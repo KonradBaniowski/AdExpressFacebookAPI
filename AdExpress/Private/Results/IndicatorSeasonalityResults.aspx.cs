@@ -146,14 +146,14 @@ namespace AdExpress.Private.Results {
 					if (vehicleInfo != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null
 						&& !vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category)
 						&& !vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media)
-						&& vehicleInfo.Id != TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia ) {
+						&& vehicleInfo.Id != TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia) {
 						_webSession.Graphics = false;
 						ResultsOptionsWebControl1.GraphRadioButton.Checked = false;
 						ResultsOptionsWebControl1.GraphRadioButton.Visible = false;
 						ResultsOptionsWebControl1.TableRadioButton.Visible = false;
 						_webSession.PreformatedMediaDetail = CstPreformatedDetail.PreformatedMediaDetails.vehicle;
 						_webSession.Save();
-					}
+					}					
 				}
 				else {
 					ResultsOptionsWebControl1.GraphRadioButton.Visible = true;
@@ -419,6 +419,9 @@ namespace AdExpress.Private.Results {
 							break;
 						case CstDBClassif.Vehicles.names.cinema:
 							result = noResult("");
+							break;
+						case CstDBClassif.Vehicles.names.plurimedia:
+							ResultsOptionsWebControl1.mediaDetail.Enabled = true;
 							break;
 						default:
 							ResultsOptionsWebControl1.mediaDetail.Enabled = false;

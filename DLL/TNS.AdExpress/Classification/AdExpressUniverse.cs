@@ -45,16 +45,16 @@ namespace TNS.AdExpress.Classification  {
 		/// <param name="dataTablePrefix">Current dataTable Prefix</param>
 		/// <param name="beginByAnd">Indicates if condition begin by and</param>
 		/// <returns>String sql conditions</returns>
-		public string GetSqlConditions(string dataTablePrefix,bool beginByAnd) {
+		public string GetSqlConditions(string dataTablePrefix, bool beginByAnd) {
 
-			string sql = "";			
-					
+			string sql = "";
+
 			//Get include elements conditions
-			sql = GetSqlConditions(dataTablePrefix,beginByAnd,AccessType.includes);
+			sql = GetSqlConditions(dataTablePrefix, beginByAnd, AccessType.includes);
 
 			//Get excludes elements conditions
 			if (sql.Length > 0) beginByAnd = true;
-			sql+=GetSqlConditions(dataTablePrefix, beginByAnd, AccessType.excludes);
+			sql += GetSqlConditions(dataTablePrefix, beginByAnd, AccessType.excludes);
 
 			return sql;
 		}
@@ -75,7 +75,7 @@ namespace TNS.AdExpress.Classification  {
 			string listIds = "";
 
 			//Get include or exlucdes elements conditions
-			listGroup = (accessType==AccessType.includes)? GetIncludes() : GetExludes();
+			listGroup = (accessType == AccessType.includes) ? GetIncludes() : GetExludes();
 			if (listGroup != null && listGroup.Count > 0) {
 
 				for (int i = 0; i < listGroup.Count; i++) {

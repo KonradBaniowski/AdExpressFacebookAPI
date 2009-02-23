@@ -114,6 +114,10 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		/// Identifiant de la catégorie du module
 		/// </summary>
 		protected Int64 _moduleCategoryId;
+		/// <summary>
+		/// Maximum size of the result table
+		/// </summary>
+		protected Int32 _resultSize = 0;
 		#endregion
 
 		#region Constructeur
@@ -135,6 +139,14 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		#endregion
 
 		#region Accesseurs
+		/// <summary>
+		/// Maximum size of the result table
+		/// </summary>
+        public Int32 ResultSize
+        {
+            get { return _resultSize; }
+            set { _resultSize = value; }
+        }
         /// <summary>
         /// Get if allowed Media universe is null
         /// </summary>

@@ -84,6 +84,15 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         {
             return (new DALEngineTop(this._session, typeYear, classifLevel,_dalUtilities)).GetData();
         }
+		/// <summary>
+		/// Implements method to get Products Personnalisation type
+		/// </summary>
+		/// <param name="idProductList">Id product list</param>
+		/// <param name="strYearId">Year Id</param>
+		/// <returns>DataTable[id_product,inref,incomp,inneutral]</returns>
+		public DataSet GetProductsPersonnalisationType(String idProductList, string strYearId) {
+			return (new DALEngine(this._session, _dalUtilities)).GetProductsPersonnalisationType(idProductList,strYearId);
+		}
         /// <summary>
         /// Implements default data access layer for evolution indicator
         /// </summary>

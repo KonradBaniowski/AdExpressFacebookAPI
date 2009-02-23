@@ -28,10 +28,13 @@ using LostWon = TNS.AdExpressI.LostWon;
 using PresentAbsent = TNS.AdExpressI.PresentAbsent;
 using Portofolio = TNS.AdExpressI.Portofolio;
 using NewCreatives = TNS.AdExpressI.NewCreatives;
+using ProductClassReports = TNS.AdExpressI.ProductClassReports;
 
 using Domain=TNS.AdExpress.Domain.Web.Navigation;
 using System.Reflection;
 using System.Collections.Generic;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Web.Controls.Exceptions;
 
 namespace TNS.AdExpress.Web.Controls.Results{
 	/// <summary>
@@ -608,6 +611,44 @@ namespace TNS.AdExpress.Web.Controls.Results{
             js.Append("\r\n\t obj.BackgroudColorL4 = '" + BackgroudColorL4 + "';");
             js.Append("\r\n\t obj.HighlightBackgroundColorL4 = '" + HighlightBackgroundColorL4 + "';");
             js.Append("\r\n\t obj.HtmlCodeL4 = '" + _htmlCodeL4 + "';");
+            ///////
+            js.Append("\r\n\t obj.CssL5 = '" + CssL5 + "';");
+            js.Append("\r\n\t obj.BackgroudColorL5 = '" + BackgroudColorL5 + "';");
+            js.Append("\r\n\t obj.HighlightBackgroundColorL5 = '" + HighlightBackgroundColorL5 + "';");
+            js.Append("\r\n\t obj.HtmlCodeL5 = '" + _htmlCodeL5 + "';");
+            js.Append("\r\n\t obj.CssL6 = '" + CssL6 + "';");
+            js.Append("\r\n\t obj.BackgroudColorL6 = '" + BackgroudColorL6 + "';");
+            js.Append("\r\n\t obj.HighlightBackgroundColorL6 = '" + HighlightBackgroundColorL6 + "';");
+            js.Append("\r\n\t obj.HtmlCodeL6 = '" + _htmlCodeL6 + "';");
+            js.Append("\r\n\t obj.CssL7 = '" + CssL7 + "';");
+            js.Append("\r\n\t obj.BackgroudColorL7 = '" + BackgroudColorL7 + "';");
+            js.Append("\r\n\t obj.HighlightBackgroundColorL7 = '" + HighlightBackgroundColorL7 + "';");
+            js.Append("\r\n\t obj.HtmlCodeL7 = '" + _htmlCodeL7 + "';");
+            js.Append("\r\n\t obj.CssL8 = '" + CssL8 + "';");
+            js.Append("\r\n\t obj.BackgroudColorL8 = '" + BackgroudColorL8 + "';");
+            js.Append("\r\n\t obj.HighlightBackgroundColorL8 = '" + HighlightBackgroundColorL8 + "';");
+            js.Append("\r\n\t obj.HtmlCodeL8 = '" + _htmlCodeL8 + "';");
+            js.Append("\r\n\t obj.CssL9 = '" + CssL9 + "';");
+            js.Append("\r\n\t obj.BackgroudColorL9 = '" + BackgroudColorL9 + "';");
+            js.Append("\r\n\t obj.HighlightBackgroundColorL9 = '" + HighlightBackgroundColorL9 + "';");
+            js.Append("\r\n\t obj.HtmlCodeL9 = '" + _htmlCodeL9 + "';");
+            js.Append("\r\n\t obj.CssSub1 = '" + CssSubTotal1 + "';");
+            js.Append("\r\n\t obj.BackgroudColorSub1 = '" + BackgroudColorSubTotal1 + "';");
+            js.Append("\r\n\t obj.HighlightBackgroundColorSub1 = '" + HighlightBackgroundColorSubTotal1 + "';");
+            js.Append("\r\n\t obj.HtmlCodeSub1 = '" + _htmlCodeSubTotal1 + "';");
+            js.Append("\r\n\t obj.CssSub2 = '" + CssSubTotal2 + "';");
+            js.Append("\r\n\t obj.BackgroudColorSub2 = '" + BackgroudColorSubTotal2 + "';");
+            js.Append("\r\n\t obj.HighlightBackgroundColorSub2 = '" + HighlightBackgroundColorSubTotal2 + "';");
+            js.Append("\r\n\t obj.HtmlCodeSub2 = '" + _htmlCodeSubTotal2 + "';");
+            js.Append("\r\n\t obj.CssSub3 = '" + CssSubTotal3 + "';");
+            js.Append("\r\n\t obj.BackgroudColorSub3 = '" + BackgroudColorSubTotal3 + "';");
+            js.Append("\r\n\t obj.HighlightBackgroundColorSub3 = '" + HighlightBackgroundColorSubTotal3 + "';");
+            js.Append("\r\n\t obj.HtmlCodeSub3 = '" + _htmlCodeSubTotal3 + "';");
+            js.Append("\r\n\t obj.CssSub4 = '" + CssSubTotal4 + "';");
+            js.Append("\r\n\t obj.BackgroudColorSub4 = '" + BackgroudColorSubTotal4 + "';");
+            js.Append("\r\n\t obj.HighlightBackgroundColorSub4 = '" + HighlightBackgroundColorSubTotal4 + "';");
+            js.Append("\r\n\t obj.HtmlCodeSub4 = '" + _htmlCodeSubTotal4 + "';");
+            ///////
 			js.Append("\r\n\t obj.CssLNbParution = '" + CssLNbParution + "';");
 			js.Append("\r\n\t obj.BackgroudColorLNbParution = '" + BackgroudColorLNbParution + "';");
 			js.Append("\r\n\t obj.HighlightBackgroundColorLNbParution = '" + HighlightBackgroundColorLNbParution + "';");
@@ -720,8 +761,9 @@ namespace TNS.AdExpress.Web.Controls.Results{
 				);
 			#endregion
 
-			#region Get_ResultWebControl()
-			js.Append("\r\n function get_"+this.ID+"(){");
+
+            #region Get_ResultWebControl()
+            js.Append("\r\n function get_"+this.ID+"(){");
 			js.Append("\r\n\t oN=document.getElementById('res_"+this.ID+"');");
 			js.Append("\r\n\t oN.innerHTML='"+GetLoadingHTML()+"';");
 							
@@ -776,8 +818,27 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			#region get_ResultWebControl_callback(res)
 			js.Append("\r\n function get_"+this.ID+"_callback(res){");//res.error
 			js.Append("\r\n\t if(res.error != null){ ");
-				js.Append("\r\n\t oN.innerHTML = res.error.Message;");
-			js.Append("\r\n\t }\r\n");
+
+            #region Big tables
+            js.Append("\r\n\t\t if(res.error.Type == \"TNS.AdExpress.Web.Controls.Exceptions.ResultTableCapacityException\"){ ");
+            js.AppendFormat("\r\n\t\t\t var msgLink = document.getElementById('msgLink_{0}');", this.ID);
+            string msgClose = GestionWeb.GetWebWord(2371, _customerWebSession.SiteLanguage);
+            string msgEscap = GestionWeb.GetWebWord(2372, _customerWebSession.SiteLanguage);
+            js.AppendFormat("\n \r\n\t\t\t msgLink.title = \"{0}\"; ", GestionWeb.GetWebWord(2567, _customerWebSession.SiteLanguage));
+            js.AppendFormat("\r\n\t\t\t msgLink.alt = \"#TB_inline?height=200&width=400&inlineId=msgDiv_{0}&caption={1}&label={2}\"; ", this.ID, msgClose, msgEscap);
+            js.Append("\n var GECKO = (navigator.product == (\"Gecko\"));");
+            js.Append("\r\n\t\t\t if (GECKO) {");
+            js.AppendFormat("\r\n\t\t\t\t tb_show('{0}', '#TB_inline?height=145&width=400&inlineId=msgDiv_{1}&caption={2}&label={3}', ''); "
+                , "Attention", this.ID, msgClose, msgEscap);
+            js.Append("\r\n\t\t\t }");
+            js.Append("\r\n\t\t\t else {");
+            js.Append("\r\n\t\t\t\t msgLink.click();");
+            js.Append("\r\n\t\t\t }");
+            js.Append("\r\n\t\t }");
+            #endregion
+
+            js.Append("\r\n\t\t oN.innerHTML = res.error.Message;");
+            js.Append("\r\n\t }\r\n");
 			js.Append("\r\n\t else if(res.value != null){ ");
 			js.Append("\r\n\t currentPageIndex = 1;");
 			js.Append("\r\n\t leftPageIndex  = 0;");
@@ -1571,7 +1632,190 @@ namespace TNS.AdExpress.Web.Controls.Results{
 					_htmlCodeL4 = o["HtmlCodeL4"].Value; 
 					_htmlCodeL4 = _htmlCodeL4.Replace("\"","");
 				}
-				if (o.Contains("CssLNbParution")) {
+                //////
+                if (o.Contains("CssL5"))
+                {
+                    _cssL5 = o["CssL5"].Value;
+                    _cssL5 = _cssL5.Replace("\"", "");
+                }
+                if (o.Contains("BackgroudColorL5"))
+                {
+                    _backgroudColorL5 = o["BackgroudColorL5"].Value;
+                    _backgroudColorL5 = _backgroudColorL5.Replace("\"", "");
+                }
+                if (o.Contains("HighlightBackgroundColorL5"))
+                {
+                    _highlightBackgroundColorL5 = o["HighlightBackgroundColorL5"].Value;
+                    _highlightBackgroundColorL5 = _highlightBackgroundColorL5.Replace("\"", "");
+                }
+                if (o.Contains("HtmlCodeL5"))
+                {
+                    _htmlCodeL5 = o["HtmlCodeL5"].Value;
+                    _htmlCodeL5 = _htmlCodeL5.Replace("\"", "");
+                }
+                if (o.Contains("CssL6"))
+                {
+                    _cssL6 = o["CssL6"].Value;
+                    _cssL6 = _cssL6.Replace("\"", "");
+                }
+                if (o.Contains("BackgroudColorL6"))
+                {
+                    _backgroudColorL6 = o["BackgroudColorL6"].Value;
+                    _backgroudColorL6 = _backgroudColorL6.Replace("\"", "");
+                }
+                if (o.Contains("HighlightBackgroundColorL6"))
+                {
+                    _highlightBackgroundColorL6 = o["HighlightBackgroundColorL6"].Value;
+                    _highlightBackgroundColorL6 = _highlightBackgroundColorL6.Replace("\"", "");
+                }
+                if (o.Contains("HtmlCodeL6"))
+                {
+                    _htmlCodeL6 = o["HtmlCodeL6"].Value;
+                    _htmlCodeL6 = _htmlCodeL6.Replace("\"", "");
+                }
+                if (o.Contains("CssL7"))
+                {
+                    _cssL7 = o["CssL7"].Value;
+                    _cssL7 = _cssL7.Replace("\"", "");
+                }
+                if (o.Contains("BackgroudColorL7"))
+                {
+                    _backgroudColorL7 = o["BackgroudColorL7"].Value;
+                    _backgroudColorL7 = _backgroudColorL7.Replace("\"", "");
+                }
+                if (o.Contains("HighlightBackgroundColorL7"))
+                {
+                    _highlightBackgroundColorL7 = o["HighlightBackgroundColorL7"].Value;
+                    _highlightBackgroundColorL7 = _highlightBackgroundColorL7.Replace("\"", "");
+                }
+                if (o.Contains("HtmlCodeL7"))
+                {
+                    _htmlCodeL7 = o["HtmlCodeL7"].Value;
+                    _htmlCodeL7 = _htmlCodeL7.Replace("\"", "");
+                }
+                if (o.Contains("CssL8"))
+                {
+                    _cssL8 = o["CssL8"].Value;
+                    _cssL8 = _cssL8.Replace("\"", "");
+                }
+                if (o.Contains("BackgroudColorL8"))
+                {
+                    _backgroudColorL8 = o["BackgroudColorL8"].Value;
+                    _backgroudColorL8 = _backgroudColorL8.Replace("\"", "");
+                }
+                if (o.Contains("HighlightBackgroundColorL8"))
+                {
+                    _highlightBackgroundColorL8 = o["HighlightBackgroundColorL8"].Value;
+                    _highlightBackgroundColorL8 = _highlightBackgroundColorL8.Replace("\"", "");
+                }
+                if (o.Contains("HtmlCodeL8"))
+                {
+                    _htmlCodeL8 = o["HtmlCodeL8"].Value;
+                    _htmlCodeL8 = _htmlCodeL8.Replace("\"", "");
+                }
+                if (o.Contains("CssL9"))
+                {
+                    _cssL9 = o["CssL9"].Value;
+                    _cssL9 = _cssL9.Replace("\"", "");
+                }
+                if (o.Contains("BackgroudColorL9"))
+                {
+                    _backgroudColorL9 = o["BackgroudColorL9"].Value;
+                    _backgroudColorL9 = _backgroudColorL9.Replace("\"", "");
+                }
+                if (o.Contains("HighlightBackgroundColorL9"))
+                {
+                    _highlightBackgroundColorL9 = o["HighlightBackgroundColorL9"].Value;
+                    _highlightBackgroundColorL9 = _highlightBackgroundColorL9.Replace("\"", "");
+                }
+                if (o.Contains("HtmlCodeL9"))
+                {
+                    _htmlCodeL9 = o["HtmlCodeL9"].Value;
+                    _htmlCodeL9 = _htmlCodeL9.Replace("\"", "");
+                }
+                if (o.Contains("CssSub1"))
+                {
+                    _cssSubTotal1 = o["CssSub1"].Value;
+                    _cssSubTotal1 = _cssSubTotal1.Replace("\"", "");
+                }
+                if (o.Contains("BackgroudColorSub1"))
+                {
+                    _backgroudColorSubTotal1 = o["BackgroudColorSub1"].Value;
+                    _backgroudColorSubTotal1 = _backgroudColorSubTotal1.Replace("\"", "");
+                }
+                if (o.Contains("HighlightBackgroundColorSub1"))
+                {
+                    _highlightBackgroundColorSubTotal1 = o["HighlightBackgroundColorSub1"].Value;
+                    _highlightBackgroundColorSubTotal1 = _highlightBackgroundColorSubTotal1.Replace("\"", "");
+                }
+                if (o.Contains("HtmlCodeSub1"))
+                {
+                    _htmlCodeSubTotal1 = o["HtmlCodeSub1"].Value;
+                    _htmlCodeSubTotal1 = _htmlCodeSubTotal1.Replace("\"", "");
+                }
+                if (o.Contains("CssSub2"))
+                {
+                    _cssSubTotal2 = o["CssSub2"].Value;
+                    _cssSubTotal2 = _cssSubTotal2.Replace("\"", "");
+                }
+                if (o.Contains("BackgroudColorSub2"))
+                {
+                    _backgroudColorSubTotal2 = o["BackgroudColorSub2"].Value;
+                    _backgroudColorSubTotal2 = _backgroudColorSubTotal2.Replace("\"", "");
+                }
+                if (o.Contains("HighlightBackgroundColorSub2"))
+                {
+                    _highlightBackgroundColorSubTotal2 = o["HighlightBackgroundColorSub2"].Value;
+                    _highlightBackgroundColorSubTotal2 = _highlightBackgroundColorSubTotal2.Replace("\"", "");
+                }
+                if (o.Contains("HtmlCodeSub2"))
+                {
+                    _htmlCodeSubTotal2 = o["HtmlCodeSub2"].Value;
+                    _htmlCodeSubTotal2 = _htmlCodeSubTotal2.Replace("\"", "");
+                }
+                if (o.Contains("CssSub3"))
+                {
+                    _cssSubTotal3 = o["CssSub3"].Value;
+                    _cssSubTotal3 = _cssSubTotal3.Replace("\"", "");
+                }
+                if (o.Contains("BackgroudColorSub3"))
+                {
+                    _backgroudColorSubTotal3 = o["BackgroudColorSub3"].Value;
+                    _backgroudColorSubTotal3 = _backgroudColorSubTotal3.Replace("\"", "");
+                }
+                if (o.Contains("HighlightBackgroundColorSub3"))
+                {
+                    _highlightBackgroundColorSubTotal3 = o["HighlightBackgroundColorSub3"].Value;
+                    _highlightBackgroundColorSubTotal3 = _highlightBackgroundColorSubTotal3.Replace("\"", "");
+                }
+                if (o.Contains("HtmlCodeSub3"))
+                {
+                    _htmlCodeSubTotal3 = o["HtmlCodeSub3"].Value;
+                    _htmlCodeSubTotal3 = _htmlCodeSubTotal3.Replace("\"", "");
+                }
+                if (o.Contains("CssSub4"))
+                {
+                    _cssSubTotal4 = o["CssSub4"].Value;
+                    _cssSubTotal4 = _cssSubTotal4.Replace("\"", "");
+                }
+                if (o.Contains("BackgroudColorSub4"))
+                {
+                    _backgroudColorSubTotal4 = o["BackgroudColorSub4"].Value;
+                    _backgroudColorSubTotal4 = _backgroudColorSubTotal4.Replace("\"", "");
+                }
+                if (o.Contains("HighlightBackgroundColorSub4"))
+                {
+                    _highlightBackgroundColorSubTotal4 = o["HighlightBackgroundColorSub4"].Value;
+                    _highlightBackgroundColorSubTotal4 = _highlightBackgroundColorSubTotal4.Replace("\"", "");
+                }
+                if (o.Contains("HtmlCodeSub4"))
+                {
+                    _htmlCodeSubTotal4 = o["HtmlCodeSub4"].Value;
+                    _htmlCodeSubTotal4 = _htmlCodeSubTotal4.Replace("\"", "");
+                }
+                /////
+                if (o.Contains("CssLNbParution"))
+                {
 					_cssLNbParution = o["CssLNbParution"].Value;
 					_cssLNbParution = _cssLNbParution.Replace("\"", "");
 				}
@@ -1628,41 +1872,57 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			int j=0;
 			object[] tab=null,  globalTable=null;
 			int[] tabIndex=null;
-				
-			try {
+
+            try
+            {
                 this.LoadResultParameters(resultParameters);
                 this.LoadStyleParameters(styleParameters);
-				_customerWebSession=(WebSession)WebSession.Load(idSession);
+                _customerWebSession = (WebSession)WebSession.Load(idSession);
                 this.LoadSortParameters(sortParameters);
-				_data = GetResultTable(_customerWebSession);
-				if (_data != null){
-					StringBuilder output=new StringBuilder(10000);
-					this.InitCss();
-					long nbLineToSchow = 0;
-					tab = GetHTMLTable(ref nbLineToSchow);//tableau des résultats (chaque ligne est en HTML)
-					if(tab!=null){
-						j++;
+                _data = GetResultTable(_customerWebSession);
+                TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(_customerWebSession.CurrentModule);
+                if (_data != null)
+                {
+                    StringBuilder output = new StringBuilder(10000);
+                    this.InitCss();
+                    long nbLineToSchow = 0;
+                    tab = GetHTMLTable(ref nbLineToSchow);//tableau des résultats (chaque ligne est en HTML)
+                    if (tab != null)
+                    {
+                        j++;
 
-						tabIndex = GetTableIndex(_data, nbLineToSchow);
-						if(tabIndex!=null && tabIndex.Length>0)
-							j++;
-                        if (_optionHtml.Length > 0)
+                        tabIndex = GetTableIndex(_data, nbLineToSchow);
+                        if (module.ResultSize > 0 && module.ResultSize < tabIndex.Length)
                         {
-                            j++;
+                            throw new ResultTableCapacityException(string.Format("<div align=\"center\" class=\"txtViolet11Bold\" style=\"WIDTH: 400px; POSITION: relative;\"><table class=\"txtViolet11Bold\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\"><tr><td colSpan=\"2\">{0}</td></tr><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>{1}</td></tr><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>{2}</td></tr></table></div>", GestionWeb.GetWebWord(2568, _customerWebSession.SiteLanguage), GestionWeb.GetWebWord(2569, _customerWebSession.SiteLanguage), GestionWeb.GetWebWord(2570, _customerWebSession.SiteLanguage)));
                         }
-						globalTable = new object[j];
-						globalTable[0]=tab;
-						if(j > 1)globalTable[1]=tabIndex;
-                        if (j > 2) globalTable[2] = _optionHtml;
+                        else
+                        {
+                            if (tabIndex != null && tabIndex.Length > 0)
+                                j++;
+                            if (_optionHtml.Length > 0)
+                            {
+                                j++;
+                            }
+                            globalTable = new object[j];
+                            globalTable[0] = tab;
+                            if (j > 1) globalTable[1] = tabIndex;
+                            if (j > 2) globalTable[2] = _optionHtml;
+                        }
                     }
-				}
+                }
 
-				_customerWebSession.Save();
-			}
-			catch(System.Exception err) {
-				string clientErrorMessage = OnAjaxMethodError(err,this._customerWebSession);
-				throw new Exception(clientErrorMessage);
-			}
+                _customerWebSession.Save();
+            }
+            catch (ResultTableCapacityException e)
+            {
+                throw e;
+            }
+            catch (System.Exception err)
+            {
+                string clientErrorMessage = OnAjaxMethodError(err, this._customerWebSession);
+                throw new Exception(clientErrorMessage);
+            }
 			return(globalTable);
 		}
 		#endregion
@@ -1840,6 +2100,8 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		protected override void OnPreRender(EventArgs e) {
 			base.OnPreRender (e);
             DetailSelectionPreRender();
+            Page.ClientScript.RegisterClientScriptInclude("JQUERY", "/scripts/jquery.js");
+            Page.ClientScript.RegisterClientScriptInclude("THICKBOX", "/scripts/thickbox.js");
 		}
         /// <summary>
         /// Prérender
@@ -1891,6 +2153,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 					html.Append(AjaxEventScript());
 					html.Append(GetLoadingHTML());
 					html.Append(SelectionCallBackScript());
+                    html.Append(GetTableCapacityHtml());
 					output.Write(html.ToString());
 					break;
 				case RenderType.rawExcel:
@@ -2018,6 +2281,16 @@ namespace TNS.AdExpress.Web.Controls.Results{
                     data = newCreativesResult.GetData();
 
                     break;
+                case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
+
+                    if(module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Product Class reports"));
+                    param = new object[1];
+                    param[0] = customerWebSession;
+
+                    ProductClassReports.IProductClassReports productClassLayer = (ProductClassReports.IProductClassReports)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                    data = productClassLayer.GetGenericProductClassReport();
+                    data.Sort(ResultTable.SortOrder.DESC, 2);
+                    break;
                 default:
 					return null;
 			}
@@ -2039,11 +2312,11 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		public object[] GetHTMLTable(ref long nbLineToSchow){
 
 			int i=0,j=0;
-			object[]tab = null;
-			string temp = "";
+			StringBuilder temp = new StringBuilder();
 			string lineStart="";
-			object[]newtab=null;
+            List<string> tab = null;
 			if(_data!=null && _data.LinesNumber>0){
+                tab = new List<string>(_data.LinesNumber+1);
 
 				#region Tri des données
 				int iCol = (int)this._data.GetHeadersIndexInResultTable(this._sSortKey);
@@ -2053,53 +2326,44 @@ namespace TNS.AdExpress.Web.Controls.Results{
 				#endregion
 
 				#region Génération du tableau
-				tab = new object[_data.LinesNumber];
-				
-
-			
 				//entêtes de tableau
 				this._sJSSortMethod = "sort_"+this.ID;
 				if (_data.NewHeaders!=null)
-					temp += _data.NewHeaders.Render(this.ID, _cssLHeader,this._sImgCroiOverPath,this._sImgCroiPath,this._sImgDeCroiOverPath,this._sImgDeCroiPath,this._sJSSortMethod);
+					temp.Append(_data.NewHeaders.Render(this.ID, _cssLHeader,this._sImgCroiOverPath,this._sImgCroiPath,this._sImgDeCroiOverPath,this._sImgDeCroiPath,this._sJSSortMethod));
                 // Lorsque le tableau ne contient pas une ligne total, on met le header dans la première case du tableau tab
                 // et on met la premier ligne du résultat dans la deuxième case de tab, ainsi on n'affiche pas la première ligne du résultat
                 // au début de chaque page de pagination
 //                if (temp.Length > 0 && _data.LinesNumber > 0 && ((LineStart)_data[0, 0]).LineType != LineType.total) {
 //                {
-                    tab = new object[_data.LinesNumber + 1];
-                    tab[nbLineToSchow] = temp;
+                    tab.Add(temp.ToString());
                     nbLineToSchow++;
-                    temp = "";
-                    newtab = new object[nbLineToSchow];
-                    Array.Copy(tab, newtab, nbLineToSchow);
+                    temp.Length = 0;
                 //}
 				try{
 					for(i = 0; i < _data.LinesNumber; i++) {
 						//Utilisation des styles au niveau des balises <TR>
 						lineStart= _data[i,0].Render();
 						if(lineStart.Length==0)continue;
-						temp +=lineStart;
+						temp.Append(lineStart);
 						for (j = 1; j < _data.ColumnsNumber-1; j++) {
 					
 							if(j==_data.LevelColumn) {
 								try {	    
-									temp+=_data[i,j].Render();
+									temp.Append(_data[i,j].Render());
 								}
 								catch(System.Exception) {
-									temp+=_data[i,j].Render();
+									temp.Append(_data[i,j].Render());
 								}
 							}
 							else {
-								temp+= _data[i,j].Render();
+								temp.Append(_data[i,j].Render());
 							}
 						}
-						temp+=_data[i,_data.ColumnsNumber-1].Render();
+						temp.Append(_data[i,_data.ColumnsNumber-1].Render());
 
-						tab[nbLineToSchow] = temp;
+						tab.Add(temp.ToString());
 						nbLineToSchow++;
-						temp ="";
-						newtab=new object[nbLineToSchow];
-						Array.Copy(tab,newtab,nbLineToSchow);
+						temp.Length = 0;
 
 					}
 				}
@@ -2108,7 +2372,16 @@ namespace TNS.AdExpress.Web.Controls.Results{
 				}
 				#endregion
 			}
-			return newtab;
+
+            if (tab != null && tab.Count > 0)
+            {
+                return tab.ToArray();
+            }
+            else
+            {
+                return null;
+            }
+
 		}
 		#endregion		
 
@@ -2119,7 +2392,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		/// <param name="data">Tableau de données à traiter</param>
 		/// <param name="nbLineToSchow">Nombre de ligne affichée</param>
 		/// <returns>tableau d'index</returns>
-        protected int[] GetTableIndex(ResultTable data, long nbLineToSchow)
+        protected virtual int[] GetTableIndex(ResultTable data, long nbLineToSchow)
         {
 		
 
@@ -2178,6 +2451,27 @@ namespace TNS.AdExpress.Web.Controls.Results{
             string themeName = WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name;
 
             return ("<div width=\"100%\" align=\"center\" id=\"res_" + this.ID + "\"><img src=\"/App_Themes/" + themeName + "/Images/Common/waitAjax.gif\"></div>");
+			
+		}
+
+		#endregion
+
+		#region GetTableCapacityHtml
+		/// <summary>
+		/// Get HTML code for the eroor message about table capacity
+		/// </summary>
+		/// <returns></returns>
+		protected string GetTableCapacityHtml(){
+
+            StringBuilder str = new StringBuilder();
+
+            str.AppendFormat("<input style=\"visibility:hidden\" type=\"hidden\" id=\"msgLink_{0}\" alt=\"#TB_inline?height=200&width=400&inlineId=msgDiv_{0}\" title=\"Warning\" class=\"thickbox\" type=\"button\" value=\"Show\" />", this.ID);
+            str.AppendFormat("<div style=\"display:none;\"  id=\"msgDiv_{0}\" >", this.ID);
+            str.AppendFormat("<div class=\"txtViolet11Bold\" id=\"msgDivTable_{0}\" width=\"100%\" align=\"center\" style=\"margin-top:20px\">", this.ID);
+            str.AppendFormat("<table class=\"txtViolet11Bold\" id=\"msgTable_{0}\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">", this.ID);
+            str.AppendFormat("<tr><td colSpan=\"2\">{0}</td></tr><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>{1}</td></tr><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>{2}</td></tr></table></div></div>", GestionWeb.GetWebWord(2568, _customerWebSession.SiteLanguage), GestionWeb.GetWebWord(2569, _customerWebSession.SiteLanguage), GestionWeb.GetWebWord(2570, _customerWebSession.SiteLanguage));
+
+            return str.ToString();
 			
 		}
 

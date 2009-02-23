@@ -58,55 +58,55 @@ namespace TNS.AdExpressI.LostWon {
         /// <summary>
         /// Id of media univers on year N
         /// </summary>
-        public const int N_UNIVERSE_ID = -1;
+        public const Int32 N_UNIVERSE_ID = -1;
         /// <summary>
         /// Id of media univers on year N-1
         /// </summary>
-        public const int N1_UNIVERSE_ID = -2;
+        public const Int32 N1_UNIVERSE_ID = -2;
         /// <summary>
         /// Id of media univers about evol
         /// </summary>
-        public const int EVOL_UNIVERSE_ID = -3;
+        public const Int32 EVOL_UNIVERSE_ID = -3;
         /// <summary>
         /// Id of subtotal columns
         /// </summary>
-        public const int SUBTOTAL_ID = -5;
+        public const Int32 SUBTOTAL_ID = -5;
         /// <summary>
         /// Id of label columns
         /// </summary>
-        public const int LEVEL_ID = -6;
+        public const Int32 LEVEL_ID = -6;
         /// <summary>
         /// Id of Media Schedule Column
         /// </summary>
-        public const int MEDIA_SCHEDULE_ID = -7;
+        public const Int32 MEDIA_SCHEDULE_ID = -7;
         /// <summary>
         /// Id of column loyal
         /// </summary>
-        public const int LOYAL_HEADER_ID = -8;
+        public const Int32 LOYAL_HEADER_ID = -8;
         /// <summary>
         /// Id of column loyal sliding
         /// </summary>
-        public const int LOYAL_DECLINE_HEADER_ID = -9;
+        public const Int32 LOYAL_DECLINE_HEADER_ID = -9;
         /// <summary>
         /// Id of column loyal rising
         /// </summary>
-        public const int LOYAL_RISE_HEADER_ID = -10;
+        public const Int32 LOYAL_RISE_HEADER_ID = -10;
         /// <summary>
         /// Id of column Won
         /// </summary>
-        public const int WON_HEADER_ID = -11;
+        public const Int32 WON_HEADER_ID = -11;
         /// <summary>
         /// Id of column Lost
         /// </summary>
-        public const int LOST_HEADER_ID = -12;
+        public const Int32 LOST_HEADER_ID = -12;
         /// <summary>
         /// Id of column Item Number
         /// </summary>
-        public const int ITEM_NUMBER_HEADER_ID = -13;
+        public const Int32 ITEM_NUMBER_HEADER_ID = -13;
         /// <summary>
         /// Id of column Unit
         /// </summary>
-        public const int UNIT_HEADER_ID = -14;
+        public const Int32 UNIT_HEADER_ID = -14;
 
         #endregion
 
@@ -118,7 +118,7 @@ namespace TNS.AdExpressI.LostWon {
         /// <summary>
         /// Result Type
         /// </summary>
-        protected int _result;
+        protected Int32 _result;
         /// <summary>
         /// Current vehicle univers
         /// </summary>
@@ -143,7 +143,7 @@ namespace TNS.AdExpressI.LostWon {
         /// <summary>
         /// Get Result Type
         /// </summary>
-        public int ResultType {
+        public Int32 ResultType {
             get { return _result; }
         }
         /// <summary>
@@ -233,14 +233,14 @@ namespace TNS.AdExpressI.LostWon {
         /// </summary>
         /// <returns>Computed data</returns>
         public ResultTable GetResult() {
-            return this.GetResult((int)_session.CurrentTab);
+            return this.GetResult((Int32)_session.CurrentTab);
         }
         /// <summary>
         /// Compute specified result
         /// </summary>
         /// <param name="result">Type of result (DynamicAnalysis)</param>
         /// <returns>Computed data</returns>
-        public ResultTable GetResult(int result) {
+        public ResultTable GetResult(Int32 result) {
             switch (result) {
                 case DynamicAnalysis.LOST:
                 case DynamicAnalysis.LOYAL:
@@ -312,7 +312,7 @@ namespace TNS.AdExpressI.LostWon {
         protected ResultTable GetSynthesisData() {
 
             #region variables
-            long nbLine;
+            Int32 nbLine;
             List<string> advertisers = null;
             List<string> products = null;
             List<string> brands = null;
@@ -321,14 +321,14 @@ namespace TNS.AdExpressI.LostWon {
             List<string> groups = null;
             List<string> agencyGroups = null;
             List<string> agency = null;
-            Int64 advertiserLineIndex = 0;
-            Int64 brandLineIndex = 0;
-            Int64 productLineIndex = 0;
-            Int64 sectorLineIndex = 0;
-            Int64 subsectorLineIndex = 0;
-            Int64 groupLineIndex = 0;
-            Int64 agencyGroupLineIndex = 0;
-            Int64 agencyLineIndex = 0;
+            Int32 advertiserLineIndex = 0;
+            Int32 brandLineIndex = 0;
+            Int32 productLineIndex = 0;
+            Int32 sectorLineIndex = 0;
+            Int32 subsectorLineIndex = 0;
+            Int32 groupLineIndex = 0;
+            Int32 agencyGroupLineIndex = 0;
+            Int32 agencyLineIndex = 0;
 
             string filterN = "";
             string filterN1 = "";
@@ -345,11 +345,11 @@ namespace TNS.AdExpressI.LostWon {
 
             string beginningPeriodN1DA = customerPeriod.ComparativeStartDate;
             string endPeriodN1DA = customerPeriod.ComparativeEndDate;
-            DateTime PeriodBeginningDate = new DateTime(int.Parse(customerPeriod.StartDate.Substring(0, 4)), int.Parse(customerPeriod.StartDate.Substring(4, 2)), int.Parse(customerPeriod.StartDate.Substring(6, 2)));
-            DateTime PeriodEndDate = new DateTime(int.Parse(customerPeriod.EndDate.Substring(0, 4)), int.Parse(customerPeriod.EndDate.Substring(4, 2)), int.Parse(customerPeriod.EndDate.Substring(6, 2))); ;
+            DateTime PeriodBeginningDate = new DateTime(Int32.Parse(customerPeriod.StartDate.Substring(0, 4)), Int32.Parse(customerPeriod.StartDate.Substring(4, 2)), Int32.Parse(customerPeriod.StartDate.Substring(6, 2)));
+            DateTime PeriodEndDate = new DateTime(Int32.Parse(customerPeriod.EndDate.Substring(0, 4)), Int32.Parse(customerPeriod.EndDate.Substring(4, 2)), Int32.Parse(customerPeriod.EndDate.Substring(6, 2))); ;
 
-            DateTime PeriodBeginningDateN1DA = new DateTime(int.Parse(customerPeriod.ComparativeStartDate.Substring(0, 4)), int.Parse(customerPeriod.ComparativeStartDate.Substring(4, 2)), int.Parse(customerPeriod.ComparativeStartDate.Substring(6, 2)));
-            DateTime PeriodEndDateN1DA = new DateTime(int.Parse(customerPeriod.ComparativeEndDate.Substring(0, 4)), int.Parse(customerPeriod.ComparativeEndDate.Substring(4, 2)), int.Parse(customerPeriod.ComparativeEndDate.Substring(6, 2))); ;
+            DateTime PeriodBeginningDateN1DA = new DateTime(Int32.Parse(customerPeriod.ComparativeStartDate.Substring(0, 4)), Int32.Parse(customerPeriod.ComparativeStartDate.Substring(4, 2)), Int32.Parse(customerPeriod.ComparativeStartDate.Substring(6, 2)));
+            DateTime PeriodEndDateN1DA = new DateTime(Int32.Parse(customerPeriod.ComparativeEndDate.Substring(0, 4)), Int32.Parse(customerPeriod.ComparativeEndDate.Substring(4, 2)), Int32.Parse(customerPeriod.ComparativeEndDate.Substring(6, 2))); ;
             CultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
             
 			//string PeriodDateN = string.Format(cInfo, "{0:d}-{1:d}", PeriodBeginningDate, PeriodEndDate);
@@ -471,7 +471,7 @@ namespace TNS.AdExpressI.LostWon {
             #endregion
 
             ResultTable resultTable = new ResultTable(nbLine, headers);
-            Int64 nbCol = resultTable.ColumnsNumber - 2;
+            Int32 nbCol = resultTable.ColumnsNumber - 2;
 
             advertisers = new List<string>();
             products = new List<string>();
@@ -483,7 +483,7 @@ namespace TNS.AdExpressI.LostWon {
             agency = new List<string>();
 
             #region Initialisation des lignes
-            Int64 levelLabelColIndex = resultTable.GetHeadersIndexInResultTable(LEVEL_ID.ToString());
+            Int32 levelLabelColIndex = resultTable.GetHeadersIndexInResultTable(LEVEL_ID.ToString());
             advertiserLineIndex = resultTable.AddNewLine(LineType.level1);
             resultTable[advertiserLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1146, _session.SiteLanguage));
             if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE)) {
@@ -514,34 +514,40 @@ namespace TNS.AdExpressI.LostWon {
             #endregion
 
             #region Initialisation des lignes
-            Int64 _loyalNumberColonneIndex = resultTable.GetHeadersIndexInResultTable(LOYAL_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
-            Int64 _loyalDeclineNumberColonneIndex = resultTable.GetHeadersIndexInResultTable(LOYAL_DECLINE_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
-            Int64 _loyalRiseNumberColonneIndex = resultTable.GetHeadersIndexInResultTable(LOYAL_RISE_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
-            Int64 _wonNumberColonneIndex = resultTable.GetHeadersIndexInResultTable(WON_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
-            Int64 _lostNumberColonneIndex = resultTable.GetHeadersIndexInResultTable(LOST_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
+            Int32 _loyalNumberColonneIndex = resultTable.GetHeadersIndexInResultTable(LOYAL_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
+            Int32 _loyalDeclineNumberColonneIndex = resultTable.GetHeadersIndexInResultTable(LOYAL_DECLINE_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
+            Int32 _loyalRiseNumberColonneIndex = resultTable.GetHeadersIndexInResultTable(LOYAL_RISE_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
+            Int32 _wonNumberColonneIndex = resultTable.GetHeadersIndexInResultTable(WON_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
+            Int32 _lostNumberColonneIndex = resultTable.GetHeadersIndexInResultTable(LOST_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
 
             #region Initialisation des Nombres
-            for (int i = 0; i < nbLine; i++) {
+            for (Int32 i = 0; i < nbLine; i++) {
                 resultTable[i, _loyalNumberColonneIndex] = numberFactory.Get(0.0);
                 resultTable[i, _loyalDeclineNumberColonneIndex] = numberFactory.Get(0.0);
                 resultTable[i, _loyalRiseNumberColonneIndex] = numberFactory.Get(0.0);
                 resultTable[i, _wonNumberColonneIndex] = numberFactory.Get(0.0);
                 resultTable[i, _lostNumberColonneIndex] = numberFactory.Get(0.0);
             }
-            for (long i = 0; i < nbLine; i++) {
-                for (long j = _loyalNumberColonneIndex + 1; j < _loyalDeclineNumberColonneIndex; j++) {
+            for (Int32 i = 0; i < nbLine; i++)
+            {
+                for (Int32 j = _loyalNumberColonneIndex + 1; j < _loyalDeclineNumberColonneIndex; j++)
+                {
                     resultTable[i, j] = cellUnitFactory.Get(0.0);
                 }
-                for (long j = _loyalDeclineNumberColonneIndex + 1; j < _loyalRiseNumberColonneIndex; j++) {
+                for (Int32 j = _loyalDeclineNumberColonneIndex + 1; j < _loyalRiseNumberColonneIndex; j++)
+                {
                     resultTable[i, j] = cellUnitFactory.Get(0.0);
                 }
-                for (long j = _loyalRiseNumberColonneIndex + 1; j < _wonNumberColonneIndex; j++) {
+                for (Int32 j = _loyalRiseNumberColonneIndex + 1; j < _wonNumberColonneIndex; j++)
+                {
                     resultTable[i, j] = cellUnitFactory.Get(0.0);
                 }
-                for (long j = _wonNumberColonneIndex + 1; j < _lostNumberColonneIndex; j++) {
+                for (Int32 j = _wonNumberColonneIndex + 1; j < _lostNumberColonneIndex; j++)
+                {
                     resultTable[i, j] = cellUnitFactory.Get(0.0);
                 }
-                for (long j = _lostNumberColonneIndex + 1; j <= nbCol; j++) {
+                for (Int32 j = _lostNumberColonneIndex + 1; j <= nbCol; j++)
+                {
                     resultTable[i, j] = cellUnitFactory.Get(0.0);
                 }
             }
@@ -624,7 +630,7 @@ namespace TNS.AdExpressI.LostWon {
         }
         #endregion
 
-        #region Internal methods
+        #region Int32ernal methods
 
         #region Raw table
         /// <summary>
@@ -634,8 +640,8 @@ namespace TNS.AdExpressI.LostWon {
         protected ResultTable GetRawTable()
         {
             #region Date
-            int dateBegin = int.Parse(_session.PeriodBeginningDate);
-            int dateEnd = int.Parse(_session.PeriodEndDate);
+            Int32 dateBegin = Int32.Parse(_session.PeriodBeginningDate);
+            Int32 dateEnd = Int32.Parse(_session.PeriodEndDate);
             DateTime startDate = new DateTime(dateBegin / 10000, (dateBegin-(10000*(dateBegin/10000))) / 100, (dateBegin-(100*(dateBegin/100))));
             if (startDate > DateTime.Now)
             {
@@ -675,17 +681,17 @@ namespace TNS.AdExpressI.LostWon {
             #endregion
 
             #region Init Table
-            Int64 nbline = GetNbLine(dt);
+            Int32 nbline = GetNbLine(dt);
             ResultTable tabData = new ResultTable(nbline, headers);
             #endregion
 
             #region Fill result table
-            int levelNb = _session.GenericProductDetailLevel.GetNbLevels;
+            Int32 levelNb = _session.GenericProductDetailLevel.GetNbLevels;
             Int64[] oldIds = new Int64[levelNb];
             Int64[] cIds = new Int64[levelNb];
             CellLevel[] levels = new CellLevel[nbline];
-            Int64 cLine = 0;
-            for (int i = 0; i < levelNb; i++) { oldIds[i] = cIds[i] = -1; }
+            Int32 cLine = 0;
+            for (Int32 i = 0; i < levelNb; i++) { oldIds[i] = cIds[i] = -1; }
             CellUnitFactory cellFactory = _session.GetCellUnitFactory();
             SetLineDelegate setLine;
             switch (_session.Unit)
@@ -699,13 +705,13 @@ namespace TNS.AdExpressI.LostWon {
             }
             foreach (DataRow row in dt.Rows)
             {
-                for (int i = 0; i < levelNb; i++)
+                for (Int32 i = 0; i < levelNb; i++)
                 {
                     cIds[i] = _session.GenericProductDetailLevel.GetIdValue(row, i + 1);
                     if (cIds[i] >= 0 && cIds[i] != oldIds[i])
                     {
                         oldIds[i] = cIds[i];
-                        for (int ii = i + 1; ii < levelNb; ii++) { oldIds[ii] = -1; }
+                        for (Int32 ii = i + 1; ii < levelNb; ii++) { oldIds[ii] = -1; }
                         cLine = InitLine(tabData, row, cellFactory, i + 1, (i > 0) ? levels[i - 1] : null);
                         levels[i] = (CellLevel)tabData[cLine, 1];
                     }
@@ -727,10 +733,10 @@ namespace TNS.AdExpressI.LostWon {
         /// <param name="level">Current level</param>
         /// <param name="parent">Parent level</param>
         /// <returns>Index of current line</returns>
-        protected Int64 InitLine(ResultTable tab, DataRow row, CellUnitFactory cellFactory, int level, CellLevel parent)
+        protected Int32 InitLine(ResultTable tab, DataRow row, CellUnitFactory cellFactory, Int32 level, CellLevel parent)
         {
 
-            Int64 cLine = -1;
+            Int32 cLine = -1;
             CellLevel cell;
             switch (level)
             {
@@ -761,7 +767,7 @@ namespace TNS.AdExpressI.LostWon {
 
             }
 
-            for (int i = 2; i <= tab.DataColumnsNumber; i++)
+            for (Int32 i = 2; i <= tab.DataColumnsNumber; i++)
             {
                 tab[cLine, i] = cellFactory.Get(0.0);
             }
@@ -781,7 +787,7 @@ namespace TNS.AdExpressI.LostWon {
         /// <param name="periodBegin">Period Begin</param>
         /// <param name="periodEnd">Period End</param>
         /// <returns>Current line</returns>
-        protected delegate Int64 SetLineDelegate(ResultTable tab, Int64 cLine, DataRow row, CellUnitFactory cellFactory, Int64 periodBegin, Int64 periodEnd);
+        protected delegate Int64 SetLineDelegate(ResultTable tab, Int32 cLine, DataRow row, CellUnitFactory cellFactory, Int64 periodBegin, Int64 periodEnd);
         /// <summary>
         /// Delegate to affect double values to the table
         /// </summary>
@@ -792,7 +798,7 @@ namespace TNS.AdExpressI.LostWon {
         /// <param name="periodBegin">Period Begin</param>
         /// <param name="periodEnd">Period End</param>
         /// <returns>Current line</returns>
-        protected Int64 SetDoubleLine(ResultTable tab, Int64 cLine, DataRow row, CellUnitFactory cellFactory, Int64 periodBegin, Int64 periodEnd)
+        protected Int64 SetDoubleLine(ResultTable tab, Int32 cLine, DataRow row, CellUnitFactory cellFactory, Int64 periodBegin, Int64 periodEnd)
         {
 
             Int64 idElement = Convert.ToInt64(row["columnDetailLevel"]);
@@ -828,7 +834,7 @@ namespace TNS.AdExpressI.LostWon {
         /// <param name="periodBegin">Period Begin</param>
         /// <param name="periodEnd">Period End</param>
         /// <returns>Current line</returns>
-        protected Int64 SetListLine(ResultTable tab, Int64 cLine, DataRow row, CellUnitFactory cellFactory, Int64 periodBegin, Int64 periodEnd)
+        protected Int64 SetListLine(ResultTable tab, Int32 cLine, DataRow row, CellUnitFactory cellFactory, Int64 periodBegin, Int64 periodEnd)
         {
 
             Int64 idElement = Convert.ToInt64(row["columnDetailLevel"]);
@@ -845,8 +851,8 @@ namespace TNS.AdExpressI.LostWon {
                 idSubTotal = string.Format("{0}-{1}", N_UNIVERSE_ID, SUBTOTAL_ID);
             }
 
-            Int64 iSubTotal = -1;
-            Int64 iCol = tab.GetHeadersIndexInResultTable(idCol);
+            Int32 iSubTotal = -1;
+            Int32 iCol = tab.GetHeadersIndexInResultTable(idCol);
             if (tab.HeadersIndexInResultTable.ContainsKey(idSubTotal))
             {
                 iSubTotal = tab.GetHeadersIndexInResultTable(idSubTotal);
@@ -902,11 +908,11 @@ namespace TNS.AdExpressI.LostWon {
         {
 
             #region Dates
-            DateTime periodBeginN = new DateTime(int.Parse(_session.CustomerPeriodSelected.StartDate.Substring(0, 4)), int.Parse(_session.CustomerPeriodSelected.StartDate.Substring(4, 2)), int.Parse(_session.CustomerPeriodSelected.StartDate.Substring(6, 2)));
-            DateTime periodEndN = new DateTime(int.Parse(_session.CustomerPeriodSelected.EndDate.Substring(0, 4)), int.Parse(_session.CustomerPeriodSelected.EndDate.Substring(4, 2)), int.Parse(_session.CustomerPeriodSelected.EndDate.Substring(6, 2))); ;
+            DateTime periodBeginN = new DateTime(Int32.Parse(_session.CustomerPeriodSelected.StartDate.Substring(0, 4)), Int32.Parse(_session.CustomerPeriodSelected.StartDate.Substring(4, 2)), Int32.Parse(_session.CustomerPeriodSelected.StartDate.Substring(6, 2)));
+            DateTime periodEndN = new DateTime(Int32.Parse(_session.CustomerPeriodSelected.EndDate.Substring(0, 4)), Int32.Parse(_session.CustomerPeriodSelected.EndDate.Substring(4, 2)), Int32.Parse(_session.CustomerPeriodSelected.EndDate.Substring(6, 2))); ;
 
-            DateTime periodBeginN1 = new DateTime(int.Parse(_session.CustomerPeriodSelected.ComparativeStartDate.Substring(0, 4)), int.Parse(_session.CustomerPeriodSelected.ComparativeStartDate.Substring(4, 2)), int.Parse(_session.CustomerPeriodSelected.ComparativeStartDate.Substring(6, 2)));
-            DateTime periodEndN1 = new DateTime(int.Parse(_session.CustomerPeriodSelected.ComparativeEndDate.Substring(0, 4)), int.Parse(_session.CustomerPeriodSelected.ComparativeEndDate.Substring(4, 2)), int.Parse(_session.CustomerPeriodSelected.ComparativeEndDate.Substring(6, 2))); ;
+            DateTime periodBeginN1 = new DateTime(Int32.Parse(_session.CustomerPeriodSelected.ComparativeStartDate.Substring(0, 4)), Int32.Parse(_session.CustomerPeriodSelected.ComparativeStartDate.Substring(4, 2)), Int32.Parse(_session.CustomerPeriodSelected.ComparativeStartDate.Substring(6, 2)));
+            DateTime periodEndN1 = new DateTime(Int32.Parse(_session.CustomerPeriodSelected.ComparativeEndDate.Substring(0, 4)), Int32.Parse(_session.CustomerPeriodSelected.ComparativeEndDate.Substring(4, 2)), Int32.Parse(_session.CustomerPeriodSelected.ComparativeEndDate.Substring(6, 2))); ;
 
             AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
 			//string periodLabelN = string.Format("{0}-{1}", string.Format(cInfo, "{0:d}", periodBeginN), string.Format(cInfo, "{0:d}", periodEndN));
@@ -1020,8 +1026,8 @@ namespace TNS.AdExpressI.LostWon {
         {
 
             #region Lines number
-            int nbLine = 0;
-            for (int i = 0; i < tabData.LinesNumber; i++)
+            Int32 nbLine = 0;
+            for (Int32 i = 0; i < tabData.LinesNumber; i++)
             {
                 if (!(tabData.GetLineStart(i) is LineHide))
                 {
@@ -1055,14 +1061,14 @@ namespace TNS.AdExpressI.LostWon {
             //Total line
             nbLine++;
             ResultTable tabResult = new ResultTable(nbLine, tabData.NewHeaders);
-            Int64 cLine = 0;
-            Int64 NIndex = tabResult.GetHeadersIndexInResultTable(N_UNIVERSE_ID.ToString());
-            Int64 N1Index = tabResult.GetHeadersIndexInResultTable(N1_UNIVERSE_ID.ToString());
-            Int64 levelIndex = tabResult.GetHeadersIndexInResultTable(LEVEL_ID.ToString());
-            Int64 msIndex = tabResult.GetHeadersIndexInResultTable(MEDIA_SCHEDULE_ID.ToString());
-            Int64 EvolIndex = tabResult.GetHeadersIndexInResultTable(EVOL_UNIVERSE_ID.ToString());
-            Int64 dataIndex = (_showMediaSchedule) ? msIndex + 1 : levelIndex + 1;
-            Int64 nbLevel = _session.GenericProductDetailLevel.GetNbLevels;
+            Int32 cLine = 0;
+            Int32 NIndex = tabResult.GetHeadersIndexInResultTable(N_UNIVERSE_ID.ToString());
+            Int32 N1Index = tabResult.GetHeadersIndexInResultTable(N1_UNIVERSE_ID.ToString());
+            Int32 levelIndex = tabResult.GetHeadersIndexInResultTable(LEVEL_ID.ToString());
+            Int32 msIndex = tabResult.GetHeadersIndexInResultTable(MEDIA_SCHEDULE_ID.ToString());
+            Int32 EvolIndex = tabResult.GetHeadersIndexInResultTable(EVOL_UNIVERSE_ID.ToString());
+            Int32 dataIndex = (_showMediaSchedule) ? msIndex + 1 : levelIndex + 1;
+            Int32 nbLevel = _session.GenericProductDetailLevel.GetNbLevels;
             CellLevel[] levels = new CellLevel[nbLevel + 1];
             #endregion
 
@@ -1106,13 +1112,13 @@ namespace TNS.AdExpressI.LostWon {
                 if (_showMediaSchedule) tabResult[cLine, msIndex] = new CellMediaScheduleLink(cellParution, _session);
                 //Year N
                 tabResult[cLine, NIndex] = nbFactory.Get(0.0);
-                for (Int64 k = NIndex + 1; k < N1Index; k++)
+                for (Int32 k = NIndex + 1; k < N1Index; k++)
                 {
                     tabResult[cLine, k] = nbFactory.Get(0.0);
                 }
                 //Year N1
                 tabResult[cLine, N1Index] = nbFactory.Get(0.0);
-                for (Int64 k = N1Index + 1; k < EvolIndex; k++)
+                for (Int32 k = N1Index + 1; k < EvolIndex; k++)
                 {
                     tabResult[cLine, k] = nbFactory.Get(0.0);
                 }
@@ -1120,7 +1126,7 @@ namespace TNS.AdExpressI.LostWon {
                 cEvol = new CellEvol(tabResult[cLine, NIndex], tabResult[cLine, N1Index]);
                 cEvol.StringFormat = "{0:percentage}";
                 tabResult[cLine, EvolIndex] = cEvol;
-                for (Int64 k = EvolIndex + 1; k <= tabResult.DataColumnsNumber; k++)
+                for (Int32 k = EvolIndex + 1; k <= tabResult.DataColumnsNumber; k++)
                 {
                     cEvol = new CellEvol(tabResult[cLine, NIndex + (k - EvolIndex)], tabResult[cLine, N1Index + (k - EvolIndex)]);
                     cEvol.StringFormat = "{0:percentage}";
@@ -1128,7 +1134,7 @@ namespace TNS.AdExpressI.LostWon {
                 }
 
                 //Parution numbers for N and N1
-                Int64 z;
+                Int32 z;
                 foreach (KeyValuePair<string, double> kpv in resNbParution)
                 {
                     z = tabResult.GetHeadersIndexInResultTable(kpv.Key);
@@ -1142,9 +1148,9 @@ namespace TNS.AdExpressI.LostWon {
 
             #region Fill final table
             CellLevel cLevel = null;
-            Int64 NTotalIndex = tabResult.GetHeadersIndexInResultTable(string.Format("{0}-{1}", N_UNIVERSE_ID, SUBTOTAL_ID));
-            Int64 N1TotalIndex = tabResult.GetHeadersIndexInResultTable(string.Format("{0}-{1}", N1_UNIVERSE_ID, SUBTOTAL_ID));
-            for (int i = 0; i < tabData.LinesNumber; i++)
+            Int32 NTotalIndex = tabResult.GetHeadersIndexInResultTable(string.Format("{0}-{1}", N_UNIVERSE_ID, SUBTOTAL_ID));
+            Int32 N1TotalIndex = tabResult.GetHeadersIndexInResultTable(string.Format("{0}-{1}", N1_UNIVERSE_ID, SUBTOTAL_ID));
+            for (Int32 i = 0; i < tabData.LinesNumber; i++)
             {
 
                 if (tabData.GetLineStart(i) is LineHide)
@@ -1171,8 +1177,8 @@ namespace TNS.AdExpressI.LostWon {
         }
 
         #region InitFinalLineValuesDelegate
-        protected delegate Int64 InitFinalLineValuesDelegate(ResultTable toTab, Int64 toLine, CellUnitFactory cellFactory, bool isPDM, Int64 NIndex, Int64 N1Index, Int64 EvolIndex);
-        protected Int64 InitFinalDoubleValuesLine(ResultTable toTab, Int64 toLine, CellUnitFactory cellFactory, bool isPDM, Int64 NIndex, Int64 N1Index, Int64 EvolIndex)
+        protected delegate Int32 InitFinalLineValuesDelegate(ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, bool isPDM, Int32 NIndex, Int32 N1Index, Int32 EvolIndex);
+        protected Int32 InitFinalDoubleValuesLine(ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, bool isPDM, Int32 NIndex, Int32 N1Index, Int32 EvolIndex)
         {
 
             // Units
@@ -1185,7 +1191,7 @@ namespace TNS.AdExpressI.LostWon {
                 toTab[toLine, NIndex] = cellFactory.Get(0.0);
             }
             //year N
-            for (Int64 k = NIndex + 1; k < N1Index; k++)
+            for (Int32 k = NIndex + 1; k < N1Index; k++)
             {
                 if (isPDM)
                 {
@@ -1205,7 +1211,7 @@ namespace TNS.AdExpressI.LostWon {
             {
                 toTab[toLine, N1Index] = cellFactory.Get(0.0);
             }
-            for (Int64 k = N1Index + 1; k < EvolIndex; k++)
+            for (Int32 k = N1Index + 1; k < EvolIndex; k++)
             {
                 if (isPDM)
                 {
@@ -1220,7 +1226,7 @@ namespace TNS.AdExpressI.LostWon {
             CellEvol cEvol = new CellEvol(toTab[toLine, NIndex], toTab[toLine, N1Index]);
             cEvol.StringFormat = "{0:percentage}";
             toTab[toLine, EvolIndex] = cEvol;
-            for (Int64 k = EvolIndex + 1; k <= toTab.DataColumnsNumber; k++)
+            for (Int32 k = EvolIndex + 1; k <= toTab.DataColumnsNumber; k++)
             {
                 cEvol = new CellEvol(toTab[toLine, NIndex + (k - EvolIndex)], toTab[toLine, N1Index + (k - EvolIndex)]);
                 cEvol.StringFormat = "{0:percentage}";
@@ -1230,7 +1236,7 @@ namespace TNS.AdExpressI.LostWon {
             return toLine;
 
         }
-        protected Int64 InitFinalListValuesLine(ResultTable toTab, Int64 toLine, CellUnitFactory cellFactory, bool isPDM, Int64 NIndex, Int64 N1Index, Int64 EvolIndex)
+        protected Int32 InitFinalListValuesLine(ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, bool isPDM, Int32 NIndex, Int32 N1Index, Int32 EvolIndex)
         {
 
             // Units
@@ -1243,7 +1249,7 @@ namespace TNS.AdExpressI.LostWon {
                 toTab[toLine, NIndex] = cellFactory.Get(0.0);
             }
             //year N
-            for (Int64 k = NIndex + 1; k < N1Index; k++)
+            for (Int32 k = NIndex + 1; k < N1Index; k++)
             {
                 if (isPDM)
                 {
@@ -1263,7 +1269,7 @@ namespace TNS.AdExpressI.LostWon {
             {
                 toTab[toLine, N1Index] = cellFactory.Get(0.0);
             }
-            for (Int64 k = N1Index + 1; k < EvolIndex; k++)
+            for (Int32 k = N1Index + 1; k < EvolIndex; k++)
             {
                 if (isPDM)
                 {
@@ -1278,7 +1284,7 @@ namespace TNS.AdExpressI.LostWon {
             CellEvol cEvol = new CellEvol(toTab[toLine, NIndex], toTab[toLine, N1Index]);
             cEvol.StringFormat = "{0:percentage}";
             toTab[toLine, EvolIndex] = cEvol;
-            for (Int64 k = EvolIndex + 1; k <= toTab.DataColumnsNumber; k++)
+            for (Int32 k = EvolIndex + 1; k <= toTab.DataColumnsNumber; k++)
             {
                 cEvol = new CellEvol(toTab[toLine, NIndex + (k - EvolIndex)], toTab[toLine, N1Index + (k - EvolIndex)]);
                 cEvol.StringFormat = "{0:percentage}";
@@ -1288,10 +1294,10 @@ namespace TNS.AdExpressI.LostWon {
             return toLine;
 
         }
-        protected Int64 InitFinalLine(ResultTable fromTab, ResultTable toTab, Int64 fromLine, CellLevel parent, Int64 msIndex)
+        protected Int32 InitFinalLine(ResultTable fromTab, ResultTable toTab, Int32 fromLine, CellLevel parent, Int32 msIndex)
         {
             CellLevel cFromLevel = (CellLevel)fromTab[fromLine, 1];
-            Int64 cLine = toTab.AddNewLine(fromTab.GetLineStart(fromLine).LineType);
+            Int32 cLine = toTab.AddNewLine(fromTab.GetLineStart(fromLine).LineType);
             AdExpressCellLevel cell = new AdExpressCellLevel(cFromLevel.Id, cFromLevel.Label, parent, cFromLevel.Level, cLine, _session);
             toTab[cLine, 1] = cell;
 
@@ -1309,8 +1315,8 @@ namespace TNS.AdExpressI.LostWon {
         #endregion
 
         #region SetLineDelegate
-        protected delegate Int64 SetFinalLineDelegate(ResultTable fromTab, ResultTable toTab, Int64 fromLine, Int64 toLine, Int64 NIndex, Int64 N1Index, Int64 EvolIndex, Int64 NTotalIndex, Int64 N1TotalIndex);
-        protected Int64 SetFinalDoubleLine(ResultTable fromTab, ResultTable toTab, Int64 fromLine, Int64 toLine, Int64 NIndex, Int64 N1Index, Int64 EvolIndex, Int64 NTotalIndex, Int64 N1TotalIndex)
+        protected delegate Int32 SetFinalLineDelegate(ResultTable fromTab, ResultTable toTab, Int32 fromLine, Int32 toLine, Int32 NIndex, Int32 N1Index, Int32 EvolIndex, Int32 NTotalIndex, Int32 N1TotalIndex);
+        protected Int32 SetFinalDoubleLine(ResultTable fromTab, ResultTable toTab, Int32 fromLine, Int32 toLine, Int32 NIndex, Int32 N1Index, Int32 EvolIndex, Int32 NTotalIndex, Int32 N1TotalIndex)
         {
             Double v = 0;
             //year N
@@ -1318,7 +1324,7 @@ namespace TNS.AdExpressI.LostWon {
             {
                 toTab.AffectValueAndAddToHierarchy(1, toLine, NIndex, ((CellUnit)fromTab[fromLine, NIndex]).Get_value());
             }
-            for (Int64 k = NIndex + 1; k < N1Index; k++)
+            for (Int32 k = NIndex + 1; k < N1Index; k++)
             {
                 v = ((CellUnit)fromTab[fromLine, k]).Get_value();
                 toTab.AffectValueAndAddToHierarchy(1, toLine, k, v);
@@ -1332,7 +1338,7 @@ namespace TNS.AdExpressI.LostWon {
             {
                 toTab.AffectValueAndAddToHierarchy(1, toLine, N1Index, ((CellUnit)fromTab[fromLine, N1Index]).Get_value());
             }
-            for (Int64 k = N1Index + 1; k < EvolIndex; k++)
+            for (Int32 k = N1Index + 1; k < EvolIndex; k++)
             {
                 v = ((CellUnit)fromTab[fromLine, k]).Get_value();
                 toTab.AffectValueAndAddToHierarchy(1, toLine, k, v);
@@ -1345,28 +1351,28 @@ namespace TNS.AdExpressI.LostWon {
             return toLine;
 
         }
-        protected Int64 SetFinalListLine(ResultTable fromTab, ResultTable toTab, Int64 fromLine, Int64 toLine, Int64 NIndex, Int64 N1Index, Int64 EvolIndex, Int64 NTotalIndex, Int64 N1TotalIndex)
+        protected Int32 SetFinalListLine(ResultTable fromTab, ResultTable toTab, Int32 fromLine, Int32 toLine, Int32 NIndex, Int32 N1Index, Int32 EvolIndex, Int32 NTotalIndex, Int32 N1TotalIndex)
         {
 
             HybridList value = null;
-            Int64 l = 0;
+            Int32 l = 0;
             Int64 v = 0;
             //year N
             if (NTotalIndex < 0)
             {
                 value = ((CellIdsNumber)fromTab[fromLine, NIndex]).List;
-                l = value.length;
-                for (int i = 0; i < l; i++)
+                l = Convert.ToInt32(value.length);
+                for (Int32 i = 0; i < l; i++)
                 {
                     v = value.removeHead().UniqueID;
                     toTab.AffectValueAndAddToHierarchy(1, toLine, NIndex, v);
                 }
             }
-            for (Int64 k = NIndex + 1; k < N1Index; k++)
+            for (Int32 k = NIndex + 1; k < N1Index; k++)
             {
                 value = ((CellIdsNumber)fromTab[fromLine, k]).List;
-                l = value.length;
-                for (int i = 0; i < l; i++)
+                l = Convert.ToInt32(value.length);
+                for (Int32 i = 0; i < l; i++)
                 {
                     v = value.removeHead().UniqueID;
                     toTab.AffectValueAndAddToHierarchy(1, toLine, k, v);
@@ -1380,18 +1386,18 @@ namespace TNS.AdExpressI.LostWon {
             if (N1TotalIndex < 0)
             {
                 value = ((CellIdsNumber)fromTab[fromLine, N1Index]).List;
-                l = value.length;
-                for (int i = 0; i < l; i++)
+                l = Convert.ToInt32(value.length);
+                for (Int32 i = 0; i < l; i++)
                 {
                     v = value.removeHead().UniqueID;
                     toTab.AffectValueAndAddToHierarchy(1, toLine, N1Index, v);
                 }
             }
-            for (Int64 k = N1Index + 1; k < EvolIndex; k++)
+            for (Int32 k = N1Index + 1; k < EvolIndex; k++)
             {
                 value = ((CellIdsNumber)fromTab[fromLine, k]).List;
-                l = value.length;
-                for (int i = 0; i < l; i++)
+                l = Convert.ToInt32(value.length);
+                for (Int32 i = 0; i < l; i++)
                 {
                     v = value.removeHead().UniqueID;
                     toTab.AffectValueAndAddToHierarchy(1, toLine, k, v);
@@ -1416,10 +1422,10 @@ namespace TNS.AdExpressI.LostWon {
         /// </summary>
         /// <param name="tabData">Data</param>
         /// <returns>Number of lines</returns>
-        protected long GetNbLine(DataTable dt)
+        protected Int32 GetNbLine(DataTable dt)
         {
 
-            long nbLine = 0;
+            Int32 nbLine = 0;
             Int64 oldIdL1 = -1;
             Int64 oldIdL2 = -1;
             Int64 oldIdL3 = -1;
@@ -1463,21 +1469,21 @@ namespace TNS.AdExpressI.LostWon {
         /// </summary>
         /// <param name="getWon">Specify if the result must be in Won mode or in lost mode</param>
         /// <param name="tabData">Data Table</param>
-        /// <param name="nbLineInTabResult">(out) Number of lines in final result</param>
+        /// <param name="nbLineInt32abResult">(out) Number of lines in final result</param>
         /// <param name="nbCol">Nb of column in Preformatted table</param>
         /// <returns>Table with either won data or lost data</returns>
         protected void Filter(ResultTable tabData, PredicateDelegate predicate)
         {
 
-            int nbLevel = _session.GenericProductDetailLevel.GetNbLevels;
+            Int32 nbLevel = _session.GenericProductDetailLevel.GetNbLevels;
 
             CellLevel[] levels = new CellLevel[nbLevel];
             bool[] display = new bool[nbLevel + 1];
-            for (int i = 0; i <= nbLevel; i++) { display[i] = false; }
+            for (Int32 i = 0; i <= nbLevel; i++) { display[i] = false; }
             CellLevel cLevel = null;
-            Int64 yearNIndex = tabData.GetHeadersIndexInResultTable(N_UNIVERSE_ID.ToString());
-            Int64 yearN1Index = tabData.GetHeadersIndexInResultTable(N1_UNIVERSE_ID.ToString());
-            for (int i = 0; i < tabData.LinesNumber; i++)
+            Int32 yearNIndex = tabData.GetHeadersIndexInResultTable(N_UNIVERSE_ID.ToString());
+            Int32 yearN1Index = tabData.GetHeadersIndexInResultTable(N1_UNIVERSE_ID.ToString());
+            for (Int32 i = 0; i < tabData.LinesNumber; i++)
             {
                 cLevel = (CellLevel)tabData[i, 1];
                 //Init parents
@@ -1507,10 +1513,10 @@ namespace TNS.AdExpressI.LostWon {
                 }
                 else
                 {
-                    for (int j = nbLevel - 1; j >= 0; j--) { display[j] = true; }
+                    for (Int32 j = nbLevel - 1; j >= 0; j--) { display[j] = true; }
                 }
             }
-            for (int i = 1; i < nbLevel; i++)
+            for (Int32 i = 1; i < nbLevel; i++)
             {
                 if (levels[i] != null)
                 {
@@ -1532,7 +1538,7 @@ namespace TNS.AdExpressI.LostWon {
         /// <param name="yearN1Index">N1 year column index</param>
         /// <param name="yearNIndex">N year column index</param>
         /// <returns>True if predicate is respected, false either</returns>
-        protected delegate bool PredicateDelegate(ResultTable tabData, Int64 cLine, Int64 yearNIndex, Int64 yearN1Index);
+        protected delegate bool PredicateDelegate(ResultTable tabData, Int32 cLine, Int32 yearNIndex, Int32 yearN1Index);
         /// <summary>
         /// Check line match "won" predicate
         /// </summary>
@@ -1541,7 +1547,7 @@ namespace TNS.AdExpressI.LostWon {
         /// <param name="yearN1Index">N1 year column index</param>
         /// <param name="yearNIndex">N year column index</param>
         /// <returns>True line is there is data in year N but not in year N1, false neither</returns>
-        protected bool PredicateWon(ResultTable tabData, Int64 cLine, Int64 yearNIndex, Int64 yearN1Index)
+        protected bool PredicateWon(ResultTable tabData, Int32 cLine, Int32 yearNIndex, Int32 yearN1Index)
         {
             return ((CellUnit)tabData[cLine, yearNIndex]).Value != 0.0 && ((CellUnit)tabData[cLine, yearN1Index]).Value == 0.0;
         }
@@ -1553,7 +1559,7 @@ namespace TNS.AdExpressI.LostWon {
         /// <param name="yearN1Index">N1 year column index</param>
         /// <param name="yearNIndex">N year column index</param>
         /// <returns>True line is there is no data in year N but some in year N1, false neither</returns>
-        protected bool PredicateLost(ResultTable tabData, Int64 cLine, Int64 yearNIndex, Int64 yearN1Index)
+        protected bool PredicateLost(ResultTable tabData, Int32 cLine, Int32 yearNIndex, Int32 yearN1Index)
         {
             return ((CellUnit)tabData[cLine, yearNIndex]).Value == 0.0 && ((CellUnit)tabData[cLine, yearN1Index]).Value != 0.0;
         }
@@ -1565,7 +1571,7 @@ namespace TNS.AdExpressI.LostWon {
         /// <param name="yearN1Index">N1 year column index</param>
         /// <param name="yearNIndex">N year column index</param>
         /// <returns>True line is there is data both in N and N1, false neither</returns>
-        protected bool PredicateLoyal(ResultTable tabData, Int64 cLine, Int64 yearNIndex, Int64 yearN1Index)
+        protected bool PredicateLoyal(ResultTable tabData, Int32 cLine, Int32 yearNIndex, Int32 yearN1Index)
         {
             return ((CellUnit)tabData[cLine, yearNIndex]).Value != 0.0 && ((CellUnit)tabData[cLine, yearN1Index]).Value != 0.0;
         }
@@ -1577,7 +1583,7 @@ namespace TNS.AdExpressI.LostWon {
         /// <param name="yearN1Index">N1 year column index</param>
         /// <param name="yearNIndex">N year column index</param>
         /// <returns>True line is there is data both in N and N1 and N > N1, false neither</returns>
-        protected bool PredicateLoyalRising(ResultTable tabData, Int64 cLine, Int64 yearNIndex, Int64 yearN1Index)
+        protected bool PredicateLoyalRising(ResultTable tabData, Int32 cLine, Int32 yearNIndex, Int32 yearN1Index)
         {
             double v = ((CellUnit)tabData[cLine, yearN1Index]).Value;
             return ((CellUnit)tabData[cLine, yearNIndex]).Value > v && v > 0;
@@ -1590,7 +1596,7 @@ namespace TNS.AdExpressI.LostWon {
         /// <param name="yearN1Index">N1 year column index</param>
         /// <param name="yearNIndex">N year column index</param>
         /// <returns>True line is there is data both in N and N1 and N lower than N1, false neither</returns>
-        protected bool PredicateLoyalDecline(ResultTable tabData, Int64 cLine, Int64 yearNIndex, Int64 yearN1Index)
+        protected bool PredicateLoyalDecline(ResultTable tabData, Int32 cLine, Int32 yearNIndex, Int32 yearN1Index)
         {
             double v = ((CellUnit)tabData[cLine, yearNIndex]).Value;
             return ((CellUnit)tabData[cLine, yearN1Index]).Value > v && v > 0;
@@ -1609,7 +1615,7 @@ namespace TNS.AdExpressI.LostWon {
         /// <param name="expression">Calcul expression</param>
         /// <param name="filterN">Year N Filter</param>
         /// <param name="filterN1">Year N-1 filter</param>
-        protected delegate void GetProductActivity(ResultTable tabResult, DataTable dt, long indexLineProduct, string expression, string filterN, string filterN1);
+        protected delegate void GetProductActivity(ResultTable tabResult, DataTable dt, Int32 indexLineProduct, string expression, string filterN, string filterN1);
         /// <summary>
         /// Get Advertising activity of a product
         /// </summary>
@@ -1619,15 +1625,15 @@ namespace TNS.AdExpressI.LostWon {
         /// <param name="expression">Calcul expression</param>
         /// <param name="filterN">Year N Filter</param>
         /// <param name="filterN1">Year N-1 filter</param>
-        protected void GetDoubleProductActivity(ResultTable tabResult, DataTable dt, long indexLineProduct, string expression, string filterN, string filterN1)
+        protected void GetDoubleProductActivity(ResultTable tabResult, DataTable dt, Int32 indexLineProduct, string expression, string filterN, string filterN1)
         {
             Double unitValueN = 0;
             Double unitValueN1 = 0;
-            Int64 loyalNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOYAL_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
-            Int64 loyalDeclineNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOYAL_DECLINE_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
-            Int64 loyalRiseNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOYAL_RISE_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
-            Int64 wonNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(WON_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
-            Int64 lostNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOST_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
+            Int32 loyalNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOYAL_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
+            Int32 loyalDeclineNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOYAL_DECLINE_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
+            Int32 loyalRiseNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOYAL_RISE_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
+            Int32 wonNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(WON_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
+            Int32 lostNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOST_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
 
             object o = dt.Compute(expression, filterN);
             unitValueN = (o != DBNull.Value) ? Convert.ToDouble(o) : 0;
@@ -1703,15 +1709,15 @@ namespace TNS.AdExpressI.LostWon {
         /// <param name="expression">Column name of the field to treat</param>
         /// <param name="filterN">Year N Filter</param>
         /// <param name="filterN1">Year N-1 filter</param>
-        protected void GetListProductActivity(ResultTable tabResult, DataTable dt, long indexLineProduct, string expression, string filterN, string filterN1)
+        protected void GetListProductActivity(ResultTable tabResult, DataTable dt, Int32 indexLineProduct, string expression, string filterN, string filterN1)
         {
             CellIdsNumber unitValueN = (CellIdsNumber)_session.GetCellUnitFactory().Get(0.0);
             CellIdsNumber unitValueN1 = (CellIdsNumber)_session.GetCellUnitFactory().Get(0.0);
-            Int64 loyalNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOYAL_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
-            Int64 loyalDeclineNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOYAL_DECLINE_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
-            Int64 loyalRiseNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOYAL_RISE_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
-            Int64 wonNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(WON_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
-            Int64 lostNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOST_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
+            Int32 loyalNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOYAL_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
+            Int32 loyalDeclineNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOYAL_DECLINE_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
+            Int32 loyalRiseNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOYAL_RISE_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
+            Int32 wonNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(WON_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
+            Int32 lostNumberColonneIndex = tabResult.GetHeadersIndexInResultTable(LOST_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
 
             #region Extract data
             //Year N
@@ -1720,7 +1726,7 @@ namespace TNS.AdExpressI.LostWon {
             foreach (DataRow row in rows)
             {
                 ids = row[expression].ToString().Split(',');
-                for (int i = 0; i < ids.Length; i++)
+                for (Int32 i = 0; i < ids.Length; i++)
                 {
                     unitValueN.Add(Convert.ToDouble(ids[i]));
                 }
@@ -1730,7 +1736,7 @@ namespace TNS.AdExpressI.LostWon {
             foreach (DataRow row in rows)
             {
                 ids = row[expression].ToString().Split(',');
-                for (int i = 0; i < ids.Length; i++)
+                for (Int32 i = 0; i < ids.Length; i++)
                 {
                     unitValueN1.Add(Convert.ToDouble(ids[i]));
                 }
@@ -1750,12 +1756,12 @@ namespace TNS.AdExpressI.LostWon {
             List<Int64> NIds = new List<Int64>();
             List<Int64> N1Ids = new List<Int64>();
             Int64 l = unitValueN.List.length;
-            for (int i = 0; i < l; i++)
+            for (Int32 i = 0; i < l; i++)
             {
                 NIds.Add(unitValueN.List.removeHead().UniqueID);
             }
             l = unitValueN1.List.length;
-            for (int i = 0; i < l; i++)
+            for (Int32 i = 0; i < l; i++)
             {
                 N1Ids.Add(unitValueN1.List.removeHead().UniqueID);
             }

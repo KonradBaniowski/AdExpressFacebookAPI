@@ -71,8 +71,8 @@ namespace TNS.AdExpress.Web.Rules.Results
 			long oldL2Id = -1;
 			long idOldAdvertisement = -1;
 			long idOldDate = -1;
-			long iCurLine=0;
-			long currentL3Index = -1;
+            int iCurLine = 0;
+            int currentL3Index = -1;
 			long idL3 = 0;
 			#endregion
 		
@@ -399,7 +399,8 @@ namespace TNS.AdExpress.Web.Rules.Results
         ///<param name="webSession">Session du client</param>
 		/// <param name="tab">Tableau de résultat</param>
 		/// <param name="iCurLine">Ligne courante</param>
-		private static void InitProofLine(WebSession webSession,ResultTable tab, long iCurLine){
+        private static void InitProofLine(WebSession webSession, ResultTable tab, int iCurLine)
+        {
 			
 			// produit
 			tab[iCurLine, PRODUCT_COL_INDEX] =  new CellEmpty();

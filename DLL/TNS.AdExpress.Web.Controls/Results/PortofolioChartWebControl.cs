@@ -121,8 +121,17 @@ namespace TNS.AdExpress.Web.Controls.Results {
 		}
 		#endregion				
 
-		#region SetDesignMode
-		/// <summary>
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public PortofolioChartWebControl() {
+            this.ImageUrl = WebApplicationParameters.DundasConfiguration.ImageURL;
+        }
+        #endregion
+
+        #region SetDesignMode
+        /// <summary>
 		/// Design graphic
 		/// </summary>
 		protected virtual void SetDesignMode() {

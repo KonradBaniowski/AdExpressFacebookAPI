@@ -364,7 +364,7 @@ namespace TNS.AdExpressI.Insertions
             List<string> keyLabelName = new List<string>();
             GetKeysColumnNames(dt, keys, keyIdName, keyLabelName);
             //Line Number
-            Int64 nbLine = GetLineNumber(dt, levels, keyIdName);
+            int nbLine = GetLineNumber(dt, levels, keyIdName);
             //Data Columns
             List<Cell> cells = new List<Cell>();
             List<string> columnsName = GetColumnsName(dt, columns, cells);
@@ -423,7 +423,7 @@ namespace TNS.AdExpressI.Insertions
             Int64[] cKeyIds = new Int64[keys.Count];
 
             string label = string.Empty;
-            Int64 cLine = 0;
+            int cLine = 0;
             bool isNewInsertion = false;
             string key = string.Empty;
 
@@ -494,8 +494,8 @@ namespace TNS.AdExpressI.Insertions
             return data;
         }
 
-        protected delegate void SetLine(VehicleInformation vehicle, ResultTable tab, DataRow row, Int64 cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol);
-        protected void SetRawLine(VehicleInformation vehicle, ResultTable tab, DataRow row, Int64 cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol)
+        protected delegate void SetLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol);
+        protected void SetRawLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol)
         {
             int i = -1;
             int j = 0;
@@ -642,7 +642,7 @@ namespace TNS.AdExpressI.Insertions
 
             }
         }
-        protected void SetAggregLine(VehicleInformation vehicle, ResultTable tab, DataRow row, Int64 cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol)
+        protected void SetAggregLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol)
         {
 
             CellInsertionInformation c;
@@ -671,7 +671,7 @@ namespace TNS.AdExpressI.Insertions
             c.Add(row, visuals);
 
         }
-        protected void SetCreativeLine(VehicleInformation vehicle, ResultTable tab, DataRow row, Int64 cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol)
+        protected void SetCreativeLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol)
         {
 
             CellCreativesInformation c;
@@ -714,8 +714,9 @@ namespace TNS.AdExpressI.Insertions
 
         }
 
-        protected delegate void SetSpecificLine(VehicleInformation vehicle, ResultTable tab, DataRow row, Int64 cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, Int64 idColumnsSet);
-        protected void SetMSCreativeLine(VehicleInformation vehicle, ResultTable tab, DataRow row, Int64 cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, Int64 idColumnsSet) {
+        protected delegate void SetSpecificLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, Int64 idColumnsSet);
+        protected void SetMSCreativeLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, Int64 idColumnsSet)
+        {
 
             CellCreativesInformation c;
             List<string> visuals = new List<string>();
@@ -760,9 +761,10 @@ namespace TNS.AdExpressI.Insertions
         /// <param name="levels">Detail levels</param>
         /// <param name="keys">Data Key</param>
         /// <returns>Number of line in final table</returns>
-        protected Int64 GetLineNumber(DataTable dt, List<DetailLevelItemInformation> levels, List<string> keys) {
+        protected int GetLineNumber(DataTable dt, List<DetailLevelItemInformation> levels, List<string> keys)
+        {
 
-            Int64 nbLine = 0;
+            int nbLine = 0;
 
             Int64[] oldIds = new Int64[levels.Count];
             for (int i = 0; i < oldIds.Length; i++) { oldIds[i] = -1; }

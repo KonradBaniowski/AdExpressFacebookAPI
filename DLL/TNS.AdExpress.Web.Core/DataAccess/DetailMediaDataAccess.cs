@@ -54,7 +54,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
                 //Liste des supports actifs pour Internet
                 if(VehiclesInformation.Contains(Vehicles.names.internet) && ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(Vehicles.names.internet)) {
                     activeMediaList = TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-                    string inClauseSQLCode = TNS.AdExpress.Web.Core.Utilities.SQLGenerator.GetInClauseMagicMethod(webSession,"id_media",activeMediaList);
+                    string inClauseSQLCode = TNS.AdExpress.Web.Core.Utilities.SQLGenerator.GetInClauseMagicMethod("id_media",activeMediaList);
                     if(inClauseSQLCode.Length > 0) {
                         sql.AppendFormat(" and {0} ",inClauseSQLCode);
                     }
@@ -212,7 +212,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
                 //Liste des supports actifs pour Internet
                 if(VehiclesInformation.Contains(Vehicles.names.internet) && ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(VehicleClassificationCst.internet)) {
                     activeMediaList = TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-                    string inClauseSQLCode = TNS.AdExpress.Web.Core.Utilities.SQLGenerator.GetInClauseMagicMethod(webSession,"id_media",activeMediaList);
+                    string inClauseSQLCode = TNS.AdExpress.Web.Core.Utilities.SQLGenerator.GetInClauseMagicMethod("id_media",activeMediaList);
                     if(inClauseSQLCode.Length > 0) {
                         sql.AppendFormat(" and {0} ",inClauseSQLCode);
                     }
@@ -529,7 +529,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
             //Liste des supports actifs pour Internet
             if(VehiclesInformation.Contains(Vehicles.names.internet) && ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(VehicleClassificationCst.internet)) {
                 activeMediaList = TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-                string inClauseSQLCode = TNS.AdExpress.Web.Core.Utilities.SQLGenerator.GetInClauseMagicMethod(webSession,"id_media",activeMediaList);
+                string inClauseSQLCode = TNS.AdExpress.Web.Core.Utilities.SQLGenerator.GetInClauseMagicMethod("id_media",activeMediaList);
                 if(inClauseSQLCode.Length > 0) {
                     sql.AppendFormat(" and {0} ",inClauseSQLCode);
                 }

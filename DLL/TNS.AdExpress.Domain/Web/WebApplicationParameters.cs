@@ -91,6 +91,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// Inset option is allowed
         /// </summary>
         protected static bool _allowInsetOption = true;
+        /// <summary>
+        /// Dundas Configuration
+        /// </summary>
+        protected static DundasConfiguration _dundas = null;
         #endregion
         
         #region Contructeur
@@ -118,6 +122,7 @@ namespace TNS.AdExpress.Domain.Web {
             _creativesDetails = new InsertionDetails(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.CREATIVES_CONFIGURATION_COLUMNS_ITEMS_CONFIGURATION_FILENAME));
             _msCreativesDetails = new MSCreativesDetails(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.MS_CREATIVES_CONFIGURATION_COLUMNS_ITEMS_CONFIGURATION_FILENAME));
             _portofolioDetailMediaColumns = new PortofolioDetailMediaColumns(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.PORTOFOLIO_DETAIL_MEDIA_CONFIGURATION_FILENAME));
+            _dundas = new DundasConfiguration(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.DUNDAS_CONFIGURATION_FILENAME));
         }
         #endregion
 
@@ -226,6 +231,12 @@ namespace TNS.AdExpress.Domain.Web {
             {
                 _allowInsetOption = value;
             }
+        }
+        /// <summary>
+        /// Get Dundas Virtual Path File Temporary
+        /// </summary>
+        public static DundasConfiguration DundasConfiguration {
+            get { return _dundas; }
         }
 
         #endregion

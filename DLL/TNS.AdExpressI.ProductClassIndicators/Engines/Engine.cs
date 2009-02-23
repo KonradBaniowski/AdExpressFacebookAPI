@@ -79,10 +79,18 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// Year ID
         /// </summary>
         protected int _iYearID = 0;
+		/// <summary>
+		/// Year ID N-1
+		/// </summary>
+		protected int _iYearN1ID = 0;
         /// <summary>
         /// Year ID as a string
         /// </summary>
         protected string _strYearID = string.Empty;
+		/// <summary>
+		/// Year ID N-1 as a string
+		/// </summary>
+		protected string _strYearN1ID = string.Empty;
         #endregion
 
         #endregion
@@ -144,6 +152,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             _periodBegin = FctUtilities.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
             _periodEnd = FctUtilities.Dates.getPeriodEndDate(absolutEndPeriod, _session.PeriodType);
             FctUtilities.Dates.GetYearSelected(_session, ref _strYearID, ref _iYearID, _periodBegin);
+			_iYearN1ID = (_iYearID == 1) ? 2 : 1;
+			if (_iYearN1ID > 0)
+				_strYearN1ID = _iYearN1ID.ToString();
             #endregion
         }
         #endregion

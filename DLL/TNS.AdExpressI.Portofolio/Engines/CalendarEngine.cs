@@ -78,7 +78,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			AdExpressCellLevel[] cellLevels;
 			LineType[] lineTypes = new LineType[5] { LineType.total, LineType.level1, LineType.level2, LineType.level3, LineType.level4 };
 			Headers headers = null;
-			Int64 iCurLine = 0;
+            int iCurLine = 0;
 			int iNbLine = 0;
 			int iNbLevels = 0;
 			ArrayList parutions = new ArrayList();
@@ -179,8 +179,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		#endregion
 
         #region InitLine
-        protected delegate void InitLine(ResultTable oTab, Int64 cLine, CellUnitFactory cellFactory, AdExpressCellLevel parent);
-        protected void InitDoubleLine(ResultTable oTab, Int64 cLine, CellUnitFactory cellFactory, AdExpressCellLevel parent) {
+        protected delegate void InitLine(ResultTable oTab, int cLine, CellUnitFactory cellFactory, AdExpressCellLevel parent);
+        protected void InitDoubleLine(ResultTable oTab, int cLine, CellUnitFactory cellFactory, AdExpressCellLevel parent)
+        {
             //total
             if(!_webSession.Percentage) oTab[cLine, 3] = cellFactory.Get(0.0);
             else oTab[cLine, 3] = new CellPDM(0.0, null);
@@ -195,7 +196,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 else oTab[cLine, j] = new CellPDM(0.0, (CellUnit)oTab[cLine, 3]);
             }
         }
-        protected void InitListLine(ResultTable oTab, Int64 cLine, CellUnitFactory cellFactory, AdExpressCellLevel parent) {
+        protected void InitListLine(ResultTable oTab, int cLine, CellUnitFactory cellFactory, AdExpressCellLevel parent)
+        {
             //total
             if(!_webSession.Percentage) oTab[cLine, 3] = cellFactory.Get(0.0);
             else oTab[cLine, 3] = new CellVersionNbPDM(null);
@@ -213,10 +215,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         #endregion
 
         #region SetLine
-        protected delegate void SetLine(ResultTable oTab, Int64 iLineIndex, DataRow dr);
-        protected void SetDoubleLine(ResultTable oTab, Int64 cLine, DataRow row) {
+        protected delegate void SetLine(ResultTable oTab, int iLineIndex, DataRow dr);
+        protected void SetDoubleLine(ResultTable oTab, int cLine, DataRow row)
+        {
             if(row != null) {
-                long lCol = oTab.GetHeadersIndexInResultTable(row["date_media_num"].ToString());
+                int lCol = oTab.GetHeadersIndexInResultTable(row["date_media_num"].ToString());
                 double valu = Convert.ToDouble(row[_webSession.GetSelectedUnit().Id.ToString()]);
                 //Affect value
                 oTab.AffectValueAndAddToHierarchy(1, cLine, lCol, valu);
@@ -224,9 +227,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 oTab.AffectValueAndAddToHierarchy(1, cLine, 3, valu);
             }
         }
-        protected void SetListLine(ResultTable oTab, Int64 cLine, DataRow row) {
+        protected void SetListLine(ResultTable oTab, int cLine, DataRow row)
+        {
             if(row != null) {
-                long lCol = oTab.GetHeadersIndexInResultTable(row["date_media_num"].ToString());
+                int lCol = oTab.GetHeadersIndexInResultTable(row["date_media_num"].ToString());
                 //Get values
                 string[] tIds = row[_webSession.GetSelectedUnit().Id.ToString()].ToString().Split(',');
                 //Affect value

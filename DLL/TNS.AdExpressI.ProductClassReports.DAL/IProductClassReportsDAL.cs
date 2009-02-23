@@ -32,5 +32,12 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
         /// <param name="resultType">Type of report</param>
         DataSet GetData(int resultType);
 
+        /// <summary>
+        /// Get Advertiser which are part of the selected univers
+        /// </summary>
+        /// <param name="exclude">Advertiser Ids to exclude from the request</param>
+        /// <returns></returns>
+        DataSet GetUniversAdvertisers(string exclude);
+
     }
 }

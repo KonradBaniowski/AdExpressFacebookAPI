@@ -79,23 +79,23 @@
   <ItemGroup>
     <Reference Include="AjaxPro.2, Version=6.10.6.2, Culture=neutral, PublicKeyToken=4735ae9824c7d3ec, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\AjaxPro.2.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\AjaxPro.2.dll</HintPath>
     </Reference>
     <Reference Include="DundasWebChart, Version=6.0.0.1722, Culture=neutral, PublicKeyToken=90d06b0c62d592d0, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\DundasWebChart.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\DundasWebChart.dll</HintPath>
     </Reference>
     <Reference Include="obout_ASPTreeView_2_NET, Version=2.0.37.0, Culture=neutral, PublicKeyToken=6fd96a95fc486c7d">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\obout_ASPTreeView_2_NET.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\obout_ASPTreeView_2_NET.dll</HintPath>
     </Reference>
     <Reference Include="obout_SlideMenu3_Pro_NET, Version=3.3.1.5, Culture=neutral, PublicKeyToken=cabe53a497e8b042, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\obout_SlideMenu3_Pro_NET.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\obout_SlideMenu3_Pro_NET.dll</HintPath>
     </Reference>
     <Reference Include="Oracle.DataAccess, Version=2.102.2.20, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\Oracle.DataAccess.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\Oracle.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -121,39 +121,39 @@
     </Reference>
     <Reference Include="TNS.Classification, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.Classification.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.Classification.dll</HintPath>
     </Reference>
     <Reference Include="TNS.Classification.WebControls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.Classification.WebControls.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.Classification.WebControls.dll</HintPath>
     </Reference>
     <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.dll</HintPath>
     </Reference>
     <Reference Include="TNS.FrameWork.Date, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0e2d78f24e5a5f7a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.Date.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.Date.dll</HintPath>
     </Reference>
     <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.DB.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.DB.dll</HintPath>
     </Reference>
     <Reference Include="TNS.FrameWork.Net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.Net.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.Net.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.25849, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.24843, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.WebResultUI.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\Dev\TNS.FrameWork.WebResultUI.dll</HintPath>
     </Reference>
     <Reference Include="TNS.Isis.Constantes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.Isis.Constantes.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.Isis.Constantes.dll</HintPath>
     </Reference>
     <Reference Include="TNS.Isis.Right, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.Isis.Right.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.Isis.Right.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +178,8 @@
     <Compile Include="Exceptions\AlertsCreationsResultsWebControlException.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Exceptions\ResultTableCapacityException.cs" />
+    <Compile Include="Exceptions\SelectRecapItemsInClassificationWebControlException.cs" />
     <Compile Include="Exceptions\ResultsOptionsWebControlException.cs" />
     <Compile Include="Exceptions\PortofolioChartWebControlException.cs" />
     <Compile Include="Exceptions\DetailVehicleSelectionWebControlException.cs">
@@ -391,6 +393,7 @@
     <Compile Include="Results\PortofolioChartWebControl.cs" />
     <Compile Include="Results\PortofolioDetailMediaResultWebControl.cs" />
     <Compile Include="Results\ProductClassAnalysis\ProductClassContainerWebControl.cs" />
+    <Compile Include="Results\ProductClassAnalysis\ProductClassReportWebControl.cs" />
     <Compile Include="Results\ProductClassAnalysis\ProductClassTableWebControl.cs" />
     <Compile Include="Results\ProofResultWebControl.cs">
       <SubType>Code</SubType>
@@ -464,6 +467,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Selections\SelectItemsInClassificationWebControl.cs" />
+    <Compile Include="Selections\SelectRecapItemsInClassificationWebControl.cs" />
     <Compile Include="Selections\SloganPersonalisationWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -560,6 +564,14 @@
     <ProjectReference Include="..\TNS.AdExpressI.ProductClassIndicators\TNS.AdExpressI.ProductClassIndicators.csproj">
       <Project>{F0E136B5-AA9D-468D-BAE4-3599B11D854F}</Project>
       <Name>TNS.AdExpressI.ProductClassIndicators</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.ProductClassReports.DAL\TNS.AdExpressI.ProductClassReports.DAL.csproj">
+      <Project>{10F045E8-CB61-470C-AD90-1C942D751B4C}</Project>
+      <Name>TNS.AdExpressI.ProductClassReports.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.ProductClassReports\TNS.AdExpressI.ProductClassReports.csproj">
+      <Project>{C0D576BE-BB8D-4F27-B361-385162442113}</Project>
+      <Name>TNS.AdExpressI.ProductClassReports</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.Protofolio.Default\TNS.AdExpressI.Portofolio.Default.csproj">
       <Project>{638BEFDD-6370-4AEA-8943-DD6961FE3FDE}</Project>

@@ -88,9 +88,9 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 				if(synthesisTable!=null && synthesisTable.Rows.Count>0){
 
 					#region Construction de resultTable
-					long nbLines=LINES_NUMBER;
-					long nbCol=COLUMNS_NUMBER;
-					long lineIndex=0;
+                    int nbLines = LINES_NUMBER;
+                    int nbCol = COLUMNS_NUMBER;
+                    int lineIndex = 0;
 					resultTable = new ResultTable(nbLines,nbCol);
 					#endregion
 					

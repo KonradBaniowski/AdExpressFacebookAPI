@@ -9,11 +9,14 @@ using System.Drawing;
 
 using CstComparisonCriterion = TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion;
 using CstPreformatedDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
+using CstDbClassif = TNS.AdExpress.Constantes.Classification.DB;
 
 using TNS.AdExpress.Domain.Translation;
 using Dundas.Charting.WebControl;
 using System.Data;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Classification;
+
 using System.Web.UI.WebControls;
 
 namespace TNS.AdExpressI.ProductClassIndicators.Charts
@@ -27,8 +30,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
         const int NBRE_MEDIA = 5;
         #endregion
 
-        #region Constructor
-        /// <summary>
+		#region Varibales
+		#endregion
+
+		#region Constructor
+		/// <summary>
         /// Default Constructor
         /// </summary>
         /// <param name="session">User sessions</param>
@@ -42,8 +48,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
         #region OnPreRender
         protected override void OnPreRender(EventArgs e)
         {
-            //base.OnPreRender(e);
-
+			bool withPluriByCategory = (_session.PreformatedMediaDetail==CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory 
+				&& CstDbClassif.Vehicles.names.plurimedia == VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID));
             #region Animation Params
             if (_chartType != ChartImageType.Flash)
             {
@@ -464,7 +470,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
 
                         #region PluriMedia
                         case EngineMediaStrategy.TOTAL_UNIV_VEHICLE_INVEST_COLUMN_INDEX:
-                            if (tab[i, EngineMediaStrategy.TOTAL_UNIV_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1)
+                            if (tab[i, EngineMediaStrategy.TOTAL_UNIV_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1 && !withPluriByCategory )
                             {
                                 if (totalUniversValue != 0)
                                 {
@@ -477,7 +483,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                             }
                             break;
                         case EngineMediaStrategy.TOTAL_SECTOR_VEHICLE_INVEST_COLUMN_INDEX:
-                            if (tab[i, EngineMediaStrategy.TOTAL_SECTOR_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1)
+							if (tab[i, EngineMediaStrategy.TOTAL_SECTOR_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1 && !withPluriByCategory)
                             {
                                 if (totalSectorValue != 0)
                                 {
@@ -490,7 +496,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                             }
                             break;
                         case EngineMediaStrategy.TOTAL_MARKET_VEHICLE_INVEST_COLUMN_INDEX:
-                            if (tab[i, EngineMediaStrategy.TOTAL_MARKET_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1)
+							if (tab[i, EngineMediaStrategy.TOTAL_MARKET_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1 && !withPluriByCategory)
                             {
                                 if (totalMarketValue != 0)
                                 {
@@ -529,7 +535,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
 
             if (MEDIA_LEVEL_NUMBER != 1)
             {
-                for (int i = 0; i < 5 && i < foundRows.Length; i++)
+				for (int i = 0; i < NBRE_MEDIA && i < foundRows.Length; i++)
                 {
                     xValues[i] = foundRows[i]["Name"].ToString();
                     yValues[i] = Convert.ToDouble(foundRows[i]["Position"]);
@@ -542,7 +548,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                     yValues[index] = 100 - otherUniversValue;
                 }
 
-                for (int i = 0; i < 5 && i < foundRowsSectorMarket.Length; i++)
+				for (int i = 0; i < NBRE_MEDIA && i < foundRowsSectorMarket.Length; i++)
                 {
                     xValuesSectorMarket[i] = foundRowsSectorMarket[i]["Name"].ToString();
                     yValuesSectorMarket[i] = Convert.ToDouble(foundRowsSectorMarket[i]["Position"]);

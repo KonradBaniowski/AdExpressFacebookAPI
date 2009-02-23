@@ -1646,7 +1646,11 @@ namespace TNS.AdExpress.Constantes.Web{
 			/// <summary>
 			/// Concurrent
 			/// </summary>
-			competitor
+			competitor,
+			/// <summary>
+			/// Reference et Concurrent
+			/// </summary>
+			mixed
 		}
 	}
 	#endregion
@@ -3147,7 +3151,7 @@ namespace TNS.AdExpress.Constantes.Web{
 			/// </summary>
 			encart=0,
 			/// <summary>
-			/// ID encart
+			/// ID flying encart
 			/// </summary>
 			flyingEncart=1,
 			/// <summary>

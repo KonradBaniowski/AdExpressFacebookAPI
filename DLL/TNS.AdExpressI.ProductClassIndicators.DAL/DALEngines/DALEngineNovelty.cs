@@ -90,7 +90,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             }
             else
             {
-                sql.Append(" id_product,product, id_advertiser");
+                sql.Append(" id_product,product");
             }
             //Investments of current month and from the beginning of the year
             string monthAlias = FctUtilities.Dates.CurrentActiveMonth(_periodEnd, _session);
@@ -118,7 +118,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             }
             else
             {
-                sql.AppendFormat(" {0}.id_product, {1}.product, {0}.id_advertiser", dataTable.Prefix, _recapProduct.Prefix);
+                sql.AppendFormat(" {0}.id_product, {1}.product", dataTable.Prefix, _recapProduct.Prefix);
             }
             //novelty month
             if (_periodEnd.Month == DateTime.Now.Month)
@@ -164,7 +164,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
                 sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(dataTable.Prefix, true));
             // Product rights
-            sql.Append(FctUtilities.SQLGenerator.getClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
+			sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
             #endregion
 
             #region sélection des médias
@@ -174,7 +174,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             #region group by
             if (_classifLevel == CstResult.MotherRecap.ElementType.product)
             {
-                sql.AppendFormat(" group by {0}.id_product, {1}.product, {0}.id_advertiser", dataTable.Prefix, _recapProduct.Prefix);
+                sql.AppendFormat(" group by {0}.id_product, {1}.product", dataTable.Prefix, _recapProduct.Prefix);
             }
             else
             {
@@ -185,7 +185,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             #region sort
             if (_classifLevel == CstResult.MotherRecap.ElementType.product)
             {
-                sql.AppendFormat(" order by {0}.id_product, {1}.product, {0}.id_advertiser", dataTable.Prefix, _recapProduct.Prefix);
+                sql.AppendFormat(" order by {0}.id_product, {1}.product", dataTable.Prefix, _recapProduct.Prefix);
             }
             else
             {

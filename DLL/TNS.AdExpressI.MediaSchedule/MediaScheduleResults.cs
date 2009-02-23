@@ -1850,7 +1850,8 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// <param name="cssClasseNb">Line syle</param>
         /// <param name="tmpCol">Year column in data source</param>
         protected virtual void AppendYearsTotal(object[,] data, StringBuilder t, int line, string cssClasseNb, int tmpCol, IFormatProvider fp, UnitInformation unit) {
-            if(_allowTotal) {
+            if (_allowTotal)
+            {
                 string s = string.Empty;
                 if (!_isExcelReport || _isCreativeDivisionMS || unit.Id != CstWeb.CustomerSessions.Unit.duration)
                 {
@@ -1862,13 +1863,17 @@ namespace TNS.AdExpressI.MediaSchedule {
                 }
                 if (Convert.ToDouble(data[line, tmpCol].ToString()) == 0 || s.Length <= 0)
                 {
-                    s = "&nbsp;";
-                }
+                    s = FctWeb.Units.ConvertUnitValueToString(data[line, tmpCol], _session.Unit, fp).Trim();
+                    if (Convert.ToDouble(data[line, tmpCol]) == 0 || s.Length <= 0)
+                    {
+                        s = "&nbsp;";
+                    }
 
-                t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>"
-                    , cssClasseNb
-                    , s
-                    );
+                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>"
+                        , cssClasseNb
+                        , s
+                        );
+                }
             }
         }
 

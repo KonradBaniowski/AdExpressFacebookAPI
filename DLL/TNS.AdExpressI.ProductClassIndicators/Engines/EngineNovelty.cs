@@ -189,7 +189,18 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 tab[i, ID_ELEMENT_COLUMN_INDEX] = Convert.ToInt64(currentRow[eltIDName]);
                 tab[i, ELEMENT_COLUMN_INDEX] = currentRow[eltLabelName].ToString();
-                tab[i, PERSONNALISATION_ELEMENT_COLUMN_INDEX] = Convert.ToInt64(currentRow[advIdName]);
+				if (_classifLevel == CstResult.MotherRecap.ElementType.advertiser) {
+					if (_competitorIDS.Contains(Convert.ToInt64(currentRow[advIdName]))) {
+						tab[i, PERSONNALISATION_ELEMENT_COLUMN_INDEX] = CstWeb.AdvertiserPersonalisation.Type.competitor;
+					}
+					else if (_referenceIDS.Contains(Convert.ToInt64(currentRow[advIdName]))) {
+						tab[i, PERSONNALISATION_ELEMENT_COLUMN_INDEX] = CstWeb.AdvertiserPersonalisation.Type.reference;
+					}
+					else {
+						tab[i, PERSONNALISATION_ELEMENT_COLUMN_INDEX] = CstWeb.AdvertiserPersonalisation.Type.none;
+					}					
+				}
+
                 double d = Convert.ToDouble(currentRow[monthColumn]);
                 tab[i, CURRENT_MONTH_INVEST_COLUMN_INDEX] = d;
                 tab[i, SOV_COLUMN_INDEX] = d * Convert.ToDouble(100) / total;
@@ -291,12 +302,15 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         {
 
             System.Text.StringBuilder t = new System.Text.StringBuilder(5000);
+			DataSet res = null;
 
             #region Styles
             string cssLabelNone = "p7";
             string cssNbNone = "p9";
             string cssRefLabel = "p15";
             string cssRefNb = "p151";
+			string cssMixedLabel = "p16";
+			string cssMixedNB = "p161";
             string cssCompLabel = (this._excel) ? "p142" : "p14";
             string cssCompNb = (this._excel) ? "p143" : "p141";
             #endregion
@@ -341,31 +355,45 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             t.Append("\n</tr>");
             #endregion
 
+			#region Get id products
+			if (_classifLevel == TNS.AdExpress.Constantes.FrameWork.Results.MotherRecap.ElementType.product) {
+				string idProductList = "";
+				for (int i = 0; i < tab.GetLength(0); i++) {
+					if (tab[i, ID_ELEMENT_COLUMN_INDEX] != null)
+						idProductList += tab[i, ID_ELEMENT_COLUMN_INDEX] + ",";
+				}
+				if (idProductList != null && idProductList.Length>0) idProductList = idProductList.Substring(0, idProductList.Length - 1);
+				res = _dalLayer.GetProductsPersonnalisationType(idProductList,_strYearID);
+			}
+			#endregion
+
             #region Build table
             string cssLabel, cssNb;
-            Int64 idAdv = 0;
             for (int i = 0; i < tab.GetLength(0); i++)
             {
-                idAdv = Convert.ToInt64(tab[i, PERSONNALISATION_ELEMENT_COLUMN_INDEX]);
+             
+				#region Ref or competitor
+				if (_classifLevel == TNS.AdExpress.Constantes.FrameWork.Results.MotherRecap.ElementType.product)
+					SetAdvertiserPersonalisation(tab, res, i);
 
-                #region personnalisation des éléments de références et concurrents
-                if (_referenceIDS.Contains(idAdv))
-                {
-                    cssLabel = cssRefLabel;
-                    cssNb = cssRefNb;
+				if (tab[i, PERSONNALISATION_ELEMENT_COLUMN_INDEX] != null && Convert.ToInt32(tab[i, PERSONNALISATION_ELEMENT_COLUMN_INDEX]) == 3) {
+					cssLabel = cssMixedLabel;
+					cssNb = cssMixedNB;
+				}
+				else if (tab[i, PERSONNALISATION_ELEMENT_COLUMN_INDEX] != null && Convert.ToInt32(tab[i, PERSONNALISATION_ELEMENT_COLUMN_INDEX]) == 1) {
+					cssLabel = cssRefLabel;
+					cssNb = cssRefNb;
+				}
+				else if (tab[i, PERSONNALISATION_ELEMENT_COLUMN_INDEX] != null && Convert.ToInt32(tab[i, PERSONNALISATION_ELEMENT_COLUMN_INDEX]) == 2) {
+					cssLabel = cssCompLabel;
+					cssNb = cssCompNb;
+				}
+				else {
+					cssLabel = cssLabelNone;
+					cssNb = cssNbNone;
+				}
 
-                }
-                else if (_competitorIDS.Contains(idAdv))
-                {
-                    cssLabel = cssCompLabel;
-                    cssNb = cssCompNb;
-                }
-                else
-                {
-                    cssLabel = cssLabelNone;
-                    cssNb = cssNbNone;
-                }
-                #endregion
+				#endregion
 
                 t.Append("<tr>");
                 //Label column
@@ -421,6 +449,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             StringBuilder t = new StringBuilder(10000);
             object[,] tab = this.GetData();
             IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+			DataSet res = null;
 
             #region No data
             if (tab.GetLength(0) == 0)
@@ -438,6 +467,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 string cssColored = "p9ind";
                 string cssRefLabel = "p15";
                 string cssRefNb = "p151";
+				string cssMixedLabel = "p16";
+				string cssMixedNB = "p161";
                 string cssCompLabel = (this._excel) ? "p142" : "p14";
                 string cssCompNb = (this._excel) ? "p143" : "p141";
                 #endregion
@@ -496,35 +527,49 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 t.Append("\n</tr>");
                 #endregion
 
-                #region data
-                string cssLabel = string.Empty;
+				#region Get id products
+				if (_classifLevel == TNS.AdExpress.Constantes.FrameWork.Results.MotherRecap.ElementType.product) {
+					string idProductList = "";
+					for (int i = 0; i < tab.GetLength(0); i++) {
+						if (tab[i, ID_ELEMENT_COLUMN_INDEX] != null)
+							idProductList += tab[i, ID_ELEMENT_COLUMN_INDEX] + ",";
+					}
+					if (idProductList != null && idProductList.Length > 0) idProductList = idProductList.Substring(0, idProductList.Length - 1);
+					res = _dalLayer.GetProductsPersonnalisationType(idProductList,_strYearID);					
+				}
+				#endregion
+
+				#region data
+				string cssLabel = string.Empty;
                 string cssNb = string.Empty;
                 bool found = false;
-                Int64 idAdv = -1;
+
                 for (int i = 0; i < tab.GetLength(0); i++)
                 {
                     found = false;
 
-                    #region Ref or competitor
-                    if (tab[i, PERSONNALISATION_ELEMENT_COLUMN_INDEX] != null)
-                    {
-                        idAdv = Convert.ToInt64(tab[i, PERSONNALISATION_ELEMENT_COLUMN_INDEX]);
-                        if (_referenceIDS.Contains(idAdv))
+					#region Ref or competitor
+					if (_classifLevel == TNS.AdExpress.Constantes.FrameWork.Results.MotherRecap.ElementType.product)
+						SetAdvertiserPersonalisation(tab, res, i);
+					                   					                   
+						if (tab[i, PERSONNALISATION_ELEMENT_COLUMN_INDEX] != null && Convert.ToInt32(tab[i, PERSONNALISATION_ELEMENT_COLUMN_INDEX]) == 3) {
+							cssLabel = cssMixedLabel;
+							cssNb = cssMixedNB;
+						}
+						else if (tab[i, PERSONNALISATION_ELEMENT_COLUMN_INDEX] != null && Convert.ToInt32(tab[i, PERSONNALISATION_ELEMENT_COLUMN_INDEX]) == 2) {
+							cssLabel = cssCompLabel;
+							cssNb = cssCompNb;
+						}
+						else if (tab[i, PERSONNALISATION_ELEMENT_COLUMN_INDEX] != null && Convert.ToInt32(tab[i, PERSONNALISATION_ELEMENT_COLUMN_INDEX]) == 1)
                         {
                             cssLabel = cssRefLabel;
                             cssNb = cssRefNb;
-                        }
-                        else if (_competitorIDS.Contains(idAdv))
-                        {
-                            cssLabel = cssCompLabel;
-                            cssNb = cssCompNb;
-                        }
-                        else
-                        {
-                            cssLabel = cssLabelNone;
-                            cssNb = cssNbNone;
-                        }
-                    }
+                        }						
+						else {
+							cssLabel = cssLabelNone;
+							cssNb = cssNbNone;
+						}
+                   
                     #endregion
 
                     t.Append("<tr>");
@@ -680,6 +725,55 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             return str;        
         }
         #endregion
+
+		#region SetAdvertiserPersonalisation
+		/// <summary>
+		/// Set advertiser personnalisation
+		/// </summary>
+		/// <param name="tabResult">tab Result</param>
+		/// <param name="res">dictionary[id_product,id_advertiser]</param>
+		/// <param name="rowIndex">row index</param>
+		protected virtual void SetAdvertiserPersonalisation(object[,] tabResult, DataSet res, int rowIndex) {
+			List<long> temp = null;
+			long idProd = -1;
+			int nbTypes = 0;
+			bool inRef = false, inComp = false, inneutral = false;
+			tabResult[rowIndex, PERSONNALISATION_ELEMENT_COLUMN_INDEX] = CstWeb.AdvertiserPersonalisation.Type.none;
+			if (res != null && res.Tables[0] != null && res.Tables[0].Rows.Count > 0) {
+				if (tabResult[rowIndex, ID_ELEMENT_COLUMN_INDEX] != null) {
+					idProd = long.Parse(tabResult[rowIndex, ID_ELEMENT_COLUMN_INDEX].ToString());
+					foreach (DataRow row in res.Tables[0].Rows) {
+						if (long.Parse(row["id_product"].ToString()) == idProd) {
+							if (Convert.ToInt32(row["inref"]) > 0) {
+								nbTypes++;
+								inRef = true;
+							}
+							if (Convert.ToInt32(row["incomp"]) > 0) {
+								nbTypes++;
+								inComp = true;
+							}
+							if (Convert.ToInt32(row["inneutral"]) > 0) {
+								nbTypes++;
+								inneutral = true;
+							}
+
+							if (nbTypes > 1)
+								tabResult[rowIndex, PERSONNALISATION_ELEMENT_COLUMN_INDEX] = CstWeb.AdvertiserPersonalisation.Type.mixed;
+							else if (inComp)
+								tabResult[rowIndex, PERSONNALISATION_ELEMENT_COLUMN_INDEX] = CstWeb.AdvertiserPersonalisation.Type.competitor;
+							else if (inRef)
+								tabResult[rowIndex, PERSONNALISATION_ELEMENT_COLUMN_INDEX] = CstWeb.AdvertiserPersonalisation.Type.reference;							
+							nbTypes = 0;
+							inRef = false;
+							inComp = false;
+							inneutral = false;
+							break;
+						}
+					}							
+				}
+			}
+		}
+		#endregion
 
         #endregion
 

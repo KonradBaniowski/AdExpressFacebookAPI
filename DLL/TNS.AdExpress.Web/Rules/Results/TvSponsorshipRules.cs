@@ -147,9 +147,9 @@ namespace TNS.AdExpress.Web.Rules.Results
 			Int64 oldIdL2=-1;
 			Int64 oldIdL3=-1;
 			Int64 oldIdL4=-1;
-			long currentLine;
-			long currentLineInTabResult;			
-			long k;
+            int currentLine;
+            int currentLineInTabResult;
+            int k;
 			ResultTable resultTable = null;
 			CellUnitFactory cellUnitFactory =null,cellKeuroFactory = null,cellEuroFactory = null,cellDurationFactory = null,cellInsertionFactory = null;
             CellUnit cellKeuro = null, cellEuro=null, cellDuration = null, cellInsertion = null;
@@ -178,8 +178,8 @@ namespace TNS.AdExpress.Web.Rules.Results
 				headers.Root.Add(new Header(true,GestionWeb.GetWebWord(1164,webSession.SiteLanguage),FrameWorkResultConstantes.TvSponsorship.LEVEL_HEADER_ID));
 			else if	(webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS )
 				headers.Root.Add(new Header(true,GestionWeb.GetWebWord(804,webSession.SiteLanguage),FrameWorkResultConstantes.TvSponsorship.LEVEL_HEADER_ID));
-			long startDataColIndex=1;
-			long startDataColIndexInit=1;
+            int startDataColIndex = 1;
+            int startDataColIndexInit = 1;
 
 			// Ajout Création 
 			bool showCreative=false;
@@ -222,16 +222,15 @@ namespace TNS.AdExpress.Web.Rules.Results
 			#endregion
 
 			#region Déclaration du tableau de résultat
-			
-			long nbLine=GetNbLineFromPreformatedTableToResultTable(tabData)+1;
-		
-			 resultTable=new ResultTable(nbLine,headers);
-			long nbCol=resultTable.ColumnsNumber-2;
-			long totalColIndex=-1;
+
+            int nbLine = GetNbLineFromPreformatedTableToResultTable(tabData) + 1;
+            resultTable=new ResultTable(nbLine,headers);
+            int nbCol = resultTable.ColumnsNumber - 2;
+            int totalColIndex = -1;
 			if(showTotal)totalColIndex=resultTable.GetHeadersIndexInResultTable(FrameWorkResultConstantes.TvSponsorship.TOTAL_HEADER_ID.ToString());
-			long levelLabelColIndex=resultTable.GetHeadersIndexInResultTable(FrameWorkResultConstantes.TvSponsorship.LEVEL_HEADER_ID.ToString());
-			long creativeColIndex=resultTable.GetHeadersIndexInResultTable(FrameWorkResultConstantes.TvSponsorship.CREATIVE_HEADER_ID.ToString());
-            long insertionsColIndex = resultTable.GetHeadersIndexInResultTable(FrameWorkResultConstantes.TvSponsorship.INSERTIONS_HEADER_ID.ToString());
+            int levelLabelColIndex = resultTable.GetHeadersIndexInResultTable(FrameWorkResultConstantes.TvSponsorship.LEVEL_HEADER_ID.ToString());
+            int creativeColIndex = resultTable.GetHeadersIndexInResultTable(FrameWorkResultConstantes.TvSponsorship.CREATIVE_HEADER_ID.ToString());
+            int insertionsColIndex = resultTable.GetHeadersIndexInResultTable(FrameWorkResultConstantes.TvSponsorship.INSERTIONS_HEADER_ID.ToString());
 			#endregion
 
 			#region Sélection de l'unité
@@ -261,8 +260,8 @@ namespace TNS.AdExpress.Web.Rules.Results
 			#region Total
 
 			TNS.AdExpress.Domain.Level.GenericDetailLevel genericDetailLevel = webSession.GenericMediaDetailLevel;
-			
-			long nbColInTabData=tabData.GetLength(1);
+
+            int nbColInTabData = tabData.GetLength(1);
 			startDataColIndex++;
 			startDataColIndexInit++;
 			currentLineInTabResult = resultTable.AddNewLine(TNS.FrameWork.WebResultUI.LineType.total);
@@ -594,15 +593,15 @@ namespace TNS.AdExpress.Web.Rules.Results
 				#endregion
 
 				// On rajoute les valeurs aux cellules de la ligne	
-				long startCol;
+                int startCol;
 				if (webSession.PreformatedTable==WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units )
 				startCol = FrameWorkResultConstantes.TvSponsorship.FIRST_RESULT_ITEM_COLUMN_INDEX;
 				else startCol = FrameWorkResultConstantes.TvSponsorship.TOTAL_COLUMN_INDEX;
 
 				for(k=startCol;k<nbColInTabData;k++){
-						if (webSession.PreformatedTable==WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units )		
-						resultTable.AffectValueAndAddToHierarchy(levelLabelColIndex,currentLineInTabResult,startDataColIndex+k-(long.Parse((FrameWorkResultConstantes.TvSponsorship.FIRST_RESULT_ITEM_COLUMN_INDEX).ToString())),(double)tabData[currentLine,k]);					
-					else resultTable.AffectValueAndAddToHierarchy(levelLabelColIndex,currentLineInTabResult,startDataColIndex+k-(long.Parse((FrameWorkResultConstantes.TvSponsorship.TOTAL_COLUMN_INDEX).ToString())),(double)tabData[currentLine,k]);					
+						if (webSession.PreformatedTable==WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units )
+                            resultTable.AffectValueAndAddToHierarchy(levelLabelColIndex, currentLineInTabResult, startDataColIndex + k - FrameWorkResultConstantes.TvSponsorship.FIRST_RESULT_ITEM_COLUMN_INDEX, (double)tabData[currentLine, k]);					
+					else resultTable.AffectValueAndAddToHierarchy(levelLabelColIndex,currentLineInTabResult,startDataColIndex+k-FrameWorkResultConstantes.TvSponsorship.TOTAL_COLUMN_INDEX,(double)tabData[currentLine,k]);					
 				}
 
 			}
@@ -618,11 +617,12 @@ namespace TNS.AdExpress.Web.Rules.Results
 		/// </summary>
 		/// <param name="tabData">Tableau préformaté</param>
 		/// <returns>Nombre de ligne du tableau de résultat</returns>
-		private static long GetNbLineFromPreformatedTableToResultTable(object[,] tabData){
+        private static int GetNbLineFromPreformatedTableToResultTable(object[,] tabData)
+        {
 
 			#region Variables
-			long nbLine=0;
-			long k;
+            int nbLine = 0;
+            int k;
 			Int64 oldIdL1=-1;
 			Int64 oldIdL2=-1;
 			Int64 oldIdL3=-1;

@@ -449,7 +449,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <summary>
 		/// Load allowed branches and levels id for the current Page
 		/// </summary>
-		protected void LoadBranchAndLevelsForCurrentPage(Module module) {
+		protected virtual void LoadBranchAndLevelsForCurrentPage(Module module) {
 			CoreSelection.ILevelsRules levelsRules = null;
 			List<int> tempBranchIds = null;
 			List<UniverseLevel> tempLevels = null;
@@ -1055,11 +1055,15 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 					throw (es);
 				}
 			}
-			cwe.SendMail();
+			cwe.SendMail();		
 			return GetMessageError(customerSession, 1973);
 		}
 		#endregion
 
+
 		#endregion
+
+
+		
 	}
 }

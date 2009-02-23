@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\AdExpress\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -38,15 +38,19 @@
     <Reference Include="System.Xml" />
     <Reference Include="TNS.Classification, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.Classification.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.Classification.dll</HintPath>
     </Reference>
     <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\prog_sources\Versionning\AdExpress PZL\TNS.FrameWork.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.dll</HintPath>
     </Reference>
     <Reference Include="TNS.FrameWork.Date, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0e2d78f24e5a5f7a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress PZL\TNS.FrameWork.Date.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.Date.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.24843, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\Dev\TNS.FrameWork.WebResultUI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +63,16 @@
     <Compile Include="Engines\Engine.cs" />
     <Compile Include="Exceptions\NotImplementedReportException.cs" />
     <Compile Include="Exceptions\ProductClassReportsException.cs" />
+    <Compile Include="GenericEngines\ClassifLevels.cs" />
+    <Compile Include="GenericEngines\GenericEngine_Classif1Year_X_Monthes.cs" />
+    <Compile Include="GenericEngines\GenericEngine_Classif1_X_Year.cs" />
+    <Compile Include="GenericEngines\GenericEngine_Classif1Year_X_Classif2.cs" />
+    <Compile Include="GenericEngines\GenericEngine_Classif1Classif2_X_Monthes.cs" />
+    <Compile Include="GenericEngines\GenericEngine_Classif1Classif2_X_Periods.cs" />
+    <Compile Include="GenericEngines\GenericEngine_Classif1Classif2_X_Years.cs" />
+    <Compile Include="GenericEngines\GenericEngine.cs" />
+    <Compile Include="GenericEngines\ProductClassLineStart.cs" />
+    <Compile Include="GenericEngines\ProductClassResultTable.cs" />
     <Compile Include="IProductClassReports.cs" />
     <Compile Include="ProductClassReports.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

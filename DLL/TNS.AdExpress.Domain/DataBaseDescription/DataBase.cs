@@ -751,7 +751,15 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// All Product
         /// </summary>
-        allProduct=1
+        allProduct=1,
+		 /// <summary>
+        /// All Recap Media
+        /// </summary>
+        allRecapMedia=2,
+        /// <summary>
+        /// All Recap Product
+        /// </summary>
+        allRecapProduct=3
     }
     #endregion
 

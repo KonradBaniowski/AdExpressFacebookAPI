@@ -266,7 +266,7 @@
       <columnItem id="7" name="Annonceur"/>
       <columnItem id="43" name="Agence Media"/>
       <columnItem id="53" name="Plan Media"/>
-      <columnItem id="3" name="Support" idDetailLevelMatching="3"/>
+      <columnItem id="3" name="Support"/>
       <columnItem id="9" name="Produit"/>
       <columnItem id="44" name="Famille"/>
       <columnItem id="8" name="Groupe"/>
@@ -289,7 +289,7 @@
       <columnItem id="7" name="Annonceur"/>
       <columnItem id="43" name="Agence Media"/>
       <columnItem id="53" name="Plan Media"/>
-      <columnItem id="3" name="Support" idDetailLevelMatching="3"/>
+      <columnItem id="3" name="Support"/>
       <columnItem id="9" name="Produit"/>
       <columnItem id="44" name="Famille"/>
       <columnItem id="8" name="Groupe"/>

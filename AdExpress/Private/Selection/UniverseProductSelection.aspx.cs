@@ -60,21 +60,12 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, EventArgs e) {
-			//Modification de la langue pour les Textes AdExpress
-			//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[0].Controls, _webSession.SiteLanguage);
 				
 			ModuleTitleWebControl1.CustomerWebSession = _webSession;
 			InformationWebControl1.Language = _webSession.SiteLanguage;
 			sessionId = _webSession.IdSession;
             HeaderWebControl1.Language = _webSession.SiteLanguage;
-
-			#region Boutons  Images
-			//validateButton.ImageUrl = "/Images/" + _siteLanguage + "/button/valider_up.gif";
-			//validateButton.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/valider_down.gif";
-			//saveUniverseImageButtonRollOverWebControl.ImageUrl = "/Images/" + _siteLanguage + "/button/enregistrer_univers_up.gif";
-			//saveUniverseImageButtonRollOverWebControl.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/enregistrer_univers_down.gif";
-			#endregion
-
+			
 			#region Script
 			//Gestion de la sélection d'un radiobutton dans la liste des univers
 			if (!Page.ClientScript.IsClientScriptBlockRegistered("InsertIdMySession4")) {
@@ -261,11 +252,8 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
 				_webSession.PrincipalProductUniverses = universeDictionary;
 				_webSession.Save();
 				_webSession.Source.Close();				
-				//saveScript = WebFunctions.Script.SaveUniverseOpen(_webSession.IdSession, branchType, idUniverseClientDescription);
-				//Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"saveUnivers","<script language=\"JavaScript\" type=\"text/JavaScript\"> window.open('/Private/Universe/UniverseSavePopUp.aspx?idSession="+_webSession.IdSession+"', '', \"toolbar=0, directories=0, status=0, menubar=0, width=450, height=300, scrollbars=1, location=0, resizable=1\");</script>");
 				saveScript = "window.showModalDialog('/Private/Universe/RegisterUniverse.aspx?idSession=" + _webSession.IdSession + "&brancheType=" + branchType
 					+ "&idUniverseClientDescription=" + idUniverseClientDescription + "&atd=" + DateTime.Now.ToString("yyyyMMddhhmmss") + " ',null, 'dialogHeight:300px;dialogWidth:450px;help:no;resizable:no;scroll:no;status:no;');";
-				//saveScript = WebFunctions.Script.SaveUniverseOpen(_webSession.IdSession, branchType, idUniverseClientDescription);		
 			}
 			else {
 				Response.Write("<script language=javascript>");
@@ -278,9 +266,7 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
 			_webSession.Save();
 			SelectItemsInClassificationWebControl1.ErrorCode = FrameWorkSelection.error.SECURITY_EXCEPTION;
 			Response.Write("<script language=javascript>");
-			Response.Write("alert(\"" + GestionWeb.GetWebWord(2285, _webSession.SiteLanguage) + "\");");//TODO:texte a definir
-			//Response.Write("	alert(\"Impossible d'avoir des elements de même niveaux dans des groupes en inclusion.\");");//TODO:texte a definir dasn GestionWebWord
-			//Response.Write("history.go(-1);");
+			Response.Write("alert(\"" + GestionWeb.GetWebWord(2285, _webSession.SiteLanguage) + "\");");		
 			Response.Write("</script>");
 		}catch(TNS.Classification.Universe.CapacityException){
 			_webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
@@ -385,6 +371,12 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
 			case WebConstantes.Module.Name.DONNEES_DE_CADRAGE:
 				SelectItemsInClassificationWebControl1.DefaultBranchId = 1;//Branche famille par défaut
 				break;
+			case WebConstantes.Module.Name.INDICATEUR:
+			case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
+				SelectItemsInClassificationWebControl1.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.recap01).Label;
+				SelectItemsInClassificationWebControl1.DefaultBranchId = 1;//Branche famille par défaut
+				SelectItemsInClassificationWebControl1.NbMaxItemByLevel = 100000;
+				break;
 		}
 		
 		SelectItemsInClassificationWebControl1.IdSession = _webSession.IdSession;
@@ -406,6 +398,8 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
 			case WebConstantes.Module.Name.BILAN_CAMPAGNE:
 			case WebConstantes.Module.Name.DONNEES_DE_CADRAGE:
 			case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
+			case WebConstantes.Module.Name.INDICATEUR:
+			case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
 				return true;
 			default: return false;
 		}

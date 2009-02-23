@@ -68,6 +68,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             #region Init Chart
             bool referenceElement = false;
             bool competitorElement = false;
+			bool mixedElement = false;
             // There is at least one element
             bool oneProductExist = false;
 
@@ -133,10 +134,17 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                     series.Points.AddXY(tab[i, EngineTop.PRODUCT], Convert.ToDouble(u.Replace(" ", string.Empty), fp));
 
                     series.Points[i - 1].ShowInLegend = true;
-                    // Competitor in red
+                   
                     if (tab[i, EngineTop.COMPETITOR] != null)
                     {
-                        if ((int)tab[i, EngineTop.COMPETITOR] == 2)
+						// Mixed in yellow
+                         if ((int)tab[i, EngineTop.COMPETITOR] == 3)
+                        {
+                            series.Points[i - 1].Color = (Color)_colorConverter.ConvertFrom(_mixedSerieColor);
+							mixedElement = true;
+                        }
+						// Competitor in red
+                        else if ((int)tab[i, EngineTop.COMPETITOR] == 2)
                         {
                             series.Points[i - 1].Color = (Color)_colorConverter.ConvertFrom(_competitorSerieColor);
                             competitorElement = true;
@@ -197,6 +205,16 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                     this.Legends["Default"].CustomItems.Add(legendItemCompetitor);
                 }
             }
+			
+			if (mixedElement) {
+				LegendItem legendItemMixed = new LegendItem();
+				legendItemMixed.BorderWidth = 0;
+				legendItemMixed.Color = (Color)_colorConverter.ConvertFrom(_legendItemMixedColor);
+				legendItemMixed.Name = GestionWeb.GetWebWord(2561, _session.SiteLanguage);
+				this.Legends["Default"].CustomItems.Add(legendItemMixed);				
+			}
+
+
             #endregion
 
             #region Axe X

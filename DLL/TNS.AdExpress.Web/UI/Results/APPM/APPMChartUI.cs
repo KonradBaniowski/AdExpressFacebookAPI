@@ -7,6 +7,7 @@ using Dundas.Charting.WebControl;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using System.Drawing;
+using TNS.AdExpress.Domain.Web;
 
 
 namespace TNS.AdExpress.Web.UI.Results.APPM
@@ -26,6 +27,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 		/// Constructor of the class
 		/// </summary>
 		public APPMChartUI():base(){
+            this.ImageUrl = WebApplicationParameters.DundasConfiguration.ImageURL;
 		}
 		#endregion
 

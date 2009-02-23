@@ -64,6 +64,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                 bool useBaalForModule=false;
                 bool useBaalForResult=false;
 				Int64 module=0;
+                Int32 resultLimitation = 0;
 				ResultPageInformation currentResultPageInformation=null;
 				while(Reader.Read()){
 					allowRecall=true;
@@ -80,8 +81,15 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 					remoteExcelUrlValue="";
 					valueExcelUrlValue="";
                     functionName="";
+                    resultLimitation = 0;
 					if(Reader.NodeType==XmlNodeType.Element){
 						switch(Reader.LocalName){
+                            case "ResultLimitation":
+                                if (Reader.GetAttribute("size") != null)
+                                {
+                                    ((Module)HtModule[module]).ResultSize = int.Parse(Reader.GetAttribute("size"));
+                                }
+                                break;
 							case "moduleGroup":
 								if(Reader.GetAttribute("privilegecode")!=null && Reader.GetAttribute("traductioncode")!=null && Reader.GetAttribute("flashUrl")!=null && Reader.GetAttribute("type")!=null) {
 									HtModuleGroup.Add(Int64.Parse(Reader.GetAttribute("privilegecode")),new ModuleGroup(Int64.Parse(Reader.GetAttribute("privilegecode")),Int64.Parse(Reader.GetAttribute("traductioncode")),Reader.GetAttribute("flashUrl"),Reader.GetAttribute("missingFlashUrl"),Int64.Parse(Reader.GetAttribute("descriptionWebTextId"))));

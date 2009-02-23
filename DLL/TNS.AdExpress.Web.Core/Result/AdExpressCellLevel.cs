@@ -45,7 +45,7 @@ namespace TNS.AdExpress.Web.Core.Result{
 		/// <param name="label">Libellé du niveau</param>
 		/// <param name="level">Niveau de profondeur du niveau</param>
 		/// <param name="lineIndexInResultTable">Index de la ligne du niveau dans le tableau de resultat</param>
-		public AdExpressCellLevel(long id, string label, int level,long lineIndexInResultTable) : base(id,label,level,lineIndexInResultTable){
+		public AdExpressCellLevel(long id, string label, int level,int lineIndexInResultTable) : base(id,label,level,lineIndexInResultTable){
 		}
 		/// <summary>
 		/// Constructeur
@@ -55,7 +55,9 @@ namespace TNS.AdExpress.Web.Core.Result{
 		/// <param name="parentLevel">Niveau supérieur</param>
 		/// <param name="level">Niveau de profondeur du niveau</param>
 		/// <param name="lineIndexInResultTable">Index de la ligne du niveau dans le tableau de resultat</param>
-		public AdExpressCellLevel(long id, string label, CellLevel parentLevel, int level,long lineIndexInResultTable) : base(id,label,parentLevel,level,lineIndexInResultTable){
+        public AdExpressCellLevel(long id, string label, CellLevel parentLevel, int level, int lineIndexInResultTable)
+            : base(id, label, parentLevel, level, lineIndexInResultTable)
+        {
 		}
 		/// <summary>
 		/// Constructeur
@@ -65,7 +67,9 @@ namespace TNS.AdExpress.Web.Core.Result{
 		/// <param name="level">Niveau de profondeur du niveau</param>
 		/// <param name="lineIndexInResultTable">Index de la ligne du niveau dans le tableau de resultat</param>
 		/// <param name="webSession">Session du client</param>
-		public AdExpressCellLevel(long id, string label, int level,long lineIndexInResultTable,WebSession webSession) : base(id,label,level,lineIndexInResultTable){
+        public AdExpressCellLevel(long id, string label, int level, int lineIndexInResultTable, WebSession webSession)
+            : base(id, label, level, lineIndexInResultTable)
+        {
 			if(webSession==null)throw(new ArgumentNullException("L'objet WebSession est null"));
 			_webSession=webSession;
 		}
@@ -78,7 +82,9 @@ namespace TNS.AdExpress.Web.Core.Result{
 		/// <param name="level">Niveau de profondeur du niveau</param>
 		/// <param name="lineIndexInResultTable">Index de la ligne du niveau dans le tableau de resultat</param>
 		/// <param name="webSession">Session du client</param>
-		public AdExpressCellLevel(long id, string label, CellLevel parentLevel, int level,long lineIndexInResultTable,WebSession webSession) : base(id,label,parentLevel,level,lineIndexInResultTable){
+        public AdExpressCellLevel(long id, string label, CellLevel parentLevel, int level, int lineIndexInResultTable, WebSession webSession)
+            : base(id, label, parentLevel, level, lineIndexInResultTable)
+        {
 			if(webSession==null)throw(new ArgumentNullException("L'objet WebSession est null"));
 			_webSession=webSession;
 		}
@@ -92,7 +98,9 @@ namespace TNS.AdExpress.Web.Core.Result{
 		/// <param name="lineIndexInResultTable">Index de la ligne du niveau dans le tableau de resultat</param>
 		/// <param name="webSession">Session du client</param>
 		/// <param name="genericDetailLevel">Niveau de détail générique</param>
-		public AdExpressCellLevel(long id, string label, CellLevel parentLevel, int level,long lineIndexInResultTable,WebSession webSession,GenericDetailLevel genericDetailLevel) : base(id,label,parentLevel,level,lineIndexInResultTable){
+        public AdExpressCellLevel(long id, string label, CellLevel parentLevel, int level, int lineIndexInResultTable, WebSession webSession, GenericDetailLevel genericDetailLevel)
+            : base(id, label, parentLevel, level, lineIndexInResultTable)
+        {
 			if(webSession==null)throw(new ArgumentNullException("L'objet WebSession est null"));
 			if(genericDetailLevel==null)throw(new ArgumentNullException("L'objet GenericDetailLevel est null"));
 			_webSession=webSession;

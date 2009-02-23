@@ -59,6 +59,13 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// <param name="classifLevel">Detail of the indicator</param>        
         /// <returns>DataSet filled with data required to compute result</returns>
         DataSet GetTops(CstResult.PalmaresRecap.typeYearSelected typeYear, CstResult.MotherRecap.ElementType classifLevel);
+		/// <summary>
+		/// Get Products Personnalisation type
+		/// </summary>
+		/// <param name="idProductList">Id product list</param>
+		///<param name="strYearId">Year Id</param>
+		/// <returns>DataTable[id_product,inref,incomp,inneutral]</returns>
+		DataSet GetProductsPersonnalisationType(String idProductList, string strYearId);
         /// <summary>
         /// Get data for Indocator Evolution (Table or graph)
         /// </summary>

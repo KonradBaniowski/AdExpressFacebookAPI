@@ -20,6 +20,7 @@ using TNS.FrameWork.DB.Common;
 using Dundas.Charting.WebControl;
 using TNS.AdExpress.Domain.Translation;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Web;
 namespace TNS.AdExpress.Web.Controls.Results.Appm
 {
 	/// <summary>
@@ -99,6 +100,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 				
 			}
 			_dataSource = dataSource;
+            this.ImageUrl = WebApplicationParameters.DundasConfiguration.ImageURL;
 		}
 		#endregion
 	

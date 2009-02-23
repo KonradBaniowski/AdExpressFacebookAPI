@@ -173,7 +173,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                 if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
                     sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(dataTable.Prefix, true));
                 // Product rights
-                sql.Append(FctUtilities.SQLGenerator.getClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
+				//sql.Append(FctUtilities.SQLGenerator.getClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
+				sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
             }
 
 
@@ -306,7 +307,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                 if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
                     sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(dataTable.Prefix, true));
                 // Product rights
-                sql.Append(FctUtilities.SQLGenerator.getClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
+				//sql.Append(FctUtilities.SQLGenerator.getClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
+				sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
             }
 
 

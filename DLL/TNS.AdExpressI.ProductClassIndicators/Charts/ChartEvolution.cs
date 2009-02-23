@@ -20,6 +20,7 @@ using System.Web.UI.WebControls;
 
 using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
+using CstWeb = TNS.AdExpress.Constantes.Web;
 
 using Dundas.Charting.WebControl;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -114,6 +115,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             int compteur = 0;
             bool hasComp = false;
             bool hasRef = false;
+			bool hasMixed = false;
+			
+
             for (int i = 0; i < tab.GetLongLength(0) && i < 10; i++)
             {
                 ecart = Convert.ToDouble(tab[i, EngineEvolution.ECART]);
@@ -126,7 +130,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                     if (tab[i, EngineEvolution.COMPETITOR] != null)
                     {
                         typeElt = Convert.ToInt32(tab[i, EngineEvolution.COMPETITOR]);
-                        if (typeElt == 2)
+						if (typeElt == 3) {
+							series.Points[compteur].Color = (Color)_colorConverter.ConvertFrom(_mixedSerieColor);
+							hasMixed = true;
+						}
+						else if (typeElt == 2)
                         {
                             series.Points[compteur].Color = (Color)_colorConverter.ConvertFrom(_competitorSerieColor);
                             hasComp = true;
@@ -151,7 +159,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                     if (tab[last, EngineEvolution.COMPETITOR] != null)
                     {
                         typeElt = Convert.ToInt32(tab[last, EngineEvolution.COMPETITOR]);
-                        if (typeElt == 2)
+						if (typeElt == 3) {
+							series.Points[compteur].Color = (Color)_colorConverter.ConvertFrom(_mixedSerieColor);
+							hasMixed = true;
+						}
+                        else if (typeElt == 2)
                         {
                             series.Points[compteur].Color = (Color)_colorConverter.ConvertFrom(_competitorSerieColor);
                             hasComp = true;
@@ -215,6 +227,15 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                     this.Legends["Default"].CustomItems.Add(legendItemCompetitor);
                 }
             }
+
+			
+			if (hasMixed) {
+				LegendItem legendItemMixed = new LegendItem();
+				legendItemMixed.BorderWidth = 0;
+				legendItemMixed.Color = (Color)_colorConverter.ConvertFrom(_legendItemMixedColor);
+				legendItemMixed.Name = GestionWeb.GetWebWord(2561, _session.SiteLanguage);
+				this.Legends["Default"].CustomItems.Add(legendItemMixed);				
+			}
             #endregion
 
             this.DataManipulator.Sort(PointsSortOrder.Descending, series);

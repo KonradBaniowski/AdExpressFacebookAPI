@@ -567,7 +567,7 @@
     </allowedUnits>
     <allowedRecapMediaDetailLevels>
       <allowedRecapMediaLevelItems>
-        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>      <!-- Media -->
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>      <!-- Media -->        
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
   </vehicle>

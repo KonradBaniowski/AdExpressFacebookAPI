@@ -51,34 +51,61 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <summary>
         /// In Clause Method
         /// </summary>
-        /// <param name="webSession">Customer session</param>
+        /// <param name="session">User session (useless)</param>
         /// <param name="label">Field</param>
         /// <param name="inClauseItems">Items
         /// <example>"3,9,6"</example>
         /// </param>
         /// <returns>In clause SQL code</returns>
-        public static string GetInClauseMagicMethod(WebSession webSession,string label,string inClauseItems) {
+        [Obsolete("No need for user session")]
+        public static string GetInClauseMagicMethod(WebSession session, string label, string inClauseItems)
+        {
+            return GetInClauseMagicMethod(label, inClauseItems, true);
+        }
+        /// <summary>
+        /// In Clause Method
+        /// </summary>
+        /// <param name="label">Field</param>
+        /// <param name="inClauseItems">Items
+        /// <example>"3,9,6"</example>
+        /// </param>
+        /// <returns>In clause SQL code</returns>
+        public static string GetInClauseMagicMethod(string label, string inClauseItems)
+        {
+            return GetInClauseMagicMethod(label, inClauseItems, true);
+        }
+        /// <summary>
+        /// In Clause Method
+        /// </summary>
+        /// <param name="label">Field</param>
+        /// <param name="inClauseItems">Items
+        /// <example>"3,9,6"</example>
+        /// </param>
+        /// <param name="include">True if elements are included (in), false either (not in)</param>
+        /// <returns>In clause SQL code</returns>
+        public static string GetInClauseMagicMethod(string label, string inClauseItems, bool include)
+        {
 
             string str = string.Empty;
-            //if(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == (long)VehicleClassificationCst.internet) {
-                //string activeMediaList = TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-                if(inClauseItems.Length > 0) {
-                    StringBuilder sb = new StringBuilder();
-                    string[] strs = inClauseItems.Split(',');
-                    int i = 0;
-                    sb.Append("(");
-                    while(i < strs.Length) {
-                        if(i > 0) {
-                            sb.Append(" or ");
-                        }
-                        sb.AppendFormat(" {1} in ({0}) ",String.Join(",",strs,i,Math.Min(strs.Length-i,500)),label);
-                        i += 500;
+            if (inClauseItems.Length > 0)
+            {
+                StringBuilder sb = new StringBuilder();
+                string[] strs = inClauseItems.Split(',');
+                int i = 0;
+                sb.Append("(");
+                while (i < strs.Length)
+                {
+                    if (i > 0)
+                    {
+                        sb.Append((include)?" or ":" and ");
                     }
-                    sb.Append(")");
-                    return sb.ToString();
+                    sb.AppendFormat(" {1} {2} ({0}) ", String.Join(",", strs, i, Math.Min(strs.Length - i, 500)), label, (include)?" in ":" not in ");
+                    i += 500;
                 }
+                sb.Append(")");
+                return sb.ToString();
+            }
 
-            //}
             return str;
         }
         #endregion
@@ -316,103 +343,88 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <returns>Code SQL généré</returns>
         public static string getClassificationCustomerProductRight(WebSession webSession, string sectorPrefixe, string subsectorPrefixe, string groupPrefixe, string segmentPrefixe, bool beginByAnd)
         {
-            string sql = "";
-            bool premier = true;
-            // Sector (Famille)
-            if (webSession.CustomerLogin[CustomerRightConstante.type.sectorAccess].Length > 0)
-            {
-                if (beginByAnd) sql += " and";
-                sql += " ((" + sectorPrefixe + ".id_sector in (" + webSession.CustomerLogin[CustomerRightConstante.type.sectorAccess] + ") ";
-                premier = false;
-            }
-            // SubSector (Classe)
-            if (webSession.CustomerLogin[CustomerRightConstante.type.subSectorAccess].Length > 0)
-            {
-                if (!premier) sql += " or";
-                else
-                {
-                    if (beginByAnd) sql += " and";
-                    sql += " ((";
-                }
-                sql += " " + subsectorPrefixe + ".id_subsector in (" + webSession.CustomerLogin[CustomerRightConstante.type.subSectorAccess] + ") ";
-                premier = false;
-            }
-            // Group (Groupe)
-            if (webSession.CustomerLogin[CustomerRightConstante.type.groupAccess].Length > 0)
-            {
-                if (!premier) sql += " or";
-                else
-                {
-                    if (beginByAnd) sql += " and";
-                    sql += " ((";
-                }
-                sql += " " + groupPrefixe + ".id_group_ in (" + webSession.CustomerLogin[CustomerRightConstante.type.groupAccess] + ") ";
-                premier = false;
-            }
-            // Segment (Variété)
-            if (webSession.CustomerLogin[CustomerRightConstante.type.segmentAccess].Length > 0)
-            {
-                if (!premier) sql += " or";
-                else
-                {
-                    if (beginByAnd) sql += " and";
-                    sql += " ((";
-                }
-                sql += " " + segmentPrefixe + ".id_segment in (" + webSession.CustomerLogin[CustomerRightConstante.type.segmentAccess] + ") ";
-                premier = false;
-            }
-            if (!premier) sql += " )";
-            // Droits en exclusion
-            // Sector (Famille)
-            if (webSession.CustomerLogin[CustomerRightConstante.type.sectorException].Length > 0)
-            {
-                if (!premier) sql += " and";
-                else
-                {
-                    if (beginByAnd) sql += " and";
-                    sql += " (";
-                }
-                sql += " " + sectorPrefixe + ".id_sector not in (" + webSession.CustomerLogin[CustomerRightConstante.type.sectorException] + ") ";
-                premier = false;
-            }
-            // SubSector (Classe)
-            if (webSession.CustomerLogin[CustomerRightConstante.type.subSectorException].Length > 0)
-            {
-                if (!premier) sql += " and";
-                else
-                {
-                    if (beginByAnd) sql += " and";
-                    sql += " (";
-                }
-                sql += " " + subsectorPrefixe + ".id_subsector not in (" + webSession.CustomerLogin[CustomerRightConstante.type.subSectorException] + ") ";
-                premier = false;
-            }
-            // Group (Groupe)
-            if (webSession.CustomerLogin[CustomerRightConstante.type.groupException].Length > 0)
-            {
-                if (!premier) sql += " and";
-                else
-                {
-                    if (beginByAnd) sql += " and";
-                    sql += " (";
-                }
-                sql += " " + groupPrefixe + ".id_group_  not in (" + webSession.CustomerLogin[CustomerRightConstante.type.groupException] + ") ";
-                premier = false;
-            }
-            // Segment (Variété)
-            if (webSession.CustomerLogin[CustomerRightConstante.type.segmentException].Length > 0)
-            {
-                if (!premier) sql += " and";
-                else
-                {
-                    if (beginByAnd) sql += " and";
-                    sql += " (";
-                }
-                sql += " " + segmentPrefixe + ".id_segment  not in (" + webSession.CustomerLogin[CustomerRightConstante.type.segmentException] + ") ";
-                premier = false;
-            }
-            if (!premier) sql += " )";
-            return (sql);
+			string sql = "";
+			bool premier = true;
+			// Sector (Famille)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.sectorAccess].Length > 0) {
+				if (beginByAnd) sql += " and";
+				sql += " ((" + GetInClauseMagicMethod(sectorPrefixe + ".id_sector", webSession.CustomerLogin[CustomerRightConstante.type.sectorAccess], true);
+				premier = false;
+			}
+			// SubSector (Classe)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.subSectorAccess].Length > 0) {
+				if (!premier) sql += " or";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " ((";
+				}
+				sql += "  " + GetInClauseMagicMethod(subsectorPrefixe + ".id_subsector", webSession.CustomerLogin[CustomerRightConstante.type.subSectorAccess], true);
+				premier = false;
+			}
+			// Group (Groupe)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.groupAccess].Length > 0) {
+				if (!premier) sql += " or";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " ((";
+				}
+				sql += "  " + GetInClauseMagicMethod(groupPrefixe + ".id_group_", webSession.CustomerLogin[CustomerRightConstante.type.groupAccess], true);
+				premier = false;
+			}
+			// Segment (Variété)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.segmentAccess].Length > 0) {
+				if (!premier) sql += " or";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " ((";
+				}
+				sql += "  " + GetInClauseMagicMethod(segmentPrefixe + ".id_segment", webSession.CustomerLogin[CustomerRightConstante.type.segmentAccess], true);
+				premier = false;
+			}			
+			if (!premier) sql += " )";
+			// Droits en exclusion
+			// Sector (Famille)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.sectorException].Length > 0) {
+				if (!premier) sql += " and";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " (";
+				}
+				sql += "  " + GetInClauseMagicMethod(sectorPrefixe + ".id_sector", webSession.CustomerLogin[CustomerRightConstante.type.sectorException], false);
+				premier = false;
+			}
+			// SubSector (Classe)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.subSectorException].Length > 0) {
+				if (!premier) sql += " and";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " (";
+				}
+				sql += "  " + GetInClauseMagicMethod(subsectorPrefixe + ".id_subsector", webSession.CustomerLogin[CustomerRightConstante.type.subSectorException], false);
+				premier = false;
+			}
+			// Group (Groupe)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.groupException].Length > 0) {
+				if (!premier) sql += " and";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " (";
+				}
+				sql += "  " + GetInClauseMagicMethod(groupPrefixe + ".id_group_", webSession.CustomerLogin[CustomerRightConstante.type.groupException], false);
+				premier = false;
+			}
+			// Segment (Variété)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.segmentException].Length > 0) {
+				if (!premier) sql += " and";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " (";
+				}
+				sql += "  " + GetInClauseMagicMethod(segmentPrefixe + ".id_segment", webSession.CustomerLogin[CustomerRightConstante.type.segmentException], false);
+				premier = false;
+			}			
+			if (!premier) sql += " )";
+			return (sql);
         }
 
         /// <summary>
@@ -426,36 +438,190 @@ namespace TNS.AdExpress.Web.Core.Utilities
         {
             string sql = "";
             bool premier = true;
-            // Sector (Famille)
-            if (webSession.CustomerLogin[CustomerRightConstante.type.sectorAccess].Length > 0)
-            {
-                if (beginByAnd) sql += " and";
-                sql += " ((" + sectorPrefixe + ".id_sector in (" + webSession.CustomerLogin[CustomerRightConstante.type.sectorAccess] + ") ";
-                premier = false;
-            }
-
+			// Sector (Famille)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.sectorAccess].Length > 0) {
+				if (beginByAnd) sql += " and";
+				sql += " ((" + GetInClauseMagicMethod(sectorPrefixe + ".id_sector", webSession.CustomerLogin[CustomerRightConstante.type.sectorAccess], true);
+				premier = false;
+			}
             if (!premier) sql += " )";
-            // Droits en exclusion
-            // Sector (Famille)
-            if (webSession.CustomerLogin[CustomerRightConstante.type.sectorException].Length > 0)
-            {
-                if (!premier) sql += " and";
-                else
-                {
-                    if (beginByAnd) sql += " and";
-                    sql += " (";
-                }
-                sql += " " + sectorPrefixe + ".id_sector not in (" + webSession.CustomerLogin[CustomerRightConstante.type.sectorException] + ") ";
-                premier = false;
-            }
+            // Droits en exclusion           
+			// Sector (Famille)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.sectorException].Length > 0) {
+				if (!premier) sql += " and";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " (";
+				}
+				sql += "  " + GetInClauseMagicMethod(sectorPrefixe + ".id_sector", webSession.CustomerLogin[CustomerRightConstante.type.sectorException], false);
+				premier = false;
+			}
             if (!premier) sql += " )";
             return (sql);
-        }
+		}
 
-        #endregion
 
-        #region media ||plurimedia
-        /// <summary>
+		#region Droits produits Recap
+
+		/// <summary>
+		/// Génère les droits clients Produit dont les droits annonceurs.
+		/// </summary>
+		/// <remarks>Appliqué à ce jour seulement pour les Recap.</remarks>
+		/// <param name="webSession">Session du client</param>
+		/// <param name="sectorPrefixe">Préfixe de la table sector</param>
+		/// <param name="subsectorPrefixe">Préfixe de la table subsector</param>
+		/// <param name="groupPrefixe">Préfixe de la table group_</param>
+		/// <param name="segmentPrefixe">Préfixe de la table segment</param>
+		/// <param name="advertiserPrefixe">Préfixe de la table annonceur</param>
+		/// <param name="beginByAnd">True si le bloc doit commencer par un AND, false sinon</param>
+		/// <returns>Code SQL généré</returns>
+		public static string GetClassificationCustomerProductRight(WebSession webSession, string sectorPrefixe, string subsectorPrefixe, string groupPrefixe, string segmentPrefixe,string advertiserPrefixe, bool beginByAnd) {
+			string sql = "";
+			bool premier = true;
+			// Sector (Famille)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.sectorAccess].Length > 0) {
+				if (beginByAnd) sql += " and";
+				sql += " ((" + GetInClauseMagicMethod(sectorPrefixe + ".id_sector", webSession.CustomerLogin[CustomerRightConstante.type.sectorAccess], true);
+				premier = false;
+			}
+			// SubSector (Classe)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.subSectorAccess].Length > 0) {
+				if (!premier) sql += " or";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " ((";
+				}
+				sql += "  " + GetInClauseMagicMethod(subsectorPrefixe + ".id_subsector", webSession.CustomerLogin[CustomerRightConstante.type.subSectorAccess], true);
+				premier = false;
+			}
+			// Group (Groupe)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.groupAccess].Length > 0) {
+				if (!premier) sql += " or";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " ((";
+				}
+				sql += "  " + GetInClauseMagicMethod(groupPrefixe + ".id_group_", webSession.CustomerLogin[CustomerRightConstante.type.groupAccess], true);
+				premier = false;
+			}
+			// Segment (Variété)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.segmentAccess].Length > 0) {
+				if (!premier) sql += " or";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " ((";
+				}
+				sql += "  " + GetInClauseMagicMethod(segmentPrefixe + ".id_segment", webSession.CustomerLogin[CustomerRightConstante.type.segmentAccess], true);
+				premier = false;
+			}
+
+		
+			// Advertiser (Annonceur)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.advertiserAccess].Length > 0 ) {			
+				if (!premier) sql += " or";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " ((";
+				}
+				sql += "  " + GetInClauseMagicMethod(advertiserPrefixe + ".id_advertiser", webSession.CustomerLogin[CustomerRightConstante.type.advertiserAccess], true);
+				//sql += "  " + GetInClauseMagicMethod(advertiserPrefixe + ".id_advertiser", listAdvertisers, true);
+				premier = false;
+			}
+			if (!premier) sql += " )";
+			// Droits en exclusion
+			// Sector (Famille)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.sectorException].Length > 0) {
+				if (!premier) sql += " and";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " (";
+				}
+				sql += "  " + GetInClauseMagicMethod(sectorPrefixe + ".id_sector", webSession.CustomerLogin[CustomerRightConstante.type.sectorException], false);
+				premier = false;
+			}
+			// SubSector (Classe)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.subSectorException].Length > 0) {
+				if (!premier) sql += " and";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " (";
+				}
+				sql += "  " + GetInClauseMagicMethod(subsectorPrefixe + ".id_subsector", webSession.CustomerLogin[CustomerRightConstante.type.subSectorException], false);
+				premier = false;
+			}
+			// Group (Groupe)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.groupException].Length > 0) {
+				if (!premier) sql += " and";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " (";
+				}
+				sql += "  " + GetInClauseMagicMethod(groupPrefixe + ".id_group_", webSession.CustomerLogin[CustomerRightConstante.type.groupException], false);
+				premier = false;
+			}
+			// Segment (Variété)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.segmentException].Length > 0) {
+				if (!premier) sql += " and";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " (";
+				}
+				sql += "  " + GetInClauseMagicMethod(segmentPrefixe + ".id_segment", webSession.CustomerLogin[CustomerRightConstante.type.segmentException], false);
+				premier = false;
+			}
+			// Advertiser (Annonceur)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.advertiserException].Length > 0) {			
+				if (!premier) sql += " and";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " (";
+				}
+				sql += "  " + GetInClauseMagicMethod(advertiserPrefixe + ".id_advertiser", webSession.CustomerLogin[CustomerRightConstante.type.advertiserException], false);
+				//sql += "  " + GetInClauseMagicMethod(advertiserPrefixe + ".id_advertiser", listExcludedAdvertisers, false);
+				premier = false;
+			}
+			if (!premier) sql += " )";
+			return (sql);
+		}
+
+		/// <summary>
+		/// Génère les droits clients annonceurs.
+		/// </summary>
+		/// <remarks>Appliqué à ce jour seulement pour les Recap.</remarks>
+		/// <param name="webSession">Session du client</param>
+		/// <param name="advertiserPrefixe">Préfixe de la table annonceur</param>		
+		/// <param name="beginByAnd">True si le bloc doit commencer par un AND, false sinon</param>
+		/// <returns>Code SQL généré</returns>
+		public static string GetClassificationCustomerAdvertiserRight(WebSession webSession, string advertiserPrefixe, bool beginByAnd) {
+			string sql = "";
+			bool premier = true;
+			// Advertiser (Annonceur)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.advertiserAccess].Length > 0) {
+				if (beginByAnd) sql += " and";
+				sql += " ((" + GetInClauseMagicMethod(advertiserPrefixe + ".id_advertiser", webSession.CustomerLogin[CustomerRightConstante.type.advertiserAccess], true);
+				premier = false;
+			}						
+			if (!premier) sql += " )";
+			// Droits en exclusion
+			//  Advertiser (Annonceur)
+			if (webSession.CustomerLogin[CustomerRightConstante.type.advertiserException].Length > 0) {
+				if (!premier) sql += " and";
+				else {
+					if (beginByAnd) sql += " and";
+					sql += " (";
+				}
+				sql += "  " + GetInClauseMagicMethod(advertiserPrefixe + ".id_advertiser", webSession.CustomerLogin[CustomerRightConstante.type.advertiserException], false);
+				premier = false;
+			}		
+			if (!premier) sql += " )";
+			return (sql);
+		}
+		#endregion
+
+		#endregion
+
+		#region media ||plurimedia
+		/// <summary>
         /// Génère les droits clients Produit.
         /// Cette fonction est à utiliser si une même table contient tous les identifiants de la nomenclature produit.
         /// </summary>

@@ -233,8 +233,8 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
             #endregion
 
             #region nbLines init
-            long nbLines = 0;
-            long lineIndex = 0;
+            Int32 nbLines = 0;
+            Int32 lineIndex = 0;
             switch (_vehicleInformation.Id) {
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio:

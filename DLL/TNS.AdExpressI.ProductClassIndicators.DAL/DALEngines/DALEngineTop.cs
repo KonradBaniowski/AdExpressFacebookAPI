@@ -63,94 +63,101 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             _typeYear = typeYear;
             _classifLevel = classifLevel;
         }
-        #endregion
+		/// <summary>
+		/// Default constructor
+		/// </summary>
+		/// <param name="session">User session</param>
+		///<param name="dalUtilities">Dal utilities</param>
+		public DALEngineTop(WebSession session, DALUtilities dalUtilities)
+			: base(session, dalUtilities) {			
+		}
+        #endregion        
 
-        #region Get Data
-        /// <summary>
-        /// Get data for Top indicators
-        /// </summary>
-        /// <returns>Tops data</returns>
-        public DataSet GetData()
-        {
+		#region Get Data
+		/// <summary>
+		/// Get data for Top indicators
+		/// </summary>
+		/// <returns>Tops data</returns>
+		public DataSet GetData() {
 
-            DataSet ds = null;
-            StringBuilder sql = new StringBuilder();
+			DataSet ds = null;
+			StringBuilder sql = new StringBuilder();
 
-            #region Request building
-            Table dataTable = this.GetDataTable(true);
-            sql.AppendFormat(" select {0}.id_advertiser, {0}.advertiser, ", _recapAdvertiser.Prefix);
-            if (_classifLevel == CstResult.MotherRecap.ElementType.product)
-            {
-                sql.AppendFormat(" {0}.id_product, {0}.product,  ", _recapProduct.Prefix);
-            }
-            sql.Append(this.GetExpenditureClause());
-
-
-            sql.Append(" from ");
-            sql.AppendFormat(" {0}, ", dataTable.SqlWithPrefix);
-            sql.AppendFormat(" {0} ", _recapAdvertiser.SqlWithPrefix);
-            if (_classifLevel == CstResult.MotherRecap.ElementType.product)
-            {
-                sql.AppendFormat(", {0}", _recapProduct.SqlWithPrefix);
-            }
-
-            sql.Append(" where  ");
-            sql.AppendFormat(" {0}.id_advertiser={1}.id_advertiser", dataTable.Prefix, _recapAdvertiser.Prefix);
-            sql.AppendFormat(" and {0}.id_language={1}", _recapAdvertiser.Prefix, _session.DataLanguage);
-            if (_classifLevel == CstResult.MotherRecap.ElementType.product)
-            {
-                sql.AppendFormat(" and {0}.id_product={1}.id_product", dataTable.Prefix, _recapProduct.Prefix);
-                sql.AppendFormat(" and {0}.id_language={1}", _recapProduct.Prefix, _session.DataLanguage);
-            }
-
-            //Media Selection
-            sql.AppendFormat(" and {0}", _utilities.GetMediaSelection(dataTable.Prefix));
-
-            #region Product classification
-            // Product selection
-            if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
-                sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(dataTable.Prefix, true));
-            // Product rights
-            sql.Append(FctUtilities.SQLGenerator.getClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
-            #endregion
+			#region Request building
+			Table dataTable = this.GetDataTable(true);
+			if (_classifLevel == CstResult.MotherRecap.ElementType.advertiser) {
+				sql.AppendFormat(" select {0}.id_advertiser, {0}.advertiser, ", _recapAdvertiser.Prefix);
+			}
+			if (_classifLevel == CstResult.MotherRecap.ElementType.product) {
+				sql.AppendFormat(" select {0}.id_product, {0}.product,  ", _recapProduct.Prefix);
+			}
+			sql.Append(this.GetExpenditureClause());
 
 
-            if (_classifLevel == CstResult.PalmaresRecap.ElementType.product)
-            {
-                sql.AppendFormat( " group by {0}.id_advertiser, {0}.advertiser, {1}.id_product, {1}.product ", _recapAdvertiser.Prefix, _recapProduct.Prefix);
-            }
-            else
-            {
-                sql.AppendFormat( " group by {0}.id_advertiser, {0}.advertiser ", _recapAdvertiser.Prefix);
-            }
-            if (_typeYear == CstResult.PalmaresRecap.typeYearSelected.currentYear){
-                sql.Append(" order by total_N desc ");
-            }
-            else
-            {
-                sql.Append(" order by total_N1 desc ");
-            }
+			sql.Append(" from ");
+			sql.AppendFormat(" {0} ", dataTable.SqlWithPrefix);
+			if (_classifLevel == CstResult.MotherRecap.ElementType.advertiser) {
+				sql.AppendFormat(" ,{0} ", _recapAdvertiser.SqlWithPrefix);
+			}
+			if (_classifLevel == CstResult.MotherRecap.ElementType.product) {
+				sql.AppendFormat(", {0}", _recapProduct.SqlWithPrefix);
+			}
 
-            if (_session.ComparativeStudy && _typeYear == CstResult.PalmaresRecap.typeYearSelected.currentYear)
-            {
-                sql.Append(", total_N1 desc");
-            }
-            #endregion
+			sql.Append(" where  0=0 ");
+			if (_classifLevel == CstResult.MotherRecap.ElementType.advertiser) {
+				sql.AppendFormat(" and {0}.id_advertiser={1}.id_advertiser", dataTable.Prefix, _recapAdvertiser.Prefix);
+				sql.AppendFormat(" and {0}.id_language={1}", _recapAdvertiser.Prefix, _session.DataLanguage);
+			}
+			if (_classifLevel == CstResult.MotherRecap.ElementType.product) {
+				sql.AppendFormat(" and {0}.id_product={1}.id_product", dataTable.Prefix, _recapProduct.Prefix);
+				sql.AppendFormat(" and {0}.id_language={1}", _recapProduct.Prefix, _session.DataLanguage);
+			}
 
-            #region Execution de la requête
-            IDataSource dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis, WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].NlsSort);
-            try
-            {
-                ds = dataSource.Fill(sql.ToString());
-            }
-            catch (System.Exception err)
-            {
-                throw new ProductClassIndicatorsDALException(string.Format("Error while loading data: {0}", sql), err);
-            }
-            #endregion
+			//Media Selection
+			sql.AppendFormat(" and {0}", _utilities.GetMediaSelection(dataTable.Prefix));
 
-            return (ds);
-        }
-        #endregion
+			#region Product classification
+			// Product selection
+			if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
+				sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(dataTable.Prefix, true));
+			// Product rights
+			//sql.Append(FctUtilities.SQLGenerator.getClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
+			sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
+			#endregion
+
+
+			if (_classifLevel == CstResult.PalmaresRecap.ElementType.product) {
+				sql.AppendFormat(" group by {0}.id_product, {0}.product ", _recapProduct.Prefix);
+			}
+			else {
+				sql.AppendFormat(" group by {0}.id_advertiser, {0}.advertiser ", _recapAdvertiser.Prefix);
+			}
+			if (_typeYear == CstResult.PalmaresRecap.typeYearSelected.currentYear) {
+				sql.Append(" order by total_N desc ");
+			}
+			else {
+				sql.Append(" order by total_N1 desc ");
+			}
+
+			if (_session.ComparativeStudy && _typeYear == CstResult.PalmaresRecap.typeYearSelected.currentYear) {
+				sql.Append(", total_N1 desc");
+			}
+			#endregion
+
+			#region Execution de la requête
+			IDataSource dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis, WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].NlsSort);
+			try {
+				ds = dataSource.Fill(sql.ToString());
+			}
+			catch (System.Exception err) {
+				throw new ProductClassIndicatorsDALException(string.Format("Error while loading data: {0}", sql), err);
+			}
+			#endregion
+
+			return (ds);
+		}
+		#endregion
+
+		
     }
 }

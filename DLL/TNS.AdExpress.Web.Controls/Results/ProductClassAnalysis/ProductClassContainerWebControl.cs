@@ -170,6 +170,7 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
 					_tableChart = new ProductClassTableWebControl(_session);
                     _tableChart.Excel = _excel;
                     _tableChart.ID = "tableChartWebControl_" + this.ID;
+					_tableChart.AjaxProTimeOut = 240000;
                     Controls.Add(_tableChart);
 			}			
 			base.OnLoad (e);

@@ -67,25 +67,29 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
 
             #region Request building
             Table dataTable = this.GetDataTable(true);
+			if (_classifLevel == CstResult.MotherRecap.ElementType.advertiser)
             sql.AppendFormat(" select {0}.id_advertiser, {0}.advertiser", _recapAdvertiser.Prefix);
             if (_classifLevel == CstResult.MotherRecap.ElementType.product)
             {
-                sql.AppendFormat(", {0}.id_product, {0}.product", _recapProduct.Prefix);
+				sql.AppendFormat("select {0}.id_product, {0}.product", _recapProduct.Prefix);
             }
             sql.AppendFormat(", {0}", this.GetExpenditureClause());
 
 
             sql.Append(" from ");
             sql.AppendFormat(" {0}", dataTable.SqlWithPrefix);
+			if (_classifLevel == CstResult.MotherRecap.ElementType.advertiser)
             sql.AppendFormat(", {0}", _recapAdvertiser.SqlWithPrefix);
             if (_classifLevel == CstResult.MotherRecap.ElementType.product)
             {
                 sql.AppendFormat(", {0}", _recapProduct.SqlWithPrefix);
             }
 
-            sql.Append(" where  ");
-            sql.AppendFormat(" {0}.id_advertiser={1}.id_advertiser", dataTable.Prefix, _recapAdvertiser.Prefix);
-            sql.AppendFormat(" and {0}.id_language={1}", _recapAdvertiser.Prefix, _session.DataLanguage);
+            sql.Append(" where  0=0 ");
+			if (_classifLevel == CstResult.MotherRecap.ElementType.advertiser) {
+				sql.AppendFormat(" and {0}.id_advertiser={1}.id_advertiser", dataTable.Prefix, _recapAdvertiser.Prefix);
+				sql.AppendFormat(" and {0}.id_language={1}", _recapAdvertiser.Prefix, _session.DataLanguage);
+			}
             if (_classifLevel == CstResult.MotherRecap.ElementType.product)
             {
                 sql.AppendFormat(" and {0}.id_product={1}.id_product", dataTable.Prefix, _recapProduct.Prefix);
@@ -100,13 +104,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
                 sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(dataTable.Prefix, true));
             // Product rights
-            sql.Append(FctUtilities.SQLGenerator.getClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
+			//sql.Append(FctUtilities.SQLGenerator.getClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
+			sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
             #endregion
 
 
             if (_classifLevel == CstResult.PalmaresRecap.ElementType.product)
             {
-                sql.AppendFormat( " group by {0}.id_advertiser, {0}.advertiser, {1}.id_product, {1}.product ", _recapAdvertiser.Prefix, _recapProduct.Prefix);
+                sql.AppendFormat( " group by  {0}.id_product, {0}.product ", _recapProduct.Prefix);
             }
             else
             {

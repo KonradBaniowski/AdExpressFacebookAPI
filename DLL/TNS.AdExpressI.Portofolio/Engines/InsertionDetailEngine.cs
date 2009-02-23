@@ -219,7 +219,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				#region Generation of table
 				string[] files;
 				string listVisual = "";
-				long iCurColumn = 0;
+                int iCurColumn = 0;
 				Cell curCell = null;
 				string date = "";
 				string dateMediaNum = "";
@@ -336,7 +336,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 											curCell = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
                                             curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
                                             curCell.SetCellValue(row[Column.DataBaseField]);
-											tab[iCurLine, iCurColumn++] = curCell;
+											tab[iCurLine, iCurColumn++] = curCell; 
 										}
 										break;
 									default:

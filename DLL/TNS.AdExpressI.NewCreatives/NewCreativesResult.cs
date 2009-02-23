@@ -150,9 +150,9 @@ namespace TNS.AdExpressI.NewCreatives {
             AdExpressCellLevel[] cellLevels;
             LineType[] lineTypes = new LineType[4] { LineType.total, LineType.level1, LineType.level2, LineType.level3 };
             Headers headers = null;
-            Int64 iCurLine = 0;
-            int iNbLine = 0;
-            int iNbLevels = 0;
+            Int32 iCurLine = 0;
+            Int32 iNbLine = 0;
+            Int32 iNbLevels = 0;
             ArrayList parutions = new ArrayList();
 
             InitLine initLine = null;
@@ -235,8 +235,9 @@ namespace TNS.AdExpressI.NewCreatives {
         #endregion
 
         #region InitLine
-        protected delegate void InitLine(ResultTable oTab, Int64 cLine, CellUnitFactory cellFactory, AdExpressCellLevel parent);
-        protected void InitListLine(ResultTable oTab, Int64 cLine, CellUnitFactory cellFactory, AdExpressCellLevel parent) {
+        protected delegate void InitLine(ResultTable oTab, Int32 cLine, CellUnitFactory cellFactory, AdExpressCellLevel parent);
+        protected void InitListLine(ResultTable oTab, Int32 cLine, CellUnitFactory cellFactory, AdExpressCellLevel parent)
+        {
             //total
             oTab[cLine, 2] = cellFactory.Get(0.0);
 
@@ -254,10 +255,11 @@ namespace TNS.AdExpressI.NewCreatives {
         #endregion
 
         #region SetLine
-        protected delegate void SetLine(ResultTable oTab, Int64 iLineIndex, DataRow dr);
-        protected void SetListLine(ResultTable oTab, Int64 cLine, DataRow row) {
+        protected delegate void SetLine(ResultTable oTab, Int32 iLineIndex, DataRow dr);
+        protected void SetListLine(ResultTable oTab, Int32 cLine, DataRow row)
+        {
             if(row != null) {
-                long lCol = oTab.GetHeadersIndexInResultTable(row["date_creation"].ToString());
+                Int32 lCol = oTab.GetHeadersIndexInResultTable(row["date_creation"].ToString());
                 //Get values
                 string[] tIds = row[_session.GetSelectedUnit().Id.ToString()].ToString().Split(',');
                 //Affect value

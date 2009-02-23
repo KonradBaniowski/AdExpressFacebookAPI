@@ -353,8 +353,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			#endregion
 
 			#region nbLines init
-            long nbLines = 0;
-            long lineIndex = 0;
+            int nbLines = 0;
+            int lineIndex = 0;
             switch (_vehicleInformation.Id) {
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:

@@ -101,7 +101,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         {
             return BuildTops();
         }
-        #endregion
+        #endregion		
 
         #region GetData
         /// <summary>
@@ -117,6 +117,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             #region Data loading
             DataSet ds = _dalLayer.GetTops(typeYear, classifLevel); 
             DataTable dt = ds.Tables[0];
+			string idProductList = "";
             #endregion
 
             #region Init Result Table
@@ -138,21 +139,27 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 
                 row = dt.Rows[i-1];
 
-                idAdv = Convert.ToInt64(row["id_advertiser"]);
+				if (classifLevel == CstResult.MotherRecap.ElementType.advertiser) 
+					idAdv = Convert.ToInt64(row["id_advertiser"]);
                 idLev = (classifLevel == CstResult.MotherRecap.ElementType.advertiser) ? idAdv : Convert.ToInt64(row["id_product"]);
                 dN = Convert.ToDouble(row[strTotalColName]);
                 tabResult[i, ID_PRODUCT_INDEX] = idLev;
                 tabResult[i, PRODUCT] = row[strLabColName].ToString();
 
-                if (_competitorIDS.Contains(idAdv)){
-                    tabResult[i, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.competitor;
-                }
-                else if (_referenceIDS.Contains(idAdv)){
-                    tabResult[i, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.reference;
-                }
-                else{
-                    tabResult[i, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.none;
-                }
+				if (classifLevel == CstResult.MotherRecap.ElementType.advertiser) {
+					if (_competitorIDS.Contains(idAdv)) {
+						tabResult[i, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.competitor;
+					}
+					else if (_referenceIDS.Contains(idAdv)) {
+						tabResult[i, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.reference;
+					}
+					else {
+						tabResult[i, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.none;
+					}
+				}
+				else {
+					idProductList += idLev + ",";
+				}
                 tabResult[i, TOTAL_N] = dN;
                 if (_session.ComparativeStudy && typeYear == CstResult.PalmaresRecap.typeYearSelected.currentYear)
                 {
@@ -164,6 +171,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 tabResult[i, RANK] = i;
 
             }
+			if (classifLevel == CstResult.MotherRecap.ElementType.product) {
+				if (idProductList != null && idProductList.Length > 0) {
+					idProductList = idProductList.Substring(0, idProductList.Length - 1);
+					SetAdvertiserPersonalisation(tabResult, idProductList, nbLine,typeYear);
+				}
+			}
             #endregion
 
             #region Compute rank progression and total univers
@@ -255,12 +268,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             const string competitorStyle = "p14";
             const string competitorExcelStyle = "p142";
             const string referenceStyle = "p15";
+			const string mixedStyle = "p16";
             //Numbers
             const string L3 = "p9";
             const string competitorStyleNB = "p141";
             const string competitorExcelStyleNB = "p143";
 
             const string referenceStyleNB = "p151";
+			const string mixedStyleNB = "p161";
             // Total
             const string totalTitle = "pmtotal";
             const string totalNb = "pmtotalnb";
@@ -323,7 +338,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
 
                 #region Style css
-                if (tab[i, CstResult.PalmaresRecap.COMPETITOR] != null && Convert.ToInt32(tab[i, CstResult.PalmaresRecap.COMPETITOR]) == 2)
+				if (tab[i, CstResult.PalmaresRecap.COMPETITOR] != null && Convert.ToInt32(tab[i, CstResult.PalmaresRecap.COMPETITOR]) == 3) {
+					styleClassTitle = mixedStyle;
+					styleClassNumber = mixedStyleNB;					
+				}
+                else if (tab[i, CstResult.PalmaresRecap.COMPETITOR] != null && Convert.ToInt32(tab[i, CstResult.PalmaresRecap.COMPETITOR]) == 2)
                 {
                     styleClassTitle = competitorStyle;
                     styleClassNumber = competitorStyleNB;
@@ -488,5 +507,98 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         }
         #endregion
 
-    }
+		#region Internal Methods
+		///// <summary>
+		///// Set advertiser personnalisation
+		///// </summary>
+		///// <param name="tabResult">tab Result</param>
+		///// <param name="idProductList">id Product List</param>
+		//protected virtual void SetAdvertiserPersonalisation(object[,] tabResult,string idProductList,int nbLine ) {
+		//    Dictionary<long, List<long>> res = _dalLayer.GetProductsPersonnalisationType(idProductList);
+		//    List<long> temp = null;
+		//    long idAdv=-1;
+		//    bool inRef = false, inComp = false;
+		//    if(res !=null && res.Count>0){
+
+		//        for (int i = 0; i < nbLine; i++) {
+		//            if (tabResult[i, ID_PRODUCT_INDEX] != null && res.ContainsKey(long.Parse(tabResult[i, ID_PRODUCT_INDEX].ToString()))) {
+		//                temp = res[long.Parse(tabResult[i, ID_PRODUCT_INDEX].ToString())];
+		//                if (temp != null && temp.Count > 0) {
+		//                    for (int j = 0; j < temp.Count; j++) {
+		//                        idAdv = temp[j];
+		//                        if (_competitorIDS.Contains(idAdv)) inComp = true;
+		//                        if (_referenceIDS.Contains(idAdv)) inRef = true;
+		//                        if (inComp && inRef) break;								
+		//                    }
+		//                    if (inComp && inRef)
+		//                        tabResult[i, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.mixed;
+		//                    else if (inComp)
+		//                        tabResult[i, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.competitor;
+		//                    else if (inRef)
+		//                        tabResult[i, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.reference;
+		//                    else tabResult[i, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.none;							
+		//                }
+		//            }
+		//            inRef = false;
+		//            inComp = false;
+		//        }
+		//    }
+		//}
+		#endregion
+
+		#region SetAdvertiserPersonalisation
+		/// <summary>
+		/// Set advertiser personnalisation
+		/// </summary>
+		/// <param name="tabResult">tab Result</param>
+		/// <param name="idProductList">id Product List</param>
+		protected virtual void SetAdvertiserPersonalisation(object[,] tabResult, string idProductList, int nbLine,CstResult.PalmaresRecap.typeYearSelected typeYear) {
+			DataSet res = null;
+			if(typeYear == CstResult.PalmaresRecap.typeYearSelected.previousYear && _session.ComparativeStudy)
+			 res = _dalLayer.GetProductsPersonnalisationType(idProductList,_strYearN1ID);
+			 else res = _dalLayer.GetProductsPersonnalisationType(idProductList, _strYearID);
+			List<long> temp = null;
+			long idProd = -1;
+			int nbTypes = 0;
+			bool inRef = false, inComp = false, inneutral= false;
+			if (res != null && res.Tables[0] != null && res.Tables[0].Rows.Count > 0) {
+				for (int i = 0; i < nbLine; i++) {
+					if (tabResult[i, ID_PRODUCT_INDEX] != null) {
+						idProd = long.Parse(tabResult[i, ID_PRODUCT_INDEX].ToString());
+						foreach (DataRow row in res.Tables[0].Rows) {
+							if (long.Parse(row["id_product"].ToString()) == idProd) {
+								if (Convert.ToInt32(row["inref"]) > 0) {
+									nbTypes++;
+									inRef = true;
+								}
+								if (Convert.ToInt32(row["incomp"]) > 0) {
+									nbTypes++;
+									inComp = true;
+								}
+								if (Convert.ToInt32(row["inneutral"]) > 0) {
+									nbTypes++;
+									inneutral = true;
+								}
+
+								if (nbTypes > 1)
+									tabResult[i, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.mixed;
+								else if (inComp)
+									tabResult[i, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.competitor;
+								else if (inRef)
+									tabResult[i, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.reference;
+								else tabResult[i, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.none;
+								nbTypes = 0;
+								inRef = false;
+								inComp = false;
+								inneutral = false;
+								break;
+							}
+						}						
+					}					
+				}							
+			}
+		}
+		#endregion
+
+	}
 }

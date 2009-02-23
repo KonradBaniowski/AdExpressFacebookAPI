@@ -222,15 +222,15 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					#endregion
 
 					#region Crétaion de table resultTable
-					long nbLines=(SeasonalityPlanTable.Rows.Count/2)+1;
-					long nbCol;
-					long lineIndex=0;
+                    int nbLines = (SeasonalityPlanTable.Rows.Count / 2) + 1;
+                    int nbCol;
+                    int lineIndex = 0;
 					resultTable = new ResultTable(nbLines,headers);
 					nbCol = resultTable.DataColumnsNumber;
 					#endregion
 
 					#region filling resultTable
-					Int64 baseValueColumn=0, baseDistributionColumn=0, additionalValueColumn=0, additionalDistributionColumn=0;
+                    int baseValueColumn = 0, baseDistributionColumn = 0, additionalValueColumn = 0, additionalDistributionColumn = 0;
 
 					#region Sélection de l'unité
 					CellUnitFactory cellUnitFactory=webSession.GetCellUnitFactory();

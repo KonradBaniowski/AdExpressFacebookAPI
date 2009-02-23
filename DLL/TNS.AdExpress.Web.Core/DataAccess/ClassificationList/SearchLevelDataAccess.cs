@@ -34,58 +34,37 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
         public static DataSet GetItems(string table, string wordToSearch, WebSession webSession, string dBSchema, Dimension dimension) {
 
             #region Tables initilization
-            View oView;
-            string classificationRight = "";
+			View oView = null;
+            string classificationRight = "";            
+			bool useView = true;
 
-            try {
-                switch(dimension){
-                    case Dimension.product :
-                        oView = WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);
-                        classificationRight = getCustomerProductRight(webSession, "wp", true);
-                        break;
-                    case Dimension.media :
-                        oView = WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia);
-                        classificationRight = getCustomerMediaRight(webSession, "wp", true);
-                        break;
-                    default :
-                        throw (new CoreExceptions.SearchLevelDataAccessException("Unknown nomenclature dimension"));
-                }
-            }
-            catch(System.Exception err) {
-                throw (new CoreExceptions.SearchLevelDataAccessException("Impossible to get view names or schema label",err));
-            }
-            #endregion		
+			try {
+				oView = GetView(webSession, dimension);
+				classificationRight = GetRights(webSession, dimension);
+				useView = CanUseView(webSession, dimension, classificationRight);
+			}
+			catch (System.Exception err) {
+				throw (new CoreExceptions.SearchLevelDataAccessException("Impossible to get view names or rights", err));
+			}
+            #endregion
 
 			#region Construction de la requête
 			string sql = "select distinct wp.id_" + table.ToString() + " as id_item, wp." + table.ToString() + " as item ";
-            sql += " from " +oView.Sql + webSession.DataLanguage.ToString() + " wp";			
+			sql += GetFromClause(webSession,oView,table,dBSchema,useView);
 
-            //Word to search			
+			//Word to search			
 			wordToSearch = wordToSearch.ToUpper().Replace("'", " ");
 			wordToSearch = wordToSearch.ToUpper().Replace("*", "%");
 			wordToSearch = "'" + wordToSearch.Trim() + "%'";
 
 			sql += " where wp." + table.ToString() + " like " + wordToSearch + "";
-			
-			#region Application des droits
-			if (classificationRight != null && classificationRight.Length > 0) {
-				sql += " " +classificationRight;
-			}
-			#endregion
-
-            switch(webSession.CurrentModule){
-                case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA:
-                    if(dimension == Dimension.media)
-                        sql += " and wp.id_vehicle in (" + webSession.GetSelection(webSession.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess) + ") ";
-                    break;
-            }
-
+			sql += GetJointClause(webSession, oView, table, dimension, classificationRight, useView);
 			sql += " order by " + table.ToString();
 			#endregion
 
 			#region Excution de la requête
 			try {
-				return webSession.Source.Fill(sql);
+				return GetSource(webSession).Fill(sql);
 			}
 			catch (System.Exception e) {
 				throw new CoreExceptions.SearchLevelDataAccessException(e.Message, e);
@@ -99,57 +78,37 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 		/// <param name="table">Table de la nomenclature</param>
 		/// <param name="idList">Liste d'identifiant d'éléments</param>
 		/// <param name="webSession">Session du client</param>
+		/// <param name="dimension">dimension</param>
 		/// <param name="dBSchema"> DB Schema</param>
 		/// <returns>Le nombre d'élément de la nomenclature trouvé</returns>
         public static DataSet GetOneLevelItems(string table, string idList, WebSession webSession, string dBSchema, Dimension dimension) {
 			
             #region Tables initilization
-            View oView;
+            View oView = null;
             string classificationRight = "";
+			bool useView = true;
 
-            try {
-                switch(dimension) {
-                    case Dimension.product:
-                        oView = WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);
-                        classificationRight = getCustomerProductRight(webSession, "wp", true);
-                        break;
-                    case Dimension.media:
-                        oView = WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia);
-                        classificationRight = getCustomerMediaRight(webSession, "wp", true);
-                        break;
-                    default:
-                        throw (new CoreExceptions.SearchLevelDataAccessException("Unknown nomenclature dimension"));
-                }
-            }
-            catch(System.Exception err) {
-                throw (new CoreExceptions.SearchLevelDataAccessException("Impossible to get view names or schema label",err));
-            }
+			try {
+				oView = GetView(webSession, dimension);
+				classificationRight = GetRights(webSession, dimension);
+				useView = CanUseView(webSession, dimension, classificationRight);
+			}
+			catch (System.Exception err) {
+				throw (new CoreExceptions.SearchLevelDataAccessException("Impossible to get view names or rights", err));
+			}
             #endregion
 
 			#region Construction de la requête
 			string sql = "select distinct wp.id_" + table.ToString() + " as id_item, wp." + table.ToString() + " as item ";
-            sql += " from " + oView.Sql + webSession.DataLanguage.ToString() + " wp ";
+			sql += GetFromClause(webSession, oView, table,dBSchema, useView);
 			sql += " where wp.id_" + table.ToString() + " in (" + idList + ")";
-			
-			#region Application des droits
-            if(classificationRight != null && classificationRight.Length > 0) {
-                sql += classificationRight;
-			}
-			#endregion
-
-            switch(webSession.CurrentModule) {
-                case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA:
-                    if(dimension == Dimension.media)
-                        sql += " and wp.id_vehicle in (" + webSession.GetSelection(webSession.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess) + ") ";
-                    break;
-            }
-
+			sql += GetJointClause(webSession, oView, table, dimension, classificationRight, useView);
 			sql += " order by " + table.ToString();
 			#endregion
 
 			#region Excution de la requête
 			try {
-				return webSession.Source.Fill(sql);
+				return GetSource(webSession).Fill(sql);
 			}
 			catch (System.Exception e) {
 				throw new CoreExceptions.SearchLevelDataAccessException(e.Message, e);
@@ -169,52 +128,31 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
         public static DataSet GetSelectedItems(string table, string idList, WebSession webSession, string dBSchema, Dimension dimension) {
 
             #region Tables initilization
-            View oView;
+			View oView = null;
             string classificationRight = "";
+			bool useView = true;
 
-            try {
-                switch(dimension) {
-                    case Dimension.product:
-                        oView = WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);
-                        classificationRight = getCustomerProductRight(webSession, "wp", true); 
-                        break;
-                    case Dimension.media:
-                        oView = WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia);
-                        classificationRight = getCustomerMediaRight(webSession, "wp", true);
-                        break;
-                    default:
-                        throw (new CoreExceptions.SearchLevelDataAccessException("Unknown nomenclature dimension"));
-                }
-            }
-            catch(System.Exception err) {
-                throw (new CoreExceptions.SearchLevelDataAccessException("Impossible to get view names or schema label",err));
-            }
+			try {
+				oView = GetView(webSession, dimension);
+				classificationRight = GetRights(webSession, dimension);
+				useView = CanUseView(webSession, dimension, classificationRight);
+			}
+			catch (System.Exception err) {
+				throw (new CoreExceptions.SearchLevelDataAccessException("Impossible to get view names or rights", err));
+			}
             #endregion
 
 			#region Construction de la requête
 			string sql = "select distinct wp.id_" + table.ToString() + " as id_item, wp." + table.ToString() + " as item ";
-            sql += " from " + oView.Sql + webSession.DataLanguage.ToString() + " wp";
+			sql += GetFromClause(webSession, oView, table,dBSchema, useView);
 			sql += " where wp.id_" + table.ToString() + " in (" + idList + ")";
-
-			#region Application des droits
-            if(classificationRight != null && classificationRight.Length > 0) {
-                sql += classificationRight;
-			}
-			#endregion
-
-            switch(webSession.CurrentModule) {
-                case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA:
-                    if(dimension == Dimension.media)
-                        sql += " and wp.id_vehicle in (" + webSession.GetSelection(webSession.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess) + ") ";
-                    break;
-            }
-
+			sql += GetJointClause(webSession, oView, table, dimension, classificationRight, useView);
 			sql += " order by " + table.ToString();
 			#endregion
 
 			#region Excution de la requête
 			try {
-				return webSession.Source.Fill(sql);
+				return GetSource(webSession).Fill(sql);
 			}
 			catch (System.Exception e) {
 				throw new CoreExceptions.SearchLevelDataAccessException(e.Message, e);
@@ -237,25 +175,15 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 		public static DataSet GetItems(string table, string selectedItemIds, string selectedItemTableName, WebSession webSession, string dBSchema, Dimension dimension) {
 
             #region Tables initilization
-            View oView;
+			View oView = null;
             string classificationRight = "";
 
-            try {
-                switch(dimension) {
-                    case Dimension.product:
-                        oView = WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);
-                        classificationRight = getCustomerProductRight(webSession, "wp", true); 
-                        break;
-                    case Dimension.media:
-                        oView = WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia);
-                        classificationRight = getCustomerMediaRight(webSession, "wp", true);
-                        break;
-                    default:
-                        throw (new CoreExceptions.SearchLevelDataAccessException("Unknown nomenclature dimension"));
-                }
-            }
+            try {				
+				oView = GetView(webSession, dimension);
+				classificationRight = GetRights(webSession, dimension);
+			}
             catch(System.Exception err) {
-                throw (new CoreExceptions.SearchLevelDataAccessException("Impossible to get view names or schema label",err));
+                throw (new CoreExceptions.SearchLevelDataAccessException("Impossible to get view names or rights",err));
             }
             #endregion
 
@@ -282,7 +210,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 
 			#region Excution de la requête
 			try {
-				return webSession.Source.Fill(sql);
+				return GetSource(webSession).Fill(sql);
 			}
 			catch (System.Exception e) {
 				throw new CoreExceptions.SearchLevelDataAccessException(e.Message, e);
@@ -290,6 +218,48 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 			#endregion
 
 		}
+		#endregion
+
+		#region GetItems
+		/// <summary>
+		/// Obtient la liste d'éléments contenant le terme contenu dans wordToSearch dans le niveau de nomenclature table
+		/// </summary>
+		/// <param name="table">Table de la nomenclature</param>
+		/// <param name="wordToSearch">Terme recherché</param>
+		/// <param name="webSession">Session du client</param>
+		/// <param name="dBSchema"> DB Schema</param>
+		/// <returns>Le nombre d'élément de la nomenclature trouvé</returns>
+		public static DataSet GetRecapItems(string table, WebSession webSession, string dBSchema,int universeLevelId, Dimension dimension) {
+
+			#region Tables Variables
+			View oView = null;
+			string classificationRight = "";
+			bool useView = false;
+			
+			#endregion
+
+			#region Construction de la requête
+			string sql = "select distinct wp.id_" + table.ToString() + " as id_item, wp." + table.ToString() + " as item ";
+			sql += " from " + dBSchema + "." + table + " wp ";		
+
+			sql += " where ";
+			sql += "  wp.id_language = " + webSession.DataLanguage;
+			sql += GetAccessRights(webSession, universeLevelId, "id_" + table, true);
+			sql += " and wp.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
+			sql += " order by " + table.ToString();
+			#endregion
+
+			#region Excution de la requête
+			try {
+				return GetSource(webSession).Fill(sql);
+			}
+			catch (System.Exception e) {
+				throw new CoreExceptions.SearchLevelDataAccessException(e.Message, e);
+			}
+			#endregion
+		}
+
+		
 		#endregion
 
 		#region Droits client
@@ -395,186 +365,196 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 		/// <param name="beginByAnd">True si le bloc doit commencer par un AND, false sinon</param>
 		/// <returns>Code SQL généré</returns>
 		public static string getCustomerProductRight(WebSession webSession, string tablePrefixe, bool beginByAnd) {
-			return (getClassificationCustomerProductRight(webSession, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe,tablePrefixe,tablePrefixe,tablePrefixe,tablePrefixe, beginByAnd));
-		}
+			switch (webSession.CurrentModule) {
+				case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR:
+				case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE:
+					//Droits produits dont les droits annonceurs uniquement appliqués pour l'analyse sectorielle
+					return (Utilities.SQLGenerator.GetClassificationCustomerProductRight(webSession, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe, beginByAnd));
+				default :
+					return (Utilities.SQLGenerator.getClassificationCustomerProductRight(webSession, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe, beginByAnd));
+			}
+		}		
 
+		#endregion
+
+		#endregion
+
+		#region GetView
 		/// <summary>
-		/// Génère les droits clients Produit.
+		/// Get classification View 
 		/// </summary>
-		/// <param name="webSession">Session du client</param>
-		/// <param name="sectorPrefixe">Préfixe de la table sector</param>
-		/// <param name="subsectorPrefixe">Préfixe de la table subsector</param>
-		/// <param name="groupPrefixe">Préfixe de la table group_</param>
-		/// <param name="segmentPrefixe">Préfixe de la table segment</param>
-		/// <param name="beginByAnd">True si le bloc doit commencer par un AND, false sinon</param>
-		/// <returns>Code SQL généré</returns>
-		public static string getClassificationCustomerProductRight(WebSession webSession, string sectorPrefixe, string subsectorPrefixe, string groupPrefixe, string segmentPrefixe,string holdingCompanyPrefixe,string advertiserPrefixe, string brandPrefixe,string productPrefixe,bool beginByAnd) {
-			string sql = "";
-			bool premier = true;
-			// Sector (Famille)
-			if (webSession.CustomerLogin[CustomerRightConstante.type.sectorAccess].Length > 0) {
-				if (beginByAnd) sql += " and";
-				sql += " ((" + sectorPrefixe + ".id_sector in (" + webSession.CustomerLogin[CustomerRightConstante.type.sectorAccess] + ") ";
-				premier = false;
+		/// <param name="webSession">Customer Session</param>
+		/// <param name="oView">View</param>
+		/// <param name="classificationRight">Sql rights</param>
+		protected static View GetView(WebSession webSession, Dimension dimension) {
+			
+			switch (webSession.CurrentModule) {
+				case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR:
+				case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE:
+					switch (dimension) {
+						case Dimension.product:
+							return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allRecapProduct);							
+						case Dimension.media:
+							return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allRecapMedia);							
+						default:
+							throw (new CoreExceptions.SearchLevelDataAccessException("Unknown nomenclature dimension"));
+					}					
+				default :
+					switch (dimension) {
+						case Dimension.product:
+							return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);							
+						case Dimension.media:
+							return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia);							
+						default:
+							throw (new CoreExceptions.SearchLevelDataAccessException("Unknown nomenclature dimension"));
+					}					
 			}
-			// SubSector (Classe)
-			if (webSession.CustomerLogin[CustomerRightConstante.type.subSectorAccess].Length > 0) {
-				if (!premier) sql += " or";
-				else {
-					if (beginByAnd) sql += " and";
-					sql += " ((";
-				}
-				sql += " " + subsectorPrefixe + ".id_subsector in (" + webSession.CustomerLogin[CustomerRightConstante.type.subSectorAccess] + ") ";
-				premier = false;
-			}
-			// Group (Groupe)
-			if (webSession.CustomerLogin[CustomerRightConstante.type.groupAccess].Length > 0) {
-				if (!premier) sql += " or";
-				else {
-					if (beginByAnd) sql += " and";
-					sql += " ((";
-				}
-				sql += " " + groupPrefixe + ".id_group_ in (" + webSession.CustomerLogin[CustomerRightConstante.type.groupAccess] + ") ";
-				premier = false;
-			}
-			// Segment (Variété)
-			if (webSession.CustomerLogin[CustomerRightConstante.type.segmentAccess].Length > 0) {
-				if (!premier) sql += " or";
-				else {
-					if (beginByAnd) sql += " and";
-					sql += " ((";
-				}
-				sql += " " + segmentPrefixe + ".id_segment in (" + webSession.CustomerLogin[CustomerRightConstante.type.segmentAccess] + ") ";
-				premier = false;
-			}
-			// Holding Company 
-			if (webSession.CustomerLogin[CustomerRightConstante.type.holdingCompanyAccess].Length > 0) {
-				if (!premier) sql += " or";
-				else {
-					if (beginByAnd) sql += " and";
-					sql += " ((";
-				}
-				sql += " " + holdingCompanyPrefixe + ".id_holding_company in (" + webSession.CustomerLogin[CustomerRightConstante.type.holdingCompanyAccess] + ") ";
-				premier = false;
-			}
-			// Advertiser
-			if (webSession.CustomerLogin[CustomerRightConstante.type.advertiserAccess].Length > 0) {
-				if (!premier) sql += " or";
-				else {
-					if (beginByAnd) sql += " and";
-					sql += " ((";
-				}
-				sql += " " + advertiserPrefixe + ".id_advertiser in (" + webSession.CustomerLogin[CustomerRightConstante.type.advertiserAccess] + ") ";
-				premier = false;
-			}
-			// Brand
-			if (webSession.CustomerLogin[CustomerRightConstante.type.brandAccess].Length > 0) {
-				if (!premier) sql += " or";
-				else {
-					if (beginByAnd) sql += " and";
-					sql += " ((";
-				}
-				sql += " " + brandPrefixe + ".id_brand in (" + webSession.CustomerLogin[CustomerRightConstante.type.brandAccess] + ") ";
-				premier = false;
-			}
-			// Product
-			if (webSession.CustomerLogin[CustomerRightConstante.type.productAccess].Length > 0) {
-				if (!premier) sql += " or";
-				else {
-					if (beginByAnd) sql += " and";
-					sql += " ((";
-				}
-				sql += " " + productPrefixe + ".id_product in (" + webSession.CustomerLogin[CustomerRightConstante.type.productAccess] + ") ";
-				premier = false;
-			}
-			if (!premier) sql += " )";
-			// Droits en exclusion
-			// Sector (Famille)
-			if (webSession.CustomerLogin[CustomerRightConstante.type.sectorException].Length > 0) {
-				if (!premier) sql += " and";
-				else {
-					if (beginByAnd) sql += " and";
-					sql += " (";
-				}
-				sql += " " + sectorPrefixe + ".id_sector not in (" + webSession.CustomerLogin[CustomerRightConstante.type.sectorException] + ") ";
-				premier = false;
-			}
-			// SubSector (Classe)
-			if (webSession.CustomerLogin[CustomerRightConstante.type.subSectorException].Length > 0) {
-				if (!premier) sql += " and";
-				else {
-					if (beginByAnd) sql += " and";
-					sql += " (";
-				}
-				sql += " " + subsectorPrefixe + ".id_subsector not in (" + webSession.CustomerLogin[CustomerRightConstante.type.subSectorException] + ") ";
-				premier = false;
-			}
-			// Group (Groupe)
-			if (webSession.CustomerLogin[CustomerRightConstante.type.groupException].Length > 0) {
-				if (!premier) sql += " and";
-				else {
-					if (beginByAnd) sql += " and";
-					sql += " (";
-				}
-				sql += " " + groupPrefixe + ".id_group_  not in (" + webSession.CustomerLogin[CustomerRightConstante.type.groupException] + ") ";
-				premier = false;
-			}
-			// Segment (Variété)
-			if (webSession.CustomerLogin[CustomerRightConstante.type.segmentException].Length > 0) {
-				if (!premier) sql += " and";
-				else {
-					if (beginByAnd) sql += " and";
-					sql += " (";
-				}
-				sql += " " + segmentPrefixe + ".id_segment  not in (" + webSession.CustomerLogin[CustomerRightConstante.type.segmentException] + ") ";
-				premier = false;
-			}
-			// Holding Company
-			if (webSession.CustomerLogin[CustomerRightConstante.type.holdingCompanyException].Length > 0) {
-				if (!premier) sql += " and";
-				else {
-					if (beginByAnd) sql += " and";
-					sql += " (";
-				}
-				sql += " " + holdingCompanyPrefixe + ".id_holding_company  not in (" + webSession.CustomerLogin[CustomerRightConstante.type.holdingCompanyException] + ") ";
-				premier = false;
-			}
-			// Advertiser
-			if (webSession.CustomerLogin[CustomerRightConstante.type.advertiserException].Length > 0) {
-				if (!premier) sql += " and";
-				else {
-					if (beginByAnd) sql += " and";
-					sql += " (";
-				}
-				sql += " " + advertiserPrefixe + ".id_advertiser  not in (" + webSession.CustomerLogin[CustomerRightConstante.type.advertiserException] + ") ";
-				premier = false;
-			}
-			// Brand
-			if (webSession.CustomerLogin[CustomerRightConstante.type.brandException].Length > 0) {
-				if (!premier) sql += " and";
-				else {
-					if (beginByAnd) sql += " and";
-					sql += " (";
-				}
-				sql += " " + brandPrefixe + ".id_brand  not in (" + webSession.CustomerLogin[CustomerRightConstante.type.brandException] + ") ";
-				premier = false;
-			}
-			// Product
-			if (webSession.CustomerLogin[CustomerRightConstante.type.productException].Length > 0) {
-				if (!premier) sql += " and";
-				else {
-					if (beginByAnd) sql += " and";
-					sql += " (";
-				}
-				sql += " " + productPrefixe + ".id_product  not in (" + webSession.CustomerLogin[CustomerRightConstante.type.productException] + ") ";
-				premier = false;
-			}
-			if (!premier) sql += " )";
-			return (sql);
+
 		}
 		#endregion
 
-        #endregion
+		#region GetRights
+		/// <summary>
+		/// Get classification rights
+		/// </summary>
+		/// <param name="webSession">Customer Session</param>
+		/// <param name="oView">View</param>
+		/// <param name="classificationRight">Sql rights</param>
+		protected static string GetRights(WebSession webSession, Dimension dimension) {
+			string classificationRight = "";
+			switch (dimension) {
+				case Dimension.product:
+					classificationRight = getCustomerProductRight(webSession, "wp", true);
+					break;
+				case Dimension.media:
+					classificationRight = getCustomerMediaRight(webSession, "wp", true);
+					break;
+				default:
+					throw (new CoreExceptions.SearchLevelDataAccessException("Unknown nomenclature dimension"));
+			}
 
-    }
+			return classificationRight;
+		}
+
+		#region GetItemsInAccess
+		/// <summary>
+		/// Get classification access rights
+		/// </summary>
+		/// <param name="webSession">Customer Session</param>
+		/// <param name="universeLevelId">universe levekl Id</param>
+		 /// <param name="label">Field</param>
+		/// <param name="include">True if elements are included (in), false either (not in)</param>
+		/// <returns>ID list of nomenclature items </returns>
+		public static string GetAccessRights(WebSession webSession,long universeLevelId,string label, bool include) {
+			string accessItems = "";
+			switch (universeLevelId) {
+				case TNS.Classification.Universe.TNSClassificationLevels.ADVERTISER:
+					accessItems = Utilities.SQLGenerator.GetInClauseMagicMethod(label, webSession.CustomerLogin[CustomerRightConstante.type.advertiserAccess], include); break;
+				case TNS.Classification.Universe.TNSClassificationLevels.SECTOR:
+					accessItems = Utilities.SQLGenerator.GetInClauseMagicMethod(label, webSession.CustomerLogin[CustomerRightConstante.type.sectorAccess], include); break;
+				case TNS.Classification.Universe.TNSClassificationLevels.SUB_SECTOR:
+					accessItems = Utilities.SQLGenerator.GetInClauseMagicMethod(label, webSession.CustomerLogin[CustomerRightConstante.type.subSectorAccess], include); break;
+				case TNS.Classification.Universe.TNSClassificationLevels.GROUP_:
+					accessItems = Utilities.SQLGenerator.GetInClauseMagicMethod(label, webSession.CustomerLogin[CustomerRightConstante.type.groupAccess], include); break;
+				case TNS.Classification.Universe.TNSClassificationLevels.SEGMENT:
+					accessItems = Utilities.SQLGenerator.GetInClauseMagicMethod(label, webSession.CustomerLogin[CustomerRightConstante.type.segmentAccess], include); break;
+				default:
+					throw (new CoreExceptions.SearchLevelDataAccessException("Identifiant de niveau de nomenclature inconnu"));
+			}
+			return (accessItems != null && accessItems.Length > 0) ? " and " + accessItems : accessItems;
+		}
+
+		#endregion
+
+		#endregion
+
+		#region GetSource
+		/// <summary>
+		/// Get data source
+		/// </summary>
+		/// <param name="webSession">Customer Session</param>
+		protected static IDataSource GetSource(WebSession webSession) {
+			switch (webSession.CurrentModule) {
+				case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR:
+				case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE:
+					return WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis, WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].NlsSort);
+				default:
+					return webSession.Source;				
+			}
+		}
+		#endregion
+
+		#region GetFromClause
+		/// <summary>
+		/// Get sql from clause
+		/// </summary>
+		/// <param name="webSession">User session</param>
+		/// <param name="oView">View</param>
+		/// <param name="table">Table</param>
+		/// <param name="useView">determine if must use View</param>
+		/// <returns>sql from clause string</returns>
+		protected static string GetFromClause(WebSession webSession, View oView, string table, string dBSchema, bool useView) {			
+			if (useView)
+				return " from " + oView.Sql + webSession.DataLanguage.ToString() + " wp ";
+			else return " from " + dBSchema + "."+ table + " wp ";
+		}
+		#endregion
+
+		#region GetJointClause
+		/// <summary>
+		/// Get sql Joint clause
+		/// </summary>
+		/// <param name="webSession">User session</param>
+		/// <param name="oView">View</param>
+		/// <param name="table">Table</param>
+		/// <param name="classificationRight">Classification rights</param>
+		/// <param name="dimension">dimension media or product</param>
+		/// <param name="useView">determine if must use View</param>
+		/// <returns>sql from clause string</returns>
+		protected static string GetJointClause(WebSession webSession, View oView, string table, Dimension dimension,string classificationRight,bool useView) {			
+			string sql="";
+
+			if (useView) {
+
+				#region Application des droits
+				if (classificationRight != null && classificationRight.Length > 0) {
+					sql += classificationRight;
+				}
+				#endregion
+
+				switch (webSession.CurrentModule) {
+					case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA:
+						if (dimension == Dimension.media)
+							sql += " and wp.id_vehicle in (" + webSession.GetSelection(webSession.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess) + ") ";
+						break;
+				}
+			}
+			else {
+				sql += " and wp.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED; 
+				sql += " and wp.id_language = " + webSession.DataLanguage;
+			}
+
+			return sql;
+		}
+		#endregion
+
+		#region CanUseView
+		/// <summary>
+		/// Determine if View table must be used in query
+		/// </summary>
+		/// <param name="webSession">User Session</param>
+		/// <param name="dimension">dimension media or product</param>
+		/// <param name="classificationRight">classification rights</param>
+		/// <returns></returns>
+		protected static bool CanUseView(WebSession webSession, Dimension dimension, string classificationRight) {
+			if ((classificationRight != null && classificationRight.Length > 0)
+			|| (dimension == Dimension.media && webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA))
+			 return true;
+			 return false;
+		}
+		#endregion
+
+		
+
+	}
 }

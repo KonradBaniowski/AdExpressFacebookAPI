@@ -16,6 +16,11 @@ using System.Collections;
 using TNS.AdExpress.Web.DataAccess.Selections.Products;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpressI.ProductClassReports.DAL;
+
+using CstModule = TNS.AdExpress.Constantes.Web.Module;
+using System.Reflection;
 
 namespace TNS.AdExpress.Web.Controls.Selections
 {
@@ -113,7 +118,18 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnPreRender(EventArgs e) {
-			dsListAdvertiser=TNS.AdExpress.Web.DataAccess.Selections.Products.RecapAdvertiserDataAccess.GetAvertiserData(webSession,ExceptionsList);
+
+            TNS.AdExpress.Domain.Web.Navigation.Module m = ModulesList.GetModule(CstModule.Name.TABLEAU_DYNAMIQUE);
+            if (m.CountryDataAccessLayer == null) throw (new NullReferenceException("Data Access layer is null for the Product Class result"));
+            object[] param = new object[1];
+            param[0] = webSession;
+            IProductClassReportsDAL productClassLayer = (IProductClassReportsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + m.CountryDataAccessLayer.AssemblyName, m.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            dsListAdvertiser = productClassLayer.GetUniversAdvertisers(ExceptionsList);
+
+
+
+
+            //dsListAdvertiser=TNS.AdExpress.Web.DataAccess.Selections.Products.RecapAdvertiserDataAccess.GetAvertiserData(webSession,ExceptionsList);
 			// Sélection de tous les fils
 			if (!Page.ClientScript.IsClientScriptBlockRegistered("SelectAllChilds")) {
 				Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"SelectAllChilds",TNS.AdExpress.Web.Functions.Script.SelectAllChilds());

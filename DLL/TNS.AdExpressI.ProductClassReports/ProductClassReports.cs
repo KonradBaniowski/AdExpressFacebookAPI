@@ -22,6 +22,9 @@ using TNS.AdExpress.Web.Core.Sessions;
 using CstTblFormat = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedTables;
 using TNS.Classification.Universe;
 using TNS.AdExpressI.ProductClassReports.Engines;
+using System.Data;
+using TNS.FrameWork.WebResultUI;
+using TNS.AdExpressI.ProductClassReports.GenericEngines;
 
 namespace TNS.AdExpressI.ProductClassReports
 {
@@ -44,6 +47,10 @@ namespace TNS.AdExpressI.ProductClassReports
         /// Report engine
         /// </summary>
         protected Engine _engine = null;
+        /// <summary>
+        /// Generic report engine
+        /// </summary>
+        protected GenericEngine _genericEngine = null;
         #endregion
 
         #region Accessors
@@ -115,6 +122,45 @@ namespace TNS.AdExpressI.ProductClassReports
         }
         #endregion
 
+        #region IProductClassReports Generic Membres
+        /// <summary>
+        /// Compute Product Class Report depending on type or fesult specified in user session
+        /// </summary>
+        /// <returns>Data Result</returns>
+        public ResultTable GetGenericProductClassReport()
+        {
+            return GetGenericProductClassReport((int)_session.PreformatedTable);
+        }
+        /// <summary>
+        /// Compute Product Class Report matching the "resultType" param
+        /// </summary>
+        /// <param name="resultType">Type of result</param>
+        /// <exception cref="TNS.AdExpressI.ProductClassReports.Exceptions.NotImplementedReportException">Thrown when the invoked report is not implemented.</exception>
+        /// <returns>Data Result</returns>
+        public ResultTable GetGenericProductClassReport(int resultType)
+        {
+            return this.GetGenericProductClassReport(resultType, false);
+        }
+        /// <summary>
+        /// Compute Product Class Report depending on type or fesult specified in user session
+        /// </summary>
+        /// <returns>Data Result</returns>
+        public ResultTable GetGenericProductClassReportExcel()
+        {
+            return GetGenericProductClassReportExcel((int)_session.PreformatedTable);
+        }
+        /// <summary>
+        /// Compute Product Class Report matching the "resultType" param
+        /// </summary>
+        /// <param name="resultType">Type of result</param>
+        /// <exception cref="TNS.AdExpressI.ProductClassReports.Exceptions.NotImplementedReportException">Thrown when the invoked report is not implemented.</exception>
+        /// <returns>Data Result</returns>
+        public ResultTable GetGenericProductClassReportExcel(int resultType)
+        {
+            return this.GetGenericProductClassReport(resultType, true);
+        }
+        #endregion
+
         #region GetProductClassReport
         /// <summary>
         /// Compute Product Class Report matching the "resultType" param (HTML code)
@@ -130,7 +176,7 @@ namespace TNS.AdExpressI.ProductClassReports
                 case (int)CstTblFormat.media_X_Year:
                 case (int)CstTblFormat.product_X_Year:
                     _engine = new Engine_Classif1_X_Year(_session, resultType);
-                    break;
+                    break;				
                 case (int)CstTblFormat.productMedia_X_Year:
                 case (int)CstTblFormat.mediaProduct_X_Year:
                     _engine = new Engine_Classif1Classif2_X_Years(_session, resultType);
@@ -155,6 +201,50 @@ namespace TNS.AdExpressI.ProductClassReports
             return _engine.GetResult().ToString();
         }
         #endregion
+
+        #region Generic GetProductClassReport
+        /// <summary>
+        /// Compute Product Class Report matching the "resultType" param
+        /// </summary>
+        /// <param name="resultType">Type of result</param>
+        /// <param name="excel">Report as Excel output ? </param>
+        /// <exception cref="TNS.AdExpressI.ProductClassReports.Exceptions.NotImplementedReportException">Thrown when the invoked report is not implemented.</exception>
+        /// <returns>Data Result</returns>
+        protected ResultTable GetGenericProductClassReport(int resultType, bool excel)
+        {
+            switch (resultType)
+            {
+                case (int)CstTblFormat.media_X_Year:
+                case (int)CstTblFormat.product_X_Year:
+                    _genericEngine = new GenericEngine_Classif1_X_Year(_session, resultType);
+                    break;
+                case (int)CstTblFormat.productMedia_X_Year:
+                case (int)CstTblFormat.mediaProduct_X_Year:
+                    _genericEngine = new GenericEngine_Classif1Classif2_X_Years(_session, resultType);
+                    break;
+                case (int)CstTblFormat.productMedia_X_YearMensual:
+                case (int)CstTblFormat.mediaProduct_X_YearMensual:
+                    _genericEngine = new GenericEngine_Classif1Classif2_X_Monthes(_session, resultType);
+                    break;
+                case (int)CstTblFormat.productYear_X_Media:
+                    _genericEngine = new GenericEngine_Classif1Year_X_Classif2(_session, resultType);
+                    break;
+                case (int)CstTblFormat.mediaYear_X_Mensual:                            
+                case (int)CstTblFormat.productYear_X_Mensual:
+					_genericEngine = new GenericEngine_Classif1Year_X_Monthes(_session, resultType,true);
+                    break;
+				case (int)CstTblFormat.mediaYear_X_Cumul:
+				case (int)CstTblFormat.productYear_X_Cumul:
+					_genericEngine = new GenericEngine_Classif1Year_X_Monthes(_session, resultType);					
+					break;
+                default:
+                    throw new NotImplementedReportException(string.Format("Tableau {0} ({1}) is not implemented.", _session.PreformatedTable, _session.PreformatedTable.GetHashCode()));
+            }
+            _genericEngine.Excel = excel;
+            return _genericEngine.GetResult();
+        }
+        #endregion
+
 
     }
 }

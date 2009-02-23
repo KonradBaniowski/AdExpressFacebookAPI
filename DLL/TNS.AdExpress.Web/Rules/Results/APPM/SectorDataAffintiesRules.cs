@@ -66,9 +66,9 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 				if(data!=null && data.Rows.Count>0){
 
 					#region Crétaion de table resultTable
-					long nbLines=data.Rows.Count;
-					long nbCol;
-					long lineIndex=0;
+                    int nbLines = data.Rows.Count;
+                    int nbCol;
+                    int lineIndex = 0;
 					resultTable = new ResultTable(nbLines,headers);
 					nbCol = resultTable.DataColumnsNumber;
 					#endregion

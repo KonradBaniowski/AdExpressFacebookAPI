@@ -30,6 +30,7 @@ using TNS.AdExpressI.ProductClassIndicators.DAL.Exceptions;
 using TNS.AdExpress.Domain.Exceptions;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Classification;
+using TNS.Classification.Universe;
 
 
 namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
@@ -369,7 +370,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
         {
 
             StringBuilder sql = new StringBuilder(5000);
-            Table dataTable = this.GetDataTable(false);
+            //Table dataTable = this.GetDataTable(false);
+			Table dataTable = this.GetDataTable(true);
             double total = 0;
 
             #region Query Building
@@ -399,7 +401,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                 if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
                     sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(dataTable.Prefix, true));
                 // Product rights
-                sql.Append(FctUtilities.SQLGenerator.getClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
+				//sql.Append(FctUtilities.SQLGenerator.getClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
+				sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
             }
 
             #region Media selection
@@ -468,6 +471,157 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             return GetTotal(totalType, typeYear, GetMonthExpenditureClause(typeYear));
         }
         #endregion
+
+		#region Get Products Personnalisation type
+		/// <summary>
+		/// Get Products Personnalisation type
+		/// </summary>
+		/// <param name="idProductList">Id product list</param>
+		/// <returns>DataTable[id_product,inref,incomp,inneutral]</returns>
+		public virtual DataSet GetProductsPersonnalisationType(String idProductList, string strYearId) {
+			#region Variables
+			DataSet ds = null;
+			Dictionary<long, List<long>> res = null;
+			StringBuilder sql = new StringBuilder();
+			string expenditure = "";
+			#region dates (mensuels) des investissements
+			int iStart = _periodBegin.Month;
+			int iEnd = _periodEnd.Month;
+			#endregion
+
+
+			if (!_periodEnd.Equals(null) && !_periodBegin.Equals(null)) {
+				
+				//N or N-1
+				for (int i = iStart; i <= iEnd; i++) {
+					if (i == iEnd && iStart != iEnd) {
+						sql.AppendFormat("exp_euro_N{0}_{1}) as total_N ", strYearId, i);
+					}
+					else if (i == iStart && iStart != iEnd) {
+						sql.AppendFormat("sum(exp_euro_N{0}_{1} + ", strYearId, i);
+					}
+					else if (iStart == iEnd) {
+						sql.AppendFormat("sum(exp_euro_N{0}_{1}) as total_N", strYearId, i);
+					}
+					else {
+						sql.AppendFormat("exp_euro_N{0}_{1} + ", strYearId, i);
+					}
+
+				}				
+				expenditure = sql.ToString();
+			}
+			#endregion
+
+			#region Request building
+			sql = new StringBuilder();
+			Table dataTable = this.GetDataTable(true);
+			
+			sql.Append(" select distinct  id_product ");
+			
+			#region Notion de personnalisation des annonceurs?
+			string annonceurPerso = "id_advertiser";
+			if (annonceurPerso != null && annonceurPerso.Length > 0) {
+				NomenclatureElementsGroup refElts = null;
+				string refString = "";
+				string[] refLst = null;
+				if (_session.SecondaryProductUniverses.Count > 0 && _session.SecondaryProductUniverses.ContainsKey(0)) {
+					refElts = _session.SecondaryProductUniverses[0].GetGroup(0);
+					if (refElts != null && refElts.Count() > 0 && refElts.Contains(TNSClassificationLevels.ADVERTISER)) {
+						refString = refElts.GetAsString(TNSClassificationLevels.ADVERTISER);
+						refLst = refString.Split(new char[1] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+						if (refLst != null && refLst.Length > 0) {
+							sql.AppendFormat(", sum(decode({0}", annonceurPerso);
+							foreach (string s in refLst) {
+								sql.AppendFormat(",{0},1", s);
+							}
+							sql.Append(", 0)) as inref ");
+						}
+					}
+				}
+				if (refLst == null || refLst.Length == 0) {
+					sql.Append(", 0 as inref ");
+				}
+				NomenclatureElementsGroup compElts = null;
+				string compString = "";
+				string[] compLst = null;
+				if (_session.SecondaryProductUniverses.Count > 0 && _session.SecondaryProductUniverses.ContainsKey(1)) {
+					compElts = _session.SecondaryProductUniverses[1].GetGroup(0);
+					if (compElts != null && compElts.Count() > 0 && compElts.Contains(TNSClassificationLevels.ADVERTISER)) {
+						compString = compElts.GetAsString(TNSClassificationLevels.ADVERTISER);
+						compLst = compString.Split(new char[1] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+						if (compLst != null && compLst.Length > 0) {
+							sql.AppendFormat(", sum(decode({0}", annonceurPerso);
+							foreach (string s in compLst) {
+								sql.AppendFormat(",{0},1", s);
+							}
+							sql.Append(", 0)) as incomp ");
+						}
+					}
+				}
+				if (compLst == null || compLst.Length == 0) {
+					sql.Append(", 0 as incomp ");
+				}
+				if (compString.Length > 0) {
+					if (refString.Length > 0) {
+						refString += ",";
+					}
+					refString += compString;
+				}
+				if (refString.Length > 0) {
+					sql.AppendFormat(", sum(case when {0} not in ({1}) then 1 else 0 end) as inneutral ", annonceurPerso, refString);
+				}
+				else {
+					sql.AppendFormat(", count(distinct {0}) as inneutral ", annonceurPerso);
+				}
+			}
+			#endregion
+
+			sql.Append("  from ( ");
+
+			sql.AppendFormat(" select distinct  {0}.id_product, {0}.id_advertiser ", dataTable.Prefix);
+			if (expenditure != null && expenditure.Length > 0) {
+				sql.AppendFormat(" ,{0} ", expenditure);
+
+			}
+			sql.Append(" from ");
+			sql.AppendFormat(" {0} ", dataTable.SqlWithPrefix);
+
+			sql.Append(" where  0=0 ");
+
+			//Media Selection
+			sql.AppendFormat(" and {0}", _utilities.GetMediaSelection(dataTable.Prefix));
+
+			if (idProductList != null && idProductList.Length > 0) {
+				sql.Append(" and " + FctUtilities.SQLGenerator.GetInClauseMagicMethod(dataTable.Prefix + ".id_product", idProductList, true));
+			}
+
+			#region Product classification
+			// Product selection
+			if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
+				sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(dataTable.Prefix, true));
+			// Product rights
+			sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
+			#endregion
+
+			sql.AppendFormat(" group by {0}.id_product,{0}.id_advertiser ", dataTable.Prefix);
+			sql.AppendFormat(" order by {0}.id_product,{0}.id_advertiser ", dataTable.Prefix);
+			sql.Append(" ) where total_N >0 ");
+			sql.Append(" group by  id_product ");
+			#endregion
+
+			#region Execution de la requête
+			IDataSource dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis, WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].NlsSort);
+			try {
+				ds = dataSource.Fill(sql.ToString());
+			}
+			catch (System.Exception err) {
+				throw new ProductClassIndicatorsDALException(string.Format("Error while loading data: {0}", sql), err);
+			}
+			#endregion			
+
+			return ds;
+		}
+		#endregion
 
     }
 }

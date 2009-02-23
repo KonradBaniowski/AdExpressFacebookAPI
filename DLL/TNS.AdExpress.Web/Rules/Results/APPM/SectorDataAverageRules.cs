@@ -119,9 +119,9 @@ namespace TNS.AdExpress.Web.Rules.Results.APPM{
 					#endregion
 					
 					#region Crétaion de la table resultTable
-					long nbLines=LINES_NUMBER;
-					long nbCol;
-					long lineIndex=0;
+                    int nbLines = LINES_NUMBER;
+                    int nbCol;
+                    int lineIndex = 0;
 					resultTable = new ResultTable(nbLines,headers);
 					nbCol = resultTable.DataColumnsNumber;
 					#endregion
