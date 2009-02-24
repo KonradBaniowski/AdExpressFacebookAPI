@@ -50,7 +50,7 @@
     </Reference>
     <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.24843, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\Dev\TNS.FrameWork.WebResultUI.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\Trunk\TNS.FrameWork.WebResultUI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

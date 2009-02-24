@@ -1,4 +1,3 @@
-<%@ Register TagPrefix="cc1" Namespace="TNS.FrameWork.WebResultUI" Assembly="TNS.FrameWork.WebResultUI" %>
 <%@ Register TagPrefix="cc2" Namespace="TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Page language="c#" Inherits="AdExpress.Private.Results.Excel.ProductClassReport" CodeFile="ProductClassReport.aspx.cs" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
