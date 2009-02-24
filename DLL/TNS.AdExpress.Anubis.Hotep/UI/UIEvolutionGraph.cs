@@ -127,6 +127,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
             int compteur = 0;
             bool hasComp = false;
             bool hasRef = false;
+			bool hasMixed = false;
             for (int i = 0; i < _tab.GetLongLength(0) && i < 10; i++) {
                 ecart = Convert.ToDouble(_tab[i, EngineEvolution.ECART]);
                 if (ecart > 0) {
@@ -136,7 +137,12 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
                     #region Reference or competitor ?
                     if (_tab[i, EngineEvolution.COMPETITOR] != null) {
                         typeElt = Convert.ToInt32(_tab[i, EngineEvolution.COMPETITOR]);
-                        if (typeElt == 2) {
+						if (typeElt == 3) {
+							_style.GetTag("EvolutionGraphColorLegendItemMixed").SetStyleDundas(ref colorTemp);
+							series.Points[compteur].Color = colorTemp;
+							hasMixed = true;
+						}
+						else if (typeElt == 2) {
                             _style.GetTag("EvolutionGraphColorLegendItemCompetitor").SetStyleDundas(ref colorTemp);
                             series.Points[compteur].Color = colorTemp;
                             hasComp = true;
@@ -160,7 +166,12 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
                     #region Reference or competitor ?
                     if (_tab[last, EngineEvolution.COMPETITOR] != null) {
                         typeElt = Convert.ToInt32(_tab[last, EngineEvolution.COMPETITOR]);
-                        if (typeElt == 2) {
+                        if (typeElt == 3) {
+                            _style.GetTag("EvolutionGraphColorLegendItemMixed").SetStyleDundas(ref colorTemp);
+                            series.Points[compteur].Color = colorTemp;
+                            hasMixed = true;
+                        }
+                        else if (typeElt == 2) {
                             _style.GetTag("EvolutionGraphColorLegendItemCompetitor").SetStyleDundas(ref colorTemp);
                             series.Points[compteur].Color = colorTemp;
                             hasComp = true;
@@ -217,6 +228,14 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 					legendItemCompetitor.Name=GestionWeb.GetWebWord(1204,_webSession.SiteLanguage);
 					this.Legends["Default"].CustomItems.Add(legendItemCompetitor);
 				}
+			}
+			if (hasMixed) {
+				LegendItem legendItemMixed = new LegendItem();
+				legendItemMixed.BorderWidth = 0;
+				_style.GetTag("EvolutionGraphColorLegendItemMixed").SetStyleDundas(ref colorTemp);
+				legendItemMixed.Color = colorTemp;
+				legendItemMixed.Name = GestionWeb.GetWebWord(2561, _webSession.SiteLanguage);
+				this.Legends["Default"].CustomItems.Add(legendItemMixed);
 			}
 			#endregion
 			

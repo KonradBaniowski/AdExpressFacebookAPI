@@ -447,6 +447,9 @@
     <colorList name="lightPinkColor">
       <color>255, 223, 222</color>
     </colorList>
+    <colorList name="lightYellowColor">
+      <color>255,255,51</color>
+    </colorList>
     <colorList name="msCreativesColor">
       <color>100,72,131</color>
       <color>204,153,255</color>
@@ -681,6 +684,7 @@
     <tag name="PalmaresGraphColorSerie">purpleV8Color</tag>
     <tag name="PalmaresGraphColorLegendItemReference">lightGreenColor</tag>
     <tag name="PalmaresGraphColorLegendItemCompetitor">lightPinkColor</tag>
+    <tag name="PalmaresGraphColorLegendItemMixed">lightYellowColor</tag>
     <tag name="PalmaresGraphLabelFontAxisX">FontPurple8</tag>
     <tag name="PalmaresGraphLabelFontAxisY">FontPurple10</tag>
     <tag name="PalmaresGraphTitleFontAxisY">FontPurple10</tag>
@@ -698,6 +702,7 @@
     <tag name="EvolutionGraphColorSerie">purpleV8Color</tag>
     <tag name="EvolutionGraphColorLegendItemReference">lightGreenColor</tag>
     <tag name="EvolutionGraphColorLegendItemCompetitor">lightPinkColor</tag>
+    <tag name="EvolutionGraphColorLegendItemMixed">lightYellowColor</tag>
     <tag name="EvolutionGraphLabelFontAxisX">FontPurple8</tag>
     <tag name="EvolutionGraphLabelFontAxisY">FontPurple10</tag>
     <tag name="EvolutionGraphTitleFontAxisY">FontPurple10</tag>

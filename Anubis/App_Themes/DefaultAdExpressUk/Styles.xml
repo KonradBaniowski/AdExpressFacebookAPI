@@ -447,6 +447,9 @@
     <colorList name="lightPinkColor">
       <color>255, 223, 222</color>
     </colorList>
+    <colorList name="lightYellowColor">
+      <color>255,255,51</color>
+    </colorList>
     <colorList name="msCreativesColor">
       <color>100,72,131</color>
       <color>204,153,255</color>

@@ -294,6 +294,24 @@ namespace TNS.AdExpress.Web.Controls.Results{
         }
         #endregion
 
+        #region Use limitation
+        /// <summary>
+        /// Get /Set if control must use the limit size of tables
+        /// </summary>
+        protected bool _useLimitation = true;
+        /// <summary>
+        /// Get /Set if control must use the limit size of tables
+        /// </summary>
+        [Bindable(true),
+       Category("UseLimitation"),
+        DefaultValue("true")]
+        public bool UseLimitation
+        {
+            get { return _useLimitation; }
+            set { _useLimitation = value; }
+        }
+        #endregion
+
         #region Pagination
         /// <summary>
         /// Get / Set the name of the cookie which contains the pahe size
@@ -2100,8 +2118,11 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		protected override void OnPreRender(EventArgs e) {
 			base.OnPreRender (e);
             DetailSelectionPreRender();
-            Page.ClientScript.RegisterClientScriptInclude("JQUERY", "/scripts/jquery.js");
-            Page.ClientScript.RegisterClientScriptInclude("THICKBOX", "/scripts/thickbox.js");
+            if (_useLimitation)
+            {
+                Page.ClientScript.RegisterClientScriptInclude("JQUERY", "/scripts/jquery.js");
+                Page.ClientScript.RegisterClientScriptInclude("THICKBOX", "/scripts/thickbox.js");
+            }
 		}
         /// <summary>
         /// Prérender
@@ -2153,7 +2174,10 @@ namespace TNS.AdExpress.Web.Controls.Results{
 					html.Append(AjaxEventScript());
 					html.Append(GetLoadingHTML());
 					html.Append(SelectionCallBackScript());
-                    html.Append(GetTableCapacityHtml());
+                    if (_useLimitation)
+                    {
+                        html.Append(GetTableCapacityHtml());
+                    }
 					output.Write(html.ToString());
 					break;
 				case RenderType.rawExcel:

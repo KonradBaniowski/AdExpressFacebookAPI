@@ -26,6 +26,8 @@ using TNS.AdExpress.Constantes.Customer;
 using CstRights = TNS.AdExpress.Constantes.Customer.Right;
 using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
 using CstWeb = TNS.AdExpress.Constantes.Web;
+using CstPreformatedDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
+using CstDbClassif = TNS.AdExpress.Constantes.Classification.DB;
 
 using TNS.AdExpress.Web.BusinessFacade.Results;
 using TNS.AdExpress.Web.BusinessFacade.Selections.Products;
@@ -56,6 +58,7 @@ using TNS.AdExpressI.ProductClassIndicators.Engines;
 using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Theme;
+using TNS.AdExpress.Domain.Classification;
 using System.Collections.Generic;
 #endregion
 
@@ -1036,6 +1039,8 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
 			try{
                 if (tab.GetLongLength(0) != 0) {
+					bool withPluriByCategory = (_webSession.PreformatedMediaDetail == CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory
+					&& CstDbClassif.Vehicles.names.plurimedia == VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID));
 
                     #region GRP graph
 
@@ -1371,7 +1376,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
                                 #region PluriMedia
                                 case EngineMediaStrategy.TOTAL_UNIV_VEHICLE_INVEST_COLUMN_INDEX:
-                                    if (tab[i, EngineMediaStrategy.TOTAL_UNIV_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1) {
+									if (tab[i, EngineMediaStrategy.TOTAL_UNIV_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1 && !withPluriByCategory) {
                                         if (totalUniversValue != 0) {
                                             elementValue = Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_UNIV_VEHICLE_INVEST_COLUMN_INDEX]) / totalUniversValue * 100;
                                             DataRow row = tableUnivers.NewRow();
@@ -1382,7 +1387,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
                                     }
                                     break;
                                 case EngineMediaStrategy.TOTAL_SECTOR_VEHICLE_INVEST_COLUMN_INDEX:
-                                    if (tab[i, EngineMediaStrategy.TOTAL_SECTOR_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1) {
+									if (tab[i, EngineMediaStrategy.TOTAL_SECTOR_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1 && !withPluriByCategory) {
                                         if (totalSectorValue != 0) {
                                             elementValue = Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_SECTOR_VEHICLE_INVEST_COLUMN_INDEX]) / totalSectorValue * 100;
                                             DataRow row1 = tableSectorMarket.NewRow();
@@ -1393,7 +1398,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
                                     }
                                     break;
                                 case EngineMediaStrategy.TOTAL_MARKET_VEHICLE_INVEST_COLUMN_INDEX:
-                                    if (tab[i, EngineMediaStrategy.TOTAL_MARKET_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1) {
+									if (tab[i, EngineMediaStrategy.TOTAL_MARKET_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1 && !withPluriByCategory) {
                                         if (totalMarketValue != 0) {
                                             elementValue = Convert.ToDouble(tab[i, EngineMediaStrategy.TOTAL_MARKET_VEHICLE_INVEST_COLUMN_INDEX]) / totalMarketValue * 100;
                                             DataRow row1 = tableSectorMarket.NewRow();

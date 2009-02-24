@@ -84,6 +84,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
             Color colorTemp = Color.Black;
             bool referenceElement = false;
             bool competitorElement = false;
+			bool mixedElement = false;
             // There is at least one element
             bool oneProductExist = false;
 
@@ -156,7 +157,14 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
                     series.Points[i - 1].ShowInLegend = true;
                     // Competitor in red
                     if (_tab[i, EngineTop.COMPETITOR] != null) {
-                        if ((int)_tab[i, EngineTop.COMPETITOR] == 2) {
+						// Mixed in yellow
+						if ((int)_tab[i, EngineTop.COMPETITOR] == 3) {
+							_style.GetTag("PalmaresGraphColorLegendItemMixed").SetStyleDundas(ref colorTemp);
+							series.Points[i - 1].Color = colorTemp;
+							mixedElement = true;
+						}
+						// Competitor in red
+						else if ((int)_tab[i, EngineTop.COMPETITOR] == 2) {
                             _style.GetTag("PalmaresGraphColorLegendItemCompetitor").SetStyleDundas(ref colorTemp);
                             series.Points[i - 1].Color = colorTemp;
                             competitorElement = true;
@@ -210,6 +218,14 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 					legendItemCompetitor.Name=GestionWeb.GetWebWord(1204,_webSession.SiteLanguage);
 					this.Legends["Default"].CustomItems.Add(legendItemCompetitor);
 				}
+			}
+			if (mixedElement) {
+				LegendItem legendItemMixed = new LegendItem();
+				legendItemMixed.BorderWidth = 0;
+				_style.GetTag("PalmaresGraphColorLegendItemMixed").SetStyleDundas(ref colorTemp);
+				legendItemMixed.Color = colorTemp;
+				legendItemMixed.Name = GestionWeb.GetWebWord(2561, _webSession.SiteLanguage);
+				this.Legends["Default"].CustomItems.Add(legendItemMixed);
 			}
 			#endregion
 

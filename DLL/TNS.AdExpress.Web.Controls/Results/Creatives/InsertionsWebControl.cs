@@ -323,6 +323,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
         #region Constructor
         public InsertionsWebControl()
         {
+            base._useLimitation = false;
         }
         #endregion
 

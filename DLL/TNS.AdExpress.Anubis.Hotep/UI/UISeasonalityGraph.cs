@@ -83,8 +83,8 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 
 			#region Variables
 			bool referenceElement=false;
-			bool competitorElement=false;
-            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
+			bool competitorElement=false;            
+			CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
             Color colorTemp = Color.Black;
 			#endregion
 
