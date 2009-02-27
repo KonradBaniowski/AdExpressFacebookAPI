@@ -700,7 +700,6 @@ namespace TNS.AdExpressI.Insertions.DAL
                 case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
                 case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA_CONCURENTIELLE:
                 case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
-                case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
                 case CstWeb.Module.Name.ANALYSE_POTENTIELS:
                     sql.Append(SQLGenerator.getLevelProduct(_session, tData.Prefix, true));
                     break;
