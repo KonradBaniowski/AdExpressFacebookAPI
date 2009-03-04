@@ -1869,11 +1869,9 @@ namespace TNS.AdExpressI.MediaSchedule {
                         s = "&nbsp;";
                     }
 
-                    t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>"
-                        , cssClasseNb
-                        , s
-                        );
                 }
+                t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssClasseNb, s);
+
             }
         }
 
