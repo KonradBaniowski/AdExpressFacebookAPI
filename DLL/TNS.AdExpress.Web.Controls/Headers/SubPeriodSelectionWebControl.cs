@@ -25,6 +25,18 @@ namespace TNS.AdExpress.Web.Controls.Headers
 
         #region Constantes
         /// <summary>
+        /// Pattern to determine the path to the selected subperiod visual for monthes
+        /// </summary>
+        private const string IMAGE_PATTERN_SELECTED_MONTH = "/App_Themes/{0}/Images/Culture/GlobalCalendar/m{1}s.gif";
+        /// <summary>
+        /// Pattern to determine the path to the subperiod visual for monthes
+        /// </summary>
+        private const string IMAGE_PATTERN_MONTH = "/App_Themes/{0}/Images/Culture/GlobalCalendar/m{1}.gif";
+        /// <summary>
+        /// Pattern to determine the path to the subperiod visual when mouse is over for monthes
+        /// </summary>
+        private const string IMAGE_PATTERN_OVER_MONTH = "/App_Themes/{0}/Images/Culture/GlobalCalendar/m{1}r.gif";
+        /// <summary>
         /// Pattern to determine the path to the selected subperiod visual
         /// </summary>
         private const string IMAGE_PATTERN_SELECTED = "/App_Themes/{0}/Images/Culture/GlobalCalendar/{1}s.gif";
@@ -576,7 +588,9 @@ namespace TNS.AdExpress.Web.Controls.Headers
             string tmpBegin = string.Empty;
             string tmpEnd = string.Empty;
             string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
-
+            string patternOver = (periodType == WebCst.CustomerSessions.Period.Type.dateToDateMonth) ? IMAGE_PATTERN_OVER_MONTH : IMAGE_PATTERN_OVER;
+            string pattern = (periodType == WebCst.CustomerSessions.Period.Type.dateToDateMonth) ? IMAGE_PATTERN_MONTH : IMAGE_PATTERN;
+            string patternSelected = (periodType == WebCst.CustomerSessions.Period.Type.dateToDateMonth) ? IMAGE_PATTERN_SELECTED_MONTH : IMAGE_PATTERN_SELECTED;
 
             sb.AppendFormat("\r\ntab_zooms_{0}[{1}] = '{2}';", this.ID, i, currentPeriod);
             if (globalDateBegin.Length > 0)
@@ -615,24 +629,24 @@ namespace TNS.AdExpress.Web.Controls.Headers
             }
             sb.AppendFormat("\r\ntab_periodImage_{0}[{1}] = '{2}';",
                 this.ID, i,
-                string.Format(IMAGE_PATTERN, themeName, Int32.Parse(currentPeriod.Substring(4, 2))));
+                string.Format(pattern, themeName, Int32.Parse(currentPeriod.Substring(4, 2))));
             sb.AppendFormat("\r\ntab_periodImage_selected_{0}[{1}] = '{2}';",
                 this.ID, i,
-                string.Format(IMAGE_PATTERN_SELECTED, themeName, Int32.Parse(currentPeriod.Substring(4, 2))));
+                string.Format(patternSelected, themeName, Int32.Parse(currentPeriod.Substring(4, 2))));
             sb.AppendFormat("\r\ntab_periodImage_over_{0}[{1}] = '{2}';",
                 this.ID, i,
-                string.Format(IMAGE_PATTERN_OVER, themeName, Int32.Parse(currentPeriod.Substring(4, 2))));
+                string.Format(patternOver, themeName, Int32.Parse(currentPeriod.Substring(4, 2))));
             if (_zoom == currentPeriod)
             {
                 //style=\"display:none\" 
-                tmpSb.AppendFormat("<img id=img_{2}_{3} src=\"" + IMAGE_PATTERN_SELECTED + "\" onMouseOver=\"javascript:PeriodMouseOver_{2}({3});\" onMouseOut=\"javascript:PeriodMouseOut_{2}({3});\" style=\"cursor:pointer;\" onclick=\"javascript:PeriodSelect_{2}({3});\"/>"
+                tmpSb.AppendFormat("<img id=img_{2}_{3} src=\"" + patternSelected + "\" onMouseOver=\"javascript:PeriodMouseOver_{2}({3});\" onMouseOut=\"javascript:PeriodMouseOut_{2}({3});\" style=\"cursor:pointer;\" onclick=\"javascript:PeriodSelect_{2}({3});\"/>"
                     , themeName
                     , Int32.Parse(currentPeriod.Substring(4, 2))
                     , this.ID, i);
             }
             else
             {
-                tmpSb.AppendFormat("<img id=img_{2}_{3} src=\"" + IMAGE_PATTERN + "\" onMouseOver=\"javascript:PeriodMouseOver_{2}({3});\" onMouseOut=\"javascript:PeriodMouseOut_{2}({3});\" style=\"cursor:pointer;\" onclick=\"javascript:PeriodSelect_{2}({3});\"/>"
+                tmpSb.AppendFormat("<img id=img_{2}_{3} src=\"" + pattern + "\" onMouseOver=\"javascript:PeriodMouseOver_{2}({3});\" onMouseOut=\"javascript:PeriodMouseOut_{2}({3});\" style=\"cursor:pointer;\" onclick=\"javascript:PeriodSelect_{2}({3});\"/>"
                     , themeName
                     , Int32.Parse(currentPeriod.Substring(4, 2))
                     , this.ID, i);
