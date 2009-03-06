@@ -3140,7 +3140,11 @@ namespace TNS.AdExpress.Constantes.Web{
 			/// <summary>
 			/// category group of list
 			/// </summary>
-			category = 1
+			category = 1,
+			/// <summary>
+			/// media group of list
+			/// </summary>
+			media = 2
 		}
 		/// <summary>
 		/// Category of vehicle list
@@ -3173,7 +3177,11 @@ namespace TNS.AdExpress.Constantes.Web{
 			/// <summary>
 			/// ID subscriber encart
 			/// </summary>			
-			subScriberEncart=6
+			subScriberEncart=6,
+			/// <summary>
+			/// ID media in "Select All" option on selection page
+			/// </summary>			
+            mediaInSelectAll = 7
 
 		}
 	}
