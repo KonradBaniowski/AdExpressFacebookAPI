@@ -25,6 +25,7 @@ using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using CstWebCustomer = TNS.AdExpress.Constantes.Customer;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Web;
 
 namespace AdExpress.Private.Selection{
 	/// <summary>
@@ -94,6 +95,11 @@ namespace AdExpress.Private.Selection{
 					#endregion					
 
 				}
+
+                if (WebApplicationParameters.WebSiteName.Equals("France"))
+                {
+                    AdExpressText2.Code = 2571;
+                }
 
 				//Annuler l'univers de version
 				if(_webSession.CurrentModule == WebConstantes.Module.Name.ALERTE_PLAN_MEDIA){

@@ -1756,5 +1756,6 @@
     <item mnemonic="w2568" type="System.String">Le tableau demandé comporte trop de lignes pour être affiché par votre navigateur. Vous pouvez :</item>
     <item mnemonic="w2569" type="System.String">Affiner la sélection ou modifier les options du tableau.</item>
     <item mnemonic="w2570" type="System.String">Essayer d'exporter le résultat au format Excel.</item>
+    <item mnemonic="w2571" type="System.String">Sélectionner / désélectionner tous les médias (sauf Evaliant)</item>
   </items>
 </localization>
