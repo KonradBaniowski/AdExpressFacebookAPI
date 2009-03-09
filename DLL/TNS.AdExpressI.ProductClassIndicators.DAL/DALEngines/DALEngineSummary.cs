@@ -72,7 +72,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             {
                 sql.Append(" ,total_N1");
                 //Evolution K€ (year N) / K€ (year N-1).
-                sql.Append(",decode(total_N1,0,null,ROUND(((total_N/total_N1)*100)-100,0)) as evol");
+                sql.Append(",decode(total_N1,0,null,((total_N/total_N1)*100)-100) as evol");
                 //Difference : 	K€ (N) - K€ (N-1).
                 sql.Append(" ,total_N-total_N1 as ecart ");
             }
