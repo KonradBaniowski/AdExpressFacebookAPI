@@ -950,7 +950,7 @@ namespace AdExpress.Private.MyAdExpress{
 					Response.Write("</script>");
 				}				
 			}
-			catch(TNS.AdExpress.Web.Exceptions.NoDataException) {
+			catch(TNS.AdExpress.Domain.Exceptions.NoDataException) {
 				Response.Write("<script language=\"JavaScript\">alert(\""+GestionWeb.GetWebWord(1787,_webSession.SiteLanguage)+"\");</script>");
 			}
 			catch(System.Exception exc){

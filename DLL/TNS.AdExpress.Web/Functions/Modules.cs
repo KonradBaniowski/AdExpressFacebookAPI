@@ -82,7 +82,7 @@ namespace TNS.AdExpress.Web.Functions
 					if(selectedVehicle == VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.internet)){						
 						if(lastCompleteMonth !=null && lastCompleteMonth.Length>0 && int.Parse(lastCompleteMonth) >= int.Parse(DateTime.Now.AddMonths(-1).ToString("yyyyMM")))
 							webSession.PeriodEndDate = webSession.PeriodBeginningDate = DateTime.Now.AddMonths(-1).ToString("yyyyMM");
-						else throw new WebExceptions.NoDataException(GestionWeb.GetWebWord(2157,webSessionSave.SiteLanguage));
+						else throw new TNS.AdExpress.Domain.Exceptions.NoDataException(GestionWeb.GetWebWord(2157, webSessionSave.SiteLanguage));
 					}else{
 						//Dates de chargement des données pour les autres médias
 						ActivePreviousAtomicPeriod(CstPeriodType.previousMonth,webSessionSave);											
@@ -114,7 +114,7 @@ namespace TNS.AdExpress.Web.Functions
 							webSession.PeriodEndDate = lastCompleteMonth;
 							monthPeriod = new DateTime(int.Parse(lastCompleteMonth.Substring(0,4)),int.Parse(lastCompleteMonth.Substring(4,2)),01);						
 							webSession.PeriodBeginningDate = monthPeriod.AddMonths(1 - webSession.PeriodLength).ToString("yyyyMM");	
-						}else throw new WebExceptions.NoDataException(GestionWeb.GetWebWord(2157,webSessionSave.SiteLanguage));
+						}else throw new TNS.AdExpress.Domain.Exceptions.NoDataException(GestionWeb.GetWebWord(2157,webSessionSave.SiteLanguage));
 					}else{
 						//Dates de chargement des données pour les autres médias
 												
@@ -135,11 +135,12 @@ namespace TNS.AdExpress.Web.Functions
 						if( lastCompleteMonth !=null && lastCompleteMonth.Length>0 && int.Parse(lastCompleteMonth.Substring(0,4))==DateTime.Now.Year){
 							webSession.PeriodBeginningDate = DateTime.Now.ToString("yyyy01");						
 							webSession.PeriodEndDate = lastCompleteMonth;
-						}else throw new WebExceptions.NoDataException(GestionWeb.GetWebWord(2157,webSessionSave.SiteLanguage));
+						}
+						else throw new TNS.AdExpress.Domain.Exceptions.NoDataException(GestionWeb.GetWebWord(2157, webSessionSave.SiteLanguage));
 					}else{
 						//Dates de chargement des données pour les autres médias
 						if(DateTime.Now.Month==1){
-							throw new WebExceptions.NoDataException(GestionWeb.GetWebWord(1612,webSessionSave.SiteLanguage));														
+							throw new TNS.AdExpress.Domain.Exceptions.NoDataException(GestionWeb.GetWebWord(1612, webSessionSave.SiteLanguage));														
 						}
 						else {
 							WebFunctions.Dates.DownloadDates(webSessionSave,ref downloadBeginningDate,ref downloadEndDate,CstPeriodType.currentYear);								
@@ -175,7 +176,8 @@ namespace TNS.AdExpress.Web.Functions
 						if(lastCompleteMonth !=null && lastCompleteMonth.Length>0 && int.Parse(lastCompleteMonth.Substring(0,4))>DateTime.Now.AddYears(-2).Year){
 							webSession.PeriodBeginningDate = DateTime.Now.AddYears(-1).ToString("yyyy01");
 							webSession.PeriodEndDate = (int.Parse(lastCompleteMonth.Substring(0,4))== DateTime.Now.Year)? DateTime.Now.AddYears(-1).ToString("yyyy12") : lastCompleteMonth;
-						}else throw new WebExceptions.NoDataException(GestionWeb.GetWebWord(2157,webSessionSave.SiteLanguage));
+						}
+						else throw new TNS.AdExpress.Domain.Exceptions.NoDataException(GestionWeb.GetWebWord(2157, webSessionSave.SiteLanguage));
 					}else{
 						//Dates de chargement des données pour les autres médias										
 						WebFunctions.Dates.DownloadDates(webSessionSave,ref downloadBeginningDate,ref downloadEndDate,CstPeriodType.previousYear);								
@@ -213,7 +215,7 @@ namespace TNS.AdExpress.Web.Functions
 					DateDll.AtomicPeriodWeek week = new DateDll.AtomicPeriodWeek(int.Parse(downloadEndDate.Substring(0,4)),int.Parse(downloadEndDate.Substring(4,2)));
 					DateDll.AtomicPeriodWeek  currentWeek = new DateDll.AtomicPeriodWeek(DateTime.Now);
 					currentWeek.SubWeek(1);
-					if(week.LastDay.Subtract(currentWeek.FirstDay).Days<0)throw(new WebExceptions.NoDataException(GestionWeb.GetWebWord(1787,webSession.SiteLanguage)));
+					if (week.LastDay.Subtract(currentWeek.FirstDay).Days < 0) throw (new TNS.AdExpress.Domain.Exceptions.NoDataException(GestionWeb.GetWebWord(1787, webSession.SiteLanguage)));
 					break;
 				case CstPeriodType.previousMonth :
 					//activation checkbox mois  précédente
@@ -221,10 +223,10 @@ namespace TNS.AdExpress.Web.Functions
 					DateTime monthPeriod = new DateTime(int.Parse(downloadEndDate.Substring(0,4)),int.Parse(downloadEndDate.Substring(4,2)),01);										
 					if( !monthPeriod.Month.ToString().Equals(DateTime.Now.AddMonths(-1).Month.ToString())
 						|| !monthPeriod.Year.ToString().Equals(DateTime.Now.AddMonths(-1).Year.ToString()))
-						throw(new WebExceptions.NoDataException(GestionWeb.GetWebWord(1787,webSession.SiteLanguage)));
+						throw (new TNS.AdExpress.Domain.Exceptions.NoDataException(GestionWeb.GetWebWord(1787, webSession.SiteLanguage)));
 					break;
 				default:
-					throw(new WebExceptions.NoDataException(" Impossible d'identifier le détail de la période"));
+					throw (new TNS.AdExpress.Domain.Exceptions.NoDataException(" Impossible d'identifier le détail de la période"));
 			}
 		}
 		#endregion

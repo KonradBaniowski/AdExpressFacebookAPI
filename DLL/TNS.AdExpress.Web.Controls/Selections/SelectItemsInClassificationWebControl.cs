@@ -245,8 +245,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				else if (err.GetType() == typeof(TNS.Classification.Universe.CapacityException)) {
 					throw new TNS.Classification.Universe.CapacityException("Dépassement du nombre d'éléments autorisés pour un niveau", err);
 				}
-				else if (err.GetType() == typeof(TNS.AdExpress.Web.Exceptions.NoDataException)) {
-					throw new TNS.AdExpress.Web.Exceptions.NoDataException();
+				else if (err.GetType() == typeof(TNS.AdExpress.Domain.Exceptions.NoDataException)) {
+					throw new TNS.AdExpress.Domain.Exceptions.NoDataException();
 				}
 				throw new TNS.AdExpress.Web.Controls.Exceptions.SelectItemsInClassificationWebControlException("Impossible de sauvegarder la selection d'univers.", err);
 			}

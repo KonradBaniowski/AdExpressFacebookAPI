@@ -685,7 +685,7 @@ namespace TNS.AdExpress.Web.DataAccess{
 			string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 			
 			if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
-				throw new WebExceptions.NoDataException();
+				throw new TNS.AdExpress.Domain.Exceptions.NoDataException();
 
 			DateTime PeriodBeginningDate = WebFunctions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
 			DateTime PeriodEndDate = WebFunctions.Dates.getPeriodEndDate(absolutEndPeriod, webSession.PeriodType);

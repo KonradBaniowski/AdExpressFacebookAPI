@@ -251,7 +251,7 @@ namespace AdExpress.Private.Selection{
 				_webSession.Source.Close();
 				Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);
 			}
-			catch(NoDataException) {
+			catch (TNS.AdExpress.Domain.Exceptions.NoDataException) {
 				_webSession.ComparativeStudy=false;
 				Response.Write("<script language=\"JavaScript\">alert(\""+GestionWeb.GetWebWord(1787,_webSession.SiteLanguage)+"\");</script>");
 			}
@@ -390,7 +390,7 @@ namespace AdExpress.Private.Selection{
 				_webSession.Source.Close();
 				Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);
 			}
-			catch(NoDataException) {
+			catch (TNS.AdExpress.Domain.Exceptions.NoDataException) {
 				Response.Write("<script language=\"JavaScript\">alert(\""+GestionWeb.GetWebWord(1787,_webSession.SiteLanguage)+"\");</script>");
 			}
 			catch(System.Exception ex)

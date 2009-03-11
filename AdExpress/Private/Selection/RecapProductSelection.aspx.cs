@@ -577,7 +577,7 @@ namespace AdExpress.Private.Selection{
 					absolutEndPeriod = Dates.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
 
 					if ((int.Parse(absolutEndPeriod) < int.Parse(_webSession.PeriodBeginningDate)) || (absolutEndPeriod.Substring(4, 2).Equals("00"))) {
-						throw (new TNS.AdExpress.Web.Exceptions.NoDataException());
+						throw (new TNS.AdExpress.Domain.Exceptions.NoDataException());
 					}
 
 					_webSession.PeriodEndDate = absolutEndPeriod;
@@ -587,7 +587,7 @@ namespace AdExpress.Private.Selection{
 					_webSession.ComparativeStudy = true;
 					
 				}
-				catch (TNS.AdExpress.Web.Exceptions.NoDataException) {
+				catch (TNS.AdExpress.Domain.Exceptions.NoDataException) {
 					
 					//Sinon choix par défaut année précédente
 					_webSession.PeriodType = WebConstantes.CustomerSessions.Period.Type.previousYear;

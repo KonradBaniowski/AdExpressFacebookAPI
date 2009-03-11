@@ -340,7 +340,7 @@ namespace AdExpress.Private.Selection
 						_webSession.PeriodType=CstPeriodType.currentYear;
 						_webSession.PeriodLength=1;					
 							if(DateTime.Now.Month==1){
-								throw new WebExceptions.NoDataException(GestionWeb.GetWebWord(1612,_webSession.SiteLanguage));														
+								throw new TNS.AdExpress.Domain.Exceptions.NoDataException(GestionWeb.GetWebWord(1612, _webSession.SiteLanguage));														
 							}
 							else {
 								WebFunctions.Dates.DownloadDates(_webSession,ref downloadBeginningDate,ref downloadEndDate,CstPeriodType.currentYear);								

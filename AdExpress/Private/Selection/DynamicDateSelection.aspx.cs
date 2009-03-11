@@ -375,11 +375,12 @@ namespace AdExpress.Private.Selection{
 							if( _lastCompleteMonth !=null && _lastCompleteMonth.Length>0 && int.Parse(_lastCompleteMonth.Substring(0,4))==DateTime.Now.Year){
 								_webSession.PeriodBeginningDate = DateTime.Now.ToString("yyyy01");						
 								_webSession.PeriodEndDate = _lastCompleteMonth;
-							}else throw new WebExceptions.NoDataException(GestionWeb.GetWebWord(2157,_webSession.SiteLanguage));
+							}
+							else throw new TNS.AdExpress.Domain.Exceptions.NoDataException(GestionWeb.GetWebWord(2157, _webSession.SiteLanguage));
 						}else{
 							//Dates de chargement des données pour les autres médias
 							if(DateTime.Now.Month==1){
-								throw new WebExceptions.NoDataException(GestionWeb.GetWebWord(1612,_webSession.SiteLanguage));														
+								throw new TNS.AdExpress.Domain.Exceptions.NoDataException(GestionWeb.GetWebWord(1612, _webSession.SiteLanguage));														
 							}else {
 								WebFunctions.Dates.DownloadDates(_webSession,ref downloadBeginningDate,ref downloadEndDate,CstPeriodType.currentYear);								
 								_webSession.PeriodBeginningDate=downloadBeginningDate;						
@@ -400,8 +401,9 @@ namespace AdExpress.Private.Selection{
 								if(_lastCompleteMonth !=null && _lastCompleteMonth.Length>0){
 									_webSession.PeriodEndDate = _lastCompleteMonth;
 									monthPeriod = new DateTime(int.Parse(_lastCompleteMonth.Substring(0,4)),int.Parse(_lastCompleteMonth.Substring(4,2)),01);						
-									_webSession.PeriodBeginningDate = monthPeriod.AddMonths(1 - _webSession.PeriodLength).ToString("yyyyMM");	
-								}else throw new WebExceptions.NoDataException(GestionWeb.GetWebWord(2157,_webSession.SiteLanguage));
+									_webSession.PeriodBeginningDate = monthPeriod.AddMonths(1 - _webSession.PeriodLength).ToString("yyyyMM");
+								}
+								else throw new TNS.AdExpress.Domain.Exceptions.NoDataException(GestionWeb.GetWebWord(2157, _webSession.SiteLanguage));
 							}else{
 								//Dates de chargement des données pour les autres médias
 								WebFunctions.Dates.LastLoadedMonth(ref downloadBeginningDate,ref downloadEndDate,CstPeriodType.nLastMonth);								
@@ -445,7 +447,8 @@ namespace AdExpress.Private.Selection{
 							if(_lastCompleteMonth !=null && _lastCompleteMonth.Length>0 && int.Parse(_lastCompleteMonth.Substring(0,4))>DateTime.Now.AddYears(-2).Year){
 								_webSession.PeriodBeginningDate = DateTime.Now.AddYears(-1).ToString("yyyy01");
 								_webSession.PeriodEndDate = (int.Parse(_lastCompleteMonth.Substring(0,4))==DateTime.Now.Year)? DateTime.Now.AddYears(-1).ToString("yyyy12") : _lastCompleteMonth;
-							}else throw new WebExceptions.NoDataException(GestionWeb.GetWebWord(2157,_webSession.SiteLanguage));
+							}
+							else throw new TNS.AdExpress.Domain.Exceptions.NoDataException(GestionWeb.GetWebWord(2157, _webSession.SiteLanguage));
 						}else{
 							//Dates de chargement des données pour les autres médias
 							WebFunctions.Dates.DownloadDates(_webSession,ref downloadBeginningDate,ref downloadEndDate,CstPeriodType.previousYear);								
@@ -461,7 +464,7 @@ namespace AdExpress.Private.Selection{
 						if(_selectedVehicle == DBClassificationConstantes.Vehicles.names.internet.GetHashCode()){						
 							if(_lastCompleteMonth !=null && _lastCompleteMonth.Length>0 && int.Parse(_lastCompleteMonth) >= int.Parse(DateTime.Now.AddMonths(-1).ToString("yyyyMM")))
 								_webSession.PeriodEndDate = _webSession.PeriodBeginningDate = DateTime.Now.AddMonths(-1).ToString("yyyyMM");
-							else throw new WebExceptions.NoDataException(GestionWeb.GetWebWord(2157,_webSession.SiteLanguage));
+							else throw new TNS.AdExpress.Domain.Exceptions.NoDataException(GestionWeb.GetWebWord(2157, _webSession.SiteLanguage));
 						}else{
 							//Dates de chargement des données pour les autres médias
 							WebFunctions.Modules.ActivePreviousAtomicPeriod(CstPeriodType.previousMonth,_webSession);												
