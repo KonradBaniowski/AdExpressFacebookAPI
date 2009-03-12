@@ -52,7 +52,7 @@
 		<meta name="Cache-control" content="no-cache"/>
 	</HEAD>
 	<body  class="bodyStyle" onload="javascript:activateActiveX();">
-		<form id="Form2" action="PortofolioDetailVehicleSelection.aspx" method="post" runat="server">
+		<form id="Form2" method="post" runat="server">
 			<table height="600" cellSpacing="0" cellPadding="0" border="0">
 				<tr>
 					<!-- marge de gauche-->

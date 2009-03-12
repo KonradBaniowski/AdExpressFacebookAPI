@@ -57,7 +57,7 @@
 		<meta content="no-cache" name="Cache-control"/>
 	</head>
 	<body onload="initjsDOMenu();<%=saveScript%>">
-		<form id="Form2" action="AdvertiserSelection.aspx" method="post" runat="server">
+		<form id="Form2"  method="post" runat="server">
 			<table height="600" cellspacing="0" cellpadding="0" border="0">
 				<tr>	
 					<td valign="top"><!-- marge de gauche-->

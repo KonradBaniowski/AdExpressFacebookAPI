@@ -50,7 +50,7 @@
 		<meta content="no-cache" name="Cache-control">
 	</HEAD>
 	<body onload="<%=saveScript%>">
-		<form id="Form2" action="CompetitorAdvertiserSelection.aspx" method="post" runat="server">
+		<form id="Form2"  method="post" runat="server">
 			<table height="600" cellSpacing="0" cellPadding="0" border="0">
 				<tr>	
 					<td vAlign="top"><!-- marge de gauche-->
