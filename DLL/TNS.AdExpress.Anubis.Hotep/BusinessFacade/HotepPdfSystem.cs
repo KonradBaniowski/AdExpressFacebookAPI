@@ -60,6 +60,7 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Theme;
 using TNS.AdExpress.Domain.Classification;
 using System.Collections.Generic;
+using TNS.AdExpress.Domain.Exceptions;
 #endregion
 
 namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
