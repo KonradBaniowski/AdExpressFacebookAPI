@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{15D35C74-51FD-4533-8FF1-6C6064E6B963}</ProjectGuid>
     <SccProjectName>SAK</SccProjectName>
@@ -256,6 +256,7 @@
     <None Include="ModelSupport\TNS\AdExpress\default.txvpck" />
     <None Include="ModelSupport\TNS\default.txaPackage" />
     <None Include="ModelSupport\TNS\default.txvpck" />
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="UI\UIEvolutionGraph.resx">
       <DependentUpon>UIEvolutionGraph.cs</DependentUpon>
     </EmbeddedResource>
