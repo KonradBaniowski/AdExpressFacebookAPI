@@ -256,7 +256,6 @@
     <None Include="ModelSupport\TNS\AdExpress\default.txvpck" />
     <None Include="ModelSupport\TNS\default.txaPackage" />
     <None Include="ModelSupport\TNS\default.txvpck" />
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="UI\UIEvolutionGraph.resx">
       <DependentUpon>UIEvolutionGraph.cs</DependentUpon>
     </EmbeddedResource>
@@ -272,6 +271,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
