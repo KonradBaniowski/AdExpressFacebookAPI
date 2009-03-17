@@ -2313,7 +2313,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 
                     ProductClassReports.IProductClassReports productClassLayer = (ProductClassReports.IProductClassReports)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                     data = productClassLayer.GetGenericProductClassReport();
-                    data.Sort(ResultTable.SortOrder.DESC, 2);
+					if (data != null && data.LinesNumber > 0) data.Sort(ResultTable.SortOrder.DESC, 2);
                     break;
                 default:
 					return null;

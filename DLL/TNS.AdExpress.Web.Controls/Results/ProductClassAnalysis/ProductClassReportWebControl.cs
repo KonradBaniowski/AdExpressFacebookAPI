@@ -38,86 +38,85 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
 
             #region Styles
             LineStart lS = null;
-            for (int i = 0; i < r.LinesNumber; i++)
-            {
-                lS = r.GetLineStart(i);
-                if (!(lS is LineHide))
-                {
-                    switch (lS.LineType)
-                    {
-                        case LineType.total:
-                            lS.CssClass = this.CssLTotal;
-                            break;
-                        case LineType.level1:
-                            lS.BackgroundColor = this.BackgroudColorL1;
-                            lS.HighlightBackgroundColor = this.HighlightBackgroundColorL1;
-                            lS.CssClass = this.CssL1;
-                            break;
-                        case LineType.level2:
-                            lS.BackgroundColor = this.BackgroudColorL2;
-                            lS.HighlightBackgroundColor = this.HighlightBackgroundColorL2;
-                            lS.CssClass = this.CssL2;
-                            break;
-                        case LineType.level3:
-                            lS.BackgroundColor = this.BackgroudColorL3;
-                            lS.HighlightBackgroundColor = this.HighlightBackgroundColorL3;
-                            lS.CssClass = this.CssL3;
-                            break;
-                        case LineType.level4:
-                            lS.BackgroundColor = this.BackgroudColorL4;
-                            lS.HighlightBackgroundColor = this.HighlightBackgroundColorL4;
-                            lS.CssClass = this.CssL4;
-                            break;
-                        case LineType.level5:
-                            lS.BackgroundColor = this.BackgroudColorL5;
-                            lS.HighlightBackgroundColor = this.HighlightBackgroundColorL5;
-                            lS.CssClass = this.CssL5;
-                            break;
-                        case LineType.level6:
-                            lS.BackgroundColor = this.BackgroudColorL6;
-                            lS.HighlightBackgroundColor = this.HighlightBackgroundColorL6;
-                            lS.CssClass = this.CssL6;
-                            break;
-                        case LineType.level7:
-                            lS.BackgroundColor = this.BackgroudColorL7;
-                            lS.HighlightBackgroundColor = this.HighlightBackgroundColorL7;
-                            lS.CssClass = this.CssL7;
-                            break;
-                        case LineType.level8:
-                            lS.BackgroundColor = this.BackgroudColorL8;
-                            lS.HighlightBackgroundColor = this.HighlightBackgroundColorL8;
-                            lS.CssClass = this.CssL8;
-                            break;
-                        case LineType.level9:
-                            lS.HighlightBackgroundColor = this.HighlightBackgroundColorL9;
-                            lS.BackgroundColor = this.BackgroudColorL9;
-                            lS.CssClass = this.CssL9;
-                            break;
-                        case LineType.subTotal1:
-                            lS.BackgroundColor = this.BackgroudColorSubTotal1;
-                            lS.HighlightBackgroundColor = this.HighlightBackgroundColorSubTotal1;
-                            lS.CssClass = this.CssSubTotal1;
-                            break;
-                        case LineType.subTotal2:
-                            lS.BackgroundColor = this.BackgroudColorSubTotal2;
-                            lS.HighlightBackgroundColor = this.HighlightBackgroundColorSubTotal2;
-                            lS.CssClass = this.CssSubTotal2;
-                            break;
-                        case LineType.subTotal3:
-                            lS.HighlightBackgroundColor = this.HighlightBackgroundColorSubTotal2;
-                            lS.BackgroundColor = this.BackgroudColorSubTotal3;
-                            lS.CssClass = this.CssSubTotal3;
-                            break;
-                        case LineType.subTotal4:
-                            lS.HighlightBackgroundColor = this.HighlightBackgroundColorSubTotal3;
-                            lS.BackgroundColor = this.BackgroudColorSubTotal4;
-                            lS.CssClass = this.CssSubTotal4;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
+			if (r != null && r.LinesNumber > 0) {
+				for (int i = 0; i < r.LinesNumber; i++) {
+					lS = r.GetLineStart(i);
+					if (!(lS is LineHide)) {
+						switch (lS.LineType) {
+							case LineType.total:
+								lS.CssClass = this.CssLTotal;
+								break;
+							case LineType.level1:
+								lS.BackgroundColor = this.BackgroudColorL1;
+								lS.HighlightBackgroundColor = this.HighlightBackgroundColorL1;
+								lS.CssClass = this.CssL1;
+								break;
+							case LineType.level2:
+								lS.BackgroundColor = this.BackgroudColorL2;
+								lS.HighlightBackgroundColor = this.HighlightBackgroundColorL2;
+								lS.CssClass = this.CssL2;
+								break;
+							case LineType.level3:
+								lS.BackgroundColor = this.BackgroudColorL3;
+								lS.HighlightBackgroundColor = this.HighlightBackgroundColorL3;
+								lS.CssClass = this.CssL3;
+								break;
+							case LineType.level4:
+								lS.BackgroundColor = this.BackgroudColorL4;
+								lS.HighlightBackgroundColor = this.HighlightBackgroundColorL4;
+								lS.CssClass = this.CssL4;
+								break;
+							case LineType.level5:
+								lS.BackgroundColor = this.BackgroudColorL5;
+								lS.HighlightBackgroundColor = this.HighlightBackgroundColorL5;
+								lS.CssClass = this.CssL5;
+								break;
+							case LineType.level6:
+								lS.BackgroundColor = this.BackgroudColorL6;
+								lS.HighlightBackgroundColor = this.HighlightBackgroundColorL6;
+								lS.CssClass = this.CssL6;
+								break;
+							case LineType.level7:
+								lS.BackgroundColor = this.BackgroudColorL7;
+								lS.HighlightBackgroundColor = this.HighlightBackgroundColorL7;
+								lS.CssClass = this.CssL7;
+								break;
+							case LineType.level8:
+								lS.BackgroundColor = this.BackgroudColorL8;
+								lS.HighlightBackgroundColor = this.HighlightBackgroundColorL8;
+								lS.CssClass = this.CssL8;
+								break;
+							case LineType.level9:
+								lS.HighlightBackgroundColor = this.HighlightBackgroundColorL9;
+								lS.BackgroundColor = this.BackgroudColorL9;
+								lS.CssClass = this.CssL9;
+								break;
+							case LineType.subTotal1:
+								lS.BackgroundColor = this.BackgroudColorSubTotal1;
+								lS.HighlightBackgroundColor = this.HighlightBackgroundColorSubTotal1;
+								lS.CssClass = this.CssSubTotal1;
+								break;
+							case LineType.subTotal2:
+								lS.BackgroundColor = this.BackgroudColorSubTotal2;
+								lS.HighlightBackgroundColor = this.HighlightBackgroundColorSubTotal2;
+								lS.CssClass = this.CssSubTotal2;
+								break;
+							case LineType.subTotal3:
+								lS.HighlightBackgroundColor = this.HighlightBackgroundColorSubTotal2;
+								lS.BackgroundColor = this.BackgroudColorSubTotal3;
+								lS.CssClass = this.CssSubTotal3;
+								break;
+							case LineType.subTotal4:
+								lS.HighlightBackgroundColor = this.HighlightBackgroundColorSubTotal3;
+								lS.BackgroundColor = this.BackgroudColorSubTotal4;
+								lS.CssClass = this.CssSubTotal4;
+								break;
+							default:
+								break;
+						}
+					}
+				}
+			}
             #endregion
 
             #region Legend
