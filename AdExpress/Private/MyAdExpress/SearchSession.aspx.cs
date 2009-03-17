@@ -392,6 +392,11 @@ namespace AdExpress.Private.MyAdExpress{
 					}
 					#endregion
 
+					//Patch page de résultats Tableaux dynamiques
+					if (webSessionSave != null && webSessionSave.LastReachedResultUrl.Length>0 && webSessionSave.LastReachedResultUrl.IndexOf("ASDynamicTables.aspx") >= 0) {
+						webSessionSave.LastReachedResultUrl = webSessionSave.LastReachedResultUrl.Replace("ASDynamicTables.aspx", "ProductClassReport.aspx");
+					}
+
 					#region Vérification des flags produit pour le niveau de détail produit					
 					if((!_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_HOLDING_COMPANY) && (webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("holdingcompany")>=0))||
 						(!_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE) && (webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("brand") >= 0))
@@ -854,7 +859,12 @@ namespace AdExpress.Private.MyAdExpress{
                     //_webSession.Sort=webSessionSave.Sort;
 					_webSession.Sorting=webSessionSave.Sorting;
 					_webSession.Unit=webSessionSave.Unit;
+
+					//Patch last reahce result URL pour tableaux Dynamiques
 					_webSession.LastReachedResultUrl=webSessionSave.LastReachedResultUrl;
+					
+
+
 					_webSession.ModuleTraductionCode=webSessionSave.ModuleTraductionCode;
 
 
