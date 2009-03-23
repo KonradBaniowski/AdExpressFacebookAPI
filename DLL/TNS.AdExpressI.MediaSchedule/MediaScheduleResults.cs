@@ -1864,7 +1864,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 if (Convert.ToDouble(data[line, tmpCol].ToString()) == 0 || s.Length <= 0)
                 {
                     s = FctWeb.Units.ConvertUnitValueToString(data[line, tmpCol], _session.Unit, fp).Trim();
-                    if (Convert.ToDouble(data[line, tmpCol]) == 0 || s.Length <= 0)
+                    if (Convert.ToDouble(data[line, tmpCol].ToString()) == 0 || s.Length <= 0)
                     {
                         s = "&nbsp;";
                     }
