@@ -1636,7 +1636,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                             if(_allowVersion) {
                                 oMediaScheduleData.VersionsDetail.Add(sloganId, new VersionItem(sloganId, cssClasse));
                             }
-                            else if(_isPDFReport) {
+							else if (_isPDFReport && VehiclesInformation.Contains(_vehicleId)) {
                                 switch(VehiclesInformation.DatabaseIdToEnum(_vehicleId)) {
                                     case CstDBClassif.Vehicles.names.directMarketing:
                                         oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, cssClasse));
@@ -1656,7 +1656,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                             if(_allowVersion) {
                                 oMediaScheduleData.VersionsDetail.Add(sloganId, new VersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
                             }
-                            else if(_isPDFReport) {
+                            else if(_isPDFReport && VehiclesInformation.Contains(_vehicleId)) {
                                 switch(VehiclesInformation.DatabaseIdToEnum(_vehicleId)) {
                                     case CstDBClassif.Vehicles.names.directMarketing:
                                         oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
