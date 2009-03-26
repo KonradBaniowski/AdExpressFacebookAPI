@@ -92,9 +92,9 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
 
             #region result columns
             Int32 RES_N_INDEX = 2;
-            Int32 RES_PDMV_N_INDEX = (_session.PDM || _session.PDV)? RES_N_INDEX + 1 : -1;
+			Int32 RES_PDMV_N_INDEX = ((_session.PDM && _tableType == CstFormat.PreformatedTables.media_X_Year.GetHashCode())|| (_session.PDV && _tableType == CstFormat.PreformatedTables.product_X_Year.GetHashCode())) ? RES_N_INDEX + 1 : -1;
             Int32 RES_N1_INDEX = (_session.ComparativeStudy)? Math.Max(RES_N_INDEX, RES_PDMV_N_INDEX) + 1 : -1;
-            Int32 RES_PDMV_N1_INDEX = ((_session.PDM || _session.PDV) && _session.ComparativeStudy) ? RES_N1_INDEX + 1 : -1;
+			Int32 RES_PDMV_N1_INDEX = (((_session.PDM && _tableType == CstFormat.PreformatedTables.media_X_Year.GetHashCode()) || (_session.PDV && _tableType == CstFormat.PreformatedTables.product_X_Year.GetHashCode())) && _session.ComparativeStudy) ? RES_N1_INDEX + 1 : -1;
             Int32 RES_EVOL_INDEX = (_session.Evolution && _session.ComparativeStudy) ? Math.Max(RES_N1_INDEX, RES_PDMV_N1_INDEX) + 1 : -1;
             #endregion
 
