@@ -16,6 +16,8 @@ using CustomerWebConstantes = TNS.AdExpress.Constantes.Web.CustomerSessions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.Web;
 using Obout = OboutInc.SlideMenu;
+using TNS.AdExpress.Domain.Web;
+using FrameWorkCsts = TNS.AdExpress.Constantes.FrameWork;
 
 namespace TNS.AdExpress.Web.Controls.Selections {
     /// <summary>
@@ -1056,19 +1058,11 @@ namespace TNS.AdExpress.Web.Controls.Selections {
             StringBuilder js = new StringBuilder();
 
             js.Append("\r\n\n function GetDateLabel(date, year, periodType){");
+			
 
             js.Append("\r\n\t switch(periodType){");
             js.Append("\r\n\t\t case 'Day':");
-
-            switch (_language) {
-                case 44:
-                    js.Append("\r\n\t\t\t return date.substr(4,2) + '/' + date.substr(6,2) + '/' + date.substr(0,4);");
-                    break;
-                default:
-                    js.Append("\r\n\t\t\t return date.substr(6,2) + '/' + date.substr(4,2) + '/' + date.substr(0,4);");
-                    break;
-            }
-
+			js.Append("\r\n\t\t\t return formatDate(date.substr(0,4),date.substr(4,2),date.substr(6,2),'" + WebApplicationParameters.AllowedLanguages[_language].CultureInfo.GetFormatPattern(FrameWorkCsts.Dates.Pattern.shortDatePattern.ToString()) + "');");			
             js.Append("\r\n\t\t\t break;");
             js.Append("\r\n\t\t case 'Month':");
             js.AppendFormat("\r\n\t\t\t return monthLabelList_{0}[date-1]+ ' ' + year;", this.ID);

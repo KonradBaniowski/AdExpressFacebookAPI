@@ -129,6 +129,7 @@
 				}
 			}
 		</script>
+		<script type="text/javascript" src="/scripts/DateFormat.js"></script>
 	</head>
 	<body onload="javascript:selectedItem(7);javascript:activateActiveX();" bottomMargin="0" leftMargin="0" topMargin="0" class="bodyStyle">
 		<form id="Form2" method="post" runat="server">
