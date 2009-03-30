@@ -52,7 +52,7 @@
       <allowedRecapMediaLevelItems>
         <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem><!-- Media -->
         <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem><!-- Categorie -->
-        <allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem><!-- Support -->
+        <!--<allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem>--><!-- Support -->
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
     </vehicle>
@@ -155,7 +155,7 @@
       <allowedRecapMediaLevelItems>
         <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem><!-- Media -->
         <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem><!-- Categorie -->
-        <allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem><!-- Support -->
+        <!--<allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem>--><!-- Support -->
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
   </vehicle>

@@ -69,7 +69,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             {
                 if (dtData.Columns[i].ColumnName.IndexOf("ID_M") >= 0)
                 {
-                    if (_vehicle == CstDBClassif.Vehicles.names.plurimedia || !firstMedia)
+					if (_vehicle == CstDBClassif.Vehicles.names.plurimedia || (!firstMedia || _session.PreformatedMediaDetail == CstFormat.PreformatedMediaDetails.vehicle))
                     //if (!firstMedia)
                     {
                         DATA_MEDIA_INDEXES.Add(i);
@@ -519,6 +519,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
 
                 #region Add Values
                 cId = Convert.ToInt32(row[DATA_MEDIA_INDEXES[DATA_MEDIA_INDEXES.Count - 1]]);
+				if (_vehicle != CstDBClassif.Vehicles.names.plurimedia &&  _session.PreformatedMediaDetail == CstFormat.PreformatedMediaDetails.vehicle)
                 subTotalIndex = (RES_MEDIA_SUBTOTAL.ContainsKey(cId)) ? RES_MEDIA_SUBTOTAL[cId].IndexInResultTable : -1;
                 valueN = Convert.ToDouble(row[DATA_YEAR_N]);
                 if (DATA_YEAR_N1 > -1)
