@@ -230,13 +230,25 @@ namespace TNS.AdExpressI.Portofolio.Poland.Engines {
             DateTime dtFirstDate = DateTime.Today;
             DateTime dtLastDate = DateTime.Today;
             if (isAlertModule) {
-                if (firstDate.Length > 0) {
-                    dtFirstDate = new DateTime(int.Parse(firstDate.Substring(0, 4)), int.Parse(firstDate.Substring(4, 2)), int.Parse(firstDate.Substring(6, 2)));
-                }
+				if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor) {
+					if (firstDate.Length > 0) {
+						dtFirstDate = Convert.ToDateTime(firstDate);
+						dtFirstDate = dtFirstDate.Date;
+					}
+					if (lastDate.Length > 0) {
+						dtLastDate = Convert.ToDateTime(lastDate);
+						dtLastDate = dtLastDate.Date;
+					}
+				}
+				else {
+					if (firstDate.Length > 0) {
+						dtFirstDate = new DateTime(int.Parse(firstDate.Substring(0, 4)), int.Parse(firstDate.Substring(4, 2)), int.Parse(firstDate.Substring(6, 2)));
+					}
 
-                if (lastDate.Length > 0) {
-                    dtLastDate = new DateTime(int.Parse(lastDate.Substring(0, 4)), int.Parse(lastDate.Substring(4, 2)), int.Parse(lastDate.Substring(6, 2)));
-                }
+					if (lastDate.Length > 0) {
+						dtLastDate = new DateTime(int.Parse(lastDate.Substring(0, 4)), int.Parse(lastDate.Substring(4, 2)), int.Parse(lastDate.Substring(6, 2)));
+					}
+				}
             }
             else {
                 dtFirstDate = WebFunctions.Dates.getPeriodBeginningDate(_periodBeginning, _webSession.PeriodType);
