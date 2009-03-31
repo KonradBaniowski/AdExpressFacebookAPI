@@ -332,7 +332,7 @@
     <allowedRecapMediaDetailLevels>
       <allowedRecapMediaLevelItems>
         <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem> <!-- Media -->
-        <!--<allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem>--> <!-- Categorie -->
+        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem> <!-- Categorie -->
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
   </vehicle>
