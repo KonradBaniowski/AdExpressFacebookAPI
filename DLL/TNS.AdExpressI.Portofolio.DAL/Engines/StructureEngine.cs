@@ -28,6 +28,7 @@ using CstProject = TNS.AdExpress.Constantes.Project;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Exceptions;
+using TNS.AdExpress.Domain;
 
 namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 	/// <summary>
@@ -344,7 +345,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					#region Media selection
 					//Vehicle selection 
 
-					sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_vehicle = " + _vehicleInformation.Id.GetHashCode().ToString());
+					sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_vehicle = " + _vehicleInformation.DatabaseId.ToString());
 
 					//Media selection	
 					sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media = " + _idMedia.ToString());
@@ -443,7 +444,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 						+ " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.inset).Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + "";
 				case PortofolioStructure.Ventilation.location:
 					return " " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.location).Prefix + ".id_language=" + _webSession.DataLanguage
-						+ " and dl.activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + ""
+						+ " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataLocation).Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + ""
 						+ " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.location).Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + "";
 				default:
 					throw new PortofolioDALException("getPressStructLanguage(PortofolioStructure.Ventilation ventilation)--> Impossible de déterminer le type de language pour la presse.");
@@ -464,15 +465,16 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				case PortofolioStructure.Ventilation.format:
 					return " and  " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_format =" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.format).Prefix + ".id_format";
 				case PortofolioStructure.Ventilation.insert:
-					return " and  " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_inset = " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.inset).Prefix + ".id_inset"
-					 + " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_inset in ( " + WebConstantes.CustomerSessions.InsertType.encart.GetHashCode() + "," + WebConstantes.CustomerSessions.InsertType.flyingEncart.GetHashCode() + " )"
-					+ " and srt.id_inset in ( " + WebConstantes.CustomerSessions.InsertType.encart.GetHashCode() + "," + WebConstantes.CustomerSessions.InsertType.flyingEncart.GetHashCode() + " )";
+					string fieldsList = Lists.GetIdList(WebConstantes.GroupList.ID.inset);
+					string res = " and  " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_inset = " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.inset).Prefix + ".id_inset";
+					if (fieldsList != null && fieldsList.Length > 0) res += " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_inset in ( " + fieldsList + " )";
+					return res;
 				case PortofolioStructure.Ventilation.location:
 					return " and  " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media = dl.id_media "
-						+ " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.location).Prefix + ".id_location=dl.id_location "
+						+ " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.location).Prefix + ".id_location=" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataLocation).Prefix + ".id_location "
 						//Period
 					+ " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num=dl.date_media_num "
-					+ "  and dl.ID_ADVERTISEMENT=" + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".ID_ADVERTISEMENT ";
+					+ "  and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataLocation).Prefix + ".ID_ADVERTISEMENT=" + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".ID_ADVERTISEMENT ";
 				default:
 					throw new PortofolioDALException("getPressStructJoint(PortofolioStructure.Ventilation ventilation) : Impossible to realise joint sql for Press vehicle.");
 			}

@@ -735,7 +735,15 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// Dimension banners
         /// </summary>
-        dimensionBanners = 158
+        dimensionBanners = 158,
+		/// <summary>
+		/// Product class analysis direct marketing data aggregated by segment
+		/// </summary>
+		recapDirectMarketingSegment = 159,
+		/// <summary>
+		/// Recap Direct Marketing
+		/// </summary>
+		recapDirectMarketing = 160
     } 
     #endregion
 

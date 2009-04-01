@@ -164,6 +164,10 @@
     <table enumId="154" description="Data: Cinema" schemaEnumId="0" label="data_cinema_4M" prefix="wp"/>
     <table enumId="155" description="Custormer directory: directory" schemaEnumId="5" label="directory" prefix="drt"/>
     <table enumId="156" description="Data: banners" schemaEnumId="0" label="banners" prefix="bn"/>
+    <table enumId="157" description="Classif: format banners" schemaEnumId="0" label="format_banners" prefix="fb"/>
+    <table enumId="158" description="Classif: dimension banners" schemaEnumId="0" label="dimension_banners" prefix="db"/>
+    <table enumId="159" description="Recap Data: Marketing direct segment" schemaEnumId="4" label="recap_marketing_direct_segment" prefix="rcp"/>
+    <table enumId="160" description="Recap Data: Marketing direct" schemaEnumId="4" label="recap_marketing_direct" prefix="rcp"/>
 
   </tables>
   <views>

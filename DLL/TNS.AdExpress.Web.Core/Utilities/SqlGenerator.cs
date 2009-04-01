@@ -2456,28 +2456,30 @@ namespace TNS.AdExpress.Web.Core.Utilities
         {
             switch (vehicleType)
             {
-                case ClassificationConstantes.DB.Vehicles.names.cinema:
-                    return (DBConstantes.Tables.RECAP_CINEMA);
-                case ClassificationConstantes.DB.Vehicles.names.radio:
-                    return (DBConstantes.Tables.RECAP_RADIO);
-                case ClassificationConstantes.DB.Vehicles.names.tv:
-                    return (DBConstantes.Tables.RECAP_TV);
-                case ClassificationConstantes.DB.Vehicles.names.press:
-                    return (DBConstantes.Tables.RECAP_PRESS);
-                case ClassificationConstantes.DB.Vehicles.names.outdoor:
-                    return (DBConstantes.Tables.RECAP_OUTDOOR);
-                case ClassificationConstantes.DB.Vehicles.names.internet:
-                    return (DBConstantes.Tables.RECAP_INTERNET);
-                case ClassificationConstantes.DB.Vehicles.names.plurimedia:
-                    return (DBConstantes.Tables.RECAP_PLURI);
-                case ClassificationConstantes.DB.Vehicles.names.mediasTactics:
-                    return (DBConstantes.Tables.RECAP_MEDIA_TACTIC);
-                case ClassificationConstantes.DB.Vehicles.names.mobileTelephony:
-                    return (DBConstantes.Tables.RECAP_MOBILE_TELEPHONY);
-                case ClassificationConstantes.DB.Vehicles.names.emailing:
-                    return (DBConstantes.Tables.RECAP_EMAILING);
-                default:
-                    throw (new SQLGeneratorException("Impossible de déterminer la table recap à traiter."));
+				case ClassificationConstantes.DB.Vehicles.names.cinema:
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapCinema).Sql;
+				case ClassificationConstantes.DB.Vehicles.names.radio:
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapRadio).Sql;
+				case ClassificationConstantes.DB.Vehicles.names.tv:
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTv).Sql;
+				case ClassificationConstantes.DB.Vehicles.names.press:
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPress).Sql;
+				case ClassificationConstantes.DB.Vehicles.names.outdoor:
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapOutDoor).Sql;
+				case ClassificationConstantes.DB.Vehicles.names.internet:
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInternet).Sql;
+				case ClassificationConstantes.DB.Vehicles.names.plurimedia:
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPluri).Sql;
+				case ClassificationConstantes.DB.Vehicles.names.mediasTactics:
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTactic).Sql;
+				case ClassificationConstantes.DB.Vehicles.names.mobileTelephony:
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMobileTel).Sql;
+				case ClassificationConstantes.DB.Vehicles.names.emailing:
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapEmailing).Sql;
+				case ClassificationConstantes.DB.Vehicles.names.directMarketing:
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapDirectMarketing).Sql;
+				default:
+					throw (new SQLGeneratorException("Impossible de déterminer la table recap à traiter."));
             }
         }
 
@@ -2491,25 +2493,27 @@ namespace TNS.AdExpress.Web.Core.Utilities
             switch (vehicleType)
             {
                 case ClassificationConstantes.DB.Vehicles.names.cinema:
-                    return (DBConstantes.Tables.RECAP_CINEMA_SEGMENT);
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapCinemaSegment).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.radio:
-                    return (DBConstantes.Tables.RECAP_RADIO_SEGMENT);
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapRadioSegment).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.tv:
-                    return (DBConstantes.Tables.RECAP_TV_SEGMENT);
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTvSegment).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.press:
-                    return (DBConstantes.Tables.RECAP_PRESS_SEGMENT);
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPressSegment).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.outdoor:
-                    return (DBConstantes.Tables.RECAP_OUTDOOR_SEGMENT);
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapOutDoorSegment).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.internet:
-                    return (DBConstantes.Tables.RECAP_INTERNET_SEGMENT);
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInternetSegment).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.plurimedia:
-                    return (DBConstantes.Tables.RECAP_PLURI_SEGMENT);
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPluriSegment).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.mediasTactics:
-                    return (DBConstantes.Tables.RECAP_MEDIA_TACTIC_SEGMENT);
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTacticSegment).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.mobileTelephony:
-                    return (DBConstantes.Tables.RECAP_MOBILE_TELEPHONY_SEGMENT);
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMobileTelSegment).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.emailing:
-                    return (DBConstantes.Tables.RECAP_EMAILING_SEGMENT);
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapEmailingSegment).Sql;
+				case ClassificationConstantes.DB.Vehicles.names.directMarketing:
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapDirectMarketingSegment).Sql;
                 default:
                     throw (new SQLGeneratorException("Impossible de déterminer la table recap à traiter."));
             }

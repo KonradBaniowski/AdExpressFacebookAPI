@@ -486,9 +486,11 @@
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!--Media detail level allowed in recap's modules-->
+    <!--Media detail level allowed in recap's modules-->
     <allowedRecapMediaDetailLevels>
       <allowedRecapMediaLevelItems>
-        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>      <!-- Media -->
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem><!-- Media -->
+        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem><!-- Categorie -->
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
   </vehicle>
