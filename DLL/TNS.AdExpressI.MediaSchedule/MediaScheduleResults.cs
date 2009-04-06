@@ -2369,34 +2369,10 @@ namespace TNS.AdExpressI.MediaSchedule {
                             sloganId = Convert.ToInt64(data[i, sloganIndex]);
                             if(!_session.SloganColors.ContainsKey(sloganId)) {
                                 colorNumberToUse = (colorItemIndex % _style.CellVersions.Count) + 1;
-                                _session.SloganColors.Add(sloganId, "MediaPlanCellVersions"+colorNumberToUse);
-                                switch (VehiclesInformation.DatabaseIdToEnum(_vehicleId)) {
-                                    case CstDBClassif.Vehicles.names.directMarketing:
-                                        //oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, style));
-                                        break;
-                                    case CstDBClassif.Vehicles.names.outdoor:
-                                        //oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportOutdoorVersionItem(sloganId, style));
-                                        break;
-                                    default:
-                                        //oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportVersionItem(sloganId, style));
-                                        break;
-                                }
+                                _session.SloganColors.Add(sloganId, "MediaPlanCellVersions"+colorNumberToUse);								
                                 colorItemIndex++;
                             }
-                            if(sloganId != 0 && !oMediaScheduleData.VersionsDetail.ContainsKey(sloganId)) {
-                                switch(VehiclesInformation.DatabaseIdToEnum(_vehicleId)) {
-                                    case CstDBClassif.Vehicles.names.directMarketing:
-                                        //oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
-                                        break;
-                                    case CstDBClassif.Vehicles.names.outdoor:
-                                        //oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportOutdoorVersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
-                                        break;
-                                    default:
-                                        //oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportVersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
-                                        break;
-                                }
-
-                            }
+							
                             presentstyle = _session.SloganColors[sloganId].ToString();
                             extendedStyle = _session.SloganColors[sloganId].ToString();
                             stringItem = "x";
