@@ -9,6 +9,8 @@
     <column id="7" name="Annonceur" webTextId="857" dbId="id_advertiser" dbLabel="advertiser" dbTable="advertiser" dbTablePrefixe="ad" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="8" name="Groupe" webTextId="1110" dbId="id_group_" dbLabel="group_" dbTable="group_" dbTablePrefixe="gr" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="9" name="Produit" webTextId="858" dbId="id_product" dbLabel="product" dbTable="product" dbTablePrefixe="pr" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="11" name="Format" webTextId="1420" dbId="id_format" dbLabel="format" dbTable="format" dbTablePrefixe="fo"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="13" name="Couleur" webTextId="1438" dbId="id_color" dbLabel="color" dbTable="color" dbTablePrefixe="cl"   dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="14" name="Prix" webTextId="1936" dbLabel="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
     <column id="33" name="Date" webTextId="895"  dbLabel="date_media_num" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
     <column id="36" name="Position presse" webTextId="862"  dbLabel="rank_media" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
@@ -33,7 +35,7 @@
 
   <detailColumns>
     <!--Presse-->
-    <detailColumn id="1" name="Annonceur\Groupe\Produit\Centre d'interet\Régie\Prix">
+    <detailColumn id="1" name="Annonceur\Groupe\Produit\Centre d'interet\Régie\Format\Couleur\Prix">
       <columnItem id="54" name="Id pub presse" visible="false"  notInExcelExport="true" isKey="true"/>
       <columnItem id="42" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
@@ -42,10 +44,12 @@
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>
       <columnItem id="5" name="Régie" idDetailLevelMatching="5"/>
+      <columnItem id="11" name="Format" idDetailLevelMatching="20"/>
+      <columnItem id="13" name="Couleur"/>
       <columnItem id="14" name="Prix"/>
     </detailColumn>
     <!--Presse-->
-    <detailColumn id="6" name="Date du Support\Annonceurs\Agence média\Produit\Famille\Groupe\Prix">
+    <detailColumn id="6" name="Date du Support\Annonceurs\Agence média\Produit\Famille\Groupe\Format\Couleur\Prix">
       <columnItem id="42" name="Date du Support"/>
       <columnItem id="7" name="Annonceur"/>
       <columnItem id="43" name="Agence Media"/>
@@ -54,6 +58,8 @@
       <columnItem id="9" name="Produit"/>
       <columnItem id="44" name="Famille"/>
       <columnItem id="8" name="Groupe"/>
+      <columnItem id="11" name="Format" idDetailLevelMatching="20"/>
+      <columnItem id="13" name="Couleur"/>
       <columnItem id="14" name="Prix"/>
     </detailColumn>
     <!--Presse-->
@@ -64,6 +70,8 @@
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
+      <columnItem id="11" name="Format" idDetailLevelMatching="20"/>
+      <columnItem id="13" name="Couleur"/>
       <columnItem id="14" name="Prix"/>
     </detailColumn>
 

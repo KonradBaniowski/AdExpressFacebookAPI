@@ -132,32 +132,14 @@ namespace AdExpress.Private.MyAdExpress{
 			
 			try{
                 _theme = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
-				//Modification de la langue pour les Textes AdExpress
-                //for (int i = 0; i < this.Controls.Count; i++) {
-                //    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
-                //}
+				//Modification de la langue pour les Textes AdExpress                
 			
 				HeaderWebControl1.ActiveMenu = CstWeb.MenuTraductions.MY_ADEXPRESS;
 
 				#region Rollover des boutons
-				//personalizeImagebuttonrolloverwebcontrol.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/personnaliser_up.gif";
-				//personalizeImagebuttonrolloverwebcontrol.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/personnaliser_down.gif";
 
-				//resultImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/resultat_up.gif";
-				//resultImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/resultat_down.gif";
-
-				//deleteImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/supprimer_up.gif";
-				//deleteImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/supprimer_down.gif";
-				deleteImageButtonRollOverWebControl.Attributes.Add("onclick", "javascript: return confirm('Etes vous sûr de vouloir supprimer cette requête ?');");
-
-			//	detailImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/detail_up.gif";
-			//	detailImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/detail_down.gif";
-
-				//universOpenImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/personnaliser_up.gif";
-				//universOpenImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/personnaliser_down.gif";
-				
-				//pdfOpenImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/ouvrir_up.gif";
-				//pdfOpenImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/ouvrir_down.gif";
+				deleteImageButtonRollOverWebControl.Attributes.Add("onclick", "javascript: return confirm('" + GestionWeb.GetWebWord(2572, _webSession.SiteLanguage) + "');");
+			
 				#endregion
 
 				//Charge la liste des répertoires
