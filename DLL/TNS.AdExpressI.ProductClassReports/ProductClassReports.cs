@@ -17,7 +17,9 @@ using System.Text;
 using TNS.AdExpressI.ProductClassReports.Exceptions;
 
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Domain.Classification;
 
 using CstTblFormat = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedTables;
 using TNS.Classification.Universe;
@@ -159,6 +161,25 @@ namespace TNS.AdExpressI.ProductClassReports
         {
             return this.GetGenericProductClassReport(resultType, true);
         }
+
+		/// <summary>
+		/// Determine if module bridge can be show
+		/// </summary>
+		/// <returns>True if module bridge can be show</returns>
+		public bool ShowModuleBridge() {
+			List<Int64> ids = null;
+			if(_session.CustomerLogin.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR) != null)
+			ids = ((Module)_session.CustomerLogin.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR)).ExcludedVehicles;
+
+			//Rule : Not show module brige if media selected is only Marketing direct
+			if (ids != null && ids.Count > 0) {
+				VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID);
+				if (vehicleInfo != null && vehicleInfo.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing)
+					return false;
+			}
+			return true;
+		}
+
         #endregion
 
         #region GetProductClassReport

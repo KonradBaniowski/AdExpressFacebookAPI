@@ -289,6 +289,11 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                     currentResultPageInformation.AllowedMediaUniverse.MediaList=Reader.GetAttribute("list");
                                 }
                                 break;
+							case "ExcludedVehicles":
+								if (Reader.GetAttribute("list") != null && Reader.GetAttribute("list").Length>0) {
+									((Module)HtModule[module]).ExcludedVehicles = new List<Int64>(Array.ConvertAll<string, Int64>(Reader.GetAttribute("list").Split(','), (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); })); 
+								}
+								break;
 						}					
 					}				
 				}

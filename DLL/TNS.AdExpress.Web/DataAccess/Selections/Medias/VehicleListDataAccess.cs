@@ -8,6 +8,7 @@
 using System;
 using System.Data;
 using System.Text;
+using System.Collections.Generic;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -21,6 +22,7 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Web.Navigation;
 using WebNavigation=TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using DBClassification=TNS.AdExpress.Constantes.Classification.DB;
@@ -52,7 +54,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 				bool isRecap = false;
 				
 				try {
-			
+
 					if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
 					|| webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
 						isRecap = true;
@@ -1167,6 +1169,16 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 			//Media universe
 			if (module != null)
 				sql += module.GetAllowedMediaUniverseSql(vehicleTable.Prefix,categoryTable.Prefix,mediaTable.Prefix, true);
+
+			//Exclude vehicle Marketing direct for Indiactors module (for France)
+			if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR) {
+				List<Int64> lst	 = ((Module)webSession.CustomerLogin.GetModule(webSession.CurrentModule)).ExcludedVehicles;
+				if (lst != null && lst.Count > 0) {
+					string inCondition = String.Join(", ", Array.ConvertAll<long, string>(lst.ToArray(), i => i.ToString()));
+					sql += " and " + vehicleTable.Prefix + ".id_vehicle not in ( " + inCondition + ") ";
+				}
+			}
+
 			#endregion
 
 			#region Media Rights

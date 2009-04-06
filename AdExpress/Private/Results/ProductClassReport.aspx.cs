@@ -36,6 +36,8 @@ using CstPreformatedDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Prefo
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress;
+using ProductClassReports = TNS.AdExpressI.ProductClassReports;
 
 #endregion
 
@@ -137,12 +139,17 @@ namespace AdExpress.Private.Results{
 				}
 				#endregion
 			
-				#region Texte et langage du site
-                //for (int i = 0; i < this.Controls.Count; i++) {
-                //    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
-                //}
+				#region Texte et langage du site               
 				Moduletitlewebcontrol2.CustomerWebSession=_webSession;
 				ModuleBridgeWebControl1.CustomerWebSession=_webSession;
+				object[] param = null;
+				TNS.AdExpress.Domain.Web.Navigation.Module module = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
+				if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Product Class reports"));
+				param = new object[1];
+				param[0] = _webSession;
+				ProductClassReports.IProductClassReports productClassLayer = (ProductClassReports.IProductClassReports)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+				if (!productClassLayer.ShowModuleBridge()) ModuleBridgeWebControl1.Visible = false;
+				productClassLayer = null;
 				InformationWebControl1.Language = _webSession.SiteLanguage;
 //				ExportWebControl1.CustomerWebSession=_webSession;
 				ValidateSelectionButton.ToolTip = GestionWeb.GetWebWord(1183,_webSession.SiteLanguage);

@@ -1068,7 +1068,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 						case ClassificationCst.DB.Vehicles.names.tv:
 						case ClassificationCst.DB.Vehicles.names.radio:
 						case ClassificationCst.DB.Vehicles.names.outdoor:
-						case ClassificationCst.DB.Vehicles.names.mediasTactics:
+						case ClassificationCst.DB.Vehicles.names.mediasTactics:						
 							mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
 							if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category)) 
 								mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
@@ -1083,6 +1083,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 						case ClassificationCst.DB.Vehicles.names.mobileTelephony:
 						case ClassificationCst.DB.Vehicles.names.emailing:
 						case ClassificationCst.DB.Vehicles.names.plurimedia:
+						case ClassificationCst.DB.Vehicles.names.directMarketing:
 							mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
 							if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category)) 
 							mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));

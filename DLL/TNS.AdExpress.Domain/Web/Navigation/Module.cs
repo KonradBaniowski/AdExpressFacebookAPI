@@ -118,6 +118,11 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		/// Maximum size of the result table
 		/// </summary>
 		protected Int32 _resultSize = 0;
+		/// <summary>
+		/// List of excluded vehicles
+		/// <remarks>Used particularly for A. Secto (indicateurs) to exclude Vehicle direct marketing in unique selection</remarks>
+		/// </summary>
+		protected List<Int64> _excludedVehicles = new List<long>();
 		#endregion
 
 		#region Constructeur
@@ -256,6 +261,14 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		///<summary>Obtient les niveaux de détails orientés produit par défaut</summary>
 		public ArrayList DefaultProductDetailLevels {
 			get{return (_defaultProductDetailLevels);}
+		}
+		/// <summary>
+		/// List of excluded vehicles
+		/// <remarks>Used particularly for A. Secto (indicateurs) to exclude Vehicle direct marketing in unique selection</remarks>
+		/// </summary>
+		public List<Int64> ExcludedVehicles {
+			get { return (_excludedVehicles); }
+			set { _excludedVehicles = value; }
 		}
 		#endregion
 

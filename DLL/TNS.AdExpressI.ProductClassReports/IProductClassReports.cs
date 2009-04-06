@@ -72,5 +72,11 @@ namespace TNS.AdExpressI.ProductClassReports
         /// <returns>HTML Code</returns>
         ResultTable GetGenericProductClassReportExcel(int result);
 
+		/// <summary>
+		/// Determine if module bridge can be show
+		/// </summary>
+		/// <returns>True if module bridge can be show</returns>
+		bool ShowModuleBridge();
+
     }
 }

@@ -834,16 +834,8 @@
         <DataAccessLayer name="Default Product Class Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassReports.DAL.Default.dll" class="TNS.AdExpressI.ProductClassReports.DAL.Default.ProductClassReportDAL"/>
         <ResultLimitation size="50000"/>
         <ModuleAllowedMediaUniverse initFromBaal="true" baalId="341">
-        </ModuleAllowedMediaUniverse>
-        <selections>
-          <!--<selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ASProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
-            <allowedUniverseLevels>
-              <allowedUniverseLevel id="3" name="group_"/>
-              <allowedUniverseLevel id="4" name="segment"/>
-            </allowedUniverseLevels>
-            <allowedUniverseBranches>
-              <allowedUniverseBranch id="6" name="group_\segment"/>
-            </allowedUniverseBranches>-->
+        </ModuleAllowedMediaUniverse>       
+        <selections>          
           <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
@@ -892,17 +884,10 @@
       <module name="Analyse secto : Indicateurs" privilegecode="195" traductioncode="2173" moduleCategoryId="2" urlNextPage="/Private/Selection/RecapUniverseProductSelection.aspx" descriptionWebTextId="2202" descriptionImageName="/Images/Common/Infobulle/Indicateurs.png">
         <RulesLayer name="Default Product Class Indicators Rules Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.Default.ProductClassIndicators"/>
         <DataAccessLayer name="Default Product Class Indicators Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.DAL.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.DAL.Default.ProductClassIndicatorsDAL"/>
+        <ExcludedVehicles list="10"/> 
         <ModuleAllowedMediaUniverse initFromBaal="true" baalId="341">
-        </ModuleAllowedMediaUniverse>
-        <selections>
-          <!--<selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ASProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
-            <allowedUniverseLevels>
-              <allowedUniverseLevel id="3" name="group_"/>
-              <allowedUniverseLevel id="4" name="segment"/>
-            </allowedUniverseLevels>
-            <allowedUniverseBranches>
-              <allowedUniverseBranch id="6" name="group_\segment"/>
-            </allowedUniverseBranches>-->
+        </ModuleAllowedMediaUniverse>       
+        <selections>         
           <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
@@ -928,7 +913,6 @@
           </optionalSelection>
         </optionalSelections>
         <results>
-
           <page id="0" resultid="34" name="Seasonality" traductioncode="1139" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>

@@ -460,18 +460,18 @@ namespace AdExpress.Private.Selection{
 			{		
 				// On teste que la date de début est inférieur à la date de fin
 				if(monthCalendarBeginWebControl.SelectedDate> monthCalendarEndWebControl.SelectedDate)
-				throw(new AdExpressException.SectorDateSelectionException("La date de début doit être inférieure à la date de fin"));
+				throw(new AdExpressException.SectorDateSelectionException(GestionWeb.GetWebWord(1855,_siteLanguage)));
 				
 				if(monthCalendarBeginWebControl.SelectedYear != monthCalendarEndWebControl.SelectedYear)
-				throw(new AdExpressException.SectorDateSelectionException("Il est nécessaire de sélectionner deux années identiques pour valider."));
+					throw (new AdExpressException.SectorDateSelectionException(GestionWeb.GetWebWord(2573, _siteLanguage)));
 				
 				if(DateTime.Now.Year>_webSession.DownLoadDate){
 					if(isComparativeStudy(selectedComparativeStudy) && (monthCalendarBeginWebControl.SelectedYear==DateTime.Now.Year-3 || monthCalendarEndWebControl.SelectedYear==DateTime.Now.Year-3) )
-						throw(new AdExpressException.SectorDateSelectionException("Il est nécessaire de sélectionner une période supérieure à N-2 pour réaliser une étude comparative."));
+						throw (new AdExpressException.SectorDateSelectionException(GestionWeb.GetWebWord(2574, _siteLanguage)));
 				
 				}else{
 					if(isComparativeStudy(selectedComparativeStudy) && (monthCalendarBeginWebControl.SelectedYear==DateTime.Now.Year-2 || monthCalendarEndWebControl.SelectedYear==DateTime.Now.Year-2) )
-						throw(new AdExpressException.SectorDateSelectionException("Il est nécessaire de sélectionner une période supérieure à N-2 pour réaliser une étude comparative."));
+						throw (new AdExpressException.SectorDateSelectionException(GestionWeb.GetWebWord(2574, _siteLanguage)));
 				}
 
 

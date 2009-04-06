@@ -313,6 +313,8 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 					return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMobileTel) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMobileTelSegment);
                 case CstDBClassif.Vehicles.names.emailing:
 					return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapEmailing) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapEmailingSegment);
+				case CstDBClassif.Vehicles.names.directMarketing:
+					return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapDirectMarketing) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapDirectMarketingSegment);
                 case CstDBClassif.Vehicles.names.internationalPress:
                 case CstDBClassif.Vehicles.names.others:
                 case CstDBClassif.Vehicles.names.adnettrack:
