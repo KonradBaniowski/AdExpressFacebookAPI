@@ -80,6 +80,10 @@ namespace TNS.AdExpress.Domain.Classification {
 		/// <remarks>Used in generic component</remarks>
 		/// </summary>
 		private TNS.AdExpress.Domain.Level.GenericDetailLevel _defaultMediaSelectionDetailLevel = null;
+		/// <summary>
+		/// Allowed universe levels
+		/// </summary>
+		private List<long> _allowedUniverseLevels = new List<long>();
         #endregion
 
         #region Constructor
@@ -306,6 +310,14 @@ namespace TNS.AdExpress.Domain.Classification {
 		public TNS.AdExpress.Domain.Level.GenericDetailLevel DefaultMediaSelectionDetailLevel {
 			get { return _defaultMediaSelectionDetailLevel; }
 			set { _defaultMediaSelectionDetailLevel = value; }
+		}
+		/// <summary>
+		/// Get /Set allowed universe levels
+		/// <remarks>Used in generic component of universe media ou product selection</remarks>
+		/// </summary>
+		public List<long> AllowedUniverseLevels {
+			get { return _allowedUniverseLevels; }
+			set { _allowedUniverseLevels = value; }
 		}
         #endregion
 

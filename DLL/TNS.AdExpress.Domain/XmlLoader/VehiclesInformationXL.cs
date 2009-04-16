@@ -38,6 +38,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 			List<DetailLevelItemInformation> allowedMediaSelectionLevelItemsList = new List<DetailLevelItemInformation>();
 			List<TNS.AdExpress.Domain.Level.GenericDetailLevel> defaultMediaSelectionDetailLevels = new List<TNS.AdExpress.Domain.Level.GenericDetailLevel>();
 			TNS.AdExpress.Domain.Level.GenericDetailLevel defaultMediaSelectionDetailLevel = null;
+			List<long> allowedUniverseLevels = new List<long>();
             XmlTextReader reader = null;
             VehicleInformation vhInfo = null;
             string id= string.Empty;
@@ -62,6 +63,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 									vhInfo.AllowedMediaSelectionLevelItemsList = allowedMediaSelectionLevelItemsList;
 									vhInfo.DefaultMediaSelectionDetailLevels = defaultMediaSelectionDetailLevels;
 									vhInfo.DefaultMediaSelectionDetailLevel = defaultMediaSelectionDetailLevel;
+									vhInfo.AllowedUniverseLevels = allowedUniverseLevels;
                                     list.Add(vhInfo);
                                     id = string.Empty;
                                     showActiveMedia = false;
@@ -73,6 +75,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 									allowedMediaSelectionLevelItemsList = new List<DetailLevelItemInformation>();
 									defaultMediaSelectionDetailLevels = new List<TNS.AdExpress.Domain.Level.GenericDetailLevel>();
 									defaultMediaSelectionDetailLevel = null;
+									allowedUniverseLevels = new List<long>();
                                 }
                                 if (reader.GetAttribute("id") == null || reader.GetAttribute("id").Length == 0) throw (new InvalidXmlValueException("Invalid id parameter"));
                                 id = reader.GetAttribute("id");
@@ -126,6 +129,11 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 								if (reader.GetAttribute("id") == null || reader.GetAttribute("id").Length == 0) throw (new InvalidXmlValueException("Invalid selectionAllowedMediaLevelItem parameter"));
 								allowedMediaSelectionLevelItemsList.Add(DetailLevelItemsInformation.Get(int.Parse(reader.GetAttribute("id"))));
 								break;
+							case "allowedUniverseLevel":
+								if (reader.GetAttribute("id") == null || reader.GetAttribute("id").Length == 0) throw (new InvalidXmlValueException("Invalid allowedUniverseLevel parameter"));
+								allowedUniverseLevels.Add(int.Parse(reader.GetAttribute("id")));
+								break;
+								
                         }
                     }
                 }
@@ -134,6 +142,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 					vhInfo.AllowedMediaSelectionLevelItemsList = allowedMediaSelectionLevelItemsList;
 					vhInfo.DefaultMediaSelectionDetailLevels = defaultMediaSelectionDetailLevels;
 					vhInfo.DefaultMediaSelectionDetailLevel = defaultMediaSelectionDetailLevel;
+					vhInfo.AllowedUniverseLevels = allowedUniverseLevels;
                     list.Add(vhInfo);
                 }
             }

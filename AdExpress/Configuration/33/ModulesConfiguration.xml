@@ -833,8 +833,9 @@
         <RulesLayer name="Default Product Class Rules Layers" assemblyName="TNS.AdExpressI.ProductClassReports.Default.dll" class="TNS.AdExpressI.ProductClassReports.Default.ProductClassReports"/>
         <DataAccessLayer name="Default Product Class Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassReports.DAL.Default.dll" class="TNS.AdExpressI.ProductClassReports.DAL.Default.ProductClassReportDAL"/>
         <ResultLimitation size="50000"/>
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="341">
-        </ModuleAllowedMediaUniverse>       
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleCategories list="11,12,13,14,17,18,19,20,21,22,23,24,25,26,27,28,31,33,34,35,37,38,39,41,44,46,51,52,54,55,56,57,58,59,60,61,63,64,68,76,77,78,79,80,81,82,83,84,86,89,90,91,94,95,96,97,98,69,70"/>
+        </ModuleAllowedMediaUniverse>    
         <selections>          
           <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
             <allowedUniverseLevels>
@@ -884,9 +885,10 @@
       <module name="Analyse secto : Indicateurs" privilegecode="195" traductioncode="2173" moduleCategoryId="2" urlNextPage="/Private/Selection/RecapUniverseProductSelection.aspx" descriptionWebTextId="2202" descriptionImageName="/Images/Common/Infobulle/Indicateurs.png">
         <RulesLayer name="Default Product Class Indicators Rules Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.Default.ProductClassIndicators"/>
         <DataAccessLayer name="Default Product Class Indicators Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.DAL.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.DAL.Default.ProductClassIndicatorsDAL"/>
-        <ExcludedVehicles list="10"/> 
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="341">
-        </ModuleAllowedMediaUniverse>       
+        <ExcludedVehicles list="10"/>
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleCategories list="11,12,13,14,17,18,19,20,21,22,23,24,25,26,27,28,31,33,34,35,37,38,39,41,44,46,51,52,54,55,56,57,58,59,60,61,63,64,68,76,77,78,79,80,81,82,83,84,86,89,90,91,94,95,96,97,98,69,70"/>
+        </ModuleAllowedMediaUniverse>      
         <selections>         
           <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
             <allowedUniverseLevels>

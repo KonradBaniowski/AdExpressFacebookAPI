@@ -55,6 +55,21 @@
         <!--<allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem>--><!-- Support -->
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
+    <!--Allowed universe levels-->
+    <allowedUniverseLevels>
+      <allowedUniverseLevel id="1" name="sector"/>
+      <allowedUniverseLevel id="2" name="subsector"/>
+      <allowedUniverseLevel id="3" name="group_"/>
+      <allowedUniverseLevel id="4" name="segment"/>
+      <allowedUniverseLevel id="7" name="holding_company"/>
+      <allowedUniverseLevel id="6" name="advertiser"/>
+      <allowedUniverseLevel id="8" name="brand"/>
+      <allowedUniverseLevel id="5" name="product"/>
+      <allowedUniverseLevel id="11" name="vehicle"/>
+      <allowedUniverseLevel id="12" name="category"/>
+      <allowedUniverseLevel id="14" name="media"/>
+      <allowedUniverseLevel id="15" name="interest_center"/>
+    </allowedUniverseLevels>
     </vehicle>
   <!-- RADIO -->
   <vehicle id="radio" databaseId="7" showInsertions="false" showCreations="false">
@@ -68,7 +83,7 @@
       <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                  <!-- Media -->
       <allowedMediaLevelItem>category</allowedMediaLevelItem>                 <!-- Categorie -->
       <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>           <!-- Centre d'interet -->
-      <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>              <!-- Régie -->
+      <!--<allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>-->              <!-- Régie -->
       <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>           <!-- Groupe de société -->
       <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>               <!-- Annonceur -->
       <allowedMediaLevelItem>brand</allowedMediaLevelItem>                    <!-- Marque -->
@@ -77,7 +92,7 @@
       <allowedMediaLevelItem>subSector</allowedMediaLevelItem>                <!-- Classe -->
       <allowedMediaLevelItem>group</allowedMediaLevelItem>                    <!-- Groupe -->
       <allowedMediaLevelItem>segment</allowedMediaLevelItem>                  <!-- Variété -->
-      <allowedMediaLevelItem>title</allowedMediaLevelItem>                    <!-- Titre -->
+      <!--<allowedMediaLevelItem>title</allowedMediaLevelItem>-->                    <!-- Titre -->
     </allowedMediaLevelItems>
     <!-- Selection hierarchy-->
     <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
@@ -106,6 +121,20 @@
         <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem><!-- Categorie -->
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
+    <!--Allowed universe levels-->
+    <allowedUniverseLevels>
+      <allowedUniverseLevel id="1" name="sector"/>
+      <allowedUniverseLevel id="2" name="subsector"/>
+      <allowedUniverseLevel id="3" name="group_"/>
+      <allowedUniverseLevel id="4" name="segment"/>
+      <allowedUniverseLevel id="7" name="holding_company"/>
+      <allowedUniverseLevel id="6" name="advertiser"/>
+      <allowedUniverseLevel id="8" name="brand"/>
+      <allowedUniverseLevel id="5" name="product"/>
+      <allowedUniverseLevel id="11" name="vehicle"/>
+      <allowedUniverseLevel id="12" name="category"/>
+      <allowedUniverseLevel id="15" name="interest_center"/>
+    </allowedUniverseLevels>
   </vehicle>
   <!-- OUTDOOR -->
   <vehicle id="outdoor" databaseId="1" showInsertions="false" showCreations="false">
@@ -120,7 +149,7 @@
         <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                  <!-- Media -->
         <allowedMediaLevelItem>category</allowedMediaLevelItem>                 <!-- Categorie -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>           <!-- Centre d'interet -->
-        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>              <!-- Régie -->
+        <!--<allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>-->              <!-- Régie -->
         <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>           <!-- Groupe de société -->
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>               <!-- Annonceur -->
         <allowedMediaLevelItem>brand</allowedMediaLevelItem>                    <!-- Marque -->
@@ -129,7 +158,7 @@
         <allowedMediaLevelItem>subSector</allowedMediaLevelItem>                <!-- Classe -->
         <allowedMediaLevelItem>group</allowedMediaLevelItem>                    <!-- Groupe -->
         <allowedMediaLevelItem>segment</allowedMediaLevelItem>                  <!-- Variété -->
-        <allowedMediaLevelItem>title</allowedMediaLevelItem>                    <!-- Titre -->
+        <!--<allowedMediaLevelItem>title</allowedMediaLevelItem>-->                    <!-- Titre -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -158,6 +187,20 @@
         <!--<allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem>--><!-- Support -->
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
+    <!--Allowed universe levels-->
+    <allowedUniverseLevels>
+      <allowedUniverseLevel id="1" name="sector"/>
+      <allowedUniverseLevel id="2" name="subsector"/>
+      <allowedUniverseLevel id="3" name="group_"/>
+      <allowedUniverseLevel id="4" name="segment"/>
+      <allowedUniverseLevel id="7" name="holding_company"/>
+      <allowedUniverseLevel id="6" name="advertiser"/>
+      <allowedUniverseLevel id="8" name="brand"/>
+      <allowedUniverseLevel id="5" name="product"/>
+      <allowedUniverseLevel id="11" name="vehicle"/>
+      <allowedUniverseLevel id="12" name="category"/>
+      <allowedUniverseLevel id="15" name="interest_center"/>
+    </allowedUniverseLevels>
   </vehicle>
   <!-- Internet -->
   <vehicle id="internet" databaseId="6" showInsertions="false" showCreations="false">
@@ -172,7 +215,7 @@
         <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                  <!-- Media -->
         <allowedMediaLevelItem>category</allowedMediaLevelItem>                 <!-- Categorie -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>           <!-- Centre d'interet -->
-        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>              <!-- Régie -->
+        <!--<allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>-->             <!-- Régie -->
         <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>           <!-- Groupe de société -->
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>               <!-- Annonceur -->
         <allowedMediaLevelItem>brand</allowedMediaLevelItem>                    <!-- Marque -->
@@ -181,7 +224,7 @@
         <allowedMediaLevelItem>subSector</allowedMediaLevelItem>                <!-- Classe -->
         <allowedMediaLevelItem>group</allowedMediaLevelItem>                    <!-- Groupe -->
         <allowedMediaLevelItem>segment</allowedMediaLevelItem>                  <!-- Variété -->
-        <allowedMediaLevelItem>title</allowedMediaLevelItem>                    <!-- Titre -->
+       <!--<allowedMediaLevelItem>title</allowedMediaLevelItem>-->                    <!-- Titre -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -210,8 +253,22 @@
         <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem><!-- Categorie -->
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
+    <!--Allowed universe levels-->
+    <allowedUniverseLevels>
+      <allowedUniverseLevel id="1" name="sector"/>
+      <allowedUniverseLevel id="2" name="subsector"/>
+      <allowedUniverseLevel id="3" name="group_"/>
+      <allowedUniverseLevel id="4" name="segment"/>
+      <allowedUniverseLevel id="7" name="holding_company"/>
+      <allowedUniverseLevel id="6" name="advertiser"/>
+      <allowedUniverseLevel id="8" name="brand"/>
+      <allowedUniverseLevel id="5" name="product"/>
+      <allowedUniverseLevel id="11" name="vehicle"/>
+      <allowedUniverseLevel id="12" name="category"/>
+      <allowedUniverseLevel id="15" name="interest_center"/>
+    </allowedUniverseLevels>
   </vehicle>
-  <!-- Cinzma -->
+  <!-- Cinema -->
   <vehicle id="cinema" databaseId="5" showInsertions="false" showCreations="false">
     <!-- Units-->
     <allowedUnits>
@@ -260,6 +317,20 @@
         <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem><!-- Media -->
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
+    <!--Allowed universe levels-->
+    <allowedUniverseLevels>
+      <allowedUniverseLevel id="1" name="sector"/>
+      <allowedUniverseLevel id="2" name="subsector"/>
+      <allowedUniverseLevel id="3" name="group_"/>
+      <allowedUniverseLevel id="4" name="segment"/>
+      <allowedUniverseLevel id="7" name="holding_company"/>
+      <allowedUniverseLevel id="6" name="advertiser"/>
+      <allowedUniverseLevel id="8" name="brand"/>
+      <allowedUniverseLevel id="5" name="product"/>
+      <allowedUniverseLevel id="11" name="vehicle"/>
+      <allowedUniverseLevel id="12" name="category"/>
+      <allowedUniverseLevel id="15" name="interest_center"/>
+    </allowedUniverseLevels>
   </vehicle>
   <!-- PRESS -->
   <vehicle id="press" databaseId="2" showInsertions="true" showCreations="false">
@@ -321,6 +392,21 @@
         <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem><!-- Categorie -->
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
+    <!--Allowed universe levels-->
+    <allowedUniverseLevels>
+      <allowedUniverseLevel id="1" name="sector"/>
+      <allowedUniverseLevel id="2" name="subsector"/>
+      <allowedUniverseLevel id="3" name="group_"/>
+      <allowedUniverseLevel id="4" name="segment"/>
+      <allowedUniverseLevel id="7" name="holding_company"/>
+      <allowedUniverseLevel id="6" name="advertiser"/>
+      <allowedUniverseLevel id="8" name="brand"/>
+      <allowedUniverseLevel id="5" name="product"/>
+      <allowedUniverseLevel id="11" name="vehicle"/>
+      <allowedUniverseLevel id="12" name="category"/>
+      <allowedUniverseLevel id="14" name="media"/>
+      <allowedUniverseLevel id="15" name="interest_center"/>
+    </allowedUniverseLevels>
   </vehicle>
   <!-- PLURIMEDIA -->
   <vehicle id="plurimedia" databaseId="50" showInsertions="false" showCreations="false">
@@ -335,6 +421,14 @@
        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem><!-- Categorie -->
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
+    <!--Allowed universe levels-->
+    <allowedUniverseLevels>
+      <allowedUniverseLevel id="1" name="sector"/>
+      <allowedUniverseLevel id="2" name="subsector"/>
+      <allowedUniverseLevel id="3" name="group_"/>
+      <allowedUniverseLevel id="4" name="segment"/>
+      <allowedUniverseLevel id="6" name="advertiser"/>      
+    </allowedUniverseLevels>
   </vehicle>
 </vehicles>
 
