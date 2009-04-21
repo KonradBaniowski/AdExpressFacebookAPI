@@ -324,7 +324,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 							sql.Append(", ID_ADVERTISING_AGENCY ");
                         sql.Append(" , id_media");
                         sql.AppendFormat(", {0}", FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session));
-                        if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb) {
+                        if ((_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack || _vehicleInformation.Id == CstDBClassif.Vehicles.names.evaliantMobile) && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb) {
                             groupByOptional = string.Format(", {0}", FctWeb.SQLGenerator.GetUnitAlias(_session));
                         }
                         sql.Append(" from (");
@@ -448,7 +448,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                 universFilter = GetUniversFilter(type, dateField, customerPeriod);
                 // Unités
                 unitFieldNameSumWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumWithAlias(_session, type);
-                if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                if ((_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack || _vehicleInformation.Id == CstDBClassif.Vehicles.names.evaliantMobile) && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
                 {
                     if (type == CstDB.TableType.Type.webPlan)
                     {
@@ -609,7 +609,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
             sql.AppendFormat(" {0}", productsRights);
 
             // Autopromo Evaliant
-            if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.AutopromoEvaliant)
+            if ((_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack || _vehicleInformation.Id == CstDBClassif.Vehicles.names.evaliantMobile) && _session.AutopromoEvaliant)
             {
                 sql.AppendFormat(" and {0}.auto_promotion = 0 ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
             }
@@ -673,7 +673,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                     }
 
                     if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
-                        if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                        if ((_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack || _vehicleInformation.Id == CstDBClassif.Vehicles.names.evaliantMobile) && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
                         {
                             groupByOptional = string.Format(", versionNb ");
                         }

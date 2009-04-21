@@ -109,6 +109,7 @@ namespace TNS.AdExpressI.Insertions
             int iDateBegin = Convert.ToInt32(dateBegin.ToString("yyyyMMdd"));
             int iDateEnd = Convert.ToInt32(dateEnd.ToString("yyyyMMdd"));
             _getCreatives = sloganNotNull;
+            Int64 id = -1;
 
             switch (_module.Id)
             {
@@ -116,7 +117,8 @@ namespace TNS.AdExpressI.Insertions
                 case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
                 case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
                 case CstWeb.Module.Name.ANALYSE_POTENTIELS:
-                    Int64 id = ((LevelInformation)_session.SelectionUniversMedia.Nodes[0].Tag).ID;
+                case CstWeb.Module.Name.NEW_CREATIVES:
+                    id = ((LevelInformation)_session.SelectionUniversMedia.Nodes[0].Tag).ID;
                     vehicles.Add(VehiclesInformation.Get(id));
                     break;
                 case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
@@ -134,9 +136,6 @@ namespace TNS.AdExpressI.Insertions
                 case CstWeb.Module.Name.ANALYSE_DES_PROGRAMMES:
                     vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.tv));
                     break;
-                case CstWeb.Module.Name.NEW_CREATIVES:
-                    vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack));
-                    break;
             }
 
             if (vehicles.Count <= 0)
@@ -145,6 +144,7 @@ namespace TNS.AdExpressI.Insertions
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.directMarketing));
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet));
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack));
+                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.evaliantMobile));
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.press));
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.outdoor));
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.radio));
@@ -290,6 +290,9 @@ namespace TNS.AdExpressI.Insertions
                 case CstDBClassif.Vehicles.names.adnettrack:
                 case CstDBClassif.Vehicles.names.internet:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_INTERNET_ACCESS_FLAG);
+                    break;
+                case CstDBClassif.Vehicles.names.evaliantMobile:
+                    hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG);
                     break;
                 case CstDBClassif.Vehicles.names.directMarketing:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG);
@@ -694,6 +697,9 @@ namespace TNS.AdExpressI.Insertions
                     case CstDBClassif.Vehicles.names.internet:
                         tab[cLine, 1] = c = new CellCreativesEvaliantInformation(_session, vehicle, columns, columnsName, cells, _module, _zoomDate, _universId);
                         break;
+                    case CstDBClassif.Vehicles.names.evaliantMobile:
+                        tab[cLine, 1] = c = new CellCreativesEvaliantMobileInformation(_session, vehicle, columns, columnsName, cells, _module, _zoomDate, _universId);
+                        break;
                     default:
                         tab[cLine, 1] = c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module);
                         break;
@@ -735,6 +741,9 @@ namespace TNS.AdExpressI.Insertions
                     case CstDBClassif.Vehicles.names.adnettrack:
                     case CstDBClassif.Vehicles.names.internet:
                         tab[cLine, 1] = c = new CellCreativesEvaliantInformation(_session, vehicle, columns, columnsName, cells, _module, _zoomDate, _universId, idColumnsSet);
+                        break;
+                    case CstDBClassif.Vehicles.names.evaliantMobile:
+                        tab[cLine, 1] = c = new CellCreativesEvaliantMobileInformation(_session, vehicle, columns, columnsName, cells, _module, _zoomDate, _universId, idColumnsSet);
                         break;
                     default:
                         tab[cLine, 1] = c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module, idColumnsSet);
@@ -930,6 +939,7 @@ namespace TNS.AdExpressI.Insertions
                     {
                         case CstDBClassif.Vehicles.names.directMarketing:
                         case CstDBClassif.Vehicles.names.adnettrack:
+                        case CstDBClassif.Vehicles.names.evaliantMobile:
                         case CstDBClassif.Vehicles.names.internet:
                         case CstDBClassif.Vehicles.names.internationalPress:
                         case CstDBClassif.Vehicles.names.outdoor:
@@ -1119,6 +1129,18 @@ namespace TNS.AdExpressI.Insertions
 
                     }
                     break;
+                case CstDBClassif.Vehicles.names.evaliantMobile:
+                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG)) {
+                        break;
+                    }
+                    if (row["associated_file"] != System.DBNull.Value) {
+                        string[] files = row["associated_file"].ToString().Split(',');
+                        foreach (string s in files) {
+                            visuals.Add(this.GetCreativePathEvaliantMobile(s));
+                        }
+
+                    }
+                    break;
                 default:
                     break;
             }
@@ -1183,9 +1205,12 @@ namespace TNS.AdExpressI.Insertions
         {
             return file;
         }
-        protected string GetCreativePathAdNetTrack(string file)
-        {
+
+        protected string GetCreativePathAdNetTrack(string file) {
             return string.Format("{0}/{1}", CstWeb.CreationServerPathes.CREA_ADNETTRACK, file);
+        }
+        protected string GetCreativePathEvaliantMobile(string file) {
+            return string.Format("{0}/{1}", CstWeb.CreationServerPathes.CREA_EVALIANT_MOBILE, file);
         }
         protected string GetCreativePathTv(string file)
         {

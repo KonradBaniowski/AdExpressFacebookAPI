@@ -148,6 +148,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
             #region Media seller
             if(_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
 				&& _vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.mediaSeller)) {
                 ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.mediaSeller);
                 dt = ds.Tables[0];
@@ -234,7 +235,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #region Page number
 			if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.pages) && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack) {
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) {
                 ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.pageNumber);
                 dt = ds.Tables[0];
                 pageNumber = dt.Rows[0]["page"].ToString();
@@ -268,7 +270,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack) {
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) {
                 ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberNewProductInTracking);
                 dt = ds.Tables[0];
                 numberNewProductInTracking = dt.Rows[0]["nbLines"].ToString();
@@ -279,7 +282,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack) {
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) {
                 ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberNewProductInVehicle);
                 dt = ds.Tables[0];
                 numberNewProductInVehicle = dt.Rows[0]["nbLines"].ToString();
@@ -293,7 +297,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region Number of banners (Evaliant)
-            if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {
+            if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile) {
                 ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberBanners);
                 dt = ds.Tables[0];
                 CellIdsNumber cell = new CellIdsNumber();
@@ -388,6 +393,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     break;
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
                     nbLines = 8;
                     if (investment != null && investment.Length > 0) nbLines++;
                     break;
@@ -486,7 +492,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             }
 
             // Number of banners
-            if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack && numberBanner.Length > 0) {
+            if((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile) && numberBanner.Length > 0) {
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(2479, _webSession.SiteLanguage));
 				CellNumber cN = new CellNumber(double.Parse(numberBanner.ToString()));
@@ -628,7 +634,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				resultTable[lineIndex, SECOND_COLUMN_INDEX] = cD;
                 ChangeLineType(ref lineType);
             }
-            else if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {
+            else if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile)) {
                 // Number of insertion (occurrences) Evaliant
                 if(nbrSpot.Length == 0) {
                     nbrSpot = "0";
@@ -642,7 +648,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             }
 
             // Total investissements
-            if(investment != null && investment.Length > 0 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack) {
+            if (investment != null && investment.Length > 0 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) {
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1390, _webSession.SiteLanguage));
 				CellEuro cE = new CellEuro(double.Parse(investment));
@@ -662,7 +668,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             if ((_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor 
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing 
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack) && isAlertModule) {
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) && isAlertModule) {
                 //Nombre de nouveaux produits dans la pige
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1394, _webSession.SiteLanguage));

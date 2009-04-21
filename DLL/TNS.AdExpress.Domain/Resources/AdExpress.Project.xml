@@ -5,8 +5,9 @@
   <projects>
     <project id="Global">
       <files>
-        <file>d:\dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en.xml</file>
-        <file>d:\dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fr.xml</file>
+       <file>C:\dev\Csharp2\AdExpress International Demo\Dev\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en.xml</file>
+        <file>C:\dev\Csharp2\AdExpress International Demo\Dev\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fr.xml</file>
+        <file>C:\dev\Csharp2\AdExpress International Demo\Dev\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fi.xml</file>
       </files>
     </project>
   </projects>

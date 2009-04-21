@@ -774,6 +774,9 @@ namespace TNS.AdExpress {
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
                     if (!Domain.AllowedFlags.ContainFlag(Flags.ID_DETAIL_INTERNET_ACCESS_FLAG)) return true;
                     return (_flagsRights.ContainsKey(Flags.ID_DETAIL_INTERNET_ACCESS_FLAG) && _flagsRights[Flags.ID_DETAIL_INTERNET_ACCESS_FLAG] != null);
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
+                    if (!Domain.AllowedFlags.ContainFlag(Flags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG)) return true;
+                    return (_flagsRights.ContainsKey(Flags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG) && _flagsRights[Flags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG] != null);
                 default:
 					return (false);
 			}

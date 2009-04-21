@@ -371,7 +371,9 @@ namespace AdExpress.Private.Results{
             foreach(string cVehicle in vehicles) {
                 switch(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(cVehicle))){
                     case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
-                        ResultsOptionsWebControl1.AutopromoEvaliantOption = true;
+					case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
+                        //ResultsOptionsWebControl1.AutopromoEvaliantOption = true;
+						ResultsOptionsWebControl1.AutopromoEvaliantOption = VehiclesInformation.Get(Int64.Parse(cVehicle)).Autopromo; 
                         break;
                     case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
                     case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:

@@ -131,7 +131,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			sql += " and " + DBConstantes.Fields.DATE_MEDIA_NUM + " <=" + _endDate;
 
             // Autopromo Evaliant
-            if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile) {
                 if(_webSession.AutopromoEvaliant) // Hors autopromo (checkbox = checked)
                     sql += " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".auto_promotion = 0 ";
             }

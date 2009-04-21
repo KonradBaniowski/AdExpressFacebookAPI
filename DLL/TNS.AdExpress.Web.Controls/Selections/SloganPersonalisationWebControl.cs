@@ -533,6 +533,10 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 											if (currentRow["sloganFile"] != null && currentRow["sloganFile"].ToString().CompareTo("") != 0)
                                                 vignettes = string.Format("<a href=\"javascript:openEvaliantCreative('{1}/{0}', '{3}');\"><img border=\"0\" src=\"/App_Themes/{2}/Images/Common/Button/adnettrack.gif\"></a>", currentRow["sloganFile"].ToString().Replace(@"\", "/"), WebConstantes.CreationServerPathes.CREA_ADNETTRACK, themeName, currentRow["advertDimension"]);
 											break;
+                                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
+                                            if (currentRow["sloganFile"] != null && currentRow["sloganFile"].ToString().CompareTo("") != 0)
+                                                vignettes = string.Format("<a href=\"javascript:openEvaliantCreative('{1}/{0}', '{3}');\"><img border=\"0\" src=\"/App_Themes/{2}/Images/Common/Button/adnettrack.gif\"></a>", currentRow["sloganFile"].ToString().Replace(@"\", "/"), WebConstantes.CreationServerPathes.CREA_EVALIANT_MOBILE, themeName, currentRow["advertDimension"]);
+                                            break;
 									}
 
 								}

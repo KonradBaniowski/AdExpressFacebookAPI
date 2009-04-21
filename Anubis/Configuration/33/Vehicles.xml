@@ -833,7 +833,6 @@
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!--Media detail level allowed in recap's modules-->
-    <!--Media detail level allowed in recap's modules-->
     <allowedRecapMediaDetailLevels>
       <allowedRecapMediaLevelItems>
         <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>
@@ -1052,5 +1051,61 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
+  </vehicle>
+  <!-- Evaliant mobile-->
+  <vehicle id="evaliantMobile" databaseId="15" showInsertions="false" showCreations="true">
+    <!-- Units-->
+    <allowedUnits>
+      <allowedUnit>occurence</allowedUnit>
+      <allowedUnit>versionNb</allowedUnit>
+    </allowedUnits>
+    <!-- Media detail level in results-->
+    <allowedMediaDetailLevels>
+      <allowedMediaLevelItems>
+        <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>
+        <!-- Media -->
+        <allowedMediaLevelItem>category</allowedMediaLevelItem>
+        <!-- Categorie -->
+        <allowedMediaLevelItem>media</allowedMediaLevelItem>
+        <!-- Support -->
+        <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>
+        <!-- Centre d'interet -->
+        <allowedMediaLevelItem>slogan</allowedMediaLevelItem>
+        <!-- Version -->
+        <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>
+        <!-- Groupe de société -->
+        <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>
+        <!-- Annonceur -->
+        <allowedMediaLevelItem>brand</allowedMediaLevelItem>
+        <!-- Marque -->
+        <allowedMediaLevelItem>product</allowedMediaLevelItem>
+        <!-- Produit -->
+        <allowedMediaLevelItem>sector</allowedMediaLevelItem>
+        <!-- Famille -->
+        <allowedMediaLevelItem>subSector</allowedMediaLevelItem>
+        <!-- Classe -->
+        <allowedMediaLevelItem>group</allowedMediaLevelItem>
+        <!-- Groupe -->
+        <allowedMediaLevelItem>segment</allowedMediaLevelItem>
+        <!-- Variété -->
+      </allowedMediaLevelItems>
+    </allowedMediaDetailLevels>
+    <!-- Selection hierarchy-->
+    <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>
+      <!-- Centre d'interet -->
+    </MediaSelectionParents>
+    <!--Media detail level in selection-->
+    <MediaSelectionDetailLevel>
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+      </defaultMediaSelectionDetailLevels>
+      <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="3"/>
+        <!-- Support -->
+        <allowedMediaSelectionLevelItem id="4"/>
+        <!-- Centre d 'interet -->
+      </allowedMediaSelectionLevelItemsList>
+    </MediaSelectionDetailLevel>
   </vehicle>
 </vehicles>

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9422E4B4-765F-4008-B41E-67A9F27D3124}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -124,6 +124,7 @@
     <Content Include="Configuration\33\CreativesConfiguration.xml" />
     <Content Include="Configuration\33\CustomerErrorMail.xml" />
     <Content Include="Configuration\33\Database.xml" />
+    <Content Include="Configuration\33\DundasConfiguration.xml" />
     <Content Include="Configuration\33\Flags.xml" />
     <Content Include="Configuration\33\GenericColumn.xml" />
     <Content Include="Configuration\33\GenericDetailLevel.xml" />
@@ -157,6 +158,7 @@
     <Content Include="Configuration\35\CreativesConfiguration.xml" />
     <Content Include="Configuration\35\CustomerErrorMail.xml" />
     <Content Include="Configuration\35\Database.xml" />
+    <Content Include="Configuration\35\DundasConfiguration.xml" />
     <Content Include="Configuration\35\Flags.xml" />
     <Content Include="Configuration\35\GenericColumn.xml" />
     <Content Include="Configuration\35\GenericDetailLevel.xml" />

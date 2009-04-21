@@ -526,6 +526,7 @@ namespace TNS.AdExpress.Web.Functions{
                 case DBClassificationConstantes.Vehicles.names.outdoor:
                 case DBClassificationConstantes.Vehicles.names.cinema:
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
+                case DBClassificationConstantes.Vehicles.names.evaliantMobile:
 					lastDate = TNS.AdExpress.Web.DataAccess.Selections.Medias.MediaPublicationDatesDataAccess.GetLatestPublication(webSession, selectedVehicle, dataSource);
                     startYear--;
                     if (lastDate.Length == 0) lastDate = startYear + "1231";

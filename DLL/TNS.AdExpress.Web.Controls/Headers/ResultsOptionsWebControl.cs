@@ -1602,6 +1602,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				case ClassificationCst.DB.Vehicles.names.outdoor:
 				case ClassificationCst.DB.Vehicles.names.cinema:
                 case ClassificationCst.DB.Vehicles.names.adnettrack:
+                case ClassificationCst.DB.Vehicles.names.evaliantMobile:
 					return (current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO || (current.Id == FrameWorkResults.Portofolio.CALENDAR && webSession.CustomerPeriodSelected.IsSliding4M));
 				case ClassificationCst.DB.Vehicles.names.others:
 				case ClassificationCst.DB.Vehicles.names.tv:

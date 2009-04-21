@@ -59,6 +59,7 @@
     <Compile Include="Cells\CellCreativesEvaliantInformation.cs" />
     <Compile Include="Cells\CellCreativesRadioInformation.cs" />
     <Compile Include="Cells\CellCreativesTvInformation.cs" />
+    <Compile Include="Cells\CellCreativesEvaliantMobileInformation.cs" />
     <Compile Include="Exceptions\InsertionsException.cs" />
     <Compile Include="IInsertionsResult.cs" />
     <Compile Include="InsertionsResult.cs" />

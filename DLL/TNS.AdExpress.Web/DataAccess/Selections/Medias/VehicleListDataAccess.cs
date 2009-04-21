@@ -1187,6 +1187,17 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 				sql += GetRecapMediaConditions(webSession, vehicleTable, categoryTable, mediaTable);
 			else
 				sql += GetMediaRights(webSession, vehicleTable, categoryTable, mediaTable);
+			
+			if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES) {
+				//Get only adnettrack or telephony mobile vehicles' for selection
+				string ids = "";
+				if (VehiclesInformation.Contains(VehicleClassificationCst.evaliantMobile))
+					ids = VehiclesInformation.Get(VehicleClassificationCst.evaliantMobile).DatabaseId.ToString();
+				if (VehiclesInformation.Contains(VehicleClassificationCst.adnettrack))
+					ids += (ids != null && ids.Length > 0) ? "," + VehiclesInformation.Get(VehicleClassificationCst.adnettrack).DatabaseId.ToString() : VehiclesInformation.Get(VehicleClassificationCst.adnettrack).DatabaseId.ToString();
+				if (ids != null && ids.Length > 0) sql += " and " + vehicleTable.Prefix + ".id_vehicle  in ( " + ids + ") ";
+				else throw (new VehicleListDataAccessException("Impossible to execute query no adnettrack and mobileTelephony vehciles availabe ")); 
+			}
 			#endregion
 
 			sql += " order by " + vehicleTable.Prefix + ".vehicle,"+vehicleTable.Prefix + ".id_vehicle";

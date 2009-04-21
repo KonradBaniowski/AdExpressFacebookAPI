@@ -255,7 +255,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             //}
 
             // Autopromo Evaliant
-            if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {
+                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile) {
                 if(_webSession.AutopromoEvaliant) // Hors autopromo (checkbox = checked)
                     sql.Append(" and auto_promotion = 0 ");
             }
@@ -380,7 +380,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			sql += " where id_media=" + _idMedia + "";
 
             // Autopromo Evaliant
-            if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile) {
                 if(_webSession.AutopromoEvaliant) // Hors autopromo (checkbox = checked)
                     sql += " and auto_promotion = 0 ";
             }
@@ -657,6 +657,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinemaAlert).Label;
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                     return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrackAlert).Label;
+                case DBClassificationConstantes.Vehicles.names.evaliantMobile:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataEvaliantMobileAlert).Label;
                 default:
 					throw new PortofolioDALException("GetTableData()-->Vehicle unknown.");
 			}
@@ -1361,7 +1363,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             sql.AppendFormat(" from {0} where id_media={1}", table, _idMedia);
 
             // Autopromo Evaliant
-            if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {
+            if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile) {
                 if(_webSession.AutopromoEvaliant) // Hors autopromo (checkbox = checked)
                     sql.Append(" and auto_promotion = 0 ");
             }

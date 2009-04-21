@@ -219,7 +219,8 @@ namespace AdExpress.Private.Results{
                 if (UnitsInformation.List.ContainsKey(WebConstantes.CustomerSessions.Unit.versionNb) 
                     && _webSession.GetValidUnitForResult().Contains(UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb))
                     && !_webSession.ReachedModule
-                    && vehicleSelection == DBClassificationConstantes.Vehicles.names.adnettrack.GetHashCode().ToString()
+                    && (vehicleSelection == DBClassificationConstantes.Vehicles.names.adnettrack.GetHashCode().ToString() 
+                        || vehicleSelection == DBClassificationConstantes.Vehicles.names.evaliantMobile.GetHashCode().ToString())
                     )
                 {
                     _webSession.Unit = WebConstantes.CustomerSessions.Unit.versionNb;
@@ -361,8 +362,8 @@ namespace AdExpress.Private.Results{
             // Option autopromo (Evaliant)
             string vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess);
             DBClassificationConstantes.Vehicles.names vehicleName = VehiclesInformation.DatabaseIdToEnum(Int64.Parse(vehicleSelection));
-            if(vehicleName == DBClassificationConstantes.Vehicles.names.adnettrack)
-                ResultsOptionsWebControl1.AutopromoEvaliantOption = true;
+            if (vehicleName == DBClassificationConstantes.Vehicles.names.adnettrack || vehicleName == DBClassificationConstantes.Vehicles.names.evaliantMobile)
+				ResultsOptionsWebControl1.AutopromoEvaliantOption = VehiclesInformation.Get(vehicleName).Autopromo; 
             else
                 ResultsOptionsWebControl1.AutopromoEvaliantOption = false;
 
@@ -483,6 +484,7 @@ namespace AdExpress.Private.Results{
 				case ClassificationCst.DB.Vehicles.names.directMarketing:
 				case ClassificationCst.DB.Vehicles.names.internet:
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
+                case DBClassificationConstantes.Vehicles.names.evaliantMobile:
 					if ((_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR)) {
 						_webSession.CurrentTab = FrameWorkConstantes.Portofolio.SYNTHESIS;
 						_webSession.Save();

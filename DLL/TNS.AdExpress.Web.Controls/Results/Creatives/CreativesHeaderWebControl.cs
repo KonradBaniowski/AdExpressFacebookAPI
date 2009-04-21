@@ -263,6 +263,9 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                     case DBClassifCst.Vehicles.names.internet:
                         vehicle = GestionWeb.GetWebWord(1301, _webSession.SiteLanguage); 
                         break;
+					case DBClassifCst.Vehicles.names.evaliantMobile:
+						vehicle = GestionWeb.GetWebWord(2577, _webSession.SiteLanguage);
+						break;
                 }
                 #endregion
 

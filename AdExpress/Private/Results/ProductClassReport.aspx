@@ -58,7 +58,7 @@
 								</tr>
 								<tr vAlign="top">
 									<TD vAlign="top"><cc2:resultsoptionswebcontrol id="ResultsOptionsWebControl1" runat="server" EvolutionOption="True" PdvOption="True"
-											PdmOption="True" Width="120px" ImageWidth="139" ImageHeight="26" PreformatedTableOption="True" ShowPictures="True" ResultOption="False"
+											PdmOption="True" Width="120px" PreformatedTableOption="True" ShowPictures="True" ResultOption="False"
 											AutoPostBackOption="False" ProductDetailOption="True" MediaDetailOption="True"
 											UnitOption="False" PersonalizedElementsOption="True" InializeAdVertiserOption="True" SkinID="resultsOptionsASDynamicTables"></cc2:resultsoptionswebcontrol></TD><!--MediaOptionOption="True" --><!--2005MI-->
 								</tr>

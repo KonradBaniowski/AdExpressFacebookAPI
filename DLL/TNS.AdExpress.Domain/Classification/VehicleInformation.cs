@@ -81,6 +81,10 @@ namespace TNS.AdExpress.Domain.Classification {
 		/// </summary>
 		private TNS.AdExpress.Domain.Level.GenericDetailLevel _defaultMediaSelectionDetailLevel = null;
 		/// <summary>
+		/// Allowed autopromo
+		/// </summary>
+		private bool _autopromo=false;
+		/// <summary>
 		/// Allowed universe levels
 		/// </summary>
 		private List<long> _allowedUniverseLevels = new List<long>();
@@ -311,6 +315,14 @@ namespace TNS.AdExpress.Domain.Classification {
 			get { return _defaultMediaSelectionDetailLevel; }
 			set { _defaultMediaSelectionDetailLevel = value; }
 		}
+			 /// <summary>
+        /// Get auto promo authorization
+        /// </summary>
+        public bool Autopromo {
+            get { return _autopromo; }
+			set { _autopromo = value; }
+        }
+		
 		/// <summary>
 		/// Get /Set allowed universe levels
 		/// <remarks>Used in generic component of universe media ou product selection</remarks>

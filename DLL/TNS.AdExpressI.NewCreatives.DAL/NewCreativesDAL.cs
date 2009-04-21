@@ -25,6 +25,7 @@ using TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpressI.NewCreatives.DAL.Exceptions;
 
 using TNS.FrameWork.DB;
+using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 
 using CstDBDesc = TNS.AdExpress.Domain.DataBaseDescription;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
@@ -35,6 +36,7 @@ using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Web.Core.Utilities;
 #endregion
 
 namespace TNS.AdExpressI.NewCreatives.DAL {
@@ -115,6 +117,7 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
             string detailProductJoints = "";
             string detailProductOrderBy = "";
             string productsRights = "";
+            Table table = null;
             #endregion
 
             #region Construction de la requête
@@ -143,18 +146,19 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 }
                 
                 // from
-                sql.Append("from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.banners).SqlWithPrefix + " , ");
+                table = GetTable(_vehicleInformation);
+                sql.Append("from " + table.SqlWithPrefix + " , ");
                 sql.Append(detailProductTablesNames);
 
                 // where
-                sql.Append(" where " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.banners).Prefix + ".date_creation >= to_date('" + _beginingDate + "','yyyymmdd') ");
-                sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.banners).Prefix + ".date_creation <= to_date('" + _endDate + "','yyyymmdd') ");
+                sql.Append(" where " + table.Prefix + ".date_creation >= to_date('" + _beginingDate + "','yyyymmdd') ");
+                sql.Append(" and " + table.Prefix + ".date_creation <= to_date('" + _endDate + "','yyyymmdd') ");
                 sql.Append(detailProductJoints);
                 sql.Append(productsRights);
 
                 // Sector ID
                 if(_idSector != -1)
-                    sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.banners).Prefix + ".id_sector in (" + _idSector + ") ");
+                    sql.Append(" and " + table.Prefix + ".id_sector in (" + _idSector + ") ");
 
                 // group by
                 sql.Append(" group by " + detailProductFields + ", hashcode ");
@@ -176,6 +180,29 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
             }
             #endregion
 
+        }
+        #endregion
+
+        #region protected Methods
+        /// <summary>
+        ///Get table
+        /// </summary>
+        /// <param name="vehicle">Vehicle Information</param>
+        /// <returns>Table</returns>
+        private Table GetTable(VehicleInformation vehicle) {
+            switch (vehicle.Id) {
+                case DBClassificationConstantes.Vehicles.names.adnettrack:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.banners);
+                case DBClassificationConstantes.Vehicles.names.evaliantMobile:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.banners_mobile);
+                case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.internationalPress:
+                case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.others:
+                default:
+                    throw (new SQLGeneratorException("Impossible de déterminer la table à traiter"));
+            }
         }
         #endregion
 

@@ -1073,7 +1073,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                 for (int i = 0; i < detailLevels.GetNbLevels; i++)
                 {
                     DetailLevelItemInformation cLevel = (DetailLevelItemInformation)detailLevels.Levels[i];
-					if (filters[i] != "-1" || (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.adnettrack) && _idVehicle == VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.adnettrack) && cLevel.Id == DetailLevelItemInformation.Levels.slogan && filters[i] != "-1"))
+                    if (filters[i] != "-1" || (((VehiclesInformation.Contains(CstDBClassif.Vehicles.names.adnettrack) && _idVehicle == VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.adnettrack)) || (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.evaliantMobile) && _idVehicle == VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.evaliantMobile))) && cLevel.Id == DetailLevelItemInformation.Levels.slogan && filters[i] != "-1"))
                     {
                         filtersList.Add(cLevel.DataBaseIdField, filters[i]);
                     }

@@ -208,15 +208,21 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                         else first = false;
                         //sql.AppendFormat("({0})", GetQuery(detailLevel, _period.PeriodDetailLEvel, subPeriods.SubPeriodType, -1, subPeriods.Items, string.Empty));
 
-                        Int64 vehicleIdTmp = -1;
+                        //Int64 vehicleIdTmp = -1;
+						List<Int64> vehicleIdListTmp = new List<long>();
                         for(int i = 0; i < listVehicles.Length; i++) {
                             if(VehiclesInformation.Contains(Int64.Parse(listVehicles[i]))
-                                && VehiclesInformation.DatabaseIdToEnum(Int64.Parse(listVehicles[i])) == CstDBClassif.Vehicles.names.adnettrack
+                                && (VehiclesInformation.DatabaseIdToEnum(Int64.Parse(listVehicles[i])) == CstDBClassif.Vehicles.names.adnettrack
+								||VehiclesInformation.DatabaseIdToEnum(Int64.Parse(listVehicles[i])) == CstDBClassif.Vehicles.names.evaliantMobile)
                                 && _session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb) {
-                                vehicleIdTmp = Int64.Parse(listVehicles[i]);
+                                //vehicleIdTmp = Int64.Parse(listVehicles[i]);
+								vehicleIdListTmp.Add(Int64.Parse(listVehicles[i]));
                             }
                         }
-                        sql.AppendFormat("({0})", GetQuery(detailLevel, _period.PeriodDetailLEvel, subPeriods.SubPeriodType, vehicleIdTmp, subPeriods.Items, string.Empty));
+						if(vehicleIdListTmp!=null && vehicleIdListTmp.Count>0)
+							sql.AppendFormat("({0})", GetQueryForWebPlanEvaliant(detailLevel, _period.PeriodDetailLEvel, subPeriods.SubPeriodType, subPeriods.Items, string.Empty));
+						else
+						sql.AppendFormat("({0})", GetQuery(detailLevel, _period.PeriodDetailLEvel, subPeriods.SubPeriodType, -1, subPeriods.Items, string.Empty));
                         break;
                     default:
                         throw new MediaScheduleDALException("Unable to determine type of subPeriod.");
@@ -301,7 +307,8 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                 mediaPeriodicity = GetPeriodicity(periodBreakDown, vehicleId, periodDisplay);
                 
                 // Get classification fields
-                if(_isAdNetTrackMediaSchedule || (VehiclesInformation.Contains(vehicleId) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack)) {
+				if (_isAdNetTrackMediaSchedule || (VehiclesInformation.Contains(vehicleId) && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack
+					|| VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.evaliantMobile))) {
                     mediaFieldName = GetAdnettrackSqlFields(detailLevel);
                 }
                 else {
@@ -312,7 +319,8 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                 orderFieldName = detailLevel.GetSqlOrderFields();
                 
                 // Get group by clause
-                if(_isAdNetTrackMediaSchedule || (VehiclesInformation.Contains(vehicleId) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack)) {
+				if (_isAdNetTrackMediaSchedule || (VehiclesInformation.Contains(vehicleId) && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack
+					|| VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.evaliantMobile))) {
                     groupByFieldName = GetAdnettrackSqlGroupByFields(detailLevel);
                 }
                 else {
@@ -350,7 +358,8 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             //    sql.AppendFormat("sum(OCCURRENCE) as {0}", unitAlias);
             //}
             if(VehiclesInformation.Contains(vehicleId) 
-                && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack
+                && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack
+				|| VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.evaliantMobile)
                 && _session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb) {
                 switch(periodBreakDown) {
                     case CstPeriod.PeriodBreakdownType.data:
@@ -400,7 +409,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             }
 
             // Autopromo Evaliant
-            if(VehiclesInformation.Contains(vehicleId) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack) {
+            if(VehiclesInformation.Contains(vehicleId) &&  (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack || VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.evaliantMobile)) {
                 if(_session.AutopromoEvaliant) // Hors autopromo (checkbox = checked)
                     sql.AppendFormat(" and {0}.auto_promotion = 0 ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
             }
@@ -416,13 +425,13 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             // Zoom on a specific version
             if(_session.SloganIdZoom > 0 && periodDisplay == CstPeriod.DisplayLevel.dayly) {
                 sql.AppendFormat(" and {0}.{2} = {1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.SloganIdZoom
-                    ,(vehicleInfo != null && vehicleInfo.Id != CstDBClassif.Vehicles.names.adnettrack)?"id_slogan":"hashcode");
+                    ,(vehicleInfo != null && (vehicleInfo.Id != CstDBClassif.Vehicles.names.adnettrack && vehicleInfo.Id != CstDBClassif.Vehicles.names.evaliantMobile ))?"id_slogan":"hashcode");
             }
             else {
                 // Refine vesions
                 if(slogans.Length > 0 && periodDisplay == CstPeriod.DisplayLevel.dayly) {
                     sql.AppendFormat(" and {0}.{2} in({1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, slogans
-                        ,(vehicleInfo != null && vehicleInfo.Id != CstDBClassif.Vehicles.names.adnettrack)?"id_slogan":"hashcode");
+						, (vehicleInfo != null && (vehicleInfo.Id != CstDBClassif.Vehicles.names.adnettrack && vehicleInfo.Id != CstDBClassif.Vehicles.names.evaliantMobile)) ? "id_slogan" : "hashcode");
                 }
             }
 
@@ -458,16 +467,17 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 
             #region Rights
             // No media right if AdNetTrack media schedule
-            if(_isAdNetTrackMediaSchedule)
-                sql.Append(FctWeb.SQLGenerator.GetAdNetTrackMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
-            else
-                sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+			if (_isAdNetTrackMediaSchedule) {
+				sql.Append(FctWeb.SQLGenerator.GetAdNetTrackMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+			}
+			else
+				sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             #endregion
 
             #region Selection
             list = _session.GetSelection(_session.SelectionUniversMedia, CstRight.type.vehicleAccess);
             if(_isAdNetTrackMediaSchedule){
-                sql.AppendFormat(" and ({0}.id_vehicle={1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack).DatabaseId);
+				 sql.AppendFormat(" and ({0}.id_vehicle={1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack).DatabaseId);
             }
             else if(periodDisplay == CstPeriod.DisplayLevel.dayly) {
                 sql.AppendFormat(" and ({0}.id_vehicle={1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, vehicleId);
@@ -491,6 +501,212 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             return (sql.ToString());
         }
         #endregion
+
+		#region GetQuery web plan evaliant and evaliant mobile
+		/// <summary>
+		/// Build query
+		/// </summary>
+		/// <param name="detailLevel">Detail levels selection</param>
+		/// <param name="periodDisplay">Period detail display</param>
+		/// <param name="periodBreakDown">Type of period (days, weeks, monthes)</param>
+		/// <param name="vehicleId">Vehicle filter for desagregated data</param>
+		/// <param name="beginningDate">Period Beginning</param>
+		/// <param name="endDate">Period End</param>
+		/// <param name="additionalConditions">Addtional conditions such as AdNetTrack Baners...</param>
+		/// <returns>Sql query as a string</returns>
+		protected virtual string GetQueryForWebPlanEvaliant(GenericDetailLevel detailLevel, CstPeriod.DisplayLevel periodDisplay, CstPeriod.PeriodBreakdownType periodBreakDown, List<PeriodItem> periodItems, string additionalConditions) {
+
+			#region Variables
+			StringBuilder sql = new StringBuilder();
+			string list = "";
+			string tableName = null;
+			string mediaTableName = null;
+			string dateFieldName = null;
+			string mediaFieldName = null;
+			string mediaPeriodicity = null;
+			string orderFieldName = null;
+			string unitFieldName = null;
+			string unitAlias = null;
+			string mediaJoinCondition = null;
+			string groupByFieldName = null;
+			string groupByOptional = null;
+			//VehicleInformation vehicleInfo = null;
+			#endregion
+
+			//if (VehiclesInformation.Contains(vehicleId))
+			//    vehicleInfo = VehiclesInformation.Get(vehicleId);
+
+			#region Construction de la requête
+			try {
+				// Get the name of the data table	
+				switch (periodBreakDown) {
+					case CstPeriod.PeriodBreakdownType.month:
+						tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.monthData).SqlWithPrefix;
+						break;
+					case CstPeriod.PeriodBreakdownType.week:
+						tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.weekData).SqlWithPrefix;
+						break;
+					default:
+						throw (new MediaScheduleDALException("Unable to determine table to use."));
+				}
+				//Get unit field
+				unitFieldName = _session.GetSelectedUnit().DatabaseMultimediaField; 
+				
+				// Get the classification table
+				mediaTableName = detailLevel.GetSqlTables(_schAdexpr03.Label);
+				if (mediaTableName.Length > 0) mediaTableName += ",";
+				// Get unit field
+				dateFieldName = FctWeb.SQLGenerator.GetDateFieldName(periodBreakDown);
+				unitAlias = FctWeb.SQLGenerator.GetUnitAlias(_session);
+				// Periodicity
+				mediaPeriodicity = GetPeriodicity(periodBreakDown, -1, periodDisplay);
+
+				// Get classification fields				
+				mediaFieldName = GetAdnettrackSqlFields(detailLevel);
+				
+				// Get field order
+				orderFieldName = detailLevel.GetSqlOrderFields();
+
+				// Get group by clause				
+				groupByFieldName = GetAdnettrackSqlGroupByFields(detailLevel);
+				
+				// Get joins for classification
+				mediaJoinCondition = detailLevel.GetSqlJoins(_session.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+			}
+			catch (System.Exception err) {
+				throw (new MediaScheduleDALException("Unable to build the query.", err));
+			}
+
+			// Select : Media classificaion selection
+			sql.AppendFormat("select {0} ", mediaFieldName);
+
+			// Date selection
+			if (periodDisplay != CstPeriod.DisplayLevel.dayly
+				&& (periodBreakDown == CstPeriod.PeriodBreakdownType.data
+				|| periodBreakDown == CstPeriod.PeriodBreakdownType.data_4m)) {
+				if (periodDisplay != CstPeriod.DisplayLevel.weekly)
+					sql.AppendFormat(", to_number(to_char(to_date({0}, 'YYYYMMDD'), 'YYYYMM')) as date_num,", dateFieldName);
+				else
+					sql.AppendFormat(", to_number(to_char(to_date({0}, 'YYYYMMDD'), 'IYYYIW')) as date_num,", dateFieldName);
+			}
+			else {
+				sql.AppendFormat(", {0} as date_num,", dateFieldName);
+			}
+
+			// Periodicity selection
+			sql.AppendFormat("{0}, ", mediaPeriodicity);
+			switch (periodBreakDown) {
+				case CstPeriod.PeriodBreakdownType.data:
+				case CstPeriod.PeriodBreakdownType.data_4m:
+					unitFieldName = string.Format(" to_char({0}.{1}) as {2} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseField, _session.GetSelectedUnit().Id.ToString());
+					groupByOptional = string.Format(", {0}.{1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseField);
+					break;
+				default:
+					unitFieldName = string.Format(" {0}.{1} as {2} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseMultimediaField, _session.GetSelectedUnit().Id.ToString());
+					groupByOptional = string.Format(", {0}.{1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseMultimediaField);
+					break;
+			}
+			sql.AppendFormat("{0}", unitFieldName);						
+
+			// From : Tables
+			sql.AppendFormat(" from {0}{1} ", mediaTableName, tableName);
+
+			// Where : Conditions media
+			sql.AppendFormat("where 0=0 {0}", mediaJoinCondition);
+
+			// Period
+			bool first = true;
+			foreach (PeriodItem periodItem in periodItems) {
+				if (first) {
+					first = false;
+					sql.Append(" and ((");
+				}
+				else {
+					sql.Append(") or (");
+				}
+				sql.AppendFormat("{0}>={1}", dateFieldName, periodItem.Begin);
+				sql.AppendFormat(" and {0}<={1}", dateFieldName, periodItem.End);
+			}
+			if (!first) {
+				sql.Append(")) ");
+			}
+			
+			// Autopromo Evaliant			
+			if (_session.AutopromoEvaliant) // Hors autopromo (checkbox = checked)
+				sql.AppendFormat(" and {0}.auto_promotion = 0 ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+			
+			// Additional conditions            
+			if (additionalConditions.Length > 0) {
+				sql.AppendFormat(" {0} ", additionalConditions);
+			}
+
+			// Version selection
+			string slogans = _session.SloganIdList;
+
+			// Zoom on a specific version
+			if (_session.SloganIdZoom > 0 && periodDisplay == CstPeriod.DisplayLevel.dayly) {
+				sql.AppendFormat(" and {0}.{2} = {1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.SloganIdZoom
+					,"hashcode");
+			}
+			else {
+				// Refine vesions
+				if (slogans.Length > 0 && periodDisplay == CstPeriod.DisplayLevel.dayly) {
+					sql.AppendFormat(" and {0}.{2} in({1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, slogans
+						, "hashcode");
+				}
+			}
+
+			// Selection and right managment
+
+			#region Nomenclature Produit (droits)
+			//Access rgithDroits en accès
+			sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+			// Exclude product if radio selected)
+			GetExcludeProudcts(sql);
+			#endregion
+
+			#region Nomenclature Produit (Niveau de détail)
+			// Product level
+			sql.Append(FctWeb.SQLGenerator.getLevelProduct(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+			#endregion
+
+			#region Sélection produit
+			// product
+				sql.Append(GetProductSelection(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+			#endregion
+
+			#region Sélection support
+			// media
+			sql.Append(GetMediaSelection(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+			#endregion
+
+			#region Media classification
+
+			#region Rights			
+			sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+			#endregion
+
+			#region Selection
+			list = _session.GetSelection(_session.SelectionUniversMedia, CstRight.type.vehicleAccess);
+			if (list.Length > 0) {
+				sql.AppendFormat(" and ({0}.id_vehicle in ({1})) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, list);
+			}
+			#endregion
+
+			//Universe media
+			sql.Append(GetMediaUniverse(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+
+			#endregion
+
+			// Order
+			sql.AppendFormat("Group by {0} {1}", groupByFieldName, groupByOptional);
+			// And date
+			sql.AppendFormat(", {0} ", dateFieldName);
+			#endregion
+
+			return (sql.ToString());
+		}
+		#endregion
 
         #region Queries building stuff
 
@@ -528,6 +744,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                         case CstDBClassif.Vehicles.names.others:
                         case CstDBClassif.Vehicles.names.internet:
                         case CstDBClassif.Vehicles.names.adnettrack:
+						case CstDBClassif.Vehicles.names.evaliantMobile:
                         case CstDBClassif.Vehicles.names.cinema: // A Changer quand les durées seront bonnes
                             return (" 1 as period_count ");
                         case CstDBClassif.Vehicles.names.directMarketing:

@@ -131,7 +131,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                 groupByFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlGroupByFieldsWithoutTablePrefix();
                 unitFieldSumWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session);
 
-                if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                if ((_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack || _vehicleInformation.Id == CstDBClassif.Vehicles.names.evaliantMobile) && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
                 {
                     groupByOptional = string.Format(", {0}", u.Id.ToString());
                 }
@@ -285,7 +285,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                 orderFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlOrderFieldsWithoutTablePrefix();
                 groupByFieldNameWithoutTablePrefix = _session.GenericProductDetailLevel.GetSqlGroupByFieldsWithoutTablePrefix();
                 unitFieldSumUnionWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session);
-                if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                if ((_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack || _vehicleInformation.Id == CstDBClassif.Vehicles.names.evaliantMobile) && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
                 {
                     groupByOptional = string.Format(", {0}", FctWeb.SQLGenerator.GetUnitAlias(_session));
                 }
@@ -639,7 +639,7 @@ namespace TNS.AdExpressI.LostWon.DAL
                 universFilter = GetUniversFilter(type, dateField, customerPeriod);
                 // Unités
                 unitFieldSumWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumWithAlias(_session, type);
-                if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+                if ((_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack || _vehicleInformation.Id == CstDBClassif.Vehicles.names.evaliantMobile) && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
                 {
                     UnitInformation u = _session.GetSelectedUnit();
                     if (type != CstDB.TableType.Type.webPlan)
@@ -791,7 +791,7 @@ namespace TNS.AdExpressI.LostWon.DAL
             sql.AppendFormat(" {0}", productsRights);
 
             // Autopromo Evaliant
-            if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.AutopromoEvaliant)
+            if ((_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack || _vehicleInformation.Id == CstDBClassif.Vehicles.names.evaliantMobile) && _session.AutopromoEvaliant)
             {
                 sql.AppendFormat(" and {0}.auto_promotion = 0 ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
             }
@@ -863,7 +863,7 @@ namespace TNS.AdExpressI.LostWon.DAL
             universFilter = GetUniversFilter(type, dateField, customerPeriod);
             // Unités
             unitFieldSumWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumWithAlias(_session, type);
-            if (_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
+            if ((_vehicleInformation.Id == CstDBClassif.Vehicles.names.adnettrack || _vehicleInformation.Id == CstDBClassif.Vehicles.names.evaliantMobile) && _session.Unit == CstWeb.CustomerSessions.Unit.versionNb)
             {
                 UnitInformation u = _session.GetSelectedUnit();
                 if (type != CstDB.TableType.Type.webPlan)

@@ -60,6 +60,9 @@ namespace TNS.AdExpress.Domain.XmlLoader
                                     case "CREA_ADNETTRACK":
                                         CreationServerPathes.CREA_ADNETTRACK = value;
                                         break;
+                                    case "CREA_EVALIANT_MOBILE":
+                                        CreationServerPathes.CREA_EVALIANT_MOBILE = value;
+                                        break;
                                     case "IMAGES":
                                         CreationServerPathes.IMAGES = value;
                                         break;

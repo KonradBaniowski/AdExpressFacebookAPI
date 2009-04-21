@@ -145,7 +145,8 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 
                 // Sélection 
                 sql = string.Format("select distinct {0}.id_advertiser,advertiser,{0}.id_product,product,{0}.id_vehicle, vehicle", tablePrefixe);
-                if (vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack)
+                if (vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
+					&& vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile)
                 {
                     sql = string.Format("{1}, nvl({0}.id_slogan,0) as id_slogan", tablePrefixe, sql);
                 }
@@ -235,7 +236,8 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
                 sql += SQLGenerator.getLevelProduct(webSession, tablePrefixe, true);
                 #endregion
 
-                if (vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack)
+                if (vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
+					&& vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile)
                 {
                     sql += " and " + tablePrefixe + ".id_slogan!=0 ";
                 }
@@ -374,6 +376,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 				case DBClassificationConstantes.Vehicles.names.directMarketing:
 					return "id_media,TO_CHAR(weight) as advertDimension, TO_CHAR(associated_file) as sloganFile";
 				case DBClassificationConstantes.Vehicles.names.adnettrack:
+				case DBClassificationConstantes.Vehicles.names.evaliantMobile:
 					return "id_media, (dimension || ' / ' || format) as advertDimension, TO_CHAR(associated_file) as sloganFile";
 				default : return "";
 			}

@@ -280,6 +280,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     iNbCol = 3 + creatives + insertions;
                     break;
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
                     iNbCol = 4 + creatives + insertions;
                     break;
 				default:
@@ -304,6 +305,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.cinema:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
 
                     foreach (UnitInformation currentUnit in _webSession.GetValidUnitForResult()) {
                         headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(currentUnit.WebTextId, _webSession.SiteLanguage), currentUnit.WebTextId));

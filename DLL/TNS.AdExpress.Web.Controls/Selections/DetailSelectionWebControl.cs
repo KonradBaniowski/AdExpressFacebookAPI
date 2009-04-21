@@ -1214,8 +1214,11 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             bool isEvaliant = false;
             if (m.Id != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA)
             {
-                ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-                if (vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack)
+                VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+                ClassificationCst.DB.Vehicles.names vehicleType = vehicleInformation.Id;
+                if ((vehicleType == ClassificationCst.DB.Vehicles.names.adnettrack 
+                    || vehicleType == ClassificationCst.DB.Vehicles.names.evaliantMobile) 
+                    && vehicleInformation.Autopromo)
                 {
                     isEvaliant = true;
                 }
@@ -1223,7 +1226,13 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             else
             {
                 string[] listVehicles = webSession.GetSelection(webSession.SelectionUniversMedia, Constantes.Customer.Right.type.vehicleAccess).Split(new char[] { ',' });
-                if (listVehicles != null && listVehicles.Length > 0 && VehiclesInformation.Contains(ClassificationCst.DB.Vehicles.names.adnettrack) && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(ClassificationCst.DB.Vehicles.names.adnettrack).ToString()) >= 0)
+                if (listVehicles != null && listVehicles.Length > 0 
+                    && ((VehiclesInformation.Contains(ClassificationCst.DB.Vehicles.names.adnettrack) 
+                    && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(ClassificationCst.DB.Vehicles.names.adnettrack).ToString()) >= 0
+                    && VehiclesInformation.Get(ClassificationCst.DB.Vehicles.names.adnettrack).Autopromo)
+                    || (VehiclesInformation.Contains(ClassificationCst.DB.Vehicles.names.evaliantMobile)
+                    && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(ClassificationCst.DB.Vehicles.names.evaliantMobile).ToString()) >= 0
+                    && VehiclesInformation.Get(ClassificationCst.DB.Vehicles.names.evaliantMobile).Autopromo)))
                 {
                     isEvaliant = true;
                 }

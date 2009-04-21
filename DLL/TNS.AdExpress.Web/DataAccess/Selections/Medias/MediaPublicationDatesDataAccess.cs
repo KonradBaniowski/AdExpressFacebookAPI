@@ -168,6 +168,9 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                     tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack).Sql;
                     break;
+                case DBClassificationConstantes.Vehicles.names.evaliantMobile:
+                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataEvaliantMobile).Sql;
+                    break;
 
             }
 
@@ -188,6 +191,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
                 case DBClassificationConstantes.Vehicles.names.outdoor:
                 case DBClassificationConstantes.Vehicles.names.cinema:
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
+                case DBClassificationConstantes.Vehicles.names.evaliantMobile:
                     sql += " select min(last_date) as last_date ";
                     sql += " from (";
 

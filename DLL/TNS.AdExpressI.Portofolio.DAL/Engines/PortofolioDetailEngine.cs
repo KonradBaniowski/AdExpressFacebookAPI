@@ -99,7 +99,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 							dataFieldsForGadWithoutTablePrefix = ", " + WebFunctions.SQLGenerator.GetFieldsAddressForGad("");
 						sql = "";
                         sql += " select id_media, " + productFieldNameWithoutTablePrefix + dataFieldsForGadWithoutTablePrefix + ", " + WebFunctions.SQLGenerator.GetUnitFieldsNameUnionForPortofolio(_webSession);
-                        if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack)
+                        if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile)
                         {
                             sql += string.Format(", {0}", UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb).Id.ToString());
                         }
@@ -109,7 +109,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 						sql += sqlWebPlan;
 						sql += " ) ";
 						sql += " group by id_media, " + groupByFieldNameWithoutTablePrefix + dataFieldsForGadWithoutTablePrefix;
-                        if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack)
+                        if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile)
                         {
                             sql += string.Format(", {0}",UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb).Id.ToString());
                         }
@@ -189,7 +189,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				detailProductFields = _webSession.GenericProductDetailLevel.GetSqlFields();
 				detailProductJoints = _webSession.GenericProductDetailLevel.GetSqlJoins(_webSession.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 
-                if(_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack) {
+                if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) {
                     unitFields = WebFunctions.SQLGenerator.GetUnitFieldsName(_webSession, type, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                 }
                 else {
@@ -279,7 +279,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 						break;
 				}
                 // Autopromo Evaliant
-                if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack) {
+                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile) {
                     if(_webSession.AutopromoEvaliant) // Hors autopromo (checkbox = checked)
                         sql += " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".auto_promotion = 0 ";
                 }

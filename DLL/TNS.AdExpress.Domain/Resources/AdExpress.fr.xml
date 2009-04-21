@@ -319,7 +319,7 @@
     <item mnemonic="w999" type="System.String">&lt;img src="/Images/Common/button/initialize_up.gif"&gt;&amp;nbsp;Ce bouton vous permet de réinitialiser votre recherche.</item>
     <item mnemonic="w1000" type="System.String">&lt;u&gt;3 modes de sélection vous sont proposés :&lt;/u&gt;</item>
     <item mnemonic="w1001" type="System.String">1.&amp;nbsp;Pour sélectionner un annonceur en totalité, cliquez sur la case annonceur correspondante. Si vous sauvegardez votre sélection, toutes les nouvelles références de l'annonceur seront prises en compte.</item>
-    <item mnemonic="w1002" type="System.String">2.&amp;nbspPour sélectionner un annonceur, à l'exclusion de certaines références, cliquez sur la case annonceur correspondante, déployez le niveau annonceur en cliquant la double flèche à droite de l'annonceur et désélectionnez certaines références. Pour sélectionner ou désélectionner toutes les références d'un annonceur, cliquez sur le lien se trouvant sous le libellé annonceur. Si vous sauvegardez votre sélection, toutes les nouvelles références de l'annonceur seront prises en compte, à l'exception des références désélectionnées.</item>
+    <item mnemonic="w1002" type="System.String">2.&amp;nbsp;Pour sélectionner un annonceur, à l'exclusion de certaines références, cliquez sur la case annonceur correspondante, déployez le niveau annonceur en cliquant la double flèche à droite de l'annonceur et désélectionnez certaines références. Pour sélectionner ou désélectionner toutes les références d'un annonceur, cliquez sur le lien se trouvant sous le libellé annonceur. Si vous sauvegardez votre sélection, toutes les nouvelles références de l'annonceur seront prises en compte, à l'exception des références désélectionnées.</item>
     <item mnemonic="w1003" type="System.String">3.&amp;nbsp;Pour sélectionner des références, déployez le niveau annonceur en cliquant sur la double flèche à droite de l'annonceur et cliquez sur les cases références correspondantes. Si vous sauvegardez votre sélection, seules les références sélectionnées seront prises en compte.</item>
     <item mnemonic="w1004" type="System.String">Le principe de sélection s'applique également aux autres niveaux hiérarchiques de la nomenclature produits.&lt;br&gt;&lt;br&gt;Pour chaque niveau hiérarchique choisi, le niveau de détail proposé est le niveau inférieur direct :&lt;br&gt;&lt;br&gt;&lt;table cellspaccing=0 cellpadding=0 border=0 align="left" class="txtViolet11"&gt;&lt;tr&gt;&lt;td width="10px"&gt;&lt;img src="/Images/Common/pixel.gif" width="10px"&gt;&lt;/td&gt;&lt;td align="left"&gt;&lt;li&gt;Groupe de sociétés -&gt; Annonceur&lt;li&gt;Annonceur -&gt; Référence&lt;li&gt;Marque -&gt; Référence&lt;br&gt;&lt;br&gt;&lt;li&gt;Famille -&gt; Classe&lt;li&gt;Classe -&gt; Groupe&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;br&gt;</item>
     <item mnemonic="w1005" type="System.String">&lt;br&gt;Le bouton</item>
@@ -1757,5 +1757,11 @@
     <item mnemonic="w2569" type="System.String">Affiner la sélection ou modifier les options du tableau.</item>
     <item mnemonic="w2570" type="System.String">Essayer d'exporter le résultat au format Excel.</item>
     <item mnemonic="w2571" type="System.String">Sélectionner / désélectionner tous les médias (sauf Evaliant)</item>
+    <item mnemonic="w2572" type="System.String">Etes vous sûr de vouloir supprimer cette requête ?</item>
+    <item mnemonic="w2573" type="System.String">Il est nécessaire de sélectionner deux années identiques pour valider.</item>
+    <item mnemonic="w2574" type="System.String">Il est nécessaire de sélectionner une période supérieure à N-2 pour réaliser une étude comparative.</item>
+    <item mnemonic="w2575" type="System.String">Déplacer vers la corbeille</item>
+    <item mnemonic="w2576" type="System.String">Rétablir les colonnes</item>
+    <item mnemonic="w2577" type="System.String">Evaliant Mobile</item>
   </items>
 </localization>

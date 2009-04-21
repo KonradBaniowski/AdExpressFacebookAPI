@@ -48,6 +48,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             bool showInsertions=false;
             bool showCreations = false;
             bool showActiveMedia = false;
+			bool autopromo = false;
             string readString = string.Empty;
             #endregion
 
@@ -63,6 +64,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 									vhInfo.AllowedMediaSelectionLevelItemsList = allowedMediaSelectionLevelItemsList;
 									vhInfo.DefaultMediaSelectionDetailLevels = defaultMediaSelectionDetailLevels;
 									vhInfo.DefaultMediaSelectionDetailLevel = defaultMediaSelectionDetailLevel;
+									vhInfo.Autopromo = autopromo;
 									vhInfo.AllowedUniverseLevels = allowedUniverseLevels;
                                     list.Add(vhInfo);
                                     id = string.Empty;
@@ -75,6 +77,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 									allowedMediaSelectionLevelItemsList = new List<DetailLevelItemInformation>();
 									defaultMediaSelectionDetailLevels = new List<TNS.AdExpress.Domain.Level.GenericDetailLevel>();
 									defaultMediaSelectionDetailLevel = null;
+									autopromo = false;
 									allowedUniverseLevels = new List<long>();
                                 }
                                 if (reader.GetAttribute("id") == null || reader.GetAttribute("id").Length == 0) throw (new InvalidXmlValueException("Invalid id parameter"));
@@ -87,6 +90,8 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 showCreations = bool.Parse(reader.GetAttribute("showCreations"));
                                 if (reader.GetAttribute("showActiveMedia") != null && reader.GetAttribute("showActiveMedia").Length > 0)
                                     showActiveMedia = bool.Parse(reader.GetAttribute("showActiveMedia"));
+								if (reader.GetAttribute("autopromo") != null && reader.GetAttribute("autopromo").Length > 0)
+									autopromo = bool.Parse(reader.GetAttribute("autopromo"));
                                 break;
                             case "allowedUnit":
                                 readString = reader.ReadString();
@@ -142,6 +147,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 					vhInfo.AllowedMediaSelectionLevelItemsList = allowedMediaSelectionLevelItemsList;
 					vhInfo.DefaultMediaSelectionDetailLevels = defaultMediaSelectionDetailLevels;
 					vhInfo.DefaultMediaSelectionDetailLevel = defaultMediaSelectionDetailLevel;
+					vhInfo.Autopromo = autopromo;
 					vhInfo.AllowedUniverseLevels = allowedUniverseLevels;
                     list.Add(vhInfo);
                 }

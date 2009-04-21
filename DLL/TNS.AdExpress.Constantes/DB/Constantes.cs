@@ -1578,6 +1578,14 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// Texte du flag de detail des insertion
 		/// </summary>
 		public const string DETAIL_INTERNET_ACCESS_FLAG=" Accéder aux créations Internet";
+        /// <summary>
+        /// Identifiant du flag detail des insertion
+        /// </summary>
+        public const Int64 ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG = 276;
+        /// <summary>
+        /// Texte du flag de detail des insertion
+        /// </summary>
+        public const string DETAIL_EVALIANT_MOBILE_ACCESS_FLAG = " Accéder aux création Evaliant Mobile";
 		/// <summary>
 		/// Identifiant du flag Agences Média
 		/// </summary>

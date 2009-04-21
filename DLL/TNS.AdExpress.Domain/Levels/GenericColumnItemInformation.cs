@@ -381,7 +381,15 @@ namespace TNS.AdExpress.Domain.Level
 			/// <summary>
 			/// Row number
 			/// </summary>
-			rowNum = 90
+			rowNum = 90,
+            /// <summary>
+            /// Banner Evaliant mobile DImension
+            /// </summary>
+            bannerEvaliantMobileDimension = 91,
+			/// <summary>
+			/// product evaliant mobile
+			/// </summary>
+			productEvaliantMobile = 92
 		}
 		#endregion
 

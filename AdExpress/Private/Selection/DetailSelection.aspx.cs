@@ -749,7 +749,7 @@ namespace AdExpress.Private.Selection{
                     if (_webSession.CurrentModule != CstWeb.Module.Name.ANALYSE_PLAN_MEDIA && _webSession.SelectionUniversMedia.FirstNode != null)
                     {
                         CstClassif.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-                        if (vehicleType == CstClassif.DB.Vehicles.names.adnettrack)
+                        if (vehicleType == CstClassif.DB.Vehicles.names.adnettrack || vehicleType == CstClassif.DB.Vehicles.names.evaliantMobile)
                         {
                             displayAutoPromo = true;
                         }
@@ -757,7 +757,11 @@ namespace AdExpress.Private.Selection{
                     else
                     {
                         string[] listVehicles = _webSession.GetSelection(_webSession.SelectionUniversMedia, CstRight.type.vehicleAccess).Split(new char[] { ',' });
-                        if (listVehicles != null && listVehicles.Length > 0 && VehiclesInformation.Contains(CstClassif.DB.Vehicles.names.adnettrack) && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(CstClassif.DB.Vehicles.names.adnettrack).ToString()) >= 0)
+                        if (listVehicles != null && listVehicles.Length > 0 
+                            && VehiclesInformation.Contains(CstClassif.DB.Vehicles.names.adnettrack) 
+                            && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(CstClassif.DB.Vehicles.names.adnettrack).ToString()) >= 0
+                            && VehiclesInformation.Contains(CstClassif.DB.Vehicles.names.evaliantMobile)
+                            && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(CstClassif.DB.Vehicles.names.evaliantMobile).ToString()) >= 0)
                         {
                             displayAutoPromo = true;
                         }

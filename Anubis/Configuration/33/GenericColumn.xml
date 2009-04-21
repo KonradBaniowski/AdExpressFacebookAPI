@@ -153,6 +153,8 @@
     <column id="88" name="Banner first parution" webTextId="2545" dbTablePrefixe="wp" dbLabel="date_creation" dbLabelAlias="dateParution" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
     <column id="89" name="Id Category" webTextId="860" dbLabel="id_category" dbTablePrefixe="wp" dbLabelAlias="idCategory"/>
     <column id="90" name="Row number" webTextId="2560"  dbLabel="rownum" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
+    <column id="91" name="Dimension banner mobile" webTextId="2542" dbId="id_dimension_banners_mobile" dbLabel="dimension_banners_mobile" dbLabelAlias="dimension_banners_mobile" dbTable="dimension_banners_mobile" dbTablePrefixe="dbanm"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel" useLanguage="false"/>
+    <column id="92" name="Produit evaliant mobile" webTextId="468" dbId="id_product" dbLabel="product" dbTable="product" dbTablePrefixe="pr" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
   </columnItems>
 
   <detailColumns>
@@ -457,6 +459,19 @@
       <columnItem id="77" name="Produit AdNetTrack"/>
       <columnItem id="78" name="Format banner" filter="true"/>
       <columnItem id="79" name="Dimension banner" filter="true"/>
+      <columnItem id="88" name="First parution"/>
+      <columnItem id="80" name="url" visible="false"/>
+      <columnItem id="87" name="Gad" visible="false"/>
+      <columnItem id="81" name="hashcode" visible="false"  isKey="true"/>
+      <columnItem id="75" name="Banner"/>
+    </detailColumn>
+    <!--Evaliant Mobile-->
+    <detailColumn id="26" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
+      <columnItem id="7" name="Annonceur"/>
+      <columnItem id="8" name="Groupe"/>
+      <columnItem id="92" name="Produit evaliant mobile"/>
+      <columnItem id="78" name="Format banner" filter="true"/>
+      <columnItem id="91" name="Dimension banner mobile" filter="true"/>
       <columnItem id="88" name="First parution"/>
       <columnItem id="80" name="url" visible="false"/>
       <columnItem id="87" name="Gad" visible="false"/>

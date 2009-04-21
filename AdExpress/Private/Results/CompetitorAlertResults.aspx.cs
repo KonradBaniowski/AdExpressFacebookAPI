@@ -360,9 +360,9 @@ namespace AdExpress.Private.Results{
 
             #region Option autopromo (Evaliant)
             Int64 id = ((LevelInformation)_webSession.SelectionUniversMedia.Nodes[0].Tag).ID;
-            if (VehiclesInformation.DatabaseIdToEnum(id) == DBClassificationConstantes.Vehicles.names.adnettrack)
+            if (VehiclesInformation.DatabaseIdToEnum(id) == DBClassificationConstantes.Vehicles.names.adnettrack || VehiclesInformation.DatabaseIdToEnum(id) == DBClassificationConstantes.Vehicles.names.evaliantMobile)
             {
-                ResultsOptionsWebControl1.AutopromoEvaliantOption = true;
+				ResultsOptionsWebControl1.AutopromoEvaliantOption = VehiclesInformation.Get(id).Autopromo; 
             }
             #endregion
 

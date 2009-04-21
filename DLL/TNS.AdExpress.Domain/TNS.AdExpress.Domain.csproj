@@ -220,6 +220,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\AdExpress.en.xml" />
+    <Content Include="Resources\AdExpress.fi.xml" />
     <Content Include="Resources\AdExpress.fr.xml" />
     <Content Include="Resources\AdExpress.Project.xml" />
   </ItemGroup>

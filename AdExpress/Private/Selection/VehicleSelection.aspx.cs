@@ -102,7 +102,9 @@ namespace AdExpress.Private.Selection{
                 }
 
 				//Annuler l'univers de version
-				if(_webSession.CurrentModule == WebConstantes.Module.Name.ALERTE_PLAN_MEDIA){
+				if(_webSession.CurrentModule == WebConstantes.Module.Name.ALERTE_PLAN_MEDIA
+					|| _webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA
+					){
 					_webSession.IdSlogans = new ArrayList();
 					_webSession.SloganIdZoom=-1;
 					_webSession.Save();

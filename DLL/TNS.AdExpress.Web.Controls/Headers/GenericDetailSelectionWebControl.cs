@@ -611,8 +611,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				    output.Write("<TR>");
 				    output.Write("<TD>");
 				    output.Write("</TD>");
-                    output.Write("<TD align=left colSpan=2><A class=roll03 onmouseover=\"saveButton1.src='/App_Themes/" + _themeName + "/Images/Common/button/restore_down.gif';\" onmouseout=\"saveButton1.src ='/App_Themes/" + _themeName + "/Images/Common/button/restore_up.gif';\" href=\"javascript:initialiser();\"><IMG alt=\"Rétablir les colonnes\" src=\"/App_Themes/" + _themeName + "/Images/Common/button/restore_up.gif\" border=0 name=saveButton1></A><IMG src=\"/App_Themes/" + _themeName + "/Images/Common/pixel.gif\" width=\"165\" height=\"1\">");
-				    output.Write("<A class=roll03 onmouseover=\"saveButton2.src='/App_Themes/"+_themeName+"/Images/Common/button/delete_down.gif';\" onmouseout=\"saveButton2.src ='/App_Themes/"+_themeName+"/Images/Common/button/delete_up.gif';\" href=\"javascript:vider();\"><IMG alt=\"Déplacer vers la corbeille\" src=\"/App_Themes/"+_themeName+"/Images/Common/button/delete_up.gif\" border=0 name=saveButton2></A></TD>");
+					output.Write("<TD align=left colSpan=2><A class=roll03 onmouseover=\"saveButton1.src='/App_Themes/" + _themeName + "/Images/Common/button/restore_down.gif';\" onmouseout=\"saveButton1.src ='/App_Themes/" + _themeName + "/Images/Common/button/restore_up.gif';\" href=\"javascript:initialiser();\"><IMG alt=\"" + GestionWeb.GetWebWord(2576, _customerWebSession.SiteLanguage) + "\" src=\"/App_Themes/" + _themeName + "/Images/Common/button/restore_up.gif\" border=0 name=saveButton1></A><IMG src=\"/App_Themes/" + _themeName + "/Images/Common/pixel.gif\" width=\"165\" height=\"1\">");
+				    output.Write("<A class=roll03 onmouseover=\"saveButton2.src='/App_Themes/"+_themeName+"/Images/Common/button/delete_down.gif';\" onmouseout=\"saveButton2.src ='/App_Themes/"+_themeName+"/Images/Common/button/delete_up.gif';\" href=\"javascript:vider();\"><IMG alt=\""+GestionWeb.GetWebWord(2575, _customerWebSession.SiteLanguage)+"\" src=\"/App_Themes/"+_themeName+"/Images/Common/button/delete_up.gif\" border=0 name=saveButton2></A></TD>");
 				    output.Write("<TD colSpan=2 align=right><A class=roll03 onmouseover=\"saveButton2.src='/App_Themes/"+_themeName+"/Images/Common/button/delete_down.gif';\" onmouseout=\"saveButton2.src ='/App_Themes/"+_themeName+"/Images/Common/button/delete_up.gif';\" href=\"javascript:vider();\"></A>&nbsp;</TD>");
 				    output.Write("</TR>");
     			    
@@ -665,7 +665,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				    if (Page.IsPostBack && _columnSetId==_oldColumnSetId){
 					    output.Write("<TD>");
                         output.Write("<DIV class=\"simpleDropPanel\" id=\"droponme\">");
-					    output.Write("<DIV class=\"title\">Corbeille</DIV>");
+						output.Write("<DIV class=\"title\">" + GestionWeb.GetWebWord(1950, _customerWebSession.SiteLanguage) + "</DIV>");
     				
 					    foreach(GenericColumnItemInformation Column in _columnItemTrashList){
 						    output.Write("\n<DIV id=\""+(int)Column.Id+"\">");

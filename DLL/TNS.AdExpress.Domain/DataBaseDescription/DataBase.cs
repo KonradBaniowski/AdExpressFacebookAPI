@@ -743,7 +743,19 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
 		/// <summary>
 		/// Recap Direct Marketing
 		/// </summary>
-		recapDirectMarketing = 160
+		recapDirectMarketing = 160,
+		/// <summary>
+		/// Evaliant mobile Data
+		/// </summary>
+		dataEvaliantMobile = 161,
+		/// <summary>
+		/// 4M Evaliant mobile Data
+		/// </summary>
+		dataEvaliantMobileAlert = 162,
+        /// <summary>
+        /// Banners
+        /// </summary>
+        banners_mobile = 163
     } 
     #endregion
 

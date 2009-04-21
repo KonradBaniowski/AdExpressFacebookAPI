@@ -143,7 +143,11 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
 			/// <summary>
 			/// Emailing
 			/// </summary>
-			emailing = 13
+			emailing = 13,
+			/// <summary>
+			/// Evaliant mobile
+			/// </summary>
+			evaliantMobile = 15
 		}
 	}
 	#endregion

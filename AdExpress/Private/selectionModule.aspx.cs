@@ -235,10 +235,10 @@ namespace AdExpress{
                     #region paramètres rajoutés pour Nouvelles créations (Evaliant)
                     //Setting vehicle as adnettrack for new ceratives
                     if(_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES) {
-                        System.Windows.Forms.TreeNode tmpNode = new System.Windows.Forms.TreeNode();
-                        tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, DBConstantes.Vehicles.names.adnettrack.GetHashCode(), GestionWeb.GetWebWord(2533, _webSession.SiteLanguage));
-                        tmpNode.Checked = true;
-                        _webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
+						//System.Windows.Forms.TreeNode tmpNode = new System.Windows.Forms.TreeNode();
+						//tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, DBConstantes.Vehicles.names.adnettrack.GetHashCode(), GestionWeb.GetWebWord(2533, _webSession.SiteLanguage));
+						//tmpNode.Checked = true;
+						//_webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
 
                         // unit version nb
                         _webSession.Unit = CstWeb.CustomerSessions.Unit.versionNb;

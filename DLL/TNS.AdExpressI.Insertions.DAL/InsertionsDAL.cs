@@ -263,11 +263,11 @@ namespace TNS.AdExpressI.Insertions.DAL
             {
                 id = Convert.ToInt64(ids[i]);
                 level = (DetailLevelItemInformation)detailLevels.Levels[i];
-                if (id > 0 || (id != -1 && id != 0 && level.Id == DetailLevelItemInformation.Levels.slogan && (vehicle.Id == CstDBClassif.Vehicles.names.adnettrack || vehicle.Id == CstDBClassif.Vehicles.names.internet)))
+                if (id > 0 || (id != -1 && id != 0 && level.Id == DetailLevelItemInformation.Levels.slogan && (vehicle.Id == CstDBClassif.Vehicles.names.adnettrack || vehicle.Id == CstDBClassif.Vehicles.names.internet || vehicle.Id == CstDBClassif.Vehicles.names.evaliantMobile)))
                 {
                     if (level.DataBaseIdField == CstDB.Fields.ID_VEHICLE && id == VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.internet))
                         id = CstDBClassif.Vehicles.names.adnettrack.GetHashCode();
-                    if (level.Id == DetailLevelItemInformation.Levels.slogan && (vehicle.Id == CstDBClassif.Vehicles.names.adnettrack || vehicle.Id == CstDBClassif.Vehicles.names.internet))
+                    if (level.Id == DetailLevelItemInformation.Levels.slogan && (vehicle.Id == CstDBClassif.Vehicles.names.adnettrack || vehicle.Id == CstDBClassif.Vehicles.names.internet || vehicle.Id == CstDBClassif.Vehicles.names.evaliantMobile))
                     {
                         str.AppendFormat(" and {1}.hashcode = {0}", id, table.Prefix);
                     }
@@ -275,7 +275,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                         str.AppendFormat(" and {2}.{0} = {1}", level.DataBaseIdField, id, table.Prefix);
                     }
                 }
-                if (id == 0 && level.Id == DetailLevelItemInformation.Levels.slogan && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack && vehicle.Id != CstDBClassif.Vehicles.names.internet)
+                if (id == 0 && level.Id == DetailLevelItemInformation.Levels.slogan && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack && vehicle.Id != CstDBClassif.Vehicles.names.internet && vehicle.Id != CstDBClassif.Vehicles.names.evaliantMobile)
                 {
                     str.AppendFormat(" and {2}.{0} = {1}", level.DataBaseIdField, id, table.Prefix);
                 }
@@ -303,7 +303,7 @@ namespace TNS.AdExpressI.Insertions.DAL
             if (rank != 0)
             {
                 id = Convert.ToInt64(ids[rank - 1]);
-                if (id == 0 && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack && vehicle.Id != CstDBClassif.Vehicles.names.internet) 
+                if (id == 0 && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack && vehicle.Id != CstDBClassif.Vehicles.names.internet && vehicle.Id != CstDBClassif.Vehicles.names.evaliantMobile) 
                     return string.Format(" and {0}.id_slogan is null ", table.Prefix);
             }
             return ("");
@@ -743,7 +743,7 @@ namespace TNS.AdExpressI.Insertions.DAL
             {
                 sql.AppendFormat(" and wp.id_slogan={0}", _session.SloganIdZoom);
             }
-            if ((_msCreaConfig || _creaConfig) && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack && vehicle.Id != CstDBClassif.Vehicles.names.internet)
+            if ((_msCreaConfig || _creaConfig) && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack && vehicle.Id != CstDBClassif.Vehicles.names.internet && vehicle.Id != CstDBClassif.Vehicles.names.evaliantMobile)
             {
                 sql.AppendFormat(" and {0}.id_slogan is not null", tData.Prefix);
             }
@@ -762,15 +762,14 @@ namespace TNS.AdExpressI.Insertions.DAL
                 sql.Append(FctWeb.SQLGenerator.GetJointForInsertDetail(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
             }
 
-            if (vehicle.Id != CstDBClassif.Vehicles.names.internet)
-            {
-                sql.AppendFormat(" and {1}.id_vehicle={0} ", vehicle.DatabaseId, tData.Prefix);
+            switch (vehicle.Id) {
+                case CstDBClassif.Vehicles.names.internet:
+                    sql.AppendFormat(" and {1}.id_vehicle={0} ", VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack).DatabaseId, tData.Prefix);
+                    break;
+                default:
+                    sql.AppendFormat(" and {1}.id_vehicle={0} ", vehicle.DatabaseId, tData.Prefix);
+                    break;
             }
-            else
-            {
-                sql.AppendFormat(" and {1}.id_vehicle={0} ", VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack).DatabaseId, tData.Prefix);
-            }
-
         }
 
         /// <summary>
