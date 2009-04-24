@@ -42,7 +42,7 @@
 							
 								<tr vAlign="top" class="whiteBackGround">
 									<!-- Logo -->
-									<td><asp:Image runat="server" height=90 width=185 SkinID="logo" /></td>
+									<td class="logoCoteDroitBackGround"><asp:Image runat="server" height=90 width=185 SkinID="logo" /></td>
 								</tr>
 								<tr>
 									<td><asp:Image runat="server" height="5" width="185" SkinID="plus_sous_logo" /></td>
