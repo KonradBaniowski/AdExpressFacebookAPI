@@ -151,8 +151,9 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 sql.Append(detailProductTablesNames);
 
                 // where
+				string maxHour ="23:59:59";
                 sql.Append(" where " + table.Prefix + ".date_creation >= to_date('" + _beginingDate + "','yyyymmdd') ");
-                sql.Append(" and " + table.Prefix + ".date_creation <= to_date('" + _endDate + "','yyyymmdd') ");
+				sql.Append(" and " + table.Prefix + ".date_creation <= to_date('" + _endDate + maxHour + "','yyyymmddHH24:MI:SS') ");
                 sql.Append(detailProductJoints);
                 sql.Append(productsRights);
 
