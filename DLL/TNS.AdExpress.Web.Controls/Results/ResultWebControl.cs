@@ -2227,6 +2227,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 				case WebConstantes.Module.Name.ALERTE_POTENTIELS:
 				case WebConstantes.Module.Name.ALERTE_PORTEFEUILLE:
 				case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+				case WebConstantes.Module.Name.NEW_CREATIVES:
 					tLabels = new string[_customerWebSession.GenericProductDetailLevel.GetNbLevels];
 					foreach(DetailLevelItemInformation level in _customerWebSession.GenericProductDetailLevel.Levels){
 						tLabels[i] = level.Name;
