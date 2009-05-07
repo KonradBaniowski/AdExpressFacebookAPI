@@ -29,7 +29,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Theme;
-
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Anubis.Satet.BusinessFacade
 {
@@ -93,27 +93,51 @@ namespace TNS.AdExpress.Anubis.Satet.BusinessFacade
 		/// <summary>
 		/// Génère les résultats APPM dans un document excel
 		/// </summary>
-		public void Fill(){
+		public void Fill() {
+			_webSession.PreformatedMediaDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategory;
+
+			// Initialisation à media\catégorie
+			#region Niveau de détail media\Catégorie pour les autres planches (Generic)
+			ArrayList levels = new ArrayList();
+			levels.Add(1);
+			levels.Add(2);
+			_webSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+			#endregion
+
 			//Page principale
-            this.MainPageDesign(_webSession, _style);
+			this.MainPageDesign(_webSession, _style);
 			//Paramètres d'étude			
-            UI.SessionParameter.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+			UI.SessionParameter.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 			//Synthèse
-            UI.Synthesis.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
-			//Calendrier d'actions
-            UI.MediaPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+			UI.Synthesis.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+			//Calendrier d'actions			
+			#region Niveau de détail Categorie\Support pour plan media (Generic)
+			//Categorie\Support 
+			levels = new ArrayList();
+			levels.Add(2);
+			levels.Add(3);
+			_webSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+			#endregion
+			UI.MediaPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+
 			//Analyse par titre
-            UI.SupportPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+			#region Niveau de détail media\Catégorie pour les autres planches (Generic)
+			levels = new ArrayList();
+			levels.Add(1);
+			levels.Add(2);
+			_webSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+			#endregion
+			UI.SupportPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 			//Analyse des parts de voix
-            UI.PDVPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+			UI.PDVPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 			//Analyse par périodicité
-            UI.PeriodicityPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+			UI.PeriodicityPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 			//Analyse par famille de presse
-            UI.AnalyseFamilyInterestPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+			UI.AnalyseFamilyInterestPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 			//Affinités
-            UI.Affinities.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
-			
-			if(_excel!=null){
+			UI.Affinities.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+
+			if (_excel != null) {
 				this.Save(_excelFilePath);
 			}
 
