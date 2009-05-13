@@ -999,6 +999,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
 				case WebConstantes.Module.Name.ALERTE_PORTEFEUILLE:
 				case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+                case WebConstantes.Module.Name.NEW_CREATIVES:
 				switch(_componentProfile){
 					case WebConstantes.GenericDetailLevel.ComponentProfile.media:
 						switch(currentDetailLevelItem.Id){
@@ -1178,7 +1179,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 
 				case WebConstantes.Module.Name.ALERTE_PLAN_MEDIA:
 				case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
-				switch(currentDetailLevelItem.Id){
+ 				switch(currentDetailLevelItem.Id){
 						#region Annonceur 
 					case DetailLevelItemInformation.Levels.advertiser:						
 						if (
@@ -1317,6 +1318,8 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 					default:
 						return(true);
 				}
+
+               
 
 				case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
 				switch(currentDetailLevelItem.Id){
