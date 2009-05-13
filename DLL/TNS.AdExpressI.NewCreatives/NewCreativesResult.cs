@@ -216,7 +216,11 @@ namespace TNS.AdExpressI.NewCreatives {
                         }
                         iCurLine = tab.AddNewLine(lineTypes[i]);
                         tab[iCurLine, 1] = cellLevels[i] = new AdExpressCellLevel(dCurLevel, _session.GenericProductDetailLevel.GetLabelValue(row, i), cellLevels[i - 1], i, iCurLine, _session);
-
+                        if(_session.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser) == i) {
+                            if(row["id_address"] != DBNull.Value) {
+                                cellLevels[i].AddressId = Convert.ToInt64(row["id_address"]);
+                            }
+                        }
                         level = _session.GenericProductDetailLevel.GetDetailLevelItemInformation(i);
 
                         // version

@@ -117,7 +117,11 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
             string detailProductJoints = "";
             string detailProductOrderBy = "";
             string productsRights = "";
+            string dataTableNameForGad = "";
+            string dataFieldsForGad = "";
+            string dataJointForGad = "";
             Table table = null;
+            Schema schAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
             #endregion
 
             #region Construction de la requête
@@ -127,6 +131,16 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 detailProductJoints = _session.GenericProductDetailLevel.GetSqlJoins(_session.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                 detailProductOrderBy = _session.GenericProductDetailLevel.GetSqlOrderFields();
                 productsRights = WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+                table = GetTable(_vehicleInformation);
+
+                if(_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)) {
+                    try {
+                        dataTableNameForGad = ", " + schAdExpr03.Sql + WebFunctions.SQLGenerator.GetTablesForGad(_session) + " " + CstDB.Tables.GAD_PREFIXE;
+                        dataFieldsForGad = ", " + WebFunctions.SQLGenerator.GetFieldsAddressForGad();
+                        dataJointForGad = "and " + WebFunctions.SQLGenerator.GetJointForGad(table.Prefix);
+                    }
+                    catch(SQLGeneratorException) { ;}
+                }
 
                 // select
                 sql.Append("select distinct " + detailProductFields + ", hashcode as versionNb ");
@@ -144,11 +158,13 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                     default:
                         break;
                 }
+                sql.Append(dataFieldsForGad+" ");
                 
                 // from
-                table = GetTable(_vehicleInformation);
+                
                 sql.Append("from " + table.SqlWithPrefix + " , ");
                 sql.Append(detailProductTablesNames);
+                sql.Append(dataTableNameForGad + " ");
 
                 // where
 				string maxHour ="23:59:59";
@@ -156,6 +172,7 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
 				sql.Append(" and " + table.Prefix + ".date_creation <= to_date('" + _endDate + maxHour + "','yyyymmddHH24:MI:SS') ");
                 sql.Append(detailProductJoints);
                 sql.Append(productsRights);
+                sql.Append(" " + dataJointForGad + " ");
 
                 // Sector ID
                 if(_idSector != -1)
@@ -163,6 +180,8 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
 
                 // group by
                 sql.Append(" group by " + detailProductFields + ", hashcode ");
+                if(dataFieldsForGad.Length>0)
+                    sql.Append(dataFieldsForGad);
                 
                 // order by
                 sql.Append(" order by " + detailProductOrderBy + ", date_creation ");
