@@ -26,7 +26,6 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using WebNavigation=TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using DBClassification=TNS.AdExpress.Constantes.Classification.DB;
-
 namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 	/// <summary>
 	/// Charge la liste des Vehicles que peut sélectionner un client
@@ -1183,8 +1182,12 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 
 			#region Media Rights
 			if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
-				|| webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE)
+				|| webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE) {
 				sql += GetRecapMediaConditions(webSession, vehicleTable, categoryTable, mediaTable);
+
+				
+
+			}
 			else
 				sql += GetMediaRights(webSession, vehicleTable, categoryTable, mediaTable);
 			

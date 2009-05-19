@@ -3185,7 +3185,13 @@ namespace TNS.AdExpress.Constantes.Web{
 			/// <summary>
 			/// ID media in "Select All" option on selection page
 			/// </summary>			
-            mediaInSelectAll = 7
+            mediaInSelectAll = 7,
+
+			/// <summary>
+			/// ID media for VMC Rights in recap
+			/// <remarks>Used to force VMC rights in Recap</remarks>
+			/// </summary>			
+			forceVmcRightsInRecap = 8
 
 		}
 	}

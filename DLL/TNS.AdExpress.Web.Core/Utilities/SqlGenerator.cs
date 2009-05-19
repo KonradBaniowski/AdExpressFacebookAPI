@@ -748,7 +748,17 @@ namespace TNS.AdExpress.Web.Core.Utilities
         public static string getAccessVehicleList(WebSession webSession, string tablePrefixe, bool beginByAnd)
         {
             string sql = "";
+			 string idVehicleVMC="";
+
+			
             string idVehicleListString = webSession.CustomerLogin[TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccessForRecap];
+			//Force VMC rigths
+			if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE){
+				idVehicleVMC = TNS.AdExpress.Domain.Lists.GetIdList(WebConstantes.GroupList.ID.media, WebConstantes.GroupList.Type.forceVmcRightsInRecap);
+				if (idVehicleVMC != null && idVehicleVMC.Length > 0) {
+					idVehicleListString = (idVehicleListString != null && idVehicleListString.Length > 0) ? idVehicleListString + "," + idVehicleVMC : idVehicleVMC;
+				}
+			}
             if (idVehicleListString.Length > 0)
             {
                 if (beginByAnd) sql += " and ";
@@ -866,6 +876,29 @@ namespace TNS.AdExpress.Web.Core.Utilities
             if (!premier) sql += " )";
             return (sql);
         }
+
+
+		/// <summary>
+		/// Force les droits VMC dans les recap
+		/// </summary>
+		/// <remarks>Used only for recap modules</remarks>
+		/// <param name="webSession">Session du client</param>
+		/// <param name="tablePrefixe">Préfixe de la table contenant toute la nomenclature</param>
+		/// <param name="beginByAnd">La condition doit elle commencer par And</param>
+		/// <returns>Code SQL généré</returns>
+		public static string ForceVmcRightsInRecap(WebSession webSession, string tablePrefixe, bool beginByAnd) {
+			string sql = "";			
+			if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE) {
+				string idVehicle = TNS.AdExpress.Domain.Lists.GetIdList(WebConstantes.GroupList.ID.media, WebConstantes.GroupList.Type.forceVmcRightsInRecap);
+				if (idVehicle != null && idVehicle.Length > 0) {
+					sql += " and " + tablePrefixe + ".id_vehicle in (" + idVehicle + ") ";
+				}
+			}
+			return (sql);
+
+		}
+
+
         #endregion
 
         #region Nomenclature support tronquée à Vehicle > Category
