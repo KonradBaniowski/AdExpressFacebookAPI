@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -89,7 +89,10 @@
     <Compile Include="Classification\ProductItemsList.cs" />
     <Compile Include="Classification\VehicleInformation.cs" />
     <Compile Include="Classification\VehiclesInformation.cs" />
+    <Compile Include="Exceptions\InfoNewsXLException.cs" />
     <Compile Include="Results\DundasConfiguration.cs" />
+    <Compile Include="Results\InfoNews.cs" />
+    <Compile Include="Results\InfoNewsItem.cs" />
     <Compile Include="Theme\Line.cs" />
     <Compile Include="Theme\Colors.cs" />
     <Compile Include="Results\MSCreativesDetails.cs" />
@@ -105,6 +108,7 @@
     <Compile Include="Theme\Theme.cs" />
     <Compile Include="Web\Rss.cs" />
     <Compile Include="XmlLoader\DundasConfigurationXL.cs" />
+    <Compile Include="XmlLoader\InfoNewsXL.cs" />
     <Compile Include="XmlLoader\ResultOptionsXL.cs" />
     <Compile Include="XmlLoader\CreativeConfigDataAccess.cs" />
     <Compile Include="DataBaseDescription\Connection.cs" />

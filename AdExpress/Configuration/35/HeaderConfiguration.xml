@@ -11,7 +11,7 @@
 		<menuItem name="identification" idWebText="759" href="/index.aspx" language="true" idSession="false"/>
 		<menuItem name="modules" idWebText="760" href="/Private/selectionModule.aspx" language="false" idSession="true"/>
 		<menuItem name="myAdExpress" idWebText="761" href="/Private/MyAdExpress/SearchSession.aspx" language="false" idSession="true"/>
-    <!--<menuItem name="news" idWebText="762" href="/Private/Results/InfoNews.aspx" language="false" idSession="true"/>-->
+    <menuItem name="news" idWebText="762" href="/Private/Results/InfoNews.aspx" language="false" idSession="true"/>
 		<!--<menuItem name="news" idWebText="762" href="#" language="false" idSession="false"/>-->
     <!--<menuItem name="MAJ des données" idWebText="1253" href="/Private/Informations/DataUpdate2.aspx" language="false" idSession="true" displayInPopUp="true"/>-->
 		<!--<menuItem name="contact" idWebText="763" href="/Public/Contact.aspx" language="true" idSession="false"/>-->

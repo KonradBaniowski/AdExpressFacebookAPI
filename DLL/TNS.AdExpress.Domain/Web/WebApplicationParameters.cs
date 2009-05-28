@@ -95,6 +95,8 @@ namespace TNS.AdExpress.Domain.Web {
         /// Dundas Configuration
         /// </summary>
         protected static DundasConfiguration _dundas = null;
+
+		protected static TNS.AdExpress.Domain.Results.InfoNews _infoNewsInformations = null;
         #endregion
         
         #region Contructeur
@@ -123,6 +125,8 @@ namespace TNS.AdExpress.Domain.Web {
             _msCreativesDetails = new MSCreativesDetails(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.MS_CREATIVES_CONFIGURATION_COLUMNS_ITEMS_CONFIGURATION_FILENAME));
             _portofolioDetailMediaColumns = new PortofolioDetailMediaColumns(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.PORTOFOLIO_DETAIL_MEDIA_CONFIGURATION_FILENAME));
             _dundas = new DundasConfiguration(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.DUNDAS_CONFIGURATION_FILENAME));
+			_infoNewsInformations = new InfoNews(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.INFO_NEWS_FILENAME));
+			
         }
         #endregion
 
@@ -238,6 +242,13 @@ namespace TNS.AdExpress.Domain.Web {
         public static DundasConfiguration DundasConfiguration {
             get { return _dundas; }
         }
+
+		/// <summary>
+		/// Get Infos news items information
+		/// </summary>
+		public static TNS.AdExpress.Domain.Results.InfoNews InfoNewsInformations {
+			get { return _infoNewsInformations; }
+		}
 
         #endregion
 

@@ -2406,6 +2406,54 @@ namespace TNS.AdExpress.Constantes.Web{
 	/// </summary>
 	public class ModuleInfosNews
 	{
+		public enum Directories {
+			/// <summary>
+			/// adExNews
+			/// </summary>
+			adExNews = 0,
+			/// <summary>
+			/// adExReport
+			/// </summary>
+			adExReport = 1,
+			/// <summary>
+			/// adExReview
+			/// </summary>
+			adExReview = 2,
+			/// <summary>
+			/// novelties
+			/// </summary>
+			novelties = 3,
+			/// <summary>
+			/// advertising Expenditure Category
+			/// </summary>
+			advertisingExpenditureCategory = 4,
+			/// <summary>
+			/// top 150 Brand Advertisers
+			/// </summary>
+			top150BrandAdvertisers = 5,
+			/// <summary>
+			/// top 20 Retailers
+			/// </summary>
+			top20Retailers = 6,
+			/// <summary>
+			/// monthly Advertising Expenditure Trends
+			/// </summary>
+			monthlyAdvertisingExpenditureTrends = 7,
+			/// <summary>
+			/// advertising Year Event Materials
+			/// </summary>
+			advertisingYearEventMaterials = 8,
+			/// <summary>
+			/// Metholodology
+			/// </summary>
+			Metholodology = 9,
+			/// <summary>
+			/// module Descriptions
+			/// </summary>
+			moduleDescriptions = 10
+
+		}
+
 		/// <summary>
 		/// Sous module ADEXNEWS
 		/// </summary>

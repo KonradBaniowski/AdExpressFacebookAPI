@@ -122,5 +122,10 @@ namespace TNS.AdExpress.Constantes.Web {
         /// </summary>
         public const string DUNDAS_CONFIGURATION_FILENAME = @"DundasConfiguration.xml";
 
+		/// <summary>
+		/// Fichier de configuration des infos/news
+		/// </summary>
+		public const string INFO_NEWS_FILENAME = @"InfoNews.xml";
+
     }
 }

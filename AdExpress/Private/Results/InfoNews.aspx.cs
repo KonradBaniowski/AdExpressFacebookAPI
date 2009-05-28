@@ -21,7 +21,9 @@ using TradCst = TNS.AdExpress.Constantes.DB.Language;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using WebFunctions=TNS.AdExpress.Web.Functions;
-
+using TNS.AdExpress.Domain.Web;
+using System.Reflection;
+using  TNS.AdExpressI.InfoNews;
 namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Module infos/news
@@ -82,8 +84,28 @@ namespace AdExpress.Private.Results{
 				PageTitleWebControl1.Language = _webSession.SiteLanguage;
 				#endregion
 
+				#region Script
+				// Ouverture/fermeture des fenêtres pères
+				if (!Page.ClientScript.IsClientScriptBlockRegistered("DivDisplayer")) {
+					//page.ClientScript.RegisterClientScriptBlock(this.GetType(),"DivDisplayer",TNS.AdExpress.Web.Functions.Script.DivDisplayer());
+					Page.ClientScript.RegisterClientScriptBlock(Page.GetType(), "DivDisplayer", TNS.AdExpress.Web.Functions.Script.ShowHideContent());
+				}
+				#endregion
+
 				#region Résultat
-				result = TNS.AdExpress.Web.BusinessFacade.Results.InfoNewsSystem.GetHtml(this.Page, _webSession);
+
+				//result = TNS.AdExpress.Web.BusinessFacade.Results.InfoNewsSystem.GetHtml(this.Page, _webSession);
+
+				TNS.AdExpress.Domain.Results.InfoNews infosnews =  WebApplicationParameters.InfoNewsInformations;
+				if (infosnews != null) {
+					if (infosnews.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the InfoNews result"));
+					object[] parameters = new object[2];
+					parameters[0] = _webSession;
+					parameters[1] = Page.Theme;
+
+					TNS.AdExpressI.InfoNews.IInfoNewsResult infoNewsResult = (TNS.AdExpressI.InfoNews.IInfoNewsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + infosnews.CountryRulesLayer.AssemblyName, infosnews.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+					result = infoNewsResult.GetHtml();
+				}
 				#endregion
 
 			}
