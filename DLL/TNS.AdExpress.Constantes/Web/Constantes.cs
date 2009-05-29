@@ -2450,7 +2450,11 @@ namespace TNS.AdExpress.Constantes.Web{
 			/// <summary>
 			/// module Descriptions
 			/// </summary>
-			moduleDescriptions = 10
+			moduleDescriptions = 10,
+			/// <summary>
+			/// adExReport 360
+			/// </summary>
+			adExReport360 = 11
 
 		}
 

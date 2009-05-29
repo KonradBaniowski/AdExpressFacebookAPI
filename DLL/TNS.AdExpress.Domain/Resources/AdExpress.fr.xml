@@ -1785,5 +1785,14 @@
     <item mnemonic="w2597" type="System.String">Advertising year event materials</item>
     <item mnemonic="w2598" type="System.String">Metholodology</item>
     <item mnemonic="w2599" type="System.String">Module descriptions</item>
+    <item mnemonic="w2600" type="System.String">occurrence</item>
+    <item mnemonic="w2601" type="System.String">occurrences</item>
+    <item mnemonic="w2602" type="System.String">Détail de l'alerte</item>
+    <item mnemonic="w2603" type="System.String">Echéance</item>
+    <item mnemonic="w2604" type="System.String">Chaque semaine le</item>
+    <item mnemonic="w2605" type="System.String">Chaque mois le</item>
+    <item mnemonic="w2606" type="System.String">Date d'expiration</item>
+    <item mnemonic="w2607" type="System.String">Type d'alerte</item>
+    <item mnemonic="w2608" type="System.String">AdexReport 360</item>
   </items>
 </localization>
