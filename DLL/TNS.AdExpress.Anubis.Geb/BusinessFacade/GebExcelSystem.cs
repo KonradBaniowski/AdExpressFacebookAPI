@@ -14,7 +14,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 using TNS.AdExpress.Anubis.Geb.UI;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 
 using GebConfigurationAlert=TNS.AdExpress.Geb.Configuration.Alert;
 using GebAlertRequest=TNS.AdExpress.Geb.AlertRequest;

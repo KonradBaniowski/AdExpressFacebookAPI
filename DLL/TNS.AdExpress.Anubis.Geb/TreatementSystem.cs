@@ -11,13 +11,14 @@ using System.Threading;
 using TNS.AdExpress.Anubis.BusinessFacade;
 using TNS.AdExpress.Anubis.BusinessFacade.Result;
 using TNS.AdExpress.Anubis.Common;
+using Oracle.DataAccess.Client;
 
 using TNS.AdExpress.Anubis.Geb.Common;
 using TNS.AdExpress.Anubis.Geb.BusinessFacade;
 using TNS.AdExpress.Geb.Configuration;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Geb;
-using Aspose.Excel;
+using Aspose.Cells;
 
 namespace TNS.AdExpress.Anubis.Geb{
 	/// <summary>
@@ -176,7 +177,14 @@ namespace TNS.AdExpress.Anubis.Geb{
 				#endregion
 
 				#region Chargement des paramètres de l'alerte
-				Alert alertConfiguration = new Alert(_dataSource,currentAlertParameters.AlertId);
+                Alert alertConfiguration=null;
+                try {
+                    alertConfiguration = new Alert(_dataSource,currentAlertParameters.AlertId);
+                }
+                catch(System.Exception err) {
+                    OnError(_navSessionId,"Chargement de l'alerte impossible: source:"+((OracleConnection)_dataSource.GetSource()).ConnectionString,err);
+                    
+                }
 				#endregion
 
 				#region Excel management

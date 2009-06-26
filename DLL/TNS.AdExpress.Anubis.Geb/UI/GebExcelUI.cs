@@ -7,16 +7,16 @@
 #region Namespaces
 using System;
 using System.IO;
-using Aspose.Excel;
+using Aspose.Cells;
 using System.Drawing;
 using System.Data;
 
 using Oracle.DataAccess.Client;
 
 using TNS.AdExpress.Constantes.DB;
-using ClassificationDA=TNS.AdExpress.Classification.DataAccess;
+using ClassificationDA=TNS.AdExpress.DataAccess.Classification;
 using Functions=TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Web.Core.Translation;
+using TNS.AdExpress.Domain.Translation;
 
 using TNS.AdExpress.Geb;
 using GebConfiguration=TNS.AdExpress.Geb.Configuration;
@@ -27,6 +27,7 @@ using GebExceptions=TNS.AdExpress.Anubis.Geb.Exceptions;
 
 using TNS.FrameWork.DB.Common;
 using FrameworkDate=TNS.FrameWork.Date;
+using TNS.AdExpress.Domain.Web;
 #endregion
 
 namespace TNS.AdExpress.Anubis.Geb.UI{
@@ -58,7 +59,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 		/// <summary>
 		/// Composant excel
 		/// </summary>
-		protected Excel _excel;
+        protected Workbook _excel;
 		/// <summary>
 		/// Licence Aspose Excel
 		/// </summary>
@@ -78,9 +79,9 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 		/// Constructeur
 		/// </summary>
 		public GebExcelUI(){
-			_excel = new Excel();
+			_excel = new Workbook();
 			_license = new License();
-			_license.SetLicense("Aspose.Excel.lic");
+			_license.SetLicense("Aspose.Cells.lic");
 			//Ajout de couleur			
 			AddColor(Color.FromArgb(128,128,192));
 		}
@@ -127,7 +128,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 					#endregion
 
 					#region Couverture du support et Chemin de fer
-					string couvPath=@"\\hera\adexdatas\images\"+alertParameters.MediaId+@"\"+alertParametersBlob.DateMediaNum+@"\imagette\coe001.jpg";
+                    string couvPath=@"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\"+alertParameters.MediaId+@"\"+alertParametersBlob.DateMediaNum+@"\imagette\coe001.jpg";
 					if(File.Exists(couvPath)){
 						// Lien du chemin de Fer
 						cells.Merge(INDEX_START_LINE-1,INDEX_START_COLUMN+6,1,2);
@@ -217,7 +218,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 								// Construction du lien
 								visuals = dr["visual"].ToString().Split(',');
 								for(int i=0; i < visuals.GetLength(0); i++){
-									imgPath=@"\\hera\adexdatas\images\"+alertParameters.MediaId+@"\"+alertParametersBlob.DateMediaNum+@"\imagette\"+visuals[i];
+                                    imgPath=@"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\"+alertParameters.MediaId+@"\"+alertParametersBlob.DateMediaNum+@"\imagette\"+visuals[i];
 									if(File.Exists(imgPath)){
 										url += @"/ImagesPresse/"+alertParameters.MediaId+@"/"+alertParametersBlob.DateMediaNum+@"/"+visuals[i]+",";
 									}								
@@ -243,7 +244,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 							PutCellValue(cells,dr["media_paging"].ToString().Trim(),cellRow-1,5,false,Color.Black, true);
 						
 							//PutCellValue(cells,(int)dr["area_page"]/1000,cellRow-1,6,false,Color.Black, true);
-							PutCellValue(cells,Functions.Units.ConvertUnitValueToString(dr["area_page"].ToString(),TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.pages),cellRow-1,6,false,Color.Black, true);
+                            PutCellValue(cells,Functions.Units.ConvertUnitValueToString(dr["area_page"].ToString(),TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.pages,WebApplicationParameters.AllowedLanguages[WebApplicationParameters.DefaultLanguage].CultureInfo),cellRow-1,6,false,Color.Black,true);
 						
 							PutCellValue(cells,dr["area_mmc"],cellRow-1,7,false,Color.Black, true);
 							PutCellValue(cells,dr["expenditure_euro"],cellRow-1,8,false,Color.Black, true);
@@ -301,7 +302,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 		/// <param name="alertParameters">Paramètres de l'alerte</param>
 		/// <param name="cellRow">Ligne en cours</param>
 		/// <returns>Renvoi la nouvelle valeur de la ligne après écriture du rappel</returns>
-		internal static int GetHeaderExcel(IDataSource source, Aspose.Excel.Cells cells, DataTable dt, GebConfiguration.Alert alertParameters, int cellRow){
+        internal static int GetHeaderExcel(IDataSource source,Aspose.Cells.Cells cells,DataTable dt,GebConfiguration.Alert alertParameters,int cellRow) {
 
 			#region Paramètres du tableaux
 			PutCellValue(cells,GestionWeb.GetWebWord(512, alertParameters.LanguageId).ToUpper(),cellRow-1,INDEX_COLUMN_HEADER_START,true,Color.Gray, false);
@@ -349,7 +350,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 			#region Univers Famille
 			if(alertParameters.SectorListId.Length>0){
 				cellRow++;
-				ClassificationDA.ProductBranch.PartialSectorLevelListDataAccess sectors = new ClassificationDA.ProductBranch.PartialSectorLevelListDataAccess(alertParameters.SectorListId,alertParameters.LanguageId,(OracleConnection)source.GetSource());
+				ClassificationDA.ProductBranch.PartialSectorLevelListDataAccess sectors = new ClassificationDA.ProductBranch.PartialSectorLevelListDataAccess(alertParameters.SectorListId,alertParameters.LanguageId,source);
 				PutCellValue(cells,GestionWeb.GetWebWord(1103, alertParameters.LanguageId),cellRow-1,INDEX_COLUMN_HEADER_START,true,Color.Black, false);
 				cellRow++;
 
@@ -371,7 +372,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 			#region Univers Classe
 			if(alertParameters.SubSectorListId.Length>0){
 				cellRow++;
-				ClassificationDA.ProductBranch.PartialSubSectorLevelListDataAccess subSectors = new ClassificationDA.ProductBranch.PartialSubSectorLevelListDataAccess(alertParameters.SubSectorListId,alertParameters.LanguageId,(OracleConnection)source.GetSource());
+				ClassificationDA.ProductBranch.PartialSubSectorLevelListDataAccess subSectors = new ClassificationDA.ProductBranch.PartialSubSectorLevelListDataAccess(alertParameters.SubSectorListId,alertParameters.LanguageId,source);
 				PutCellValue(cells,GestionWeb.GetWebWord(552, alertParameters.LanguageId),cellRow-1,INDEX_COLUMN_HEADER_START,true,Color.Black, false);
 				cellRow++;
 
@@ -393,7 +394,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 			#region Univers Groupe
 			if(alertParameters.GroupListId.Length>0){
 				cellRow++;
-				ClassificationDA.ProductBranch.PartialGroupLevelListDataAccess groups = new ClassificationDA.ProductBranch.PartialGroupLevelListDataAccess(alertParameters.GroupListId,alertParameters.LanguageId,(OracleConnection)source.GetSource());
+				ClassificationDA.ProductBranch.PartialGroupLevelListDataAccess groups = new ClassificationDA.ProductBranch.PartialGroupLevelListDataAccess(alertParameters.GroupListId,alertParameters.LanguageId,source);
 				PutCellValue(cells,GestionWeb.GetWebWord(859, alertParameters.LanguageId),cellRow-1,INDEX_COLUMN_HEADER_START,true,Color.Black, false);
 				cellRow++;
 
@@ -415,7 +416,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 			#region Univers Variété
 			if(alertParameters.SegmentListId.Length>0){
 				cellRow++;
-				ClassificationDA.ProductBranch.PartialSegmentLevelListDataAccess segments = new ClassificationDA.ProductBranch.PartialSegmentLevelListDataAccess(alertParameters.SegmentListId,alertParameters.LanguageId,(OracleConnection)source.GetSource());
+				ClassificationDA.ProductBranch.PartialSegmentLevelListDataAccess segments = new ClassificationDA.ProductBranch.PartialSegmentLevelListDataAccess(alertParameters.SegmentListId,alertParameters.LanguageId,source);
 				PutCellValue(cells,GestionWeb.GetWebWord(592, alertParameters.LanguageId),cellRow-1,INDEX_COLUMN_HEADER_START,true,Color.Black, false);
 				cellRow++;
 
@@ -473,7 +474,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 		/// <param name="isBold">Vrai si police en gras</param>
 		/// <param name="color">Couleur de la police</param>
 		/// <param name="displayBorders">Affiche ou non les bordures</param>
-		internal static void PutCellValue(Aspose.Excel.Cells cells,object data,int row,int column,bool isBold,System.Drawing.Color color, bool displayBorders){
+        internal static void PutCellValue(Aspose.Cells.Cells cells,object data,int row,int column,bool isBold,System.Drawing.Color color,bool displayBorders) {
 			cells[row,column].PutValue(data);
 			cells[row,column].Style.Font.Color = color;
 			cells[row,column].Style.Font.IsBold = isBold;
@@ -498,7 +499,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 		/// <param name="color">Couleur de la police</param>
 		/// <param name="displayBorders">Affiche ou non les bordures</param>
 		/// <param name="url">Lien URL</param>
-		internal static void PutCellValue(Worksheet sheet,Aspose.Excel.Cells cells,object data,int row,int column,bool isBold,System.Drawing.Color color, bool displayBorders, string url){
+        internal static void PutCellValue(Worksheet sheet,Aspose.Cells.Cells cells,object data,int row,int column,bool isBold,System.Drawing.Color color,bool displayBorders,string url) {
 			// Lien (au niveau de la cellule)
 			if(url != null) sheet.Hyperlinks.Add(row,column,1,1,url);
 			cells[row,column].Style.Font.Underline = FontUnderlineType.Single;
@@ -521,7 +522,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 		/// <param name="paddingRight">Espace droite dans la cellule</param>
 		/// <param name="paddingTop">Espace haut dans la cellule</param>
 		/// <param name="paddingBottom">Espace bas dans la cellule</param>
-		internal static void PutCellImage(Worksheet sheet,Aspose.Excel.Cells cells,int row,int column,string imgPath,bool displayBorders,int paddingLeft,int paddingRight,int paddingTop,int paddingBottom){
+        internal static void PutCellImage(Worksheet sheet,Aspose.Cells.Cells cells,int row,int column,string imgPath,bool displayBorders,int paddingLeft,int paddingRight,int paddingTop,int paddingBottom) {
 			PutCellImage(sheet,cells,row,column,imgPath,displayBorders,paddingLeft,paddingRight,paddingTop,paddingBottom,null);
 		}
 
@@ -539,7 +540,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 		/// <param name="paddingTop">Espace haut dans la cellule</param>
 		/// <param name="paddingBottom">Espace bas dans la cellule</param>
 		/// <param name="url">Lien URL</param>
-		internal static void PutCellImage(Worksheet sheet,Aspose.Excel.Cells cells,int row,int column,string imgPath,bool displayBorders,int paddingLeft,int paddingRight,int paddingTop,int paddingBottom, string url){
+		internal static void PutCellImage(Worksheet sheet,Aspose.Cells.Cells cells,int row,int column,string imgPath,bool displayBorders,int paddingLeft,int paddingRight,int paddingTop,int paddingBottom, string url){
 			// Ajout de l'image dans la cellule
 			Pictures pics = sheet.Pictures;
 			string pictFileName = System.IO.Path.GetFullPath(imgPath);
@@ -548,9 +549,9 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 			
 			// Espace dans la cellule pour pouvoir positionner l'image
 			if(paddingLeft>0)	pic.Left	= paddingLeft;
-			if(paddingRight>0)	pic.Right	= paddingRight;
+			//if(paddingRight>0)	pic.Right	= paddingRight;
 			if(paddingTop>0)	pic.Top		= paddingTop;
-			if(paddingBottom>0)	pic.Bottom	= paddingBottom;
+			//if(paddingBottom>0)	pic.Bottom	= paddingBottom;
 
 			// Lien (au niveau de la cellule)
 			if(url != null){
@@ -578,7 +579,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 		/// <param name="lastColumn">Dernière colonne de la collection</param>
 		/// <param name="isBold">Vrai si police en gras</param>
 		/// <param name="color">Couleur de la police</param>
-		internal static void CellsHeaderStyle(Aspose.Excel.Cells cells,object data,int row,int firstColumn,int lastColumn,bool isBold,System.Drawing.Color color){
+        internal static void CellsHeaderStyle(Aspose.Cells.Cells cells,object data,int row,int firstColumn,int lastColumn,bool isBold,System.Drawing.Color color) {
 			for(int i=firstColumn;i<=lastColumn;i++){
 				if(data!=null)cells[row,i].PutValue(data);
 				cells[row,i].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
@@ -601,7 +602,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 		/// <param name="printArea">Zone d'impression</param>
 		/// <param name="upperLeftColumn">Colone la plus à gauche</param>
 		/// <param name="vPageBreaks">Saut de page vertical</param>
-		internal void PageSettings(Aspose.Excel.Worksheet sheet, string name,DataTable dt,int nbMaxRowByPage,ref int s,int upperLeftColumn,string vPageBreaks){
+        internal void PageSettings(Aspose.Cells.Worksheet sheet,string name,DataTable dt,int nbMaxRowByPage,ref int s,int upperLeftColumn,string vPageBreaks) {
 			
 			int nbPages=0;
 			nbPages=(int)Math.Ceiling(dt.Rows.Count*1.0/nbMaxRowByPage);
@@ -618,7 +619,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 
 			sheet.IsGridlinesVisible = false;
 			sheet.PageSetup.Orientation = PageOrientationType.Landscape; // Format paysage
-			Aspose.Excel.PageSetup pageSetup = sheet.PageSetup;
+            Aspose.Cells.PageSetup pageSetup = sheet.PageSetup;
 
 			// Set margins, in unit of inches 					
 			pageSetup.TopMarginInch = 0.3; 
