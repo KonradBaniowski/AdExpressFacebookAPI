@@ -140,7 +140,7 @@ namespace TNS.AdExpress.Anubis.Bastet {
 				_bastetConfig=new BastetConfig(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+confifurationFilePath));
 			}
 			catch(System.Exception err){
-				OnError(_navSessionId, "Impossible to launch job treatment <== impossible to load configuration file", err);
+                OnError(_navSessionId,"Impossible to launch job treatment <== impossible to load configuration file: Path="+confifurationFilePath,err);
 				return;
 			}
 			#endregion
