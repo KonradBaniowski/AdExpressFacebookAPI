@@ -114,6 +114,18 @@
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
+    <Reference Include="TNS.Baal.Common, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.Baal.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.Baal.ExtractList, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.Baal.ExtractList.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.Baal.Localization, Version=0.0.0.0, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.Baal.Localization.dll</HintPath>
+    </Reference>
     <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.dll</HintPath>
@@ -192,6 +204,7 @@
     <Compile Include="Exceptions\GebConfigDataAccessException.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Exceptions\GebConfigException.cs" />
     <Compile Include="Exceptions\GebExcelDataAccessException.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -20,7 +20,7 @@ using FrameworkDBBusiness = TNS.FrameWork.DB.BusinessFacade;
 using Hermes=TNS.AdExpress.Hermes;
 using TNS.Baal.Common;
 using TNS.Baal.ExtractList;
-using ClassificationDA=TNS.AdExpress.Classification.DataAccess;
+using ClassificationDA=TNS.AdExpress.DataAccess.Classification;
 #endregion
 
 namespace TNS.AdExpress.Anubis.HermesPress{
@@ -330,7 +330,7 @@ namespace TNS.AdExpress.Anubis.HermesPress{
 				t.Append("<tr style=\"font-family: Arial, Helvetica, sans-serif;font-size: 13px;color: #4b3e5a;\" nowrap>");
 				t.Append("<td valign=\"top\">&nbsp;&raquo;&nbsp;Liste des supports non transférés</td>");
 				t.Append("<td><table>");
-				ClassificationDA.MediaBranch.PartialMediaListDataAccess media = new TNS.AdExpress.Classification.DataAccess.MediaBranch.PartialMediaListDataAccess(_mediaTreatedKOList.Substring(0,_mediaTreatedKOList.Length-1),33,(OracleConnection)_dataSource.GetSource());
+				ClassificationDA.MediaBranch.PartialMediaListDataAccess media = new TNS.AdExpress.DataAccess.Classification.MediaBranch.PartialMediaListDataAccess(_mediaTreatedKOList.Substring(0,_mediaTreatedKOList.Length-1),33,_dataSource);
 				string[] mediaIdList = _mediaTreatedKOList.Substring(0,_mediaTreatedKOList.Length-1).Split(',');
 				foreach(string mediaId in mediaIdList){
 					t.Append("<tr style=\"font-family: Arial, Helvetica, sans-serif;font-weight: bold;font-size: 13px;color: #4b3e5a;\" nowrap><td width=50%>"+media[Int64.Parse(mediaId)]+"</td><td>"+mediaId+"</td></tr>");

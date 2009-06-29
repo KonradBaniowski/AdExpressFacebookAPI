@@ -15,6 +15,7 @@ using AnubisConstantes=TNS.AdExpress.Anubis.Constantes;
 using TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.DB.Common;
 using GebExceptions=TNS.AdExpress.Geb.Exceptions;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Geb{
 	/// <summary>
@@ -213,7 +214,9 @@ namespace TNS.AdExpress.Geb{
 		public static Object Load(Int64 idStaticNavSession){
 
 			#region Ouverture de la base de données
-			OracleConnection cnx = new OracleConnection(Connection.GEB_CONNECTION_STRING);
+
+            OracleConnection cnx =(OracleConnection)WebApplicationParameters.DataBaseDescription.GetDefaultConnection(TNS.AdExpress.Domain.DataBaseDescription.DefaultConnectionIds.geb).GetSource();
+            //    new OracleConnection(Connection.GEB_CONNECTION_STRING);
 			try{
 				cnx.Open();
 			}

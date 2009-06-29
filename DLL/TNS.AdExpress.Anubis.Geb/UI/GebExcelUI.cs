@@ -72,6 +72,14 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 		/// Booléen pour dire si le résultat est null
 		/// </summary>
 		protected bool _resultIsNull = true;
+        /// <summary>
+        /// Date Cover
+        /// </summary>
+        protected string _dateCoverNum;
+        /// <summary>
+        /// Booléen pour dire si le support est antidaté
+        /// </summary>
+        protected bool _mediaAntidated = false;
 		#endregion
 		
 		#region Constructeur
@@ -104,14 +112,14 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 		/// <param name="source">Source de données</param>
 		/// <param name="alertParametersBlob">Paramètres de l'alerte du BLOB</param>
 		/// <param name="alertParameters">Paramètres de l'alerte de la table BDD</param>
-		protected void DetailMediaResult(IDataSource source, GebAlertRequest alertParametersBlob, GebConfiguration.Alert alertParameters){
+        /// <param name="config">Configuration de Geb</param>
+        protected void DetailMediaResult(IDataSource source,GebAlertRequest alertParametersBlob,GebConfiguration.Alert alertParameters,TNS.AdExpress.Anubis.Geb.Common.GebConfig config) {
 			try{
 				// GetData
 				DataTable dt = DataAccess.GebExcelDataAccess.GetDetailMedia(source,alertParametersBlob,alertParameters).Tables[0];
 
 				// Ecriture du fichier Excel
 				if(dt!=null && dt.Rows.Count>0){
-					_resultIsNull = false;
 
 					#region Variables
 					int s=1;
@@ -120,7 +128,18 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 					int cellRow = INDEX_START_LINE; // Index de la ligne de départ
 					Worksheet sheet = _excel.Worksheets[0];
 					Cells cells = sheet.Cells;
+                    string couvPath="";
 					#endregion
+
+                    #region Renseignement des variables
+                    _resultIsNull = false;
+                    _dateCoverNum = dt.Rows[0]["date_cover_num"].ToString();
+
+                    if(Array.IndexOf(config.MediaItemsList.Split(','),alertParameters.MediaId.ToString()) > -1)
+                        _mediaAntidated = true;
+                    else
+                        _mediaAntidated = false;
+                    #endregion
 
 					#region Rappel de sélection
 					// Ecriture du rappel avec une méthode qui retour la valeur de la 'cellRow'
@@ -128,18 +147,29 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 					#endregion
 
 					#region Couverture du support et Chemin de fer
-                    string couvPath=@"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\"+alertParameters.MediaId+@"\"+alertParametersBlob.DateMediaNum+@"\imagette\coe001.jpg";
+                    if(_mediaAntidated)
+                        couvPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" + alertParameters.MediaId + @"\" + dt.Rows[0]["date_media_num"].ToString() + @"\imagette\coe001.jpg";
+                    else
+                        couvPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" + alertParameters.MediaId + @"\" + dt.Rows[0]["date_cover_num"].ToString() + @"\imagette\coe001.jpg";
+                    
 					if(File.Exists(couvPath)){
 						// Lien du chemin de Fer
 						cells.Merge(INDEX_START_LINE-1,INDEX_START_COLUMN+6,1,2);
 
-						sheet.Hyperlinks.Add(INDEX_START_LINE-1,INDEX_START_COLUMN+6,1,1,"http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia="+alertParameters.MediaId+"&date="+alertParametersBlob.DateMediaNum+"&nameMedia="+alertParameters.MediaName);
-//						sheet.Hyperlinks.Add(INDEX_START_LINE-1,INDEX_START_COLUMN+6,1,1,"http://localhost/Public/PortofolioCreationMedia.aspx?idMedia="+alertParameters.MediaId+"&date="+alertParametersBlob.DateMediaNum+"&nameMedia="+alertParameters.MediaName);
+                        // Ancienne version
+                        //sheet.Hyperlinks.Add(INDEX_START_LINE-1,INDEX_START_COLUMN+6,1,1,"http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia="+alertParameters.MediaId+"&date="+alertParametersBlob.DateMediaNum+"&nameMedia="+alertParameters.MediaName);
+                        
+                        // Nouvelle version avec changement des noms de variable dans l'url
+                        if(_mediaAntidated)
+                            sheet.Hyperlinks.Add(INDEX_START_LINE - 1,INDEX_START_COLUMN + 6,1,1,"http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia=" + alertParameters.MediaId + "&dateCoverNum=" + dt.Rows[0]["date_media_num"].ToString() + "&dateMediaNum=" + dt.Rows[0]["date_media_num"].ToString() + "&nameMedia=" + alertParameters.MediaName);
+                        else
+                            sheet.Hyperlinks.Add(INDEX_START_LINE - 1,INDEX_START_COLUMN + 6,1,1,"http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia=" + alertParameters.MediaId + "&dateCoverNum=" + dt.Rows[0]["date_cover_num"].ToString() + "&dateMediaNum=" + dt.Rows[0]["date_media_num"].ToString() + "&nameMedia=" + alertParameters.MediaName);
 						
 						cells[INDEX_START_LINE-1,INDEX_START_COLUMN+6].PutValue(GestionWeb.GetWebWord(1397, alertParameters.LanguageId));
 						cells[INDEX_START_LINE-1,INDEX_START_COLUMN+6].Style.Font.Color = Color.FromArgb(128,128,192);
 						cells[INDEX_START_LINE-1,INDEX_START_COLUMN+6].Style.Font.Underline = FontUnderlineType.Single;
 						cells[INDEX_START_LINE-1,INDEX_START_COLUMN+6].Style.HorizontalAlignment=TextAlignmentType.Center;
+
 						// Couverture
 						PutCellImage(sheet,cells,INDEX_START_LINE,INDEX_START_COLUMN+6,couvPath,false,0,0,0,0);
 					}
@@ -217,18 +247,25 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 							if(dr["visual"]!=null && dr["visual"]!=System.DBNull.Value){
 								// Construction du lien
 								visuals = dr["visual"].ToString().Split(',');
-								for(int i=0; i < visuals.GetLength(0); i++){
-                                    imgPath=@"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\"+alertParameters.MediaId+@"\"+alertParametersBlob.DateMediaNum+@"\imagette\"+visuals[i];
-									if(File.Exists(imgPath)){
-										url += @"/ImagesPresse/"+alertParameters.MediaId+@"/"+alertParametersBlob.DateMediaNum+@"/"+visuals[i]+",";
-									}								
-								}
-								if(url.Length > 0 && url!=""){
-									// Cellule avec lien hypertext si des visuels existent
-									urlStart = @"http://www.tnsadexpress.com/Private/Results/ZoomCreationPopUp.aspx?creation=";
-									url = urlStart + url.Substring(0,url.Length-1);
-									PutCellValue(sheet,cells,GestionWeb.GetWebWord(1928, alertParameters.LanguageId),cellRow-1,0,false,Color.FromArgb(128,128,192),true,url);
-								}
+                                for(int i=0;i < visuals.GetLength(0);i++) {
+                                    if(_mediaAntidated)
+                                        imgPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" + alertParameters.MediaId + @"\" + dr["date_media_num"].ToString() + @"\imagette\" + visuals[i];
+                                    else
+                                        imgPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" + alertParameters.MediaId + @"\" + dr["date_cover_num"].ToString() + @"\imagette\" + visuals[i];
+
+                                    if(File.Exists(imgPath)) {
+                                        if(_mediaAntidated)
+                                            url += @"/ImagesPresse/" + alertParameters.MediaId + @"/" + dr["date_media_num"].ToString() + @"/" + visuals[i] + ",";
+                                        else
+                                            url += @"/ImagesPresse/" + alertParameters.MediaId + @"/" + dr["date_cover_num"].ToString() + @"/" + visuals[i] + ",";
+                                    }
+                                }
+                                if(url.Length > 0 && url!="") {
+                                    // Cellule avec lien hypertext si des visuels existent
+                                    urlStart = @"http://www.tnsadexpress.com/Private/Results/ZoomCreationPopUp.aspx?creation=";
+                                    url = urlStart + url.Substring(0,url.Length-1);
+                                    PutCellValue(sheet,cells,GestionWeb.GetWebWord(1928,alertParameters.LanguageId),cellRow-1,0,false,Color.FromArgb(128,128,192),true,url);
+                                }
 								else{
 									// Cellule sans lien hypertext
 									PutCellValue(cells,"",cellRow-1,0,false,Color.Black, true);
@@ -546,11 +583,12 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 			string pictFileName = System.IO.Path.GetFullPath(imgPath);
 			int pos = sheet.Pictures.Add(row,column,pictFileName);
 			Picture pic = sheet.Pictures[pos];
+            pic.Placement= PlacementType.Move;
 			
 			// Espace dans la cellule pour pouvoir positionner l'image
-			if(paddingLeft>0)	pic.Left	= paddingLeft;
+			//if(paddingLeft>0)	pic.Left	= paddingLeft;
 			//if(paddingRight>0)	pic.Right	= paddingRight;
-			if(paddingTop>0)	pic.Top		= paddingTop;
+			//if(paddingTop>0)	pic.Top		= paddingTop;
 			//if(paddingBottom>0)	pic.Bottom	= paddingBottom;
 
 			// Lien (au niveau de la cellule)
@@ -583,9 +621,10 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 			for(int i=firstColumn;i<=lastColumn;i++){
 				if(data!=null)cells[row,i].PutValue(data);
 				cells[row,i].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
-				cells[row,i].Style.ForegroundColor =  Color.FromArgb(128,128,192);					
 				cells[row,i].Style.Font.Color = color;
-				cells[row,i].Style.Font.IsBold = isBold;				
+				cells[row,i].Style.Font.IsBold = isBold;
+                cells[row,i].Style.ForegroundColor = Color.FromArgb(128,128,192);
+                cells[row,i].Style.Pattern = BackgroundType.Solid;
 			}			
 		}
 		#endregion

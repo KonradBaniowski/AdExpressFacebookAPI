@@ -110,7 +110,7 @@ namespace TNS.AdExpress.Anubis.Geb.BusinessFacade{
 		/// </summary>
 		public void Fill(){
 			// Détail support
-			this.DetailMediaResult(_source, _alertParametersBlob, _alertParameters);
+            this.DetailMediaResult(_source,_alertParametersBlob,_alertParameters,_config);
 			
 			// Sauvegarde du fichier
 			_excel.Save(_excelFilePath);
@@ -187,70 +187,85 @@ namespace TNS.AdExpress.Anubis.Geb.BusinessFacade{
 			string objet = "";
 			string messageBody = "";
 			StringBuilder t = new StringBuilder();
-			string couvPath=@"\\hera\adexdatas\images\"+_alertParameters.MediaId+@"\"+_alertParametersBlob.DateMediaNum+@"\imagette\coe001.jpg";
+            string couvPath=String.Empty;
+            string dateLabel = String.Empty;
+                //=@"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\"+_alertParameters.MediaId+@"\"+_alertParametersBlob.DateMediaNum+@"\imagette\coe001.jpg";
 			//string couvPathHtml=@"http://www.tnsadexpress.com/ImagesPresse/"+_alertParameters.MediaId+@"/"+_alertParametersBlob.DateMediaNum+@"/imagette/coe001.jpg";
 			#endregion
 
-			#region Objet du mail
-			objet = GestionWeb.GetWebWord(1929, _alertParameters.LanguageId)+" "+ _alertParameters.MediaName+ " "+GestionWeb.GetWebWord(1729, _alertParameters.LanguageId)+" "+ FrameworkDate.DateString.YYYYMMDDToDD_MM_YYYY(_alertParametersBlob.DateMediaNum, _alertParameters.LanguageId);
-			#endregion
-			
-			#region Corps du message
 
-			#region Message
-			if(!_resultIsNull){
-				// Résultat
-				messageBody = GestionWeb.GetWebWord(1941, _alertParameters.LanguageId);
-			}
-			else{
-				// Pas de résultat
-				messageBody = GestionWeb.GetWebWord(1942, _alertParameters.LanguageId);
-			}
-			#endregion
-			
-			t.Append("<html>");
+            #region Objet du mail
+            objet = GestionWeb.GetWebWord(1929,_alertParameters.LanguageId)
+                + " " + _alertParameters.MediaName
+                + " " + GestionWeb.GetWebWord(1729,_alertParameters.LanguageId)
+                + " " + FrameworkDate.DateString.YYYYMMDDToDD_MM_YYYY(_alertParametersBlob.DateMediaNum,_alertParameters.LanguageId);
+            #endregion
 
-			#region Style Css
-			t.Append("<style type=\"text/css\">");
-			t.Append("<!--");
-			t.Append("body{font-family:Arial,Helvetica,sans-serif;font-size:12px;}");
-			t.Append("a:link {font-size: 12px;text-decoration: none;color: #FF0099;}");
-			t.Append("a:visited {font-size: 12px;text-decoration: none;color: #FF0099;}");
-			t.Append("a:hover {font-size: 12px;text-decoration: underline;color: #FF0099;}");
-			t.Append("a:active {font-size: 12px;text-decoration: none;color: #FF0099;}");
-			t.Append("-->");
-			t.Append("</style>");
-			#endregion
+            #region Corps du message
 
-			#region Body
-			t.Append("<body><p>"+messageBody+"</p>");
-			t.Append("<p align=\"center\">"+_alertParameters.MediaName + " "+GestionWeb.GetWebWord(1729, _alertParameters.LanguageId)+" " + FrameworkDate.DateString.YYYYMMDDToDD_MM_YYYY(_alertParametersBlob.DateMediaNum, _alertParameters.LanguageId)+"<br>");
-			if(File.Exists(couvPath)) t.Append("<img src=\"cid:123456789@GEG\" border=0>");
-			t.Append("</p><p align=\"center\"><a href=\"http://www.tnsmediaintelligence.fr\">www.tnsmediaintelligence.fr</a></p>");
-			t.Append("</body>");
-			#endregion
+            #region Message
+            if(!_resultIsNull) {
+                // Corps du message
+                messageBody = GestionWeb.GetWebWord(1941,_alertParameters.LanguageId);
 
-			t.Append("</html>");
-			#endregion
+                // Couverture
+                if(_mediaAntidated)
+                    couvPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" + _alertParameters.MediaId + @"\" + _alertParametersBlob.DateMediaNum + @"\imagette\coe001.jpg";
+                else
+                    couvPath = @"\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\" + _alertParameters.MediaId + @"\" + this._dateCoverNum + @"\imagette\coe001.jpg";
+            }
+            else {
+                // Pas de résultat
+                messageBody = GestionWeb.GetWebWord(1942,_alertParameters.LanguageId);
+            }
+            #endregion
 
-			#region Envoi du mail
-			// Liste des destinataires
-			foreach(string s in _alertParameters.EmailList){
-				to.Add(s);
-			}
-			SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to, objet, Convertion.ToHtmlString(t.ToString()), true, _config.CustomerMailServer, _config.CustomerMailPort);
-			mail.mailKoHandler += new TNS.FrameWork.Net.Mail.SmtpUtilities.mailKoEventHandler(mail_mailKoHandler);
-			
-			// Fichier en pièce jointe uniquement s'il y a un résultat
-			if(!_resultIsNull){
-				mail.Attach(_excelFilePath,SmtpUtilities.AttachmentType.ATTACH_EXCEL);
-			}
-			// Affichage de l'image dans le corps du message
-			if(File.Exists(couvPath)){
-				mail.Attach(couvPath,SmtpUtilities.AttachmentType.ATTACH_JPEG_IN_MAIL,"123456789@GEG");
-			}
-			mail.SendWithoutThread(false);
-			#endregion
+            t.Append("<html>");
+
+            #region Style Css
+            t.Append("<style type=\"text/css\">");
+            t.Append("<!--");
+            t.Append("body{font-family:Arial,Helvetica,sans-serif;font-size:12px;}");
+            t.Append("a:link {font-size: 12px;text-decoration: none;color: #FF0099;}");
+            t.Append("a:visited {font-size: 12px;text-decoration: none;color: #FF0099;}");
+            t.Append("a:hover {font-size: 12px;text-decoration: underline;color: #FF0099;}");
+            t.Append("a:active {font-size: 12px;text-decoration: none;color: #FF0099;}");
+            t.Append("-->");
+            t.Append("</style>");
+            #endregion
+
+            #region Body
+            t.Append("<body><p>"+messageBody+"</p>");
+            t.Append("<p align=\"center\">"+_alertParameters.MediaName + " " + GestionWeb.GetWebWord(1729,_alertParameters.LanguageId) + " " + FrameworkDate.DateString.YYYYMMDDToDD_MM_YYYY(_alertParametersBlob.DateMediaNum,_alertParameters.LanguageId) + "<br>");
+
+            if(File.Exists(couvPath))
+                t.Append("<img src=\"cid:123456789@GEG\" border=0>");
+
+            t.Append("</p><p align=\"center\"><a href=\"http://www.tnsmediaintelligence.fr\">www.tnsmediaintelligence.fr</a></p>");
+            t.Append("</body>");
+            #endregion
+
+            t.Append("</html>");
+            #endregion
+
+            #region Envoi du mail
+            // Liste des destinataires
+            foreach(string s in _alertParameters.EmailList) {
+                to.Add(s);
+            }
+            SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom,to,objet,Convertion.ToHtmlString(t.ToString()),true,_config.CustomerMailServer,_config.CustomerMailPort);
+            mail.mailKoHandler += new TNS.FrameWork.Net.Mail.SmtpUtilities.mailKoEventHandler(mail_mailKoHandler);
+
+            // Fichier en pièce jointe uniquement s'il y a un résultat
+            if(!_resultIsNull) {
+                mail.Attach(_excelFilePath,SmtpUtilities.AttachmentType.ATTACH_EXCEL);
+            }
+            // Affichage de l'image dans le corps du message
+            if(File.Exists(couvPath)) {
+                mail.Attach(couvPath,SmtpUtilities.AttachmentType.ATTACH_JPEG_IN_MAIL,"123456789@GEG");
+            }
+            mail.SendWithoutThread(false);
+            #endregion
 		}
 		#endregion
 

@@ -8,7 +8,7 @@ using System;
 using System.Collections;
 using System.Data;
 using Oracle.DataAccess.Client;
-using AdExClassification=TNS.AdExpress.Classification.DataAccess;
+using AdExClassification=TNS.AdExpress.DataAccess.Classification;
 using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.DB.Common;
@@ -112,7 +112,7 @@ namespace TNS.AdExpress.Geb.Configuration{
 								break;
 						}
 					}
-					AdExClassification.MediaBranch.PartialMediaListDataAccess mediaName = new AdExClassification.MediaBranch.PartialMediaListDataAccess(_mediaId.ToString(),_languageId,(OracleConnection)source.GetSource());
+					AdExClassification.MediaBranch.PartialMediaListDataAccess mediaName = new AdExClassification.MediaBranch.PartialMediaListDataAccess(_mediaId.ToString(),_languageId,source);
 					_mediaName = mediaName[_mediaId].ToString();
 				}
 				if(dsFlag!=null && dsFlag.Tables.Count>0 && dsFlag.Tables[0]!=null && dsFlag.Tables[0].Rows.Count>0){

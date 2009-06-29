@@ -178,13 +178,8 @@ namespace TNS.AdExpress.Anubis.Geb{
 
 				#region Chargement des paramètres de l'alerte
                 Alert alertConfiguration=null;
-                try {
-                    alertConfiguration = new Alert(_dataSource,currentAlertParameters.AlertId);
-                }
-                catch(System.Exception err) {
-                    OnError(_navSessionId,"Chargement de l'alerte impossible: source:"+((OracleConnection)_dataSource.GetSource()).ConnectionString,err);
-                    
-                }
+                alertConfiguration = new Alert(_dataSource,currentAlertParameters.AlertId);
+                
 				#endregion
 
 				#region Excel management

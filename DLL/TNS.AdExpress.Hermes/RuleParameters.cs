@@ -16,6 +16,7 @@ using TNS.AdExpress.Constantes.DB;
 using HermesExceptions=TNS.AdExpress.Hermes.Exceptions;
 using AnubisConstantes=TNS.AdExpress.Anubis.Constantes;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Web;
 #endregion
 
 namespace TNS.AdExpress.Hermes {
@@ -171,7 +172,8 @@ namespace TNS.AdExpress.Hermes {
 		public static Object Load(Int64 idStaticNavSession){
 
 			#region Ouverture de la base de données
-			OracleConnection cnx = new OracleConnection(Connection.HERMES_CONNECTION_STRING);
+			//OracleConnection cnx = new OracleConnection(Connection.HERMES_CONNECTION_STRING);
+            OracleConnection cnx =(OracleConnection)WebApplicationParameters.DataBaseDescription.GetDefaultConnection(TNS.AdExpress.Domain.DataBaseDescription.DefaultConnectionIds.hermes).GetSource(); 
 			try{
 				cnx.Open();
 			}

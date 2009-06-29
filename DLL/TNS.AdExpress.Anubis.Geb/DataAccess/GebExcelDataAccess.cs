@@ -61,7 +61,8 @@ namespace TNS.AdExpress.Anubis.Geb.DataAccess{
 			sql.Append("media, ");
 			sql.Append("LPAD(RTRIM(wp.Media_paging,' '),10,'0') as ChampPage, ");
 			sql.Append("wp.id_advertisement, ");
-			sql.Append("visual ");
+            sql.Append("visual, ");
+            sql.Append("wp.date_cover_num ");
 			
 			// From
 			sql.Append(" from "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+DBConstantes.Tables.ALERT_DATA_PRESS+" wp ");
