@@ -169,7 +169,7 @@ namespace TNS.AdExpress.Anubis.HermesPress{
 			#region B. Chargement du fichier de configuration
 			try{
 				// Chargement de la connexion : utilisateur particulier pour Hermes
-				TNS.FrameWork.DB.Common.Oracle.DataBaseConfiguration connectionPitagor = FrameworkDBBusiness.Oracle.DataBaseConfigurationBussinessFacade.GetOne(AppDomain.CurrentDomain.BaseDirectory+@"Config\Hermes\HermesPita.xml");
+                TNS.FrameWork.DB.Common.Oracle.DataBaseConfiguration connectionPitagor = FrameworkDBBusiness.Oracle.DataBaseConfigurationBussinessFacade.GetOne(AppDomain.CurrentDomain.BaseDirectory+@"Configuration\33\Plugins\Hermes\HermesPita.xml");
 				_dataSourcePitagor = new TNS.FrameWork.DB.Common.OracleDataSource(connectionPitagor.ConnectionString);
 			}
 			catch(System.Exception err){
