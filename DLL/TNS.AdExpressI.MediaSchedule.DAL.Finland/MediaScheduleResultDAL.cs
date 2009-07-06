@@ -73,7 +73,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Finland
                                 case CstPeriod.DisplayLevel.weekly:
                                     return string.Format(" max({0}DURATION_WEEK(date_media_num,duration)) as period_count ",_schAdexpr03.Sql);
                                 default:
-                                    return (" (max(duration)/86400) as period_count ");
+                                    return (" trunc((max(duration)/86400)) as period_count ");
                             }
                         case CstDBClassif.Vehicles.names.outdoor:
                         case CstDBClassif.Vehicles.names.radio:

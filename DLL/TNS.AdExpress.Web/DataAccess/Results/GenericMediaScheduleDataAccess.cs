@@ -488,7 +488,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                                 case ConstantesPeriod.DisplayLevel.weekly:
                                     return (" max(" + ConstantesDB.Schema.ADEXPRESS_SCHEMA + ".DURATION_WEEK(date_media_num,duration)) as period_count ");
                                 default:
-                                    return (" (max(duration)/86400) as period_count ");
+                                    return (" trunc((max(duration)/86400)) as period_count ");
                             }
                         //case ConstantesDBClassif.Vehicles.names.outdoor:
                         //    switch (displayPeriod)

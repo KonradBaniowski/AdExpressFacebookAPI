@@ -1104,12 +1104,13 @@ namespace TNS.AdExpressI.MediaSchedule {
                     currentDate = 0;
                 }
             }
-            catch(System.Exception) {
+            catch(System.Exception err) {
                 long nbColDebug = oTab.GetLength(0);
                 long nbLineDebug = oTab.GetLength(1);
                 long nbRowsDebug = dt.Rows.Count;
                 long cli = currentLineIndex;
                 int cd = currentDate;
+                throw new Exception("Erreur dans le Plan Mèdia.", err);
             }
             #endregion
 
