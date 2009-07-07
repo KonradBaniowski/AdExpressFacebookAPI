@@ -14,6 +14,8 @@ using DBActivation=TNS.AdExpress.Constantes.DB.ActivationValues;
 using WebExceptions=TNS.AdExpress.Web.Core.Exceptions;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Core.DataAccess.Session{
 
@@ -33,7 +35,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.Session{
 
 			#region Request
 			string sql="select "+DBTables.LIST_DETAIL_PREFIXE+".id_list,"+DBTables.LIST_DETAIL_PREFIXE+".id_type_level,"+DBTables.LIST_DETAIL_PREFIXE+".rank ";
-			sql+=" from "+DBSchema.UNIVERS_SCHEMA+"."+DBTables.LIST_DETAIL+" "+DBTables.LIST_DETAIL_PREFIXE+","+DBSchema.UNIVERS_SCHEMA+"."+DBTables.LIST+" "+DBTables.LIST_PREFIXE+" ";
+            sql += " from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label + "." + DBTables.LIST_DETAIL + " " + DBTables.LIST_DETAIL_PREFIXE + "," + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label + "." + DBTables.LIST + " " + DBTables.LIST_PREFIXE + " ";
 			sql+=" where id_login="+webSession.CustomerLogin.IdLogin;
 			sql+=" and "+DBTables.LIST_PREFIXE+".id_list="+DBTables.LIST_DETAIL_PREFIXE+".id_list ";
 			sql+=" and "+DBTables.LIST_PREFIXE+".activation<"+DBActivation.UNACTIVATED.ToString();
@@ -61,7 +63,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.Session{
 			IDbTransaction transaction=null;
 			try{
 				#region Remove items
-				string sqlItems="delete from "+DBSchema.UNIVERS_SCHEMA+"."+DBTables.LIST_DETAIL;
+                string sqlItems = "delete from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label + "." + DBTables.LIST_DETAIL;
 				sqlItems+=" where id_list="+genericDetailLevelSavedID.ToString();
 				IDbConnection connection=(IDbConnection) webSession.Source.GetSource();
 				webSession.Source.Open();
@@ -70,7 +72,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.Session{
 				#endregion
 
 				#region Remove the list
-				string sqlList="delete from "+DBSchema.UNIVERS_SCHEMA+"."+DBTables.LIST;
+                string sqlList = "delete from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label + "." + DBTables.LIST;
 				sqlList+=" where id_list="+genericDetailLevelSavedID.ToString();
 				webSession.Source.Delete(sqlList);
 				transaction.Commit();
@@ -105,7 +107,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.Session{
 			IDbTransaction transaction=null;
 			try{
 				#region Save the list
-				string sqlList="insert into "+DBSchema.UNIVERS_SCHEMA+"."+DBTables.LIST+" values ";
+                string sqlList = "insert into " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label + "." + DBTables.LIST + " values ";
 				sqlList+="("+listId.ToString()+","+genericDetailLevel.Type.GetHashCode()+","+webSession.CustomerLogin.IdLogin+",sysdate,sysdate,'',"+DBActivation.ACTIVATED.ToString()+")";
 				IDbConnection connection=(IDbConnection) webSession.Source.GetSource();
 				webSession.Source.Open();
@@ -117,7 +119,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.Session{
 				string sqlLevel;
 				int i=0;
 				foreach(DetailLevelItemInformation.Levels currentLevel in genericDetailLevel.LevelIds){
-					sqlLevel="insert into "+DBSchema.UNIVERS_SCHEMA+"."+DBTables.LIST_DETAIL+" values ";
+                    sqlLevel = "insert into " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label + "." + DBTables.LIST_DETAIL + " values ";
 					sqlLevel+="("+listId.ToString()+","+currentLevel.GetHashCode().ToString()+","+i.ToString()+")";
 					i++;
 					webSession.Source.Insert(sqlLevel);
@@ -147,7 +149,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.Session{
 		private static Int64 GetNewListId(IDataSource source){
 			DataSet ds=null;
 			#region Request
-			string sql="select "+DBSchema.UNIVERS_SCHEMA+".SEQ_"+DBTables.LIST+".nextval from dual";
+            string sql = "select " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label + ".SEQ_" + DBTables.LIST + ".nextval from dual";
 			#endregion
 
 			#region Request Execution

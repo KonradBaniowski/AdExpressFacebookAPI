@@ -94,9 +94,9 @@ namespace TNS.AdExpress.Anubis.DataAccess.Result{
 					//" NEW_ID NUMBER;"+
 					" BEGIN "+
 					//" DELETE " + Schema.APPLICATION_SCHEMA + "." + Tables.TABLE_SESSION + " WHERE ID_NAV_SESSION=" + this.idSession + "; " +
-					" Select " + TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA + ".SEQ_STATIC_NAV_SESSION.NEXTVAL into :new_id from dual;"+
-					
-					" INSERT INTO " + TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA + "." + Tables.PDF_SESSION + "(id_login,id_static_nav_session, static_nav_session,id_pdf_result_type,pdf_user_filename,status,date_creation,date_modification) VALUES("+webSession.CustomerLogin.IdLogin+", :new_id, :blobtodb,"+resultType.GetHashCode()+",'"+fileName+"',0,sysdate,sysdate); " +
+                    " Select " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label + ".SEQ_STATIC_NAV_SESSION.NEXTVAL into :new_id from dual;" +
+
+                    " INSERT INTO " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label + "." + Tables.PDF_SESSION + "(id_login,id_static_nav_session, static_nav_session,id_pdf_result_type,pdf_user_filename,status,date_creation,date_modification) VALUES(" + webSession.CustomerLogin.IdLogin + ", :new_id, :blobtodb," + resultType.GetHashCode() + ",'" + fileName + "',0,sysdate,sysdate); " +
 					//" RETURN(NEW_ID);"+
 					" END; ";
 				sqlCommand = new OracleCommand(block);
@@ -194,9 +194,9 @@ namespace TNS.AdExpress.Anubis.DataAccess.Result{
 					//" NEW_ID NUMBER;"+
 					" BEGIN "+
 					//" DELETE " + Schema.APPLICATION_SCHEMA + "." + Tables.TABLE_SESSION + " WHERE ID_NAV_SESSION=" + this.idSession + "; " +
-					" Select " + TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA + ".SEQ_STATIC_NAV_SESSION.NEXTVAL into :new_id from dual;"+
-					
-					" INSERT INTO " + TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA + "." + Tables.PDF_SESSION + "(id_login,id_static_nav_session, static_nav_session,id_pdf_result_type,pdf_user_filename,status,date_creation,date_modification) VALUES("+proofDetail.CustomerWebSession.CustomerLogin.IdLogin+", :new_id, :blobtodb,"+resultType.GetHashCode()+",'"+fileName+"',0,sysdate,sysdate); " +
+                    " Select " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label + ".SEQ_STATIC_NAV_SESSION.NEXTVAL into :new_id from dual;" +
+
+                    " INSERT INTO " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label + "." + Tables.PDF_SESSION + "(id_login,id_static_nav_session, static_nav_session,id_pdf_result_type,pdf_user_filename,status,date_creation,date_modification) VALUES(" + proofDetail.CustomerWebSession.CustomerLogin.IdLogin + ", :new_id, :blobtodb," + resultType.GetHashCode() + ",'" + fileName + "',0,sysdate,sysdate); " +
 					//" RETURN(NEW_ID);"+
 					" END; ";
 				sqlCommand = new OracleCommand(block);
@@ -279,7 +279,7 @@ namespace TNS.AdExpress.Anubis.DataAccess.Result{
 				binaryData = new byte[0];
 				//create PL/SQL command
 				string block = " BEGIN "+
-					" SELECT static_nav_session INTO :1 FROM " + TNS.AdExpress.Constantes.DB.Schema.UNIVERS_SCHEMA + "." + Tables.PDF_SESSION+ " WHERE id_static_nav_session = " + idStaticNavSession.ToString() + "; " +
+                    " SELECT static_nav_session INTO :1 FROM " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label + "." + Tables.PDF_SESSION + " WHERE id_static_nav_session = " + idStaticNavSession.ToString() + "; " +
 					" END; ";
 				sqlCommand = new OracleCommand(block);
 				sqlCommand.Connection = cnx;
@@ -345,7 +345,7 @@ namespace TNS.AdExpress.Anubis.DataAccess.Result{
 		internal static void ChangeStatus(IDataSource dataSource,Int64 idStaticNavSession,AnubisConstantes.Result.status pdfStatus){
 
 			#region Requête
-			string sql="update "+DbSchemas.UNIVERS_SCHEMA+"."+DbTables.PDF_SESSION+" set status="+pdfStatus.GetHashCode()+" where id_static_nav_session="+idStaticNavSession;
+            string sql = "update " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label + "." + DbTables.PDF_SESSION + " set status=" + pdfStatus.GetHashCode() + " where id_static_nav_session=" + idStaticNavSession;
 			#endregion
 
 			try{
@@ -365,7 +365,7 @@ namespace TNS.AdExpress.Anubis.DataAccess.Result{
 		internal static void RegisterFile(IDataSource dataSource, Int64 idStaticNavSession,string fileName){
 
 			#region Requête
-			string sql="update "+DbSchemas.UNIVERS_SCHEMA+"."+DbTables.PDF_SESSION+" set status="+AnubisConstantes.Result.status.done.GetHashCode()+", pdf_name='" + fileName + "' where id_static_nav_session="+idStaticNavSession;
+            string sql = "update " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label + "." + DbTables.PDF_SESSION + " set status=" + AnubisConstantes.Result.status.done.GetHashCode() + ", pdf_name='" + fileName + "' where id_static_nav_session=" + idStaticNavSession;
 			#endregion
 
 			try{
@@ -388,7 +388,7 @@ namespace TNS.AdExpress.Anubis.DataAccess.Result{
 
 			#region Requête
 			string sql="select ID_STATIC_NAV_SESSION, ID_PDF_RESULT_TYPE, PDF_NAME, PDF_USER_FILENAME, STATUS, DATE_CREATION, DATE_MODIFICATION, ID_LOGIN from "
-				+ DbSchemas.UNIVERS_SCHEMA+"."+DbTables.PDF_SESSION
+                + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label + "." + DbTables.PDF_SESSION
 				+ " where id_static_nav_session="+idStaticNavSession;
 			#endregion
 
@@ -409,7 +409,7 @@ namespace TNS.AdExpress.Anubis.DataAccess.Result{
 		/// <param name="idStaticNavSession">Session ID to delete</param>
 		internal static void DeleteRequest(IDataSource dataSource, Int64 idStaticNavSession){
 			#region Requête
-			string sql=" DELETE "+ DbSchemas.UNIVERS_SCHEMA+"."+DbTables.PDF_SESSION
+            string sql = " DELETE " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label + "." + DbTables.PDF_SESSION
 				+ " where id_static_nav_session="+idStaticNavSession;
 			#endregion
 

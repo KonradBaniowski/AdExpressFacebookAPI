@@ -2481,8 +2481,8 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 
 				//create anonymous PL/SQL command
 				string block = " BEGIN " +
-					" DELETE " + TNS.AdExpress.Constantes.DB.Schema.APPLICATION_SCHEMA + "." + Tables.TABLE_SESSION + " WHERE ID_NAV_SESSION=" + this.idSession + "; " +
-					" INSERT INTO " + TNS.AdExpress.Constantes.DB.Schema.APPLICATION_SCHEMA + "." + Tables.TABLE_SESSION + "(id_nav_session, nav_session) VALUES(" + this.idSession + ", :1); " +
+                    " DELETE " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mou01).Label + "." + Tables.TABLE_SESSION + " WHERE ID_NAV_SESSION=" + this.idSession + "; " +
+                    " INSERT INTO " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mou01).Label + "." + Tables.TABLE_SESSION + "(id_nav_session, nav_session) VALUES(" + this.idSession + ", :1); " +
 					" END; ";
 				sqlCommand = new OracleCommand(block);
 				sqlCommand.Connection = cnx;
@@ -2570,7 +2570,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 				i = 1;
 				//create anonymous PL/SQL command
 				string block = " BEGIN " +
-					" SELECT nav_session INTO :1 FROM " + TNS.AdExpress.Constantes.DB.Schema.APPLICATION_SCHEMA + "." + Tables.TABLE_SESSION + " WHERE id_nav_session = " + idWebSession + "; " +
+                    " SELECT nav_session INTO :1 FROM " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mou01).Label + "." + Tables.TABLE_SESSION + " WHERE id_nav_session = " + idWebSession + "; " +
 					" END; ";
 				i = 2;
 				sqlCommand = new OracleCommand(block);

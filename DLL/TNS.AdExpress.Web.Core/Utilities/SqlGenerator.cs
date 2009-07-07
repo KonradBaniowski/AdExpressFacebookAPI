@@ -1402,7 +1402,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
             #region sélection des familles
 
             sql += " select distinct id_sector ";
-            sql += " from " + DBConstantes.Schema.RECAP_SCHEMA + "." + recapTableName + " " + DBConstantes.Tables.RECAP_PREFIXE + " ";
+            sql += " from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.recap01).Label + "." + recapTableName + " " + DBConstantes.Tables.RECAP_PREFIXE + " ";
             if (CheckedText.IsNotEmpty(GroupAccessList))
             {
                 sql += " where id_group_ in (" + GroupAccessList + ") ";

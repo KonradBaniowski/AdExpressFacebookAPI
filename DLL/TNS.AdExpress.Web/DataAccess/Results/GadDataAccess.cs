@@ -17,6 +17,8 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Exceptions;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
@@ -38,7 +40,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			sql+=" ct.telephone, ct.fax, ct.email ";
 			//G Ragneau - intégration Doc Marketing - 22/01
 			sql += string.Format(", gd.id_gad");
-			sql += string.Format(", (select doc_marketing_key from {0}.DOC_MARKETING_KEY where date_media_num=to_number(to_char(sysdate, 'yyyyMMdd'))) as docKey", DBConstantes.Schema.UNIVERS_SCHEMA);
+            sql += string.Format(", (select doc_marketing_key from {0}.DOC_MARKETING_KEY where date_media_num=to_number(to_char(sysdate, 'yyyyMMdd'))) as docKey", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label);
 			//fin modif
 			sql+=" from "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".address ad, "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".contact ct ";
 			

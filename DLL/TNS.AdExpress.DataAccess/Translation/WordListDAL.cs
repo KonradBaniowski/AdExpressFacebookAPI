@@ -12,6 +12,8 @@ using Oracle.DataAccess.Client;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.DataAccess.Exceptions;
+using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Web;
 
 
 namespace TNS.AdExpress.DataAccess.Translation {
@@ -49,7 +51,7 @@ namespace TNS.AdExpress.DataAccess.Translation {
             int max = 0;
 
             #region request Max
-            string sqlMax = "SELECT max(id_web_text)as max from " + DBConstantes.Schema.APPLICATION_SCHEMA + ".web_text";
+            string sqlMax = "SELECT max(id_web_text)as max from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mou01).Label + ".web_text";
             try {
                 dsMax = _source.Fill(sqlMax);
                 max = int.Parse(dsMax.Tables[0].Rows[0]["max"].ToString());
@@ -62,7 +64,7 @@ namespace TNS.AdExpress.DataAccess.Translation {
             string[] list = new string[max + 1];
 
             #region word request
-            string sql = "SELECT id_web_text,web_text from " + DBConstantes.Schema.APPLICATION_SCHEMA + ".web_text where id_language=" + SiteLanguage.ToString() + " order by id_web_text";
+            string sql = "SELECT id_web_text,web_text from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mou01).Label + ".web_text where id_language=" + SiteLanguage.ToString() + " order by id_web_text";
             #endregion
             try {
                 ds = _source.Fill(sql);

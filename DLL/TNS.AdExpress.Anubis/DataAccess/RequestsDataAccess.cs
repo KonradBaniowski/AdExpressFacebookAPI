@@ -15,6 +15,8 @@ using TNS.AdExpress.Anubis.Exceptions;
 
 using TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 namespace TNS.AdExpress.Anubis.DataAccess{
 	/// <summary>
@@ -33,7 +35,7 @@ namespace TNS.AdExpress.Anubis.DataAccess{
 		internal static DataTable Get(IDataSource dataSource, string notIn, Hashtable plgLst){
 
 			#region requête
-			string sql="select ID_STATIC_NAV_SESSION, ID_PDF_RESULT_TYPE from "+Schema.UNIVERS_SCHEMA+"."+Tables.PDF_SESSION;
+            string sql = "select ID_STATIC_NAV_SESSION, ID_PDF_RESULT_TYPE from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label + "." + Tables.PDF_SESSION;
 			sql+=" where STATUS="+Constantes.Result.status.newOne.GetHashCode();
 			//chargement du filtre qui interdit les requêtes déjà chargées
 			if(notIn.Length>0)
@@ -88,7 +90,7 @@ namespace TNS.AdExpress.Anubis.DataAccess{
 			#region Liste des fichiers à supprimer
 
 			#region requête
-			string sql = "select PDF_NAME, ID_LOGIN, ID_PDF_RESULT_TYPE from "+Schema.UNIVERS_SCHEMA+"."+Tables.PDF_SESSION;
+            string sql = "select PDF_NAME, ID_LOGIN, ID_PDF_RESULT_TYPE from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label + "." + Tables.PDF_SESSION;
 			bool first = true;
 			foreach(object obj in plugLst.Keys){
 				if (((Plugin)plugLst[obj]).ResultLongevity>0){
@@ -124,7 +126,7 @@ namespace TNS.AdExpress.Anubis.DataAccess{
 			#region suppression des enregistrements
 
 			#region requête
-			sql = "delete "+Schema.UNIVERS_SCHEMA+"."+Tables.PDF_SESSION;
+            sql = "delete " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label + "." + Tables.PDF_SESSION;
 			sql += condition;
 			#endregion
 

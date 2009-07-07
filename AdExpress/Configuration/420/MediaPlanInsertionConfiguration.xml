@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <vehicleGroups>
+    <vehicle id="1"   name="presse">
+      <detailColumns>
+        <detailColumn id="1">
+          <allowedModules>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="lost/won" privilegecode="197"/>
+          </allowedModules>
+        </detailColumn>
+        <detailColumn id="9">
+          <allowedModules>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+            <allowedModule name="Present/absent" privilegecode="278"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+      <MediaDetailLevel>
+        <defaultMediaDetailLevels>
+          <defaultMediaDetailLevel id="9" name="catégorie\support\date" />
+        </defaultMediaDetailLevels>
+        <allowedMediaLevelItems>
+          <allowedMediaLevelItem id="2" name="Categorie"/>
+          <allowedMediaLevelItem id="3" name="Support"/>
+          <allowedMediaLevelItem id="4" name="Centre d'interet"/>
+          <allowedMediaLevelItem id="5" name="Régie"/>
+          <allowedMediaLevelItem id="6" name="Version"/>
+          <allowedMediaLevelItem id="7" name="Groupe de société"/>
+          <allowedMediaLevelItem id="8" name="Annonceur"/>
+          <allowedMediaLevelItem id="9" name="Marque"/>
+          <allowedMediaLevelItem id="10" name="Produit"/>
+          <allowedMediaLevelItem id="11" name="Famille"/>
+          <allowedMediaLevelItem id="12" name="Classe"/>
+          <allowedMediaLevelItem id="13" name="Groupe"/>
+          <allowedMediaLevelItem id="14" name="Variété"/>
+          <allowedMediaLevelItem id="18" name="Date"/>
+          <allowedMediaLevelItem id="20" name="Format"/>
+        </allowedMediaLevelItems>
+      </MediaDetailLevel>
+    </vehicle>
+    <vehicle id="11"  name="presse internationale">
+      <detailColumns>
+        <detailColumn id="1">
+          <allowedModules>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="lost/won" privilegecode="197"/>
+          </allowedModules>
+        </detailColumn>
+        <detailColumn id="9">
+          <allowedModules>
+            <allowedModule name="present/absent" privilegecode="278"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+      <MediaDetailLevel>
+        <defaultMediaDetailLevels>
+          <defaultMediaDetailLevel id="9" name="catégorie\support\date" />
+        </defaultMediaDetailLevels>
+        <allowedMediaLevelItems>
+          <allowedMediaLevelItem id="2" name="Categorie"/>
+          <allowedMediaLevelItem id="3" name="Support"/>
+          <allowedMediaLevelItem id="4" name="Centre d'interet"/>
+          <allowedMediaLevelItem id="5" name="Régie"/>
+          <allowedMediaLevelItem id="6" name="Version"/>
+          <allowedMediaLevelItem id="7" name="Groupe de société"/>
+          <allowedMediaLevelItem id="8" name="Annonceur"/>
+          <allowedMediaLevelItem id="9" name="Marque"/>
+          <allowedMediaLevelItem id="10" name="Produit"/>
+          <allowedMediaLevelItem id="11" name="Famille"/>
+          <allowedMediaLevelItem id="12" name="Classe"/>
+          <allowedMediaLevelItem id="13" name="Groupe"/>
+          <allowedMediaLevelItem id="14" name="Variété"/>
+          <allowedMediaLevelItem id="18" name="Date"/>
+          <allowedMediaLevelItem id="20" name="Format"/>
+        </allowedMediaLevelItems>
+      </MediaDetailLevel>
+    </vehicle>
+    <vehicle id="5"   name="radio" >
+      <detailColumns>
+        <detailColumn id="2">
+          <allowedModules>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="Lost/Won" privilegecode="197"/>
+          </allowedModules>
+        </detailColumn>
+        <detailColumn id="23">
+          <allowedModules>
+            <allowedModule name="Present/Absent" privilegecode="278"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+      <MediaDetailLevel>
+        <defaultMediaDetailLevels>
+          <defaultMediaDetailLevel id="9" name="catégorie\support\date" />
+        </defaultMediaDetailLevels>
+        <allowedMediaLevelItems>
+          <allowedMediaLevelItem id="2" name="Categorie"/>
+          <allowedMediaLevelItem id="3" name="Support"/>
+          <allowedMediaLevelItem id="4" name="Centre d'interet"/>
+          <allowedMediaLevelItem id="5" name="Régie"/>
+          <allowedMediaLevelItem id="6" name="Version"/>
+          <allowedMediaLevelItem id="7" name="Groupe de société"/>
+          <allowedMediaLevelItem id="8" name="Annonceur"/>
+          <allowedMediaLevelItem id="9" name="Marque"/>
+          <allowedMediaLevelItem id="10" name="Produit"/>
+          <allowedMediaLevelItem id="11" name="Famille"/>
+          <allowedMediaLevelItem id="12" name="Classe"/>
+          <allowedMediaLevelItem id="13" name="Groupe"/>
+          <allowedMediaLevelItem id="14" name="Variété"/>
+          <allowedMediaLevelItem id="18" name="Date"/>
+          <allowedMediaLevelItem id="19" name="Durée"/>
+        </allowedMediaLevelItems>
+      </MediaDetailLevel>
+    </vehicle>
+    <vehicle id="3"   name="télévision" >
+      <detailColumns>
+        <detailColumn id="3">
+          <allowedModules>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="perdu/gagné" privilegecode="197"/>
+          </allowedModules>
+        </detailColumn>
+        <detailColumn id="5">
+          <allowedModules>
+            <allowedModule name="Analyse des dispositifs" privilegecode="1780"/>
+            <allowedModule  name="Analyse des programmes" privilegecode="1781"/>
+          </allowedModules>
+        </detailColumn>
+        <detailColumn id="22">
+          <allowedModules>
+            <allowedModule name="Présent/absent" privilegecode="278"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+      <MediaDetailLevel>
+        <defaultMediaDetailLevels>
+          <defaultMediaDetailLevel id="9" name="catégorie\support\date" />
+        </defaultMediaDetailLevels>
+        <allowedMediaLevelItems>
+          <allowedMediaLevelItem id="2" name="Categorie"/>
+          <allowedMediaLevelItem id="3" name="Support"/>
+          <allowedMediaLevelItem id="4" name="Centre d'interet"/>
+          <allowedMediaLevelItem id="5" name="Régie"/>
+          <allowedMediaLevelItem id="6" name="Version"/>
+          <allowedMediaLevelItem id="7" name="Groupe de société"/>
+          <allowedMediaLevelItem id="8" name="Annonceur"/>
+          <allowedMediaLevelItem id="9" name="Marque"/>
+          <allowedMediaLevelItem id="10" name="Produit"/>
+          <allowedMediaLevelItem id="11" name="Famille"/>
+          <allowedMediaLevelItem id="12" name="Classe"/>
+          <allowedMediaLevelItem id="13" name="Groupe"/>
+          <allowedMediaLevelItem id="14" name="Variété"/>
+          <allowedMediaLevelItem id="18" name="Date"/>
+          <allowedMediaLevelItem id="19" name="Durée"/>
+          <allowedMediaLevelItem id="21" name="Code écran"/>
+        </allowedMediaLevelItems>
+      </MediaDetailLevel>
+    </vehicle>
+    <!--<vehicle id="5"   name="Autres" >
+      <detailColumns>
+        <detailColumn id="3">
+          <allowedModules>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="Perdu/gagné" privilegecode="197"/>
+          </allowedModules>
+        </detailColumn>
+        <detailColumn id="22">
+          <allowedModules>
+            <allowedModule name="Présent/absent" privilegecode="278"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+      <MediaDetailLevel>
+        <defaultMediaDetailLevels>
+          <defaultMediaDetailLevel id="9" name="catégorie\support\date" />
+        </defaultMediaDetailLevels>
+        <allowedMediaLevelItems>
+          <allowedMediaLevelItem id="2" name="Categorie"/>
+          <allowedMediaLevelItem id="3" name="Support"/>
+          <allowedMediaLevelItem id="4" name="Centre d'interet"/>
+          <allowedMediaLevelItem id="5" name="Régie"/>
+          <allowedMediaLevelItem id="6" name="Version"/>
+          <allowedMediaLevelItem id="7" name="Groupe de société"/>
+          <allowedMediaLevelItem id="8" name="Annonceur"/>
+          <allowedMediaLevelItem id="9" name="Marque"/>
+          <allowedMediaLevelItem id="10" name="Produit"/>
+          <allowedMediaLevelItem id="11" name="Famille"/>
+          <allowedMediaLevelItem id="12" name="Classe"/>
+          <allowedMediaLevelItem id="13" name="Groupe"/>
+          <allowedMediaLevelItem id="14" name="Variété"/>
+          <allowedMediaLevelItem id="18" name="Date"/>
+          <allowedMediaLevelItem id="19" name="Durée"/>
+          <allowedMediaLevelItem id="21" name="Code écran"/>
+        </allowedMediaLevelItems>
+      </MediaDetailLevel>
+    </vehicle>-->
+    <vehicle id="8"   name="Publicité Extérieure" >
+      <detailColumns>
+        <detailColumn id="4">
+          <allowedModules>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="lost/won" privilegecode="197"/>
+          </allowedModules>
+          <allowedModules>
+            <allowedModule name="present/absent" privilegecode="278"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+      <MediaDetailLevel>
+        <defaultMediaDetailLevels>
+          <defaultMediaDetailLevel id="9" name="catégorie\support\date" />
+        </defaultMediaDetailLevels>
+        <allowedMediaLevelItems>
+          <allowedMediaLevelItem id="2" name="Categorie"/>
+          <allowedMediaLevelItem id="3" name="Support"/>
+          <allowedMediaLevelItem id="4" name="Centre d'interet"/>
+          <allowedMediaLevelItem id="5" name="Régie"/>
+          <allowedMediaLevelItem id="6" name="Version"/>
+          <allowedMediaLevelItem id="7" name="Groupe de société"/>
+          <allowedMediaLevelItem id="8" name="Annonceur"/>
+          <allowedMediaLevelItem id="9" name="Marque"/>
+          <allowedMediaLevelItem id="10" name="Produit"/>
+          <allowedMediaLevelItem id="11" name="Famille"/>
+          <allowedMediaLevelItem id="12" name="Classe"/>
+          <allowedMediaLevelItem id="13" name="Groupe"/>
+          <allowedMediaLevelItem id="14" name="Variété"/>
+          <allowedMediaLevelItem id="18" name="Date"/>
+          <allowedMediaLevelItem id="22" name="Format"/>
+        </allowedMediaLevelItems>
+      </MediaDetailLevel>
+    </vehicle>
+    <vehicle id="10"  name="VMC" >
+      <detailColumns>
+        <detailColumn id="10">
+          <allowedModules>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="present/absent" privilegecode="278"/>
+            <allowedModule name="lost/won" privilegecode="197"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+      <MediaDetailLevel>
+        <defaultMediaDetailLevels>
+          <defaultMediaDetailLevel id="9" name="catégorie\support\date" />
+        </defaultMediaDetailLevels>
+        <allowedMediaLevelItems>
+          <allowedMediaLevelItem id="2" name="Categorie"/>
+          <allowedMediaLevelItem id="3" name="Support"/>
+          <allowedMediaLevelItem id="6" name="Version"/>
+          <allowedMediaLevelItem id="8" name="Annonceur"/>
+          <allowedMediaLevelItem id="9" name="Marque"/>
+          <allowedMediaLevelItem id="10" name="Produit"/>
+          <allowedMediaLevelItem id="11" name="Famille"/>
+          <allowedMediaLevelItem id="12" name="Classe"/>
+          <allowedMediaLevelItem id="13" name="Groupe"/>
+          <allowedMediaLevelItem id="14" name="Variété"/>
+          <allowedMediaLevelItem id="18" name="Date"/>
+        </allowedMediaLevelItems>
+      </MediaDetailLevel>
+    </vehicle>
+  </vehicleGroups>
+
+</configuration>
+

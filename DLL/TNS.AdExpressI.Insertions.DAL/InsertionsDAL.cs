@@ -265,7 +265,7 @@ namespace TNS.AdExpressI.Insertions.DAL
                 level = (DetailLevelItemInformation)detailLevels.Levels[i];
                 if (id > 0 || (id != -1 && id != 0 && level.Id == DetailLevelItemInformation.Levels.slogan && (vehicle.Id == CstDBClassif.Vehicles.names.adnettrack || vehicle.Id == CstDBClassif.Vehicles.names.internet || vehicle.Id == CstDBClassif.Vehicles.names.evaliantMobile)))
                 {
-                    if (level.DataBaseIdField == CstDB.Fields.ID_VEHICLE && id == VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.internet))
+                    if (level.DataBaseIdField == CstDB.Fields.ID_VEHICLE && VehiclesInformation.Contains(CstDBClassif.Vehicles.names.internet) && id == VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.internet))
                         id = CstDBClassif.Vehicles.names.adnettrack.GetHashCode();
                     if (level.Id == DetailLevelItemInformation.Levels.slogan && (vehicle.Id == CstDBClassif.Vehicles.names.adnettrack || vehicle.Id == CstDBClassif.Vehicles.names.internet || vehicle.Id == CstDBClassif.Vehicles.names.evaliantMobile))
                     {

@@ -15,6 +15,8 @@ using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using System.Text;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.DataAccess.Results{
 	/// <summary>
@@ -30,11 +32,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		/// <param name="typeList">Liste des types possibles pour les fichiers résultats</param> 
 		/// <returns></returns>
 		public static DataSet GetData(WebSession webSession,IDataSource dataSource, string typeList){
-			
+
 			#region Requete
 			StringBuilder sql = new StringBuilder(1000);
 			sql.Append("select pdf_name,id_static_nav_session , PDF_USER_FILENAME , ID_LOGIN, id_pdf_result_type   from ");
-			sql.Append(DBConstantes.Schema.UNIVERS_SCHEMA+".STATIC_NAV_SESSION  ");
+            sql.Append(WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label + ".STATIC_NAV_SESSION  ");
 			sql.Append(" where  STATUS in (3) and id_pdf_result_type in ("+typeList+")");
 			sql.Append(" and ID_LOGIN="+webSession.CustomerLogin.IdLogin.ToString());
 			sql.Append(" order by id_pdf_result_type,pdf_name,DATE_CREATION ");
