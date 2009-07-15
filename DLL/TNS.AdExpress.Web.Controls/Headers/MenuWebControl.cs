@@ -23,6 +23,7 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Translation;
 using WebCst=TNS.AdExpress.Constantes.Web;
 using WebFunction=TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Controls.Headers{
 	/// <summary>
@@ -394,6 +395,14 @@ namespace TNS.AdExpress.Web.Controls.Headers{
                     jsTmp = this.GetSaveItem(MAIN_MENU);
                     js.Append(jsTmp);
                 }
+
+                // Alert
+                if (NyxConfiguration.IsAlertsActivated && ((ResultPageInformation)pInfo).CreateAlertUrl != "")
+                { 
+                    jsTmp = this.GetCreateAlertItem(MAIN_MENU, (ResultPageInformation)pInfo);
+                    js.Append(jsTmp);
+                }
+
 				//Export
 				int jsLength = js.Length;
                 jsTmp = this.GetExportItems(MAIN_MENU, (ResultPageInformation)pInfo);
@@ -573,6 +582,10 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				+ "\r\n\t\t"+menuObjectName+".items.saveMenuItem.showIcon(\"saveMenuIcon\", \"saveMenuIcon\");");
 		}
 
+        private string GetCreateAlertItem(string menuObjectName, ResultPageInformation pInfo) {
+            return ("\r\n\t\t" + menuObjectName + ".addMenuItem(new menuItem(\"" + GestionWeb.GetWebWord(2578, _webSession.SiteLanguage) + "\", \"alertMenuItem\",\"javascript:popupOpenBis('" + pInfo.CreateAlertUrl + "?idSession=" + _webSession.IdSession + ((_urlParameters.Length > 0) ? "&" + _urlParameters : "") + "&param=" + generateNumber() + "','470','435','no');\"));"
+               + "\r\n\t\t" + menuObjectName + ".items.alertMenuItem.showIcon(\"alertMenuIcon\", \"alertMenuIcon\");");       
+        }
 
 
 		/// <summary>

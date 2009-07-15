@@ -12,6 +12,7 @@
     <defaultConnection enumId="5" description="Hermes" dataBaseEnumId="2" login="adexpr03_proc_8" password="lnampt8"            dataSource="ADEXPRESS_WEB_TEST.pige" connectionTimeOut="120" pooling="false" isUtf8="true"/>
     <defaultConnection enumId="6" description="Publication" dataBaseEnumId="2" login="user_web" password="zebony8"              dataSource="ADEXPRESS_WEB_TEST.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="7" description="Web Administration" dataBaseEnumId="2" login="admin_web" password="zepabony9"    dataSource="ADEXPRESS_WEB_TEST.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="8" description="Alerts" dataBaseEnumId="2" login="adexpr03_proc_11" password="trela4"              dataSource="ADEXPRESS_WEB_TEST.PIGE" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
   </defaultConnections>
   <schemas>
     <schema enumId="0" description="AdExpress Data (AdExpr03)" label="adexpr03"/>
@@ -33,7 +34,7 @@
     <table enumId="7" description="Classif: Segment" schemaEnumId="0" label="segment" prefix="sg"/>
     <table enumId="8" description="Classif: Product" schemaEnumId="0" label="product" prefix="pr"/>
     <table enumId="10" description="Classif: advertiser" schemaEnumId="0" label="advertiser" prefix="ad"/>
-    
+
     <table enumId="12" description="Right: Template" schemaEnumId="2" label="template" prefix="t"/>
     <table enumId="13" description="Right: Template assignment" schemaEnumId="2" label="template_assignment" prefix="ta"/>
     <table enumId="14" description="Right: Media type" schemaEnumId="2" label="type_media" prefix="tm"/>
@@ -130,6 +131,7 @@
     <table enumId="111" description="Tracking: Login Ip" schemaEnumId="5" label="ip_by_login" prefix="ipl"/>
     <table enumId="112" description="Tracking: Connection time" schemaEnumId="5" label="connection_time" prefix="cnxt"/>
 
+
     <table enumId="120" description="Recap: advertiser" schemaEnumId="4" label="advertiser" prefix="recap_a"/>
     <table enumId="121" description="Recap: brand" schemaEnumId="4" label="brand" prefix="recap_b"/>
     <table enumId="122" description="Recap: category" schemaEnumId="4" label="category" prefix="recap_c"/>
@@ -168,11 +170,17 @@
     <table enumId="156" description="Data: banners" schemaEnumId="0" label="banners" prefix="wp"/>
     <table enumId="157" description="Classif: format banners" schemaEnumId="0" label="format_banners" prefix="fb"/>
     <table enumId="158" description="Classif: dimension banners" schemaEnumId="0" label="dimension_banners" prefix="db"/>
-
+    <table enumId="159" description="Recap Data: Marketing direct segment" schemaEnumId="4" label="recap_marketing_direct_segment" prefix="rcp"/>
+    <table enumId="160" description="Recap Data: Marketing direct" schemaEnumId="4" label="recap_marketing_direct" prefix="rcp"/>
+    <table enumId="161" description="Data: Evaliant mobile" schemaEnumId="0" label="data_mobile" prefix="wp"/>
+    <table enumId="162" description="Data: Evaliant mobile" schemaEnumId="0" label="data_mobile_4M" prefix="wp"/>
+    <table enumId="163" description="Data: banners mobile" schemaEnumId="0" label="banners_mobile" prefix="wp"/>
   </tables>
   <views>
     <view enumId="0" description="Classif: all media" schemaEnumId="0" label="all_media_" prefix="allm"/>
     <view enumId="1" description="Classif: all product" schemaEnumId="0" label="all_product_" prefix="allp"/>
-  </views>  
+    <view enumId="2" description="Classif: all Recap media" schemaEnumId="4" label="all_media_" prefix="allrm"/>
+    <view enumId="3" description="Classif: all Recap product" schemaEnumId="4" label="all_product_" prefix="allrp"/>
+  </views>
 </database>
 

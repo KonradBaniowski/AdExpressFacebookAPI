@@ -267,21 +267,16 @@ namespace AdExpress.Private.Selection {
                 DateTime previousMonth;
                 Int32 lastDayOfMonthInt;
 
-                if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE) {
-                    switch (periodCalendarDisponibilityType) {
-
-                        case WebConstantes.globalCalendar.periodDisponibilityType.currentDay:
-                            lastDayEnable = DateTime.Now;
-                            break;
-                        case WebConstantes.globalCalendar.periodDisponibilityType.lastCompletePeriod:
-                            lastDayEnable = GlobalCalendarWebControl1.FirstDayNotEnable.AddDays(-1);
-                            isLastCompletePeriod = true;
-                            break;
-
-                    }
+                if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE &&
+                    periodCalendarDisponibilityType == WebConstantes.globalCalendar.periodDisponibilityType.lastCompletePeriod)
+                {
+                        lastDayEnable = GlobalCalendarWebControl1.FirstDayNotEnable.AddDays(-1);
+                        isLastCompletePeriod = true;
                 }
 
-                switch (selectedIndex) {
+                switch (selectedIndex)
+                {
+                    #region nLastYears
                     case 0:
                         if (int.Parse(yearDateList.SelectedValue) != 0) {
                             _webSession.PeriodType = CstPeriodType.nLastYear;
@@ -294,6 +289,9 @@ namespace AdExpress.Private.Selection {
                             throw (new AdExpressException.AnalyseDateSelectionException(GestionWeb.GetWebWord(885, _webSession.SiteLanguage)));
                         }
                         break;
+                    #endregion
+
+                    #region nLastMonths
                     case 1:
                         if (int.Parse(monthDateList.SelectedValue) != 0) {
                             _webSession.PeriodType = CstPeriodType.nLastMonth;
@@ -325,6 +323,9 @@ namespace AdExpress.Private.Selection {
                             throw (new AdExpressException.AnalyseDateSelectionException(GestionWeb.GetWebWord(885, _webSession.SiteLanguage)));
                         }
                         break;
+                    #endregion
+
+                    #region nLastWeeks
                     case 2:
                         if (int.Parse(weekDateList.SelectedValue) != 0) {
                             _webSession.PeriodType = CstPeriodType.nLastWeek;
@@ -360,6 +361,10 @@ namespace AdExpress.Private.Selection {
                             throw (new AdExpressException.AnalyseDateSelectionException(GestionWeb.GetWebWord(885, _webSession.SiteLanguage)));
                         }
                         break;
+                    #endregion
+
+                    #region nLastDays
+
                     case 3:
                         _webSession.PeriodType = CstPeriodType.nLastDays;
                         _webSession.PeriodLength = int.Parse(dayDateList.SelectedValue);
@@ -368,6 +373,10 @@ namespace AdExpress.Private.Selection {
                         _webSession.PeriodEndDate = tempDate.ToString("yyyyMMdd");
                         _webSession.DetailPeriod = CstPeriodDetail.dayly;
                         break;
+
+                    #endregion
+
+                    #region previousYear
                     case 4:
                         _webSession.PeriodType = CstPeriodType.previousYear;
                         _webSession.PeriodLength = 1;
@@ -375,6 +384,7 @@ namespace AdExpress.Private.Selection {
                         _webSession.PeriodEndDate = DateTime.Now.AddYears(-1).ToString("yyyy1231");
                         _webSession.DetailPeriod = CstPeriodDetail.monthly;
                         break;
+                    #endregion
                     case 5:
                         _webSession.PeriodType = CstPeriodType.previousMonth;
                         _webSession.PeriodLength = 1;

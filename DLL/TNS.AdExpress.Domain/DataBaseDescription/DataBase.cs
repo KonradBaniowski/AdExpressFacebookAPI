@@ -64,6 +64,14 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Web Administration
         /// </summary>
         webAdministration=7,
+        /// <summary>
+        /// Alerts
+        /// </summary>
+        alert=8,
+        /// <summary>
+        /// Music
+        /// </summary>
+        music=9,
     } 
     #endregion
 

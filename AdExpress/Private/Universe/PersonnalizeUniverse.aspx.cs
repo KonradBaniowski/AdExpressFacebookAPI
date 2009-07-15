@@ -23,6 +23,7 @@ using DataAccess=TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
 using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Translation;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
+using TNS.AdExpress.Domain.Classification;
 
 namespace AdExpress.Private.Universe{
 	/// <summary>
@@ -190,9 +191,18 @@ namespace AdExpress.Private.Universe{
 		/// </summary>
 		public string listUniversToRename;
 		#endregion
-	
-		#region Constructeur
-		/// <summary>
+
+        #region Properties
+
+        public bool IsAlertsActivated
+        {
+            get { return (NyxConfiguration.IsAlertsActivated); }
+        }
+
+        #endregion
+
+        #region Constructeur
+        /// <summary>
 		/// Constructeur
 		/// </summary>
 		public PersonnalizeUniverse():base(){		
@@ -439,6 +449,25 @@ namespace AdExpress.Private.Universe{
 		}
 
 		#endregion
+
+        #region Bouton Alertes
+
+        protected void alertOpenImageButtonRollOver_Click(object sender, System.EventArgs e)
+        {
+            try
+            {
+                _webSession.Source.Close();
+                Response.Redirect("/Private/Alerts/ShowAlerts.aspx?idSession=" + _webSession.IdSession + "");
+            }
+            catch (System.Exception exc)
+            {
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                }
+            }
+        }
+        #endregion
 
 		#region Bouton créer un groupe d'univers
 		/// <summary>

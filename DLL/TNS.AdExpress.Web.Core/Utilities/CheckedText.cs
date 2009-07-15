@@ -91,5 +91,18 @@ namespace TNS.AdExpress.Web.Core.Utilities{
 				return false;
 		}
 
+        /// <summary>
+        /// Vérifie si un tableau d'adresses email est correct ou pas
+        /// </summary>
+        /// <param name="emails">Le tableau d'adresses email</param>
+        /// <returns>True si l'adresse mail est correcte, false sinon</returns>
+        public static bool CheckedMailText(string[] emails)
+        {
+            foreach (string email in emails)
+                if (email.Trim().Length != 0 && !CheckedMailText(email))
+                    return (false);
+            return (true);
+        }
+
 	}
 }

@@ -207,6 +207,53 @@
 								<tr>
 									<td class="txtGris10 whiteBackGround" height="5"><cc3:imagebuttonrolloverwebcontrol id="pdfOpenImageButtonRollOverWebControl" runat="server" onclick="pdfOpenImageButtonRollOverWebControl_Click" SkinID="ouvrirButton"></cc3:imagebuttonrolloverwebcontrol></td>
 								</tr>
+								<!-- Mes Alertes -->
+								<% if (IsAlertsActivated) { %>
+								    <tr>
+									    <td height="10"></td>
+								    </tr>
+								    <tr>
+									    <td class="whiteBackGround"><asp:Image ID="Image64" runat="server" SkinID="pixel" height="5" width="1" /></td>
+								    </tr>								
+								    <tr runat="server" id="blockAlerts">
+									    <td class="whiteBackGround">
+										    <table cellSpacing="0" cellPadding="0" border="0">
+											    <tr class="violetBackGround">
+												    <td><asp:Image ID="Image53" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												    <td><asp:Image ID="Image54" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												    <td><asp:Image ID="Image55" runat="server" SkinID="pixel" height="1" width="159" /></td>
+												    <td><asp:Image ID="Image56" runat="server" SkinID="pixel" height="1" width="1" /></td>
+											    </tr>
+											    <tr>
+												    <td vAlign="top"><asp:Image ID="Image57" runat="server" SkinID="block_fleche" height="12" width="12" /></td>
+												    <td class="blockdupliBackGround"><asp:Image ID="Image58" runat="server" SkinID="pixel" height="1" width="13" /></td>
+												    <td class="txtNoir11Bold">
+													    <p style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px"><cc1:adexpresstext language="33" id="Adexpresstext9" runat="server" Code="2585"></cc1:adexpresstext></p>
+												    </td>
+												    <td class="violetBackGround"><asp:Image ID="Image59" runat="server" SkinID="pixel" height="1" width="1" /></td>
+											    </tr>
+											    <tr>
+												    <td><asp:Image ID="Image60" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												    <td class="violetBackGround"><asp:Image ID="Image61" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												    <td class="violetBackGround"><asp:Image ID="Image62" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												    <td class="violetBackGround"><asp:Image ID="Image63" runat="server" SkinID="pixel" height="1" width="1" /></td>
+											    </tr>
+										    </table>
+									    </td>
+								    </tr>
+								    <tr>
+									    <td class="whiteBackGround" height="5"></td>
+								    </tr>
+								    <tr>
+									    <td class="txtGris11Bold whiteBackGround"><cc1:adexpresstext language="33" id="Adexpresstext10" runat="server" Code="2586"></cc1:adexpresstext></td>
+								    </tr>
+								    <tr>
+									    <td height="5"></td>
+								    </tr>
+								    <tr>
+									    <td class="txtGris10 whiteBackGround" height="5"><cc3:imagebuttonrolloverwebcontrol id="Imagebuttonrolloverwebcontrol1" runat="server" onclick="alertOpenImageButtonRollOver_Click" SkinID="ouvrirButton"></cc3:imagebuttonrolloverwebcontrol></td>
+								    </tr>								
+								<% } %>
 								<!-- test!!!!--></table>
 							<!--TEST : acces à la page de resultat Plan Media -->
 							<!--Fin TEST : acces à la page de resultat Plan Media --></td>

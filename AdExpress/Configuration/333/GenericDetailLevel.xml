@@ -27,7 +27,8 @@
 		<level id="24" name="Emissions" webTextId="2051" dbId="id_program" dbLabel="program" dbTable="program" dbTablePrefixe="pg"/>
 		<level id="25" name="Formes de Parrainage" webTextId="2121" dbId="id_form_sponsorship" dbLabel="form_sponsorship" dbTable="form_sponsorship" dbTablePrefixe="fs"/>
     <level id="26" name="Pays" webTextId="2091" dbId="id_country" dbLabel="country" dbTable="country" dbTablePrefixe="co"/>
-	</detaillevelItems>
+    <level id="27" name="Basic Media" webTextId="2544" dbId="id_basic_media" dbLabel="basic_media" dbTable="basic_media" dbTablePrefixe="bm"/>
+  </detaillevelItems>
 
 	<detailLevels>
 		<detailLevel id="1" name="media\catégorie">
@@ -121,6 +122,30 @@
 		<detailLevel id="21" name="produit">
 			<levelItem id="10" name="Produit"/>			
 		</detailLevel>
+    <detailLevel id="22" name="centre d'interet\support">
+      <levelItem id="4" name="Centre d'interet"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="23" name="regie\support">  
+      <levelItem id="5" name="Régie"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>   
+    <detailLevel id="24" name="titre\support">
+      <levelItem id="17" name="Titre"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="25" name="catégorie\support">
+      <levelItem id="2" name="Catégorie"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="26" name="basic media\support">
+      <levelItem id="27" name="Basic Media"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="27" name="pays\support">
+      <levelItem id="26" name="Pays"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
 	</detailLevels>
 </genericDetailLevel>
 

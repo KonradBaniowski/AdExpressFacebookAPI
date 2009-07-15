@@ -12,6 +12,9 @@ using System.Text;
 using TNS.AdExpress.Web;
 using TNS.FrameWork.Date;
 
+using WebCustSession = TNS.AdExpress.Constantes.Web.CustomerSessions;
+using TNS.AdExpress.Web.Core.Sessions;
+
 namespace TNS.AdExpress.Web.Core {
 
     /// <summary>
@@ -616,6 +619,5 @@ namespace TNS.AdExpress.Web.Core {
         #endregion
 
         #endregion
-
     }
 }

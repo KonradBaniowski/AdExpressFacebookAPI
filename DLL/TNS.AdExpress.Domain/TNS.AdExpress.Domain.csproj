@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -85,6 +85,8 @@
     <Compile Include="Classification\ListContener.cs" />
     <Compile Include="Classification\Media.cs" />
     <Compile Include="Classification\MediaItemsList.cs" />
+    <Compile Include="Classification\NyxConfiguration.cs" />
+    <Compile Include="Classification\PluginInformation.cs" />
     <Compile Include="Classification\Product.cs" />
     <Compile Include="Classification\ProductItemsList.cs" />
     <Compile Include="Classification\VehicleInformation.cs" />
@@ -109,6 +111,7 @@
     <Compile Include="Web\Rss.cs" />
     <Compile Include="XmlLoader\DundasConfigurationXL.cs" />
     <Compile Include="XmlLoader\InfoNewsXL.cs" />
+    <Compile Include="XmlLoader\NyxConfigurationXL.cs" />
     <Compile Include="XmlLoader\ResultOptionsXL.cs" />
     <Compile Include="XmlLoader\CreativeConfigDataAccess.cs" />
     <Compile Include="DataBaseDescription\Connection.cs" />

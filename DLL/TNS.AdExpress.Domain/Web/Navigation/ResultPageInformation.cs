@@ -41,6 +41,10 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		/// Lien vers la page Excel pour l'affichage des unités (Plan Média)
 		/// </summary>
 		protected string _valueExcelUrl="";
+        /// <summary>
+        /// Lien vers la page de création de l'alerte
+        /// </summary>
+        protected string _createAlertUrl="";
 		/// <summary>
 		/// Lien vers la page d'export Jpeg
 		/// </summary>
@@ -123,6 +127,21 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 			if(remoteExcelUrl!=null)_remoteExcelUrl = remoteExcelUrl;
 			if(valueExcel!=null)_valueExcelUrl = valueExcel;
 		}
+
+        public ResultPageInformation(int id, Int64 resultId, string url, Int64 idWebText, string rawExcelUrl, string printExcelUrl, string printBisExcelUrl, string exportJpegUrl, string remotePdfUrl, string remoteResultPdfUrl, string valueExcel, string remoteTextUrl, string remoteExcelUrl, string helpUrl, Int64 menuTextId, string createAlertUrl)
+            : this(id, resultId, url, idWebText, helpUrl, menuTextId)
+        {
+            if (rawExcelUrl != null) _rawExcelUrl = rawExcelUrl;
+            if (printExcelUrl != null) _printExcelUrl = printExcelUrl;
+            if (printBisExcelUrl != null) _printBisExcelUrl = printBisExcelUrl;
+            if (exportJpegUrl != null) _exportJpegUrl = exportJpegUrl;
+            if (remotePdfUrl != null) _remotePdfUrl = remotePdfUrl;
+            if (remoteResultPdfUrl != null) _remoteResultPdfUrl = remoteResultPdfUrl;
+            if (remoteTextUrl != null) _remoteTextUrl = remoteTextUrl;
+            if (remoteExcelUrl != null) _remoteExcelUrl = remoteExcelUrl;
+            if (valueExcel != null) _valueExcelUrl = valueExcel;
+            if (createAlertUrl != null) _createAlertUrl = createAlertUrl;
+        }
 		#endregion
 
 		#region Accesseur
@@ -167,6 +186,14 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		public string RawExcelUrl{
 			get{return _rawExcelUrl;}
 		}
+
+        /// <summary>
+        /// Obtient l'url de la page de création d'une alerte
+        /// </summary>
+        public string CreateAlertUrl
+        {
+            get { return (this._createAlertUrl); }
+        }
 
 		/// <summary>
 		/// Obtient l'url de la page Excel

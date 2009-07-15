@@ -209,6 +209,14 @@ height and width of the icon image.
 	position: absolute;
 	width: 20px;
 }
+.alertMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr/Images/Common/Menu/addAlert.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
 .programMenuIcon {
 	background-image: url(/App_Themes/DefaultAdExpressFr/Images/Common/Menu/programMenuIcon.gif);
 	background-repeat: no-repeat;

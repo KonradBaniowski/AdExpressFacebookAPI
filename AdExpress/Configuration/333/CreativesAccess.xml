@@ -5,6 +5,7 @@
     <VirtualPath id="IMAGES_MD" name="Répertoire virtuel des créations marketing direct" value="/ImagesMD"/>
     <VirtualPath id="IMAGES_OUTDOOR" name="Répertoire virtuel des créations de la publicité extérieure" value="/ImagesOutDoor"/>
     <VirtualPath id="CREA_ADNETTRACK" name="Répertoire virtuel des créations d evaliant" value="/adnettrackCreatives"/>
+    <VirtualPath id="CREA_EVALIANT_MOBILE" name="Répertoire virtuel des créations d evaliant mobile" value="/evaliantMobileCreatives"/>
     <VirtualPath id="DOWNLOAD_RADIO_SERVER" name="Répertoire des spots radio" value="/SpotsRadio"/>
     <VirtualPath id="DOWNLOAD_CREATIVES_RADIO_SERVER" name="Répertoire des spots radio" value="/radioCreatives"/>
     <VirtualPath id="DOWNLOAD_TV_SERVER" name="Répertoire des spots tv" value="/SpotTv"/>

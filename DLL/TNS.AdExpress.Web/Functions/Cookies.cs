@@ -40,8 +40,31 @@ namespace TNS.AdExpress.Web.Functions
 			}
 		}
 
+        /// <summary>
+        /// Gets or sets the cookie containing the alert email list
+        /// </summary>
+        /// <param name="page">Current web page</param>
+        /// <param name="get">Defines if we shoulg set or get the cookie</param>
+        /// <param name="emailList">Email list</param>
+        /// <returns>The cookie value if existing</returns>
+        public static string ManageEmailListCookie(System.Web.UI.Page page, bool get, string emailList)
+        {
+            HttpCookie cookie = page.Request.Cookies[WebConstantes.Cookies.AlertEmailList];
+            if (get)
+            {
+                if (cookie != null)
+                    return (cookie.Value);
+                else
+                    return (null);
+            }
+            else
+            {
+                page.Response.Cookies[WebConstantes.Cookies.AlertEmailList].Value = emailList;
+                page.Response.Cookies[WebConstantes.Cookies.AlertEmailList].Expires = DateTime.MaxValue;
+                return (null);
+            }
 
-
+        }
 
 		/// <summary>
 		/// Enregistre l'email pour l'export distant d'un fichier (anubis) dans un cookie

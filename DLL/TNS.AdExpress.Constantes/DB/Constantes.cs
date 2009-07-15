@@ -984,6 +984,10 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// Table ALERT
 		/// </summary>
 		public const string ALERT="alert";
+        /// <summary>
+        /// Table ALERT_OCCURRENCE
+        /// </summary>
+        public const string ALERT_OCCURENCE = "alert_occurence";
 		/// <summary>
 		/// Préfixe de la table ALERT
 		/// </summary>
@@ -1538,6 +1542,10 @@ namespace TNS.AdExpress.Constantes.DB{
 		///  APPM
 		/// </summary>
 		public const string APPM_SCHEMA="APPM01";
+        /// <summary>
+        /// Alert
+        /// </summary>
+        public const string ALERT_SCHEMA="mau01";
 	}
 	#endregion
 
@@ -1989,5 +1997,41 @@ namespace TNS.AdExpress.Constantes.DB{
 		public const Int64 GROUP_BY_CONTRAINT_TYPE=5;
 	}
 	#endregion
+
+    #region Classe des statuts et types des alertes
+
+    public class Alerts
+    {
+        /// <summary>
+        /// Defines the type of an alert
+        /// </summary>
+        public enum AlertType
+        {
+            Portfolio = 1,
+            AdExpressAlert = 2
+        }
+
+        /// <summary>
+        /// Defines the periodicity of an alert
+        /// </summary>
+        public enum AlertPeriodicity
+        {
+            Daily = 10,
+            Weekly = 20,
+            Monthly = 30
+        }
+
+        /// <summary>
+        /// Defines the status of an alert
+        /// </summary>
+        public enum AlertStatuses
+        {
+            Activated = 0,
+            New = 10,
+            ToDelete = 50
+        }
+    }
+
+    #endregion
 
 }

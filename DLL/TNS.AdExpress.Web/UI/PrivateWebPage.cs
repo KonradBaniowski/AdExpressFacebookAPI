@@ -26,6 +26,7 @@ using WebConstantes=TNS.AdExpress.Constantes.Web;
 using WebNavigation=TNS.AdExpress.Domain.Web.Navigation;
 using TNS.FrameWork.Exceptions;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpress.Web.UI{
 	/// <summary>
@@ -107,23 +108,50 @@ namespace TNS.AdExpress.Web.UI{
 		/// Constructeur
 		/// </summary>
 		public PrivateWebPage(){
-			// Gestion des évènements
-			base.Load +=new EventHandler(WebPage_Load);
-			base.Unload += new EventHandler(WebPage_Unload);
-			try{
-				// Chargement de la session du client
-				 _webSession=(WebSession)WebSession.Load(HttpContext.Current.Request.QueryString.Get("idSession"));
 
-                 if (_webSession != null) {
+            HttpCookie autoConnectCookie = HttpContext.Current.Request.Cookies[Cookies.AlertAutoConnectCookie];
+            string idAlert = HttpContext.Current.Request.QueryString["idAlert"];
+            string idOcc = HttpContext.Current.Request.QueryString["idOcc"];
+            string idSession = HttpContext.Current.Request.QueryString["idSession"];
 
-                     // On obtient les informations sur le modules
-                     _currentModule = WebNavigation.ModulesList.GetModule(_webSession.CurrentModule);
-                     if (HttpContext.Current.Request.QueryString.Get("sitelanguage") != null)_webSession.SiteLanguage = _siteLanguage;
-                     // Définition de la langue à utiliser
-                     else _siteLanguage = _webSession.SiteLanguage;
-                 }
-			}
-			catch(System.Exception){}
+            if (idSession != null || (autoConnectCookie != null && idAlert != null && idOcc != null))
+            {
+
+                // Gestion des évènements
+                base.Load += new EventHandler(WebPage_Load);
+                base.Unload += new EventHandler(WebPage_Unload);
+
+                try
+                {
+                    // Chargement de la session du client via QuerySring
+                    // ou Cookie
+                    if (idSession != null)
+                        _webSession = (WebSession)WebSession.Load(idSession);
+
+                    // Loading session information
+                    if (_webSession != null)
+                    {
+                        // On obtient les informations sur le modules
+                        _currentModule = WebNavigation.ModulesList.GetModule(_webSession.CurrentModule);
+
+                        // Définition de la langue à utiliser
+                        if (HttpContext.Current.Request.QueryString.Get("sitelanguage") != null)
+                            _webSession.SiteLanguage = _siteLanguage;
+                        else
+                            _siteLanguage = _webSession.SiteLanguage;
+                    }
+                }
+                catch (System.Exception) { }
+            }
+            else
+            {
+                string redirectUrl = "/index.aspx?";
+                if (idAlert != null)
+                    redirectUrl += "idAlert=" + idAlert;
+                if (idOcc != null)
+                    redirectUrl += "&idOcc=" + idOcc;
+                HttpContext.Current.Response.Redirect(redirectUrl);
+            }
 		}
 
 		#endregion

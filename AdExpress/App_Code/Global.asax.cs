@@ -132,6 +132,9 @@ namespace AdExpress {
                 //Load Global WebSite options
                 ResultOptionsXL.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.RESULT_OPTIONS_CONFIGURATION_FILENAME));
 
+                // Loading Nyx configuration
+                NyxConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.NYX_CONFIGURATION_FILENAME));
+
 			}
 			catch(System.Exception error){
 				string body="";

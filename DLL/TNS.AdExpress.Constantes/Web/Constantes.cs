@@ -1205,6 +1205,17 @@ namespace TNS.AdExpress.Constantes.Web{
 		/// </summary>
 		public static string IsRegisterEmailForRemotingExport = "isRegisterEmailForRemotingExport";
 
+        /// <summary>
+        /// Cookie dedicated to the alert email list
+        /// </summary>
+        public static string AlertEmailList = "alertEmailList";
+
+        /// <summary>
+        /// Cookie dedicated to auto-connection when clicking on an alert
+        /// link
+        /// </summary>
+        public static string AlertAutoConnectCookie = "alertAutoConnect";
+
 		/// <summary>
 		/// Cooky dedicated to save email for Remoting file (pdf, excel...) export
 		/// </summary>

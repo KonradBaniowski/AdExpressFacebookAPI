@@ -41,6 +41,7 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Classification;
 
+using CustPeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type;
 
 namespace TNS.AdExpress.Web.Core.Sessions {
 	/// <summary>
@@ -2382,6 +2383,13 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		}
 		#endregion
 
+        public void CopyFrom(WebSession session)
+        {
+            if (session != null)
+            { 
+            }
+        }
+
 		#region Blob
 		/// <summary>
 		/// Méthode qui sauvegarde l'objet webSession courant dans la table de sauvegarde des sessions
@@ -3276,7 +3284,151 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		}
 		#endregion 
 
-		#endregion
-	}
+        #region Dates
+
+        public CustomerPeriod UpdateDates(DateTime FirstDayNotEnable)
+        {
+            bool isLastCompletePeriod = false;
+            DateTime lastDayEnable = DateTime.Now;
+            DateTime tmp = DateTime.Now;
+
+            // In the case of a LostWin study, if the period disponibility
+            // selected is a complete period, we change the flag and the
+            // lastDayEnable variable
+            if (this.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE &&
+                this.CustomerPeriodSelected.PeriodDisponibilityType == WebConstantes.globalCalendar.periodDisponibilityType.lastCompletePeriod)
+            {
+                lastDayEnable = FirstDayNotEnable.AddDays(-1);
+                isLastCompletePeriod = true;
+            }
+
+            // Updating dates depending on the period type.
+            // Only updating if the period type is a sliding
+            // one
+            switch (this.periodType)
+            {
+                #region nLastYears
+                case CustPeriodType.nLastYear:
+                    this.PeriodBeginningDate = DateTime.Now.AddYears(1 - this.PeriodLength).ToString("yyyy0101");
+                    this.PeriodEndDate = DateTime.Now.ToString("yyyyMMdd");
+                    break;
+                #endregion
+
+                #region nLastMonths
+                case CustPeriodType.nLastMonth:
+                    // Setting default values
+                    this.PeriodBeginningDate = lastDayEnable.AddMonths(1 - this.PeriodLength).ToString("yyyyMM01");
+                    this.PeriodEndDate = lastDayEnable.ToString("yyyyMMdd");
+
+                    // In case we need a complete period, we check if the
+                    // month corresponding to the lastDayEnable is the end
+                    // of the month
+                    DateTime lastDayOfMonth = new DateTime(lastDayEnable.Year, lastDayEnable.Month, 1).AddMonths(1).AddDays(-1);
+
+                    // If the lastDayEnable is not the end of its month
+                    // we have to set the period to a month earlier
+                    if (isLastCompletePeriod && lastDayEnable != lastDayOfMonth)
+                    {
+                        this.PeriodBeginningDate = lastDayEnable.AddMonths(0 - this.PeriodLength).ToString("yyyyMM01");
+                        this.PeriodEndDate = lastDayEnable.AddDays(-(lastDayEnable.Day + 1)).ToString("yyyyMMdd");
+                    }
+                    break;
+                #endregion
+
+                #region nLastWeeks
+                case CustPeriodType.nLastWeek:
+                    // Setting local variables
+                    DateTime PeriodEnd = lastDayEnable;
+                    DateTime lastDayOfWeek = lastDayEnable.AddDays(7 - lastDayEnable.DayOfWeek.GetHashCode());
+
+                    // Checking if we need the last complete period
+                    // and if so, if the lastDayEnable is the last day
+                    // of its week. Otherwise, setting PeriodEnd to the
+                    // previous week
+                    if (isLastCompletePeriod && lastDayOfWeek != lastDayEnable)
+                        PeriodEnd = lastDayEnable.AddDays(-lastDayEnable.DayOfWeek.GetHashCode());
+
+                    // Setting beginning and end dates
+                    this.PeriodBeginningDate = PeriodEnd.AddDays(-(this.PeriodLength * 7 - 1)).ToString("yyyyMMdd");
+                    this.PeriodEndDate = PeriodEnd.ToString("yyyyMMdd");
+                    break;
+                #endregion
+
+                #region nLastDays
+                case CustPeriodType.nLastDays:
+                    this.PeriodBeginningDate = lastDayEnable.AddDays(1 - this.PeriodLength).ToString("yyyyMMdd");
+                    this.PeriodEndDate = lastDayEnable.ToString("yyyyMMdd");
+                    break;
+                #endregion
+
+                #region previousYear
+                case CustPeriodType.previousYear:
+                    this.PeriodBeginningDate = DateTime.Now.AddYears(-1).ToString("yyyy0101");
+                    this.PeriodEndDate = DateTime.Now.AddYears(-1).ToString("yyyy1231");
+                    break;
+                #endregion
+
+                #region previousMonth
+
+                case CustPeriodType.previousMonth:
+                    tmp = tmp.AddDays(-tmp.Day);
+                    this.PeriodEndDate = tmp.ToString("yyyyMMdd");
+                    this.PeriodBeginningDate = tmp.ToString("yyyyMM01");
+                    break;
+
+                #endregion
+
+                #region previousWeek
+
+                case CustPeriodType.previousWeek:
+                    tmp = tmp.AddDays(-tmp.DayOfWeek.GetHashCode());
+                    this.PeriodEndDate = tmp.ToString("yyyyMMdd");
+                    this.PeriodBeginningDate = tmp.AddDays(-6).ToString("yyyyMMdd");
+                    break;
+
+                #endregion
+
+                #region previousDay
+
+                case CustPeriodType.previousDay:
+                    this.PeriodBeginningDate = tmp.AddDays(-1).ToString("yyyyMMdd");
+                    this.PeriodEndDate = this.PeriodBeginningDate;
+                    break;
+
+                #endregion
+
+                #region currentYear
+
+                case CustPeriodType.currentYear:
+                    this.PeriodBeginningDate = tmp.ToString("yyyy0101");
+                    this.PeriodEndDate = tmp.ToString("yyyyMMdd");
+                    break;
+
+                #endregion
+            }
+
+            // Formatting dates depending on the module.
+            // Some only need a yyyyMM format
+            switch (this.CurrentModule)
+            { 
+                case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR:
+                case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE:
+                case TNS.AdExpress.Constantes.Web.Module.Name.TENDACES:
+                    this.PeriodBeginningDate = this.PeriodBeginningDate.Substring(0, 6);
+                    this.PeriodEndDate = this.PeriodEndDate.Substring(0, 6);
+                    break;
+
+            }
+
+            return (null);
+        
+        }
+
+        #endregion
+
+        #endregion
+
+
+    }
 
 }

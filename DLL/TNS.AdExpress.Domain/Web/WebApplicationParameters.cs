@@ -43,6 +43,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         private static string _countryConfigurationDirectoryRoot;
         /// <summary>
+        /// Configuration country code
+        /// </summary>
+        private static string _countryCode;
+        /// <summary>
         /// Database description
         /// </summary>
         private static DataBase _dataBase;        	
@@ -108,7 +112,8 @@ namespace TNS.AdExpress.Domain.Web {
             _configurationDirectoryRoot=AppDomain.CurrentDomain.BaseDirectory+CONFIGARION_DIRECTORY_NAME+@"\";
 
             _webSiteName=WebParamtersXL.LoadSiteName(new XmlReaderDataSource(_configurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME));
-            _countryConfigurationDirectoryRoot=_configurationDirectoryRoot+WebParamtersXL.LoadDirectoryName(new XmlReaderDataSource(_configurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME))+@"\";
+            _countryCode = WebParamtersXL.LoadDirectoryName(new XmlReaderDataSource(_configurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME));
+            _countryConfigurationDirectoryRoot = _configurationDirectoryRoot + _countryCode + @"\";
             // Initialisation des descriptions des éléments de niveaux de détail
             DetailLevelItemsInformation.Init(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + ConfigurationFile.GENERIC_DETAIL_LEVEL_ITEMS_CONFIGURATION_FILENAME));
             // Initialisation des descriptions des niveaux de détail
@@ -136,6 +141,13 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         public static string WebSiteName {
             get { return _webSiteName; }
+        }
+        /// <summary>
+        /// Get country code
+        /// </summary>
+        public static string CountryCode
+        {
+            get { return (_countryCode); }
         }
         /// <summary>
         /// Get configuration directory root

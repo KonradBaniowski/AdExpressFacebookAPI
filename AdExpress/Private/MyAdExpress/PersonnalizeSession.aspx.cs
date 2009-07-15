@@ -22,6 +22,7 @@ using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Translation;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using CstWeb = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Classification;
 
 namespace AdExpress.Private.MyAdExpress{
 	/// <summary>
@@ -50,11 +51,20 @@ namespace AdExpress.Private.MyAdExpress{
 		/// </summary>
 		public string listSesssionsToRename;
 		#endregion
-	
-		#region Evènements
-		
-		#region Constructeur
-		/// <summary>
+
+        #region Properties
+
+        public bool IsAlertsActivated
+        {
+            get { return (NyxConfiguration.IsAlertsActivated); }
+        }
+
+        #endregion
+
+        #region Evènements
+
+        #region Constructeur
+        /// <summary>
 		/// Constructeur 
 		/// </summary>
 		public PersonnalizeSession():base(){
@@ -238,6 +248,26 @@ namespace AdExpress.Private.MyAdExpress{
 		}
 
 		#endregion
+
+        #region Bouton Alertes
+
+        protected void alertOpenImageButtonRollOver_Click(object sender, System.EventArgs e)
+        {
+            try
+            {
+                _webSession.Source.Close();
+                Response.Redirect("/Private/Alerts/ShowAlerts.aspx?idSession=" + _webSession.IdSession + "");
+            }
+            catch (System.Exception exc)
+            {
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                }
+            }
+        }
+        #endregion
+
 
 		#region Bouton créer un répertoire
 		/// <summary>

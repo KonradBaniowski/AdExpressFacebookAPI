@@ -76,7 +76,11 @@ namespace TNS.AdExpress.Anubis.Constantes{
 			/// <summary>
 			/// Type Indicateurs Radio TV (Hermes)
 			/// </summary>
-			hermesRadioTV= 13
+			hermesRadioTV= 13,
+            /// <summary>
+            /// Alerte AdExpress
+            /// </summary>
+            alertAdExpress = 20,
 		}
 
 		/// <summary>

@@ -20,6 +20,11 @@ using Oracle.DataAccess.Client;
 using TNS.FrameWork.DB.Common;
 
 using WebFunctions = TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Alerts;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Classification;
+using System.Reflection;
 
 namespace AdExpress{
 	/// <summary>
@@ -141,8 +146,32 @@ namespace AdExpress{
                     // Tracking (NewConnection)
                     // On obtient l'adresse IP:
                     _webSession.OnNewConnection(this.Request.UserHostAddress);
-                    //Se Rediriger vers la page des modules
-                    Response.Redirect("Private/selectionModule.aspx?idSession="+_webSession.IdSession);
+
+                    // Checking if the QueryString contains a idAlert and idOcc
+                    string idAlert = Request.QueryString["idAlert"];
+                    string idOcc = Request.QueryString["idOcc"];
+                    if (idAlert != null && idOcc != null)
+                    { 
+                        int alertId = int.Parse(idAlert);
+                        int occId = int.Parse(idOcc);
+
+                        DataAccessLayer layer = NyxConfiguration.GetDataAccessLayer(NyxDataAccessLayer.Alert);
+                        TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
+                        IAlertDAL alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null, null);
+                        TNS.Alert.Domain.Alert alert = alertDAL.GetAlert(alertId);
+                        if (_webSession.CustomerLogin.IdLogin == alert.CustomerId)
+                        {
+                            TNS.Alert.Domain.AlertOccurence occ = alertDAL.GetOccurrence(occId, alertId);
+                            if (occ != null && occ.AlertId == alert.AlertId)
+                                Response.Redirect("/Private/Alerts/ShowAlert.aspx?idSession=" + _webSession.IdSession +
+                                    "&idOcc=" + idOcc + "&idAlert=" + idAlert);
+                            else
+                                Response.Redirect("/Private/Alerts/ShowAlerts.aspx?idSession=" + _webSession.IdSession.ToString());
+                        }
+                    }
+                    else
+                        //Se Rediriger vers la page des modules
+                        Response.Redirect("Private/selectionModule.aspx?idSession="+_webSession.IdSession);
                 }
 				else{
 					// L'accès est impossible

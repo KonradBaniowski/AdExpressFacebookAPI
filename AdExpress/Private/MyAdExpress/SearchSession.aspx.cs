@@ -112,10 +112,24 @@ namespace AdExpress.Private.MyAdExpress{
 		/// idSession
 		/// </summary>
 		public string idSession;
+
+        /// <summary>
+        /// Specifies if alerts are activated or not
+        /// </summary>
+
 		#endregion
 
-		#region Constructeur
-		/// <summary>
+        #region Properties
+
+        public bool IsAlertsActivated
+        {
+            get { return (NyxConfiguration.IsAlertsActivated); }
+        }
+
+        #endregion
+
+        #region Constructeur
+        /// <summary>
 		/// Constructeur
 		/// </summary>
 		public SearchSession():base(){
@@ -174,6 +188,7 @@ namespace AdExpress.Private.MyAdExpress{
 					Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"insertHidden",TNS.AdExpress.Web.Functions.Script.InsertHidden());
 				}
 				#endregion
+
 			}
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
@@ -266,8 +281,27 @@ namespace AdExpress.Private.MyAdExpress{
 
 		#endregion
 
-		#region Bouton supprimer
-		/// <summary>
+        #region Bouton Alertes
+
+        protected void alertOpenImageButtonRollOver_Click(object sender, System.EventArgs e)
+        {
+            try
+            {
+                _webSession.Source.Close();
+                Response.Redirect("/Private/Alerts/ShowAlerts.aspx?idSession=" + _webSession.IdSession + "");
+            }
+            catch (System.Exception exc)
+            {
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                }
+            }
+        }
+        #endregion
+
+        #region Bouton supprimer
+        /// <summary>
 		/// Gestion du bouton supprimer
 		/// </summary>
 		/// <param name="sender">Objet qui execute l'évènement</param>
@@ -346,7 +380,7 @@ namespace AdExpress.Private.MyAdExpress{
                 bool verifCustomerPeriod = false;
                 bool validResultPage = true;
 
-			
+
 				foreach (string currentKey in Request.Form.AllKeys){
 					tabParent=currentKey.Split('_');
 					if(tabParent[0]=="CKB") {

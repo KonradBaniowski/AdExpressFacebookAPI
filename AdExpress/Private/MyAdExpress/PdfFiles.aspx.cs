@@ -29,6 +29,7 @@ using WebRules=TNS.AdExpress.Web.Rules;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
 using WebCst = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Classification;
 
 namespace AdExpress.Private.MyAdExpress{
 	/// <summary>
@@ -107,8 +108,17 @@ namespace AdExpress.Private.MyAdExpress{
 		public string idSession;
 		#endregion
 
-		#region Constructeur
-		/// <summary>
+        #region Properties
+
+        public bool IsAlertsActivated
+        {
+            get { return (NyxConfiguration.IsAlertsActivated); }
+        }
+
+        #endregion
+
+        #region Constructeur
+        /// <summary>
 		/// Constructeur
 		/// </summary>
 		public PdfFiles():base(){
@@ -259,6 +269,25 @@ namespace AdExpress.Private.MyAdExpress{
 			}
 		}
 		#endregion
+
+        #region Bouton Alertes
+
+        protected void alertOpenImageButtonRollOver_Click(object sender, System.EventArgs e)
+        {
+            try
+            {
+                _webSession.Source.Close();
+                Response.Redirect("/Private/Alerts/ShowAlerts.aspx?idSession=" + _webSession.IdSession + "");
+            }
+            catch (System.Exception exc)
+            {
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                }
+            }
+        }
+        #endregion
 
 //		#region Bouton supprimer
 //		/// <summary>
