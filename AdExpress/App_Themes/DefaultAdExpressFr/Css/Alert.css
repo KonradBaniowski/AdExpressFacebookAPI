@@ -1,0 +1,123 @@
+﻿/* Alert creation theme (pop up) */
+
+div.periodicity-type, div.periodicity-type-day
+{
+	color: #644883;
+	font-weight: bold;
+	border: solid 1px #644883;
+	float: left;
+	background-color: White;
+}
+
+div.periodicity-type a, div.periodicity-type-day a
+{
+	color: #AAAAAA;
+	font-size:11px;
+	padding: 4px 2px 4px 2px;
+	cursor: pointer;
+	display: inline-block;
+	width: 12px;
+	font-weight: normal;
+	outline: none;
+	text-align: center;
+}
+
+a.periodicity-param-selected
+{
+	background-color: #DED8E5;
+	color: White;
+}
+
+div.periodicity-type-day a 
+{
+	width:auto;
+}
+
+/* Alert consultation page */
+
+div.block-valid-alert
+{
+	font-size: 11px;	
+	border: solid 1px #644883;
+	border-bottom: 0px;
+	padding: 3px 0 0 0;
+	margin: 0 0 0 15px;
+	font-family:Arial,Helvetica,sans-serif;
+}
+
+div.block-valid-alert-last
+{
+	border-top: solid 1px #644883;
+	padding: 3px 0 0 0;
+	margin: 0 0 0 15px;
+}
+
+div.block-valid-alert h2
+{
+	color: #644883;
+	cursor: pointer;
+	margin: 0px;
+	margin-left: 30px;
+	font-size:11px;
+	font-weight:bold;
+}
+
+div.block-valid-alert a
+{
+	color: #FF0099;
+}
+
+div.block-valid-alert ul
+{
+	margin: 0px;
+	padding: 1% 0px 1% 5%;	
+	width: 35%;
+	float: left;
+	background-color: #DED8E5;
+}
+
+div.block-alert-details
+{
+	width: 50%;
+	float: left;
+	color: #644883;
+	padding-top: 5px;
+	background-color: #DED8E5;
+}
+
+div.block-valid-alert div
+{
+	margin: 0px;
+}
+
+div.alert-content
+{
+	background-color: #DED8E5;
+	border-top: solid 1px #644883;
+	width: 100%;
+}
+
+.alert-dayofmonth-selection-title
+{
+	background-color: #644883;
+	font-size: 11px;
+	color: White;
+	font-family: Arial;
+}
+
+.alert-dayofmonth-selection-table
+{
+	width: 152px;
+	background-color: White;
+}
+
+.alert-dayofmonth-selection-table td
+{
+	width: 21px;	
+	text-align: center;
+}
+
+.alert-dayofmonth-selection-table a
+{
+	text-decoration: none;	
+}
