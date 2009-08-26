@@ -212,6 +212,10 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
                             || _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.segmentBrand
                             || _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.segmentProduct
                             || _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.product
+                            /* WARNING !!! the two following tests are added temporarily in order to add specific levels for the Finnish version
+                             * */
+                            || _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.sectorAdvertiser
+                            || _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.subSectorAdvertiser
                             )
                             && i == CLASSIF_INDEXES.GetUpperBound(0)))
                             )

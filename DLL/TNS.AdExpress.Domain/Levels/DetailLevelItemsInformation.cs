@@ -242,6 +242,13 @@ namespace TNS.AdExpress.Domain.Level {
                     levels.Add(Get(DetailLevelItemInformation.Levels.subSector));
                     levels.Add(Get(DetailLevelItemInformation.Levels.group));
                     break;
+                case CstFormat.PreformatedProductDetails.subSector:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.subSector));
+                    break;
+                case CstFormat.PreformatedProductDetails.subSectorAdvertiser:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.subSector));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.advertiser));
+                    break;
                 case CstFormat.PreformatedProductDetails.segmentAdvertiser:
                     levels.Add(Get(DetailLevelItemInformation.Levels.segment));
                     levels.Add(Get(DetailLevelItemInformation.Levels.advertiser));

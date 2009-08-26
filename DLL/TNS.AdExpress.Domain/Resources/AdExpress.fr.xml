@@ -1795,5 +1795,6 @@
     <item mnemonic="w2607" type="System.String">Type d'alerte</item>
     <item mnemonic="w2608" type="System.String">AdexReport 360</item>
     <item mnemonic="w2609" type="System.String">Sauvegarde de l'alerte</item>
+    <item mnemonic="w2610" type="System.String">Classe/Annonceur</item>
   </items>
 </localization>

@@ -1139,6 +1139,18 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				productDetail.ID = "productDetail_" + this.ID;
 				productDetail.CssClass =  cssClass;
 				productDetail.AutoPostBack = autoPostBackOption;
+                
+                /* WARNING !!! : This patch is just temporarily used in order to add specific levels for the Finland version of the site
+                * the levels are : Category, Sub Category, Category/Advertiser and Sub Category/Advertiser
+                * */
+                if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
+                {
+                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(175, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.sector.GetHashCode().ToString()));
+                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1491, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.sectorAdvertiser.GetHashCode().ToString()));
+                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(552, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.subSector.GetHashCode().ToString()));
+                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2610, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.subSectorAdvertiser.GetHashCode().ToString()));
+                }
+
 				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1110, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.group.GetHashCode().ToString()));
 				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1144, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.groupSegment.GetHashCode().ToString()));
 				//Rights verification for Brand
@@ -1170,6 +1182,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				}
 				if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) 
 				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(858, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.product.GetHashCode().ToString()));
+
 				try{
 					productDetail.Items.FindByValue(customerWebSession.PreformatedProductDetail.GetHashCode().ToString()).Selected = true;
 				}

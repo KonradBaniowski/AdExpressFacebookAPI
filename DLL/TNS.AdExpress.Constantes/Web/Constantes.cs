@@ -690,7 +690,15 @@ namespace TNS.AdExpress.Constantes.Web{
 				/// <summary>
 				///  Nomenclature produit détaillée au niveau Famille -> Groupe de société -> Annonceur
 				/// </summary>
-				sectorHoldingCompanyAdvertiser
+                sectorHoldingCompanyAdvertiser,
+                /// <summary>
+                /// Nomenclature produit détaillée au niveau Classe
+                /// </summary>
+                subSector,
+                /// <summary>
+                /// Nomenclature produit détaillée au niveau Classe -> Annonceur
+                /// </summary>
+                subSectorAdvertiser
 			}
 
 	
@@ -1500,6 +1508,32 @@ namespace TNS.AdExpress.Constantes.Web{
 		public const int PRESENTATION = 757;
 	}
 	#endregion
+
+    #region Country Code
+    /// <summary>
+    /// Constantes concerning country code
+    /// </summary>
+    public class CountryCode
+    {
+        /// <summary>
+        /// Country Code For France
+        /// </summary>
+        public const string FRANCE = "33";
+        /// <summary>
+        /// Country Code For Finland
+        /// </summary>
+        public const string FINLAND = "35";
+        /// <summary>
+        /// Country Code For Czech Republic
+        /// </summary>
+        public const string CZECH_REPUBLIC = "420";
+        /// <summary>
+        /// Country Code For Poland
+        /// </summary>
+        public const string POLAND = "48";
+
+    }
+    #endregion
 
 	#region Détail sélection
 	/// <summary>

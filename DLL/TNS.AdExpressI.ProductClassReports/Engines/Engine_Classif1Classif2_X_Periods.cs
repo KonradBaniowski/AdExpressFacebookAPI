@@ -363,6 +363,10 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
                             || _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.segmentBrand
                             || _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.product
                             || _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.segmentProduct
+                            /* WARNING !!! the two following tests are added temporarily in order to add specific levels for the Finnish version
+                             * */
+                            || _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.sectorAdvertiser
+                            || _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.subSectorAdvertiser
                             )
                             && i == MAIN_CLASSIF_INDEXES.GetUpperBound(0)))
                             )
@@ -666,6 +670,10 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
                                         || _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.segmentBrand
                                         || _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.segmentProduct
                                         || _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.product
+                                        /* WARNING !!! the two following tests are added temporarily in order to add specific levels for the Finnish version
+                                        * */
+                                        || _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.sectorAdvertiser
+                                        || _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.subSectorAdvertiser
                                         )
                                         && j == SECONDARY_CLASSIF_INDEXES.GetUpperBound(0)))
                                         )
@@ -795,6 +803,10 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 				case CstFormat.PreformatedProductDetails.brand:
 				case CstFormat.PreformatedProductDetails.group:
 				case CstFormat.PreformatedProductDetails.product:
+                /* WARNING !!! the two following tests are added temporarily in order to add specific levels for the Finnish version
+                * */
+                case CstFormat.PreformatedProductDetails.sector:
+                case CstFormat.PreformatedProductDetails.subSector:
 					PRODUCT_LEVEL_NUMBER = 1;
 					break;
 				default:
@@ -1068,7 +1080,12 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 											//toto
 											|| _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.product
 											|| _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.segmentBrand
-											|| _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.segmentProduct )
+											|| _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.segmentProduct
+                                            /* WARNING !!! the two following tests are added temporarily in order to add specific levels for the Finnish version
+                                             **/
+                                            || _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.sectorAdvertiser
+                                            || _session.PreformatedProductDetail == CstFormat.PreformatedProductDetails.subSectorAdvertiser
+                                            )
 										{
 											bufferHtml.Length = 0;
 											outputHtml = bufferHtml;
