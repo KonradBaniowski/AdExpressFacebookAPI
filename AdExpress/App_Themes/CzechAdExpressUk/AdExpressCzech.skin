@@ -377,154 +377,154 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <ctrHeader:HeaderWebControl  
                             runat="server" 
                             language="33" 
-                            FlashUrl="/App_Themes/CzechRepublicAdExpressUk/Flash/Common/HeaderStrip.swf" 
-                            MissingFlashUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Common/FlashReplacement/HeaderStrip.gif" 
+                            FlashUrl="/App_Themes/CzechAdExpressUk/Flash/Common/HeaderStrip.swf" 
+                            MissingFlashUrl="/App_Themes/CzechAdExpressUk/Images/Common/FlashReplacement/HeaderStrip.gif" 
 />
 
 <%-- Flash web control : used to show a flash animation --%>
 <ctrHeader:FlashWebControl  
                            runat="server" 
-                           FlashUrl="/App_Themes/CzechRepublicAdExpressUk/Flash/Culture/anime6.swf" 
-                           MissingFlashUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/FlashReplacement/HomeAnime.gif"
+                           FlashUrl="/App_Themes/CzechAdExpressUk/Flash/Culture/anime6.swf" 
+                           MissingFlashUrl="/App_Themes/CzechAdExpressUk/Images/Culture/FlashReplacement/HomeAnime.gif"
 />
 
 <%-- A list of ImageButtonRollOver web control used in the site--%>
 <%-- Validate Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
-                           ImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/valider_up.gif" 
-                           RollOverImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/valider_down.gif" 
+                           ImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/valider_up.gif" 
+                           RollOverImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/valider_down.gif" 
                            SkinID="validateButton" 
 />
 
 <%-- Ok Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
-                           ImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Common/Button/ok_up.gif" 
-                           RollOverImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Common/Button/ok_down.gif" 
+                           ImageUrl="/App_Themes/CzechAdExpressUk/Images/Common/Button/ok_up.gif" 
+                           RollOverImageUrl="/App_Themes/CzechAdExpressUk/Images/Common/Button/ok_down.gif" 
                            SkinID="okButton"
 />
 
 <%-- Initialize Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
-                           ImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Common/button/initialize_up.gif" 
-                           RollOverImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Common/button/initialize_down.gif" 
+                           ImageUrl="/App_Themes/CzechAdExpressUk/Images/Common/button/initialize_up.gif" 
+                           RollOverImageUrl="/App_Themes/CzechAdExpressUk/Images/Common/button/initialize_down.gif" 
                            SkinID="initializeButton" 
 />
 
 <%-- Initialize All Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol   
                            runat="server" 
-                           ImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Common/button/initialize_all_up.gif" 
-                           RollOverImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Common/button/initialize_all_down.gif" 
+                           ImageUrl="/App_Themes/CzechAdExpressUk/Images/Common/button/initialize_all_up.gif" 
+                           RollOverImageUrl="/App_Themes/CzechAdExpressUk/Images/Common/button/initialize_all_down.gif" 
                            SkinID="initializeAllButton" 
 />
 
 <%-- Next Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
-                           ImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/suivant_up.gif" 
-                           RollOverImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/suivant_down.gif" 
+                           ImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/suivant_up.gif" 
+                           RollOverImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/suivant_down.gif" 
                            SkinID="nextButton" 
 />
 
 <%-- Save Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
-                           ImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/enregistrer_univers_up.gif" 
-                           RollOverImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/enregistrer_univers_down.gif" 
+                           ImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/enregistrer_univers_up.gif" 
+                           RollOverImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/enregistrer_univers_down.gif" 
                            SkinID="saveButton" 
 />
 
 <%-- Load Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol   
                            runat="server" 
-                           ImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/charger_up.gif" 
-                           RollOverImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/charger_down.gif" 
+                           ImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/charger_up.gif" 
+                           RollOverImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/charger_down.gif" 
                            SkinID="loadButton" 
 />
 
 <%-- Open Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
-                           ImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/ouvrir_up.gif" 
-                           RollOverImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/ouvrir_down.gif" 
+                           ImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/ouvrir_up.gif" 
+                           RollOverImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/ouvrir_down.gif" 
                            SkinID="ouvrirButton" 
 />
 
 <%-- Close Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
-                           ImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/fermer_up.gif" 
-                           RollOverImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/fermer_down.gif" 
+                           ImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/fermer_up.gif" 
+                           RollOverImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/fermer_down.gif" 
                            SkinID="fermerButton" 
 />
 
 <%-- Personnaliser Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
-                           ImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/personnaliser_up.gif" 
-                           RollOverImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/personnaliser_down.gif" 
+                           ImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/personnaliser_up.gif" 
+                           RollOverImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/personnaliser_down.gif" 
                            SkinID="personnaliserButton" 
 />
 
 <%-- Cancel Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
-                           ImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/annuler_up.gif" 
-                           RollOverImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/annuler_down.gif" 
+                           ImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/annuler_up.gif" 
+                           RollOverImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/annuler_down.gif" 
                            SkinID="annulerButton" 
 />
 
 <%-- Result Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
-                           ImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/resultat_up.gif" 
-                           RollOverImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/resultat_down.gif" 
+                           ImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/resultat_up.gif" 
+                           RollOverImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/resultat_down.gif" 
                            SkinID="resultatButton" 
 />
 
 <%-- Delete Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
-                           ImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/supprimer_up.gif" 
-                           RollOverImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/supprimer_down.gif" 
+                           ImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/supprimer_up.gif" 
+                           RollOverImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/supprimer_down.gif" 
                            SkinID="supprimerButton" 
 />
 
 <%-- Detail Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
-                           ImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/detail_up.gif" 
-                           RollOverImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/detail_down.gif" 
+                           ImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/detail_up.gif" 
+                           RollOverImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/detail_down.gif" 
                            SkinID="detailButton" 
 />
 
 <%-- Form Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
-                           ImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/bt_formes_up.gif" 
-                           RollOverImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/bt_formes_down.gif" 
+                           ImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/bt_formes_up.gif" 
+                           RollOverImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/bt_formes_down.gif" 
                            SkinID="formButton" 
 />
 
 <%-- Emission Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
-                           ImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/bt_emissions_up.gif" 
-                           RollOverImageUrl="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/button/bt_emissions_down.gif" 
+                           ImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/bt_emissions_up.gif" 
+                           RollOverImageUrl="/App_Themes/CzechAdExpressUk/Images/Culture/button/bt_emissions_down.gif" 
                            SkinID="EmissionButton" 
 />
 
 <%-- Actualities web control : used to show the actualities in the selection module page --%>
 <ctrHeader:actualitieswebcontrol  
                            runat="server" 
-                           ImageUrlPath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/AdExpressVisu.gif" 
+                           ImageUrlPath="/App_Themes/CzechAdExpressUk/Images/Common/AdExpressVisu.gif" 
                            TitleCss="actualities" 
                            RssTitleCss="txtViolet11Bold" 
                            RssDescriptionCss="txtViolet11" 
-                           ImageRssUrlPath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/iconRss.gif" 
+                           ImageRssUrlPath="/App_Themes/CzechAdExpressUk/Images/Common/iconRss.gif" 
 />
 
 <%-- Module selection web control : used to show adexpress modules--%>
@@ -535,34 +535,34 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            ModuleGroupInformationCss="moduleGroupInformation" 
                            ModuleGroupCss="moduleGroup" 
                            ModuleCss="Tips1" 
-                           ImageModuleUrlPath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/arrowModule.gif" 
-                           DescriptionImageList="198:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/PlanMedia.png,199:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/PlanMediaConcurrentiel.png,277:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/Concurrentiels.png,280:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/Potentiel.png,
-282:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/Portefeuille.png,196:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/PlanMedia.png,184:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/PlanMediaConcurrentiel.png,278:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/Concurrentiels.png,197:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/Dynamique.png,
-281:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/Potentiel.png,1950:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/Justificatifs.png,283:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/Portefeuille.png,194:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/TableauDynamique.png,195:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/Indicateurs.png,
-450:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/Tendances.png,475:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/TableauBord.png,601:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/TableauBord.png,602:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/TableauBord.png,1036:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/TableauBord.png,
-4370:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/TableauBord.png,546:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/Chronopresse.png,1920:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/Cadrage.png,1780:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/Dispositifs.png,1781:/App_Themes/CzechRepublicAdExpressUk/Images/Common/Infobulle/Programmes.png,4369:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Evaliant.png"
+                           ImageModuleUrlPath="/App_Themes/CzechAdExpressUk/Images/Common/arrowModule.gif" 
+                           DescriptionImageList="198:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/PlanMedia.png,199:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/PlanMediaConcurrentiel.png,277:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/Concurrentiels.png,280:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/Potentiel.png,
+282:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/Portefeuille.png,196:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/PlanMedia.png,184:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/PlanMediaConcurrentiel.png,278:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/Concurrentiels.png,197:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/Dynamique.png,
+281:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/Potentiel.png,1950:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/Justificatifs.png,283:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/Portefeuille.png,194:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/TableauDynamique.png,195:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/Indicateurs.png,
+450:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/Tendances.png,475:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/TableauBord.png,601:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/TableauBord.png,602:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/TableauBord.png,1036:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/TableauBord.png,
+4370:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/TableauBord.png,546:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/Chronopresse.png,1920:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/Cadrage.png,1780:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/Dispositifs.png,1781:/App_Themes/CzechAdExpressUk/Images/Common/Infobulle/Programmes.png,4369:/App_Themes/DefaultAdExpressFr/Images/Common/Infobulle/Evaliant.png"
 />
 <%-- Module title web control : used to show module title --%>
 <ctrHeader:ModuleTitleWebControl  
                            runat="server" 
-                           BlockFlechePath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/block_fleche.gif" 
-                           BlockDupliPath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/block_dupli.gif" 
+                           BlockFlechePath="/App_Themes/CzechAdExpressUk/Images/Common/block_fleche.gif" 
+                           BlockDupliPath="/App_Themes/CzechAdExpressUk/Images/Common/block_dupli.gif" 
                            TitleUppercaseCss="titleUppercase" 
 />
 
 <%-- Module bridge web control : used to switch between 2 modules --%>
 <ctrHeader:ModuleBridgeWebControl  
                            runat="server" 
-                           BlockFlechePath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/block_fleche.gif" 
-                           BlockDupliPath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/block_dupli.gif" 
+                           BlockFlechePath="/App_Themes/CzechAdExpressUk/Images/Common/block_fleche.gif" 
+                           BlockDupliPath="/App_Themes/CzechAdExpressUk/Images/Common/block_dupli.gif" 
                            TitleUppercaseCss="titleUppercase" 
 />
 
 <%-- Media seller web control : used to show media detail : Media Genre, Title ... --%>
 <ctrHeader:mediasellerwebcontrol  
                            runat="server" 
-                           BlockFlechePath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/block_fleche.gif" 
-                           BlockDupliPath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/block_dupli.gif" 
+                           BlockFlechePath="/App_Themes/CzechAdExpressUk/Images/Common/block_fleche.gif" 
+                           BlockDupliPath="/App_Themes/CzechAdExpressUk/Images/Common/block_dupli.gif" 
                            TitleUppercaseCss="titleUppercase" 
                            CommonCssClass="txtNoir11Bold" 
 />
@@ -570,10 +570,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%-- Information web control : used to show information about how to use the web menu --%>
 <ctrHeader:InformationWebControl  
                            runat="server" 
-                           FlashPath="/App_Themes/CzechRepublicAdExpressUk/Flash/Culture/infoOptions.swf" 
-                           FlashReplacementPath="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/FlashReplacement/infoOptions.gif" 
-                           FlashOneLinePath="/App_Themes/CzechRepublicAdExpressUk/Flash/Culture/infoOptionsOneLine.swf" 
-                           FlashOneLineReplacementPath="/App_Themes/CzechRepublicAdExpressUk/Images/Culture/FlashReplacement/infoOptionsOneLine.gif" 
+                           FlashPath="/App_Themes/CzechAdExpressUk/Flash/Culture/infoOptions.swf" 
+                           FlashReplacementPath="/App_Themes/CzechAdExpressUk/Images/Culture/FlashReplacement/infoOptions.gif" 
+                           FlashOneLinePath="/App_Themes/CzechAdExpressUk/Flash/Culture/infoOptionsOneLine.swf" 
+                           FlashOneLineReplacementPath="/App_Themes/CzechAdExpressUk/Images/Culture/FlashReplacement/infoOptionsOneLine.gif" 
 />
 
 <%-- One vehicle selection web control --%>
@@ -654,10 +654,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            HighlightBackgroundColorL1="#FFFFFF" 
                            HighlightBackgroundColorL2="#FFFFFF" 
                            HighlightBackgroundColorL3="#FFFFFF" 
-                           ImgBtnCroiOverPath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/fl_tri_croi3_in.gif" 
-                           ImgBtnCroiPath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/fl_tri_croi3.gif" 
-                           ImgBtnDeCroiOverPath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/fl_tri_decroi3_in.gif" 
-                           ImgBtnDeCroiPath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/fl_tri_decroi3.gif" 
+                           ImgBtnCroiOverPath="/App_Themes/CzechAdExpressUk/Images/Common/fl_tri_croi3_in.gif" 
+                           ImgBtnCroiPath="/App_Themes/CzechAdExpressUk/Images/Common/fl_tri_croi3.gif" 
+                           ImgBtnDeCroiOverPath="/App_Themes/CzechAdExpressUk/Images/Common/fl_tri_decroi3_in.gif" 
+                           ImgBtnDeCroiPath="/App_Themes/CzechAdExpressUk/Images/Common/fl_tri_decroi3.gif" 
                            CssLTotal="lv0" 
                            SkinID="portofolioResultTable" 
 />
@@ -821,10 +821,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            CssL1="lv2" 
                            CssLHeader="h2" 
                            HighlightBackgroundColorL1="#FFFFFF" 
-                           ImgBtnCroiOverPath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/fl_tri_croi3_in.gif" 
-                           ImgBtnCroiPath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/fl_tri_croi3.gif" 
-                           ImgBtnDeCroiOverPath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/fl_tri_decroi3_in.gif" 
-                           ImgBtnDeCroiPath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/fl_tri_decroi3.gif" 
+                           ImgBtnCroiOverPath="/App_Themes/CzechAdExpressUk/Images/Common/fl_tri_croi3_in.gif" 
+                           ImgBtnCroiPath="/App_Themes/CzechAdExpressUk/Images/Common/fl_tri_croi3.gif" 
+                           ImgBtnDeCroiOverPath="/App_Themes/CzechAdExpressUk/Images/Common/fl_tri_decroi3_in.gif" 
+                           ImgBtnDeCroiPath="/App_Themes/CzechAdExpressUk/Images/Common/fl_tri_decroi3.gif" 
                            CssDetailSelectionBordelLevel="dsBorderLevel" 
                            CssDetailSelectionL1="dsLv1" 
                            CssDetailSelectionL2="dsLv2" 
@@ -1019,17 +1019,17 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%-- Creatives web control : to display a set of creations, vehicle by vehicle, depending on a univers of products and media --%>
 <ctrCreatives:CreativesWebControl  
                            runat="server" 
-                           FooterImage="/App_Themes/CzechRepublicAdExpressUk/Images/Common/Result/footer.gif"
-                           HeaderImage="/App_Themes/CzechRepublicAdExpressUk/Images/Common/Result/header.gif"
-                           LoadingImage="/App_Themes/CzechRepublicAdExpressUk/Images/Common/waitAjax.gif"
-                           ButtonFirstDown="/App_Themes/CzechRepublicAdExpressUk/Images/Common/Result/bt_first_down.gif"
-                           ButtonFirstUp="/App_Themes/CzechRepublicAdExpressUk/Images/Common/Result/bt_first_up.gif"
-                           ButtonLastDown="/App_Themes/CzechRepublicAdExpressUk/Images/Common/Result/bt_last_down.gif"
-                           ButtonLastUp="/App_Themes/CzechRepublicAdExpressUk/Images/Common/Result/bt_last_up.gif"
-                           ButtonNextDown="/App_Themes/CzechRepublicAdExpressUk/Images/Common/Result/bt_next_down.gif"
-                           ButtonNextUp="/App_Themes/CzechRepublicAdExpressUk/Images/Common/Result/bt_next_up.gif"
-                           ButtonPreviousDown="/App_Themes/CzechRepublicAdExpressUk/Images/Common/Result/bt_previous_down.gif"
-                           ButtonPreviousUp="/App_Themes/CzechRepublicAdExpressUk/Images/Common/Result/bt_previous_up.gif"
+                           FooterImage="/App_Themes/CzechAdExpressUk/Images/Common/Result/footer.gif"
+                           HeaderImage="/App_Themes/CzechAdExpressUk/Images/Common/Result/header.gif"
+                           LoadingImage="/App_Themes/CzechAdExpressUk/Images/Common/waitAjax.gif"
+                           ButtonFirstDown="/App_Themes/CzechAdExpressUk/Images/Common/Result/bt_first_down.gif"
+                           ButtonFirstUp="/App_Themes/CzechAdExpressUk/Images/Common/Result/bt_first_up.gif"
+                           ButtonLastDown="/App_Themes/CzechAdExpressUk/Images/Common/Result/bt_last_down.gif"
+                           ButtonLastUp="/App_Themes/CzechAdExpressUk/Images/Common/Result/bt_last_up.gif"
+                           ButtonNextDown="/App_Themes/CzechAdExpressUk/Images/Common/Result/bt_next_down.gif"
+                           ButtonNextUp="/App_Themes/CzechAdExpressUk/Images/Common/Result/bt_next_up.gif"
+                           ButtonPreviousDown="/App_Themes/CzechAdExpressUk/Images/Common/Result/bt_previous_down.gif"
+                           ButtonPreviousUp="/App_Themes/CzechAdExpressUk/Images/Common/Result/bt_previous_up.gif"
 />
 
 <%-- Select items in classification web control : used to select Items in Classification --%>
@@ -1053,19 +1053,19 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            TreeIncludeFrameBodyCss="treeIncludeFrameBodyCss" 
                            TreeIncludeFrameCss="treeIncludeFrameCss" 
                            TreeIncludeFrameHeaderCss="treeIncludeFrameHeaderCss" 
-                           TreeViewIcons="/App_Themes/CzechRepublicAdExpressUk/Styles/TreeView/Icons" 
-                           TreeViewScripts="/App_Themes/CzechRepublicAdExpressUk/Styles/TreeView/Scripts" 
-                           TreeViewStyles="/App_Themes/CzechRepublicAdExpressUk/Styles/TreeView/Css" 
-                           ExcludeImage="/App_Themes/CzechRepublicAdExpressUk/Images/Common/exclude_item.gif"
-                           IncludeImage="/App_Themes/CzechRepublicAdExpressUk/Images/Common/include_item.gif"
-                           Intersectionimage="/App_Themes/CzechRepublicAdExpressUk/Images/Common/intersection.gif"
-                           TrashImage="/App_Themes/CzechRepublicAdExpressUk/Images/Common/button/bt_delete_up.GIF"
-                           DeleteImage="/App_Themes/CzechRepublicAdExpressUk/Styles/TreeView/Css/bt_delete_item.gif"
-                           LoupeUpImage = "/App_Themes/CzechRepublicAdExpressUk/Images/Common/button/bt_loupe_up.gif"
-                           LoupeDownImage = "/App_Themes/CzechRepublicAdExpressUk/Images/Common/button/bt_loupe_down.gif"
-                           InitializeUpImage = "/App_Themes/CzechRepublicAdExpressUk/Images/Common/button/initialize_up.gif"
-                           InitializeDownImage = "/App_Themes/CzechRepublicAdExpressUk/Images/Common/button/initialize_down.gif"
-                           WaitLoadingImage = "/App_Themes/CzechRepublicAdExpressUk/Images/Common/waitAjax.gif"
+                           TreeViewIcons="/App_Themes/CzechAdExpressUk/Styles/TreeView/Icons" 
+                           TreeViewScripts="/App_Themes/CzechAdExpressUk/Styles/TreeView/Scripts" 
+                           TreeViewStyles="/App_Themes/CzechAdExpressUk/Styles/TreeView/Css" 
+                           ExcludeImage="/App_Themes/CzechAdExpressUk/Images/Common/exclude_item.gif"
+                           IncludeImage="/App_Themes/CzechAdExpressUk/Images/Common/include_item.gif"
+                           Intersectionimage="/App_Themes/CzechAdExpressUk/Images/Common/intersection.gif"
+                           TrashImage="/App_Themes/CzechAdExpressUk/Images/Common/button/bt_delete_up.GIF"
+                           DeleteImage="/App_Themes/CzechAdExpressUk/Styles/TreeView/Css/bt_delete_item.gif"
+                           LoupeUpImage = "/App_Themes/CzechAdExpressUk/Images/Common/button/bt_loupe_up.gif"
+                           LoupeDownImage = "/App_Themes/CzechAdExpressUk/Images/Common/button/bt_loupe_down.gif"
+                           InitializeUpImage = "/App_Themes/CzechAdExpressUk/Images/Common/button/initialize_up.gif"
+                           InitializeDownImage = "/App_Themes/CzechAdExpressUk/Images/Common/button/initialize_down.gif"
+                           WaitLoadingImage = "/App_Themes/CzechAdExpressUk/Images/Common/waitAjax.gif"
 />
 <%-- Select items in classification web control : used to select Items in Classification --%>
 <ctrSelections:SelectRecapItemsInClassificationWebControl  
@@ -1088,27 +1088,27 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            TreeIncludeFrameBodyCss="treeIncludeFrameBodyCss" 
                            TreeIncludeFrameCss="treeIncludeFrameCss" 
                            TreeIncludeFrameHeaderCss="treeIncludeFrameHeaderCss" 
-                           TreeViewIcons="/App_Themes/CzechRepublicAdExpressUk/Styles/TreeView/Icons" 
-                           TreeViewScripts="/App_Themes/CzechRepublicAdExpressUk/Styles/TreeView/Scripts" 
-                           TreeViewStyles="/App_Themes/CzechRepublicAdExpressUk/Styles/TreeView/Css" 
-                           ExcludeImage="/App_Themes/CzechRepublicAdExpressUk/Images/Common/exclude_item.gif"
-                           IncludeImage="/App_Themes/CzechRepublicAdExpressUk/Images/Common/include_item.gif"
-                           Intersectionimage="/App_Themes/CzechRepublicAdExpressUk/Images/Common/intersection.gif"
-                           TrashImage="/App_Themes/CzechRepublicAdExpressUk/Images/Common/button/bt_delete_up.GIF"
-                           DeleteImage="/App_Themes/CzechRepublicAdExpressUk/Styles/TreeView/Css/bt_delete_item.gif"
-                           LoupeUpImage = "/App_Themes/CzechRepublicAdExpressUk/Images/Common/button/bt_loupe_up.gif"
-                           LoupeDownImage = "/App_Themes/CzechRepublicAdExpressUk/Images/Common/button/bt_loupe_down.gif"
-                           InitializeUpImage = "/App_Themes/CzechRepublicAdExpressUk/Images/Common/button/initialize_up.gif"
-                           InitializeDownImage = "/App_Themes/CzechRepublicAdExpressUk/Images/Common/button/initialize_down.gif"
-                           WaitLoadingImage = "/App_Themes/CzechRepublicAdExpressUk/Images/Common/waitAjax.gif"
+                           TreeViewIcons="/App_Themes/CzechAdExpressUk/Styles/TreeView/Icons" 
+                           TreeViewScripts="/App_Themes/CzechAdExpressUk/Styles/TreeView/Scripts" 
+                           TreeViewStyles="/App_Themes/CzechAdExpressUk/Styles/TreeView/Css" 
+                           ExcludeImage="/App_Themes/CzechAdExpressUk/Images/Common/exclude_item.gif"
+                           IncludeImage="/App_Themes/CzechAdExpressUk/Images/Common/include_item.gif"
+                           Intersectionimage="/App_Themes/CzechAdExpressUk/Images/Common/intersection.gif"
+                           TrashImage="/App_Themes/CzechAdExpressUk/Images/Common/button/bt_delete_up.GIF"
+                           DeleteImage="/App_Themes/CzechAdExpressUk/Styles/TreeView/Css/bt_delete_item.gif"
+                           LoupeUpImage = "/App_Themes/CzechAdExpressUk/Images/Common/button/bt_loupe_up.gif"
+                           LoupeDownImage = "/App_Themes/CzechAdExpressUk/Images/Common/button/bt_loupe_down.gif"
+                           InitializeUpImage = "/App_Themes/CzechAdExpressUk/Images/Common/button/initialize_up.gif"
+                           InitializeDownImage = "/App_Themes/CzechAdExpressUk/Images/Common/button/initialize_down.gif"
+                           WaitLoadingImage = "/App_Themes/CzechAdExpressUk/Images/Common/waitAjax.gif"
 />
 <%-- Select items in classification web control : used to select Items in Classification specific to details selection--%>
 <ctrSelections:SelectItemsInClassificationWebControl  
                            runat="server" 
                            
-                           TreeViewIcons = "/App_Themes/CzechRepublicAdExpressUk/Styles/TreeView/Icons"
-                           TreeViewScripts = "/App_Themes/CzechRepublicAdExpressUk/Styles/TreeView/Scripts"
-                           TreeViewStyles = "/App_Themes/CzechRepublicAdExpressUk/Styles/TreeView/Css"
+                           TreeViewIcons = "/App_Themes/CzechAdExpressUk/Styles/TreeView/Icons"
+                           TreeViewScripts = "/App_Themes/CzechAdExpressUk/Styles/TreeView/Scripts"
+                           TreeViewStyles = "/App_Themes/CzechAdExpressUk/Styles/TreeView/Css"
                            ChildNodeExcludeCss = "txtChildNodeExcludeCss"
                            ChildNodeIncludeCss = "txtChildNodeIncludeCss"
                            ParentNodeChildExcludeCss = "txtParentNodeChildExcludeCss"
@@ -1126,8 +1126,8 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%-- Global calendar web control : used to display the global calendar --%>
 <ctrSelections:GlobalCalendarWebControl  
                            runat="server"
-                           CssPath="Css/CzechRepublicAdExpressUk/Calendar.css"
-                           ThemeName="CzechRepublicAdExpressUk"
+                           CssPath="Css/CzechAdExpressUk/Calendar.css"
+                           ThemeName="CzechAdExpressUk"
 />
 
 <%-- Initialize product web control : used to initialize products selection --%>
@@ -1161,7 +1161,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%-- generic media schedule web control : used to display a generic media plan --%>
 <ctrMadiaPlan:genericmediaschedulewebcontrol 
                            runat="server"
-                           ThemeName = "CzechRepublicAdExpressUk" 
+                           ThemeName = "CzechAdExpressUk" 
 />
 
 <%-- Period Detail Selection WebControl : designed for Media Plan Schedules --%>
@@ -1176,7 +1176,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%-- Generic detail selection web control : used to display columns detail --%>
 <ctrHeader:genericdetailselectionwebcontrol 
                            runat="server"
-                           ThemeName = "CzechRepublicAdExpressUk"
+                           ThemeName = "CzechAdExpressUk"
 />
 
 <%-- Media insertions creations result web control --%>
@@ -1186,7 +1186,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            CssListLabel="txtViolet11Bold"
                            CssListBox="txtNoir11Bold"
                            CssCustomSectionTitle="txtViolet11Bold"
-                           ThemeName = "CzechRepublicAdExpressUk"
+                           ThemeName = "CzechAdExpressUk"
 />
 
 <%-- Option layer web control : used to display generic details selection --%>
@@ -1194,14 +1194,14 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            runat="server" 
                            CssDefaultListLabel="txtViolet11Bold"
 						   BackGroundColor="#E1E0DA" 
-						   ThemeName = "CzechRepublicAdExpressUk"
+						   ThemeName = "CzechAdExpressUk"
 />
 
 <%-- Option table types web control : used to display format table details selection --%>
 <ctrHeader:ResultsTableTypesWebControl 
                            runat="server" 
                            BorderColor="#644883"
-                           ImageButtonArrow="/App_Themes/CzechRepublicAdExpressUk/Images/Common/Button/bt_arrow_tall_top.gif"
+                           ImageButtonArrow="/App_Themes/CzechAdExpressUk/Images/Common/Button/bt_arrow_tall_top.gif"
 						   SkinID = "ResultsTableTypesWebControl1"
 />
 <%-- Option Dash Board web control : used to display Dash Board details selection --%>
@@ -1209,7 +1209,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            runat="server" 
                            BorderColor="#644883"
                            CommonCssClass="txtNoir11Bold" 
-                           ImageButtonArrow="/App_Themes/CzechRepublicAdExpressUk/Images/Common/Button/bt_arrow_tall_top.gif"
+                           ImageButtonArrow="/App_Themes/CzechAdExpressUk/Images/Common/Button/bt_arrow_tall_top.gif"
 						   SkinID = "ResultsDashBoardOptionsWebControl1"
 />
 
@@ -1476,10 +1476,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 						   HighlightBackgroundColorL2="#FFFFFF" 
 						   HighlightBackgroundColorL3="#FFFFFF"  
 						   HighlightBackgroundColorL4="#FFFFFF" 
-						   ImgBtnCroiOverPath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/fl_tri_croi3_in.gif"
-						   ImgBtnCroiPath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/fl_tri_croi3.gif" 
-						   ImgBtnDeCroiOverPath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/fl_tri_decroi3_in.gif"
-						   ImgBtnDeCroiPath="/App_Themes/CzechRepublicAdExpressUk/Images/Common/fl_tri_decroi3.gif" 
+						   ImgBtnCroiOverPath="/App_Themes/CzechAdExpressUk/Images/Common/fl_tri_croi3_in.gif"
+						   ImgBtnCroiPath="/App_Themes/CzechAdExpressUk/Images/Common/fl_tri_croi3.gif" 
+						   ImgBtnDeCroiOverPath="/App_Themes/CzechAdExpressUk/Images/Common/fl_tri_decroi3_in.gif"
+						   ImgBtnDeCroiPath="/App_Themes/CzechAdExpressUk/Images/Common/fl_tri_decroi3.gif" 
 						   PageSizeOptions="100,200,500,1000" 
 						   AllowPaging="True"
 						   CssDetailSelectionBordelLevel="dsBorderLevel"

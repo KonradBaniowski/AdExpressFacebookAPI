@@ -76,6 +76,10 @@ namespace TNS.AdExpress.Web.Functions{
 						return(GestionWeb.GetWebWord(1492,webSession.SiteLanguage));
 					case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.sectorProduct:
 						return(GestionWeb.GetWebWord(1105,webSession.SiteLanguage));
+                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.subSector:
+                        return (GestionWeb.GetWebWord(552, webSession.SiteLanguage));
+                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.subSectorAdvertiser:
+                        return (GestionWeb.GetWebWord(2610, webSession.SiteLanguage));
 					case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.product:
 						return(GestionWeb.GetWebWord(858,webSession.SiteLanguage));
 					case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiser:

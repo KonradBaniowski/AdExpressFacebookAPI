@@ -3,7 +3,7 @@ Menu related selectors
 */
 .jsdomenudiv {
 	background-color: #FFFFFF;
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/menu_left_grey.png);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/menu_left_grey.png);
 	background-repeat: repeat-y;
 	border: 1px solid #8A867A;
 	cursor: default;
@@ -43,7 +43,7 @@ Menu related selectors
 }
 
 .jsdomenuarrow {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/menu_arrow.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/menu_arrow.gif);
 	background-repeat: no-repeat; /* Do not alter this line! */
 	height: 7px;
 	position: absolute; /* Do not alter this line! */
@@ -52,7 +52,7 @@ Menu related selectors
 }
 
 .jsdomenuarrowover {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/menu_arrow_o.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/menu_arrow_o.gif);
 	background-repeat: no-repeat; /* Do not alter this line! */
 	height: 7px;
 	position: absolute; /* Do not alter this line! */
@@ -72,7 +72,7 @@ Menu bar related selectors
 */
 .jsdomenubardiv {
 	background-color: #ECE9D8;
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/menu_divider.png);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/menu_divider.png);
 	background-position: left;
 	background-repeat: no-repeat;
 	border: 1px outset;
@@ -146,7 +146,7 @@ Example of selectors for icons. Change the height and width to match the actual
 height and width of the icon image.
 */
 .calendarMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/calendarMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/calendarMenuIcon.gif);
 	background-repeat: no-repeat; /* Do not alter this line! */
 	height: 20px;
 	left: 2px;
@@ -154,7 +154,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .excelColMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/excelColMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/excelColMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -162,7 +162,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .excelExportMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/excelExportMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/excelExportMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -170,7 +170,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .excelMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/excelMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/excelMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -178,7 +178,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .excelUnitMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/excelUnitMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/excelUnitMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -186,7 +186,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .helpMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/helpMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/helpMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -194,7 +194,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .jpegExportMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/jpegExportMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/jpegExportMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -202,7 +202,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .mediaMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/mediaMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/mediaMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -210,7 +210,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .programMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/programMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/programMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -218,7 +218,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .sponsorshipMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/sponsorshipMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/sponsorshipMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -226,7 +226,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .pdfExportMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/pdfExportMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/pdfExportMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -234,7 +234,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .printColMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/printColMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/printColMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -242,7 +242,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .printMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/printMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/printMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -250,7 +250,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .printHTMLMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/printHTMLMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/printHTMLMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -258,7 +258,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .productMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/productMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/productMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -266,7 +266,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .resultMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/resultMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/resultMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -274,7 +274,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .saveMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/saveMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/saveMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -282,7 +282,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .selectedMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/selectedMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/selectedMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -290,7 +290,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .sloganMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/sloganMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/sloganMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -298,7 +298,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .targetMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/targetMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/targetMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -306,7 +306,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .textExportMenuIcon {
-	background-image: url(/App_Themes/CzechRepublicAdExpressUk/Images/Common/Menu/textExportMenuIcon.gif);
+	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/Menu/textExportMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
