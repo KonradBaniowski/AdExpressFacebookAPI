@@ -3294,4 +3294,30 @@ namespace TNS.AdExpress.Constantes.Web{
 	}
 	#endregion
 
+    #region Common Layers
+    /// <summary>
+    /// contains all constantes to identify the common web site layers
+    /// </summary>
+    public class Layers {
+        public enum Id {
+            /// <summary>
+            /// Classification layer Id
+            /// </summary>
+            classification = 0,
+            /// <summary>
+            /// Utilities layer Id
+            /// </summary>
+            utilities = 1,
+            /// <summary>
+            /// Date layer Id
+            /// </summary>
+            date = 2,
+            /// <summary>
+            /// Classification level list layer Id
+            /// </summary>
+            classificationLevelList = 3
+        }
+    }
+    #endregion
+
 }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<NyxConfiguration isAlertsActivated="true" targetHost="http://localhost:2018/">
+<NyxConfiguration isAlertsActivated="false" targetHost="http://localhost:2018/">
   <dataAccessLayers>
     <dataAccessLayer enum="Alert" name="AlertDAL" assemblyName="TNS.AdExpress.Alerts.DAL.Default.dll" class="TNS.AdExpress.Alerts.DAL.Default.AlertsDAL" />
     <dataAccessLayer enum="Session" name="SessionDAL" assemblyName="TNS.AdExpress.StaticNavSession.DAL.Default.dll" class="TNS.AdExpress.StaticNavSession.DAL.Default.AlertDAL" />

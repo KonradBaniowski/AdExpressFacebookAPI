@@ -41,6 +41,10 @@ namespace TNS.AdExpress.Domain.Classification {
         /// </summary>
         private bool _showActiveMedia;
         /// <summary>
+        /// True if we need to calculate the last available date for this vehicle
+        /// </summary>
+        private bool _needLastAvailableDate;
+        /// <summary>
         /// Allowed units list
         /// </summary>
         private List<CustomerSessions.Unit> _allowedUnitsList;
@@ -99,6 +103,7 @@ namespace TNS.AdExpress.Domain.Classification {
         /// <param name="showInsertions">Show insertions</param>
         /// <param name="showCreations">Show creations</param>
         /// <param name="showActiveMedia">Show avtive media</param>
+        /// <param name="needLastAvailableDate">True if we need to calculate the last available date for this vehicle</param>
         /// <param name="allowedUnitsList">Allowed units list</param>
         /// <param name="allowedMediaLevelItemsList">Allowed media level items list</param>
         /// <param name="mediaSelectionParentsList">Media selection parents list</param>
@@ -108,6 +113,7 @@ namespace TNS.AdExpress.Domain.Classification {
                                   bool showInsertions, 
                                   bool showCreations,
                                   bool showActiveMedia,
+                                  bool needLastAvailableDate,
                                   List<CustomerSessions.Unit> allowedUnitsList, 
                                   List<DetailLevelItemInformation.Levels> allowedMediaLevelItemsList,
                                   string defaultMediaSelectionParent,
@@ -131,6 +137,7 @@ namespace TNS.AdExpress.Domain.Classification {
             _showInsertions = showInsertions;
             _showCreations = showCreations;
             _showActiveMedia = showActiveMedia;
+            _needLastAvailableDate = needLastAvailableDate;
             _detailColumnId = detailColumnId;
 
         }
@@ -141,6 +148,7 @@ namespace TNS.AdExpress.Domain.Classification {
         /// <param name="databaseId">Data base id</param>
         /// <param name="showInsertions">Show insertions</param>
         /// <param name="showCreations">Show creations</param>
+        /// <param name="needLastAvailableDate">True if we need to calculate the last available date for this vehicle</param>
         /// <param name="allowedUnitsList">Allowed units list</param>
         /// <param name="allowedMediaLevelItemsList">Allowed media level items list</param>
         /// <param name="mediaSelectionParentsList">Media selection parents list</param>
@@ -150,13 +158,15 @@ namespace TNS.AdExpress.Domain.Classification {
 								  Int64 databaseId,
 								  bool showInsertions,
 								  bool showCreations,
-                                  bool showActiveMedia,  
+                                  bool showActiveMedia,
+                                  bool needLastAvailableDate,
 								  List<CustomerSessions.Unit> allowedUnitsList,
 								  List<DetailLevelItemInformation.Levels> allowedMediaLevelItemsList,
 								  string defaultMediaSelectionParent,
 								  List<DetailLevelItemInformation.Levels> mediaSelectionParentsList,
 								  Int64 detailColumnId,List<DetailLevelItemInformation.Levels> allowedRecapMediaLevelItemsList):
-			this(id, databaseId, showInsertions, showCreations, showActiveMedia, allowedUnitsList, allowedMediaLevelItemsList,defaultMediaSelectionParent,mediaSelectionParentsList, detailColumnId) {
+            this(id, databaseId, showInsertions, showCreations, showActiveMedia, needLastAvailableDate, allowedUnitsList, allowedMediaLevelItemsList, defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId)
+        {
 			_allowedRecapMediaLevelItemsList = allowedRecapMediaLevelItemsList;
 		}
         #endregion
@@ -187,10 +197,16 @@ namespace TNS.AdExpress.Domain.Classification {
             get { return _showCreations; }
         }
         /// <summary>
-        /// Get show active media
+        /// Get if we need to calculate the last available date for this vehicle
         /// </summary>
         public bool ShowActiveMedia {
             get { return _showActiveMedia; }
+        }
+        /// <summary>
+        /// Get show active media
+        /// </summary>
+        public bool NeedLastAvailableDate {
+            get { return _needLastAvailableDate; }
         }
         /// <summary>
         /// Get allowed units enum list

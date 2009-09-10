@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <vehicles>
   <!-- TV -->
-  <vehicle id="tv" databaseId="3" showInsertions="false" showCreations="false">
+  <vehicle id="tv" databaseId="3" showInsertions="false" showCreations="false" needLastAvailableDate="true">
     <!-- Units-->
     <allowedUnits>
       <allowedUnit>euro</allowedUnit>
@@ -72,7 +72,7 @@
     </allowedUniverseLevels>
     </vehicle>
   <!-- RADIO -->
-  <vehicle id="radio" databaseId="7" showInsertions="false" showCreations="false">
+  <vehicle id="radio" databaseId="7" showInsertions="false" showCreations="false" needLastAvailableDate="true">
     <!-- Units-->
     <allowedUnits>
       <allowedUnit>euro</allowedUnit>
@@ -137,7 +137,7 @@
     </allowedUniverseLevels>
   </vehicle>
   <!-- OUTDOOR -->
-  <vehicle id="outdoor" databaseId="1" showInsertions="false" showCreations="false">
+  <vehicle id="outdoor" databaseId="1" showInsertions="false" showCreations="false" needLastAvailableDate="true">
     <!-- Units-->
     <allowedUnits>
       <allowedUnit>euro</allowedUnit>
@@ -203,7 +203,7 @@
     </allowedUniverseLevels>
   </vehicle>
   <!-- Internet -->
-  <vehicle id="internet" databaseId="6" showInsertions="false" showCreations="false">
+  <vehicle id="internet" databaseId="6" showInsertions="false" showCreations="false" needLastAvailableDate="true">
     <!-- Units-->
     <allowedUnits>
       <allowedUnit>euro</allowedUnit>
@@ -269,7 +269,7 @@
     </allowedUniverseLevels>
   </vehicle>
   <!-- Cinema -->
-  <vehicle id="cinema" databaseId="5" showInsertions="false" showCreations="false">
+  <vehicle id="cinema" databaseId="5" showInsertions="false" showCreations="false" needLastAvailableDate="true">
     <!-- Units-->
     <allowedUnits>
       <allowedUnit>euro</allowedUnit>
@@ -333,7 +333,7 @@
     </allowedUniverseLevels>
   </vehicle>
   <!-- PRESS -->
-  <vehicle id="press" databaseId="2" showInsertions="true" showCreations="false">
+  <vehicle id="press" databaseId="2" showInsertions="true" showCreations="false" needLastAvailableDate="true">
     <!-- Units-->
     <allowedUnits>
       <allowedUnit>euro</allowedUnit>

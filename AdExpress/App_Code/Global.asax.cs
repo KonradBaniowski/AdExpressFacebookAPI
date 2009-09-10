@@ -19,12 +19,16 @@ using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Web.Core.Utilities;
 
 using TNS.Classification;
 using TNS.AdExpress.Domain;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.XmlLoader;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpressI.Date;
+using System.Reflection;
 
 
 namespace AdExpress {
@@ -102,7 +106,11 @@ namespace AdExpress {
 				// Initialisation des listes d'univers produit d'AdExpress
 				//TNS.AdExpress.Web.Core.ClassificationList.Product.Init();
 
-				ActiveMediaList.Init(WebApplicationParameters.DefaultDataLanguage); 
+				ActiveMediaList.Init(WebApplicationParameters.DefaultDataLanguage);
+
+                CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.date];
+                IDate date = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
+                LastAvailableDate.Init(date.GetLastAvailableDate());
 
 				//Initialisation de la configuration Reseau pour les résultats PDF
 				//AnubisCommon.Network.Configuration networkConfig=AnubisBF.Network.ConfigurationSystem.Load(AppDomain.CurrentDomain.BaseDirectory+@"config\"+AnubisConstantes.Application.Configuration.NETWORK_FILE);

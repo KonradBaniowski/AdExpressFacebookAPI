@@ -131,5 +131,10 @@ namespace TNS.AdExpress.Constantes.Web {
 		/// </summary>
 		public const string INFO_NEWS_FILENAME = @"InfoNews.xml";
 
+        /// <summary>
+        /// Layers common to all web site configuartion file
+        /// </summary>
+        public const string CORE_LAYERS_CONFIGURATION_FILENAME = @"CoreLayersConfiguration.xml";
+
     }
 }

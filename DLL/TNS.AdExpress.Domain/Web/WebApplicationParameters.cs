@@ -14,6 +14,7 @@ using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Web.Core;
 using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Constantes.Web;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpress.Domain.Web {
 
@@ -101,6 +102,11 @@ namespace TNS.AdExpress.Domain.Web {
         protected static DundasConfiguration _dundas = null;
 
 		protected static TNS.AdExpress.Domain.Results.InfoNews _infoNewsInformations = null;
+        /// <summary>
+        /// Collections of layers which can be called in all web site
+        /// <example></example>
+        /// </summary>
+        protected static Dictionary<WebConstantes.Layers.Id, Domain.Layers.CoreLayer> _coreLayers = null;
         #endregion
         
         #region Contructeur
@@ -131,7 +137,8 @@ namespace TNS.AdExpress.Domain.Web {
             _portofolioDetailMediaColumns = new PortofolioDetailMediaColumns(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.PORTOFOLIO_DETAIL_MEDIA_CONFIGURATION_FILENAME));
             _dundas = new DundasConfiguration(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.DUNDAS_CONFIGURATION_FILENAME));
 			_infoNewsInformations = new InfoNews(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.INFO_NEWS_FILENAME));
-			
+            _coreLayers = CoreLayersXL.Load(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.CORE_LAYERS_CONFIGURATION_FILENAME));
+
         }
         #endregion
 
@@ -261,7 +268,12 @@ namespace TNS.AdExpress.Domain.Web {
 		public static TNS.AdExpress.Domain.Results.InfoNews InfoNewsInformations {
 			get { return _infoNewsInformations; }
 		}
-
+        /// <summary>
+        /// Get Collections of layers which can be called in all web site
+        /// </summary>
+        public static Dictionary<WebConstantes.Layers.Id, Domain.Layers.CoreLayer> CoreLayers {
+            get { return _coreLayers; }
+        }
         #endregion
 
     }

@@ -38,6 +38,9 @@ using TNS.FrameWork.Date;
 using Portofolio = TNS.AdExpressI.Portofolio;
 using Domain = TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpressI.Date;
 
 /// <summary>
 /// Page de sélection des dates (global)
@@ -267,192 +270,27 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
 	/// <param name="e">Argument</param>
 	protected void validateButton2_Click(object sender, System.EventArgs e) {
 		try {
-			DateDll.AtomicPeriodWeek startWeek;
-			DateDll.AtomicPeriodWeek endWeek;
-			DateDll.AtomicPeriodWeek tmp;
-			DateTime dateBegin;
-			DateTime dateEnd;
-			DateTime lastDayOfWeek;
-			DateTime compareDate;
-			DateTime lastDayEnable = DateTime.Now;
-			DateTime tempDate = DateTime.Now;
-			bool isLastCompletePeriod = false;
-			DateTime firstDayOfMonth;
-			DateTime lastDayOfMonth;
-			DateTime previousMonth;
-			Int32 lastDayOfMonthInt;
 
-			if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE) {
-				switch (periodCalendarDisponibilityType) {
+            CoreLayer cl = WebApplicationParameters.CoreLayers[WebConstantes.Layers.Id.date];
+            IDate date = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
+            int selectedValue = -1;
 
-					case WebConstantes.globalCalendar.periodDisponibilityType.currentDay:
-						lastDayEnable = DateTime.Now;
-						break;
-					case WebConstantes.globalCalendar.periodDisponibilityType.lastCompletePeriod:
-						lastDayEnable = GlobalCalendarWebControl1.FirstDayNotEnable.AddDays(-1);
-						isLastCompletePeriod = true;
-						break;
+            switch (selectedIndex) {
+                case 0:
+                    selectedValue = int.Parse(yearDateList.SelectedValue);
+                    break;
+                case 1:
+                    selectedValue = int.Parse(monthDateList.SelectedValue);
+                    break;
+                case 2:
+                    selectedValue = int.Parse(weekDateList.SelectedValue);
+                    break;
+                case 3:
+                    selectedValue = int.Parse(dayDateList.SelectedValue);
+                    break;
+            }
 
-				}
-			}
-
-			switch (selectedIndex) {
-				case 0:
-					if (int.Parse(yearDateList.SelectedValue) != 0) {
-						_webSession.PeriodType = CstPeriodType.nLastYear;
-						_webSession.PeriodLength = int.Parse(yearDateList.SelectedValue);
-						_webSession.PeriodBeginningDate = DateTime.Now.AddYears(1 - _webSession.PeriodLength).ToString("yyyy0101");
-						_webSession.PeriodEndDate = DateTime.Now.ToString("yyyyMMdd");
-						_webSession.DetailPeriod = CstPeriodDetail.monthly;
-					}
-					else {
-						throw (new AdExpressException.AnalyseDateSelectionException(GestionWeb.GetWebWord(885, _webSession.SiteLanguage)));
-					}
-					break;
-				case 1:
-					if (int.Parse(monthDateList.SelectedValue) != 0) {
-						_webSession.PeriodType = CstPeriodType.nLastMonth;
-						_webSession.PeriodLength = int.Parse(monthDateList.SelectedValue);
-						if (isLastCompletePeriod) {
-							firstDayOfMonth = new DateTime(lastDayEnable.Year, lastDayEnable.Month, 1);
-							lastDayOfMonth = (firstDayOfMonth.AddMonths(1)).AddDays(-1);
-
-							if (lastDayEnable == lastDayOfMonth) {
-								_webSession.PeriodBeginningDate = lastDayEnable.AddMonths(1 - _webSession.PeriodLength).ToString("yyyyMM01"); ;
-								_webSession.PeriodEndDate = lastDayEnable.ToString("yyyyMMdd");
-							}
-							else {
-								_webSession.PeriodBeginningDate = lastDayEnable.AddMonths(0 - _webSession.PeriodLength).ToString("yyyyMM01"); ;
-								previousMonth = lastDayEnable.AddMonths(-1);
-								firstDayOfMonth = new DateTime(previousMonth.Year, previousMonth.Month, 1);
-								lastDayOfMonthInt = ((firstDayOfMonth.AddMonths(1)).AddDays(-1)).Day;
-								_webSession.PeriodEndDate = firstDayOfMonth.ToString("yyyyMM") + lastDayOfMonthInt;
-							}
-
-						}
-						else {
-							_webSession.PeriodBeginningDate = lastDayEnable.AddMonths(1 - _webSession.PeriodLength).ToString("yyyyMM01"); ;
-							_webSession.PeriodEndDate = lastDayEnable.ToString("yyyyMMdd");
-						}
-						_webSession.DetailPeriod = CstPeriodDetail.monthly;
-					}
-					else {
-						throw (new AdExpressException.AnalyseDateSelectionException(GestionWeb.GetWebWord(885, _webSession.SiteLanguage)));
-					}
-					break;
-				case 2:
-					if (int.Parse(weekDateList.SelectedValue) != 0) {
-						_webSession.PeriodType = CstPeriodType.nLastWeek;
-						_webSession.PeriodLength = int.Parse(weekDateList.SelectedValue);
-						startWeek = new DateDll.AtomicPeriodWeek(lastDayEnable);
-						endWeek = new DateDll.AtomicPeriodWeek(lastDayEnable);
-
-						if (isLastCompletePeriod) {
-							lastDayOfWeek = endWeek.FirstDay.AddDays(6);
-
-							if (lastDayOfWeek == lastDayEnable) {
-								dateEnd = lastDayEnable;
-							}
-							else {
-								startWeek.SubWeek(1);
-								endWeek.SubWeek(1);
-								lastDayOfWeek = endWeek.FirstDay.AddDays(6);
-								dateEnd = lastDayOfWeek;
-							}
-						}
-						else {
-							dateEnd = lastDayEnable;
-						}
-
-						_webSession.PeriodEndDate = dateEnd.Year.ToString() + dateEnd.Month.ToString("00") + dateEnd.Day.ToString("00");
-						startWeek.SubWeek(_webSession.PeriodLength - 1);
-						dateBegin = startWeek.FirstDay;
-						_webSession.PeriodBeginningDate = dateBegin.Year.ToString() + dateBegin.Month.ToString("00") + dateBegin.Day.ToString("00");
-
-						_webSession.DetailPeriod = CstPeriodDetail.weekly;
-					}
-					else {
-						throw (new AdExpressException.AnalyseDateSelectionException(GestionWeb.GetWebWord(885, _webSession.SiteLanguage)));
-					}
-					break;
-				case 3:
-					_webSession.PeriodType = CstPeriodType.nLastDays;
-					_webSession.PeriodLength = int.Parse(dayDateList.SelectedValue);
-					tempDate = lastDayEnable;
-					_webSession.PeriodBeginningDate = tempDate.AddDays(1 - _webSession.PeriodLength).ToString("yyyyMMdd"); ;
-					_webSession.PeriodEndDate = tempDate.ToString("yyyyMMdd");
-					_webSession.DetailPeriod = CstPeriodDetail.dayly;
-					break;
-				case 4:
-					_webSession.PeriodType = CstPeriodType.previousYear;
-					_webSession.PeriodLength = 1;
-					_webSession.PeriodBeginningDate = DateTime.Now.AddYears(-1).ToString("yyyy0101");
-					_webSession.PeriodEndDate = DateTime.Now.AddYears(-1).ToString("yyyy1231");
-					_webSession.DetailPeriod = CstPeriodDetail.monthly;
-					break;
-				case 5:
-					_webSession.PeriodType = CstPeriodType.previousMonth;
-					_webSession.PeriodLength = 1;
-					firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-					lastDayOfMonthInt = (firstDayOfMonth.AddDays(-1)).Day;
-					_webSession.PeriodBeginningDate = DateTime.Now.AddMonths(-1).ToString("yyyyMM01");
-					_webSession.PeriodEndDate = DateTime.Now.AddMonths(-1).ToString("yyyyMM") + lastDayOfMonthInt;
-					_webSession.DetailPeriod = CstPeriodDetail.monthly;
-					break;
-				case 6:
-					_webSession.PeriodType = CstPeriodType.previousWeek;
-					_webSession.PeriodLength = 1;
-					tmp = new DateDll.AtomicPeriodWeek(DateTime.Now);
-					tmp.SubWeek(1);
-					dateBegin = tmp.FirstDay;
-					_webSession.PeriodBeginningDate = dateBegin.Year.ToString() + dateBegin.Month.ToString("00") + dateBegin.Day.ToString("00");
-					dateEnd = tmp.FirstDay.AddDays(6);
-					_webSession.PeriodEndDate = dateEnd.Year.ToString() + dateEnd.Month.ToString("00") + dateEnd.Day.ToString("00");
-					_webSession.DetailPeriod = CstPeriodDetail.weekly;
-					break;
-				case 7:
-					_webSession.PeriodType = CstPeriodType.previousDay;
-					_webSession.PeriodLength = 2;
-					_webSession.PeriodBeginningDate = _webSession.PeriodEndDate = DateTime.Now.AddDays(1 - _webSession.PeriodLength).ToString("yyyyMMdd");
-					_webSession.DetailPeriod = CstPeriodDetail.dayly;
-					break;
-				case 8:
-					_webSession.PeriodType = CstPeriodType.currentYear;
-					_webSession.PeriodLength = 1;
-					_webSession.PeriodBeginningDate = DateTime.Now.AddYears(1 - _webSession.PeriodLength).ToString("yyyy0101");
-					_webSession.PeriodEndDate = DateTime.Now.ToString("yyyyMMdd");
-					_webSession.DetailPeriod = CstPeriodDetail.monthly;
-					break;
-				default:
-					throw (new AdExpressException.AnalyseDateSelectionException(GestionWeb.GetWebWord(885, _webSession.SiteLanguage)));
-			}
-
-			compareDate = new DateTime(Convert.ToInt32(_webSession.PeriodEndDate.Substring(0, 4)), Convert.ToInt32(_webSession.PeriodEndDate.Substring(4, 2)), Convert.ToInt32(_webSession.PeriodEndDate.Substring(6, 2)));
-
-			if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE) {
-
-				if (CompareDateEnd(lastDayEnable, compareDate))
-					_webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_webSession.PeriodBeginningDate, _webSession.PeriodEndDate, true, comparativePeriodCalendarType, periodCalendarDisponibilityType);
-				else {
-
-					switch (periodCalendarDisponibilityType) {
-
-						case WebConstantes.globalCalendar.periodDisponibilityType.currentDay:
-							_webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_webSession.PeriodBeginningDate, lastDayEnable.ToString("yyyyMMdd"), true, comparativePeriodCalendarType, periodCalendarDisponibilityType);
-							break;
-						case WebConstantes.globalCalendar.periodDisponibilityType.lastCompletePeriod:
-							_webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_webSession.PeriodBeginningDate, lastDayEnable.ToString("yyyyMMdd"), true, comparativePeriodCalendarType, periodCalendarDisponibilityType);
-							break;
-					}
-				}
-
-			}
-			else {
-				if (CompareDateEnd(DateTime.Now, compareDate))
-					_webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_webSession.PeriodBeginningDate, _webSession.PeriodEndDate);
-				else
-					_webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_webSession.PeriodBeginningDate, DateTime.Now.ToString("yyyyMMdd"));
-			}
+            date.SetDate(ref _webSession, GlobalCalendarWebControl1.FirstDayNotEnable, periodCalendarDisponibilityType, comparativePeriodCalendarType, selectedIndex, selectedValue);
 
 			_webSession.Source.Close();
 			Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession);

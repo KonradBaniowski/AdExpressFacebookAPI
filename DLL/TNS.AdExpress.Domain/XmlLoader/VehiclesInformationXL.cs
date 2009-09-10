@@ -48,6 +48,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             bool showInsertions=false;
             bool showCreations = false;
             bool showActiveMedia = false;
+            bool needLastAvailableDate = false;
 			bool autopromo = false;
             string readString = string.Empty;
             #endregion
@@ -60,7 +61,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                         switch (reader.LocalName) {
                             case "vehicle":
                                 if (id.Length > 0) {
-                                    vhInfo = new VehicleInformation(id, baseId, showInsertions, showCreations, showActiveMedia, allowedUnitsList, allowedMediaLevelItemsList, defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId, allowedRecapMediaLevelItemsList);
+                                    vhInfo = new VehicleInformation(id, baseId, showInsertions, showCreations, showActiveMedia, needLastAvailableDate, allowedUnitsList, allowedMediaLevelItemsList, defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId, allowedRecapMediaLevelItemsList);
 									vhInfo.AllowedMediaSelectionLevelItemsList = allowedMediaSelectionLevelItemsList;
 									vhInfo.DefaultMediaSelectionDetailLevels = defaultMediaSelectionDetailLevels;
 									vhInfo.DefaultMediaSelectionDetailLevel = defaultMediaSelectionDetailLevel;
@@ -69,6 +70,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                     list.Add(vhInfo);
                                     id = string.Empty;
                                     showActiveMedia = false;
+                                    needLastAvailableDate = false;
                                     defaultMediaSelectionParent = string.Empty;
                                     allowedUnitsList = new List<CustomerSessions.Unit>();
                                     allowedMediaLevelItemsList = new List<DetailLevelItemInformation.Levels>();
@@ -90,7 +92,9 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 showCreations = bool.Parse(reader.GetAttribute("showCreations"));
                                 if (reader.GetAttribute("showActiveMedia") != null && reader.GetAttribute("showActiveMedia").Length > 0)
                                     showActiveMedia = bool.Parse(reader.GetAttribute("showActiveMedia"));
-								if (reader.GetAttribute("autopromo") != null && reader.GetAttribute("autopromo").Length > 0)
+                                if (reader.GetAttribute("needLastAvailableDate") != null && reader.GetAttribute("needLastAvailableDate").Length > 0)
+                                    needLastAvailableDate = bool.Parse(reader.GetAttribute("needLastAvailableDate"));
+                                if (reader.GetAttribute("autopromo") != null && reader.GetAttribute("autopromo").Length > 0)
 									autopromo = bool.Parse(reader.GetAttribute("autopromo"));
                                 break;
                             case "allowedUnit":
@@ -143,7 +147,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                     }
                 }
                 if (id.Length > 0) {
-                    vhInfo = new VehicleInformation(id, baseId, showInsertions, showCreations, showActiveMedia, allowedUnitsList, allowedMediaLevelItemsList, defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId, allowedRecapMediaLevelItemsList);
+                    vhInfo = new VehicleInformation(id, baseId, showInsertions, showCreations, showActiveMedia, needLastAvailableDate, allowedUnitsList, allowedMediaLevelItemsList, defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId, allowedRecapMediaLevelItemsList);
 					vhInfo.AllowedMediaSelectionLevelItemsList = allowedMediaSelectionLevelItemsList;
 					vhInfo.DefaultMediaSelectionDetailLevels = defaultMediaSelectionDetailLevels;
 					vhInfo.DefaultMediaSelectionDetailLevel = defaultMediaSelectionDetailLevel;
