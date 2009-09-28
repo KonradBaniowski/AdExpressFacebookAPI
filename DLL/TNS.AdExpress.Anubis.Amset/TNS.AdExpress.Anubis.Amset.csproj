@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{8723463B-7215-4F70-9B47-B6F84BFFC13C}</ProjectGuid>
     <SccProjectName>SAK</SccProjectName>
@@ -213,8 +213,12 @@
     <Compile Include="UI\Synthesis.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Content Include="Images\checkbox.GIF" />
-    <Content Include="Images\checkbox_not_checked.GIF" />
+    <Content Include="Images\checkbox.GIF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\checkbox_not_checked.GIF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\33\Plugins\Amset.xml" />
     <None Include="ModelSupport\default.txaPackage" />
   </ItemGroup>

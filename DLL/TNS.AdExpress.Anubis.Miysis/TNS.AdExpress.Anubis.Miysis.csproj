@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{789382E6-1D15-43BA-94C9-AB4252A522EB}</ProjectGuid>
     <SccProjectName>SAK</SccProjectName>
@@ -214,13 +214,27 @@
     </Compile>
     <Content Include="Configuration\33\Plugins\Miysis.xml" />
     <Content Include="Configuration\35\Plugins\Miysis.xml" />
-    <Content Include="Images\33\LogoAdExpress.jpg" />
-    <Content Include="Images\33\LogoAdExpress220.jpg" />
-    <Content Include="Images\33\LogoAdExpressWater.bmp" />
-    <Content Include="Images\33\LogoAdExpressWater.jpg" />
-    <Content Include="Images\44\LogoAdExpress.jpg" />
-    <Content Include="Images\44\LogoAdExpress220.jpg" />
-    <Content Include="Images\Common\logo_Tns.bmp" />
+    <Content Include="Images\33\LogoAdExpress.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\33\LogoAdExpress220.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\33\LogoAdExpressWater.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\33\LogoAdExpressWater.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\44\LogoAdExpress.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\44\LogoAdExpress220.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Common\logo_Tns.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="ModelSupport\default.txaPackage" />
   </ItemGroup>
   <ItemGroup>

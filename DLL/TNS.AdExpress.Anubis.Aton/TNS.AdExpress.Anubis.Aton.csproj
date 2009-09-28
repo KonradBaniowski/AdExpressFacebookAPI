@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{B4DF037E-C165-4018-A716-E5EBFBEE0120}</ProjectGuid>
     <SccProjectName>SAK</SccProjectName>
@@ -212,15 +212,26 @@
     <Compile Include="UI\UISeasonalityGraph.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Content Include="Images\33\LogoAdExpress.jpg" />
-    <Content Include="Images\33\LogoAdExpressWater.bmp" />
-    <Content Include="Images\33\LogoAdExpressWater.jpg" />
-    <Content Include="Images\Common\APPM.bmp" />
-    <Content Include="Images\Common\logo_Tns.bmp" />
+    <Content Include="Images\33\LogoAdExpress.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\33\LogoAdExpressWater.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\33\LogoAdExpressWater.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Common\APPM.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Common\logo_Tns.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\33\Plugins\Aton.xml" />
     <None Include="ModelSupport\default.txaPackage" />
     <EmbeddedResource Include="UI\UISeasonalityGraph.resx">
       <DependentUpon>UISeasonalityGraph.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
