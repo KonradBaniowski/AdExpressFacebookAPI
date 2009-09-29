@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{351CB38F-7054-4438-8793-13E264063F17}</ProjectGuid>
     <SccProjectName>SAK</SccProjectName>
@@ -150,15 +150,13 @@
       <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
       <Name>TNS.AdExpress.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TNS.ADEXPRESS.WEB\TNS.AdExpress.Web.csproj">
-      <Name>TNS.AdExpress.Web</Name>
-      <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
-    <ProjectReference Include="..\TNS.ADEXPRESS.WEB.CORE\TNS.AdExpress.Web.Core.csproj">
-      <Name>TNS.AdExpress.Web.Core</Name>
+    <ProjectReference Include="..\TNS.AdExpress.Web.Core\TNS.AdExpress.Web.Core.csproj">
       <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+      <Name>TNS.AdExpress.Web.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress.Web\TNS.AdExpress.Web.csproj">
+      <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
+      <Name>TNS.AdExpress.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -309,7 +307,6 @@
     </Compile>
     <Content Include="Images\Bastet.gif" />
     <Content Include="Images\logoTNSMedia.gif" />
-    <Content Include="_Config\bastet.xml" />
     <None Include="ModelSupport\default.txaPackage" />
     <None Include="ModelSupport\default.txvpck" />
     <None Include="ModelSupport\TNS\default.txaPackage" />

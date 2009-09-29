@@ -15,6 +15,7 @@ using BastetFunctions=TNS.AdExpress.Anubis.Bastet.Functions;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Translation;
+using System.IO;
 namespace TNS.AdExpress.Anubis.Bastet.Functions
 {
 	/// <summary>
@@ -459,12 +460,12 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 			//Ajout des logos TNS et Bastet
 			Pictures pics = sheet.Pictures;
 			string tnsLogoPath = TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_TNS;
-			string logoPath = System.IO.Path.GetFullPath(tnsLogoPath);
+			string logoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, tnsLogoPath);
 			int picIndex = pics.Add(0, 0,logoPath);
 			pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
 
 			string bastetLogoPath = TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_BASTET;
-			string bastetImagePath = System.IO.Path.GetFullPath(bastetLogoPath);
+            string bastetImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, bastetLogoPath);
 			picIndex = pics.Add(0,upperLeftColumn,bastetImagePath);
 			pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
 

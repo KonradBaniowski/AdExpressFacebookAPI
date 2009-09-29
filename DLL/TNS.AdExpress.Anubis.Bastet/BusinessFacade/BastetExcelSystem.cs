@@ -152,6 +152,13 @@ namespace TNS.AdExpress.Anubis.Bastet.BusinessFacade {
 
 			if(this._excel!=null){
 				//Sauvegarde du fichier excel
+                if (!Directory.Exists(_excelFilePath))
+                {
+                    try { Directory.CreateDirectory(Path.GetDirectoryName(_excelFilePath)); }
+                    catch {
+                        _excelFilePath = Path.Combine(Path.GetTempPath(), Path.GetFileName(_excelFilePath));
+                    }
+                }
 				this.Save(_excelFilePath);
 			}
 		}

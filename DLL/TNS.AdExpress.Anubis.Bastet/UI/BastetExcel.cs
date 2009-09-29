@@ -273,6 +273,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		/// <param name="parameters">paramètres des statistiques</param>
 		/// <param name="idLogins">identifiant du demandeur</param>
 		protected void CustomerSelelection(BastetCommon.Parameters parameters,string idLogins){
+            string debug = "";
 			try{
 				Worksheet sheet = this._excel.Worksheets[0];
 				sheet.Name = GestionWeb.GetWebWord(1989, _language); //" Rappel des sélections";
@@ -300,11 +301,13 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 				//Ajout du logo TNS
 				Pictures pics = sheet.Pictures;
 				string tnsLogoPath= TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_TNS;	
-				string logoPath = System.IO.Path.GetFullPath(tnsLogoPath);
+				string logoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, tnsLogoPath);
+                debug = logoPath;
 				int picIndex = pics.Add(0, 0,logoPath);
 				pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
-				string bastetLogoPath = TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_BASTET;	
-				string bastetImagePath = System.IO.Path.GetFullPath(bastetLogoPath);
+				string bastetLogoPath = TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_BASTET;
+                string bastetImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, bastetLogoPath);
+                debug = logoPath;
 				picIndex = pics.Add(0, 5, bastetImagePath);
 				pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
 				sheet.IsGridlinesVisible = false;
@@ -442,7 +445,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 				sheet.AutoFitColumn(4);
 				sheet.AutoFitColumn(7);
 			}catch(Exception err){
-				throw (new  BastetExceptions.BastetExcelException(" CustomerSelelection : Impossible to get selection recall. ", err));
+				throw (new  BastetExceptions.BastetExcelException(" CustomerSelelection : Impossible to get selection recall. " + debug, err));
 			}
 		}
 		#endregion

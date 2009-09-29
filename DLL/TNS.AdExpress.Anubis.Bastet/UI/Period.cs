@@ -17,6 +17,7 @@ using BastetExceptions=TNS.AdExpress.Anubis.Bastet.Exceptions;
 using SessionCst = TNS.AdExpress.Constantes.Web.CustomerSessions;
 using AnubisBastet=TNS.AdExpress.Anubis.Bastet;
 using TNS.AdExpress.Domain.Translation;
+using System.IO;
 
 
 
@@ -69,11 +70,11 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 					//Ajout du logo TNS
 					Pictures pics = sheet.Pictures;
 					string tnsLogoPath = TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_TNS;	
-					string logoPath = System.IO.Path.GetFullPath(tnsLogoPath);
+					string logoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, tnsLogoPath);
 					int picIndex = pics.Add(0, 0, logoPath);
 					pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
 					string bastetLogoPath = TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_BASTET;
-					string bastetImagePath = System.IO.Path.GetFullPath(bastetLogoPath);
+					string bastetImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, bastetLogoPath);
 					picIndex = pics.Add(0, 5, bastetImagePath);
 					pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
 
