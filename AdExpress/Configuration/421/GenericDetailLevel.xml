@@ -4,10 +4,10 @@
 		<level id="1" name="Media" webTextId="363" dbId="id_vehicle" dbLabel="vehicle" dbTable="vehicle" dbTablePrefixe="vh"/>
 		<level id="2" name="Categorie" webTextId="1382" dbId="id_category" dbLabel="category" dbTable="category" dbTablePrefixe="ct"/>
 		<level id="3" name="Support" webTextId="971" dbId="id_media" dbLabel="media" dbTable="media" dbTablePrefixe="md"/>
-		<level id="4" name="Centre d'interet" webTextId="1887" dbId="id_interest_center" dbLabel="interest_center" dbTable="interest_center" dbTablePrefixe="ic"/>
-		<level id="5" name="Régie" webTextId="1383" dbId="id_media_seller" dbLabel="media_seller" dbTable="media_seller" dbTablePrefixe="ms"/>
+		<!--<level id="4" name="Centre d'interet" webTextId="1887" dbId="id_interest_center" dbLabel="interest_center" dbTable="interest_center" dbTablePrefixe="ic"/>
+		<level id="5" name="Régie" webTextId="1383" dbId="id_media_seller" dbLabel="media_seller" dbTable="media_seller" dbTablePrefixe="ms"/>-->
 		<level id="6" name="Version" webTextId="1888" dbId="id_slogan" dbIdAlias="id_slogan" convertNullDbId="true" dbLabel="id_slogan" dbLabelAlias="slogan" convertNullDbLabel="true"/>
-		<level id="7" name="Groupe de société" webTextId="1589" dbId="id_holding_company" dbLabel="holding_company" dbTable="holding_company" dbTablePrefixe="hc"/>
+    <!--<level id="7" name="Groupe de société" webTextId="1589" dbId="id_holding_company" dbLabel="holding_company" dbTable="holding_company" dbTablePrefixe="hc"/>-->
 		<level id="8" name="Annonceur" webTextId="857" dbId="id_advertiser" dbLabel="advertiser" dbTable="advertiser" dbTablePrefixe="ad"/>
 		<level id="9" name="Marque" webTextId="1889" dbId="id_brand" dbLabel="brand" dbTable="brand" dbTablePrefixe="br"/>
 		<level id="10" name="Produit" webTextId="858" dbId="id_product" dbLabel="product" dbTable="product" dbTablePrefixe="pr"/>
@@ -46,7 +46,7 @@
 			<levelItem id="3" name="Support"/>
 			<levelItem id="6" name="Version"/>
 		</detailLevel>
-		<detailLevel id="4" name="media\centre d'interet\support">
+		<!--<detailLevel id="4" name="media\centre d'interet\support">
 			<levelItem id="1" name="Media"/>
 			<levelItem id="4" name="Centre d'interet"/>
 			<levelItem id="3" name="Support"/>
@@ -67,7 +67,7 @@
 			<levelItem id="5" name="Régie"/>
 			<levelItem id="3" name="Support"/>
 			<levelItem id="6" name="Version"/>
-		</detailLevel>
+		</detailLevel>-->
 		<detailLevel id="8" name="media\version\support">
 			<levelItem id="1" name="Media"/>
 			<levelItem id="6" name="Version"/>
@@ -122,7 +122,7 @@
 		<detailLevel id="21" name="produit">
 			<levelItem id="10" name="Produit"/>			
 		</detailLevel>
-    <detailLevel id="22" name="centre d'interet\support">
+    <!--<detailLevel id="22" name="centre d'interet\support">
       <levelItem id="4" name="Centre d'interet"/>
       <levelItem id="3" name="Support"/>
     </detailLevel>
@@ -133,7 +133,7 @@
     <detailLevel id="24" name="titre\support">
       <levelItem id="17" name="Titre"/>
       <levelItem id="3" name="Support"/>
-    </detailLevel>
+    </detailLevel>-->
     <detailLevel id="25" name="catégorie\support">
       <levelItem id="2" name="Catégorie"/>
       <levelItem id="3" name="Support"/>
