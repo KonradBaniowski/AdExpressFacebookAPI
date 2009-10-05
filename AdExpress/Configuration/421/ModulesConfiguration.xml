@@ -17,7 +17,7 @@
         <DataAccessLayer name="Default Media Schedule data access layers" assemblyName="TNS.AdExpressI.MediaSchedule.DAL.Default.dll" class="TNS.AdExpressI.MediaSchedule.DAL.Default.MediaScheduleResultDAL"/>
        <!-- <ModuleAllowedMediaUniverse initFromBaal="true" baalId="331">-->
          <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="6,7"/>
+          <ModuleVehicles list="1"/>
         </ModuleAllowedMediaUniverse>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
@@ -110,7 +110,7 @@
         <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.Default.dll" class="TNS.AdExpressI.PresentAbsent.DAL.Default.PresentAbsentDAL"/>
         <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="333">-->
           <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="6,7"/>
+          <ModuleVehicles list="1"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -323,7 +323,7 @@
         <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.Default.dll" class="TNS.AdExpressI.Portofolio.DAL.Default.PortofolioDAL"/>
         <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="337">-->
            <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-           <ModuleVehicles list="6,7"/>
+           <ModuleVehicles list="1"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
