@@ -1778,13 +1778,13 @@
     <item mnemonic="w2590" type="System.String">AdExReport</item>
     <item mnemonic="w2591" type="System.String">AdExReview</item>
     <item mnemonic="w2592" type="System.String">Nouveautes</item>
-    <item mnemonic="w2593" type="System.String">Advertising expenditure by category</item>
-    <item mnemonic="w2594" type="System.String">TOP 150 brand advertisers</item>
+    <item mnemonic="w2593" type="System.String">Dépenses publicitaires par catégorie</item>
+    <item mnemonic="w2594" type="System.String">Top 150 marque annonceurs</item>
     <item mnemonic="w2595" type="System.String">TOP 20 retailers</item>
     <item mnemonic="w2596" type="System.String">Monthly advertising expenditure trends</item>
     <item mnemonic="w2597" type="System.String">Advertising year event materials</item>
-    <item mnemonic="w2598" type="System.String">Metholodology</item>
-    <item mnemonic="w2599" type="System.String">Module descriptions</item>
+    <item mnemonic="w2598" type="System.String">Methodologie</item>
+    <item mnemonic="w2599" type="System.String">Descriptions de Modules</item>
     <item mnemonic="w2600" type="System.String">occurrence</item>
     <item mnemonic="w2601" type="System.String">occurrences</item>
     <item mnemonic="w2602" type="System.String">Détail de l'alerte</item>
@@ -1796,5 +1796,14 @@
     <item mnemonic="w2608" type="System.String">AdexReport 360</item>
     <item mnemonic="w2609" type="System.String">Sauvegarde de l'alerte</item>
     <item mnemonic="w2610" type="System.String">Classe/Annonceur</item>
+    <item mnemonic="w2611" type="System.String">Supprimer une alerte enregistrée</item>
+    <item mnemonic="w2612" type="System.String">Sélectionner l'alerte enregistrée à supprimer</item>
+    <item mnemonic="w2613" type="System.String">Vous êtes sur le point de supprimer une alerte avec toutes ses occurrences. Voulez vous Vraiment les supprimer ?</item>
+    <item mnemonic="w2614" type="System.String">Planification Horaire</item>
+    <item mnemonic="w2615" type="System.String">Vous avez atteint votre quota d'alertes</item>
+    <item mnemonic="w2616" type="System.String">Attention : il est impossible d’envoyer les alertes paramétrées dans les cas suivants :&lt;br/&gt;-	le 31 du mois lorsque le mois ne comprend que 30 jours&lt;br/&gt;-	les jours 29/30/31 en février en fonction des années.</item>
+    <item mnemonic="w2617" type="System.String">Sélection d'une catégorie</item>
+    <item mnemonic="w2618" type="System.String">Aucune catégorie disponible.</item>
+    <item mnemonic="w2619" type="System.String">Choisissez une catégorie parmi la liste ci-contre :</item>
   </items>
 </localization>
