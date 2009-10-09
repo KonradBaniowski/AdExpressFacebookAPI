@@ -244,7 +244,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             //          sql.AppendFormat(", count(distinct hashcode) as {0}", UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb).Id.ToString());
             //  }
             //}
-			if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
+            if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan && !customerPeriod.IsSliding4M) {
                 sql.AppendFormat(", {0} as date_num ",date);
 			}
             //if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack && type == DBConstantes.TableType.Type.webPlan) {
@@ -306,7 +306,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			sql.Append(mediaRights);
 			sql.Append(" " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
 			sql.Append(listProductHap);
-			if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan) {
+			if (customerPeriod.IsDataVehicle && customerPeriod.IsWebPlan && !customerPeriod.IsSliding4M) {
 				sql.AppendFormat(" group by {0}",date);
 			}
 			#endregion

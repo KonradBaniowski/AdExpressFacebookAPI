@@ -413,8 +413,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
 			#region Building resultTable
             if (!isAlertModule
-                || (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.directMarketing && _webSession.CustomerPeriodSelected.Is4M)
-                || (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internet && _webSession.CustomerPeriodSelected.Is4M)
+                || (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.directMarketing && _webSession.CustomerPeriodSelected.IsSliding4M)
+                || (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internet && _webSession.CustomerPeriodSelected.IsSliding4M)
                 || (firstDate.Length > 0 && lastDate.Length > 0 && isAlertModule)) {
                 // Date begin and date end for outdooor
                 if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor && isAlertModule) {
