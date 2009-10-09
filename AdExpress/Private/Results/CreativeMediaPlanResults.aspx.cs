@@ -174,11 +174,15 @@ namespace AdExpress.Private.Results{
                     param[1] = period;
                     IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                     resultTmp = mediaScheduleResult.GetHtmlCreativeDivision();
-                    if (resultTmp.HTMLCode.Length <= 0)
-                    {
-                        _webSession.IdSlogans = new ArrayList();
-                        resultTmp = mediaScheduleResult.GetHtmlCreativeDivision();
-                    }
+
+                    /* When we don't have a media schedule for a list of versions we show the message : 'no result for this selection'
+                     * in the old version we switched to the product media schedule
+                     * */
+                    //if (resultTmp.HTMLCode.Length <= 0)
+                    //{
+                    //    _webSession.IdSlogans = new ArrayList();
+                    //    resultTmp = mediaScheduleResult.GetHtmlCreativeDivision();
+                    //}
 
                     result += "<table align=\"center\" cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">";
                     result += "\r\n\t<tr height=\"1\">\r\n\t\t<td>";
