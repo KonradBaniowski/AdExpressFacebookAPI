@@ -11,5 +11,5 @@
   <level id="11" name="vehicle" labelId="1292" dbId="id_vehicle" dbTable="vehicle"/>
   <level id="12" name="category" labelId="1382" dbId="id_category" dbTable="category"/>
   <level id="14" name="media" labelId="971" dbId="id_media" dbTable="media"/>
-  <!--<level id="15" name="interest_center" labelId="1384" dbId="id_interest_center" dbTable="interest_center"/>-->
+  <level id="15" name="interest_center" labelId="1384" dbId="id_interest_center" dbTable="interest_center"/>
 </universeLevels>

@@ -62,8 +62,18 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
 
 				//Condition universe media in access
 				WebNavigation.Module module = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
-				if (module != null && module.ModuleType == WebConstantes.Module.Type.tvSponsorship)
+				if (module != null && module.ModuleType == WebConstantes.Module.Type.tvSponsorship) {
+
 					sql.Append(module.GetAllowedMediaUniverseSqlWithOutPrefix(true));
+
+					//Exclude TNT category for sponsorship modules
+					//Droits Parrainage TV					
+					string idSponsorShipTNTCategory = TNS.AdExpress.Domain.Lists.GetIdList(WebConstantes.GroupList.ID.category, WebConstantes.GroupList.Type.excludeDigitalSponsorship);
+					if (idSponsorShipTNTCategory != null && idSponsorShipTNTCategory.Length > 0) {
+						sql.AppendFormat("  and  id_category not in ( {0}) ", idSponsorShipTNTCategory);
+					}
+
+				}
 
 				#region le bloc doit il commencer par AND
 				premier = true;
@@ -223,8 +233,16 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
 				}
 				//Condition universe media in access
 				WebNavigation.Module module = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
-				if (module != null && module.ModuleType == WebConstantes.Module.Type.tvSponsorship)
+				if (module != null && module.ModuleType == WebConstantes.Module.Type.tvSponsorship) {
 					sql.Append(module.GetAllowedMediaUniverseSqlWithOutPrefix(true));
+
+					//Exclude TNT category for sponsorship modules
+					//Droits Parrainage TV					
+					string idSponsorShipTNTCategory = TNS.AdExpress.Domain.Lists.GetIdList(WebConstantes.GroupList.ID.category, WebConstantes.GroupList.Type.excludeDigitalSponsorship);
+					if (idSponsorShipTNTCategory != null && idSponsorShipTNTCategory.Length > 0) {
+						sql.AppendFormat("  and  id_category not in ( {0}) ", idSponsorShipTNTCategory);
+					}
+				}
 
 				#region le bloc doit il commencer par AND
 				premier = true;

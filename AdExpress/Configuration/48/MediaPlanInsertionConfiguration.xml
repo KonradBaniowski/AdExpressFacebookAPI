@@ -23,7 +23,7 @@
         <allowedMediaLevelItems>
           <allowedMediaLevelItem id="2" name="Categorie"/>
           <allowedMediaLevelItem id="3" name="Support"/>
-          <!--<allowedMediaLevelItem id="4" name="Centre d'interet"/>-->
+          <allowedMediaLevelItem id="4" name="Centre d'interet"/>
           <allowedMediaLevelItem id="5" name="Régie"/>
           <allowedMediaLevelItem id="6" name="Version"/>
           <!--<allowedMediaLevelItem id="7" name="Groupe de société"/>-->
@@ -61,7 +61,7 @@
         <allowedMediaLevelItems>
           <allowedMediaLevelItem id="2" name="Categorie"/>
           <allowedMediaLevelItem id="3" name="Support"/>
-          <!--<allowedMediaLevelItem id="4" name="Centre d'interet"/>-->
+          <allowedMediaLevelItem id="4" name="Centre d'interet"/>
           <allowedMediaLevelItem id="5" name="Régie"/>
           <!--<allowedMediaLevelItem id="6" name="Version"/>-->
           <!--<allowedMediaLevelItem id="7" name="Groupe de société"/>-->
@@ -99,7 +99,7 @@
         <allowedMediaLevelItems>
           <allowedMediaLevelItem id="2" name="Categorie"/>
           <allowedMediaLevelItem id="3" name="Support"/>
-          <!--<allowedMediaLevelItem id="4" name="Centre d'interet"/>-->
+          <allowedMediaLevelItem id="4" name="Centre d'interet"/>
           <allowedMediaLevelItem id="5" name="Régie"/>
           <allowedMediaLevelItem id="6" name="Version"/>
           <!--<allowedMediaLevelItem id="7" name="Groupe de société"/>-->
@@ -136,7 +136,7 @@
         <allowedMediaLevelItems>
           <allowedMediaLevelItem id="2" name="Categorie"/>
           <allowedMediaLevelItem id="3" name="Support"/>
-          <!--<allowedMediaLevelItem id="4" name="Centre d'interet"/>-->
+          <allowedMediaLevelItem id="4" name="Centre d'interet"/>
           <allowedMediaLevelItem id="5" name="Régie"/>
           <allowedMediaLevelItem id="6" name="Version"/>
          <!-- <allowedMediaLevelItem id="7" name="Groupe de société"/>-->

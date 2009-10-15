@@ -23,8 +23,8 @@
             <defaultMediaDetailLevel id="1" name="media\catégorie" />
             <defaultMediaDetailLevel id="2" name="media\catégorie\support" />
             <defaultMediaDetailLevel id="3" name="media\catégorie\support\version" />
-            <!--<defaultMediaDetailLevel id="4" name="media\centre d'interet\support" />-->
-            <!--<defaultMediaDetailLevel id="5" name="media\centre d'interet\support\version" />-->
+            <defaultMediaDetailLevel id="4" name="media\centre d'interet\support" />
+            <defaultMediaDetailLevel id="5" name="media\centre d'interet\support\version" />
             <defaultMediaDetailLevel id="6" name="media\regie\support" />
             <!--<defaultMediaDetailLevel id="7" name="media\regie\support\version" />-->
             <defaultMediaDetailLevel id="8" name="media\version\support" />
@@ -33,7 +33,7 @@
             <allowedMediaLevelItem id="1" name="Media"/>
             <allowedMediaLevelItem id="2" name="Categorie"/>
             <allowedMediaLevelItem id="3" name="Support"/>
-            <!--<allowedMediaLevelItem id="4" name="Centre d'interet"/>-->
+            <allowedMediaLevelItem id="4" name="Centre d'interet"/>
             <allowedMediaLevelItem id="5" name="Régie"/>
             <allowedMediaLevelItem id="6" name="Version"/>
             <allowedMediaLevelItem id="8" name="Annonceur"/>
@@ -74,11 +74,11 @@
               <allowedUniverseLevel id="11" name="vehicle"/>
               <allowedUniverseLevel id="12" name="category"/>
               <allowedUniverseLevel id="14" name="media"/>
-              <!--<allowedUniverseLevel id="15" name="interest_center"/>-->
+              <allowedUniverseLevel id="15" name="interest_center"/>
             </allowedUniverseLevels>
             <allowedUniverseBranches>
               <allowedUniverseBranch id="7" name="vehicle\category\media"/>
-              <!--<allowedUniverseBranch id="8" name="vehicle\interest_center\media"/>-->
+              <allowedUniverseBranch id="8" name="vehicle\interest_center\media"/>
             </allowedUniverseBranches>
           </optionalSelection>
           <optionalSelection id="7" name="Slogan" traductioncode="1993" url="/Private/Selection/SloganPersonalisationSelection.aspx" icone="slogan" menuTextId="1987" helpUrl="/Private/Helps/ReferenceCompetitorPersonalisationHelp.aspx">
@@ -138,8 +138,8 @@
             <allowedColumnDetailLevelItem id="2" name="Categorie"/>
             <allowedColumnDetailLevelItem id="3" name="Support"/>
             <allowedColumnDetailLevelItem id="5" name="Régie"/>
-            <!--<allowedColumnDetailLevelItem id="17" name="Titre"/>-->
-            <!--<allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>-->
+           <!-- <allowedColumnDetailLevelItem id="17" name="Titre"/>-->
+            <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
           </allowedColumnDetailLevelItems>
         </ColumnDetailLevel>
         <selections>
@@ -309,7 +309,7 @@
             <allowedColumnDetailLevelItem id="3" name="Support"/>
             <allowedColumnDetailLevelItem id="5" name="Régie"/>
             <!--<allowedColumnDetailLevelItem id="17" name="Titre"/>-->
-            <!--<allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>-->
+           <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
           </allowedColumnDetailLevelItems>
         </ColumnDetailLevel>
         <selections>

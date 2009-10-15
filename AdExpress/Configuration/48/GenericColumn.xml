@@ -162,7 +162,7 @@
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <!--<columnItem id="6" name="Version" idDetailLevelMatching="6"/>-->
-      <!--<columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>-->
+      <columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>
       <columnItem id="5" name="Régie" idDetailLevelMatching="5"/>
       <columnItem id="11" name="Format" idDetailLevelMatching="20"/>
       <columnItem id="12" name="Surface"/>
@@ -180,7 +180,7 @@
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <!--<columnItem id="6" name="Version" idDetailLevelMatching="6"/>-->
-      <!--<columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>-->
+     <columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>
       <columnItem id="5" name="Régie" idDetailLevelMatching="5"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="16" name="Top de diffusion" isKey="true"/>
@@ -202,7 +202,7 @@
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <!--<columnItem id="6" name="Version" idDetailLevelMatching="6"/>-->
-      <!--<columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>-->
+      <columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>
       <columnItem id="5" name="Régie" idDetailLevelMatching="5"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="17" name="Top de diffusion"/>
@@ -222,7 +222,7 @@
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
-      <!--<columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>-->
+      <columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>
       <columnItem id="5" name="Régie"/>
       <columnItem id="28" name="Nombre de panneaux"/>
       <columnItem id="29" name="Format du panneau" idDetailLevelMatching="22"/>

@@ -33,7 +33,7 @@
   <level id="14" name="media">
     <style width="170"></style>
   </level>
-  <!--<level id="15" name="interest_center">
+  <level id="15" name="interest_center">
     <style width="170"></style>
-  </level>-->
+  </level>
 </levelsCustomStyles>

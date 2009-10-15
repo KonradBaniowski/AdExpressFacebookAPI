@@ -3288,7 +3288,12 @@ namespace TNS.AdExpress.Constantes.Web{
 			/// ID media for VMC Rights in recap
 			/// <remarks>Used to force VMC rights in Recap</remarks>
 			/// </summary>			
-			forceVmcRightsInRecap = 8
+			forceVmcRightsInRecap = 8,
+			/// <summary>
+			/// ID media to force exclusion of Sponsorship TNT
+			/// </summary>			
+			excludeDigitalSponsorship = 9
+
 
 		}
 	}

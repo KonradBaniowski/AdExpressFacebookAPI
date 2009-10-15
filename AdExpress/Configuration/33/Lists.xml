@@ -7,6 +7,7 @@
   <list group="category" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="thematicTv" listIds ="35"/>
   <list group="category" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="digitalTv" listIds ="78"/>
   <list group="category" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="productClassAnalysisSponsorShipTv" listIds ="68,44"/>
+  <list group="category" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="excludeDigitalSponsorship" listIds ="44"/>
   <list group="media" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="mediaInSelectAll" listIds ="1,2,3,4,5,7,8,10,11"/>
   <list group="media" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="forceVmcRightsInRecap" listIds ="10"/>
 </lists>

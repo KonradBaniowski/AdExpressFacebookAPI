@@ -29,7 +29,7 @@
         <allowedMediaLevelItem>segment</allowedMediaLevelItem>                <!-- Variété -->
         <!--<allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>-->       <!-- Groupe d'agences -->
         <!--<allowedMediaLevelItem>agency</allowedMediaLevelItem>-->          <!-- Agence -->
-        <!--<allowedMediaLevelItem>title</allowedMediaLevelItem>-->           <!-- Titre -->
+        <allowedMediaLevelItem>title</allowedMediaLevelItem>        <!-- Titre -->
         <!--<allowedMediaLevelItem>country</allowedMediaLevelItem>-->         <!-- Pays -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
@@ -42,14 +42,18 @@
     </MediaSelectionParents>
     <!--Media detail level in selection-->
     <MediaSelectionDetailLevel>
-      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="25">
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
         <defaultMediaSelectionDetailLevel id="25" name="catégorie\support" />
-        <defaultMediaSelectionDetailLevel id="23" name="régie\support" />        
+        <defaultMediaSelectionDetailLevel id="23" name="régie\support" />
+        <defaultMediaSelectionDetailLevel id="24" name="titre\support" />
       </defaultMediaSelectionDetailLevels>
       <allowedMediaSelectionLevelItemsList>
         <allowedMediaSelectionLevelItem id="3"/> <!-- Support -->
         <allowedMediaSelectionLevelItem id="5"/><!-- Régie-->
-         <allowedMediaSelectionLevelItem id="2"/> <!-- Catégorie -->
+        <allowedMediaSelectionLevelItem id="17"/><!-- Titre -->
+         <allowedMediaSelectionLevelItem id="2"/><!-- Catégorie -->
+        <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!-- Détailled columns in insertions-->
@@ -62,6 +66,21 @@
         <!--<allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem>-->        <!-- Support -->
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
+    <!--Allowed universe levels-->
+    <allowedUniverseLevels>
+      <allowedUniverseLevel id="1" name="sector"/>
+      <allowedUniverseLevel id="2" name="subsector"/>
+      <allowedUniverseLevel id="3" name="group_"/>
+      <allowedUniverseLevel id="4" name="segment"/>
+      <!--<allowedUniverseLevel id="7" name="holding_company"/>-->
+      <allowedUniverseLevel id="6" name="advertiser"/>
+      <allowedUniverseLevel id="8" name="brand"/>
+      <allowedUniverseLevel id="5" name="product"/>
+      <allowedUniverseLevel id="11" name="vehicle"/>
+      <allowedUniverseLevel id="12" name="category"/>
+      <allowedUniverseLevel id="14" name="media"/>
+      <allowedUniverseLevel id="15" name="interest_center"/>
+    </allowedUniverseLevels>
   </vehicle>
   <!-- RADIO -->
   <vehicle id="radio" databaseId="2" showInsertions="true" showCreations="false">
@@ -105,6 +124,7 @@
     <!--Media detail level in selection-->
     <MediaSelectionDetailLevel>
       <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="25">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
         <defaultMediaSelectionDetailLevel id="25" name="catégorie\support" />
         <defaultMediaSelectionDetailLevel id="23" name="régie\support" />
       </defaultMediaSelectionDetailLevels>
@@ -112,6 +132,7 @@
         <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
         <allowedMediaSelectionLevelItem id="5"/><!-- Régie-->
         <allowedMediaSelectionLevelItem id="2"/><!-- Catégorie -->
+        <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!-- Détailled columns in insertions-->
@@ -124,6 +145,21 @@
         <allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem>        <!-- Support -->
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
+    <!--Allowed universe levels-->
+    <allowedUniverseLevels>
+      <allowedUniverseLevel id="1" name="sector"/>
+      <allowedUniverseLevel id="2" name="subsector"/>
+      <allowedUniverseLevel id="3" name="group_"/>
+      <allowedUniverseLevel id="4" name="segment"/>
+      <!--<allowedUniverseLevel id="7" name="holding_company"/>-->
+      <allowedUniverseLevel id="6" name="advertiser"/>
+      <allowedUniverseLevel id="8" name="brand"/>
+      <allowedUniverseLevel id="5" name="product"/>
+      <allowedUniverseLevel id="11" name="vehicle"/>
+      <allowedUniverseLevel id="12" name="category"/>
+      <allowedUniverseLevel id="14" name="media"/>
+      <allowedUniverseLevel id="15" name="interest_center"/>
+    </allowedUniverseLevels>
   </vehicle>
   <!-- TV -->
   <vehicle id="tv" databaseId="1" showInsertions="true" showCreations="false">
@@ -172,11 +208,13 @@
       <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="25">
         <defaultMediaSelectionDetailLevel id="25" name="catégorie\support" />
         <defaultMediaSelectionDetailLevel id="23" name="régie\support" />
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
       </defaultMediaSelectionDetailLevels>
       <allowedMediaSelectionLevelItemsList>
         <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
         <allowedMediaSelectionLevelItem id="5"/><!-- Régie-->
         <allowedMediaSelectionLevelItem id="2"/><!-- Catégorie -->
+        <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!-- Détailled columns in insertions-->
@@ -189,6 +227,21 @@
         <allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem>        <!-- Support -->
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
+    <!--Allowed universe levels-->
+    <allowedUniverseLevels>
+      <allowedUniverseLevel id="1" name="sector"/>
+      <allowedUniverseLevel id="2" name="subsector"/>
+      <allowedUniverseLevel id="3" name="group_"/>
+      <allowedUniverseLevel id="4" name="segment"/>
+      <!--<allowedUniverseLevel id="7" name="holding_company"/>-->
+      <allowedUniverseLevel id="6" name="advertiser"/>
+      <allowedUniverseLevel id="8" name="brand"/>
+      <allowedUniverseLevel id="5" name="product"/>
+      <allowedUniverseLevel id="11" name="vehicle"/>
+      <allowedUniverseLevel id="12" name="category"/>
+      <allowedUniverseLevel id="14" name="media"/>
+      <allowedUniverseLevel id="15" name="interest_center"/>
+    </allowedUniverseLevels>
   </vehicle>
   <!-- OUTDOOR -->
   <vehicle id="outdoor" databaseId="5" showInsertions="true" showCreations="false">
@@ -238,11 +291,13 @@
       <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="25">
         <defaultMediaSelectionDetailLevel id="25" name="catégorie\support" />
         <defaultMediaSelectionDetailLevel id="23" name="régie\support" />
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
       </defaultMediaSelectionDetailLevels>
       <allowedMediaSelectionLevelItemsList>
         <allowedMediaSelectionLevelItem id="3"/><!-- Support -->
         <allowedMediaSelectionLevelItem id="5"/><!-- Régie-->
         <allowedMediaSelectionLevelItem id="2"/><!-- Catégorie -->
+        <allowedMediaSelectionLevelItem id="4"/><!-- Centre d 'interet -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!--Media detail level allowed in recap's modules-->
@@ -253,7 +308,20 @@
         <allowedRecapMediaLevelItem>media</allowedRecapMediaLevelItem> <!-- Support -->
       </allowedRecapMediaLevelItems>
     </allowedRecapMediaDetailLevels>
-
+    <allowedUniverseLevels>
+      <allowedUniverseLevel id="1" name="sector"/>
+      <allowedUniverseLevel id="2" name="subsector"/>
+      <allowedUniverseLevel id="3" name="group_"/>
+      <allowedUniverseLevel id="4" name="segment"/>
+      <!--<allowedUniverseLevel id="7" name="holding_company"/>-->
+      <allowedUniverseLevel id="6" name="advertiser"/>
+      <allowedUniverseLevel id="8" name="brand"/>
+      <allowedUniverseLevel id="5" name="product"/>
+      <allowedUniverseLevel id="11" name="vehicle"/>
+      <allowedUniverseLevel id="12" name="category"/>
+      <allowedUniverseLevel id="14" name="media"/>
+      <allowedUniverseLevel id="15" name="interest_center"/>
+    </allowedUniverseLevels>
   </vehicle>
   <!-- PLURIMEDIA -->
   <vehicle id="plurimedia" databaseId="50" showInsertions="false" showCreations="false">
