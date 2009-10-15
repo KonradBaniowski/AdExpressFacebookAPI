@@ -17,7 +17,6 @@ using System.Windows.Forms;
 using TNS.AdExpress.Anubis.Amset.Common;
 using TNS.AdExpress.Anubis.Amset.Exceptions;
 using TNS.AdExpress.Anubis.Amset.UI;
-using TNS.AdExpress.Anubis.Common;
 
 using TNS.FrameWork;
 using TNS.FrameWork.Net.Mail;
@@ -162,7 +161,7 @@ namespace TNS.AdExpress.Anubis.Amset.BusinessFacade{
 				shortName = DateTime.Now.ToString("yyyyMMddHHmmss_")
 					+ rqDetails["id_static_nav_session"].ToString()
 					+ "_"
-					+ TNS.AdExpress.Anubis.Common.Functions.GetRandomString(30,40);
+					+ TNS.Ares.Functions.GetRandomString(30,40);
 
 				txtFileName += @"\" + shortName + ".xls";
 

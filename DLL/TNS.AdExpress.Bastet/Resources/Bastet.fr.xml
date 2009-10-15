@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<localization>
+  <globalization>
+    <culture>Neutral</culture>
+  </globalization>
+  <items>
+
+    <item mnemonic="w1" type="System.String">Etape suivante ></item>
+    <item mnemonic="w2" type="System.String">Ajouter</item>
+    <item mnemonic="w3" type="System.String">Supprimer</item>
+    <item mnemonic="w4" type="System.String">Rechercher</item>
+    <item mnemonic="w5" type="System.String">Valider votre demande</item>
+   
+    <item mnemonic="w6" type="System.String">Gestion des emails</item>
+    <item mnemonic="w7" type="System.String">Gestion de la période</item>
+    <item mnemonic="w8" type="System.String">Gestion des logins</item>
+    <item mnemonic="w9" type="System.String">validation</item>
+    <item mnemonic="w10" type="System.String">Ajouter un email destinataire :</item>
+    
+    <item mnemonic="w11" type="System.String">Liste des destinataires :</item>
+    <item mnemonic="w12" type="System.String">Sélection de périodes calendaires</item>
+    <item mnemonic="w13" type="System.String">Sélection de périodes glissantes</item>
+    <item mnemonic="w14" type="System.String">Au cours de(s) :</item>
+    <item mnemonic="w15" type="System.String">derniers mois</item>
+    
+    <item mnemonic="w16" type="System.String">dernières semaines</item>
+    <item mnemonic="w17" type="System.String">Ou bien sur :</item>
+    <item mnemonic="w18" type="System.String">l'année en cours</item>
+    <item mnemonic="w19" type="System.String">Options de recherche</item>
+    <item mnemonic="w20" type="System.String">Société / Login</item>
+    
+    <item mnemonic="w21" type="System.String">Tout</item>
+    <item mnemonic="w22" type="System.String">Aucun résultat trouvé</item>
+    <item mnemonic="w23" type="System.String">Résultat de votre recherche</item>
+    <item mnemonic="w24" type="System.String">Sélectionner/désélectionner tous les logins</item>
+    <item mnemonic="w25" type="System.String">Connexion impossible</item>
+    
+    <item mnemonic="w26" type="System.String">Email non valide</item>
+    <item mnemonic="w27" type="System.String">Le champs ne peut pas être vide</item>
+    <item mnemonic="w28" type="System.String">La liste est vide</item>
+    <item mnemonic="w29" type="System.String">La liste est vide, vous devez préciser au moins 1 email</item>
+    <item mnemonic="w30" type="System.String">La date de fin ne peut pas être supérieure à la date de début</item>
+    
+    <item mnemonic="w31" type="System.String">Il est nécessaire de sélectionner deux dates pour valider</item>
+    <item mnemonic="w32" type="System.String">Vous devez sélectionner une période</item>
+    <item mnemonic="w33" type="System.String">Vous devez sélectionner au moins un élément de la liste</item>
+    <item mnemonic="w34" type="System.String">Vous ne pouvez pas sauvegarder plus de 1000 éléments</item>
+    <item mnemonic="w35" type="System.String">Accès refusé, vous devez vous authentifier</item>
+    
+    <item mnemonic="w36" type="System.String">Erreur : aucun email enregistré en session</item>
+    <item mnemonic="w37" type="System.String">Erreur : aucune date enregistrée en session</item>
+    <item mnemonic="w38" type="System.String">Une erreur est survenue, impossible d'afficher la page demandée</item>
+    <item mnemonic="w39" type="System.String">Erreur client</item>
+    <item mnemonic="w40" type="System.String">Serveur :</item>
+    
+    <item mnemonic="w41" type="System.String">Page demandée :</item>
+    <item mnemonic="w42" type="System.String">Navigateur :</item>
+    <item mnemonic="w43" type="System.String">Système d'exploitation :</item>
+    <item mnemonic="w44" type="System.String">Message d'erreur :</item>
+    <item mnemonic="w45" type="System.String">StackTrace :</item>
+
+    <item mnemonic="w46" type="System.String">Statistiques</item>
+    <item mnemonic="w47" type="System.String">Indicateurs</item>
+    <item mnemonic="w48" type="System.String">Sélection du module</item>
+    <item mnemonic="w49" type="System.String">Pour être redirigé, cliquez</item>
+    <item mnemonic="w50" type="System.String">ici</item>
+
+    <item mnemonic="w51" type="System.String">Sélection de la période</item>
+    <item mnemonic="w52" type="System.String">Export Excel</item>
+    <item mnemonic="w53" type="System.String">Pas de données sur la période du</item>
+    <item mnemonic="w54" type="System.String">au</item>
+    <item mnemonic="w55" type="System.String">Indicateurs des mises à jour</item>
+
+    <item mnemonic="w56" type="System.String">Supports</item>
+
+  </items>
+</localization>

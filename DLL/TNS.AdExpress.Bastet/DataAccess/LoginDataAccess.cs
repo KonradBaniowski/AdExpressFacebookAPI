@@ -12,6 +12,8 @@ using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Bastet.Exceptions;
 using DbSchema = TNS.Isis.Constantes.DataBase;
 using DbTables = TNS.Isis.Constantes.Tables;
+using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Bastet.Web;
 
 namespace TNS.AdExpress.Bastet.DataAccess{
 	/// <summary>
@@ -29,30 +31,34 @@ namespace TNS.AdExpress.Bastet.DataAccess{
 
 			#region Requête
 			StringBuilder sql = new StringBuilder();
+            Table rightCompany = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightCompany);
+            Table rightLogin = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
+            Table rightContact = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
+            Table rightAddress = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightAddress);
 
-			sql.Append("select "+ DbTables.COMPANY_PREFIXE +".id_company, "+ DbTables.COMPANY_PREFIXE +".company, ");
-			sql.Append(DbTables.LOGIN_PREFIXE +".id_login, "+ DbTables.LOGIN_PREFIXE +".login, ");
-			sql.Append(DbTables.LOGIN_PREFIXE +".activation ");
-			sql.Append(" from "+ DbSchema.RIGHT_SCHEMA +"."+ DbTables.COMPANY_TABLE +" "+ DbTables.COMPANY_PREFIXE +", ");
-			sql.Append(DbSchema.RIGHT_SCHEMA +"."+ DbTables.LOGIN_TABLE +" "+ DbTables.LOGIN_PREFIXE +", ");
-			sql.Append(DbSchema.RIGHT_SCHEMA +"."+ DbTables.CONTACT_TABLE +" "+ DbTables.CONTACT_PREFIXE +", ");
-			sql.Append(DbSchema.RIGHT_SCHEMA +"."+ DbTables.ADDRESS_TABLE +" "+ DbTables.ADDRESS_PREFIXE +" ");
-			sql.Append(" where "+ DbTables.LOGIN_PREFIXE +".id_contact = "+ DbTables.CONTACT_PREFIXE +".id_contact ");
-			sql.Append(" and "+ DbTables.CONTACT_PREFIXE +".id_address = "+ DbTables.ADDRESS_PREFIXE +".id_address ");
-			sql.Append(" and "+ DbTables.ADDRESS_PREFIXE +".id_company = "+ DbTables.COMPANY_PREFIXE +".id_company ");	
+            sql.Append("select " + rightCompany.Prefix + ".id_company, " + rightCompany.Prefix + ".company, ");
+			sql.Append(rightLogin.Prefix +".id_login, "+ rightLogin.Prefix +".login, ");
+			sql.Append(rightLogin.Prefix +".activation ");
+            sql.Append(" from " + rightCompany.SqlWithPrefix + ", ");
+            sql.Append(rightLogin.SqlWithPrefix + ", ");
+            sql.Append(rightContact.SqlWithPrefix + ", ");
+            sql.Append(rightAddress.SqlWithPrefix + " ");
+			sql.Append(" where "+ rightLogin.Prefix +".id_contact = "+ rightContact.Prefix +".id_contact ");
+			sql.Append(" and "+ rightContact.Prefix +".id_address = "+ rightAddress.Prefix +".id_address ");
+			sql.Append(" and "+ rightAddress.Prefix +".id_company = "+ rightCompany.Prefix +".id_company ");	
 			if(byKeyWord){
 				// Recherche par mot clef
 				sql.Append(" and (");
-				sql.Append(" UPPER("+ DbTables.LOGIN_PREFIXE +".login) like '%"+label.ToUpper()+"%' ");
+				sql.Append(" UPPER("+ rightLogin.Prefix +".login) like '%"+label.ToUpper()+"%' ");
 				sql.Append(" or ");
-				sql.Append(" UPPER("+ DbTables.COMPANY_PREFIXE +".company) like '%"+label.ToUpper()+"%' ");
+				sql.Append(" UPPER("+ rightCompany.Prefix +".company) like '%"+label.ToUpper()+"%' ");
 				sql.Append(")");
 			}
 			else{
 				// Recherche par identifiant ou liste d'identifiants
-				sql.Append(" and "+ DbTables.LOGIN_PREFIXE +".id_login in ("+label+") ");
+				sql.Append(" and "+ rightLogin.Prefix +".id_login in ("+label+") ");
 			}
-			sql.Append(" order by "+ DbTables.COMPANY_PREFIXE +".company, "+ DbTables.LOGIN_PREFIXE +".login");
+			sql.Append(" order by "+ rightCompany.Prefix +".company, "+ rightLogin.Prefix +".login");
 
 			#endregion
 
@@ -77,13 +83,15 @@ namespace TNS.AdExpress.Bastet.DataAccess{
 
 			#region Requête
 			StringBuilder sql = new StringBuilder();
+            Table rightLogin = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
+            Table rightContact = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
 
-			sql.Append("select "+ DbTables.LOGIN_PREFIXE +".id_login, "+ DbTables.LOGIN_PREFIXE +".login ");
-			sql.Append(" from "+ DbSchema.RIGHT_SCHEMA +"."+ DbTables.LOGIN_TABLE +" "+ DbTables.LOGIN_PREFIXE +", ");
-			sql.Append(DbSchema.RIGHT_SCHEMA +"."+ DbTables.CONTACT_TABLE +" "+ DbTables.CONTACT_PREFIXE +" ");
-			sql.Append(" where "+ DbTables.LOGIN_PREFIXE +".id_contact = "+ DbTables.CONTACT_PREFIXE +".id_contact ");
-			sql.Append(" and "+ DbTables.CONTACT_PREFIXE +".id_group_contact in ("+customerTypeId+") ");
-			sql.Append(" order by "+ DbTables.LOGIN_PREFIXE +".login");
+			sql.Append("select "+ rightLogin.Prefix +".id_login, "+ rightLogin.Prefix +".login ");
+            sql.Append(" from " + rightLogin.SqlWithPrefix + ", ");
+            sql.Append(rightContact.SqlWithPrefix + " ");
+			sql.Append(" where "+ rightLogin.Prefix +".id_contact = "+ rightContact.Prefix +".id_contact ");
+			sql.Append(" and "+ rightContact.Prefix +".id_group_contact in ("+customerTypeId+") ");
+			sql.Append(" order by "+ rightLogin.Prefix +".login");
 			#endregion
 
 			#region Execution

@@ -85,8 +85,6 @@
     <Compile Include="Classification\ListContener.cs" />
     <Compile Include="Classification\Media.cs" />
     <Compile Include="Classification\MediaItemsList.cs" />
-    <Compile Include="Classification\NyxConfiguration.cs" />
-    <Compile Include="Classification\PluginInformation.cs" />
     <Compile Include="Classification\Product.cs" />
     <Compile Include="Classification\ProductItemsList.cs" />
     <Compile Include="Classification\VehicleInformation.cs" />
@@ -109,11 +107,11 @@
     <Compile Include="Theme\Style.cs" />
     <Compile Include="Theme\Tag.cs" />
     <Compile Include="Theme\Theme.cs" />
+    <Compile Include="Web\Navigation\ModuleAssignment.cs" />
     <Compile Include="Web\Rss.cs" />
     <Compile Include="XmlLoader\CoreLayersXL.cs" />
     <Compile Include="XmlLoader\DundasConfigurationXL.cs" />
     <Compile Include="XmlLoader\InfoNewsXL.cs" />
-    <Compile Include="XmlLoader\NyxConfigurationXL.cs" />
     <Compile Include="XmlLoader\ResultOptionsXL.cs" />
     <Compile Include="XmlLoader\CreativeConfigDataAccess.cs" />
     <Compile Include="DataBaseDescription\Connection.cs" />
@@ -209,6 +207,7 @@
     <Compile Include="XmlLoader\ModulesListXL.cs" />
     <Compile Include="XmlLoader\MSCreativesDetailsXL.cs" />
     <Compile Include="XmlLoader\PortofolioDetailMediaColumnsXL.cs" />
+    <Compile Include="XmlLoader\RightOptionsXL.cs" />
     <Compile Include="XmlLoader\ThemeXL.cs" />
     <Compile Include="XmlLoader\UnitsDescriptionXL.cs" />
     <Compile Include="XmlLoader\VehiclesInformationXL.cs" />
@@ -232,6 +231,7 @@
     <Content Include="Resources\AdExpress.fi.xml" />
     <Content Include="Resources\AdExpress.fr.xml" />
     <Content Include="Resources\AdExpress.Project.xml" />
+    <Content Include="Resources\AdExpress.ru.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

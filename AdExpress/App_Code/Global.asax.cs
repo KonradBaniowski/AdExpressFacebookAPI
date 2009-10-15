@@ -26,9 +26,13 @@ using TNS.AdExpress.Domain;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.XmlLoader;
+using TNS.Ares.Domain.DataBase;
+using TNS.Ares.Domain.LS;
+using TNS.Alert.Domain;
 using TNS.AdExpress.Domain.Layers;
-using TNS.AdExpressI.Date;
 using System.Reflection;
+using TNS.AdExpress.Web.Core.Utilities;
+using TNS.AdExpressI.Date;
 
 
 namespace AdExpress {
@@ -139,9 +143,14 @@ namespace AdExpress {
 
                 //Load Global WebSite options
                 ResultOptionsXL.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.RESULT_OPTIONS_CONFIGURATION_FILENAME));
+				RightOptionsXL.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.RIGHT_OPTIONS_CONFIGURATION_FILENAME));
 
-                // Loading Nyx configuration
-                NyxConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.NYX_CONFIGURATION_FILENAME));
+                // Loading Ares Config configuration
+                PluginConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.PLUGIN_CONFIGURATION_FILENAME));
+                AlertConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.ALERTE_CONFIGURATION));
+                DataBaseConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
+
+
 
 			}
 			catch(System.Exception error){

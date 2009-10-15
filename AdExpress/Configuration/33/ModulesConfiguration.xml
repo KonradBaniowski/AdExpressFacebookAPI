@@ -86,7 +86,7 @@
           </optionalSelection>
         </optionalSelections>
         <results>
-          <page id="0" resultid="16" name="Résultats" traductioncode="1474" url="/Private/Results/MediaPlanResults.aspx" printExcelUrl="/Private/Results/Excel/MediaPlanResults.aspx" valueExcelUrl="/Private/Results/ValueExcel/MediaPlanResults.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPlanAlertResultsHelp.aspx">
+          <page id="0" resultid="16" name="Résultats" traductioncode="1474" url="/Private/Results/MediaPlanResults.aspx" printExcelUrl="/Private/Results/Excel/MediaPlanResults.aspx" valueExcelUrl="/Private/Results/ValueExcel/MediaPlanResults.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPlanAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <!--<page name="Synthèses" traductioncode="750" url="#" />-->
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -106,8 +106,8 @@
       </module>
       <!-- *****************************************      Present / Absent                    *****************************************-->
       <module name="Present/Absent" privilegecode="278" traductioncode="2167" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2196" descriptionImageName="/Images/Common/Infobulle/Concurrentiels.png">
-        <RulesLayer name="Default Present Absent rules layers" assemblyName="TNS.AdExpressI.PresentAbsent.Default.dll" class="TNS.AdExpressI.PresentAbsent.Default.PresentAbsentResult"/>
-        <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.Default.dll" class="TNS.AdExpressI.PresentAbsent.DAL.Default.PresentAbsentDAL"/>
+       <RulesLayer name="Default Present Absent rules layers" assemblyName="TNS.AdExpressI.PresentAbsent.Default.dll" class="TNS.AdExpressI.PresentAbsent.Default.PresentAbsentResult"/>
+        <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.Default.dll" class="TNS.AdExpressI.PresentAbsent.DAL.Default.PresentAbsentDAL"/>       
         <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="333">-->
           <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="1,2,3,5,6,7,8,11,15"/>
@@ -170,7 +170,7 @@
           </optionalSelection>
         </optionalSelections>
         <results>
-          <page id="0" resultid="18" name="Résultats portefeuille" traductioncode="1125" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx">
+          <page id="0" resultid="18" name="Résultats portefeuille" traductioncode="1125" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
@@ -198,7 +198,7 @@
               <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
-          <page id="1" resultid="19" name="Résultats communs" traductioncode="1127" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx">
+          <page id="1" resultid="19" name="Résultats communs" traductioncode="1127" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
@@ -226,7 +226,7 @@
               <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
-          <page id="2" resultid="20" name="Résultats absents" traductioncode="1126" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx">
+          <page id="2" resultid="20" name="Résultats absents" traductioncode="1126" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
@@ -254,7 +254,7 @@
               <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
-          <page id="3" resultid="21" name="Résultats exclusifs" traductioncode="1128" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx">
+          <page id="3" resultid="21" name="Résultats exclusifs" traductioncode="1128" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
@@ -282,7 +282,7 @@
               <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
-          <page id="4" resultid="6" name="Résultats Forces" traductioncode="1157" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" >
+          <page id="4" resultid="6" name="Résultats Forces" traductioncode="1157" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
@@ -310,7 +310,7 @@
               <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
-          <page id="5" resultid="7" name="Résultats Potentiels" traductioncode="1158" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" >
+          <page id="5" resultid="7" name="Résultats Potentiels" traductioncode="1158" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
@@ -338,7 +338,7 @@
               <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
-          <page id="6" resultid="52" name="Résultats synthèse" traductioncode="1664" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx">
+          <page id="6" resultid="52" name="Résultats synthèse" traductioncode="1664" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
@@ -432,7 +432,7 @@
           </optionalSelection>
         </optionalSelections>
         <results>
-          <page id="0" resultid="22" name="Résultats portefeuille" traductioncode="1240" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx">
+          <page id="0" resultid="22" name="Résultats portefeuille" traductioncode="1240" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
@@ -463,7 +463,7 @@
               <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
-          <page id="1" resultid="23" name="Résultats fidèles" traductioncode="1241" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx">
+          <page id="1" resultid="23" name="Résultats fidèles" traductioncode="1241" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
@@ -494,7 +494,7 @@
               <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
-          <page id="2" resultid="24" name="Résultats fidèles en baisse" traductioncode="1242" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx">
+          <page id="2" resultid="24" name="Résultats fidèles en baisse" traductioncode="1242" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
@@ -525,7 +525,7 @@
               <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
-          <page id="3" resultid="25" name="Résultats fidèles en développement" traductioncode="1243" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx">
+          <page id="3" resultid="25" name="Résultats fidèles en développement" traductioncode="1243" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
@@ -556,7 +556,7 @@
               <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
-          <page id="4" resultid="26" name="Résultats gagnés" traductioncode="1244" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx">
+          <page id="4" resultid="26" name="Résultats gagnés" traductioncode="1244" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
@@ -587,7 +587,7 @@
               <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
-          <page id="5" resultid="27" name="Résultats perdus" traductioncode="1245" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx">
+          <page id="5" resultid="27" name="Résultats perdus" traductioncode="1245" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
@@ -618,7 +618,7 @@
               <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
-          <page id="6" resultid="50" name="Résultats synthèse" traductioncode="1664" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx">
+          <page id="6" resultid="50" name="Résultats synthèse" traductioncode="1664" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
               <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
@@ -671,7 +671,7 @@
           </optionalSelection>
         </optionalSelections>
         <results>
-          <page id="0" resultid="58" name="Résultats Liste des Insertions" traductioncode="2104" url="/Private/Results/ProofResults.aspx" printExcelUrl="/Private/Results/Excel/ProofResults.aspx"  menuTextId="1983" helpUrl="/Private/Helps/ProofResultsHelp.aspx">
+          <page id="0" resultid="58" name="Résultats Liste des Insertions" traductioncode="2104" url="/Private/Results/ProofResults.aspx" printExcelUrl="/Private/Results/Excel/ProofResults.aspx"  menuTextId="1983" helpUrl="/Private/Helps/ProofResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -735,7 +735,7 @@
           </optionalSelection>
         </optionalSelections>
         <results>
-          <page id="0" resultid="31" name="Synthèse publicitaire" traductioncode="1375" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPortofolioResultsHelp.aspx">
+          <page id="0" resultid="31" name="Synthèse publicitaire" traductioncode="1375" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPortofolioResultsHelp.aspx"  createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -747,7 +747,7 @@
               <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
-          <page id="1" resultid="32" name="Détail du Portefeuille" traductioncode="1376" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPortofolioResultsHelp.aspx">
+          <page id="1" resultid="32" name="Détail du Portefeuille" traductioncode="1376" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPortofolioResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <!-- s'il n'y en a pas toutes les unites sont disponibles-->
             <allowedUnits>
               <!--<allowedUnit>kEuro</allowedUnit>-->
@@ -775,7 +775,7 @@
               <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
-          <page id="3" resultid="11" name="Détail Support" traductioncode="1378" url="/Private/Results/MediaPortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
+          <page id="3" resultid="11" name="Détail Support" traductioncode="1378" url="/Private/Results/MediaPortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
               <ResultVehicles list="1,2,3,5,8,11"/>
             </ResultAllowedMediaUniverse>
@@ -793,7 +793,7 @@
               <detailSelection id="6" name="Product Selected"/>
             </detailSelections>
           </page>
-          <page id="4" resultid="12" name="Structure" traductioncode="1379" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" exportJpegUrl="/Private/Results/Jpeg/PortofolioResultsExport.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
+          <page id="4" resultid="12" name="Structure" traductioncode="1379" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" exportJpegUrl="/Private/Results/Jpeg/PortofolioResultsExport.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
               <ResultVehicles list="1,2,3,5,11"/>
             </ResultAllowedMediaUniverse>
@@ -812,7 +812,7 @@
               <detailSelection id="6" name="Product Selected"/>
             </detailSelections>
           </page>
-          <page id="6" resultid="13" name="Calendrier d'Actions" traductioncode="1474" url="/Private/Results/MediaPortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
+          <page id="6" resultid="13" name="Calendrier d'Actions" traductioncode="1474" url="/Private/Results/MediaPortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
               <ResultVehicles list="1,2,3,5,6,8,11,15"/>
             </ResultAllowedMediaUniverse>
@@ -865,7 +865,7 @@
           </optionalSelection>
         </optionalSelections>
         <results>
-          <page id="0" resultid="33" name="Résultats" traductioncode="750" url="/Private/Results/ProductClassReport.aspx" printExcelUrl="/Private/Results/Excel/ProductClassReport.aspx" menuTextId="1983" helpUrl="/Private/Helps/ASDynamicTablesHelp.aspx">
+          <page id="0" resultid="33" name="Résultats" traductioncode="750" url="/Private/Results/ProductClassReport.aspx" printExcelUrl="/Private/Results/Excel/ProductClassReport.aspx" menuTextId="1983" helpUrl="/Private/Helps/ASDynamicTablesHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <!--<page name="Synthèses" traductioncode="750" url="#" />-->
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -917,7 +917,7 @@
           </optionalSelection>
         </optionalSelections>
         <results>
-          <page id="0" resultid="34" name="Seasonality" traductioncode="1139" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx">
+          <page id="0" resultid="34" name="Seasonality" traductioncode="1139" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -928,7 +928,7 @@
               <detailSelection id="4" name="Unit"/>
             </detailSelections>
           </page>
-          <page id="1" resultid="35" name="Palmares" traductioncode="1165" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx">
+          <page id="1" resultid="35" name="Palmares" traductioncode="1165" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -939,7 +939,7 @@
               <detailSelection id="4" name="Unit"/>
             </detailSelections>
           </page>
-          <page id="2" resultid="36" name="Nouveautés" traductioncode="1197" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx">
+          <page id="2" resultid="36" name="Nouveautés" traductioncode="1197" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -950,7 +950,7 @@
               <detailSelection id="4" name="Unit"/>
             </detailSelections>
           </page>
-          <page id="3" resultid="37" name="Evolution" traductioncode="1207" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx">
+          <page id="3" resultid="37" name="Evolution" traductioncode="1207" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -961,7 +961,7 @@
               <detailSelection id="4" name="Unit"/>
             </detailSelections>
           </page>
-          <page id="4" resultid="38" name="Stratégie média" traductioncode="1227" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx">
+          <page id="4" resultid="38" name="Stratégie média" traductioncode="1227" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -973,7 +973,7 @@
               <detailSelection id="7" name="Media Level Detail"/>
             </detailSelections>
           </page>
-          <page id="5" resultid="54" name="Synthèse" traductioncode="1664" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx">
+          <page id="5" resultid="54" name="Synthèse" traductioncode="1664" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -991,13 +991,22 @@
       </module>
       <!--******************************************      Modules Tendances                   *****************************************-->
       <module name="Tendances" privilegecode="450" traductioncode="2178" moduleCategoryId="6" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2207" descriptionImageName="/Images/Common/Infobulle/Tendances.png">
+        <DataAccessLayer name="Default Trends data access layers" assemblyName="TNS.AdExpressI.Trends.DAL.Default.dll" class="TNS.AdExpressI.Trends.DAL.Default.TrendsDAL"/>
         <ModuleAllowedMediaUniverse initFromBaal="true" baalId="345">
         </ModuleAllowedMediaUniverse>
         <selections>
           <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected"/>
         </selections>
         <results>
-          <page id="0" resultid="39" name="Résultats" traductioncode="750" url="/Private/Results/TendenciesResult.aspx" printExcelUrl="/Private/Results/Excel/TendenciesResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/TendenciesResultHelp.aspx">
+          <page id="0" resultid="39" name="Résultats" traductioncode="750" url="/Private/Results/TendenciesResult.aspx" printExcelUrl="/Private/Results/Excel/TendenciesResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/TendenciesResultHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+            <allowedUnits>
+              <allowedUnit>euro</allowedUnit>
+              <allowedUnit>spot</allowedUnit>
+              <allowedUnit>insertion</allowedUnit>
+              <allowedUnit>duration</allowedUnit>
+              <allowedUnit>pages</allowedUnit>
+              <allowedUnit>numberBoard</allowedUnit>
+            </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="3" name="Date"/>
@@ -1029,7 +1038,7 @@
           <selection id="5" name="Date" traductioncode="854" url="/Private/Selection/DashBoardDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/DashBoardDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
         </selections>
         <results>
-          <page id="0" resultid="40" name="Résultats" traductioncode="1613" url="/Private/Results/DashBoardResults.aspx" printExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" printBisExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DashBoardResultsHelp.aspx">
+          <page id="0" resultid="40" name="Résultats" traductioncode="1613" url="/Private/Results/DashBoardResults.aspx" printExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" printBisExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DashBoardResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="3" name="Date"/>
@@ -1065,7 +1074,7 @@
           <selection id="5" name="Date" traductioncode="854" url="/Private/Selection/DashBoardDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/DashBoardDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
         </selections>
         <results>
-          <page id="0" resultid="41" name="Résultats" traductioncode="1614" url="/Private/Results/DashBoardResults.aspx" printExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" printBisExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DashBoardResultsHelp.aspx">
+          <page id="0" resultid="41" name="Résultats" traductioncode="1614" url="/Private/Results/DashBoardResults.aspx" printExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" printBisExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DashBoardResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="3" name="Date"/>
@@ -1103,7 +1112,7 @@
           <selection id="5" name="Date" traductioncode="854" url="/Private/Selection/DashBoardDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/DashBoardDateSelectionHelp.aspx" validationMethod="isDatesSelected" />
         </selections>
         <results>
-          <page id="0" resultid="42" name="Résultats" traductioncode="1615" url="/Private/Results/DashBoardResults.aspx" printExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" printBisExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DashBoardResultsHelp.aspx">
+          <page id="0" resultid="42" name="Résultats" traductioncode="1615" url="/Private/Results/DashBoardResults.aspx" printExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" printBisExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DashBoardResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="3" name="Date"/>
@@ -1140,7 +1149,7 @@
           <selection id="5" name="Date" traductioncode="854" url="/Private/Selection/DashBoardDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/DashBoardDateSelectionHelp.aspx" validationMethod="isDatesSelected" />
         </selections>
         <results>
-          <page id="0" resultid="53" name="Résultats" traductioncode="1892" url="/Private/Results/DashBoardResults.aspx" printExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" printBisExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DashBoardResultsHelp.aspx">
+          <page id="0" resultid="53" name="Résultats" traductioncode="1892" url="/Private/Results/DashBoardResults.aspx" printExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" printBisExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DashBoardResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="3" name="Date"/>
@@ -1178,7 +1187,7 @@
           <selection id="5" name="Date" traductioncode="854" url="/Private/Selection/DashBoardDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/DashBoardDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
         </selections>
         <results>
-          <page id="0" resultid="66" name="Résultats" traductioncode="2538" url="/Private/Results/DashBoardResults.aspx" printExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" printBisExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DashBoardResultsHelp.aspx">
+          <page id="0" resultid="66" name="Résultats" traductioncode="2538" url="/Private/Results/DashBoardResults.aspx" printExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" printBisExcelUrl="/Private/Results/Excel/DashBoardResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DashBoardResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="3" name="Date"/>
@@ -1227,7 +1236,7 @@
           </optionalSelection>
         </optionalSelections>
         <results>
-          <page id="0" resultid="43" name="Synthèse" traductioncode="1664" url="/Private/Results/APPMResults.aspx" printExcelUrl="/Private/Results/Excel/APPMResults.aspx" remotePdfUrl="/Private/MyAdExpress/APPMPdfSavePopUp.aspx" remoteTextUrl="/Private/MyAdExpress/APPMTextFileSavePopUp.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/APPMResultsHelp.aspx">
+          <page id="0" resultid="43" name="Synthèse" traductioncode="1664" url="/Private/Results/APPMResults.aspx" printExcelUrl="/Private/Results/Excel/APPMResults.aspx" remotePdfUrl="/Private/MyAdExpress/APPMPdfSavePopUp.aspx" remoteTextUrl="/Private/MyAdExpress/APPMTextFileSavePopUp.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/APPMResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -1237,7 +1246,7 @@
               <detailSelection id="17" name="Target Selected"/>
             </detailSelections>
           </page>
-          <page id="1" resultid="44" name="Calendrier d'actions" traductioncode="1474" url="/Private/Results/APPMResults.aspx" printExcelUrl="/Private/Results/Excel/MediaPlanResults.aspx" remotePdfUrl="/Private/MyAdExpress/APPMPdfSavePopUp.aspx" remoteTextUrl="/Private/MyAdExpress/APPMTextFileSavePopUp.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/APPMResultsHelp.aspx">
+          <page id="1" resultid="44" name="Calendrier d'actions" traductioncode="1474" url="/Private/Results/APPMResults.aspx" printExcelUrl="/Private/Results/Excel/MediaPlanResults.aspx" remotePdfUrl="/Private/MyAdExpress/APPMPdfSavePopUp.aspx" remoteTextUrl="/Private/MyAdExpress/APPMTextFileSavePopUp.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/APPMResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -1247,7 +1256,7 @@
               <detailSelection id="17" name="Target Selected"/>
             </detailSelections>
           </page>
-          <page id="2" resultid="45" name="Valorisation et performance du plan par support" traductioncode="1680" url="/Private/Results/APPMResults.aspx" printExcelUrl="/Private/Results/Excel/APPMResults.aspx" remotePdfUrl="/Private/MyAdExpress/APPMPdfSavePopUp.aspx" remoteTextUrl="/Private/MyAdExpress/APPMTextFileSavePopUp.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/APPMResultsHelp.aspx">
+          <page id="2" resultid="45" name="Valorisation et performance du plan par support" traductioncode="1680" url="/Private/Results/APPMResults.aspx" printExcelUrl="/Private/Results/Excel/APPMResults.aspx" remotePdfUrl="/Private/MyAdExpress/APPMPdfSavePopUp.aspx" remoteTextUrl="/Private/MyAdExpress/APPMTextFileSavePopUp.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/APPMResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -1257,7 +1266,7 @@
               <detailSelection id="17" name="Target Selected"/>
             </detailSelections>
           </page>
-          <page id="3" resultid="46" name="Analyse des parts de voix" traductioncode="1728" url="/Private/Results/APPMResults.aspx" printExcelUrl="/Private/Results/Excel/APPMResults.aspx" exportJpegUrl="/Private/Results/Jpeg/APPMResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/APPMPdfSavePopUp.aspx" remoteTextUrl="/Private/MyAdExpress/APPMTextFileSavePopUp.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/APPMResultsHelp.aspx">
+          <page id="3" resultid="46" name="Analyse des parts de voix" traductioncode="1728" url="/Private/Results/APPMResults.aspx" printExcelUrl="/Private/Results/Excel/APPMResults.aspx" exportJpegUrl="/Private/Results/Jpeg/APPMResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/APPMPdfSavePopUp.aspx" remoteTextUrl="/Private/MyAdExpress/APPMTextFileSavePopUp.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/APPMResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -1267,7 +1276,7 @@
               <detailSelection id="17" name="Target Selected"/>
             </detailSelections>
           </page>
-          <page id="4" resultid="47" name="Périodicités du plan" traductioncode="1665" url="/Private/Results/APPMResults.aspx" printExcelUrl="/Private/Results/Excel/APPMResults.aspx" exportJpegUrl="/Private/Results/Jpeg/APPMResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/APPMPdfSavePopUp.aspx" remoteTextUrl="/Private/MyAdExpress/APPMTextFileSavePopUp.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/APPMResultsHelp.aspx">
+          <page id="4" resultid="47" name="Périodicités du plan" traductioncode="1665" url="/Private/Results/APPMResults.aspx" printExcelUrl="/Private/Results/Excel/APPMResults.aspx" exportJpegUrl="/Private/Results/Jpeg/APPMResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/APPMPdfSavePopUp.aspx" remoteTextUrl="/Private/MyAdExpress/APPMTextFileSavePopUp.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/APPMResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -1278,7 +1287,7 @@
               <detailSelection id="4" name="Unit"/>
             </detailSelections>
           </page>
-          <page id="5" resultid="48" name="Analyse des familles d'intérêts du plan" traductioncode="1740" url="/Private/Results/APPMResults.aspx" printExcelUrl="/Private/Results/Excel/APPMResults.aspx" exportJpegUrl="/Private/Results/Jpeg/APPMResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/APPMPdfSavePopUp.aspx" remoteTextUrl="/Private/MyAdExpress/APPMTextFileSavePopUp.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/APPMResultsHelp.aspx">
+          <page id="5" resultid="48" name="Analyse des familles d'intérêts du plan" traductioncode="1740" url="/Private/Results/APPMResults.aspx" printExcelUrl="/Private/Results/Excel/APPMResults.aspx" exportJpegUrl="/Private/Results/Jpeg/APPMResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/APPMPdfSavePopUp.aspx" remoteTextUrl="/Private/MyAdExpress/APPMTextFileSavePopUp.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/APPMResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -1290,7 +1299,7 @@
             </detailSelections>
           </page>
           <!--<page id="7" name="Analyse des types d'emplacements du plan" traductioncode="1741" url="/Private/Results/APPMResults.aspx" printExcelUrl="/Private/Results/Excel/APPMResults.aspx" remotePdfUrl="/Private/MyAdExpress/APPMPdfSavePopUp.aspx"/>-->
-          <page id="6" resultid="49" name="Affinités" traductioncode="1687" url="/Private/Results/APPMResults.aspx" printExcelUrl="/Private/Results/Excel/APPMResults.aspx" remotePdfUrl="/Private/MyAdExpress/APPMPdfSavePopUp.aspx" remoteTextUrl="/Private/MyAdExpress/APPMTextFileSavePopUp.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/APPMResultsHelp.aspx">
+          <page id="6" resultid="49" name="Affinités" traductioncode="1687" url="/Private/Results/APPMResults.aspx" printExcelUrl="/Private/Results/Excel/APPMResults.aspx" remotePdfUrl="/Private/MyAdExpress/APPMPdfSavePopUp.aspx" remoteTextUrl="/Private/MyAdExpress/APPMTextFileSavePopUp.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/APPMResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -1300,7 +1309,7 @@
               <detailSelection id="17" name="Target Selected"/>
             </detailSelections>
           </page>
-          <page id="7" resultid="55" name="Calendrier d'actions version" traductioncode="1998" url="/Private/Results/APPMResults.aspx" remotePdfUrl="/Private/MyAdExpress/APPMPdfSavePopUp.aspx" remoteTextUrl="/Private/MyAdExpress/APPMTextFileSavePopUp.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/APPMResultsHelp.aspx">
+          <page id="7" resultid="55" name="Calendrier d'actions version" traductioncode="1998" url="/Private/Results/APPMResults.aspx" remotePdfUrl="/Private/MyAdExpress/APPMPdfSavePopUp.aspx" remoteTextUrl="/Private/MyAdExpress/APPMTextFileSavePopUp.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/APPMResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -1331,7 +1340,7 @@
         <selection id="4" name="Date" showLink="true" traductioncode="854" url="/Private/Selection/APPMDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/SectorDataDateSelectionHelp.aspx" validationMethod="isDatesSelected" />
         <selection id="6" name="Target" showLink="true" traductioncode="1655" url="/Private/Selection/AEPMTargetSelection.aspx" icone="target" menuTextId="1991" helpUrl="/Private/Helps/AEPMTargetSelectionHelp.aspx" validationMethod="IsTargetSelected" />
         <results>
-          <page id="0" resultid="59" name="Synthèse" traductioncode="1664" url="/Private/Results/SectorDataResults.aspx" printExcelUrl="/Private/Results/Excel/SectorDataResults.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx"  remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/SectorDataResultsHelp.aspx">
+          <page id="0" resultid="59" name="Synthèse" traductioncode="1664" url="/Private/Results/SectorDataResults.aspx" printExcelUrl="/Private/Results/Excel/SectorDataResults.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx"  remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/SectorDataResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -1341,7 +1350,7 @@
               <detailSelection id="17" name="Target Selected"/>
             </detailSelections>
           </page>
-          <page id="1" resultid="60" name="Moyennes" traductioncode="2081" url="/Private/Results/SectorDataResults.aspx" printExcelUrl="/Private/Results/Excel/SectorDataResults.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/SectorDataResultsHelp.aspx">
+          <page id="1" resultid="60" name="Moyennes" traductioncode="2081" url="/Private/Results/SectorDataResults.aspx" printExcelUrl="/Private/Results/Excel/SectorDataResults.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/SectorDataResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -1351,18 +1360,7 @@
               <detailSelection id="17" name="Target Selected"/>
             </detailSelections>
           </page>
-          <page id="2" resultid="61" name="Saisonnalité" traductioncode="1139" url="/Private/Results/SectorDataResults.aspx" exportJpegUrl="/Private/Results/Jpeg/SectorDataResultsExport.aspx"  printExcelUrl="/Private/Results/Excel/SectorDataResults.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/SectorDataResultsHelp.aspx">
-            <detailSelections>
-              <detailSelection id="1" name="Module name"/>
-              <detailSelection id="2" name="Result name"/>
-              <detailSelection id="3" name="Date"/>
-              <detailSelection id="5" name="Vehicle Selected"/>
-              <detailSelection id="6" name="Product Selected"/>
-              <detailSelection id="17" name="Target Selected"/>
-              <detailSelection id="4" name="Unit"/>
-            </detailSelections>
-          </page>
-          <page id="3" resultid="62" name="Analyse des familles d'intérêts du plan" traductioncode="1740" url="/Private/Results/SectorDataResults.aspx" exportJpegUrl="/Private/Results/Jpeg/SectorDataResultsExport.aspx" printExcelUrl="/Private/Results/Excel/SectorDataResults.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/SectorDataResultsHelp.aspx">
+          <page id="2" resultid="61" name="Saisonnalité" traductioncode="1139" url="/Private/Results/SectorDataResults.aspx" exportJpegUrl="/Private/Results/Jpeg/SectorDataResultsExport.aspx"  printExcelUrl="/Private/Results/Excel/SectorDataResults.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/SectorDataResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -1373,7 +1371,7 @@
               <detailSelection id="4" name="Unit"/>
             </detailSelections>
           </page>
-          <page id="4" resultid="63" name="Périodicités du plan" traductioncode="1665" url="/Private/Results/SectorDataResults.aspx" exportJpegUrl="/Private/Results/Jpeg/SectorDataResultsExport.aspx" printExcelUrl="/Private/Results/Excel/SectorDataResults.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/SectorDataResultsHelp.aspx">
+          <page id="3" resultid="62" name="Analyse des familles d'intérêts du plan" traductioncode="1740" url="/Private/Results/SectorDataResults.aspx" exportJpegUrl="/Private/Results/Jpeg/SectorDataResultsExport.aspx" printExcelUrl="/Private/Results/Excel/SectorDataResults.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/SectorDataResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -1384,7 +1382,18 @@
               <detailSelection id="4" name="Unit"/>
             </detailSelections>
           </page>
-          <page id="5" resultid="64" name="Affinités" traductioncode="1686" url="/Private/Results/SectorDataResults.aspx"  printExcelUrl="/Private/Results/Excel/SectorDataResults.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/SectorDataResultsHelp.aspx">
+          <page id="4" resultid="63" name="Périodicités du plan" traductioncode="1665" url="/Private/Results/SectorDataResults.aspx" exportJpegUrl="/Private/Results/Jpeg/SectorDataResultsExport.aspx" printExcelUrl="/Private/Results/Excel/SectorDataResults.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/SectorDataResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="17" name="Target Selected"/>
+              <detailSelection id="4" name="Unit"/>
+            </detailSelections>
+          </page>
+          <page id="5" resultid="64" name="Affinités" traductioncode="1686" url="/Private/Results/SectorDataResults.aspx"  printExcelUrl="/Private/Results/Excel/SectorDataResults.aspx" remoteExcelUrl="/Private/MyAdExpress/APPMExcelSavePopUp.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/SectorDataResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -1462,7 +1471,7 @@
           </optionalSelection>
         </optionalSelections>
         <results>
-          <page id="0" resultid="56" name="Résultats" traductioncode="2048" url="/Private/Results/SponsorshipResults.aspx" printExcelUrl="/Private/Results/Excel/SponsorshipResults.aspx"  menuTextId="1983" helpUrl="/Private/Helps/SponsorshipResultsHelp.aspx">
+          <page id="0" resultid="56" name="Résultats" traductioncode="2048" url="/Private/Results/SponsorshipResults.aspx" printExcelUrl="/Private/Results/Excel/SponsorshipResults.aspx"  menuTextId="1983" helpUrl="/Private/Helps/SponsorshipResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="3" name="Date"/>
@@ -1538,7 +1547,7 @@
           </optionalSelection>
         </optionalSelections>
         <results>
-          <page id="0" resultid="57" name="Résultats" traductioncode="2049" url="/Private/Results/SponsorshipResults.aspx" printExcelUrl="/Private/Results/Excel/SponsorshipResults.aspx"  menuTextId="1983" helpUrl="/Private/Helps/SponsorshipProgramResultsHelp.aspx">
+          <page id="0" resultid="57" name="Résultats" traductioncode="2049" url="/Private/Results/SponsorshipResults.aspx" printExcelUrl="/Private/Results/Excel/SponsorshipResults.aspx"  menuTextId="1983" helpUrl="/Private/Helps/SponsorshipProgramResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="3" name="Date"/>
@@ -1595,7 +1604,7 @@
           <selection id="4" name="Date" showLink="true" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected" />
         </selections>
         <results>
-          <page id="0" resultid="65" name="Les nouvelles créations" traductioncode="2557" url="/Private/Results/NewCreativesResults.aspx" rawExcelUrl="/Private/Results/RawExcel/NewCreativesResults.aspx" printExcelUrl="/Private/Results/Excel/NewCreativesResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/Default.aspx">
+          <page id="0" resultid="65" name="Les nouvelles créations" traductioncode="2557" url="/Private/Results/NewCreativesResults.aspx" rawExcelUrl="/Private/Results/RawExcel/NewCreativesResults.aspx" printExcelUrl="/Private/Results/Excel/NewCreativesResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/Default.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>

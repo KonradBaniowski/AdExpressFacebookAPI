@@ -26,8 +26,8 @@ namespace TNS.AdExpress.Bastet.BusinessFacade{
 		/// <param name="dateBegin">Date de début</param>
 		/// <param name="dateEnd">Date de fin</param>
 		/// <returns>HTML</returns>
-		public static string GetIndicators(IDataSource source, string vehicleList, string dateBegin, string dateEnd){
-			return(IndicatorsUI.GetHtml(source,vehicleList,dateBegin,dateEnd));			
+        public static string GetIndicators(IDataSource source, string vehicleList, DateTime dateBegin, DateTime dateEnd, int siteLanguageId, int dataLanguageId) {
+			return(IndicatorsUI.GetHtml(source,vehicleList,dateBegin,dateEnd,siteLanguageId, dataLanguageId));			
 		}
 
 		/// <summary>
@@ -38,8 +38,8 @@ namespace TNS.AdExpress.Bastet.BusinessFacade{
 		/// <param name="dateBegin">Date de début</param>
 		/// <param name="dateEnd">Date de fin</param>
 		/// <returns>HTML</returns>
-		public static string GetIndicatorsExcel(IDataSource source, string vehicleList, string dateBegin, string dateEnd){
-			return(IndicatorsUI.GetExcel(source,vehicleList,dateBegin,dateEnd));			
+        public static string GetIndicatorsExcel(IDataSource source, string vehicleList, DateTime dateBegin, DateTime dateEnd, int siteLanguageId, int dataLanguageId) {
+			return(IndicatorsUI.GetExcel(source,vehicleList,dateBegin,dateEnd,siteLanguageId,  dataLanguageId));			
 		}
 
 	}

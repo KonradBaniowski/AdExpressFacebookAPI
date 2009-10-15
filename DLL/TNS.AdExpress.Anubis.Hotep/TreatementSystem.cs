@@ -7,9 +7,6 @@ using System;
 using System.Data;
 using System.Threading;
 
-using TNS.AdExpress.Anubis.BusinessFacade;
-using TNS.AdExpress.Anubis.BusinessFacade.Result;
-using TNS.AdExpress.Anubis.Common;
 using TNS.AdExpress.Anubis.Hotep.Common;
 using TNS.AdExpress.Anubis.Hotep.BusinessFacade;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -17,12 +14,17 @@ using TNS.FrameWork.DB.Common;
 using PDFCreatorPilotLib;
 using TNS.AdExpress.Domain.Theme;
 using TNS.AdExpress.Domain.Web;
+using CstWeb = TNS.AdExpress.Constantes.Web;
+using TNS.Ares;
+using TNS.AdExpress.Domain.Layers;
+using TNS.Ares.StaticNavSession.DAL;
+using System.Reflection;
 
 namespace TNS.AdExpress.Anubis.Hotep{
 	/// <summary>
 	/// Implementation of TNS.AdExpress.Anubis.BusinessFacade.IPlugin for Hotep plug-in
 	/// </summary>
-	public class TreatementSystem:TNS.AdExpress.Anubis.BusinessFacade.IPlugin{
+	public class TreatementSystem:IPlugin{
 
 		#region Evènements
 		/// <summary>
@@ -68,6 +70,10 @@ namespace TNS.AdExpress.Anubis.Hotep{
         /// Theme
         /// </summary>
         private Theme _theme;
+        /// <summary>
+        /// Data Access Layer
+        /// </summary>
+        private IStaticNavSessionDAL _dataAccess;
 		#endregion
 
         #region Constructeur
@@ -102,6 +108,11 @@ namespace TNS.AdExpress.Anubis.Hotep{
 			
 			_navSessionId=navSessionId;
 
+            object[] parameter = new object[1];
+            parameter[0] = dataSource;
+            CoreLayer cl = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.dataAccess];
+            _dataAccess = (IStaticNavSessionDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameter, null, null, null);
+
 			#region Chargement du fichier de configuration
 			if(configurationFilePath==null){
 				OnError(_navSessionId,"Impossible de lancer le traitement d'un job", new ArgumentNullException("Le nom du fichier de configuration est null."));
@@ -112,14 +123,14 @@ namespace TNS.AdExpress.Anubis.Hotep{
 				return;
 			}
 			try{
-				_hotepConfig=new HotepConfig(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+configurationFilePath));
+				_hotepConfig=new HotepConfig(new XmlReaderDataSource(configurationFilePath));
 			}
 			catch(System.Exception err){
 				OnError(_navSessionId,"Impossible de lancer le traitement d'un job <== impossible de charger le fichier de configuration",err);
 				return;
 			}
             try {
-                _theme = new Theme(new XmlReaderDataSource(_hotepConfig.ThemePath + @"\App_Themes\" + WebApplicationParameters.Themes[((WebSession)ParameterSystem.Load(_navSessionId)).SiteLanguage].Name + @"\" + "Styles.xml"));
+                _theme = new Theme(new XmlReaderDataSource(_hotepConfig.ThemePath + @"\App_Themes\" + WebApplicationParameters.Themes[((WebSession)_dataAccess.LoadData(_navSessionId)).SiteLanguage].Name + @"\" + "Styles.xml"));
             }
             catch (System.Exception err) {
                 OnError(_navSessionId, "File of theme not found ! (in Plugin APPM in TreatmentSystem class)",err);
@@ -152,26 +163,26 @@ namespace TNS.AdExpress.Anubis.Hotep{
 				OnStartWork(_navSessionId,this.GetPluginName()+" started for "+_navSessionId);
 
 				#region Request Details
-				DataRow rqDetails = ParameterSystem.GetRequestDetails(_dataSource,_navSessionId).Tables[0].Rows[0];
+                DataRow rqDetails = _dataAccess.GetRow(_navSessionId);
 				#endregion
 
 				#region PDF management
 
-                pdf = new HotepPdfSystem(_dataSource, _hotepConfig, rqDetails, (WebSession)ParameterSystem.Load(_navSessionId), _theme);
+                pdf = new HotepPdfSystem(_dataSource, _hotepConfig, rqDetails, (WebSession)_dataAccess.LoadData(_navSessionId), _theme);
 				string fileName = pdf.Init();
 				pdf.AutoLaunch = false;
 				//TODO update Database for physical file name
 				pdf.Fill();
 				pdf.EndDoc();
-				ParameterSystem.RegisterFile(_dataSource,_navSessionId,fileName);
+                _dataAccess.RegisterFile(_navSessionId, fileName);
 				pdf.Send(fileName);
-				ParameterSystem.ChangeStatus(_dataSource,_navSessionId,TNS.AdExpress.Anubis.Constantes.Result.status.sent);
+                _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.sent.GetHashCode());
 				#endregion
 
 				OnStopWorkerJob(_navSessionId,"","",this.GetPluginName()+" finished for "+_navSessionId);
 			}
 			catch(System.Exception err){
-				ParameterSystem.ChangeStatus(_dataSource,_navSessionId,TNS.AdExpress.Anubis.Constantes.Result.status.error);
+                _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.error.GetHashCode());
 				OnError(_navSessionId,"Erreur lors du traitement du résultat.", err);
 				return;
 			}

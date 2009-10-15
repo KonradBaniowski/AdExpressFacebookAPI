@@ -221,7 +221,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Type du niveau de détail générique
             /// </summary>			
-            genericSelectionDetailLevelType = 49
+            genericSelectionDetailLevelType = 49,
+            /// <summary>
+            /// Nb Alerts
+            /// </summary>			
+            nbAlerts = 50
 		}
 	
 	}
@@ -1139,17 +1143,21 @@ namespace TNS.AdExpress.Constantes.Web{
 		public enum InsertType
 		{
 			/// <summary>
-			/// Encart
+			/// inset
 			/// </summary>
 			encart=108,
 			/// <summary>
-			/// Encart volant
+			/// Flying inset
 			/// </summary>
 			flyingEncart=85,
 			/// <summary>
 			/// excart
 			/// </summary>
-			Excart=999		
+			Excart=999,
+			/// <summary>
+			/// Subscriber inset
+			/// </summary>
+			subScriberEncart = 1983
 		}	
 		#endregion
 
@@ -1454,6 +1462,10 @@ namespace TNS.AdExpress.Constantes.Web{
             /// Les nouvelles créations (Evaliant)
             /// </summary>
             public const int NEW_CREATIVES = 4369;
+            /// <summary>
+            /// Alert AdExpress
+            /// </summary>
+            public const int ALERT_ADEXPRESS = 5931;
 		}
 		#endregion
 
@@ -3299,30 +3311,39 @@ namespace TNS.AdExpress.Constantes.Web{
 	}
 	#endregion
 
-    #region Common Layers
-    /// <summary>
-    /// contains all constantes to identify the common web site layers
-    /// </summary>
-    public class Layers {
-        public enum Id {
+	#region Common Layers
+	/// <summary>
+	/// contains all constantes to identify the common web site layers
+	/// </summary>
+	public class Layers {
+		public enum Id {
+			/// <summary>
+			/// Classification layer Id
+			/// </summary>
+			classification = 0,
+			/// <summary>
+			/// Utilities layer Id
+			/// </summary>
+			utilities = 1,
+			/// <summary>
+			/// Dates layer Id
+			/// </summary>
+			date = 2,
             /// <summary>
-            /// Classification layer Id
-            /// </summary>
-            classification = 0,
+			/// Classification level list layer Id
+			/// </summary>
+			classificationLevelList = 3,
             /// <summary>
-            /// Utilities layer Id
+            /// Data Access layer id
             /// </summary>
-            utilities = 1,
+            dataAccess = 4,
             /// <summary>
-            /// Date layer Id
+            /// Date DataAccess
             /// </summary>
-            date = 2,
-            /// <summary>
-            /// Classification level list layer Id
-            /// </summary>
-            classificationLevelList = 3
-        }
-    }
-    #endregion
+            dateDAL = 5
+		}
+	}
+
+	#endregion
 
 }

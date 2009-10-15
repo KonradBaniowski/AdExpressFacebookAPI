@@ -31,10 +31,12 @@ using WebFunctions = TNS.AdExpress.Web.Functions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.FrameWork.Date;
-using TNS.AdExpressI.Date;
-using System.Reflection;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpressI.Date;
+using TNS.AdExpressI.Date.DAL;
+using System.Reflection;
+using TNS.AdExpress.Constantes.Web;
 
 namespace AdExpress.Private.Selection {
     /// <summary>
@@ -100,6 +102,9 @@ namespace AdExpress.Private.Selection {
                 string selectionType = "";
                 string disponibilityType = "";
 
+                CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.dateDAL];
+                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
+
                 if (_webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA) {
 
                     if (Page.Request.Form.GetValues("selectionType") != null) selectionType = Page.Request.Form.GetValues("selectionType")[0];
@@ -141,7 +146,7 @@ namespace AdExpress.Private.Selection {
                             GlobalCalendarWebControl1.FirstDayNotEnable = (DateTime)this.ViewState["FirstDayNotEnabledVS"];
                     }
                     else {
-                        GlobalCalendarWebControl1.FirstDayNotEnable = WebFunctions.Dates.GetFirstDayNotEnabled(_webSession, selectedVehicle, GlobalCalendarWebControl1.StartYear, _webSession.Source);
+                        GlobalCalendarWebControl1.FirstDayNotEnable = dateDAL.GetFirstDayNotEnabled(_webSession, selectedVehicle, GlobalCalendarWebControl1.StartYear);
                         ViewState.Add("FirstDayNotEnabledVS", GlobalCalendarWebControl1.FirstDayNotEnable);
                     }
                 }

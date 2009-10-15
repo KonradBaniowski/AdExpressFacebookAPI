@@ -254,61 +254,62 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                 DataTable dt=webSession.CustomerLogin.GetCustomerModuleListHierarchy();
                 foreach(DataRow currentRow in dt.Rows) {
 					idGroupModule = (Int64)currentRow["idGroupModule"];
+                    idModule = (Int64)currentRow["idModule"];
+                    if (ModulesList.GetModule(idModule) != null) {
+                        if (idGroupModuleOld != idGroupModule) {
+                            html += htmlModuleGroups + htmlModules + moduleGroupInformation;
+                            htmlModuleGroups = "";
+                            htmlModules = "";
+                            moduleGroupInformation = "";
+                            // On réinitialise les catégories qd on change de groupe de module
+                            idModuleCategory = -1;
+                            idModuleCategoryOld = -1;
+                        }
+                        if (currentRow["idModuleCategory"] != System.DBNull.Value)
+                            idModuleCategory = (Int64)currentRow["idModuleCategory"];
+                        else
+                            idModuleCategory = -1;
 
-					if (idGroupModuleOld != idGroupModule) {
-						html += htmlModuleGroups + htmlModules + moduleGroupInformation;
-						htmlModuleGroups = "";
-						htmlModules = "";
-						moduleGroupInformation = "";
-						// On réinitialise les catégories qd on change de groupe de module
-						idModuleCategory = -1;
-						idModuleCategoryOld = -1;
-					}
-					if (currentRow["idModuleCategory"] != System.DBNull.Value)
-						idModuleCategory = (Int64)currentRow["idModuleCategory"];
-					else
-						idModuleCategory = -1;
+                        if (htmlModuleGroups.Length == 0) {
+                            // Groupe de module
+                            htmlModuleGroups += "\r\n<tr>";
+                            htmlModuleGroups += "\r\n<td width=\"" + _columnLeftWidth.ToString() + "\">&nbsp;</td>";
+                            htmlModuleGroups += "\r\n<td " + ((_moduleGroupCss.Length > 0) ? " class=\"" + _moduleGroupCss + "\"" : "") + ">" + GestionWeb.GetWebWord((int)ModulesList.GetModuleGroupIdWebTxt(idGroupModule), webSession.SiteLanguage) + "</td>";
+                            if (first) {
+                                // Pour le tout 1er groupe de module, on ne met pas de couleur de fond violet
+                                htmlModuleGroups += "\r\n<td " + ((_moduleGroupCss.Length > 0) ? " class=\"" + _moduleGroupCss + "\"" : "") + ">&nbsp;</td>";
+                                first = false;
+                            }
+                            else {
+                                // A partir du 2ème groupe de module, on appelle le CSS adapté avec couleur de fond
+                                htmlModuleGroups += "\r\n<td " + ((_moduleGroupWithBackgroundCss.Length > 0) ? " class=\"" + _moduleGroupWithBackgroundCss + "\"" : "") + ">&nbsp;</td>";
+                            }
+                            htmlModuleGroups += "\r\n</tr>";
 
-					if (htmlModuleGroups.Length == 0) {
-						// Groupe de module
-						htmlModuleGroups += "\r\n<tr>";
-						htmlModuleGroups += "\r\n<td width=\"" + _columnLeftWidth.ToString() + "\">&nbsp;</td>";
-						htmlModuleGroups += "\r\n<td " + ((_moduleGroupCss.Length > 0) ? " class=\"" + _moduleGroupCss + "\"" : "") + ">" + GestionWeb.GetWebWord((int)ModulesList.GetModuleGroupIdWebTxt(idGroupModule), webSession.SiteLanguage) + "</td>";
-						if (first) {
-							// Pour le tout 1er groupe de module, on ne met pas de couleur de fond violet
-							htmlModuleGroups += "\r\n<td " + ((_moduleGroupCss.Length > 0) ? " class=\"" + _moduleGroupCss + "\"" : "") + ">&nbsp;</td>";
-							first = false;
-						}
-						else {
-							// A partir du 2ème groupe de module, on appelle le CSS adapté avec couleur de fond
-							htmlModuleGroups += "\r\n<td " + ((_moduleGroupWithBackgroundCss.Length > 0) ? " class=\"" + _moduleGroupWithBackgroundCss + "\"" : "") + ">&nbsp;</td>";
-						}
-						htmlModuleGroups += "\r\n</tr>";
+                            // Table des modules
+                            htmlModules += "\r\n<tr><td>&nbsp;</td><td><table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">";
+                        }
 
-						// Table des modules
-						htmlModules += "\r\n<tr><td>&nbsp;</td><td><table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">";
-					}
+                        // Catégorie de modules
+                        if (idModuleCategoryOld != idModuleCategory && idModuleCategory != -1) {
+                            idModuleCategoryOld = idModuleCategory;
+                            htmlModules += "\r\n<tr><td>&nbsp;&nbsp;&nbsp;<font class=" + _moduleSubGroupCss + ">" + GestionWeb.GetWebWord((int)ModulesList.GetModuleCategoryWebTxt(idModuleCategory), webSession.SiteLanguage) + "</font></td></tr>";
+                        }
 
-					// Catégorie de modules
-					if (idModuleCategoryOld != idModuleCategory && idModuleCategory != -1) {
-						idModuleCategoryOld = idModuleCategory;
-						htmlModules += "\r\n<tr><td>&nbsp;&nbsp;&nbsp;<font class=" + _moduleSubGroupCss + ">" + GestionWeb.GetWebWord((int)ModulesList.GetModuleCategoryWebTxt(idModuleCategory), webSession.SiteLanguage) + "</font></td></tr>";
-					}
+                        // Module
+                        moduleLabel = GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(idModule), webSession.SiteLanguage);
+                        htmlModules += "\r\n<tr><td>&nbsp;&nbsp;" + ((_imageModuleUrlPath.Length > 0) ? "&nbsp;<img src=\"" + _imageModuleUrlPath + "\">" : "")
+                            + "&nbsp;<a class=\"Tips1\" href=\"" + this.Parent.Page.Request.RawUrl.ToString() + "&m=" + idModule + "\"  "//onclick=\"return false;\" " 
+                            + InformationModuleHtml(idModule, (string)descriptionImagesModulesList[idModule]) + " >" + moduleLabel + "</a></td></tr>";
 
-					// Module
-					idModule = (Int64)currentRow["idModule"];
-					moduleLabel = GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(idModule), webSession.SiteLanguage);
-					htmlModules += "\r\n<tr><td>&nbsp;&nbsp;" + ((_imageModuleUrlPath.Length > 0) ? "&nbsp;<img src=\"" + _imageModuleUrlPath + "\">" : "") 
-                        + "&nbsp;<a class=\"Tips1\" href=\"" + this.Parent.Page.Request.RawUrl.ToString() + "&m=" + idModule + "\"  "//onclick=\"return false;\" " 
-                        + InformationModuleHtml(idModule, (string)descriptionImagesModulesList[idModule]) + " >" + moduleLabel + "</a></td></tr>";
-
-					if (idGroupModuleOld != idGroupModule && moduleGroupInformation.Length == 0) {
-						idGroupModuleOld = idGroupModule;
-						// Informations
-						moduleGroupInformation += "</table><br></td>"
-							+ "<td width=\"" + _columnInformationWidth.ToString() + "\" valign=top " + ((_moduleGroupInformationCss.Length > 0) ? " class=\"" + _moduleGroupInformationCss + "\"" : "") + ">" + GestionWeb.GetWebWord((int)ModulesList.GetModuleGroupDescriptionWebTextId(idGroupModule), webSession.SiteLanguage) + "</td>"
-							+ "</tr>";
-					}
+                        if (idGroupModuleOld != idGroupModule && moduleGroupInformation.Length == 0) {
+                            idGroupModuleOld = idGroupModule;
+                            // Informations
+                            moduleGroupInformation += "</table><br></td>"
+                                + "<td width=\"" + _columnInformationWidth.ToString() + "\" valign=top " + ((_moduleGroupInformationCss.Length > 0) ? " class=\"" + _moduleGroupInformationCss + "\"" : "") + ">" + GestionWeb.GetWebWord((int)ModulesList.GetModuleGroupDescriptionWebTextId(idGroupModule), webSession.SiteLanguage) + "</td>"
+                                + "</tr>";
+                        }
+                    }
 				}
 				if (htmlModuleGroups.Length > 0 && htmlModules.Length > 0) html += htmlModuleGroups + htmlModules + moduleGroupInformation;
 				html += "</table>";

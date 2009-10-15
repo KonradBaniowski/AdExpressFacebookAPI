@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{28311011-B4C8-47F0-97EB-B94EE8F99900}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TNS.AdExpressI.Classification.DAL.Default</RootNamespace>
+    <AssemblyName>TNS.AdExpressI.Classification.DAL.Default</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\AdExpress\Bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TNS.Classification, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.Classification.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.DB.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClassificationDAL.cs" />
+    <Compile Include="ClassificationLevelListDALFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
+      <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
+      <Name>TNS.AdExpress.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
+      <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
+      <Name>TNS.AdExpress.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress.Web.Core\TNS.AdExpress.Web.Core.csproj">
+      <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
+      <Name>TNS.AdExpress.Web.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress.Web\TNS.AdExpress.Web.csproj">
+      <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
+      <Name>TNS.AdExpress.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.Classification.DAL\TNS.AdExpressI.Classification.DAL.csproj">
+      <Project>{B731E9A2-0DBF-43A6-A89E-6DC27D96FFD4}</Project>
+      <Name>TNS.AdExpressI.Classification.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

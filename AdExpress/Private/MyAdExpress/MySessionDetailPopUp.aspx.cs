@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -33,6 +32,7 @@ using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpressI.Date;
 using System.Reflection;
 using TNS.AdExpress.Constantes.Classification.DB;
+using System.Collections.Generic;
 
 namespace AdExpress.Private.MyAdExpress{
 	/// <summary>

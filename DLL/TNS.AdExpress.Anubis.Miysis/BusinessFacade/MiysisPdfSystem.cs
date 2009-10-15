@@ -18,9 +18,6 @@ using System.Reflection;
 
 using TNS.AdExpress.Anubis.Miysis.Common;
 using TNS.AdExpress.Anubis.Miysis.Exceptions;
-using TNS.AdExpress.Anubis.BusinessFacade.Result;
-using TNS.AdExpress.Anubis.Common;
-using TNSAnubisConstantes=TNS.AdExpress.Anubis.Constantes;
 
 using TNS.AdExpress.Web.UI.Results;
 
@@ -66,9 +63,12 @@ using TNS.AdExpressI.MediaSchedule;
 using TNS.AdExpress.Domain.Web.Navigation;
 using DomainLevel = TNS.AdExpress.Domain.Level;
 using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
+using MiysisFunctions = TNS.AdExpress.Anubis.Miysis.Functions;
 using TNS.AdExpress.Domain.Theme;
 using TNS.AdExpressI.Insertions;
 using TNS.AdExpressI.Insertions.Cells;
+using TNS.Ares;
+using TNS.Ares.Pdf;
 #endregion
 
 namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
@@ -248,7 +248,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 				shortName = DateTime.Now.ToString("yyyyMMdd_") 
 					+ rqDetails["id_static_nav_session"].ToString()
 					+ "_"
-					+ TNS.AdExpress.Anubis.Common.Functions.GetRandomString(30,40);
+					+ TNS.Ares.Functions.GetRandomString(30,40);
 
 				pdfFileName += @"\" + shortName + ".pdf";
 
@@ -345,7 +345,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 
 		string workFile = GetWorkDirectory() + @"\Campaign_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-		sw = TNS.AdExpress.Anubis.Common.Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
+        sw = MiysisFunctions.Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 
 		#region Title
 		sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
@@ -504,7 +504,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 
 		#region Html file loading
 		sw.WriteLine("</TABLE>");
-		TNS.AdExpress.Anubis.Common.Functions.CloseHtmlFile(sw);
+        MiysisFunctions.Functions.CloseHtmlFile(sw);
 		HTML2PDF2Class html = new HTML2PDF2Class();
 		html.MarginLeft = Convert.ToInt32(this.LeftMargin);
 		html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
@@ -974,7 +974,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 				html=new StringBuilder(10000);
 							
 				#region Html file loading
-				TNS.AdExpress.Anubis.Common.Functions.CloseHtmlFile(sw);
+                MiysisFunctions.Functions.CloseHtmlFile(sw);
                 HTML2PDF2Class htmlTmp = new HTML2PDF2Class();
 				htmlTmp.MarginLeft = Convert.ToInt32(this.LeftMargin);
 				htmlTmp.MarginTop = Convert.ToInt32(this.WorkZoneTop);

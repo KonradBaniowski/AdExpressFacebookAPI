@@ -94,7 +94,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                     showActiveMedia = bool.Parse(reader.GetAttribute("showActiveMedia"));
                                 if (reader.GetAttribute("needLastAvailableDate") != null && reader.GetAttribute("needLastAvailableDate").Length > 0)
                                     needLastAvailableDate = bool.Parse(reader.GetAttribute("needLastAvailableDate"));
-                                if (reader.GetAttribute("autopromo") != null && reader.GetAttribute("autopromo").Length > 0)
+								if (reader.GetAttribute("autopromo") != null && reader.GetAttribute("autopromo").Length > 0)
 									autopromo = bool.Parse(reader.GetAttribute("autopromo"));
                                 break;
                             case "allowedUnit":

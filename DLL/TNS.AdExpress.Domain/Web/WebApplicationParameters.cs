@@ -14,7 +14,7 @@ using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Web.Core;
 using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Constantes.Web;
-using WebConstantes = TNS.AdExpress.Constantes.Web;
+using WebConstantes=TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpress.Domain.Web {
 
@@ -96,17 +96,27 @@ namespace TNS.AdExpress.Domain.Web {
         /// Inset option is allowed
         /// </summary>
         protected static bool _allowInsetOption = true;
+		/// <summary>
+		/// Collections of inset type
+		/// </summary>
+		protected static Dictionary<CustomerSessions.InsertType, long> _insetTypeCollection = null;
         /// <summary>
         /// Dundas Configuration
         /// </summary>
         protected static DundasConfiguration _dundas = null;
-
+		/// <summary>
+		/// Info news information
+		/// </summary>
 		protected static TNS.AdExpress.Domain.Results.InfoNews _infoNewsInformations = null;
-        /// <summary>
-        /// Collections of layers which can be called in all web site
-        /// <example></example>
-        /// </summary>
-        protected static Dictionary<WebConstantes.Layers.Id, Domain.Layers.CoreLayer> _coreLayers = null;
+		/// <summary>
+		/// Collections of layers which can be called in all web site
+		/// <example></example>
+		/// </summary>
+		protected static Dictionary<WebConstantes.Layers.Id, Domain.Layers.CoreLayer> _coreLayers = null;
+		/// <summary>
+		/// True if must use right defaut connection
+		/// </summary>
+		protected static bool _useRightDefaultConnection = false;
         #endregion
         
         #region Contructeur
@@ -137,8 +147,8 @@ namespace TNS.AdExpress.Domain.Web {
             _portofolioDetailMediaColumns = new PortofolioDetailMediaColumns(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.PORTOFOLIO_DETAIL_MEDIA_CONFIGURATION_FILENAME));
             _dundas = new DundasConfiguration(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.DUNDAS_CONFIGURATION_FILENAME));
 			_infoNewsInformations = new InfoNews(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.INFO_NEWS_FILENAME));
-            _coreLayers = CoreLayersXL.Load(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.CORE_LAYERS_CONFIGURATION_FILENAME));
-
+			_coreLayers = CoreLayersXL.Load(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.CORE_LAYERS_CONFIGURATION_FILENAME));
+			
         }
         #endregion
 
@@ -255,6 +265,17 @@ namespace TNS.AdExpress.Domain.Web {
                 _allowInsetOption = value;
             }
         }
+		/// <summary>
+		/// Get inset type collection
+		/// </summary>
+		public static Dictionary<CustomerSessions.InsertType, long> InsetTypeCollection {
+			get {
+				return _insetTypeCollection;
+			}
+			set {
+				_insetTypeCollection = value;
+			}
+		}
         /// <summary>
         /// Get Dundas Virtual Path File Temporary
         /// </summary>
@@ -268,12 +289,23 @@ namespace TNS.AdExpress.Domain.Web {
 		public static TNS.AdExpress.Domain.Results.InfoNews InfoNewsInformations {
 			get { return _infoNewsInformations; }
 		}
-        /// <summary>
-        /// Get Collections of layers which can be called in all web site
-        /// </summary>
-        public static Dictionary<WebConstantes.Layers.Id, Domain.Layers.CoreLayer> CoreLayers {
-            get { return _coreLayers; }
-        }
+		/// <summary>
+		/// Get Collections of layers which can be called in all web site
+		/// </summary>
+		public static Dictionary<WebConstantes.Layers.Id, Domain.Layers.CoreLayer> CoreLayers {
+			get { return _coreLayers; }
+		}
+		/// <summary>
+		/// True if must use right defaut connection
+		/// </summary>
+		public static bool UseRightDefaultConnection {
+			get {
+				return _useRightDefaultConnection;
+			}
+			set {
+				_useRightDefaultConnection = value;
+			}
+		}
         #endregion
 
     }

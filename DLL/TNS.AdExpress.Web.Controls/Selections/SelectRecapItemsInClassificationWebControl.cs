@@ -216,6 +216,46 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 			}
 			return dt;
 		}
-		#endregion		
+		#endregion	
+	
+        #region GetItemsInAccess
+        /// <summary>
+        /// Obtains identifier list of  product classification items authorized for the current customer.
+        /// </summary>
+        /// <param name="universeLevelId"> product classification level Id of the current universe</param>      
+        /// <returns>level classification </returns>
+        /// <exception cref="TNS.AdExpress.Web.Controls.Exceptions.SelectRecapItemsInClassificationWebControlException">
+        /// "Identifier of classification level unknown</exception>
+        protected virtual CustomerRightConstante.type GetAccessRights(long universeLevelId)
+        {           
+            switch (universeLevelId)
+            {
+                //Get list of the identifiers of the authorized advertisers
+                case TNS.Classification.Universe.TNSClassificationLevels.ADVERTISER:
+                    return CustomerRightConstante.type.advertiserAccess;
+
+                //Get list of the identifiers of the authorized categories
+                case TNS.Classification.Universe.TNSClassificationLevels.SECTOR:
+                    return CustomerRightConstante.type.sectorAccess;
+
+                //Getlist of the identifiers of the authorized sub categories
+                case TNS.Classification.Universe.TNSClassificationLevels.SUB_SECTOR:
+                    return CustomerRightConstante.type.subSectorAccess;
+
+                //Get list of the identifiers of the authorized groups
+                case TNS.Classification.Universe.TNSClassificationLevels.GROUP_:
+                    return CustomerRightConstante.type.groupAccess;
+
+                //Get level segment
+                case TNS.Classification.Universe.TNSClassificationLevels.SEGMENT:
+                    return CustomerRightConstante.type.segmentAccess;
+                default:
+                    throw (new Exceptions.SelectRecapItemsInClassificationWebControlException("Identifier of classification level unknown"));
+            }
+            
+        }
+
+        #endregion
+
 	}
 }

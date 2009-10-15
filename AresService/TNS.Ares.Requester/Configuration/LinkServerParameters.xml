@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<servers selectedServerId="2">
+  <smtp host="frmitpu-msprod" from="tnsadexpress@tnsmi.fr" errorEmailList="alexandre.rousseau@tnsmi.fr" />
+  <server server_id="1" host="frmitch-ls03" port="30000" />
+  <server server_id="2" host="frmitch-ditd058" port="30000" />
+  <server server_id="3" host="frmitch-ditd021" port="30000" />
+</servers>

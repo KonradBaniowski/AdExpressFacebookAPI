@@ -7,6 +7,7 @@ using System;
 using System.Data;
 using System.Text;
 using System.IO;
+using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -38,6 +39,8 @@ using CoreSelection=TNS.AdExpress.Web.Core.Selection;
 using FrameWorkSelection = TNS.AdExpress.Constantes.FrameWork.Selection;
 using Oracle.DataAccess.Client;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpressI.Classification.DAL;
+using TNS.AdExpress.Domain.Layers;
 
 namespace TNS.AdExpress.Web.Controls.Selections{
 	/// <summary>
@@ -449,7 +452,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <summary>
 		/// Load allowed branches and levels id for the current Page
 		/// </summary>
-		protected virtual void LoadBranchAndLevelsForCurrentPage(Module module) {
+		protected virtual void LoadBranchAndLevelsForCurrentPage(TNS.AdExpress.Domain.Web.Navigation.Module module) {
 			CoreSelection.ILevelsRules levelsRules = null;
 			List<int> tempBranchIds = null;
 			List<UniverseLevel> tempLevels = null;
@@ -1010,7 +1013,18 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		protected override DataTable GetData(int universeLevelId, string selectedItemIds, int universeLevelOfSelectedItem) {
 			try {
 				_webSession = (WebSession)WebSession.Load(_idSession);
-				return TNS.AdExpress.Web.Core.DataAccess.ClassificationList.SearchLevelDataAccess.GetItems(UniverseLevels.Get(universeLevelId).TableName, selectedItemIds, UniverseLevels.Get(universeLevelOfSelectedItem).TableName, _webSession, _dBSchema, _dimension).Tables[0];
+				//return TNS.AdExpress.Web.Core.DataAccess.ClassificationList.SearchLevelDataAccess.GetItems(UniverseLevels.Get(universeLevelId).TableName, selectedItemIds, UniverseLevels.Get(universeLevelOfSelectedItem).TableName, _webSession, _dBSchema, _dimension).Tables[0];
+
+				CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
+				if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
+				object[] param = new object[2];
+				param[0] = _webSession;
+				param[1] = _dimension;
+                //param[2] = _dBSchema;
+                //IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                TNS.AdExpressI.Classification.DAL.ClassificationDAL classficationDAL = (TNS.AdExpressI.Classification.DAL.ClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                classficationDAL.DBSchema = _dBSchema;
+				return classficationDAL.GetItems(UniverseLevels.Get(universeLevelId).TableName, selectedItemIds, UniverseLevels.Get(universeLevelOfSelectedItem).TableName).Tables[0];
 			}
 			catch (Exception err) {
 				throw new TNS.AdExpress.Web.Controls.Exceptions.SelectItemsInClassificationWebControlException("Impossible d'obtenir les données.", err);
@@ -1026,7 +1040,19 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		protected override DataTable GetData(int universeLevelId, string wordToSearch) {
 			try {
 				_webSession = (WebSession)WebSession.Load(_idSession);
-				return TNS.AdExpress.Web.Core.DataAccess.ClassificationList.SearchLevelDataAccess.GetItems(UniverseLevels.Get(universeLevelId).TableName, wordToSearch, _webSession, _dBSchema, _dimension).Tables[0];
+				//return TNS.AdExpress.Web.Core.DataAccess.ClassificationList.SearchLevelDataAccess.GetItems(UniverseLevels.Get(universeLevelId).TableName, wordToSearch, _webSession, _dBSchema, _dimension).Tables[0];
+
+				CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];                
+				if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
+				object[] param = new object[2];
+				param[0] = _webSession;
+				param[1] = _dimension;
+                //param[2] = _dBSchema;
+                //IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                TNS.AdExpressI.Classification.DAL.ClassificationDAL classficationDAL = (TNS.AdExpressI.Classification.DAL.ClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                classficationDAL.DBSchema = _dBSchema;
+                
+                return classficationDAL.GetItems(UniverseLevels.Get(universeLevelId).TableName, wordToSearch).Tables[0];
 			}
 			catch (Exception err) {
 				throw new TNS.AdExpress.Web.Controls.Exceptions.SelectItemsInClassificationWebControlException("Impossible d'obtenir les données.", err);

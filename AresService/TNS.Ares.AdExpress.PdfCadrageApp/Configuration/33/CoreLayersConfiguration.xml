@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <layers>
+    <layer id="dataAccess" name="layer of data access" assemblyName="TNS.Ares.StaticNavSession.DAL.Default.dll" class="TNS.Ares.StaticNavSession.DAL.Default.StaticNavSessionDAL"/>
+  </layers>
+</configuration>

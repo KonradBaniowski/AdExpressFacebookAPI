@@ -1,5 +1,5 @@
-using System;
-using System.Collections.Generic;
+
+
 #region Informations
 // Auteur: D. Mussuma 
 // Date de création: 03/12/2008 
@@ -7,8 +7,10 @@ using System.Collections.Generic;
 #endregion
 
 using System;
+using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Collections;
 using System.Data;
@@ -24,7 +26,8 @@ using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Classification;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
-
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpressI.Classification.DAL;
 namespace TNS.AdExpress.Web.Controls.Selections {
 	/// <summary>
 	/// Show list of  Parent/media of one vehicle to select with corresponding rights.
@@ -630,16 +633,42 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 		/// <param name="keyWord">Key Word</param>
 		/// <param name="listAccessMedia">media access list</param>
 		/// <returns>List of media to show</returns>
-		private DataSet GetData(int eventButton, string keyWord, string listAccessMedia) {			
-			//TEST
-			//return null;
+		private DataSet GetData(int eventButton, string keyWord, string listAccessMedia) {
+			IClassificationDAL classficationDAL = null;
+			CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
+			if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
 
-			if (_eventButton == constEvent.eventSelection.OK_EVENT && _nbItemsValidity != constEvent.error.MAX_ELEMENTS)
-				return Core.DataAccess.DetailMediaDataAccess.keyWordDetailMediaListDataAccess(_webSession, keyWord, listAccessMedia, _webSession.GenericMediaSelectionDetailLevel);
-			else if (_eventButton == constEvent.eventSelection.LOAD_EVENT || _eventButton == constEvent.eventSelection.SAVE_EVENT)
-				return Core.DataAccess.DetailMediaDataAccess.DetailMediaListDataAccess(_webSession, _webSession.GenericMediaSelectionDetailLevel,listAccessMedia);
-			else
-				return Core.DataAccess.DetailMediaDataAccess.DetailMediaListDataAccess(_webSession, _webSession.GenericMediaSelectionDetailLevel);
+			object[] param = null;
+			if (_eventButton == constEvent.eventSelection.OK_EVENT && _nbItemsValidity != constEvent.error.MAX_ELEMENTS) {
+				param = new object[3];
+				param[0] = _webSession;
+				param[1] = _webSession.GenericMediaSelectionDetailLevel;
+				param[2] = listAccessMedia;				
+				classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+				return classficationDAL.GetDetailMedia(keyWord);
+
+			}
+			else if (_eventButton == constEvent.eventSelection.LOAD_EVENT || _eventButton == constEvent.eventSelection.SAVE_EVENT) {
+				param = new object[3];
+				param[0] = _webSession;
+				param[1] = _webSession.GenericMediaSelectionDetailLevel;
+				param[2] = listAccessMedia;
+			}
+			else {
+				param = new object[3];
+				param[0] = _webSession;
+				param[1] = _webSession.GenericMediaSelectionDetailLevel;
+				param[2] = "";
+			}
+			classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+			return classficationDAL.GetDetailMedia();
+
+			//if (_eventButton == constEvent.eventSelection.OK_EVENT && _nbItemsValidity != constEvent.error.MAX_ELEMENTS)
+			//    return Core.DataAccess.DetailMediaDataAccess.keyWordDetailMediaListDataAccess(_webSession, keyWord, listAccessMedia, _webSession.GenericMediaSelectionDetailLevel);
+			//else if (_eventButton == constEvent.eventSelection.LOAD_EVENT || _eventButton == constEvent.eventSelection.SAVE_EVENT)
+			//    return Core.DataAccess.DetailMediaDataAccess.DetailMediaListDataAccess(_webSession, _webSession.GenericMediaSelectionDetailLevel,listAccessMedia);
+			//else
+			//    return Core.DataAccess.DetailMediaDataAccess.DetailMediaListDataAccess(_webSession, _webSession.GenericMediaSelectionDetailLevel);
 		}
 		#endregion
 

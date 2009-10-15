@@ -24,6 +24,12 @@ using TNS.AdExpress.Domain.Translation;
 using WebCst=TNS.AdExpress.Constantes.Web;
 using WebFunction=TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Classification;
+using TNS.Ares.Domain.LS;
+using TNS.Ares.Alerts.DAL;
+using TNS.Ares.Domain.Layers;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.Alert.Domain;
 
 namespace TNS.AdExpress.Web.Controls.Headers{
 	/// <summary>
@@ -59,7 +65,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		protected const string MAIN_MENU = "menu";
 		#endregion
 
-		
 		#region Variables
 		/// <summary>
 		/// Session du client
@@ -397,9 +402,22 @@ namespace TNS.AdExpress.Web.Controls.Headers{
                 }
 
                 // Alert
-                if (NyxConfiguration.IsAlertsActivated && ((ResultPageInformation)pInfo).CreateAlertUrl != "")
-                { 
-                    jsTmp = this.GetCreateAlertItem(MAIN_MENU, (ResultPageInformation)pInfo);
+                if (AlertConfiguration.IsActivated 
+                    && ((ResultPageInformation)pInfo).CreateAlertUrl != ""
+                    && _webSession.CustomerLogin.HasModuleAssignmentAlertsAdExpress()
+                    && _webSession.CustomerLogin.IsModuleAssignmentValidDateAlertsAdExpress())
+                {
+                    DataAccessLayer layer = PluginConfiguration.GetDataAccessLayer(PluginDataAccessLayerName.Alert);
+                    TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
+                    IAlertDAL alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, new object[] { src }, null, null, null);
+                    int nbUserAlert = alertDAL.GetAlerts(_webSession.CustomerLogin.IdLogin).Count;
+                    if (_webSession.CustomerLogin.GetNbAlertsAdExpress() > nbUserAlert) {
+                        jsTmp = this.GetCreateAlertItem(MAIN_MENU, (ResultPageInformation)pInfo, true);
+                    }
+                    else {
+                        //Grisé
+                        jsTmp = this.GetCreateAlertItem(MAIN_MENU, (ResultPageInformation)pInfo, false);
+                    }
                     js.Append(jsTmp);
                 }
 
@@ -582,9 +600,13 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				+ "\r\n\t\t"+menuObjectName+".items.saveMenuItem.showIcon(\"saveMenuIcon\", \"saveMenuIcon\");");
 		}
 
-        private string GetCreateAlertItem(string menuObjectName, ResultPageInformation pInfo) {
-            return ("\r\n\t\t" + menuObjectName + ".addMenuItem(new menuItem(\"" + GestionWeb.GetWebWord(2578, _webSession.SiteLanguage) + "\", \"alertMenuItem\",\"javascript:popupOpenBis('" + pInfo.CreateAlertUrl + "?idSession=" + _webSession.IdSession + ((_urlParameters.Length > 0) ? "&" + _urlParameters : "") + "&param=" + generateNumber() + "','470','435','no');\"));"
-               + "\r\n\t\t" + menuObjectName + ".items.alertMenuItem.showIcon(\"alertMenuIcon\", \"alertMenuIcon\");");       
+        private string GetCreateAlertItem(string menuObjectName, ResultPageInformation pInfo, bool isValid) {
+            if(isValid)
+                return ("\r\n\t\t" + menuObjectName + ".addMenuItem(new menuItem(\"" + GestionWeb.GetWebWord(2578, _webSession.SiteLanguage) + "\", \"alertMenuItem\",\"javascript:popupOpenBis('" + pInfo.CreateAlertUrl + "?idSession=" + _webSession.IdSession + ((_urlParameters.Length > 0) ? "&" + _urlParameters : "") + "&param=" + generateNumber() + "','470','315','no');\"));"
+                   + "\r\n\t\t" + menuObjectName + ".items.alertMenuItem.showIcon(\"alertMenuIcon\", \"alertMenuIcon\");");   
+            else
+                return ("\r\n\t\t" + menuObjectName + ".addMenuItem(new menuItem(\"" + GestionWeb.GetWebWord(2578, _webSession.SiteLanguage) + "\", \"alertMenuItem\", \"\", false, \"jsdomenuitemdisabled\", \"jsdomenuitemdisabledover\"));"
+                   + "\r\n\t\t" + menuObjectName + ".items.alertMenuItem.showIcon(\"alertMenuIcon\", \"alertMenuIcon\");"); 
         }
 
 

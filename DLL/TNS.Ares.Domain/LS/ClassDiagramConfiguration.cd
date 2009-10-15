@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TNS.Ares.Domain.LS.LsClientConfiguration">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAgBAAAKQAAACAAAAAAAAAAAAAAAADCAAAgAAIEAA=</HashCode>
+      <FileName>LS\LsClientConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.Ares.Domain.LS.RequesterConfigurations">
+    <Position X="2.75" Y="4.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAIAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>LS\RequesterConfigurations.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.Ares.Domain.LS.PluginConfiguration">
+    <Position X="5.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAkAIAAiAAAABAAAAGIAACBAIAAQAAABBQAgAEAAA=</HashCode>
+      <FileName>LS\PluginConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.Ares.Domain.LS.PluginExec">
+    <Position X="9.75" Y="4.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAABAAAEgAAAAAAAAAAAAAAACAAAAAAAAAAQ=</HashCode>
+      <FileName>LS\PluginExec.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.Ares.Domain.LS.PluginInformation">
+    <Position X="7.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>hAAAsAgAECAAAQAEEAKGAQQAARAAARAADIBQAAAAAAA=</HashCode>
+      <FileName>LS\PluginInformation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.Ares.Domain.LS.RequesterConfiguration">
+    <Position X="0.5" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LS\RequesterConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="TNS.Ares.Domain.LS.PluginDataAccessLayerName">
+    <Position X="9.75" Y="3.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>LS\PluginConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TNS.Ares.Domain.LS.PluginType">
+    <Position X="9.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAQEAQAgEAAAAQABAAQAAAIAAAAQAAAACAAAAAAABAA=</HashCode>
+      <FileName>LS\PluginInformation.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TNS.Ares.Domain.LS.LsClientName">
+    <Position X="2.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAgAAAAARAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LS\RequesterConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

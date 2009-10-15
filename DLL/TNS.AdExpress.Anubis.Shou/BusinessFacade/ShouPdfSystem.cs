@@ -15,9 +15,6 @@ using System.Windows.Forms;
 
 using TNS.AdExpress.Anubis.Shou.Common;
 using TNS.AdExpress.Anubis.Shou.Exceptions;
-using TNS.AdExpress.Anubis.BusinessFacade.Result;
-using TNS.AdExpress.Anubis.Common;
-using TNSAnubisConstantes=TNS.AdExpress.Anubis.Constantes;
 
 using TNS.AdExpress.Web.UI;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -37,6 +34,8 @@ using HTML2PDFAddOn;
 
 using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Domain.Theme;
+using TNS.Ares;
+using TNS.Ares.Pdf;
 
 namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 {
@@ -186,7 +185,7 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 				shortName = DateTime.Now.ToString("yyyyMMdd_") 
 					+ rqDetails["id_static_nav_session"].ToString()
 					+ "_"
-					+ Functions.GetRandomString(30,40);
+					+ TNS.Ares.Functions.GetRandomString(30,40);
 
 				pdfFileName += @"\" + shortName + ".pdf";
 
@@ -497,7 +496,7 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 
 				string workFile = GetWorkDirectory() + @"\SessionParameter" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-				sw = Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
+				sw = Functions.Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 				sw.WriteLine("<TABLE align=center WIDTH=100%><tr align=center>");
 
 				#region Debut Tableau général
@@ -627,7 +626,7 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 				sw.WriteLine("</TR></TABLE >");
 
 				#region Html file loading
-				Functions.CloseHtmlFile(sw);
+				Functions.Functions.CloseHtmlFile(sw);
 				HTML2PDF2Class html = new HTML2PDF2Class();
                 html.MarginLeft = 170;	//Convert.ToInt32(this.LeftMargin);		
 				html.MarginTop = Convert.ToInt32(this.WorkZoneTop);

@@ -24,6 +24,9 @@ using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Translation;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using TNS.AdExpress.Domain.Classification;
+using TNS.Ares.Domain.LS;
+using WebCst = TNS.AdExpress.Constantes.Web;
+using TNS.Alert.Domain;
 
 namespace AdExpress.Private.Universe{
 	/// <summary>
@@ -194,9 +197,10 @@ namespace AdExpress.Private.Universe{
 
         #region Properties
 
-        public bool IsAlertsActivated
-        {
-            get { return (NyxConfiguration.IsAlertsActivated); }
+        public bool IsAlertsActivated {
+            get {
+                return (AlertConfiguration.IsActivated && _webSession.CustomerLogin.HasModuleAssignmentAlertsAdExpress());
+            }
         }
 
         #endregion
@@ -463,6 +467,25 @@ namespace AdExpress.Private.Universe{
             {
                 if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
                 {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                }
+            }
+        }
+        #endregion
+
+        #region Bouton Alertes Personnaliser
+        /// <summary>
+        /// Gestion du bouton Personnaliser
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void personalizeAlertesImagebuttonrolloverwebcontrol_Click(object sender, System.EventArgs e) {
+            try {
+                _webSession.Source.Close();
+                Response.Redirect("/Private/Alerts/PersonalizeAlerts.aspx?idSession=" + _webSession.IdSession + "");
+            }
+            catch (System.Exception exc) {
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException)) {
                     this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
                 }
             }

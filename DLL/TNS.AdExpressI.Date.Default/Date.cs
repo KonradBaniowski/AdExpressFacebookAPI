@@ -23,7 +23,7 @@ namespace TNS.AdExpressI.Date.Default {
         /// <summary>
         /// Constructor
         /// </summary>
-        public Date() { }
+        public Date() : base() { }
         #endregion
 
         #region Override

@@ -10,10 +10,6 @@ using System.Threading;
 
 //using TNS.AdExpress.Common;
 
-using TNS.AdExpress.Anubis.BusinessFacade;
-using TNS.AdExpress.Anubis.BusinessFacade.Result;
-using TNS.AdExpress.Anubis.Common;
-
 using TNS.AdExpress.Anubis.Amset.Common;
 using TNS.AdExpress.Anubis.Amset.BusinessFacade;
 
@@ -22,12 +18,17 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Theme;
 using TNS.AdExpress.Domain.Web;
+using TNS.Ares;
+using TNS.Ares.StaticNavSession.DAL;
+using TNS.AdExpress.Domain.Layers;
+using CstWeb = TNS.AdExpress.Constantes.Web;
+using System.Reflection;
 
 namespace TNS.AdExpress.Anubis.Amset{
 	/// <summary>
 	/// Implementation of TNS.AdExpress.Anubis.BusinessFacade.IPlugin for Amset plug-in
 	/// </summary>
-	public class TreatementSystem:TNS.AdExpress.Anubis.BusinessFacade.IPlugin{
+	public class TreatementSystem:IPlugin{
 	
 		#region Evènements
 		/// <summary>
@@ -77,6 +78,10 @@ namespace TNS.AdExpress.Anubis.Amset{
         /// Theme
         /// </summary>
         private Theme _theme;
+        /// <summary>
+        /// Data Access Layer
+        /// </summary>
+        private IStaticNavSessionDAL _dataAccess;
 		#endregion
 
 		#region Constructeur
@@ -110,6 +115,11 @@ namespace TNS.AdExpress.Anubis.Amset{
 		public void Treatement(string configurationFilePath,IDataSource dataSource,Int64 navSessionId){
 			_navSessionId=navSessionId;
 
+            object[] parameter = new object[1];
+            parameter[0] = dataSource;
+            CoreLayer cl = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.dataAccess];
+            _dataAccess = (IStaticNavSessionDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameter, null, null, null);
+
 			#region Chargement du fichier de configuration
 			if(configurationFilePath==null){
 				OnError(_navSessionId,"Impossible de lancer le traitement d'un job", new ArgumentNullException("Le nom du fichier de configuration est null."));
@@ -120,14 +130,14 @@ namespace TNS.AdExpress.Anubis.Amset{
 				return;
 			}
 			try{
-				_amsetConfig=new AmsetConfig(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+configurationFilePath));
+				_amsetConfig=new AmsetConfig(new XmlReaderDataSource(configurationFilePath));
 			}
 			catch(System.Exception err){
 				OnError(_navSessionId,"Impossible de lancer le traitement d'un job <== impossible de charger le fichier de configuration",err);
 				return;
 			}
             try {
-                _theme = new Theme(new XmlReaderDataSource(_amsetConfig.ThemePath + @"\App_Themes\" + WebApplicationParameters.Themes[((WebSession)ParameterSystem.Load(_navSessionId)).SiteLanguage].Name + @"\" + "Styles.xml"));
+                _theme = new Theme(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory + _amsetConfig.ThemePath + @"\App_Themes\" + WebApplicationParameters.Themes[((WebSession)_dataAccess.LoadData(_navSessionId)).SiteLanguage].Name + @"\" + "Styles.xml"));
             }
             catch (System.Exception err) {
                 OnError(_navSessionId, "File of theme not found ! (in Plugin Satet in TreatmentSystem class)",err);
@@ -161,22 +171,22 @@ namespace TNS.AdExpress.Anubis.Amset{
 				OnStartWork(_navSessionId,this.GetPluginName()+" started for "+_navSessionId);
 
 				#region Request Details
-				DataRow rqDetails = ParameterSystem.GetRequestDetails(_dataSource,_navSessionId).Tables[0].Rows[0];
+                DataRow rqDetails = _dataAccess.GetRow(_navSessionId);
 				#endregion
 
 				#region excel management
-				_excel = new AmsetExcelSystem(_dataSource,_amsetConfig,rqDetails,(WebSession)ParameterSystem.Load(_navSessionId),_theme);
+                _excel = new AmsetExcelSystem(_dataSource, _amsetConfig, rqDetails, (WebSession)_dataAccess.LoadData(_navSessionId), _theme);
 				string fileName = _excel.Init();				
 				_excel.Fill();
-				ParameterSystem.RegisterFile(_dataSource,_navSessionId,fileName);
+                _dataAccess.RegisterFile(_navSessionId, fileName);
 				_excel.Send();
-				ParameterSystem.ChangeStatus(_dataSource,_navSessionId,TNS.AdExpress.Anubis.Constantes.Result.status.sent);
+                _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.sent.GetHashCode());
 				#endregion
 
 				OnStopWorkerJob(_navSessionId,"","",this.GetPluginName()+" finished for "+_navSessionId);
 			}
 			catch(System.Exception err){
-				ParameterSystem.ChangeStatus(_dataSource,_navSessionId,TNS.AdExpress.Anubis.Constantes.Result.status.error);
+                _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.error.GetHashCode());
 				OnError(_navSessionId,"Erreur lors du traitement du résultat.", err);
 				return;
 			}

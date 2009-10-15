@@ -157,13 +157,13 @@ namespace TNS.AdExpress.Domain.Level
 		}
 
         /// <summary>
-        /// Obtient le code SQL des champs correspondant aux colonnes exceptées celles qui ont une équivalence
-        /// avec le niveau de détail présenté en ligne.  
+        /// Get the SQL code of the fields corresponding to columns (from the XML configuration files) except the ones that mutched with
+        /// the detail level list
         /// </summary>
         /// <param name="columns">List of columns to include</param>
-        /// <param name="detailLevelList">Identifiants de niveau de détail</param>
-        /// <remarks>Ne termine pas par une virgule</remarks>
-        /// <returns>Code SQL</returns>
+        /// <param name="detailLevelList">Detail level Ids list</param>
+        /// <remarks>The SQL code doesn't end with a coma</remarks>
+        /// <returns>SQL Code</returns>
         public static string GetSqlFields(List<GenericColumnItemInformation> columns, ArrayList detailLevelList)
         {
             string sql = "";

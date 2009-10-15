@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configurations>
+  <lsClientConfiguration familyId="123" monitorPort="30229" productName="PDF Cadrage Service" maxAvailableSlots="1">
+    <moduleDescription description="PDF Cadrage Service" moduleId="11"/>
+  </lsClientConfiguration>
+</configurations>

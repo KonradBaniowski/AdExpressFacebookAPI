@@ -13,6 +13,7 @@
         <unitformat name="duration"           format="00 H 00 M 00 S"         excelFormat="#,##0;-#,##0"/>
         <unitformat name="durationminu"       format="00 h 00 m 00 S"         excelFormat="#,##0;-#,##0"/>
         <unitformat name="shortduration"      format="0 m 00 s"               excelFormat="#,##0;-#,##0"/>
+        <unitformat name="alertSchedule"      format="HH \h mm"               excelFormat="#,##0;-#,##0"/>
         <unitformat name="airtime"            format="#0:00:00"               excelFormat="#0:00:00"/>
         <unitformat name="currency"           format="#,##0 €;-#,##0 €"       excelFormat="# ### ### ##0;-# ### ### ##0"/>
         <unitformat name="codeEcran"          format="################"       excelFormat="################"/>
@@ -33,6 +34,7 @@
         <unitformat name="percentWOSign"      format="#,##0.00;-#,##0.00"       excelFormat="#,##0.00;-#,##0.00"/>
         <unitformat name="duration"           format="00 H 00 M 00 S"           excelFormat="#,##0.0;-#,##0.0"/>
         <unitformat name="durationminu"       format="00 h 00 m 00 S"           excelFormat="#,##0.0;-#,##0.0"/>
+        <unitformat name="alertSchedule"      format="HH \h mm"                 excelFormat="#,##0;-#,##0"/>
         <unitformat name="shortduration"      format="0 m 00 s"                 excelFormat="#,##0.0;-#,##0.0"/>
         <unitformat name="airtime"            format="#0:00:00"                 excelFormat="#0:00:00"/>
         <unitformat name="currency"           format="#,##0 €;-#,##0 €"         excelFormat="#,###,###,##0.0;-#,###,###,##0.0"/>

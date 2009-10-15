@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<flags>
+  <flag id="141" description="Doc Marketing (fiche détaillée)"/>
+  <flag id="146" description="Accès Agences Media"/>
+  <flag id="200" description="Accéder aux créations"/>
+  <flag id="201" description="Télécharger les créations"/>
+  <flag id="211" description="Accès Marques"/>
+  <flag id="212" description="Accès Groupes de société"/>
+  <flag id="216" description="Accès détail Publicité Extérieure"/>
+  <flag id="221" description="Accéder aux versions"/>
+  <flag id="226" description="Accès détail Produit (Plan media)"/>
+  <flag id="231" description="Accéder aux créations Internet"/>
+  <flag id="236" description="Accès plan media AdNetTrack"/>
+  <flag id="241" description="Accéder aux créations TV"/>
+  <flag id="242" description="Accéder aux créations Radio"/>
+  <flag id="243" description="Accéder aux créations Presse"/>
+  <flag id="244" description="Accéder aux creations Pub Extérieure"/>
+  <flag id="245" description="Accéder aux créations Autres"/>
+  <flag id="246" description="Accéder aux créations Presse Internationale"/>
+  <flag id="251" description="Accéder aux créations du Media Courrier"/>
+  <flag id="252" description="Accès aux volumes du Media Courrier"/>
+  <flag id="256" description="Accès aux poids du Media Courrier"/>
+  <flag id="261" description="Accès Parrainage dans analyse sectorielle"/>
+  <flag id="266" description="Accéder Spot à Spot TNT"/>
+  <flag id="276" description="Accéder aux création Evaliant Mobile"/>
+</flags>

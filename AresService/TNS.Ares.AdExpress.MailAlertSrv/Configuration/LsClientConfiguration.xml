@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configurations>
+  <lsClientConfiguration familyId="123" monitorPort="30240" productName="AdExpress Alert treatment"  maxAvailableSlots="5">
+    <moduleDescription description="AdExpress Alert treatment" moduleId="20"/>
+  </lsClientConfiguration>
+</configurations>    

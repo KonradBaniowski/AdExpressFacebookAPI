@@ -9,8 +9,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using TNS.Alert.Domain;
-using TNS.AdExpress.Alerts;
-using TNS.AdExpress.Domain.Layers;
+using TNS.Ares.Alerts;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
@@ -22,6 +21,9 @@ using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Constantes.Web;
 
 using ModuleName = TNS.AdExpress.Constantes.Web.Module.Name;
+using TNS.Ares.Alerts.DAL;
+using TNS.Ares.Domain.LS;
+using TNS.Ares.Domain.Layers;
 
 public partial class Private_Alerts_ShowAlert : TNS.AdExpress.Web.UI.PrivateWebPage
 {
@@ -38,7 +40,7 @@ public partial class Private_Alerts_ShowAlert : TNS.AdExpress.Web.UI.PrivateWebP
         string stringIdOccurrence = Request.QueryString["idOcc"];
 
         // Loading alert data access layer
-        DataAccessLayer layer = NyxConfiguration.GetDataAccessLayer(NyxDataAccessLayer.Alert);
+        DataAccessLayer layer = PluginConfiguration.GetDataAccessLayer(PluginDataAccessLayerName.Alert);
         TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
         alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null, null);
 

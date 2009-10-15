@@ -38,6 +38,10 @@ namespace TNS.AdExpress.Domain.Units {
         /// </summary>
         private string _databaseMultimediaField="";
         /// <summary>
+        /// Field name in aggregated data
+        /// </summary>
+        private string _databaseTrendsField="";
+        /// <summary>
         /// Full type name of cell
         /// </summary>
         private string _cellType="";
@@ -57,11 +61,12 @@ namespace TNS.AdExpress.Domain.Units {
         /// <param name="baseId">Parent Id</param>
         /// <param name="databaseField">Field name in occurencies data</param>
         /// <param name="databaseMultimediaField">Field name in aggregated data</param>
-        public UnitInformation(string id, string format,Int64 webTextId,string baseId,string cellType,string databaseField,string databaseMultimediaField) {
+        public UnitInformation(string id, string format,Int64 webTextId,string baseId,string cellType,string databaseField,string databaseMultimediaField,string databaseTrendsField) {
             if(id==null || id.Length==0) throw (new ArgumentException("Invalid paramter unit id"));
             if (cellType != null || cellType.Length > 0) _cellType = cellType;
             if(databaseField!=null || databaseField.Length>0) _databaseField=databaseField;
             if(databaseMultimediaField!=null || databaseMultimediaField.Length>0) _databaseMultimediaField=databaseMultimediaField;
+            if(databaseTrendsField!=null || databaseTrendsField.Length>0) _databaseTrendsField=databaseTrendsField;
             if (format != null && format.Length > 0)
             {
                 _strFormat = format;
@@ -111,6 +116,13 @@ namespace TNS.AdExpress.Domain.Units {
         /// </summary>
         public string DatabaseMultimediaField {
             get { return (_databaseMultimediaField); }
+        }
+
+        /// <summary>
+        /// Get Database Multimedia Field
+        /// </summary>
+        public string DatabaseTrendsField {
+            get { return (_databaseTrendsField); }
         }
 
         /// <summary>

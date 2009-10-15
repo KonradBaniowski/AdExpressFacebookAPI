@@ -167,7 +167,14 @@ namespace TNS.AdExpress.Constantes.Customer{
 			/// <summary>
 			/// forme de parrainage en exception
 			/// </summary>
-			sponsorshipFormException
+			sponsorshipFormException,
+			/// Basic media in access
+			/// </summary>
+			basicMediaAccess,
+			/// <summary>
+			/// Basic media in exception
+			/// </summary>
+			basicMediaException
 
 		}
 		#endregion

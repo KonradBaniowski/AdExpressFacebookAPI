@@ -14,6 +14,10 @@
     <defaultConnection enumId="5" description="Hermes" dataBaseEnumId="2" login="adexpr03_proc_8" password="lnampt8"            dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" isUtf8="true"/>
     <defaultConnection enumId="6" description="Publication" dataBaseEnumId="2" login="user_web" password="zebony8"              dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="7" description="Web Administration" dataBaseEnumId="2" login="admin_web" password="zepabony9"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="8" description="Alerts" dataBaseEnumId="2" login="adexpr03_proc_11" password="trela5"            dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="9" description="EasyMusic" dataBaseEnumId="2" login="nicotest3000" password="nicotest3000"       dataSource="music01_test.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <!--Test default rights connection-->
+    <defaultConnection enumId="10" description="Rights" dataBaseEnumId="2" login="gfacon" password="sandie5"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
   </defaultConnections>
   <schemas>
     <schema enumId="0" description="AdExpress Data (AdExpr03)" label="adexpr03"/>
@@ -22,6 +26,7 @@
     <schema enumId="3" description="Mou" label="mou01"/>
     <schema enumId="4" description="Product class analysis" label="recap01"/>
     <schema enumId="5" description="Web" label="webnav01"/>
+    <schema enumId="10" description="Alert" label="mau01"/>
   </schemas>
   <tables defaultResultTablesPrefix="wp">
     <table enumId="0" description="List table" schemaEnumId="5" label="list" prefix="lst"/>
@@ -176,6 +181,19 @@
     <table enumId="161" description="Data: Evaliant mobile" schemaEnumId="0" label="data_mobile" prefix="wp"/>
     <table enumId="162" description="Data: Evaliant mobile" schemaEnumId="0" label="data_mobile_4M" prefix="wp"/>
     <table enumId="163" description="Data: banners mobile" schemaEnumId="0" label="banners_mobile" prefix="wp"/>
+
+    <table enumId="164" description="Trends: Month" schemaEnumId="0" label="tendency_month" prefix="tm"/>
+    <table enumId="165" description="Trends: Total Month" schemaEnumId="0" label="total_tendency_month" prefix="ttm"/>
+    <table enumId="166" description="Trends: Week" schemaEnumId="0" label="tendency_week" prefix="tm"/>
+    <table enumId="167" description="Trends: Total Week" schemaEnumId="0" label="total_tendency_week" prefix="ttm"/>
+
+    <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
+    <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>
+    <table enumId="302" description="Alert Schedule" schemaEnumId="10" label="alert_schedule" prefix="as"/>
+    <table enumId="400" description="Static Nav Session" schemaEnumId="5" label="static_nav_session" prefix="snv"/>
+
+    
+
   </tables>
   <views>
     <view enumId="0" description="Classif: all media" schemaEnumId="0" label="all_media_" prefix="allm"/>

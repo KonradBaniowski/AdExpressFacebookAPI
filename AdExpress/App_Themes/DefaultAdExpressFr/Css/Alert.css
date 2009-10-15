@@ -1,6 +1,7 @@
 ﻿/* Alert creation theme (pop up) */
 
-div.periodicity-type, div.periodicity-type-day
+div.periodicity-type, 
+div.periodicity-type-day
 {
 	color: #644883;
 	font-weight: bold;
@@ -9,10 +10,16 @@ div.periodicity-type, div.periodicity-type-day
 	background-color: White;
 }
 
-div.periodicity-type a, div.periodicity-type-day a
+div.periodicity-type a, 
+a.alert-periodicity-type-day
 {
-	color: #AAAAAA;
-	font-size:11px;
+	color: #644883;
+}
+
+div.periodicity-type a, 
+a.alert-periodicity-type-day,
+a.alert-periodicity-type-day-warning
+{
 	padding: 4px 2px 4px 2px;
 	cursor: pointer;
 	display: inline-block;
@@ -20,6 +27,8 @@ div.periodicity-type a, div.periodicity-type-day a
 	font-weight: normal;
 	outline: none;
 	text-align: center;
+	font-family:Arial;
+	font-size:10px;
 }
 
 a.periodicity-param-selected
@@ -28,9 +37,16 @@ a.periodicity-param-selected
 	color: White;
 }
 
-div.periodicity-type-day a 
+a.alert-periodicity-type-day,
+a.alert-periodicity-type-day-warning
 {
 	width:auto;
+}
+
+a.alert-periodicity-type-day-warning
+{
+	font-family:Arial;
+	color: Orange;
 }
 
 /* Alert consultation page */
@@ -105,11 +121,28 @@ div.alert-content
 	font-family: Arial;
 }
 
-.alert-dayofmonth-selection-table
+.alert-dayofmonth-selection-table,
+.alert-dayofmonth-selection-table td.alert-dayofmonth-selection-table-warning
 {
 	width: 152px;
 	background-color: White;
 }
+
+.alert-dayofmonth-selection-table td.alert-dayofmonth-selection-table-warning a
+{
+	font-family:Arial;
+	color: Orange;
+}
+
+p.alert-dayofmonth-selection-table-warning
+{
+	color: #644883;
+	font-weight: bold;
+	font-size:11px;
+	font-family:Arial;
+	text-align:justify;
+}
+
 
 .alert-dayofmonth-selection-table td
 {

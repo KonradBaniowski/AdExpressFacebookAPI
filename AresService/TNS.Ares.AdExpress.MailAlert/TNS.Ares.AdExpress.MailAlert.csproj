@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5085BB37-3A63-4046-A69A-6BFC8075B187}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TNS.Ares.AdExpress.MailAlert</RootNamespace>
+    <AssemblyName>TNS.Ares.AdExpress.MailAlert</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.DB.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.Net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.LinkSystem, Version=3.3.3.0, Culture=neutral, PublicKeyToken=32c946e5f5c6d4a5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\FrameWork\TNS.LinkSystem.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AlertShell.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\FrameWorks\DLL\TNS.FrameWorks.LSConnectivity\TNS.FrameWorks.LSConnectivity.csproj">
+      <Project>{8FEDCF12-1DA7-44E3-8092-0D238D137A1A}</Project>
+      <Name>TNS.FrameWorks.LSConnectivity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
+      <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
+      <Name>TNS.AdExpress.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Web.Core\TNS.AdExpress.Web.Core.csproj">
+      <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
+      <Name>TNS.AdExpress.Web.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Web\TNS.AdExpress.Web.csproj">
+      <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
+      <Name>TNS.AdExpress.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.Alert.Domain\TNS.Alert.Domain.csproj">
+      <Project>{741A9674-6545-469F-8528-F96BA2DB3A74}</Project>
+      <Name>TNS.Alert.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.Ares.Alerts.DAL.Default\TNS.Ares.Alerts.DAL.Default.csproj">
+      <Project>{4C001E53-0D0B-497B-8EA6-760727D4616C}</Project>
+      <Name>TNS.Ares.Alerts.DAL.Default</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.Ares.Alerts.DAL\TNS.Ares.Alerts.DAL.csproj">
+      <Project>{3EDBE8FB-A516-49C9-92FC-B0B0103F7D06}</Project>
+      <Name>TNS.Ares.Alerts.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.Ares.Constantes\TNS.Ares.Constantes.csproj">
+      <Project>{303C6B21-CA16-4D7B-8EDB-E8869B2B3EC9}</Project>
+      <Name>TNS.Ares.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.Ares.Domain\TNS.Ares.Domain.csproj">
+      <Project>{255834E2-DCA3-4290-9325-FFA4291839A6}</Project>
+      <Name>TNS.Ares.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.Ares.StaticNavSession.DAL.Default\TNS.Ares.StaticNavSession.DAL.Default.csproj">
+      <Project>{5D4C60A4-D7D0-4725-9BA8-57EF44677BC4}</Project>
+      <Name>TNS.Ares.StaticNavSession.DAL.Default</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.Ares.StaticNavSession.DAL\TNS.Ares.StaticNavSession.DAL.csproj">
+      <Project>{4762D913-FC82-42BD-840F-5BCB43E5979D}</Project>
+      <Name>TNS.Ares.StaticNavSession.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

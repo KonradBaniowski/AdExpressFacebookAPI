@@ -29,7 +29,7 @@ namespace TNS.AdExpress.Bastet.Rules{
 		/// <param name="dateBegin">Date de début</param>
 		/// <param name="dateEnd">Date de fin</param>
 		/// <returns>Organisation des données dans un tableau à 2 dimensions tab[,]</returns>
-		internal static object[,] GetRules(DataTable dt, string dateBegin, string dateEnd){
+		internal static object[,] GetRules(DataTable dt, DateTime dateBegin, DateTime dateEnd){
 
 			#region Variables
 			bool newMedia=false;
@@ -89,8 +89,8 @@ namespace TNS.AdExpress.Bastet.Rules{
 			ArrayList periodItemsList=new ArrayList();
 			Hashtable periodColumnIndexList=new Hashtable();
 			
-			DateTime currentDateTime = new DateTime(int.Parse(dateBegin.Substring(0,4)),int.Parse(dateBegin.Substring(4,2)),int.Parse(dateBegin.Substring(6,2)));
-			DateTime endDate = new DateTime(int.Parse(dateEnd.Substring(0,4)),int.Parse(dateEnd.Substring(4,2)),int.Parse(dateEnd.Substring(6,2)));
+			DateTime currentDateTime = new DateTime(dateBegin.Year,dateBegin.Month,dateBegin.Day);
+			DateTime endDate = new DateTime(dateEnd.Year,dateEnd.Month,dateEnd.Day);
 			int periodColumnIndex=7;
 			
 			while(currentDateTime<=endDate){

@@ -13,7 +13,7 @@ using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Web.Core;
 using TNS.AdExpress.Domain.Exceptions;
-
+using TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpress.Domain.XmlLoader {
     /// <summary>
@@ -29,6 +29,9 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 
             #region Variables
             XmlTextReader reader=null;
+			Dictionary<CustomerSessions.InsertType, long> insetTypeCollection = new Dictionary<CustomerSessions.InsertType, long>();
+			string id;
+			long dataBaseId;
             #endregion
 
             try {
@@ -43,9 +46,17 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                     WebApplicationParameters.AllowInsetOption = Convert.ToBoolean(reader.GetAttribute("available"));
                                 }
                                 break;
+							case "insetItem":
+								if (reader.GetAttribute("id") == null || reader.GetAttribute("id").Length == 0) throw (new InvalidXmlValueException("Invalid id parameter"));
+								id = reader.GetAttribute("id");
+								if (reader.GetAttribute("dataBaseId") == null || reader.GetAttribute("dataBaseId").Length == 0) throw (new InvalidXmlValueException("Invalid data base Id parameter")); ;
+								dataBaseId = long.Parse(reader.GetAttribute("dataBaseId"));
+								insetTypeCollection.Add((CustomerSessions.InsertType)Enum.Parse(typeof(CustomerSessions.InsertType), id, true), dataBaseId);
+								break;
                         }
                     }
                 }
+				WebApplicationParameters.InsetTypeCollection = insetTypeCollection;
             }
 
             #region Error Management

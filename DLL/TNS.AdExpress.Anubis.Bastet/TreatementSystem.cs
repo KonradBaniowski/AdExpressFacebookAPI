@@ -15,23 +15,25 @@ using System.IO;
 using System.Data;
 using System.Threading;
 
-using TNS.AdExpress.Anubis.BusinessFacade;
-using TNS.AdExpress.Anubis.BusinessFacade.Result;
-using TNS.AdExpress.Anubis.Common;
-
 using TNS.AdExpress.Anubis.Bastet.Common;
 using TNS.AdExpress.Anubis.Bastet.BusinessFacade;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Bastet.Common;
 
 using Aspose.Cells;
+using TNS.Ares;
+using CstWeb = TNS.AdExpress.Constantes.Web;
+using TNS.Ares.StaticNavSession.DAL;
+using TNS.AdExpress.Domain.Layers;
+using System.Reflection;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Anubis.Bastet {
 	/// <summary>
 	/// Implementation de TNS.AdExpress.Anubis.BusinessFacade.IPlugin pour Bastet plug-
 	/// in
 	/// </summary>
-	public class TreatementSystem :TNS.AdExpress.Anubis.BusinessFacade.IPlugin{
+	public class TreatementSystem :IPlugin{
 		
 		#region Evènements
 		/// <summary>
@@ -77,6 +79,10 @@ namespace TNS.AdExpress.Anubis.Bastet {
 		/// Composant excel
 		/// </summary>
 		private BastetExcelSystem _excel;
+        /// <summary>
+        /// Data Access Layer
+        /// </summary>
+        private IStaticNavSessionDAL _dataAccess;
 		#endregion
 				
 		#region Constructeur
@@ -126,6 +132,11 @@ namespace TNS.AdExpress.Anubis.Bastet {
 		/// <param name="dataSource">source de données</param>
 		public void Treatement(string confifurationFilePath,IDataSource dataSource,Int64 navSessionId){
 			_navSessionId=navSessionId;
+
+            object[] parameter = new object[1];
+            parameter[0] = dataSource;
+            CoreLayer cl = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.dataAccess];
+            _dataAccess = (IStaticNavSessionDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameter, null, null, null);
 	
 			#region Chargement du fichier de configuration
 			if(confifurationFilePath==null){
@@ -137,7 +148,7 @@ namespace TNS.AdExpress.Anubis.Bastet {
 				return;
 			}
 			try{
-				_bastetConfig=new BastetConfig(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory+confifurationFilePath));
+				_bastetConfig=new BastetConfig(new XmlReaderDataSource(confifurationFilePath));
 			}
 			catch(System.Exception err){
                 OnError(_navSessionId,"Impossible to launch job treatment <== impossible to load configuration file: Path="+confifurationFilePath,err);
@@ -172,25 +183,25 @@ namespace TNS.AdExpress.Anubis.Bastet {
 				OnStartWork(_navSessionId,this.GetPluginName()+" started for "+_navSessionId);
 
 				#region Request Details
-				DataRow rqDetails = ParameterSystem.GetRequestDetails(_dataSource,_navSessionId).Tables[0].Rows[0];
+                DataRow rqDetails = _dataAccess.GetRow(_navSessionId);
 				#endregion
 
 				#region Excel management
 				
 				_excel = new BastetExcelSystem(_dataSource,_bastetConfig,rqDetails,(Parameters)Parameters.Load(_navSessionId));
 				string fileName = _excel.Init();
-				_excel.Fill();				
-				ParameterSystem.RegisterFile(_dataSource,_navSessionId,fileName);
+				_excel.Fill();
+                _dataAccess.RegisterFile(_navSessionId, fileName);
 				_excel.Send();
-				ParameterSystem.ChangeStatus(_dataSource,_navSessionId,TNS.AdExpress.Anubis.Constantes.Result.status.sent);	
-				ParameterSystem.DeleteRequest(_dataSource,_navSessionId);			
+                _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.sent.GetHashCode());
+                _dataAccess.DeleteRow(_navSessionId);			
 				
 				#endregion
 
 				OnStopWorkerJob(_navSessionId,"","",this.GetPluginName()+" finished for "+_navSessionId);
 			}
 			catch(System.Exception err){
-				ParameterSystem.ChangeStatus(_dataSource,_navSessionId,TNS.AdExpress.Anubis.Constantes.Result.status.error);
+                _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.error.GetHashCode());
 				OnError(_navSessionId,"Error during result execution.", err);
 				return;
 			}

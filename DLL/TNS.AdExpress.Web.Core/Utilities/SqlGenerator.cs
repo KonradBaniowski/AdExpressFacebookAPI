@@ -2718,28 +2718,47 @@ namespace TNS.AdExpress.Web.Core.Utilities
             {
                 case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
                 case WebConstantes.CustomerSessions.Period.DisplayLevel.yearly:
-                    return (DBConstantes.Hathor.Tables.TENDENCY_MONTH);
+                    return (WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.tendencyMonth));
                 case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
-                    return (DBConstantes.Hathor.Tables.TENDENCY_WEEK);
+                    return (WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.tendencyWeek));
                 default:
                     throw (new SQLGeneratorException("Le détails période sélectionné est incorrect pour le choix de la table"));
             }
         }
 
         /// <summary>
+        /// Get table description for trends total according to the period selected by the client
+        /// </summary>
+        /// <param name="periodType">Period type selected</param>
+        /// <returns>Tablz description</returns>
+        public static Table GetTrendTotalTableInformtation(WebConstantes.CustomerSessions.Period.DisplayLevel periodType) {
+            switch(periodType) {
+                case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
+                case WebConstantes.CustomerSessions.Period.DisplayLevel.yearly:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.totalTendencyMonth));
+                case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.totalTendencyWeek));
+                default:
+                    throw (new SQLGeneratorException("Le détails période sélectionné est incorrect pour le choix de la table"));
+            }
+        }
+
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="periodType"></param>
         /// <returns></returns>
+        [Obsolete("This method is obsolete; use GetTrendTotalTableInformtation")]
         public static string GetTotalTableNameForTendency(WebConstantes.CustomerSessions.Period.DisplayLevel periodType)
         {
             switch (periodType)
             {
                 case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
                 case WebConstantes.CustomerSessions.Period.DisplayLevel.yearly:
-                    return (DBConstantes.Hathor.Tables.TOTAL_TENDENCY_MONTH);
+                    return (WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.totalTendencyMonth));
                 case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
-                    return (DBConstantes.Hathor.Tables.TOTAL_TENDENCY_WEEK);
+                    return (WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.totalTendencyWeek));
                 default:
                     throw (new SQLGeneratorException("Le détails période sélectionné est incorrect pour le choix de la table"));
             }
@@ -4164,7 +4183,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
 					return string.Format(" and  ( " + dataTablePrefixe + ".id_inset=0 or " + dataTablePrefixe + ".id_inset is null )");
                     return string.Format(" and (({0}.id_vehicle not in({1})) or ({0}.id_vehicle in({1}) and ( {0}.id_inset=0 or {0}.id_inset is null ) ))", dataTablePrefixe, insertMediaList);
                 case WebConstantes.CustomerSessions.Insert.insert:
-					string fieldsList = Lists.GetIdList(WebConstantes.GroupList.ID.inset);
+                    string fieldsList = webSession.CustomerDataFilters.InsetTypesAsString; //Lists.GetIdList(WebConstantes.GroupList.ID.inset);
                     if (fieldsList != null && fieldsList.Length > 0)
                     {
                         return string.Format(" and (({0}.id_vehicle not in({2})) or ({0}.id_vehicle in({2}) and {0}.id_inset in ({1})))", dataTablePrefixe, fieldsList, insertMediaList);

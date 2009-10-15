@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{CAC9AD4B-7AB0-4F48-A3C6-1F8B552673D4}</ProjectGuid>
     <SccProjectName>SAK</SccProjectName>
@@ -118,16 +118,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.Net.dll</HintPath>
     </Reference>
-    <ProjectReference Include="..\TNS.ADEXPRESS.ANUBIS\TNS.AdExpress.Anubis.csproj">
-      <Name>TNS.AdExpress.Anubis</Name>
-      <Project>{614B37CF-80A5-4252-AC63-F1811B073F5D}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
-    <ProjectReference Include="..\TNS.ADEXPRESS.ANUBIS.CONSTANTES\TNS.AdExpress.Anubis.Constantes.csproj">
-      <Name>TNS.AdExpress.Anubis.Constantes</Name>
-      <Project>{87716AC8-B9D2-432C-84F7-885A73B77141}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
     <ProjectReference Include="..\TNS.ADEXPRESS.CONSTANTES\TNS.AdExpress.Constantes.csproj">
       <Name>TNS.AdExpress.Constantes</Name>
       <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
@@ -150,6 +140,22 @@
     <ProjectReference Include="..\TNS.ADEXPRESS\TNS.AdExpress.csproj">
       <Project>{6E75699B-838C-4534-99F7-D4C3E768CD57}</Project>
       <Name>TNS.AdExpress</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.Constantes\TNS.Ares.Constantes.csproj">
+      <Project>{303C6B21-CA16-4D7B-8EDB-E8869B2B3EC9}</Project>
+      <Name>TNS.Ares.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.Pdf\TNS.Ares.Pdf.csproj">
+      <Project>{B1F6C717-7C8D-4869-9579-A20F14E9DD4C}</Project>
+      <Name>TNS.Ares.Pdf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.StaticNavSession.DAL\TNS.Ares.StaticNavSession.DAL.csproj">
+      <Project>{4762D913-FC82-42BD-840F-5BCB43E5979D}</Project>
+      <Name>TNS.Ares.StaticNavSession.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares\TNS.Ares.csproj">
+      <Project>{614B37CF-80A5-4252-AC63-F1811B073F5D}</Project>
+      <Name>TNS.Ares</Name>
     </ProjectReference>
     <COMReference Include="stdole">
       <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
@@ -181,6 +187,7 @@
     <Compile Include="Exceptions\ShouPdfSystemException.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Functions\Functions.cs" />
     <Compile Include="TreatementSystem.cs">
       <SubType>Code</SubType>
     </Compile>

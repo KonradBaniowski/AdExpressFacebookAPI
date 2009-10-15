@@ -39,14 +39,17 @@ using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Alerts;
+using TNS.Ares.Alerts;
 using TNS.Alert.Domain;
-using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using System.Reflection;
 
-using AlertPeriodicity = TNS.AdExpress.Constantes.DB.Alerts.AlertPeriodicity;
-using AlertStatuses = TNS.AdExpress.Constantes.DB.Alerts.AlertStatuses;
+using AlertPeriodicity = TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity;
+using AlertStatuses = TNS.Ares.Constantes.Constantes.Alerts.AlertStatuses;
+using TNS.Ares.Alerts.DAL;
+using TNS.Ares.Domain.LS;
+using TNS.Ares.Domain.Layers;
+using System.Text;
 
 
 namespace AdExpress.Private.Alerts{
@@ -157,10 +160,10 @@ namespace AdExpress.Private.Alerts{
                 idSession = _webSession.IdSession;
 
                 #region Alerts
-                if (NyxConfiguration.IsAlertsActivated)
+                if (AlertConfiguration.IsActivated)
                 {
                     // Loading Data Access Layer
-                    DataAccessLayer layer = NyxConfiguration.GetDataAccessLayer(NyxDataAccessLayer.Alert);
+                    DataAccessLayer layer = PluginConfiguration.GetDataAccessLayer(PluginDataAccessLayerName.Alert);
                     TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
                     alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null, null);
 
@@ -205,6 +208,7 @@ namespace AdExpress.Private.Alerts{
 
 		#endregion
 
+        #region alertsItemBindingalertsItemBinding
         /// <summary>
         /// Alerts Binding callback
         /// </summary>
@@ -254,7 +258,7 @@ namespace AdExpress.Private.Alerts{
                     dayName = WebApplicationParameters.AllowedLanguages[_siteLanguage].CultureInfo.DateTimeFormat.DayNames.GetValue(alert.PeriodicityValue - 1).ToString();
 
                 // Getting HTML value
-                details.InnerHtml = alert.ToHtml(_siteLanguage, module.IdWebText, dayName);
+                details.InnerHtml = GetAlertHTML(alert, _siteLanguage, module.IdWebText, dayName, WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo/*, alertDAL.GetAlertHours()*/);
                 
             }
             else
@@ -283,9 +287,10 @@ namespace AdExpress.Private.Alerts{
             hl.Text += " " + occ.DateSend.ToString();
             hl.NavigateUrl = String.Format("/Private/Alerts/ShowAlert.aspx?idSession={0}&idOcc={1}", Request.QueryString["idSession"], occ.AlertOccurrenceId);
         }
+        #endregion
 
-		#region Code généré par le Concepteur Web Form
-		/// <summary>
+        #region Code généré par le Concepteur Web Form
+        /// <summary>
 		/// Initialisation
 		/// </summary>
 		/// <param name="e">Arguments</param>
@@ -308,8 +313,27 @@ namespace AdExpress.Private.Alerts{
 		}
 		#endregion
 
-		#region Bouton Personnaliser
-		/// <summary>
+        #region bouton Ouvrir
+        /// <summary>
+        /// Gestion du bouton Ouvrir
+        /// </summary>
+        /// <param name="sender">Objet source</param>
+        /// <param name="e">Arguments</param>
+        protected void ImageButtonRollOverWebControl1_Click(object sender, System.EventArgs e) {
+            try {
+                _webSession.Source.Close();
+                Response.Redirect("/Private/MyAdexpress/SearchSession.aspx?idSession=" + _webSession.IdSession + "");
+            }
+            catch (System.Exception exc) {
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException)) {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                }
+            }
+        }
+        #endregion
+
+        #region Bouton Personnaliser Alertes
+        /// <summary>
 		/// Gestion du bouton Personnaliser
 		/// </summary>
 		/// <param name="sender"></param>
@@ -317,7 +341,7 @@ namespace AdExpress.Private.Alerts{
 		protected void personalizeImagebuttonrolloverwebcontrol_Click(object sender, System.EventArgs e) {
 			try{
                 _webSession.Source.Close();
-				Response.Redirect("/Private/MyAdexpress/PersonnalizeSession.aspx?idSession="+_webSession.IdSession+"");
+                Response.Redirect("/Private/MyAdexpress/PersonalizeAlerts.aspx?idSession=" + _webSession.IdSession + "");
 			}
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
@@ -337,6 +361,25 @@ namespace AdExpress.Private.Alerts{
 			try{
                 _webSession.Source.Close();
 				Response.Redirect("/Private/Universe/PersonnalizeUniverse.aspx?idSession="+_webSession.IdSession+"");
+			}
+			catch(System.Exception exc){
+				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
+					this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this,exc,_webSession));
+				}
+			}
+		}
+		#endregion
+
+        #region Bouton Alertes Personnaliser
+		/// <summary>
+		/// Gestion du bouton Personnaliser
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+        protected void personalizeAlertesImagebuttonrolloverwebcontrol_Click(object sender, System.EventArgs e) {
+			try{
+                _webSession.Source.Close();
+                Response.Redirect("/Private/Alerts/PersonalizeAlerts.aspx?idSession=" + _webSession.IdSession + "");
 			}
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
@@ -366,695 +409,58 @@ namespace AdExpress.Private.Alerts{
 
 		#endregion
 
-		#region Bouton supprimer
-		/// <summary>
-		/// Gestion du bouton supprimer
-		/// </summary>
-		/// <param name="sender">Objet qui execute l'évènement</param>
-		/// <param name="e">Arguments</param>
-		protected void deleteImageButtonRollOverWebControl_Click(object sender, System.EventArgs e) {
-			try{
-			
-				string[] tabParent=null;
-				Int64 idMySession=0;
+        #region Bouton supprimer Alerte
+        /// <summary>
+        /// Gestion du bouton supprimer
+        /// </summary>
+        /// <param name="sender">Objet qui execute l'évènement</param>
+        /// <param name="e">Arguments</param>
+        protected void deleteAlerteImageButtonRollOverWebControl_Click(object sender, System.EventArgs e) {
+            try {
+                /*
+                    string[] tabParent=null;
+                    Int64 idMySession=0;
 
-				foreach (string currentKey in Request.Form.AllKeys){
-					tabParent=currentKey.Split('_');
-					if(tabParent[0]=="CKB") {
-						idMySession=Int64.Parse(tabParent[1]);		
-					}
-				}
-				if (idMySession!=0){
-					//MySessionDataAccess deleteSession=new MySessionDataAccess(idMySession,new OracleConnection(_webSession.CustomerLogin.OracleConnectionString));
-					MySessionDataAccess deleteSession=new MySessionDataAccess(idMySession,_webSession);
-					if (deleteSession.Delete()){
-						// Validation : confirmation de suppression de la requête
-						Response.Write("<script language=javascript>");
-						Response.Write("	alert(\""+GestionWeb.GetWebWord(286,_webSession.SiteLanguage)+"\");");					
-						Response.Write("</script>");
-						// Actualise la page
-						this.OnLoad(null);
-					}
-					else{
-						// Erreur : la suppression de la requête a échouée
-						Response.Write("<script language=javascript>");
-						Response.Write("	alert(\""+GestionWeb.GetWebWord(830,_webSession.SiteLanguage)+"\");");					
-						Response.Write("</script>");
-					}
-				}
-				else{
-					// Erreur : veuillez sélectionner une requête
-					Response.Write("<script language=javascript>");
-					Response.Write("	alert(\""+GestionWeb.GetWebWord(831,_webSession.SiteLanguage)+"\");");					
-					Response.Write("</script>");
-				}
-			}
-			catch(System.Exception exc){
-				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
-					this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this,exc,_webSession));
-				}
-			}
-		}
-		#endregion
-		
-		#region Bouton Résultat
-		/// <summary>
-		/// Gestion du bouton résultat
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		protected void resultImageButtonRollOverWebControl_Click(object sender, System.EventArgs e) {
-		
-			try{
-				string[] tabParent=null;
-				Int64 idMySession=0;
-				WebSession webSessionSave;
-				AtomicPeriodWeek tmp;
-				bool validModule=false;
-				bool notValidPeriod = false;
-				//TNS.FrameWork.DB.Common.IDataSource source = new TNS.FrameWork.DB.Common.InternationalOracleDataSource("User Id=" + _webSession.CustomerLogin.Login + "; Password=" + _webSession.CustomerLogin.PassWord + " " + TNS.AdExpress.Constantes.DB.Connection.RIGHT_CONNECTION_STRING);
-				TNS.AdExpress.Right right=new TNS.AdExpress.Right(_webSession.CustomerLogin.Login,_webSession.CustomerLogin.PassWord,_webSession.SiteLanguage);
-				string PeriodBeginningDate="";
-				string PeriodEndDate="";
-				string invalidPeriodMessage="";
-                DateTime tmpEndDate;
-                DateTime tmpBeginDate;
-                DateTime lastDayEnable = DateTime.Now;
-                DateTime FirstDayNotEnable = DateTime.Now;
-                CstWeb.globalCalendar.comparativePeriodType comparativePeriodType;
-                CstWeb.globalCalendar.periodDisponibilityType periodDisponibilityType;
-                bool verifCustomerPeriod = false;
-                bool validResultPage = true;
-
-			
-				foreach (string currentKey in Request.Form.AllKeys){
-					tabParent=currentKey.Split('_');
-					if(tabParent[0]=="CKB") {
-						idMySession=Int64.Parse(tabParent[1]);		
-					}
-				}
-
-				if (idMySession!=0){
-
-					webSessionSave=(WebSession)MySessionDataAccess.GetResultMySession(idMySession.ToString(),_webSession);
-				
-					DataTable dtModulesList= right.GetCustomerModuleListHierarchy();
-
-					#region Vérification des droits sur les modules
-					foreach(DataRow currentRow in dtModulesList.Rows){
-						if((Int64)currentRow["idModule"]==webSessionSave.CurrentModule) {
-							validModule=true; 
-						}
-                        //Verifie droit accès resultat courant
-                        TNS.AdExpress.Domain.Web.Navigation.Module module = right.GetModule(webSessionSave.CurrentModule);
-                        if (module != null)
-                        {
-                            validResultPage = (module.GetResultPageInformation(Convert.ToInt32(webSessionSave.CurrentTab)) != null);
-                        }   
-					}
-					#endregion
-
-					//Patch page de résultats Tableaux dynamiques
-					if (webSessionSave != null && webSessionSave.LastReachedResultUrl.Length>0 && webSessionSave.LastReachedResultUrl.IndexOf("ASDynamicTables.aspx") >= 0) {
-						webSessionSave.LastReachedResultUrl = webSessionSave.LastReachedResultUrl.Replace("ASDynamicTables.aspx", "ProductClassReport.aspx");
-					}
-
-					#region Vérification des flags produit pour le niveau de détail produit					
-					if((!_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_HOLDING_COMPANY) && (webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("holdingcompany")>=0))||
-						(!_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE) && (webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("brand") >= 0))
-						|| (!_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_AGENCY) && (webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("agency") >= 0))
-						){
-						_webSession.PreformatedProductDetail=TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiser;
-					}
-					else{
-						_webSession.PreformatedProductDetail=webSessionSave.PreformatedProductDetail;
-					}
-
-					
-					#endregion
-
-					#region Vérification des flags produit pour le niveau de détail support
-					if((!_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG) && (webSessionSave.PreformatedMediaDetail.ToString().ToLower().IndexOf("slogan")>=0))
-						){
-						_webSession.PreformatedMediaDetail=TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategory;
-					}
-					else{
-						_webSession.PreformatedMediaDetail=webSessionSave.PreformatedMediaDetail;
-					}
-					#endregion
-
-					#region Paramètres
-					_webSession.UserParameters=webSessionSave.UserParameters;
-					#endregion
-
-					#region Niveau de détail media (Generic)
-					try{
-                        if(webSessionSave.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA_CONCURENTIELLE||
-                           webSessionSave.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PLAN_MEDIA_CONCURENTIELLE) {
-                            ArrayList levels=new ArrayList();
-                            levels.Add(1);
-                            levels.Add(2);
-                            levels.Add(3);
-                            _webSession.GenericMediaDetailLevel=new GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-                        }
-						if(webSessionSave.GenericMediaDetailLevel==null){
-						
-							// Initialisation à media\catégorie
-							ArrayList levels=new ArrayList();
-							levels.Add(1);
-							levels.Add(2);
-							_webSession.GenericMediaDetailLevel=new GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-						
-						}
-					}
-					catch(System.Exception){
-						ArrayList levels=new ArrayList();
-						levels.Add(1);
-						levels.Add(2);
-						_webSession.GenericMediaDetailLevel=new GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-					}
-					#endregion
-					
-					#region Niveau de détail produit (Generic)
-					try{
-						if(webSessionSave.GenericProductDetailLevel==null){
-							ArrayList levels=PopulateGenericProductDetailLevel(webSessionSave);
-							_webSession.GenericProductDetailLevel=new GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.customLevels);
-						}
-					}
-					catch(System.NotImplementedException){
-						ArrayList levels=PopulateGenericProductDetailLevel(webSessionSave);
-						_webSession.GenericProductDetailLevel=new GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.customLevels);					
-					}
-					catch(System.Exception){
-						ArrayList levels=new ArrayList();
-						levels.Add(8);
-						_webSession.GenericProductDetailLevel=new GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-					}
-					#endregion
-
-					#region Niveau de détail media AdnetTrack (Generic)
-					try{
-						if(webSessionSave.GenericAdNetTrackDetailLevel==null){
-						
-							// Initialisation à media\catégorie
-							ArrayList levels=new ArrayList();
-							levels.Add(1);
-							levels.Add(2);
-							_webSession.GenericMediaDetailLevel = new GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-						
-						}
-					}
-					catch(System.Exception){
-						ArrayList levels=new ArrayList();
-						levels.Add(1);
-						levels.Add(2);
-						_webSession.GenericAdNetTrackDetailLevel = new GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-					}
-					#endregion
-
-                    #region Niveau de détail colonne (Generic)
-                    if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE ||
-                           webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE) {
-                        try {
-
-                            if (webSessionSave.GenericColumnDetailLevel == null) {
-
-                                // Initialisation à Support
-                                ArrayList levels = new ArrayList();
-                                levels.Add(3);
-                                _webSession.GenericColumnDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-
-                            }
-
-                        }
-                        catch (System.Exception) {
-                            ArrayList levels = new ArrayList();
-                            levels.Add(3);
-                            _webSession.GenericColumnDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+                    foreach (string currentKey in Request.Form.AllKeys){
+                        tabParent=currentKey.Split('_');
+                        if(tabParent[0]=="CKB") {
+                            idMySession=Int64.Parse(tabParent[1]);		
                         }
                     }
-                    #endregion
-
-					if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS && (webSessionSave.SelectionUniversMedia.FirstNode == null || webSessionSave.SelectionUniversMedia.FirstNode.Tag == null)) {
-                        _webSession.SelectionUniversMedia.Nodes.Clear();
-                        System.Windows.Forms.TreeNode tmpNode=new System.Windows.Forms.TreeNode("TELEVISION");
-						tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, VehiclesInformation.EnumToDatabaseId(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv), "TELEVISION");
-						webSessionSave.SelectionUniversMedia.Nodes.Add(tmpNode);
-                    }
-
-                    _webSession.CompetitorUniversAdvertiser=webSessionSave.CompetitorUniversAdvertiser;
-					_webSession.CompetitorUniversMedia=webSessionSave.CompetitorUniversMedia;
-					_webSession.CompetitorUniversProduct=webSessionSave.CompetitorUniversProduct;
-					_webSession.CurrentModule=webSessionSave.CurrentModule;
-					_webSession.CurrentTab=webSessionSave.CurrentTab;
-					_webSession.SelectionUniversAdvertiser=webSessionSave.SelectionUniversAdvertiser;
-					_webSession.SelectionUniversMedia=webSessionSave.SelectionUniversMedia;
-					_webSession.SelectionUniversProduct=webSessionSave.SelectionUniversProduct;
-					_webSession.CurrentUniversAdvertiser=webSessionSave.CurrentUniversAdvertiser;
-					_webSession.CurrentUniversMedia=webSessionSave.CurrentUniversMedia;
-					_webSession.CurrentUniversProduct=webSessionSave.CurrentUniversProduct;
-
-					_webSession.DetailPeriod=webSessionSave.DetailPeriod;
-
-					
-					_webSession.Percentage=webSessionSave.Percentage;
-					_webSession.Insert=webSessionSave.Insert;
-
-
-					_webSession.PeriodLength=webSessionSave.PeriodLength;
-					_webSession.PeriodType=webSessionSave.PeriodType;
-
-					
-
-                    #region Période sélectionnée (GlobalDateSelection)
-                    if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE
-                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE
-                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE
-                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) {
-
-                        int oldYear = 2000;
-                        long selectedVehicle = ((LevelInformation)webSessionSave.SelectionUniversMedia.FirstNode.Tag).ID;
-						if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE)
-							FirstDayNotEnable = WebFunctions.Dates.GetFirstDayNotEnabled(webSessionSave, selectedVehicle, oldYear,_webSession.Source); 
-
-                        switch (webSessionSave.DetailPeriod) {
-                            case CstCustomerSession.Period.DisplayLevel.monthly:
-                                if (webSessionSave.PeriodType != CstCustomerSession.Period.Type.currentYear &&
-                                    webSessionSave.PeriodType != CstCustomerSession.Period.Type.nLastYear &&
-                                    webSessionSave.PeriodType != CstCustomerSession.Period.Type.previousYear &&
-                                    webSessionSave.PeriodType != CstCustomerSession.Period.Type.nLastMonth &&
-                                    webSessionSave.PeriodType != CstCustomerSession.Period.Type.previousMonth) {
-                                    if (webSessionSave.PeriodType != CstCustomerSession.Period.Type.dateToDate) {
-                                        string startYearMonth = webSessionSave.PeriodBeginningDate;
-                                        string endYearMonth = webSessionSave.PeriodEndDate;
-                                        DateTime firstDayOfMonth = new DateTime(int.Parse(endYearMonth.ToString().Substring(0, 4)), int.Parse(endYearMonth.ToString().Substring(4, 2)), 1);
-                                        Int32 lastDayOfMonth = ((firstDayOfMonth.AddMonths(1)).AddDays(-1)).Day;
-                                        _webSession.PeriodBeginningDate = startYearMonth + "01";
-                                        _webSession.PeriodEndDate = endYearMonth + lastDayOfMonth;
-                                    }
-                                    else {
-                                        _webSession.PeriodBeginningDate = webSessionSave.PeriodBeginningDate;
-                                        _webSession.PeriodEndDate = webSessionSave.PeriodEndDate;
-                                    }
-                                    _webSession.PeriodType = CstCustomerSession.Period.Type.dateToDate;
-                                }
-                                break;
-                            case CstCustomerSession.Period.DisplayLevel.weekly:
-                                if (webSessionSave.PeriodType != CstCustomerSession.Period.Type.nLastWeek &&
-                                    webSessionSave.PeriodType != CstCustomerSession.Period.Type.previousWeek) {
-                                    if (webSessionSave.PeriodType != CstCustomerSession.Period.Type.dateToDate) {
-                                        AtomicPeriodWeek startWeek = new AtomicPeriodWeek(int.Parse(webSessionSave.PeriodBeginningDate.ToString().Substring(0, 4)), int.Parse(webSessionSave.PeriodBeginningDate.ToString().Substring(4, 2)));
-                                        AtomicPeriodWeek endWeek = new AtomicPeriodWeek(int.Parse(webSessionSave.PeriodEndDate.ToString().Substring(0, 4)), int.Parse(webSessionSave.PeriodEndDate.ToString().Substring(4, 2)));
-                                        DateTime dateBegin = startWeek.FirstDay;
-                                        DateTime dateEnd = endWeek.FirstDay.AddDays(6);
-                                        _webSession.PeriodBeginningDate = dateBegin.Year.ToString() + dateBegin.Month.ToString("00") + dateBegin.Day.ToString("00");
-                                        _webSession.PeriodEndDate = dateEnd.Year.ToString() + dateEnd.Month.ToString("00") + dateEnd.Day.ToString("00");
-                                    }
-                                    else {
-                                        _webSession.PeriodBeginningDate = webSessionSave.PeriodBeginningDate;
-                                        _webSession.PeriodEndDate = webSessionSave.PeriodEndDate;
-                                    }
-                                    _webSession.PeriodType = CstCustomerSession.Period.Type.dateToDate;
-                                }
-                                break;
-                            default:								
-                                _webSession.PeriodBeginningDate = webSessionSave.PeriodBeginningDate;
-                                _webSession.PeriodEndDate = webSessionSave.PeriodEndDate;
-                                _webSession.PeriodType = CstCustomerSession.Period.Type.dateToDate;
-                                break;
-                        }
-
-                        switch (webSessionSave.DetailPeriod) {
-                            case CstCustomerSession.Period.DisplayLevel.monthly:
-                            case CstCustomerSession.Period.DisplayLevel.weekly:
-                            case CstCustomerSession.Period.DisplayLevel.dayly:
-                                if (webSessionSave.PeriodType != CstCustomerSession.Period.Type.currentYear &&
-                                    webSessionSave.PeriodType != CstCustomerSession.Period.Type.nLastYear &&
-                                    webSessionSave.PeriodType != CstCustomerSession.Period.Type.previousYear &&
-                                    webSessionSave.PeriodType != CstCustomerSession.Period.Type.nLastMonth &&
-                                    webSessionSave.PeriodType != CstCustomerSession.Period.Type.previousMonth &&
-                                    webSessionSave.PeriodType != CstCustomerSession.Period.Type.nLastWeek &&
-                                    webSessionSave.PeriodType != CstCustomerSession.Period.Type.previousWeek &&
-                                    webSessionSave.PeriodType != CstCustomerSession.Period.Type.nLastDays &&
-                                    webSessionSave.PeriodType != CstCustomerSession.Period.Type.previousDay) {
-
-                                    tmpEndDate = new DateTime(Convert.ToInt32(_webSession.PeriodEndDate.Substring(0, 4)), Convert.ToInt32(_webSession.PeriodEndDate.Substring(4, 2)), Convert.ToInt32(_webSession.PeriodEndDate.Substring(6,2)));
-                                    tmpBeginDate = new DateTime(Convert.ToInt32(_webSession.PeriodBeginningDate.Substring(0, 4)), Convert.ToInt32(_webSession.PeriodBeginningDate.Substring(4, 2)), Convert.ToInt32(_webSession.PeriodBeginningDate.Substring(6, 2)));
-
-                                    if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE) {
-
-                                        if (webSessionSave.DetailPeriod == CstCustomerSession.Period.DisplayLevel.monthly) {
-                                            comparativePeriodType = CstWeb.globalCalendar.comparativePeriodType.dateToDate;
-                                            periodDisponibilityType = CstWeb.globalCalendar.periodDisponibilityType.lastCompletePeriod;
-                                        }
-                                        else if (webSessionSave.DetailPeriod == CstCustomerSession.Period.DisplayLevel.weekly) {
-                                            comparativePeriodType = CstWeb.globalCalendar.comparativePeriodType.comparativeWeekDate;
-                                            periodDisponibilityType = CstWeb.globalCalendar.periodDisponibilityType.lastCompletePeriod;
-                                        }
-                                        else {
-                                            comparativePeriodType = webSessionSave.CustomerPeriodSelected.ComparativePeriodType;
-                                            periodDisponibilityType = webSessionSave.CustomerPeriodSelected.PeriodDisponibilityType;
-                                        }
-
-                                        switch (periodDisponibilityType) {
-
-                                            case CstWeb.globalCalendar.periodDisponibilityType.currentDay:
-                                                lastDayEnable = DateTime.Now;
-                                                break;
-                                            case CstWeb.globalCalendar.periodDisponibilityType.lastCompletePeriod:
-                                                lastDayEnable = FirstDayNotEnable.AddDays(-1);
-                                                break;
-
-                                        }
-
-                                        if (CompareDateEnd(lastDayEnable, tmpEndDate) || CompareDateEnd(tmpBeginDate, DateTime.Now))
-                                            _webSession.CustomerPeriodSelected = new CustomerPeriod(_webSession.PeriodBeginningDate, _webSession.PeriodEndDate, true, comparativePeriodType, periodDisponibilityType);
-                                        else 
-                                            _webSession.CustomerPeriodSelected = new CustomerPeriod(_webSession.PeriodBeginningDate, lastDayEnable.ToString("yyyyMMdd"), true, comparativePeriodType, periodDisponibilityType);
-                                    }
-                                    else {
-                                        if (CompareDateEnd(DateTime.Now, tmpEndDate) || CompareDateEnd(tmpBeginDate, DateTime.Now))
-                                            _webSession.CustomerPeriodSelected = new CustomerPeriod(_webSession.PeriodBeginningDate, _webSession.PeriodEndDate);
-                                        else
-                                            _webSession.CustomerPeriodSelected = new CustomerPeriod(_webSession.PeriodBeginningDate, DateTime.Now.ToString("yyyyMMdd"));
-                                    }
-                                    verifCustomerPeriod = true;
-                                }
-                                break;
-                        }
-                    }
-                    #endregion
-
-
-					//rajouté le 27/10 par Guillaume Ragneau
-					if (_webSession.CurrentModule == CstWeb.Module.Name.INDICATEUR 
-						|| _webSession.CurrentModule == CstWeb.Module.Name.TABLEAU_DYNAMIQUE){
-						_webSession.LastAvailableRecapMonth = DBFunctions.CheckAvailableDateForMedia(
-							((LevelInformation)_webSession.SelectionUniversMedia.Nodes[0].Tag).ID, _webSession);
-					}
-
-                    if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE
-                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE
-                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE
-                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) {
-                        if(!verifCustomerPeriod)
-                            UpdateGlobalDates(webSessionSave.PeriodType, webSessionSave, FirstDayNotEnable);
-                    }
-					else if(!WebFunctions.Modules.IsDashBoardModule(webSessionSave) && webSessionSave.CurrentModule!=TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE) {
-//						if(DateTime.Now.Year<=_webSession.DownLoadDate){ 
-							
-							switch(webSessionSave.PeriodType){
-
-								case CstCustomerSession.Period.Type.nLastMonth:
-
-									_webSession.PeriodBeginningDate = DateTime.Now.AddMonths(-(webSessionSave.PeriodLength-1)).ToString("yyyyMM");
-									_webSession.PeriodEndDate = DateTime.Now.ToString("yyyyMM");
-
-									if( webSessionSave.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE || webSessionSave.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR ){
-										//Détermine le dernier mois accessible en fonction de la fréquence de livraison du client et
-										//du dernier mois dispo en BDD
-										//traitement de la notion de fréquence
-										UpdateRecapDates(CstCustomerSession.Period.Type.nLastMonth,ref notValidPeriod,ref invalidPeriodMessage);
-									}
-                                   break;
-
-								case CstCustomerSession.Period.Type.currentYear:
-
-									_webSession.PeriodBeginningDate = DateTime.Now.AddYears(1 - webSessionSave.PeriodLength).ToString("yyyy01");
-									_webSession.PeriodEndDate = DateTime.Now.ToString("yyyyMM");
-									
-									if( webSessionSave.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE || webSessionSave.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR ){
-										//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
-										//du dernier mois dispo en BDD
-										//traitement de la notion de fréquence
-										UpdateRecapDates(CstCustomerSession.Period.Type.currentYear,ref notValidPeriod,ref invalidPeriodMessage);
-									}
-									break;
-
-								case CstCustomerSession.Period.Type.nLastYear:
-									_webSession.PeriodBeginningDate = DateTime.Now.AddYears(1 - webSessionSave.PeriodLength).ToString("yyyy01");
-									_webSession.PeriodEndDate = DateTime.Now.ToString("yyyyMM");
-									break;
-
-								case CstCustomerSession.Period.Type.previousMonth:
-									_webSession.PeriodEndDate = _webSession.PeriodBeginningDate = DateTime.Now.AddMonths(-1).ToString("yyyyMM");
-									break;
-
-								case CstCustomerSession.Period.Type.previousYear:
-								
-									//Année précédente est fonction de la dernière année de chargement des données pour les Recap
-									if( (webSessionSave.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE || webSessionSave.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR )
-										&& (DateTime.Now.AddYears(-1).Year==_webSession.DownLoadDate)
-										){
-										_webSession.PeriodEndDate = DateTime.Now.AddYears(-2).ToString("yyyy")+"12";
-										_webSession.PeriodBeginningDate = DateTime.Now.AddYears(-2).ToString("yyyy")+"01";
-									}else{
-										_webSession.PeriodEndDate = DateTime.Now.AddYears(-1).ToString("yyyy")+"12";
-										_webSession.PeriodBeginningDate = DateTime.Now.AddYears(-1).ToString("yyyy")+"01";
-									
-									}
-									break;
-
-								//Année N-2
-								case CstCustomerSession.Period.Type.nextToLastYear:
-									//Année N-2 est fonction de la dernière année de chargement des données pour les Recap
-									if( (webSessionSave.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE || webSessionSave.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR )
-										&& (DateTime.Now.AddYears(-1).Year==_webSession.DownLoadDate)
-										){
-										_webSession.PeriodEndDate = DateTime.Now.AddYears(-3).ToString("yyyy")+"12";
-										_webSession.PeriodBeginningDate = DateTime.Now.AddYears(-3).ToString("yyyy")+"01";
-									}else{
-										_webSession.PeriodEndDate = DateTime.Now.AddYears(-2).ToString("yyyy")+"12";
-										_webSession.PeriodBeginningDate = DateTime.Now.AddYears(-2).ToString("yyyy")+"01";
-									
-									}
-									break;
-
-								case CstCustomerSession.Period.Type.dateToDateMonth:
-
-									_webSession.PeriodBeginningDate=webSessionSave.PeriodBeginningDate;
-									_webSession.PeriodEndDate=webSessionSave.PeriodEndDate;
-
-									if( webSessionSave.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE || webSessionSave.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR ){
-										//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
-										//du dernier mois dispo en BDD
-										//traitement de la notion de fréquence	
-											UpdateRecapDates(CstCustomerSession.Period.Type.dateToDateMonth,ref notValidPeriod,ref invalidPeriodMessage);
-									}
-									break;
-								case CstCustomerSession.Period.Type.dateToDateWeek:
-									_webSession.PeriodBeginningDate=webSessionSave.PeriodBeginningDate;
-									_webSession.PeriodEndDate=webSessionSave.PeriodEndDate;
-									break;
-
-								case CstCustomerSession.Period.Type.nLastWeek:
-									tmp = new AtomicPeriodWeek(DateTime.Now);
-									if (tmp.Week < 10){
-										_webSession.PeriodEndDate = tmp.Year.ToString()+"0"+tmp.Week.ToString();
-									}
-									else{
-										_webSession.PeriodEndDate = tmp.Year.ToString()+tmp.Week.ToString();
-									}
-									tmp.SubWeek(webSessionSave.PeriodLength-1);
-									if(tmp.Week<10){
-										_webSession.PeriodBeginningDate = tmp.Year.ToString()+"0"+tmp.Week.ToString();
-									}else {
-										_webSession.PeriodBeginningDate = tmp.Year.ToString()+tmp.Week.ToString();
-									}
-									break;
-
-								case CstCustomerSession.Period.Type.previousWeek:
-									tmp = new AtomicPeriodWeek(DateTime.Now);
-									tmp.SubWeek(1);
-									if(tmp.Week<10){
-										_webSession.PeriodBeginningDate =_webSession.PeriodEndDate= tmp.Year.ToString()+"0"+tmp.Week.ToString();
-									}else {
-										_webSession.PeriodBeginningDate =_webSession.PeriodEndDate= tmp.Year.ToString()+tmp.Week.ToString();
-									}
-									//_webSession.PeriodEndDate = _webSession.PeriodBeginningDate = tmp.Week.ToString();
-									break;
-
-								case CstCustomerSession.Period.Type.dateToDate:
-									_webSession.PeriodBeginningDate=webSessionSave.PeriodBeginningDate;
-									_webSession.PeriodEndDate=webSessionSave.PeriodEndDate;
-									break;
-
-									//N derniers jours
-								case CstCustomerSession.Period.Type.nLastDays :
-									
-									_webSession.PeriodBeginningDate = DateTime.Now.AddDays(1 - _webSession.PeriodLength).ToString("yyyyMMdd");
-									_webSession.PeriodEndDate = DateTime.Now.ToString("yyyyMMdd");									
-									break;
-
-									//Jour précédent
-								case CstCustomerSession.Period.Type.previousDay :
-														
-									_webSession.PeriodBeginningDate = _webSession.PeriodEndDate =DateTime.Now.AddDays(1 - _webSession.PeriodLength).ToString("yyyyMMdd");
-								
-									break;
-
-								default :
-									_webSession.PeriodBeginningDate=webSessionSave.PeriodBeginningDate;
-									_webSession.PeriodEndDate=webSessionSave.PeriodEndDate;	
-									break;
-							}
-//						}else{							
-//								_webSession.PeriodBeginningDate=webSessionSave.PeriodBeginningDate;
-//								_webSession.PeriodEndDate=webSessionSave.PeriodEndDate;										
-//						}
-					}else{
-						if(WebFunctions.Modules.IsDashBoardModule(webSessionSave)){
-							try{
-							WebFunctions.Dates.WebSessionSaveDownloadDates(webSessionSave,ref PeriodBeginningDate,ref PeriodEndDate);
-							}catch(System.Exception err){
-								notValidPeriod = true;
-								invalidPeriodMessage = err.Message;								
-							}
-							_webSession.PeriodBeginningDate=PeriodBeginningDate;
-							_webSession.PeriodEndDate=PeriodEndDate;
-							if(_webSession.PeriodType==CstCustomerSession.Period.Type.LastLoadedWeek || _webSession.PeriodType==CstCustomerSession.Period.Type.LastLoadedMonth)
-								_webSession.DetailPeriodBeginningDate = _webSession.DetailPeriodEndDate = "";
-						}else if(webSessionSave.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE){
-							try{
-								WebFunctions.Modules.LoadModuleStudyPeriodDates(_webSession,webSessionSave);
-							}catch(System.Exception err){
-								notValidPeriod = true;
-								invalidPeriodMessage = err.Message;								
-							}
-						}
-					}					
-					
-					//Année agence média
-					_webSession.MediaAgencyFileYear=webSessionSave.MediaAgencyFileYear;					
-					if(_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_AGENCY) && (webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("agency")>=0)
-						&& !WebFunctions.CheckedText.IsStringEmpty(_webSession.MediaAgencyFileYear)
-						&& _webSession.PeriodBeginningDate.Length>0
-						){
-						_webSession.MediaAgencyFileYear = DBConstantes.Tables.PRODUCT_GROUP_ADV_AGENCY+_webSession.PeriodBeginningDate.Substring(0,4); 
-					}
-
-					_webSession.ReachedModule=webSessionSave.ReachedModule;
-					_webSession.ReferenceUniversAdvertiser=webSessionSave.ReferenceUniversAdvertiser;
-					_webSession.ReferenceUniversMedia=webSessionSave.ReferenceUniversMedia;
-					_webSession.ReferenceUniversProduct=webSessionSave.ReferenceUniversProduct;
-                    //_webSession.Sort=webSessionSave.Sort;
-					_webSession.Sorting=webSessionSave.Sorting;
-					_webSession.Unit=webSessionSave.Unit;
-
-					//Patch last reahce result URL pour tableaux Dynamiques
-					_webSession.LastReachedResultUrl=webSessionSave.LastReachedResultUrl;
-					
-
-
-					_webSession.ModuleTraductionCode=webSessionSave.ModuleTraductionCode;
-
-
-					_webSession.ComparaisonCriterion = webSessionSave.ComparaisonCriterion;
-					
-					if(_webSession.PeriodEndDate.Length>0 && (DateTime.Now.Year - int.Parse(_webSession.PeriodEndDate.Substring(0,4)) < 2))
-						_webSession.ComparativeStudy = webSessionSave.ComparativeStudy;
-					else _webSession.ComparativeStudy = false;
-					_webSession.CustomizedReferenceComcurrentElements = webSessionSave.CustomizedReferenceComcurrentElements;
-					_webSession.PreformatedTable = webSessionSave.PreformatedTable;
-					_webSession.PDM = webSessionSave.PDM;
-					_webSession.PDV = webSessionSave.PDV;
-					_webSession.PersonalizedElementsOnly=webSessionSave.PersonalizedElementsOnly;
-					_webSession.Graphics=webSessionSave.Graphics;
-
-					if (!_webSession.ComparativeStudy || !webSessionSave.Evolution)
-						_webSession.Evolution = false;
-					
-		
-					//Rajouté pour module Tableaux de bord
-					_webSession.Format = webSessionSave.Format;
-					_webSession.NamedDay = webSessionSave.NamedDay;
-					_webSession.TimeInterval = webSessionSave.TimeInterval;
-					_webSession.DetailPeriodBeginningDate =  webSessionSave.DetailPeriodBeginningDate;
-					_webSession.DetailPeriodEndDate =  webSessionSave.DetailPeriodEndDate;
-				
-					#region Rajouté pour module Bilan de campagne (APPM)
-					_webSession.CurrentUniversAEPMTarget = webSessionSave.CurrentUniversAEPMTarget;
-					_webSession.SelectionUniversAEPMWave = webSessionSave.SelectionUniversAEPMWave;
-					_webSession.SelectionUniversOJDWave = webSessionSave.SelectionUniversOJDWave;
-					_webSession.SelectionUniversAEPMTarget = webSessionSave.SelectionUniversAEPMTarget;
-					_webSession.CurrentUniversAEPMWave = webSessionSave.CurrentUniversAEPMWave;
-					_webSession.CurrentUniversOJDWave = webSessionSave.CurrentUniversOJDWave;
-					_webSession.EmailRecipient = webSessionSave.EmailRecipient;
-					_webSession.Ecart = webSessionSave.Ecart;
-					_webSession.ExportedPDFFileName = webSessionSave.ExportedPDFFileName;
-					_webSession.PublicationBeginningDate = webSessionSave.PublicationBeginningDate ;
-					_webSession.PublicationEndDate = webSessionSave.PublicationEndDate;
-					_webSession.PublicationDateType = webSessionSave.PublicationDateType;
-					#endregion
-
-					//Nouveaux univers produit
-					_webSession.PrincipalProductUniverses = webSessionSave.PrincipalProductUniverses;
-					_webSession.SecondaryProductUniverses = webSessionSave.SecondaryProductUniverses;
-					//Nouveaux univers Media
-					_webSession.PrincipalMediaUniverses = webSessionSave.PrincipalMediaUniverses;
-					_webSession.SecondaryMediaUniverses = webSessionSave.SecondaryMediaUniverses;
-
-					if(notValidPeriod){
-						//Erreur : période non disponible
-						Response.Write("<script language=javascript>");
-//						Response.Write("	alert(\""+GestionWeb.GetWebWord(1787,_webSession.SiteLanguage)+"\");");	
-						Response.Write("	alert(\""+invalidPeriodMessage+"\");");					
-						Response.Write("</script>");
-					}
-					else if (validModule){
-                        if (validResultPage)
-                        {
-                            _webSession.Save();
-                            if (_webSession.LastReachedResultUrl.Length != 0)
-                            {
-                                //_webSession.Source.Close();
-                                Response.Redirect(_webSession.LastReachedResultUrl + "?idSession=" + _webSession.IdSession);
-                            }
-                            else
-                            {
-
-                                //Erreur : Impossible de charger la session
-                                Response.Write("<script language=javascript>");
-                                Response.Write("	alert(\"" + GestionWeb.GetWebWord(851, _webSession.SiteLanguage) + "\");");
-                                Response.Write("</script>");
-                            }
-                        }
-                        else
-                        {
-                            //Erreur : Cette session n'est plus dispo
+                    if (idMySession!=0){
+                        //MySessionDataAccess deleteSession=new MySessionDataAccess(idMySession,new OracleConnection(_webSession.CustomerLogin.OracleConnectionString));
+                        MySessionDataAccess deleteSession=new MySessionDataAccess(idMySession,_webSession);
+                        if (deleteSession.Delete()){
+                            // Validation : confirmation de suppression de la requête
                             Response.Write("<script language=javascript>");
-                            Response.Write("	alert(\"" + GestionWeb.GetWebWord(2455, _webSession.SiteLanguage) + "\");");
+                            Response.Write("	alert(\""+GestionWeb.GetWebWord(286,_webSession.SiteLanguage)+"\");");					
+                            Response.Write("</script>");
+                            // Actualise la page
+                            this.OnLoad(null);
+                        }
+                        else{
+                            // Erreur : la suppression de la requête a échouée
+                            Response.Write("<script language=javascript>");
+                            Response.Write("	alert(\""+GestionWeb.GetWebWord(830,_webSession.SiteLanguage)+"\");");					
                             Response.Write("</script>");
                         }
-					}
-					else{
-						// Erreur : Droits insuffisants
-						Response.Write("<script language=javascript>");
-						Response.Write("	alert(\""+GestionWeb.GetWebWord(832,_webSession.SiteLanguage)+"\");");					
-						Response.Write("</script>");
-					}
-				}
-				else{
-					// Erreur : veuillez sélectionner une requête
-					Response.Write("<script language=javascript>");
-					Response.Write("	alert(\""+GestionWeb.GetWebWord(831,_webSession.SiteLanguage)+"\");");					
-					Response.Write("</script>");
-				}				
-			}
-			catch(TNS.AdExpress.Domain.Exceptions.NoDataException) {
-				Response.Write("<script language=\"JavaScript\">alert(\""+GestionWeb.GetWebWord(1787,_webSession.SiteLanguage)+"\");</script>");
-			}
-			catch(System.Exception exc){
-				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
-					this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this,exc,_webSession));
-				}
-			}
-		}
-
-		#endregion	
-	
-
+                    }
+                    else{
+                        // Erreur : veuillez sélectionner une requête
+                        Response.Write("<script language=javascript>");
+                        Response.Write("	alert(\""+GestionWeb.GetWebWord(831,_webSession.SiteLanguage)+"\");");					
+                        Response.Write("</script>");
+                    }
+                 */
+            }
+            catch (System.Exception exc) {
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException)) {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                }
+            }
+        }
+        #endregion
+			
 		#region Déchargement de la page
 		/// <summary>
 		/// Evènement de déchargement de la page:
@@ -1565,8 +971,64 @@ namespace AdExpress.Private.Alerts{
         }
         #endregion
 
+        #region GetHTML
+        /// <summary>
+        /// GetHTML
+        /// </summary>
+        /// <param name="lang">language Id</param>
+        /// <param name="idWebText">Id Web Text</param>
+        /// <param name="dayName">Name Of Day</param>
+        /// <param name="formatProvider">Format Provider</param>
+        /// <param name="alertHourCollection">Alert Hour Collection</param>
+        /// <returns>Html Code</returns>
+        private string GetAlertHTML(Alert alert, int lang, long idWebText, string dayName, IFormatProvider formatProvider/*, AlertHourCollection alertHourCollection*/) {
+            StringBuilder html = new StringBuilder(5000);
+            html.Append(GestionWeb.GetWebWord(1293, lang) + " : ");
+
+            switch (alert.Periodicity) {
+                case TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity.Daily:
+                    html.Append(GestionWeb.GetWebWord(2579, lang) + "<br />");
+                    break;
+                case TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity.Weekly:
+                    html.Append(GestionWeb.GetWebWord(2580, lang));
+                    html.Append("<br />");
+                    html.Append(GestionWeb.GetWebWord(2603, lang) + " : ");
+                    html.Append(GestionWeb.GetWebWord(2604, lang) + " ");
+                    html.Append(dayName);
+                    html.Append("<br />");
+                    break;
+                case TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity.Monthly:
+                    html.Append(GestionWeb.GetWebWord(1294, lang));
+                    html.Append("<br />");
+                    html.Append(GestionWeb.GetWebWord(2603, lang) + " : ");
+                    html.Append(GestionWeb.GetWebWord(2605, lang) + " ");
+                    html.Append(alert.PeriodicityValue.ToString());
+                    html.Append("<br />");
+                    break;
+            }
+
+            /*if (alertHourCollection != null && alertHourCollection.Count > 0) {
+                for (int i = 0; i < alertHourCollection.Count; i++) {
+                    if (alertHourCollection[i].IdAlertSchedule == alert.IdAlertSchedule) {
+                        html.Append(GestionWeb.GetWebWord(2614, lang) + " : ");
+                        html.Append(string.Format(formatProvider, "{0:alertSchedule}", (new DateTime(alertHourCollection[i].HoursSchedule.Ticks))) + "<br />");
+                        break;
+                    }
+                }
+            }*/
+
+            html.Append(GestionWeb.GetWebWord(2606, lang) + " : ");
+            html.Append(string.Format(formatProvider, "{0:shortdatepattern}", alert.ExpirationDate) + "<br />");
+
+            html.Append(GestionWeb.GetWebWord(2607, lang) + " : ");
+            html.Append(GestionWeb.GetWebWord(idWebText, lang) + "<br />");
+
+            return (html.ToString());
+        }
+
 		#endregion
-	
-		
-	}
+
+        #endregion
+
+    }
 }

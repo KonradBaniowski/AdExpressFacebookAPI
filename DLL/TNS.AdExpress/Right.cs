@@ -28,22 +28,27 @@ namespace TNS.AdExpress {
         /// clé : type de liste dans la nomenclature en accès ou en exception 
         /// valeur : liste correspondant à la clé 
         /// </summary>
-        protected Dictionary<CustomerCst.Right.type,string[]> _rights;
+        protected Dictionary<CustomerCst.Right.type, string[]> _rights;
         /// <summary>
         /// Modules list
         /// </summary>
-        protected Dictionary<Int64,Module> _modulesRights;
+        protected Dictionary<Int64, Module> _modulesRights;
         /// <summary>
         /// hashtable : clé idFlag
         /// valeur : Flag
         /// </summary>
-        protected Dictionary<Int64,string> _flagsRights;
+        protected Dictionary<Int64, string> _flagsRights;
         /// <summary>
         /// Module frequencies
         /// module id, frequency id
         /// </summary>
         [System.NonSerialized]
-        protected Dictionary<Int64,Int64> _moduleFrequencies;
+        protected Dictionary<Int64, Int64> _moduleFrequencies;
+        /// <summary>
+        /// ModuleAssignement Alerts AdExpress
+        /// </summary>
+        [System.NonSerialized]
+        protected ModuleAssignment _moduleAssignmentAlertsAdExpress;
         /// <summary>
         /// identifiant login
         /// </summary>		
@@ -77,12 +82,12 @@ namespace TNS.AdExpress {
         /// bool indiquant si c'est la première connection au site
         /// true si première connection
         /// </summary>
-        protected bool firstRequest=true;
+        protected bool firstRequest = true;
         /// <summary>
         /// DB Connection
         /// </summary>
         [System.NonSerialized]
-        private IDataSource _source=null;
+        private IDataSource _source = null;
         /// <summary>
         /// date de connection
         /// </summary>		
@@ -91,10 +96,10 @@ namespace TNS.AdExpress {
         /// Date de modification des droits utilisateur
         /// </summary>
         protected DateTime _lastModificationDate;
-		/// <summary>
-		/// Site language
-		/// </summary>
-		protected int _siteLanguage = 33;
+        /// <summary>
+        /// Site language
+        /// </summary>
+        protected int _siteLanguage = 33;
         #endregion
 
         #region Constructor
@@ -131,6 +136,7 @@ namespace TNS.AdExpress {
 			_connectionDate = DateTime.Now;
 			_siteLanguage = sitelanguage;
 			try {
+				
 				_loginId = RightDAL.GetLoginId(Source, _login, _password);
 			}
 			catch (System.Exception err) {
@@ -210,7 +216,7 @@ namespace TNS.AdExpress {
         /// Si true assigne idLogin
         /// </summary>
         /// <returns></returns>
-        public bool CanAccessToAdExpress() {
+        public bool CanAccessToAdExpress() {			
             return (RightDAL.CanAccessToAdExpressDB(Source,_loginId));
 
         }
@@ -220,6 +226,7 @@ namespace TNS.AdExpress {
         /// </summary>
         /// <returns>true si login-mot de passe correct, false sinon</returns>
         public bool CheckLogin(IDataSource source) {
+			
             _loginId=RightDAL.GetLoginId(source,_login,_password);
             if(_loginId==-1) return (false);
             return (true);
@@ -232,7 +239,7 @@ namespace TNS.AdExpress {
         /// Customer rights have been modified ?
         /// </summary>
         /// <returns>True if the rights have been modified</returns>
-        protected bool isRightModifiedDB() {
+        protected bool isRightModifiedDB() {			
             _lastModificationDate=RightDAL.LastModificationDate(_source,_loginId);
             if(_lastModificationDate<_connectionDate)return false;
             return true;
@@ -245,6 +252,7 @@ namespace TNS.AdExpress {
         /// </summary>
         /// <returns>True if some templates exist</returns>
         public bool IsProductTemplateExist() {
+					
             return(RightDAL.IsProductTemplateExist(Source,_loginId));
         }
 
@@ -253,6 +261,7 @@ namespace TNS.AdExpress {
         /// </summary>
         /// <returns>True if some templates exist</returns>
         public  bool IsMediaTemplateExist() {
+			
             return(RightDAL.IsMediaTemplateExist(Source,_loginId));
         }
         #endregion
@@ -279,7 +288,7 @@ namespace TNS.AdExpress {
 
             #region Product Template
             if(IsProductTemplateExist()) {
-                ds=RightDAL.GetProductTemplate(Source,_loginId);
+				ds=RightDAL.GetProductTemplate(Source,_loginId);
                 try {
                     if(ds!=null&&ds.Tables!=null&&ds.Tables[0]!=null&&ds.Tables[0].Rows!=null) {
                         foreach(DataRow row in ds.Tables[0].Rows) {
@@ -341,7 +350,7 @@ namespace TNS.AdExpress {
             #endregion
 
             #region Customer rights
-            ds=RightDAL.GetProductRights(Source,_loginId);
+			 ds=RightDAL.GetProductRights(Source,_loginId);
             try {
                 if(ds!=null&&ds.Tables!=null&&ds.Tables[0]!=null&&ds.Tables[0].Rows!=null) {
                     foreach(DataRow row in ds.Tables[0].Rows) {
@@ -440,7 +449,7 @@ namespace TNS.AdExpress {
 
             #region Media Template
             if(IsMediaTemplateExist()) {
-                ds=RightDAL.GetMediaTemplate(Source,_loginId);
+				ds=RightDAL.GetMediaTemplate(Source,_loginId);
                 try {
                     if(ds!=null&&ds.Tables!=null&&ds.Tables[0]!=null&&ds.Tables[0].Rows!=null) {
                         foreach(DataRow row in ds.Tables[0].Rows) {
@@ -487,7 +496,7 @@ namespace TNS.AdExpress {
             #endregion
 
             #region Customer media rights
-            ds=RightDAL.GetMediaRights(Source,_loginId);
+			 ds=RightDAL.GetMediaRights(Source,_loginId);
             try {
                 if(ds!=null&&ds.Tables!=null&&ds.Tables[0]!=null&&ds.Tables[0].Rows!=null) {
                     foreach(DataRow row in ds.Tables[0].Rows) {
@@ -588,7 +597,7 @@ namespace TNS.AdExpress {
         public void SetModuleRights() {
             DataSet ds;
             try {
-                ds=RightDAL.GetModulesRights(Source,_loginId);
+				ds=RightDAL.GetModulesRights(Source,_loginId);
                 _modulesRights=new Dictionary<Int64,Module>();
                 if(ds!=null&&ds.Tables!=null&&ds.Tables[0]!=null&&ds.Tables[0].Rows!=null) {
                     foreach(DataRow row in ds.Tables[0].Rows) {
@@ -608,7 +617,7 @@ namespace TNS.AdExpress {
             DataSet ds=null;
             try {
                 if(_modulesRights==null) SetModuleRights();
-                ds=RightDAL.GetModulesRights(Source,_loginId);
+				ds=RightDAL.GetModulesRights(Source,_loginId);
                 if(ds!=null && ds.Tables[0]!=null && ds.Tables[0].Rows!=null) {
                     ds.Tables[0].TableName="listModule";
                     ds.Tables[0].Columns[0].ColumnName="idGroupModule";
@@ -647,35 +656,111 @@ namespace TNS.AdExpress {
         private void SetModuleFrequencies() {
             DataSet ds;
             try {
-                ds=RightDAL.GetModuleFrequencies(Source,_loginId);
-                _moduleFrequencies=new Dictionary<Int64,Int64>();
-                if(ds!=null&&ds.Tables!=null&&ds.Tables[0]!=null&&ds.Tables[0].Rows!=null) {
-                    foreach(DataRow row in ds.Tables[0].Rows) {
-                        _moduleFrequencies.Add((Int64)row[0],(Int64)row[1]);
+                 ds = RightDAL.GetModuleFrequencies(Source, _loginId);
+                _moduleFrequencies = new Dictionary<Int64, Int64>();
+                if (ds != null && ds.Tables != null && ds.Tables[0] != null && ds.Tables[0].Rows != null) {
+                    foreach (DataRow row in ds.Tables[0].Rows) {
+                        _moduleFrequencies.Add((Int64)row[0], (Int64)row[1]);
                     }
                 }
             }
-            catch(System.Exception err) {
-				throw (new RightException("Impossible to retreive module frequencies", err));
+            catch (System.Exception err) {
+                throw (new RightException("Impossible to retreive module frequencies", err));
             }
         }
 
         /// <summary>
         /// Méthode pour récupérer la fréquence d'un module
         /// </summary>
-        /// <param name="idModule">identifiant du module</param>
+        /// <param name="moduleId">identifiant du module</param>
         /// <returns>Valeur de la fréquence</returns>
         public Int64 GetIdFrequency(Int64 moduleId) {
             try {
-                if(_moduleFrequencies==null) SetModuleFrequencies();
-                if(_moduleFrequencies[moduleId]!=null) {
+                if (_moduleFrequencies == null) SetModuleFrequencies();
+                if (_moduleFrequencies[moduleId] != null) {
                     return _moduleFrequencies[moduleId];
                 }
                 else return Frequency.DEFAULT;
 
             }
-            catch(System.Exception err) {
-                throw (new RightException("Impossible to retreive module frequency",err));
+            catch (System.Exception err) {
+                throw (new RightException("Impossible to retreive module frequency", err));
+            }
+        }
+        #endregion
+
+        #region ModuleAssignmentAlertsAdExpress
+        /// <summary>
+        /// Set Module frequencies
+        /// </summary>
+        private void SetModuleAssignmentAlertsAdExpress() {
+            DataSet ds;
+            try {
+               ds = RightDAL.GetModuleAssignment(Source, _loginId);
+                _moduleAssignmentAlertsAdExpress = null;
+                if (ds != null && ds.Tables != null && ds.Tables[0] != null && ds.Tables[0].Rows != null) {
+                    foreach (DataRow row in ds.Tables[0].Rows) {
+                        if(WebCst.Module.Name.ALERT_ADEXPRESS == (Int64)row[0])
+                            _moduleAssignmentAlertsAdExpress = new ModuleAssignment((Int64)row[0], (DateTime)row[1], (DateTime)row[2], (Int64)row[3], ((row[4].ToString().Length > 0) ? (Int64)row[4] : -1));
+                    }
+                    if (_moduleAssignmentAlertsAdExpress == null)
+                        _moduleAssignmentAlertsAdExpress = new ModuleAssignment(WebCst.Module.Name.ALERT_ADEXPRESS, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(-10), 0, -1);
+                }
+            }
+            catch (System.Exception err) {
+                throw (new RightException("Impossible to build SetModuleAssignmentAlertsAdExpress", err));
+            }
+        }
+
+
+        /// <summary>
+        /// HasModuleAssignment (A utiliser seulement pour les Alertes AdExpress !!!)
+        /// </summary>
+        /// <param name="moduleId">module Id</param>
+        /// <returns>boolean</returns>
+        public bool HasModuleAssignmentAlertsAdExpress() {
+            try {
+                if (_moduleAssignmentAlertsAdExpress == null) SetModuleAssignmentAlertsAdExpress();
+                if (_moduleAssignmentAlertsAdExpress != null && _moduleAssignmentAlertsAdExpress.NbAlert>=0) return true;
+                return (false);
+            }
+            catch (System.Exception err) {
+                throw (new RightException("Impossible to build HasModuleAssignmentAlertsAdExpress", err));
+            }
+        }
+
+        /// <summary>
+        /// IsModuleAssignmentValidDate (A utiliser seulement pour les Alertes AdExpress !!!)
+        /// </summary>
+        /// <param name="moduleId">module Id</param>
+        /// <returns>boolean</returns>
+        public bool IsModuleAssignmentValidDateAlertsAdExpress() {
+            try {
+                if (_moduleAssignmentAlertsAdExpress == null) SetModuleAssignmentAlertsAdExpress();
+                if (_moduleAssignmentAlertsAdExpress != null && _moduleAssignmentAlertsAdExpress.NbAlert >= 0 && _moduleAssignmentAlertsAdExpress.DateBegin < DateTime.Now && _moduleAssignmentAlertsAdExpress.DateEnd > DateTime.Now) return true;
+                return (false);
+            }
+            catch (System.Exception err) {
+                throw (new RightException("Impossible to build IsModuleAssignmentValidDateAlertsAdExpress", err));
+            }
+        }
+
+        /// <summary>
+        /// Méthode pour récupérer le nb d'alerte maximale de l'utilisateur (A utiliser seulement pour les Alertes AdExpress !!!)
+        /// </summary>
+        /// <param name="moduleId">identifiant du module</param>
+        /// <returns>Nb Alerts</returns>
+        public Int64 GetNbAlertsAdExpress() {
+            try {
+                if (_moduleAssignmentAlertsAdExpress == null) SetModuleAssignmentAlertsAdExpress();
+                if (_moduleAssignmentAlertsAdExpress!=null && _moduleAssignmentAlertsAdExpress.NbAlert >= 0) {
+                    return _moduleAssignmentAlertsAdExpress.NbAlert;
+                }
+                else return 0;
+
+        }
+            catch (System.Exception err) {
+                throw (new RightException("Impossible to Get Nb Alerts AdExpress", err));
             }
         }
         #endregion
@@ -699,22 +784,7 @@ namespace TNS.AdExpress {
 			catch (System.Exception err) {
 				throw (new RightException("Impossible to retreive flags rights", err));
 			}
-		}
-		///// <summary>
-		///// Get Flag name
-		///// </summary>
-		///// <param name="flagId">flag Id</param>
-		///// <returns>Flag name</returns>
-		//public string GetFlag(Int64 flagId) {
-		//    try {
-		//        if (_flagsRights == null) SetFlagsRights();
-		//        if (_flagsRights.ContainsKey(flagId)) return (_flagsRights[flagId]);
-		//        return (null);
-		//    }
-		//    catch (System.Exception err) {
-		//        throw (new RightException("Impossible to retreive flags rights"));
-		//    }
-		//}
+		}		
 
 		/// <summary>
 		/// Indicate if the customer have access to a flag
@@ -722,12 +792,7 @@ namespace TNS.AdExpress {
 		/// <param name="flagId">Flag id</param>
 		/// <returns>True if the customer have access to the flag</returns>
 		public bool CustormerFlagAccess(Int64 flagId) {
-			try {
-				#region Old version
-				//if (_flagsRights == null) SetFlagsRights();
-				//if (_flagsRights.ContainsKey(flagId)) return (true);
-				//return (false);
-				#endregion
+			try {				
 				
 				if(!Domain.AllowedFlags.ContainFlag(flagId))return true;
 				if (_flagsRights == null) SetFlagsRights();
@@ -783,8 +848,6 @@ namespace TNS.AdExpress {
 		}
         #endregion
         #endregion
-
-       
 
         #region Recap Access Vehicle list
         /// <summary>

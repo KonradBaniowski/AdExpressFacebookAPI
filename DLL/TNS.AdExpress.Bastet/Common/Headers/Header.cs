@@ -15,18 +15,6 @@ namespace TNS.AdExpress.Bastet.Common.Headers{
 		
 		#region Variables
 		/// <summary>
-		/// Url de l'image sous jacente des menus
-		/// </summary>
-		protected string _imgUrl;
-		/// <summary>
-		/// Url de l'animation flash au dessus des menus
-		/// </summary>
-		protected string _flashUrl;
-		/// <summary>
-		/// Lien à utiliser quand le client ne dispose pas de flash
-		/// </summary>
-		protected string _missingFlashUrl; 
-		/// <summary>
 		/// Menus de l'entête(List de HeaderMenuItem)
 		/// </summary>
 		protected ArrayList _menuItems;
@@ -39,42 +27,12 @@ namespace TNS.AdExpress.Bastet.Common.Headers{
 		/// <param name="imgUrl">Url de l'image sous jacente des menus</param>
 		/// <param name="flashUrl">Url du fichier animation flash en haut de l'entête</param>
 		/// <param name="missingFlashUrl">Lien à utiliser quand le client ne dispose pas de flash</param>
-		public Header(string imgUrl, string flashUrl, string missingFlashUrl) {
-			_imgUrl=imgUrl;
-			_missingFlashUrl = missingFlashUrl;
-			_flashUrl = flashUrl;
+        public Header() {
 			_menuItems = new ArrayList();
 		}
 		#endregion
 
 		#region Accesseurs
-		/// <summary>
-		/// Get l'url de l'image sous jacente des menus
-		/// </summary>
-		public string ImgUrl{
-			get{
-				return _imgUrl;
-			}
-		}
-
-		/// <summary>
-		/// Get l'url de l'animation flash au dessus des menus
-		/// </summary>
-		public string FlashUrl{
-			get{
-				return _flashUrl;
-			}
-		}
-
-		/// <summary>
-		/// Get l'url de l'animation flash au dessus des menus
-		/// </summary>
-		public string MissingFlashUrl{
-			get{
-				return _missingFlashUrl;
-			}
-		}
-
 		/// <summary>
 		/// Get menuItems
 		/// </summary>

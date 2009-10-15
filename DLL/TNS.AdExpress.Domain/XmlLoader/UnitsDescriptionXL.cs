@@ -34,6 +34,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             string baseId="";
             string databaseField="";
             string databaseMultimediaField="";
+            string databaseTrendsField="";
             string cellType = "";
             string format = "";
             UnitInformation unit;
@@ -58,10 +59,12 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 else databaseField = reader.GetAttribute("field");
                                 if(reader.GetAttribute("multimediaField") == null || reader.GetAttribute("multimediaField").Length == 0) databaseMultimediaField="";
                                 else databaseMultimediaField = reader.GetAttribute("multimediaField");
+                                if(reader.GetAttribute("trendsField") == null || reader.GetAttribute("trendsField").Length == 0) databaseTrendsField="";
+                                else databaseTrendsField = reader.GetAttribute("trendsField");
                                 if (reader.GetAttribute("format") == null || reader.GetAttribute("format").Length == 0) format = "";
                                 else format = reader.GetAttribute("format");
-                                
-                                unit = new UnitInformation(id,format,webTextId,baseId,cellType,databaseField,databaseMultimediaField);
+
+                                unit = new UnitInformation(id,format,webTextId,baseId,cellType,databaseField,databaseMultimediaField,databaseTrendsField);
                                 list.Add(unit);
                                 break;
                         }

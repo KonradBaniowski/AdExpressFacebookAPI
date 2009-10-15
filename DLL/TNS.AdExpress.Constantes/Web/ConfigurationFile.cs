@@ -121,20 +121,23 @@ namespace TNS.AdExpress.Constantes.Web {
         /// Fichier de configuration des graphiques Dundas
         /// </summary>
         public const string DUNDAS_CONFIGURATION_FILENAME = @"DundasConfiguration.xml";
-        /// <summary>
-        /// Fichier de configuration Nyx
-        /// </summary>
-        public const string NYX_CONFIGURATION_FILENAME = @"NyxConfiguration.xml";
-
 		/// <summary>
 		/// Fichier de configuration des infos/news
 		/// </summary>
 		public const string INFO_NEWS_FILENAME = @"InfoNews.xml";
 
+		/// <summary>
+		/// Layers common to all web site configuartion file
+		/// </summary>
+		public const string CORE_LAYERS_CONFIGURATION_FILENAME = @"CoreLayersConfiguration.xml";
+		/// <summary>
+		/// Right options configuration file 
+		/// </summary>
+		public const string RIGHT_OPTIONS_CONFIGURATION_FILENAME = @"RightOptions.xml";
         /// <summary>
-        /// Layers common to all web site configuartion file
+        /// Alertes AdExpress Configuration
         /// </summary>
-        public const string CORE_LAYERS_CONFIGURATION_FILENAME = @"CoreLayersConfiguration.xml";
+        public const string ALERTE_CONFIGURATION = @"PluginAlerteConfiguration.xml";
 
     }
 }

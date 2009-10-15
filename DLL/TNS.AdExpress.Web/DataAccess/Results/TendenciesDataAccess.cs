@@ -67,8 +67,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			sql+= DBConstantes.Hathor.Tables.TENDENCY_MONTH_PREFIXE+".ID_CATEGORY, ";
 			sql+= DBConstantes.Hathor.Tables.TENDENCY_MONTH_PREFIXE+".CATEGORY, ";
 			sql+= getUnitsFields;
-			sql+= " from "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+dataTableName+" "+DBConstantes.Hathor.Tables.TENDENCY_MONTH_PREFIXE+", ";
-			sql+= DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+dataTotalTableName +" "+DBConstantes.Hathor.Tables.TOTAL_TENDENCY_MONTH_PREFIXE;
+			sql+= " from "+dataTableName+", ";
+			sql+= dataTotalTableName+" ";
 
 			if(vehicleName==DBClassificationConstantes.Vehicles.names.press || vehicleName==DBClassificationConstantes.Vehicles.names.internationalPress){
 				sql+= ","+DBConstantes.Schema.ADEXPRESS_SCHEMA+".TITLE "+DBConstantes.Tables.TITLE_PREFIXE;
@@ -153,7 +153,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			#region Construction de la requête
 			dataTotalTableName = WebFunctions.SQLGenerator.GetTotalTableNameForTendency(webSession.DetailPeriod);
 
-			sql+="select * from adexpr03."+dataTotalTableName;
+			sql+="select * from "+dataTotalTableName;
 			sql+=" where id_vehicle="+vehicleName.GetHashCode().ToString();
 			
 			if (webSession.PDM){

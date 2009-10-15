@@ -11,7 +11,6 @@ using System.Text;
 using TNS.AdExpress.Anubis.Aton.Exceptions;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Web;
-using TNSAnubisConstantes = TNS.AdExpress.Anubis.Constantes;
 
 namespace TNS.AdExpress.Anubis.Aton.Functions{
 	/// <summary>

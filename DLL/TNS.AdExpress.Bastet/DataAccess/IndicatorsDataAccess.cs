@@ -31,7 +31,7 @@ namespace TNS.AdExpress.Bastet.DataAccess{
 		/// <param name="dateBegin">Date de début</param>
 		/// <param name="dateEnd">Date de fin</param>
 		/// <returns>Données des indicateurs</returns>
-		internal static DataSet GetDatas(IDataSource source, string vehicleList, string dateBegin, string dateEnd){
+        internal static DataSet GetDatas(IDataSource source, string vehicleList, DateTime dateBegin, DateTime dateEnd, int dataLanguageId) {
 
 			#region Construction de la requête
 			StringBuilder sql = new StringBuilder();
@@ -42,14 +42,14 @@ namespace TNS.AdExpress.Bastet.DataAccess{
 			sql.Append("where dc.id_media = md.id_media and md.id_basic_media = bm.id_basic_media ");
 			sql.Append("and bm.id_category = ct.id_category and ct.id_vehicle = vh.id_vehicle ");
 			// Language
-			sql.Append("and dc.id_language="+DBLanguage.FRENCH+" and md.id_language="+DBLanguage.FRENCH+" ");
-			sql.Append("and bm.id_language="+DBLanguage.FRENCH+" and ct.id_language="+DBLanguage.FRENCH+" and vh.id_language="+DBLanguage.FRENCH+" ");
+            sql.Append("and dc.id_language=" + dataLanguageId + " and md.id_language=" + dataLanguageId + " ");
+            sql.Append("and bm.id_language=" + dataLanguageId + " and ct.id_language=" + dataLanguageId + " and vh.id_language=" + dataLanguageId + " ");
 			// Activation (DEAD = 10 pour ne montrer que les supports ACTIFS uniquement)
 			sql.Append("and md.activation<"+DBActivation.DEAD+" and bm.activation<"+DBActivation.DEAD+" ");
 			sql.Append("and ct.activation<"+DBActivation.DEAD+" and vh.activation<"+DBActivation.DEAD+" ");
 			// Paramètres
-			sql.Append("and dc.date_media_num >= "+dateBegin+" ");
-			sql.Append("and dc.date_media_num <= "+dateEnd+" ");
+			sql.Append("and dc.date_media_num >= "+dateBegin.ToString("yyyyMMdd")+" ");
+            sql.Append("and dc.date_media_num <= " + dateEnd.ToString("yyyyMMdd") + " ");
 			sql.Append("and vh.id_vehicle in ("+vehicleList+") ");
 			sql.Append("group by dc.id_data_control,vh.id_vehicle,vh.vehicle,ct.id_category,ct.category,dc.id_media,md.media,dc.id_diffusion,dc.date_media_num,dc.nb_line ");
 			sql.Append("order by vh.vehicle, ct.category, md.media, dc.id_diffusion,dc.date_media_num ");

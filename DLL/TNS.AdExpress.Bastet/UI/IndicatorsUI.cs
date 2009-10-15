@@ -18,6 +18,9 @@ using FrkDate=TNS.FrameWork.Date;
 using TNS.FrameWork.Date;
 using Cst=TNS.AdExpress.Bastet.Constantes;
 using TNS.AdExpress.Bastet.Functions;
+using TNS.AdExpress.Bastet.Translation;
+using TNS.AdExpress.Bastet.Web;
+using System.Globalization;
 #endregion
 
 namespace TNS.AdExpress.Bastet.UI{
@@ -35,16 +38,17 @@ namespace TNS.AdExpress.Bastet.UI{
 		/// <param name="dateBegin">Date de début</param>
 		/// <param name="dateEnd">Date de fin</param>
 		/// <returns>Code HTML</returns>
-		internal static string GetHtml(IDataSource source, string vehicleList, string dateBegin, string dateEnd){
+        internal static string GetHtml(IDataSource source, string vehicleList, DateTime dateBegin, DateTime dateEnd, int siteLanguageId, int dataLanguageId) {
 
 			#region Variables
 			StringBuilder t = new StringBuilder();
+            CultureInfo cultureInfo = WebApplicationParameters.AllowedLanguages[siteLanguageId].CultureInfo;
 			#endregion
 
 			#region Get Datas
-			DataSet ds = IndicatorsDataAccess.GetDatas(source,vehicleList,dateBegin,dateEnd);
+			DataSet ds = IndicatorsDataAccess.GetDatas(source,vehicleList,dateBegin,dateEnd,dataLanguageId);
 			if(ds==null || ds.Tables[0].Rows.Count==0){
-				t.Append("<p align=center class=txtRouge12Bold>Pas de données sur la période du "+FrkDate.DateString.YYYYMMDDToDD_MM_YYYY(dateBegin,33)+" au "+FrkDate.DateString.YYYYMMDDToDD_MM_YYYY(dateEnd,33)+"</p>");
+                t.Append("<p align=center class=txtRouge12Bold>" + GestionWeb.GetWebWord(53, siteLanguageId) + " " + FrkDate.DateString.YYYYMMDDToDD_MM_YYYY(dateBegin.ToString("yyyyMMdd"), siteLanguageId) + " " + GestionWeb.GetWebWord(54, siteLanguageId) + " " + FrkDate.DateString.YYYYMMDDToDD_MM_YYYY(dateEnd.ToString("yyyyMMdd"), siteLanguageId) + "</p>");
 				return(t.ToString());
 			}
 			#endregion
@@ -76,7 +80,7 @@ namespace TNS.AdExpress.Bastet.UI{
 
 			#region Début du tableau
 			t.Append("<table id=\"calendartable\" border=1 cellpadding=0 cellspacing=0>\r\n\t<tr>");
-			t.Append("\r\n\t\t<td rowspan=\"3\" width=\"250px\" class=\"pt\">SUPPORTS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>");
+			t.Append("\r\n\t\t<td rowspan=\"3\" width=\"250px\" class=\"pt\">"+GestionWeb.GetWebWord(56, siteLanguageId).ToUpper()+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>");
 
 			// MAJ GR : On affiche les années si nécessaire
 			for(k=Cst.FIRST_PEDIOD_COlUMN_INDEX; k<FIRST_PERIOD_INDEX; k++){
@@ -101,7 +105,7 @@ namespace TNS.AdExpress.Bastet.UI{
 				if (currentDay.Month!=previousMonth){
 					if (nbPeriodInMonth>=8){
 						headerHtml+="<td colspan=\""+nbPeriodInMonth+"\" class=\"pt\" align=center>"
-							+Dates.GetPeriodTxt(currentDay.AddDays(-1).ToString("yyyyMM"))
+                            + cultureInfo.TextInfo.ToTitleCase(currentDay.AddDays(-1).ToString("MMMM yyyy", cultureInfo)) //Dates.GetPeriodTxt(currentDay.AddDays(-1).ToString("yyyyMM"))
 							+"</td>";
 					}
 					else headerHtml+="<td colspan=\""+nbPeriodInMonth+"\" class=\"pt\" align=center>"
@@ -114,7 +118,7 @@ namespace TNS.AdExpress.Bastet.UI{
 				dateHtml+="<td class=\"pp\">&nbsp;"+currentDay.ToString("dd") +"&nbsp;</td>";
 			}
 			if (nbPeriodInMonth>=8)headerHtml+="<td colspan=\""+nbPeriodInMonth+"\" class=\"pt\" align=center>"
-									   +Dates.GetPeriodTxt(currentDay.ToString("yyyyMM"))
+                                       + cultureInfo.TextInfo.ToTitleCase(currentDay.ToString("MMMM yyyy", cultureInfo))     //Dates.GetPeriodTxt(currentDay.ToString("yyyyMM"))
 									   +"</td>";
 			else headerHtml+="<td colspan=\""+nbPeriodInMonth+"\" class=\"pt\" align=center>"
 					 +"&nbsp"
@@ -122,15 +126,17 @@ namespace TNS.AdExpress.Bastet.UI{
 			dateHtml += "</tr>";
 
 			string dayClass="";
-			char day;
+			string day;
 			dateHtml+="\r\n\t<tr>";
 			for(j=FIRST_PERIOD_INDEX;j<nbColTab;j++){
-				day = Dates.GetDayOfWeek(((DateTime)tab[0,j]).DayOfWeek.ToString()).ToCharArray()[0];
-				if(day.ToString()=="S" || day.ToString()=="D")
+                DateTime dateTime = ((DateTime)tab[0, j]);
+                DayOfWeek dayOfWeek = dateTime.DayOfWeek;
+                day = TNS.FrameWork.Date.DayString.GetCharacters(dateTime, WebApplicationParameters.AllowedLanguages[siteLanguageId].CultureInfo, 1);
+                if (dayOfWeek == DayOfWeek.Saturday || dayOfWeek == DayOfWeek.Sunday)
 					dayClass="pdw";
 				else
-					dayClass="pd";					
-				dateHtml+="<td class=\""+dayClass+"\">"+Dates.GetDayOfWeek(((DateTime)tab[0,j]).DayOfWeek.ToString())+"</td>";
+					dayClass="pd";
+                dateHtml += "<td class=\"" + dayClass + "\">" + day + "</td>";
 			}
 			dateHtml+="\r\n\t</tr>";
 
@@ -235,16 +241,17 @@ namespace TNS.AdExpress.Bastet.UI{
 		/// <param name="dateBegin">Date de début</param>
 		/// <param name="dateEnd">Date de fin</param>
 		/// <returns>Code HTML</returns>
-		internal static string GetExcel(IDataSource source, string vehicleList, string dateBegin, string dateEnd){
+        internal static string GetExcel(IDataSource source, string vehicleList, DateTime dateBegin, DateTime dateEnd, int siteLanguageId, int dataLanguageId) {
 
 			#region Variables
 			StringBuilder t = new StringBuilder();
+            CultureInfo cultureInfo = WebApplicationParameters.AllowedLanguages[siteLanguageId].CultureInfo;
 			#endregion
 
 			#region Get Datas
-			DataSet ds = IndicatorsDataAccess.GetDatas(source,vehicleList,dateBegin,dateEnd);
+            DataSet ds = IndicatorsDataAccess.GetDatas(source, vehicleList, dateBegin, dateEnd, dataLanguageId);
 			if(ds==null || ds.Tables[0].Rows.Count==0){
-				t.Append("Pas de donnees sur la periode du "+FrkDate.DateString.YYYYMMDDToDD_MM_YYYY(dateBegin,33)+" au "+FrkDate.DateString.YYYYMMDDToDD_MM_YYYY(dateEnd,33));
+                t.Append(GestionWeb.GetWebWord(53, siteLanguageId) + " " + FrkDate.DateString.YYYYMMDDToDD_MM_YYYY(dateBegin.ToString("yyyyMMdd"), siteLanguageId) + " " + GestionWeb.GetWebWord(53, siteLanguageId) + " " + FrkDate.DateString.YYYYMMDDToDD_MM_YYYY(dateEnd.ToString("yyyyMMdd"), siteLanguageId));
 				return(t.ToString());
 			}
 			#endregion
@@ -312,7 +319,7 @@ namespace TNS.AdExpress.Bastet.UI{
 				if (currentDay.Month!=previousMonth){
 					if (nbPeriodInMonth>=8){
 						headerHtml+="<td colspan=\""+nbPeriodInMonth+"\" class=\"ptX\" align=center nowrap>"
-							+Dates.GetPeriodTxt(currentDay.AddDays(-1).ToString("yyyyMM"))
+                            + cultureInfo.TextInfo.ToTitleCase(currentDay.AddDays(-1).ToString("MMMM yyyy", cultureInfo))     //Dates.GetPeriodTxt(currentDay.AddDays(-1).ToString("yyyyMM"))
 							+"</td>";
 					}
 					else headerHtml+="<td colspan=\""+nbPeriodInMonth+"\" class=\"ptX\" align=center nowrap>"
@@ -325,7 +332,7 @@ namespace TNS.AdExpress.Bastet.UI{
 				dateHtml+="<td class=\"ppX\" nowrap>&nbsp;"+currentDay.ToString("dd") +"&nbsp;</td>";
 			}
 			if (nbPeriodInMonth>=8)headerHtml+="<td colspan=\""+nbPeriodInMonth+"\" class=\"ptX\" align=center nowrap>"
-									   +Dates.GetPeriodTxt(currentDay.ToString("yyyyMM"))
+                                       + cultureInfo.TextInfo.ToTitleCase(currentDay.ToString("MMMM yyyy", cultureInfo))     //Dates.GetPeriodTxt(currentDay.ToString("yyyyMM"))
 									   +"</td>";
 			else headerHtml+="<td colspan=\""+nbPeriodInMonth+"\" class=\"ptX\" align=center nowrap>"
 					 +"&nbsp"
@@ -333,15 +340,17 @@ namespace TNS.AdExpress.Bastet.UI{
 			dateHtml += "</tr>";
 
 			string dayClass="";
-			char day;
+			string day;
 			dateHtml+="\r\n\t<tr>";
 			for(j=FIRST_PERIOD_INDEX;j<nbColTab;j++){
-				day = Dates.GetDayOfWeek(((DateTime)tab[0,j]).DayOfWeek.ToString()).ToCharArray()[0];
-				if(day.ToString()=="S" || day.ToString()=="D")
+                DateTime dateTime = ((DateTime)tab[0, j]);
+                DayOfWeek dayOfWeek = dateTime.DayOfWeek;
+                day = TNS.FrameWork.Date.DayString.GetCharacters(dateTime, WebApplicationParameters.AllowedLanguages[siteLanguageId].CultureInfo, 1);
+                if (dayOfWeek == DayOfWeek.Saturday || dayOfWeek == DayOfWeek.Sunday)
 					dayClass="pdwX";
 				else
-					dayClass="pdX";					
-				dateHtml+="<td nowrap class=\""+dayClass+"\">"+Dates.GetDayOfWeek(((DateTime)tab[0,j]).DayOfWeek.ToString())+"</td>";
+					dayClass="pdX";
+                dateHtml += "<td nowrap class=\"" + dayClass + "\">" + day + "</td>";
 			}
 			dateHtml+="\r\n\t</tr>";
 

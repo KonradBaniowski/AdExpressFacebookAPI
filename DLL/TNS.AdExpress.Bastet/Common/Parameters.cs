@@ -18,6 +18,7 @@ using DbSchemas=TNS.AdExpress.Constantes.DB.Schema;
 using TNS.AdExpress.Bastet.Exceptions;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Web;
+using TNS.Ares.StaticNavSession.DAL;
 
 
 namespace TNS.AdExpress.Bastet.Common{
@@ -137,93 +138,45 @@ namespace TNS.AdExpress.Bastet.Common{
 		/// <param name="resultType">Type de résultat</param>
 		/// <returns>Identifiant correspondant à la session sauvegardée</returns>
 		public Int64 Save(){
-			
-			// test que tous les paramètres soient non null et vide !!!!!!!!!!!!!!!
 
-			Int64 idStaticNavSession=-1;
-			OracleConnection connection = (OracleConnection)_source.GetSource();
 
-			#region Ouverture de la base de données
-			bool DBToClosed=false;
-			// On teste si la base est déjà ouverte
-			if (connection.State==System.Data.ConnectionState.Closed){
-				DBToClosed=true;
-				try{
-					connection.Open();
-				}
-				catch(System.Exception et){
-					throw(new ParametersException("Impossible d'ouvrir la base de données",et));
-				}
-			}
-			#endregion
+            TNS.Ares.Domain.Layers.DataAccessLayer dataAccessLayer = TNS.Ares.Domain.LS.PluginConfiguration.GetDataAccessLayer(TNS.Ares.Domain.LS.PluginDataAccessLayerName.Session);
 
-			#region Sérialisation et sauvegarde de la session
-			OracleCommand sqlCommand=null;
-			MemoryStream ms=null;
+            object[] parameters = new object[1];
+            parameters[0] = _source;
+            IStaticNavSessionDAL staticNavSessionDAL = (IStaticNavSessionDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + dataAccessLayer.AssemblyName, dataAccessLayer.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, parameters, null, null, null);
+
+            MemoryStream ms=null;
 			BinaryFormatter bf=null;
-			byte[] binaryData=null;
-			
-			try{
-				//"Serialization"
-				ms = new MemoryStream();
-				bf = new BinaryFormatter();
-				bf.Serialize(ms,this);
-				binaryData = new byte[ms.GetBuffer().Length];
-				binaryData = ms.GetBuffer();
+            byte[] binaryData=null;
+            Int64 idStaticNavSession = -1;
 
-				//create anonymous PL/SQL command
-				string block = ""+
-					" BEGIN "+
-					" Select " + Schema.UNIVERS_SCHEMA + ".SEQ_STATIC_NAV_SESSION.NEXTVAL into :new_id from dual;"+
-					
-					" INSERT INTO " + Schema.UNIVERS_SCHEMA + "." + Tables.PDF_SESSION + "(id_login,id_static_nav_session, static_nav_session,id_pdf_result_type,pdf_user_filename,status,date_creation,date_modification) VALUES("+_loginId+", :new_id, :blobtodb,"+AnubisConstantes.Result.type.bastet.GetHashCode()+",'"+ _exportExcelFileName +"',0,sysdate,sysdate); " +
-					" END; ";
-				sqlCommand = new OracleCommand(block);
-				sqlCommand.Connection =  connection;
-				sqlCommand.CommandType = CommandType.Text;			
-				
+            try {
+                ms = new MemoryStream();
+                bf = new BinaryFormatter();
+                bf.Serialize(ms, this);
+                binaryData = new byte[ms.GetBuffer().Length];
+                binaryData = ms.GetBuffer();
+                try {
+                    idStaticNavSession = staticNavSessionDAL.InsertData(binaryData, _loginId, TNS.Ares.Domain.LS.PluginConfiguration.GetPluginInformation(TNS.Ares.Domain.LS.PluginType.Bastet).ResultType, _exportExcelFileName);
+                }
+                catch (Exception er) {
+                    throw (new ParametersException("WebSession.Save() : Echec de l'insertion de l'objet dans la base de donnée", er));
+                }
+            }
+            catch (System.Exception e) {
+                // Fermeture des structures
+                try {
+                    if (ms != null) ms.Close();
+                    if (bf != null) bf = null;
+                }
+                catch (System.Exception et) {
+                    throw (new ParametersException("Parameter.Save() : Impossible de libérer les ressources après échec de la méthode", et));
+                }
+                throw (new ParametersException("WebSession.Save() : Echec de la sauvegarde de l'objet dans la base de donnée", e));
+            }
 
-				//Fill parametres
-				OracleParameter param2 = sqlCommand.Parameters.Add("new_id",OracleDbType.Int64);
-				param2.Direction = ParameterDirection.Output;
-				OracleParameter param = sqlCommand.Parameters.Add("blobtodb", OracleDbType.Blob);
-				param.Direction = ParameterDirection.Input;
-				param.Value = binaryData;
-				
-				//Execute PL/SQL block
-				sqlCommand.ExecuteNonQuery();
-				idStaticNavSession=(Int64)param2.Value;
-			}
-			#endregion
-
-			#region Gestion des erreurs dues à la sérialisation et à la sauvegarde de l'objet
-			catch(System.Exception e){
-				// Fermeture des structures
-				try{
-					if (ms != null) ms.Close();
-					if (bf != null) bf=null;
-					if(sqlCommand!=null) sqlCommand.Dispose();
-					connection.Close();
-					connection.Dispose();
-				}
-				catch(System.Exception et) {
-					throw(new ParametersException("WebSession.Save() : Impossible de libérer les ressources après échec de la méthode",et));
-				}
-				throw(new ParametersException("WebSession.Save() : Echec de la sauvegarde de l'objet dans la base de donnée",e));
-			}
-			#endregion
-			
-			#region Fermeture de la base de données
-			try{
-				ms.Close();
-				bf=null;
-				if(sqlCommand!=null)sqlCommand.Dispose();
-				if (DBToClosed) connection.Close();
-			}
-			catch(System.Exception et){
-				throw(new ParametersException ("Impossible de fermer la base de données",et));
-			}
-			#endregion
+            
 			
 			return(idStaticNavSession);
 		}
@@ -234,83 +187,16 @@ namespace TNS.AdExpress.Bastet.Common{
 		/// <returns>Retourne l'objet récupéré ou null si il y a eu un problème non géré</returns>
 		/// <param name="idStaticNavSession">Identifiant de la session sauvegardée</param>
 		public static Object Load(Int64 idStaticNavSession){
-			
-			#region Ouverture de la base de données
-			IDataSource dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(TNS.AdExpress.Domain.DataBaseDescription.DefaultConnectionIds.webAdministration);
-			//OracleConnection cnx = new OracleConnection(Connection.SESSION_CONNECTION_STRING_TEST);
-			OracleConnection cnx = (OracleConnection)dataSource.GetSource();
-			try{
-				cnx.Open();
-				
-			}
-			catch(System.Exception e){
-				throw(new ParametersException("Impossible d'ouvrir la base de données",e));
-			}			
-			#endregion
-			
-			#region Chargement et deserialization de l'objet
-			OracleCommand sqlCommand=null;
-			MemoryStream ms=null;
-			BinaryFormatter bf=null;
-			byte[] binaryData=null;
-			Object o = null;
-			try{
-				binaryData = new byte[0];
-				//create PL/SQL command
-				string block = " BEGIN "+
-					" SELECT static_nav_session INTO :1 FROM " + Schema.UNIVERS_SCHEMA + "." + Tables.PDF_SESSION+ " WHERE id_static_nav_session = " + idStaticNavSession.ToString() + "; " +
-					" END; ";
-				sqlCommand = new OracleCommand(block);
-				sqlCommand.Connection = cnx;
-				sqlCommand.CommandType = CommandType.Text;
-				//Initialize parametres
-				OracleParameter param = sqlCommand.Parameters.Add("blobfromdb", OracleDbType.Blob);
-				param.Direction = ParameterDirection.Output;
 
-				//Execute PL/SQL block
-				sqlCommand.ExecuteNonQuery();
-				//Récupération des octets du blob
-				binaryData = (byte[]) ((OracleBlob)(sqlCommand.Parameters[0].Value)).Value;
-				
-				//Deserialization oft the object
-				ms = new MemoryStream();
-				ms.Write(binaryData, 0, binaryData.Length);
-				bf=new BinaryFormatter();
-				ms.Position = 0;
-				o = bf.Deserialize(ms);
-			}
-			#endregion
+            IDataSource dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(TNS.AdExpress.Domain.DataBaseDescription.DefaultConnectionIds.webAdministration);
 
-			#region Gestion des erreurs de chargement et de deserialization de l'objet
-			catch(System.Exception e){
-				try{
-					// Fermeture des structures
-					if (ms != null) ms.Close();
-					if (bf != null) bf=null;
-					if (binaryData != null) binaryData=null;
-					if(sqlCommand!=null) sqlCommand.Dispose();
-					cnx.Close();
-				}
-				catch(System.Exception et){
-					throw(new ParametersException("Impossible de libérer les ressources après échec de la méthode",et));
-				}
-				throw(new ParametersException("Problème au chargement de la session à partir de la base de données",e));
-			}
-			try{
-				// Fermeture des structures
-				if (ms != null) ms.Close();
-				if (bf != null) bf=null;
-				if (binaryData != null) binaryData=null;
-				if(sqlCommand!=null) sqlCommand.Dispose();
-				cnx.Close();
-			}
-			catch(System.Exception et){
-				throw(new ParametersException("Impossible de fermer la base de données",et));
-			}
-			#endregion
+            TNS.Ares.Domain.Layers.DataAccessLayer dataAccessLayer = TNS.Ares.Domain.LS.PluginConfiguration.GetDataAccessLayer(TNS.Ares.Domain.LS.PluginDataAccessLayerName.Session);
+
+            object[] parameters = new object[1];
+            parameters[0] = dataSource;
+            IStaticNavSessionDAL staticNavSessionDAL = (IStaticNavSessionDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + dataAccessLayer.AssemblyName, dataAccessLayer.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, parameters, null, null, null);
+            return staticNavSessionDAL.LoadData(idStaticNavSession);
 			
-			//retourne l'objet deserialized ou null si il y a eu un probleme
-			return(o);
 		}
 		#endregion
 

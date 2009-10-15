@@ -22,7 +22,6 @@ using TNS.AdExpress.DataAccess.Classification;
 using TNS.AdExpress.DataAccess.Classification.ProductBranch;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.DataBaseDescription;
-using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
@@ -32,7 +31,11 @@ using TNS.AdExpress.Web.Core.Sessions;
 using ConstantesPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using FrameworkDB = TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Alerts;
+using TNS.Ares.Alerts;
+using TNS.Ares.Domain.LS;
+using TNS.Ares.Alerts.DAL;
+using TNS.Ares.Domain.Layers;
+using WebCst = TNS.AdExpress.Constantes.Web;
 
 namespace AdExpress.Private.Alerts
 {
@@ -64,6 +67,10 @@ namespace AdExpress.Private.Alerts
 		/// Page
 		/// </summary>
 		private string _pageNumber = null;
+        /// <summary>
+        /// Is Quota Full
+        /// </summary>
+        private bool _isQuotaFull;
 		#endregion
 
         #region Variables Plan média
@@ -95,7 +102,8 @@ namespace AdExpress.Private.Alerts
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e) {
 			try{
-
+                if (_isQuotaFull)
+                    return;
                 this.ddlPeriodicityType.Attributes.Add("onchange", "onPeriodicityChanged(this);");
 
 				#region Paramètres pour les fiches justificatives
@@ -118,9 +126,9 @@ namespace AdExpress.Private.Alerts
                 {
                     // Il faudra vérifier si chaque type d'alerte est
                     // disponible pour le pays ou le site est déployé
-                    this.ddlPeriodicityType.Items.Add(new ListItem(GestionWeb.GetWebWord(2579, _webSession.SiteLanguage), "10"));
-                    this.ddlPeriodicityType.Items.Add(new ListItem(GestionWeb.GetWebWord(2580, _webSession.SiteLanguage), "20"));
-                    this.ddlPeriodicityType.Items.Add(new ListItem(GestionWeb.GetWebWord(1294, _webSession.SiteLanguage), "30"));
+                    this.ddlPeriodicityType.Items.Add(new ListItem(GestionWeb.GetWebWord(2579, _webSession.SiteLanguage), TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity.Daily.GetHashCode().ToString()));
+                    this.ddlPeriodicityType.Items.Add(new ListItem(GestionWeb.GetWebWord(2580, _webSession.SiteLanguage), TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity.Weekly.GetHashCode().ToString()));
+                    this.ddlPeriodicityType.Items.Add(new ListItem(GestionWeb.GetWebWord(1294, _webSession.SiteLanguage), TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity.Monthly.GetHashCode().ToString()));
                 }
                 #endregion
 
@@ -178,16 +186,19 @@ namespace AdExpress.Private.Alerts
 		}
 		#endregion
 
-		/// <summary>
+        #region Button Close
+        /// <summary>
 		/// Femeture de la fenêtre
 		/// </summary>
 		/// <param name="sender">Objet source</param>
 		/// <param name="e">Arguments</param>
 		protected void closeRollOverWebControl_Click(object sender, System.EventArgs e) {
 			this.ClientScript.RegisterClientScriptBlock(this.GetType(),"closeScript",WebFunctions.Script.CloseScript());
-		}
+        }
+        #endregion
 
-		/// <summary>
+        #region Button Validate
+        /// <summary>
 		/// Lancer une génération
 		/// </summary>
 		/// <param name="sender">Objet source</param>
@@ -223,16 +234,28 @@ namespace AdExpress.Private.Alerts
 					string[] mails=new string[1];
 					mails[0]=mail;
 					_webSession.EmailRecipient=mails;
-					Int64 idStaticNavSession = 0;
 
-                    DataAccessLayer layer = NyxConfiguration.GetDataAccessLayer(NyxDataAccessLayer.Alert);
+                    DataAccessLayer layer = PluginConfiguration.GetDataAccessLayer(PluginDataAccessLayerName.Alert);
                     FrameworkDB.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
-                    IAlertDAL alertDAL = (TNS.AdExpress.Alerts.IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null, null);
+                    IAlertDAL alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null, null);
+                    if (alertDAL.GetAlerts(_webSession.CustomerLogin.IdLogin).Count >= _webSession.CustomerLogin.GetNbAlertsAdExpress()) {
+                        Response.Write(WebFunctions.Script.ErrorCloseScript(GestionWeb.GetWebWord(2615, _siteLanguage)));
+                        return;
+                    }
+                    else {
+                        Int64 idAlertSchedule = -1;
+                        // Loading alerts and binding them
+                        TNS.Alert.Domain.AlertHourCollection alertHourCollection = alertDAL.GetAlertHours();
+                        for (int i = 0; i < alertHourCollection.Count; i++) {
+                            if (alertHourCollection[i].HoursSchedule.Ticks == (new TimeSpan(18, 0, 0)).Ticks) {
+                                idAlertSchedule = alertHourCollection[i].IdAlertSchedule;
+                            }
+                        }
 
-                    alertDAL.InsertAlertData(this.tbxFileName.Text, _webSession,
-                                             (TNS.AdExpress.Constantes.DB.Alerts.AlertPeriodicity)Enum.Parse(typeof(TNS.AdExpress.Constantes.DB.Alerts.AlertPeriodicity), this.ddlPeriodicityType.SelectedValue),
-                                             int.Parse(this.hiddenPeriodicityValue.Value), this.tbxMail.Text, _webSession.CustomerLogin.IdLogin);
-
+                        alertDAL.InsertAlertData(this.tbxFileName.Text, _webSession.ToBinaryData(), _webSession.CurrentModule,
+                                                 (TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity)Enum.Parse(typeof(TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity), this.ddlPeriodicityType.SelectedValue),
+                                                 int.Parse(this.hiddenPeriodicityValue.Value), this.tbxMail.Text, _webSession.CustomerLogin.IdLogin, idAlertSchedule);
+                    }
 					closeRollOverWebControl_Click(this, null);
 				}
 			}
@@ -241,12 +264,14 @@ namespace AdExpress.Private.Alerts
 					this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this,exc,_webSession));
 				}
 			}
-		
-		}
-		#endregion
 
-		#region Code généré par le Concepteur Web Form
-		/// <summary>
+        }
+        #endregion
+
+        #endregion
+
+        #region Code généré par le Concepteur Web Form
+        /// <summary>
 		/// Initialisation
 		/// </summary>
 		/// <param name="e">Arguements</param>
@@ -256,6 +281,18 @@ namespace AdExpress.Private.Alerts
 			//
 			InitializeComponent();
 			base.OnInit(e);
+            DataAccessLayer layer = PluginConfiguration.GetDataAccessLayer(PluginDataAccessLayerName.Alert);
+            FrameworkDB.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
+            IAlertDAL alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null, null);
+
+            if (alertDAL.GetAlerts(_webSession.CustomerLogin.IdLogin).Count >= _webSession.CustomerLogin.GetNbAlertsAdExpress()) {
+                Response.Write(WebFunctions.Script.ErrorCloseScript(GestionWeb.GetWebWord(2615, _siteLanguage)));
+                _isQuotaFull = true;
+                return;
+            }
+            else {
+                _isQuotaFull = false;
+            }
 		}
 		
 		/// <summary>

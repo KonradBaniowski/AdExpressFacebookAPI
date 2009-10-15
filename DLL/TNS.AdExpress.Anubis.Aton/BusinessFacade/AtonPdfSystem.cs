@@ -16,10 +16,8 @@ using System.Windows.Forms;
 
 using TNS.AdExpress.Anubis.Aton.Common;
 using TNS.AdExpress.Anubis.Aton.Exceptions;
-using TNS.AdExpress.Anubis.BusinessFacade.Result;
 using TNS.AdExpress.Anubis.Aton.UI;
 using AtonFunctions=TNS.AdExpress.Anubis.Aton.Functions;
-using TNSAnubisConstantes=TNS.AdExpress.Anubis.Constantes;
 
 using TNS.AdExpress.Constantes.Customer;
 using CstRights = TNS.AdExpress.Constantes.Customer.Right;
@@ -52,12 +50,14 @@ using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Theme;
 using System.Globalization;
 using TNS.AdExpress.Domain.Web;
+using TNS.Ares.Pdf;
+using TNS.Ares;
 
 namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 	/// <summary>
 	/// Description résumée de AtonPdfSystem.
 	/// </summary>
-	public class AtonPdfSystem:Pdf {
+	public class AtonPdfSystem: Pdf {
 
 		#region Variables
 		private IDataSource _dataSource = null;
@@ -226,7 +226,7 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				shortName = DateTime.Now.ToString("yyyyMMdd_") 
 					+ rqDetails["id_static_nav_session"].ToString()
 					+ "_"
-					+ TNS.AdExpress.Anubis.Common.Functions.GetRandomString(30,40);
+					+ TNS.Ares.Functions.GetRandomString(30,40);
 
 				pdfFileName += @"\" + shortName + ".pdf";
 

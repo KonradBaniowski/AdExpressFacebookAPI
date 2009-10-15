@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<assembly>
+  <name>Bastet.Localization</name>
+  <compiler>C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727</compiler>
+  <projects>
+    <project id="Global">
+      <files>
+        <file>C:\Dev\CSharp2\AdExpress International Demo\Dev\DLL\TNS.AdExpress.Bastet\Resources\Bastet.en.xml</file>
+        <file>C:\Dev\CSharp2\AdExpress International Demo\Dev\DLL\TNS.AdExpress.Bastet\Resources\Bastet.fr.xml</file>
+      </files>
+    </project>
+  </projects>
+  <outputs>
+    <dir>\\172.17.236.10\Prog_Sources\Versionning\AdExpress Olympe 2009</dir>
+  </outputs>
+</assembly>

@@ -24,6 +24,10 @@ using TNS.AdExpress.Constantes.Customer;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpressI.Trends.DAL;
+using System.Reflection;
+
 
 namespace AdExpress.Private.Results{
 
@@ -169,6 +173,25 @@ namespace AdExpress.Private.Results{
 				}
 				#endregion
  
+
+                // New DAL Test 
+                // ArrayList levels=new ArrayList();
+                //levels.Add(1);
+                //levels.Add(2);
+                //levels.Add(17);
+                //_webSession.DetailLevel=new TNS.AdExpress.Domain.Level.GenericDetailLevel(levels);
+
+                //DataTable dt = null;
+                //TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_webSession.CurrentModule);
+
+                //if(module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the present absent result"));
+                //object[] parameters = new object[1];
+                //parameters[0] = _webSession;
+                //ITrendsDAL TtendsDAL = (ITrendsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryDataAccessLayer.AssemblyName,module.CountryDataAccessLayer.Class,false,BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public,null,parameters,null,null,null);
+                //dt =TtendsDAL.GetData().Tables[0];
+
+
+
 				result=TNS.AdExpress.Web.UI.Results.TendenciesUI.GetHTMLTendenciesUI(_webSession,vehicleName,false);					
 			}
 			catch(System.Exception exc){

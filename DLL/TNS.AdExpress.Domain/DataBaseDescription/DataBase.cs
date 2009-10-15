@@ -72,6 +72,14 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Music
         /// </summary>
         music=9,
+		/// <summary>
+		/// rights
+		/// </summary>
+		rights = 10,
+        /// <summary>
+        /// AdEXpress Russia
+        /// </summary>
+        adExpressRussia = 11
     } 
     #endregion
 
@@ -104,6 +112,10 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Web
         /// </summary>
         webnav01=5,
+        /// <summary>
+        /// 
+        /// </summary>
+        alert = 10
     } 
     #endregion
 
@@ -763,7 +775,35 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// Banners
         /// </summary>
-        banners_mobile = 163
+        banners_mobile = 163,
+        /// <summary>
+        /// Banners
+        /// </summary>
+        tendencyMonth=164,
+        /// <summary>
+        /// Banners
+        /// </summary>
+        totalTendencyMonth=165,
+        /// <summary>
+        /// Banners
+        /// </summary>
+        tendencyWeek=166,
+        /// <summary>
+        /// Banners
+        /// </summary>
+        totalTendencyWeek=167,
+        /// <summary>
+        /// Alert description
+        /// </summary>
+        alert = 300,
+        /// <summary>
+        /// Alert Occurences
+        /// </summary>
+        alertOccurence = 301,
+        /// <summary>
+        /// Static Nav Session
+        /// </summary>
+        staticNav = 400,
     } 
     #endregion
 

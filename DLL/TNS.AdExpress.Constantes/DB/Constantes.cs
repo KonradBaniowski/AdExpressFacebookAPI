@@ -1998,40 +1998,4 @@ namespace TNS.AdExpress.Constantes.DB{
 	}
 	#endregion
 
-    #region Classe des statuts et types des alertes
-
-    public class Alerts
-    {
-        /// <summary>
-        /// Defines the type of an alert
-        /// </summary>
-        public enum AlertType
-        {
-            Portfolio = 1,
-            AdExpressAlert = 2
-        }
-
-        /// <summary>
-        /// Defines the periodicity of an alert
-        /// </summary>
-        public enum AlertPeriodicity
-        {
-            Daily = 10,
-            Weekly = 20,
-            Monthly = 30
-        }
-
-        /// <summary>
-        /// Defines the status of an alert
-        /// </summary>
-        public enum AlertStatuses
-        {
-            Activated = 0,
-            New = 10,
-            ToDelete = 50
-        }
-    }
-
-    #endregion
-
 }

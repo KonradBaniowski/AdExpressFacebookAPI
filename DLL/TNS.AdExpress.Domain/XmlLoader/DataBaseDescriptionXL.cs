@@ -72,8 +72,27 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                     customerConnection.Pooling=bool.Parse(reader.GetAttribute("pooling"));								
                                 list.Add(customerConnectionId,customerConnection);
 								if (reader.GetAttribute("isUtf8") != null)
-									customerConnection.IsUTF8 = bool.Parse(reader.GetAttribute("isUtf8"));	
-                                break;
+									customerConnection.IsUTF8 = bool.Parse(reader.GetAttribute("isUtf8"));
+								
+								#region Specifics Properties for SQl server
+								if (reader.GetAttribute("sqlServerCurrentLanguage") != null)
+									customerConnection.SQlServerCurrentLanguage = reader.GetAttribute("sqlServerCurrentLanguage");
+								if (reader.GetAttribute("enliste") != null)
+									customerConnection.Enlist = bool.Parse(reader.GetAttribute("enliste"));
+								if (reader.GetAttribute("integratedSecurity") != null)
+									customerConnection.IntegratedSecurity = bool.Parse(reader.GetAttribute("integratedSecurity"));
+								if (reader.GetAttribute("persistSecurityInfo") != null)
+									customerConnection.PersistSecurityInfo = bool.Parse(reader.GetAttribute("persistSecurityInfo"));
+								if (reader.GetAttribute("replication") != null)
+									customerConnection.Replication = bool.Parse(reader.GetAttribute("replication"));
+								if (reader.GetAttribute("typeSystemVersion") != null)
+									customerConnection.TypeSystemVersion = reader.GetAttribute("typeSystemVersion");
+								if (reader.GetAttribute("workstationID") != null)
+									customerConnection.WorkstationID = reader.GetAttribute("workstationID");
+                                if (reader.GetAttribute("databaseName") != null)
+                                    customerConnection.DataBaseName = reader.GetAttribute("databaseName");
+								#endregion
+								break;
                         }
                     }
                 }
@@ -156,6 +175,25 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 								if (reader.GetAttribute("isUtf8") != null)
 									defaultConnection.IsUTF8 = bool.Parse(reader.GetAttribute("isUtf8"));								
                                 list.Add(defaultConnectionId,defaultConnection);
+
+								#region Specifics Properties for SQl server
+								if (reader.GetAttribute("sqlServerCurrentLanguage") != null)
+									defaultConnection.SQlServerCurrentLanguage = reader.GetAttribute("sqlServerCurrentLanguage");
+								if (reader.GetAttribute("enliste") != null)
+									defaultConnection.Enlist = bool.Parse(reader.GetAttribute("enliste"));
+								if (reader.GetAttribute("integratedSecurity") != null)
+									defaultConnection.IntegratedSecurity = bool.Parse(reader.GetAttribute("integratedSecurity"));
+								if (reader.GetAttribute("persistSecurityInfo") != null)
+									defaultConnection.PersistSecurityInfo = bool.Parse(reader.GetAttribute("persistSecurityInfo"));
+								if (reader.GetAttribute("replication") != null)
+									defaultConnection.Replication = bool.Parse(reader.GetAttribute("replication"));
+								if (reader.GetAttribute("typeSystemVersion") != null)
+									defaultConnection.TypeSystemVersion = reader.GetAttribute("typeSystemVersion");
+								if (reader.GetAttribute("workstationID") != null)
+									defaultConnection.WorkstationID = reader.GetAttribute("workstationID");
+                                  if (reader.GetAttribute("databaseName") != null)
+                                      defaultConnection.DataBaseName = reader.GetAttribute("databaseName");							
+								#endregion
 
                                 break;
                         }

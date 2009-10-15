@@ -16,7 +16,6 @@ using TNS.AdExpress.Bastet.Common;
 
 using TNS.AdExpress.Anubis.Bastet.Common;
 using TNS.AdExpress.Anubis.Bastet.UI;
-using TNS.AdExpress.Anubis.Common;
 
 using TNS.FrameWork;
 using TNS.FrameWork.Net.Mail;

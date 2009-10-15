@@ -110,7 +110,7 @@ namespace TNS.AdExpress.Anubis.Sobek.BusinessFacade
 				shortName = DateTime.Now.ToString("yyyyMMddHHmmss_")
 					+ rqDetails["id_static_nav_session"].ToString()
 					+ "_"
-					+ TNS.AdExpress.Anubis.Common.Functions.GetRandomString(30,40);
+					+ TNS.Ares.Functions.GetRandomString(30,40);
 
 				txtFileName += @"\" + shortName + ".txt";
 

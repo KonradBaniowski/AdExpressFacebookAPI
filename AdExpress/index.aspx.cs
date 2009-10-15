@@ -20,11 +20,15 @@ using Oracle.DataAccess.Client;
 using TNS.FrameWork.DB.Common;
 
 using WebFunctions = TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Alerts;
-using TNS.AdExpress.Domain.Layers;
+using TNS.Ares.Alerts;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Classification;
 using System.Reflection;
+using TNS.Ares.Domain.LS;
+using TNS.Ares.Domain.Layers;
+using TNS.Ares.Alerts.DAL;
+using TNS.AdExpressI.Date.DAL;
+
 
 namespace AdExpress{
 	/// <summary>
@@ -135,10 +139,14 @@ namespace AdExpress{
                     newRight.SetModuleRights();
                     newRight.SetFlagsRights();
                     newRight.SetRights();
+                    //newRight.HasModuleAssignmentAlertsAdExpress();
                     if(_webSession==null) _webSession = new WebSession(newRight);
                     _webSession.SiteLanguage=this._siteLanguage;
-                    // Année courante pour les recaps
-                    _webSession.DownLoadDate=TNS.AdExpress.Web.BusinessFacade.Selections.Periods.RecapBusinessFacade.GetLastLoadedYear();
+                    // Année courante pour les recaps                    
+                    TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+                    if (cl == null) throw (new NullReferenceException("Core layer is null for the Date DAL"));
+                    IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
+                    _webSession.DownLoadDate = dateDAL.GetLastLoadedYear();
                     // On met à jour IDataSource à partir de la session elle même.
                     _webSession.Source=newRight.Source;
                     //Sauvegarder la session
@@ -155,7 +163,7 @@ namespace AdExpress{
                         int alertId = int.Parse(idAlert);
                         int occId = int.Parse(idOcc);
 
-                        DataAccessLayer layer = NyxConfiguration.GetDataAccessLayer(NyxDataAccessLayer.Alert);
+                        DataAccessLayer layer = PluginConfiguration.GetDataAccessLayer(PluginDataAccessLayerName.Alert);
                         TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
                         IAlertDAL alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null, null);
                         TNS.Alert.Domain.Alert alert = alertDAL.GetAlert(alertId);

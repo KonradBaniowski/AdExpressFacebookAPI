@@ -575,35 +575,84 @@ namespace TNS.AdExpress.DataAccess {
         /// <param name="source">Data Source</param>
         /// <param name="loginId">Login Id</param>
         /// <returns></returns>
-        public static DataSet GetModuleFrequencies(IDataSource source,Int64 loginId) {
+        public static DataSet GetModuleFrequencies(IDataSource source, Int64 loginId) {
 
             #region Tables initilization
-            Table moduleAssignmentTable,frequencyTable;
+            Table moduleAssignmentTable, frequencyTable;
             try {
-                moduleAssignmentTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightModuleAssignment);
-                frequencyTable=WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightFrequency);
+                moduleAssignmentTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightModuleAssignment);
+                frequencyTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightFrequency);
             }
-            catch(System.Exception err) {
-                throw (new RightDALException("Impossible to get table names or schema label",err));
+            catch (System.Exception err) {
+                throw (new RightDALException("Impossible to get table names or schema label", err));
             }
             #endregion
 
             #region Request
-            StringBuilder sql=new StringBuilder(1000);
-            sql.Append(" select id_module, "+frequencyTable.Prefix+".id_frequency");
+            StringBuilder sql = new StringBuilder(1000);
+            sql.Append(" select id_module, " + frequencyTable.Prefix + ".id_frequency");
             sql.Append(" from  " + frequencyTable.SqlWithPrefix + "," + moduleAssignmentTable.SqlWithPrefix + " ");
-            sql.Append(" where ma.id_login="+loginId+" ");
+            sql.Append(" where ma.id_login=" + loginId + " ");
             sql.Append(" and " + frequencyTable.Prefix + ".ID_FREQUENCY=" + moduleAssignmentTable.Prefix + ".ID_FREQUENCY ");
-            sql.Append(" and "+moduleAssignmentTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ");
-            sql.Append(" and "+frequencyTable.Prefix+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+" ");
+            sql.Append(" and " + moduleAssignmentTable.Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ");
+            sql.Append(" and " + frequencyTable.Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ");
             #endregion
 
             #region Execute request
             try {
                 return (source.Fill(sql.ToString()));
             }
-            catch(System.Exception err) {
-                throw (new RightDALException("Impossible to retreive module frequencies",err));
+            catch (System.Exception err) {
+                throw (new RightDALException("Impossible to retreive module frequencies", err));
+            }
+            #endregion
+        }
+        #endregion
+
+        #region Module Assignment
+        /// <summary>
+        /// Get Module frequencies
+        /// </summary>
+        /// <param name="source">Data Source</param>
+        /// <param name="loginId">Login Id</param>
+        /// <returns></returns>
+        public static DataSet GetModuleAssignment(IDataSource source, Int64 loginId) {
+
+            #region Tables initilization
+            Table moduleAssignmentTable, moduleTable, moduleGroupTable, moduleCategoryTable;
+            try {
+                moduleAssignmentTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightModuleAssignment);
+                moduleTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightModule);
+                moduleGroupTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightModuleGroup);
+                moduleCategoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightModuleCategory); ;
+            }
+            catch (System.Exception err) {
+                throw (new RightDALException("Impossible to get table names or schema label", err));
+            }
+            #endregion
+
+            #region request
+            StringBuilder sql = new StringBuilder(1000);
+            sql.Append(" select " + moduleAssignmentTable.Prefix + ".id_module," + moduleAssignmentTable.Prefix + ".date_beginning_module," + moduleAssignmentTable.Prefix + ".date_end_module," + moduleAssignmentTable.Prefix + ".id_frequency," + moduleAssignmentTable.Prefix + ".nb_alert ");
+            sql.Append(" from " + moduleAssignmentTable.SqlWithPrefix + "," + moduleTable.SqlWithPrefix + "," + moduleGroupTable.SqlWithPrefix + "," + moduleCategoryTable.SqlWithPrefix + " ");
+            sql.Append(" where " + moduleAssignmentTable.Prefix + ".id_module=" + moduleTable.Prefix + ".id_module ");
+            sql.Append(" and " + moduleAssignmentTable.Prefix + ".id_module not in(" + TNS.AdExpress.Constantes.Web.Module.NOT_USED_ID_LIST + ") ");
+            sql.Append(" and " + moduleTable.Prefix + ".id_module_group=" + moduleGroupTable.Prefix + ".id_module_group ");
+            sql.Append(" and " + moduleTable.Prefix + ".id_module_category = " + moduleCategoryTable.Prefix + ".id_module_category(+) ");
+            sql.Append(" and " + moduleAssignmentTable.Prefix + ".id_login=" + loginId + " ");
+            sql.Append(" and " + moduleGroupTable.Prefix + ".id_project=" + TNS.AdExpress.Constantes.Project.ADEXPRESS_ID + " ");
+            sql.Append(" and " + moduleAssignmentTable.Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ");
+            sql.Append(" and " + moduleTable.Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ");
+            sql.Append(" and " + moduleGroupTable.Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + " ");
+            sql.Append(" order by " + moduleGroupTable.Prefix + ".module_group, " + moduleCategoryTable.Prefix + ".module_category, " + moduleTable.Prefix + ".module");
+            #endregion
+
+            #region Execute request
+            try {
+                return (source.Fill(sql.ToString()));
+            }
+            catch (System.Exception err) {
+                throw (new RightDALException("Impossible to retreive module rights", err));
             }
             #endregion
         }
@@ -619,7 +668,7 @@ namespace TNS.AdExpress.DataAccess {
 
         #endregion
 
-       #region Modules
+        #region Modules
         /// <summary>
         /// Get Customer Modules rights
         /// </summary>
@@ -643,7 +692,7 @@ namespace TNS.AdExpress.DataAccess {
 
             #region request
             StringBuilder sql=new StringBuilder(1000);
-            sql.Append(" select "+moduleTable.Prefix+".id_module_group,"+moduleTable.Prefix+".id_module,"+moduleCategoryTable.Prefix+".id_module_category ");
+            sql.Append(" select " + moduleTable.Prefix + ".id_module_group," + moduleTable.Prefix + ".id_module," + moduleCategoryTable.Prefix + ".id_module_category ");
             sql.Append(" from "+moduleAssignmentTable.SqlWithPrefix+","+moduleTable.SqlWithPrefix+","+moduleGroupTable.SqlWithPrefix+","+moduleCategoryTable.SqlWithPrefix+" ");
             sql.Append(" where "+moduleAssignmentTable.Prefix+".id_module="+moduleTable.Prefix+".id_module ");
             sql.Append(" and "+moduleAssignmentTable.Prefix+".id_module not in("+TNS.AdExpress.Constantes.Web.Module.NOT_USED_ID_LIST+") ");

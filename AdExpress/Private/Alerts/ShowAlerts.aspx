@@ -1,10 +1,9 @@
-
 <%@ Import Namespace="System.Data" %>
-<%@ Register TagPrefix="cc1" Namespace="TNS.AdExpress.Web.Controls.Translation" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Page language="c#" Inherits="AdExpress.Private.Alerts.ShowAlerts" CodeFile="ShowAlerts.aspx.cs" %>
+<%@ Register TagPrefix="cc1" Namespace="TNS.AdExpress.Web.Controls.Translation" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc3" Namespace="TNS.AdExpress.Web.Controls.Buttons" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc2" Namespace="TNS.AdExpress.Web.Controls.Headers" Assembly="TNS.AdExpress.Web.Controls" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" >
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
 	<HEAD runat="server">
 		<title>AdExpress</title>
@@ -43,7 +42,7 @@
 		<meta http-equiv="pragma" content="no-cache">
 		<meta content="no-cache" name="Cache-control">
 	</HEAD>
-	<body onload="MM_preloadImages('/App_Themes/<%=_theme%>/images/Culture/button/valider_down.gif');javascript:activateActiveX();" class="bodyStyle">
+	<body class="bodyStyle" onload="javascript:activateActiveX();">
 		<form id="Form2" method="post" runat="server">
 			<table height="600" cellSpacing="0" cellPadding="0" border="0">
 					<tr>
@@ -109,7 +108,7 @@
 									<td height="5"></td>
 								</tr>
 								<tr>
-									<td class="whiteBackGround" height="5"><asp:Image ID="Image46" runat="server" SkinID="ouvrir_gris" /></td>
+									<td class="whiteBackGround" height="5"><cc3:imagebuttonrolloverwebcontrol id="ImageButtonRollOverWebControl2" runat="server" onclick="ImageButtonRollOverWebControl1_Click" SkinID="ouvrirButton" ></cc3:imagebuttonrolloverwebcontrol></td>
 								</tr>
 								<tr>
 									<td class="whiteBackGround" height="5"></td>
@@ -250,8 +249,14 @@
 									<td height="5"></td>
 								</tr>
 								<tr>
-									<td class="txtGris10 whiteBackGround" height="5"><cc3:imagebuttonrolloverwebcontrol id="Imagebuttonrolloverwebcontrol1" runat="server" SkinID="ouvrirButton"></cc3:imagebuttonrolloverwebcontrol></td>
-								</tr>								
+									<td class="txtGris10 whiteBackGround" height="5"><asp:Image ID="Image46" runat="server" SkinID="ouvrir_gris" /></td>
+								</tr>	
+								<tr>
+									<td class="whiteBackGround" height="5"></td>
+								</tr>
+								<tr>
+									<td class="whiteBackGround" height="5"><cc3:imagebuttonrolloverwebcontrol id="Imagebuttonrolloverwebcontrol1" runat="server" onclick="personalizeAlertesImagebuttonrolloverwebcontrol_Click" SkinID="personnaliserButton"></cc3:imagebuttonrolloverwebcontrol></td>
+								</tr>							
 								<!-- test!!!!--></table>
 							<!--TEST : acces à la page de resultat Plan Media -->
 							<!--Fin TEST : acces à la page de resultat Plan Media --></td>
@@ -308,7 +313,7 @@
 											</TR>
 											<TR>
 												<TD></TD>
-												<TD class="whiteBackGround">
+												<TD align="right" class="whiteBackGround">
 													<!--Liste des alertes-->
 													<asp:Repeater ID="repeaterAlerts" runat="server" OnItemDataBound="alertsItemBinding">
 													    <ItemTemplate>
@@ -316,7 +321,7 @@
 													            <div style="height: 20px">
 													                <img id="flagStatus" runat="server" src="/App_Themes/DefaultAdExpressFr/Images/Common/flagPending.gif" align="left" />
 													                <img align="right" height="15" width="15" src="/App_Themes/DefaultAdExpressFr/Images/Common/Button/bt_arrow_down.gif"/>
-												                    <h2 id="headerAlert" runat="server">
+												                    <h2 id="headerAlert" runat="server" style="text-align:left;">
 												                        <%# DataBinder.Eval(Container.DataItem, "Title") %>
 												                    </h2>
 												                </div>
@@ -345,7 +350,7 @@
 											        <div class="block-valid-alert-last"></div>
 													<input id="idMySession" type="hidden" name="nameMySession" /> <input id="idPopup" type="hidden" name="namePopup" />
 												</TD>
-												<TD width="50" class="whiteBackGround"></TD>
+												<TD width="4px" class="whiteBackGround"></TD>
 											</TR>
 											<TR>
 												<TD></TD>

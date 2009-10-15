@@ -39,7 +39,7 @@ namespace TNS.AdExpress.Bastet.Common.Headers{
 		/// <param name="pathXMLFile"></param>
 		public static void Init(IDataSource source){
 			_list.Clear();
-			_list=HeaderDataAccess.GetDescription(source);
+            _list = HeaderXL.GetDescription(source);
 		}
 		#endregion
 

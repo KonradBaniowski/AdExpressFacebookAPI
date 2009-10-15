@@ -754,8 +754,11 @@ function addMenuItem(menuItemObj) { // Public method
     itemElm.subMenu = null;
     itemElm.arrowClassName = arrowClassName;
     itemElm.arrowClassNameOver = arrowClassNameOver;
+
+    var fontText = createElm("font");
     var textNode = document.createTextNode(menuItemObj.displayText);
-    itemElm.appendChild(textNode);
+    fontText.appendChild(textNode);
+    itemElm.appendChild(fontText);
     this.menuObj.appendChild(itemElm);
     itemElm.parent = this;
     itemElm.setClassName = function(className) { // Public method

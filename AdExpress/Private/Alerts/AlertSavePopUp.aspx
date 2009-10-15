@@ -23,122 +23,177 @@
 				<tr>
 					<td colspan="2">
 						<table id="SaveData" cellspacing="0" cellpadding="0" width="100%" border="0">
-							<tr height="35">
-								<td class="txtViolet11Bold" width="150"><cc1:adexpresstext language="33" id="FileNameLabel" runat="server" Code="1746"></cc1:adexpresstext></td>
+							<tr height="45">
+								<td class="txtViolet11Bold" width="130"><cc1:adexpresstext language="33" id="FileNameLabel" runat="server" Code="1746"></cc1:adexpresstext></td>
 								<td><asp:textbox id="tbxFileName" runat="server" Width="300px"></asp:textbox></td>
 							</tr>
 							<tr>
-								<td class="txtViolet11Bold" width="150"><cc1:adexpresstext language="33" id="MailLabel" runat="server" Code="1136"></cc1:adexpresstext></td>
+								<td class="txtViolet11Bold" width="130"><cc1:adexpresstext language="33" id="MailLabel" runat="server" Code="1136"></cc1:adexpresstext></td>
 								<td>
 								    <asp:textbox id="tbxMail" runat="server" Width="300px"></asp:textbox><br />
 								    <asp:CheckBox id="cbxRegisterMail" runat="server" Visible="False"></asp:CheckBox>
 								</td>
 							</tr>
 							<tr>
-							    <td class="txtViolet11Bold" width="150" style="vertical-align: top">
-							        <br />
+								<td style="height:8px"></td>
+							</tr>
+							<tr>
+							    <td class="txtViolet11Bold" width="130" style="vertical-align: top">
 							        <cc1:adexpresstext language="33" id="PeriodicityLabel" runat="server" Code="1293"></cc1:adexpresstext>
 							    </td>
-							    <td>
-							        <br />
+							    <td style="vertical-align: top">
 							        <script type="text/javascript">
 							            var oldDay = undefined;
+
+							            windowWidth = '480';
 							        
 							            function onPeriodicityChanged(e) {
-						                    document.getElementById('divPeriodicityWeekly').style.display = 'none';
-						                    document.getElementById('divPeriodicityMonthly').style.display = 'none';
 						                    if (e.value == 20) {
+						                        document.getElementById('divPeriodicityDaily').style.display = 'none';
 						                        document.getElementById('divPeriodicityWeekly').style.display = '';
+						                        document.getElementById('divPeriodicityMonthly').style.display = 'none';
+						                        window.resizeTo(windowWidth, 400);
+						                    }
+						                    else if (e.value == 30) {
+						                        document.getElementById('divPeriodicityDaily').style.display = 'none';
+						                        document.getElementById('divPeriodicityWeekly').style.display = 'none';
+						                        document.getElementById('divPeriodicityMonthly').style.display = '';
+						                        window.resizeTo(windowWidth, 570);
 						                    }
 						                    else {
-						                        if (e.value == 30) {
-						                            document.getElementById('divPeriodicityMonthly').style.display = '';
-						                        }
-							                }
+						                        document.getElementById('divPeriodicityDaily').style.display = '';
+						                        document.getElementById('divPeriodicityWeekly').style.display = 'none';
+						                        document.getElementById('divPeriodicityMonthly').style.display = 'none';
+						                        window.resizeTo(windowWidth, 350);
+						                    }
 							            }
 							            
 							            function onPeriodicityParameterClicked(e, obj)
 							            {
 							                document.getElementById('hiddenPeriodicityValue').value = e;
 							                if (oldDay != undefined) {
-							                    oldDay.style.backgroundColor = '#FFFFFF';
-							                    oldDay.style.color = "#AAAAAA";
+							                    oldDay.style.backgroundColor = '';
 							                }
 							                obj.style.backgroundColor = "#DED8E5";
-							                obj.style.color = "#FFFFFF";
 							                oldDay = obj;
 							                return (false);
 							            }
 							        </script>
 							        <asp:DropDownList runat="server" ID="ddlPeriodicityType">
 							        </asp:DropDownList>
-							        <br />
-                                    <div class="periodicity-type-day" id="divPeriodicityWeekly" style="display: none">
-							            <table>
+							        <div id="divPeriodicityDaily">
+							            <table cellpadding="0" cellspacing="0">
 							                <tr>
-							                    <th class="alert-dayofmonth-selection-title">
-    							                    <asp:Label ID="lblIntroWeekly" runat="server"></asp:Label>
-							                    </th>
-							                </tr>
-							                <tr>
-							                    <td>
-							                        <asp:HyperLink ID="lnkMonday" runat="server">1</asp:HyperLink>
-							                        <asp:HyperLink ID="lnkTuesday" runat="server">2</asp:HyperLink>
-							                        <asp:HyperLink ID="lnkWednesday" runat="server">3</asp:HyperLink>
-							                        <asp:HyperLink ID="lnkThursday" runat="server">4</asp:HyperLink>
-							                        <asp:HyperLink ID="lnkFriday" runat="server">5</asp:HyperLink>
-							                        <asp:HyperLink ID="lnkSaturday" runat="server">6</asp:HyperLink>
-							                        <asp:HyperLink ID="lnkSunday" runat="server">7</asp:HyperLink>
-							                    </td>
-							                </tr>
+						                        <td>
+						                            <p class="alert-dayofmonth-selection-table-warning">
+						                                <cc1:adexpresstext language="33" id="Adexpresstext2" runat="server" Code="2616"></cc1:adexpresstext>
+                                                    </p>
+                                                </td>
+                                            </tr>
 							            </table>
 							        </div>
-							        <div class="periodicity-type" id="divPeriodicityMonthly" style="display: none">
-							            <table class="alert-dayofmonth-selection-table">
+                                    <div id="divPeriodicityWeekly" style="display: none;">
+							            <table cellpadding="0" cellspacing="0">
 							                <tr>
-							                    <th colspan="7" class="alert-dayofmonth-selection-title">
-							                        <asp:Label runat="server" ID="lblIntroMonthly"></asp:Label>
-							                    </th>
+							                    <td>
+							                        <div class="periodicity-type-day">
+							                            <table>
+							                                <tr>
+							                                    <th class="alert-dayofmonth-selection-title">
+    							                                    <asp:Label ID="lblIntroWeekly" runat="server"></asp:Label>
+							                                    </th>
+							                                </tr>
+							                                <tr>
+							                                    <td>
+							                                        <asp:HyperLink ID="lnkMonday" runat="server" CssClass="alert-periodicity-type-day">1</asp:HyperLink>
+							                                        <asp:HyperLink ID="lnkTuesday" runat="server" CssClass="alert-periodicity-type-day">2</asp:HyperLink>
+							                                        <asp:HyperLink ID="lnkWednesday" runat="server" CssClass="alert-periodicity-type-day">3</asp:HyperLink>
+							                                        <asp:HyperLink ID="lnkThursday" runat="server" CssClass="alert-periodicity-type-day">4</asp:HyperLink>
+							                                        <asp:HyperLink ID="lnkFriday" runat="server" CssClass="alert-periodicity-type-day">5</asp:HyperLink>
+							                                        <asp:HyperLink ID="lnkSaturday" runat="server" CssClass="alert-periodicity-type-day-warning">6</asp:HyperLink>
+							                                        <asp:HyperLink ID="lnkSunday" runat="server" CssClass="alert-periodicity-type-day-warning">7</asp:HyperLink>
+							                                    </td>
+							                                </tr>
+							                            </table>
+							                        </div>
+							                    </td>
 							                </tr>
 							                <tr>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">1</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">2</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">3</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">4</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">5</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">6</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">7</a></td>
-						                    </tr>
-						                    <tr>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">8</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">9</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">10</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">11</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">12</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">13</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">14</a></td>
-						                    </tr>
-						                    <tr>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">15</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">16</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">17</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">18</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">19</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">20</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">21</a></td>
-						                    </tr>
-						                    <tr>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">22</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">23</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">24</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">25</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">26</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">27</a></td>
-						                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">28</a></td>
-						                   </tr>
-						                </table>
+						                        <td>
+						                            <p class="alert-dayofmonth-selection-table-warning">
+						                                <cc1:adexpresstext language="33" id="Adexpresstext1" runat="server" Code="2616"></cc1:adexpresstext>
+                                                    </p>
+                                                </td>
+                                            </tr>
+							            </table>
 							        </div>
-							        <br style="clear:both" />
+							        <div id="divPeriodicityMonthly" style="display: none;float:none;">
+							            <table cellpadding="0" cellspacing="0" border="0">
+							                <tr>
+							                    <td>
+							                        <div class="periodicity-type">
+							                            <table class="alert-dayofmonth-selection-table">
+							                                <tr>
+							                                    <th colspan="7" class="alert-dayofmonth-selection-title">
+							                                        <asp:Label runat="server" ID="lblIntroMonthly"></asp:Label>
+							                                    </th>
+							                                </tr>
+							                                <tr>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">1</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">2</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">3</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">4</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">5</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">6</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">7</a></td>
+						                                    </tr>
+						                                    <tr>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">8</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">9</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">10</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">11</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">12</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">13</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">14</a></td>
+						                                    </tr>
+						                                    <tr>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">15</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">16</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">17</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">18</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">19</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">20</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">21</a></td>
+						                                    </tr>
+						                                    <tr>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">22</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">23</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">24</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">25</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">26</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">27</a></td>
+						                                        <td><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">28</a></td>
+						                                   </tr>
+						                                   <tr>
+						                                        <td class="alert-dayofmonth-selection-table-warning"><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">29</a></td>
+						                                        <td class="alert-dayofmonth-selection-table-warning"><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">30</a></td>
+						                                        <td class="alert-dayofmonth-selection-table-warning"><a href="#" onclick="onPeriodicityParameterClicked(this.innerHTML, this);">31</a></td>
+						                                        <td colspan="4"></td>
+						                                   </tr>
+						                                </table>
+						                            </div>
+						                        </td>
+						                    </tr>
+						                    <tr>
+						                        <td>
+						                            <p class="alert-dayofmonth-selection-table-warning">
+						                                <cc1:adexpresstext language="33" id="warningText" runat="server" Code="2616"></cc1:adexpresstext>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </table>
+							        </div>
+							        
 							        <input type="hidden" runat="server" id="hiddenPeriodicityValue" value="-1" />
 							    </td>
 							</tr>							

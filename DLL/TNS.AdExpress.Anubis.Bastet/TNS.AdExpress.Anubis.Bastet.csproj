@@ -126,16 +126,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.Net.dll</HintPath>
     </Reference>
-    <ProjectReference Include="..\TNS.ADEXPRESS.ANUBIS\TNS.AdExpress.Anubis.csproj">
-      <Name>TNS.AdExpress.Anubis</Name>
-      <Project>{614B37CF-80A5-4252-AC63-F1811B073F5D}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
-    <ProjectReference Include="..\TNS.ADEXPRESS.ANUBIS.CONSTANTES\TNS.AdExpress.Anubis.Constantes.csproj">
-      <Name>TNS.AdExpress.Anubis.Constantes</Name>
-      <Project>{87716AC8-B9D2-432C-84F7-885A73B77141}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
     <ProjectReference Include="..\TNS.ADEXPRESS.BASTET\TNS.AdExpress.Bastet.csproj">
       <Name>TNS.AdExpress.Bastet</Name>
       <Project>{D622B998-DC44-438B-BDD3-F27074A1FE75}</Project>
@@ -157,6 +147,18 @@
     <ProjectReference Include="..\TNS.AdExpress.Web\TNS.AdExpress.Web.csproj">
       <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
       <Name>TNS.AdExpress.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.Constantes\TNS.Ares.Constantes.csproj">
+      <Project>{303C6B21-CA16-4D7B-8EDB-E8869B2B3EC9}</Project>
+      <Name>TNS.Ares.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.StaticNavSession.DAL\TNS.Ares.StaticNavSession.DAL.csproj">
+      <Project>{4762D913-FC82-42BD-840F-5BCB43E5979D}</Project>
+      <Name>TNS.Ares.StaticNavSession.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares\TNS.Ares.csproj">
+      <Project>{614B37CF-80A5-4252-AC63-F1811B073F5D}</Project>
+      <Name>TNS.Ares</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<localization>
+  <globalization>
+    <culture>en</culture>
+  </globalization>
+  <items>
+        <item mnemonic="w1" type="System.String"></item>
+        <item mnemonic="w2" type="System.String"></item>
+        <item mnemonic="w3" type="System.String"></item>
+        <item mnemonic="w4" type="System.String"></item>
+        <item mnemonic="w5" type="System.String"></item>
+
+        <item mnemonic="w6" type="System.String"></item>
+        <item mnemonic="w7" type="System.String"></item>
+        <item mnemonic="w8" type="System.String"></item>
+        <item mnemonic="w9" type="System.String"></item>
+        <item mnemonic="w10" type="System.String"></item>
+
+        <item mnemonic="w11" type="System.String"></item>
+        <item mnemonic="w12" type="System.String"></item>
+        <item mnemonic="w13" type="System.String"></item>
+        <item mnemonic="w14" type="System.String"></item>
+        <item mnemonic="w15" type="System.String"></item>
+
+        <item mnemonic="w16" type="System.String"></item>
+        <item mnemonic="w17" type="System.String"></item>
+        <item mnemonic="w18" type="System.String"></item>
+        <item mnemonic="w19" type="System.String"></item>
+        <item mnemonic="w20" type="System.String"></item>
+
+        <item mnemonic="w21" type="System.String"></item>
+        <item mnemonic="w22" type="System.String"></item>
+        <item mnemonic="w23" type="System.String"></item>
+        <item mnemonic="w24" type="System.String"></item>
+        <item mnemonic="w25" type="System.String"></item>
+
+        <item mnemonic="w26" type="System.String"></item>
+        <item mnemonic="w27" type="System.String"></item>
+        <item mnemonic="w28" type="System.String"></item>
+        <item mnemonic="w29" type="System.String"></item>
+        <item mnemonic="w30" type="System.String"></item>
+
+        <item mnemonic="w31" type="System.String"></item>
+        <item mnemonic="w32" type="System.String"></item>
+        <item mnemonic="w33" type="System.String"></item>
+        <item mnemonic="w34" type="System.String"></item>
+        <item mnemonic="w35" type="System.String"></item>
+
+        <item mnemonic="w36" type="System.String"></item>
+        <item mnemonic="w37" type="System.String"></item>
+        <item mnemonic="w38" type="System.String"></item>
+        <item mnemonic="w39" type="System.String"></item>
+        <item mnemonic="w40" type="System.String"></item>
+
+        <item mnemonic="w41" type="System.String"></item>
+        <item mnemonic="w42" type="System.String"></item>
+        <item mnemonic="w43" type="System.String"></item>
+        <item mnemonic="w44" type="System.String"></item>
+        <item mnemonic="w45" type="System.String"></item>
+
+        <item mnemonic="w46" type="System.String"></item>
+        <item mnemonic="w47" type="System.String"></item>
+        <item mnemonic="w48" type="System.String"></item>
+        <item mnemonic="w49" type="System.String"></item>
+        <item mnemonic="w50" type="System.String"></item>
+
+        <item mnemonic="w51" type="System.String"></item>
+        <item mnemonic="w52" type="System.String"></item>
+        <item mnemonic="w53" type="System.String"></item>
+        <item mnemonic="w54" type="System.String"></item>
+        <item mnemonic="w55" type="System.String"></item>
+
+        <item mnemonic="w56" type="System.String"></item>
+      </items>
+    </localization>
+  

@@ -36,6 +36,7 @@ using TNS.AdExpressI.PresentAbsent.DAL;
 using TNS.AdExpressI.PresentAbsent.Exceptions;
 using TNS.FrameWork.WebResultUI;
 using TNS.FrameWork.Collections;
+using TNS.AdExpress.Domain.Web;
 
 #endregion
 
@@ -492,7 +493,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// Get table with synthesis about numbers of Commons, Exclusives and Missings products
         /// </summary>
         /// <returns>Result Table</returns>
-        public ResultTable GetSynthesisData()
+		public virtual ResultTable GetSynthesisData()
         {
 
             #region Variables
@@ -549,7 +550,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             object[] parameters = new object[1];
             parameters[0] = _session;
             IPresentAbsentResultDAL presentAbsentDAL = (IPresentAbsentResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
-            dt = presentAbsentDAL.GetSynthesisData();
+            dt = presentAbsentDAL.GetSynthesisData().Tables[0];
             //dt = CompetitorDataAccess.GetGenericSynthesisData(webSession, vehicleName);
             #endregion
 
@@ -893,7 +894,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// <param name="nbUnivers">(out) Univers number</param>
         /// <param name="mediaListForLabelSearch">(out)Media Ids list</param>
         /// <returns>Data table</returns>
-        protected ResultTable GetGrossTable(out Dictionary<Int64, HeaderBase> universesSubTotal, out Dictionary<string, HeaderBase> elementsHeader, out Dictionary<string, HeaderBase> elementsSubTotal)
+        protected virtual ResultTable GetGrossTable(out Dictionary<Int64, HeaderBase> universesSubTotal, out Dictionary<string, HeaderBase> elementsHeader, out Dictionary<string, HeaderBase> elementsSubTotal)
         {
 
             #region Load data from data layer
@@ -904,8 +905,8 @@ namespace TNS.AdExpressI.PresentAbsent{
             object[] parameters = new object[1];
             parameters[0] = _session;
             IPresentAbsentResultDAL presentAbsentDAL = (IPresentAbsentResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
-            dt = presentAbsentDAL.GetData();
-            dsMedia = presentAbsentDAL.GetMediaDetails();
+			dt = presentAbsentDAL.GetData().Tables[0];
+            dsMedia = presentAbsentDAL.GetColumnDetails();
 
             DataTable dtMedia = dsMedia.Tables[0];
 
@@ -1051,10 +1052,11 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// <param name="row">Data container</param>
         /// <param name="cellFactory">Cell Factory for double cells</param>
         /// <returns>Current line</returns>
-        protected Int32 SetDoubleLine(ResultTable tab, Dictionary<string, HeaderBase> elementsHeader, Dictionary<string, HeaderBase> elementsSubTotal, Int32 cLine, DataRow row, CellUnitFactory cellFactory, Dictionary<Int64, Int64> mediaToUnivers)
+        protected virtual Int32 SetDoubleLine(ResultTable tab, Dictionary<string, HeaderBase> elementsHeader, Dictionary<string, HeaderBase> elementsSubTotal, Int32 cLine, DataRow row, CellUnitFactory cellFactory, Dictionary<Int64, Int64> mediaToUnivers)
         {
+			DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
 
-            Int64 idElement = Convert.ToInt64(row["columnDetailLevel"]);
+            Int64 idElement = Convert.ToInt64(row[columnDetailLevel.DataBaseIdField]);
             Int64 idMedia = Convert.ToInt64(row["id_media"]);
             Double value = Convert.ToDouble(row[_session.GetSelectedUnit().Id.ToString()]);
             string sIdElement = string.Format("{0}-{1}", mediaToUnivers[idMedia], idElement);
@@ -1081,10 +1083,11 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// <param name="row">Data container</param>
         /// <param name="cellFactory">Cell Factory for list cells</param>
         /// <returns>Current line</returns>
-        protected Int32 SetListLine(ResultTable tab, Dictionary<string, HeaderBase> elementsHeader, Dictionary<string, HeaderBase> elementsSubTotal, Int32 cLine, DataRow row, CellUnitFactory cellFactory, Dictionary<Int64, Int64> mediaToUnivers)
+        protected virtual Int32 SetListLine(ResultTable tab, Dictionary<string, HeaderBase> elementsHeader, Dictionary<string, HeaderBase> elementsSubTotal, Int32 cLine, DataRow row, CellUnitFactory cellFactory, Dictionary<Int64, Int64> mediaToUnivers)
         {
+            DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
 
-            Int64 idElement = Convert.ToInt64(row["columnDetailLevel"]);
+            Int64 idElement = Convert.ToInt64(row[columnDetailLevel.DataBaseIdField]);
             Int64 idMedia = Convert.ToInt64(row["id_media"]);
             string[] value = row[_session.GetSelectedUnit().Id.ToString()].ToString().Split(',');
             string sIdElement = string.Format("{0}-{1}", mediaToUnivers[idMedia], idElement);
@@ -1120,7 +1123,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// </summary>
         /// <param name="elementsHeaders">(ou) Header for each level element</param>
         /// <param name="dtMedia">List of medias with the detail level matching
-        protected Headers GetHeaders(DataTable dtMedia, out Dictionary<string, HeaderBase> elementsHeader, out Dictionary<string, HeaderBase> elementsSubTotal, out Dictionary<Int64, HeaderBase> universesSubTotal, out Dictionary<Int64, Int64> idMediaToIdUnivers)
+        protected virtual Headers GetHeaders(DataTable dtMedia, out Dictionary<string, HeaderBase> elementsHeader, out Dictionary<string, HeaderBase> elementsSubTotal, out Dictionary<Int64, HeaderBase> universesSubTotal, out Dictionary<Int64, Int64> idMediaToIdUnivers)
         {
 
             #region Extract Media lists
@@ -1131,6 +1134,9 @@ namespace TNS.AdExpressI.PresentAbsent{
             Dictionary<Int64, List<Int64>> idsByUnivers = new Dictionary<Int64, List<Int64>>();
             //Media ids ==> id univers mapping
             idMediaToIdUnivers = new Dictionary<Int64,Int64>();
+            //vehicle-level detail in column
+            DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
+
             //Init media univers mapping
             while (_session.CompetitorUniversMedia[iUnivers] != null)
             {
@@ -1156,7 +1162,8 @@ namespace TNS.AdExpressI.PresentAbsent{
             Int64 idMedia = -1;
             foreach (DataRow row in dtMedia.Rows)
             {
-                idElement = Convert.ToInt64(row["columnDetailLevel"]);
+                //idElement = Convert.ToInt64(row["columnDetailLevel"]); 
+                idElement = Convert.ToInt64(row[columnDetailLevel.DataBaseIdField]); 
                 idMedia = Convert.ToInt64(row["id_media"]);
                 if (!idElements.Contains(idElement))
                 {
@@ -1173,7 +1180,6 @@ namespace TNS.AdExpressI.PresentAbsent{
             #endregion
 
             #region Load elements labels
-            DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
             DALClassif.ClassificationLevelListDataAccess levels = null;
 
             switch (columnDetailLevel.Id)

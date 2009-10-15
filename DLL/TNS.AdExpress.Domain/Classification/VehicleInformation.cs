@@ -165,8 +165,7 @@ namespace TNS.AdExpress.Domain.Classification {
 								  string defaultMediaSelectionParent,
 								  List<DetailLevelItemInformation.Levels> mediaSelectionParentsList,
 								  Int64 detailColumnId,List<DetailLevelItemInformation.Levels> allowedRecapMediaLevelItemsList):
-            this(id, databaseId, showInsertions, showCreations, showActiveMedia, needLastAvailableDate, allowedUnitsList, allowedMediaLevelItemsList, defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId)
-        {
+            this(id, databaseId, showInsertions, showCreations, showActiveMedia, needLastAvailableDate, allowedUnitsList, allowedMediaLevelItemsList, defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId) {
 			_allowedRecapMediaLevelItemsList = allowedRecapMediaLevelItemsList;
 		}
         #endregion

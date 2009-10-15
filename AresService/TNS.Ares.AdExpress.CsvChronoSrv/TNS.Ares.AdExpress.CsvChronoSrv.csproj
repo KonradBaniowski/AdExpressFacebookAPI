@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1CEBA187-61E1-4E55-9DE4-56C077FD55BB}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TNS.Ares.AdExpress.CsvChronoSrv</RootNamespace>
+    <AssemblyName>TNS.Ares.AdExpress.CsvChronoSrv</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TNS.Classification, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.Classification.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.DB.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.LinkSystem, Version=3.3.3.0, Culture=neutral, PublicKeyToken=32c946e5f5c6d4a5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\FrameWork\TNS.LinkSystem.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CsvChronoService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CsvChronoService.Designer.cs">
+      <DependentUpon>CsvChronoService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="ProjectInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ProjectInstaller.Designer.cs">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ProjectInstaller.resx">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\FrameWorks\DLL\TNS.FrameWorks.LSConnectivity\TNS.FrameWorks.LSConnectivity.csproj">
+      <Project>{8FEDCF12-1DA7-44E3-8092-0D238D137A1A}</Project>
+      <Name>TNS.FrameWorks.LSConnectivity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
+      <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
+      <Name>TNS.AdExpress.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
+      <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
+      <Name>TNS.AdExpress.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress\TNS.AdExpress.csproj">
+      <Project>{6E75699B-838C-4534-99F7-D4C3E768CD57}</Project>
+      <Name>TNS.AdExpress</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.Ares.Constantes\TNS.Ares.Constantes.csproj">
+      <Project>{303C6B21-CA16-4D7B-8EDB-E8869B2B3EC9}</Project>
+      <Name>TNS.Ares.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.Ares.Domain\TNS.Ares.Domain.csproj">
+      <Project>{255834E2-DCA3-4290-9325-FFA4291839A6}</Project>
+      <Name>TNS.Ares.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Anubis.Sobek\TNS.AdExpress.Anubis.Sobek.csproj">
+      <Project>{092C3F2B-3026-4BE3-AA8E-01F11E0B5173}</Project>
+      <Name>TNS.AdExpress.Anubis.Sobek</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Classification\TNS.AdExpress.Classification.csproj">
+      <Project>{85908D78-32C1-4C1B-9E17-0D957B849DFA}</Project>
+      <Name>TNS.AdExpress.Classification</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.DataAccess\TNS.AdExpress.DataAccess.csproj">
+      <Project>{A4DEDE88-C99E-495F-98F2-E2762520F4BE}</Project>
+      <Name>TNS.AdExpress.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Web.Core\TNS.AdExpress.Web.Core.csproj">
+      <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
+      <Name>TNS.AdExpress.Web.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Web\TNS.AdExpress.Web.csproj">
+      <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
+      <Name>TNS.AdExpress.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.AdExpress.CsvChrono\TNS.Ares.AdExpress.CsvChrono.csproj">
+      <Project>{D41DC338-9546-4A94-9CBA-8669B4BFBE00}</Project>
+      <Name>TNS.Ares.AdExpress.CsvChrono</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Configuration\33\AdExpressConfiguration.xml" />
+    <Content Include="Configuration\33\AdNetTrackDetailLevel.xml" />
+    <Content Include="Configuration\33\BaalList.xml" />
+    <Content Include="Configuration\33\CoreLayersConfiguration.xml" />
+    <Content Include="Configuration\33\CreativesAccess.xml" />
+    <Content Include="Configuration\33\CreativesConfiguration.xml" />
+    <Content Include="Configuration\33\CssConfiguration.xml" />
+    <Content Include="Configuration\33\CustomerErrorMail.xml" />
+    <Content Include="Configuration\33\Database.xml" />
+    <Content Include="Configuration\33\DundasConfiguration.xml" />
+    <Content Include="Configuration\33\Flags.xml" />
+    <Content Include="Configuration\33\GenericColumn.xml" />
+    <Content Include="Configuration\33\GenericDetailLevel.xml" />
+    <Content Include="Configuration\33\HeaderConfiguration.xml" />
+    <Content Include="Configuration\33\InfoNews.xml" />
+    <Content Include="Configuration\33\Lists.xml" />
+    <Content Include="Configuration\33\MediaPlanInsertionConfiguration.xml" />
+    <Content Include="Configuration\33\ModuleCategory.xml" />
+    <Content Include="Configuration\33\ModulesConfiguration.xml" />
+    <Content Include="Configuration\33\MSCreativesDetails.xml" />
+    <Content Include="Configuration\33\PluginConfiguration.xml" />
+    <Content Include="Configuration\33\PortofolioDetailMediaConfiguration.xml" />
+    <Content Include="Configuration\33\ResultOptions.xml" />
+    <Content Include="Configuration\33\RightOptions.xml" />
+    <Content Include="Configuration\33\Units.xml" />
+    <Content Include="Configuration\33\UniverseBranches.xml" />
+    <Content Include="Configuration\33\UniverseLevels.xml" />
+    <Content Include="Configuration\33\UniverseLevelsCustomStyles.xml" />
+    <Content Include="Configuration\33\Vehicles.xml" />
+    <Content Include="Configuration\33\WebLanguages.xml" />
+    <Content Include="Configuration\33\WebThemes.xml" />
+    <Content Include="Configuration\ErrorMail.xml" />
+    <Content Include="Configuration\LsClientConfiguration.xml" />
+    <Content Include="Configuration\WebParameters.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

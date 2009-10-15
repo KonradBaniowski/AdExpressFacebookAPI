@@ -16,9 +16,6 @@ using System.Windows.Forms;
 
 using TNS.AdExpress.Anubis.Mnevis.Common;
 using TNS.AdExpress.Anubis.Mnevis.Exceptions;
-using TNS.AdExpress.Anubis.BusinessFacade.Result;
-using TNS.AdExpress.Anubis.Common;
-using TNSAnubisConstantes=TNS.AdExpress.Anubis.Constantes;
 
 using TNS.AdExpress.Web.UI.Results;
 
@@ -56,6 +53,7 @@ using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Theme;
+using TNS.Ares.Pdf;
 #endregion
 
 namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
@@ -199,7 +197,7 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 				shortName = DateTime.Now.ToString("yyyyMMdd_") 
 					+ rqDetails["id_static_nav_session"].ToString()
 					+ "_"
-					+ Functions.GetRandomString(30,40);
+					+ TNS.Ares.Functions.GetRandomString(30,40);
 
 				pdfFileName += @"\" + shortName + ".pdf";
 
@@ -723,7 +721,7 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 				html=new StringBuilder(10000);
 							
 				#region Html file loading
-				Functions.CloseHtmlFile(sw);
+				Functions.Functions.CloseHtmlFile(sw);
 				HTML2PDF2Class htmlTmp = new HTML2PDF2Class();
 				htmlTmp.MarginLeft = Convert.ToInt32(this.LeftMargin);
 				htmlTmp.MarginTop = Convert.ToInt32(this.WorkZoneTop);
@@ -916,7 +914,7 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 
 				string workFile = GetWorkDirectory() + @"\SessionParameter" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
 
-                sw = Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
+                sw = Functions.Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 
 				#region Title
 				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
@@ -1056,7 +1054,7 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 				#endregion
 
 				#region Html file loading
-				Functions.CloseHtmlFile(sw);
+                Functions.Functions.CloseHtmlFile(sw);
 				HTML2PDF2Class html = new HTML2PDF2Class();
 				html.MarginLeft = Convert.ToInt32(this.LeftMargin);
 				html.MarginTop = Convert.ToInt32(this.WorkZoneTop);

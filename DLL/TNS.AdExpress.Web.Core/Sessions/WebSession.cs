@@ -601,6 +601,11 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		protected Hashtable userParameters = new Hashtable();
 		#endregion
 
+        /// <summary>
+        /// Customer data filters
+        /// </summary>
+        [System.NonSerialized]
+        TNS.AdExpress.Web.Core.CustomerDataFilters _customerDataFilters = null;
 		#endregion
 
 		#region Constructeur
@@ -635,9 +640,16 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		public IDataSource Source {
 			get {
-                if(_source == null)
-                    //_source = new OracleDataSource(CustomerLogin.OracleConnectionString);
-                    _source=customerLogin.Source;
+                if (WebApplicationParameters.UseRightDefaultConnection)
+                {
+                    _source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.adExpressRussia);
+                }
+                else
+                {
+                    if (_source == null)
+                        //_source = new OracleDataSource(CustomerLogin.OracleConnectionString);
+                        _source = customerLogin.Source;
+                }
 				return (_source);
 			}
 			set {
@@ -844,6 +856,16 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 				modificationDate = DateTime.Now;
 			}
 		}
+
+        /// <summary>
+        /// Get customer data filters
+        /// </summary>
+        public TNS.AdExpress.Web.Core.CustomerDataFilters CustomerDataFilters{
+            get {
+                if (_customerDataFilters == null) _customerDataFilters = new CustomerDataFilters(this);
+                return _customerDataFilters; 
+            }
+        }
 		#endregion
 
 		#region Modules
@@ -954,7 +976,17 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 					}
 					else {
 						Login login = new Login(CustomerLogin.IdLogin, CustomerLogin.Login, CustomerLogin.PassWord);
-						login.Source = Source;
+                        if (WebApplicationParameters.UseRightDefaultConnection)
+                        {
+                            string nlsSort = "";
+                            if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
+                            {
+                                nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
+                            }
+                            login.Source = WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03);
+                        }
+                        else
+                            login.Source = Source;
 						_company = login.LoginCompany;
 					}
 				}
@@ -2488,10 +2520,16 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 				binaryData = ms.GetBuffer();
 
 				//create anonymous PL/SQL command
-				string block = " BEGIN " +
-                    " DELETE " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mou01).Label + "." + Tables.TABLE_SESSION + " WHERE ID_NAV_SESSION=" + this.idSession + "; " +
-                    " INSERT INTO " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mou01).Label + "." + Tables.TABLE_SESSION + "(id_nav_session, nav_session) VALUES(" + this.idSession + ", :1); " +
-					" END; ";
+                string label ="";
+                if (WebApplicationParameters.UseRightDefaultConnection)
+                label = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label;
+                else label = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mou01).Label;
+
+                    string block = " BEGIN " +
+                        " DELETE " + label + "." + Tables.TABLE_SESSION + " WHERE ID_NAV_SESSION=" + this.idSession + "; " +
+                        " INSERT INTO " + label + "." + Tables.TABLE_SESSION + "(id_nav_session, nav_session) VALUES(" + this.idSession + ", :1); " +
+                        " END; ";
+               
 				sqlCommand = new OracleCommand(block);
 				sqlCommand.Connection = cnx;
 				sqlCommand.CommandType = CommandType.Text;
@@ -2577,8 +2615,13 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 				binaryData = new byte[0];
 				i = 1;
 				//create anonymous PL/SQL command
+                string label = "";
+                if (WebApplicationParameters.UseRightDefaultConnection)
+                    label = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label;
+                else label = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mou01).Label;
+
 				string block = " BEGIN " +
-                    " SELECT nav_session INTO :1 FROM " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mou01).Label + "." + Tables.TABLE_SESSION + " WHERE id_nav_session = " + idWebSession + "; " +
+                    " SELECT nav_session INTO :1 FROM " + label + "." + Tables.TABLE_SESSION + " WHERE id_nav_session = " + idWebSession + "; " +
 					" END; ";
 				i = 2;
 				sqlCommand = new OracleCommand(block);
@@ -3026,7 +3069,17 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		public void OnNewConnection(string IP) {
 			try {
-				DATracking.NewConnection(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, IP);
+                if (WebApplicationParameters.UseRightDefaultConnection)
+                {
+                    string nlsSort = "";
+                    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
+                    {
+                        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
+                    }
+                    DATracking.NewConnection(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, IP);
+                }
+                else
+                    DATracking.NewConnection(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, IP);
 			}
 			catch (System.Exception) { }
 		}
@@ -3036,7 +3089,17 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		private void OnSetModule() {
 			try {
-				DATracking.SetModule(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule);
+                if (WebApplicationParameters.UseRightDefaultConnection)
+                {
+                    string nlsSort = "";
+                    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
+                    {
+                        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
+                    }
+                    DATracking.SetModule(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord,nlsSort, CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule);
+                }
+                else
+                    DATracking.SetModule(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule);
 			}
 			catch (System.Exception) { }
 		}
@@ -3047,7 +3110,17 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// <param name="vehicleId">Identifiant du media (Vehicle)</param>
 		public void OnSetVehicle(Int64 vehicleId) {
 			try {
-				DATracking.SetVehicle(Source, Int64.Parse(IdSession), CustomerLogin.IdLogin, CurrentModule, vehicleId);
+                if (WebApplicationParameters.UseRightDefaultConnection)
+                {
+                    string nlsSort = "";
+                    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
+                    {
+                        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
+                    }
+                    DATracking.SetVehicle(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(IdSession), CustomerLogin.IdLogin, CurrentModule, vehicleId);
+                }
+                else
+                    DATracking.SetVehicle(Source, Int64.Parse(IdSession), CustomerLogin.IdLogin, CurrentModule, vehicleId);
 			}
 			catch (System.Exception) { }
 		}
@@ -3060,7 +3133,17 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 				Module moduleSelected = customerLogin.GetModule(currentModule);
 				Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
 				//customerLogin.HtModulesList.Clear();
-				DATracking.UseGad(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                if (WebApplicationParameters.UseRightDefaultConnection)
+                {
+                    string nlsSort = "";
+                    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
+                    {
+                        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
+                    }
+                    DATracking.SetVehicle(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                }
+                else
+                    DATracking.SetVehicle(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
 			}
 			catch (System.Exception) { }
 
@@ -3075,7 +3158,17 @@ namespace TNS.AdExpress.Web.Core.Sessions {
                     Module moduleSelected = customerLogin.GetModule(currentModule);
 					Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
 					//customerLogin.HtModulesList.Clear();
-					DATracking.SetMediaAgency(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                    if (WebApplicationParameters.UseRightDefaultConnection)
+                    {
+                        string nlsSort = "";
+                        if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
+                        {
+                            nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
+                        }
+                        DATracking.SetMediaAgency(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                    }
+                    else
+                        DATracking.SetMediaAgency(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
 				}
 				catch (System.Exception) { }
 			}
@@ -3096,7 +3189,17 @@ namespace TNS.AdExpress.Web.Core.Sessions {
                         Module moduleSelected = customerLogin.GetModule(currentModule);
 						Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
 						//customerLogin.HtModulesList.Clear();
-						DATracking.SetMediaAgency(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                        if (WebApplicationParameters.UseRightDefaultConnection)
+                        {
+                            string nlsSort = "";
+                            if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
+                            {
+                                nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
+                            }
+                            DATracking.SetMediaAgency(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                        }
+                        else
+                            DATracking.SetMediaAgency(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
 					}
 					catch (System.Exception) { }
 					break;
@@ -3110,7 +3213,17 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		private void OnSetPeriodType() {
 			try {
-				DATracking.SetPeriodType(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, (int)periodType);
+                if (WebApplicationParameters.UseRightDefaultConnection)
+                {
+                    string nlsSort = "";
+                    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
+                    {
+                        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
+                    }
+                    DATracking.SetPeriodType(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, (int)periodType);
+                }
+                else
+                    DATracking.SetPeriodType(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, (int)periodType);
 			}
 			catch (System.Exception) { }
 
@@ -3121,7 +3234,17 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		private void OnSetUnit() {
 			try {
-				DATracking.SetUnit(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, (int)unit);
+                if (WebApplicationParameters.UseRightDefaultConnection)
+                {
+                    string nlsSort = "";
+                    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
+                    {
+                        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
+                    }
+                    DATracking.SetUnit(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, (int)unit);
+                }
+                else
+                    DATracking.SetUnit(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, (int)unit);
 			}
 			catch (System.Exception) { }
 		}
@@ -3135,7 +3258,17 @@ namespace TNS.AdExpress.Web.Core.Sessions {
                 Module moduleSelected = customerLogin.GetModule(currentModule);
 				Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
 				//customerLogin.HtModulesList.Clear();
-				DATracking.SetResult(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                if (WebApplicationParameters.UseRightDefaultConnection)
+                {
+                    string nlsSort = "";
+                    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
+                    {
+                        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
+                    }
+                    DATracking.SetResult(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord,nlsSort, CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                }
+                else
+                    DATracking.SetResult(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
 			}
 			catch (System.Exception) { }
 
@@ -3150,7 +3283,17 @@ namespace TNS.AdExpress.Web.Core.Sessions {
                 Module moduleSelected = customerLogin.GetModule(currentModule);
 				Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
 				//customerLogin.HtModulesList.Clear();
-				DATracking.UseFileExport(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                if (WebApplicationParameters.UseRightDefaultConnection)
+                {
+                    string nlsSort = "";
+                    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
+                    {
+                        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
+                    }
+                    DATracking.UseFileExport(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                }
+                else
+                    DATracking.UseFileExport(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
 			}
 			catch (System.Exception) { }
 		}
@@ -3164,7 +3307,17 @@ namespace TNS.AdExpress.Web.Core.Sessions {
                 Module moduleSelected = customerLogin.GetModule(currentModule);
 				Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
 				//customerLogin.HtModulesList.Clear();
-				DATracking.UseMyAdExpressSave(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                if (WebApplicationParameters.UseRightDefaultConnection)
+                {
+                    string nlsSort = "";
+                    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
+                    {
+                        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
+                    }
+                    DATracking.UseMyAdExpressSave(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord,nlsSort, CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                }
+                else
+                    DATracking.UseMyAdExpressSave(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
 			}
 			catch (System.Exception) { }
 
@@ -3424,6 +3577,23 @@ namespace TNS.AdExpress.Web.Core.Sessions {
         
         }
 
+        #endregion
+
+        #region ToBinaryData
+        public byte[] ToBinaryData() {
+            MemoryStream ms = null;
+            BinaryFormatter bf = null;
+            byte[] binaryData = null;
+
+            ms = new MemoryStream();
+            bf = new BinaryFormatter();
+            bf.Serialize(ms, this);
+            binaryData = new byte[ms.GetBuffer().Length];
+            binaryData = ms.GetBuffer();
+            if (ms != null) ms.Close();
+            if (bf != null) bf = null;
+            return (binaryData);
+        }
         #endregion
 
         #endregion

@@ -67,7 +67,19 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
                 sourceFactory.ConnectionTimeOut=_connectionTimeOut;
                 sourceFactory.DecrPoolSize=_decrPoolSize;
                 sourceFactory.MaxPoolSize=_maxPoolSize;
-                sourceFactory.Pooling=_pooling;			
+                sourceFactory.Pooling=_pooling;
+
+                #region Set SQL server Properties
+                sourceFactory.CurrentLanguage = _sqlServerCurrentLanguage;
+                sourceFactory.Enlist = _enliste;
+                sourceFactory.IntegratedSecurity = _integratedSecurity;
+                sourceFactory.PersistSecurityInfo = _persistSecurityInfo;
+                sourceFactory.Replication = _replication;
+                sourceFactory.TypeSystemVersion = _typeSystemVersion;
+                sourceFactory.WorkstationID = _workstationID;
+                sourceFactory.DataBaseName = _dataBaseName;
+                #endregion
+
                 return(sourceFactory.GetIDataSource());
             }
             catch(System.Exception err){
@@ -86,6 +98,18 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
 				sourceFactory.Pooling = _pooling;
 				sourceFactory.IsUTF8 = _isUTF8;
 				sourceFactory.NlsSort = nlsSort;
+
+                #region Set SQL server Properties
+                sourceFactory.CurrentLanguage = _sqlServerCurrentLanguage;
+                sourceFactory.Enlist = _enliste;
+                sourceFactory.IntegratedSecurity = _integratedSecurity;
+                sourceFactory.PersistSecurityInfo = _persistSecurityInfo;
+                sourceFactory.Replication = _replication;
+                sourceFactory.TypeSystemVersion = _typeSystemVersion;
+                sourceFactory.WorkstationID = _workstationID;
+                sourceFactory.DataBaseName = _dataBaseName;
+                #endregion
+
 				return (sourceFactory.GetIDataSource());
 			}
 			catch (System.Exception err) {

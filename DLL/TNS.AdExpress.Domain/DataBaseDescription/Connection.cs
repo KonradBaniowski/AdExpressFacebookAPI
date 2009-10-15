@@ -57,6 +57,53 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
 		/// </summary>
 		protected bool _isUTF8 = false;
 
+		#region SQl server keyword values within the ConnectionString
+		/// <summary>
+		/// The SQL Server Language record name. 
+		/// </summary>
+		protected string _sqlServerCurrentLanguage = "";
+		/// <summary>
+		/// true indicates that the SQL Server connection pooler automatically enlists the connection in the creation thread's current transaction context.
+		/// </summary>
+		protected bool _enliste = false;
+		/// <summary>
+		/// When false, User ID and Password are specified in the connection. When true, the current Windows account credentials are used for authentication.
+		/// </summary>
+		protected bool _integratedSecurity = false;
+		/// <summary>
+		/// When set to false or no (strongly recommended), security-sensitive information, such as the password, 
+		/// is not returned as part of the connection if the connection is open or has ever been in an open state. 
+		/// Resetting the connection string resets all connection string values including the password. Recognized values are true, false, yes, and no. 
+		/// </summary>
+		protected bool _persistSecurityInfo = false;
+		/// <summary>
+		/// true if replication is supported using the connection. 
+		/// </summary>
+		protected bool _replication = false;
+		/// <summary>
+		/// The name of the workstation connecting to SQL Server.
+		/// </summary>
+		protected string _workstationID = "";
+		/// <summary>
+		/// A string value that indicates the type system the application expects. Possible values are:
+		///Type System Version=SQL Server 2000; 
+		///Type System Version=SQL Server 2005; 
+		///Type System Version=Latest; 
+		///When set to SQL Server 2000, the SQL Server 2000 type system is used. The following conversions are performed when connecting to a SQL Server 2005 instance:
+		///XML to NTEXT
+		///UDT to VARBINARY
+		///VARCHAR(MAX), NVARCHAR(MAX) and VARBINARY(MAX) to TEXT, NEXT and IMAGE respectively.
+		///When set to SQL Server 2005, the SQL Server 2005 type system is used. No conversions are made for the current version of ADO.NET.
+		///When set to Latest, the latest version than this client-server pair can handle is used. This will automatically move forward as the client and server components are upgraded.
+		/// </summary>
+		protected string _typeSystemVersion = "";
+        /// <summary>
+        /// Data base Name
+        /// </summary>
+        protected string _dataBaseName = "";
+
+		#endregion
+
         #endregion
 
         #region Constructor
@@ -123,6 +170,67 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
 		public bool IsUTF8 {
 			set { _isUTF8 = value; }
 		}
+		/// <summary>
+		/// The SQL Server Language record name. 
+		/// </summary>
+		/// <remarks>Corresponds to property Current Language in SQL server</remarks>
+		public string SQlServerCurrentLanguage {
+			set { _sqlServerCurrentLanguage = value; }
+		}
+		/// <summary>
+		/// Set true indicates that the SQL Server connection pooler automatically enlists the connection in the creation thread's current transaction context. 
+		/// </summary>
+		public bool Enlist {
+			set { _enliste = value; }
+		}
+		/// <summary>
+		/// When false, User ID and Password are specified in the connection. When true, the current Windows account credentials are used for authentication.
+		/// </summary>
+		public bool IntegratedSecurity {
+			set { _integratedSecurity = value; }
+		}
+		/// <summary>
+		/// When set to false or no (strongly recommended), security-sensitive information, such as the password, 
+		/// is not returned as part of the connection if the connection is open or has ever been in an open state. 
+		/// Resetting the connection string resets all connection string values including the password. Recognized values are true, false, yes, and no. 
+		/// </summary>
+		public bool PersistSecurityInfo {
+			set { _persistSecurityInfo = value; }
+		}
+		/// <summary>
+		/// true if replication is supported using the connection. 
+		/// </summary>
+		public bool Replication {
+			set { _replication = value; }
+		}
+		/// <summary>
+		/// The name of the workstation connecting to SQL Server.
+		/// </summary>
+		public string WorkstationID {
+			set { _workstationID = value; }
+		}
+		/// <summary>
+		/// A string value that indicates the type system the application expects. Possible values are:
+		///Type System Version=SQL Server 2000; 
+		///Type System Version=SQL Server 2005; 
+		///Type System Version=Latest; 
+		///When set to SQL Server 2000, the SQL Server 2000 type system is used. The following conversions are performed when connecting to a SQL Server 2005 instance:
+		///XML to NTEXT
+		///UDT to VARBINARY
+		///VARCHAR(MAX), NVARCHAR(MAX) and VARBINARY(MAX) to TEXT, NEXT and IMAGE respectively.
+		///When set to SQL Server 2005, the SQL Server 2005 type system is used. No conversions are made for the current version of ADO.NET.
+		///When set to Latest, the latest version than this client-server pair can handle is used. This will automatically move forward as the client and server components are upgraded.
+		/// </summary>
+		public string TypeSystemVersion {
+			set { _typeSystemVersion = value; }
+		}
+        /// <summary>
+        /// Data base Name
+        /// </summary>
+        public string DataBaseName
+        {
+            set { _dataBaseName = value; }
+        }
         #endregion
 
         #region Public Methods
@@ -133,10 +241,24 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
             try {
                 SourceFactory sourceFactory=new SourceFactory(_type,login,password,_dataSource);
                 sourceFactory.ConnectionTimeOut=_connectionTimeOut;
-                sourceFactory.DecrPoolSize=_decrPoolSize;
+				sourceFactory.DecrPoolSize = _decrPoolSize;
                 sourceFactory.MaxPoolSize=_maxPoolSize;
-                sourceFactory.Pooling=_pooling;				
-                return (sourceFactory.GetIDataSource());
+                sourceFactory.Pooling=_pooling;
+				sourceFactory.IsUTF8 = _isUTF8;
+				sourceFactory.NlsSort = _nlsSort;
+
+				#region Set SQL server Properties
+				sourceFactory.CurrentLanguage = _sqlServerCurrentLanguage;
+				sourceFactory.Enlist = _enliste;
+				sourceFactory.IntegratedSecurity = _integratedSecurity;
+				sourceFactory.PersistSecurityInfo = _persistSecurityInfo;
+				sourceFactory.Replication = _replication;
+				sourceFactory.TypeSystemVersion = _typeSystemVersion;
+				sourceFactory.WorkstationID = _workstationID;
+                sourceFactory.DataBaseName = _dataBaseName;
+				#endregion
+
+				return (sourceFactory.GetIDataSource());
             }
             catch(System.Exception err) {
                 throw (new DefaultConnectionException("Impossible to retreive default connection",err));
@@ -145,8 +267,9 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
 		/// <summary>
 		/// Get IDataSource
 		/// </summary>
-		public IDataSource GetDataSource(string login, string password,string nlsSort) {
+		public IDataSource GetDataSource(string login, string password,string nlsSort){
 			try {
+				
 				SourceFactory sourceFactory = new SourceFactory(_type, login, password, _dataSource);
 				sourceFactory.ConnectionTimeOut = _connectionTimeOut;
 				sourceFactory.DecrPoolSize = _decrPoolSize;
@@ -154,6 +277,17 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
 				sourceFactory.Pooling = _pooling;
 				sourceFactory.IsUTF8 = _isUTF8;
 				sourceFactory.NlsSort = nlsSort;
+
+				#region Set SQL server Properties
+				sourceFactory.CurrentLanguage = _sqlServerCurrentLanguage;
+				sourceFactory.Enlist = _enliste;
+				sourceFactory.IntegratedSecurity = _integratedSecurity;
+				sourceFactory.PersistSecurityInfo = _persistSecurityInfo;
+				sourceFactory.Replication = _replication;
+				sourceFactory.TypeSystemVersion = _typeSystemVersion;
+				sourceFactory.WorkstationID = _workstationID;
+                sourceFactory.DataBaseName = _dataBaseName;
+				#endregion
 				return (sourceFactory.GetIDataSource());
 			}
 			catch (System.Exception err) {

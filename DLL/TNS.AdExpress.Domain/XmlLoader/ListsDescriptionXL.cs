@@ -18,49 +18,49 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 	/// </summary>
 	public class ListsDescriptionXL {
 
-		/// <summary>
-		/// Load inset description list
-		/// </summary>
-		/// <param name="source">source</param>
-		/// <returns>Inset list</returns>
-		public static Dictionary<CustomerSessions.InsertType, long> Load(IDataSource source) {
+		///// <summary>
+		///// Load inset description list
+		///// </summary>
+		///// <param name="source">source</param>
+		///// <returns>Inset list</returns>
+		//public static Dictionary<CustomerSessions.InsertType, long> Load(IDataSource source) {
 
-			#region Variables
-			Dictionary<CustomerSessions.InsertType, long> list = new Dictionary<CustomerSessions.InsertType, long>();
-			XmlTextReader reader = null;
-			string id;
-			long dataBaseId;
-			#endregion
+		//    #region Variables
+		//    Dictionary<CustomerSessions.InsertType, long> list = new Dictionary<CustomerSessions.InsertType, long>();
+		//    XmlTextReader reader = null;
+		//    string id;
+		//    long dataBaseId;
+		//    #endregion
 
-			try {
-				source.Open();
-				reader = (XmlTextReader)source.GetSource();
-				while (reader.Read()) {
-					if (reader.NodeType == XmlNodeType.Element) {
-						switch (reader.LocalName) {
-							case "inset":
-								if (reader.GetAttribute("id") == null || reader.GetAttribute("id").Length == 0) throw (new InvalidXmlValueException("Invalid id parameter"));
-								id = reader.GetAttribute("id");								
-								if (reader.GetAttribute("dataBaseId") == null || reader.GetAttribute("dataBaseId").Length == 0) throw (new InvalidXmlValueException("Invalid data base Id parameter"));;
-								dataBaseId = long.Parse(reader.GetAttribute("dataBaseId"));
-								list.Add((CustomerSessions.InsertType)Enum.Parse(typeof(CustomerSessions.InsertType), id, true), dataBaseId);								
-								break;
-						}
-					}
-				}
-			}
-			catch (System.Exception err) {
+		//    try {
+		//        source.Open();
+		//        reader = (XmlTextReader)source.GetSource();
+		//        while (reader.Read()) {
+		//            if (reader.NodeType == XmlNodeType.Element) {
+		//                switch (reader.LocalName) {
+		//                    case "inset":
+		//                        if (reader.GetAttribute("id") == null || reader.GetAttribute("id").Length == 0) throw (new InvalidXmlValueException("Invalid id parameter"));
+		//                        id = reader.GetAttribute("id");								
+		//                        if (reader.GetAttribute("dataBaseId") == null || reader.GetAttribute("dataBaseId").Length == 0) throw (new InvalidXmlValueException("Invalid data base Id parameter"));;
+		//                        dataBaseId = long.Parse(reader.GetAttribute("dataBaseId"));
+		//                        list.Add((CustomerSessions.InsertType)Enum.Parse(typeof(CustomerSessions.InsertType), id, true), dataBaseId);								
+		//                        break;
+		//                }
+		//            }
+		//        }
+		//    }
+		//    catch (System.Exception err) {
 
-				#region Close the file
-				if (source.GetSource() != null) source.Close();
-				#endregion
+		//        #region Close the file
+		//        if (source.GetSource() != null) source.Close();
+		//        #endregion
 
-				throw (new Exception(" Error : ", err));
-			}
-			source.Close();
-			return (list);
+		//        throw (new Exception(" Error : ", err));
+		//    }
+		//    source.Close();
+		//    return (list);
 
-		}
+		//}
 		/// <summary>
 		/// Load group list 
 		/// </summary>

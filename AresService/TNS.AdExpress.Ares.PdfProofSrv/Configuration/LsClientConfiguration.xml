@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configurations>
+  <lsClientConfiguration familyId="123" monitorPort="30234" productName="Shou request treatment" maxAvailableSlots="1" directoryName="33\Plugins\Shou.xml">
+    <moduleDescription description="Shou request treatment" moduleId="11"/>
+  </lsClientConfiguration>
+</configurations>

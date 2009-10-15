@@ -270,7 +270,6 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
 	/// <param name="e">Argument</param>
 	protected void validateButton2_Click(object sender, System.EventArgs e) {
 		try {
-
             CoreLayer cl = WebApplicationParameters.CoreLayers[WebConstantes.Layers.Id.date];
             IDate date = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
             int selectedValue = -1;

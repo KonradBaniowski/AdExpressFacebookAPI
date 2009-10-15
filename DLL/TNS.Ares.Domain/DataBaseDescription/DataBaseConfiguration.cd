@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="AdExpress Database description&#xD;&#xA;">
+    <Position X="0.609" Y="0.5" Height="0.399" Width="2.124" />
+  </Comment>
+  <Class Name="TNS.Ares.Domain.DataBaseDescription.CustomerConnection">
+    <Position X="3.75" Y="1.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AACCAIACAAACpwUAAEZIAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>DataBaseDescription\Connection.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_id" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TNS.Ares.Domain.DataBaseDescription.DataBase">
+    <Position X="3.5" Y="7" Width="3" />
+    <AssociationLine Name="_schemas" Type="TNS.Ares.Domain.DataBaseDescription.Schema">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.158" Y="0.048" Height="0.16" Width="1.048" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="_tables" Type="TNS.Ares.Domain.DataBaseDescription.Table">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.11" Y="0.06" Height="0.16" Width="0.874" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AEAQEAAAQAAAAAAIAAAQAAAACCJABAAAACABABBAAAA=</HashCode>
+      <FileName>DataBaseDescription\DataBase.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_schemas" />
+      <Field Name="_tables" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TNS.Ares.Domain.DataBaseDescription.Schema">
+    <Position X="3.5" Y="11" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAQBBAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataBaseDescription\Schema.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_id" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TNS.Ares.Domain.DataBaseDescription.Table">
+    <Position X="7" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAEAAAACAAQBBAAAACAAAAAAAAQAwAAAAAAAA=</HashCode>
+      <FileName>DataBaseDescription\Table.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_id" />
+      <Field Name="_schema" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TNS.Ares.Domain.DataBaseDescription.DefaultConnection">
+    <Position X="0.5" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AASAAAAAAAAAAAAAAABAAAAAAAAAAAACAAAQIAAAAAA=</HashCode>
+      <FileName>DataBaseDescription\DefaultConnection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="TNS.Ares.Domain.DataBaseDescription.CustomerConnectionIds">
+    <Position X="0.5" Y="7.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>DataBaseDescription\DataBase.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TNS.Ares.Domain.DataBaseDescription.SchemaIds">
+    <Position X="0.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAIAAIAAAAAABAAAABAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>DataBaseDescription\DataBase.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TNS.Ares.Domain.DataBaseDescription.TableIds">
+    <Position X="9.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>0ndIg2lFUo6z0WHqyiLUOEGKsRGxoM+Xwv5dD9YnB+U=</HashCode>
+      <FileName>DataBaseDescription\DataBase.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TNS.Ares.Domain.DataBaseDescription.DefaultConnectionIds">
+    <Position X="0.5" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>YAAAAgAAAAIBAAAAAEEAQAAAIAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>DataBaseDescription\DataBase.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

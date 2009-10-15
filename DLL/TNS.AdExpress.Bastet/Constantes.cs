@@ -46,4 +46,44 @@ namespace TNS.AdExpress.Bastet{
 		public const int FIRST_PEDIOD_COlUMN_INDEX = 7;
 
 	}
+
+    public class WebSession {
+
+        /// <summary>
+        /// Language
+        /// </summary>
+        public const string LANGUAGE = "Language";
+        /// <summary>
+        /// Language
+        /// </summary>
+        public const string LOGIN = "Login";
+        /// <summary>
+        /// Language
+        /// </summary>
+        public const string MAILS = "Mails";
+        /// <summary>
+        /// Language
+        /// </summary>
+        public const string DATE_BEGIN = "DateBegin";
+        /// <summary>
+        /// Language
+        /// </summary>
+        public const string DATE_END = "DateEnd";
+        /// <summary>
+        /// Vehicle List
+        /// </summary>
+        public const string VEHICLE_LIST = "vehicleList";
+    }
+
+    #region Cookies
+    /// <summary>
+    /// List every cookie used in the web site
+    /// </summary>
+    public class Cookies {
+        /// <summary>
+        /// Cooky dedicated to the language management
+        /// </summary>
+        public static string LANGUAGE = "language";
+    }
+    #endregion
 }

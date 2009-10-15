@@ -253,7 +253,13 @@
 								    </tr>
 								    <tr>
 									    <td class="txtGris10 whiteBackGround" height="5"><cc3:imagebuttonrolloverwebcontrol id="Imagebuttonrolloverwebcontrol2" runat="server" onclick="alertOpenImageButtonRollOver_Click" SkinID="ouvrirButton"></cc3:imagebuttonrolloverwebcontrol></td>
-								    </tr>								
+								    </tr>					
+								     <tr>
+									    <td class="whiteBackGround" height="5"></td>
+								    </tr>
+								    <tr>
+									    <td class="whiteBackGround" height="5"><cc3:imagebuttonrolloverwebcontrol id="Imagebuttonrolloverwebcontrol3" runat="server" onclick="personalizeAlertesImagebuttonrolloverwebcontrol_Click" SkinID="personnaliserButton"></cc3:imagebuttonrolloverwebcontrol></td>
+								    </tr>				
 								<% } %>									
 								<!-- test!!!!--></table>
 							<!--TEST : acces à la page de resultat Plan Media -->

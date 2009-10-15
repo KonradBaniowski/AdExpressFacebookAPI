@@ -27,6 +27,7 @@ using WebNavigation=TNS.AdExpress.Domain.Web.Navigation;
 using TNS.FrameWork.Exceptions;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.UI{
 	/// <summary>
@@ -188,13 +189,18 @@ namespace TNS.AdExpress.Web.UI{
 			#endregion
 
 			#region Connexion à la base de données
-			try{
-				//Pour reste APPM
-                OracleConnection connection=(OracleConnection)_webSession.Source.GetSource();
-			}
-			catch(System.Exception err){
-				this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this.Page,new WebExeptions.WebPageException("Le DataSource ne peut être créer",err),_webSession));
-			}
+            try
+            {
+                if (!WebApplicationParameters.UseRightDefaultConnection)
+                {
+                    //Pour reste APPM
+                    OracleConnection connection = (OracleConnection)_webSession.Source.GetSource();
+                }
+            }
+            catch (System.Exception err)
+            {
+                this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this.Page, new WebExeptions.WebPageException("Le DataSource ne peut être créer", err), _webSession));
+            }
 			//Ancienne connexion client
 			//_webSession.CustomerLogin.Connection=(OracleConnection)_dataSource.GetSource();
 			#endregion
