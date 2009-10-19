@@ -465,7 +465,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				case PortofolioStructure.Ventilation.format:
 					return " and  " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_format =" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.format).Prefix + ".id_format";
 				case PortofolioStructure.Ventilation.insert:
-					string fieldsList = Lists.GetIdList(WebConstantes.GroupList.ID.inset);
+                    string fieldsList = _webSession.CustomerDataFilters.InsetTypesAsString;
 					string res = " and  " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_inset = " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.inset).Prefix + ".id_inset";
 					if (fieldsList != null && fieldsList.Length > 0) res += " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_inset in ( " + fieldsList + " )";
 					return res;

@@ -1211,7 +1211,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 }
                 // Encart
                 if (dataType == PortofolioSynthesis.dataType.adNumberIncludingInsets) {
-                    sql.AppendFormat(" and id_inset in ({0}) ",Lists.GetIdList(WebConstantes.GroupList.ID.inset));
+                    sql.AppendFormat(" and id_inset in ({0}) ", _webSession.CustomerDataFilters.InsetTypesAsString);
                 }
                 if (_beginingDate.Length > 0)
                     sql.AppendFormat(" and  DATE_MEDIA_NUM>={0} ",_beginingDate);
