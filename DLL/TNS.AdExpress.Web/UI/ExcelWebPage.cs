@@ -1301,6 +1301,8 @@ namespace TNS.AdExpress.Web.UI{
                 t.Append(GetMediaSelectedForMediaPlanPopUp(webSession));
                 // Niveau de détail
                 t.Append(GetGenericMediaLevelDetail(webSession));
+                // Inset option
+                t.Append(GetInsetSelected(webSession));
                 // Produit sélectionné
                 t.Append(GetProductSelectedForMediaPlanPopUp(webSession));
 
