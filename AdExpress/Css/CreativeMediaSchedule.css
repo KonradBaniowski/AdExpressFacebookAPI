@@ -94,17 +94,17 @@ td.ppi
 {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color : #FFFFFF;
+	color : #333333;
 	font-weight: bold;
 	text-decoration : none;
 	text-align:center;
 	border-left-width:0px;
 	border-top-width:0px;
 	border-bottom-width:0px;
-	border-right-color:#644883;
+	border-right-color:#5C5C5C;
 	border-right-width: 1px; 
 	border-right-style:solid;
-	background-color: #D0C8DA;/*#644883;#9D9885#FF05B6*/
+	background-color: #E6EBEB;/*#644883;#9D9885#FF05B6*/
 	width:17px;
 }
 a.ppi,a.ppi:active, a.ppi:visited
@@ -432,7 +432,7 @@ td.pyLeft
 	font-weight: bold;
 	text-align:left;
 	text-decoration : none;
-	background-color: #644883;
+	background-color: #B5BBBB;
 	padding-left:0px;
 	padding-right:0px;
 	border-left-width:0px;
@@ -450,7 +450,7 @@ td.pyRight
 	font-weight: bold;
 	text-align:right;
 	text-decoration : none;
-	background-color: #644883;
+	background-color: #B5BBBB;
 	padding-left:0px;
 	padding-right:0px;
 	border-left-width:0px;
@@ -468,13 +468,14 @@ td.pa
 	font-weight: bold;
 	text-align:center;
 	text-decoration : none;
-	background-color: #644883;
+	background-color: #B5BBBB;
 	padding-left:5px;
 	padding-right:5px;
 	border-left-width:0px;
 	border-top-width:0px;
-	border-bottom-width:0px;
+	border-bottom-width:1px;
 	border-bottom-style:solid;
+	border-bottom-color:#FFFFFF;
 	border-right-width: 0px; 
 }
 td.pa1
@@ -485,13 +486,14 @@ td.pa1
 	font-weight: bold;
 	text-align:center;
 	text-decoration : none;
-	background-color: #644883;
+	background-color: #B5BBBB;
 	padding-left:5px;
 	padding-right:5px;
 	border-left-width:0px;
 	border-top-width:0px;
-	border-bottom-width:0px;
+	border-bottom-width:1px;
 	border-bottom-style:solid;
+	border-bottom-color: #FFFFFF; 
 	border-right-color:#FFFFFF;
 	border-right-width: 1px; 
 	border-right-style:solid;

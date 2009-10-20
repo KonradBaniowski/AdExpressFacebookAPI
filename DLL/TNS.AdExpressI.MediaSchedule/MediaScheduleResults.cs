@@ -1516,7 +1516,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 }
                                 #endregion
 
-                                if(!isExport) {
+                                if(!isExport && !IsCreativeDivisionMS) {
 
                                     periods.AppendFormat("<td class=\"{0}\" width=\"17px\"><a class=\"{1}\" href=\"{2}?idSession={3}&zoomDate={4}\">&nbsp;{5}&nbsp;</a></td>"
                                         , periodClass
