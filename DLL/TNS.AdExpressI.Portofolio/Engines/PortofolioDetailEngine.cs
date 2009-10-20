@@ -56,6 +56,12 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		/// Define if show insertions
 		/// </summary>
 		protected bool _showInsertions = false;
+
+        /// <summary>
+        /// Define if show media schedule Link
+        /// </summary>
+        protected bool _showMediaSchedule = false;
+
 		#endregion
 
 		#region Constructor
@@ -71,6 +77,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			: base(webSession, vehicleInformation, idMedia, periodBeginning, periodEnd) {
 			_showCreatives = showCreatives;
 			_showInsertions = showInsertions;
+            _showMediaSchedule = webSession.CustomerLogin.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)!=null ? true : false;
 		}
 
 		#endregion
@@ -98,7 +105,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			int iCurLine = 0;
 			int iNbLine = 0;
 			int iNbLevels = 0;
-			int insertions = 0, creatives = 0;
+            int insertions = 0, creatives = 0;
 			#endregion
 
 			// Get Data
@@ -112,6 +119,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			#region Initialisation du tableau de résultats
 			if (_showInsertions) insertions = 1;
 			if (_showCreatives) creatives = 1;
+          
             GetPortofolioHeaders(out headers, out cellFactories, out lineDelegates, out columnsName);
 			tab = new ResultTable(iNbLine, headers);
 			#endregion
@@ -126,9 +134,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			//Creatives
 			if (_showCreatives) tab[iCurLine, 1 + creatives] = new CellOneLevelCreativesLink((AdExpressCellLevel)tab[iCurLine, 1], _webSession, _webSession.GenericProductDetailLevel);
 			if (_showInsertions) tab[iCurLine, 1 + creatives + insertions] = new CellOneLevelInsertionsLink((AdExpressCellLevel)tab[iCurLine, 1], _webSession, _webSession.GenericProductDetailLevel);
-
-			tab[iCurLine, 2 + creatives + insertions] = new CellMediaScheduleLink(cellLevels[0], _webSession);
-			AffectPortefolioLine(cellFactories, lineDelegates, columnsName, null, tab, iCurLine, false);
+            if (_showMediaSchedule) tab[iCurLine, 2 + creatives + insertions] = new CellMediaScheduleLink(cellLevels[0], _webSession);
+			
+            AffectPortefolioLine(cellFactories, lineDelegates, columnsName, null, tab, iCurLine, false);
 			#endregion
 
 			int i = 1;
@@ -151,7 +159,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 						//Creatives
 						if (creatives > 0) tab[iCurLine, 1 + creatives] = new CellOneLevelCreativesLink((AdExpressCellLevel)tab[iCurLine, 1], _webSession, _webSession.GenericProductDetailLevel);
 						if (insertions > 0) tab[iCurLine, 1 + creatives + insertions] = new CellOneLevelInsertionsLink((AdExpressCellLevel)tab[iCurLine, 1], _webSession, _webSession.GenericProductDetailLevel);
-						tab[iCurLine, 2 + creatives + insertions] = new CellMediaScheduleLink((AdExpressCellLevel)tab[iCurLine, 1], _webSession);
+                        if (_showMediaSchedule) tab[iCurLine, 2 + creatives + insertions] = new CellMediaScheduleLink((AdExpressCellLevel)tab[iCurLine, 1], _webSession);
                         //feuille ou niveau parent?
                         if(i != iNbLevels) {
                             AffectPortefolioLine(cellFactories, lineDelegates, columnsName, null, tab, iCurLine, false);
@@ -229,8 +237,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		protected virtual void GetPortofolioHeaders(out Headers headers, out CellUnitFactory[] cellFactories, out AffectLine[] lineDelegates, out string[] columnsName) {
 			int insertions = 0;
 			int creatives = 0;
+            int mediaSchedule = 0;
 			int iNbCol = 0;
-            int columnIndex = 2;
+            int columnIndex = (_showMediaSchedule) ? 2 : 1;
             System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(@"TNS.FrameWork.WebResultUI");
             Type type;
             Cell cellUnit;
@@ -248,40 +257,43 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				headers.Root.Add(new HeaderCreative(false, GestionWeb.GetWebWord(INSERTIONS_LIST_COL, _webSession.SiteLanguage), INSERTIONS_LIST_COL));
 				insertions = 1;
 			}
-
-			// Media schedule column
-			headers.Root.Add(new HeaderMediaSchedule(false, GestionWeb.GetWebWord(PM_COL, _webSession.SiteLanguage), PM_COL));
+            if (_showMediaSchedule)
+            {
+                // Media schedule column
+                headers.Root.Add(new HeaderMediaSchedule(false, GestionWeb.GetWebWord(PM_COL, _webSession.SiteLanguage), PM_COL));
+                mediaSchedule = 1;
+            }
 
 			switch (_vehicleInformation.Id) {
 				case DBClassificationConstantes.Vehicles.names.press:
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
-					iNbCol = 6 + creatives + insertions;
+                    iNbCol = 5 + creatives + insertions + mediaSchedule;
 					break;
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing:
 					if (_webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_VOLUME_MARKETING_DIRECT)) {
-						iNbCol = 4 + creatives + insertions;
+                        iNbCol = 3 + creatives + insertions + mediaSchedule;
 					}
 					else {
-						iNbCol = 3 + creatives + insertions;
+                        iNbCol = 2 + creatives + insertions + mediaSchedule; 
 					}
 					break;
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio:
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others:
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
-					iNbCol = 5 + creatives + insertions;
+					iNbCol = 4 + creatives + insertions + mediaSchedule;
                     break;
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
-					iNbCol = 4 + creatives + insertions;
-                    break;
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
 					iNbCol = 3 + creatives + insertions;
                     break;
+				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
+                    iNbCol = 3 + creatives + insertions + mediaSchedule;
+                    break;
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.cinema:
-                    iNbCol = 3 + creatives + insertions;
+                    iNbCol = 2 + creatives + insertions + mediaSchedule;
                     break;
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
-                    iNbCol = 4 + creatives + insertions;
+                    iNbCol = 3 + creatives + insertions + mediaSchedule;
                     break;
 				default:
 					throw new PortofolioException("Vehicle unknown.");

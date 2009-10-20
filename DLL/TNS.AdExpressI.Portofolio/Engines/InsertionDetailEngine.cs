@@ -49,6 +49,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		/// Day of Week
 		/// </summary>
 		protected string _dayOfWeek;
+        /// <summary>
+        /// Define if show media schedule Link
+        /// </summary>
+        protected bool _showMediaSchedule = false;
+
 		#endregion
 
 		#region Constructor
@@ -64,6 +69,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			: base(webSession, vehicleInformation, idMedia, periodBeginning, periodEnd) {
 			_adBreak = adBreak;
 			_dayOfWeek = dayOfWeek;
+            _showMediaSchedule = webSession.CustomerLogin.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) != null ? true : false;
 		}
 		#endregion
 
@@ -186,6 +192,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 									headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
 								break;
 							case GenericColumnItemInformation.Columns.planMedia://Plan media
+                                if(_showMediaSchedule)
 								headers.Root.Add(new HeaderMediaSchedule(false, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
 								break;
 							case GenericColumnItemInformation.Columns.dateDiffusion:
@@ -303,6 +310,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 										}
 										break;
 									case GenericColumnItemInformation.Columns.planMedia://Plan media
+                                        if (_showMediaSchedule)
 										tab[iCurLine, iCurColumn++] = new CellInsertionMediaScheduleLink(_webSession, Convert.ToInt64(row["id_product"]), 1);
 										break;
 									case GenericColumnItemInformation.Columns.dateParution:// Parution Date and  diffusion Date
