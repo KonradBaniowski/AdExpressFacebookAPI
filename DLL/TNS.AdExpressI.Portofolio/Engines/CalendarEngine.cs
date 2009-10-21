@@ -44,10 +44,43 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		protected const int PM_COL = 751;		
 		protected const int TOTAL_COL = 1401;
 		protected const int POURCENTAGE_COL = 1236;
+        protected const int PRODUCT = 1;
+        protected const int MEDIA_SCHEDULE = 2;
+        protected const int TOTAL = 2;
+        protected const int PERCENTAGE = 3;
+        protected const int DATA = 4;
 		#endregion
 
-		#region Constructor
-		/// <summary>
+        #region Enum
+        /// <summary>
+        /// Column name : Product, media schedule, total ...
+        /// </summary>
+        private enum ColumnName { 
+            /// <summary>
+            /// Product colomn
+            /// </summary>
+            product,
+            /// <summary>
+            /// Media schedule link column
+            /// </summary>
+            mediaSchedule,
+            /// <summary>
+            /// Total column
+            /// </summary>
+            total,
+            /// <summary>
+            /// Percentage
+            /// </summary>
+            percentage,
+            /// <summary>
+            /// data
+            /// </summary>
+            data
+        }
+        #endregion
+
+        #region Constructor
+        /// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="webSession">Client Session</param>
@@ -132,11 +165,13 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			iNbLevels = _webSession.GenericProductDetailLevel.GetNbLevels;
 			cellLevels = new AdExpressCellLevel[iNbLevels + 1];
 			tab.AddNewLine(LineType.total);
-			tab[iCurLine, 1] = cellLevels[0] = new AdExpressCellLevel(0, GestionWeb.GetWebWord(805, _webSession.SiteLanguage), 0, iCurLine, _webSession);
-			tab[iCurLine, 2] = new CellMediaScheduleLink(cellLevels[0], _webSession);                      
+			tab[iCurLine, GetColumnIndex(ColumnName.product)] = cellLevels[0] = new AdExpressCellLevel(0, GestionWeb.GetWebWord(805, _webSession.SiteLanguage), 0, iCurLine, _webSession);
+            /* If the customer don't have the right to media schedule module, we don't show the MS column
+             * */
+            if (_webSession.CustomerLogin.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) != null)
+			    tab[iCurLine, GetColumnIndex(ColumnName.mediaSchedule)] = new CellMediaScheduleLink(cellLevels[0], _webSession);                      
 
             initLine(tab, iCurLine, cellFactory, cellLevels[0]);
-
 			#endregion
 
 			i = 1;
@@ -152,14 +187,17 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 							cellLevels[j] = null;
 						}
 						iCurLine = tab.AddNewLine(lineTypes[i]);
-						tab[iCurLine, 1] = cellLevels[i] = new AdExpressCellLevel(dCurLevel, _webSession.GenericProductDetailLevel.GetLabelValue(row, i), cellLevels[i - 1], i, iCurLine, _webSession);
+						tab[iCurLine, GetColumnIndex(ColumnName.product)] = cellLevels[i] = new AdExpressCellLevel(dCurLevel, _webSession.GenericProductDetailLevel.GetLabelValue(row, i), cellLevels[i - 1], i, iCurLine, _webSession);
 						if (row.Table.Columns.Contains("id_address") && row["id_address"] != System.DBNull.Value) {
 							cellLevels[i].AddressId = Convert.ToInt64(row["id_address"]);
 						}
 						level = _webSession.GenericProductDetailLevel.GetDetailLevelItemInformation(i);
 						//PM
                         //if (level != DetailLevelItemInformation.Levels.agency && level != DetailLevelItemInformation.Levels.groupMediaAgency) {
-							tab[iCurLine, 2] = new CellMediaScheduleLink((AdExpressCellLevel)tab[iCurLine, 1], _webSession);
+                        /* If the customer don't have the right to media schedule module, we don't show the MS link column
+                        * */
+                        if (_webSession.CustomerLogin.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) != null)
+							tab[iCurLine, GetColumnIndex(ColumnName.mediaSchedule)] = new CellMediaScheduleLink((AdExpressCellLevel)tab[iCurLine, 1], _webSession);
                         //}
                         //else {
                         //    tab[iCurLine, 2] = new CellEmpty();
@@ -183,33 +221,33 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         protected void InitDoubleLine(ResultTable oTab, int cLine, CellUnitFactory cellFactory, AdExpressCellLevel parent)
         {
             //total
-            if(!_webSession.Percentage) oTab[cLine, 3] = cellFactory.Get(0.0);
-            else oTab[cLine, 3] = new CellPDM(0.0, null);
+            if(!_webSession.Percentage) oTab[cLine, GetColumnIndex(ColumnName.total)] = cellFactory.Get(0.0);
+            else oTab[cLine, GetColumnIndex(ColumnName.total)] = new CellPDM(0.0, null);
 
             //pourcentage
-            if(parent == null) oTab[cLine, 4] = new CellPercent(0.0, null);
-            else oTab[cLine, 4] = new CellPercent(0.0, (CellUnit)oTab[parent.LineIndexInResultTable, 4]);
+            if (parent == null) oTab[cLine, GetColumnIndex(ColumnName.percentage)] = new CellPercent(0.0, null);
+            else oTab[cLine, GetColumnIndex(ColumnName.percentage)] = new CellPercent(0.0, (CellUnit)oTab[parent.LineIndexInResultTable, GetColumnIndex(ColumnName.percentage)]);
 
             //initialisation des autres colonnes
-            for(int j = 5; j < oTab.DataColumnsNumber + 1; j++) {
+            for (int j = GetColumnIndex(ColumnName.data); j < oTab.DataColumnsNumber + 1; j++) {
                 if(!_webSession.Percentage) oTab[cLine, j] = cellFactory.Get(0.0);
-                else oTab[cLine, j] = new CellPDM(0.0, (CellUnit)oTab[cLine, 3]);
+                else oTab[cLine, j] = new CellPDM(0.0, (CellUnit)oTab[cLine, GetColumnIndex(ColumnName.total)]);
             }
         }
         protected void InitListLine(ResultTable oTab, int cLine, CellUnitFactory cellFactory, AdExpressCellLevel parent)
         {
             //total
-            if(!_webSession.Percentage) oTab[cLine, 3] = cellFactory.Get(0.0);
-            else oTab[cLine, 3] = new CellVersionNbPDM(null);
+            if (!_webSession.Percentage) oTab[cLine, GetColumnIndex(ColumnName.total)] = cellFactory.Get(0.0);
+            else oTab[cLine, GetColumnIndex(ColumnName.total)] = new CellVersionNbPDM(null);
 
             //pourcentage
-            if(parent == null) oTab[cLine, 4] = new CellVersionNbPDM(null);
-            else oTab[cLine, 4] = new CellVersionNbPDM((CellIdsNumber)oTab[parent.LineIndexInResultTable, 3]);
+            if (parent == null) oTab[cLine, GetColumnIndex(ColumnName.percentage)] = new CellVersionNbPDM(null);
+            else oTab[cLine, GetColumnIndex(ColumnName.percentage)] = new CellVersionNbPDM((CellIdsNumber)oTab[parent.LineIndexInResultTable, GetColumnIndex(ColumnName.total)]);
 
             //initialisation des autres colonnes
-            for(int j = 5; j < oTab.DataColumnsNumber + 1; j++) {
+            for (int j = GetColumnIndex(ColumnName.data); j < oTab.DataColumnsNumber + 1; j++) {
                 if(!_webSession.Percentage) oTab[cLine, j] = cellFactory.Get(0.0);
-                else oTab[cLine, j] = new CellVersionNbPDM((CellIdsNumber)oTab[cLine, 3]);
+                else oTab[cLine, j] = new CellVersionNbPDM((CellIdsNumber)oTab[cLine, GetColumnIndex(ColumnName.total)]);
             }
         }
         #endregion
@@ -223,8 +261,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 double valu = Convert.ToDouble(row[_webSession.GetSelectedUnit().Id.ToString()]);
                 //Affect value
                 oTab.AffectValueAndAddToHierarchy(1, cLine, lCol, valu);
-                oTab.AffectValueAndAddToHierarchy(1, cLine, 4, valu);
-                oTab.AffectValueAndAddToHierarchy(1, cLine, 3, valu);
+                oTab.AffectValueAndAddToHierarchy(1, cLine, GetColumnIndex(ColumnName.percentage), valu);
+                oTab.AffectValueAndAddToHierarchy(1, cLine, GetColumnIndex(ColumnName.total), valu);
             }
         }
         protected void SetListLine(ResultTable oTab, int cLine, DataRow row)
@@ -236,8 +274,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 //Affect value
                 for(int i = 0; i < tIds.Length; i++) {
                     oTab.AffectValueAndAddToHierarchy(1, cLine, lCol, Convert.ToInt64(tIds[i]));
-                    oTab.AffectValueAndAddToHierarchy(1, cLine, 4, Convert.ToInt64(tIds[i]));
-                    oTab.AffectValueAndAddToHierarchy(1, cLine, 3, Convert.ToInt64(tIds[i]));
+                    oTab.AffectValueAndAddToHierarchy(1, cLine, GetColumnIndex(ColumnName.percentage), Convert.ToInt64(tIds[i]));
+                    oTab.AffectValueAndAddToHierarchy(1, cLine, GetColumnIndex(ColumnName.total), Convert.ToInt64(tIds[i]));
                 }
             }
         }
@@ -313,7 +351,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		protected virtual void GetCalendarHeaders(out Headers headers, out CellUnitFactory cellFactory, ArrayList parutions) {
 			headers = new Headers();
 			headers.Root.Add(new Header(true, GestionWeb.GetWebWord(PROD_COL, _webSession.SiteLanguage), PROD_COL));
-			headers.Root.Add(new HeaderMediaSchedule(false, GestionWeb.GetWebWord(PM_COL, _webSession.SiteLanguage), PM_COL));
+            /* If the customer don't have the right to media schedule module, we don't show the MS column
+             * */
+            if (_webSession.CustomerLogin.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) != null)
+			    headers.Root.Add(new HeaderMediaSchedule(false, GestionWeb.GetWebWord(PM_COL, _webSession.SiteLanguage), PM_COL));
 			headers.Root.Add(new Header(true, GestionWeb.GetWebWord(TOTAL_COL, _webSession.SiteLanguage), TOTAL_COL));
 			headers.Root.Add(new Header(true, GestionWeb.GetWebWord(POURCENTAGE_COL, _webSession.SiteLanguage), POURCENTAGE_COL));
 
@@ -331,5 +372,37 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		}
 		#endregion
 
-	}
+        #region GetColumnIndex
+        /// <summary>
+        /// Get the column index depending on the column name
+        /// <remarks>This method is used to get dynamically the index of a column and to treat the case when we don't have the right for the media schedule module</remarks>
+        /// </summary>
+        /// <param name="columnName">Column name (product, meddia schedule link ...)</param>
+        /// <returns>Column index</returns>
+        private int GetColumnIndex(ColumnName columnName) {
+
+            int showMediaSchedule = 0;
+
+            if (_webSession.CustomerLogin.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) != null)
+                showMediaSchedule = 1;
+
+            switch(columnName){
+                case ColumnName.product:
+                    return PRODUCT;
+                case ColumnName.mediaSchedule:
+                    return MEDIA_SCHEDULE;
+                case ColumnName.total:
+                    return TOTAL + showMediaSchedule; 
+                case ColumnName.percentage:
+                    return PERCENTAGE + showMediaSchedule;
+                case ColumnName.data:
+                    return DATA + showMediaSchedule;
+                default:
+                    throw new PortofolioException("The column name does not exist.");
+            }
+
+        }
+        #endregion
+
+    }
 }
