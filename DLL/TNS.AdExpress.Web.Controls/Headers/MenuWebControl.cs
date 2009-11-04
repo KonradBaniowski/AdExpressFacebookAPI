@@ -374,7 +374,8 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 
 			js.Append("\r\n<script>");
 			js.Append("\r\n\tfunction createjsDOMenu() {");
-			js.Append("\r\n\t\t" + MAIN_MENU + " = new jsDOMenu(205);");
+//			js.Append("\r\n\t\t" + MAIN_MENU + " = new jsDOMenu(205);");
+            js.Append("\r\n\t\t" + MAIN_MENU + " = new jsDOMenu(230);");
 
 			// Recall Selection
 			if (pInfo!= null && pInfo.AllowRecall && !this._forbidRecall){
