@@ -4,13 +4,21 @@ div.periodicity-type, div.periodicity-type-day
 {
 	color: #644883;
 	font-weight: bold;
+	border: solid 1px #644883;
+	float: left;
+	background-color: White;
 }
 
-div.periodicity-type a, div.periodicity-type-day a
+div.periodicity-type a, 
+a.alert-periodicity-type-day
 {
-	background-color: #E8E4ED;
 	color: #644883;
-	font-size:11px;
+}
+
+div.periodicity-type a, 
+a.alert-periodicity-type-day,
+a.alert-periodicity-type-day-warning
+{
 	padding: 4px 2px 4px 2px;
 	cursor: pointer;
 	display: inline-block;
@@ -18,16 +26,26 @@ div.periodicity-type a, div.periodicity-type-day a
 	font-weight: normal;
 	outline: none;
 	text-align: center;
+	font-family:Arial;
+	font-size:10px;
 }
 
 a.periodicity-param-selected
 {
-	background-color: #C8F4C8;
+	background-color: #DED8E5;
+	color: White;
 }
 
-div.periodicity-type-day a 
+a.alert-periodicity-type-day,
+a.alert-periodicity-type-day-warning
 {
 	width:auto;
+}
+
+a.alert-periodicity-type-day-warning
+{
+	font-family:Arial;
+	color: Orange;
 }
 
 /* Alert consultation page */
@@ -92,4 +110,65 @@ div.alert-content
 	background-color: #DED8E5;
 	border-top: solid 1px #644883;
 	width: 100%;
+}
+.alert-dayofweek-selection-title
+{
+	background-color: #644883;
+	font-size: 11px;
+	color: White;
+	font-family: Arial;
+	text-align:center;
+}
+.alert-dayofmonth-selection-title
+{
+	background-color: #644883;
+	font-size: 11px;
+	color: White;
+	font-family: Arial;
+	text-align:center;
+	
+	width:130px;
+	margin-left: auto; 
+	margin-right: auto; 
+
+}
+
+.alert-dayofmonth-selection-table,
+.alert-dayofmonth-selection-table td.alert-dayofmonth-selection-table-warning
+{
+	/*width: 140px;*/
+	background-color: White;
+}
+
+.alert-dayofmonth-selection-table td.alert-dayofmonth-selection-table-warning a
+{
+	font-family:Arial;
+	color: Orange;
+}
+
+p.alert-dayofmonth-selection-table-warning
+{
+	color: #644883;
+	font-weight: normal;
+	font-size:11px;
+	font-family:Arial;
+	text-align:justify;
+}
+
+
+.alert-dayofmonth-selection-table td
+{
+	/*width: 21px;	*/
+	text-align: center;
+}
+
+.alert-dayofmonth-selection-table a
+{
+	text-decoration: none;	
+}
+
+
+.imageCursor
+{
+	cursor:pointer;
 }

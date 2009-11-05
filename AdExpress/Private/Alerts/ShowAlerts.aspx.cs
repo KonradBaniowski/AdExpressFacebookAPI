@@ -109,10 +109,6 @@ namespace AdExpress.Private.Alerts{
 		/// Script
 		/// </summary>
 		protected string script;
-        /// <summary>
-        /// Current Theme Name
-        /// </summary>
-        protected string _theme;
 		/// <summary>
 		/// id Session
 		/// </summary>
@@ -147,11 +143,10 @@ namespace AdExpress.Private.Alerts{
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){		
-			
 			try{
-                _theme = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
+                string theme = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
 				//Modification de la langue pour les Textes AdExpress                
-			
+
 				HeaderWebControl1.ActiveMenu = CstWeb.MenuTraductions.MY_ADEXPRESS;
 
 				//Charge la liste des répertoires
@@ -198,6 +193,7 @@ namespace AdExpress.Private.Alerts{
 					Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"insertHidden",TNS.AdExpress.Web.Functions.Script.InsertHidden());
 				}
 				#endregion
+
 			}
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
@@ -208,6 +204,17 @@ namespace AdExpress.Private.Alerts{
 
 		#endregion
 
+        #region OnLoad
+        /// <summary>
+        /// On Load event
+        /// </summary>
+        /// <param name="e">Arguments</param>
+        protected override void OnLoad(EventArgs e) {
+            base.OnLoad(e);
+            SetAllTextLanguage(Page.Controls, _webSession.SiteLanguage);
+        }
+        #endregion
+
         #region alertsItemBindingalertsItemBinding
         /// <summary>
         /// Alerts Binding callback
@@ -216,6 +223,7 @@ namespace AdExpress.Private.Alerts{
         /// <param name="e">Data binding parameter, which contains an Alert object</param>
         protected void alertsItemBinding(object sender, RepeaterItemEventArgs e)
         {
+            string theme = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
             Alert alert = (Alert)e.Item.DataItem;
             AlertOccurenceCollection occurrences = alertDAL.GetOccurrences(alert.AlertId);
 
@@ -223,14 +231,17 @@ namespace AdExpress.Private.Alerts{
             HtmlContainerControl headerAlert = (HtmlContainerControl)e.Item.FindControl("headerAlert");
             headerAlert.InnerHtml += String.Format(" - {0} {1}", occurrences.Count, (occurrences.Count <= 1 ? GestionWeb.GetWebWord(2600, _siteLanguage) : GestionWeb.GetWebWord(2601, _siteLanguage)));
 
-            HtmlImage status = (HtmlImage)e.Item.FindControl("flagStatus");
-            switch (alert.Status)
-            {
+            System.Web.UI.Control control =  GetControl(repeaterAlerts.Controls, "flagStatus");
+            System.Web.UI.WebControls.Image imageFc = null;
+            if(control == null) throw new Exception("The control 'flagStatus' is not defined in Page showAlerts");
+            if(control.GetType() == typeof(System.Web.UI.WebControls.Image))
+                imageFc = (System.Web.UI.WebControls.Image)control;
+            switch(alert.Status) {
                 case AlertStatuses.ToDelete:
-                    status.Src = "/App_Themes/DefaultAdExpressFr/Images/Common/flagUnactive.gif";
+                    imageFc.ImageUrl = "/App_Themes/" + theme + "/Images/Common/flagUnactive.gif";
                     break;
                 case AlertStatuses.Activated:
-                    status.Src = "/App_Themes/DefaultAdExpressFr/Images/Common/flagActivated.gif";
+                    imageFc.ImageUrl = "/App_Themes/" + theme + "/Images/Common/flagActivated.gif";
                     break;
             }
 
@@ -1027,6 +1038,42 @@ namespace AdExpress.Private.Alerts{
         }
 
 		#endregion
+
+        #region GetControl
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="controlCollection"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private System.Web.UI.Control GetControl(System.Web.UI.ControlCollection controlCollection, string name) {
+            System.Web.UI.Control control = null;
+            for(int i = 0; i < controlCollection.Count; i++) {
+                if(controlCollection[i].ID == name)
+                    return controlCollection[i];
+                else if(controlCollection[i].Controls.Count > 0) {
+                    control = GetControl(controlCollection[i].Controls, name);
+                    if(control != null)
+                        return control;
+                }
+            }
+            return null;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="language"></param>
+        public void SetAllTextLanguage(System.Web.UI.ControlCollection controlCollection, int language) {
+            foreach(System.Web.UI.Control currentControl in controlCollection) {
+                if(currentControl is ITranslation) 
+                    ((ITranslation)currentControl).Language = language;
+                if(currentControl.Controls.Count > 0) {
+                    SetAllTextLanguage(currentControl.Controls, language);
+                }
+            }
+        }
+        #endregion
 
         #endregion
 

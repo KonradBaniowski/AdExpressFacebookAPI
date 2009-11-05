@@ -1,16 +1,15 @@
-<%@ Import Namespace="System.Data" %>
 <%@ Page language="c#" Inherits="AdExpress.Private.Alerts.ShowAlerts" CodeFile="ShowAlerts.aspx.cs" %>
 <%@ Register TagPrefix="cc1" Namespace="TNS.AdExpress.Web.Controls.Translation" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc3" Namespace="TNS.AdExpress.Web.Controls.Buttons" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc2" Namespace="TNS.AdExpress.Web.Controls.Headers" Assembly="TNS.AdExpress.Web.Controls" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
-<HTML>
-	<HEAD runat="server">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head runat="server">
 		<title>AdExpress</title>
-		<meta http-equiv="Content-Type" content="text/html;">
-		<meta content="C#" name="CODE_LANGUAGE">
+		<meta http-equiv="Content-Type" content="text/html;" />
+		<meta content="C#" name="CODE_LANGUAGE" />
 		<meta content="JavaScript" name="vs_defaultClientScript">
-		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema" />
 		<script language="JavaScript" type="text/JavaScript">
 		<!--
 			function MM_preloadImages() { //v3.0
@@ -41,14 +40,14 @@
 		<meta http-equiv="expires" content="0">
 		<meta http-equiv="pragma" content="no-cache">
 		<meta content="no-cache" name="Cache-control">
-	</HEAD>
+	</head>
 	<body class="bodyStyle" onload="javascript:activateActiveX();">
 		<form id="Form2" method="post" runat="server">
-			<table height="600" cellSpacing="0" cellPadding="0" border="0">
+			<table height="600" cellspacing="0" cellpadding="0" border="0">
 					<tr>
 						<!-- marge de gauche-->
-						<td vAlign="top">
-							<table cellSpacing="0" cellPadding="0" border="0">
+						<td valign="top">
+							<table cellspacing="0" cellpadding="0" border="0">
 								<tr>
 									<td><asp:Image ID="Image153" runat="server" SkinID="logo_cote_gauche" height="100" width="10" /></td>
 								</tr>
@@ -58,9 +57,9 @@
 							</table>
 						</td>
 						<!-- menu -->
-						<td vAlign="top" class="imageBackGround">
-							<table id="tableMenu" cellSpacing="0" cellPadding="0" width="10" border="0">
-								<tr vAlign="top" class="whiteBackGround">
+						<td valign="top" class="imageBackGround">
+							<table id="tableMenu" cellspacing="0" cellpadding="0" width="10" border="0">
+								<tr valign="top" class="whiteBackGround">
 									<!-- Logo -->
 									<td><asp:Image ID="Image2" runat="server" SkinID="logo" height="90" width="185" /></td>
 								</tr>
@@ -76,7 +75,7 @@
 								<!--Mon Adexpress-->
 								<tr>
 									<td class="whiteBackGround">
-										<table cellSpacing="0" cellPadding="0" border="0">
+										<table cellspacing="0" cellpadding="0" border="0">
 											<tr class="violetBackGround">
 												<td><asp:Image ID="Image6" runat="server" SkinID="pixel" height="1" width="1" /></td>
 												<td><asp:Image ID="Image7" runat="server" SkinID="pixel" height="1" width="1" /></td>
@@ -84,7 +83,7 @@
 												<td><asp:Image ID="Image9" runat="server" SkinID="pixel" height="1" width="1" /></td>
 											</tr>
 											<tr>
-												<td vAlign="top"><asp:Image ID="Image10" runat="server" SkinID="block_fleche" height="12" width="12" /></td>
+												<td valign="top"><asp:Image ID="Image10" runat="server" SkinID="block_fleche" height="12" width="12" /></td>
 												<td class="blockdupliBackGround"><asp:Image ID="Image11" runat="server" SkinID="pixel" height="1" width="13" /></td>
 												<td class="txtNoir11Bold">
 													<p style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px"><cc1:adexpresstext language="33" id="AdExpressText1" runat="server" Code="829"></cc1:adexpresstext></p>
@@ -125,7 +124,7 @@
 								<!--Mes Univers-->
 								<tr>
 									<td class="whiteBackGround">
-										<table cellSpacing="0" cellPadding="0" border="0">
+										<table cellspacing="0" cellpadding="0" border="0">
 											<tr class="violetBackGround">
 												<td><asp:Image ID="Image24" runat="server" SkinID="pixel" height="1" width="1" /></td>
 												<td><asp:Image ID="Image25" runat="server" SkinID="pixel" height="1" width="1" /></td>
@@ -133,7 +132,7 @@
 												<td><asp:Image ID="Image26" runat="server" SkinID="pixel" height="1" width="1" /></td>
 											</tr>
 											<tr>
-												<td vAlign="top"><asp:Image ID="Image47" runat="server" SkinID="block_fleche" height="12" width="12" /></td>
+												<td valign="top"><asp:Image ID="Image47" runat="server" SkinID="block_fleche" height="12" width="12" /></td>
 												<td class="blockdupliBackGround"><asp:Image ID="Image33" runat="server" SkinID="pixel" height="1" width="13" /></td>
 												<td class="txtNoir11Bold">
 													<p style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px"><cc1:adexpresstext language="33" id="Adexpresstext3" runat="server" Code="875"></cc1:adexpresstext></p>
@@ -170,7 +169,7 @@
 								<!--Mes PDF-->
 								<tr>
 									<td class="whiteBackGround">
-										<table cellSpacing="0" cellPadding="0" border="0">
+										<table cellspacing="0" cellpadding="0" border="0">
 											<tr class="violetBackGround">
 												<td><asp:Image ID="Image34" runat="server" SkinID="pixel" height="1" width="1" /></td>
 												<td><asp:Image ID="Image35" runat="server" SkinID="pixel" height="1" width="1" /></td>
@@ -178,7 +177,7 @@
 												<td><asp:Image ID="Image36" runat="server" SkinID="pixel" height="1" width="1" /></td>
 											</tr>
 											<tr>
-												<td vAlign="top"><asp:Image ID="Image17" runat="server" SkinID="block_fleche" height="12" width="12" /></td>
+												<td valign="top"><asp:Image ID="Image17" runat="server" SkinID="block_fleche" height="12" width="12" /></td>
 												<td class="blockdupliBackGround"><asp:Image ID="Image18" runat="server" SkinID="pixel" height="1" width="13" /></td>
 												<td class="txtNoir11Bold">
 													<p style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px"><cc1:adexpresstext language="33" id="Adexpresstext7" runat="server" Code="1778"></cc1:adexpresstext></p>
@@ -215,7 +214,7 @@
 								<!-- Mes Alertes -->
 								<tr runat="server" id="blockAlerts">
 									<td class="whiteBackGround">
-										<table cellSpacing="0" cellPadding="0" border="0">
+										<table cellspacing="0" cellpadding="0" border="0">
 											<tr class="violetBackGround">
 												<td><asp:Image ID="Image53" runat="server" SkinID="pixel" height="1" width="1" /></td>
 												<td><asp:Image ID="Image54" runat="server" SkinID="pixel" height="1" width="1" /></td>
@@ -223,7 +222,7 @@
 												<td><asp:Image ID="Image56" runat="server" SkinID="pixel" height="1" width="1" /></td>
 											</tr>
 											<tr>
-												<td vAlign="top"><asp:Image ID="Image57" runat="server" SkinID="block_fleche" height="12" width="12" /></td>
+												<td valign="top"><asp:Image ID="Image57" runat="server" SkinID="block_fleche" height="12" width="12" /></td>
 												<td class="blockdupliBackGround"><asp:Image ID="Image58" runat="server" SkinID="pixel" height="1" width="13" /></td>
 												<td class="txtNoir11Bold">
 													<p style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px"><cc1:adexpresstext language="33" id="Adexpresstext9" runat="server" Code="2585"></cc1:adexpresstext></p>
@@ -261,8 +260,8 @@
 							<!--TEST : acces à la page de resultat Plan Media -->
 							<!--Fin TEST : acces à la page de resultat Plan Media --></td>
 						<!-- Séparateur -->
-						<td vAlign="top">
-							<table id="Table5" cellSpacing="0" cellPadding="0" border="0">
+						<td valign="top">
+							<table id="Table5" cellspacing="0" cellpadding="0" border="0">
 								<tr>
 									<td><asp:Image ID="Image48" runat="server" SkinID="logo_cote_droit" height="100" width="5" /></td>
 								</tr>
@@ -275,8 +274,8 @@
 						<td width="10" class="imageBackGround">&nbsp;</td>
 						<td style="WIDTH: 6px" width="6" class="whiteBackGround">&nbsp;</td>
 						<!-- droite-->
-						<td vAlign="top" class="imageBackGround">
-							<table cellSpacing="0" cellPadding="0" border="0">
+						<td valign="top" class="imageBackGround">
+							<table cellspacing="0" cellpadding="0" border="0">
 								<tr>
 									<!-- Menu du haut-->
 									<td><cc2:headerwebcontrol language="33" id="HeaderWebControl1" runat="server" Type_de_page="generic" ActiveMenu="2"></cc2:headerwebcontrol></td>
@@ -284,43 +283,44 @@
 								<tr>
 									<!-- ligne du haut a droite -->
 									<td>
-										<table id="Table2" cellSpacing="0" cellPadding="0" width="100%" border="0">
+										<table id="Table2" cellspacing="0" cellpadding="0" width="100%" border="0">
 											<tr>
-												<td vAlign="top" align="left"><asp:Image ID="Image43" runat="server" SkinID="croix" height="5" width="5" /></td>
+												<td valign="top" align="left"><asp:Image ID="Image43" runat="server" SkinID="croix" height="5" width="5" /></td>
 												<td><asp:Image ID="Image42" runat="server" SkinID="pixel" height="17" width="1" /></td>
-												<td vAlign="top" align="right"><asp:Image ID="Image44" runat="server" SkinID="croix" height="5" width="5" /></td>
+												<td valign="top" align="right"><asp:Image ID="Image44" runat="server" SkinID="croix" height="5" width="5" /></td>
 											</tr>
 										</table>
 									</td>
 								</tr>
 								<!-- Centre -->
 								<tr>
+								
 									<td>
-										<TABLE id="Table1" cellSpacing="0" cellPadding="0" width="727" border="0">
-											<TR class="violetBackGround" height="14">
-												<TD width="14"><asp:Image ID="Image45" runat="server" SkinID="fleche_1" /></TD>
-												<TD class="txtBlanc11Bold bandeauTitreBackGround" colSpan="2">&nbsp;
-													<cc1:adexpresstext language="33" id="AdExpressText5" runat="server" Code="2584"></cc1:adexpresstext></TD>
-											</TR>
-											<TR>
-												<TD></TD>
-												<TD class="txtViolet11 whiteBackGround" vAlign="middle" colSpan="2" height="20">&nbsp;
-													<cc1:adexpresstext language="33" id="AdExpressText6" runat="server" Code="907"></cc1:adexpresstext></TD>
-											</TR>
-											<TR>
-												<TD></TD>
-												<TD class="whiteBackGround" colSpan="2" height="10"></TD>
-											</TR>
-											<TR>
-												<TD></TD>
-												<TD align="right" class="whiteBackGround">
+										<table id="Table1" cellspacing="0" cellpadding="0" width="727" border="0">
+											<tr class="violetBackGround" height="14">
+												<td width="14"><asp:Image ID="Image45" runat="server" SkinID="fleche_1" /></td>
+												<td class="txtBlanc11Bold bandeauTitreBackGround" colSpan="2">&nbsp;
+													<cc1:adexpresstext language="33" id="AdExpressText5" runat="server" Code="2584"></cc1:adexpresstext></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td class="txtViolet11 whiteBackGround" valign="middle" colSpan="2" height="20">&nbsp;
+													<cc1:adexpresstext language="33" id="AdExpressText6" runat="server" Code="907"></cc1:adexpresstext></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td class="whiteBackGround" colSpan="2" height="10"></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td align="right" class="whiteBackGround">
 													<!--Liste des alertes-->
 													<asp:Repeater ID="repeaterAlerts" runat="server" OnItemDataBound="alertsItemBinding">
 													    <ItemTemplate>
 													        <div class="block-valid-alert">
 													            <div style="height: 20px">
-													                <img id="flagStatus" runat="server" src="/App_Themes/DefaultAdExpressFr/Images/Common/flagPending.gif" align="left" />
-													                <img align="right" height="15" width="15" src="/App_Themes/DefaultAdExpressFr/Images/Common/Button/bt_arrow_down.gif"/>
+													                <asp:Image ID="flagStatus" runat="server" SkinID="alertFlagPending" ImageAlign="Left"/>
+													                <asp:Image ID="Image65" runat="server" SkinID="bt_arrow_down" height="15" width="15" ImageAlign="Right"/>
 												                    <h2 id="headerAlert" runat="server" style="text-align:left;">
 												                        <%# DataBinder.Eval(Container.DataItem, "Title") %>
 												                    </h2>
@@ -349,14 +349,14 @@
 													</asp:Repeater>
 											        <div class="block-valid-alert-last"></div>
 													<input id="idMySession" type="hidden" name="nameMySession" /> <input id="idPopup" type="hidden" name="namePopup" />
-												</TD>
-												<TD width="4px" class="whiteBackGround"></TD>
-											</TR>
-											<TR>
-												<TD></TD>
-												<TD class="whiteBackGround" colSpan="2" height="10"></TD>
-											</TR>
-										</TABLE>
+												</td>
+												<td width="4px" class="whiteBackGround"></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td class="whiteBackGround" colSpan="2" height="10"></td>
+											</tr>
+										</table>
 									</td>
 								</tr>
 							</table>
@@ -365,39 +365,39 @@
 						<td></td>
 					</tr>
 					<!-- ligne du bas a droite -->
-					<TR height="5">
-						<TD></TD>
-						<TD vAlign="top" class="imageBackGround">
-							<TABLE id="Table7" cellSpacing="0" cellPadding="0" width="100%" border="0">
-								<TR>
-									<TD vAlign="top"><asp:Image ID="Image49" runat="server" SkinID="croix" height="5" width="5" /></TD>
-									<TD></TD>
-									<TD vAlign="top" align="right"><asp:Image ID="Image50" runat="server" SkinID="croix" height="5" width="5" /></TD>
-								</TR>
-								<TR>
-									<TD vAlign="top"></TD>
-									<TD></TD>
-									<TD vAlign="top" align="right"></TD>
-								</TR>
-							</TABLE>
-						</TD>
-						<TD></TD>
-						<TD class="violetBackGround"></TD>
-						<TD class="imageBackGround"></TD>
-						<TD style="WIDTH: 6px"></TD>
-						<TD id="dellCel" vAlign="top" class="imageBackGround">
-							<TABLE id="Table8" cellSpacing="0" cellPadding="0" width="100%" border="0">
-								<TR>
-									<TD vAlign="top"><asp:Image ID="Image51" runat="server" SkinID="croix" height="5" width="5" /></TD>
-									<TD></TD>
-									<TD vAlign="top" align="right"><asp:Image ID="Image52" runat="server" SkinID="croix" height="5" width="5" /></TD>
-								</TR>
-							</TABLE>
-						</TD>
-					</TR>
+					<tr height="5">
+						<td></td>
+						<td valign="top" class="imageBackGround">
+							<table id="Table7" cellspacing="0" cellpadding="0" width="100%" border="0">
+								<tr>
+									<td valign="top"><asp:Image ID="Image49" runat="server" SkinID="croix" height="5" width="5" /></td>
+									<td></td>
+									<td valign="top" align="right"><asp:Image ID="Image50" runat="server" SkinID="croix" height="5" width="5" /></td>
+								</tr>
+								<tr>
+									<td valign="top"></td>
+									<td></td>
+									<td valign="top" align="right"></td>
+								</tr>
+							</table>
+						</td>
+						<td></td>
+						<td class="violetBackGround"></td>
+						<td class="imageBackGround"></td>
+						<td style="WIDTH: 6px"></td>
+						<td id="dellCel" valign="top" class="imageBackGround">
+							<table id="Table8" cellspacing="0" cellpadding="0" width="100%" border="0">
+								<tr>
+									<td valign="top"><asp:Image ID="Image51" runat="server" SkinID="croix" height="5" width="5" /></td>
+									<td></td>
+									<td valign="top" align="right"><asp:Image ID="Image52" runat="server" SkinID="croix" height="5" width="5" /></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
 				
 			</table>
 			&nbsp;
 		</form>
 	</body>
-</HTML>
+</html>

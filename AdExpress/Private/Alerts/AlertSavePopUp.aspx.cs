@@ -102,9 +102,9 @@ namespace AdExpress.Private.Alerts
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e) {
 			try{
-                if (_isQuotaFull)
-                    return;
+                if (_isQuotaFull) return;
                 this.ddlPeriodicityType.Attributes.Add("onchange", "onPeriodicityChanged(this);");
+                string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
 
 				#region Paramètres pour les fiches justificatives
 				//Récupération des paramètres de l'url
@@ -132,24 +132,91 @@ namespace AdExpress.Private.Alerts
                 }
                 #endregion
 
-                #region Initialisation Periodicity Type Weekly
-                this.lnkMonday.Text = GestionWeb.GetWebWord(1554, _webSession.SiteLanguage);
-                this.lnkMonday.Attributes.Add("onclick", "onPeriodicityParameterClicked(1, this);");
-                this.lnkTuesday.Text = GestionWeb.GetWebWord(1555, _webSession.SiteLanguage);
-                this.lnkTuesday.Attributes.Add("onclick", "onPeriodicityParameterClicked(2, this);");
-                this.lnkWednesday.Text = GestionWeb.GetWebWord(1556, _webSession.SiteLanguage);
-                this.lnkWednesday.Attributes.Add("onclick", "onPeriodicityParameterClicked(3, this);");
-                this.lnkThursday.Text = GestionWeb.GetWebWord(1557, _webSession.SiteLanguage);
-                this.lnkThursday.Attributes.Add("onclick", "onPeriodicityParameterClicked(4, this);");
-                this.lnkFriday.Text = GestionWeb.GetWebWord(1558, _webSession.SiteLanguage);
-                this.lnkFriday.Attributes.Add("onclick", "onPeriodicityParameterClicked(5, this);");
-                this.lnkSaturday.Text = GestionWeb.GetWebWord(1559, _webSession.SiteLanguage);
-                this.lnkSaturday.Attributes.Add("onclick", "onPeriodicityParameterClicked(6, this);");
-                this.lnkSunday.Text = GestionWeb.GetWebWord(1560, _webSession.SiteLanguage);
-                this.lnkSunday.Attributes.Add("onclick", "onPeriodicityParameterClicked(7, this);");
+                #region Initialisation images path for calendar
+                string baseImgPath = "/App_Themes/" + themeName + @"/Images/Culture/AlertCalendar/";
+
+                this.lnkMonday.ImageUrl     = baseImgPath + "DayLab_1.gif";
+                this.lnkTuesday.ImageUrl    = baseImgPath + "DayLab_2.gif";
+                this.lnkWednesday.ImageUrl  = baseImgPath + "DayLab_3.gif";
+                this.lnkThursday.ImageUrl   = baseImgPath + "DayLab_4.gif";
+                this.lnkFriday.ImageUrl     = baseImgPath + "DayLab_5.gif";
+                this.lnkSaturday.ImageUrl   = baseImgPath + "DayLab_6.gif";
+                this.lnkSunday.ImageUrl     = baseImgPath + "DayLab_7.gif";
+
+                this.lnkMonday.Attributes.Add("onclick", "onPeriodicityParameterClicked(1, this, '" + baseImgPath + "');");
+                this.lnkTuesday.Attributes.Add("onclick", "onPeriodicityParameterClicked(2, this, '" + baseImgPath + "');");
+                this.lnkWednesday.Attributes.Add("onclick", "onPeriodicityParameterClicked(3, this, '" + baseImgPath + "');");
+                this.lnkThursday.Attributes.Add("onclick", "onPeriodicityParameterClicked(4, this, '" + baseImgPath + "');");
+                this.lnkFriday.Attributes.Add("onclick", "onPeriodicityParameterClicked(5, this, '" + baseImgPath + "');");
+                this.lnkSaturday.Attributes.Add("onclick", "onPeriodicityParameterClicked(6, this, '" + baseImgPath + "');");
+                this.lnkSunday.Attributes.Add("onclick", "onPeriodicityParameterClicked(7, this, '" + baseImgPath + "');");
 
                 this.lblIntroWeekly.Text = GestionWeb.GetWebWord(2582, _webSession.SiteLanguage);
                 this.lblIntroMonthly.Text = GestionWeb.GetWebWord(2583, _webSession.SiteLanguage);
+
+                this.day1.ImageUrl = baseImgPath + "1.gif";
+                this.day2.ImageUrl = baseImgPath + "2.gif";
+                this.day3.ImageUrl = baseImgPath + "3.gif";
+                this.day4.ImageUrl = baseImgPath + "4.gif";
+                this.day5.ImageUrl = baseImgPath + "5.gif";
+                this.day6.ImageUrl = baseImgPath + "6.gif";
+                this.day7.ImageUrl = baseImgPath + "7.gif";
+                this.day8.ImageUrl = baseImgPath + "8.gif";
+                this.day9.ImageUrl = baseImgPath + "9.gif";
+                this.day10.ImageUrl = baseImgPath + "10.gif";
+                this.day11.ImageUrl = baseImgPath + "11.gif";
+                this.day12.ImageUrl = baseImgPath + "12.gif";
+                this.day13.ImageUrl = baseImgPath + "13.gif";
+                this.day14.ImageUrl = baseImgPath + "14.gif";
+                this.day15.ImageUrl = baseImgPath + "15.gif";
+                this.day16.ImageUrl = baseImgPath + "16.gif";
+                this.day17.ImageUrl = baseImgPath + "17.gif";
+                this.day18.ImageUrl = baseImgPath + "18.gif";
+                this.day19.ImageUrl = baseImgPath + "19.gif";
+                this.day20.ImageUrl = baseImgPath + "20.gif";
+                this.day21.ImageUrl = baseImgPath + "21.gif";
+                this.day22.ImageUrl = baseImgPath + "22.gif";
+                this.day23.ImageUrl = baseImgPath + "23.gif";
+                this.day24.ImageUrl = baseImgPath + "24.gif";
+                this.day25.ImageUrl = baseImgPath + "25.gif";
+                this.day26.ImageUrl = baseImgPath + "26.gif";
+                this.day27.ImageUrl = baseImgPath + "27.gif";
+                this.day28.ImageUrl = baseImgPath + "28.gif";
+                this.day29.ImageUrl = baseImgPath + "29.gif";
+                this.day30.ImageUrl = baseImgPath + "30.gif";
+                this.day31.ImageUrl = baseImgPath + "31.gif";
+
+                this.day1.Attributes.Add("onclick", "onPeriodicityParameterClicked(1, this, '" + baseImgPath + "');");
+                this.day2.Attributes.Add("onclick", "onPeriodicityParameterClicked(2, this, '" + baseImgPath + "');");
+                this.day3.Attributes.Add("onclick", "onPeriodicityParameterClicked(3, this, '" + baseImgPath + "');");
+                this.day4.Attributes.Add("onclick", "onPeriodicityParameterClicked(4, this, '" + baseImgPath + "');");
+                this.day5.Attributes.Add("onclick", "onPeriodicityParameterClicked(5, this, '" + baseImgPath + "');");
+                this.day6.Attributes.Add("onclick", "onPeriodicityParameterClicked(6, this, '" + baseImgPath + "');");
+                this.day7.Attributes.Add("onclick", "onPeriodicityParameterClicked(7, this, '" + baseImgPath + "');");
+                this.day8.Attributes.Add("onclick", "onPeriodicityParameterClicked(8, this, '" + baseImgPath + "');");
+                this.day9.Attributes.Add("onclick", "onPeriodicityParameterClicked(9, this, '" + baseImgPath + "');");
+                this.day10.Attributes.Add("onclick", "onPeriodicityParameterClicked(10, this, '" + baseImgPath + "');");
+                this.day11.Attributes.Add("onclick", "onPeriodicityParameterClicked(11, this, '" + baseImgPath + "');");
+                this.day12.Attributes.Add("onclick", "onPeriodicityParameterClicked(12, this, '" + baseImgPath + "');");
+                this.day13.Attributes.Add("onclick", "onPeriodicityParameterClicked(13, this, '" + baseImgPath + "');");
+                this.day14.Attributes.Add("onclick", "onPeriodicityParameterClicked(14, this, '" + baseImgPath + "');");
+                this.day15.Attributes.Add("onclick", "onPeriodicityParameterClicked(15, this, '" + baseImgPath + "');");
+                this.day16.Attributes.Add("onclick", "onPeriodicityParameterClicked(16, this, '" + baseImgPath + "');");
+                this.day17.Attributes.Add("onclick", "onPeriodicityParameterClicked(17, this, '" + baseImgPath + "');");
+                this.day18.Attributes.Add("onclick", "onPeriodicityParameterClicked(18, this, '" + baseImgPath + "');");
+                this.day19.Attributes.Add("onclick", "onPeriodicityParameterClicked(19, this, '" + baseImgPath + "');");
+                this.day20.Attributes.Add("onclick", "onPeriodicityParameterClicked(20, this, '" + baseImgPath + "');");
+                this.day21.Attributes.Add("onclick", "onPeriodicityParameterClicked(21, this, '" + baseImgPath + "');");
+                this.day22.Attributes.Add("onclick", "onPeriodicityParameterClicked(22, this, '" + baseImgPath + "');");
+                this.day23.Attributes.Add("onclick", "onPeriodicityParameterClicked(23, this, '" + baseImgPath + "');");
+                this.day24.Attributes.Add("onclick", "onPeriodicityParameterClicked(24, this, '" + baseImgPath + "');");
+                this.day25.Attributes.Add("onclick", "onPeriodicityParameterClicked(25, this, '" + baseImgPath + "');");
+                this.day26.Attributes.Add("onclick", "onPeriodicityParameterClicked(26, this, '" + baseImgPath + "');");
+                this.day27.Attributes.Add("onclick", "onPeriodicityParameterClicked(27, this, '" + baseImgPath + "');");
+                this.day28.Attributes.Add("onclick", "onPeriodicityParameterClicked(28, this, '" + baseImgPath + "');");
+                this.day29.Attributes.Add("onclick", "onPeriodicityParameterClicked(29, this, '" + baseImgPath + "');");
+                this.day30.Attributes.Add("onclick", "onPeriodicityParameterClicked(30, this, '" + baseImgPath + "');");
+                this.day31.Attributes.Add("onclick", "onPeriodicityParameterClicked(31, this, '" + baseImgPath + "');");
                 #endregion
 
                 #region Gestion des cookies
@@ -162,7 +229,6 @@ namespace AdExpress.Private.Alerts
                     WebFunctions.Cookies.ManageEmailListCookie(this.Page, false, this.tbxMail.Text);
 
 					cbxRegisterMail.Text = GestionWeb.GetWebWord(2117,_webSession.SiteLanguage);
-					cbxRegisterMail.CssClass = "txtViolet11Bold";
 					
 					HttpCookie isRegisterEmailForRemotingExport = null, savedEmailForRemotingExport = null;
 					cbxRegisterMail.Visible = true; //RegisterMailLabel.Visible = true;

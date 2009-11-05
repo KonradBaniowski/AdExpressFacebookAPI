@@ -603,7 +603,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 
         private string GetCreateAlertItem(string menuObjectName, ResultPageInformation pInfo, bool isValid) {
             if(isValid)
-                return ("\r\n\t\t" + menuObjectName + ".addMenuItem(new menuItem(\"" + GestionWeb.GetWebWord(2578, _webSession.SiteLanguage) + "\", \"alertMenuItem\",\"javascript:popupOpenBis('" + pInfo.CreateAlertUrl + "?idSession=" + _webSession.IdSession + ((_urlParameters.Length > 0) ? "&" + _urlParameters : "") + "&param=" + generateNumber() + "','470','315','no');\"));"
+                return ("\r\n\t\t" + menuObjectName + ".addMenuItem(new menuItem(\"" + GestionWeb.GetWebWord(2578, _webSession.SiteLanguage) + "\", \"alertMenuItem\",\"javascript:popupOpenBis('" + pInfo.CreateAlertUrl + "?idSession=" + _webSession.IdSession + ((_urlParameters.Length > 0) ? "&" + _urlParameters : "") + "&param=" + generateNumber() + "','470','450','no');\"));"
                    + "\r\n\t\t" + menuObjectName + ".items.alertMenuItem.showIcon(\"alertMenuIcon\", \"alertMenuIcon\");");   
             else
                 return ("\r\n\t\t" + menuObjectName + ".addMenuItem(new menuItem(\"" + GestionWeb.GetWebWord(2578, _webSession.SiteLanguage) + "\", \"alertMenuItem\", \"\", false, \"jsdomenuitemdisabled\", \"jsdomenuitemdisabledover\"));"
