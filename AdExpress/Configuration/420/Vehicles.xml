@@ -3,7 +3,7 @@
   <!-- RADIO -->
   <vehicle id="radio" databaseId="5" showInsertions="true" showCreations="false">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>duration</allowedUnit>
@@ -83,7 +83,7 @@
   <!-- NewsPaper -->
   <vehicle id="newspaper" databaseId="1" showInsertions="true" showCreations="false">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>insertion</allowedUnit>
@@ -162,7 +162,7 @@
   <!-- Magazine -->
   <vehicle id="magazine" databaseId="2" showInsertions="true" showCreations="false">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>insertion</allowedUnit>

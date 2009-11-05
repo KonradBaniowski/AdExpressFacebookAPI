@@ -614,6 +614,7 @@
           <ModuleVehicles list="1,2,3,5,50"/>
         </ModuleAllowedMediaUniverse>
         <ResultLimitation size="25000"/>
+        <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <selections>
           <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ASProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
             <allowedUniverseLevels>
@@ -665,6 +666,7 @@
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="341">
           <ModuleVehicles list="1,2,3,5,50"/>
         </ModuleAllowedMediaUniverse>
+        <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <selections>
           <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ASProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
             <allowedUniverseLevels>

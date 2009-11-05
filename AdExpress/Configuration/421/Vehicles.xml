@@ -3,7 +3,7 @@
   <!-- Evaliant -->
   <vehicle id="adnettrack" databaseId="1" showInsertions="false" showCreations="true" autopromo="true">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="versionNb">
       <allowedUnit>occurence</allowedUnit>
       <allowedUnit>versionNb</allowedUnit>
     </allowedUnits>

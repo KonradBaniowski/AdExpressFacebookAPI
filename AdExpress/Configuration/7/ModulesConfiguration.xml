@@ -656,6 +656,7 @@
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="1"/>
         </ModuleAllowedMediaUniverse>
+        <overrideDefaultUnits unit="euro"></overrideDefaultUnits>
         <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
           <allowedUniverseLevels>
             <allowedUniverseLevel id="6" name="advertiser"/>
