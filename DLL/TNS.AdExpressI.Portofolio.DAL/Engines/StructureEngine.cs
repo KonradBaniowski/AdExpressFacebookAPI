@@ -115,6 +115,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				case DBClassificationConstantes.Vehicles.names.others:
 					return GetStructData();
 				case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
 					return GetPressStructData();
 				default: throw new PortofolioDALException("The method to get data is not defined for this vehicle.");

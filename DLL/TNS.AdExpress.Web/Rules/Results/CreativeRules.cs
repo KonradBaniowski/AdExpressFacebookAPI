@@ -83,6 +83,8 @@ namespace TNS.AdExpress.Web.Rules.Results {
                     item = new CreativeMailing(-1);
                     break;
                 case DBClassifCst.Vehicles.names.internationalPress:
+                case DBClassifCst.Vehicles.names.newspaper:
+                case DBClassifCst.Vehicles.names.magazine:
                 case DBClassifCst.Vehicles.names.press:
                     item = new CreativePresse(-1);
                     break;
@@ -200,6 +202,8 @@ namespace TNS.AdExpress.Web.Rules.Results {
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.internet));
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.adnettrack));
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.press));
+                vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.newspaper));
+                vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.magazine));
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.outdoor));
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.radio));
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.tv));

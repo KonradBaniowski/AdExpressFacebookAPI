@@ -412,6 +412,8 @@ namespace AdExpress.Private.Results {
 							ResultsOptionsWebControl1.mediaDetail.Items.Remove(ResultsOptionsWebControl1.mediaDetail.Items.FindByText(GestionWeb.GetWebWord(1141, _webSession.SiteLanguage)));
 							break;
 						case CstDBClassif.Vehicles.names.press:
+                        case CstDBClassif.Vehicles.names.newspaper:
+                        case CstDBClassif.Vehicles.names.magazine:
 						case CstDBClassif.Vehicles.names.internet:
 							ResultsOptionsWebControl1.mediaDetail.Items.Remove(ResultsOptionsWebControl1.mediaDetail.Items.FindByText(GestionWeb.GetWebWord(1141, _webSession.SiteLanguage)));
 							break;

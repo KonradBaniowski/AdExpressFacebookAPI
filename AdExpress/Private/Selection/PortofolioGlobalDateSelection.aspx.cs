@@ -231,7 +231,10 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
 
 		previousWeekCheckBox.Language = previousMonthCheckbox.Language = previousYearCheckbox.Language = previousDayCheckBox.Language = currentYearCheckbox.Language = _webSession.SiteLanguage;
 		if (VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID).Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press
-			|| VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID).Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress) {
+			|| VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID).Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress
+            || VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID).Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.newspaper
+            || VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID).Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.magazine
+            ) {
 			Dictionary<string, string> parutionsDates = GetDatesParution();
 			if (parutionsDates != null && parutionsDates.Count > 0) {
 				GlobalCalendarWebControl1.IdDivCover = "div_press_Cover";

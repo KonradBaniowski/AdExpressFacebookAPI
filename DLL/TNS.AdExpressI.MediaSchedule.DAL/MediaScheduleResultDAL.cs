@@ -401,7 +401,11 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             }
 
             //INset option
-            if ((vehicleInfo != null && (vehicleInfo.Id == CstDBClassif.Vehicles.names.press || vehicleInfo.Id == CstDBClassif.Vehicles.names.internationalPress))
+            if ((vehicleInfo != null && (vehicleInfo.Id == CstDBClassif.Vehicles.names.press 
+                || vehicleInfo.Id == CstDBClassif.Vehicles.names.internationalPress
+                || CstDBClassif.Vehicles.names.newspaper == vehicleInfo.Id
+                || CstDBClassif.Vehicles.names.magazine == vehicleInfo.Id
+                ))
                 || (periodBreakDown != CstWeb.CustomerSessions.Period.PeriodBreakdownType.data && periodBreakDown != CstWeb.CustomerSessions.Period.PeriodBreakdownType.data_4m)
                 )
             {
@@ -729,6 +733,8 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                 case CstPeriod.PeriodBreakdownType.data_4m:
                     switch(VehiclesInformation.DatabaseIdToEnum(vehicleId)) {
                         case CstDBClassif.Vehicles.names.press:
+                        case CstDBClassif.Vehicles.names.newspaper:
+                        case CstDBClassif.Vehicles.names.magazine:
                         case CstDBClassif.Vehicles.names.internationalPress:
                         case CstDBClassif.Vehicles.names.outdoor:
                             switch(displayPeriod) {

@@ -47,7 +47,10 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Periods{
 			sql.Append("select distinct date_media_num ");			
 			
 			if((int)idVehicle==DBClassificationConstantes.Vehicles.names.press.GetHashCode() 
-				|| (int)idVehicle==DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode() ){			
+				|| (int)idVehicle==DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode()
+                || (int)idVehicle == DBClassificationConstantes.Vehicles.names.newspaper.GetHashCode()
+                || (int)idVehicle == DBClassificationConstantes.Vehicles.names.magazine.GetHashCode()
+                ){			
 				sql.Append(", disponibility_visual ");
 				sql.Append(", number_page_media ");
 				sql.Append(", date_cover_num ");
@@ -56,7 +59,11 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Periods{
 			sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+tableName+" wp ");
 
 			if((int)idVehicle==DBClassificationConstantes.Vehicles.names.press.GetHashCode() 
-				|| (int)idVehicle==DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode() ){				
+				|| (int)idVehicle==DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode()
+                || (int)idVehicle == DBClassificationConstantes.Vehicles.names.newspaper.GetHashCode()
+                || (int)idVehicle == DBClassificationConstantes.Vehicles.names.magazine.GetHashCode()
+                
+                ){				
 			sql.Append(","+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+DBConstantes.Tables.APPLICATION_MEDIA+" am ");	
 			sql.Append(", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"." + DBConstantes.Tables.ALARM_MEDIA + " al ");
 			}
@@ -69,7 +76,10 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Periods{
 					sql.Append(" and wp.date_media_num<="+dateEnd); 		
 
 			if((int)idVehicle==DBClassificationConstantes.Vehicles.names.press.GetHashCode() 
-				|| (int)idVehicle==DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode() ){
+				|| (int)idVehicle==DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode()
+                || (int)idVehicle == DBClassificationConstantes.Vehicles.names.newspaper.GetHashCode()
+                || (int)idVehicle == DBClassificationConstantes.Vehicles.names.magazine.GetHashCode()
+                ){
 				
 			//		sql.Append(" and am.id_language_data_i(+) = wp.id_language_data_i ");
                     sql.Append(" and am.date_debut(+) = wp.date_media_num ");				

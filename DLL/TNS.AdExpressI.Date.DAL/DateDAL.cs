@@ -50,6 +50,8 @@ namespace TNS.AdExpressI.Date.DAL {
 
             switch (VehiclesInformation.DatabaseIdToEnum(selectedVehicle)) {
                 case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                 case DBClassificationConstantes.Vehicles.names.radio:
                 case DBClassificationConstantes.Vehicles.names.tv:
@@ -152,6 +154,12 @@ namespace TNS.AdExpressI.Date.DAL {
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                     tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress).Sql;
                     break;
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaper).Sql;
+                    break;
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazine).Sql;
+                    break;
                 case DBClassificationConstantes.Vehicles.names.tv:
                 case DBClassificationConstantes.Vehicles.names.others:
                     tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTv).Sql;
@@ -183,6 +191,8 @@ namespace TNS.AdExpressI.Date.DAL {
                     sql += " from " + tableName;
                     break;
                 case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                 case DBClassificationConstantes.Vehicles.names.others:
                 case DBClassificationConstantes.Vehicles.names.tv:

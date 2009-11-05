@@ -383,7 +383,10 @@ namespace AdExpress.Private.Selection
 		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
 
 			//Liste des univers			
-			if(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID==DBClassificationConstantes.Vehicles.names.press.GetHashCode()){
+			if(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID==DBClassificationConstantes.Vehicles.names.press.GetHashCode()
+                ||((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == DBClassificationConstantes.Vehicles.names.newspaper.GetHashCode()
+                ||((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == DBClassificationConstantes.Vehicles.names.magazine.GetHashCode()
+                ){
 				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaPress;
 			}
 			else if(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID==(long)DBClassificationConstantes.Vehicles.names.radio.GetHashCode()){

@@ -143,6 +143,10 @@ namespace TNS.AdExpress.Web.DataAccess{
 					return "recap_tv";
 				case ClassificationConstantes.DB.Vehicles.names.press:
 					return "recap_press";
+                case ClassificationConstantes.DB.Vehicles.names.newspaper:
+                    return "recap_newspaper";
+                case ClassificationConstantes.DB.Vehicles.names.magazine:
+                    return "recap_magazine";
 				case ClassificationConstantes.DB.Vehicles.names.plurimedia:
 					return "recap_pluri";
 				case ClassificationConstantes.DB.Vehicles.names.mediasTactics:

@@ -309,6 +309,10 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 					return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTv) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTvSegment);
                 case CstDBClassif.Vehicles.names.press:
 					return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPress) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPressSegment);
+                case CstDBClassif.Vehicles.names.magazine:
+                    return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMagazine) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMagazineSegment);
+                case CstDBClassif.Vehicles.names.newspaper:
+                    return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapNewspaper) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapNewspaperSegment);
                 case CstDBClassif.Vehicles.names.plurimedia:
 					return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPluri) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPluriSegment);
                 case CstDBClassif.Vehicles.names.mediasTactics:

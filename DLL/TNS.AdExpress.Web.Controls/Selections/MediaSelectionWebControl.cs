@@ -612,6 +612,8 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			switch (vehicleInformation.Id) {
 				case DBConstantesClassification.Vehicles.names.radio:
 				case DBConstantesClassification.Vehicles.names.press:
+                case DBConstantesClassification.Vehicles.names.newspaper:
+                case DBConstantesClassification.Vehicles.names.magazine:
 				case DBConstantesClassification.Vehicles.names.internationalPress:
 				case DBConstantesClassification.Vehicles.names.tv:	
 				case DBConstantesClassification.Vehicles.names.others:

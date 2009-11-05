@@ -149,8 +149,10 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
             #endregion
 
             #region Periodicity
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press ||
-                _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+                  || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
                 ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.periodicity);
                 dt = ds.Tables[0];
                 periodicity = dt.Rows[0]["periodicity"].ToString();
@@ -248,6 +250,8 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
                     if (investment != null && investment.Length > 0) nbLines++;//nbLines = 12;
                     break;
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.newspaper:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.magazine:
 					nbLines = 3;
 					if (investment != null && investment.Length > 0) nbLines++;
 					if (category != null && category.Length > 0 ) nbLines++;
@@ -277,7 +281,10 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
                
                 // Period selected
                     lineIndex = resultTable.AddNewLine(lineType);
-                    if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press && isAlertModule)
+                    if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+                          || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine)
+                        && isAlertModule)
                         resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1381, _webSession.SiteLanguage));
                     else
                         resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1541, _webSession.SiteLanguage));
@@ -325,7 +332,10 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
             }
 
             // Case vehicle press
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press) {
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+                  || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine)
+            {
                 if (pageNumber != null && pageNumber.Length > 0) {
                     // Nombre de page
                     lineIndex = resultTable.AddNewLine(lineType);

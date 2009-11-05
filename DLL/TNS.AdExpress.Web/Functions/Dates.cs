@@ -519,6 +519,8 @@ namespace TNS.AdExpress.Web.Functions{
 
             switch(VehiclesInformation.DatabaseIdToEnum(selectedVehicle)) {
                 case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                 case DBClassificationConstantes.Vehicles.names.radio:
                 case DBClassificationConstantes.Vehicles.names.tv:

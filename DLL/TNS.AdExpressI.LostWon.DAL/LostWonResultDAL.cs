@@ -654,7 +654,11 @@ namespace TNS.AdExpressI.LostWon.DAL
 
 
                 //option encarts (pour la presse)
-                if (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
+                if (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id 
+                    || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id
+                    || CstDBClassif.Vehicles.names.newspaper == _vehicleInformation.Id
+                    || CstDBClassif.Vehicles.names.magazine == _vehicleInformation.Id
+                    )
                     dataJointForInsert = FctWeb.SQLGenerator.GetJointForInsertDetail(_session, DATA_TABLE_PREFIXE);
                 if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
                 {
@@ -696,7 +700,11 @@ namespace TNS.AdExpressI.LostWon.DAL
             sql.AppendFormat(" {0}", joinOptional);
 
             //Jointures encart
-            if (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
+            if (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id 
+                || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id
+                || CstDBClassif.Vehicles.names.newspaper == _vehicleInformation.Id
+                    || CstDBClassif.Vehicles.names.magazine == _vehicleInformation.Id
+                )
                 sql.AppendFormat(" {0}", dataJointForInsert);
 
 
@@ -880,7 +888,11 @@ namespace TNS.AdExpressI.LostWon.DAL
             }
 
             //option encarts (pour la presse)
-            if (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
+            if (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id 
+                || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id
+                || CstDBClassif.Vehicles.names.newspaper == _vehicleInformation.Id
+                || CstDBClassif.Vehicles.names.magazine == _vehicleInformation.Id
+                )
                 dataJointForInsert = FctWeb.SQLGenerator.GetJointForInsertDetail(_session, DATA_TABLE_PREFIXE);
 
             sql.AppendFormat("  select {0}.id_sector,{0}.id_subsector, {0}.id_group_", DATA_TABLE_PREFIXE);
@@ -904,7 +916,11 @@ namespace TNS.AdExpressI.LostWon.DAL
             //Where
             sql.AppendFormat(" {0} ", universFilter);
             //Jointures 
-            if (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
+            if (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id 
+                || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id
+                || CstDBClassif.Vehicles.names.newspaper == _vehicleInformation.Id
+                || CstDBClassif.Vehicles.names.magazine == _vehicleInformation.Id
+                )
                 sql.AppendFormat(" {0}", dataJointForInsert);
 
             //Jointures groupe agences/agences	

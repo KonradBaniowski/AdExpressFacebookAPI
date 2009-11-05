@@ -699,7 +699,8 @@ namespace TNS.AdExpress.Web.UI{
 		private static string GetInsetSelected(WebSession webSession){
 			string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
 			ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(Int64.Parse(Vehicle));
-			if(vehicleType==ClassificationCst.DB.Vehicles.names.press ||vehicleType==ClassificationCst.DB.Vehicles.names.internationalPress){
+            if (vehicleType == ClassificationCst.DB.Vehicles.names.press || vehicleType == ClassificationCst.DB.Vehicles.names.magazine || vehicleType == ClassificationCst.DB.Vehicles.names.newspaper || vehicleType == ClassificationCst.DB.Vehicles.names.internationalPress)
+            {
 				int code=0;
 				switch(webSession.Insert){
 					case  WebConstantes.CustomerSessions.Insert.total :
@@ -1586,6 +1587,8 @@ namespace TNS.AdExpress.Web.UI{
 				else{ 
 					switch(VehiclesInformation.DatabaseIdToEnum(idVehicle)){
 						case ClassificationConstant.Vehicles.names.press:
+                        case ClassificationConstant.Vehicles.names.newspaper:
+                        case ClassificationConstant.Vehicles.names.magazine:
 						case ClassificationConstant.Vehicles.names.internationalPress:
 							// Date de parution (presse)
 							t.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1541,webSession.SiteLanguage) +" :</font> "+ TNS.FrameWork.Date.DateString.YYYYMMDDToDD_MM_YYYY(periodBeginning,webSession.SiteLanguage) +"</td></tr>");
@@ -1970,6 +1973,12 @@ namespace TNS.AdExpress.Web.UI{
 					}
 					vehicletype=VehiclesInformation.DatabaseIdToEnum(Int64.Parse(mediaList[i].ToString()));
 					switch(vehicletype){
+                        case ClassificationConstant.Vehicles.names.newspaper:
+                            mediaNames += GestionWeb.GetWebWord(2620, webSession.SiteLanguage);
+                            break;
+                        case ClassificationConstant.Vehicles.names.magazine:
+                            mediaNames += GestionWeb.GetWebWord(2621, webSession.SiteLanguage);
+                            break;
 						case ClassificationConstant.Vehicles.names.press:
 							mediaNames+=GestionWeb.GetWebWord(204,webSession.SiteLanguage);
 							break;

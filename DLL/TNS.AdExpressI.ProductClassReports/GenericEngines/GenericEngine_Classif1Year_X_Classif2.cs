@@ -146,6 +146,14 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
 					//headers.Root.Add(new Header(true, GestionWeb.GetWebWord(204, _session.SiteLanguage).ToUpper(), ID_TOTAL));
 					headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
+                case CstDBClassif.Vehicles.names.magazine:
+                    //headers.Root.Add(new Header(true, GestionWeb.GetWebWord(204, _session.SiteLanguage).ToUpper(), ID_TOTAL));
+                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
+                    break;
+                case CstDBClassif.Vehicles.names.newspaper:
+                    //headers.Root.Add(new Header(true, GestionWeb.GetWebWord(204, _session.SiteLanguage).ToUpper(), ID_TOTAL));
+                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
+                    break;
                 case CstDBClassif.Vehicles.names.radio:
 					//headers.Root.Add(new Header(true, GestionWeb.GetWebWord(205, _session.SiteLanguage).ToUpper(), ID_TOTAL));
 					headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));

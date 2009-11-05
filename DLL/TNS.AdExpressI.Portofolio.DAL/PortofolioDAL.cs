@@ -240,6 +240,8 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 					res = new Engines.StructureEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate,_hourBeginningList,_hourEndList);
 					break;
 				case DBClassificationConstantes.Vehicles.names.press :
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
 				case DBClassificationConstantes.Vehicles.names.internationalPress :					
 					res = new Engines.StructureEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate, _ventilationTypeList);
 					break;
@@ -355,6 +357,8 @@ namespace TNS.AdExpressI.Portofolio.DAL {
             sql.Append("select distinct date_media_num ");
 
             if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
                 sql.Append(", disponibility_visual ");
                 sql.Append(", number_page_media ");
@@ -366,6 +370,8 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 			sql.Append(tableName);
 
             if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
                 sql.Append("," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.applicationMedia).SqlWithPrefix + " ");
                 sql.Append("," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.alarmMedia).SqlWithPrefix + " ");
@@ -382,6 +388,8 @@ namespace TNS.AdExpressI.Portofolio.DAL {
                 sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num<=" + _endDate);
 
             if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
 
                 sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.applicationMedia).Prefix + ".date_debut(+) = " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num ");
@@ -483,25 +491,25 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 		/// Throw when the vehicle is unknown
 		/// </exception>
 		/// <returns>Table name</returns>
-		protected virtual string GetTableData() {
-			switch (_vehicleInformation.Id) {
-				case DBClassificationConstantes.Vehicles.names.internationalPress:
-					return DBConstantes.Tables.ALERT_DATA_PRESS_INTER;
-				case DBClassificationConstantes.Vehicles.names.press:
-					return DBConstantes.Tables.ALERT_DATA_PRESS;
-				case DBClassificationConstantes.Vehicles.names.radio:
-					return DBConstantes.Tables.ALERT_DATA_RADIO;
-				case DBClassificationConstantes.Vehicles.names.tv:
-				case DBClassificationConstantes.Vehicles.names.others:
-					return DBConstantes.Tables.ALERT_DATA_TV;
-				case DBClassificationConstantes.Vehicles.names.outdoor:
-					return DBConstantes.Tables.ALERT_DATA_OUTDOOR;
-				case DBClassificationConstantes.Vehicles.names.directMarketing:
-					return DBConstantes.Tables.ALERT_DATA_MARKETING_DIRECT;
-				default:
-					throw new PortofolioDALException("GetTableData()-->Vehicle unknown.");
-			}
-		}
+        //protected virtual string GetTableData() {
+        //    switch (_vehicleInformation.Id) {
+        //        case DBClassificationConstantes.Vehicles.names.internationalPress:
+        //            return DBConstantes.Tables.ALERT_DATA_PRESS_INTER;
+        //        case DBClassificationConstantes.Vehicles.names.press:
+        //            return DBConstantes.Tables.ALERT_DATA_PRESS;
+        //        case DBClassificationConstantes.Vehicles.names.radio:
+        //            return DBConstantes.Tables.ALERT_DATA_RADIO;
+        //        case DBClassificationConstantes.Vehicles.names.tv:
+        //        case DBClassificationConstantes.Vehicles.names.others:
+        //            return DBConstantes.Tables.ALERT_DATA_TV;
+        //        case DBClassificationConstantes.Vehicles.names.outdoor:
+        //            return DBConstantes.Tables.ALERT_DATA_OUTDOOR;
+        //        case DBClassificationConstantes.Vehicles.names.directMarketing:
+        //            return DBConstantes.Tables.ALERT_DATA_MARKETING_DIRECT;
+        //        default:
+        //            throw new PortofolioDALException("GetTableData()-->Vehicle unknown.");
+        //    }
+		//}
 		#endregion
 
         #region Get Select Data Ecran
@@ -514,6 +522,8 @@ namespace TNS.AdExpressI.Portofolio.DAL {
             switch (_vehicleInformation.Id) {
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                 case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
                 case DBClassificationConstantes.Vehicles.names.internet:
                     return "";
                 case DBClassificationConstantes.Vehicles.names.radio:
@@ -545,24 +555,31 @@ namespace TNS.AdExpressI.Portofolio.DAL {
             string sql = "";
             switch (_vehicleInformation.Id) {
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
-                    sql += WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql + DBConstantes.Tables.ALERT_DATA_PRESS_INTER + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+                case DBClassificationConstantes.Vehicles.names.press:
+                    sql += WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressAlert).Sql  + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
                     sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).SqlWithPrefix;
                     sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.color).SqlWithPrefix;
                     sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.format).SqlWithPrefix;
                     return sql;
-                case DBClassificationConstantes.Vehicles.names.press:
-                    sql += WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql + DBConstantes.Tables.ALERT_DATA_PRESS + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                    sql += WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaperAlert).Sql + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+                    sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).SqlWithPrefix;
+                    sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.color).SqlWithPrefix;
+                    sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.format).SqlWithPrefix;
+                    return sql;
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                    sql += WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazineAlert).Sql + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
                     sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).SqlWithPrefix;
                     sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.color).SqlWithPrefix;
                     sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.format).SqlWithPrefix;
                     return sql;
                 case DBClassificationConstantes.Vehicles.names.radio:
-                    sql += WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql + DBConstantes.Tables.ALERT_DATA_RADIO + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+                    sql += WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadioAlert).Sql + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
                     sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).SqlWithPrefix;
                     return sql;
                 case DBClassificationConstantes.Vehicles.names.tv:
                 case DBClassificationConstantes.Vehicles.names.others:
-                    sql += WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql + DBConstantes.Tables.ALERT_DATA_TV + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+                    sql += WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTvAlert).Sql + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
                     sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).SqlWithPrefix;
                     return sql;
                 default:

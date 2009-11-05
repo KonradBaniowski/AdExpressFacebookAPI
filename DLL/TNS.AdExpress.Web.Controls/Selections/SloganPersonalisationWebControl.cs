@@ -440,6 +440,8 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 									switch (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString()))) {
 
 										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press :
+                                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.newspaper:
+                                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.magazine:
 										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
 
 											#region Construction de la liste des images presse

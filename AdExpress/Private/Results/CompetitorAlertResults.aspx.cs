@@ -267,7 +267,10 @@ namespace AdExpress.Private.Results{
 				#region choix du type d'encarts
 
 				if (DBClassificationConstantes.Vehicles.names.press == _vehicleInformation.Id
-					|| DBClassificationConstantes.Vehicles.names.internationalPress == _vehicleInformation.Id) {
+					|| DBClassificationConstantes.Vehicles.names.internationalPress == _vehicleInformation.Id
+                    || DBClassificationConstantes.Vehicles.names.newspaper == _vehicleInformation.Id
+                    || DBClassificationConstantes.Vehicles.names.magazine == _vehicleInformation.Id
+                    ) {
 
 					#region Affichage encarts en fonction du module
 					switch(_webSession.CurrentModule){
@@ -378,7 +381,7 @@ namespace AdExpress.Private.Results{
 				if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
 				 _vehicleInformation = VehiclesInformation.Get(long.Parse(vehicleSelection));
 				if (_vehicleInformation == null) throw (new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
-				if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) && columnDetailLevel.Id == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.media)
+                if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) && columnDetailLevel.Id == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.media)
                     _resultWebControl.NbTableBeginningLinesToRepeat = 2;
                 else
                 {

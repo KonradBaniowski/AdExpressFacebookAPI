@@ -266,6 +266,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
 			switch (_vehicleInformation.Id) {
 				case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
                     iNbCol = 5 + creatives + insertions + mediaSchedule;
 					break;
@@ -308,6 +310,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
             switch (_vehicleInformation.Id) {
                 case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio:

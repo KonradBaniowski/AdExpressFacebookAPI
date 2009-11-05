@@ -833,6 +833,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			
 			switch(idVehicle){
 				case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
 
 
@@ -1049,6 +1051,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			//Ajoute des champs spécifiques à la Presse 
 			if (( idVehicle == DBClassificationConstantes.Vehicles.names.press
 				|| idVehicle == DBClassificationConstantes.Vehicles.names.internationalPress
+                || idVehicle == DBClassificationConstantes.Vehicles.names.newspaper
+                || idVehicle == DBClassificationConstantes.Vehicles.names.magazine
 				)
 				&& AddPressSpecificField(webSession, DbTables.WEB_PLAN_PREFIXE).Length > 0) {
 				sql.Append("," + AddPressSpecificField(webSession, DbTables.WEB_PLAN_PREFIXE));
@@ -1154,6 +1158,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					sql+="," +DBConstantes.Schema.ADEXPRESS_SCHEMA+".agglomeration  "+DbTables.AGGLOMERATION_PREFIXE;
 					break;
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
 				case DBClassificationConstantes.Vehicles.names.press:
 					sql+=GetMediaTables(preformatedMediaDetail);
 					sql+=", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+DBConstantes.Tables.GROUP_+ "  "+DbTables.GROUP_PREFIXE;
@@ -1336,6 +1342,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					sql.Append(" and "+DbTables.GROUP_PREFIXE+".activation < "+ DBConstantes.ActivationValues.UNACTIVATED);
 					break;
 				case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
 					sql.Append(GetMediaJoinConditions(webSession,dataTablePrefixe,true));
 					// Groupe

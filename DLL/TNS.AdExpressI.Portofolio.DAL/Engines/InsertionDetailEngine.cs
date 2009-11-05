@@ -104,7 +104,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     sqlGroupBy += " , advertising_agency";
                 }
 
-                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress)
+                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+                    || DBClassificationConstantes.Vehicles.names.newspaper == _vehicleInformation.Id
+                    || DBClassificationConstantes.Vehicles.names.magazine == _vehicleInformation.Id
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress)
                 {
                     sql.Append(" , date_cover_num");
                     sqlGroupBy += " , date_cover_num";
@@ -216,6 +219,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 			switch (_vehicleInformation.Id) {
 				case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
 					if (allPeriod) return " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".Id_type_page," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_advertisement,media_paging,id_product";
 					else

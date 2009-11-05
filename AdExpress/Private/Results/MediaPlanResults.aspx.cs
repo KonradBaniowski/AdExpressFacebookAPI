@@ -376,6 +376,8 @@ namespace AdExpress.Private.Results{
 						ResultsOptionsWebControl1.AutopromoEvaliantOption = VehiclesInformation.Get(Int64.Parse(cVehicle)).Autopromo; 
                         break;
                     case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.newspaper:
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.magazine:
                     case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
                         ResultsOptionsWebControl1.InsertOption = true;
                         break;

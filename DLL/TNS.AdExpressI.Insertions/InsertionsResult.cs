@@ -146,6 +146,8 @@ namespace TNS.AdExpressI.Insertions
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack));
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.evaliantMobile));
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.press));
+                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.newspaper));
+                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.magazine));
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.outdoor));
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.radio));
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.tv));
@@ -298,6 +300,8 @@ namespace TNS.AdExpressI.Insertions
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG);
                     break;
                 case CstDBClassif.Vehicles.names.internationalPress:
+                case CstDBClassif.Vehicles.names.newspaper:
+                case CstDBClassif.Vehicles.names.magazine:
                 case CstDBClassif.Vehicles.names.press:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_PRESS_CREATION_ACCESS_FLAG);
                     break;
@@ -402,6 +406,8 @@ namespace TNS.AdExpressI.Insertions
                         case CstDBClassif.Vehicles.names.directMarketing:
                         case CstDBClassif.Vehicles.names.internationalPress:
                         case CstDBClassif.Vehicles.names.press:
+                        case CstDBClassif.Vehicles.names.newspaper:
+                        case CstDBClassif.Vehicles.names.magazine:
                         case CstDBClassif.Vehicles.names.outdoor:
                             setLine = new SetLine(SetAggregLine);
                             break;
@@ -944,6 +950,8 @@ namespace TNS.AdExpressI.Insertions
                         case CstDBClassif.Vehicles.names.internationalPress:
                         case CstDBClassif.Vehicles.names.outdoor:
                         case CstDBClassif.Vehicles.names.press:
+                        case CstDBClassif.Vehicles.names.newspaper:
+                        case CstDBClassif.Vehicles.names.magazine:
                             return null;
                             break;
                         case CstDBClassif.Vehicles.names.others:
@@ -1000,10 +1008,14 @@ namespace TNS.AdExpressI.Insertions
             switch (vehicle.Id)
             {
                 case CstDBClassif.Vehicles.names.press:
+                case CstDBClassif.Vehicles.names.newspaper:
+                case CstDBClassif.Vehicles.names.magazine:
                 case CstDBClassif.Vehicles.names.internationalPress:
 
                     if ((vehicle.Id==CstDBClassif.Vehicles.names.internationalPress && !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG))
                         || (vehicle.Id==CstDBClassif.Vehicles.names.press && !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRESS_CREATION_ACCESS_FLAG))
+                        || (vehicle.Id == CstDBClassif.Vehicles.names.newspaper && !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRESS_CREATION_ACCESS_FLAG))
+                        || (vehicle.Id == CstDBClassif.Vehicles.names.magazine && !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRESS_CREATION_ACCESS_FLAG))
                         )
                     {
                         break;

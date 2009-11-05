@@ -1805,5 +1805,7 @@
     <item mnemonic="w2617" type="System.String">Sélection d'une catégorie</item>
     <item mnemonic="w2618" type="System.String">Aucune catégorie disponible.</item>
     <item mnemonic="w2619" type="System.String">Choisissez une catégorie parmi la liste ci-contre :</item>
+    <item mnemonic="w2620" type="System.String">Journaux</item>
+    <item mnemonic="w2621" type="System.String">Magazine</item>
   </items>
 </localization>

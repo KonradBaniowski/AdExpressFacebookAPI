@@ -147,7 +147,15 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
 			/// <summary>
 			/// Evaliant mobile
 			/// </summary>
-			evaliantMobile = 15
+			evaliantMobile = 15,
+            /// <summary>
+            /// Evaliant mobile
+            /// </summary>
+            newspaper = 16,
+            /// <summary>
+            /// Evaliant mobile
+            /// </summary>
+            magazine = 17
 		}
 	}
 	#endregion

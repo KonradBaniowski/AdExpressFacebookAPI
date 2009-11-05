@@ -690,6 +690,8 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                     switch (vehicle.Id)
                     {
                         case CstDBClassif.Vehicles.names.press:
+                        case CstDBClassif.Vehicles.names.newspaper:
+                        case CstDBClassif.Vehicles.names.magazine:
                         case CstDBClassif.Vehicles.names.internationalPress:
                         case CstDBClassif.Vehicles.names.outdoor:
                         case CstDBClassif.Vehicles.names.directMarketing:

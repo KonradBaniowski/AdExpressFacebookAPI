@@ -109,6 +109,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				case DBClassificationConstantes.Vehicles.names.others:
 					return GetStructureHtml();
 				case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
 					return GetPressStructureHtml();					
 				default: throw new PortofolioException("The method to get data is not defined for this vehicle.");
@@ -137,6 +139,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				case DBClassificationConstantes.Vehicles.names.others:
 					return ComputeChartData();
 				case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
 					return ComputePressChartData();
 				default: throw new PortofolioException("GetChartData() : The method to get data is not defined for this vehicle.");

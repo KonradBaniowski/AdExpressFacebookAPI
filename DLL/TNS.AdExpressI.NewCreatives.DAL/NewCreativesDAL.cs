@@ -216,6 +216,8 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
                     return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.banners_mobile);
                 case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                 case DBClassificationConstantes.Vehicles.names.radio:
                 case DBClassificationConstantes.Vehicles.names.tv:

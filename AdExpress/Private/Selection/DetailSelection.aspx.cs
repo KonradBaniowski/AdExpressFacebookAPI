@@ -704,7 +704,7 @@ namespace AdExpress.Private.Selection{
                     if (_webSession.CurrentModule != CstWeb.Module.Name.ANALYSE_PLAN_MEDIA && _webSession.SelectionUniversMedia.FirstNode != null)
                     {
                         CstClassif.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-                        if (vehicleType == CstClassif.DB.Vehicles.names.press || vehicleType == CstClassif.DB.Vehicles.names.internationalPress)
+                        if (vehicleType == CstClassif.DB.Vehicles.names.press || vehicleType == CstClassif.DB.Vehicles.names.newspaper || vehicleType == CstClassif.DB.Vehicles.names.magazine || vehicleType == CstClassif.DB.Vehicles.names.internationalPress)
                         {
                             displayInset = true;
                         }
@@ -716,6 +716,8 @@ namespace AdExpress.Private.Selection{
                             && (
                                 (VehiclesInformation.Contains(CstClassif.DB.Vehicles.names.press) && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(CstClassif.DB.Vehicles.names.press).ToString()) >= 0)
                                 || (VehiclesInformation.Contains(CstClassif.DB.Vehicles.names.internationalPress) && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(CstClassif.DB.Vehicles.names.internationalPress).ToString()) >= 0)
+                                || (VehiclesInformation.Contains(CstClassif.DB.Vehicles.names.newspaper) && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(CstClassif.DB.Vehicles.names.newspaper).ToString()) >= 0)
+                                || (VehiclesInformation.Contains(CstClassif.DB.Vehicles.names.magazine) && Array.IndexOf(listVehicles, VehiclesInformation.EnumToDatabaseId(CstClassif.DB.Vehicles.names.magazine).ToString()) >= 0)
                             )
                         )
                         {

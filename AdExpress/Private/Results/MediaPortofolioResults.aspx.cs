@@ -224,7 +224,10 @@ namespace AdExpress.Private.Results{
 				_genericProductLevel = false;
 				portofolioChartWebControl1.Visible = false;
 				if(DBClassificationConstantes.Vehicles.names.press==vehicleName 
-					|| DBClassificationConstantes.Vehicles.names.internationalPress==vehicleName){
+					|| DBClassificationConstantes.Vehicles.names.internationalPress==vehicleName
+                    || DBClassificationConstantes.Vehicles.names.newspaper == vehicleName
+                    || DBClassificationConstantes.Vehicles.names.magazine == vehicleName)
+                {
 					ResultsOptionsWebControl1.InsertOption=true;	
 				}			
 				else ResultsOptionsWebControl1.InsertOption=false;	
@@ -280,7 +283,10 @@ namespace AdExpress.Private.Results{
 						ResultsOptionsWebControl1.Percentage = true;
 						_ResultWebControl.Visible = true;
 						if (DBClassificationConstantes.Vehicles.names.press == vehicleName
-							|| DBClassificationConstantes.Vehicles.names.internationalPress == vehicleName) {
+							|| DBClassificationConstantes.Vehicles.names.internationalPress == vehicleName
+                            || DBClassificationConstantes.Vehicles.names.newspaper == vehicleName
+                            || DBClassificationConstantes.Vehicles.names.magazine == vehicleName)
+                        {
 							ResultsOptionsWebControl1.InsertOption = true;
 						}
 						else ResultsOptionsWebControl1.InsertOption = false;
@@ -469,6 +475,8 @@ namespace AdExpress.Private.Results{
 				case ClassificationCst.DB.Vehicles.names.tv:
 				case ClassificationCst.DB.Vehicles.names.radio:
 				case ClassificationCst.DB.Vehicles.names.press:
+                case ClassificationCst.DB.Vehicles.names.newspaper:
+                case ClassificationCst.DB.Vehicles.names.magazine:
 				case ClassificationCst.DB.Vehicles.names.internationalPress:
 					if (!_webSession.CustomerPeriodSelected.IsSliding4M && (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR)) {
 						_webSession.CurrentTab = FrameWorkConstantes.Portofolio.SYNTHESIS;

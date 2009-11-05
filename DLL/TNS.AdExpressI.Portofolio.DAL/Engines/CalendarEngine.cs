@@ -102,7 +102,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				productsRights = WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
 				detailProductOrderBy = _webSession.GenericProductDetailLevel.GetSqlOrderFields();
 				//option encarts (pour la presse)
-				if (DBClassificationConstantes.Vehicles.names.press == _vehicleInformation.Id || DBClassificationConstantes.Vehicles.names.internationalPress == _vehicleInformation.Id)
+                if (DBClassificationConstantes.Vehicles.names.press == _vehicleInformation.Id || DBClassificationConstantes.Vehicles.names.internationalPress == _vehicleInformation.Id || DBClassificationConstantes.Vehicles.names.newspaper == _vehicleInformation.Id || DBClassificationConstantes.Vehicles.names.magazine == _vehicleInformation.Id)
 					dataJointForInsert = WebFunctions.SQLGenerator.GetJointForInsertDetail(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 				//listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
 				listProductHap = GetExcludeProducts(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
@@ -141,7 +141,11 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			sql += " " + dataJointForGad;
 			sql += " " + mediaAgencyJoins;
 			//Jointures encart
-			if (DBClassificationConstantes.Vehicles.names.press == _vehicleInformation.Id || DBClassificationConstantes.Vehicles.names.internationalPress == _vehicleInformation.Id)
+			if (DBClassificationConstantes.Vehicles.names.press == _vehicleInformation.Id 
+                || DBClassificationConstantes.Vehicles.names.internationalPress == _vehicleInformation.Id
+                || DBClassificationConstantes.Vehicles.names.newspaper == _vehicleInformation.Id
+                || DBClassificationConstantes.Vehicles.names.magazine == _vehicleInformation.Id
+                )
 				sql += " " + dataJointForInsert;
 
 			#region Sélection de Médias

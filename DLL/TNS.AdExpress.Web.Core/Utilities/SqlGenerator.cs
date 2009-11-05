@@ -2495,6 +2495,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
 					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapRadio).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.tv:
 					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTv).Sql;
+                case ClassificationConstantes.DB.Vehicles.names.newspaper:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapNewspaper).Sql;
+                case ClassificationConstantes.DB.Vehicles.names.magazine:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMagazine).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.press:
 					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPress).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.outdoor:
@@ -2532,7 +2536,11 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case ClassificationConstantes.DB.Vehicles.names.tv:
 					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTvSegment).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.press:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPressSegment).Sql;                    
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPressSegment).Sql;
+                case ClassificationConstantes.DB.Vehicles.names.newspaper:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapNewspaperSegment).Sql;
+                case ClassificationConstantes.DB.Vehicles.names.magazine:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMagazineSegment).Sql; 
                 case ClassificationConstantes.DB.Vehicles.names.outdoor:
 					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapOutDoorSegment).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.internet:
@@ -2774,6 +2782,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
             switch (vehicleName)
             {
                 case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                     return "" + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_category," + DBConstantes.Tables.CATEGORY_PREFIXE + ".category"
                         + " ," + DBConstantes.Tables.TITLE_PREFIXE + ".id_title as id_media," + DBConstantes.Tables.TITLE_PREFIXE + ".title as media";
@@ -2798,6 +2808,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
             switch (vehicleName)
             {
                 case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                     return " " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".media " + DBConstantes.Tables.MEDIA_PREFIXE + "," + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".title " + DBConstantes.Tables.TITLE_PREFIXE + ""
                             + " ," + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".category " + DBConstantes.Tables.CATEGORY_PREFIXE + "";
@@ -2847,6 +2859,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
             switch (vehicleName)
             {
                 case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                     return " and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_title=" + DBConstantes.Tables.TITLE_PREFIXE + ".id_title"
                             + " and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_media=" + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_media"
@@ -2891,6 +2905,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
             switch (vehicleName)
             {
                 case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                     return " group by " + DBConstantes.Tables.TITLE_PREFIXE + ".id_title,title "
                             + " ,wp.id_category "
@@ -2916,6 +2932,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
             switch (vehicleName)
             {
                 case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                     return " order by category, title";
                 case DBClassificationConstantes.Vehicles.names.radio:
@@ -2994,6 +3012,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
             {
                 case DBClassificationConstantes.Vehicles.names.press:
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress).SqlWithPrefix);
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaper).SqlWithPrefix);
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazine).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInter).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.radio:
@@ -3037,6 +3059,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
         {
             switch (vehicleName)
             {
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaperAlert).SqlWithPrefix);
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazineAlert).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.press:
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressAlert).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
@@ -3105,6 +3131,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
             {
                 case DBClassificationConstantes.Vehicles.names.press:
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress).Label);
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaper).Label);
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazine).Label);
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInter).Label);
                 case DBClassificationConstantes.Vehicles.names.radio:
@@ -3148,6 +3178,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
         {
             switch (vehicleName)
             {
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaperAlert).Label);
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazineAlert).Label);
                 case DBClassificationConstantes.Vehicles.names.press:
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressAlert).Label);
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
@@ -3188,6 +3222,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.weekData).SqlWithPrefix;
                 case CstPeriod.PeriodBreakdownType.data_4m:
                     switch (VehiclesInformation.DatabaseIdToEnum(vehicleId)) {
+                        case DBClassificationConstantes.Vehicles.names.newspaper:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaperAlert).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.magazine:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazineAlert).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.press:
                             return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressAlert).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.internationalPress:
@@ -3214,6 +3252,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     }
                 case CstPeriod.PeriodBreakdownType.data:
                     switch(VehiclesInformation.DatabaseIdToEnum(vehicleId)) {
+                        case DBClassificationConstantes.Vehicles.names.newspaper:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaper).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.magazine:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazine).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.press:
                             return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.internationalPress:
@@ -3847,6 +3889,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
             {
                 case DBClassificationConstantes.Vehicles.names.press:
                     return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress);
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaper);
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazine);
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                     return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInter);
                 case DBClassificationConstantes.Vehicles.names.radio:
@@ -4175,6 +4221,17 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 if (insertMediaList.Length > 0) insertMediaList += ",";
                 insertMediaList += VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.internationalPress).DatabaseId;
             }
+            if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.newspaper))
+            {
+                if (insertMediaList.Length > 0) insertMediaList += ",";
+                insertMediaList += VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.newspaper).DatabaseId;
+            }
+            if (VehiclesInformation.Contains(DBClassificationConstantes.Vehicles.names.magazine))
+            {
+                if (insertMediaList.Length > 0) insertMediaList += ",";
+                insertMediaList += VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.magazine).DatabaseId;
+            }
+
 
 			switch (webSession.Insert) {
 				case WebConstantes.CustomerSessions.Insert.total:

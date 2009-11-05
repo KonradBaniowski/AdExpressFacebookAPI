@@ -305,6 +305,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             switch (vehicle)
             {
                 case DBClassifCst.Vehicles.names.press:
+                case DBClassifCst.Vehicles.names.newspaper:
+                case DBClassifCst.Vehicles.names.magazine:
                 case DBClassifCst.Vehicles.names.internationalPress:
                     if (withOutPrefix)
                         sql.AppendFormat(",  version,  volume, {0}, nbsupport, visuel ", UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString());
@@ -679,6 +681,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             switch (vehicle)
             {
                 case DBClassifCst.Vehicles.names.press:
+                case DBClassifCst.Vehicles.names.newspaper:
+                case DBClassifCst.Vehicles.names.magazine:
                 case DBClassifCst.Vehicles.names.internationalPress:
                     sql.AppendFormat(", {0}id_slogan ", prefix);
                     break;

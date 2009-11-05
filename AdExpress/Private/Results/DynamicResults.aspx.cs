@@ -200,7 +200,11 @@ namespace AdExpress.Private.Results{
 
 				#region choix du type d'encarts
 				if (DBClassificationConstantes.Vehicles.names.press == _vehicleInformation.Id
-					|| DBClassificationConstantes.Vehicles.names.internationalPress == _vehicleInformation.Id) {
+					|| DBClassificationConstantes.Vehicles.names.internationalPress == _vehicleInformation.Id
+                    || DBClassificationConstantes.Vehicles.names.newspaper == _vehicleInformation.Id
+                    || DBClassificationConstantes.Vehicles.names.magazine == _vehicleInformation.Id
+                    )
+                {
 					ResultsOptionsWebControl1.InsertOption=true;																	
 				}			
 				else ResultsOptionsWebControl1.InsertOption=false;
@@ -303,7 +307,7 @@ namespace AdExpress.Private.Results{
 				if (_vehicleInformation == null) throw (new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
 
 				TNS.AdExpress.Domain.Level.DetailLevelItemInformation columnDetailLevel = (TNS.AdExpress.Domain.Level.DetailLevelItemInformation)_webSession.GenericColumnDetailLevel.Levels[0];
-				if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) && columnDetailLevel.Id == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.media)
+                if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) && columnDetailLevel.Id == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.media)
 					resultwebcontrol1.NbTableBeginningLinesToRepeat = 2;
 				else resultwebcontrol1.NbTableBeginningLinesToRepeat = 1;
 			

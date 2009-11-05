@@ -143,7 +143,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
 			#region Press and Internatioanl Press cases
 			try {
-				if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress)
+				if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press 
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
+                    )
 					SetDataTable(dt, _dayOfWeek, allPeriod);
 			}
 			catch (System.Exception err) {
@@ -164,7 +168,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				}
 				//Show diffusion date
 				bool showDate = true;
-				if (!allPeriod && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress))
+				if (!allPeriod && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press 
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
+                    ))
 					showDate = false;
 				//Show column product
 				bool showProduct = _webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
@@ -249,6 +257,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 						#region Initialisation of dateMediaNum
 						switch (_vehicleInformation.Id) {
 							case DBClassificationConstantes.Vehicles.names.press:
+                            case DBClassificationConstantes.Vehicles.names.newspaper:
+                            case DBClassificationConstantes.Vehicles.names.magazine:
 							case DBClassificationConstantes.Vehicles.names.internationalPress:
 								dateMediaNum = row["date_media_num"].ToString();
 								break;

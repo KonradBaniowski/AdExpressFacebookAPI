@@ -189,6 +189,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
             switch (VehiclesInformation.DatabaseIdToEnum(_idVehicle))
             {
                 case DBClassificationConstantes.Vehicles.names.press: vehicle = GestionWeb.GetWebWord(1298, _customerWebSession.SiteLanguage).ToUpper(); break;
+                case DBClassificationConstantes.Vehicles.names.newspaper: vehicle = GestionWeb.GetWebWord(2620, _customerWebSession.SiteLanguage).ToUpper(); break;
+                case DBClassificationConstantes.Vehicles.names.magazine: vehicle = GestionWeb.GetWebWord(2621, _customerWebSession.SiteLanguage).ToUpper(); break;
                 case DBClassificationConstantes.Vehicles.names.radio: vehicle = GestionWeb.GetWebWord(205, _customerWebSession.SiteLanguage); break;
                 case DBClassificationConstantes.Vehicles.names.tv: vehicle = GestionWeb.GetWebWord(206, _customerWebSession.SiteLanguage); break;
                 case DBClassificationConstantes.Vehicles.names.others: vehicle = GestionWeb.GetWebWord(647, _customerWebSession.SiteLanguage); break;

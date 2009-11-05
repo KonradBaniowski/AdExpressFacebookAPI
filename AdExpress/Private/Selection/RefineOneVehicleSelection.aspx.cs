@@ -224,7 +224,10 @@ namespace AdExpress.Private.Selection
 						.IndexOf(_webSession.Unit)==-1){
 						// On met euro par défaut
 						if(_webSession.GetSelection(_webSession.SelectionUniversMedia,CstWebCustomer.Right.type.vehicleAccess)==DBClassificationConstantes.Vehicles.names.press.GetHashCode().ToString() 
-							|| _webSession.GetSelection(_webSession.SelectionUniversMedia,CstWebCustomer.Right.type.vehicleAccess)==DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode().ToString()){
+							|| _webSession.GetSelection(_webSession.SelectionUniversMedia,CstWebCustomer.Right.type.vehicleAccess)==DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode().ToString()
+                            || _webSession.GetSelection(_webSession.SelectionUniversMedia, CstWebCustomer.Right.type.vehicleAccess) == DBClassificationConstantes.Vehicles.names.newspaper.GetHashCode().ToString()
+                            || _webSession.GetSelection(_webSession.SelectionUniversMedia, CstWebCustomer.Right.type.vehicleAccess) == DBClassificationConstantes.Vehicles.names.magazine.GetHashCode().ToString()
+                            ){
 							_webSession.Unit=TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.pages;
 						}
 						else{

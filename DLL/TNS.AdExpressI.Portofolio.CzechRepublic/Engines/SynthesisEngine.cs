@@ -162,6 +162,8 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
 
             #region Periodicity
             if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press ||
+                _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper ||
+                _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine ||
                 _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
                 ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.periodicity);
                 dt = ds.Tables[0];
@@ -209,8 +211,11 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
             #endregion
 
             #region ad Number Including Insets
-            if (WebApplicationParameters.AllowInsetOption && _vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.pages) && _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
-                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
+            if (WebApplicationParameters.AllowInsetOption && _vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.pages) && (
+                _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress)) {
                 ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.adNumberIncludingInsets);
                 dt = ds.Tables[0];
                 adNumberIncludingInsets = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString()].ToString();
@@ -218,8 +223,11 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
             #endregion
 
             #region ad Number Excluding Insets
-            if (WebApplicationParameters.AllowInsetOption && _vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.pages) && _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
-                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
+            if (WebApplicationParameters.AllowInsetOption && _vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.pages) && 
+                (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress)) {
                 ds = portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.adNumberExcludingInsets);
                 dt = ds.Tables[0];
                 adNumberExcludingInsets = dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString()].ToString();
@@ -355,6 +363,8 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
             int lineIndex = 0;
             switch (_vehicleInformation.Id) {
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.newspaper:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.magazine:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
                     nbLines = 9;
                     if (adNumber != null && adNumber.Length > 0) nbLines = nbLines + 2;
@@ -426,7 +436,9 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
                     //if (firstDate.Length > 0 || !isAlertModule) {
                     lineIndex = resultTable.AddNewLine(lineType);
                     if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
-                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) && isAlertModule)
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine) && isAlertModule)
                         resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1381, _webSession.SiteLanguage));
                     else resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1541, _webSession.SiteLanguage));
                     if ((firstDate != null && firstDate.Length > 0 && lastDate != null && lastDate.Length > 0 && firstDate.Equals(lastDate) && isAlertModule)
@@ -528,6 +540,8 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
             }
             // Case vehicle press
             if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
                 if (pageNumber != null && pageNumber.Length > 0) {
                     // Nombre de page

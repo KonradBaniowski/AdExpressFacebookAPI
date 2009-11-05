@@ -152,7 +152,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			if (_webSession.CustomerLogin.ShowCreatives(_vehicleInformation.Id)) {
 				if (!excel) {
 					if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
-						|| _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
+						|| _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress
+                        || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
+                        || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
+                        ) {
 
 						Hashtable htValue = portofolioDAL.GetInvestmentByMedia();
 

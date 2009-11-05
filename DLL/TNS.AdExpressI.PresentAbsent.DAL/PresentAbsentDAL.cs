@@ -213,7 +213,9 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 				unitFieldNameSumWithAlias = FctWeb.SQLGenerator.GetUnitFieldNameSumWithAlias(_session, type);
 
                 //Filter option INSET for PRESS medium
-                if(CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
+                if(CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id
+                      || _vehicleInformation.Id == CstDBClassif.Vehicles.names.newspaper
+                || _vehicleInformation.Id == CstDBClassif.Vehicles.names.magazine)
                     dataJointForInsert = FctWeb.SQLGenerator.GetJointForInsertDetail(_session, DATA_TABLE_PREFIXE);
             }
             catch (Exception e) {
@@ -256,7 +258,9 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 
 
             //Filter INSET option
-            if(CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
+            if(CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id
+                 || _vehicleInformation.Id == CstDBClassif.Vehicles.names.newspaper
+                || _vehicleInformation.Id == CstDBClassif.Vehicles.names.magazine)
                 sql.AppendFormat(" {0}", dataJointForInsert);
 
             //Joins for tures group advertising agency and advertising agency
@@ -780,7 +784,9 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 				}
 
 				//Treatment specific to the medium PRESS : option INSET 
-				if (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
+				if (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id
+                     || _vehicleInformation.Id == CstDBClassif.Vehicles.names.newspaper
+                || _vehicleInformation.Id == CstDBClassif.Vehicles.names.magazine)
 					dataJointForInsert = FctWeb.SQLGenerator.GetJointForInsertDetail(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 
 				//Get filter options for the GAD (company's informations)
@@ -832,7 +838,9 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 				sql.AppendFormat(" {0}", mediaAgencyJoins);
 
 				//Jointures encart
-				if (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id)
+				if (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id
+                     || _vehicleInformation.Id == CstDBClassif.Vehicles.names.newspaper
+                || _vehicleInformation.Id == CstDBClassif.Vehicles.names.magazine)
 					sql.AppendFormat(" {0}", dataJointForInsert);
 				//optional joins
 				sql.Append(joinOptional);

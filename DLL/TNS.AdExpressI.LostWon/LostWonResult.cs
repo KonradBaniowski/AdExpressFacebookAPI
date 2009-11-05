@@ -1051,7 +1051,12 @@ namespace TNS.AdExpressI.LostWon {
             Dictionary<string, double> resNbParution = null;
             DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
 
-            if (columnDetailLevel.Id == DetailLevelItemInformation.Levels.media && (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id))
+            if (columnDetailLevel.Id == DetailLevelItemInformation.Levels.media && 
+                (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id 
+                || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id
+                || CstDBClassif.Vehicles.names.newspaper == _vehicleInformation.Id
+                || CstDBClassif.Vehicles.names.magazine == _vehicleInformation.Id
+                ))
             {
                 resNbParution = GetNbParutionsByMedia();
                 if (resNbParution != null && resNbParution.Count > 0)

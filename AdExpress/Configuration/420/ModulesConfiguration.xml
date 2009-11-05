@@ -18,7 +18,7 @@
         <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="331">-->
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <!--<ModuleVehicles list="1,2,3,5"/>-->
-          <ModuleVehicles list="5"/>
+          <ModuleVehicles list="1,2,5"/>
         </ModuleAllowedMediaUniverse>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
@@ -56,7 +56,7 @@
               <allowedUniverseLevel id="2" name="subsector"/>
               <allowedUniverseLevel id="3" name="group_"/>
               <allowedUniverseLevel id="4" name="segment"/>
-              <allowedUniverseLevel id="7" name="holding_company"/>
+              <!--<allowedUniverseLevel id="7" name="holding_company"/>-->
               <allowedUniverseLevel id="6" name="advertiser"/>
               <allowedUniverseLevel id="8" name="brand"/>
               <allowedUniverseLevel id="5" name="product"/>
@@ -110,7 +110,7 @@
         <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="333">-->
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <!--<ModuleVehicles list="1,2,3,5"/>-->
-          <ModuleVehicles list="5"/>
+          <ModuleVehicles list="1,2,5"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -131,7 +131,7 @@
             <allowedProductLevelItem id="14" name="Variete"/>
             <allowedProductLevelItem id="10" name="Produit"/>
             <allowedProductLevelItem id="9" name="Marque"/>
-            <allowedProductLevelItem id="7" name="Groupe de société"/>
+            <!--<allowedProductLevelItem id="7" name="Groupe de société"/>-->
             <allowedProductLevelItem id="8" name="Annonceur"/>
             <!--<allowedProductLevelItem id="15" name="Groupe d'agence"/>-->
             <!--<allowedProductLevelItem id="16" name="Agence"/>-->
@@ -366,7 +366,7 @@
         <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="336">-->
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <!--<ModuleVehicles list="1,2,3,5"/>-->
-          <ModuleVehicles list="5"/>
+          <ModuleVehicles list="1,2,5"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -387,7 +387,7 @@
             <allowedProductLevelItem id="14" name="Variete"/>
             <allowedProductLevelItem id="10" name="Produit"/>
             <allowedProductLevelItem id="9" name="Marque"/>
-            <allowedProductLevelItem id="7" name="Groupe de société"/>
+            <!--<allowedProductLevelItem id="7" name="Groupe de société"/>-->
             <allowedProductLevelItem id="8" name="Annonceur"/>
             <!--<allowedProductLevelItem id="15" name="Groupe d'agence"/>-->
             <!--<allowedProductLevelItem id="16" name="Agence"/>-->
@@ -643,7 +643,7 @@
         <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="337">-->
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <!--<ModuleVehicles list="1,2,3,5"/>-->
-          <ModuleVehicles list="5"/>
+          <ModuleVehicles list="1,2,5"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>

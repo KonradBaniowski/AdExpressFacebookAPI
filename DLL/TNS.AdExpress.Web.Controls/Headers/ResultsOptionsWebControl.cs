@@ -1078,6 +1078,8 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 								mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1143, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategoryMedia.GetHashCode().ToString()));
 							break;
 						case ClassificationCst.DB.Vehicles.names.press:
+                        case ClassificationCst.DB.Vehicles.names.newspaper:
+                        case ClassificationCst.DB.Vehicles.names.magazine:
 						case ClassificationCst.DB.Vehicles.names.internationalPress:
 						case ClassificationCst.DB.Vehicles.names.internet:
 						case ClassificationCst.DB.Vehicles.names.mobileTelephony:
@@ -1107,6 +1109,8 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 							mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1143, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategoryMedia.GetHashCode().ToString()));
 							break;
 						case ClassificationCst.DB.Vehicles.names.press:
+                        case ClassificationCst.DB.Vehicles.names.newspaper:
+                        case ClassificationCst.DB.Vehicles.names.magazine:
 						case ClassificationCst.DB.Vehicles.names.internationalPress:
 						case ClassificationCst.DB.Vehicles.names.internet:
 						case ClassificationCst.DB.Vehicles.names.mobileTelephony:
@@ -1621,6 +1625,8 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				case ClassificationCst.DB.Vehicles.names.tv:
 				case ClassificationCst.DB.Vehicles.names.radio:
 				case ClassificationCst.DB.Vehicles.names.press:
+                case ClassificationCst.DB.Vehicles.names.newspaper:
+                case ClassificationCst.DB.Vehicles.names.magazine:
 				case ClassificationCst.DB.Vehicles.names.internationalPress:				
 					return (current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO || (webSession.CustomerPeriodSelected.IsSliding4M));						
 				default: throw new Exceptions.ResultsOptionsWebControlException("ResultsOptionsWebControl : Vehicle unknown.");

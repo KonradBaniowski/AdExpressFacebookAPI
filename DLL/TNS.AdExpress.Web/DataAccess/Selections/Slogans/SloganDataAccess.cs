@@ -156,7 +156,10 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
                 }
                 // Sélection de la date
                 if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
-                    || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress)
+                    || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress
+                    || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
+                    || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
+                    )
                     sql += ", date_cover_num as date_media_num ";
                 else sql += ", date_media_num ";
                 //Sélection champs spécifiques à chaque média
@@ -168,7 +171,10 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
                     + TblProduct.SqlWithPrefix + ", "
                 + TblAdvertiser.SqlWithPrefix + ", ";
                 if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
-                    || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress)
+                    || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress
+                    || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
+                    || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
+                    )
                 {
                     sql += TblFormat.SqlWithPrefix + ",";
                 }
@@ -185,7 +191,9 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
                 sql += " and " + TblAdvertiser.Prefix + ".id_language=" + webSession.DataLanguage.ToString();
                 sql += " and " + TblAdvertiser.Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
                 if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
-                    || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress)
+                    || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress
+                    || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
+                    || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine)
                 {
                     sql += " and " + TblFormat.Prefix + ".id_format(+)=" + tablePrefixe + ".id_format ";
                     sql += " and " + TblFormat.Prefix + ".id_language(+)=" + webSession.DataLanguage.ToString();
@@ -294,7 +302,8 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 				sql += " from " + WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.vehicle).SqlWithPrefix + ", "
 					+ WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.product).SqlWithPrefix + ", "
 					+ WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.advertiser).SqlWithPrefix + ", ";
-				if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press) {
+                if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine)
+                {
 					sql += WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.format).SqlWithPrefix + ",";
 				}
 
@@ -369,7 +378,9 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 				case DBClassificationConstantes.Vehicles.names.others :
 					return "id_media,TO_CHAR( duration)  as advertDimension, TO_CHAR(associated_file) as sloganFile";
 				case DBClassificationConstantes.Vehicles.names.internationalPress :
-				case DBClassificationConstantes.Vehicles.names.press : 
+				case DBClassificationConstantes.Vehicles.names.press :
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
 					return "id_media,format as advertDimension, visual as sloganFile";	
 				case DBClassificationConstantes.Vehicles.names.outdoor :
 					return "id_media,type_board as advertDimension, associated_file as sloganFile";

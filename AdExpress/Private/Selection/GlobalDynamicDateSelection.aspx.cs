@@ -420,6 +420,8 @@ namespace AdExpress.Private.Selection {
 
             switch ((DBClassificationConstantes.Vehicles.names)selectedVehicle) {
                 case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                     lastDate = TNS.AdExpress.Web.DataAccess.Selections.Medias.MediaPublicationDatesDataAccess.GetLatestPublication(_webSession, selectedVehicle,_webSession.Source);
                     if (lastDate.Length == 0) lastDate = startYear + "0101";

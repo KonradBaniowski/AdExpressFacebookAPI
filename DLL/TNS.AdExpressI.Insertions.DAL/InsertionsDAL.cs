@@ -933,7 +933,9 @@ namespace TNS.AdExpressI.Insertions.DAL {
             /* For the media type press and international press we can do studies according to the inset option (total, inset excluding, inset)
              * so to get the corresponding filter we use GetJointForInsertDetail method
              * */
-            if (vehicle.Id == CstDBClassif.Vehicles.names.press || vehicle.Id == CstDBClassif.Vehicles.names.internationalPress) {
+            if (vehicle.Id == CstDBClassif.Vehicles.names.press || vehicle.Id == CstDBClassif.Vehicles.names.internationalPress || vehicle.Id == CstDBClassif.Vehicles.names.newspaper
+                || vehicle.Id == CstDBClassif.Vehicles.names.magazine)
+            {
                 sql.Append(FctWeb.SQLGenerator.GetJointForInsertDetail(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
             }
 

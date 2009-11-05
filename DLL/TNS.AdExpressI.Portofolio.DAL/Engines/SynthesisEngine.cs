@@ -511,6 +511,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             switch (_vehicleInformation.Id) {
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                 case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
                 case DBClassificationConstantes.Vehicles.names.internet:
                     return "";
                 case DBClassificationConstantes.Vehicles.names.radio:
@@ -610,6 +612,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 			switch (_vehicleInformation.Id) {
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
 				case DBClassificationConstantes.Vehicles.names.press:
 					sql += "," + WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.periodicity);
 					return sql;
@@ -638,6 +642,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 		/// <returns>Table name</returns>
 		protected virtual string GetTableData() {
 			switch (_vehicleInformation.Id) {
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaperAlert).Label;
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazineAlert).Label;
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
                     return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInterAlert).Label;
 				case DBClassificationConstantes.Vehicles.names.press:

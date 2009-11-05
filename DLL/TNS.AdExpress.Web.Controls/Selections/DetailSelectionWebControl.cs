@@ -1180,7 +1180,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		private string GetInsetSelected(WebSession webSession){
 			//string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
 			ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-			if(vehicleType==ClassificationCst.DB.Vehicles.names.press ||vehicleType==ClassificationCst.DB.Vehicles.names.internationalPress){
+            if (vehicleType == ClassificationCst.DB.Vehicles.names.press || vehicleType == ClassificationCst.DB.Vehicles.names.newspaper || vehicleType == ClassificationCst.DB.Vehicles.names.magazine || vehicleType == ClassificationCst.DB.Vehicles.names.internationalPress)
+            {
 				int code=0;
 				switch(webSession.Insert){
 					case  WebConstantes.CustomerSessions.Insert.total :

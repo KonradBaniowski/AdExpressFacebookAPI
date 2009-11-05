@@ -465,6 +465,10 @@ namespace AdExpress.Private.Results{
 			switch(vehicleName){
 				case DBClassificationConstantes.Vehicles.names.press:
 					return 1298;
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                    return 2620;
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                    return 2621;
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
 					return 646;
 				case DBClassificationConstantes.Vehicles.names.radio:

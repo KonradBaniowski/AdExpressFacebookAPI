@@ -670,6 +670,8 @@ namespace TNS.AdExpress.Web.Controls.Selections {
            
             switch (VehiclesInformation.DatabaseIdToEnum(_selectedVehicle)) {
                 case Vehicles.names.press:
+                case Vehicles.names.newspaper:
+                case Vehicles.names.magazine:
                 case Vehicles.names.internationalPress:
                     days = _firstDayNotEnable.Subtract(currentDay).Days;
                     if (days >= 1) return true;
@@ -716,6 +718,8 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 
             switch (VehiclesInformation.DatabaseIdToEnum(_selectedVehicle)) {
                 case Vehicles.names.press:
+                case Vehicles.names.newspaper:
+                case Vehicles.names.magazine:
                 case Vehicles.names.internationalPress:
 					lastDate = TNS.AdExpress.Web.DataAccess.Selections.Medias.MediaPublicationDatesDataAccess.GetLatestPublication(_customerWebSession, _selectedVehicle, _customerWebSession.Source);
                     publicationDate = new DateTime(Convert.ToInt32(lastDate.Substring(0, 4)), Convert.ToInt32(lastDate.Substring(4, 2)), Convert.ToInt32(lastDate.Substring(6, 2)));

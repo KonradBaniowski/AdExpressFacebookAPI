@@ -236,6 +236,12 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
 
                 #region Vehicle Label
                 switch (VehiclesInformation.DatabaseIdToEnum(_vehicles[i])) {
+                    case DBClassifCst.Vehicles.names.newspaper:
+                        vehicle = GestionWeb.GetWebWord(2620, _webSession.SiteLanguage);
+                        break;
+                    case DBClassifCst.Vehicles.names.magazine:
+                        vehicle = GestionWeb.GetWebWord(2621, _webSession.SiteLanguage);
+                        break;
                     case DBClassifCst.Vehicles.names.press: 
                         vehicle = GestionWeb.GetWebWord(1298, _webSession.SiteLanguage); 
                         break;

@@ -287,6 +287,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			
 			switch(idVehicle){
 				case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
 					
 					
@@ -402,6 +404,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					break;
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
 				case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
 					sql+=", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+DBConstantes.Tables.COLOR+" "+DbTables.COLOR_PREFIXE;
 					sql+=", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+DBConstantes.Tables.LOCATION+" "+DbTables.LOCATION_PREFIXE;
 					sql+=", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+DBConstantes.Tables.DATA_LOCATION+" "+DbTables.DATA_LOCATION_PREFIXE;
@@ -465,8 +469,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			
 			//jointures média
 			sql.Append(GetMediaJoinConditions(dataTablePrefixe,true,siteLanguage));
-			
-			if (idVehicle==DBClassificationConstantes.Vehicles.names.press || idVehicle==DBClassificationConstantes.Vehicles.names.internationalPress){
+
+            if (idVehicle == DBClassificationConstantes.Vehicles.names.press || idVehicle == DBClassificationConstantes.Vehicles.names.internationalPress || idVehicle == DBClassificationConstantes.Vehicles.names.newspaper || idVehicle == DBClassificationConstantes.Vehicles.names.magazine)
+            {
 				sql.Append(" and ("+DbTables.APPLICATION_MEDIA_PREFIXE+".id_media(+) = "+dataTablePrefixe+".id_media ");
 				sql.Append(" and "+DbTables.APPLICATION_MEDIA_PREFIXE+".date_debut(+) = "+dataTablePrefixe+".date_media_num ");
 				sql.Append(" and "+DbTables.APPLICATION_MEDIA_PREFIXE+".id_project(+) = "+ CstProject.ADEXPRESS_ID +") ");
@@ -565,6 +570,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			string sql="";
 			switch(idVehicle){
 				case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
 				case DBClassificationConstantes.Vehicles.names.internationalPress:																
 					sql+=" vehicle ,category, media ,"+prefixeMediaPlanTable+".id_slogan"																
 						+", "+prefixeMediaPlanTable+".date_media_Num, "+prefixeMediaPlanTable+".id_advertisement"

@@ -171,6 +171,12 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
                     tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataEvaliantMobile).Sql;
                     break;
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaper).Sql;
+                    break;
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazine).Sql;
+                    break;
 
             }
 
@@ -184,6 +190,8 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
                     sql += " from " + tableName;
                     break;
                 case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                 case DBClassificationConstantes.Vehicles.names.others:
                 case DBClassificationConstantes.Vehicles.names.tv:

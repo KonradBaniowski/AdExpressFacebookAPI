@@ -793,6 +793,38 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// </summary>
         totalTendencyWeek=167,
         /// <summary>
+        /// dataNewspaper
+        /// </summary>
+        dataNewspaper=168,
+        /// <summary>
+        /// dataNewspaper4M
+        /// </summary>
+        dataNewspaperAlert = 169,
+        /// <summary>
+        /// dataMagazine
+        /// </summary>
+        dataMagazine=170,
+        /// <summary>
+        /// dataMagazine4M
+        /// </summary>
+        dataMagazineAlert = 171,
+        /// <summary>
+        /// Recap Newspaper
+        /// </summary>
+        recapNewspaper = 172,
+        /// <summary>
+        /// Recap Magazine
+        /// </summary>
+        recapMagazine = 173,
+        /// <summary>
+        /// Recap Newspaper Segment
+        /// </summary>
+        recapNewspaperSegment = 174,
+        /// <summary>
+        /// Recap Magazine Segment
+        /// </summary>
+        recapMagazineSegment = 175,
+        /// <summary>
         /// Alert description
         /// </summary>
         alert = 300,

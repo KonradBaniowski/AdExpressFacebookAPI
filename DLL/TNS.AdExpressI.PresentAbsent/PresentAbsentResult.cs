@@ -1336,7 +1336,10 @@ namespace TNS.AdExpressI.PresentAbsent{
             //Parution Number
 			Dictionary<Int64, double> resNbParution = null;
             DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
-			if (columnDetailLevel.Id == DetailLevelItemInformation.Levels.media && (_vehicleInformation.Id == CstDBClassif.Vehicles.names.press || _vehicleInformation.Id == CstDBClassif.Vehicles.names.internationalPress)) {
+			if (columnDetailLevel.Id == DetailLevelItemInformation.Levels.media && (_vehicleInformation.Id == CstDBClassif.Vehicles.names.press || _vehicleInformation.Id == CstDBClassif.Vehicles.names.internationalPress
+                || _vehicleInformation.Id == CstDBClassif.Vehicles.names.newspaper
+                || _vehicleInformation.Id == CstDBClassif.Vehicles.names.magazine))
+            {
 				resNbParution = GetNbParutionsByMedia();
 				if (resNbParution != null && resNbParution.Count>0)
 					nbLine++;

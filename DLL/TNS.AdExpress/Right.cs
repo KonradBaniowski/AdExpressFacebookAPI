@@ -812,6 +812,8 @@ namespace TNS.AdExpress {
         /// <returns>True, if the customer has access</returns>
         public bool ShowCreatives(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names vehicleId) {			
 			switch (vehicleId) {
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.newspaper:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.magazine:
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
 					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_PRESS_CREATION_ACCESS_FLAG)) return true;
 					return (_flagsRights.ContainsKey(Flags.ID_PRESS_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_PRESS_CREATION_ACCESS_FLAG] != null);
