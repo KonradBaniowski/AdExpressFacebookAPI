@@ -34,7 +34,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Page de résultat du module Tendance
 	/// </summary>
-	public partial class TendenciesResult : TNS.AdExpress.Web.UI.ExcelWebPage{
+    public partial class TendenciesResult : TNS.AdExpress.Web.UI.ResultWebPage {
 
 		#region Variables MMI
 		/// <summary>
@@ -89,8 +89,6 @@ namespace AdExpress.Private.Results{
 		/// Constructeur, chargement de la session
 		/// </summary>
 		public TendenciesResult():base(){
-			// On réinitialise en KEuro car d'anciennes sessions peuvent être en Euro
-			_webSession.Unit = WebConstantes.CustomerSessions.Unit.kEuro;
 		}
 		#endregion
 

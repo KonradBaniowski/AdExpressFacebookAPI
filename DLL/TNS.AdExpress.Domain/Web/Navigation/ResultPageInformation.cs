@@ -13,6 +13,7 @@ using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Exceptions;
 
 namespace TNS.AdExpress.Domain.Web.Navigation {
 	/// <summary>
@@ -81,6 +82,10 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
         /// Parent Module
         /// </summary>
         protected Module _parentModule;
+        /// <summary>
+        /// Override Default Units List
+        /// </summary>
+        protected DefaultUnitList _overrideDefaultUnits = null;
 		#endregion
 
 		#region Constructeur
@@ -268,6 +273,14 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
         public List<CustomerSessions.Unit> AllowedUnitEnumList {
             get { return _allowedUnitsList; }
             set { _allowedUnitsList = value; }
+        }
+
+        /// <summary>
+        /// Get / Set Override Default Units List
+        /// </summary>
+        public DefaultUnitList OverrideDefaultUnits {
+            get { return _overrideDefaultUnits; }
+            set { _overrideDefaultUnits = value; }
         }
 		#endregion
 
@@ -458,7 +471,38 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 			return isValidPage;
 		}
 
-		
+        #region GetDefaultUnit
+        /// <summary>
+        /// GetDefaultUnit 
+        /// </summary>
+        /// <param name="vehicleName">vehicleName</param>
+        /// <returns>return Default Unit defined for this Result Page. If not defined, return the default unit for the module</returns>
+        public CustomerSessions.Unit GetDefaultUnit(Vehicles.names vehicleName) {
+            try {
+                //If Default Unit is not defined
+                if (_overrideDefaultUnits == null || _overrideDefaultUnits.GetDefaultUnit(vehicleName) == CustomerSessions.Unit.none) {
+                    if (_parentModule == null) throw new Exception("_parentModule is null in ResultPageInformation where id='"+this.Id+"'");
+                    //Get Default Unit from Vehicle
+                    return _parentModule.GetDefaultUnit(vehicleName);
+                }
+                //If Default Unit is defined
+                else {
+                    return _overrideDefaultUnits.GetDefaultUnit(vehicleName);
+                }
+            }
+            catch (Exception e) {
+                throw new ResultPageInformationException("Impossible to Get Default Unit for vehicle '" + vehicleName.ToString() + "'", e);
+            }
+        }
+        /// <summary>
+        /// GetDefaultUnit 
+        /// </summary>
+        /// <param name="vehicleId">vehicleId</param>
+        /// <returns>return Default Unit defined for this Result Page. If not defined, return the default unit for the module</returns>
+        public CustomerSessions.Unit GetDefaultUnit(Int64 vehicleId) {
+            return GetDefaultUnit(VehiclesInformation.Get(vehicleId).Id);
+        }
+        #endregion
 
 		#endregion
 

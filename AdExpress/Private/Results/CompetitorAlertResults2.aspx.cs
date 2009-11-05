@@ -35,7 +35,7 @@ namespace AdExpress.Private.Results
 	/// <summary>
 	/// Page Alerte concurrentielle
 	/// </summary>
-	public class CompetitorAlertResults2 : TNS.AdExpress.Web.UI.ResultWebPage
+    public class CompetitorAlertResults2 : TNS.AdExpress.Web.UI.ResultWebPage
 	{
 
 		#region Variables MMI

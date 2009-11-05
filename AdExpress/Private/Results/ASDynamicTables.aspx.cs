@@ -37,7 +37,7 @@ namespace AdExpress{
 	/// <summary>
 	/// Tableaux dynamiques de l'analyse sectorielle
 	/// </summary>
-	public partial class ASDynamicTables :  TNS.AdExpress.Web.UI.ResultWebPage{
+    public partial class ASDynamicTables : TNS.AdExpress.Web.UI.ResultWebPage {
 		
 		#region Variables
 		/// <summary>

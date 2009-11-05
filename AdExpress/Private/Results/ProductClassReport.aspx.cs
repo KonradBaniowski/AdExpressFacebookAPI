@@ -45,7 +45,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Tableaux dynamiques de l'analyse sectorielle
 	/// </summary>
-	public partial class ProductClassReport :  TNS.AdExpress.Web.UI.ResultWebPage{
+    public partial class ProductClassReport : TNS.AdExpress.Web.UI.ResultWebPage {
 		
 		#region Variables
 		/// <summary>
@@ -86,8 +86,6 @@ namespace AdExpress.Private.Results{
         {			
 			_webSession.CurrentModule = WebConstantes.Module.Name.TABLEAU_DYNAMIQUE;
 			_webSession.CurrentTab = 0;
-			// On réinitialise en KEuro car d'anciennes sessions peuvent être en Euro
-			_webSession.Unit = WebConstantes.CustomerSessions.Unit.kEuro;
 		}
 		#endregion
 

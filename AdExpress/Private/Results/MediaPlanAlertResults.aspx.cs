@@ -26,7 +26,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Description résumée de test.
 	/// </summary>
-	public partial class MediaPlanAlertResults : TNS.AdExpress.Web.UI.ResultWebPage{
+    public partial class MediaPlanAlertResults : TNS.AdExpress.Web.UI.ResultWebPage {
 
 		#region Variables	
 		/// <summary>

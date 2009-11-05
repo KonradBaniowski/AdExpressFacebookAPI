@@ -35,7 +35,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Affichage de la page de résultat Alerte Plan Media Concurrentiel
 	/// </summary>
-	public partial class CompetitorMediaPlanAlertResults : TNS.AdExpress.Web.UI.ResultWebPage{
+    public partial class CompetitorMediaPlanAlertResults : TNS.AdExpress.Web.UI.ResultWebPage {
 
 //        #region Variables MMI
 //        /// <summary>

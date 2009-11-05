@@ -47,7 +47,7 @@ namespace AdExpress.Private.Results
 	/// <summary>
 	/// Page de résultats du parrainage TV
 	/// </summary>
-	public partial class SponsorshipResults : TNS.AdExpress.Web.UI.ResultWebPage{	
+    public partial class SponsorshipResults : TNS.AdExpress.Web.UI.ResultWebPage {	
 	
 		#region Variables
 

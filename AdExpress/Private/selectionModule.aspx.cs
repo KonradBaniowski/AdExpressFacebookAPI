@@ -119,17 +119,8 @@ namespace AdExpress{
 					_webSession.Insert=TNS.AdExpress.Constantes.Web.CustomerSessions.Insert.total;
 					_webSession.PeriodEndDate="";
 					_webSession.Graphics=true;
-					
-					// Unité par défaut
-					if(_webSession.CurrentModule ==TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
-						|| _webSession.CurrentModule ==TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE
-						|| _webSession.CurrentModule ==TNS.AdExpress.Constantes.Web.Module.Name.TENDACES
-						){
-						_webSession.Unit=CstWeb.CustomerSessions.Unit.kEuro;
-					}
-					else{
-						_webSession.Unit=CstWeb.CustomerSessions.Unit.euro;
-					}
+
+                    _webSession.Unit = CstWeb.CustomerSessions.Unit.euro;
 
                     _webSession.PreformatedProductDetail=WebFunctions.ProductDetailLevel.GetDefault(_webSession);
 
@@ -231,19 +222,6 @@ namespace AdExpress{
 						_webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
 					}
 					#endregion
-
-                    #region paramètres rajoutés pour Nouvelles créations (Evaliant)
-                    //Setting vehicle as adnettrack for new ceratives
-                    if(_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES) {
-						//System.Windows.Forms.TreeNode tmpNode = new System.Windows.Forms.TreeNode();
-						//tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, DBConstantes.Vehicles.names.adnettrack.GetHashCode(), GestionWeb.GetWebWord(2533, _webSession.SiteLanguage));
-						//tmpNode.Checked = true;
-						//_webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
-
-                        // unit version nb
-                        _webSession.Unit = CstWeb.CustomerSessions.Unit.versionNb;
-                    }
-                    #endregion
 
 					#region paramètres rajoutés pour tableaux de bord
 					_webSession.DetailPeriodBeginningDate="";

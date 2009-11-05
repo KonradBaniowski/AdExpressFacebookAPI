@@ -15,6 +15,8 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Exceptions;
 
 namespace TNS.AdExpress.Domain.XmlLoader {
     /// <summary>
@@ -40,6 +42,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 			TNS.AdExpress.Domain.Level.GenericDetailLevel defaultMediaSelectionDetailLevel = null;
 			List<long> allowedUniverseLevels = new List<long>();
             XmlTextReader reader = null;
+            XmlReader subtree = null;
             VehicleInformation vhInfo = null;
             string id= string.Empty;
             string defaultMediaSelectionParent = string.Empty;
@@ -51,6 +54,8 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             bool needLastAvailableDate = false;
 			bool autopromo = false;
             string readString = string.Empty;
+            CustomerSessions.Unit defaultAllowUnit;
+            AllowUnits allowUnits = new AllowUnits(); ;
             #endregion
 
             try {
@@ -61,7 +66,8 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                         switch (reader.LocalName) {
                             case "vehicle":
                                 if (id.Length > 0) {
-                                    vhInfo = new VehicleInformation(id, baseId, showInsertions, showCreations, showActiveMedia, needLastAvailableDate, allowedUnitsList, allowedMediaLevelItemsList, defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId, allowedRecapMediaLevelItemsList);
+                                    vhInfo = new VehicleInformation(id, baseId, showInsertions, showCreations, showActiveMedia, needLastAvailableDate, allowUnits, allowedMediaLevelItemsList, defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId, allowedRecapMediaLevelItemsList);
+                                    allowUnits = new AllowUnits();
 									vhInfo.AllowedMediaSelectionLevelItemsList = allowedMediaSelectionLevelItemsList;
 									vhInfo.DefaultMediaSelectionDetailLevels = defaultMediaSelectionDetailLevels;
 									vhInfo.DefaultMediaSelectionDetailLevel = defaultMediaSelectionDetailLevel;
@@ -97,10 +103,30 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 								if (reader.GetAttribute("autopromo") != null && reader.GetAttribute("autopromo").Length > 0)
 									autopromo = bool.Parse(reader.GetAttribute("autopromo"));
                                 break;
-                            case "allowedUnit":
-                                readString = reader.ReadString();
-                                if (readString == null || readString.Length == 0) throw (new InvalidXmlValueException("Invalid allowedUnit parameter"));
-                                allowedUnitsList.Add((CustomerSessions.Unit)Enum.Parse(typeof(CustomerSessions.Unit), readString, true));
+                            case "allowedUnits":
+                                defaultAllowUnit = (CustomerSessions.Unit)Enum.Parse(typeof(CustomerSessions.Unit), reader.GetAttribute("defaultUnit"));
+                                allowedUnitsList = new List<CustomerSessions.Unit>();
+                                subtree = (XmlReader)reader.ReadSubtree();
+
+                                while (subtree.Read()) {
+                                    if (subtree.NodeType == XmlNodeType.Element) {
+                                        switch (subtree.LocalName) {
+                                            case "allowedUnit":
+                                                readString = subtree.ReadString();
+                                                if (readString == null || readString.Length == 0) throw (new InvalidXmlValueException("Invalid allowedUnit parameter"));
+                                                try {
+                                                    allowedUnitsList.Add((CustomerSessions.Unit)Enum.Parse(typeof(CustomerSessions.Unit), readString, true));
+                                                }
+                                                catch (Exception e) {
+                                                    throw new Exception("Impossible to Add unit '" + readString + "' to allowedUnitsList", e);
+                                                }
+                                                break;
+                                        }
+                                    }
+                                }
+                                allowUnits.DefaultAllowUnit = defaultAllowUnit;
+                                allowUnits.AllowUnitList = allowedUnitsList;
+                                allowUnits.Verify();
                                 break;
                             case "allowedMediaLevelItem":
                                 readString = reader.ReadString();
@@ -147,7 +173,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                     }
                 }
                 if (id.Length > 0) {
-                    vhInfo = new VehicleInformation(id, baseId, showInsertions, showCreations, showActiveMedia, needLastAvailableDate, allowedUnitsList, allowedMediaLevelItemsList, defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId, allowedRecapMediaLevelItemsList);
+                    vhInfo = new VehicleInformation(id, baseId, showInsertions, showCreations, showActiveMedia, needLastAvailableDate, allowUnits, allowedMediaLevelItemsList, defaultMediaSelectionParent, mediaSelectionParentsList, detailColumnId, allowedRecapMediaLevelItemsList);
 					vhInfo.AllowedMediaSelectionLevelItemsList = allowedMediaSelectionLevelItemsList;
 					vhInfo.DefaultMediaSelectionDetailLevels = defaultMediaSelectionDetailLevels;
 					vhInfo.DefaultMediaSelectionDetailLevel = defaultMediaSelectionDetailLevel;
@@ -162,7 +188,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                 if (source.GetSource() != null) source.Close();
                 #endregion
 
-                throw (new Exception(" Error : ", err));
+                throw (new VehiclesInformationXLException(" Error : ", err));
             }
 
             source.Close();

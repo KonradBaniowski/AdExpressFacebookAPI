@@ -3,7 +3,7 @@
   <!-- PRESS -->
   <vehicle id="press" databaseId="1" showInsertions="true" showCreations="true">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="pages">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>insertion</allowedUnit>
@@ -82,7 +82,7 @@
   <!-- RADIO -->
   <vehicle id="radio" databaseId="2" showInsertions="true" showCreations="true">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>duration</allowedUnit>
@@ -160,7 +160,7 @@
   <!-- TV -->
   <vehicle id="tv" databaseId="3" showInsertions="true" showCreations="true">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>duration</allowedUnit>
@@ -242,7 +242,7 @@
   <!-- MEDIA TACTIQUE -->
   <vehicle id="mediasTactics" databaseId="4" showInsertions="false" showCreations="false">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
     <allowedRecapMediaDetailLevels>
@@ -271,7 +271,7 @@
   <!-- OTHERS -->
   <vehicle id="others" databaseId="5" showInsertions="true" showCreations="true">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>duration</allowedUnit>
@@ -341,7 +341,7 @@
   <!-- Evaliant -->
   <vehicle id="adnettrack" databaseId="6" showInsertions="false" showCreations="true" autopromo="true">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="versionNb">
       <allowedUnit>occurence</allowedUnit>
       <allowedUnit>versionNb</allowedUnit>
     </allowedUnits>
@@ -396,7 +396,7 @@
   <!-- INTERNET -->
   <vehicle id="internet" databaseId="7" showInsertions="false" showCreations="true" showActiveMedia="true">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
     </allowedUnits>
@@ -469,7 +469,7 @@
   <!-- OUTDOOR -->
   <vehicle id="outdoor" databaseId="8" showInsertions="true" showCreations="true">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>numberBoard</allowedUnit>
@@ -544,7 +544,7 @@
   <!-- CINEMA -->
   <vehicle id="cinema" databaseId="9" showInsertions="false" showCreations="false">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
     <allowedRecapMediaDetailLevels>
@@ -571,7 +571,7 @@
   <!-- DIRECT_MARKETING -->
   <vehicle id="directMarketing" databaseId="10" showInsertions="true" showCreations="true">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>volume</allowedUnit>
@@ -646,7 +646,7 @@
   <!-- INTERNATIONAL_PRESS -->
   <vehicle id="internationalPress" databaseId="11" showInsertions="true" showCreations="true">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="pages">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>insertion</allowedUnit>
@@ -728,7 +728,7 @@
   <!-- PLURIMEDIA -->
   <vehicle id="plurimedia" databaseId="50" showInsertions="false" showCreations="false">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
     <allowedRecapMediaDetailLevels>
@@ -748,7 +748,7 @@
   <!-- EMAILING -->
   <vehicle id="emailing" databaseId="13" showInsertions="false" showCreations="false">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
     <!--Media detail level allowed in recap's modules-->
@@ -777,7 +777,7 @@
   <!--TELEPHONIE MOBILE-->
   <vehicle id="mobileTelephony" databaseId="12" showInsertions="false" showCreations="false">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
     <!--Media detail level allowed in recap's modules-->
@@ -806,7 +806,7 @@
   <!-- Evaliant mobile-->
   <vehicle id="evaliantMobile" databaseId="15" showInsertions="false" showCreations="true" autopromo="false">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="versionNb">
       <allowedUnit>occurence</allowedUnit>
       <allowedUnit>versionNb</allowedUnit>
     </allowedUnits>

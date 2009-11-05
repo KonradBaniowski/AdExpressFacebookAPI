@@ -47,7 +47,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Page Alerte concurrentielle
 	/// </summary>
-	public partial class CompetitorAlertResults : TNS.AdExpress.Web.UI.ResultWebPage{
+    public partial class CompetitorAlertResults : TNS.AdExpress.Web.UI.ResultWebPage {
 
 		#region Variables MMI
 		/// <summary>
@@ -291,12 +291,7 @@ namespace AdExpress.Private.Results{
                 #region Résultat
                 //Code html des résultats
 				result="";
-
-				if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) && _vehicleInformation.AllowedUnitEnumList.Contains(WebConstantes.CustomerSessions.Unit.pages)
-					&& !_webSession.ReachedModule
-					){
-					_webSession.Unit=WebConstantes.CustomerSessions.Unit.pages;
-				}												
+											
 				#endregion
 
 				#region MAJ _webSession

@@ -22,7 +22,7 @@ namespace AdExpress.Private.Results
 	/// <summary>
 	/// Liste des justiifcatifs presse
 	/// </summary>
-	public partial class ProofResults  : TNS.AdExpress.Web.UI.ResultWebPage{
+    public partial class ProofResults : TNS.AdExpress.Web.UI.ResultWebPage {
 
 		#region Variables
 		/// <summary> 

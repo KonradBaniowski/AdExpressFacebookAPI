@@ -43,7 +43,7 @@ namespace AdExpress.Private.Results
 	/// <summary>
 	/// Page d'affichage des résultats du données de cadrage.
 	/// </summary>
-	public partial class SectorDataResults : TNS.AdExpress.Web.UI.ResultWebPage{
+    public partial class SectorDataResults : TNS.AdExpress.Web.UI.BaseResultWebPage {
 
 		#region variables
 		/// <summary>
@@ -267,11 +267,11 @@ namespace AdExpress.Private.Results
 				case TNS.AdExpress.Constantes.FrameWork.Results.APPM.sectorDataAffinities:
 				case TNS.AdExpress.Constantes.FrameWork.Results.APPM.sectorDataAverage:
 				case TNS.AdExpress.Constantes.FrameWork.Results.APPM.sectorDataSynthesis :
-					if(_webSession.Unit ==WebConstantes.CustomerSessions.Unit.kEuro){
-						//unité en euro pour cette planche
-						_webSession.Unit=WebConstantes.CustomerSessions.Unit.euro;
-						_webSession.Save();
-					}
+                    if (_webSession.Unit == WebConstantes.CustomerSessions.Unit.kEuro) {
+                        //unité en euro pour cette planche
+                        _webSession.Unit = WebConstantes.CustomerSessions.Unit.euro;
+                        _webSession.Save();
+                    }
 					_webSession.Graphics =false;
 					break;
 			}

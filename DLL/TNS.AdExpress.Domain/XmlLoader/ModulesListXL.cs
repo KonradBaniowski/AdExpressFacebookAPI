@@ -21,6 +21,9 @@ using TNS.AdExpress.Domain.Layers;
 using Except = TNS.FrameWork.Exceptions;
 using Constante = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Classification;
+using TNS.FrameWork.Exceptions;
+using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Constantes.Classification.DB;
 
 namespace TNS.AdExpress.Domain.XmlLoader{
 	///<summary>
@@ -36,16 +39,18 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 		/// <param name="pathXMLFile">Xml file path</param>
 		/// <param name="HtModuleGroup">Modules groups list</param>
 		/// <param name="HtModule">Modules List</param>
-		public static void Load(IDataSource source,Hashtable HtModuleGroup, Hashtable HtModule){
-			XmlTextReader Reader=null;
-			HtModule.Clear();
-			HtModuleGroup.Clear();
+		public static void Load(IDataSource source,Hashtable htModuleGroup, Hashtable htModule){
+			XmlTextReader reader=null;
+            XmlReader subtree = null;
+            XmlReader subtree2 = null;
+			htModule.Clear();
+			htModuleGroup.Clear();
 			bool showLink;
 			int moduleType = 0;
 			OptionalPageInformation currentSelectionPage = null, currentSubSelectionPage = null; 
 			try{
 
-				Reader=(XmlTextReader)source.GetSource();
+				reader=(XmlTextReader)source.GetSource();
 				bool allowRecall=true;
 				string helpUrlValue="";
 				string optionalNextUrlValue="";
@@ -64,10 +69,11 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                 string allowedUnitValue="";
                 bool useBaalForModule=false;
                 bool useBaalForResult=false;
+                Constante.CustomerSessions.Unit defaultUnit;
 				Int64 module=0;
                 Int32 resultLimitation = 0;
 				ResultPageInformation currentResultPageInformation=null;
-				while(Reader.Read()){
+				while(reader.Read()){
 					allowRecall=true;
 					methodValue="";
 					helpUrlValue="";
@@ -84,217 +90,246 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                     createAlertUrlValue="";
                     functionName="";
                     resultLimitation = 0;
-					if(Reader.NodeType==XmlNodeType.Element){
-						switch(Reader.LocalName){
+					if(reader.NodeType==XmlNodeType.Element){
+						switch(reader.LocalName){
                             case "ResultLimitation":
-                                if (Reader.GetAttribute("size") != null)
+                                if (reader.GetAttribute("size") != null)
                                 {
-                                    ((Module)HtModule[module]).ResultSize = int.Parse(Reader.GetAttribute("size"));
+                                    ((Module)htModule[module]).ResultSize = int.Parse(reader.GetAttribute("size"));
                                 }
                                 break;
 							case "moduleGroup":
-								if(Reader.GetAttribute("privilegecode")!=null && Reader.GetAttribute("traductioncode")!=null && Reader.GetAttribute("flashUrl")!=null && Reader.GetAttribute("type")!=null) {
-									HtModuleGroup.Add(Int64.Parse(Reader.GetAttribute("privilegecode")),new ModuleGroup(Int64.Parse(Reader.GetAttribute("privilegecode")),Int64.Parse(Reader.GetAttribute("traductioncode")),Reader.GetAttribute("flashUrl"),Reader.GetAttribute("missingFlashUrl"),Int64.Parse(Reader.GetAttribute("descriptionWebTextId"))));
-									moduleType=int.Parse(Reader.GetAttribute("type"));
+								if(reader.GetAttribute("privilegecode")!=null && reader.GetAttribute("traductioncode")!=null && reader.GetAttribute("flashUrl")!=null && reader.GetAttribute("type")!=null) {
+									htModuleGroup.Add(Int64.Parse(reader.GetAttribute("privilegecode")),new ModuleGroup(Int64.Parse(reader.GetAttribute("privilegecode")),Int64.Parse(reader.GetAttribute("traductioncode")),reader.GetAttribute("flashUrl"),reader.GetAttribute("missingFlashUrl"),Int64.Parse(reader.GetAttribute("descriptionWebTextId"))));
+									moduleType=int.Parse(reader.GetAttribute("type"));
 								}
 								break;
 							case "module":
-                                if(Reader.GetAttribute("privilegecode") != null && Reader.GetAttribute("traductioncode") != null && Reader.GetAttribute("urlNextPage") != null && Reader.GetAttribute("descriptionWebTextId") != null && Reader.GetAttribute("descriptionImageName") != null && Reader.GetAttribute("moduleCategoryId") != null) {
-                                    HtModule.Add(Int64.Parse(Reader.GetAttribute("privilegecode")), new Module(Int64.Parse(Reader.GetAttribute("privilegecode")), Int64.Parse(Reader.GetAttribute("traductioncode")), Int64.Parse(Reader.GetAttribute("descriptionWebTextId")), Int64.Parse(Reader.GetAttribute("moduleCategoryId")), Reader.GetAttribute("urlNextPage"), moduleType, Reader.GetAttribute("descriptionImageName")));
-									module = Int64.Parse(Reader.GetAttribute("privilegecode"));
+                                if(reader.GetAttribute("privilegecode") != null && reader.GetAttribute("traductioncode") != null && reader.GetAttribute("urlNextPage") != null && reader.GetAttribute("descriptionWebTextId") != null && reader.GetAttribute("descriptionImageName") != null && reader.GetAttribute("moduleCategoryId") != null) {
+                                    htModule.Add(Int64.Parse(reader.GetAttribute("privilegecode")), new Module(Int64.Parse(reader.GetAttribute("privilegecode")), Int64.Parse(reader.GetAttribute("traductioncode")), Int64.Parse(reader.GetAttribute("descriptionWebTextId")), Int64.Parse(reader.GetAttribute("moduleCategoryId")), reader.GetAttribute("urlNextPage"), moduleType, reader.GetAttribute("descriptionImageName")));
+									module = Int64.Parse(reader.GetAttribute("privilegecode"));
 								}
 								break;
 							case "selection":
-								if(Reader.GetAttribute("allowRecall")!=null)allowRecall=Boolean.Parse(Reader.GetAttribute("allowRecall"));
-								if(Reader.GetAttribute("validationMethod")!=null)methodValue=Reader.GetAttribute("validationMethod");
-								if(Reader.GetAttribute("helpUrl")!=null)helpUrlValue=Reader.GetAttribute("helpUrl");
-                                if (Reader.GetAttribute("functionName") != null)functionName=Reader.GetAttribute("functionName");
-								if(Reader.GetAttribute("showLink")==null)showLink=true;
+								if(reader.GetAttribute("allowRecall")!=null)allowRecall=Boolean.Parse(reader.GetAttribute("allowRecall"));
+								if(reader.GetAttribute("validationMethod")!=null)methodValue=reader.GetAttribute("validationMethod");
+								if(reader.GetAttribute("helpUrl")!=null)helpUrlValue=reader.GetAttribute("helpUrl");
+                                if (reader.GetAttribute("functionName") != null)functionName=reader.GetAttribute("functionName");
+								if(reader.GetAttribute("showLink")==null)showLink=true;
 								else{
-									if(Reader.GetAttribute("showLink")=="true")showLink=true;
+									if(reader.GetAttribute("showLink")=="true")showLink=true;
 									else showLink=false;
 								}
-								if(Reader.GetAttribute("id")!=null && Reader.GetAttribute("traductioncode")!=null && Reader.GetAttribute("url")!=null && Reader.GetAttribute("icone")!=null && Reader.GetAttribute("menuTextId")!=null && module!=0 ){
-									((Module)HtModule[module]).SelectionsPages.Add(currentSelectionPage = new SelectionPageInformation(int.Parse(Reader.GetAttribute("id")),showLink,Reader.GetAttribute("url"),Int64.Parse(Reader.GetAttribute("traductioncode")),Reader.GetAttribute("icone"),helpUrlValue, methodValue,Int64.Parse(Reader.GetAttribute("menuTextId")),allowRecall,functionName));
+								if(reader.GetAttribute("id")!=null && reader.GetAttribute("traductioncode")!=null && reader.GetAttribute("url")!=null && reader.GetAttribute("icone")!=null && reader.GetAttribute("menuTextId")!=null && module!=0 ){
+									((Module)htModule[module]).SelectionsPages.Add(currentSelectionPage = new SelectionPageInformation(int.Parse(reader.GetAttribute("id")),showLink,reader.GetAttribute("url"),Int64.Parse(reader.GetAttribute("traductioncode")),reader.GetAttribute("icone"),helpUrlValue, methodValue,Int64.Parse(reader.GetAttribute("menuTextId")),allowRecall,functionName));
 								}
 								break;
 							case "type":
-								if (Reader.GetAttribute("id")!=null)
-									currentSelectionPage.LoadableUnivers.Add(int.Parse(Reader.GetAttribute("id")));
+								if (reader.GetAttribute("id")!=null)
+									currentSelectionPage.LoadableUnivers.Add(int.Parse(reader.GetAttribute("id")));
 								break;
 							case "subSelection":
-								if(Reader.GetAttribute("allowRecall")!=null)allowRecall=Boolean.Parse(Reader.GetAttribute("allowRecall"));
-								if(Reader.GetAttribute("validationMethod")!=null)methodValue=Reader.GetAttribute("validationMethod");
-								if(Reader.GetAttribute("helpUrl")!=null)helpUrlValue=Reader.GetAttribute("helpUrl");								
-								if(Reader.GetAttribute("showLink")==null)showLink=true;
+								if(reader.GetAttribute("allowRecall")!=null)allowRecall=Boolean.Parse(reader.GetAttribute("allowRecall"));
+								if(reader.GetAttribute("validationMethod")!=null)methodValue=reader.GetAttribute("validationMethod");
+								if(reader.GetAttribute("helpUrl")!=null)helpUrlValue=reader.GetAttribute("helpUrl");								
+								if(reader.GetAttribute("showLink")==null)showLink=true;
 								else {
-									if(Reader.GetAttribute("showLink")=="true")showLink=true;
+									if(reader.GetAttribute("showLink")=="true")showLink=true;
 									else showLink=false;
 								}
-								if(Reader.GetAttribute("id")!=null && Reader.GetAttribute("traductioncode")!=null && Reader.GetAttribute("url")!=null && Reader.GetAttribute("icone")!=null && Reader.GetAttribute("menuTextId")!=null && module!=0 ) {
-									((SelectionPageInformation)currentSelectionPage).HtSubSelectionPageInformation.Add(int.Parse(Reader.GetAttribute("id")),currentSubSelectionPage = new SubSelectionPageInformation(int.Parse(Reader.GetAttribute("id")),showLink,Reader.GetAttribute("url"),Int64.Parse(Reader.GetAttribute("traductioncode")),Reader.GetAttribute("icone"),helpUrlValue, methodValue,Int64.Parse(Reader.GetAttribute("menuTextId")),allowRecall));
+								if(reader.GetAttribute("id")!=null && reader.GetAttribute("traductioncode")!=null && reader.GetAttribute("url")!=null && reader.GetAttribute("icone")!=null && reader.GetAttribute("menuTextId")!=null && module!=0 ) {
+									((SelectionPageInformation)currentSelectionPage).HtSubSelectionPageInformation.Add(int.Parse(reader.GetAttribute("id")),currentSubSelectionPage = new SubSelectionPageInformation(int.Parse(reader.GetAttribute("id")),showLink,reader.GetAttribute("url"),Int64.Parse(reader.GetAttribute("traductioncode")),reader.GetAttribute("icone"),helpUrlValue, methodValue,Int64.Parse(reader.GetAttribute("menuTextId")),allowRecall));
 								}
 								break;
 							case "subType":
-								if (Reader.GetAttribute("id")!=null)
-									currentSubSelectionPage.LoadableUnivers.Add(int.Parse(Reader.GetAttribute("id")));
+								if (reader.GetAttribute("id")!=null)
+									currentSubSelectionPage.LoadableUnivers.Add(int.Parse(reader.GetAttribute("id")));
 								break;
 							case "optionalSelection":
-								if(Reader.GetAttribute("helpUrl")!=null)helpUrlValue=Reader.GetAttribute("helpUrl");
-								if(Reader.GetAttribute("optionalNextUrl")!=null)optionalNextUrlValue=Reader.GetAttribute("optionalNextUrl");
-								if(Reader.GetAttribute("showLink")==null)showLink=true;
+								if(reader.GetAttribute("helpUrl")!=null)helpUrlValue=reader.GetAttribute("helpUrl");
+								if(reader.GetAttribute("optionalNextUrl")!=null)optionalNextUrlValue=reader.GetAttribute("optionalNextUrl");
+								if(reader.GetAttribute("showLink")==null)showLink=true;
 								else{
-									if(Reader.GetAttribute("showLink")=="true")showLink=true;
+									if(reader.GetAttribute("showLink")=="true")showLink=true;
 									else showLink=false;
 								}
-								if(Reader.GetAttribute("id")!=null && Reader.GetAttribute("traductioncode")!=null && Reader.GetAttribute("url")!=null && Reader.GetAttribute("icone")!=null && Reader.GetAttribute("menuTextId")!=null && module!=0){
-									((Module)HtModule[module]).OptionalsPages.Add(currentSelectionPage = new OptionalPageInformation(int.Parse(Reader.GetAttribute("id")), showLink, Reader.GetAttribute("url"),Int64.Parse(Reader.GetAttribute("traductioncode")),Reader.GetAttribute("icone"),Reader.GetAttribute("helpUrl"),Int64.Parse(Reader.GetAttribute("menuTextId")),optionalNextUrlValue));
+								if(reader.GetAttribute("id")!=null && reader.GetAttribute("traductioncode")!=null && reader.GetAttribute("url")!=null && reader.GetAttribute("icone")!=null && reader.GetAttribute("menuTextId")!=null && module!=0){
+									((Module)htModule[module]).OptionalsPages.Add(currentSelectionPage = new OptionalPageInformation(int.Parse(reader.GetAttribute("id")), showLink, reader.GetAttribute("url"),Int64.Parse(reader.GetAttribute("traductioncode")),reader.GetAttribute("icone"),reader.GetAttribute("helpUrl"),Int64.Parse(reader.GetAttribute("menuTextId")),optionalNextUrlValue));
 								}
 								break;
 							case "page":
-								currentResultPageInformation=null;
-								if(Reader.GetAttribute("rawExcelUrl")!=null) rawExcelUrlValue=Reader.GetAttribute("rawExcelUrl");
-								if(Reader.GetAttribute("printExcelUrl")!=null) printExcelUrlValue=Reader.GetAttribute("printExcelUrl");
-								if(Reader.GetAttribute("printBisExcelUrl")!=null) printBisExcelUrlValue=Reader.GetAttribute("printBisExcelUrl");
-								if(Reader.GetAttribute("exportJpegUrl")!=null) exportJpegUrlValue=Reader.GetAttribute("exportJpegUrl");
-								if(Reader.GetAttribute("remotePdfUrl")!=null) remotePdfUrlValue=Reader.GetAttribute("remotePdfUrl");
-								if(Reader.GetAttribute("remoteResultPdfUrl")!=null) remoteResultPdfUrlValue=Reader.GetAttribute("remoteResultPdfUrl");
-								if(Reader.GetAttribute("remoteTextUrl")!=null) remoteTextUrlValue=Reader.GetAttribute("remoteTextUrl");
-								if(Reader.GetAttribute("remoteExcelUrl")!=null) remoteExcelUrlValue=Reader.GetAttribute("remoteExcelUrl");
-								if(Reader.GetAttribute("valueExcelUrl")!=null) valueExcelUrlValue=Reader.GetAttribute("valueExcelUrl");
-                                if (Reader.GetAttribute("helpUrl") != null) helpUrlValue = Reader.GetAttribute("helpUrl");
-                                if (Reader.GetAttribute("createAlertUrl") != null) createAlertUrlValue = Reader.GetAttribute("createAlertUrl");
 
-								if(Reader.GetAttribute("id")!=null && Reader.GetAttribute("resultid")!=null && Reader.GetAttribute("traductioncode")!=null && Reader.GetAttribute("url")!=null && Reader.GetAttribute("menuTextId")!=null && module!=0){
-									currentResultPageInformation=new ResultPageInformation(int.Parse(Reader.GetAttribute("id")),Int64.Parse(Reader.GetAttribute("resultid")), Reader.GetAttribute("url"),Int64.Parse(Reader.GetAttribute("traductioncode")),rawExcelUrlValue,printExcelUrlValue,printBisExcelUrlValue,exportJpegUrlValue,remotePdfUrlValue,remoteResultPdfUrlValue,valueExcelUrlValue,remoteTextUrlValue,remoteExcelUrlValue,Reader.GetAttribute("helpUrl"),Int64.Parse(Reader.GetAttribute("menuTextId")), createAlertUrlValue);
-                                    currentResultPageInformation.ParentModule=(Module)HtModule[module];
-									((Module)HtModule[module]).AddResultPageInformation(currentResultPageInformation);
+                                #region Result Page
+                                currentResultPageInformation =null;
+								if(reader.GetAttribute("rawExcelUrl")!=null) rawExcelUrlValue=reader.GetAttribute("rawExcelUrl");
+								if(reader.GetAttribute("printExcelUrl")!=null) printExcelUrlValue=reader.GetAttribute("printExcelUrl");
+								if(reader.GetAttribute("printBisExcelUrl")!=null) printBisExcelUrlValue=reader.GetAttribute("printBisExcelUrl");
+								if(reader.GetAttribute("exportJpegUrl")!=null) exportJpegUrlValue=reader.GetAttribute("exportJpegUrl");
+								if(reader.GetAttribute("remotePdfUrl")!=null) remotePdfUrlValue=reader.GetAttribute("remotePdfUrl");
+								if(reader.GetAttribute("remoteResultPdfUrl")!=null) remoteResultPdfUrlValue=reader.GetAttribute("remoteResultPdfUrl");
+								if(reader.GetAttribute("remoteTextUrl")!=null) remoteTextUrlValue=reader.GetAttribute("remoteTextUrl");
+								if(reader.GetAttribute("remoteExcelUrl")!=null) remoteExcelUrlValue=reader.GetAttribute("remoteExcelUrl");
+								if(reader.GetAttribute("valueExcelUrl")!=null) valueExcelUrlValue=reader.GetAttribute("valueExcelUrl");
+                                if (reader.GetAttribute("helpUrl") != null) helpUrlValue = reader.GetAttribute("helpUrl");
+                                if (reader.GetAttribute("createAlertUrl") != null) createAlertUrlValue = reader.GetAttribute("createAlertUrl");
+
+								if(reader.GetAttribute("id")!=null && reader.GetAttribute("resultid")!=null && reader.GetAttribute("traductioncode")!=null && reader.GetAttribute("url")!=null && reader.GetAttribute("menuTextId")!=null && module!=0){
+									currentResultPageInformation=new ResultPageInformation(int.Parse(reader.GetAttribute("id")),Int64.Parse(reader.GetAttribute("resultid")), reader.GetAttribute("url"),Int64.Parse(reader.GetAttribute("traductioncode")),rawExcelUrlValue,printExcelUrlValue,printBisExcelUrlValue,exportJpegUrlValue,remotePdfUrlValue,remoteResultPdfUrlValue,valueExcelUrlValue,remoteTextUrlValue,remoteExcelUrlValue,reader.GetAttribute("helpUrl"),Int64.Parse(reader.GetAttribute("menuTextId")), createAlertUrlValue);
+                                    currentResultPageInformation.ParentModule=(Module)htModule[module];
+                                    subtree2 = (XmlReader)reader.ReadSubtree();
+
+                                    while (subtree2.Read()) {
+                                        if (subtree2.NodeType == XmlNodeType.Element) {
+                                            switch (subtree2.LocalName) {
+                                                case "detailSelection":
+                                                    if (subtree2.GetAttribute("id") != null)
+                                                        currentResultPageInformation.DetailSelectionItemsType.Add(int.Parse(subtree2.GetAttribute("id")));
+                                                    break;
+                                                case "allowedUnit":
+                                                    allowedUnitValue = subtree2.ReadString();
+                                                    if (allowedUnitValue != null && allowedUnitValue.Length > 0 && module != 0 && currentResultPageInformation != null)
+                                                        currentResultPageInformation.AllowedUnitEnumList.Add((Constante.CustomerSessions.Unit)Enum.Parse(typeof(Constante.CustomerSessions.Unit), allowedUnitValue, true));
+                                                    break;
+                                                case "ResultAllowedMediaUniverse":
+                                                    useBaalForResult = false;
+                                                    if (subtree2.GetAttribute("initFromBaal") != null && subtree2.GetAttribute("initFromBaal").Length > 0) {
+                                                        // Baal list must be use
+                                                        if (Boolean.Parse(subtree2.GetAttribute("initFromBaal"))) {
+                                                            if (subtree2.GetAttribute("baalId") == null || subtree2.GetAttribute("baalId").Length == 0)
+                                                                throw (new ArgumentNullException("baalId must be declared if initFromBaal is true"));
+                                                            currentResultPageInformation.AllowedMediaUniverse = Media.GetItemsList(int.Parse(subtree2.GetAttribute("baalId")));
+                                                            useBaalForResult = true;
+                                                        }
+                                                    }
+                                                    break;
+                                                case "ResultVehicles":
+                                                    if (!useBaalForResult && subtree2.GetAttribute("list") != null && subtree2.GetAttribute("list").Length > 0) {
+                                                        if (currentResultPageInformation.IsNullAllowedMediaUniverse) currentResultPageInformation.InitAllowedMediaUniverse();
+                                                        currentResultPageInformation.AllowedMediaUniverse.VehicleList = subtree2.GetAttribute("list");
+                                                    }
+                                                    break;
+                                                case "ResultCategories":
+                                                    if (!useBaalForResult && subtree2.GetAttribute("list") != null && subtree2.GetAttribute("list").Length > 0) {
+                                                        if (currentResultPageInformation.IsNullAllowedMediaUniverse) currentResultPageInformation.InitAllowedMediaUniverse();
+                                                        currentResultPageInformation.AllowedMediaUniverse.CategoryList = subtree2.GetAttribute("list");
+                                                    }
+                                                    break;
+                                                case "ResultMedias":
+                                                    if (!useBaalForResult && subtree2.GetAttribute("list") != null && subtree2.GetAttribute("list").Length > 0) {
+                                                        if (currentResultPageInformation.IsNullAllowedMediaUniverse) currentResultPageInformation.InitAllowedMediaUniverse();
+                                                        currentResultPageInformation.AllowedMediaUniverse.MediaList = subtree2.GetAttribute("list");
+                                                    }
+                                                    break;
+                                                case "overrideDefaultUnits":
+                                                    defaultUnit = Constante.CustomerSessions.Unit.none;
+                                                    if (reader.GetAttribute("unit") != null && reader.GetAttribute("unit").Length > 0) {
+                                                        if (!Enum.IsDefined(typeof(Constante.CustomerSessions.Unit), reader.GetAttribute("unit"))) throw new InvalidXmlValueException("Default unit '" + reader.GetAttribute("unit") + "' is not defined");
+                                                        defaultUnit = (Constante.CustomerSessions.Unit)Enum.Parse(typeof(Constante.CustomerSessions.Unit), reader.GetAttribute("unit"));
+                                                    }
+                                                    currentResultPageInformation.OverrideDefaultUnits = new DefaultUnitList(GetDefaultUnit(subtree2), defaultUnit);
+                                                    break;
+                                            }
+                                        }
+                                    }
+									((Module)htModule[module]).AddResultPageInformation(currentResultPageInformation);
 								}
-								break;
-							case "detailSelection":
-								if (Reader.GetAttribute("id")!=null)
-									currentResultPageInformation.DetailSelectionItemsType.Add(int.Parse(Reader.GetAttribute("id")));
-								break;
-                            case "allowedUnit":
-                                allowedUnitValue = Reader.ReadString();
-                                if (allowedUnitValue != null && allowedUnitValue.Length > 0 && module != 0 && currentResultPageInformation!=null)
-                                    currentResultPageInformation.AllowedUnitEnumList.Add((Constante.CustomerSessions.Unit)Enum.Parse(typeof(Constante.CustomerSessions.Unit), allowedUnitValue, true));
+								
+                                #endregion
+
+                                break;
+                            case "overrideDefaultUnits":
+                                defaultUnit = Constante.CustomerSessions.Unit.none;
+                                if (reader.GetAttribute("unit") != null && reader.GetAttribute("unit").Length > 0) {
+                                    if (!Enum.IsDefined(typeof(Constante.CustomerSessions.Unit), reader.GetAttribute("unit"))) throw new InvalidXmlValueException("Default unit '" + reader.GetAttribute("unit") + "' is not defined");
+                                    defaultUnit = (Constante.CustomerSessions.Unit)Enum.Parse(typeof(Constante.CustomerSessions.Unit), reader.GetAttribute("unit"));
+                                }
+                                ((Module)htModule[module]).OverrideDefaultUnits = new DefaultUnitList(GetDefaultUnit(reader),defaultUnit);
                                 break;
                             case "link":
-								if(Reader.GetAttribute("privilegecode")!=null && module!=0){
-									((Module)HtModule[module]).Bridges.Add(Int64.Parse(Reader.GetAttribute("privilegecode")));
+								if(reader.GetAttribute("privilegecode")!=null && module!=0){
+									((Module)htModule[module]).Bridges.Add(Int64.Parse(reader.GetAttribute("privilegecode")));
 								}
 								break;
 							case "defaultMediaDetailLevel":
-								if(Reader.GetAttribute("id")!=null && module!=0){
-									((Module)HtModule[module]).DefaultMediaDetailLevels.Add(DetailLevelsInformation.Get(int.Parse(Reader.GetAttribute("id"))));
+								if(reader.GetAttribute("id")!=null && module!=0){
+									((Module)htModule[module]).DefaultMediaDetailLevels.Add(DetailLevelsInformation.Get(int.Parse(reader.GetAttribute("id"))));
 								}
 								break;
 							case "defaultProductDetailLevel":
-								if(Reader.GetAttribute("id")!=null && module!=0){
-									((Module)HtModule[module]).DefaultProductDetailLevels.Add(DetailLevelsInformation.Get(int.Parse(Reader.GetAttribute("id"))));
+								if(reader.GetAttribute("id")!=null && module!=0){
+									((Module)htModule[module]).DefaultProductDetailLevels.Add(DetailLevelsInformation.Get(int.Parse(reader.GetAttribute("id"))));
 								}
 								break;
 							case "allowedMediaLevelItem":
-								if(Reader.GetAttribute("id")!=null && module!=0){
-									((Module)HtModule[module]).AllowedMediaDetailLevelItems.Add(DetailLevelItemsInformation.Get(int.Parse(Reader.GetAttribute("id"))));
+								if(reader.GetAttribute("id")!=null && module!=0){
+									((Module)htModule[module]).AllowedMediaDetailLevelItems.Add(DetailLevelItemsInformation.Get(int.Parse(reader.GetAttribute("id"))));
 								}
 								break;
 							case "allowedProductLevelItem":
-								if(Reader.GetAttribute("id")!=null && module!=0){
-									((Module)HtModule[module]).AllowedProductDetailLevelItems.Add(DetailLevelItemsInformation.Get(int.Parse(Reader.GetAttribute("id"))));
+								if(reader.GetAttribute("id")!=null && module!=0){
+									((Module)htModule[module]).AllowedProductDetailLevelItems.Add(DetailLevelItemsInformation.Get(int.Parse(reader.GetAttribute("id"))));
 								}
 								break;
                             case "allowedColumnDetailLevelItem":
-                                if (Reader.GetAttribute("id") != null && module != 0) {
-                                    ((Module)HtModule[module]).AllowedColumnDetailLevelItems.Add(DetailLevelItemsInformation.Get(int.Parse(Reader.GetAttribute("id"))));
+                                if (reader.GetAttribute("id") != null && module != 0) {
+                                    ((Module)htModule[module]).AllowedColumnDetailLevelItems.Add(DetailLevelItemsInformation.Get(int.Parse(reader.GetAttribute("id"))));
                                 }
                                 break;
 							case "allowedUniverseLevel":
-								if (Reader.GetAttribute("id") != null) {
-									currentSelectionPage.AllowedLevelsIds.Add(int.Parse(Reader.GetAttribute("id")));
+								if (reader.GetAttribute("id") != null) {
+									currentSelectionPage.AllowedLevelsIds.Add(int.Parse(reader.GetAttribute("id")));
 								}
 								break;
 							case "allowedUniverseBranch":
-								if (Reader.GetAttribute("id") != null) {
-									currentSelectionPage.AllowedBranchesIds.Add(int.Parse(Reader.GetAttribute("id")));
+								if (reader.GetAttribute("id") != null) {
+									currentSelectionPage.AllowedBranchesIds.Add(int.Parse(reader.GetAttribute("id")));
 								}
 								break;
                             case "RulesLayer":
-                                if(Reader.GetAttribute("name")!=null&&Reader.GetAttribute("assemblyName")!=null&&Reader.GetAttribute("class")!=null&&
-                                    Reader.GetAttribute("name").Length>0&&Reader.GetAttribute("assemblyName").Length>0&&Reader.GetAttribute("class").Length>0) {
-                                   ((Module)HtModule[module]).CountryRulesLayer=new RulesLayer(Reader.GetAttribute("name"),Reader.GetAttribute("assemblyName"),Reader.GetAttribute("class"));
+                                if(reader.GetAttribute("name")!=null&&reader.GetAttribute("assemblyName")!=null&&reader.GetAttribute("class")!=null&&
+                                    reader.GetAttribute("name").Length>0&&reader.GetAttribute("assemblyName").Length>0&&reader.GetAttribute("class").Length>0) {
+                                   ((Module)htModule[module]).CountryRulesLayer=new RulesLayer(reader.GetAttribute("name"),reader.GetAttribute("assemblyName"),reader.GetAttribute("class"));
                                 }
                                 break;
                             case "DataAccessLayer":
-                                if(Reader.GetAttribute("name")!=null&&Reader.GetAttribute("assemblyName")!=null&&Reader.GetAttribute("class")!=null&&
-                                    Reader.GetAttribute("name").Length>0&&Reader.GetAttribute("assemblyName").Length>0&&Reader.GetAttribute("class").Length>0) {
-                                    ((Module)HtModule[module]).CountryDataAccessLayer=new DataAccessLayer(Reader.GetAttribute("name"),Reader.GetAttribute("assemblyName"),Reader.GetAttribute("class"));
+                                if(reader.GetAttribute("name")!=null&&reader.GetAttribute("assemblyName")!=null&&reader.GetAttribute("class")!=null&&
+                                    reader.GetAttribute("name").Length>0&&reader.GetAttribute("assemblyName").Length>0&&reader.GetAttribute("class").Length>0) {
+                                    ((Module)htModule[module]).CountryDataAccessLayer=new DataAccessLayer(reader.GetAttribute("name"),reader.GetAttribute("assemblyName"),reader.GetAttribute("class"));
                                 }
                                 break;
                             case "ModuleAllowedMediaUniverse":
                                 useBaalForModule=false;
-                                if(Reader.GetAttribute("initFromBaal")!=null && Reader.GetAttribute("initFromBaal").Length>0){
+                                if(reader.GetAttribute("initFromBaal")!=null && reader.GetAttribute("initFromBaal").Length>0){
                                     // Baal list must be use
-                                    if(Boolean.Parse(Reader.GetAttribute("initFromBaal"))){
-                                        if(Reader.GetAttribute("baalId")==null || Reader.GetAttribute("baalId").Length==0)
+                                    if(Boolean.Parse(reader.GetAttribute("initFromBaal"))){
+                                        if(reader.GetAttribute("baalId")==null || reader.GetAttribute("baalId").Length==0)
                                             throw(new ArgumentNullException("baalId must be declared if initFromBaal is true"));
-                                        ((Module)HtModule[module]).AllowedMediaUniverse=Media.GetItemsList(int.Parse(Reader.GetAttribute("baalId")));
+                                        ((Module)htModule[module]).AllowedMediaUniverse=Media.GetItemsList(int.Parse(reader.GetAttribute("baalId")));
                                         useBaalForModule=true;
                                     }
                                 }
                                 break;
                             case "ModuleVehicles":
-                                if(!useBaalForModule && Reader.GetAttribute("list")!=null && Reader.GetAttribute("list").Length>0) {
-                                    if(((Module)HtModule[module]).IsNullAllowedMediaUniverse)((Module)HtModule[module]).InitAllowedMediaUniverse();
-                                    ((Module)HtModule[module]).AllowedMediaUniverse.VehicleList=Reader.GetAttribute("list");
+                                if(!useBaalForModule && reader.GetAttribute("list")!=null && reader.GetAttribute("list").Length>0) {
+                                    if(((Module)htModule[module]).IsNullAllowedMediaUniverse)((Module)htModule[module]).InitAllowedMediaUniverse();
+                                    ((Module)htModule[module]).AllowedMediaUniverse.VehicleList=reader.GetAttribute("list");
                                 }
                                 break;
                             case "ModuleCategories":
-                                if(!useBaalForModule && Reader.GetAttribute("list")!=null && Reader.GetAttribute("list").Length>0) {
-                                    if(((Module)HtModule[module]).IsNullAllowedMediaUniverse) ((Module)HtModule[module]).InitAllowedMediaUniverse();
-                                    ((Module)HtModule[module]).AllowedMediaUniverse.CategoryList=Reader.GetAttribute("list");
+                                if(!useBaalForModule && reader.GetAttribute("list")!=null && reader.GetAttribute("list").Length>0) {
+                                    if(((Module)htModule[module]).IsNullAllowedMediaUniverse) ((Module)htModule[module]).InitAllowedMediaUniverse();
+                                    ((Module)htModule[module]).AllowedMediaUniverse.CategoryList=reader.GetAttribute("list");
                                 }
                                 break;
                             case "ModuleMedias":
-                                if(!useBaalForModule && Reader.GetAttribute("list")!=null && Reader.GetAttribute("list").Length>0) {
-                                    if(((Module)HtModule[module]).IsNullAllowedMediaUniverse) ((Module)HtModule[module]).InitAllowedMediaUniverse();
-                                    ((Module)HtModule[module]).AllowedMediaUniverse.MediaList=Reader.GetAttribute("list");
-                                }
-                                break;
-                            case "ResultAllowedMediaUniverse":
-                                useBaalForResult=false;
-                                if(Reader.GetAttribute("initFromBaal")!=null && Reader.GetAttribute("initFromBaal").Length>0) {
-                                    // Baal list must be use
-                                    if(Boolean.Parse(Reader.GetAttribute("initFromBaal"))) {
-                                        if(Reader.GetAttribute("baalId")==null || Reader.GetAttribute("baalId").Length==0)
-                                            throw (new ArgumentNullException("baalId must be declared if initFromBaal is true"));
-                                        currentResultPageInformation.AllowedMediaUniverse=Media.GetItemsList(int.Parse(Reader.GetAttribute("baalId")));
-                                        useBaalForResult=true;
-                                    }
-                                }
-                                break;
-                            case "ResultVehicles":
-                                if(!useBaalForResult && Reader.GetAttribute("list")!=null && Reader.GetAttribute("list").Length>0) {
-                                    if(currentResultPageInformation.IsNullAllowedMediaUniverse) currentResultPageInformation.InitAllowedMediaUniverse();
-                                    currentResultPageInformation.AllowedMediaUniverse.VehicleList=Reader.GetAttribute("list");
-                                }
-                                break;
-                            case "ResultCategories":
-                                if(!useBaalForResult && Reader.GetAttribute("list")!=null && Reader.GetAttribute("list").Length>0) {
-                                    if(currentResultPageInformation.IsNullAllowedMediaUniverse) currentResultPageInformation.InitAllowedMediaUniverse();
-                                    currentResultPageInformation.AllowedMediaUniverse.CategoryList=Reader.GetAttribute("list");
-                                }
-                                break;
-                            case "ResultMedias":
-                                if(!useBaalForResult && Reader.GetAttribute("list")!=null && Reader.GetAttribute("list").Length>0) {
-                                    if(currentResultPageInformation.IsNullAllowedMediaUniverse) currentResultPageInformation.InitAllowedMediaUniverse();
-                                    currentResultPageInformation.AllowedMediaUniverse.MediaList=Reader.GetAttribute("list");
+                                if(!useBaalForModule && reader.GetAttribute("list")!=null && reader.GetAttribute("list").Length>0) {
+                                    if(((Module)htModule[module]).IsNullAllowedMediaUniverse) ((Module)htModule[module]).InitAllowedMediaUniverse();
+                                    ((Module)htModule[module]).AllowedMediaUniverse.MediaList=reader.GetAttribute("list");
                                 }
                                 break;
 							case "ExcludedVehicles":
-								if (Reader.GetAttribute("list") != null && Reader.GetAttribute("list").Length>0) {
-									((Module)HtModule[module]).ExcludedVehicles = new List<Int64>(Array.ConvertAll<string, Int64>(Reader.GetAttribute("list").Split(','), (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); })); 
+								if (reader.GetAttribute("list") != null && reader.GetAttribute("list").Length>0) {
+									((Module)htModule[module]).ExcludedVehicles = new List<Int64>(Array.ConvertAll<string, Int64>(reader.GetAttribute("list").Split(','), (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); })); 
 								}
 								break;
 						}					
@@ -304,7 +339,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                 foreach(KeyValuePair<Constantes.Web.CustomerSessions.Unit,Domain.Units.UnitInformation> kvp in Units.UnitsInformation.List)
                     totalUnit.Add(kvp.Key);
 
-                foreach (Module curentModule in HtModule.Values) {
+                foreach (Module curentModule in htModule.Values) {
                     ArrayList tab = curentModule.GetResultPageInformationsList();
                     for (int i = 0; i < tab.Count; i++) {
                         ResultPageInformation currentPage = ((ResultPageInformation)tab[i]);
@@ -315,15 +350,64 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                 }
 			}
 			catch(System.Exception e){
-				throw(new ModuleException("Erreur : ",e)); 
+                throw (new ModulesListXLException("Erreur : ", e)); 
 			}
 			finally{
 				#region Close the file
-				if(Reader!=null)Reader.Close();
+				if(reader!=null)reader.Close();
 				#endregion
 			}
 		}
 		#endregion
 
-	}
+        #region GetDefaultUnit
+        /// <summary>
+        /// Get Default Unit
+        /// </summary>
+        /// <param name="reader">reader</param>
+        /// <returns>Allow Default Unit List</returns>
+        private static Dictionary<Vehicles.names, DefaultUnit> GetDefaultUnit(XmlReader reader) {
+            try {
+                Dictionary<Vehicles.names, DefaultUnit> allowUnitList = new Dictionary<Vehicles.names, DefaultUnit>();
+                DefaultUnit overrideDefaultUnit = null;
+                Constante.CustomerSessions.Unit overrideDefaultUnitName;
+                XmlReader subtree = reader.ReadSubtree();
+                while (subtree.Read()) {
+                    if (subtree.NodeType == XmlNodeType.Element) {
+                        switch (subtree.LocalName) {
+                            case "overrideDefaultUnit":
+                                if (reader.GetAttribute("unit") == null && reader.GetAttribute("unit").Length <= 0) {
+                                    throw new InvalidXmlValueException("Attribute 'unit' is not defined in overrideDefaultUnit");
+                                }
+                                else if (reader.GetAttribute("vehicle") == null && reader.GetAttribute("vehicle").Length <= 0) {
+                                    throw new InvalidXmlValueException("Attribute 'vehicle' is not defined in overrideDefaultUnit");
+                                }
+                                else {
+                                    if (!Enum.IsDefined(typeof(Constante.CustomerSessions.Unit), reader.GetAttribute("unit"))) {
+                                        throw new InvalidXmlValueException("Value '" + reader.GetAttribute("unit") + "' of attribute 'unit' is incorrect in overrideDefaultUnit");
+                                    }
+                                    if (!Enum.IsDefined(typeof(Vehicles.names), reader.GetAttribute("vehicle"))) {
+                                        throw new InvalidXmlValueException("Value '" + reader.GetAttribute("vehicle") + "' of attribute 'vehicle' is incorrect in overrideDefaultUnit");
+                                    }
+                                    overrideDefaultUnitName = (Constante.CustomerSessions.Unit)Enum.Parse(typeof(Constante.CustomerSessions.Unit), reader.GetAttribute("unit"));
+                                    overrideDefaultUnit = new DefaultUnit(overrideDefaultUnitName, (Vehicles.names)Enum.Parse(typeof(Vehicles.names), reader.GetAttribute("vehicle")));
+
+                                    if (allowUnitList.ContainsKey(overrideDefaultUnit.VehicleName))
+                                        throw new InvalidXmlValueException("Attribute 'vehicle' is already defined in overrideDefaultUnit");
+                                    else
+                                        allowUnitList.Add(overrideDefaultUnit.VehicleName, overrideDefaultUnit);
+                                }
+                                break;
+                        }
+                    }
+                }
+                return allowUnitList;
+            }
+            catch (Exception e) {
+                throw new ModulesListXLException("Impossible to Load default Unit", e);
+            }
+        }
+        #endregion
+
+    }
 }

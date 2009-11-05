@@ -45,7 +45,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Affiche les tableaux dynamiques
 	/// </summary>
-	public partial class DynamicResults : TNS.AdExpress.Web.UI.ResultWebPage{	
+    public partial class DynamicResults : TNS.AdExpress.Web.UI.ResultWebPage {	
 
 		#region variables MMI
 		/// <summary>
@@ -217,13 +217,6 @@ namespace AdExpress.Private.Results{
 					){
 					_webSession.PreformatedProductDetail=TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiser;	 
 				}	
-				// Initialisation de l'unité pour le cas de la presse
-
-				if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) && _vehicleInformation.AllowedUnitEnumList.Contains(WebConstantes.CustomerSessions.Unit.pages)
-					&& !_webSession.ReachedModule
-					) {
-					_webSession.Unit = WebConstantes.CustomerSessions.Unit.pages;
-				}
 				
 				if(_webSession.CurrentTab == TNS.AdExpress.Constantes.FrameWork.Results.DynamicAnalysis.SYNTHESIS){
 					ResultsOptionsWebControl1.Percentage=false;

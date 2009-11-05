@@ -2,12 +2,13 @@
 <infoNews>
   <RulesLayer name="Default Info news rules layers" assemblyName="TNS.AdExpressI.InfosNews.Default.dll" class="TNS.AdExpressI.InfosNews.Default.InfoNewsResult"/>
   <directories>
-   <!-- <directory id="advertisingExpenditureCategory" description="Mainonta toimialoittain " webTextId="2593" virtualPath="/AdExNews/" physicalPath="C:\Top KAIKI"/>-->
-    <directory id="top150BrandAdvertisers" description="TOP 150 merkkimainostajaa" webTextId="2594" virtualPath="/InfoNewsFi/" physicalPath="C:\Top150BrandAdvertisers"/>
-   <!--<directory id="top20Retailers" description="TOP 20 kaupan ketjua" webTextId="2595" virtualPath="/AdExReview/" physicalPath="C:\RefreshDetails"/>
-    <directory id="monthlyAdvertisingExpenditureTrends" description="Mainonnan kehitys kuukausittain " webTextId="2596" virtualPath="/Nouveautes/" physicalPath="C:\RefreshExport"/>
-     <directory id="advertisingYearEventMaterials" description="Mainosvuosi-tilaisuuksien materiaalit" webTextId="2597" virtualPath="/Nouveautes/" physicalPath="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\InfoNews\nouveautes\"/>
-    <directory id="Metholodology" description="Metodologia" webTextId="2598" virtualPath="/Nouveautes/" physicalPath="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\InfoNews\nouveautes\"/>
-    <directory id="moduleDescriptions" description="Moduulikuvaukset" webTextId="2599" virtualPath="/Nouveautes/" physicalPath="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\InfoNews\nouveautes\"/>-->
-  </directories>-->
+    <directory id="advertisingExpenditureCategory" description="Mainonta toimialoittain " webTextId="2593" virtualPath="/InfoNews/AdvertisingExpenditureByCategory/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\AdvertisingExpenditureByCategory"/>
+    <directory id="top150BrandAdvertisers" description="TOP 150 merkkimainostajaa" webTextId="2594" virtualPath="/InfoNews/TOP150BrandAdvertisers/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\TOP150BrandAdvertisers"/>
+    <directory id="top20Retailers" description="TOP 20 kaupan ketjua" webTextId="2595" virtualPath="/InfoNews/TOP20Retailers/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\TOP20Retailers"/>
+    <directory id="monthlyAdvertisingExpenditureTrends" description="Mainonnan kehitys kuukausittain " webTextId="2596" virtualPath="/InfoNews/MonthlyAdvertisingExpenditureTrends/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\MonthlyAdvertisingExpenditureTrends"/>
+    <directory id="advertisingYearEventMaterials" description="Mainosvuosi-tilaisuuksien materiaalit" webTextId="2597" virtualPath="/InfoNews/AdvertisingYearEventMaterials/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\AdvertisingYearEventMaterials"/>
+    <directory id="Metholodology" description="Metodologia" webTextId="2598" virtualPath="/InfoNews/Metholodology/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\Metholodology"/>
+    <directory id="moduleDescriptions" description="Moduulikuvaukset" webTextId="2599" virtualPath="/InfoNews/ModuleDescriptions/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\ModuleDescriptions"/>
+  </directories>
 </infoNews>
+

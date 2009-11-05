@@ -13,6 +13,9 @@ using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Classification;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpress.Domain.Web.Navigation {
 	/// <summary>
@@ -123,6 +126,10 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		/// <remarks>Used particularly for A. Secto (indicateurs) to exclude Vehicle direct marketing in unique selection</remarks>
 		/// </summary>
 		protected List<Int64> _excludedVehicles = new List<long>();
+        /// <summary>
+        /// AllowUnits List
+        /// </summary>
+        protected DefaultUnitList _overrideDefaultUnits = null;
 		#endregion
 
 		#region Constructeur
@@ -270,6 +277,12 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 			get { return (_excludedVehicles); }
 			set { _excludedVehicles = value; }
 		}
+        /// <summary>
+        /// Get / Set Override Default Units List
+        /// </summary>
+        internal DefaultUnitList OverrideDefaultUnits {
+            set { _overrideDefaultUnits = value; }
+        }
 		#endregion
 
 		#region Méthode Externe
@@ -629,7 +642,10 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		
 		#endregion
 
-		/// <summary>
+        #region Public Methods
+
+        #region GetValidResultsPage
+        /// <summary>
 		/// Get valid result page
 		/// </summary>
 		/// <remarks>Valid results pages depends of universe selection , like vehicle selected</remarks>
@@ -646,7 +662,42 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 				}
 			}
 			return res;
-		}
+        }
+        #endregion
 
-	}
+        #region GetDefaultUnit
+        /// <summary>
+        /// GetDefaultUnit 
+        /// </summary>
+        /// <param name="vehicleName">vehicleName</param>
+        /// <returns>return Default Unit defined for this module. If not defined, return the default unit for the vehicle</returns>
+        public CustomerSessions.Unit GetDefaultUnit(Vehicles.names vehicleName) {
+            try {
+                //If Default Unit is not defined
+                if (_overrideDefaultUnits == null || _overrideDefaultUnits.GetDefaultUnit(vehicleName) == CustomerSessions.Unit.none) {
+                    //Get Default Unit from Vehicle
+                    return VehiclesInformation.Get(vehicleName).AllowUnits.DefaultAllowUnit;
+                }
+                //If Default Unit is defined
+                else {
+                    return _overrideDefaultUnits.GetDefaultUnit(vehicleName);
+                }
+            }
+            catch (Exception e) {
+                throw new ModuleException("Impossible to Get Default Unit for vehicle '" + vehicleName.ToString()+ "'", e);
+            }
+        }
+        /// <summary>
+        /// GetDefaultUnit 
+        /// </summary>
+        /// <param name="vehicleId">vehicleId</param>
+        /// <returns>return Default Unit defined for this module. If not defined, return the default unit for the vehicle</returns>
+        public CustomerSessions.Unit GetDefaultUnit(Int64 vehicleId) {
+            return GetDefaultUnit(VehiclesInformation.Get(vehicleId).Id);
+        }
+        #endregion
+
+        #endregion
+
+    }
 }

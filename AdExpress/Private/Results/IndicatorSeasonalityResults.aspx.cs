@@ -51,7 +51,7 @@ namespace AdExpress.Private.Results {
 	///- Evolution : annonceurs et références dont l'investissement a le plus augmenté entre la période N-1 et N.
 	///- Stratégie Média : répartion des investissements par média et par annonceurs et références.
 	/// </summary>
-	public partial class IndicatorSeasonalityResults :  TNS.AdExpress.Web.UI.ResultWebPage {
+    public partial class IndicatorSeasonalityResults : TNS.AdExpress.Web.UI.ResultWebPage {
 
 		#region variables
 		/// <summary>
@@ -84,8 +84,6 @@ namespace AdExpress.Private.Results {
 		public IndicatorSeasonalityResults():base(){
 			// Chargement de la Session			
 			_webSession.CurrentModule = CstWeb.Module.Name.INDICATEUR;
-			_webSession.Unit = CstWeb.CustomerSessions.Unit.kEuro;
-							
 		}
 		#endregion		
 

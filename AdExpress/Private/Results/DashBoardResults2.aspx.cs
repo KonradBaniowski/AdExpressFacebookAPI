@@ -44,7 +44,7 @@ namespace AdExpress.Private.Results
 	/// <summary>
 	/// Page de résultat du module Tableau de bord
 	/// </summary>
-	public class DashBoardResults2 : TNS.AdExpress.Web.UI.ResultWebPage
+    public class DashBoardResults2 : TNS.AdExpress.Web.UI.ResultWebPage
 	{
 
 		#region Variables MMI

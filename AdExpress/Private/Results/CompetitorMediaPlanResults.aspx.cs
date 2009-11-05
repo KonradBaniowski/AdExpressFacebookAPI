@@ -32,7 +32,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Page de résultat Plan Média Concurrentiel
 	/// </summary>
-	public partial class CompetitorMediaPlanResults : TNS.AdExpress.Web.UI.ResultWebPage{
+    public partial class CompetitorMediaPlanResults : TNS.AdExpress.Web.UI.ResultWebPage {
 
 //        #region Variables
 //        /// <summary>

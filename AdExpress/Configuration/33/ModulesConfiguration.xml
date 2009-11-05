@@ -15,9 +15,9 @@
       <module name="Analyse Plan Média" privilegecode="196" traductioncode="2171" moduleCategoryId="2" urlNextPage="/Private/Selection/UniverseProductSelection.aspx" descriptionWebTextId="2200" descriptionImageName="/Images/Common/Infobulle/PlanMedia.png">
         <RulesLayer name="Default Media Schedule rules layers" assemblyName="TNS.AdExpressI.MediaSchedule.Default.dll" class="TNS.AdExpressI.MediaSchedule.Default.MediaScheduleResults"/>
         <DataAccessLayer name="Default Media Schedule data access layers" assemblyName="TNS.AdExpressI.MediaSchedule.DAL.Default.dll" class="TNS.AdExpressI.MediaSchedule.DAL.Default.MediaScheduleResultDAL"/>
-       <!-- <ModuleAllowedMediaUniverse initFromBaal="true" baalId="331">-->
-         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="1,2,3,5,6,7,8,10,11,15"/>
+        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="331">
+         <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="1,2,3,5,6,7,8,10,11,15"/>-->
         </ModuleAllowedMediaUniverse>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
@@ -108,9 +108,9 @@
       <module name="Present/Absent" privilegecode="278" traductioncode="2167" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2196" descriptionImageName="/Images/Common/Infobulle/Concurrentiels.png">
        <RulesLayer name="Default Present Absent rules layers" assemblyName="TNS.AdExpressI.PresentAbsent.Default.dll" class="TNS.AdExpressI.PresentAbsent.Default.PresentAbsentResult"/>
         <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.Default.dll" class="TNS.AdExpressI.PresentAbsent.DAL.Default.PresentAbsentDAL"/>       
-        <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="333">-->
-          <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="1,2,3,5,6,7,8,11,15"/>
+        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="333">
+        <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="1,2,3,5,6,7,8,11,15"/>-->
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -370,9 +370,9 @@
       <module name="Lost/won" privilegecode="197" traductioncode="2169" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2198" descriptionImageName="/Images/Common/Infobulle/Dynamique.png">
         <RulesLayer name="Default Lost Won rules layers" assemblyName="TNS.AdExpressI.LostWon.Default.dll" class="TNS.AdExpressI.LostWon.Default.LostWonResult"/>
         <DataAccessLayer name="Default Lost Won data access layers" assemblyName="TNS.AdExpressI.LostWon.DAL.Default.dll" class="TNS.AdExpressI.LostWon.DAL.Default.LostWonResultDAL"/>
-        <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="336">-->
-          <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="1,2,3,5,6,7,8,11,15"/>
+        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="336">
+          <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="1,2,3,5,6,7,8,11,15"/>-->
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -654,6 +654,7 @@
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="1"/>
         </ModuleAllowedMediaUniverse>
+        <overrideDefaultUnits unit="euro"></overrideDefaultUnits>
         <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
           <allowedUniverseLevels>
             <allowedUniverseLevel id="6" name="advertiser"/>
@@ -686,9 +687,9 @@
       <module name="Portefeuille d'un support" privilegecode="283" traductioncode="2170" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2199" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
         <RulesLayer name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Default.dll" class="TNS.AdExpressI.Portofolio.Default.Results"/>
         <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.Default.dll" class="TNS.AdExpressI.Portofolio.DAL.Default.PortofolioDAL"/>
-        <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="337">-->
-           <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-           <ModuleVehicles list="1,2,3,5,6,7,8,10,11,15"/>
+        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="337">
+           <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+           <ModuleVehicles list="1,2,3,5,6,7,8,10,11,15"/>-->
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -838,7 +839,8 @@
         <DataAccessLayer name="Default Product Class Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassReports.DAL.Default.dll" class="TNS.AdExpressI.ProductClassReports.DAL.Default.ProductClassReportDAL"/>
         <ResultLimitation size="50000"/>
         <ModuleAllowedMediaUniverse initFromBaal="true" baalId="341">
-        </ModuleAllowedMediaUniverse>        
+        </ModuleAllowedMediaUniverse>
+        <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <selections>          
           <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
             <allowedUniverseLevels>
@@ -891,6 +893,7 @@
         <ExcludedVehicles list="10"/>
         <ModuleAllowedMediaUniverse initFromBaal="true" baalId="341">
         </ModuleAllowedMediaUniverse>
+        <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <selections>         
           <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
             <allowedUniverseLevels>
@@ -994,6 +997,7 @@
         <DataAccessLayer name="Default Trends data access layers" assemblyName="TNS.AdExpressI.Trends.DAL.Default.dll" class="TNS.AdExpressI.Trends.DAL.Default.TrendsDAL"/>
         <ModuleAllowedMediaUniverse initFromBaal="true" baalId="345">
         </ModuleAllowedMediaUniverse>
+        <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <selections>
           <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected"/>
         </selections>
@@ -1021,6 +1025,7 @@
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="1"/>
         </ModuleAllowedMediaUniverse>
+        <overrideDefaultUnits unit="euro"></overrideDefaultUnits>
         <selections>
           <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">
             <allowedUniverseLevels>
@@ -1057,6 +1062,7 @@
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="2"/>
         </ModuleAllowedMediaUniverse>
+        <overrideDefaultUnits unit="euro"></overrideDefaultUnits>
         <selections>
           <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">
             <allowedUniverseLevels>
@@ -1095,6 +1101,7 @@
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="3"/>
         </ModuleAllowedMediaUniverse>
+        <overrideDefaultUnits unit="euro"></overrideDefaultUnits>
         <selections>
           <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">
             <allowedUniverseLevels>
@@ -1132,6 +1139,7 @@
       <module name="Tableaux de bord Pan Euro" privilegecode="1036" traductioncode="2214" moduleCategoryId="6" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2215" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">
         <ModuleAllowedMediaUniverse initFromBaal="true" baalId="340">
         </ModuleAllowedMediaUniverse>
+        <overrideDefaultUnits unit="euro"></overrideDefaultUnits>
         <selections>
           <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">
             <allowedUniverseLevels>
@@ -1170,6 +1178,7 @@
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="6"/>
         </ModuleAllowedMediaUniverse>
+        <overrideDefaultUnits unit="euro"></overrideDefaultUnits>
         <selections>
           <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">
             <allowedUniverseLevels>
@@ -1419,6 +1428,7 @@
       <module name="Analyse des dispositifs" privilegecode="1780" traductioncode="2180" moduleCategoryId="0" urlNextPage="/Private/Selection/UniverseProductSelection.aspx" descriptionWebTextId="2208" descriptionImageName="/Images/Common/Infobulle/Dispositifs.png">
         <ModuleAllowedMediaUniverse initFromBaal="true" baalId="339">
         </ModuleAllowedMediaUniverse>
+        <overrideDefaultUnits unit="euro"></overrideDefaultUnits>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
             <defaultMediaDetailLevel id="12" name="support"/>
@@ -1489,6 +1499,7 @@
       <module name="Analyse des programmes" privilegecode="1781" traductioncode="2179" moduleCategoryId="0" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2209" descriptionImageName="/Images/Common/Infobulle/Programmes.png">
         <ModuleAllowedMediaUniverse initFromBaal="true" baalId="339">
         </ModuleAllowedMediaUniverse>
+        <overrideDefaultUnits unit="euro"></overrideDefaultUnits>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
             <defaultMediaDetailLevel id="10" name="annonceur"/>

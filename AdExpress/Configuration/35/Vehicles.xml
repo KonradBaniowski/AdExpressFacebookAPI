@@ -3,7 +3,7 @@
   <!-- TV -->
   <vehicle id="tv" databaseId="3" showInsertions="false" showCreations="false" needLastAvailableDate="true">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>duration</allowedUnit>
@@ -74,7 +74,7 @@
   <!-- RADIO -->
   <vehicle id="radio" databaseId="7" showInsertions="false" showCreations="false" needLastAvailableDate="true">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
     </allowedUnits>
@@ -139,7 +139,7 @@
   <!-- OUTDOOR -->
   <vehicle id="outdoor" databaseId="1" showInsertions="false" showCreations="false" needLastAvailableDate="true">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
     </allowedUnits>
@@ -205,7 +205,7 @@
   <!-- Internet -->
   <vehicle id="internet" databaseId="6" showInsertions="false" showCreations="false" needLastAvailableDate="true">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
     </allowedUnits>
@@ -271,7 +271,7 @@
   <!-- Cinema -->
   <vehicle id="cinema" databaseId="5" showInsertions="false" showCreations="false" needLastAvailableDate="true">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
     </allowedUnits>
@@ -335,7 +335,7 @@
   <!-- PRESS -->
   <vehicle id="press" databaseId="2" showInsertions="true" showCreations="false" needLastAvailableDate="true">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="pages">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>insertion</allowedUnit>
@@ -411,7 +411,7 @@
   <!-- PLURIMEDIA -->
   <vehicle id="plurimedia" databaseId="50" showInsertions="false" showCreations="false">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
     <!--Media detail level allowed in recap's modules-->

@@ -47,7 +47,7 @@ namespace TNS.AdExpress.Domain.Classification {
         /// <summary>
         /// Allowed units list
         /// </summary>
-        private List<CustomerSessions.Unit> _allowedUnitsList;
+        private AllowUnits _allowedUnitsList;
         /// <summary>
         /// Allowed media level items list
         /// </summary>
@@ -114,7 +114,7 @@ namespace TNS.AdExpress.Domain.Classification {
                                   bool showCreations,
                                   bool showActiveMedia,
                                   bool needLastAvailableDate,
-                                  List<CustomerSessions.Unit> allowedUnitsList, 
+                                  AllowUnits allowedUnitsList, 
                                   List<DetailLevelItemInformation.Levels> allowedMediaLevelItemsList,
                                   string defaultMediaSelectionParent,
                                   List<DetailLevelItemInformation.Levels> mediaSelectionParentsList, 
@@ -160,7 +160,7 @@ namespace TNS.AdExpress.Domain.Classification {
 								  bool showCreations,
                                   bool showActiveMedia,
                                   bool needLastAvailableDate,
-								  List<CustomerSessions.Unit> allowedUnitsList,
+                                  AllowUnits allowedUnitsList,
 								  List<DetailLevelItemInformation.Levels> allowedMediaLevelItemsList,
 								  string defaultMediaSelectionParent,
 								  List<DetailLevelItemInformation.Levels> mediaSelectionParentsList,
@@ -211,15 +211,15 @@ namespace TNS.AdExpress.Domain.Classification {
         /// Get allowed units enum list
         /// </summary>
         public List<CustomerSessions.Unit> AllowedUnitEnumList {
-            get { return _allowedUnitsList; }
+            get { return _allowedUnitsList.AllowUnitList; }
         }
         /// <summary>
         /// Get allowed UnitInformation list
         /// </summary>
         public List<UnitInformation> AllowedUnitInformationList {
-            get { 
+            get {
                 List<UnitInformation> list = new List<UnitInformation>();
-                foreach (CustomerSessions.Unit currentUnit in _allowedUnitsList)
+                foreach (CustomerSessions.Unit currentUnit in _allowedUnitsList.AllowUnitList)
                     list.Add(UnitsInformation.Get(currentUnit));
                 return list;
             }
@@ -231,7 +231,7 @@ namespace TNS.AdExpress.Domain.Classification {
             get {
                 List<CustomerSessions.Unit> list = new List<CustomerSessions.Unit>();
                 UnitInformation unit;
-                foreach (CustomerSessions.Unit currentUnit in _allowedUnitsList) {
+                foreach (CustomerSessions.Unit currentUnit in _allowedUnitsList.AllowUnitList) {
                     unit = UnitsInformation.Get(currentUnit);
                     if (unit.BaseId != CustomerSessions.Unit.none)
                         list.Add(unit.BaseId);
@@ -241,6 +241,14 @@ namespace TNS.AdExpress.Domain.Classification {
                 return list;
             }
         }
+
+        /// <summary>
+        /// Get allowed Unit list
+        /// </summary>
+        public AllowUnits AllowUnits {
+            get {return _allowedUnitsList;}
+        }
+
         /// <summary>
         /// Get allowed media level items enum list
         /// </summary>

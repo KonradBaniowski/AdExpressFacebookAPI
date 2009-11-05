@@ -46,7 +46,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	///Portefeuille d'un support
 	/// </summary>
-	public partial class PortofolioResults2 : TNS.AdExpress.Web.UI.ResultWebPage{	
+    public partial class PortofolioResults2 : TNS.AdExpress.Web.UI.ResultWebPage {	
 
 //        #region variables
 //        /// <summary>

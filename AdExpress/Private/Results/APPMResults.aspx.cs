@@ -49,7 +49,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Page d'affichage des résultats du bilan de campagne.
 	/// </summary>
-	public partial class APPMResults : TNS.AdExpress.Web.UI.ResultWebPage{
+    public partial class APPMResults : TNS.AdExpress.Web.UI.BaseResultWebPage {
 
 		#region variables
 		/// <summary>
@@ -416,20 +416,20 @@ namespace AdExpress.Private.Results{
 				case TNS.AdExpress.Constantes.FrameWork.Results.APPM.synthesis :
 					//displayMediaAgencyList=MediaAgencyYearWebControl1.DisplayListMediaAgency();
 					ResultsOptionsWebControl1.ProductsOption=true;	
-					if(_webSession.Unit ==WebConstantes.CustomerSessions.Unit.kEuro){
-						//unité en euro pour cette planche
-						_webSession.Unit=WebConstantes.CustomerSessions.Unit.euro;
-						_webSession.Save();
-					}
 					_webSession.Graphics =false;
-
+                    if (_webSession.Unit == WebConstantes.CustomerSessions.Unit.kEuro) {
+                        //unité en euro pour cette planche
+                        _webSession.Unit = WebConstantes.CustomerSessions.Unit.euro;
+                        _webSession.Save();
+                    }
+                    _webSession.Graphics = false;
 					break;
 				case TNS.AdExpress.Constantes.FrameWork.Results.APPM.PDVPlan:
-					if(_webSession.Unit ==WebConstantes.CustomerSessions.Unit.kEuro){
-						//unité en euro pour cette planche
-						_webSession.Unit=WebConstantes.CustomerSessions.Unit.euro;
-						_webSession.Save();
-				}
+                    if (_webSession.Unit == WebConstantes.CustomerSessions.Unit.kEuro) {
+                        //unité en euro pour cette planche
+                        _webSession.Unit = WebConstantes.CustomerSessions.Unit.euro;
+                        _webSession.Save();
+                    }
 //					graphes=true;
 					_webSession.SecondaryProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 					ResultsOptionsWebControl1.ResultFormat=true;
@@ -438,12 +438,12 @@ namespace AdExpress.Private.Results{
 				case TNS.AdExpress.Constantes.FrameWork.Results.APPM.mediaPlan:	
 				case TNS.AdExpress.Constantes.FrameWork.Results.APPM.supportPlan:
 				case TNS.AdExpress.Constantes.FrameWork.Results.APPM.affinities:
-					if(_webSession.Unit ==WebConstantes.CustomerSessions.Unit.kEuro){
-						//unité en euro pour ces planches
+                    if (_webSession.Unit == WebConstantes.CustomerSessions.Unit.kEuro) {
+                        //unité en euro pour ces planches
 
-					_webSession.Unit=WebConstantes.CustomerSessions.Unit.euro;
-						_webSession.Save();
-					}
+                        _webSession.Unit = WebConstantes.CustomerSessions.Unit.euro;
+                        _webSession.Save();
+                    }
 					_webSession.Graphics =false;
 					_webSession.SecondaryProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 					break;

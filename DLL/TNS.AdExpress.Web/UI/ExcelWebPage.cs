@@ -57,7 +57,7 @@ namespace TNS.AdExpress.Web.UI{
 	/// It has methods which can be called to make an excel header in any excel file by sending the proper parameters
 	/// to the proper method.
 	/// </summary>
-	public class ExcelWebPage: ResultWebPage{
+	public class ExcelWebPage: BaseResultWebPage{
 
 		#region variables
 		/// <summary>

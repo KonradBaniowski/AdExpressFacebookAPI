@@ -107,6 +107,7 @@
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="2"/>          <!--identifiant base de données-->
         </ModuleAllowedMediaUniverse>
+        <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
             <defaultProductDetailLevel id="11" name="famille" />
@@ -277,6 +278,7 @@
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="2"/>          <!--identifiant base de données-->
         </ModuleAllowedMediaUniverse>
+        <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
             <defaultProductDetailLevel id="11" name="famille" />
@@ -468,6 +470,7 @@
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="2"/>
         </ModuleAllowedMediaUniverse>
+        <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
             <defaultProductDetailLevel id="11" name="famille" />
@@ -585,6 +588,7 @@
           <RulesLayer name="Default Product Class Rules Layers" assemblyName="TNS.AdExpressI.ProductClassReports.Default.dll" class="TNS.AdExpressI.ProductClassReports.Default.ProductClassReports"/>
           <DataAccessLayer name="Default Product Class Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassReports.DAL.Default.dll" class="TNS.AdExpressI.ProductClassReports.DAL.Default.ProductClassReportDAL"/>
           <ResultLimitation size="50000"/>
+          <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
           <selections>
           <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ASProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
             <allowedUniverseLevels>
@@ -633,6 +637,7 @@
         <module name="Indicateurs" privilegecode="195" traductioncode="2173" moduleCategoryId="2" urlNextPage="/Private/Selection/RecapUniverseProductSelection.aspx" descriptionWebTextId="2202" descriptionImageName="/Images/Common/Infobulle/Indicateurs.png">
         <RulesLayer name="Default Product Class Indicators Rules Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.Default.ProductClassIndicators"/>
         <DataAccessLayer name="Default Product Class Indicators Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.DAL.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.DAL.Default.ProductClassIndicatorsDAL"/>
+          <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <selections>
           <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ASProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
             <allowedUniverseLevels>

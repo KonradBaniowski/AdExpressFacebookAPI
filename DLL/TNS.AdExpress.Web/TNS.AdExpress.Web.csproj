@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</ProjectGuid>
     <SccProjectName>SAK</SccProjectName>
@@ -1041,6 +1041,9 @@
     <Compile Include="Rules\Selections\Medias\MediaPublicationDatesRules.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="UI\ResultWebPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="UI\ErrorEventArgs.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1213,7 +1216,7 @@
     <Compile Include="UI\Results\TendenciesUI.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="UI\ResultWebPage.cs">
+    <Compile Include="UI\BaseResultWebPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UI\Selections\Periods\PortofolioDateUI.cs">

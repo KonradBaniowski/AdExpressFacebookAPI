@@ -43,7 +43,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Page Alerte de potentiels.
 	/// </summary>
-	public partial class MarketShareResults : TNS.AdExpress.Web.UI.ResultWebPage{
+    public partial class MarketShareResults : TNS.AdExpress.Web.UI.ResultWebPage {
 		
 //        #region Variables MMI
 //        /// <summary>

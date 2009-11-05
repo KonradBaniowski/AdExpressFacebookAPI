@@ -51,7 +51,7 @@ namespace AdExpress.Private.Results{
 	/// Affiche les résultats (tableaux et graphiques) du portefeuille
 	/// d'un support
 	/// </summary>
-	public partial class MediaPortofolioResults :  TNS.AdExpress.Web.UI.ResultWebPage{		
+    public partial class MediaPortofolioResults : TNS.AdExpress.Web.UI.ResultWebPage {		
 	
 		#region variables publiques
 		/// <summary>
@@ -206,26 +206,6 @@ namespace AdExpress.Private.Results{
 				DBClassificationConstantes.Vehicles.names vehicleName= VehiclesInformation.DatabaseIdToEnum(Int64.Parse(vehicleSelection));
 				if(vehicleSelection==null || vehicleSelection.IndexOf(",")>0) throw(new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
 				#endregion
-
-                #region Page unit as default unit
-                if (UnitsInformation.List.ContainsKey(WebConstantes.CustomerSessions.Unit.pages) 
-                    && _webSession.GetValidUnitForResult().Contains(UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.pages))
-                    && !_webSession.ReachedModule
-                    && (vehicleSelection == DBClassificationConstantes.Vehicles.names.press.GetHashCode().ToString() || vehicleSelection == DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode().ToString())
-                    )
-                {
-                    _webSession.Unit = WebConstantes.CustomerSessions.Unit.pages;
-                }
-                if (UnitsInformation.List.ContainsKey(WebConstantes.CustomerSessions.Unit.versionNb) 
-                    && _webSession.GetValidUnitForResult().Contains(UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb))
-                    && !_webSession.ReachedModule
-                    && (vehicleSelection == DBClassificationConstantes.Vehicles.names.adnettrack.GetHashCode().ToString() 
-                        || vehicleSelection == DBClassificationConstantes.Vehicles.names.evaliantMobile.GetHashCode().ToString())
-                    )
-                {
-                    _webSession.Unit = WebConstantes.CustomerSessions.Unit.versionNb;
-                }
-                #endregion
 
                 #region Option encart
                 ResultsOptionsWebControl1.InsertOption=false;											
@@ -397,12 +377,7 @@ namespace AdExpress.Private.Results{
 			base.OnPreRender (e);
 			try{
 
-				#region MAJ _webSession
-                VehicleInformation v = VehiclesInformation.Get(Convert.ToInt64(_webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess)));
-                if (!v.AllowedUnitEnumList.Contains(_webSession.Unit))
-                {
-                    _webSession.Unit = v.AllowedUnitEnumList[0];
-                }                
+				#region MAJ _webSession         
 				_webSession.LastReachedResultUrl=Page.Request.Url.AbsolutePath;
 				_webSession.Save();
 				#endregion

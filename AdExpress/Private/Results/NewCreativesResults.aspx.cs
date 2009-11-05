@@ -48,7 +48,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// New creatives result page
 	/// </summary>
-	public partial class NewCreativesResults :  TNS.AdExpress.Web.UI.ResultWebPage {
+    public partial class NewCreativesResults : TNS.AdExpress.Web.UI.ResultWebPage {
 
         #region variables publiques
         /// <summary>

@@ -21,148 +21,114 @@ using TNS.AdExpress.Web.Core.Sessions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using WebExeptions=TNS.AdExpress.Web.Exceptions;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Constantes.Classification.DB;
+using TNSExceptions = TNS.AdExpress.Domain.Exceptions;
+using TNS.AdExpress.Domain.Units;
+using System.Collections.Generic;
 
 namespace TNS.AdExpress.Web.UI{
 	/// <summary>
 	/// Page mère des page Web de résultats
 	/// </summary>
-	public class ResultWebPage: PrivateWebPage{
+    public class ResultWebPage : BaseResultWebPage {
 
 		#region Constructeurs
 		/// <summary>
 		/// Constructeur
 		/// </summary>
-		public ResultWebPage():base(){
-			base.Load +=new EventHandler(ResultWebPage_Load);
-			try{
-				_selectionError=CanShowResult();
-			}
-			catch(System.Exception){}
-		}
-		#endregion
-
-		#region Méthode internes
-		/// <summary>
-		/// On vérifie que toutes les variables ont été sélectionnées
-		/// </summary>
-		/// <returns>0 si tous est sélectionné, sinon l'identifiant de l'élément manquant</returns>
-		private WebConstantes.ErrorManager.selectedUnivers CanShowResult(){
-			switch(_webSession.CurrentModule){
-				case WebConstantes.Module.Name.ALERTE_CONCURENTIELLE:
-				case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
-				case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
-					//Vehicle sélectionné
-					if(!_webSession.isVehicleSelected())return(WebConstantes.ErrorManager.selectedUnivers.vehicle);
-					// Media
-					if(!_webSession.isCompetitorMediaSelected())return(WebConstantes.ErrorManager.selectedUnivers.media);
-					//Date
-					if(!_webSession.isDatesSelected())return(WebConstantes.ErrorManager.selectedUnivers.period);
-					return(WebConstantes.ErrorManager.selectedUnivers.none);
-				case WebConstantes.Module.Name.ALERTE_POTENTIELS:
-				case WebConstantes.Module.Name.ANALYSE_POTENTIELS:
-					//Vehicle sélectionné
-					if(!_webSession.isVehicleSelected())return(WebConstantes.ErrorManager.selectedUnivers.vehicle);
-					// Media
-					if(!_webSession.isCompetitorMediaSelected())return(WebConstantes.ErrorManager.selectedUnivers.media);
-					// Au moins 2 univers media
-					if(_webSession.mediaUniversNumber()<2)return(WebConstantes.ErrorManager.selectedUnivers.mediaNumber);
-					//Date
-					if(!_webSession.isDatesSelected())return(WebConstantes.ErrorManager.selectedUnivers.period);
-					return(WebConstantes.ErrorManager.selectedUnivers.none);
-
-				case WebConstantes.Module.Name.ALERTE_PLAN_MEDIA:
-				case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
-					//produit
-					if(!_webSession.isCurrentAdvertisersSelected())return(WebConstantes.ErrorManager.selectedUnivers.product);
-					
-					// Media
-					if(!_webSession.isMediaSelected())return(WebConstantes.ErrorManager.selectedUnivers.media);					
-					//Date
-					if(!_webSession.isDatesSelected())return(WebConstantes.ErrorManager.selectedUnivers.period);
-					return(WebConstantes.ErrorManager.selectedUnivers.none);
-				
-				case WebConstantes.Module.Name.ALERTE_PLAN_MEDIA_CONCURENTIELLE:
-				case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA_CONCURENTIELLE:
-					// Produit référence et concurrent
-					if(_webSession.advertiserUniversNumber()<2)return(WebConstantes.ErrorManager.selectedUnivers.product);
-					// Media
-					if(!_webSession.isMediaSelected())return(WebConstantes.ErrorManager.selectedUnivers.media);	
-					//Date
-					if(!_webSession.isDatesSelected())return(WebConstantes.ErrorManager.selectedUnivers.period);
-					return(WebConstantes.ErrorManager.selectedUnivers.none);
-
-				case WebConstantes.Module.Name.ALERTE_PORTEFEUILLE:
-				case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
-					// vehicle
-					if(!_webSession.isVehicleSelected())return(WebConstantes.ErrorManager.selectedUnivers.vehicle);
-					// Media
-					if(!_webSession.isReferenceMediaSelected())return(WebConstantes.ErrorManager.selectedUnivers.media);					
-					//Date
-					if(!_webSession.isDatesSelected())return(WebConstantes.ErrorManager.selectedUnivers.period);
-					return(WebConstantes.ErrorManager.selectedUnivers.none);
-					
-				case WebConstantes.Module.Name.INDICATEUR:
-				case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
-					//produit
-					if(!_webSession.isSelectionProductSelected())return(WebConstantes.ErrorManager.selectedUnivers.product);
-					// Media
-					if(!_webSession.isMediaSelected())return(WebConstantes.ErrorManager.selectedUnivers.media);
-					//Date
-					if(!_webSession.isDatesSelected())return(WebConstantes.ErrorManager.selectedUnivers.period);
-					return(WebConstantes.ErrorManager.selectedUnivers.none);
-
-				case WebConstantes.Module.Name.BILAN_CAMPAGNE:
-					//produit
-					if(_webSession.advertiserUniversNumber()<1)return(WebConstantes.ErrorManager.selectedUnivers.product);
-					//period
-					if(!_webSession.isDatesSelected())return(WebConstantes.ErrorManager.selectedUnivers.period);
-					//target
-					if(!_webSession.IsTargetSelected())return(WebConstantes.ErrorManager.selectedUnivers.target);
-					return (WebConstantes.ErrorManager.selectedUnivers.none);
-
-				case WebConstantes.Module.Name.TABLEAU_DE_BORD_PRESSE :
-				case WebConstantes.Module.Name.TABLEAU_DE_BORD_RADIO :
-				case WebConstantes.Module.Name.TABLEAU_DE_BORD_TELEVISION :
-				case WebConstantes.Module.Name.TABLEAU_DE_BORD_PAN_EURO :
-					//Familles de produits
-					//if(_webSession.CurrentUniversProduct==null || _webSession.CurrentUniversProduct.Nodes==null || _webSession.CurrentUniversProduct.Nodes.Count==0)
-					//return(WebConstantes.ErrorManager.selectedUnivers.product);
-					if (!_webSession.isCurrentAdvertisersSelected()) return (WebConstantes.ErrorManager.selectedUnivers.product);
-					// Media
-					if(!_webSession.isMediaSelected())return(WebConstantes.ErrorManager.selectedUnivers.media);
-					//Date
-					if(!_webSession.isDatesSelected())return(WebConstantes.ErrorManager.selectedUnivers.period);
-					return(WebConstantes.ErrorManager.selectedUnivers.none);
-
-
-				default:
-					throw(new System.Exception("Le module sélectionné n'est pas défini"));
-			}
-		
+        public ResultWebPage()
+            : base() {
 		}
 		#endregion
 
 		#region Evènement
-		/// <summary>
-		/// Page Loading
-		/// </summary>
-		/// <param name="sender">Source Object</param>
-		/// <param name="e">Arguments</param>
-		private void ResultWebPage_Load(object sender, EventArgs e) {
-			_nextUrl=GetNextUrlFromMenu();			
-		}
+        /// <summary>
+        /// OnInitComplete
+        /// </summary>
+        /// <param name="e">Event Argument</param>       
+        protected override void OnInitComplete(EventArgs e) {
 
+            try {
 
-		#endregion
+                #region Variables
+                string vehicleSelection = string.Empty;
+                Int64 vehicleId = -1;
+                VehicleInformation vehicleInformation = null;
+                List<UnitInformation> unitInformationList = null;
+                Dictionary<Constantes.Web.CustomerSessions.Unit, UnitInformation> unitInformationDictionary = null;
+                List<Constantes.Web.CustomerSessions.Unit> unitList = null;
+                #endregion
 
-		#region Méthodes 
-		/// <summary>
-		/// Get next URL from contextual menu
-		/// </summary>
-		/// <returns>Next URL</returns>
-		protected virtual string GetNextUrlFromMenu(){
-			throw(new NotImplementedException("Doit être implémenté dans l'objet enfant"));
-		}
+                #region Get Vehicle Selected
+                vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+                if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new TNSExceptions.VehicleException("Selection of media type is not correct"));
+                if (Int64.TryParse(vehicleSelection, out vehicleId)) {
+                    vehicleInformation = VehiclesInformation.Get(vehicleId);
+                    unitInformationList = _webSession.GetValidUnitForResult();
+                    unitInformationDictionary = new Dictionary<TNS.AdExpress.Constantes.Web.CustomerSessions.Unit, UnitInformation>();
+                    for (int i = 0; i < unitInformationList.Count; i++) {
+                        unitInformationDictionary.Add(unitInformationList[i].Id, unitInformationList[i]);
+                    }
+                }
+                else {
+                    System.Windows.Forms.TreeNode firstNode = _webSession.CurrentUniversMedia.FirstNode;
+                    if (firstNode != null) {
+                        Vehicles.names vehicleName = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)firstNode.Tag).ID);
+                        vehicleInformation = VehiclesInformation.Get(vehicleName);
+                        unitInformationList = _webSession.GetValidUnitForResult();
+                        unitInformationDictionary = new Dictionary<TNS.AdExpress.Constantes.Web.CustomerSessions.Unit, UnitInformation>();
+                        for (int i = 0; i < unitInformationList.Count; i++) {
+                            unitInformationDictionary.Add(unitInformationList[i].Id, unitInformationList[i]);
+                        }
+                    }
+                    else {
+                        switch (_webSession.CurrentModule) {
+                            case WebConstantes.Module.Name.JUSTIFICATIFS_PRESSE:
+                            case WebConstantes.Module.Name.TABLEAU_DE_BORD_PRESSE:
+                            case WebConstantes.Module.Name.DONNEES_DE_CADRAGE:
+                                vehicleInformation = VehiclesInformation.Get(Vehicles.names.press);
+                                break;
+                            case WebConstantes.Module.Name.TABLEAU_DE_BORD_RADIO:
+                                vehicleInformation = VehiclesInformation.Get(Vehicles.names.radio);
+                                break;
+                            case WebConstantes.Module.Name.TABLEAU_DE_BORD_TELEVISION:
+                                vehicleInformation = VehiclesInformation.Get(Vehicles.names.tv);
+                                break;
+                            case WebConstantes.Module.Name.TABLEAU_DE_BORD_PAN_EURO:
+                                vehicleInformation = VehiclesInformation.Get(Vehicles.names.others);
+                                break;
+                            case WebConstantes.Module.Name.TABLEAU_DE_BORD_EVALIANT:
+                                vehicleInformation = VehiclesInformation.Get(Vehicles.names.adnettrack);
+                                break;  
+                            default: throw new TNSExceptions.ModuleException("The module '" + _webSession.CurrentModule + "' is not implemented for default unit");
+                        }
+                        unitInformationDictionary = new Dictionary<TNS.AdExpress.Constantes.Web.CustomerSessions.Unit, UnitInformation>();
+                        unitList = vehicleInformation.AllowUnits.AllowUnitList;
+                        unitInformationDictionary = new Dictionary<TNS.AdExpress.Constantes.Web.CustomerSessions.Unit, UnitInformation>();
+                        for (int i = 0; i < unitList.Count; i++) {
+                            unitInformationDictionary.Add(unitList[i], UnitsInformation.Get(unitList[i]));
+                        }
+                    }
+                }
+                #endregion
+
+                #region Get Default Unit For Vehicle Selected
+                if (!_webSession.ReachedModule || !unitInformationDictionary.ContainsKey(_webSession.Unit)) {
+                    _webSession.Unit = ModulesList.GetModule(_webSession.CurrentModule).GetResultPageInformation(_webSession.CurrentTab).GetDefaultUnit(vehicleInformation.Id);
+                }
+                #endregion
+
+            }
+            catch (Exception ex) {
+                if (ex.GetType() != typeof(System.Threading.ThreadAbortException)) {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, ex, _webSession));
+                }
+            }
+
+            base.OnInitComplete(e);
+        }
 		#endregion
 
 	}

@@ -206,19 +206,6 @@ namespace AdExpress.Private.Selection{
 							_webSession.OnSetVehicle(long.Parse(currentItem.Value));
 						}
 					}
-					//verification que l unite deja sélectiuonnée convient pour tous les medias
-					if(WebFunctions.Units.getUnitsFromVehicleSelection(
-						_webSession.GetSelection(_webSession.SelectionUniversMedia,CstWebCustomer.Right.type.vehicleAccess))
-						.IndexOf(_webSession.Unit)==-1){
-						// On met euro par défaut
-						if(_webSession.GetSelection(_webSession.SelectionUniversMedia,CstWebCustomer.Right.type.vehicleAccess)==DBClassificationConstantes.Vehicles.names.press.GetHashCode().ToString() 
-							|| _webSession.GetSelection(_webSession.SelectionUniversMedia,CstWebCustomer.Right.type.vehicleAccess)==DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode().ToString()){
-							_webSession.Unit=TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.pages;
-						}
-						else{
-							_webSession.Unit=TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.euro;
-						}
-					}
 					// On sauvegarde la session
 					_webSession.Save();
 					//Redirection vers la page suivante
