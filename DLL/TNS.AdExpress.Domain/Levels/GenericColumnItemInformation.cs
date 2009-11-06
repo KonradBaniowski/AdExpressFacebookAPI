@@ -389,7 +389,15 @@ namespace TNS.AdExpress.Domain.Level
 			/// <summary>
 			/// product evaliant mobile
 			/// </summary>
-			productEvaliantMobile = 92
+			productEvaliantMobile = 92,
+            /// <summary>
+            /// Descriptif Magazine
+            /// </summary>
+            locationMagazine = 93,
+            /// <summary>
+            /// Descriptif NewsPaper
+            /// </summary>
+            locationNewsPaper = 94
 		}
 		#endregion
 

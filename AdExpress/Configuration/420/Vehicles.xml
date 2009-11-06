@@ -135,7 +135,7 @@
     </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!-- Détailled columns in insertions-->
-    <detailColumn id="6"/>
+    <detailColumn id="29"/>
     <!--Media detail level allowed in recap's modules-->
     <allowedRecapMediaDetailLevels>
       <allowedRecapMediaLevelItems>
