@@ -54,7 +54,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engines\InsertionDetailEngine.cs" />
+    <Compile Include="Engines\InsertionDetailEngine.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Engines\SynthesisEngine.cs" />
     <Compile Include="PortofolioResults.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
