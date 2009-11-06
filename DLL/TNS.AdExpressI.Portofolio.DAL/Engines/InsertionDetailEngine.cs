@@ -104,9 +104,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     sqlGroupBy += " , advertising_agency";
                 }
 
-                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
-                    || DBClassificationConstantes.Vehicles.names.newspaper == _vehicleInformation.Id
-                    || DBClassificationConstantes.Vehicles.names.magazine == _vehicleInformation.Id
+                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press                  
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress)
                 {
                     sql.Append(" , date_cover_num");
@@ -222,9 +220,22 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 case DBClassificationConstantes.Vehicles.names.newspaper:
                 case DBClassificationConstantes.Vehicles.names.magazine:
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
-					if (allPeriod) return " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".Id_type_page," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_advertisement,media_paging,id_product";
-					else
-						return " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".Id_type_page," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_advertisement,media_paging, id_product";
+                    string res = "";    
+                if (allPeriod)
+                    {
+                         res =
+                         " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".Id_type_page," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_advertisement";
+                        if (_webSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.mediaPaging)) res += ",media_paging";
+                        res += ",id_product";
+                       
+                    }
+                    else
+                    {
+                        res = " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".Id_type_page," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_advertisement";
+                        if (_webSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.mediaPaging)) res += ",media_paging";
+                        res += ",id_product";
+                    }
+                return res;
 				case DBClassificationConstantes.Vehicles.names.radio:
 					if (allPeriod) return "order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_top_diffusion";
 					else return " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_top_diffusion";

@@ -102,7 +102,7 @@
     <column id="54" name="Id pub presse" webTextId="860" dbLabel="id_advertisement" dbTablePrefixe="wp" />
     <column id="55" name="Id cobranding" webTextId="860" dbLabel="id_cobranding_advertiser" dbTablePrefixe="wp"/>
     <column id="56" name="Id Outdoor" webTextId="860" dbLabel="id_data_outdoor"/>
-    <column id="57" name="Date de couverture" webTextId="2267"  dbLabel="date_cover_num" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="57" name="Date de couverture" webTextId="2267"  dbLabel="date_media_num" dbLabelAlias="date_cover_num" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
 
     <column id="58" name="Id VMC" webTextId="860" dbTablePrefixe="wp" dbLabel="id_data_marketing_direct_panel"/>
     <column id="59" name="Enveloppe rapidité" webTextId="2223" dbId="id_mailing_rapidity" dbLabel="mailing_rapidity" dbTable="mailing_rapidity" dbTablePrefixe="mr"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
@@ -314,7 +314,7 @@
       <columnItem id="35" name="Visuel" notInExcelExport="true"/>
       <columnItem id="42" name="Date du Support"/>
       <columnItem id="7" name="Annonceur"/>
-      <columnItem id="43" name="Agence Media"/>
+     <!-- <columnItem id="43" name="Agence Media"/>-->
       <columnItem id="53" name="Plan Media"/>
       <columnItem id="3" name="Support"/>
       <columnItem id="9" name="Produit"/>
@@ -378,7 +378,7 @@
     <!--Magazine-->
     <detailColumn id="9" name="Page\Visuel\Annonceur\Groupe\Produit\Format\Surface\Couleur\Prix\Descriptif">
       <columnItem id="54" name="Id pub presse" visible="false"  notInExcelExport="true" isKey="true"/>
-      <columnItem id="42" name="Date du Support" visible="false" isKey="true"/>
+      <columnItem id="42" name="Date du Support" visible="true" isKey="true"/>
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <!-- <columnItem id="35" name="Visuel" notInExcelExport="true"/>-->
       <!-- <columnItem id="34" name="Page"/>-->
@@ -419,15 +419,16 @@
       <columnItem id="7" name="Annonceur"/>
       <columnItem id="8" name="Groupe"/>
       <columnItem id="9" name="Produit"/>
-      <columnItem id="6" name="Version" isKey="true"/>
+      <!--<columnItem id="6" name="Version" isKey="true"/>-->
       <columnItem id="85" name="Budget"/>
       <columnItem id="72" name="insertion"/>
       <columnItem id="68" name="Surface"/>
       <columnItem id="71" name="Nb supports"/>
+      <columnItem id="86" name="Date de parution"/>
       <!--<columnItem id="57" name="Date de couverture" visible="false"/>-->
-      <columnItem id="73" name="Date kiosque" visible="false"/>
+      <!--<columnItem id="73" name="Date kiosque" visible="false"/>-->
       <columnItem id="87" name="Gad" visible="false"/>
-      <columnItem id="35" name="Visuel"/>
+      <!--<columnItem id="35" name="Visuel"/>-->
     </detailColumn>
     <!--Radio-->
     <detailColumn id="12" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
@@ -534,14 +535,14 @@
       <columnItem id="7" name="Annonceur"/>
       <columnItem id="8" name="Groupe"/>
       <columnItem id="9" name="Produit"/>
-      <columnItem id="6" name="Version" isKey="true" visible="false"/>
+      <!--<columnItem id="6" name="Version" isKey="true" visible="false"/>-->
       <columnItem id="86" name="Date de parution"/>
       <columnItem id="72" name="insertion"/>
       <columnItem id="71" name="Nb supports"/>
       <columnItem id="85" name="Budget"/>
       <!--<columnItem id="57" name="Date de couverture" visible="false"/>-->
-      <columnItem id="73" name="Date kiosque" visible="false"/>
-      <columnItem id="35" name="Visuel"/>
+      <!-- <columnItem id="73" name="Date kiosque" visible="false"/>-->
+      <!--<columnItem id="35" name="Visuel"/>-->
     </detailColumn>
     <!--Radio-->
     <!--TV-->
@@ -675,7 +676,7 @@
     <!--Newspaper-->
     <detailColumn id="28" name="Page\Visuel\Annonceur\Groupe\Produit\Format\Surface\Couleur\Prix\Descriptif">
       <columnItem id="54" name="Id pub presse" visible="false"  notInExcelExport="true" isKey="true"/>
-      <columnItem id="42" name="Date du Support" visible="false" isKey="true"/>
+      <columnItem id="42" name="Date du Support" visible="true" isKey="true"/>
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <!-- <columnItem id="35" name="Visuel" notInExcelExport="true"/>-->
       <!-- <columnItem id="34" name="Page"/>-->
@@ -691,10 +692,10 @@
     </detailColumn>
     <!--NewsPaper-->
     <detailColumn id="29" name="Visuel\Date du Support\Annonceurs\Agence média\Produit\Famille\Groupe\Page\Surface en page\Surface en mmc\Prix\Descriptifs\Format\Couleur\Rang famille\Rang groupe\Rang support">
-      <columnItem id="35" name="Visuel" notInExcelExport="true"/>
+     <!-- <columnItem id="35" name="Visuel" notInExcelExport="true"/>-->
       <columnItem id="42" name="Date du Support"/>
       <columnItem id="7" name="Annonceur"/>
-      <columnItem id="43" name="Agence Media"/>
+      <!-- <columnItem id="43" name="Agence Media"/>-->
       <columnItem id="53" name="Plan Media"/>
       <columnItem id="3" name="Support"/>
       <columnItem id="9" name="Produit"/>
