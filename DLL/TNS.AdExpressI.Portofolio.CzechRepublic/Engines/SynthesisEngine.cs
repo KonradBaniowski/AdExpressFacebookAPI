@@ -679,6 +679,7 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.newspaper
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.magazine
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.radio
                 ) && isAlertModule) {
                 //Nombre de nouveaux produits dans la pige
                 lineIndex = resultTable.AddNewLine(lineType);
