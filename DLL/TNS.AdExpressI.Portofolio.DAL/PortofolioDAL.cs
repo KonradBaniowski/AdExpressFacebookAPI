@@ -357,12 +357,16 @@ namespace TNS.AdExpressI.Portofolio.DAL {
             sql.Append("select distinct date_media_num ");
 
             if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
-                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
-                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
                 sql.Append(", disponibility_visual ");
                 sql.Append(", number_page_media ");
                 sql.Append(", date_cover_num ");
+            }
+            else if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine) {
+                sql.Append(", disponibility_visual ");
+                sql.Append(", number_page_media ");
+                sql.Append(", date_media_num as date_cover_num");
             }
             sql.Append(", media ");
             sql.Append(" from ");
