@@ -676,7 +676,10 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) && isAlertModule) {
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.newspaper
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.magazine
+                ) && isAlertModule) {
                 //Nombre de nouveaux produits dans la pige
                 lineIndex = resultTable.AddNewLine(lineType);
                 resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1394, _webSession.SiteLanguage));
