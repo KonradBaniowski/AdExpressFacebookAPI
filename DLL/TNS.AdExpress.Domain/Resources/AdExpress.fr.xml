@@ -1809,6 +1809,6 @@
     <item mnemonic="w2621" type="System.String">Magazine</item>
     <item mnemonic="w2622" type="System.String">Archive</item>
     <item mnemonic="w2623" type="System.String">Instructions</item>
-    <item mnemonic="w2624" type="System.String">Autre info</item>
+    <item mnemonic="w2624" type="System.String">Autres info</item>
   </items>
 </localization>
