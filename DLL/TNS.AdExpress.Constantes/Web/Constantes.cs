@@ -2511,7 +2511,20 @@ namespace TNS.AdExpress.Constantes.Web{
 			/// <summary>
 			/// adExReport 360
 			/// </summary>
-			adExReport360 = 11
+			adExReport360 = 11,
+            /// <summary>
+            /// Archive
+            /// </summary>
+            archive=12,
+            /// <summary>
+            /// Instructions
+            /// </summary>
+            instructions=13,
+            /// <summary>
+            /// adExReport 360
+            /// </summary>
+            otherInfo=14
+
 
 		}
 
