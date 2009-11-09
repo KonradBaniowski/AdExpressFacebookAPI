@@ -220,21 +220,18 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 case DBClassificationConstantes.Vehicles.names.newspaper:
                 case DBClassificationConstantes.Vehicles.names.magazine:
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
-                    string res = "";    
-                if (allPeriod)
-                    {
-                         res =
-                         " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".Id_type_page," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_advertisement";
-                        if (_webSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.mediaPaging)) res += ",media_paging";
-                        res += ",id_product";
-                       
-                    }
-                    else
-                    {
-                        res = " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".Id_type_page," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_advertisement";
-                        if (_webSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.mediaPaging)) res += ",media_paging";
-                        res += ",id_product";
-                    }
+                    string res = " order by ";
+                    if (allPeriod)                    
+                        res += WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num,";
+                    
+                    res += WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".Id_type_page";
+                    if (_webSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.location)
+                        || _webSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.locationMagazine)
+                        || _webSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.locationNewsPaper))
+                        res += "," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_advertisement";
+                    if (_webSession.GenericInsertionColumns.ContainColumnItem(GenericColumnItemInformation.Columns.mediaPaging)) res += ",media_paging";
+                    res += ",id_product";
+               
                 return res;
 				case DBClassificationConstantes.Vehicles.names.radio:
 					if (allPeriod) return "order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_top_diffusion";

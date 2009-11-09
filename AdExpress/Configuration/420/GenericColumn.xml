@@ -224,7 +224,7 @@
       <columnItem id="13" name="Couleur"/>
       <columnItem id="36" name="Position"/>
       <columnItem id="14" name="Prix"/>
-      <columnItem id="93" name="Descriptif"/>
+      <!--<columnItem id="93" name="Descriptif"/>-->
       <!--<columnItem id="57" name="Date de couverture" visible="false"/>-->
     </detailColumn>    
     <!--Radio-->
@@ -324,7 +324,7 @@
      <!-- <columnItem id="12" name="Surface page"/>-->
       <columnItem id="45" name="Surface en mmc"/>
       <columnItem id="14" name="Prix"/>
-      <columnItem id="93" name="Descriptif"/>
+      <!--<columnItem id="93" name="Descriptif"/>-->
       <columnItem id="11" name="Format"/>
       <columnItem id="13" name="Couleur"/>
       <columnItem id="52" name="Type page" visible="false"/>
@@ -389,7 +389,7 @@
      <!-- <columnItem id="12" name="Surface"/>-->
       <columnItem id="13" name="Couleur"/>
       <columnItem id="14" name="Prix"/>
-      <columnItem id="93" name="Descriptif"/>
+      <!--<columnItem id="93" name="Descriptif"/>-->
       <!--<columnItem id="57" name="Date de couverture" visible="false"/>-->
     </detailColumn>
     <!--VMC-->
@@ -670,7 +670,7 @@
       <columnItem id="13" name="Couleur"/>
       <columnItem id="36" name="Position"/>
       <columnItem id="14" name="Prix"/>
-      <columnItem id="94" name="Descriptif"/>
+      <!--<columnItem id="94" name="Descriptif"/>-->
       <!--<columnItem id="57" name="Date de couverture" visible="false"/>-->
     </detailColumn>
     <!--Newspaper-->
@@ -687,7 +687,7 @@
      <!-- <columnItem id="12" name="Surface"/>-->
       <columnItem id="13" name="Couleur"/>
       <columnItem id="14" name="Prix"/>
-      <columnItem id="94" name="Descriptif"/>
+      <!-- <columnItem id="94" name="Descriptif"/>-->
       <!--<columnItem id="57" name="Date de couverture" visible="false"/>-->
     </detailColumn>
     <!--NewsPaper-->
@@ -705,7 +705,7 @@
      <!-- <columnItem id="12" name="Surface page"/>-->
       <columnItem id="45" name="Surface en mmc"/>
       <columnItem id="14" name="Prix"/>
-      <columnItem id="94" name="Descriptif"/>
+      <!-- <columnItem id="94" name="Descriptif"/>-->
       <columnItem id="11" name="Format"/>
       <columnItem id="13" name="Couleur"/>
       <columnItem id="52" name="Type page" visible="false"/>

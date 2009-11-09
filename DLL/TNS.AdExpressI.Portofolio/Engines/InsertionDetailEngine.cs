@@ -411,7 +411,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			ArrayList indexLines = new ArrayList();
 			#endregion
 
-			if (dt != null && dt.Rows != null && dt.Rows.Count > 0) {
+            if (dt != null && dt.Rows != null && dt.Rows.Count > 0 && dt.Columns.Contains("id_advertisement"))
+            {
 
 				#region Parcours du tableau
 				foreach (DataRow row in dt.Rows) {
