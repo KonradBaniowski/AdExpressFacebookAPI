@@ -20,6 +20,7 @@
     <schema enumId="3" description="Mou" label="mou01"/>
     <schema enumId="4" description="Product class analysis" label="recappzl01"/>
     <schema enumId="5" description="Web" label="webnav01"/>
+    <schema enumId="10" description="Alert" label="mau01"/>
   </schemas>
   <tables defaultResultTablesPrefix="wp">
     <table enumId="0" description="List table" schemaEnumId="5" label="list" prefix="lst"/>
