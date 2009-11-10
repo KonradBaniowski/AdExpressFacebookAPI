@@ -18,7 +18,7 @@
         <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="331">-->
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <!--<ModuleVehicles list="1,2,3,5"/>-->
-          <ModuleVehicles list="1,2,5"/>
+          <ModuleVehicles list="1,2,5,3"/>
         </ModuleAllowedMediaUniverse>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
@@ -110,7 +110,7 @@
         <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="333">-->
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <!--<ModuleVehicles list="1,2,3,5"/>-->
-          <ModuleVehicles list="1,2,5"/>
+          <ModuleVehicles list="1,2,5,3"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -366,7 +366,7 @@
         <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="336">-->
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <!--<ModuleVehicles list="1,2,3,5"/>-->
-          <ModuleVehicles list="1,2,5"/>
+          <ModuleVehicles list="1,2,5,3"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -643,7 +643,7 @@
         <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="337">-->
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <!--<ModuleVehicles list="1,2,3,5"/>-->
-          <ModuleVehicles list="1,2,5"/>
+          <ModuleVehicles list="1,2,5,3"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>

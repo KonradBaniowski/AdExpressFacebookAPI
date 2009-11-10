@@ -261,11 +261,11 @@
       <columnItem id="5" name="Régie" idDetailLevelMatching="5"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="17" name="Top de diffusion"/>
-      <columnItem id="27" name="Code écran" idDetailLevelMatching="21" isKey="true"/>
+     <!-- <columnItem id="27" name="Code écran" idDetailLevelMatching="21" isKey="true"/>-->
       <columnItem id="18" name="Durée" idDetailLevelMatching="19"/>
       <columnItem id="20" name="Position" isKey="true"/>
-      <columnItem id="21" name="Durée écran"/>
-      <columnItem id="22" name="Nombre Spots écran"/>
+     <!-- <columnItem id="21" name="Durée écran"/>-->
+     <!-- <columnItem id="22" name="Nombre Spots écran"/>-->
       <columnItem id="14" name="Prix"/>
       <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
     </detailColumn>
@@ -300,7 +300,7 @@
       <columnItem id="5" name="Régie" idDetailLevelMatching="5"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="17" name="Top de diffusion"/>
-      <columnItem id="27" name="Code écran" idDetailLevelMatching="21" isKey="true"/>
+      <!--<columnItem id="27" name="Code écran" idDetailLevelMatching="21" isKey="true"/>-->
       <columnItem id="18" name="Durée" idDetailLevelMatching="19"/>
       <columnItem id="20" name="Position" isKey="true"/>
       <columnItem id="39" name="Forme de parrainage" idDetailLevelMatching="25"/>
@@ -367,10 +367,10 @@
       <columnItem id="8" name="Groupe"/>
       <columnItem id="17" name="Top de diffusion télévision"/>
       <columnItem id="18" name="Durée"/>
-      <columnItem id="27" name="Code écran"/>
+     <!-- <columnItem id="27" name="Code écran"/>-->
       <columnItem id="20" name="Position télévision"/>
-      <columnItem id="21" name="Durée écran hap"/>
-      <columnItem id="22" name="Nombre Spots écran télévision"/>
+      <!-- <columnItem id="21" name="Durée écran hap"/>-->
+      <!--<columnItem id="22" name="Nombre Spots écran télévision"/>-->
       <columnItem id="14" name="Prix"/>
       <columnItem id="51" name="Prix du 30 sec"/>
       <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
@@ -598,11 +598,11 @@
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="17" name="Top de diffusion"/>
-      <columnItem id="27" name="Code écran" idDetailLevelMatching="21" isKey="true"/>
+      <!--<columnItem id="27" name="Code écran" idDetailLevelMatching="21" isKey="true"/>-->
       <columnItem id="18" name="Durée" idDetailLevelMatching="19"/>
       <columnItem id="20" name="Position" isKey="true"/>
-      <columnItem id="21" name="Durée écran"/>
-      <columnItem id="22" name="Nombre Spots écran"/>
+      <!-- <columnItem id="21" name="Durée écran"/>-->
+       <!--<columnItem id="22" name="Nombre Spots écran"/>-->
       <columnItem id="14" name="Prix"/>
       <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
     </detailColumn>
