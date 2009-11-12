@@ -14,50 +14,92 @@ Menu related selectors
 	z-index: 10;
 }
 
-.jsdomenuitem {
+.jsdomenuitem,
+.jsdomenuitemdisabled 
+{
 	background: transparent;
 	border: none;
-	color: #000000;
-	font-family: Tahoma, Helvetica, sans, Arial, sans-serif;
-	font-size: 12px;
+	padding:5px 15px 3px 1px;
+	border: 1px solid transparent !important;
+	border: none;
 	padding-bottom: 3px;
-	padding-left: 30px;
+	padding-left: 1px;
 	padding-right: 15px;
 	padding-top: 5px;
 	position: relative; /* Do not alter this line! */
-}
-
-.jsdomenuitemover {
-	background-color: #FFCCFF;
-	border: 1px solid #FF05B6;
-	color: #000000;
-	font-family: Tahoma, Helvetica, sans, Arial, sans-serif;
-	font-size: 12px;
-	margin-left: 1px;
-	margin-right: 1px;
-	padding-bottom: 2px;
-	padding-left: 28px;
-	padding-right: 15px;
-	padding-top: 4px;
 	position: relative; /* Do not alter this line! */
 }
 
-.jsdomenuarrow {
-	background-image: url(/App_Themes/SlovakiaAdExpressUk/Images/Common/Menu/menu_arrow.gif);
-	background-repeat: no-repeat; /* Do not alter this line! */
-	height: 7px;
-	position: absolute; /* Do not alter this line! */
-	right: 8px;
-	width: 4px;
+.jsdomenuitemover,
+.jsdomenuitemdisabledover {
+	background-color: #FFCCFF;
+	border: 1px solid #FF05B6;
+	padding:5px 15px 3px 1px !important;
+	padding:4px 15px 2px 0px;
+	position: relative; /* Do not alter this line! */
 }
 
-.jsdomenuarrowover {
-	background-image: url(/App_Themes/SlovakiaAdExpressUk/Images/Common/Menu/menu_arrow_o.gif);
+.jsdomenuitem p 
+{
+	top:0px;
+	font-family: Tahoma, Helvetica, sans, Arial, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	padding-left:28px;
+	margin:0px 0px 0px 0px;
+}
+
+.jsdomenuitemover p 
+{
+	top:0px;
+	font-family: Tahoma, Helvetica, sans, Arial, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	padding-left:28px;
+	margin:0px 0px 0px 0px;
+}
+
+.jsdomenuitemdisabled p 
+{
+	top:0px;
+	font-family: Tahoma, Helvetica, sans, Arial, sans-serif;
+	font-size: 12px;
+	color: #A7A6AA;
+	padding-left:28px;
+	height:100%;
+	margin:0px 0px 0px 0px;
+}
+
+.jsdomenuitemdisabledover p 
+{
+	top:0px;
+	font-family: Tahoma, Helvetica, sans, Arial, sans-serif;
+	font-size: 12px;
+	color: #A7A6AA;
+	padding-left:20px !important;
+	height:100%;
+	margin:0px 0px 0px 0px;
+}
+
+.jsdomenuarrow {
+	background-image: url(/App_Themes/SlovakiaAdExpressUk/Images/Common/Menu/menu_arrow2.gif);
 	background-repeat: no-repeat; /* Do not alter this line! */
-	height: 7px;
+	height: 20px;
 	position: absolute; /* Do not alter this line! */
 	right: 8px;
 	width: 4px;
+	top:0px;
+}
+
+
+.jsdomenuarrowover {
+	background-image: url(/App_Themes/SlovakiaAdExpressUk/Images/Common/Menu/menu_arrow_o2.gif);
+	background-repeat: no-repeat; /* Do not alter this line! */
+	height: 20px;
+	position: absolute; /* Do not alter this line! */
+	right: 8px;
+	width: 4px;
+	top:0px;
 }
 
 .jsdomenusep {

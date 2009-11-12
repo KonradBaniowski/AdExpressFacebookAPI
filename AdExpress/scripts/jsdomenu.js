@@ -755,7 +755,7 @@ function addMenuItem(menuItemObj) { // Public method
     itemElm.arrowClassName = arrowClassName;
     itemElm.arrowClassNameOver = arrowClassNameOver;
 
-    var fontText = createElm("font");
+    var fontText = createElm("p");
     var textNode = document.createTextNode(menuItemObj.displayText);
     fontText.appendChild(textNode);
     itemElm.appendChild(fontText);
