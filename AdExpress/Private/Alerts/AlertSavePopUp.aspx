@@ -115,23 +115,29 @@
 							            </table>
 							        </div>
                                     <div id="divPeriodicityWeekly" style="padding:5px;display: none;">
-							            <table cellpadding="0" cellspacing="0" width="100%">
+							            <table cellpadding="0" cellspacing="0" border="0" width="100%">
 							                <tr>
 							                    <td>
-					                                <table cellpadding="0" cellspacing="2" class="periodicity-type-day">
+					                                <table cellpadding="0" cellspacing="0" class="periodicity-type-day">
 					                                    <tr>
 					                                        <th colspan="7" align="center" class="alert-dayofweek-selection-title">
 						                                        <asp:Label ID="lblIntroWeekly" runat="server"></asp:Label>
 					                                        </th>
 					                                    </tr>
 					                                    <tr>
-					                                        <td><asp:Image runat="server" id="lnkMonday" CssClass="imageCursor" /></td>
-					                                        <td><asp:Image runat="server" id="lnkTuesday" CssClass="imageCursor" /></td>
-					                                        <td><asp:Image runat="server" id="lnkWednesday" CssClass="imageCursor" /></td>
-					                                        <td><asp:Image runat="server" id="lnkThursday" CssClass="imageCursor" /></td>
-					                                        <td><asp:Image runat="server" id="lnkFriday" CssClass="imageCursor" /></td>
-					                                        <td><asp:Image runat="server" id="lnkSaturday" CssClass="imageCursor" /></td>
-					                                        <td><asp:Image runat="server" id="lnkSunday" CssClass="imageCursor" /></td>
+					                                        <td>
+						                                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+						                                            <tr>
+					                                                    <td><asp:Image runat="server" id="lnkMonday" CssClass="imageCursor" /></td>
+					                                                    <td><asp:Image runat="server" id="lnkTuesday" CssClass="imageCursor" /></td>
+					                                                    <td><asp:Image runat="server" id="lnkWednesday" CssClass="imageCursor" /></td>
+					                                                    <td><asp:Image runat="server" id="lnkThursday" CssClass="imageCursor" /></td>
+					                                                    <td><asp:Image runat="server" id="lnkFriday" CssClass="imageCursor" /></td>
+					                                                    <td><asp:Image runat="server" id="lnkSaturday" CssClass="imageCursor" /></td>
+					                                                    <td><asp:Image runat="server" id="lnkSunday" CssClass="imageCursor" /></td>
+					                                                </tr>
+					                                            </table>
+					                                        </td>
 					                                    </tr>
 					                                </table>
 							                    </td>
@@ -147,10 +153,10 @@
 							            </table>
 							        </div>
 							        <div id="divPeriodicityMonthly" style="padding:5px;display: none;float:none;">
-							            <table cellpadding="0" cellspacing="0" border="0">
+							            <table cellpadding="0" cellspacing="0" border="0" width="100%">
 							                <tr>
 							                    <td>
-							                        <table cellpadding="0" cellspacing="2" class="periodicity-type">
+							                        <table cellpadding="0" cellspacing="0" class="periodicity-type" width="0px">
 							                            <tr>
 							                                <th colspan="7" class="alert-dayofmonth-selection-title">
 						                                        <asp:Label runat="server" ID="lblIntroMonthly"></asp:Label>
@@ -158,7 +164,7 @@
 							                            </tr>
 							                            <tr>
 							                                <td>
-						                                        <table cellpadding="0" cellspacing="2" border="0">
+						                                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
 						                                            <tr>
 						                                                <td><asp:Image runat="server" id="day1" CssClass="imageCursor" /></td>
 						                                                <td><asp:Image runat="server" id="day2" CssClass="imageCursor" /></td>

@@ -9,6 +9,51 @@ div.periodicity-type, div.periodicity-type-day
 	background-color: White;
 }
 
+
+table.periodicity-type, table.periodicity-type-day
+{
+	color: #644883;
+	font-weight: bold;
+	border: solid 1px #644883;
+	background-color: White;
+	text-align:center;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+
+table.periodicity-type-day table,
+table.periodicity-type-day table tr,
+table.periodicity-type-day table tr td,
+table.periodicity-type table,
+table.periodicity-type table tr,
+table.periodicity-type table tr td
+{
+	margin:0px 0px 0px 0px;
+	padding:0px 0px 0px 0px;
+	font-size:1px;
+}
+
+table.periodicity-type-day table tr,
+table.periodicity-type table tr
+{
+	text-align:left;
+}
+
+table.periodicity-type-day table,
+table.periodicity-type table
+{
+	padding:1px 1px 1px 1px;
+}
+
+table.periodicity-type-day table tr td img,
+table.periodicity-type table tr td img
+{
+	vertical-align:top;
+	padding:1px 1px 1px 1px;
+}
+
+
 div.periodicity-type a, 
 a.alert-periodicity-type-day
 {
@@ -19,7 +64,7 @@ div.periodicity-type a,
 a.alert-periodicity-type-day,
 a.alert-periodicity-type-day-warning
 {
-	padding: 4px 2px 4px 2px;
+	/*padding: 4px 2px 4px 2px;*/
 	cursor: pointer;
 	display: inline-block;
 	width: 12px;
