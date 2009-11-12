@@ -43,14 +43,25 @@ table.periodicity-type table tr
 table.periodicity-type-day table,
 table.periodicity-type table
 {
-	padding:1px 1px 1px 1px;
+	border-bottom:solid 0px white;
+	border-right:solid 0px white;
+	border-left:solid 2px white;
+	border-top:solid 2px white;
 }
 
 table.periodicity-type-day table tr td img,
 table.periodicity-type table tr td img
 {
 	vertical-align:top;
-	padding:1px 1px 1px 1px;
+}
+
+table.periodicity-type-day table tr td,
+table.periodicity-type table tr td
+{
+	border-bottom:solid 2px white;
+	border-right:solid 2px white;
+	border-left:solid 0px white;
+	border-top:solid 0px white;
 }
 
 
