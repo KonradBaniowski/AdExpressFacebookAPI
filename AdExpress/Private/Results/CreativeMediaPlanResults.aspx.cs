@@ -41,7 +41,7 @@ namespace AdExpress.Private.Results{
 	/// <summary>
 	/// Page de calendrier d'action d'un plan media
 	/// </summary>
-    public partial class CreativeMediaPlanResults : TNS.AdExpress.Web.UI.ResultWebPage {
+    public partial class CreativeMediaPlanResults : TNS.AdExpress.Web.UI.BaseResultWebPage {
 		
 		#region Variables
 		/// <summary>
