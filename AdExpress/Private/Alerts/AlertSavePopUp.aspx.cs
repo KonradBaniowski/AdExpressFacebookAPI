@@ -282,6 +282,14 @@ namespace AdExpress.Private.Alerts
 					this.ClientScript.RegisterClientScriptBlock(this.GetType(),"alert",WebFunctions.Script.Alert(GestionWeb.GetWebWord(2041,_siteLanguage)));
                     this.ddlPeriodicityType.SelectedIndex = 0;
                 } 
+                else if((TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity)Enum.Parse(typeof(TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity), this.ddlPeriodicityType.SelectedValue)==TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity.Weekly && !(int.Parse(this.hiddenPeriodicityValue.Value)>0 && int.Parse(this.hiddenPeriodicityValue.Value)<8)){
+                    this.ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", WebFunctions.Script.Alert(GestionWeb.GetWebWord(2645, _siteLanguage)));
+                    this.ddlPeriodicityType.SelectedIndex = 0;
+                }
+                else if ((TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity)Enum.Parse(typeof(TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity), this.ddlPeriodicityType.SelectedValue) == TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity.Monthly && !(int.Parse(this.hiddenPeriodicityValue.Value) > 0 && int.Parse(this.hiddenPeriodicityValue.Value) < 32)) {
+                    this.ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", WebFunctions.Script.Alert(GestionWeb.GetWebWord(2645, _siteLanguage)));
+                    this.ddlPeriodicityType.SelectedIndex = 0;
+                }
 				else {
 
 					#region Gestion des cookies

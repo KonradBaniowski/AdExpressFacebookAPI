@@ -1810,5 +1810,26 @@
     <item mnemonic="w2622" type="System.String">Archive</item>
     <item mnemonic="w2623" type="System.String">Instructions</item>
     <item mnemonic="w2624" type="System.String">Autres info</item>
+    <item mnemonic="w2625" type="System.String">Bonjour,</item>
+    <item mnemonic="w2626" type="System.String">Vous recevez cet email suite à la mise en place d'une alerte sur le site TNS AdExpress. Une nouvelle échéance est arrivée pour l'alerte</item>
+    <item mnemonic="w2627" type="System.String">Vous pouvez consulter cette alerte en cliquant</item>
+    <item mnemonic="w2628" type="System.String">ici</item>
+    <item mnemonic="w2629" type="System.String">TNS AdExpress</item>
+    <item mnemonic="w2630" type="System.String">Radio General</item>
+    <item mnemonic="w2631" type="System.String">Radio Music</item>
+    <item mnemonic="w2632" type="System.String">Raido Sponsorship</item>
+    <item mnemonic="w2633" type="System.String">TV Générale</item>
+    <item mnemonic="w2634" type="System.String">TV Parrainage</item>
+    <item mnemonic="w2635" type="System.String">TV Annonces</item>
+    <item mnemonic="w2636" type="System.String">TV Non-terrestres</item>
+    <item mnemonic="w2637" type="System.String">Détail des versions de la radio générale</item>
+    <item mnemonic="w2638" type="System.String">Détail des versions du parrainage radio </item>
+    <item mnemonic="w2639" type="System.String">Détail des versions de la radio musique</item>
+    <item mnemonic="w2640" type="System.String">Détail des versions de la television générale </item>
+    <item mnemonic="w2641" type="System.String">Détail des versions du parrainage télévision</item>
+    <item mnemonic="w2642" type="System.String">Détail des versions de la television annonces</item>
+    <item mnemonic="w2643" type="System.String">Détail des versions de la television non-terrestre</item>
+    <item mnemonic="w2644" type="System.String">publicité en salle</item>
+    <item mnemonic="w2645" type="System.String">Votre selection calendaire est incorrecte</item>
   </items>
 </localization>

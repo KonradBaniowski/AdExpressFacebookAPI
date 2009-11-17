@@ -78,13 +78,23 @@
 						                        document.getElementById('divPeriodicityWeekly').style.display = 'none';
 						                        document.getElementById('divPeriodicityMonthly').style.display = 'none';
 						                    }
+						                    if (oldDay != undefined) {
+						                        var name = GetImgNameWithoutExtention(oldDay.src);
+						                        if (name[name.length - 1] == 's')
+						                            name = name.substring(0, name.length - 1);
+
+						                        oldDay.src = oldDay.src.substring(0, oldDay.src.lastIndexOf("/") + 1) + name + GetExtention(oldDay.src);
+						                    }
+						                    document.getElementById('hiddenPeriodicityValue').value = -1;
 							            }
 
 							            function onPeriodicityParameterClicked(e, obj, imgPath) {
 							                document.getElementById('hiddenPeriodicityValue').value = e;
 							                if (oldDay != undefined) {
 							                    var name = GetImgNameWithoutExtention(oldDay.src);
-							                    oldDay.src = imgPath + name.substring(0, name.length - 1) + GetExtention(oldDay.src);
+							                    if (name[name.length - 1] == 's')
+							                        name = name.substring(0, name.length - 1);
+							                    oldDay.src = imgPath + name + GetExtention(oldDay.src);
 							                }
 							                obj.src = imgPath + GetImgNameWithoutExtention(obj.src) + "s" + GetExtention(obj.src);
 							                oldDay = obj;
