@@ -527,7 +527,7 @@ namespace TNS.AdExpress.Web.Core {
 
             // Get the medias not authorized for the current customer   
 			if (_customerSession.CustomerLogin[CstCustomer.Right.type.vehicleException].Length > 0) {
-				rights.Add(CstCustomer.Right.type.vehicleAccess, _customerSession.CustomerLogin[CstCustomer.Right.type.vehicleException]);
+				rights.Add(CstCustomer.Right.type.vehicleException, _customerSession.CustomerLogin[CstCustomer.Right.type.vehicleException]);
 			}
             // Get the sub medias not authorized for the current customer   
 			if (_customerSession.CustomerLogin[CstCustomer.Right.type.categoryException].Length > 0) {
