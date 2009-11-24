@@ -672,7 +672,7 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
             resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN6;
             ChangeLineType(ref lineType);
 
-            if ((_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
+            /*if ((_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
@@ -696,7 +696,7 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
                 cN8.StringFormat = unitFormat;
                 resultTable[lineIndex, SECOND_COLUMN_INDEX] = cN8;
                 ChangeLineType(ref lineType);
-            }
+            }*/
             //Nombre d'annonceurs
             lineIndex = resultTable.AddNewLine(lineType);
             resultTable[lineIndex, FIRST_COLUMN_INDEX] = new CellLabel(GestionWeb.GetWebWord(1396, _webSession.SiteLanguage));
