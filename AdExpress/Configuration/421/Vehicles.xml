@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <vehicles>
   <!-- Evaliant -->
-  <vehicle id="adnettrack" databaseId="9" showInsertions="false" showCreations="true" autopromo="true">
+  <vehicle id="adnettrack" databaseId="9" showInsertions="false" showCreations="true" autopromo="false">
     <!-- Units-->
     <allowedUnits defaultUnit="versionNb">
       <allowedUnit>occurence</allowedUnit>
