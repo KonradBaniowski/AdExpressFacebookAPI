@@ -565,19 +565,19 @@ namespace TNS.AdExpress {
             #endregion
 
             #region Recap
-            //try {
-            //    IDataSource recapSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis);
-            //    ds = RightDAL.GetProductClassAnalysisRights(recapSource, _rights);
-            //    if (ds != null && ds.Tables != null && ds.Tables[0] != null && ds.Tables[0].Rows != null) {
-            //        foreach (DataRow row in ds.Tables[0].Rows) listVehicleForRecap += row[0] + ",";
-            //        if (listVehicleForRecap.Length > 0) {
-            //            _rights.Add(CustomerCst.Right.type.vehicleAccessForRecap, listVehicleForRecap.Substring(0, listVehicleForRecap.Length - 1).Split(','));
-            //        }
-            //    }
-            //}
-            //catch (System.Exception err) {
-            //    throw (new RightException("Impossible to load recap right", err));
-            //}
+            try {
+                IDataSource recapSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis);
+                ds = RightDAL.GetProductClassAnalysisRights(recapSource, _rights);
+                if (ds != null && ds.Tables != null && ds.Tables[0] != null && ds.Tables[0].Rows != null) {
+                    foreach (DataRow row in ds.Tables[0].Rows) listVehicleForRecap += row[0] + ",";
+                    if (listVehicleForRecap.Length > 0) {
+                        _rights.Add(CustomerCst.Right.type.vehicleAccessForRecap, listVehicleForRecap.Substring(0, listVehicleForRecap.Length - 1).Split(','));
+                    }
+                }
+            }
+            catch (System.Exception err) {
+                throw (new RightException("Impossible to load recap right", err));
+            }
             #endregion
 
         }

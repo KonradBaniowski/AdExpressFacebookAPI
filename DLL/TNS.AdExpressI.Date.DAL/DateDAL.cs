@@ -113,10 +113,9 @@ namespace TNS.AdExpressI.Date.DAL {
 
             #region Execution de la requête
             try {
-                //IDataSource source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis);
-                //DataSet ds = source.Fill(sql.ToString());
-                //return (int.Parse(ds.Tables[0].Rows[0]["current_year"].ToString()));
-                return 2009;
+                IDataSource source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis);
+                DataSet ds = source.Fill(sql.ToString());
+                return (int.Parse(ds.Tables[0].Rows[0]["current_year"].ToString()));
             }
             catch (System.Exception err) {
                 throw (new Exception.DateDALException("Impossible to get the last loaded year in the database for the recap tables", err));

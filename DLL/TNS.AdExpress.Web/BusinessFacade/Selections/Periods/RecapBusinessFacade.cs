@@ -20,8 +20,7 @@ namespace TNS.AdExpress.Web.BusinessFacade.Selections.Periods{
 		/// <returns>Dernière année chargée</returns>
 		public static int GetLastLoadedYear(){
 			try{
-				//return(WebDA.Selections.Periods.RecapDataAccess.GetLastLoadedYear());
-                return 2009;
+				return(WebDA.Selections.Periods.RecapDataAccess.GetLastLoadedYear());
 			}
 			catch(System.Exception ex){
 				throw(ex);
