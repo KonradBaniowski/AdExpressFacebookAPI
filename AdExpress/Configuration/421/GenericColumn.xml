@@ -253,7 +253,7 @@
     <detailColumn id="3" name="Spot\Annonceur\Produit\Version\Centre d'interet\Régie\Groupe\Top de diffusion\Code écran\Durée\Position\Durée écran\Nombre Spots écran\Prix">
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
-      <columnItem id="10" name="Spot" notInExcelExport="true"/>
+      <!--<columnItem id="10" name="Spot" notInExcelExport="true"/>-->
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <columnItem id="6" name="Version" idDetailLevelMatching="6"/>
@@ -356,7 +356,7 @@
     </detailColumn>
     <!--TV-->
     <detailColumn id="8" name="Vidéo\Date de diffusion\Annonceurs\Agence média\Produit\Famille\Groupe\Top de diffusion\Durée\Code écran\Position\Durée écran\Spots écran\Prix\Prix du 30 sec">
-      <columnItem id="10" name="Spot"/>
+      <!--<columnItem id="10" name="Spot"/>-->
       <columnItem id="49" name="Date de diffusion"/>
       <columnItem id="7" name="Annonceur"/>
       <columnItem id="43" name="Agence Media"/>
@@ -454,7 +454,7 @@
       <columnItem id="69" name="Durée"/>
       <columnItem id="70" name="nb Support"/>
       <columnItem id="87" name="Gad" visible="false"/>
-      <columnItem id="75" name="Spot"/>
+      <!--<columnItem id="75" name="Spot"/>-->
     </detailColumn>
     <!--Outdoor-->
     <detailColumn id="14" name="Affiche\Annonceur\Groupe\Produit\Version\budget\Nombre panneaux\Nb supports">
@@ -555,7 +555,7 @@
       <columnItem id="74" name="Nb spots"/>
       <columnItem id="70" name="nb Support"/>
       <columnItem id="85" name="Budget"/>
-      <columnItem id="75" name="Spot"/>
+      <!--<columnItem id="75" name="Spot"/>-->
     </detailColumn>
     <!--Outdoor-->
     <detailColumn id="20" name="Annonceur\Groupe\Produit\Version\budget\Nb panneaux\Nb supports">
@@ -593,7 +593,7 @@
     <detailColumn id="22" name="Spot\Annonceur\Produit\Groupe\Top de diffusion\Code écran\Durée\Position\Durée écran\Nombre Spots écran\Prix">
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
-      <columnItem id="10" name="Spot" notInExcelExport="true"/>
+      <!--<columnItem id="10" name="Spot" notInExcelExport="true"/>-->
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
