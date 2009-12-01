@@ -783,6 +783,160 @@
           </page>
         </results>
       </module>
+      <!--******************************************      Analyse secto : Tableaux dynamiques *****************************************-->
+      <!--<module name="Analyse secto : Tableaux dynamiques" privilegecode="194" traductioncode="2174" moduleCategoryId="2" urlNextPage="/Private/Selection/RecapProductSelection.aspx" descriptionWebTextId="2203" descriptionImageName="/Images/Common/Infobulle/TableauDynamique.png">-->
+      <module name="Analyse secto : Tableaux dynamiques" privilegecode="194" traductioncode="2174" moduleCategoryId="2" urlNextPage="/Private/Selection/RecapUniverseProductSelection.aspx" descriptionWebTextId="2203" descriptionImageName="/Images/Common/Infobulle/TableauDynamique.png">
+        <RulesLayer name="Default Product Class Rules Layers" assemblyName="TNS.AdExpressI.ProductClassReports.Default.dll" class="TNS.AdExpressI.ProductClassReports.Default.ProductClassReports"/>
+        <DataAccessLayer name="Default Product Class Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassReports.DAL.Default.dll" class="TNS.AdExpressI.ProductClassReports.DAL.Default.ProductClassReportDAL"/>             
+        <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
+        <selections>
+          <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="2" name="subsector"/>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>
+              <allowedUniverseLevel id="6" name="advertiser"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches>
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+              <allowedUniverseBranch id="9" name="advertiser"/>
+            </allowedUniverseBranches>
+            <subSelections>
+              <subSelection id="4" name="Vehicle" traductioncode="799" url="/Private/Selection/SectorAnalysisVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/SectorAnalysisVehicleSelectionHelp.aspx" >
+              </subSelection>
+              <subSelection id="5" name="Date" traductioncode="854" url="/Private/Selection/SectorDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/SectorDateSelectionHelp.aspx" >
+              </subSelection>
+            </subSelections>
+          </selection>
+        </selections>
+        <optionalSelections>
+          <optionalSelection id="3" name="Sector" traductioncode="1201" url="/Private/Selection/ReferenceCompetitorPersonalisation.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ReferenceCompetitorPersonalisationHelp.aspx">
+          </optionalSelection>
+        </optionalSelections>
+        <results>
+          <page id="0" resultid="33" name="Résultats" traductioncode="750" url="/Private/Results/ProductClassReport.aspx" printExcelUrl="/Private/Results/Excel/ProductClassReport.aspx" menuTextId="1983" helpUrl="/Private/Helps/ASDynamicTablesHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+            <!--<page name="Synthèses" traductioncode="750" url="#" />-->
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="12" name="Comparative Study"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="8" name="Product Level Detail"/>
+              <detailSelection id="7" name="Media Level Detail"/>
+            </detailSelections>
+          </page>
+        </results>
+        <moduleBridge>
+          <link name="Indicateurs" privilegecode="195" />
+        </moduleBridge>
+      </module>
+      <!--******************************************      Analyse secto : Indicateurs         *****************************************-->
+      <!--<module name="Analyse secto : Indicateurs" privilegecode="195" traductioncode="2173" moduleCategoryId="2" urlNextPage="/Private/Selection/RecapProductSelection.aspx" descriptionWebTextId="2202" descriptionImageName="/Images/Common/Infobulle/Indicateurs.png">-->
+      <module name="Analyse secto : Indicateurs" privilegecode="195" traductioncode="2173" moduleCategoryId="2" urlNextPage="/Private/Selection/RecapUniverseProductSelection.aspx" descriptionWebTextId="2202" descriptionImageName="/Images/Common/Infobulle/Indicateurs.png">
+        <RulesLayer name="Default Product Class Indicators Rules Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.Default.ProductClassIndicators"/>
+        <DataAccessLayer name="Default Product Class Indicators Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.DAL.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.DAL.Default.ProductClassIndicatorsDAL"/>              
+        <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
+        <selections>
+          <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="2" name="subsector"/>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="4" name="segment"/>
+              <allowedUniverseLevel id="6" name="advertiser"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches>
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+              <allowedUniverseBranch id="9" name="advertiser"/>
+            </allowedUniverseBranches>
+            <subSelections>
+              <subSelection id="4" name="Vehicle" traductioncode="799" url="/Private/Selection/SectorAnalysisVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/SectorAnalysisVehicleSelectionHelp.aspx" >
+              </subSelection>
+              <subSelection id="5" name="Date" traductioncode="854" url="/Private/Selection/SectorDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/SectorDateSelectionHelp.aspx" >
+              </subSelection>
+            </subSelections>
+          </selection>
+        </selections>
+        <optionalSelections>
+          <optionalSelection id="3" name="Sector" traductioncode="1201" url="/Private/Selection/ReferenceCompetitorPersonalisation.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ReferenceCompetitorPersonalisationHelp.aspx">
+          </optionalSelection>
+        </optionalSelections>
+        <results>
+          <page id="0" resultid="34" name="Seasonality" traductioncode="1139" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="12" name="Comparative Study"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+            </detailSelections>
+          </page>
+          <page id="1" resultid="35" name="Palmares" traductioncode="1165" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="12" name="Comparative Study"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+            </detailSelections>
+          </page>
+          <page id="2" resultid="36" name="Nouveautés" traductioncode="1197" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="12" name="Comparative Study"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+            </detailSelections>
+          </page>
+          <page id="3" resultid="37" name="Evolution" traductioncode="1207" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="12" name="Comparative Study"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+            </detailSelections>
+          </page>
+          <page id="4" resultid="38" name="Stratégie média" traductioncode="1227" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" exportJpegUrl="/Private/Results/Jpeg/IndicatorResultsExport.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="12" name="Comparative Study"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="7" name="Media Level Detail"/>
+            </detailSelections>
+          </page>
+          <page id="5" resultid="54" name="Synthèse" traductioncode="1664" url="/Private/Results/IndicatorSeasonalityResults.aspx" printExcelUrl="/Private/Results/Excel/IndicatorSeasonalityResults.aspx" remotePdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/IndicatorSeasonalityResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="12" name="Comparative Study"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+            </detailSelections>
+          </page>
+        </results>
+        <moduleBridge>
+          <link name="Tableaux dynamiques" privilegecode="194" />
+        </moduleBridge>
+      </module>
     </moduleGroup>
 
     <!-- ***************************************************************************************************************************-->

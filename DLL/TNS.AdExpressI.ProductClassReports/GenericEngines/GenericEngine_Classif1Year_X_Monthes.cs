@@ -317,7 +317,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines {
 
 			foreach (DataRow row in dtData.Rows) {
 				for (int i = 0; i < DATA_CLASSIF_INDEXES.Count; i++) {
-					cId = Convert.ToInt32(row[DATA_CLASSIF_INDEXES[i]]);
+					cId = Convert.ToInt64(row[DATA_CLASSIF_INDEXES[i]]);
 					if (parents[i + 1] == null || cId != parents[i + 1].Id) {
 						for (int j = parents.Length - 1; j > i; j--) {
 							parents[j] = null;

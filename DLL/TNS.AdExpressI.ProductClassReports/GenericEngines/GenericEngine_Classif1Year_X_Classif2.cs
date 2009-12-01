@@ -209,18 +209,18 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             }
             DataRow[] dtMedias = dtData.Select("", sortStr);
 
-            Dictionary<Int32, Header> RES_MEDIA_HEADERS = new Dictionary<Int32, Header>();
-            Dictionary<Int32, HeaderBase> RES_MEDIA_SUBTOTAL = new Dictionary<Int32, HeaderBase>();
+            Dictionary<long, Header> RES_MEDIA_HEADERS = new Dictionary<long, Header>();
+            Dictionary<long, HeaderBase> RES_MEDIA_SUBTOTAL = new Dictionary<long, HeaderBase>();
             HeaderBase[] MEDIA_IDS = new HeaderBase[DATA_MEDIA_INDEXES.Count];
             List<HeaderBase> SUB_TOTALS = new List<HeaderBase>();
-            Int32 cId = -1;
+            long cId = -1;
             HeaderBase pHeaderBase = headers.Root;
             foreach (DataRow row in dtMedias)
             {
 
                 for (int i = 0; i < DATA_MEDIA_INDEXES.Count; i++)
                 {
-                    cId = Convert.ToInt32(row[DATA_MEDIA_INDEXES[i]]);
+                    cId = Convert.ToInt64(row[DATA_MEDIA_INDEXES[i]]);
                     if (MEDIA_IDS[i] == null || cId != MEDIA_IDS[i].Id)
                     {
                         if (i < DATA_MEDIA_INDEXES.Count - 1)
@@ -353,7 +353,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
 
             }
             //Init Media PDM
-            foreach (KeyValuePair<Int32, Header> record in RES_MEDIA_HEADERS)
+            foreach (KeyValuePair<long, Header> record in RES_MEDIA_HEADERS)
             {
                 //PDM N
                 if (RES_PDM_N_OFFSET > 0)
@@ -398,7 +398,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             {
                 for (int i = 0; i < DATA_PRODUCT_INDEXES.Count; i++)
                 {
-                    cId = Convert.ToInt32(row[DATA_PRODUCT_INDEXES[i]]);
+                    cId = Convert.ToInt64(row[DATA_PRODUCT_INDEXES[i]]);
                     if (parents[i + 1] == null || cId != parents[i + 1].Id)
                     {
                         for (int j = parents.Length - 1; j > i; j--)
@@ -499,7 +499,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
 
                         }
                         //Init Media PDM
-                        foreach (KeyValuePair<Int32, Header> record in RES_MEDIA_HEADERS)
+                        foreach (KeyValuePair<long, Header> record in RES_MEDIA_HEADERS)
                         {
                             //PDM N
                             if (RES_PDM_N_OFFSET > 0)

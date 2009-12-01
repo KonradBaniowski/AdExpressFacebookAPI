@@ -167,8 +167,8 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             //Classification levels indexes
             List<Int32> DATA_C1_INDEXES = new List<Int32>();
             List<Int32> DATA_C2_INDEXES = new List<Int32>();
-            List<Int32> C1_IDS = new List<Int32>();
-            List<Int32> C2_IDS = new List<Int32>();
+            List<long> C1_IDS = new List<long>();
+            List<long> C2_IDS = new List<long>();
             List<CellLevel> C1_LEVELS = new List<CellLevel>();
             List<CellLevel> C2_LEVELS = new List<CellLevel>();
             for (int i = DATA_C1_INDEX; i < DATA_C2_INDEX; i = i + 2)
@@ -290,7 +290,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             #endregion
 
             #region Build Table
-            Int32 cId = -1;
+            long cId = -1;
             Int32 cLine = -1;
             List<Int64> mainLevelIds = new List<Int64>();
             List<Int64> scdLevelIds = new List<Int64>();
@@ -313,7 +313,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                     #region Main classification init
                     for (int i = 0; i < C1_IDS.Count; i++)
                     {
-                        cId = Convert.ToInt32(row[DATA_C1_INDEXES[i]]);
+                        cId = Convert.ToInt64(row[DATA_C1_INDEXES[i]]);
                         if (cId != C1_IDS[i])
                         {
                             C1_IDS[i] = cId;
@@ -458,7 +458,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                     #region Second classification treatment
                     for (int i = 0; i < C2_IDS.Count; i++)
                     {
-                        cId = Convert.ToInt32(row[DATA_C2_INDEXES[i]]);
+                        cId = Convert.ToInt64(row[DATA_C2_INDEXES[i]]);
                         if (cId != C2_IDS[i])
                         {
                             C2_IDS[i] = cId;

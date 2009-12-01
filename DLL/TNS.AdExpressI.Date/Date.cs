@@ -19,6 +19,8 @@ using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Classification;
 using System.Data;
 using TNS.AdExpressI.Date.Exception;
+using TNS.AdExpress.Web.Core.Utilities;
+using ConstantesPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 
 namespace TNS.AdExpressI.Date {
 
@@ -39,6 +41,13 @@ namespace TNS.AdExpressI.Date {
             previousDay,
             currentYear
         }
+        #endregion
+
+        #region Variables
+        /// <summary>
+        /// Determines if dates shoukd be upadted
+        /// </summary>
+        protected bool _isUpdateDates = false;
         #endregion
 
         #region IDate Membres
@@ -144,6 +153,7 @@ namespace TNS.AdExpressI.Date {
             bool isLastCompletePeriod = false;
             globalCalendar.comparativePeriodType comparativePeriodType = globalCalendar.comparativePeriodType.dateToDate;
             globalCalendar.periodDisponibilityType periodDisponibilityType = globalCalendar.periodDisponibilityType.currentDay;
+            _isUpdateDates = true;
 
             if (webSessionSave.CurrentModule == Module.Name.ANALYSE_DYNAMIQUE) {
 
@@ -323,8 +333,11 @@ namespace TNS.AdExpressI.Date {
             webSession.PeriodType = CustomerSessions.Period.Type.nLastYear;
             webSession.PeriodLength = selectedValue;
             webSession.PeriodBeginningDate = DateTime.Now.AddYears(1 - webSession.PeriodLength).ToString("yyyy0101");
-            webSession.PeriodEndDate = DateTime.Now.ToString("yyyyMMdd");
-            webSession.DetailPeriod = CustomerSessions.Period.DisplayLevel.monthly;
+            webSession.PeriodEndDate = DateTime.Now.ToString("yyyyMMdd");           
+            if (!_isUpdateDates)              
+            {
+                webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.monthly;
+            }
         }
         #endregion
 
@@ -369,7 +382,15 @@ namespace TNS.AdExpressI.Date {
                 webSession.PeriodBeginningDate = lastDayEnable.AddMonths(1 - webSession.PeriodLength).ToString("yyyyMM01"); ;
                 webSession.PeriodEndDate = lastDayEnable.ToString("yyyyMMdd");
             }
-            webSession.DetailPeriod = CustomerSessions.Period.DisplayLevel.monthly;
+
+            if (!_isUpdateDates || (webSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly
+                && (Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, ConstantesPeriod.Type.dateToDate)
+                    < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3)))
+                )
+            {                
+                    webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.monthly;                
+            }
+           
         }
         #endregion
 
@@ -393,7 +414,7 @@ namespace TNS.AdExpressI.Date {
             webSession.PeriodLength = selectedValue;
             startWeek = new AtomicPeriodWeek(lastDayEnable);
             endWeek = new AtomicPeriodWeek(lastDayEnable);
-
+          
             if (isLastCompletePeriod) {
 
                 lastDayOfWeek = endWeek.FirstDay.AddDays(6);
@@ -420,7 +441,14 @@ namespace TNS.AdExpressI.Date {
             dateBegin = startWeek.FirstDay;
             webSession.PeriodBeginningDate = dateBegin.Year.ToString() + dateBegin.Month.ToString("00") + dateBegin.Day.ToString("00");
 
-            webSession.DetailPeriod = CustomerSessions.Period.DisplayLevel.weekly;
+
+            if (!_isUpdateDates || (webSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly
+                && (Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, ConstantesPeriod.Type.dateToDate)
+                    < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3)))
+                )
+            {
+                webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.weekly;
+            }
         }
         #endregion
 
@@ -440,7 +468,11 @@ namespace TNS.AdExpressI.Date {
             tempDate = lastDayEnable;
             webSession.PeriodBeginningDate = tempDate.AddDays(1 - webSession.PeriodLength).ToString("yyyyMMdd"); ;
             webSession.PeriodEndDate = tempDate.ToString("yyyyMMdd");
-            webSession.DetailPeriod = CustomerSessions.Period.DisplayLevel.dayly;
+            if (!_isUpdateDates)
+            {
+                webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.dayly;
+            }
+           
         }
         #endregion
 
@@ -454,8 +486,11 @@ namespace TNS.AdExpressI.Date {
             webSession.PeriodType = CustomerSessions.Period.Type.previousYear;
             webSession.PeriodLength = 1;
             webSession.PeriodBeginningDate = DateTime.Now.AddYears(-1).ToString("yyyy0101");
-            webSession.PeriodEndDate = DateTime.Now.AddYears(-1).ToString("yyyy1231");
-            webSession.DetailPeriod = CustomerSessions.Period.DisplayLevel.monthly;
+            webSession.PeriodEndDate = DateTime.Now.AddYears(-1).ToString("yyyy1231");          
+            if (!_isUpdateDates)
+            {
+                webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.monthly;
+            }
         }
         #endregion
 
@@ -474,8 +509,11 @@ namespace TNS.AdExpressI.Date {
             firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             lastDayOfMonthInt = (firstDayOfMonth.AddDays(-1)).Day;
             webSession.PeriodBeginningDate = DateTime.Now.AddMonths(-1).ToString("yyyyMM01");
-            webSession.PeriodEndDate = DateTime.Now.AddMonths(-1).ToString("yyyyMM") + lastDayOfMonthInt;
-            webSession.DetailPeriod = CustomerSessions.Period.DisplayLevel.monthly;
+            webSession.PeriodEndDate = DateTime.Now.AddMonths(-1).ToString("yyyyMM") + lastDayOfMonthInt;          
+            if (!_isUpdateDates)
+            {
+                webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.monthly;
+            }
         }
         #endregion
 
@@ -497,8 +535,11 @@ namespace TNS.AdExpressI.Date {
             dateBegin = tmp.FirstDay;
             webSession.PeriodBeginningDate = dateBegin.Year.ToString() + dateBegin.Month.ToString("00") + dateBegin.Day.ToString("00");
             dateEnd = tmp.FirstDay.AddDays(6);
-            webSession.PeriodEndDate = dateEnd.Year.ToString() + dateEnd.Month.ToString("00") + dateEnd.Day.ToString("00");
-            webSession.DetailPeriod = CustomerSessions.Period.DisplayLevel.weekly;
+            webSession.PeriodEndDate = dateEnd.Year.ToString() + dateEnd.Month.ToString("00") + dateEnd.Day.ToString("00");          
+            if (!_isUpdateDates)
+            {
+                webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.weekly;
+            }
         }
         #endregion
 
@@ -511,8 +552,11 @@ namespace TNS.AdExpressI.Date {
 
             webSession.PeriodType = CustomerSessions.Period.Type.previousDay;
             webSession.PeriodLength = 2;
-            webSession.PeriodBeginningDate = webSession.PeriodEndDate = DateTime.Now.AddDays(1 - webSession.PeriodLength).ToString("yyyyMMdd");
-            webSession.DetailPeriod = CustomerSessions.Period.DisplayLevel.dayly;
+            webSession.PeriodBeginningDate = webSession.PeriodEndDate = DateTime.Now.AddDays(1 - webSession.PeriodLength).ToString("yyyyMMdd");           
+            if (!_isUpdateDates)
+            {
+                webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.dayly;
+            }
         }
         #endregion
 
@@ -526,8 +570,11 @@ namespace TNS.AdExpressI.Date {
             webSession.PeriodType = CustomerSessions.Period.Type.currentYear;
             webSession.PeriodLength = 1;
             webSession.PeriodBeginningDate = DateTime.Now.AddYears(1 - webSession.PeriodLength).ToString("yyyy0101");
-            webSession.PeriodEndDate = DateTime.Now.ToString("yyyyMMdd");
-            webSession.DetailPeriod = CustomerSessions.Period.DisplayLevel.monthly;
+            webSession.PeriodEndDate = DateTime.Now.ToString("yyyyMMdd");          
+            if (!_isUpdateDates)
+            {
+                webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.monthly;
+            }
         }
         #endregion
 

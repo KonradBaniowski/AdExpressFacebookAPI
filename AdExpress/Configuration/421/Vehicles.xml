@@ -394,4 +394,25 @@
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
   </vehicle>
+  <!-- PLURIMEDIA -->
+  <vehicle id="plurimedia" databaseId="50" showInsertions="false" showCreations="false">
+    <!-- Units-->
+    <allowedUnits defaultUnit="euro">
+      <allowedUnit>euro</allowedUnit>
+    </allowedUnits>
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>
+        <!-- Media -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
+    <!--Allowed universe levels-->
+    <allowedUniverseLevels>
+      <allowedUniverseLevel id="1" name="sector"/>
+      <allowedUniverseLevel id="2" name="subsector"/>
+      <allowedUniverseLevel id="3" name="group_"/>
+      <allowedUniverseLevel id="4" name="segment"/>
+      <allowedUniverseLevel id="6" name="advertiser"/>
+    </allowedUniverseLevels>
+  </vehicle>
 </vehicles>
