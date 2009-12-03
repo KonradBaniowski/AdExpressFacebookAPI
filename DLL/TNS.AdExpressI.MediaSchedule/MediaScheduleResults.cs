@@ -201,7 +201,7 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// <summary>
         /// Vehicle Id filter
         /// </summary>
-        protected Int64 _vehicleId;
+        protected Int64 _vehicleId = -1;
         /// <summary>
         /// Get / Set Vehicle Id filter
         /// </summary>

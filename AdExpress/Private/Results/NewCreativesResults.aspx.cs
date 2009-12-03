@@ -156,6 +156,7 @@ namespace AdExpress.Private.Results{
                 DataTable dt = new TNS.AdExpress.DataAccess.Classification.ProductBranch.AllSectorLevelListDataAccess(_webSession.DataLanguage, _webSession.Source).GetDataTable;
                 SectorWebControl1.Session = _webSession;
                 SectorWebControl1.DataTable = dt;
+                SectorWebControl1.LanguageCode = _webSession.SiteLanguage;
                 #endregion
 
             }			
