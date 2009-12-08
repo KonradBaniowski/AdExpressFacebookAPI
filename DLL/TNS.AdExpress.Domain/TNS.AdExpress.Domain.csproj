@@ -238,6 +238,8 @@
     <Content Include="Resources\AdExpress.fr.xml" />
     <Content Include="Resources\AdExpress.Project.xml" />
     <Content Include="Resources\AdExpress.ru.xml" />
+    <Content Include="Resources\AdExpress.sk.xml" />
+    <Content Include="Resources\AdExpress.cz.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
