@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
-  <languages default="44" defaultDataLanguage="44">
-    <!--
+  <languages default="421" defaultDataLanguage="44">
     <language id="421" name="Slovakia"  imageSourceText="/Images/Common/slovakia.gif"  localization="sk-SK" classificationLanguageId="44" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="utf-8" pdfContentEncoding="utf-8" nlsSort="BINARY" NumberDecimalSeparator="." NumberGroupSeparator=",">
       <rss display="true" filePath="\\thebes\AdExpressC2\Rss\44\AdExpressFeed.xml" link="http://www.tnsadexpress.com/Rss/44/AdExpressFeed.xml"/>
       <unitformats>
@@ -22,7 +21,7 @@
         <dateFormat name="shortdatepattern"   format="MM/dd/yyyy"               excelFormat="MM/dd/yyyy"/>
         <dateFormat name="customdatepattern"  format="ddd, MMM dd, yyyy"        excelFormat="ddd, MMM dd, yyyy"/>
       </dateFormats>
-    </language>-->
+    </language>
     <language id="44" name="English"  imageSourceText="/Images/Common/angleterre.gif"  localization="en-GB" classificationLanguageId="44" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="utf-8" pdfContentEncoding="utf-8" nlsSort="BINARY" NumberDecimalSeparator="." NumberGroupSeparator=",">
       <rss display="true" filePath="\\thebes\AdExpressC2\Rss\44\AdExpressFeed.xml" link="http://www.tnsadexpress.com/Rss/44/AdExpressFeed.xml"/>
       <unitformats>
