@@ -261,7 +261,7 @@
       <columnItem id="5" name="Régie" idDetailLevelMatching="5"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="17" name="Top de diffusion"/>
-      <!-- <columnItem id="27" name="Code écran" idDetailLevelMatching="21" isKey="true"/>-->
+      <columnItem id="27" name="Code écran" idDetailLevelMatching="21" isKey="true"/>
       <columnItem id="18" name="Durée" idDetailLevelMatching="19"/>
       <columnItem id="20" name="Position" isKey="true"/>
       <!-- <columnItem id="21" name="Durée écran"/>-->
