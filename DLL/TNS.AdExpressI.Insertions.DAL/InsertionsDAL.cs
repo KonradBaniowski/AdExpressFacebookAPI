@@ -729,26 +729,26 @@ namespace TNS.AdExpressI.Insertions.DAL {
                 if (begin > fromDate) {
                     sql.AppendFormat(" {1}.date_media_num >= {0}", begin, tData.Prefix);
                     if (_module.Id == CstWeb.Module.Name.NEW_CREATIVES){
-                        sql.AppendFormat(" and {0}.date_creation >= to_date('{1}','yyyymmdd') ", tData.Prefix, begin);
+                        sql.AppendFormat(" and {0}.date_creation >= to_date('{1} 00:00:00','yyyymmdd HH24:MI:SS') ", tData.Prefix, begin);
                     }
                 }
                 else {
                     sql.AppendFormat(" {1}.date_media_num >= {0}", fromDate, tData.Prefix);
                     if (_module.Id == CstWeb.Module.Name.NEW_CREATIVES){
-                        sql.AppendFormat(" and {0}.date_creation >= to_date('{1}','yyyymmdd') ", tData.Prefix, fromDate);
+                        sql.AppendFormat(" and {0}.date_creation >= to_date('{1} 00:00:00','yyyymmdd HH24:MI:SS') ", tData.Prefix, fromDate);
                     }
                 }
                 int end = Convert.ToInt32(_session.PeriodEndDate);
                 if (end < toDate) {
                     sql.AppendFormat(" and {1}.date_media_num <= {0}", end, tData.Prefix);
                     if (_module.Id == CstWeb.Module.Name.NEW_CREATIVES){
-                        sql.AppendFormat(" and {0}.date_creation <= to_date('{1}','yyyymmdd') ", tData.Prefix, end);
+                        sql.AppendFormat(" and {0}.date_creation <= to_date('{1} 23:59:59','yyyymmdd HH24:MI:SS') ", tData.Prefix, end);
                     }
                 }
                 else {
                     sql.AppendFormat(" and {1}.date_media_num <= {0}", toDate, tData.Prefix);
                     if (_module.Id == CstWeb.Module.Name.NEW_CREATIVES){
-                        sql.AppendFormat(" and {0}.date_creation <= to_date('{1}','yyyymmdd') ", tData.Prefix, toDate);
+                        sql.AppendFormat(" and {0}.date_creation <= to_date('{1} 23:59:59','yyyymmdd HH24:MI:SS') ", tData.Prefix, toDate);
                     }
                 }
             }
@@ -756,8 +756,8 @@ namespace TNS.AdExpressI.Insertions.DAL {
                 sql.AppendFormat(" {1}.date_media_num >= {0}", fromDate, tData.Prefix);
                 sql.AppendFormat(" and {1}.date_media_num <= {0}", toDate, tData.Prefix);
                 if (_module.Id == CstWeb.Module.Name.NEW_CREATIVES){
-                    sql.AppendFormat(" and {0}.date_creation >= to_date('{1}','yyyymmdd') ", tData.Prefix, fromDate);
-                    sql.AppendFormat(" and {0}.date_creation <= to_date('{1}','yyyymmdd') ", tData.Prefix, toDate);
+                    sql.AppendFormat(" and {0}.date_creation >= to_date('{1} 00:00:00','yyyymmdd HH24:MI:SS') ", tData.Prefix, fromDate);
+                    sql.AppendFormat(" and {0}.date_creation <= to_date('{1} 23:59:59','yyyymmdd HH24:MI:SS') ", tData.Prefix, toDate);
                 }
             }
             #endregion
