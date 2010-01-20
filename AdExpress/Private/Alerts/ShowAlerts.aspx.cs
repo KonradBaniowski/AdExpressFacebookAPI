@@ -231,7 +231,7 @@ namespace AdExpress.Private.Alerts{
             HtmlContainerControl headerAlert = (HtmlContainerControl)e.Item.FindControl("headerAlert");
             headerAlert.InnerHtml += String.Format(" - {0} {1}", occurrences.Count, (occurrences.Count <= 1 ? GestionWeb.GetWebWord(2600, _siteLanguage) : GestionWeb.GetWebWord(2601, _siteLanguage)));
 
-            System.Web.UI.Control control =  GetControl(repeaterAlerts.Controls, "flagStatus");
+            System.Web.UI.Control control = GetControl(repeaterAlerts.Controls[e.Item.ItemIndex].Controls, "flagStatus");
             System.Web.UI.WebControls.Image imageFc = null;
             if(control == null) throw new Exception("The control 'flagStatus' is not defined in Page showAlerts");
             if(control.GetType() == typeof(System.Web.UI.WebControls.Image))

@@ -181,7 +181,8 @@ namespace TNS.Ares.Alerts.DAL
             StringBuilder sql = new StringBuilder(500);
             sql.Append("SELECT * ");
             sql.AppendFormat("FROM {0} ", DataBaseConfiguration.DataBase.GetTable(TableIds.alertOccurence).Sql);
-            sql.AppendFormat("WHERE id_alert = {0}", alertId);
+            sql.AppendFormat("WHERE id_alert = {0} ", alertId);
+            sql.AppendFormat("ORDER BY date_send DESC ");
 
             // Retrieving data
             this._data = this._src.Fill(sql.ToString());
