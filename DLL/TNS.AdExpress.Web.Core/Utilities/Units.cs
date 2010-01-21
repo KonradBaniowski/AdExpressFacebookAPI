@@ -22,6 +22,7 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Domain.Units;
 using System.Threading;
+using TNS.FrameWork.WebResultUI;
 
 namespace TNS.AdExpress.Web.Core.Utilities
 {
@@ -64,11 +65,13 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return string.Format(fp, f, ConvertToDuration(value));
                 case CstWeb.CustomerSessions.Unit.kEuro:
                     return string.Format(fp, f, ConvertToKEuro(value));
+                case CstWeb.CustomerSessions.Unit.versionNb:
+                    if(value is CellIdsNumber) return string.Format(fp, f, ((CellIdsNumber)value).Value);
+                    else return string.Format(fp, f, Convert.ToDouble(value.ToString()));
                 case CstWeb.CustomerSessions.Unit.euro:
                 case CstWeb.CustomerSessions.Unit.grp:
                 case CstWeb.CustomerSessions.Unit.spot:
                 case CstWeb.CustomerSessions.Unit.insertion:
-                case CstWeb.CustomerSessions.Unit.versionNb:
                 case CstWeb.CustomerSessions.Unit.mmPerCol:
                 default:
                     return string.Format(fp, f, Convert.ToDouble(value.ToString()));
