@@ -4,7 +4,6 @@ using System.Text;
 using System.Configuration;
 using System.IO;
 using System.Text.RegularExpressions;
-using log4net;
 using System.Reflection;
 
 namespace TNS.Ares.Domain
@@ -15,15 +14,6 @@ namespace TNS.Ares.Domain
     /// </summary>
     public static class ConfigParamHelper
     {
-        #region Private Logger
-
-        /// <summary>
-        /// Logger instance
-        /// </summary>
-        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
-        #endregion
-
         #region Private Static Variable Members
 
         #region PictureTrack
@@ -838,9 +828,8 @@ namespace TNS.Ares.Domain
                 if (sectObj is T)
                     section = (T)sectObj;
             }
-            catch (ConfigurationErrorsException cee)
+            catch
             {
-                log.Error("ConfigParamHelper - GetSection - Error", cee);
                 section = default(T);
             }
 

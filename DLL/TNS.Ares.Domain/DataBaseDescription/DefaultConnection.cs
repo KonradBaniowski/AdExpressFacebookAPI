@@ -20,7 +20,7 @@ namespace TNS.Ares.Domain.DataBaseDescription {
         /// <summary>
         /// Default Connection Id
         /// </summary>
-        private DefaultConnectionIds _id; 
+        private new DefaultConnectionIds _id; 
         /// <summary>
         /// Database user name
         /// </summary>

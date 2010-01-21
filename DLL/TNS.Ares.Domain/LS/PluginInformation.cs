@@ -236,6 +236,7 @@ namespace TNS.Ares.Domain.LS {
             this._longevity = longevity;
             this._deleteExpired = deleteExpired;
             this._resultType = resultType;
+            this._themePath = themePath;
             this._name = name;
             this._extension = extension;
             this._typeOfPlugin = typeOfPlugin;

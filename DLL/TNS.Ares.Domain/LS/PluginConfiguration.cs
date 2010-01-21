@@ -5,6 +5,7 @@ using TNS.Ares.Domain.Layers;
 using TNS.Ares.Domain.XmlLoader;
 using TNS.FrameWork.DB.Common;
 using TNS.Ares.Domain.DataBaseDescription;
+using TNS.Ares.Domain.Exceptions;
 
 namespace TNS.Ares.Domain.LS
 {
@@ -71,6 +72,7 @@ namespace TNS.Ares.Domain.LS
         /// <param name="layer">Layer</param>
         /// <returns>The DataAccessLayer object or null</returns>
         public static DataAccessLayer GetDataAccessLayer(PluginDataAccessLayerName layer) {
+            if (_dataAccessLayers == null) throw new Exception("_dataAccessLayers is null. GetDataAccessLayer can't return DataAccessLayer for PluginDataAccessLayerName '" + layer.ToString() + "'.");
             if (_dataAccessLayers.ContainsKey(layer))
                 return (_dataAccessLayers[layer]);
             return (null);
@@ -89,6 +91,7 @@ namespace TNS.Ares.Domain.LS
         /// <param name="plugin">Plugin</param>
         /// <returns>The PluginInformation object or null</returns>
         public static PluginInformation GetPluginInformation(PluginType plugin) {
+            if (_pluginsInformationName == null) throw new Exception("_pluginsInformationName is null. GetPluginInformation can't return PluginInformation for PluginType '" + plugin.ToString() + "'.");
             if (_pluginsInformationName.ContainsKey(plugin))
                 return (_pluginsInformationName[plugin]);
             return (null);
@@ -101,6 +104,7 @@ namespace TNS.Ares.Domain.LS
         /// <param name="plugin">Plugin</param>
         /// <returns>The PluginInformation object or null</returns>
         public static PluginInformation GetPluginInformation(int resultType) {
+            if (_pluginsInformationName == null) throw new Exception("_pluginsInformationName is null. GetPluginInformation can't return PluginInformation for ResultType '" + resultType.ToString() + "'.");
             if (_pluginsInformationId.ContainsKey(resultType))
                 return (_pluginsInformationId[resultType]);
             return (null);
@@ -152,10 +156,15 @@ namespace TNS.Ares.Domain.LS
         /// </summary>
         /// <param name="source">Datasource containing Nyx configuration</param>
         public static void Load(IDataSource source) {
-            _pluginsInformationId.Clear();
-            PluginConfigurationXL.Load(source, out _defaultFilePath, out _defaultVirtualPath, out _defaultLongevity, out _defaultThemePath, out _dataAccessLayers, out _pluginsInformationName, out _defaultConnectionId, out _defaultFamilyId);
-            foreach (PluginInformation currentPluginInformation in _pluginsInformationName.Values) {
-                _pluginsInformationId.Add(currentPluginInformation.ResultType, currentPluginInformation);
+            try {
+                _pluginsInformationId.Clear();
+                PluginConfigurationXL.Load(source, out _defaultFilePath, out _defaultVirtualPath, out _defaultLongevity, out _defaultThemePath, out _dataAccessLayers, out _pluginsInformationName, out _defaultConnectionId, out _defaultFamilyId);
+                foreach (PluginInformation currentPluginInformation in _pluginsInformationName.Values) {
+                    _pluginsInformationId.Add(currentPluginInformation.ResultType, currentPluginInformation);
+                }
+            }
+            catch (Exception e) {
+                throw new PluginConfigurationException("Initilization PluginConfiguration error", e);
             }
         }
         #endregion

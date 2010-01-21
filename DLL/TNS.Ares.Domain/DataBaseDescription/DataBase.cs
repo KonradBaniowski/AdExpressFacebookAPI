@@ -892,12 +892,17 @@ namespace TNS.Ares.Domain.DataBaseDescription {
         /// </summary>
         /// <param name="source">Data source</param>
         public DataBase(IDataSource source) {
-            _customerConnections=DataBaseDescriptionXL.LoadCustomerConnections(source);
-            _defaultConnections=DataBaseDescriptionXL.LoadDefaultConnections(source);
-            _schemas=DataBaseDescriptionXL.LoadSchemas(source);
-            _tables=DataBaseDescriptionXL.LoadTables(source,_schemas);
-            _views=DataBaseDescriptionXL.LoadViews(source, _schemas);
-            _defaultResultTablePrefix=DataBaseDescriptionXL.LoadDefaultResultTablePrefix(source);
+            try {
+                _customerConnections = DataBaseDescriptionXL.LoadCustomerConnections(source);
+                _defaultConnections = DataBaseDescriptionXL.LoadDefaultConnections(source);
+                _schemas = DataBaseDescriptionXL.LoadSchemas(source);
+                _tables = DataBaseDescriptionXL.LoadTables(source, _schemas);
+                _views = DataBaseDescriptionXL.LoadViews(source, _schemas);
+                _defaultResultTablePrefix = DataBaseDescriptionXL.LoadDefaultResultTablePrefix(source);
+            }
+            catch (Exception e) {
+                throw new DataBaseException("Initialization error in DataBase constructor", e);
+            }
         }
         #endregion
 
