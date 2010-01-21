@@ -23,6 +23,7 @@ using TNS.FrameWork.Date;
 using TNS.AdExpress.Domain.Units;
 using System.Threading;
 using TNS.FrameWork.WebResultUI;
+using TNS.AdExpress.Web.Core.Exceptions;
 
 namespace TNS.AdExpress.Web.Core.Utilities
 {
@@ -55,28 +56,30 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 f = UnitsInformation.Get(unit).StringFormat;
             }
             catch{}
-            
 
-            switch (unit)
-            {
-                case CstWeb.CustomerSessions.Unit.pages:                    
-                    return string.Format(fp, f, ConvertToPages(value));
-                case CstWeb.CustomerSessions.Unit.duration:
-                    return string.Format(fp, f, ConvertToDuration(value));
-                case CstWeb.CustomerSessions.Unit.kEuro:
-                    return string.Format(fp, f, ConvertToKEuro(value));
-                case CstWeb.CustomerSessions.Unit.versionNb:
-                    if(value is CellIdsNumber) return string.Format(fp, f, ((CellIdsNumber)value).Value);
-                    else return string.Format(fp, f, Convert.ToDouble(value.ToString()));
-                case CstWeb.CustomerSessions.Unit.euro:
-                case CstWeb.CustomerSessions.Unit.grp:
-                case CstWeb.CustomerSessions.Unit.spot:
-                case CstWeb.CustomerSessions.Unit.insertion:
-                case CstWeb.CustomerSessions.Unit.mmPerCol:
-                default:
-                    return string.Format(fp, f, Convert.ToDouble(value.ToString()));
+            try {
+                switch (unit) {
+                    case CstWeb.CustomerSessions.Unit.pages:
+                        return string.Format(fp, f, ConvertToPages(value));
+                    case CstWeb.CustomerSessions.Unit.duration:
+                        return string.Format(fp, f, ConvertToDuration(value));
+                    case CstWeb.CustomerSessions.Unit.kEuro:
+                        return string.Format(fp, f, ConvertToKEuro(value));
+                    case CstWeb.CustomerSessions.Unit.versionNb:
+                        if (value is CellIdsNumber) return string.Format(fp, f, ((CellIdsNumber)value).Value);
+                        else return string.Format(fp, f, Convert.ToDouble(value.ToString()));
+                    case CstWeb.CustomerSessions.Unit.euro:
+                    case CstWeb.CustomerSessions.Unit.grp:
+                    case CstWeb.CustomerSessions.Unit.spot:
+                    case CstWeb.CustomerSessions.Unit.insertion:
+                    case CstWeb.CustomerSessions.Unit.mmPerCol:
+                    default:
+                        return string.Format(fp, f, Convert.ToDouble(value.ToString()));
+                }
             }
-            
+            catch (Exception e) {
+                throw new UnitException("Error for convert unit '" + unit.ToString() + "' with type '" + value.GetType().ToString() + "' with value '" + value.ToString() + "'", e);
+            }
         }
 
         /// <summary>
