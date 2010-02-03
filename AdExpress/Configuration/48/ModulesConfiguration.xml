@@ -16,7 +16,7 @@
         <RulesLayer name="Default Media Schedule rules layers" assemblyName="TNS.AdExpressI.MediaSchedule.Default.dll" class="TNS.AdExpressI.MediaSchedule.Default.MediaScheduleResults"/>
         <DataAccessLayer name="Default Media Schedule data access layers" assemblyName="TNS.AdExpressI.MediaSchedule.DAL.Default.dll" class="TNS.AdExpressI.MediaSchedule.DAL.Default.MediaScheduleResultDAL"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="331">
-          <ModuleVehicles list="1,2,3,5"/>
+          <ModuleVehicles list="1,2,3,5,7,8"/>
         </ModuleAllowedMediaUniverse>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
@@ -106,7 +106,7 @@
         <RulesLayer name="Default Present Absent rules layers" assemblyName="TNS.AdExpressI.PresentAbsent.Default.dll" class="TNS.AdExpressI.PresentAbsent.Default.PresentAbsentResult"/>
         <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.Default.dll" class="TNS.AdExpressI.PresentAbsent.DAL.Default.PresentAbsentDAL"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="333">
-          <ModuleVehicles list="1,2,3,5"/>
+          <ModuleVehicles list="1,2,3,5,7,8"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -276,7 +276,7 @@
         <RulesLayer name="Default Lost Won rules layers" assemblyName="TNS.AdExpressI.LostWon.Default.dll" class="TNS.AdExpressI.LostWon.Default.LostWonResult"/>
         <DataAccessLayer name="Default Lost Won data access layers" assemblyName="TNS.AdExpressI.LostWon.DAL.Default.dll" class="TNS.AdExpressI.LostWon.DAL.Default.LostWonResultDAL"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="336">
-          <ModuleVehicles list="1,2,3,5"/>
+          <ModuleVehicles list="1,2,3,5,7,8"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -467,7 +467,7 @@
         <RulesLayer name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Poland.dll" class="TNS.AdExpressI.Portofolio.Poland.PortofolioResults"/>
         <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.Default.dll" class="TNS.AdExpressI.Portofolio.DAL.Default.PortofolioDAL"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="337">
-          <ModuleVehicles list="1,2,3,5"/>
+          <ModuleVehicles list="1,2,3,5,7,8"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -611,7 +611,7 @@
         <RulesLayer name="Default Product Class Rules Layers" assemblyName="TNS.AdExpressI.ProductClassReports.Default.dll" class="TNS.AdExpressI.ProductClassReports.Default.ProductClassReports"/>
         <DataAccessLayer name="Default Product Class Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassReports.DAL.Default.dll" class="TNS.AdExpressI.ProductClassReports.DAL.Default.ProductClassReportDAL"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="341">
-          <ModuleVehicles list="1,2,3,5,50"/>
+          <ModuleVehicles list="1,2,3,5,7,8,50"/>
         </ModuleAllowedMediaUniverse>
         <ResultLimitation size="25000"/>
         <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
@@ -664,7 +664,7 @@
         <RulesLayer name="Default Product Class Indicators Rules Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.Default.ProductClassIndicators"/>
         <DataAccessLayer name="Default Product Class Indicators Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.DAL.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.DAL.Default.ProductClassIndicatorsDAL"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="341">
-          <ModuleVehicles list="1,2,3,5,50"/>
+          <ModuleVehicles list="1,2,3,5,7,8,50"/>
         </ModuleAllowedMediaUniverse>
         <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <selections>
@@ -767,5 +767,62 @@
         </moduleBridge>
       </module>
     </moduleGroup>
-    </moduleGroups>
+
+    <!-- ***************************************************************************************************************************-->
+    <!-- ***************************************************************************************************************************-->
+    <!-- **													                            Evaliant					                                                **-->
+    <!-- ***************************************************************************************************************************-->
+    <!-- ***************************************************************************************************************************-->
+
+    <moduleGroup name="Evaliant" type="1" privilegecode="150" traductioncode="2555" flashUrl="/Flash/Common/GroupedeModuleAlerte.swf" missingFlashUrl="/Images/Common/FlashReplacement/GroupedeModuleAlerte.gif" descriptionWebTextId="2556">
+      <!-- *****************************************      Nouvelles créations              *****************************************-->
+      <module name="Les nouvelles créations" privilegecode="4369" traductioncode="2557" moduleCategoryId="0" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2558" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
+        <RulesLayer name="Default New Creatives rules layers" assemblyName="TNS.AdExpressI.NewCreatives.Default.dll" class="TNS.AdExpressI.NewCreatives.Default.NewCreativesResult"/>
+        <DataAccessLayer name="Default New Creatives data access layers" assemblyName="TNS.AdExpressI.NewCreatives.DAL.Default.dll" class="TNS.AdExpressI.NewCreatives.DAL.Default.NewCreativesDAL"/>
+        <ProductDetailLevel>
+          <defaultProductDetailLevels>
+            <defaultProductDetailLevel id="11" name="famille" />
+            <defaultProductDetailLevel id="15" name="famille\classe\groupe" />
+            <defaultProductDetailLevel id="16" name="famille\annonceur" />
+            <defaultProductDetailLevel id="17" name="famille\annonceur\produit" />
+            <defaultProductDetailLevel id="19" name="groupe" />
+            <defaultProductDetailLevel id="20" name="groupe\annonceur" />
+            <defaultProductDetailLevel id="10" name="annonceur" />
+            <defaultProductDetailLevel id="18" name="annonceur\produit" />
+            <defaultProductDetailLevel id="21" name="produit" />
+          </defaultProductDetailLevels>
+          <allowedProductLevelItems>
+            <allowedProductLevelItem id="11" name="Famille"/>
+            <allowedProductLevelItem id="12" name="Classe"/>
+            <allowedProductLevelItem id="13" name="Groupe"/>
+            <allowedProductLevelItem id="14" name="Variete"/>
+            <allowedProductLevelItem id="10" name="Produit"/>
+            <allowedProductLevelItem id="9" name="Marque"/>
+            <!--<allowedProductLevelItem id="7" name="Groupe de société"/>-->
+            <allowedProductLevelItem id="8" name="Annonceur"/>
+          </allowedProductLevelItems>
+        </ProductDetailLevel>
+        <selections>
+          <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected"/>
+          <selection id="4" name="Date" showLink="true" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected" />
+        </selections>
+        <results>
+          <page id="0" resultid="65" name="Les nouvelles créations" traductioncode="2557" url="/Private/Results/NewCreativesResults.aspx" rawExcelUrl="/Private/Results/RawExcel/NewCreativesResults.aspx" printExcelUrl="/Private/Results/Excel/NewCreativesResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/Default.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="9" name="Competitor Media Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="20" name="Generic Product Level Detail"/>
+              <detailSelection id="10" name="Inset selected"/>
+            </detailSelections>
+          </page>
+        </results>
+      </module>
+    </moduleGroup>
+
+  </moduleGroups>
 </configuration>

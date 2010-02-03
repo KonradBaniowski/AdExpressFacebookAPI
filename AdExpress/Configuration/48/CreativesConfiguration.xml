@@ -2,7 +2,7 @@
 <configuration>
   <vehicleGroups>
     <!--Press-->
-    <vehicle id="1"   name="presse">
+    <vehicle id="3"   name="presse">
       <detailColumns>
         <detailColumn id="11">
           <allowedModules>
@@ -28,7 +28,7 @@
       </detailColumns>
     </vehicle>
     <!--TV-->
-    <vehicle id="3"   name="télévision" >
+    <vehicle id="1"   name="télévision" >
       <detailColumns>
         <detailColumn id="13">
           <allowedModules>
@@ -50,6 +50,31 @@
             <allowedModule name="Analyse Plan Média" privilegecode="196"/>
             <allowedModule name="Present/Absent" privilegecode="278"/>
             <allowedModule name="Lost/Won" privilegecode="197"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+    </vehicle>
+    <vehicle id="8"   name="AdNetTrack">
+      <detailColumns>
+        <detailColumn id="17">
+          <allowedModules>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="Present/Absent" privilegecode="278"/>
+            <allowedModule name="Lost/Won" privilegecode="197"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+            <allowedModule name="New banners" privilegecode="4369"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+    </vehicle>
+    <vehicle id="7"   name="Internet">
+      <detailColumns>
+        <detailColumn id="25">
+          <allowedModules>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="present/absent" privilegecode="278"/>
+            <allowedModule name="lost/won" privilegecode="197"/>
             <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
           </allowedModules>
         </detailColumn>

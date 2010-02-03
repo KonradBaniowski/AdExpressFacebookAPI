@@ -10,7 +10,7 @@
   <flag id="221" description="Accéder aux versions"/>
   <flag id="226" description="Accès détail Produit (Plan media)"/>
   <flag id="231" description="Accéder aux créations Internet"/>
-  <flag id="236" description="Accès plan media AdNetTrack"/>
+  <!--<flag id="236" description="Accès plan media AdNetTrack"/>-->
   <flag id="241" description="Accéder aux créations TV"/>
   <flag id="242" description="Accéder aux créations Radio"/>
   <flag id="243" description="Accéder aux créations Presse"/>

@@ -282,6 +282,12 @@ namespace TNS.AdExpressI.Portofolio.Poland.Engines {
 					nbLines = 9;					
 					if (investment != null && investment.Length > 0) nbLines++;
 					break;
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
+                    nbLines = 8;
+                    if (investment != null && investment.Length > 0) nbLines++;
+                    break;
                 default:
                     throw (new PortofolioException("Vehicle unknown"));
             }
