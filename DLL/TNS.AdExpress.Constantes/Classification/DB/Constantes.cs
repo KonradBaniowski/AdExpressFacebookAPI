@@ -155,7 +155,45 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
             /// <summary>
             /// Evaliant mobile
             /// </summary>
-            magazine = 17
+            magazine = 17,
+            /// <summary>
+            /// Radio General
+            /// </summary>
+            radioGeneral = 18,
+            /// <summary>
+            /// Radio Sponsorship
+            /// </summary>
+            radioSponsorship = 19,
+            /// <summary>
+            /// Radio Music
+            /// </summary>
+            radioMusic = 20,
+            /// <summary>
+            /// Television General
+            /// </summary>
+            tvGeneral = 21,
+            /// <summary>
+            /// Television SponsorShip
+            /// </summary>
+            tvSponsorship = 22,
+            /// <summary>
+            /// Television Announces
+            /// </summary>
+            tvAnnounces = 23,
+            /// <summary>
+            /// Television non Terrestrials
+            /// </summary>
+            tvNonTerrestrials = 24,
+            /// <summary>
+            /// inDoor
+            /// </summary>
+            indoor = 25,
+            /// <summary>
+            /// Television Niche Channels
+            /// </summary>
+            tvNicheChannels = 26
+            /// <summary>
+
 		}
 	}
 	#endregion

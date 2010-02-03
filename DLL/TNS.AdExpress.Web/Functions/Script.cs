@@ -2004,48 +2004,46 @@ namespace TNS.AdExpress.Web.Functions{
 		/// <param name="weekID">ID du Contrôle des périodes hebdomadaires</param>
 		/// <param name="cumulID">ID du Contrôle des périodes cumulée</param>
 		/// <returns>script choix d'une période</returns>
-		public static string SelectPeriod(string monthID,string weekID,string cumulID){
-			System.Text.StringBuilder script=new System.Text.StringBuilder(1000);
+        public static string SelectPeriod(string monthID, string weekID, string cumulID)
+        {
+            System.Text.StringBuilder script = new System.Text.StringBuilder(1000);
 
-			script.Append("\n<script language=\"JavaScript\" type=\"text/JavaScript\">");
-			script.Append("\n\t function SelectPeriod(controlID){");
-			script.Append("\n\t\t  switch(controlID)");
-				script.Append("\n\t\t\t {");
-					//Période mensuelle
-					script.Append("\n\t\t\t\t case '"+monthID+"' :");
-					script.Append("\n\t\t\t\t document.forms[0]."+weekID+".options[0].selected=true;");										
-					script.Append("\n\t\t\t\t document.forms[0]."+cumulID+".checked=false;");
-//			script.Append("\n\t\t\t\t document.forms[0]."+cumulID+".removeAttribute('disabled');");
-//			script.Append("\n\t\t\t\t document.forms[0]."+cumulID+".parentElement.removeAttribute('disabled');");
-					script.Append("\n\t\t\t\t break;");
-					//Période hebdomadaire
-					script.Append("\n\t\t\t\t case '"+weekID+"' :");
-					script.Append("\n\t\t\t\t document.forms[0]."+monthID+".options[0].selected=true;");														
-					script.Append("\n\t\t\t\t document.forms[0]."+cumulID+".checked=false;");
-//			script.Append("\n\t\t\t\t document.forms[0]."+cumulID+".removeAttribute('disabled');");
-//			script.Append("\n\t\t\t\t document.forms[0]."+cumulID+".parentElement.removeAttribute('disabled');");
-					script.Append("\n\t\t\t\t break;");
-					//Période cumulée
-					script.Append("\n\t\t\t\t case '"+cumulID+"' :");
-					script.Append("\n\t\t\t\t document.forms[0]."+monthID+".options[0].selected=true;");
-					script.Append("\n\t\t\t\t document.forms[0]."+weekID+".options[0].selected=true;");
-//					script.Append("\n\t\t\t\t document.forms[0]."+cumulID+".disabled=true;");
-//					script.Append("\n\t\t\t\t if(document.getElementById("+cumulID+").getElementsByTagName(\'input\')[0].checked==1){document.getElementById("+cumulID+").getElementsByTagName(\'input\')[0].checked=0;}");
-//					script.Append("\n\t\t\t\t else {document.getElementById("+cumulID+").getElementsByTagName(\'input\')[0].checked==1;}");
-					script.Append("\n\t\t\t\t break;");
-//					script.Append("\n\t\t\t\t case 'Form2' :");
-//					script.Append("\n\t\t\t\t default : ");	
-//					//script.Append("\n\t\t\t\t if(document.forms[0]."+monthID+".options[0].selected && !document.forms[0]."+cumulID+".checked && document.forms[0]."+weekID+".options[0].selected){ ");
-//					script.Append("\n\t\t\t\t alert('Il est nécessaire de sélectionner une période pour valider!'); ");
-//					script.Append("\n\t\t\t\t return false; ");		
-//					//script.Append("\n\t\t\t\t } ");
-//					script.Append("\n\t\t\t\t break;");
-				script.Append("\n\t\t\t }");					
-			script.Append("\n\t\t }");
-			script.Append("\n</script>");
+            script.Append("\n<script language=\"JavaScript\" type=\"text/JavaScript\">");
+            script.Append("\n\t function SelectPeriod(controlID){");
+            script.Append("\n\t\t  switch(controlID)");
+            script.Append("\n\t\t\t {");
+            //Période mensuelle
+            if (monthID != null && monthID.Length > 0)
+            {
+                script.Append("\n\t\t\t\t case '" + monthID + "' :");
+                if (weekID != null && weekID.Length > 0) script.Append("\n\t\t\t\t document.forms[0]." + weekID + ".options[0].selected=true;");
+                if (cumulID != null && cumulID.Length > 0) script.Append("\n\t\t\t\t document.forms[0]." + cumulID + ".checked=false;");
+                script.Append("\n\t\t\t\t break;");
+            }
+            //Période hebdomadaire
+            if (weekID != null && weekID.Length > 0)
+            {
+                script.Append("\n\t\t\t\t case '" + weekID + "' :");
+                if (monthID != null && monthID.Length > 0) script.Append("\n\t\t\t\t document.forms[0]." + monthID + ".options[0].selected=true;");
+                if (cumulID != null && cumulID.Length > 0) script.Append("\n\t\t\t\t document.forms[0]." + cumulID + ".checked=false;");
+                script.Append("\n\t\t\t\t break;");
+            }
 
-			return script.ToString();
-		}
+            //Période cumulée
+            if (cumulID != null && cumulID.Length > 0)
+            {
+                script.Append("\n\t\t\t\t case '" + cumulID + "' :");
+                if (monthID != null && monthID.Length > 0) script.Append("\n\t\t\t\t document.forms[0]." + monthID + ".options[0].selected=true;");
+                if (weekID != null && weekID.Length > 0) script.Append("\n\t\t\t\t document.forms[0]." + weekID + ".options[0].selected=true;");
+                script.Append("\n\t\t\t\t break;");
+            }
+
+            script.Append("\n\t\t\t }");
+            script.Append("\n\t\t }");
+            script.Append("\n</script>");
+
+            return script.ToString();
+        }
 		#endregion
 
 		#region Méthodes interne

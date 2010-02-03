@@ -17,7 +17,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 namespace TNS.AdExpressI.Trends.DAL {
 
     /// <summary>
-    /// 
+    /// Trends Report DAL
     /// </summary>
     public interface ITrendsDAL {
 
@@ -27,10 +27,8 @@ namespace TNS.AdExpressI.Trends.DAL {
         /// <returns>
         /// DataSet Containing the following tables
         /// 
-        /// Tables[0] -> DataTable for the Total  (Media Type level)
-        /// Tables[1] -> DataTable for the second (Media Category level)
-        /// Tables[3] -> DataTable for the third  (Media Category level)
-        /// </returns>
+        /// Tables["TOTAL"] -> DataTable for the Total  (Media Type level) 
+        /// Tables["Levels"] -> DataTable for the levels  (Media Category level\Media Vehicle level)
         DataSet GetData();
     }
 }

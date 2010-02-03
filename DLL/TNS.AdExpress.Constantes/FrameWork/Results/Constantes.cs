@@ -1869,6 +1869,17 @@ namespace TNS.AdExpress.Constantes.FrameWork.Results{
 		public const int NBRE_COLUMN_RADIO_TV=11;
 
 		#endregion
+
+        public enum DateOpeningOption
+        {   ///Cumul
+            yearToDate = 0,
+
+            //Monthly
+            monthly = 1,
+
+            //Weekly
+            weekly
+        }
 	}
 	
 	#endregion

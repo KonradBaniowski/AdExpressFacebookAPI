@@ -3353,7 +3353,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Date DataAccess
             /// </summary>
-            dateDAL = 5
+            dateDAL = 5,
+            /// <summary>
+            /// Source provider layer
+            /// </summary>
+            sourceProvider = 6
 		}
 	}
 

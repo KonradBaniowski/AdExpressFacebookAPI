@@ -92,6 +92,20 @@ namespace TNS.AdExpress.Domain.Classification {
 		/// Allowed universe levels
 		/// </summary>
 		private List<long> _allowedUniverseLevels = new List<long>();
+
+        /// <summary>
+        /// Trends Media selection default detail level
+        /// </summary>
+        private TNS.AdExpress.Domain.Level.GenericDetailLevel _trendsDefaultMediaSelectionDetailLevel = null;
+        /// <summary>
+        /// Determine if show trends weekly selection
+        /// </summary>
+        private bool _showTrendsWeeklySelection = false;
+
+        /// <summary>
+        /// Determine if show trends monthly selection
+        /// </summary>
+        private bool _showTrendsMonthlySelection = false;
         #endregion
 
         #region Constructor
@@ -338,6 +352,15 @@ namespace TNS.AdExpress.Domain.Classification {
 			get { return _defaultMediaSelectionDetailLevel; }
 			set { _defaultMediaSelectionDetailLevel = value; }
 		}
+        /// <summary>
+        /// Get /Set Trends Media selection default detail level
+        /// <remarks>Used in generic component</remarks>
+        /// </summary>
+        public TNS.AdExpress.Domain.Level.GenericDetailLevel TrendsDefaultMediaSelectionDetailLevel
+        {
+            get { return _trendsDefaultMediaSelectionDetailLevel; }
+            set { _trendsDefaultMediaSelectionDetailLevel = value; }
+        }
 			 /// <summary>
         /// Get auto promo authorization
         /// </summary>
@@ -354,6 +377,22 @@ namespace TNS.AdExpress.Domain.Classification {
 			get { return _allowedUniverseLevels; }
 			set { _allowedUniverseLevels = value; }
 		}
+        /// <summary>
+        /// Get if Show Trends Monthly Selection 
+        /// </summary>
+        public bool ShowTrendsMonthlySelection
+        {
+            get { return _showTrendsMonthlySelection; }
+            set { _showTrendsMonthlySelection = value; }
+        }
+        /// <summary>
+        /// Get if Show Trends weekly Selection 
+        /// </summary>
+        public bool ShowTrendsWeeklySelection
+        {
+            get { return _showTrendsWeeklySelection; }
+            set { _showTrendsWeeklySelection = value; }
+        }
         #endregion
 
         #region Public Methods

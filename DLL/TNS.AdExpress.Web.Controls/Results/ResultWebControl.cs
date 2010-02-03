@@ -2316,6 +2316,14 @@ namespace TNS.AdExpress.Web.Controls.Results{
                     data = productClassLayer.GetGenericProductClassReport();
 					if (data != null && data.LinesNumber > 0) data.Sort(ResultTable.SortOrder.DESC, 2);
                     break;
+                case WebConstantes.Module.Name.TENDACES:
+
+                    if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Trends"));
+                    param = new object[1];
+                    param[0] = customerWebSession;
+                    TNS.AdExpressI.Trends.ITrends trendsClassLayer = (TNS.AdExpressI.Trends.ITrends)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                    data = trendsClassLayer.GetResult();
+                    break;
                 default:
 					return null;
 			}

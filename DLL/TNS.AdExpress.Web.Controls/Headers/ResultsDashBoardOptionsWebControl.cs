@@ -67,7 +67,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// <summary>
 		/// Checkbox de cumul de la période
 		/// </summary>
-		protected System.Web.UI.WebControls.CheckBox CumulPeriodCheckBox;
+        public System.Web.UI.WebControls.CheckBox CumulPeriodCheckBox;
 		
 		/// <summary>
 		/// Choix du mois pour un affichage mensuel.
@@ -883,10 +883,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				if(customerWebSession.DetailPeriod == Constantes.Web.CustomerSessions.Period.DisplayLevel.yearly)
 				isCumulPeriodChecked=true;			
 				CumulPeriodCheckBox.Checked=isCumulPeriodChecked;						
-				Controls.Add(CumulPeriodCheckBox);
-				#region Script
-				if (!this.Page.ClientScript.IsClientScriptBlockRegistered("SelectPeriod"))this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"OpenCreationCompetitorAlert",WebFunctions.Script.SelectPeriod("ResultsDateListWebControl1","ResultsDateListWebControl2","_cumulPeriodCheckBox"));						
-				#endregion
+				Controls.Add(CumulPeriodCheckBox);				
 			}
 
 		

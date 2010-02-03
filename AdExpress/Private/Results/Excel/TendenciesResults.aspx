@@ -1,8 +1,9 @@
 <%@ Import Namespace="System.Data" %>
 <%@ Page language="c#" Inherits="AdExpress.Private.Results.Excel.TendenciesResults" CodeFile="TendenciesResults.aspx.cs" %>
+<%@ Register TagPrefix="cc1" Namespace="TNS.AdExpress.Web.Controls.Results" Assembly="TNS.AdExpress.Web.Controls" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head runat="server">
+	<head id="Head1" runat="server">
 		<title>AdExpress</title>
 		<meta http-equiv="Content-Type" content="application/vnd.ms-excel;" />
 		<meta name="GENERATOR" Content="Microsoft Visual Studio .NET 7.1" />
@@ -16,7 +17,9 @@
 	</head>
 	<body>
 		<form id="Form1" method="post" runat="server">
-			<%=result%>
+				<cc1:ResultWebControl id="_resultWebControl" runat="server"  
+											AjaxProTimeOut="120" OutputType="excel" 
+											SkinID="PresentAbsentExcelResult"></cc1:ResultWebControl>
 		</form>
 	</body>
 </html>

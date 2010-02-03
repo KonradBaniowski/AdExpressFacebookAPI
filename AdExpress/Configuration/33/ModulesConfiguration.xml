@@ -995,6 +995,8 @@
       <!--******************************************      Modules Tendances                   *****************************************-->
       <module name="Tendances" privilegecode="450" traductioncode="2178" moduleCategoryId="6" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2207" descriptionImageName="/Images/Common/Infobulle/Tendances.png">
         <DataAccessLayer name="Default Trends data access layers" assemblyName="TNS.AdExpressI.Trends.DAL.Default.dll" class="TNS.AdExpressI.Trends.DAL.Default.TrendsDAL"/>
+        <RulesLayer name="Default Trends rules layers" assemblyName="TNS.AdExpressI.Trends.Default.dll" class="TNS.AdExpressI.Trends.Default.Trends"/>
+
         <ModuleAllowedMediaUniverse initFromBaal="true" baalId="345">
         </ModuleAllowedMediaUniverse>
         <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
@@ -1004,7 +1006,7 @@
         <results>
           <page id="0" resultid="39" name="Résultats" traductioncode="750" url="/Private/Results/TendenciesResult.aspx" printExcelUrl="/Private/Results/Excel/TendenciesResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/TendenciesResultHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
-              <allowedUnit>euro</allowedUnit>
+              <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>insertion</allowedUnit>
               <allowedUnit>duration</allowedUnit>

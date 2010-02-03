@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -91,9 +91,12 @@
     <Compile Include="Classification\VehiclesInformation.cs" />
     <Compile Include="Exceptions\ModulesListXLException.cs" />
     <Compile Include="Exceptions\ResultPageInformationException.cs" />
+    <Compile Include="Exceptions\TrendsXLException.cs" />
     <Compile Include="Exceptions\VehiclesInformationXLException.cs" />
     <Compile Include="Exceptions\InfoNewsXLException.cs" />
     <Compile Include="Layers\CoreLayer.cs" />
+    <Compile Include="ModulesDescritpion\Trends.cs" />
+    <Compile Include="ModulesDescritpion\TrendsDateOpeningOption.cs" />
     <Compile Include="Results\DundasConfiguration.cs" />
     <Compile Include="Results\InfoNews.cs" />
     <Compile Include="Results\InfoNewsItem.cs" />
@@ -215,6 +218,7 @@
     <Compile Include="XmlLoader\PortofolioDetailMediaColumnsXL.cs" />
     <Compile Include="XmlLoader\RightOptionsXL.cs" />
     <Compile Include="XmlLoader\ThemeXL.cs" />
+    <Compile Include="XmlLoader\TrendsXL.cs" />
     <Compile Include="XmlLoader\UnitsDescriptionXL.cs" />
     <Compile Include="XmlLoader\VehiclesInformationXL.cs" />
     <Compile Include="XmlLoader\WebLanguagesXL.cs" />

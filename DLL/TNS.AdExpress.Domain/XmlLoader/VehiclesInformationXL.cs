@@ -39,7 +39,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 			List<DetailLevelItemInformation.Levels> allowedRecapMediaLevelItemsList = new List<DetailLevelItemInformation.Levels>();
 			List<DetailLevelItemInformation> allowedMediaSelectionLevelItemsList = new List<DetailLevelItemInformation>();
 			List<TNS.AdExpress.Domain.Level.GenericDetailLevel> defaultMediaSelectionDetailLevels = new List<TNS.AdExpress.Domain.Level.GenericDetailLevel>();
-			TNS.AdExpress.Domain.Level.GenericDetailLevel defaultMediaSelectionDetailLevel = null;
+            TNS.AdExpress.Domain.Level.GenericDetailLevel defaultMediaSelectionDetailLevel = null, trendsDefaultMediaSelectionDetailLevel = null, tempL = null; 
 			List<long> allowedUniverseLevels = new List<long>();
             XmlTextReader reader = null;
             XmlReader subtree = null;
@@ -71,6 +71,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 									vhInfo.AllowedMediaSelectionLevelItemsList = allowedMediaSelectionLevelItemsList;
 									vhInfo.DefaultMediaSelectionDetailLevels = defaultMediaSelectionDetailLevels;
 									vhInfo.DefaultMediaSelectionDetailLevel = defaultMediaSelectionDetailLevel;
+                                    vhInfo.TrendsDefaultMediaSelectionDetailLevel = trendsDefaultMediaSelectionDetailLevel;
 									vhInfo.Autopromo = autopromo;
 									vhInfo.AllowedUniverseLevels = allowedUniverseLevels;
                                     list.Add(vhInfo);
@@ -85,6 +86,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 									allowedMediaSelectionLevelItemsList = new List<DetailLevelItemInformation>();
 									defaultMediaSelectionDetailLevels = new List<TNS.AdExpress.Domain.Level.GenericDetailLevel>();
 									defaultMediaSelectionDetailLevel = null;
+                                    trendsDefaultMediaSelectionDetailLevel = null;
 									autopromo = false;
 									allowedUniverseLevels = new List<long>();
                                 }
@@ -152,6 +154,11 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 								allowedRecapMediaLevelItemsList.Add((DetailLevelItemInformation.Levels)Enum.Parse(typeof(DetailLevelItemInformation.Levels), readString, true));
 								break;
 							case "defaultMediaSelectionDetailLevels":
+                                if (reader.GetAttribute("trendsDefaultMediaSelectionDetailLevel") != null && reader.GetAttribute("trendsDefaultMediaSelectionDetailLevel").Length > 0)
+                                {
+                                    trendsDefaultMediaSelectionDetailLevel = DetailLevelsInformation.Get(int.Parse(reader.GetAttribute("trendsDefaultMediaSelectionDetailLevel")));
+                                    trendsDefaultMediaSelectionDetailLevel.FromControlItem = TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels;
+                                }
 								if (reader.GetAttribute("baseDefaultMediaSelectionDetailLevel") == null || reader.GetAttribute("baseDefaultMediaSelectionDetailLevel").Length == 0) throw (new InvalidXmlValueException("Invalid baseDefaultMediaSelectionDetailLevel attribute parameter"));
 								defaultMediaSelectionDetailLevel = DetailLevelsInformation.Get(int.Parse(reader.GetAttribute("baseDefaultMediaSelectionDetailLevel")));
 								defaultMediaSelectionDetailLevel.FromControlItem = TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels;
@@ -177,6 +184,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 					vhInfo.AllowedMediaSelectionLevelItemsList = allowedMediaSelectionLevelItemsList;
 					vhInfo.DefaultMediaSelectionDetailLevels = defaultMediaSelectionDetailLevels;
 					vhInfo.DefaultMediaSelectionDetailLevel = defaultMediaSelectionDetailLevel;
+                    vhInfo.TrendsDefaultMediaSelectionDetailLevel = trendsDefaultMediaSelectionDetailLevel;
 					vhInfo.Autopromo = autopromo;
 					vhInfo.AllowedUniverseLevels = allowedUniverseLevels;
                     list.Add(vhInfo);

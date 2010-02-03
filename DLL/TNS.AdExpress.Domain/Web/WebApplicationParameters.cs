@@ -15,6 +15,8 @@ using TNS.AdExpress.Domain.Web.Core;
 using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Constantes.Web;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.ModulesDescritpion;
+using TNS.AdExpress.Constantes.Classification.DB;
 
 namespace TNS.AdExpress.Domain.Web {
 
@@ -117,6 +119,8 @@ namespace TNS.AdExpress.Domain.Web {
 		/// True if must use right defaut connection
 		/// </summary>
 		protected static bool _useRightDefaultConnection = false;
+
+        protected static Trends _trends = null;
         #endregion
         
         #region Contructeur
@@ -148,6 +152,7 @@ namespace TNS.AdExpress.Domain.Web {
             _dundas = new DundasConfiguration(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.DUNDAS_CONFIGURATION_FILENAME));
 			_infoNewsInformations = new InfoNews(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.INFO_NEWS_FILENAME));
 			_coreLayers = CoreLayersXL.Load(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.CORE_LAYERS_CONFIGURATION_FILENAME));
+            _trends = new Trends(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.TRENDS_FILENAME));
 			
         }
         #endregion
@@ -306,6 +311,14 @@ namespace TNS.AdExpress.Domain.Web {
 				_useRightDefaultConnection = value;
 			}
 		}
+
+        /// <summary>
+        /// Get trends information
+        /// </summary>
+        public static Trends TrendsInformations
+        {
+            get { return _trends; }
+        }
         #endregion
 
     }

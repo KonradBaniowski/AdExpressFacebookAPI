@@ -139,5 +139,11 @@ namespace TNS.AdExpress.Constantes.Web {
         /// </summary>
         public const string ALERTE_CONFIGURATION = @"PluginAlerteConfiguration.xml";
 
+        /// <summary>
+        /// Trends configuration file
+        /// </summary>
+        public const string TRENDS_FILENAME = @"Trends.xml";
+
+
     }
 }

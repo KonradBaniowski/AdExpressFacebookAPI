@@ -584,6 +584,10 @@
       <Project>{638BEFDD-6370-4AEA-8943-DD6961FE3FDE}</Project>
       <Name>TNS.AdExpressI.Portofolio.Default</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.Trends\TNS.AdExpressI.Trends.csproj">
+      <Project>{B2BE1C87-8341-462E-907A-F2EDAA87F819}</Project>
+      <Name>TNS.AdExpressI.Trends</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpress\TNS.AdExpress.csproj">
       <Project>{6E75699B-838C-4534-99F7-D4C3E768CD57}</Project>
       <Name>TNS.AdExpress</Name>

@@ -2735,6 +2735,25 @@ namespace TNS.AdExpress.Web.Core.Utilities
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="periodType"></param>
+        /// <returns></returns>
+        public static Table GetTrendTableInformation(WebConstantes.CustomerSessions.Period.DisplayLevel periodType)
+        {
+            switch (periodType)
+            {
+                case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
+                case WebConstantes.CustomerSessions.Period.DisplayLevel.yearly:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.tendencyMonth));
+                case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.tendencyWeek));
+                default:
+                    throw (new SQLGeneratorException("Le détails période sélectionné est incorrect pour le choix de la table"));
+            }
+        }
+
+        /// <summary>
         /// Get table description for trends total according to the period selected by the client
         /// </summary>
         /// <param name="periodType">Period type selected</param>
