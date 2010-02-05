@@ -1263,6 +1263,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 							CheckProductDetailLevelAccess() &&
 							// Droit sur les groupe de société
 							_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG) &&
+                            _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_HOLDING_COMPANY) &&
 							// Accès si sélection en groupe de société, annonceur, marque, produit, groupe et variété
 							(_customerWebSession.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.PRODUCT, AccessType.includes) ||
 							_customerWebSession.PrincipalProductUniverses[0].ContainsLevel(TNSClassificationLevels.BRAND, AccessType.includes) ||
