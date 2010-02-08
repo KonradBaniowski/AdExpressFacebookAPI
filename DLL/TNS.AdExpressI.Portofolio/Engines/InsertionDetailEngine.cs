@@ -93,7 +93,6 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			Assembly assembly;
 			Type type;
 			bool allPeriod = true;
-			bool isDigitalTV = false;
             VehicleInformation vehicle = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 			#endregion
 
@@ -107,9 +106,6 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			parameters[5] = _adBreak;
             if ((_adBreak != null && _adBreak.Length > 0) || (_dayOfWeek != null && _dayOfWeek.Length > 0)) allPeriod = false;
 			IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
-			string idTNTCategory = TNS.AdExpress.Domain.Lists.GetIdList(WebCst.GroupList.ID.category, WebCst.GroupList.Type.digitalTv);
-			if (idTNTCategory != null && idTNTCategory.Length > 0)
-				isDigitalTV = portofolioDAL.IsMediaBelongToCategory(_idMedia, idTNTCategory);
 
 			#region Product detail level (Generic)
 			// Initialisation to product
@@ -209,7 +205,6 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 									headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
 								break;
 							case GenericColumnItemInformation.Columns.topDiffusion:
-								if (!isDigitalTV)
 									headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
 								break;
 							case GenericColumnItemInformation.Columns.product:
@@ -339,13 +334,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 										break;
 									case GenericColumnItemInformation.Columns.topDiffusion:
 									case GenericColumnItemInformation.Columns.idTopDiffusion:
-										if (!isDigitalTV) {
-											if (row[Column.DataBaseField].ToString().Length > 0)
-												tab[iCurLine, iCurColumn++] = new TNS.FrameWork.WebResultUI.CellAiredTime(Convert.ToDouble(row[Column.DataBaseField]));
-											else
-												tab[iCurLine, iCurColumn++] = new TNS.FrameWork.WebResultUI.CellAiredTime(0);
-                                            curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
-										}
+										if (row[Column.DataBaseField].ToString().Length > 0)
+											tab[iCurLine, iCurColumn++] = new TNS.FrameWork.WebResultUI.CellAiredTime(Convert.ToDouble(row[Column.DataBaseField]));
+										else
+											tab[iCurLine, iCurColumn++] = new TNS.FrameWork.WebResultUI.CellAiredTime(0);
+                                        curCell.StringFormat = string.Format("{{0:{0}}}", Column.StringFormat);
 										break;
 									case GenericColumnItemInformation.Columns.product:
                                         if (showProduct && WebApplicationParameters.GenericColumnsInformation.IsVisible(vehicle.DetailColumnId, Column.Id))
