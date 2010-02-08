@@ -71,10 +71,6 @@ namespace TNS.AdExpressI.Insertions
         /// List of media to test for creative acces (press specific)
         /// </summary>
         protected string[] _mediaList = null;
-        /// <summary>
-        /// List of category to test for top diffusion rule
-        /// </summary>
-        protected string[] _topDiffCategory = TNS.AdExpress.Domain.Lists.GetIdList(CstWeb.GroupList.ID.category, CstWeb.GroupList.Type.digitalTv).Split(new char[1]{','}, StringSplitOptions.RemoveEmptyEntries);
         #endregion
 
         #region Constructor
@@ -545,10 +541,6 @@ namespace TNS.AdExpressI.Insertions
 								catch (Exception e) {
 									idCat = "";
 								}
-                                if (Array.IndexOf(_topDiffCategory, idCat) >= 0)
-                                {
-                                    val = 0;
-                                }
                             }
                             break;
                         default:
