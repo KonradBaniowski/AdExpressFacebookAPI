@@ -507,14 +507,13 @@ namespace TNS.AdExpressI.MediaSchedule {
             //ds = GenericMediaScheduleDataAccess.GetData(_session, _period);
             object[] param = null;
             if(_module.CountryDataAccessLayer == null) throw (new NullReferenceException("Data access layer is null for the Media Schedule result"));
-            if (!_isPDFReport && VehiclesInformation.Contains(_vehicleId) && (VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.adnettrack || VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.internet))
+            if (IsPlanMediaAdnettrack())
             {
                 param = new object[3];
                 param[0] = _session;
                 param[1] = _period;
                 param[2] = _vehicleId;
                 IMediaScheduleResultDAL mediaScheduleDAL = (IMediaScheduleResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
-                detailLevel = _session.GenericAdNetTrackDetailLevel;
                 ds = mediaScheduleDAL.GetMediaScheduleAdNetTrackData();
             }
             else
@@ -523,9 +522,9 @@ namespace TNS.AdExpressI.MediaSchedule {
                 param[0] = _session;
                 param[1] = _period;
                 IMediaScheduleResultDAL mediaScheduleDAL = (IMediaScheduleResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
-                detailLevel = _session.GenericMediaDetailLevel;
                 ds = mediaScheduleDAL.GetMediaScheduleData();
             }
+            detailLevel = GetDetailsLevelSelected();
 
             if(ds == null || ds.Tables.Count == 0 || ds.Tables[0] == null) {
                 return (new object[0, 0]);
@@ -1611,14 +1610,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 string cssClasse = string.Empty;
                 string cssClasseNb = string.Empty;
                 GenericDetailLevel detailLevel = null;
-                if (!_isPDFReport && VehiclesInformation.Contains(_vehicleId) && (VehiclesInformation.DatabaseIdToEnum(_vehicleId) == CstDBClassif.Vehicles.names.adnettrack || VehiclesInformation.DatabaseIdToEnum(_vehicleId) == CstDBClassif.Vehicles.names.internet))
-                {
-                    detailLevel = _session.GenericAdNetTrackDetailLevel;
-                }
-                else
-                {
-                    detailLevel = _session.GenericMediaDetailLevel;
-                }
+                detailLevel = GetDetailsLevelSelected();
 
 
                 for(i = 1; i < nbline; i++) {
@@ -2616,6 +2608,7 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// </summary>
         /// <returns>True if access authorised</returns>
         protected virtual bool AllowVersions() {
+
             bool allow = false;
             foreach(VehicleInformation v in Vehicles) {
                 allow = allow || (v.ShowCreations && _session.CustomerLogin.ShowCreatives(v.Id));
@@ -2629,6 +2622,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 && (!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.internet))
                 && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE
                 && _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)
+                && !HasOnlyLevelAgency()
                 );
         }
         /// <summary>
@@ -2649,10 +2643,31 @@ namespace TNS.AdExpressI.MediaSchedule {
                 && (!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.internet))
                 && (_module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE || _session.DetailPeriod == CstWeb.CustomerSessions.Period.DisplayLevel.dayly)
                 && _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)
+                && !HasOnlyLevelAgency()
                 ;
         }
         #endregion
 
+        #region Agency
+
+        #region HasLevelAgency
+        /// <summary>
+        /// True if the level contains only Agency network or agency
+        /// </summary>
+        /// <returns>cqfd</returns>
+        private bool HasOnlyLevelAgency(){
+            GenericDetailLevel detailLevel = GetDetailsLevelSelected();
+            if (detailLevel == null) return false;
+            foreach (DetailLevelItemInformation.Levels currentLevel in detailLevel.LevelIds) {
+                if(currentLevel != DetailLevelItemInformation.Levels.agency
+                    && currentLevel != DetailLevelItemInformation.Levels.groupMediaAgency)
+                    return false;
+            }
+            return true;
+        }
+        #endregion
+
+        #region IsAgencyLevelType
         /// <summary>
         /// True if the level requested id Agency network or agency
         /// </summary>
@@ -2667,6 +2682,9 @@ namespace TNS.AdExpressI.MediaSchedule {
                )
             );
         }
+        #endregion
+
+        #endregion
 
         #region GetVehicles
         /// <summary>
@@ -2684,6 +2702,35 @@ namespace TNS.AdExpressI.MediaSchedule {
                 vs = new List<VehicleInformation>(Array.ConvertAll<string, VehicleInformation>(vehicles.Split(','), new Converter<string, VehicleInformation>(delegate(string str) { return VehiclesInformation.Get(Convert.ToInt64(str)); })));
             }
             return vs;
+        }
+        #endregion
+
+        #region GetDetailsLevelSelected
+        /// <summary>
+        /// Get Details level Selected (in WebSession)
+        /// </summary>
+        /// <returns></returns>
+        public GenericDetailLevel GetDetailsLevelSelected() {
+            if (IsPlanMediaAdnettrack()) {
+                return (_session.GenericAdNetTrackDetailLevel);
+            }
+            else {
+                return (_session.GenericMediaDetailLevel);
+            }
+        }
+        #endregion
+
+        #region IsPlanMediaAdnettrack
+        /// <summary>
+        /// Is Plan Media Adnettrack or not
+        /// </summary>
+        /// <returns>Is Plan Media Adnettrack or not</returns>
+        private bool IsPlanMediaAdnettrack() {
+            return (!_isPDFReport 
+                && VehiclesInformation.Contains(_vehicleId) 
+                && (VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.adnettrack 
+                    || VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.internet)
+                );
         }
         #endregion
 
