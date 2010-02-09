@@ -39,6 +39,7 @@ public partial class Private_Alerts_ShowAlert : TNS.AdExpress.Web.UI.PrivateWebP
             int idOccurrence = -1;
             int idAlert = -1;
             string stringIdOccurrence = Request.QueryString["idOcc"];
+            string idSession = "";
 
             // Loading alert data access layer
             DataAccessLayer layer = PluginConfiguration.GetDataAccessLayer(PluginDataAccessLayerName.Alert);
@@ -83,10 +84,12 @@ public partial class Private_Alerts_ShowAlert : TNS.AdExpress.Web.UI.PrivateWebP
 
 
                         TNS.AdExpress.Right CustomerLogin = _webSession.CustomerLogin;
+                         idSession = _webSession.IdSession;
                         _webSession = session;
                         _webSession.CustomerLogin = CustomerLogin;
                         _webSession.Source = _webSession.CustomerLogin.Source;
                         _siteLanguage = _webSession.SiteLanguage;
+                        _webSession.IdSession = idSession;
 
 
                         // Opening connection
