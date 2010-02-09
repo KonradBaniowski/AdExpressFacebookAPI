@@ -62,14 +62,21 @@ public partial class Private_Alerts_ShowAlert : TNS.AdExpress.Web.UI.PrivateWebP
 
                         if (_webSession == null){
                             TNS.AdExpress.Right newRight = new TNS.AdExpress.Right(session.CustomerLogin.Login, session.CustomerLogin.PassWord, session.SiteLanguage);
-                            if (!newRight.CanAccessToAdExpress()){
+                            if (!newRight.CanAccessToAdExpress())
+                            {
                                 //Redirect vers page index
                                 string redirectUrl = "/index.aspx?";
-                                if (idAlert >0 )
+                                if (idAlert > 0)
                                     redirectUrl += "idAlert=" + idAlert;
                                 if (stringIdOccurrence != null)
                                     redirectUrl += "&idOcc=" + stringIdOccurrence;
                                 HttpContext.Current.Response.Redirect(redirectUrl);
+                            }
+                            else
+                            {
+                                newRight.SetModuleRights();
+                                newRight.SetFlagsRights();
+                                newRight.SetRights();
                             }
                             _webSession = new WebSession(newRight);
                         }
