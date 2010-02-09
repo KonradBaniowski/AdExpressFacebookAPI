@@ -1703,8 +1703,8 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         break;
                                     }
                                     AppenLabelTotalPDM(data, t, i, cssClasse, cssClasseNb, j, string.Empty, labColSpan, fp, unit);
-                                    if(_allowVersion) {
-                                        if(i != TOTAL_LINE_INDEX) {
+                                    if (_allowVersion) {
+                                        if (i != TOTAL_LINE_INDEX && !IsAgencyLevelType(L1_COLUMN_INDEX)) {
                                             AppendCreativeLink(data, t, themeName, i, cssClasse, j);
                                         }
                                         else {
@@ -1713,7 +1713,7 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                                     }
                                     if(_allowInsertions) {
-                                        if(i != TOTAL_LINE_INDEX) {
+                                        if (i != TOTAL_LINE_INDEX && !IsAgencyLevelType(L1_COLUMN_INDEX)) {
                                             AppendInsertionLink(data, t, themeName, i, cssClasse, j);
                                         }
                                         else {
@@ -1734,10 +1734,12 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 if(data[i, j] != null) {
                                     AppenLabelTotalPDM(data, t, i, _style.CellLevelL2, _style.CellLevelL2Nb, j, "&nbsp;", labColSpan, fp, unit);
                                     if(_allowVersion) {
-                                        AppendCreativeLink(data, t, themeName, i, _style.CellLevelL2, j);
+                                        if(!IsAgencyLevelType(L2_COLUMN_INDEX))AppendCreativeLink(data, t, themeName, i, _style.CellLevelL2, j);
+                                        else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL2);
                                     }
                                     if(_allowInsertions) {
-                                        AppendInsertionLink(data, t, themeName, i, _style.CellLevelL2, j);
+                                        if (!IsAgencyLevelType(L2_COLUMN_INDEX))AppendInsertionLink(data, t, themeName, i, _style.CellLevelL2, j);
+                                        else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL2);
                                     }
 
                                     for(int k = 1; k <= nbColYear; k++) {
@@ -1753,10 +1755,12 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 if(data[i, j] != null) {
                                     AppenLabelTotalPDM(data, t, i, _style.CellLevelL3, _style.CellLevelL3Nb, j, "&nbsp;&nbsp;", labColSpan, fp, unit);
                                     if(_allowVersion) {
-                                        AppendCreativeLink(data, t, themeName, i, _style.CellLevelL3, j);
+                                        if (!IsAgencyLevelType(L3_COLUMN_INDEX)) AppendCreativeLink(data, t, themeName, i, _style.CellLevelL3, j);
+                                        else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL3);
                                     }
                                     if(_allowInsertions) {
-                                        AppendInsertionLink(data, t, themeName, i, _style.CellLevelL3, j);
+                                        if (!IsAgencyLevelType(L3_COLUMN_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL3, j);
+                                        else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL3);
                                     }
 
                                     for(int k = 1; k <= nbColYear; k++) {
@@ -1771,10 +1775,12 @@ namespace TNS.AdExpressI.MediaSchedule {
                             case L4_COLUMN_INDEX:
                                 AppenLabelTotalPDM(data, t, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, "&nbsp;&nbsp;&nbsp;", labColSpan, fp, unit);
                                 if(_allowVersion) {
-                                    AppendCreativeLink(data, t, themeName, i, _style.CellLevelL4, j);
+                                    if (!IsAgencyLevelType(L4_COLUMN_INDEX)) AppendCreativeLink(data, t, themeName, i, _style.CellLevelL4, j);
+                                    else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL4);
                                 }
                                 if(_allowInsertions) {
-                                    AppendInsertionLink(data, t, themeName, i, _style.CellLevelL4, j);
+                                    if (!IsAgencyLevelType(L4_COLUMN_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL4, j);
+                                    else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL4);
                                 }
 
                                 for(int k = 1; k <= nbColYear; k++) {
@@ -2646,6 +2652,21 @@ namespace TNS.AdExpressI.MediaSchedule {
                 ;
         }
         #endregion
+
+        /// <summary>
+        /// True if the level requested id Agency network or agency
+        /// </summary>
+        /// <param name="Level">level requested</param>
+        /// <returns>cqfd</returns>
+        private bool IsAgencyLevelType(int Level) {
+            return(
+                _session.GenericMediaDetailLevel.LevelIds.Count >Level &&
+                (
+               (TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels)_session.GenericMediaDetailLevel.LevelIds[Level] == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.groupMediaAgency || 
+               (TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels)_session.GenericMediaDetailLevel.LevelIds[Level] == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.agency
+               )
+            );
+        }
 
         #region GetVehicles
         /// <summary>
