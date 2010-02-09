@@ -59,34 +59,55 @@ public partial class Private_Alerts_ShowAlert : TNS.AdExpress.Web.UI.PrivateWebP
                         if (Request.QueryString["idSession"] != null)
                             session.IdSession = Request.QueryString["idSession"];
 
+
+                        if (_webSession == null){
+                            TNS.AdExpress.Right newRight = new TNS.AdExpress.Right(session.CustomerLogin.Login, session.CustomerLogin.PassWord, session.SiteLanguage);
+                            if (!newRight.CanAccessToAdExpress()){
+                                //Redirect vers page index
+                                string redirectUrl = "/index.aspx?";
+                                if (idAlert >0 )
+                                    redirectUrl += "idAlert=" + idAlert;
+                                if (stringIdOccurrence != null)
+                                    redirectUrl += "&idOcc=" + stringIdOccurrence;
+                                HttpContext.Current.Response.Redirect(redirectUrl);
+                            }
+                            _webSession = new WebSession(newRight);
+                        }
+
+
+                        TNS.AdExpress.Right CustomerLogin = _webSession.CustomerLogin;
                         _webSession = session;
-                        _siteLanguage = session.SiteLanguage;
+                        _webSession.CustomerLogin = CustomerLogin;
+                        _webSession.Source = _webSession.CustomerLogin.Source;
+                        _siteLanguage = _webSession.SiteLanguage;
 
 
                         // Opening connection
-                        session.Source.Open();
+                        _webSession.Source.Open();
 
-                        TNS.AdExpress.Domain.Web.Navigation.Module module = session.CustomerLogin.GetModule(session.CurrentModule);
-                        ResultPageInformation info = module.GetResultPageInformation(session.CurrentTab);
+                        TNS.AdExpress.Domain.Web.Navigation.Module module = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
+                        ResultPageInformation info = module.GetResultPageInformation(_webSession.CurrentTab);
 
                         // Updating session information
                         DateTime FirstDayNotEnable = DateTime.Now;
-                        if (session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.JUSTIFICATIFS_PRESSE)
-                            if (session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE) {
+                        if (_webSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.JUSTIFICATIFS_PRESSE)
+                            if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE)
+                            {
                                 try {
                                     int oldYear = 2000;
-                                    long selectedVehicle = ((LevelInformation)session.SelectionUniversMedia.FirstNode.Tag).ID;
-                                    FirstDayNotEnable = WebFunctions.Dates.GetFirstDayNotEnabled(session, selectedVehicle, oldYear, session.Source);
+                                    long selectedVehicle = ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID;
+                                    FirstDayNotEnable = WebFunctions.Dates.GetFirstDayNotEnabled(_webSession, selectedVehicle, oldYear, _webSession.Source);
                                 }
                                 catch { }
                             }
 
-                        switch (session.CurrentModule) {
+                        switch (_webSession.CurrentModule)
+                        {
                             case ModuleName.INDICATEUR:
                             case ModuleName.TABLEAU_DYNAMIQUE:
-                                session.PeriodType = CustomerSessions.Period.Type.dateToDateMonth;
-                                session.PeriodBeginningDate = occ.DateBeginStudy.ToString("yyyyMM");
-                                session.PeriodEndDate = occ.DateEndStudy.ToString("yyyyMM");
+                                _webSession.PeriodType = CustomerSessions.Period.Type.dateToDateMonth;
+                                _webSession.PeriodBeginningDate = occ.DateBeginStudy.ToString("yyyyMM");
+                                _webSession.PeriodEndDate = occ.DateEndStudy.ToString("yyyyMM");
                                 break;
                             case ModuleName.ANALYSE_PLAN_MEDIA:
                             case ModuleName.ANALYSE_DYNAMIQUE:
@@ -97,36 +118,37 @@ public partial class Private_Alerts_ShowAlert : TNS.AdExpress.Web.UI.PrivateWebP
                             case ModuleName.ANALYSE_DES_DISPOSITIFS:
                             case ModuleName.ANALYSE_DES_PROGRAMMES:
                             case ModuleName.NEW_CREATIVES:
-                                session.PeriodType = CustomerSessions.Period.Type.dateToDate;
-                                session.PeriodBeginningDate = occ.DateBeginStudy.ToString("yyyyMMdd");
-                                session.PeriodEndDate = occ.DateEndStudy.ToString("yyyyMMdd");
+                                _webSession.PeriodType = CustomerSessions.Period.Type.dateToDate;
+                                _webSession.PeriodBeginningDate = occ.DateBeginStudy.ToString("yyyyMMdd");
+                                _webSession.PeriodEndDate = occ.DateEndStudy.ToString("yyyyMMdd");
                                 break;
                             case ModuleName.BILAN_CAMPAGNE:
                             case ModuleName.DONNEES_DE_CADRAGE:
                                 TNS.FrameWork.Date.AtomicPeriodWeek dateBegin = new TNS.FrameWork.Date.AtomicPeriodWeek(occ.DateBeginStudy);
                                 TNS.FrameWork.Date.AtomicPeriodWeek dateEnd = new TNS.FrameWork.Date.AtomicPeriodWeek(occ.DateEndStudy);
-                                session.PeriodType = CustomerSessions.Period.Type.dateToDateWeek;
-                                session.PeriodBeginningDate = TNS.FrameWork.Date.DateString.AtomicPeriodWeekToYYYYWW(dateBegin);
-                                session.PeriodEndDate = TNS.FrameWork.Date.DateString.AtomicPeriodWeekToYYYYWW(dateEnd);
+                                _webSession.PeriodType = CustomerSessions.Period.Type.dateToDateWeek;
+                                _webSession.PeriodBeginningDate = TNS.FrameWork.Date.DateString.AtomicPeriodWeekToYYYYWW(dateBegin);
+                                _webSession.PeriodEndDate = TNS.FrameWork.Date.DateString.AtomicPeriodWeekToYYYYWW(dateEnd);
                                 break;
                         }
 
-                        switch (session.CurrentModule) {
+                        switch (_webSession.CurrentModule)
+                        {
                             case ModuleName.ANALYSE_DYNAMIQUE:
                             case ModuleName.ANALYSE_PLAN_MEDIA:
                             case ModuleName.ANALYSE_CONCURENTIELLE:
                             case ModuleName.ANALYSE_PORTEFEUILLE:
                             case ModuleName.NEW_CREATIVES:
                                 // Updated customer period (module use globalCalendar)
-                                session.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(occ.DateBeginStudy.ToString("yyyyMMdd"), occ.DateEndStudy.ToString("yyyyMMdd"),
-                                                                                                       session.ComparativeStudy, session.CustomerPeriodSelected.ComparativePeriodType,
-                                                                                                       session.CustomerPeriodSelected.PeriodDisponibilityType);
+                                _webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(occ.DateBeginStudy.ToString("yyyyMMdd"), occ.DateEndStudy.ToString("yyyyMMdd"),
+                                                                                                       _webSession.ComparativeStudy, _webSession.CustomerPeriodSelected.ComparativePeriodType,
+                                                                                                       _webSession.CustomerPeriodSelected.PeriodDisponibilityType);
                                 break;
                             default:
                                 break;
                         }
 
-                        session.Save();
+                        _webSession.Save();
 
                         // Adding an alert auto connect cookie
                         if (Request.Cookies[Cookies.AlertAutoConnectCookie] == null) {
@@ -135,7 +157,7 @@ public partial class Private_Alerts_ShowAlert : TNS.AdExpress.Web.UI.PrivateWebP
                             Response.Cookies.Add(autoReconnect);
                         }
 
-                        Response.Redirect(info.Url + "?idSession=" + session.IdSession.ToString());
+                        Response.Redirect(info.Url + "?idSession=" + _webSession.IdSession.ToString());
                     }
                 }
             }

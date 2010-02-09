@@ -203,6 +203,14 @@ namespace AdExpress{
 				Response.Write("</script>");
 
 			}
+            catch (System.Exception)
+            {
+                // Erreur Web
+                Response.Write("<script language=javascript>");
+                Response.Write("	alert(\"" + GestionWeb.GetWebWord(880, this._siteLanguage) + "\");");
+                Response.Write("</script>");
+
+            }
 		}
 		#endregion
 
