@@ -504,10 +504,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                     } 
                     break;
                 case RenderType.rawExcel:
-                    _data = GetResultTable(_customerWebSession);
-                    _data.CultureInfo = WebApplicationParameters.AllowedLanguages[_customerWebSession.SiteLanguage].CultureInfoExcel;
+                    _data = GetResultTable(_customerWebSession);                   
                     if (_data != null)
                     {
+                        _data.CultureInfo = WebApplicationParameters.AllowedLanguages[_customerWebSession.SiteLanguage].CultureInfoExcel;
                         string[] filters = new string[5] { "-1", "-1", "-1", "-1", "-1" };
                         string[] tmp = _idsFilter.Split(',');
                         Array.Copy(tmp, filters, tmp.Length);

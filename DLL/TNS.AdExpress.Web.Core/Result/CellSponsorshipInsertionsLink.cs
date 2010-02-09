@@ -27,8 +27,7 @@ namespace TNS.AdExpress.Web.Core.Result {
         public CellSponsorshipInsertionsLink(CellLevel cellLevel, WebSession webSession, GenericDetailLevel genericDetailLevel)
             : base(cellLevel, webSession, genericDetailLevel) {
             _linkRules=new SponsorshipShowLinkRules(cellLevel,webSession,genericDetailLevel);
-			//_link = "javascript:OpenCreation('{0}','{1},-1,1','');";
-            _link = "javascript:OpenInsertion('{0}','{1},-1,1','','-1','{2}');";
+            _link = "javascript:OpenInsertion('{0}','{1},1','','-1','{2}');";
         }
 		#endregion
 
@@ -39,8 +38,7 @@ namespace TNS.AdExpress.Web.Core.Result {
         /// <returns>Adresse du lien</returns>
         public override string GetLink() {
             if(_linkRules.ShowLink()) {
-                return (string.Format(_link, _webSession.IdSession, _linkRules.GetHierarchy(), _webSession.CurrentModule));
-                //return (string.Format(_link, _webSession.IdSession, _linkRules.GetHierarchy()));
+                return (string.Format(_link, _webSession.IdSession, _linkRules.GetHierarchy(), _webSession.CurrentModule));            
             }
             return ("");
         }
