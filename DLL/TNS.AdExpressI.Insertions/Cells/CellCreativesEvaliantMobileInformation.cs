@@ -330,7 +330,7 @@ namespace TNS.AdExpressI.Insertions.Cells
             if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG))
             {
 
-                if (_format == FLASH_ID)
+                if (_format.ToUpper() == FLASH_ID)
                 {
                     // Flash banner
                     output.AppendFormat("\n <OBJECT classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0\" width=\"{0}\" height=\"{1}\">",
