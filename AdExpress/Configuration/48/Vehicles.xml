@@ -353,7 +353,7 @@
         <!-- Support -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>
         <!-- Centre d'interet -->
-        <!--<allowedMediaLevelItem>slogan</allowedMediaLevelItem>-->
+        <allowedMediaLevelItem>slogan</allowedMediaLevelItem>
         <!-- Version -->
         <!--<allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>-->
         <!-- Groupe de société -->

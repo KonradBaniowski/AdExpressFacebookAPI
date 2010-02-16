@@ -590,7 +590,7 @@
           </page>-->
           <page id="6" resultid="13" name="Calendrier d'Actions" traductioncode="1474" url="/Private/Results/MediaPortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
             <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
-              <ResultVehicles list="1,2,3"/>
+              <ResultVehicles list="1,2,3,8"/>
             </ResultAllowedMediaUniverse>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
