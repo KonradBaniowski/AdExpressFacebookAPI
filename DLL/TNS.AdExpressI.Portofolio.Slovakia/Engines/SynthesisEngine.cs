@@ -1,9 +1,10 @@
 #region Information
-// Author: Y. R'kaina
-// Creation date: 29/08/2008
+// Author: A. Rousseau
+// Creation date: 17/02/2010
 // Modification date:
 #endregion
 
+#region Using
 using System;
 using System.Data;
 using System.Collections.Generic;
@@ -28,10 +29,14 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.WebResultUI;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Web;
+#endregion
 
-namespace TNS.AdExpressI.Portofolio.Finland.Engines {
-
-    public class SynthesisEngine : AbstractResult.SynthesisEngine{
+namespace TNS.AdExpressI.Portofolio.Slovakia.Engines {
+    /// <summary>
+    /// CzechRepublic synthesis engine
+    /// </summary>
+    public class SynthesisEngine : AbstractResult.SynthesisEngine {
 
         #region Constructor
         /// <summary>
@@ -47,30 +52,6 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
             _displayNewProductNumber = false;
         }
         #endregion
-
-        #region GetPeriod
-        /// <summary>
-        /// GetPeriod
-        /// </summary>
-        protected override void GetPeriod(bool isAlertModule, string firstDate, string lastDate, out DateTime dtFirstDate, out DateTime dtLastDate) {
-            dtFirstDate = DateTime.Today;
-            dtLastDate = DateTime.Today;
-
-            if (isAlertModule) {
-                if (firstDate.Length > 0) {
-                    dtFirstDate = new DateTime(int.Parse(firstDate.Substring(0, 4)), int.Parse(firstDate.Substring(4, 2)), int.Parse(firstDate.Substring(6, 2)));
-                }
-
-                if (lastDate.Length > 0) {
-                    dtLastDate = new DateTime(int.Parse(lastDate.Substring(0, 4)), int.Parse(lastDate.Substring(4, 2)), int.Parse(lastDate.Substring(6, 2)));
-                }
-            }
-            else {
-                dtFirstDate = WebFunctions.Dates.getPeriodBeginningDate(_periodBeginning, _webSession.PeriodType);
-                dtLastDate = WebFunctions.Dates.getPeriodEndDate(_periodEnd, _webSession.PeriodType);
-            }
-        }
-        #endregion		
 
     }
 }
