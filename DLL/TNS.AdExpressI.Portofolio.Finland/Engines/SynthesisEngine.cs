@@ -44,7 +44,6 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
         /// <param name="periodEnd">Period End</param>
         public SynthesisEngine(WebSession webSession, VehicleInformation vehicleInformation, Int64 idMedia, string periodBeginning, string periodEnd)
             : base(webSession, vehicleInformation, idMedia, periodBeginning, periodEnd) {
-            _displayNewProductNumber = false;
         }
         #endregion
 
@@ -71,6 +70,16 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
             }
         }
         #endregion		
+
+        #region Protected Methods Override
+        protected override List<ICell> ComputeDataProductNumberInTracking(bool isAlertModule) {
+            return null;
+        }
+
+        protected override List<ICell> ComputeDataProductNumberInVehicle(bool isAlertModule) {
+            return null;
+        }
+        #endregion
 
     }
 }

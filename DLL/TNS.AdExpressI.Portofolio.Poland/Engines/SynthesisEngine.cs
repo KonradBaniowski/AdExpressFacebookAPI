@@ -49,10 +49,31 @@ namespace TNS.AdExpressI.Portofolio.Poland.Engines {
         /// <param name="periodEnd">Period End</param>
         public SynthesisEngine(WebSession webSession, VehicleInformation vehicleInformation, Int64 idMedia, string periodBeginning, string periodEnd)
             : base(webSession, vehicleInformation, idMedia, periodBeginning, periodEnd) {
-            _displayTypeSale = false;
-            _displayNewProductNumber = false;
-            _displayPageNumber = false;
         }
         #endregion
+
+        #region Protected Methods Override
+        //_displayNewProductNumber
+        protected override List<ICell> ComputeDataProductNumberInTracking(bool isAlertModule) {
+            return null;
+        }
+
+        protected override List<ICell> ComputeDataProductNumberInVehicle(bool isAlertModule) {
+            return null;
+        }
+        //_displayTypeSale
+        protected override List<ICell> ComputeDataNetworkType(bool isAlertModule) {
+            return null;
+        }
+        //_displayPageNumber
+        protected override List<ICell> ComputeDataPageNumber() {
+            return null;
+        }
+
+        protected override List<ICell> ComputeDataPageRatio(double pageNumber, double adNumber) {
+            return null;
+        }
+        #endregion
+
     }
 }

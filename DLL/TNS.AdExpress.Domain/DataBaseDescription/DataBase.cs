@@ -825,6 +825,14 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// </summary>
         recapMagazineSegment = 175,
         /// <summary>
+        /// Data location magazine
+        /// </summary>
+        dataLocationMagazine = 176,
+        /// <summary>
+        /// Data location Newspaper
+        /// </summary>
+        dataLocationNewspaper = 177,
+        /// <summary>
         /// Alert description
         /// </summary>
         alert = 300,

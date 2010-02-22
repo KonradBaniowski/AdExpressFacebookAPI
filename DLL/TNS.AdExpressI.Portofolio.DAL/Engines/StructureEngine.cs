@@ -205,7 +205,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					#region Media selection
 					//Vehicle selection média (vehicle)
 
-					sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_vehicle = " + _vehicleInformation.Id.GetHashCode().ToString());
+					sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_vehicle = " + _vehicleInformation.DatabaseId.ToString());
 
 					//Media selection	
 					sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media = " + _idMedia.ToString());
@@ -420,7 +420,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				case PortofolioStructure.Ventilation.location:
 					return tableName
 					+ " , " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.location).SqlWithPrefix
-					 + " , " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataLocation).SqlWithPrefix;
+					 + " , " + WebApplicationParameters.DataBaseDescription.GetTable(GetTableLocation()).SqlWithPrefix;
 				default:
 					throw new PortofolioDALException("getPressStructTables(PortofolioStructure.Ventilation ventilation)--> Impossible to determnie ventilation type for press vehicle.");
 			}
@@ -446,7 +446,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 						+ " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.inset).Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + "";
 				case PortofolioStructure.Ventilation.location:
 					return " " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.location).Prefix + ".id_language=" + _webSession.DataLanguage
-						+ " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataLocation).Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + ""
+						+ " and " + WebApplicationParameters.DataBaseDescription.GetTable(GetTableLocation()).Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + ""
 						+ " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.location).Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + "";
 				default:
 					throw new PortofolioDALException("getPressStructLanguage(PortofolioStructure.Ventilation ventilation)--> Impossible de déterminer le type de language pour la presse.");
@@ -473,10 +473,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					return res;
 				case PortofolioStructure.Ventilation.location:
 					return " and  " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media = dl.id_media "
-						+ " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.location).Prefix + ".id_location=" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataLocation).Prefix + ".id_location "
+						+ " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.location).Prefix + ".id_location=" + WebApplicationParameters.DataBaseDescription.GetTable(GetTableLocation()).Prefix + ".id_location "
 						//Period
 					+ " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num=dl.date_media_num "
-					+ "  and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataLocation).Prefix + ".ID_ADVERTISEMENT=" + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".ID_ADVERTISEMENT ";
+					+ "  and " + WebApplicationParameters.DataBaseDescription.GetTable(GetTableLocation()).Prefix + ".ID_ADVERTISEMENT=" + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".ID_ADVERTISEMENT ";
 				default:
 					throw new PortofolioDALException("getPressStructJoint(PortofolioStructure.Ventilation ventilation) : Impossible to realise joint sql for Press vehicle.");
 			}
@@ -504,5 +504,24 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			}
 		}
 		#endregion
+
+        #region Get Table Location
+        /// <summary>
+        /// Get Table Location
+        /// </summary>
+        /// <returns>Table Location</returns>
+        protected virtual TableIds GetTableLocation() {
+            if (_vehicleInformation.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.magazine) {
+                return TableIds.dataLocationMagazine;           
+            }
+            else if (_vehicleInformation.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.newspaper) {
+                return TableIds.dataLocationNewspaper;
+            }
+            else {
+                return TableIds.dataLocation;
+            }
+        }
+        #endregion
+
 	}
 }

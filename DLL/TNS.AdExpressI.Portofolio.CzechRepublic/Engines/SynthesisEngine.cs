@@ -49,7 +49,41 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
         /// <param name="periodEnd">Period End</param>
         public SynthesisEngine(WebSession webSession, VehicleInformation vehicleInformation, Int64 idMedia, string periodBeginning, string periodEnd)
             : base(webSession, vehicleInformation, idMedia, periodBeginning, periodEnd) {
-            _displayNewProductNumber = false;
+        }
+        #endregion
+
+        #region Protected Methods Override
+        /// <summary>
+        /// Compute Data product Number in Tracking
+        /// </summary>
+        /// <param name="isAlertModule">isAlertModule</param>
+        /// <returns>List of result</returns>
+        protected override List<ICell> ComputeDataProductNumberInTracking(bool isAlertModule) {
+            return null;
+        }
+        /// <summary>
+        /// Compute Data product Number in Vehicle
+        /// </summary>
+        /// <param name="isAlertModule">isAlertModule</param>
+        /// <returns>List of result</returns>
+        protected override List<ICell> ComputeDataProductNumberInVehicle(bool isAlertModule) {
+            return null;
+        }
+        /// <summary>
+        /// Compute Data Average Duration Ecran (not display because the field cobranding is always at 0 for tv and radio)
+        /// </summary>
+        /// <param name="isAlertModule">isAlertModule</param>
+        /// <returns>List of result</returns>
+        protected override List<ICell> ComputeDataAverageDurationEcran(bool isAlertModule) {
+            return null;
+        }
+        /// <summary>
+        /// Compute Data Spot Number By Ecran (not display because the field cobranding is always at 0 for tv and radio)
+        /// </summary>
+        /// <param name="isAlertModule">isAlertModule</param>
+        /// <returns>List of result</returns>
+        protected override List<ICell> ComputeDataSpotNumberByEcran(bool isAlertModule) {
+            return null;
         }
         #endregion
 

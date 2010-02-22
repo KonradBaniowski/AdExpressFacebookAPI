@@ -192,7 +192,14 @@
     <table enumId="169" description="Data: Press: Newspaper 4M" schemaEnumId="0" label="data_newspaper_4M" prefix="wp"/>
     <table enumId="170" description="Data: Press: Magazine" schemaEnumId="0" label="data_magazine" prefix="wp"/>
     <table enumId="171" description="Data: Press: Magazine 4M" schemaEnumId="0" label="data_magazine_4M" prefix="wp"/>
+    <table enumId="172" description="Recap Data: Newspaper" schemaEnumId="4" label="recap_newspaper" prefix="rcp"/>
+    <table enumId="173" description="Recap Data: Magazine" schemaEnumId="4" label="recap_magazine" prefix="rcp"/>
+    <table enumId="174" description="Recap Data: Newspaper Segment" schemaEnumId="4" label="recap_newspaper_segment" prefix="rcp"/>
+    <table enumId="175" description="Recap Data: Magazine Segment" schemaEnumId="4" label="recap_magazine_segment" prefix="rcp"/>
 
+    <table enumId="176" description="Classif: Data location" schemaEnumId="0" label="data_location_magazine" prefix="dl"/>
+    <table enumId="177" description="Classif: Data location" schemaEnumId="0" label="data_location_newspaper" prefix="dl"/>
+    
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>
     <table enumId="302" description="Alert Schedule" schemaEnumId="10" label="alert_schedule" prefix="as"/>

@@ -88,7 +88,7 @@
     <column id="40" name="Jour Semaine" webTextId="2068"  dbLabel="date_media_num" dbLabelAlias="day_of_week" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="dddd"/>
     <column id="41" name="Affiche" webTextId="1610"  dbLabel="associated_file"/>
     <column id="42" name="Date du Support" webTextId="2267"  dbLabel="date_media_num" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
-    <column id="43" name="Agence Media" webTextId="731" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <!--<column id="43" name="Agence Media" webTextId="731" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>-->
     <column id="44" name="Famille" webTextId="1103" dbId="id_sector" dbLabel="sector" dbTable="sector" dbTablePrefixe="sc" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="45" name="Surface en mmc" webTextId="595"  dbLabel="area_mmc" CellType="TNS.FrameWork.WebResultUI.CellMMC" format="max0"/>
     <column id="46" name="Rang famille" webTextId="1426"  dbLabel="rank_sector" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
@@ -337,7 +337,7 @@
       <columnItem id="10" name="Spot"/>
       <columnItem id="49" name="Date de diffusion"/>
       <columnItem id="7" name="Annonceur"/>
-      <columnItem id="43" name="Agence Media"/>
+      <!--<columnItem id="43" name="Agence Media"/>-->
       <columnItem id="53" name="Plan Media"/>
       <columnItem id="3" name="Support"/>
       <columnItem id="9" name="Produit"/>
@@ -359,7 +359,7 @@
       <!--<columnItem id="10" name="Spot"/>-->
       <columnItem id="49" name="Date de diffusion"/>
       <columnItem id="7" name="Annonceur"/>
-      <columnItem id="43" name="Agence Media"/>
+      <!--<columnItem id="43" name="Agence Media"/>-->
       <columnItem id="53" name="Plan Media"/>
       <columnItem id="3" name="Support"/>
       <columnItem id="9" name="Produit"/>
