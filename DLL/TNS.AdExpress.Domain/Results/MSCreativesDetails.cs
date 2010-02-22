@@ -67,6 +67,14 @@ namespace TNS.AdExpress.Domain.Results {
                 return (-1);
             }
         }
+        /// <summary>
+        /// Contains vehicle or not
+        /// </summary>
+        /// <param name="idVehicle">Current vehicle Id</param>
+        /// <returns>Contains vehicle or not</returns>
+        public bool ContainsVehicle(Int64 idVehicle) {
+            return (_detailColumnsByVehicle != null && _detailColumnsByVehicle.ContainsKey(idVehicle)) ;
+        }
         #endregion
 
     }

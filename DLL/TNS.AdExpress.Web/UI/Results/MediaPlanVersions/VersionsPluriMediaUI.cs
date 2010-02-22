@@ -28,6 +28,8 @@ using DomainResults = TNS.AdExpress.Domain.Results;
 using TNS.AdExpressI.Insertions;
 using TNS.AdExpressI.Insertions.Cells;
 using TNS.AdExpress.Domain.Theme;
+using TNS.AdExpress.Domain.Results;
+using TNS.AdExpress.Domain.Web;
 
 
 namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
@@ -55,12 +57,6 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 		/// <author>gragneau</author>
 		/// <since>jeudi 20 juillet 2006</since>
 		private	ArrayList _vehicles;
-		/// <summary>
-		/// Vehicles which are allowed to be displayed in the component
-		/// </summary>
-		/// <author>gragneau</author>
-		/// <since>jeudi 20 juillet 2006</since>
-		public static string[] ALLOWED_VEHICLES = new string[5]{"1","2","3","8","10"};
 		/// <summary>
 		/// Specifi wether plurimedia is allowed are not
 		/// </summary>
@@ -160,7 +156,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
             _vehicles = new ArrayList();
             if (vehicles != null && (ALLOW_PLURI || (!ALLOW_PLURI && vehicles.Length < 2))) {
                 foreach (string str in vehicles) {
-                    if (Array.IndexOf(ALLOWED_VEHICLES, str) > -1 && _webSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)))) {
+                    if (WebApplicationParameters.MsCreativesDetail.ContainsVehicle(Int64.Parse(str)) && _webSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)))) {
                         _vehicles.Add(new VersionsVehicleUI(_webSession, VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)), Period, ZoomDate));
                     }
                 }
@@ -195,7 +191,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
             _vehicles = new ArrayList();
             if (vehicles != null && (ALLOW_PLURI || (!ALLOW_PLURI && vehicles.Length < 2))) {
                 foreach (string str in vehicles) {
-                    if (Array.IndexOf(ALLOWED_VEHICLES, str) > -1 && _webSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)))) {
+                    if (WebApplicationParameters.MsCreativesDetail.ContainsVehicle(Int64.Parse(str)) && _webSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)))) {
                         _vehicles.Add(new ExportVersionsVehicleUI(_webSession, VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)), Period, ZoomDate));
                     }
                 }
@@ -228,7 +224,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 			_vehicles = new ArrayList();
 			if (vehicles != null && (ALLOW_PLURI || (!ALLOW_PLURI && vehicles.Length < 2))){ 
 				foreach(string str in vehicles){
-					if (Array.IndexOf(ALLOWED_VEHICLES, str) > -1 && _webSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)))){   
+                    if (WebApplicationParameters.MsCreativesDetail.ContainsVehicle(Int64.Parse(str)) && _webSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)))) {   
                         if(Period != null)
                             _vehicles.Add(new VersionsVehicleUI(_webSession, _versions, VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)), Period));
                         else
@@ -264,7 +260,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 			_vehicles = new ArrayList();
 			if (vehicles != null && (ALLOW_PLURI || (!ALLOW_PLURI && vehicles.Length < 2))){ 
 				foreach(string str in vehicles){
-                    if (Array.IndexOf(ALLOWED_VEHICLES, str) > -1 && _webSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)))){
+                    if (WebApplicationParameters.MsCreativesDetail.ContainsVehicle(Int64.Parse(str)) && _webSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)))) {
 						_vehicles.Add(new ExportVersionsVehicleUI(_webSession, _versions, VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str))));
 					}
 				}
@@ -296,7 +292,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 			_vehicles = new ArrayList();
 			if (vehicles != null && (ALLOW_PLURI || (!ALLOW_PLURI && vehicles.Length < 2))){ 
 				foreach(string str in vehicles){
-                    if (Array.IndexOf(ALLOWED_VEHICLES, str) > -1 && _webSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)))){
+                    if (WebApplicationParameters.MsCreativesDetail.ContainsVehicle(Int64.Parse(str)) && _webSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str)))) {
 						_vehicles.Add(new ExportVersionsVehicleUI(_webSession, _versions, VehiclesInformation.DatabaseIdToEnum(Int64.Parse(str))));
 					}
 				}
