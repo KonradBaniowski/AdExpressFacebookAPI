@@ -1,6 +1,3 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<lists>
-  <!--<list group="inset" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="encart" listIds="108"/>
-  <list group="inset" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="flyingEncart" listIds="85"/>
-  <list group="inset" keyType="TTNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="Excart" listIds="999"/>-->
+<lists> 
 </lists>

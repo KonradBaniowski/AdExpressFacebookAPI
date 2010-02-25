@@ -833,8 +833,7 @@
               <detailSelection id="9" name="Competitor Media Selected"/>
               <detailSelection id="6" name="Product Selected"/>
               <detailSelection id="4" name="Unit"/>
-              <detailSelection id="20" name="Generic Product Level Detail"/>
-              <detailSelection id="10" name="Inset selected"/>
+              <detailSelection id="20" name="Generic Product Level Detail"/>            
             </detailSelections>
           </page>
         </results>
