@@ -1052,7 +1052,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 					format.Items.FindByValue(customerWebSession.Format.GetHashCode().ToString()).Selected = true;
 				}
 				catch(System.Exception){
-					format.Items[0].Selected=true;
+                    if (format != null && format.Items != null && format.Items.Count>0) format.Items[0].Selected = true;
 				}
 
 				Controls.Add(format);
@@ -1089,7 +1089,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 					namedDay.Items.FindByValue(customerWebSession.NamedDay.GetHashCode().ToString()).Selected = true;
 				}
 				catch(System.Exception){
-					namedDay.Items[0].Selected=true;
+                    if (namedDay != null && namedDay.Items != null && namedDay.Items.Count > 0) namedDay.Items[0].Selected = true;
 				}
 
 				Controls.Add(namedDay);
@@ -1130,7 +1130,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 					drpTimeInterval.Items.FindByValue(customerWebSession.TimeInterval.GetHashCode().ToString()).Selected = true;
 				}
 				catch(System.Exception){
-					drpTimeInterval.Items[0].Selected=true;
+                    if (drpTimeInterval != null && drpTimeInterval.Items != null && drpTimeInterval.Items.Count > 0) drpTimeInterval.Items[0].Selected = true;
 				}
 				Controls.Add(drpTimeInterval);
 			}
@@ -1519,7 +1519,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			#endregion
 			
 			//Famille à exclure pour la presse
-			if(customerWebSession.CurrentModule==CstWeb.Module.Name.TABLEAU_DE_BORD_PRESSE){
+			if(customerWebSession.CurrentModule==CstWeb.Module.Name.TABLEAU_DE_BORD_PRESSE && !WebApplicationParameters.CountryCode.Equals("35")){
 				adexpressProductItemsList=Product.GetItemsList(CstWeb.AdExpressUniverse.DASHBOARD_PRESS_EXCLUDE_PRODUCT_LIST_ID);
 				if(adexpressProductItemsList.GetSectorItemsList.Length>0)excludeSector=adexpressProductItemsList.GetSectorItemsList.Split(delimiter);
 			}

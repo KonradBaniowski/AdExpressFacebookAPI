@@ -345,15 +345,54 @@ namespace TNS.AdExpress.Web.Functions{
 		/// <param name="PeriodBeginningDate">date de début </param>
 		/// <param name="PeriodEndDate">date de fin</param>
 		public static void WebSessionSaveDownloadDates(WebSession webSessionSave,ref string  PeriodBeginningDate,ref string  PeriodEndDate){
-			switch(webSessionSave.PeriodType){
+            //Patch Finland pour le Tableau de bord PRESSE
+            bool finland = false;
+            VehicleInformation _vehicleInformation = null;
+            DateTime downloadDate = DateTime.Now;
+            if (WebApplicationParameters.CountryCode.Equals("35") && WebFunctions.Modules.IsDashBoardModule(webSessionSave))
+            {
+
+                long vehicleId = ((LevelInformation)webSessionSave.SelectionUniversMedia.FirstNode.Tag).ID;
+                 _vehicleInformation = VehiclesInformation.Get(vehicleId);
+                 if (TNS.AdExpress.Web.Core.Utilities.LastAvailableDate.LastAvailableDateList.ContainsKey(_vehicleInformation.Id))
+                 {
+                     downloadDate = TNS.AdExpress.Web.Core.Utilities.LastAvailableDate.LastAvailableDateList[_vehicleInformation.Id];
+                 }
+                finland = true;
+            }
+            
+            switch(webSessionSave.PeriodType){
 				case CstCustomerSession.Period.Type.LastLoadedWeek :
 					 LastLoadedWeek(ref PeriodBeginningDate,ref PeriodEndDate);
 					break;
 				case CstCustomerSession.Period.Type.LastLoadedMonth :
+                    if (finland)
+                    {
+                        //Patch Finland pour le Tableau de bord PRESSE
+                        PeriodEndDate = PeriodBeginningDate = String.Format("{0:yyyyMM}", downloadDate);
+                    }
+                    else
 					 LastLoadedMonth(ref PeriodBeginningDate,ref PeriodEndDate,webSessionSave.PeriodType);
 					break;				
 				case CstCustomerSession.Period.Type.currentYear:
+                      if (finland)
+                        {
+                            //Patch Finland pour le Tableau de bord PRESSE
+                            PeriodBeginningDate = String.Format("{0:yyyy01}", downloadDate);
+                            PeriodEndDate = String.Format("{0:yyyyMM}", downloadDate);
+                        }
+                        else
+                          DownloadDates(webSessionSave, ref PeriodBeginningDate, ref PeriodEndDate, webSessionSave.PeriodType);
+                      break;
 				case CstCustomerSession.Period.Type.previousYear:
+                      if (finland)
+                      {
+                          //Patch Finland pour le Tableau de bord PRESSE
+                          int yearN1 = downloadDate.Year - 1;
+                          PeriodBeginningDate = yearN1.ToString() + "01";
+                          PeriodEndDate = yearN1.ToString() + "12";
+                      }
+                      else
 					DownloadDates(webSessionSave,ref PeriodBeginningDate,ref PeriodEndDate,webSessionSave.PeriodType);
 					break;
 				case CstCustomerSession.Period.Type.nLastYear:
@@ -369,8 +408,18 @@ namespace TNS.AdExpress.Web.Functions{
 					PeriodEndDate=webSessionSave.PeriodEndDate;
 					break;
 				case CstCustomerSession.Period.Type.nextToLastYear:
-					PeriodBeginningDate = DateTime.Now.AddYears(-2).ToString("yyyy01");
-					PeriodEndDate = DateTime.Now.AddYears(-2).ToString("yyyy12");
+                    if (finland)
+                    {
+                        //Patch Finland pour le Tableau de bord PRESSE
+                        int yearN2 = downloadDate.Year - 2;
+                        PeriodBeginningDate = yearN2.ToString() + "01";
+                        PeriodEndDate = yearN2.ToString() + "12";
+                    }
+                    else
+                    {
+                        PeriodBeginningDate = DateTime.Now.AddYears(-2).ToString("yyyy01");
+                        PeriodEndDate = DateTime.Now.AddYears(-2).ToString("yyyy12");
+                    }
 					break;
 				case CstCustomerSession.Period.Type.dateToDate:
 					PeriodBeginningDate=webSessionSave.PeriodBeginningDate;

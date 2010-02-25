@@ -15,6 +15,8 @@ using TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.Date;
 using CustomerWebConstantes=TNS.AdExpress.Constantes.Web.CustomerSessions;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Web.Core.Sessions;
 
 namespace TNS.AdExpress.Web.Controls.Selections{
 	/// <summary>
@@ -161,6 +163,14 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// Par exemple lorsque l'on sait qu'on a aucune date complète
 		/// </summary>
 		protected bool _allDatesInRed = false;
+        /// <summary>
+        /// Vehicle information
+        /// </summary>
+        protected VehicleInformation _vehicleInformation = null;
+        /// <summary>
+        /// Current module ID
+        /// </summary>
+        protected long _currentModule = -1;
 		#endregion
 
         #region Propriété
@@ -389,6 +399,28 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			}
 		}
 
+        /// <summary>
+        /// Vehicle information
+        /// </summary>
+        public VehicleInformation VehicleInformation
+        {
+
+            set
+            {
+                _vehicleInformation = value;
+            }
+        }
+        /// <summary>
+        /// Current Module
+        /// </summary>
+        public long CurrentModule
+        {
+
+            set
+            {
+                _currentModule = value;
+            }
+        }
 		#endregion
 
 		#region Constructeur
@@ -412,10 +444,12 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			base.OnInit (e);
 			//option des mois ou semaines completes à afficher
 			//année  N-1 devient année courante si le mois actuel est janvier
-			if(_blockIncompleteDates || _incompleteDatesInRed){
+			if(_blockIncompleteDates || _incompleteDatesInRed){               
 				if(_lastCompleteMonth!=null)this.selectedYear = int.Parse(_lastCompleteMonth.Substring(0,4));
 				else if(IsStartWithPreviousYear(_blockIncompleteDates))this.selectedYear=DateTime.Now.Year-1; 
+              
 			}
+
 			startYear=selectedYear-2;
 			if(DateTime.Now.Month==12)stopYear=(DateTime.Now.AddYears(1)).Year;
 			else {
@@ -427,6 +461,21 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 					else if(IsStartWithPreviousYear(_blockIncompleteDates))stopYear=DateTime.Now.Year-1; 
 				}
 			}
+            //Patch Finland pour le Tableau de bord PRESSE
+            if (WebApplicationParameters.CountryCode.Trim().Equals("35")
+                && ( TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DE_BORD_PRESSE == _currentModule
+                || TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DE_BORD_TELEVISION == _currentModule
+                || TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DE_BORD_RADIO == _currentModule
+                 )
+                && (_vehicleInformation != null && TNS.AdExpress.Web.Core.Utilities.LastAvailableDate.LastAvailableDateList.ContainsKey(_vehicleInformation.Id))
+                && _blockIncompleteDates  )            
+            {                
+                    DateTime dat = TNS.AdExpress.Web.Core.Utilities.LastAvailableDate.LastAvailableDateList[_vehicleInformation.Id];
+                    stopYear = selectedYear = dat.Year;
+                    startYear = selectedYear - 2;
+                    _lastCompleteMonth = String.Format("{0:yyyyMM}", dat);
+               
+            }
 			selectedDate=-1;
 			if (this.ViewState["selectedDate"]!=null){
 				selectedDate=(int)this.ViewState["selectedDate"];

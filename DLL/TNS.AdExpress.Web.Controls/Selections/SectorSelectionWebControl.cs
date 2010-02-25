@@ -27,6 +27,7 @@ using RightConstantes=TNS.AdExpress.Constantes.Customer.Right;
 using TNS.Classification;
 using TNS.AdExpress.Classification;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.Controls.Selections
 {
@@ -210,7 +211,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			this.Items.Clear();
 
 			//Famille à exclure pour la presse
-			if(webSession.CurrentModule==WebModule.Name.TABLEAU_DE_BORD_PRESSE){
+			if(webSession.CurrentModule==WebModule.Name.TABLEAU_DE_BORD_PRESSE && !WebApplicationParameters.CountryCode.Equals("35")){
 				adexpressProductItemsList=Product.GetItemsList(WebConstantes.AdExpressUniverse.DASHBOARD_PRESS_EXCLUDE_PRODUCT_LIST_ID);
 				if(adexpressProductItemsList.GetSectorItemsList.Length>0)excludeSector=adexpressProductItemsList.GetSectorItemsList.Split(delimiter);
 			}

@@ -878,54 +878,38 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias{
 		public static DataSet InterestCenterList(WebSession webSession,string idInterestCenter,string idMedia) {
 			
 			#region Variables
-			OracleConnection connection=(OracleConnection)webSession.CustomerLogin.Source.GetSource();
+			//OracleConnection connection=(OracleConnection)webSession.CustomerLogin.Source.GetSource();
 			//bool premier=true;
 			DataSet dsListAdvertiser=null;
 			StringBuilder sql=new StringBuilder(500);
+            View oView = WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia);
 			#endregion
 
 			#region Requête
-			sql.Append("Select distinct "+DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".id_interest_center,"+DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".interest_center  ");
-			//+DBConstantes.Tables.MEDIA_PREFIXE+".id_media , "+DBConstantes.Tables.MEDIA_PREFIXE+".media");
-			sql.Append(" from  "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".vehicle "+DBConstantes.Tables.VEHICLE_PREFIXE+","+DBConstantes.Schema.ADEXPRESS_SCHEMA+".interest_center "+DBConstantes.Tables.INTEREST_CENTER_PREFIXE+","+DBConstantes.Schema.ADEXPRESS_SCHEMA+".media "+DBConstantes.Tables.MEDIA_PREFIXE+" , "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".category "+DBConstantes.Tables.CATEGORY_PREFIXE+", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".basic_media "+DBConstantes.Tables.BASIC_MEDIA_PREFIXE+" ");
-			sql.Append(" where");
-			// Langue
-			sql.Append(" "+DBConstantes.Tables.VEHICLE_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
-			sql.Append(" and "+DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
-			sql.Append(" and "+DBConstantes.Tables.MEDIA_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
-			sql.Append(" and "+DBConstantes.Tables.BASIC_MEDIA_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
-			sql.Append(" and "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
-			// Activation
-			sql.Append(" and "+DBConstantes.Tables.VEHICLE_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
-			sql.Append(" and "+DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
-			sql.Append(" and "+DBConstantes.Tables.MEDIA_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);	
-			sql.Append(" and "+DBConstantes.Tables.CATEGORY_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
-			sql.Append(" and "+DBConstantes.Tables.BASIC_MEDIA_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);	
-			// Jointure
-			sql.Append(" and "+DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle="+DBConstantes.Tables.CATEGORY_PREFIXE+".id_vehicle");
-			sql.Append(" and "+DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".id_interest_center="+DBConstantes.Tables.MEDIA_PREFIXE+".id_interest_center");
-			sql.Append(" and "+DBConstantes.Tables.CATEGORY_PREFIXE+".id_category="+DBConstantes.Tables.BASIC_MEDIA_PREFIXE+".id_category");
-			sql.Append(" and "+DBConstantes.Tables.BASIC_MEDIA_PREFIXE+".id_basic_media="+DBConstantes.Tables.MEDIA_PREFIXE+".id_basic_media");
+            sql.Append(" Select distinct " + oView.Prefix + ".id_interest_center," + oView.Prefix + ".interest_center  ");
+            sql.Append(" from  " + oView.Sql + webSession.DataLanguage.ToString() + " "+oView.Prefix);
+			sql.Append(" where 0=0 ");
+			
 			//sélection média 
 			if(WebFunctions.CheckedText.IsStringEmpty(idInterestCenter) || WebFunctions.CheckedText.IsStringEmpty(idMedia) ) {
 				sql.Append("  and  ( ");
 				if(idInterestCenter.Length>0)
-					sql.Append(" "+DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".Id_interest_center in ("+idInterestCenter+")");	
+                    sql.Append(" " + oView.Prefix + ".Id_interest_center in (" + idInterestCenter + ")");	
 				if(idInterestCenter.Length>0 && idMedia.Length>0)sql.Append(" or ");
 				if(idMedia.Length>0)
-				sql.Append(" "+DBConstantes.Tables.MEDIA_PREFIXE+".id_media in ("+idMedia+")");	
+                    sql.Append(" " + oView.Prefix + ".id_media in (" + idMedia + ")");	
 				sql.Append(" ) ");
 			}
 			
 			// Vehicle
-			sql.Append(" and "+DBConstantes.Tables.VEHICLE_PREFIXE+".id_vehicle="+((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID+"");
+            sql.Append(" and " + oView.Prefix + ".id_vehicle=" + ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID + "");
 			
 			#region droits média
-			sql.Append(WebFunctions.SQLGenerator.getClassificationCustomerRecapMediaRight(webSession,DBConstantes.Tables.VEHICLE_PREFIXE,DBConstantes.Tables.CATEGORY_PREFIXE,DBConstantes.Tables.MEDIA_PREFIXE,true));
+            sql.Append(WebFunctions.SQLGenerator.getClassificationCustomerRecapMediaRight(webSession, oView.Prefix, oView.Prefix, oView.Prefix, true));
 			#endregion
 
 			//Order by
-			sql.Append(" order by "+DBConstantes.Tables.INTEREST_CENTER_PREFIXE+".interest_center  ");
+            sql.Append(" order by " + oView.Prefix + ".interest_center  ");
 
 			#endregion
 

@@ -109,7 +109,7 @@ namespace AdExpress.Private.Results{
 		public DashBoardResults():base(){	
 			//identification du Média  sélectionné
 			Vehicle = ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
-			vehicleType = (DBClassificationConstantes.Vehicles.names)int.Parse(Vehicle);
+			vehicleType = VehiclesInformation.DatabaseIdToEnum(long.Parse(Vehicle));
 		}
 		#endregion
 
@@ -549,7 +549,7 @@ namespace AdExpress.Private.Results{
 		/// <returns>false s'il doit être montrer, true sinon</returns>
 		private bool showRepartition() {
 			Int64 idVehicle = ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID;
-			DBClassificationConstantes.Vehicles.names vehicletype=(DBClassificationConstantes.Vehicles.names)idVehicle;
+			DBClassificationConstantes.Vehicles.names vehicletype=VehiclesInformation.DatabaseIdToEnum(idVehicle);
 			switch(vehicletype) {
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.radio:

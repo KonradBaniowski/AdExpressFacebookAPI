@@ -13,13 +13,13 @@
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema"/>
 		<script language="JavaScript" type="text/JavaScript">
 			function selectedItem(i){							
-				Form2.selectedItemIndex.value=i;
+				Form2.selectedItemIndex.value=i;				
 				Form2.CurrentYearRadioButton.checked=false;
 				Form2.PreviousYearRadioButton.checked=false;	
 				Form2.TwoYearAgoRadioButton.checked=false;	
 				Form2.CompetitorSudy1Ckbx.checked=false;
 				Form2.LastLoadedMonthRadiobutton.checked=false;	
-				Form2.LastLoadedWeekRadioButton.checked=false;							
+				if(Form2.LastLoadedWeekRadioButton!=null)Form2.LastLoadedWeekRadioButton.checked=false;							
 			}
 			
 			function selectedCheck(i){
@@ -51,7 +51,7 @@
 						Form2.PreviousYearRadioButton.checked=false;
 						Form2.TwoYearAgoRadioButton.checked=false;
 						Form2.LastLoadedMonthRadiobutton.checked=false;	
-						Form2.LastLoadedWeekRadioButton.checked=false;						
+						if(Form2.LastLoadedWeekRadioButton!=null)Form2.LastLoadedWeekRadioButton.checked=false;						
 						Form2.selectedItemIndex.value=i;													
 						break;
 					case 5 :
@@ -205,6 +205,8 @@
 													<tr>
 														<td>
 															<table id="Table13" cellspacing="0" cellpadding="2" width="100%" border="0">
+															  <%if (!finland){ %>
+                 
 																<tr>
 																	<td style="HEIGHT: 26px" width="50"></td>
 																	<!--<td style="HEIGHT: 26px" width="15"></td>-->
@@ -213,6 +215,7 @@
 																			<cc1:adexpresstext language="33" id="LastLoadedWeekText" runat="server" Code="1618"></cc1:adexpresstext></p>
 																	</td>
 																</tr>
+																 <%} %>
 																<tr>
 																	<td style="HEIGHT: 26px"></td>
 																	<!--<td style="HEIGHT: 26px" width="15"></td>-->
@@ -226,7 +229,7 @@
 																	<!--<td style="HEIGHT: 23px" width="15"></td>-->
 																	<td style="HEIGHT: 23px" colspan="2">
 																		<p class="txtNoir11" onclick="javascript:selectedCheck(2)"><asp:radiobutton id="CurrentYearRadioButton" runat="server" GroupName="SectorYearChoice"></asp:radiobutton>&nbsp;
-																			<cc1:adexpresstext language="33" id="CurrentYearAdExpressText" runat="server" Code="1119"></cc1:adexpresstext>&nbsp;(<%=DateTime.Now.Year%>
+																			<cc1:adexpresstext language="33" id="CurrentYearAdExpressText" runat="server" Code="1119"></cc1:adexpresstext>&nbsp;(<%=currentYear%>
 																			)</p>
 																	</td>
 																</tr>

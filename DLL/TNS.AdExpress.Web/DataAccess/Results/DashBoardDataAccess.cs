@@ -26,6 +26,8 @@ using Oracle.DataAccess.Client;
 using WebModule = TNS.AdExpress.Constantes.Web.Module;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results {
@@ -191,6 +193,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <returns>Chaîne de caractère correspondant au nom de(s) table(s) à attaquer</returns>
         private static string GetTablesNomenclatureName(WebSession webSession) {
             string sql = "";
+            string schema =  WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
             switch (webSession.PreformatedTable) {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual:
@@ -202,12 +205,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Format:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_NamedDay:
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_TimeSlice:
-                    sql += "" + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".sector  " + DBConstantes.Tables.SECTOR_PREFIXE;
+                    sql += "" + schema + ".sector  " + DBConstantes.Tables.SECTOR_PREFIXE;
                     break;
                 case CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector:
                     sql = GetMediaTablesName(webSession);
                     if (sql.Length > 0) sql += ",";
-                    sql += DBConstantes.Schema.ADEXPRESS_SCHEMA + ".sector  " + DBConstantes.Tables.SECTOR_PREFIXE;
+                    sql += schema + ".sector  " + DBConstantes.Tables.SECTOR_PREFIXE;
                     return sql;
                 default:
                     return sql;
@@ -222,22 +225,24 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <returns>Chaîne de caractère correspondant au nom de(s) table(s) médias à attaquer</returns>
         private static string GetMediaTablesName(WebSession webSession) {
             string sql = "";
+            string schema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
+
             if (webSession.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia) {
-                sql += "" + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".interest_center   " + DBConstantes.Tables.INTEREST_CENTER_PREFIXE;
-                if (!IsRepartitionSelected(webSession)) sql += "," + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".vehicle   " + DBConstantes.Tables.VEHICLE_PREFIXE;
-                sql += "," + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".media   " + DBConstantes.Tables.MEDIA_PREFIXE;
+                sql += "" + schema + ".interest_center   " + DBConstantes.Tables.INTEREST_CENTER_PREFIXE;
+                if (!IsRepartitionSelected(webSession)) sql += "," + schema + ".vehicle   " + DBConstantes.Tables.VEHICLE_PREFIXE;
+                sql += "," + schema + ".media   " + DBConstantes.Tables.MEDIA_PREFIXE;
             }
             else if (webSession.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenter) {
-                sql += "" + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".interest_center   " + DBConstantes.Tables.INTEREST_CENTER_PREFIXE;
+                sql += "" + schema + ".interest_center   " + DBConstantes.Tables.INTEREST_CENTER_PREFIXE;
                 if (!IsRepartitionSelected(webSession)) {
                     if (sql.Length > 0) sql += ",";
-                    sql += " " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".vehicle   " + DBConstantes.Tables.VEHICLE_PREFIXE;
+                    sql += " " + schema + ".vehicle   " + DBConstantes.Tables.VEHICLE_PREFIXE;
                 }
             }
             else if (webSession.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMedia) {
-                if (!IsRepartitionSelected(webSession)) sql += " " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".vehicle   " + DBConstantes.Tables.VEHICLE_PREFIXE;
+                if (!IsRepartitionSelected(webSession)) sql += " " + schema + ".vehicle   " + DBConstantes.Tables.VEHICLE_PREFIXE;
                 if (sql.Length > 0) sql += ",";
-                sql += " " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".media   " + DBConstantes.Tables.MEDIA_PREFIXE;
+                sql += " " + schema + ".media   " + DBConstantes.Tables.MEDIA_PREFIXE;
             }
             return sql;
         }

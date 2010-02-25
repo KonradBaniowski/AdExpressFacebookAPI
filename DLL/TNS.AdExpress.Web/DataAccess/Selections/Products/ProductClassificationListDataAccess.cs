@@ -20,6 +20,8 @@ using DBConstantes=TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.DataAccess.Selections;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
+using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Web;
 namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 	/// <summary>
 	/// Description résumée de ProductClassificationList.
@@ -43,40 +45,26 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 		/// <param name="idSector">identifiant(s) de(s) famille(s)</param>
 		/// <returns>Liste des familles autorisées au client.</returns>
 		public static DataSet SectorList(WebSession webSession,string idSector){
-
-			#region Construction de la requête
-			string sql="";
-			sql+=" select distinct "+TablesDBConstantes.SECTOR_PREFIXE+".id_sector,"+TablesDBConstantes.SECTOR_PREFIXE+".sector";
-			sql+=" from "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".sector "+TablesDBConstantes.SECTOR_PREFIXE;
-			sql+=" , "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".subsector "+TablesDBConstantes.SUBSECTOR_PREFIXE;
-			sql+=" , "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".group_ "+TablesDBConstantes.GROUP_PREFIXE;
-			sql+=" , "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".segment "+TablesDBConstantes.SEGMENT_PREFIXE;
-			sql+=" Where";
-			// Jointure
-			sql+=" "+TablesDBConstantes.SECTOR_PREFIXE+".id_sector="+TablesDBConstantes.SUBSECTOR_PREFIXE+".id_sector ";
-			sql+=" and "+TablesDBConstantes.SUBSECTOR_PREFIXE+".id_subsector="+TablesDBConstantes.GROUP_PREFIXE+".id_subsector ";
-			sql+=" and "+TablesDBConstantes.GROUP_PREFIXE+".id_group_="+TablesDBConstantes.SEGMENT_PREFIXE+".id_group_ ";			
-			// Langue
-			sql+=" and "+TablesDBConstantes.SECTOR_PREFIXE+".id_language="+webSession.DataLanguage.ToString();		
-			sql+=" and "+TablesDBConstantes.SUBSECTOR_PREFIXE+".id_language="+webSession.DataLanguage.ToString();	
-			sql+=" and "+TablesDBConstantes.GROUP_PREFIXE+".id_language="+webSession.DataLanguage.ToString();	
-			sql+=" and "+TablesDBConstantes.SEGMENT_PREFIXE+".id_language="+webSession.DataLanguage.ToString();	
-			// Activation
-			sql+=" and "+TablesDBConstantes.SECTOR_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
-			sql+=" and "+TablesDBConstantes.SUBSECTOR_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;						
-			sql+=" and "+TablesDBConstantes.GROUP_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;						
-			sql+=" and "+TablesDBConstantes.SEGMENT_PREFIXE+".activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;						
+            
+            TNS.AdExpress.Domain.DataBaseDescription.View oView = WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);
 			
+            #region Construction de la requête
+			string sql="";
+            sql += " select distinct " + oView.Prefix + ".id_sector," + oView.Prefix + ".sector";
+            sql += " from " + oView.Sql + webSession.DataLanguage.ToString() + " "+ oView.Prefix;
+          
+			sql+=" Where 0=0 ";
+										
 			if(CheckedText.IsStringEmpty(idSector)){
-				sql+=" and "+TablesDBConstantes.SECTOR_PREFIXE+".id_sector in ("+idSector+") ";	
+                sql += " and " + oView.Prefix + ".id_sector in (" + idSector + ") ";	
 			}
 			#region Nomenclature Produit (droits)
 			//Droits en accès
-			sql+=SQLGenerator.getClassificationCustomerProductRight(webSession,true);
+            sql += SQLGenerator.getClassificationCustomerProductRight(webSession, oView.Prefix, oView.Prefix, oView.Prefix, oView.Prefix, true);
 			#endregion
 			
 			// Tri
-			sql+=" order by "+TablesDBConstantes.SECTOR_PREFIXE+".sector";
+            sql += " order by " + oView.Prefix + ".sector";
 
 			#endregion
 

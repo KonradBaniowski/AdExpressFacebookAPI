@@ -31,6 +31,8 @@ using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using WebFunctions=TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Classification;
 
 #endregion
 
@@ -134,6 +136,11 @@ namespace AdExpress.Private.Selection
 		/// Date de fin de chargement des données
 		/// </summary>
 		private string downloadEndDate="";
+        public bool finland = false;
+
+        public string currentYear = DateTime.Now.Year.ToString();
+
+        protected VehicleInformation _vehicleInformation = null;
 		#endregion
 
 		#region Constructeurs
@@ -155,24 +162,43 @@ namespace AdExpress.Private.Selection
 		protected void Page_Load(object sender, System.EventArgs e) {
 			try{
 
+                #region Patch Finland
+                finland = false;
+                if (WebApplicationParameters.CountryCode.Equals("35")) finland = true;
+                
+                #endregion
+
 				#region Options pour la période sélectionnée
 				if(Request.Form.GetValues("selectedItemIndex")!=null)selectedIndex = int.Parse(Request.Form.GetValues("selectedItemIndex")[0]);
 				if(Request.Form.GetValues("selectedComparativeStudy")!=null)selectedComparativeStudy = int.Parse(Request.Form.GetValues("selectedComparativeStudy")[0]);
 				#endregion
 
-				#region Rappel des différentes sélections
-//				ArrayList linkToShow=new ArrayList();			
-//				if(_webSession.CurrentUniversProduct!=null && _webSession.CurrentUniversProduct.Nodes!=null && _webSession.CurrentUniversProduct.Nodes.Count >0)
-//					linkToShow.Add(3);
-//				if(_webSession.isMediaSelected())linkToShow.Add(4);
-//				recallWebControl.LinkToShow=linkToShow;
-//				if(_webSession.LastReachedResultUrl.Length>0 && _webSession.CurrentUniversProduct!=null && _webSession.CurrentUniversProduct.Nodes!=null && _webSession.CurrentUniversProduct.Nodes.Count >0 && _webSession.isMediaSelected())
-//					recallWebControl.CanGoToResult=true;
-				#endregion
-
-				this.monthWeekCalendarBeginWebControl.DisplayType = TNS.AdExpress.Web.Controls.Selections.MonthWeekCalendarWebControl.Display.all;
-				this.monthWeekCalendarEndWebControl.DisplayType = TNS.AdExpress.Web.Controls.Selections.MonthWeekCalendarWebControl.Display.all;
-				
+                if (finland )
+                {
+                    this.monthWeekCalendarBeginWebControl.DisplayType = TNS.AdExpress.Web.Controls.Selections.MonthWeekCalendarWebControl.Display.month;
+                    this.monthWeekCalendarEndWebControl.DisplayType = TNS.AdExpress.Web.Controls.Selections.MonthWeekCalendarWebControl.Display.month;
+                    this.monthWeekCalendarEndWebControl.CurrentModule = _currentModule.Id;
+                    this.monthWeekCalendarBeginWebControl.CurrentModule = _currentModule.Id;
+                    if (_vehicleInformation == null)
+                    {
+                        long vehicleId = ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID;
+                        _vehicleInformation = VehiclesInformation.Get(vehicleId);
+                    }
+                    //Patch Finland pour le Tableau de bord PRESSE
+                    if (TNS.AdExpress.Web.Core.Utilities.LastAvailableDate.LastAvailableDateList.ContainsKey(_vehicleInformation.Id))
+                    {
+                        DateTime dat = TNS.AdExpress.Web.Core.Utilities.LastAvailableDate.LastAvailableDateList[_vehicleInformation.Id];
+                         currentYear = dat.Year.ToString();
+                         this.monthWeekCalendarEndWebControl.VehicleInformation = _vehicleInformation;
+                         this.monthWeekCalendarBeginWebControl.VehicleInformation = _vehicleInformation;
+                    }
+                   
+                }
+                else
+                {
+                    this.monthWeekCalendarBeginWebControl.DisplayType = TNS.AdExpress.Web.Controls.Selections.MonthWeekCalendarWebControl.Display.all;
+                    this.monthWeekCalendarEndWebControl.DisplayType = TNS.AdExpress.Web.Controls.Selections.MonthWeekCalendarWebControl.Display.all;
+                }
 				this.monthWeekCalendarBeginWebControl.StartYear=DateTime.Now.AddYears(-2).Year;				
 				this.monthWeekCalendarEndWebControl.StartYear=DateTime.Now.AddYears(-2).Year;
 
@@ -180,34 +206,19 @@ namespace AdExpress.Private.Selection
 				//ATTaquer une table
 				downloadDate=_webSession.DownLoadDate;				
 
-				#region Next URL
-//				_nextUrl=this.recallWebControl.NextUrl;
-//				if(_nextUrl.Length==0)_nextUrl=_currentModule.FindNextUrl(Request.Url.AbsolutePath);
-//				else {
-//					_nextUrlOk=true;
-//				}
-				#endregion
+			
 
 				#region Textes et langage du site
-				//Modification de la langue pour les Textes AdExpress
-                //for (int i = 0; i < this.Controls.Count; i++) {
-                //    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
-                //}
+				
 				ModuleTitleWebControl1.CustomerWebSession = _webSession;
 				InformationWebControl1.Language = _webSession.SiteLanguage;
-				//validateButton1.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				//validateButton1.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
-				//validateButton2.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				//validateButton2.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";						
+									
 				// Gestion des Calendrier
 				this.monthWeekCalendarBeginWebControl.Language=_webSession.SiteLanguage;
 				this.monthWeekCalendarEndWebControl.Language=_webSession.SiteLanguage;	
 				
 				#endregion
 
-				#region Définition de la page d'aide
-//				helpWebControl.Url=WebConstantes.Links.HELP_FILE_PATH+"DashBoardDateSelectionHelp.aspx";
-				#endregion
 			}
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
@@ -227,19 +238,7 @@ namespace AdExpress.Private.Selection
 		protected void Page_PreRender(object sender, System.EventArgs e){
 			try{
 				if (this.IsPostBack){
-//					if(monthWeekCalendarBeginWebControl.isDateSelected()){
-//						switch(monthWeekCalendarBeginWebControl.SelectedDateType){
-//							case CstPeriodType.dateToDateMonth:
-//								monthWeekCalendarEndWebControl.DisplayType=AdExpressWebControles.Selections.MonthWeekCalendarWebControl.Display.month;
-//								break;
-//							case CstPeriodType.dateToDateWeek:
-//								monthWeekCalendarEndWebControl.DisplayType=AdExpressWebControles.Selections.MonthWeekCalendarWebControl.Display.week;
-//								break;
-//							default:
-//								monthWeekCalendarEndWebControl.DisplayType=AdExpressWebControles.Selections.MonthWeekCalendarWebControl.Display.all;
-//								break;
-//						}
-//					}
+
 					#region Url Suivante	
 					if(_nextUrlOk){
 						if(selectedIndex==6 ||selectedIndex==7 || selectedIndex==8) validateButton1_Click(this, null);
@@ -299,20 +298,41 @@ namespace AdExpress.Private.Selection
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Argument</param>
 		protected void validateButton2_Click(object sender, System.EventArgs e) {
-			//DateDll.AtomicPeriodWeek week;
+			;
 			if(Request.Form.GetValues("selectedItemIndex")!=null)selectedIndex = int.Parse(Request.Form.GetValues("selectedItemIndex")[0]);
 			if(Request.Form.GetValues("selectedComparativeStudy")!=null)selectedComparativeStudy = int.Parse(Request.Form.GetValues("selectedComparativeStudy")[0]);				
 			try {
 				DateTime downloadDate=new DateTime(_webSession.DownLoadDate,12,31);
-				
+
+                if (finland)
+                {
+                    if (_vehicleInformation == null)
+                    {
+                        long vehicleId = ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID;
+                        _vehicleInformation = VehiclesInformation.Get(vehicleId);
+                    }
+                    //Patch Finland pour le Tableau de bord PRESSE
+                    if (TNS.AdExpress.Web.Core.Utilities.LastAvailableDate.LastAvailableDateList.ContainsKey(_vehicleInformation.Id))
+                    {
+                        downloadDate = TNS.AdExpress.Web.Core.Utilities.LastAvailableDate.LastAvailableDateList[_vehicleInformation.Id];                       
+                    }
+
+                }
 				switch(selectedIndex) {
 						//Choix  dernier mois chargé
 					case 1:
 							_webSession.PeriodType=CstPeriodType.LastLoadedMonth;
-							
-							WebFunctions.Dates.LastLoadedMonth(ref downloadBeginningDate,ref downloadEndDate,CstPeriodType.nLastMonth);								
-							_webSession.PeriodBeginningDate=downloadBeginningDate;						
-							_webSession.PeriodEndDate=downloadEndDate;							
+                            if (finland)
+                            {
+                                //Patch Finland pour le Tableau de bord PRESSE
+                                downloadBeginningDate = _webSession.PeriodEndDate = _webSession.PeriodBeginningDate = String.Format("{0:yyyyMM}", downloadDate);
+                            }
+                            else
+                            {
+                                WebFunctions.Dates.LastLoadedMonth(ref downloadBeginningDate, ref downloadEndDate, CstPeriodType.nLastMonth);
+                                _webSession.PeriodBeginningDate = downloadBeginningDate;
+                                _webSession.PeriodEndDate = downloadEndDate;
+                            }
 							_webSession.PeriodLength=int.Parse(downloadBeginningDate.Substring(4,2));	
 							_webSession.DetailPeriod = CstPeriodDetail.monthly;
 							//Activation de l'option etude comparative si selectionné
@@ -338,17 +358,27 @@ namespace AdExpress.Private.Selection
 						//Choix année courante
 					case 2:
 						_webSession.PeriodType=CstPeriodType.currentYear;
-						_webSession.PeriodLength=1;					
-							if(DateTime.Now.Month==1){
-								throw new TNS.AdExpress.Domain.Exceptions.NoDataException(GestionWeb.GetWebWord(1612, _webSession.SiteLanguage));														
-							}
-							else {
-								WebFunctions.Dates.DownloadDates(_webSession,ref downloadBeginningDate,ref downloadEndDate,CstPeriodType.currentYear);								
-								_webSession.PeriodBeginningDate=downloadBeginningDate;						
-								_webSession.PeriodEndDate=downloadEndDate;
-							}
-					
-						
+						_webSession.PeriodLength=1;
+                        if (finland)
+                        {
+                            //Patch Finland pour le Tableau de bord PRESSE
+                            _webSession.PeriodBeginningDate = String.Format("{0:yyyy01}", downloadDate);
+                            _webSession.PeriodEndDate = String.Format("{0:yyyyMM}", downloadDate);
+                        }
+                        else
+                        {
+                            if (DateTime.Now.Month == 1)
+                            {
+                                throw new TNS.AdExpress.Domain.Exceptions.NoDataException(GestionWeb.GetWebWord(1612, _webSession.SiteLanguage));
+                            }
+                            else
+                            {
+                                WebFunctions.Dates.DownloadDates(_webSession, ref downloadBeginningDate, ref downloadEndDate, CstPeriodType.currentYear);
+                                _webSession.PeriodBeginningDate = downloadBeginningDate;
+                                _webSession.PeriodEndDate = downloadEndDate;
+                            }
+
+                        }
 						_webSession.DetailPeriod = CstPeriodDetail.monthly;	
 						//Activation de l'option etude comparative si selectionné
 						if(isComparativeStudy(selectedComparativeStudy))_webSession.ComparativeStudy=true;
@@ -358,12 +388,20 @@ namespace AdExpress.Private.Selection
 						//Choix année précedente
 					case 3:
 						_webSession.PeriodType=CstPeriodType.previousYear;
-						_webSession.PeriodLength=1;					
-						
-						WebFunctions.Dates.DownloadDates(_webSession,ref downloadBeginningDate,ref downloadEndDate,CstPeriodType.previousYear);								
-						_webSession.PeriodBeginningDate=downloadBeginningDate;						
-						_webSession.PeriodEndDate=downloadEndDate;
-						
+						_webSession.PeriodLength=1;
+                        if (finland)
+                        {
+                            //Patch Finland pour le Tableau de bord PRESSE
+                            int yearN1 = downloadDate.Year -1;
+                            _webSession.PeriodBeginningDate = yearN1.ToString() + "01";
+                            _webSession.PeriodEndDate = yearN1.ToString() + "12"; 
+                        }
+                        else
+                        {
+                            WebFunctions.Dates.DownloadDates(_webSession, ref downloadBeginningDate, ref downloadEndDate, CstPeriodType.previousYear);
+                            _webSession.PeriodBeginningDate = downloadBeginningDate;
+                            _webSession.PeriodEndDate = downloadEndDate;
+                        }
 						_webSession.DetailPeriod = CstPeriodDetail.monthly;
 						//Activation de l'option etude comparative si selectionné
 						if(isComparativeStudy(selectedComparativeStudy))_webSession.ComparativeStudy=true;
@@ -377,14 +415,18 @@ namespace AdExpress.Private.Selection
 						_webSession.PeriodType=CstPeriodType.nextToLastYear;
 						_webSession.PeriodLength=1;						
 						// Cas où l'année de chargement est inférieur à l'année en cours
-//						if(DateTime.Now.Year>_webSession.DownLoadDate){
-//							_webSession.PeriodBeginningDate=downloadDate.AddYears(-2).ToString("yyyy01");
-//							_webSession.PeriodEndDate=downloadDate.AddYears(-2).ToString("yyyy12");
-//						}
-//						else{
-							_webSession.PeriodBeginningDate=DateTime.Now.AddYears(-2).ToString("yyyy01");
-							_webSession.PeriodEndDate=DateTime.Now.AddYears(-2).ToString("yyyy12");
-//						}
+                        if (finland)
+                        {
+                            //Patch Finland pour le Tableau de bord PRESSE
+                            int yearN2 = downloadDate.Year - 2;
+                             _webSession.PeriodBeginningDate = yearN2.ToString() + "01";
+                             _webSession.PeriodEndDate = yearN2.ToString() + "12";
+                        }
+                        else
+                        {
+                            _webSession.PeriodBeginningDate = DateTime.Now.AddYears(-2).ToString("yyyy01");
+                            _webSession.PeriodEndDate = DateTime.Now.AddYears(-2).ToString("yyyy12");
+                        }
 						_webSession.DetailPeriod = CstPeriodDetail.monthly;
 						_webSession.ComparativeStudy=false;
 						_webSession.Save();
@@ -434,11 +476,20 @@ namespace AdExpress.Private.Selection
 		/// <returns>?</returns>
 		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode ();
-//			recallWebControl.CustomerWebSession=_webSession;
-//			monthDateList.WebSession=_webSession;	
-//			weekDateList.WebSession = _webSession;
-			this.monthWeekCalendarBeginWebControl.BlockIncompleteDates =  true;				
+
+           
+
+            this.monthWeekCalendarBeginWebControl.BlockIncompleteDates =  true;			
 			this.monthWeekCalendarEndWebControl.BlockIncompleteDates = true;
+            this.monthWeekCalendarEndWebControl.CurrentModule = _currentModule.Id;
+            this.monthWeekCalendarBeginWebControl.CurrentModule = _currentModule.Id;
+            if (_vehicleInformation == null)
+            {
+                long vehicleId = ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID;
+                _vehicleInformation = VehiclesInformation.Get(vehicleId);
+                this.monthWeekCalendarEndWebControl.VehicleInformation = _vehicleInformation;
+                this.monthWeekCalendarBeginWebControl.VehicleInformation = _vehicleInformation;
+            }
 			MenuWebControl2.CustomerWebSession = _webSession;
 			return tmp;
 		}
@@ -463,14 +514,9 @@ namespace AdExpress.Private.Selection
 				if(monthWeekCalendarBeginWebControl.SelectedYear != monthWeekCalendarEndWebControl.SelectedYear)
 					throw(new AdExpressException.SectorDateSelectionException(GestionWeb.GetWebWord(1856,_webSession.SiteLanguage)));
 				//On autorise une étude comparative que pour les années N et N-1
-//				if(DateTime.Now.Year>_webSession.DownLoadDate){
-//					if(isComparativeStudy(selectedComparativeStudy) && (monthWeekCalendarBeginWebControl.SelectedYear==DateTime.Now.Year-3 || monthWeekCalendarEndWebControl.SelectedYear==DateTime.Now.Year-3) )
-//						throw(new AdExpressException.SectorDateSelectionException("Il est nécessaire de sélectionner une période supérieure à N-2 pour réaliser une étude comparative."));
-//				
-//				}else{
+
 					if(isComparativeStudy(selectedComparativeStudy) && (monthWeekCalendarBeginWebControl.SelectedYear==DateTime.Now.Year-2 || monthWeekCalendarEndWebControl.SelectedYear==DateTime.Now.Year-2) )
 						throw(new AdExpressException.SectorDateSelectionException(GestionWeb.GetWebWord(1857,_webSession.SiteLanguage)));
-//				}
 
 
 				_webSession.PeriodType = monthWeekCalendarBeginWebControl.SelectedDateType;
