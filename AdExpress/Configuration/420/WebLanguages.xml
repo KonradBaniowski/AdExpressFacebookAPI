@@ -15,6 +15,7 @@
         <unitformat name="shortduration"      format="0 m 00 s"                 excelFormat="0 m 00 s"/>
         <unitformat name="airtime"            format="#0:00:00"                 excelFormat="#0:00:00"/>
         <unitformat name="currency"           format="#,##0 €;-#,##0 €"         excelFormat="#,###,###,##0.0;-#,###,###,##0.0"/>
+        <unitformat name="codeEcran"          format="################"         excelFormat="################"/>
       </unitformats>
       <dateFormats>
         <dateFormat name="shortdatepattern"   format="MM/dd/yyyy"               excelFormat="MM/dd/yyyy"/>
@@ -35,6 +36,7 @@
         <unitformat name="shortduration"      format="0 m 00 s"                 excelFormat="0 m 00 s"/>
         <unitformat name="airtime"            format="#0:00:00"                 excelFormat="#0:00:00"/>
         <unitformat name="currency"           format="#,##0 €;-#,##0 €"         excelFormat="#,###,###,##0.0;-#,###,###,##0.0"/>
+        <unitformat name="codeEcran"          format="################"         excelFormat="################"/>
       </unitformats>
       <dateFormats>
         <dateFormat name="shortdatepattern"   format="MM/dd/yyyy"               excelFormat="MM/dd/yyyy"/>
