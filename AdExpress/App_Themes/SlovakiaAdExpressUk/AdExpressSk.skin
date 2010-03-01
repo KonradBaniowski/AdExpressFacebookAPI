@@ -921,7 +921,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            OutCssClass="ddlOut" 
                            OverCssClass="ddlOver" 
                            BorderColor="#644883"
-                           ImageWidth="139" 
+                           ImageWidth="145" 
                            ImageHeight="26" 
                            SkinID="resultsOptionsASDynamicTables"
 />
