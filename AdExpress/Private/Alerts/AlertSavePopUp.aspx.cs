@@ -329,6 +329,7 @@ namespace AdExpress.Private.Alerts
                         alertDAL.InsertAlertData(this.tbxFileName.Text, _webSession.ToBinaryData(), _webSession.CurrentModule,
                                                  (TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity)Enum.Parse(typeof(TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity), this.ddlPeriodicityType.SelectedValue),
                                                  int.Parse(this.hiddenPeriodicityValue.Value), this.tbxMail.Text, _webSession.CustomerLogin.IdLogin, idAlertSchedule);
+                        Response.Write(WebFunctions.Script.AlertWithWindowClose(GestionWeb.GetWebWord(2660, _webSession.SiteLanguage)));
                     }
 					closeRollOverWebControl_Click(this, null);
 				}
