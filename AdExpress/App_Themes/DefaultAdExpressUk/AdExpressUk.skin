@@ -1221,6 +1221,8 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            BorderColor="#644883"
                            CommonCssClass="txtNoir11Bold" 
                            ImageButtonArrow="/App_Themes/DefaultAdExpressUk/Images/Common/Button/bt_arrow_tall_top.gif"
+                           ImageWidth="139" 
+                           ImageHeight="26"
 						   SkinID = "ResultsDashBoardOptionsWebControl1"
 />
 

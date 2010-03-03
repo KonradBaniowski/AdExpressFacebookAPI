@@ -63,7 +63,7 @@
 					<td><cc2:resultsdashboardoptionswebcontrol id="ResultsDashBoardOptionsWebControl1" SkinID = "ResultsDashBoardOptionsWebControl1" runat="server" 
 							SectorListOption="True" IsCumulPeriodChecked="False" CumulPeriodOption="False" PdmOption="True" TitleOption="True"
 							MonthlyDateOption="True" AutoPostBackOption="False" WeeklyDateOption="True" MediaDetailOption="True" FormatOption="True"
-							TimeSlliceOption="True" NamedDayOption="True" TimeIntervalOption="True" ImageWidth="139" ImageHeight="26" PreformatedTableOption="True"
+							TimeSlliceOption="True" NamedDayOption="True" TimeIntervalOption="True"  PreformatedTableOption="True"
 							Width="120px" PdvOption="True" Percentage="True" InterestCenterListOption="True" EvolutionOption="True"></cc2:resultsdashboardoptionswebcontrol></td>
 				</tr>
 				<tr class="whiteBackGround" style="height:5px">

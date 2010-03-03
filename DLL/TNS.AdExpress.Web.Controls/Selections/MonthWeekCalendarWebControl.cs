@@ -473,7 +473,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                     DateTime dat = TNS.AdExpress.Web.Core.Utilities.LastAvailableDate.LastAvailableDateList[_vehicleInformation.Id];
                     stopYear = selectedYear = dat.Year;
                     startYear = selectedYear - 2;
-                    _lastCompleteMonth = String.Format("{0:yyyyMM}", dat);
+                    _lastCompleteMonth = String.Format("{0:yyyyMM}", dat);                 
                
             }
 			selectedDate=-1;
