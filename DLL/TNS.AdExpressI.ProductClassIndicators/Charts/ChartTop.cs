@@ -236,26 +236,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             this.ChartAreas[strChartArea].AxisY.TitleFont = new Font("Arial", (float)10);
             double dd = Convert.ToDouble(tab[0, EngineTop.TOTAL_N]);
             double uu = FctUtilities.Units.ConvertUnitValue(dd, _session.Unit);
-            if (uu > 0)
-            {
-                this.ChartAreas[strChartArea].AxisY.Maximum = uu;
-            }
-            else
-            {
-                this.ChartAreas[strChartArea].AxisY.Maximum = (double)0.0;
-            }
+            if (uu <= 0) this.ChartAreas[strChartArea].AxisY.Maximum = (double)0.0;
             this.ChartAreas[strChartArea].AxisY.MajorGrid.LineWidth = 0;
             #endregion
 
             #region Axe Y2
             this.ChartAreas[strChartArea].AxisY2.Enabled = AxisEnabled.True;
-            this.ChartAreas[strChartArea].AxisY2.LabelStyle.Enabled = true;
-            this.ChartAreas[strChartArea].AxisY2.LabelsAutoFit = false;
-
-            this.ChartAreas[strChartArea].AxisY2.LabelStyle.Font = new Font("Arial", (float)10);
-            this.ChartAreas[strChartArea].AxisY2.TitleFont = new Font("Arial", (float)10);
-            this.ChartAreas[strChartArea].AxisY2.Maximum = 100;
-            this.ChartAreas[strChartArea].AxisY2.Title = GestionWeb.GetWebWord(1205, _session.SiteLanguage);
             #endregion	
 			
 			

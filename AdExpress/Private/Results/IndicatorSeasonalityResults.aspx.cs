@@ -171,11 +171,9 @@ namespace AdExpress.Private.Results {
 
                     ResultsOptionsWebControl1.GraphRadioButton.Checked = _webSession.Graphics;
                     ResultsOptionsWebControl1.TableRadioButton.Checked = !_webSession.Graphics;
-
                 }
                 else
                 {
-
                     if (_webSession.CurrentTab != CstResult.SynthesisRecap.SYNTHESIS
                         && (!ResultsOptionsWebControl1.GraphRadioButton.Checked && !ResultsOptionsWebControl1.TableRadioButton.Checked)
                         )
@@ -187,6 +185,17 @@ namespace AdExpress.Private.Results {
                     {
                         _webSession.Graphics = ResultsOptionsWebControl1.GraphRadioButton.Checked;
                     }
+                }
+
+                if (_webSession.CurrentTab == CstResult.SynthesisRecap.PALMARES && _webSession.Graphics)
+                {
+                    for (int itemIndex = 0; itemIndex < totalRadioButtonList.Items.Count; itemIndex++)
+                        if (totalRadioButtonList.Items[itemIndex] != null) totalRadioButtonList.Items[itemIndex].Enabled = false;
+                }
+                else
+                {
+                    for (int itemIndex = 0; itemIndex < totalRadioButtonList.Items.Count; itemIndex++)
+                        if (totalRadioButtonList.Items[itemIndex] != null) totalRadioButtonList.Items[itemIndex].Enabled = true;
                 }
 
                 #region Suppression du total univers
@@ -210,7 +219,10 @@ namespace AdExpress.Private.Results {
                     }
                     catch (Exception)
                     {
-                        totalRadioButtonList.Items.Insert(0, new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1188, _webSession.SiteLanguage), CstComparisonCriterion.universTotal.GetHashCode().ToString()));
+                        ListItem listitem = new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1188, _webSession.SiteLanguage), CstComparisonCriterion.universTotal.GetHashCode().ToString());
+                        if (_webSession.CurrentTab == CstResult.SynthesisRecap.PALMARES && _webSession.Graphics) listitem.Enabled = false;
+                        else listitem.Enabled = true;
+                        totalRadioButtonList.Items.Insert(0, listitem);
                     }
                 }
                 #endregion
