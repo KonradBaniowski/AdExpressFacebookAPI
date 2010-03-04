@@ -337,9 +337,8 @@
 													                    </asp:Repeater>
 													                </ul>
 													                <div class="block-alert-details">
-													                    <u><cc1:adexpresstext language="33" id="AdExpressText6" runat="server" Code="2602"></cc1:adexpresstext></u>
-													                    <p runat="server" id="alertDetails">
-													                    </p>
+													                    <div runat="server" id="alertDetails">
+													                    </div>
 													                </div>
 													                <br style="clear: both">
 													                <asp:Label runat="server" ID="lblNoOccurrence" Visible="false"></asp:Label>

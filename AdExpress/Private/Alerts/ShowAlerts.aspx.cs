@@ -269,7 +269,7 @@ namespace AdExpress.Private.Alerts{
                     dayName = WebApplicationParameters.AllowedLanguages[_siteLanguage].CultureInfo.DateTimeFormat.DayNames.GetValue(alert.PeriodicityValue - 1).ToString();
 
                 // Getting HTML value
-                details.InnerHtml = GetAlertHTML(alert, _siteLanguage, module.IdWebText, dayName, WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo/*, alertDAL.GetAlertHours()*/);
+                details.InnerHtml = GetAlertHTML(alert, _siteLanguage, module.IdWebText, dayName, WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo, alertDAL.GetAlertHours());
                 
             }
             else
@@ -992,47 +992,77 @@ namespace AdExpress.Private.Alerts{
         /// <param name="formatProvider">Format Provider</param>
         /// <param name="alertHourCollection">Alert Hour Collection</param>
         /// <returns>Html Code</returns>
-        private string GetAlertHTML(Alert alert, int lang, long idWebText, string dayName, IFormatProvider formatProvider/*, AlertHourCollection alertHourCollection*/) {
+        private string GetAlertHTML(Alert alert, int lang, long idWebText, string dayName, IFormatProvider formatProvider, AlertHourCollection alertHourCollection) {
             StringBuilder html = new StringBuilder(5000);
-            html.Append(GestionWeb.GetWebWord(1293, lang) + " : ");
 
+            html.Append("<b><u>" + GestionWeb.GetWebWord(2602, lang) + "</u></b><br /><br />");
+
+            html.Append("<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">");
+            
+            #region Periodicity
+            html.AppendFormat("<tr><th>{0}</th>", GestionWeb.GetWebWord(1293, lang));
             switch (alert.Periodicity) {
                 case TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity.Daily:
-                    html.Append(GestionWeb.GetWebWord(2579, lang) + "<br />");
+                    html.AppendFormat("<td>{0}</td></tr>", GestionWeb.GetWebWord(2579, lang) + "<br />");
                     break;
                 case TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity.Weekly:
-                    html.Append(GestionWeb.GetWebWord(2580, lang));
-                    html.Append("<br />");
-                    html.Append(GestionWeb.GetWebWord(2603, lang) + " : ");
-                    html.Append(GestionWeb.GetWebWord(2604, lang) + " ");
+                    html.AppendFormat("<td>{0}</td>", GestionWeb.GetWebWord(2580, lang));
+                    html.Append("</tr><tr>");
+                    html.AppendFormat("<th>{0}</th>", GestionWeb.GetWebWord(2603, lang));
+                    html.AppendFormat("<td>{0}</td>", GestionWeb.GetWebWord(2604, lang));
                     html.Append(dayName);
-                    html.Append("<br />");
+                    html.Append("</tr>");
                     break;
                 case TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity.Monthly:
-                    html.Append(GestionWeb.GetWebWord(1294, lang));
-                    html.Append("<br />");
-                    html.Append(GestionWeb.GetWebWord(2603, lang) + " : ");
-                    html.Append(GestionWeb.GetWebWord(2605, lang) + " ");
-                    html.Append(alert.PeriodicityValue.ToString());
-                    html.Append("<br />");
+                    html.AppendFormat("<td>{0}</td>", GestionWeb.GetWebWord(1294, lang));
+                    html.Append("</tr><tr>");
+                    html.AppendFormat("<th>{0}</th>", GestionWeb.GetWebWord(2603, lang));
+                    html.AppendFormat("<td>{0} {1}</td>", GestionWeb.GetWebWord(2605, lang), alert.PeriodicityValue.ToString());
+                    html.Append("</tr>");
                     break;
             }
+            #endregion
 
-            /*if (alertHourCollection != null && alertHourCollection.Count > 0) {
+            #region Planification horaire
+            if (alertHourCollection != null && alertHourCollection.Count > 0) {
                 for (int i = 0; i < alertHourCollection.Count; i++) {
                     if (alertHourCollection[i].IdAlertSchedule == alert.IdAlertSchedule) {
-                        html.Append(GestionWeb.GetWebWord(2614, lang) + " : ");
-                        html.Append(string.Format(formatProvider, "{0:alertSchedule}", (new DateTime(alertHourCollection[i].HoursSchedule.Ticks))) + "<br />");
+                        html.Append("<tr>");
+                        html.AppendFormat("<th>{0}</th>", GestionWeb.GetWebWord(2614, lang));
+                        html.AppendFormat("<td>{0}</td>", string.Format(formatProvider, "{0:alertSchedule}", (new DateTime(alertHourCollection[i].HoursSchedule.Ticks))));
+                        html.Append("</tr>");
                         break;
                     }
                 }
-            }*/
+            }
+            #endregion
 
-            html.Append(GestionWeb.GetWebWord(2606, lang) + " : ");
-            html.Append(string.Format(formatProvider, "{0:shortdatepattern}", alert.ExpirationDate) + "<br />");
+            #region Expiration Date
+            html.Append("<tr>");
+            html.AppendFormat("<th>{0}</th>", GestionWeb.GetWebWord(2606, lang));
+            html.AppendFormat("<td>{0}</td>", string.Format(formatProvider, "{0:shortdatepattern}", alert.ExpirationDate));
+            html.Append("</tr>");
+            #endregion
 
-            html.Append(GestionWeb.GetWebWord(2607, lang) + " : ");
-            html.Append(GestionWeb.GetWebWord(idWebText, lang) + "<br />");
+            #region Alert Type (Module)
+            html.Append("<tr>");
+            html.AppendFormat("<th>{0}</th>", GestionWeb.GetWebWord(2607, lang));
+            html.AppendFormat("<td>{0}</td>", GestionWeb.GetWebWord(idWebText, lang));
+            html.Append("</tr>");
+            #endregion
+
+            #region Mails
+            string[] mailList = alert.Recipients.Split(';');
+            for (int i = 0; i < mailList.Length; i++) {
+                html.Append("<tr>");
+                if (i == 0) html.AppendFormat("<th>{0}</th>", GestionWeb.GetWebWord(2483, lang));
+                else html.Append("<th></th>");
+                html.AppendFormat("<td>{0}</td>", mailList[i]);
+                html.Append("</tr>");
+            }
+            #endregion
+
+            html.Append("</table>");
 
             return (html.ToString());
         }

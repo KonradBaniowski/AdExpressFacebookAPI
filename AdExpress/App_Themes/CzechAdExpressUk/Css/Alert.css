@@ -141,19 +141,57 @@ div.block-valid-alert a
 div.block-valid-alert ul
 {
 	margin: 0px;
-	padding: 1% 0px 1% 5%;	
-	width: 35%;
+	padding: 1% 0px 1% 50px;	
 	float: left;
 	background-color: #DED8E5;
 }
 
 div.block-alert-details
 {
-	width: 50%;
 	float: left;
-	color: #644883;
 	padding-top: 5px;
+	padding-right:5%;
 	background-color: #DED8E5;
+}
+
+div.block-alert-details div
+{
+	min-width:10px;
+	float:left;
+	padding-left:50px;
+	text-align:left;
+}
+
+div.block-alert-details div u
+{
+	text-align:left;
+}
+
+div.block-alert-details div 
+{
+	text-align:left;
+}
+
+div.block-alert-details div table
+{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+}
+
+div.block-alert-details div table tr th
+{
+	text-align:left;
+}
+
+div.block-alert-details div table tr td
+{
+	padding-left:10px;
+}
+
+div.block-alert-details,
+div.block-alert-details div  table
+{
+	color: #644883;
 }
 
 div.block-valid-alert div
