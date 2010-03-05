@@ -28,11 +28,15 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.UI;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpressI.Date;
 using System.Reflection;
 using TNS.AdExpress.Constantes.Classification.DB;
 using System.Collections.Generic;
+using TNS.Ares.Alerts.DAL;
+using TNS.Ares.Domain.LS;
+using TNS.Alert.Domain;
+using TNS.Ares.Domain.Layers;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 namespace AdExpress.Private.MyAdExpress{
 	/// <summary>
@@ -87,6 +91,10 @@ namespace AdExpress.Private.MyAdExpress{
 		#endregion
 		
 		#region Variables
+        /// <summary>
+        /// Affiche la période dans page aspx
+        /// </summary>
+        public bool displayPeriod = false;
 		/// <summary>
 		/// _webSession sauvegardée dans mon AdExpress
 		/// </summary>
@@ -175,6 +183,10 @@ namespace AdExpress.Private.MyAdExpress{
         /// Affiche le type de la disponibilité des données dans la page aspx
         /// </summary>
         public bool displayPeriodDisponibilityType = false;
+        /// <summary>
+        /// Affiche les media dans page aspx
+        /// </summary>
+        public bool displayMedia = false;
 		#endregion
 		
 		#region Constructeur
@@ -210,9 +222,28 @@ namespace AdExpress.Private.MyAdExpress{
                 bool verifCustomerPeriod = false;
                 CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
 				#endregion
-			
-				idMySession = Int64.Parse(Page.Request.QueryString.Get("idMySession"));
-				webSessionSave=(WebSession)MySessionDataAccess.GetResultMySession(idMySession.ToString(),_webSession);
+
+                // Loading Data Access Layer
+                DataAccessLayer layer = PluginConfiguration.GetDataAccessLayer(PluginDataAccessLayerName.Alert);
+                TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
+                IAlertDAL alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null, null);
+
+               
+                try {
+                    if (Page.Request.QueryString.Get("idAlertSession") != null) {
+                        int idAlert = Int32.Parse(Page.Request.QueryString.Get("idAlertSession"));
+                        Alert alert = alertDAL.GetAlert(idAlert);
+                        webSessionSave = (WebSession)alert.Session;
+                        mySessionLabel.Text = alert.Title;
+                    }
+                    else {
+                        idMySession = Int64.Parse(Page.Request.QueryString.Get("idMySession"));
+                        webSessionSave = (WebSession)MySessionDataAccess.GetResultMySession(idMySession.ToString(), _webSession);
+                        mySessionLabel.Text = TNS.AdExpress.Web.DataAccess.MyAdExpress.MySessionsDataAccess.GetSession(idMySession, _webSession);
+                    }
+                }
+                catch (Exception) {
+                }				
 
 				#region Langage
 				//Modification de la langue pour les Textes AdExpress
@@ -404,81 +435,12 @@ namespace AdExpress.Private.MyAdExpress{
                 #endregion
 
 				#region période
-				switch(webSessionSave.PeriodType){
-					case CstCustomerSession.Period.Type.nLastMonth:
-						periodText=webSessionSave.PeriodLength.ToString()+" "+GestionWeb.GetWebWord(783,_webSession.SiteLanguage);					
-						infoDateLabel1.Text=periodText;							
-						break;
-					case CstCustomerSession.Period.Type.nLastYear:
-						periodText=webSessionSave.PeriodLength.ToString()+" "+GestionWeb.GetWebWord(781,_webSession.SiteLanguage);					
-						infoDateLabel1.Text=periodText;				
-						break;
-					case CstCustomerSession.Period.Type.previousMonth:
-						infoDateLabel1.Text=GestionWeb.GetWebWord(788,_webSession.SiteLanguage);
-						break;
-					case CstCustomerSession.Period.Type.previousYear:
-						infoDateLabel1.Text=GestionWeb.GetWebWord(787,_webSession.SiteLanguage);
-						break;
-						// Année courante		
-					case  CstCustomerSession.Period.Type.currentYear:
-						infoDateLabel1.Text=GestionWeb.GetWebWord(1228,_webSession.SiteLanguage);
-						break;
-						// Année N-2
-					case CstCustomerSession.Period.Type.nextToLastYear:
-						infoDateLabel1.Text=GestionWeb.GetWebWord(1229,_webSession.SiteLanguage);
-						break;
-					case CstCustomerSession.Period.Type.dateToDateMonth:
-						string monthBegin;
-						string monthEnd;
-						if(int.Parse(webSessionSave.PeriodBeginningDate.ToString().Substring(4,2))<10){
-							monthBegin=TNS.FrameWork.Date.MonthString.GetCharacters(int.Parse(webSessionSave.PeriodBeginningDate.ToString().Substring(5,1)),cultureInfo,10);
-						}
-						else{
-							monthBegin=TNS.FrameWork.Date.MonthString.GetCharacters(int.Parse(webSessionSave.PeriodBeginningDate.ToString().Substring(4,2)),cultureInfo,10);
-						}
-						if(int.Parse(webSessionSave.PeriodEndDate.ToString().Substring(4,2))<10){
-							monthEnd=TNS.FrameWork.Date.MonthString.GetCharacters(int.Parse(webSessionSave.PeriodEndDate.ToString().Substring(5,1)),cultureInfo,10);
-						}
-						else{
-							monthEnd=TNS.FrameWork.Date.MonthString.GetCharacters(int.Parse(webSessionSave.PeriodEndDate.ToString().Substring(4,2)),cultureInfo,10);
-						}					
-						periodText=GestionWeb.GetWebWord(846,_webSession.SiteLanguage)+" "+monthBegin+" "+GestionWeb.GetWebWord(847,_webSession.SiteLanguage)+" "+monthEnd;
-						infoDateLabel1.Text=periodText;					
-						break;
-					case CstCustomerSession.Period.Type.dateToDateWeek:
-						AtomicPeriodWeek tmp=new AtomicPeriodWeek(int.Parse(webSessionSave.PeriodBeginningDate.Substring(0,4)),int.Parse(webSessionSave.PeriodBeginningDate.ToString().Substring(4,2)));
-						periodText=tmp.FirstDay.Date.ToString("dd/MM/yyyy");
-						tmp=new AtomicPeriodWeek(int.Parse(webSessionSave.PeriodEndDate.Substring(0,4)),int.Parse(webSessionSave.PeriodEndDate.ToString().Substring(4,2)));
-						periodText+=" "+GestionWeb.GetWebWord(125,_webSession.SiteLanguage)+"";
-						periodText+=" "+tmp.LastDay.Date.ToString("dd/MM/yyyy")+"";
-						infoDateLabel1.Text=periodText;
-						break;
-                    case CstCustomerSession.Period.Type.nLastWeek:
-						infoDateLabel1.Text=webSessionSave.PeriodLength.ToString()+" "+GestionWeb.GetWebWord(784,_webSession.SiteLanguage);
-						break;
-                    case CstCustomerSession.Period.Type.previousWeek:
-						infoDateLabel1.Text=GestionWeb.GetWebWord(789,_webSession.SiteLanguage);
-						break;
-					case CstCustomerSession.Period.Type.dateToDate:
-						dateBegin = DateString.YYYYMMDDToDD_MM_YYYY(webSessionSave.PeriodBeginningDate.ToString(),_webSession.SiteLanguage);
-						dateEnd = DateString.YYYYMMDDToDD_MM_YYYY(webSessionSave.PeriodEndDate.ToString(),_webSession.SiteLanguage);
-						periodText=GestionWeb.GetWebWord(896,_webSession.SiteLanguage)+" "+dateBegin+" "+GestionWeb.GetWebWord(897,_webSession.SiteLanguage)+" "+dateEnd;
-						infoDateLabel1.Text=periodText;
-						break;
-					case CstCustomerSession.Period.Type.cumlDate:
-						dateBegin=DateString.YYYYMMDDToDD_MM_YYYY(_webSession.PeriodBeginningDate,_webSession.SiteLanguage);
-						dateEnd=DateString.YYYYMMDDToDD_MM_YYYY( _webSession.PeriodEndDate,_webSession.SiteLanguage);
-
-						periodText=GestionWeb.GetWebWord(896,_webSession.SiteLanguage)+" "+dateBegin+" "+GestionWeb.GetWebWord(897,_webSession.SiteLanguage)+" "+dateEnd;
-						infoDateLabel1.Text=periodText;
-						break;
-                    case CstCustomerSession.Period.Type.nLastDays:
-						infoDateLabel1.Text=webSessionSave.PeriodLength.ToString()+" "+GestionWeb.GetWebWord(1974,_webSession.SiteLanguage);
-						break;
-					case CstCustomerSession.Period.Type.previousDay:
-						infoDateLabel1.Text=GestionWeb.GetWebWord(1975,_webSession.SiteLanguage);
-						break;
-				}		
+                if (displayPeriod = (webSessionSave.isDatesSelected() && webSessionSave.CurrentModule!= TNS.AdExpress.Constantes.Web.Module.Name.TENDACES)) {
+                    int languageTemp = webSessionSave.SiteLanguage;
+                    webSessionSave.SiteLanguage = _webSession.SiteLanguage;
+                    infoDateLabel1.Text = HtmlFunctions.GetPeriodDetail(webSessionSave);
+                    webSessionSave.SiteLanguage = languageTemp;
+				}
 				#endregion
 
                 if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE
@@ -533,10 +495,11 @@ namespace AdExpress.Private.MyAdExpress{
 				}
 				#endregion
 
-				mySessionLabel.Text = TNS.AdExpress.Web.DataAccess.MyAdExpress.MySessionsDataAccess.GetSession(idMySession,_webSession);
-				unitLabel.Text=GestionWeb.GetWebWord(webSessionSave.GetSelectedUnit().WebTextId,_webSession.SiteLanguage);	
-	
-				mediaText= TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSessionSave.SelectionUniversMedia,false,false,false,600,false,false,_webSession.SiteLanguage,2,1,true);
+				unitLabel.Text=GestionWeb.GetWebWord(webSessionSave.GetSelectedUnit().WebTextId,_webSession.SiteLanguage);
+
+                if (displayMedia = webSessionSave.isMediaSelected()) {
+                    mediaText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSessionSave.SelectionUniversMedia, false, false, false, 600, false, false, _webSession.SiteLanguage, 2, 1, true);
+                }
 				//if(webSessionSave.isAdvertisersSelected()){
 				//    advertiserText=TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSessionSave.SelectionUniversAdvertiser,false,true,true,600,true,false,_webSession.SiteLanguage,2,1,true);
 			
@@ -715,7 +678,7 @@ namespace AdExpress.Private.MyAdExpress{
 					selectItemsInClassificationWebControl.TreeIncludeFrameCss = "treeIncludeFrameCss";
 					selectItemsInClassificationWebControl.TreeIncludeFrameHeaderCss = "treeIncludeFrameHeaderCss";
 					selectItemsInClassificationWebControl.SiteLanguage = _webSession.SiteLanguage;
-					selectItemsInClassificationWebControl.DBSchema = TNS.AdExpress.Constantes.DB.Schema.ADEXPRESS_SCHEMA;
+                    selectItemsInClassificationWebControl.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
 					for (int k = 0; k < webSessionSave.PrincipalProductUniverses.Count; k++) {
 						if (webSessionSave.PrincipalProductUniverses.Count > 1) {
 							if (webSessionSave.PrincipalProductUniverses.ContainsKey(k)) {
@@ -1011,7 +974,7 @@ namespace AdExpress.Private.MyAdExpress{
         /// </summary>
         private void UpdateGlobalDates(CstCustomerSession.Period.Type type, WebSession webSessionSave, DateTime FirstDayNotEnable) {
 
-            CoreLayer cl = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.date];
+            TNS.AdExpress.Domain.Layers.CoreLayer cl = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.date];
             IDate date = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
 
             date.UpdateDate(type, ref _webSession, webSessionSave, FirstDayNotEnable);

@@ -223,7 +223,7 @@ namespace AdExpress.Private.Alerts{
         /// <param name="e">Data binding parameter, which contains an Alert object</param>
         protected void alertsItemBinding(object sender, RepeaterItemEventArgs e)
         {
-            string theme = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
+            System.Web.UI.Control control = null;
             Alert alert = (Alert)e.Item.DataItem;
             AlertOccurenceCollection occurrences = alertDAL.GetOccurrences(alert.AlertId);
 
@@ -231,19 +231,35 @@ namespace AdExpress.Private.Alerts{
             HtmlContainerControl headerAlert = (HtmlContainerControl)e.Item.FindControl("headerAlert");
             headerAlert.InnerHtml += String.Format(" - {0} {1}", occurrences.Count, (occurrences.Count <= 1 ? GestionWeb.GetWebWord(2600, _siteLanguage) : GestionWeb.GetWebWord(2601, _siteLanguage)));
 
-            System.Web.UI.Control control = GetControl(repeaterAlerts.Controls[e.Item.ItemIndex].Controls, "flagStatus");
+            #region Detail Selection Display
+            System.Web.UI.WebControls.Image imageDs = null;
+            control = GetControl(repeaterAlerts.Controls[e.Item.ItemIndex].Controls, "detailSelection");
+            if (control == null) throw new Exception("The control 'detailSelection' is not defined in Page showAlerts");
+            if (control.GetType() == typeof(System.Web.UI.WebControls.Image))
+                imageDs = (System.Web.UI.WebControls.Image)control;
+            imageDs.ImageUrl = "/App_Themes/" + this.Theme + "/Images/Common/Result/bt_detail_up.gif";
+            imageDs.Attributes.Add("onmouseover", "this.src='/App_Themes/" + this.Theme + "/Images/Common/Result/bt_detail_down.gif'");
+            imageDs.Attributes.Add("onmouseout", "this.src='/App_Themes/" + this.Theme + "/Images/Common/Result/bt_detail_up.gif'");
+            imageDs.Attributes.Add("onclick", GetLinkPagePopupDetail(alert.AlertId));
+            imageDs.Style.Add("cursor", "hand");
+            #endregion
+
+            #region Flags Display
+            control = GetControl(repeaterAlerts.Controls[e.Item.ItemIndex].Controls, "flagStatus");
+
             System.Web.UI.WebControls.Image imageFc = null;
             if(control == null) throw new Exception("The control 'flagStatus' is not defined in Page showAlerts");
             if(control.GetType() == typeof(System.Web.UI.WebControls.Image))
                 imageFc = (System.Web.UI.WebControls.Image)control;
             switch(alert.Status) {
                 case AlertStatuses.ToDelete:
-                    imageFc.ImageUrl = "/App_Themes/" + theme + "/Images/Common/flagUnactive.gif";
+                    imageFc.ImageUrl = "/App_Themes/" + this.Theme + "/Images/Common/flagUnactive.gif";
                     break;
                 case AlertStatuses.Activated:
-                    imageFc.ImageUrl = "/App_Themes/" + theme + "/Images/Common/flagActivated.gif";
+                    imageFc.ImageUrl = "/App_Themes/" + this.Theme + "/Images/Common/flagActivated.gif";
                     break;
             }
+            #endregion
 
             // Checking if this alert has any occurrence. If so, binding the
             // inner repeater to the occurrences collection
@@ -258,6 +274,16 @@ namespace AdExpress.Private.Alerts{
                 // Changing occurrences' list visibility
                 HtmlContainerControl listOccurrences = (HtmlContainerControl)e.Item.FindControl("listOccurrences");
                 listOccurrences.Visible = true;
+
+
+                //pictureArrowContent.atrr
+                System.Web.UI.WebControls.Image imagePictureArrowContent = null;
+                control = GetControl(repeaterAlerts.Controls[e.Item.ItemIndex].Controls, "pictureArrowContent");
+                if (control == null) throw new Exception("The control 'pictureArrowContent' is not defined in Page showAlerts");
+                if (control.GetType() == typeof(System.Web.UI.WebControls.Image))
+                    imagePictureArrowContent = (System.Web.UI.WebControls.Image)control;
+                imagePictureArrowContent.Attributes.Add("onclick", String.Format("var elem = document.getElementById('{0}'); ", contentContainer.ClientID) + "if (elem.style.display == '') { elem.style.display = 'none'; } else { elem.style.display = ''; } ;");
+                imagePictureArrowContent.Style.Add("cursor", "hand");
                 headerAlert.Attributes.Add("onclick", String.Format("var elem = document.getElementById('{0}'); ", contentContainer.ClientID) + "if (elem.style.display == '') { elem.style.display = 'none'; } else { elem.style.display = ''; } ;");
 
                 // Setting the alert detailed information
@@ -1102,6 +1128,12 @@ namespace AdExpress.Private.Alerts{
                     SetAllTextLanguage(currentControl.Controls, language);
                 }
             }
+        }
+        #endregion
+
+        #region GetPagePopupDetail
+        private string GetLinkPagePopupDetail(int idAlert) {
+            return "javascript:var a = new function(){window.open('/Private/MyAdExpress/MySessionDetailPopUp.aspx?idAlertSession="+idAlert+"&idSession=" + _webSession.IdSession + "','','width=660,height=700,toolbar=no,scrollbars=yes,resizable=no');}; return false; ";
         }
         #endregion
 

@@ -320,7 +320,8 @@
 													        <div class="block-valid-alert">
 													            <div style="height: 20px">
 													                <asp:Image ID="flagStatus" runat="server" SkinID="alertFlagPending" ImageAlign="Left"/>
-													                <asp:Image ID="Image65" runat="server" SkinID="bt_arrow_down" height="15" width="15" ImageAlign="Right"/>
+													                <asp:Image ID="pictureArrowContent" runat="server" SkinID="bt_arrow_down" height="15" width="15" ImageAlign="Right"/>
+													                <asp:Image ID="detailSelection" runat="server" ImageAlign="Right" />
 												                    <h2 id="headerAlert" runat="server" style="text-align:left;">
 												                        <%# DataBinder.Eval(Container.DataItem, "Title") %>
 												                    </h2>

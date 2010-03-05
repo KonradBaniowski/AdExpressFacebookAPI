@@ -48,6 +48,7 @@
 				</TR>
 				<%}%>
 				<!--Période-->
+				<%if(displayPeriod){%>
 				<TR>
 					<TD></TD>
 					<TD class="txtViolet11Bold whiteBackGround">&nbsp;
@@ -62,6 +63,7 @@
 					<TD colSpan="2"></TD>
 				</TR>
 				<!--Période de l'étude-->
+				<%}%>
 				<%if(displayStudyPeriod){%>
 				<TR>
 					<TD></TD>
@@ -142,6 +144,7 @@
 				</TR>
 				<%}%>
 				<!--Média-->
+				<%if(displayMedia){%>
 				<TR>
 					<TD></TD>
 					<TD class="txtViolet11Bold whiteBackGround">&nbsp;
@@ -158,6 +161,7 @@
 				<TR height="7">
 					<TD colSpan="2"></TD>
 				</TR>
+				<%}%>
 				<!-- Détail Média -->
 				<%if(displayDetailMedia){%>
 				<TR height="5">
