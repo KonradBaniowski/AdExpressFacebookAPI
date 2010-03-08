@@ -151,7 +151,7 @@ public partial class Private_Alerts_ShowAlert : TNS.AdExpress.Web.UI.PrivateWebP
                             case ModuleName.NEW_CREATIVES:
                                 // Updated customer period (module use globalCalendar)
                                 _webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(occ.DateBeginStudy.ToString("yyyyMMdd"), occ.DateEndStudy.ToString("yyyyMMdd"),
-                                                                                                       _webSession.ComparativeStudy, _webSession.CustomerPeriodSelected.ComparativePeriodType,
+                                                                                                       _webSession.CustomerPeriodSelected.WithComparativePeriod, _webSession.CustomerPeriodSelected.ComparativePeriodType,
                                                                                                        _webSession.CustomerPeriodSelected.PeriodDisponibilityType);
                                 break;
                             default:
