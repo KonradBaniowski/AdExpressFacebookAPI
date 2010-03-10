@@ -1846,5 +1846,8 @@
     <item mnemonic="w2658" type="System.String">!</item>
     <item mnemonic="w2659" type="System.String">!</item>
     <item mnemonic="w2660" type="System.String">Votre alerte a bien été prise en compte. Elle sera validée par TNS dans les plus brefs délais.</item>
+    <item mnemonic="w2661" type="System.String">Variétés</item>
+    <item mnemonic="w2662" type="System.String">Sous marques</item>
+    <item mnemonic="w2663" type="System.String">!</item>
   </items>
 </localization>
