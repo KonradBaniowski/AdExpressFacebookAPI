@@ -1831,10 +1831,10 @@
     <item mnemonic="w2643" type="System.String">Détail des versions de la television non-terrestre</item>
     <item mnemonic="w2644" type="System.String">publicité en salle</item>
     <item mnemonic="w2645" type="System.String">Votre selection calendaire est incorrecte</item>
-    <item mnemonic="w2646" type="System.String">!</item>
-    <item mnemonic="w2647" type="System.String">!</item>
-    <item mnemonic="w2648" type="System.String">!</item>
-    <item mnemonic="w2649" type="System.String">!</item>
+    <item mnemonic="w2646" type="System.String">RUB</item>
+    <item mnemonic="w2647" type="System.String">KRUB</item>
+    <item mnemonic="w2648" type="System.String">USD</item>
+    <item mnemonic="w2649" type="System.String">KUSD</item>
     <item mnemonic="w2650" type="System.String">!</item>
     <item mnemonic="w2651" type="System.String">!</item>
     <item mnemonic="w2652" type="System.String">!</item>
@@ -1844,7 +1844,7 @@
     <item mnemonic="w2656" type="System.String">!</item>
     <item mnemonic="w2657" type="System.String">!</item>
     <item mnemonic="w2658" type="System.String">!</item>
-    <item mnemonic="w2659" type="System.String">!</item>
+    <item mnemonic="w2659" type="System.String">!</item>    
     <item mnemonic="w2660" type="System.String">Votre alerte a bien été prise en compte. Elle sera validée par TNS dans les plus brefs délais.</item>
     <item mnemonic="w2661" type="System.String">Variétés</item>
     <item mnemonic="w2662" type="System.String">Sous marques</item>

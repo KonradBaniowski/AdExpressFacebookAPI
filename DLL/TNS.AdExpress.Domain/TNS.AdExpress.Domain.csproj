@@ -237,6 +237,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\AdExpress.en-ru.xml" />
     <Content Include="Resources\AdExpress.en.xml" />
     <Content Include="Resources\AdExpress.fi.xml" />
     <Content Include="Resources\AdExpress.fr.xml" />
