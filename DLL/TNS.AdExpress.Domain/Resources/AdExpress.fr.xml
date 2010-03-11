@@ -1849,5 +1849,10 @@
     <item mnemonic="w2661" type="System.String">Variétés</item>
     <item mnemonic="w2662" type="System.String">Sous marques</item>
     <item mnemonic="w2663" type="System.String">!</item>
+    <item mnemonic="w2664" type="System.String">!</item>
+    <item mnemonic="w2665" type="System.String">Publicité Intérieure</item>
+    <item mnemonic="w2666" type="System.String">PUBLICITE INTERIEURE</item>
+    <item mnemonic="w2667" type="System.String">Détail des versions de la publicité intérieure</item>
+    <item mnemonic="w2668" type="System.String">Aucun résultats : vous n'avez pas les droits suffisants pour accéder aux détails des insertions de la Publicité Intérieure.</item>
   </items>
 </localization>
