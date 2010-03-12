@@ -138,8 +138,8 @@ namespace TNS.AdExpress.Web.Rules.Results{
 					//Récupération des données pour identifiant média (vehicle) issu de la sélection de l'onglet correspondant.
 					if(idVehicle!=null && idVehicle.Length>0 && long.Parse(idVehicle.ToString())>-1){
 						//Pas de droit publicité extérieure
-						if(!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)
-							&& VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString()))==CstClassification.DB.Vehicles.names.outdoor ){
+						if((!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) && VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString()))==CstClassification.DB.Vehicles.names.outdoor )
+                            || (!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_INSTORE_ACCESS_FLAG) && VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString()))==CstClassification.DB.Vehicles.names.instore )){
 							ds = null;
 						}
 						else{
@@ -156,8 +156,8 @@ namespace TNS.AdExpress.Web.Rules.Results{
 				else{
 					//Récupération des données
 						//Pas de droit publicité extérieure
-					if (!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)
-							&& VehiclesInformation.DatabaseIdToEnum(long.Parse(idMediaLevel1.ToString()))==CstClassification.DB.Vehicles.names.outdoor ){
+					if ((!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) && VehiclesInformation.DatabaseIdToEnum(long.Parse(idMediaLevel1.ToString()))==CstClassification.DB.Vehicles.names.outdoor)
+                        || (!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_INSTORE_ACCESS_FLAG) && VehiclesInformation.DatabaseIdToEnum(long.Parse(idMediaLevel1.ToString()))==CstClassification.DB.Vehicles.names.instore)){
 							ds = null;
 						}
 						else 
@@ -182,7 +182,9 @@ namespace TNS.AdExpress.Web.Rules.Results{
 					case CstClassification.DB.Vehicles.names.others :
 						return GetDataTV(ds,webSession,fieldsList);
 					case CstClassification.DB.Vehicles.names.outdoor :
-						return GetDataOutDoor(ds,webSession,fieldsList);
+                        return GetDataOutDoor(ds, webSession, fieldsList);
+                    case CstClassification.DB.Vehicles.names.instore:
+                        return GetDataInStore(ds, webSession, fieldsList);
                     case CstClassification.DB.Vehicles.names.directMarketing:
                         return GetDataMD(ds, webSession, fieldsList, mediaImpactedList);
 					default:
@@ -811,6 +813,144 @@ namespace TNS.AdExpress.Web.Rules.Results{
 			
 			return tab;
 		}
+        private static object[,] GetDataInStore(DataSet ds, WebSession webSession, ArrayList fieldsList) {
+
+            object[,] tab = null;
+            bool first = true;
+            bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
+            if (!webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_INSTORE_ACCESS_FLAG)) {
+                return tab;
+            }
+            int i = -1;
+
+            if (IsRequiredGenericColmuns(webSession)) {
+
+
+                #region détail insertion avec les colonnes génériques
+
+
+                if (fieldsList != null && fieldsList.Count > 0) {
+                    tab = new object[ds.Tables[0].Rows.Count + 1, fieldsList.Count];
+
+
+                    //1ere ligne contiendra les libellés des champs de données
+                    for (int k = 0; k < fieldsList.Count; k++) {
+                        tab[0, k] = fieldsList[k].ToString();
+                    }
+                    bool isColumnsContainsVisual = (ds != null) && ds.Tables[0].Columns.Contains(ASSOCIATED_FILE);
+
+                    //On remplit chaque ligne du tableau de résultats
+                    for (i = 0; i < ds.Tables[0].Rows.Count; i++) {
+                        for (int j = 0; j < fieldsList.Count; j++) {
+                            if (ds.Tables[0].Columns.Contains(ASSOCIATED_FILE) && fieldsList[j].ToString().Equals(ASSOCIATED_FILE)) {
+
+                                #region Construction chemin d'accès aux visuels
+
+
+                                if (isColumnsContainsVisual && ds.Tables[0].Rows[i][ASSOCIATED_FILE] != System.DBNull.Value) {
+
+                                    //visuels disponible
+                                    string[] files = ds.Tables[0].Rows[i][ASSOCIATED_FILE].ToString().Split(',');
+                                    string pathWeb = string.Empty;
+                                    string idAssociatedFile = ds.Tables[0].Rows[i][ASSOCIATED_FILE].ToString();
+
+                                    pathWeb = CstWeb.CreationServerPathes.IMAGES_INSTORE;
+                                    string dir1 = idAssociatedFile.Substring(idAssociatedFile.Length - 8, 1);
+                                    pathWeb = string.Format(@"{0}/{1}", pathWeb, dir1);
+                                    string dir2 = idAssociatedFile.Substring(idAssociatedFile.Length - 9, 1);
+                                    pathWeb = string.Format(@"{0}/{1}", pathWeb, dir2);
+                                    string dir3 = idAssociatedFile.Substring(idAssociatedFile.Length - 10, 1);
+                                    pathWeb = string.Format(@"{0}/{1}/Imagette/", pathWeb, dir3);
+
+                                    for (int m = 0; m < files.Length; m++) {
+
+                                        if (first) { tab[i + 1, j] = pathWeb + files[m]; }
+                                        else { tab[i + 1, j] += "," + pathWeb + files[m]; }
+                                        first = false;
+                                    }
+                                    first = true;
+
+                                }
+                                else
+                                    tab[i + 1, j] = "";
+                                #endregion
+
+                            }
+                            else
+                                tab[i + 1, j] = ApplyColumnRule(webSession, fieldsList[j].ToString(), ds.Tables[0].Rows[i][fieldsList[j].ToString()]);
+
+                        }
+                    }
+                }
+
+                #endregion
+
+            }
+            else {
+
+                #region détail insertion sans les colonnes génériques
+                tab = new object[ds.Tables[0].Rows.Count + 1, ds.Tables[0].Columns.Count + 1];
+
+
+                foreach (DataRow currentRow in ds.Tables[0].Rows) {
+                    i++;
+                    tab[i, CstWeb.OutDoorInsertionsColumnIndex.DATE_INDEX] = (new DateTime(
+                        int.Parse(currentRow["date_media_num"].ToString().Substring(0, 4)),
+                        int.Parse(currentRow["date_media_num"].ToString().Substring(4, 2)),
+                        int.Parse(currentRow["date_media_num"].ToString().Substring(6, 2)))).ToString("dd/MM/yyyy");
+                    tab[i, CstWeb.OutDoorInsertionsColumnIndex.ADVERTISER_INDEX] = (currentRow["advertiser"] != System.DBNull.Value) ? currentRow["advertiser"].ToString() : "";
+                    if (showProduct)
+                        tab[i, CstWeb.OutDoorInsertionsColumnIndex.PRODUCT_INDEX] = (currentRow["product"] != System.DBNull.Value) ? currentRow["product"].ToString() : "";
+                    tab[i, CstWeb.OutDoorInsertionsColumnIndex.GROUP_INDEX] = (currentRow["group_"] != System.DBNull.Value) ? currentRow["group_"].ToString() : "";
+                    tab[i, CstWeb.OutDoorInsertionsColumnIndex.NUMBER_BOARD_INDEX] = (currentRow[UnitsInformation.List[CstWeb.CustomerSessions.Unit.numberBoard].Id.ToString()] != System.DBNull.Value) ? currentRow[UnitsInformation.List[CstWeb.CustomerSessions.Unit.numberBoard].Id.ToString()].ToString() : "";
+                    tab[i, CstWeb.OutDoorInsertionsColumnIndex.TYPE_BOARD_INDEX] = (currentRow["type_board"] != System.DBNull.Value) ? currentRow["type_board"].ToString() : "";
+                    tab[i, CstWeb.OutDoorInsertionsColumnIndex.TYPE_SALE_INDEX] = (currentRow["type_sale"] != System.DBNull.Value) ? currentRow["type_sale"].ToString() : "";
+                    tab[i, CstWeb.OutDoorInsertionsColumnIndex.POSTER_NETWORK_INDEX] = (currentRow["poster_network"] != System.DBNull.Value) ? currentRow["poster_network"].ToString() : "";
+                    tab[i, CstWeb.OutDoorInsertionsColumnIndex.EXPENDITURE_INDEX] = (currentRow[UnitsInformation.List[CstWeb.CustomerSessions.Unit.euro].Id.ToString()] != System.DBNull.Value) ? currentRow[UnitsInformation.List[CstWeb.CustomerSessions.Unit.euro].Id.ToString()].ToString() : "";
+                    tab[i, CstWeb.OutDoorInsertionsColumnIndex.VEHICLE_INDEX] = (currentRow["vehicle"] != System.DBNull.Value) ? currentRow["vehicle"].ToString() : "";
+                    tab[i, CstWeb.OutDoorInsertionsColumnIndex.CATEGORY_INDEX] = (currentRow["category"] != System.DBNull.Value) ? currentRow["category"].ToString() : "";
+                    tab[i, CstWeb.OutDoorInsertionsColumnIndex.MEDIA_INDEX] = (currentRow["media"] != System.DBNull.Value) ? currentRow["media"].ToString() : "";
+                    if (!webSession.isCompetitorAdvertiserSelected()) {
+                        tab[i, CstWeb.OutDoorInsertionsColumnIndex.INTEREST_CENTER_INDEX] = (currentRow["interest_center"] != System.DBNull.Value) ? currentRow["interest_center"].ToString() : "";
+                        tab[i, CstWeb.OutDoorInsertionsColumnIndex.MEDIA_SELLER_INDEX] = (currentRow["media_seller"] != System.DBNull.Value) ? currentRow["media_seller"].ToString() : "";
+                    }
+                    tab[i, CstWeb.OutDoorInsertionsColumnIndex.AGGLOMERATION_INDEX] = (currentRow["agglomeration"] != System.DBNull.Value) ? currentRow["agglomeration"].ToString() : "";
+                    if (currentRow[ASSOCIATED_FILE] != System.DBNull.Value) {
+
+                        //visuels disponible
+                        string[] files = currentRow[ASSOCIATED_FILE].ToString().Split(',');
+                        string pathWeb = string.Empty;
+                        string idAssociatedFile = currentRow[ASSOCIATED_FILE].ToString();
+                        pathWeb = CstWeb.CreationServerPathes.IMAGES_INSTORE;
+                        string dir1 = idAssociatedFile.Substring(idAssociatedFile.Length - 8, 1);
+                        pathWeb = string.Format(@"{0}/{1}", pathWeb, dir1);
+                        string dir2 = idAssociatedFile.Substring(idAssociatedFile.Length - 9, 1);
+                        pathWeb = string.Format(@"{0}/{1}", pathWeb, dir2);
+                        string dir3 = idAssociatedFile.Substring(idAssociatedFile.Length - 10, 1);
+                        pathWeb = string.Format(@"{0}/{1}/Imagette/", pathWeb, dir3);
+
+                        for (int j = 0; j < files.Length; j++) {
+
+                            if (first) { tab[i, CstWeb.OutDoorInsertionsColumnIndex.FILES_INDEX] = pathWeb + files[j]; }
+                            else { tab[i, CstWeb.OutDoorInsertionsColumnIndex.FILES_INDEX] += "," + pathWeb + files[j]; }
+                            first = false;
+                        }
+                        first = true;
+
+                    }
+                    else
+                        tab[i, CstWeb.OutDoorInsertionsColumnIndex.FILES_INDEX] = "";
+                    if (ds.Tables[0].Columns.Contains("id_slogan") && currentRow["id_slogan"] != System.DBNull.Value && webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG))
+                        tab[i, CstWeb.OutDoorInsertionsColumnIndex.ID_SLOGAN_INDEX] = currentRow["id_slogan"].ToString();
+
+                }
+                tab[++i, 0] = null;
+                #endregion
+            }
+
+            return tab;
+        }
 		#endregion
 
         #region Marketing Direct
@@ -1208,6 +1348,10 @@ namespace TNS.AdExpress.Web.Rules.Results{
                     && vehicleArr.Contains(VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.outdoor)))
                 {
 					vehicleArr.Remove(VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.outdoor));
+                }
+                if (vehicleArr != null && vehicleArr.Count > 0 && !webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_INSTORE_ACCESS_FLAG)
+                    && vehicleArr.Contains(VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.instore))) {
+                    vehicleArr.Remove(VehiclesInformation.EnumToDatabaseId(DBClassificationConstantes.Vehicles.names.instore));
                 }
                 if (idVehicle == null || idVehicle.Length == 0 || long.Parse(idVehicle) == -1)
                 {

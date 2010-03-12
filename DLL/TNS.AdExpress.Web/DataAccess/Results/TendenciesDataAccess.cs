@@ -54,6 +54,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
 				case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.instore:
 					sql+= DBConstantes.Hathor.Tables.TENDENCY_MONTH_PREFIXE+".MEDIA, ";
 					break;
 				case DBClassificationConstantes.Vehicles.names.internationalPress:

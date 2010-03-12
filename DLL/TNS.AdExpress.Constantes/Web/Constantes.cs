@@ -2042,6 +2042,11 @@ namespace TNS.AdExpress.Constantes.Web{
 		/// </summary>
 		public const int ID_SLOGAN_INDEX = 16;
 	}
+    /// <summary>
+    /// OutDoorInsertionsColumnIndex
+    /// </summary>
+    public class InStoreInsertionsColumnIndex : OutDoorInsertionsColumnIndex {
+    }
 	#endregion
 
     #region chemins d'acces aux creations (presse, radio, tv)
@@ -2070,6 +2075,10 @@ namespace TNS.AdExpress.Constantes.Web{
         /// Répertoire virtuel des créations de la publicité extérieure
         /// </summary>
         public static string IMAGES_OUTDOOR = string.Empty;
+        /// <summary>
+        /// Répertoire virtuel des créations de la publicité INTERRIEUR
+        /// </summary>
+        public static string IMAGES_INSTORE = string.Empty;
         /// <summary>
         /// Serveur Real en streaming en radio
         /// </summary>
@@ -2144,6 +2153,10 @@ namespace TNS.AdExpress.Constantes.Web{
         /// Répertoire contenant les logos de la publicité extérieur
         /// </summary>
         public static string LOCAL_PATH_OUTDOOR = string.Empty;
+        /// <summary>
+        /// Répertoire contenant les logos de la publicité interrieur
+        /// </summary>
+        public static string LOCAL_PATH_INSTORE = string.Empty;
         /// <summary>
         /// Première page
         /// </summary>	

@@ -557,12 +557,14 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
 
 
             string message = string.Empty;
-            if (vehicle.Id == CstDBClassif.Vehicles.names.outdoor 
-				&& !this._isCreativeConfig 
-				&& !_customerWebSession.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)
-				)
-            {
-                message = GestionWeb.GetWebWord(1882, _customerWebSession.SiteLanguage);
+            if (!this._isCreativeConfig) {
+
+                if (vehicle.Id == CstDBClassif.Vehicles.names.outdoor && !_customerWebSession.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)) {
+                    message = GestionWeb.GetWebWord(1882, _customerWebSession.SiteLanguage);
+                }
+                else if (vehicle.Id == CstDBClassif.Vehicles.names.instore && !_customerWebSession.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_INSTORE_ACCESS_FLAG)) {
+                    message = GestionWeb.GetWebWord(2668, _customerWebSession.SiteLanguage);
+                }
             }
             if (!this._isCreativeConfig && vehicle.Id == CstDBClassif.Vehicles.names.internet)
             {
@@ -694,6 +696,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                         case CstDBClassif.Vehicles.names.magazine:
                         case CstDBClassif.Vehicles.names.internationalPress:
                         case CstDBClassif.Vehicles.names.outdoor:
+                        case CstDBClassif.Vehicles.names.instore:
                         case CstDBClassif.Vehicles.names.directMarketing:
                             this._cssLHeader = string.Empty;
                             this._cssL4 = _cssCellInfo;

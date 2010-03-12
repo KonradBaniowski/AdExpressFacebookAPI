@@ -195,6 +195,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Common\Results\Creatives\Comparers.cs" />
+    <Compile Include="Common\Results\Creatives\CreativeInstore.cs" />
     <Compile Include="Common\Results\Creatives\CreativeAdNetTrack.cs" />
     <Compile Include="Common\Results\Creatives\CreativeTV.cs" />
     <Compile Include="Common\Results\Creatives\CreativeRadio.cs" />

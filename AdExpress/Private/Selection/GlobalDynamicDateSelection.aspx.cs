@@ -429,6 +429,7 @@ namespace AdExpress.Private.Selection {
                     firstDayOfWeek = publicationDate.AddDays(1);
                     return firstDayOfWeek;
                 case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.instore:
                     firstDayOfWeek = firstDayOfWeek.AddDays(-7);
                     return (firstDayOfWeek);
                 case DBClassificationConstantes.Vehicles.names.radio:

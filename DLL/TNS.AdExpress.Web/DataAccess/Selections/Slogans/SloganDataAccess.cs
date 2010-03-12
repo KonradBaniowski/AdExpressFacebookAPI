@@ -383,6 +383,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
                 case DBClassificationConstantes.Vehicles.names.newspaper:
 					return "id_media,format as advertDimension, visual as sloganFile";	
 				case DBClassificationConstantes.Vehicles.names.outdoor :
+                case DBClassificationConstantes.Vehicles.names.instore:
 					return "id_media,type_board as advertDimension, associated_file as sloganFile";
 				case DBClassificationConstantes.Vehicles.names.directMarketing:
 					return "id_media,TO_CHAR(weight) as advertDimension, TO_CHAR(associated_file) as sloganFile";

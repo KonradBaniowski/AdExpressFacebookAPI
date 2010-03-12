@@ -72,6 +72,9 @@ namespace TNS.AdExpress.Domain.XmlLoader
                                     case "IMAGES_OUTDOOR":
                                         CreationServerPathes.IMAGES_OUTDOOR = value;
                                         break;
+                                    case "IMAGES_INSTORE":
+                                        CreationServerPathes.IMAGES_INSTORE = value;
+                                        break;
                                     case "DOWNLOAD_RADIO_SERVER":
                                         CreationServerPathes.DOWNLOAD_RADIO_SERVER = value;
                                         break;
@@ -128,6 +131,9 @@ namespace TNS.AdExpress.Domain.XmlLoader
                                         break;
                                     case "LOCAL_PATH_OUTDOOR":
                                         CreationServerPathes.LOCAL_PATH_OUTDOOR = value;
+                                        break;
+                                    case "LOCAL_PATH_INSTORE":
+                                        CreationServerPathes.LOCAL_PATH_INSTORE = value;
                                         break;
                                     case "LOCAL_PATH_LOGO_PRESS":
                                         CreationServerPathes.LOCAL_PATH_LOGO_PRESS = value;

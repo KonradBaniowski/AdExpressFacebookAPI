@@ -18,7 +18,7 @@
         <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="331">-->
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <!--<ModuleVehicles list="1,2,3,5"/>-->
-          <ModuleVehicles list="1,2,3,5,9"/>
+          <ModuleVehicles list="1,2,3,5,6,8,9"/>
         </ModuleAllowedMediaUniverse>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
@@ -110,7 +110,7 @@
         <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="333">-->
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <!--<ModuleVehicles list="1,2,3,5"/>-->
-          <ModuleVehicles list="1,2,3,5,9"/>
+          <ModuleVehicles list="1,2,3,5,6,8,9"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -364,7 +364,7 @@
         <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="336">-->
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <!--<ModuleVehicles list="1,2,3,5"/>-->
-          <ModuleVehicles list="1,2,3,5,9"/>
+          <ModuleVehicles list="1,2,3,5,6,8,9"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -634,7 +634,7 @@
         <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="337">-->
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <!--<ModuleVehicles list="1,2,3,5"/>-->
-          <ModuleVehicles list="1,2,3,5,9"/>
+          <ModuleVehicles list="1,2,3,5,6,8,9"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -757,7 +757,7 @@
           </page>
           <page id="6" resultid="13" name="Calendrier d'Actions" traductioncode="1474" url="/Private/Results/MediaPortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
             <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
-              <ResultVehicles list="1,2,3,5"/>
+              <ResultVehicles list="1,2,3,5,6,8"/>
             </ResultAllowedMediaUniverse>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>

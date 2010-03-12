@@ -82,7 +82,11 @@ namespace TNS.AdExpress.Constantes.Classification{
             /// <summary>
             /// type Adnettrack
             /// </summary>
-            mediaAdnettrack = 15
+            mediaAdnettrack = 15,
+            /// <summary>
+            /// type Instore
+            /// </summary>
+            mediaInstore = 16,
 		}
 		#endregion
 

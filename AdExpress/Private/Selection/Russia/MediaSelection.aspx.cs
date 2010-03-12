@@ -394,6 +394,9 @@ public partial class Private_Selection_Russia_MediaSelection : TNS.AdExpress.Web
 			else if(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID==(long)DBClassificationConstantes.Vehicles.names.outdoor.GetHashCode()){
 				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaOutdoor;
 			}
+            else if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == (long)DBClassificationConstantes.Vehicles.names.instore.GetHashCode()) {
+                branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaInstore;
+            }
 			else if(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID==(long)DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode()){
 				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaInternationalPress;
 			}

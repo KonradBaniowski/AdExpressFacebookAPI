@@ -285,6 +285,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 					iNbCol = 4 + creatives + insertions + mediaSchedule;
                     break;
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.instore:
 					iNbCol = 3 + creatives + insertions + mediaSchedule;
                     break;
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
@@ -318,6 +319,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.instore:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.cinema:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:

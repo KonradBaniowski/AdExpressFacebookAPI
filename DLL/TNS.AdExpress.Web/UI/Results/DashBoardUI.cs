@@ -15,7 +15,7 @@ using System.Text;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.DataAccess.Results;
-using TNS.AdExpress.Web.UI.Selections.Periods;
+
 using TNS.AdExpress.Web.DataAccess.Selections.Periods;
 using TNS.AdExpress.Domain.Translation;
 using CustomerConstantes=TNS.AdExpress.Constantes.Customer;

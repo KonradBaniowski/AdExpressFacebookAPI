@@ -15,6 +15,8 @@ using TNS.AdExpress.Web.Exceptions;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using CstProject = TNS.AdExpress.Constantes.Project;
+using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.DataAccess.Selections.Periods{
 	/// <summary>
@@ -33,7 +35,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Periods{
 		/// <param name="conditionEndDate">Mettre une condition sur la date de fin</param>
 		/// <returns></returns>	
 		public static DataSet GetListDate(WebSession webSession,Int64 idVehicle,Int64 idMedia,string dateBegin,string dateEnd,bool conditionEndDate){
-			string tableName="";
+			TableIds tableName;
 			try{
 				tableName = GetTable((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()));				
 			}
@@ -56,7 +58,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Periods{
 				sql.Append(", date_cover_num ");
 			}
 			sql.Append(" from ");
-			sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+tableName+" wp ");
+			sql.Append(WebApplicationParameters.DataBaseDescription.GetTable(tableName).Sql +" wp ");
 
 			if((int)idVehicle==DBClassificationConstantes.Vehicles.names.press.GetHashCode() 
 				|| (int)idVehicle==DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode()
@@ -129,11 +131,11 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Periods{
 //			if((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString())==DBClassificationConstantes.Vehicles.names.outdoor){
 //				insertOrNumberboard="number_board";
 //			}
-			string table=GetTable((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()));
+			TableIds table=GetTable((DBClassificationConstantes.Vehicles.names)int.Parse(idVehicle.ToString()));
 
 			#region Construction de la requête
 			sql+=" select max(DATE_MEDIA_NUM) last_date ";
-			sql+=" from "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+table+" ";
+			sql+=" from "+WebApplicationParameters.DataBaseDescription.GetTable(table).Sql+" ";
 			sql+=" where id_media="+idMedia+" ";
 			//sql+=" and "+insertOrNumberboard+"=1 ";
 			#endregion
@@ -228,19 +230,21 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Periods{
 		/// Lancée quand le cas du vehicle spécifié n'est pas traité
 		/// </exception>
 		/// <returns>Chaine contenant le nom de la table correspondante</returns>
-		private static string GetTable(DBClassificationConstantes.Vehicles.names idVehicle){		
+		private static TableIds GetTable(DBClassificationConstantes.Vehicles.names idVehicle){		
 			switch(idVehicle){
 				case DBClassificationConstantes.Vehicles.names.press:
-					return DBConstantes.Tables.ALERT_DATA_PRESS;
+                    return TableIds.dataPressAlert;
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
-					return DBConstantes.Tables.ALERT_DATA_PRESS_INTER;
+                    return TableIds.dataPressInterAlert;
 				case DBClassificationConstantes.Vehicles.names.radio:
-					return DBConstantes.Tables.ALERT_DATA_RADIO;
+                    return TableIds.dataRadioAlert;
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
-					return DBConstantes.Tables.ALERT_DATA_TV;
+                    return TableIds.dataTvAlert;
 				case DBClassificationConstantes.Vehicles.names.outdoor:
-					return DBConstantes.Tables.ALERT_DATA_OUTDOOR;
+                    return TableIds.dataOutDoorAlert;
+                case DBClassificationConstantes.Vehicles.names.instore:
+                    return TableIds.dataInStoreAlert;
 				default:
 					throw new Exceptions.MediaCreationDataAccessException("getTable(DBClassificationConstantes.Vehicles.value idMedia)-->Le cas de ce média n'est pas gérer. Pas de table correspondante.");
 			}			

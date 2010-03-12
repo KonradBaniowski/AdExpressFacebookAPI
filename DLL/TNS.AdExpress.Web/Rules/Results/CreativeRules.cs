@@ -94,6 +94,9 @@ namespace TNS.AdExpress.Web.Rules.Results {
                 case DBClassifCst.Vehicles.names.outdoor:
                     item = new CreativeOutdoor(-1);
                     break;
+                case DBClassifCst.Vehicles.names.instore:
+                    item = new CreativeInstore(-1);
+                    break;
                 case DBClassifCst.Vehicles.names.tv:
                 case DBClassifCst.Vehicles.names.others:
                     item = new CreativeTV(-1);
@@ -205,6 +208,7 @@ namespace TNS.AdExpress.Web.Rules.Results {
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.newspaper));
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.magazine));
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.outdoor));
+                vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.instore));
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.radio));
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.tv));
 

@@ -478,6 +478,10 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// Table des données désagrégées de publicité exterieure
 		/// </summary>
 		public const string DATA_OUTDOOR ="data_outdoor";
+        /// <summary>
+        /// Table des données désagrégées de publicité insterrieur
+        /// </summary>
+        public const string DATA_INSTORE = "data_instore";
 		/// <summary>
 		/// Table des données de parrainage
 		/// </summary>
@@ -1679,7 +1683,14 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// </summary>
 		/// <remarks>Used for Finland</remarks>
 		public const Int64 ID_PRODUCT_LEVEL_ACCESS_FLAG = 271;
-
+        /// <summary>
+        /// Identifiant du flag detail des insertion
+        /// </summary>
+        public const Int64 ID_DETAIL_INSTORE_ACCESS_FLAG = 286;
+        /// <summary>
+        /// Identifiant du flag d'accès aux créations créations Affisource
+        /// </summary>
+        public const Int64 ID_INSTORE_CREATION_ACCESS_FLAG = 287;
     }
 	#endregion
 

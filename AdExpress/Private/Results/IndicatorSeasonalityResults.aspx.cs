@@ -418,6 +418,7 @@ namespace AdExpress.Private.Results {
 						case CstDBClassif.Vehicles.names.tv:
 						case CstDBClassif.Vehicles.names.radio:
 						case CstDBClassif.Vehicles.names.outdoor:
+                        case CstDBClassif.Vehicles.names.instore:
 						case CstDBClassif.Vehicles.names.mediasTactics:
 						case CstDBClassif.Vehicles.names.mobileTelephony:
 						case CstDBClassif.Vehicles.names.emailing:

@@ -260,6 +260,9 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                     case DBClassifCst.Vehicles.names.outdoor:
                         vehicle = GestionWeb.GetWebWord(1302, _webSession.SiteLanguage); 
                         break;
+                    case DBClassifCst.Vehicles.names.instore:
+                        vehicle = GestionWeb.GetWebWord(2665, _webSession.SiteLanguage);
+                        break;
                     case DBClassifCst.Vehicles.names.adnettrack:
                         vehicle = GestionWeb.GetWebWord(648, _webSession.SiteLanguage); 
                         break;

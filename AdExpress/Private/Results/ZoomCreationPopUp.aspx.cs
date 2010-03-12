@@ -45,8 +45,8 @@ namespace AdExpress.Private.Results{
 				result+="</tr>";
 			}
 			//Agrandi l'ecran pour une affiche publicitaire
-			
-			if (i < 2 && files != null && files.Length>0 && files[0].IndexOf(TNS.AdExpress.Constantes.Web.CreationServerPathes.IMAGES_OUTDOOR)>-1) i = 2;
+
+            if (i < 2 && files != null && files.Length > 0 && (files[0].IndexOf(TNS.AdExpress.Constantes.Web.CreationServerPathes.IMAGES_OUTDOOR) > -1 || files[0].IndexOf(TNS.AdExpress.Constantes.Web.CreationServerPathes.IMAGES_INSTORE) > -1)) i = 2;
 			result+="</table><input type=hidden value=\""+i+"\" id=\"fileNb\">";
 		}
 		#endregion

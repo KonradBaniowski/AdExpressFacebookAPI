@@ -350,7 +350,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", vehicle,"+prefixeMediaPlanTable+".id_category,category,"+prefixeMediaPlanTable+".id_media,media ,interest_center,media_seller,"+prefixeMediaPlanTable+".id_slogan";
 					return sql;
 
-				case DBClassificationConstantes.Vehicles.names.outdoor:					
+				case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.instore:	
 					
 					sql=" "+prefixeMediaPlanTable+".date_media_num"						
 						+", advertiser"
@@ -400,6 +401,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			
 			switch(idVehicle){
 				case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.instore:
 					sql+="," +DBConstantes.Schema.ADEXPRESS_SCHEMA+".agglomeration  "+DbTables.AGGLOMERATION_PREFIXE;
 					break;
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
@@ -493,7 +495,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			}
 
 			// agglomeration for outdoor 
-			if(idVehicle==DBClassificationConstantes.Vehicles.names.outdoor) {
+            if (idVehicle == DBClassificationConstantes.Vehicles.names.outdoor || idVehicle == DBClassificationConstantes.Vehicles.names.instore) {
 				sql.Append(" and "+DbTables.AGGLOMERATION_PREFIXE+".id_agglomeration (+)="+dataTablePrefixe+".id_agglomeration ");				
 				sql.Append(" and "+DbTables.AGGLOMERATION_PREFIXE+".id_language(+)="+siteLanguage);
 				sql.Append(" and "+DbTables.AGGLOMERATION_PREFIXE+".activation (+)< "+ DBConstantes.ActivationValues.UNACTIVATED);
@@ -591,7 +593,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", wp.id_commercial_break, wp.id_rank";										
 					return sql;
 
-				case DBClassificationConstantes.Vehicles.names.outdoor:					
+				case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.instore:	
 					sql+=" vehicle ,category, media ,"+prefixeMediaPlanTable+".id_slogan"
                     + "," + TNS.AdExpress.Web.DataAccess.Functions.GetOutDoorInsertionsOrder(0) + " asc, wp." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.numberBoard].DatabaseField;
 					return sql;

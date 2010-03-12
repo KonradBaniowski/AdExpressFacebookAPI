@@ -209,6 +209,12 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
                     OutdoorBuildHtml(htmlBld);
                     break;
                 }
+                case DBCst.Vehicles.names.instore: {
+                        InStoreSetUp();
+                        versionsUIs = this._versionsUIs;
+                        InStoreBuildHtml(htmlBld);
+                        break;
+                    }
 			}
 	
 			return htmlBld.ToString();
@@ -295,6 +301,9 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
                         break;
                     case DBCst.Vehicles.names.outdoor:
                         _title = Convertion.ToHtmlString(GestionWeb.GetWebWord(2255, this._webSession.SiteLanguage));
+                        break;
+                    case DBCst.Vehicles.names.instore:
+                        _title = Convertion.ToHtmlString(GestionWeb.GetWebWord(2667, this._webSession.SiteLanguage));
                         break;
                     default:
                         _title = "?";
@@ -1194,6 +1203,99 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 
         }
         #endregion
+
+        #region InStoreSetUp()
+        /// <summary>
+        /// Initialise all webcontrols For InStore
+        /// </summary>
+        protected void InStoreSetUp() {
+
+            #region Get Data from persistent layer
+            //TODO Get Data from database
+            DataSet dtSet = null, dtSetDetails = null;
+            dtSet = VersionDataAccess.GetVersions(_versions.Keys, _webSession, DBCst.Vehicles.names.instore);
+            dtSetDetails = VersionDataAccess.GetPressVersionsDetails(_versions.Keys, _webSession, DBCst.Vehicles.names.instore);
+            #endregion
+
+            #region Build Set of VersionControl
+            //Create each webcontrol
+            string path = string.Empty;
+            string[] pathes = null;
+            string dirPath = string.Empty;
+            ExportInstoreVersionItem item = null;
+            VersionPressUI versionUi = null;
+            ArrayList[] versionsUi = new ArrayList[30];
+
+            ArrayList indexList = new ArrayList();
+            int i = 0;
+
+            if (dtSet != null && dtSet.Tables[0].Rows != null && dtSet.Tables[0].Rows.Count > 0) {
+                this._versionsUIs = new ArrayList();
+                foreach (DataRow row in dtSet.Tables[0].Rows) {
+                    if (row["visual"] != DBNull.Value) {
+
+                        //build different pathes
+                        pathes = row["visual"].ToString().Split(',');
+                        i = pathes.Length;
+                        path = string.Empty;
+                        dirPath = this.BuildVersionPath(row["id"].ToString(), "");
+                        foreach (string str in pathes) {
+                            path += dirPath + "/" + str + ",";
+                        }
+
+                        //fill version path
+                        item = ((ExportInstoreVersionItem)this._versions[(Int64)row["id"]]);
+                        if (item == null) {
+                            continue;
+                        }
+                        if (path.Length > 0) {
+                            item.Path = path.Substring(0, path.Length - 1);
+                        }
+
+                        //Nombre de visuels
+                        item.NbVisuel = i;
+
+                        item.Advertiser = row["annonceur"].ToString();
+                        item.Group = row["groupe"].ToString();
+                        if (_showProduct)
+                            item.Product = row["produit"].ToString();
+
+                        foreach (DataRow rowdetail in dtSetDetails.Tables[0].Rows) {
+                            if (item.Id.ToString() == rowdetail["id"].ToString()) {
+                                item.NbMedia = Int64.Parse(rowdetail["nbsupports"].ToString());
+                                item.NbBoards = Int64.Parse(rowdetail["nbpanneau"].ToString());
+                                item.ExpenditureEuro = Double.Parse(rowdetail["budget"].ToString());
+                            }
+                        }
+
+                        //build control
+                        switch (this._vehicle) {
+                            case DBCst.Vehicles.names.instore:
+                                versionUi = new VersionPressUI(this._webSession, item);
+                                break;
+                            default:
+                                throw new VersionUIException("Non authorized vehicle level : " + this._vehicle.ToString());
+                        }
+
+                        if (!indexList.Contains(i)) {
+                            versionsUi[i] = new ArrayList();
+                            indexList.Add(i);
+                        }
+
+                        versionsUi[i].Add(versionUi);
+                        i = 0;
+                    }
+                }
+                indexList.Sort();
+                foreach (int j in indexList) {
+                    for (int k = 0; k < versionsUi[j].Count; k++)
+                        this._versionsUIs.Add(versionsUi[j][k]);
+                }
+            }
+            #endregion
+
+        }
+        #endregion
 			
 		#region PressBuildHtml(StringBuilder output) 
 		/// <summary> 
@@ -1910,6 +2012,172 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
                                 }
                                 else {
                                     item.GetHtmlOutdoorExport(output, i + (4 * i), false);
+                                }
+                            }
+                            output.Append("</td>");
+                            columnIndex++;
+                        }
+
+                    }
+                }
+                output.Append("</tr>");
+                output.Append("</table>");
+                output.Append("<br>");
+
+
+            }
+        }
+        #endregion
+
+        #region InStoreBuildHtml(StringBuilder output)
+        /// <summary> 
+        /// Render all versions controls
+        /// </summary>
+        /// <returns>Html code</returns>
+        protected void InStoreBuildHtml(StringBuilder output) {
+            int startToMedium = 0, mediumToEnd = 0, end = 0, indexTable = 0;
+
+            if (this._versionsUIs != null) {
+                output.Append("<table bgcolor=\"#ffffff\" align=\"left\" border=\"0\" class=\"txtViolet14Bold\">");
+                output.Append("<tr><td colSpan=\"" + _nb_column + "\">");
+                if (_title == string.Empty) {
+                    switch (this._vehicle) {
+                        case DBCst.Vehicles.names.instore:
+                            _title = Convertion.ToHtmlString(GestionWeb.GetWebWord(2667, this._webSession.SiteLanguage));
+                            break;
+                        default:
+                            _title = "?";
+                            break;
+                    }
+                }
+                output.Append(_title);
+                output.Append("</td></tr>");
+
+
+                int columnIndex = 0;
+                foreach (VersionDetailUI item in this._versionsUIs) {
+
+                    if (item.ExportInStoreVersion.NbVisuel == 1) {
+                        startToMedium = 1;
+                        if ((columnIndex % 2) == 0) {
+
+                            if (columnIndex > 0) {
+                                output.Append("</tr>");
+                                if ((columnIndex % 4) == 0) {
+                                    output.Append("<br>");
+                                }
+                            }
+                            output.Append("<tr>");
+
+                        }
+                        output.Append("<td>");
+                        if (indexTable == 0) {
+                            output.Append("<table>");
+                            output.Append("<tr>");
+                            output.Append("<td>");
+                        }
+
+                        item.GetHtmlInStoreExport(output, 0, true);
+
+                        indexTable++;
+
+                        if (indexTable == 2) {
+                            output.Append("</td>");
+                            output.Append("</tr>");
+                            output.Append("</table>");
+                            indexTable = 0;
+                        }
+                        output.Append("</td>");
+                        columnIndex++;
+                    }
+                    else if (item.ExportInStoreVersion.NbVisuel < 5) {
+
+                        if (indexTable == 1) {
+                            output.Append("</td>");
+                            output.Append("</tr>");
+                            output.Append("</table>");
+                            indexTable = 0;
+                        }
+
+                        mediumToEnd = 1;
+                        if ((columnIndex % Nb_Columns) == 0) {
+
+                            if (columnIndex > 0) {
+                                output.Append("</tr>");
+                                if (startToMedium == 1) {
+                                    if (((columnIndex % 4) == 0) || ((columnIndex + 1) % 4 == 0)) {
+                                        output.Append("<br>");
+                                    }
+                                    if (((columnIndex % 4) == 0) || ((columnIndex + 1) % 4 == 0))
+                                        columnIndex = 0;
+                                    else
+                                        columnIndex = 1;
+                                    startToMedium = 0;
+                                }
+                                else {
+                                    if ((columnIndex % 2) == 0)
+                                        output.Append("<br>");
+                                }
+                            }
+                            output.Append("<tr>");
+
+                        }
+
+                        output.Append("<td>");
+
+                        item.GetHtmlInStoreExport(output, 0, true);
+
+
+                        output.Append("</td>");
+                        columnIndex++;
+
+                    }
+                    else if (item.ExportInStoreVersion.NbVisuel >= 5) {
+
+                        if (indexTable == 1) {
+                            output.Append("</td>");
+                            output.Append("</tr>");
+                            output.Append("</table>");
+                            indexTable = 0;
+                        }
+
+                        end = (int)Math.Ceiling((double)item.ExportInStoreVersion.NbVisuel / 4);
+
+                        for (int i = 0; i < end; i++) {
+
+                            if ((columnIndex % Nb_Columns) == 0) {
+
+                                if (columnIndex > 0) {
+                                    output.Append("</tr>");
+                                    if (mediumToEnd == 1) {
+                                        if ((columnIndex % 2) == 0) {
+                                            output.Append("<br>");
+                                        }
+                                        if (columnIndex % 2 == 0)
+                                            columnIndex = 0;
+                                        else
+                                            columnIndex = 1;
+                                        mediumToEnd = 0;
+                                    }
+                                    else {
+                                        if ((columnIndex % 2) == 0)
+                                            output.Append("<br>");
+                                    }
+                                }
+                                output.Append("<tr>");
+
+                            }
+                            output.Append("<td>");
+
+                            if (i == 0) {
+                                item.GetHtmlInStoreExport(output, 0, false);
+                            }
+                            else {
+                                if (i == end - 1) {
+                                    item.GetHtmlInStoreExport(output, i + (4 * i), true);
+                                }
+                                else {
+                                    item.GetHtmlInStoreExport(output, i + (4 * i), false);
                                 }
                             }
                             output.Append("</td>");

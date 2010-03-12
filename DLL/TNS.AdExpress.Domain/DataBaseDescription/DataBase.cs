@@ -833,6 +833,22 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// </summary>
         dataLocationNewspaper = 177,
         /// <summary>
+        /// Product class analysis outdoor data
+        /// </summary>
+        recapInStore = 178,
+        /// <summary>
+        /// Product class analysis instore data aggregated by segment
+        /// </summary>
+        recapInStoreSegment = 179,
+        /// <summary>
+        /// Instore Data
+        /// </summary>
+        dataInStore = 180,
+        /// <summary>
+        /// 4M instore Data
+        /// </summary>
+        dataInStoreAlert = 181,
+        /// <summary>
         /// Alert description
         /// </summary>
         alert = 300,

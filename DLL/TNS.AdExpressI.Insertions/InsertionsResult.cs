@@ -145,6 +145,7 @@ namespace TNS.AdExpressI.Insertions
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.newspaper));
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.magazine));
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.outdoor));
+                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.instore));
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.radio));
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.tv));
 
@@ -307,6 +308,9 @@ namespace TNS.AdExpressI.Insertions
                 case CstDBClassif.Vehicles.names.outdoor:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_OUTDOOR_CREATION_ACCESS_FLAG);
                     break;
+                case CstDBClassif.Vehicles.names.instore:
+                    hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_INSTORE_CREATION_ACCESS_FLAG);
+                    break;
                 case CstDBClassif.Vehicles.names.radio:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_RADIO_CREATION_ACCESS_FLAG);
                     break;
@@ -405,6 +409,7 @@ namespace TNS.AdExpressI.Insertions
                         case CstDBClassif.Vehicles.names.newspaper:
                         case CstDBClassif.Vehicles.names.magazine:
                         case CstDBClassif.Vehicles.names.outdoor:
+                        case CstDBClassif.Vehicles.names.instore:
                             setLine = new SetLine(SetAggregLine);
                             break;
                         default:
@@ -941,6 +946,7 @@ namespace TNS.AdExpressI.Insertions
                         case CstDBClassif.Vehicles.names.internet:
                         case CstDBClassif.Vehicles.names.internationalPress:
                         case CstDBClassif.Vehicles.names.outdoor:
+                        case CstDBClassif.Vehicles.names.instore:
                         case CstDBClassif.Vehicles.names.press:
                         case CstDBClassif.Vehicles.names.newspaper:
                         case CstDBClassif.Vehicles.names.magazine:
@@ -1067,6 +1073,19 @@ namespace TNS.AdExpressI.Insertions
 
                     }
                     break;
+                case CstDBClassif.Vehicles.names.instore:
+                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_INSTORE_CREATION_ACCESS_FLAG)) {
+                        break;
+                    }
+
+                    if (row["associated_file"] != System.DBNull.Value) {
+                        string[] files = row["associated_file"].ToString().Split(',');
+                        foreach (string s in files) {
+                            visuals.Add(this.GetCreativePathInStore(s, false));
+                        }
+
+                    }
+                    break;
                 case CstDBClassif.Vehicles.names.directMarketing:
                     if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG))
                     {
@@ -1186,6 +1205,18 @@ namespace TNS.AdExpressI.Insertions
 
             return string.Format("{0}/{1}/{2}/{3}{4}/{5}"
                 , CstWeb.CreationServerPathes.IMAGES_OUTDOOR
+                , file.Substring(file.Length - 8, 1)
+                , file.Substring(file.Length - 9, 1)
+                , file.Substring(file.Length - 10, 1)
+                , imagette
+                , file);
+
+        }
+        protected string GetCreativePathInStore(string file, bool bigSize) {
+            string imagette = (bigSize) ? string.Empty : "/Imagette";
+
+            return string.Format("{0}/{1}/{2}/{3}{4}/{5}"
+                , CstWeb.CreationServerPathes.IMAGES_INSTORE
                 , file.Substring(file.Length - 8, 1)
                 , file.Substring(file.Length - 9, 1)
                 , file.Substring(file.Length - 10, 1)

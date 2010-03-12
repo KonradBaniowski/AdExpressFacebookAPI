@@ -41,10 +41,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		/// <remarks>A utiliser pour les analyses</remarks>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>Données</returns>
-		public static DataSet GetDataWithMediaDetailLevel(WebSession webSession){
-			return(GetDataWithMediaDetailLevel(webSession,-1,webSession.PeriodBeginningDate,webSession.PeriodEndDate));
+        //public static DataSet GetDataWithMediaDetailLevel(WebSession webSession){
+        //    return(GetDataWithMediaDetailLevel(webSession,-1,webSession.PeriodBeginningDate,webSession.PeriodEndDate));
 			
-		}
+        //}
 
 		/// <summary>
 		/// Obtient les données d'un calendrier d'action pour une analyse plan média
@@ -54,120 +54,120 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		/// <param name="beginningDate">Date de début</param>
 		/// <param name="endDate">Date de fin</param>
 		/// <returns>Données</returns>
-		private static DataSet GetDataWithMediaDetailLevel(WebSession webSession,Int64 vehicleId, string beginningDate,string endDate){
+        //private static DataSet GetDataWithMediaDetailLevel(WebSession webSession,Int64 vehicleId, string beginningDate,string endDate){
 
-			#region Variables
-			string list="";
-			//bool premier=true;
-			string tableName=null;
-			string mediaTableName=null;
-			string dateFieldName=null;
-			string mediaFieldName=null;
-			string orderFieldName=null;
-			string unitFieldName=null;
-            string unitAlias = null;
-			string mediaJoinCondition=null;
-			#endregion
+        //    #region Variables
+        //    string list="";
+        //    //bool premier=true;
+        //    string tableName=null;
+        //    string mediaTableName=null;
+        //    string dateFieldName=null;
+        //    string mediaFieldName=null;
+        //    string orderFieldName=null;
+        //    string unitFieldName=null;
+        //    string unitAlias = null;
+        //    string mediaJoinCondition=null;
+        //    #endregion
 			
-			#region Construction de la requête
-			try{
+        //    #region Construction de la requête
+        //    try{
 
 				
-				tableName=GetMediaTableName(webSession,vehicleId);
-				mediaTableName=GetMediaTable(webSession.PreformatedMediaDetail);
-				dateFieldName=GetDateFieldName(webSession);
-				unitFieldName=GetUnitFieldName(webSession,vehicleId);
-                unitAlias = SQLGenerator.GetUnitAlias(webSession);
-				mediaFieldName=GetMediaFields(webSession.PreformatedMediaDetail);
-				orderFieldName=GetOrderMediaFields(webSession.PreformatedMediaDetail);
-				mediaJoinCondition=GetMediaJoinConditions(webSession,DbTables.WEB_PLAN_PREFIXE,false);
-			}
-			catch(System.Exception err){
-				throw(new WebExceptions.MediaPlanDataAccessException("Impossible de construire la requête",err));	
-			}
+        //        tableName=GetMediaTableName(webSession,vehicleId);
+        //        mediaTableName=GetMediaTable(webSession.PreformatedMediaDetail);
+        //        dateFieldName=GetDateFieldName(webSession);
+        //        unitFieldName=GetUnitFieldName(webSession,vehicleId);
+        //        unitAlias = SQLGenerator.GetUnitAlias(webSession);
+        //        mediaFieldName=GetMediaFields(webSession.PreformatedMediaDetail);
+        //        orderFieldName=GetOrderMediaFields(webSession.PreformatedMediaDetail);
+        //        mediaJoinCondition=GetMediaJoinConditions(webSession,DbTables.WEB_PLAN_PREFIXE,false);
+        //    }
+        //    catch(System.Exception err){
+        //        throw(new WebExceptions.MediaPlanDataAccessException("Impossible de construire la requête",err));	
+        //    }
 
-			string sql="";
-			// Sélection de la nomenclature Support
-			sql+="select "+mediaFieldName+" ";
-			// Sélection de la date
-			sql+=", "+dateFieldName+" as date_num,";
-			//sql+=",max(wp.id_periodicity) as id_periodicity ";
-			sql+=" "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".RECUP_ID_PERIOD(max("+DbTables.PERIODICITY_PREFIXE+".value_second)) as id_periodicity,";
-			// Sélection de l'unité
-            sql += "sum(" + unitFieldName + ") as " + unitAlias;
-			// Tables
-			sql+=" from "+mediaTableName+", "+tableName+" wp,"+DbSchemas.ADEXPRESS_SCHEMA+"."+DbTables.PERIODICITY+" "+DbTables.PERIODICITY_PREFIXE+" ";
-			//Conditions media
-			sql+="where "+mediaJoinCondition+"";
-			// Jointure Périodicité
-			sql+=" and "+DbTables.PERIODICITY_PREFIXE+".activation<"+DBConstantes.ActivationValues.UNACTIVATED;
-			sql+=" and "+DbTables.PERIODICITY_PREFIXE+".id_language=33";
-			sql+=" and "+DbTables.PERIODICITY_PREFIXE+".id_periodicity=wp.id_periodicity";
-			// Période
-			sql+=" and "+dateFieldName+">="+beginningDate;
-			sql+=" and "+dateFieldName+"<="+endDate;
+        //    string sql="";
+        //    // Sélection de la nomenclature Support
+        //    sql+="select "+mediaFieldName+" ";
+        //    // Sélection de la date
+        //    sql+=", "+dateFieldName+" as date_num,";
+        //    //sql+=",max(wp.id_periodicity) as id_periodicity ";
+        //    sql+=" "+DBConstantes.Schema.ADEXPRESS_SCHEMA+".RECUP_ID_PERIOD(max("+DbTables.PERIODICITY_PREFIXE+".value_second)) as id_periodicity,";
+        //    // Sélection de l'unité
+        //    sql += "sum(" + unitFieldName + ") as " + unitAlias;
+        //    // Tables
+        //    sql+=" from "+mediaTableName+", "+tableName+" wp,"+DbSchemas.ADEXPRESS_SCHEMA+"."+DbTables.PERIODICITY+" "+DbTables.PERIODICITY_PREFIXE+" ";
+        //    //Conditions media
+        //    sql+="where "+mediaJoinCondition+"";
+        //    // Jointure Périodicité
+        //    sql+=" and "+DbTables.PERIODICITY_PREFIXE+".activation<"+DBConstantes.ActivationValues.UNACTIVATED;
+        //    sql+=" and "+DbTables.PERIODICITY_PREFIXE+".id_language=33";
+        //    sql+=" and "+DbTables.PERIODICITY_PREFIXE+".id_periodicity=wp.id_periodicity";
+        //    // Période
+        //    sql+=" and "+dateFieldName+">="+beginningDate;
+        //    sql+=" and "+dateFieldName+"<="+endDate;
 			
-			// Gestion des sélections et des droits
+        //    // Gestion des sélections et des droits
 
-			#region Nomenclature Produit (droits)
-			//Droits en accès
-			sql+=SQLGenerator.getAnalyseCustomerProductRight(webSession,DbTables.WEB_PLAN_PREFIXE,true);
-			// Produit à exclure en radio
-			sql+=SQLGenerator.GetAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DbTables.WEB_PLAN_PREFIXE,true,false);
-			#endregion
+        //    #region Nomenclature Produit (droits)
+        //    //Droits en accès
+        //    sql+=SQLGenerator.getAnalyseCustomerProductRight(webSession,DbTables.WEB_PLAN_PREFIXE,true);
+        //    // Produit à exclure en radio
+        //    sql+=SQLGenerator.GetAdExpressProductUniverseCondition(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,DbTables.WEB_PLAN_PREFIXE,true,false);
+        //    #endregion
 
-			#region Nomenclature Produit (Niveau de détail)  
-			// Niveau de produit
-			sql+=SQLGenerator.getLevelProduct(webSession,DbTables.WEB_PLAN_PREFIXE,true);
-			#endregion
+        //    #region Nomenclature Produit (Niveau de détail)  
+        //    // Niveau de produit
+        //    sql+=SQLGenerator.getLevelProduct(webSession,DbTables.WEB_PLAN_PREFIXE,true);
+        //    #endregion
 
-			#region Nomenclature Annonceurs (droits(Ne pas faire pour l'instant) et sélection) 
+        //    #region Nomenclature Annonceurs (droits(Ne pas faire pour l'instant) et sélection) 
 		
-			#region Sélection
-			sql+=GetProductSelection(webSession,DbTables.WEB_PLAN_PREFIXE);			
-			#endregion
+        //    #region Sélection
+        //    sql+=GetProductSelection(webSession,DbTables.WEB_PLAN_PREFIXE);			
+        //    #endregion
 
-			#endregion
+        //    #endregion
 
-			#region Nomenclature Media (droits et sélection)
+        //    #region Nomenclature Media (droits et sélection)
 
-			#region Droits
-			sql+=SQLGenerator.getAnalyseCustomerMediaRight(webSession,DbTables.WEB_PLAN_PREFIXE,true);
-			#endregion
+        //    #region Droits
+        //    sql+=SQLGenerator.getAnalyseCustomerMediaRight(webSession,DbTables.WEB_PLAN_PREFIXE,true);
+        //    #endregion
 
-			#region Sélection
-			if(webSession.DetailPeriod!=WebConstantes.CustomerSessions.Period.DisplayLevel.dayly){
-				list=webSession.GetSelection(webSession.SelectionUniversMedia,CustomerRightConstante.type.vehicleAccess);
-				if(list.Length>0) sql+=" and (("+DbTables.WEB_PLAN_PREFIXE+".id_vehicle in ("+list+"))) ";
-			}
-			else
-				sql+=" and ((wp.id_vehicle= "+vehicleId+")) ";
-			#endregion
+        //    #region Sélection
+        //    if(webSession.DetailPeriod!=WebConstantes.CustomerSessions.Period.DisplayLevel.dayly){
+        //        list=webSession.GetSelection(webSession.SelectionUniversMedia,CustomerRightConstante.type.vehicleAccess);
+        //        if(list.Length>0) sql+=" and (("+DbTables.WEB_PLAN_PREFIXE+".id_vehicle in ("+list+"))) ";
+        //    }
+        //    else
+        //        sql+=" and ((wp.id_vehicle= "+vehicleId+")) ";
+        //    #endregion
 
-			#endregion
+        //    #endregion
 			
-			// Ordre
-			sql+="Group by "+mediaFieldName.Replace("nvl(id_slogan,0) as slogan","id_slogan").Replace("nvl(id_slogan,0) as id_slogan","id_slogan");
-			// et la date
-			sql+=", "+dateFieldName+" ";
+        //    // Ordre
+        //    sql+="Group by "+mediaFieldName.Replace("nvl(id_slogan,0) as slogan","id_slogan").Replace("nvl(id_slogan,0) as id_slogan","id_slogan");
+        //    // et la date
+        //    sql+=", "+dateFieldName+" ";
 
-			// Ordre
-			sql+="Order by "+orderFieldName+" ";
-			// et la date
-			sql+=", "+dateFieldName+" ";
+        //    // Ordre
+        //    sql+="Order by "+orderFieldName+" ";
+        //    // et la date
+        //    sql+=", "+dateFieldName+" ";
 
-			#endregion
+        //    #endregion
 
-			#region Execution de la requête
-			try{
-				return webSession.Source.Fill(sql.ToString());
-			}
-			catch(System.Exception err){
-				throw(new WebExceptions.MediaPlanDataAccessException ("Impossible de charger le plan media: "+sql,err));
-			}
-			#endregion			
+        //    #region Execution de la requête
+        //    try{
+        //        return webSession.Source.Fill(sql.ToString());
+        //    }
+        //    catch(System.Exception err){
+        //        throw(new WebExceptions.MediaPlanDataAccessException ("Impossible de charger le plan media: "+sql,err));
+        //    }
+        //    #endregion			
 
-		}
+        //}
 
 		/// <summary>
 		/// Charge les données pour créer un plan média pour chaque vehicle sélectionné dans la session
@@ -184,23 +184,23 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		/// Utilise les méthodes:
 		///		public string TNS.AdExpress.Web.Core.Sessions.WebSession.GetSelection(TreeNode univers, TNS.AdExpress.Constantes.Customer.Right.type level)
 		/// </remarks>
-		public static DataSet GetPluriMediaDataSetWithMediaDetailLevel(WebSession webSession, string beginningDate, string endDate){
-			string[] listVehicles = webSession.GetSelection(webSession.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess).Split(new char[]{','});
-			DataSet ds = new DataSet();
-			for(int i=0; i< listVehicles.Length; i++){
-				try{
-					ds.Merge(GetDataWithMediaDetailLevel(webSession,Int64.Parse(listVehicles[i]),beginningDate,endDate));
-				}
-				catch(System.Exception err){
-					throw new WebExceptions.MediaPlanDataAccessException("MediaPlanAlertDataAccess.getPluriMediaDataset(WebSession webSession, string beginningDate, string endDate",err);
-				}
-			}
-			DataSet ds2=new DataSet();
-			//ds2.Tables.Add();
-			ds2.Merge(ds.Tables[0].Select("",GetFieldOrderForDataView(webSession.PreformatedMediaDetail)));
+        //public static DataSet GetPluriMediaDataSetWithMediaDetailLevel(WebSession webSession, string beginningDate, string endDate){
+        //    string[] listVehicles = webSession.GetSelection(webSession.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess).Split(new char[]{','});
+        //    DataSet ds = new DataSet();
+        //    for(int i=0; i< listVehicles.Length; i++){
+        //        try{
+        //            ds.Merge(GetDataWithMediaDetailLevel(webSession,Int64.Parse(listVehicles[i]),beginningDate,endDate));
+        //        }
+        //        catch(System.Exception err){
+        //            throw new WebExceptions.MediaPlanDataAccessException("MediaPlanAlertDataAccess.getPluriMediaDataset(WebSession webSession, string beginningDate, string endDate",err);
+        //        }
+        //    }
+        //    DataSet ds2=new DataSet();
+        //    //ds2.Tables.Add();
+        //    ds2.Merge(ds.Tables[0].Select("",GetFieldOrderForDataView(webSession.PreformatedMediaDetail)));
 			
-			return ds2;
-		}
+        //    return ds2;
+        //}
 
 
 		/// <summary>
@@ -213,14 +213,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		/// <exception cref="TNS.AdExpress.Web.Exceptions.MediaPlanAlertDataAccessException">
 		/// Lancée en cas d'erreur
 		/// </exception>
-		public static DataSet GetPluriMediaDataSetWithMediaDetailLevel(WebSession webSession){
-			try{
-				return GetPluriMediaDataSetWithMediaDetailLevel(webSession, webSession.PeriodBeginningDate, webSession.PeriodEndDate);
-			}
-			catch(System.Exception err){
-				throw new WebExceptions.MediaPlanDataAccessException("MedaiPlanAlertDataAccess.getPluriMediaDataset(WebSession webSession, string beginningDate, string endDate)",err);
-			}
-		}
+        //public static DataSet GetPluriMediaDataSetWithMediaDetailLevel(WebSession webSession){
+        //    try{
+        //        return GetPluriMediaDataSetWithMediaDetailLevel(webSession, webSession.PeriodBeginningDate, webSession.PeriodEndDate);
+        //    }
+        //    catch(System.Exception err){
+        //        throw new WebExceptions.MediaPlanDataAccessException("MedaiPlanAlertDataAccess.getPluriMediaDataset(WebSession webSession, string beginningDate, string endDate)",err);
+        //    }
+        //}
 
 
 		#region Méthode internes nouvelle formule
@@ -418,58 +418,58 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		/// <param name="webSession">Session du client</param>
 		/// <param name="vehicleId">Identifiant du media</param>
 		/// <returns>La table correspondant au type de période</returns>
-		private static string GetMediaTableName(WebSession webSession,Int64 vehicleId){
-			switch(webSession.DetailPeriod){
-				case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
-					return(DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+Tables.WEB_PLAN_MEDIA_MONTH);
-				case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
-					return(DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+Tables.WEB_PLAN_MEDIA_WEEK);
-				case WebConstantes.CustomerSessions.Period.DisplayLevel.dayly:
-					Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
-					switch(currentModuleDescription.ModuleType){
-						case WebConstantes.Module.Type.alert:
-						switch((DBClassificationConstantes.Vehicles.names)Convert.ToInt32(vehicleId.ToString())){
-							case DBClassificationConstantes.Vehicles.names.press:
-								return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.ALERT_DATA_PRESS;
-							case DBClassificationConstantes.Vehicles.names.internationalPress:
-								return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.ALERT_DATA_PRESS_INTER;
-							case DBClassificationConstantes.Vehicles.names.radio:
-								return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.ALERT_DATA_RADIO;
-							case DBClassificationConstantes.Vehicles.names.tv:
-							case DBClassificationConstantes.Vehicles.names.others:
-								return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.ALERT_DATA_TV;
-							case DBClassificationConstantes.Vehicles.names.outdoor:
-								return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.ALERT_DATA_OUTDOOR;
-							case DBClassificationConstantes.Vehicles.names.adnettrack:
-								return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.ALERT_DATA_ADNETTRACK;
-							default:
-								throw(new SQLGeneratorException("Impossible de déterminer la table media à utiliser"));
-						}
-						case WebConstantes.Module.Type.analysis:
-						switch((DBClassificationConstantes.Vehicles.names)Convert.ToInt32(vehicleId.ToString())){
-							case DBClassificationConstantes.Vehicles.names.press:
-								return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.DATA_PRESS;
-							case DBClassificationConstantes.Vehicles.names.internationalPress:
-								return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.DATA_PRESS_INTER;
-							case DBClassificationConstantes.Vehicles.names.radio:
-								return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.DATA_RADIO;
-							case DBClassificationConstantes.Vehicles.names.tv:
-							case DBClassificationConstantes.Vehicles.names.others:
-								return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.DATA_TV;
-							case DBClassificationConstantes.Vehicles.names.outdoor:
-								return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.DATA_OUTDOOR;
-							case DBClassificationConstantes.Vehicles.names.adnettrack:
-								return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.DATA_ADNETTRACK;
-							default:
-								throw(new SQLGeneratorException("Impossible de déterminer la table media à utiliser"));
-						}
-						default:
-							throw(new SQLGeneratorException("Impossible de déterminer le type du module pour déterminer la table à utiliser"));
-					}
-				default:
-					throw(new SQLGeneratorException("Le détails période sélectionné est incorrect pour le choix de la table"));
-			}
-		}
+        //private static string GetMediaTableName(WebSession webSession,Int64 vehicleId){
+        //    switch(webSession.DetailPeriod){
+        //        case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
+        //            return(DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+Tables.WEB_PLAN_MEDIA_MONTH);
+        //        case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
+        //            return(DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+Tables.WEB_PLAN_MEDIA_WEEK);
+        //        case WebConstantes.CustomerSessions.Period.DisplayLevel.dayly:
+        //            Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
+        //            switch(currentModuleDescription.ModuleType){
+        //                case WebConstantes.Module.Type.alert:
+        //                switch((DBClassificationConstantes.Vehicles.names)Convert.ToInt32(vehicleId.ToString())){
+        //                    case DBClassificationConstantes.Vehicles.names.press:
+        //                        return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.ALERT_DATA_PRESS;
+        //                    case DBClassificationConstantes.Vehicles.names.internationalPress:
+        //                        return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.ALERT_DATA_PRESS_INTER;
+        //                    case DBClassificationConstantes.Vehicles.names.radio:
+        //                        return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.ALERT_DATA_RADIO;
+        //                    case DBClassificationConstantes.Vehicles.names.tv:
+        //                    case DBClassificationConstantes.Vehicles.names.others:
+        //                        return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.ALERT_DATA_TV;
+        //                    case DBClassificationConstantes.Vehicles.names.outdoor:
+        //                        return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.ALERT_DATA_OUTDOOR;
+        //                    case DBClassificationConstantes.Vehicles.names.adnettrack:
+        //                        return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.ALERT_DATA_ADNETTRACK;
+        //                    default:
+        //                        throw(new SQLGeneratorException("Impossible de déterminer la table media à utiliser"));
+        //                }
+        //                case WebConstantes.Module.Type.analysis:
+        //                switch((DBClassificationConstantes.Vehicles.names)Convert.ToInt32(vehicleId.ToString())){
+        //                    case DBClassificationConstantes.Vehicles.names.press:
+        //                        return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.DATA_PRESS;
+        //                    case DBClassificationConstantes.Vehicles.names.internationalPress:
+        //                        return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.DATA_PRESS_INTER;
+        //                    case DBClassificationConstantes.Vehicles.names.radio:
+        //                        return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.DATA_RADIO;
+        //                    case DBClassificationConstantes.Vehicles.names.tv:
+        //                    case DBClassificationConstantes.Vehicles.names.others:
+        //                        return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.DATA_TV;
+        //                    case DBClassificationConstantes.Vehicles.names.outdoor:
+        //                        return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.DATA_OUTDOOR;
+        //                    case DBClassificationConstantes.Vehicles.names.adnettrack:
+        //                        return DBTableFieldsName.Schema.ADEXPRESS_SCHEMA+"."+DBTableFieldsName.Tables.DATA_ADNETTRACK;
+        //                    default:
+        //                        throw(new SQLGeneratorException("Impossible de déterminer la table media à utiliser"));
+        //                }
+        //                default:
+        //                    throw(new SQLGeneratorException("Impossible de déterminer le type du module pour déterminer la table à utiliser"));
+        //            }
+        //        default:
+        //            throw(new SQLGeneratorException("Le détails période sélectionné est incorrect pour le choix de la table"));
+        //    }
+        //}
 
 		/// <summary>
 		/// Obtient les champs correspondants au détail media demandée par le client.

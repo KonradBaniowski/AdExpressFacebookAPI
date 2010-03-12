@@ -172,6 +172,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                     return (productDetail) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInternet) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInternetSegment);
                 case CstDBClassif.Vehicles.names.outdoor:
                     return (productDetail) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapOutDoor) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapOutDoorSegment);
+                case CstDBClassif.Vehicles.names.instore:
+                    return (productDetail) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInStore) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInStoreSegment);
                 case CstDBClassif.Vehicles.names.radio:
                     return (productDetail) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapRadio) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapRadioSegment);
                 case CstDBClassif.Vehicles.names.tv:

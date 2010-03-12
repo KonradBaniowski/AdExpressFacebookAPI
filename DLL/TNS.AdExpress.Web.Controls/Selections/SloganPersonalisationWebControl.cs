@@ -489,6 +489,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 
 										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing :
 										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
+                                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.instore:
 
                                             #region Construction de la liste des images du marketing direct ou de la publicité extérieure
 											fileList = currentRow["sloganFile"].ToString().Split(',');
@@ -505,6 +506,8 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 
 											if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBConstantesClassification.Vehicles.names.directMarketing)
 											pathWeb = WebConstantes.CreationServerPathes.IMAGES_MD;
+                                            else if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBConstantesClassification.Vehicles.names.instore)
+                                                pathWeb = WebConstantes.CreationServerPathes.IMAGES_INSTORE;
 											else pathWeb = WebConstantes.CreationServerPathes.IMAGES_OUTDOOR;
 											string dir1 = idAssociatedFile.Substring(idAssociatedFile.Length - 8, 1);
 											pathWeb = string.Format(@"{0}/{1}", pathWeb, dir1);

@@ -376,7 +376,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 					// Nombre de spot
                     t.Append("<td class=\"" + P2 + "\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>" + GestionWeb.GetWebWord(571, webSession.SiteLanguage) + "</td>");
 					break;
-				case DBClassificationConstantes.Vehicles.names.outdoor:	
+				case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.instore:	
 					// Nombre de panneaux
                     t.Append("<td class=\"" + P2 + "\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>" + GestionWeb.GetWebWord(1604, webSession.SiteLanguage) + "</td>");
 					break;
@@ -398,7 +399,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 				case DBClassificationConstantes.Vehicles.names.radio:					
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:	
-				case DBClassificationConstantes.Vehicles.names.outdoor:	
+				case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.instore:	
 					//Supports
                     t.Append("<td class=\"" + P2 + "\" nowrap>" + GestionWeb.GetWebWord(804, webSession.SiteLanguage) + "</td>");
 					break;

@@ -303,6 +303,8 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 					return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInternet) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInternetSegment);
                 case CstDBClassif.Vehicles.names.outdoor:
 					return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapOutDoor) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapOutDoorSegment);
+                case CstDBClassif.Vehicles.names.instore:
+                    return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInStore) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInStoreSegment);
                 case CstDBClassif.Vehicles.names.radio:
 					return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapRadio) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapRadioSegment);
                 case CstDBClassif.Vehicles.names.tv:

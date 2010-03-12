@@ -2503,6 +2503,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
 					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPress).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.outdoor:
 					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapOutDoor).Sql;
+                case ClassificationConstantes.DB.Vehicles.names.instore:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInStore).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.internet:
 					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInternet).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.plurimedia:
@@ -2542,7 +2544,9 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case ClassificationConstantes.DB.Vehicles.names.magazine:
                     return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMagazineSegment).Sql; 
                 case ClassificationConstantes.DB.Vehicles.names.outdoor:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapOutDoorSegment).Sql;                    
+					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapOutDoorSegment).Sql;
+                case ClassificationConstantes.DB.Vehicles.names.instore:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInStoreSegment).Sql; 
                 case ClassificationConstantes.DB.Vehicles.names.internet:
 					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInternetSegment).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.plurimedia:
@@ -3044,6 +3048,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTv).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoor).SqlWithPrefix);
+                case DBClassificationConstantes.Vehicles.names.instore:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInStore).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.internet:
@@ -3093,6 +3099,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTvAlert).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoorAlert).SqlWithPrefix);
+                case DBClassificationConstantes.Vehicles.names.instore:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInStoreAlert).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.internet:
@@ -3163,6 +3171,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTv).Label);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoor).Label);
+                case DBClassificationConstantes.Vehicles.names.instore:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInStore).Label);
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack).Label);
                 case DBClassificationConstantes.Vehicles.names.internet:
@@ -3212,6 +3222,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTvAlert).Label);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoorAlert).Label);
+                case DBClassificationConstantes.Vehicles.names.instore:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInStoreAlert).Label);
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                     return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack).Label);
                 case DBClassificationConstantes.Vehicles.names.internet:
@@ -3256,6 +3268,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                             return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTvAlert).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.outdoor:
                             return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoorAlert).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.instore:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInStoreAlert).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.adnettrack:
                             return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrackAlert).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.internet:
@@ -3286,6 +3300,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                             return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTv).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.outdoor:
                             return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoor).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.instore:
+                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInStore).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.adnettrack:
                             return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.internet:
@@ -3921,6 +3937,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTv);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
                     return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoor);
+                case DBClassificationConstantes.Vehicles.names.instore:
+                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInStore);
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                     return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack);
                 case DBClassificationConstantes.Vehicles.names.internet:
@@ -4203,6 +4221,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     fields += " sum(" + dataTotalTablePrefixe + ".DURATION_EVOL)/count(" + DBConstantes.Hathor.Tables.TENDENCY_MONTH_PREFIXE + ".MEDIA)) as SUB_DURATION_EVOL ";
                     return (fields);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.instore:
                     fields = dataTablePrefixe + ".EXPENDITURE_CUR, ";
                     fields += dataTablePrefixe + ".EXPENDITURE_PREV, ";
                     fields += dataTablePrefixe + ".EXPENDITURE_EVOL, ";

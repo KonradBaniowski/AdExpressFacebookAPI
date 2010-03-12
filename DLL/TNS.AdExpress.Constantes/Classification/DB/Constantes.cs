@@ -191,8 +191,11 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
             /// <summary>
             /// Television Niche Channels
             /// </summary>
-            tvNicheChannels = 26
+            tvNicheChannels = 26,
             /// <summary>
+            /// IN Store 
+            /// </summary>
+            instore = 27,
 
 		}
 	}

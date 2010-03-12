@@ -55,6 +55,10 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
         /// Outdoor Version to display
         /// </summary>
         protected ExportOutdoorVersionItem _exportOutdoorVersion;
+        /// <summary>
+        /// Outdoor Version to display
+        /// </summary>
+        protected ExportInstoreVersionItem _exportInStoreVersion;
 		/// <summary>
 		/// Determine if show product level
 		/// </summary>
@@ -125,6 +129,15 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
                 _exportOutdoorVersion = value;
             }
         }
+        ///<summary>Get / Set Export Version for MD</summary>
+        public ExportInstoreVersionItem ExportInStoreVersion {
+            get {
+                return (_exportInStoreVersion);
+            }
+            set {
+                _exportInStoreVersion = value;
+            }
+        }
 		#endregion
 	
 		#region Constructor
@@ -182,6 +195,17 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
             this._webSession = webSession;
             this._exportOutdoorVersion = exportOutdoorVersion;
 			_showProduct = _webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
+        }
+        /// <summary>
+        /// Constructor with exportVersion for MD
+        /// </summary>
+        /// <param name="webSession">Customer Session</param>
+        /// <param name="exportOutdoorVersion">Version to display</param>
+        public VersionDetailUI(WebSession webSession, ExportInstoreVersionItem exportInStoreVersion) {
+            this._webSession = webSession;
+            this._exportInStoreVersion = exportInStoreVersion;
+            _showProduct = _webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
         }
 		#endregion
@@ -626,6 +650,57 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
                 ((this._exportOutdoorVersion.CssClass.Length > 0) ? "class=\"" + this._exportOutdoorVersion.CssClass.Replace("c", "m") + "\">" : "\">"));
             output.Append("<font size=1>");
             output.Append("&nbsp;" + this._exportOutdoorVersion.Id);
+            output.Append("</font></td>");
+            //			output.Append("</td></tr>");
+            //
+            //			output.Append("</TABLE>");
+            output.Append("</tr>");
+
+            //End table
+            output.Append("</table>");
+            output.Append("</td>");
+            output.Append("</tr>");
+            output.Append("</table>");
+            output.Append("</td>");
+
+        }
+        #endregion
+
+        #region Render Version For InStore Export UI
+        /// <summary>Render Version For Outdoor Export UI</summary>
+        /// <param name="output">Le writer HTML vers lequel écrire </param>
+        /// <param name="index">l'index est utilsé pour traiter le cas des verions avec plus de 4 visuels</param>
+        /// <param name="withDetail">Utiliser pour l'affichage des informations sur la version</param>
+        public virtual void GetHtmlInStoreExport(StringBuilder output, Int64 index, bool withDetail) {
+            //Table
+            output.Append("<table cellpadding=0 cellspacing=0 width=100% border=\"0\" bgcolor=\"#ffffff\">");
+            //Render Verion visual
+            //output.Append("<tr><td align=\"left\" bgcolor=\"#E0D7EC\">");
+            output.Append("<tr>");//output.Append("<td align=\"left\" bgcolor=\"#FFFFFF\">");
+            output.Append("<TD>");
+            output.Append("<table cellpadding=0 cellspacing=0 border=\"0\" bgcolor=\"#ffffff\">");
+            output.Append("<tr>");
+            output.Append("<td align=\"left\" bgcolor=\"#FFFFFF\">");
+            this.RenderImageExport(output, index);
+            output.Append("</td>");
+
+            if (withDetail) {
+                output.Append("<td valign=\"top\"><TABLE width=\"300\" cellSpacing=\"0\" border=\"0\" class=\"txtViolet11Bold\" valign=\"top\">");
+                output.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(176, _webSession.SiteLanguage) + "</td><td width=\"550\">: " + Convertion.ToHtmlString(this._exportInStoreVersion.Advertiser) + "</td></tr>");
+                output.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(174, _webSession.SiteLanguage) + "</td><td>: " + Convertion.ToHtmlString(this._exportInStoreVersion.Group) + "</td></tr>");
+                if (_showProduct) output.Append("<tr valign=\"top\"><td>&nbsp;" + GestionWeb.GetWebWord(468, _webSession.SiteLanguage) + "</td><td>: " + Convertion.ToHtmlString(this._exportInStoreVersion.Product) + "</td></tr>");
+                output.Append("<tr valign=\"top\"><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1888, _webSession.SiteLanguage) + "</td><td>: " + this._exportInStoreVersion.Id + "</td></tr>");
+                output.Append("<tr valign=\"top\"><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1712, _webSession.SiteLanguage) + "</td><td>: " + this._exportInStoreVersion.ExpenditureEuro + "</td></tr>");
+                output.Append("<tr valign=\"top\"><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1604, _webSession.SiteLanguage) + "</td><td>: " + this._exportInStoreVersion.NbBoards + "</td></tr>");
+                output.Append("<tr valign=\"top\"><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1999, _webSession.SiteLanguage) + "</td><td>: " + this._exportInStoreVersion.NbMedia + "</td></tr>");
+                output.Append("</TABLE></td>");
+            }
+            output.Append("</tr>");
+
+            output.Append("<tr width=100%><td width=100% nowrap " +
+                ((this._exportInStoreVersion.CssClass.Length > 0) ? "class=\"" + this._exportInStoreVersion.CssClass.Replace("c", "m") + "\">" : "\">"));
+            output.Append("<font size=1>");
+            output.Append("&nbsp;" + this._exportInStoreVersion.Id);
             output.Append("</font></td>");
             //			output.Append("</td></tr>");
             //

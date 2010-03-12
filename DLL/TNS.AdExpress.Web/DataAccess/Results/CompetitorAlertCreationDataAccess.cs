@@ -116,7 +116,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA+".vehicle ve, ");
 			sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+tableName+" wp, ");
 			sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA+".product_group_adver_agency pga ");
-			if(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString()))==DBClassificationConstantes.Vehicles.names.outdoor)
+			if(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString()))==DBClassificationConstantes.Vehicles.names.outdoor
+                || VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBClassificationConstantes.Vehicles.names.instore)
 			{
 				sql.Append("," +DBConstantes.Schema.ADEXPRESS_SCHEMA+".agglomeration ag ");
 			
@@ -156,7 +157,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 				sql.Append(" and co.id_color (+)=wp.id_color ");
 				sql.Append(" and fo.id_format (+)=wp.id_format ");
 			}
-			if(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString()))==DBClassificationConstantes.Vehicles.names.outdoor)
+			if(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString()))==DBClassificationConstantes.Vehicles.names.outdoor
+                || VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBClassificationConstantes.Vehicles.names.instore)
 			{
 				sql.Append(" and ag.id_agglomeration (+)= wp.id_agglomeration ");
 				sql.Append(" and ag.id_language (+)= "+webSession.DataLanguage.ToString());
@@ -277,25 +279,26 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 		/// Lancée quand le cas du vehicle spécifié n'est pas traité
 		/// </exception>
 		/// <returns>Chaine contenant le nom de la table correspondante</returns>
-		private static string GetTable(DBClassificationConstantes.Vehicles.names idVehicle,long currentModule){
-			switch(idVehicle){
-				case DBClassificationConstantes.Vehicles.names.press:
-					return DBConstantes.Tables.ALERT_DATA_PRESS;
-				case DBClassificationConstantes.Vehicles.names.internationalPress:
-					return DBConstantes.Tables.ALERT_DATA_PRESS_INTER;
-				case DBClassificationConstantes.Vehicles.names.radio:
-					return DBConstantes.Tables.ALERT_DATA_RADIO;
-				case DBClassificationConstantes.Vehicles.names.tv:
-				case DBClassificationConstantes.Vehicles.names.others:
-					if(currentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES.GetHashCode())
-					return DBConstantes.Tables.DATA_SPONSORSHIP;
-					else return DBConstantes.Tables.ALERT_DATA_TV;
-				case DBClassificationConstantes.Vehicles.names.outdoor:
-					return DBConstantes.Tables.ALERT_DATA_OUTDOOR;
-				default:
-					throw new Exceptions.MediaCreationDataAccessException("GetTable(DBClassificationConstantes.Vehicles.value idMedia)-->Le cas de ce média n'est pas gérer. Pas de table correspondante.");
-			}
-		}
+        //private static string GetTable(DBClassificationConstantes.Vehicles.names idVehicle,long currentModule){
+        //    switch(idVehicle){
+        //        case DBClassificationConstantes.Vehicles.names.press:
+        //            return DBConstantes.Tables.ALERT_DATA_PRESS;
+        //        case DBClassificationConstantes.Vehicles.names.internationalPress:
+        //            return DBConstantes.Tables.ALERT_DATA_PRESS_INTER;
+        //        case DBClassificationConstantes.Vehicles.names.radio:
+        //            return DBConstantes.Tables.ALERT_DATA_RADIO;
+        //        case DBClassificationConstantes.Vehicles.names.tv:
+        //        case DBClassificationConstantes.Vehicles.names.others:
+        //            if(currentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES.GetHashCode())
+        //            return DBConstantes.Tables.DATA_SPONSORSHIP;
+        //            else return DBConstantes.Tables.ALERT_DATA_TV;
+        //        case DBClassificationConstantes.Vehicles.names.outdoor:
+        //        case DBClassificationConstantes.Vehicles.names.instore:
+        //            return DBConstantes.Tables.ALERT_DATA_OUTDOOR;
+        //        default:
+        //            throw new Exceptions.MediaCreationDataAccessException("GetTable(DBClassificationConstantes.Vehicles.value idMedia)-->Le cas de ce média n'est pas gérer. Pas de table correspondante.");
+        //    }
+        //}
 
 
 		/// <summary>
@@ -556,6 +559,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", vehicle"
                         +", wp.id_category";
 				case DBClassificationConstantes.Vehicles.names.outdoor :
+                case DBClassificationConstantes.Vehicles.names.instore:
 					return  "media"
 						+", wp.date_media_num"											
 						+", advertiser"
@@ -608,6 +612,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", wp.id_commercial_break"
 						+", wp.id_rank";
 				case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.instore:
 					return  "category"
 						+", media"
 						+", wp.date_media_num"

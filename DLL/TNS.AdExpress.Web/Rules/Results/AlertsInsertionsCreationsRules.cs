@@ -73,6 +73,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 							case CstClassification.DB.Vehicles.names.others :
 								return GetDataTV(ds);
 							case CstClassification.DB.Vehicles.names.outdoor :
+                            case CstClassification.DB.Vehicles.names.instore:
 								return GetDataOutDoor(ds);
 							default:
 								throw new AlertsInsertionsCreationsRulesException("Le vehicle demandé n'est pas un cas traité");

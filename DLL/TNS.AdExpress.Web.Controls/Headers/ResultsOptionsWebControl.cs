@@ -1068,6 +1068,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 						case ClassificationCst.DB.Vehicles.names.tv:
 						case ClassificationCst.DB.Vehicles.names.radio:
 						case ClassificationCst.DB.Vehicles.names.outdoor:
+                        case ClassificationCst.DB.Vehicles.names.instore:
 						case ClassificationCst.DB.Vehicles.names.mediasTactics:						
 							mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
 							if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category)) 
@@ -1102,6 +1103,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 						case ClassificationCst.DB.Vehicles.names.tv:
 						case ClassificationCst.DB.Vehicles.names.radio:
 						case ClassificationCst.DB.Vehicles.names.outdoor:
+                        case ClassificationCst.DB.Vehicles.names.instore:
 						case ClassificationCst.DB.Vehicles.names.mediasTactics:
 							mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
 							mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
@@ -1617,6 +1619,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				case ClassificationCst.DB.Vehicles.names.internet:
 					return ((current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO));						
 				case ClassificationCst.DB.Vehicles.names.outdoor:
+                case ClassificationCst.DB.Vehicles.names.instore:
 				case ClassificationCst.DB.Vehicles.names.cinema:
                 case ClassificationCst.DB.Vehicles.names.adnettrack:
                 case ClassificationCst.DB.Vehicles.names.evaliantMobile:

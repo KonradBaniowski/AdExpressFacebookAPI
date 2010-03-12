@@ -456,6 +456,7 @@ namespace AdExpress.Private.Results{
 
 			switch (vehicleInformation.Id) {
 				case ClassificationCst.DB.Vehicles.names.outdoor :
+                case ClassificationCst.DB.Vehicles.names.instore:
 				case ClassificationCst.DB.Vehicles.names.cinema :
 					if (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE || (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR && !_webSession.CustomerPeriodSelected.IsSliding4M)) {
 						_webSession.CurrentTab = FrameWorkConstantes.Portofolio.SYNTHESIS;

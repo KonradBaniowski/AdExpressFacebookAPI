@@ -171,6 +171,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
 					headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
                 case CstDBClassif.Vehicles.names.outdoor:
+                case CstDBClassif.Vehicles.names.instore:
 					//headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1302, _session.SiteLanguage).ToUpper(), ID_TOTAL));
 					headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;

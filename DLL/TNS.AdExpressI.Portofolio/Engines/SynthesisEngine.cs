@@ -312,7 +312,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             dtLastDate = DateTime.Today;
 
             if (isAlertModule && (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet)) {
-                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor) {
+                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore) {
                     if (firstDate.Length > 0) {
                         dtFirstDate = Convert.ToDateTime(firstDate);
                         dtFirstDate = dtFirstDate.Date;
@@ -541,6 +542,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         protected virtual string GetDataProductNumberInTracking() {
             if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.instore
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) {
@@ -559,6 +561,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         protected virtual string GetDataProductNumberInVehicle() {
             if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.instore
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) {
@@ -683,7 +686,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         /// GetDataTypeSale
         /// </summary>
         protected virtual DataTable GetDataTypeSale() {
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor) {
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore) {
                 DataSet ds = _portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.typeSale);
                 return (ds.Tables[0]);
             }
@@ -754,7 +758,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 || (firstDate.Length > 0 && lastDate.Length > 0 && isAlertModule)) {
 
                 // Date begin and date end for outdooor
-                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor && isAlertModule) {
+                if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor 
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore)
+                    && isAlertModule) {
                     data = new List<ICell>(4);
                     data.Add(new CellLabel(GestionWeb.GetWebWord(1607, _webSession.SiteLanguage)));
                     data.Add(new CellLabel(Dates.DateToString(dtFirstDate, _webSession.SiteLanguage)));
@@ -968,7 +974,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region Compute data
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor) {
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore) {
 
                 #region Get Data
                 numberBoard = GetNumberBoard(GetDataInvestment());
@@ -1000,7 +1007,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region Compute data
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor && isAlertModule) {
+            if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor 
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore )
+                && isAlertModule) {
 
                 #region Get Data
                 dtTypeSale = GetDataTypeSale();
@@ -1419,6 +1428,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
             #region Compute data
             if ((_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.instore
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
@@ -1453,6 +1463,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
             #region Compute data
             if ((_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.instore
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack

@@ -1415,6 +1415,9 @@ namespace TNS.AdExpress.Web.UI.Results {
                                     case DBClassificationConstantes.Vehicles.names.outdoor:
                                         mediaPlanResultData.VersionsDetail.Add((Int64)tab[i, sloganIndex], new ExportOutdoorVersionItem((Int64)tab[i, sloganIndex], "pc" + colorNumberToUse.ToString()));
                                         break;
+                                    case DBClassificationConstantes.Vehicles.names.instore:
+                                        mediaPlanResultData.VersionsDetail.Add((Int64)tab[i, sloganIndex], new ExportInstoreVersionItem((Int64)tab[i, sloganIndex], "pc" + colorNumberToUse.ToString()));
+                                        break;
                                     default:
                                         mediaPlanResultData.VersionsDetail.Add((Int64)tab[i, sloganIndex], new ExportVersionItem((Int64)tab[i, sloganIndex], "pc" + colorNumberToUse.ToString())); //TODO
                                         break;
@@ -1434,6 +1437,9 @@ namespace TNS.AdExpress.Web.UI.Results {
                                         break;
                                     case DBClassificationConstantes.Vehicles.names.outdoor:
                                         mediaPlanResultData.VersionsDetail.Add((Int64)tab[i, sloganIndex], new ExportOutdoorVersionItem((Int64)tab[i, sloganIndex], webSession.SloganColors[(Int64)tab[i, sloganIndex]].ToString()));
+                                        break;
+                                    case DBClassificationConstantes.Vehicles.names.instore:
+                                        mediaPlanResultData.VersionsDetail.Add((Int64)tab[i, sloganIndex], new ExportInstoreVersionItem((Int64)tab[i, sloganIndex], webSession.SloganColors[(Int64)tab[i, sloganIndex]].ToString()));
                                         break;
                                     default:
                                         mediaPlanResultData.VersionsDetail.Add((Int64)tab[i, sloganIndex], new ExportVersionItem((Int64)tab[i, sloganIndex], webSession.SloganColors[(Int64)tab[i, sloganIndex]].ToString()));

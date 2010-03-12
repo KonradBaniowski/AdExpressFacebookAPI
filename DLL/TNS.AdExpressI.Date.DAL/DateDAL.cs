@@ -57,6 +57,7 @@ namespace TNS.AdExpressI.Date.DAL {
                 case DBClassificationConstantes.Vehicles.names.tv:
                 case DBClassificationConstantes.Vehicles.names.others:
                 case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.instore:
                 case DBClassificationConstantes.Vehicles.names.cinema:
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
@@ -170,6 +171,9 @@ namespace TNS.AdExpressI.Date.DAL {
                 case DBClassificationConstantes.Vehicles.names.outdoor:
                     tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoor).Sql;
                     break;
+                case DBClassificationConstantes.Vehicles.names.instore:
+                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInStore).Sql;
+                    break;
                 case DBClassificationConstantes.Vehicles.names.cinema:
                     tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinema).Sql;
                     break;
@@ -198,6 +202,7 @@ namespace TNS.AdExpressI.Date.DAL {
                 case DBClassificationConstantes.Vehicles.names.tv:
                 case DBClassificationConstantes.Vehicles.names.radio:
                 case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.instore:
                 case DBClassificationConstantes.Vehicles.names.cinema:
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:

@@ -737,6 +737,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                         case CstDBClassif.Vehicles.names.magazine:
                         case CstDBClassif.Vehicles.names.internationalPress:
                         case CstDBClassif.Vehicles.names.outdoor:
+                        case CstDBClassif.Vehicles.names.instore:
                             switch(displayPeriod) {
                                 case CstPeriod.DisplayLevel.monthly:
                                     return string.Format(" max({0}DURATION_MONTH(date_media_num,duration)) as period_count ", _schAdexpr03.Sql);

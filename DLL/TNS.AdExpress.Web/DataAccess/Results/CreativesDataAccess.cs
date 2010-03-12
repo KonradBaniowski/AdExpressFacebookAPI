@@ -335,6 +335,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                     break;
 
                 case DBClassifCst.Vehicles.names.outdoor:
+                case DBClassifCst.Vehicles.names.instore:
                     if (withOutPrefix)
                         sql.AppendFormat(", version,  {0},  nbsupport,  visuel ", UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString());
                     else 
@@ -696,6 +697,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                     break;
 
                 case DBClassifCst.Vehicles.names.outdoor:
+                case DBClassifCst.Vehicles.names.instore:
                     sql.AppendFormat(", {0}id_slogan ", prefix);
                     break;
 

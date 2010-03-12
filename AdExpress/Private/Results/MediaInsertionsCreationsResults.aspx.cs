@@ -479,6 +479,8 @@ namespace AdExpress.Private.Results{
 					return 647;
 				case DBClassificationConstantes.Vehicles.names.outdoor:
 					return 1302;
+                case DBClassificationConstantes.Vehicles.names.instore:
+                    return 2665;
 				case DBClassificationConstantes.Vehicles.names.adnettrack:
 					return 648;
 				case DBClassificationConstantes.Vehicles.names.internet:

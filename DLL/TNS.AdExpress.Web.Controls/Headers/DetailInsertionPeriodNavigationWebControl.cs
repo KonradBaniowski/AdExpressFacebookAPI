@@ -195,6 +195,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 case DBClassificationConstantes.Vehicles.names.tv: vehicle = GestionWeb.GetWebWord(206, _customerWebSession.SiteLanguage); break;
                 case DBClassificationConstantes.Vehicles.names.others: vehicle = GestionWeb.GetWebWord(647, _customerWebSession.SiteLanguage); break;
                 case DBClassificationConstantes.Vehicles.names.outdoor: vehicle = GestionWeb.GetWebWord(1779, _customerWebSession.SiteLanguage); break;
+                case DBClassificationConstantes.Vehicles.names.instore: vehicle = GestionWeb.GetWebWord(2666, _customerWebSession.SiteLanguage); break;
                 case DBClassificationConstantes.Vehicles.names.internet: vehicle = GestionWeb.GetWebWord(1301, _customerWebSession.SiteLanguage); break;
                 case DBClassificationConstantes.Vehicles.names.adnettrack: vehicle = GestionWeb.GetWebWord(648, _customerWebSession.SiteLanguage); break;
                 case DBClassificationConstantes.Vehicles.names.directMarketing: vehicle = GestionWeb.GetWebWord(2219, _customerWebSession.SiteLanguage); break;

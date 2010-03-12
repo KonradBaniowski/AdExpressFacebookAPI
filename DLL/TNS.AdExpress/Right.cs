@@ -829,6 +829,9 @@ namespace TNS.AdExpress {
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
 					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG)) return true;
 					return (_flagsRights.ContainsKey(Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG] != null);
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.instore:
+                    if (!Domain.AllowedFlags.ContainFlag(Flags.ID_INSTORE_CREATION_ACCESS_FLAG)) return true;
+                    return (_flagsRights.ContainsKey(Flags.ID_INSTORE_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_INSTORE_CREATION_ACCESS_FLAG] != null);
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing:
 					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG)) return true;
 					return (_flagsRights.ContainsKey(Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG] != null);

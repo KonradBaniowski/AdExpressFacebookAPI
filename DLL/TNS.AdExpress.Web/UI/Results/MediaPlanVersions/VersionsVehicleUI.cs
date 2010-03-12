@@ -242,9 +242,9 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
                     break;
                 
                 case DBCst.Vehicles.names.outdoor:
-                    dtSet = VersionDataAccess.GetVersions(_versions.Keys, _webSession, DBCst.Vehicles.names.outdoor,_period);
+                case DBCst.Vehicles.names.instore:
+                    dtSet = VersionDataAccess.GetVersions(_versions.Keys, _webSession, this._vehicle, _period);
                     break;
-
 				default:
 					throw new VersionUIException("Non authorized vehicle level : " + this._vehicle.ToString());
 			}
@@ -292,6 +292,14 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
                                     path += dirPath + "/" + str + ",";
                                 }
                                 break;
+                            case DBCst.Vehicles.names.instore:
+                                pathes = row["visual"].ToString().Split(',');
+                                path = string.Empty;
+                                dirPath = this.BuildVersionPath(row["id"].ToString(), WeBCst.CreationServerPathes.IMAGES_INSTORE);
+                                foreach (string str in pathes) {
+                                    path += dirPath + "/" + str + ",";
+                                }
+                                break;
                                 
 							case DBCst.Vehicles.names.radio:
 							case DBCst.Vehicles.names.tv:
@@ -334,6 +342,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 
                             case DBCst.Vehicles.names.directMarketing:
                             case DBCst.Vehicles.names.outdoor:
+                            case DBCst.Vehicles.names.instore:
                                 if (path.Length > 0){
                                     item.Path = path.Substring(0, path.Length - 1);
                                 }
@@ -401,7 +410,9 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
                         case DBCst.Vehicles.names.outdoor:
                             _title = GestionWeb.GetWebWord(2255, this._webSession.SiteLanguage);
                             break;
-
+                        case DBCst.Vehicles.names.instore:
+                            _title = GestionWeb.GetWebWord(2667, this._webSession.SiteLanguage);
+                            break;
 						default:
 							_title = "?";
 							break;
@@ -465,7 +476,9 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
                     case DBCst.Vehicles.names.outdoor:
                         _title = GestionWeb.GetWebWord(2255, this._webSession.SiteLanguage);
                         break;
-
+                    case DBCst.Vehicles.names.instore:
+                        _title = GestionWeb.GetWebWord(2667, this._webSession.SiteLanguage);
+                        break;
                     default:
                         _title = "?";
                         break;

@@ -24,6 +24,8 @@ using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Units;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 #endregion
 
 namespace TNS.AdExpress.Web.DataAccess.Results {
@@ -61,7 +63,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 		public static DataSet GetData(WebSession webSession, Int64 idVehicle, Int64 idCategory, Int64 idMedia, Int64 idAdvertiser, int dateBegin, int dateEnd) {
 
 			#region Variables
-			string tableName = "";
+            TNS.AdExpress.Domain.DataBaseDescription.TableIds tableName;
 			string fields = "";
 			//string levelProduct="";
 			string list = "";
@@ -72,7 +74,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 			#endregion
 
 			try {
-				tableName = GetTable(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())));
+                tableName = GetTable(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())));
 				fields = GetFields(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())));
 			}
 			catch (System.Exception ex) {
@@ -98,14 +100,15 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 					sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA + ".product pr, ");
 					sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA + ".category ct, ");
 					sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA + ".vehicle ve, ");
-					sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + tableName + " wp ");
-					if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBClassificationConstantes.Vehicles.names.outdoor) {
+					sql.Append(WebApplicationParameters.DataBaseDescription.GetTable(tableName).Sql + " wp ");
+					if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBClassificationConstantes.Vehicles.names.outdoor
+                        || VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBClassificationConstantes.Vehicles.names.instore) {
 						sql.Append("," + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".agglomeration ag ");
 
 					}
 					// Tables additionneles si le vehicle considere est la presse
 					// A changer pour inter si le nom de la table est différent
-					if (tableName.CompareTo(DBConstantes.Tables.DATA_PRESS) == 0) {
+                    if (tableName == TableIds.dataPress) {
 						sql.Append(", " + DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.COLOR + " co, ");
 						sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.LOCATION + " lo, ");
 						sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.DATA_LOCATION + "  dl, ");
@@ -121,7 +124,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 					sql.Append(" and ct.id_category=wp.id_category");
 					sql.Append(" and ve.id_vehicle=wp.id_vehicle");
 					// A changer pour inter si le nom de la table est différent
-					if (tableName.CompareTo(DBConstantes.Tables.DATA_PRESS) == 0) {
+                    if (tableName == TableIds.dataPress) {
 						sql.Append(" and (am.id_media(+) = wp.id_media ");
 						//	sql.Append(" and am.id_language_data_i(+) = wp.id_language_data_i ");
 						sql.Append(" and am.date_debut(+) = wp.date_media_num ");
@@ -134,7 +137,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 						sql.Append(" and co.id_color (+)=wp.id_color ");
 						sql.Append(" and fo.id_format (+)=wp.id_format ");
 					}
-					if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBClassificationConstantes.Vehicles.names.outdoor) {
+					if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBClassificationConstantes.Vehicles.names.outdoor
+                        || VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBClassificationConstantes.Vehicles.names.instore) {
 						sql.Append(" and ag.id_agglomeration (+)= wp.id_agglomeration ");
 						sql.Append(" and ag.id_language (+)= " + webSession.DataLanguage.ToString());
 						sql.Append(" and ag.activation (+)<" + DBConstantes.ActivationValues.UNACTIVATED);
@@ -148,7 +152,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 					sql.Append(" and ct.id_language=" + webSession.DataLanguage.ToString());
 					sql.Append(" and ve.id_language=" + webSession.DataLanguage.ToString());
 					// A changer pour inter si le nom de la table est différent
-					if (tableName.CompareTo(DBConstantes.Tables.DATA_PRESS) == 0) {
+                    if (tableName == TableIds.dataPress) {
 						sql.Append(" and co.id_language (+)=" + webSession.DataLanguage.ToString());
 						sql.Append(" and lo.id_language (+)=" + webSession.DataLanguage.ToString());
 						sql.Append(" and fo.id_language (+)=" + webSession.DataLanguage.ToString());
@@ -237,23 +241,25 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 		/// Lancée quand le cas du vehicle spécifié n'est pas traité
 		/// </exception>
 		/// <returns>Chaine contenant le nom de la table correspondante</returns>
-		private static string GetTable(DBClassificationConstantes.Vehicles.names idVehicle) {
-			switch (idVehicle) {
-				case DBClassificationConstantes.Vehicles.names.press:
-					return DBConstantes.Tables.DATA_PRESS;
-				case DBClassificationConstantes.Vehicles.names.internationalPress:
-					return DBConstantes.Tables.DATA_PRESS_INTER;
-				case DBClassificationConstantes.Vehicles.names.radio:
-					return DBConstantes.Tables.DATA_RADIO;
-				case DBClassificationConstantes.Vehicles.names.tv:
-				case DBClassificationConstantes.Vehicles.names.others:
-					return DBConstantes.Tables.DATA_TV;
-				case DBClassificationConstantes.Vehicles.names.outdoor:
-					return DBConstantes.Tables.DATA_OUTDOOR;
-				default:
-					throw new Exceptions.MediaCreationDataAccessException("GetTable(DBClassificationConstantes.Vehicles.value idMedia)-->Le cas de ce média n'est pas gérer. Pas de table correspondante.");
-			}
-		}
+        private static TNS.AdExpress.Domain.DataBaseDescription.TableIds GetTable(DBClassificationConstantes.Vehicles.names idVehicle) {
+            switch (idVehicle) {
+                case DBClassificationConstantes.Vehicles.names.press:
+                    return TNS.AdExpress.Domain.DataBaseDescription.TableIds.dataPress;
+                case DBClassificationConstantes.Vehicles.names.internationalPress:
+                    return TNS.AdExpress.Domain.DataBaseDescription.TableIds.dataPressInter;
+                case DBClassificationConstantes.Vehicles.names.radio:
+                    return TNS.AdExpress.Domain.DataBaseDescription.TableIds.dataRadio;
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.others:
+                    return TNS.AdExpress.Domain.DataBaseDescription.TableIds.dataTv;
+                case DBClassificationConstantes.Vehicles.names.outdoor:
+                    return TNS.AdExpress.Domain.DataBaseDescription.TableIds.dataOutDoor;
+                case DBClassificationConstantes.Vehicles.names.instore:
+                    return TNS.AdExpress.Domain.DataBaseDescription.TableIds.dataInStore;
+                default:
+                    throw new Exceptions.MediaCreationDataAccessException("GetTable(DBClassificationConstantes.Vehicles.value idMedia)-->Le cas de ce média n'est pas gérer. Pas de table correspondante.");
+            }
+        }
 
 		/// <summary>
 		/// Donne les champs à utiliser pour le vehicle indiqué
@@ -341,6 +347,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 						+ ", vehicle"
 						+ ", " + prefix + "id_category";
 				case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.instore:
 					return "media"
 						+ ", " + prefix + "date_media_num"
 						+ ", advertiser"
@@ -407,7 +414,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 						+ ", " + prefix + "id_commercial_break"
 						+ ", " + prefix + "id_rank";
 				case DBClassificationConstantes.Vehicles.names.outdoor:
-
+                case DBClassificationConstantes.Vehicles.names.instore:
 					return "category"
 						+ ", media"
 						+ ", " + prefix + "date_media_num"

@@ -314,6 +314,7 @@ namespace TNS.AdExpressI.Trends
                 case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
                 case DBClassificationConstantes.Vehicles.names.others:
                 case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.instore:
                     //Vehicle label
                     code = 804;
                     break;

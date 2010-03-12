@@ -252,7 +252,7 @@ namespace AdExpress.Private.Results{
 				#endregion
 
 				#region Outdoor prerequisites
-				if((DBClassificationConstantes.Vehicles.names.outdoor==vehicleName)&&
+                if ((DBClassificationConstantes.Vehicles.names.outdoor == vehicleName || DBClassificationConstantes.Vehicles.names.instore == vehicleName) &&
 					((_webSession.CurrentTab==TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA)||
 					(_webSession.CurrentTab==TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.NOVELTY)||
 					(_webSession.CurrentTab==TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE)))		

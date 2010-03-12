@@ -394,6 +394,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                         case ConstantesDBClassif.Vehicles.names.others:
                             return ConstantesDB.Schema.ADEXPRESS_SCHEMA + "." + ConstantesDB.Tables.ALERT_DATA_TV;
                         case ConstantesDBClassif.Vehicles.names.outdoor:
+
                             return ConstantesDB.Schema.ADEXPRESS_SCHEMA + "." + ConstantesDB.Tables.ALERT_DATA_OUTDOOR;
                         case ConstantesDBClassif.Vehicles.names.adnettrack:
                             return ConstantesDB.Schema.ADEXPRESS_SCHEMA + "." + ConstantesDB.Tables.ALERT_DATA_ADNETTRACK;
@@ -418,6 +419,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                             return ConstantesDB.Schema.ADEXPRESS_SCHEMA + "." + ConstantesDB.Tables.DATA_TV;
                         case ConstantesDBClassif.Vehicles.names.outdoor:
                             return ConstantesDB.Schema.ADEXPRESS_SCHEMA + "." + ConstantesDB.Tables.DATA_OUTDOOR;
+                        case ConstantesDBClassif.Vehicles.names.instore:
+                            return ConstantesDB.Schema.ADEXPRESS_SCHEMA + "." + ConstantesDB.Tables.DATA_INSTORE;
                         case ConstantesDBClassif.Vehicles.names.adnettrack:
                             return ConstantesDB.Schema.ADEXPRESS_SCHEMA + "." + ConstantesDB.Tables.DATA_ADNETTRACK;
                         case ConstantesDBClassif.Vehicles.names.internet:
@@ -481,6 +484,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                         case ConstantesDBClassif.Vehicles.names.press:
                         case ConstantesDBClassif.Vehicles.names.internationalPress:
                         case ConstantesDBClassif.Vehicles.names.outdoor:
+                        case ConstantesDBClassif.Vehicles.names.instore:
                             switch (displayPeriod)
                             {
                                 case ConstantesPeriod.DisplayLevel.monthly:

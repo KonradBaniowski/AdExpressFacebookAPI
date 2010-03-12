@@ -2000,6 +2000,9 @@ namespace TNS.AdExpress.Web.UI{
 						case ClassificationConstant.Vehicles.names.outdoor:
 							mediaNames+=GestionWeb.GetWebWord(1302,webSession.SiteLanguage);
 							break;
+                        case ClassificationConstant.Vehicles.names.instore:
+                            mediaNames += GestionWeb.GetWebWord(2665, webSession.SiteLanguage);
+                            break;
 						case ClassificationConstant.Vehicles.names.cinema:
 							mediaNames+=GestionWeb.GetWebWord(1303,webSession.SiteLanguage);
 							break;

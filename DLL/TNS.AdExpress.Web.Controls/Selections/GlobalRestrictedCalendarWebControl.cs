@@ -677,6 +677,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                     if (days >= 1) return true;
                     break;
                 case Vehicles.names.outdoor:
+                case Vehicles.names.instore:
                     firstDayOfWeek = firstDayOfWeek.AddDays(-7);
                     days = firstDayOfWeek.Subtract(currentDay).Days;
                     if (days >= 1) return true;
@@ -727,6 +728,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                     return firstDayOfWeek;
                     break;
                 case Vehicles.names.outdoor:
+                case Vehicles.names.instore:
                     firstDayOfWeek = firstDayOfWeek.AddDays(-7);
                     return (firstDayOfWeek);
                 case Vehicles.names.radio:

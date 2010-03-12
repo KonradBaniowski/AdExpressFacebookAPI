@@ -269,11 +269,11 @@
       <columnItem id="14" name="Prix"/>
       <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
     </detailColumn>
-    <!--Outdoor-->
+    <!--Outdoor / InStore-->
     <detailColumn id="4" name="Affiche\Annonceur\Produit\Groupe\Centre d'interet\Régie\Nombre de panneaux\Format du panneau\Type de réseau\Réseau afficheur\Agglomeration\Prix">
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
-      <columnItem id="56" name="Id_data_outdoor" visible="false" isKey="true"/>
+      <!--<columnItem id="56" name="Id_data_outdoor" visible="false" isKey="true"/>-->
       <columnItem id="41" name="Affiche" notInExcelExport="true"/>
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
@@ -282,8 +282,8 @@
       <columnItem id="5" name="Régie"/>
       <columnItem id="28" name="Nombre de panneaux"/>
       <columnItem id="29" name="Format du panneau" idDetailLevelMatching="22"/>
-      <columnItem id="30" name="Type de réseau"/>
-      <columnItem id="31" name="Réseau afficheur"/>
+      <!--<columnItem id="30" name="Type de réseau"/>-->
+      <!--<columnItem id="31" name="Réseau afficheur"/>-->
       <columnItem id="32" name="Agglomeration"/>
       <columnItem id="14" name="Prix"/>
     </detailColumn>

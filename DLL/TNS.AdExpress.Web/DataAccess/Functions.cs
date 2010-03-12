@@ -128,41 +128,41 @@ namespace TNS.AdExpress.Web.DataAccess{
 		/// Lancée si aucune table de la base de doonées ne correspond au vehicle spécifié dans la session utilisateur.
 		/// </exception>		
 		/// <returns>Chaîne de caractère correspondant au nom de la table à attaquer</returns>
-		public static string getVehicleTableName(Int64 idVehicle){
+        //public static string getVehicleTableName(Int64 idVehicle){
 
-			switch((ClassificationConstantes.DB.Vehicles.names) idVehicle){
-				case ClassificationConstantes.DB.Vehicles.names.cinema:
-					return "recap_cinema";
-				case ClassificationConstantes.DB.Vehicles.names.internet:
-					return "recap_internet";
-				case ClassificationConstantes.DB.Vehicles.names.outdoor:
-					return "recap_outdoor";
-				case ClassificationConstantes.DB.Vehicles.names.radio:
-					return "recap_radio";
-				case ClassificationConstantes.DB.Vehicles.names.tv:
-					return "recap_tv";
-				case ClassificationConstantes.DB.Vehicles.names.press:
-					return "recap_press";
-                case ClassificationConstantes.DB.Vehicles.names.newspaper:
-                    return "recap_newspaper";
-                case ClassificationConstantes.DB.Vehicles.names.magazine:
-                    return "recap_magazine";
-				case ClassificationConstantes.DB.Vehicles.names.plurimedia:
-					return "recap_pluri";
-				case ClassificationConstantes.DB.Vehicles.names.mediasTactics:
-					return "recap_tactic";
-				case ClassificationConstantes.DB.Vehicles.names.mobileTelephony:
-					return "recap_message";
-				case ClassificationConstantes.DB.Vehicles.names.emailing:
-					return "recap_emailing";
-				case ClassificationConstantes.DB.Vehicles.names.internationalPress:
-				case ClassificationConstantes.DB.Vehicles.names.others:
-				case ClassificationConstantes.DB.Vehicles.names.adnettrack:
-				default:
-					throw new WebExceptions.DynamicTablesDataAccessException("Le vehicle n° " + idVehicle + " n'est pas traité.");
-			}
+        //    switch((ClassificationConstantes.DB.Vehicles.names) idVehicle){
+        //        case ClassificationConstantes.DB.Vehicles.names.cinema:
+        //            return "recap_cinema";
+        //        case ClassificationConstantes.DB.Vehicles.names.internet:
+        //            return "recap_internet";
+        //        case ClassificationConstantes.DB.Vehicles.names.outdoor:
+        //            return "recap_outdoor";
+        //        case ClassificationConstantes.DB.Vehicles.names.radio:
+        //            return "recap_radio";
+        //        case ClassificationConstantes.DB.Vehicles.names.tv:
+        //            return "recap_tv";
+        //        case ClassificationConstantes.DB.Vehicles.names.press:
+        //            return "recap_press";
+        //        case ClassificationConstantes.DB.Vehicles.names.newspaper:
+        //            return "recap_newspaper";
+        //        case ClassificationConstantes.DB.Vehicles.names.magazine:
+        //            return "recap_magazine";
+        //        case ClassificationConstantes.DB.Vehicles.names.plurimedia:
+        //            return "recap_pluri";
+        //        case ClassificationConstantes.DB.Vehicles.names.mediasTactics:
+        //            return "recap_tactic";
+        //        case ClassificationConstantes.DB.Vehicles.names.mobileTelephony:
+        //            return "recap_message";
+        //        case ClassificationConstantes.DB.Vehicles.names.emailing:
+        //            return "recap_emailing";
+        //        case ClassificationConstantes.DB.Vehicles.names.internationalPress:
+        //        case ClassificationConstantes.DB.Vehicles.names.others:
+        //        case ClassificationConstantes.DB.Vehicles.names.adnettrack:
+        //        default:
+        //            throw new WebExceptions.DynamicTablesDataAccessException("Le vehicle n° " + idVehicle + " n'est pas traité.");
+        //    }
 
-		}
+		//}
 		#endregion
 
 		#region GetWebPlanTable

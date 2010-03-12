@@ -898,6 +898,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					return sql;
 
 				case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.instore:
 
 					sql = " " + prefixeMediaPlanTable + ".date_media_num"
 					+ ", advertiser";
@@ -1153,6 +1154,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					sql+=", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+DBConstantes.Tables.GROUP_+ "  "+DbTables.GROUP_PREFIXE;
 					break;
 				case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.instore:
 					sql+=GetMediaTables(preformatedMediaDetail);
 					sql+=", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+DBConstantes.Tables.GROUP_+ "  "+DbTables.GROUP_PREFIXE;
 					sql+="," +DBConstantes.Schema.ADEXPRESS_SCHEMA+".agglomeration  "+DbTables.AGGLOMERATION_PREFIXE;
@@ -1370,6 +1372,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					sql.Append(" and "+DbTables.FORMAT_PREFIXE+".id_language (+)="+webSession.DataLanguage.ToString());
 					break;
 				case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.instore:
 					sql.Append(GetMediaJoinConditions(webSession,dataTablePrefixe,true));
 					// Groupe
 					sql.Append(" and "+DbTables.GROUP_PREFIXE+".id_group_="+dataTablePrefixe+".id_group_ ");

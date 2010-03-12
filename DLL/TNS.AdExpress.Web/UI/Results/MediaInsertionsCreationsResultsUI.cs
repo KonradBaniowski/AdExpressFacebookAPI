@@ -1447,7 +1447,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 				#region Tableau
 				while (i < data.GetLength(0) && data[i, 0] != null) {
 
-					currentCategory = (data[i, CstWeb.OutDoorInsertionsColumnIndex.CATEGORY_INDEX] != null) ? data[i, CstWeb.OutDoorInsertionsColumnIndex.CATEGORY_INDEX].ToString() : "";
+                    currentCategory = (data[i, CstWeb.OutDoorInsertionsColumnIndex.CATEGORY_INDEX] != null) ? data[i, CstWeb.OutDoorInsertionsColumnIndex.CATEGORY_INDEX].ToString() : "";
 
 					#region Rappel Catégorie
 					HtmlTxt.Append("<TR>");
@@ -1467,12 +1467,12 @@ namespace TNS.AdExpress.Web.UI.Results{
 					#endregion
 
 					#region Niveau Catégorie
-					while (i < data.GetLength(0) && data[i, 0] != null && currentCategory.CompareTo(data[i, CstWeb.OutDoorInsertionsColumnIndex.CATEGORY_INDEX].ToString()) == 0) {
+                    while (i < data.GetLength(0) && data[i, 0] != null && currentCategory.CompareTo(data[i, CstWeb.OutDoorInsertionsColumnIndex.CATEGORY_INDEX].ToString()) == 0) {
 
 						#region Niveau Support
 
 						#region Rappel support
-						currentMedia = (data[i, CstWeb.OutDoorInsertionsColumnIndex.MEDIA_INDEX] != null) ? data[i, CstWeb.OutDoorInsertionsColumnIndex.MEDIA_INDEX].ToString() : "";
+                        currentMedia = (data[i, CstWeb.OutDoorInsertionsColumnIndex.MEDIA_INDEX] != null) ? data[i, CstWeb.OutDoorInsertionsColumnIndex.MEDIA_INDEX].ToString() : "";
 						HtmlTxt.Append("<TR vAlign=\"top\">");
 						HtmlTxt.Append("<TD width=\"100%\" vAlign=\"center\" class=\"popuptitle2\">");
 						HtmlTxt.Append(currentMedia);
@@ -1483,11 +1483,11 @@ namespace TNS.AdExpress.Web.UI.Results{
 						#region Détail du support courant
 						oldDate = "";						
 						first = true;
-						while (i < data.GetLength(0) && data[i, 0] != null && currentMedia.CompareTo(data[i, CstWeb.OutDoorInsertionsColumnIndex.MEDIA_INDEX].ToString()) == 0) {
-							if (oldDate.CompareTo(data[i, CstWeb.OutDoorInsertionsColumnIndex.DATE_INDEX].ToString()) != 0) {
+                        while (i < data.GetLength(0) && data[i, 0] != null && currentMedia.CompareTo(data[i, CstWeb.OutDoorInsertionsColumnIndex.MEDIA_INDEX].ToString()) == 0) {
+                            if (oldDate.CompareTo(data[i, CstWeb.OutDoorInsertionsColumnIndex.DATE_INDEX].ToString()) != 0) {
 								//nouvelle date => nouvelle entête
 								first = true;
-								oldDate = (data[i, CstWeb.OutDoorInsertionsColumnIndex.DATE_INDEX] != null) ? (string)data[i, CstWeb.OutDoorInsertionsColumnIndex.DATE_INDEX] : "";
+                                oldDate = (data[i, CstWeb.OutDoorInsertionsColumnIndex.DATE_INDEX] != null) ? (string)data[i, CstWeb.OutDoorInsertionsColumnIndex.DATE_INDEX] : "";
 								HtmlTxt.Append("<TR vAlign=\"top\">");
 								HtmlTxt.Append("<TD width=\"100%\" vAlign=\"center\" class=\"popuptitle3\">");
 								HtmlTxt.Append(oldDate);
@@ -1499,7 +1499,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 							HtmlTxt.Append("</tr>");
 							
 							HtmlTxt.Append("<tr class=\"popupinsertionligne\"><td ><TABLE cellSpacing=\"0\" border=\"0\"><tr>");
-							if (data[i, CstWeb.OutDoorInsertionsColumnIndex.FILES_INDEX]== null || ((string)data[i, CstWeb.OutDoorInsertionsColumnIndex.FILES_INDEX]).CompareTo("") == 0
+                            if (data[i, CstWeb.OutDoorInsertionsColumnIndex.FILES_INDEX] == null || ((string)data[i, CstWeb.OutDoorInsertionsColumnIndex.FILES_INDEX]).CompareTo("") == 0
 								|| ( !webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG) )								
 								) {
 								//Pas de créations
@@ -1560,6 +1560,369 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 		}
 		#endregion
+
+        #region Publicité interrieur
+        /// <summary>
+        /// Retourne le code html affichant le détails des insertions de la publicité extérieure:
+        ///		data vide : code HTML d'un message d'erruer
+        ///		data non vide : code HTML du tableau présentant le détail de la publicité extérieure insertion par insertion
+        ///			Génération du code d'export Excel
+        ///			Enregistrement du script d'ouverture de "AccessDownloadCreationsPopUp.aspx"
+        ///			Rappel des paramètres
+        ///			Génération du tableau des insertions ordonnées par Catégorie > Support > Date
+        /// </summary>
+        /// <param name="data">Tableau contenant les données à afficher</param>
+        /// <param name="webSession">Session utilisateur</param>
+        /// <param name="page">Page de retour</param>
+        /// <param name="periodBeginning">Période de début des calculs</param>
+        /// <param name="periodEnd">Période de fin des calculs</param>
+        /// <param name="idVehicle">Identifiant du vehicule</param>
+        /// <returns>Code html généré</returns>
+        /// <remarks>
+        /// Utilise les méthodes:
+        ///		TNS.AdExpress.Web.Functions.Script.OpenDownload()
+        ///		private static string GetUIEmpty(int language)
+        /// </remarks>
+        private static string GetUIInStore(object[,] data, WebSession webSession, Page page, string periodBeginning, string periodEnd, string idVehicle) {
+
+
+            StringBuilder HtmlTxt = new StringBuilder(1000);
+            string ColSpan = "";
+            bool first = true;
+            string classe = "";
+            string oldDate = "";
+            const string CLASSE_1 = "p6";
+            const string CLASSE_2 = "p7";
+            int i = 0;
+            string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
+            bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
+            #region Pas de données à afficher
+            if (data[0, 0] == null) {
+                return HtmlTxt.Append(GetUIEmpty(webSession.SiteLanguage)).ToString();
+            }
+            #endregion
+
+            //Pas de droit publicité extérieure
+            if (!webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_INSTORE_ACCESS_FLAG)) {
+                HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround insertionWhiteBorder\" style=\"MARGIN-TOP: 25px; MARGIN-LEFT: 25px; MARGIN-RIGHT: 25px;\"");
+                HtmlTxt.Append("cellPadding=\"0\" cellSpacing=\"0\" align=\"left\" border=\"0\">");
+                HtmlTxt.Append(GetUIEmpty(webSession.SiteLanguage, 2668));
+                HtmlTxt.Append("</TABLE>");
+
+                return HtmlTxt.ToString();
+            }
+
+            if (MediaInsertionsCreationsRules.IsRequiredGenericColmuns(webSession)) {
+
+                #region Détail des affiches avec gestion des colonnes génériques (Nouvelle version)
+
+                #region variables
+                string oldLabelLevel1 = null, oldLabelLevel2 = null, oldLabelLevel3 = null;
+                bool isNewLine = false;
+                bool isInsertionNewCells = false;
+                int j = 0;
+                bool hasLine = false;
+                #endregion
+
+                #region Début du tableau
+                HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround\" style=\"MARGIN-TOP: 25px; MARGIN-LEFT: 0px; MARGIN-RIGHT: 25px;\"");
+                HtmlTxt.Append("cellPadding=\"0\" cellSpacing=\"3\" align=\"left\" border=\"0\">");
+                #endregion
+
+                #region Tableaux d'insertions
+
+                //Parcours du tableau de résultats ( ligne 0 <=> libellés ; lignE >0 <=>valeurs) 
+                for (i = 1; i < data.GetLength(0); i++) {//A partir de la ligne 1 du tableau
+
+                    isNewLine = true;
+                    hasLine = false;
+                    isInsertionNewCells = true;
+                    string tempVisualString = "";
+                    string tempInsertionDetailString = "";
+                    for (j = 0; j < data.GetLength(1); j++) {
+
+                        #region 1er Niveau de regroupement
+
+                        if (webSession.DetailLevel != null && webSession.DetailLevel.Levels != null && webSession.DetailLevel.Levels.Count > 0
+                            && IsNewDetailLevel((DetailLevelItemInformation)webSession.DetailLevel.Levels[0], data, 0, j, i, oldLabelLevel1)) {
+
+                            //Affiche libellé élément de niveau 1
+                            HtmlTxt.Append("<TR>");
+                            HtmlTxt.Append("<td  vAlign=\"top\" width=\"100%\">");
+                            HtmlTxt.Append("<table cellSpacing=\"0\" cellPadding=\"0\" border=\"0\">");
+                            HtmlTxt.Append("<td>");
+                            HtmlTxt.Append("<!-- fleche -->");
+                            HtmlTxt.Append("<TD style=\"WIDTH: 16px\" ><IMG height=\"16\" src=\"/App_Themes/" + themeName + "/Images/Common/fleche_1.gif\" border=\"0\"></TD>");
+                            HtmlTxt.Append("<!-- message -->");
+                            HtmlTxt.Append("<TD  vAlign=\"top\" width=\"100%\" class=\"popuptitle1 creationpopUpBackGround\">");
+                            if (data[i, j] != null) HtmlTxt.Append(data[i, j].ToString());
+                            else HtmlTxt.Append("&nbsp;");
+                            HtmlTxt.Append("</TD>");
+                            HtmlTxt.Append("</td>");
+                            HtmlTxt.Append("</table>");
+                            HtmlTxt.Append("</td>");
+                            HtmlTxt.Append("</TR>");
+                            if (data[i, j] != null) oldLabelLevel1 = data[i, j].ToString();
+                            else oldLabelLevel1 = null;
+                            oldLabelLevel2 = null;
+                            oldLabelLevel3 = null;
+                            first = true;
+                        }
+
+                        #endregion
+
+                        #region 2eme Niveau de regroupement
+                        if (webSession.DetailLevel != null && webSession.DetailLevel.Levels != null && webSession.DetailLevel.Levels.Count > 1
+                            && IsNewDetailLevel((DetailLevelItemInformation)webSession.DetailLevel.Levels[1], data, 0, j, i, oldLabelLevel2)) {
+
+                            //Affiche libellé élément de niveau 2							
+                            HtmlTxt.Append("<TR vAlign=\"top\">");
+                            HtmlTxt.Append("<TD width=\"100%\" vAlign=\"center\" class=\"popuptitle2\">");
+                            if (data[i, j] != null) HtmlTxt.Append(data[i, j].ToString());
+                            else HtmlTxt.Append("&nbsp;");
+                            HtmlTxt.Append("</TD>");
+                            HtmlTxt.Append("</TR>");
+                            if (data[i, j] != null) oldLabelLevel2 = data[i, j].ToString();
+                            else oldLabelLevel2 = null;
+                            oldLabelLevel3 = null;
+                            first = true;
+                        }
+
+
+                        #endregion
+
+                        #region 3eme Niveau de regroupement
+
+                        if (webSession.DetailLevel != null && webSession.DetailLevel.Levels != null && webSession.DetailLevel.Levels.Count > 2
+                            && IsNewDetailLevel((DetailLevelItemInformation)webSession.DetailLevel.Levels[2], data, 0, j, i, oldLabelLevel3)) {
+                            //Affiche libellé élément de niveau 3															 	
+                            HtmlTxt.Append("<TR vAlign=\"top\">");
+                            HtmlTxt.Append("<TD width=\"100%\" vAlign=\"center\" class=\"popuptitle3\">");
+                            if (data[i, j] != null) HtmlTxt.Append(data[i, j].ToString());
+                            else HtmlTxt.Append("&nbsp;");
+                            HtmlTxt.Append("</TD>");
+                            HtmlTxt.Append("</TR>");
+                            if (data[i, j] != null) oldLabelLevel3 = data[i, j].ToString();
+                            else oldLabelLevel3 = null;
+                            first = true;
+                        }
+
+                        #endregion
+                    }
+
+                    #region Corps du tableau
+                    if (webSession.GenericInsertionColumns != null && webSession.GenericInsertionColumns.Columns != null && webSession.GenericInsertionColumns.Columns.Count > 0
+                        ) {
+
+                        foreach (GenericColumnItemInformation currentColumn in webSession.GenericInsertionColumns.Columns) {
+                            for (j = 0; j < data.GetLength(1); j++) {
+                                if (data[0, j] != null && ((currentColumn.DataBaseAliasField == null && currentColumn.DataBaseField != null && data[0, j].ToString().CompareTo(currentColumn.DataBaseField.ToUpper()) == 0)
+                                    || (currentColumn.DataBaseAliasField != null && data[0, j].ToString().CompareTo(currentColumn.DataBaseAliasField.ToUpper()) == 0))
+                                    ) {
+
+                                    #region Colonne générique
+                                    hasLine = true;
+                                    if (isNewLine) {
+
+                                        HtmlTxt.Append("<tr class=\"popupinsertionligne\">");//Debut  Nouvelle ligne
+                                        HtmlTxt.Append("<td " + ((!first) ? "class=\"creationVioletTopBorder\"" : "") + "><TABLE cellSpacing=\"0\" cellPadding=\"0\" border=\"0\"><tr>");////Debut tableau contenant cellules visuels et détail insertion
+                                        isNewLine = false;
+                                        first = false;
+
+                                    }
+                                    //Cas gestion visuels
+                                    if (data[0, j] != null && data[0, j].ToString().CompareTo(ASSOCIATED_FILE) == 0) {
+
+                                        if (data[i, j] == null || data[i, j] == System.DBNull.Value || ((string)data[i, j]).CompareTo("") == 0
+                                            || (!webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_INSTORE_CREATION_ACCESS_FLAG))
+                                            ) {
+                                            //Pas de créations
+                                            tempVisualString = "<td class=\"txtViolet12Bold\" valign=\"top\">" + GestionWeb.GetWebWord(843, webSession.SiteLanguage) + "</td>";
+                                        }
+                                        else {
+                                            //Affichage de chaque création
+                                            tempVisualString = "";
+                                            string[] files = ((string)data[i, j]).Split(',');
+
+                                            foreach (string str in files) {
+
+                                                tempVisualString += "<td valign=\"center\" style=\"WIDTH: 3px\"><a class=\"image\" href=\"javascript:openPressCreation('" + ((string)data[i, j]).Replace("/Imagette", "") + "');\"><IMG border=\"0\" src=\"" + str + "\"></a></td>";
+
+                                            }
+                                        }
+                                    }	//Autres cas
+                                    else {
+                                        if (isInsertionNewCells) {
+                                            tempInsertionDetailString = "<td valign=\"top\"><TABLE width=\"240\" cellSpacing=\"0\" border=\"0\" class=\"txtViolet11Bold\" valign=\"top\">";//Debut cellule affichage du détail de l'insertion
+                                        }
+                                        if (currentColumn.Id != GenericColumnItemInformation.Columns.product || (showProduct)) {
+                                            if (data[i, j] != null) {
+                                                tempInsertionDetailString += "<tr valign=\"top\" nowrap><td>&nbsp;" + GestionWeb.GetWebWord(currentColumn.WebTextId, webSession.SiteLanguage) + "</td><td nowrap>: " + data[i, j].ToString() + "</td></tr>";
+                                            }
+                                            else {
+                                                tempInsertionDetailString += "<tr valign=\"top\"><td nowrap>&nbsp;" + GestionWeb.GetWebWord(currentColumn.WebTextId, webSession.SiteLanguage) + "</td><td>: &nbsp;</td></tr>";
+                                            }
+                                        }
+                                        isInsertionNewCells = false;
+                                    }
+
+                                    #endregion
+                                }
+                            }
+
+                        }
+                        if (hasLine) {
+                            if (tempInsertionDetailString.Length > 0) tempInsertionDetailString += "</TABLE></td>";//Fin cellule affichage du détail de l'insertion
+
+                            HtmlTxt.Append(tempVisualString + tempInsertionDetailString);//Ajout cellules visuels et détails insertions;
+                            HtmlTxt.Append("</tr></TABLE></td>");//Fin tableau contenant visuels et détail insertion
+                            HtmlTxt.Append("</tr>");////Fin Nouvelle ligne								
+                        }
+                        tempInsertionDetailString = "";
+                        tempVisualString = "";
+                    }
+                    #endregion
+
+                }
+                #endregion
+
+                //fin du tableau générale
+                HtmlTxt.Append("</TABLE>");
+
+                #endregion
+
+            }
+            else {
+
+                #region Détail insertion presse sans gestion des colonnes génériques
+
+                #region Début du tableau
+                HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround\" style=\"MARGIN-TOP: 0px; MARGIN-LEFT: 0px; MARGIN-RIGHT: 25px;\"");
+                HtmlTxt.Append("cellPadding=\"0\" cellSpacing=\"3\" align=\"left\" border=\"0\">");
+                #endregion
+
+                #region Construction du tableau
+                i = 0;
+                string currentMedia = "";
+                string currentCategory = "";
+
+                #region Tableau
+                while (i < data.GetLength(0) && data[i, 0] != null) {
+
+                    currentCategory = (data[i, CstWeb.InStoreInsertionsColumnIndex.CATEGORY_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.CATEGORY_INDEX].ToString() : "";
+
+                    #region Rappel Catégorie
+                    HtmlTxt.Append("<TR>");
+                    HtmlTxt.Append("<td  vAlign=\"top\" width=\"100%\">");
+                    HtmlTxt.Append("<table cellSpacing=\"0\" cellPadding=\"0\" border=\"0\">");
+                    HtmlTxt.Append("<td>");
+                    HtmlTxt.Append("<!-- fleche -->");
+                    HtmlTxt.Append("<TD style=\"WIDTH: 16px\" ><IMG height=\"16\" src=\"/App_Themes/" + themeName + "/Images/Common/fleche_1.gif\" border=\"0\"></TD>");
+                    HtmlTxt.Append("<!-- message -->");
+                    HtmlTxt.Append("<TD  vAlign=\"top\" width=\"100%\" class=\"popuptitle1 creationpopUpBackGround\">");
+                    HtmlTxt.Append(currentCategory);
+                    HtmlTxt.Append("</TD>");
+                    HtmlTxt.Append("</td>");
+                    HtmlTxt.Append("</table>");
+                    HtmlTxt.Append("</td>");
+                    HtmlTxt.Append("</TR>");
+                    #endregion
+
+                    #region Niveau Catégorie
+                    while (i < data.GetLength(0) && data[i, 0] != null && currentCategory.CompareTo(data[i, CstWeb.InStoreInsertionsColumnIndex.CATEGORY_INDEX].ToString()) == 0) {
+
+                        #region Niveau Support
+
+                        #region Rappel support
+                        currentMedia = (data[i, CstWeb.InStoreInsertionsColumnIndex.MEDIA_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.MEDIA_INDEX].ToString() : "";
+                        HtmlTxt.Append("<TR vAlign=\"top\">");
+                        HtmlTxt.Append("<TD width=\"100%\" vAlign=\"center\" class=\"popuptitle2\">");
+                        HtmlTxt.Append(currentMedia);
+                        HtmlTxt.Append("</TD>");
+                        HtmlTxt.Append("</TR>");
+                        #endregion
+
+                        #region Détail du support courant
+                        oldDate = "";
+                        first = true;
+                        while (i < data.GetLength(0) && data[i, 0] != null && currentMedia.CompareTo(data[i, CstWeb.InStoreInsertionsColumnIndex.MEDIA_INDEX].ToString()) == 0) {
+                            if (oldDate.CompareTo(data[i, CstWeb.InStoreInsertionsColumnIndex.DATE_INDEX].ToString()) != 0) {
+                                //nouvelle date => nouvelle entête
+                                first = true;
+                                oldDate = (data[i, CstWeb.InStoreInsertionsColumnIndex.DATE_INDEX] != null) ? (string)data[i, CstWeb.InStoreInsertionsColumnIndex.DATE_INDEX] : "";
+                                HtmlTxt.Append("<TR vAlign=\"top\">");
+                                HtmlTxt.Append("<TD width=\"100%\" vAlign=\"center\" class=\"popuptitle3\">");
+                                HtmlTxt.Append(oldDate);
+                                HtmlTxt.Append("</TD>");
+                                HtmlTxt.Append("</TR>");
+                            }
+                            HtmlTxt.Append("<tr class=\"popupinsertionligne\">");
+                            HtmlTxt.Append("<td " + ((!first) ? "class=\"creationVioletTopBorder txtViolet11Bold\"" : "") + " class=\"txtViolet11Bold\">&nbsp;</td>");
+                            HtmlTxt.Append("</tr>");
+
+                            HtmlTxt.Append("<tr class=\"popupinsertionligne\"><td ><TABLE cellSpacing=\"0\" border=\"0\"><tr>");
+                            if (data[i, CstWeb.InStoreInsertionsColumnIndex.FILES_INDEX] == null || ((string)data[i, CstWeb.InStoreInsertionsColumnIndex.FILES_INDEX]).CompareTo("") == 0
+                                || (!webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG))
+                                ) {
+                                //Pas de créations
+                                HtmlTxt.Append("<td class=\"txtViolet12Bold\" valign=\"top\">" + GestionWeb.GetWebWord(843, webSession.SiteLanguage) + "</td>");
+                            }
+                            else {
+                                //Affichage de chaque création
+                                string[] files = ((string)data[i, CstWeb.InStoreInsertionsColumnIndex.FILES_INDEX]).Split(',');
+                                foreach (string str in files) {
+                                    HtmlTxt.Append("<td valign=\"center\" width=\"1%\"><a class=\"image\" href=\"javascript:openPressCreation('" + ((string)data[i, CstWeb.InStoreInsertionsColumnIndex.FILES_INDEX]).Replace("/Imagette", "") + "');\"><IMG border=\"0\" src=\"" + str + "\"></a></td>");
+                                }
+                            }
+                            //affichage du détail de l'insertion							
+
+                            HtmlTxt.Append("<td valign=\"top\"><TABLE width=\"240\" cellSpacing=\"0\" border=\"0\" class=\"txtViolet11Bold\" valign=\"top\">");
+                            HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(176, webSession.SiteLanguage) + "</td><td width=\"550\">: " + ((data[i, CstWeb.InStoreInsertionsColumnIndex.ADVERTISER_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.ADVERTISER_INDEX].ToString() : "") + "</td></tr>");
+                            HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(174, webSession.SiteLanguage) + "</td><td nowrap>: " + ((data[i, CstWeb.InStoreInsertionsColumnIndex.GROUP_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.GROUP_INDEX].ToString() : "") + "</td></tr>");
+                            if (showProduct)
+                                HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(468, webSession.SiteLanguage) + "</td><td nowrap>: " + ((data[i, CstWeb.InStoreInsertionsColumnIndex.PRODUCT_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.PRODUCT_INDEX].ToString() : "") + "</td></tr>");
+                            if (webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) && !webSession.isCompetitorAdvertiserSelected())// si droit accroche
+                                HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1881, webSession.SiteLanguage) + "</td><td nowrap>: " + ((data[i, CstWeb.InStoreInsertionsColumnIndex.ID_SLOGAN_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.ID_SLOGAN_INDEX].ToString() : "") + "</td></tr>");
+                            if (!webSession.isCompetitorAdvertiserSelected()) {
+                                HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1384, webSession.SiteLanguage) + "</td><td nowrap>: " + ((data[i, CstWeb.InStoreInsertionsColumnIndex.INTEREST_CENTER_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.INTEREST_CENTER_INDEX].ToString() : "") + "</td></tr>");
+                                HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1383, webSession.SiteLanguage) + "</td><td nowrap>: " + ((data[i, CstWeb.InStoreInsertionsColumnIndex.MEDIA_SELLER_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.MEDIA_SELLER_INDEX].ToString() : "") + "</td></tr>");
+                            }
+                            HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1604, webSession.SiteLanguage) + "</td><td nowrap>: " + ((data[i, CstWeb.InStoreInsertionsColumnIndex.NUMBER_BOARD_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.NUMBER_BOARD_INDEX].ToString() : "") + "</td></tr>");
+                            HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1420, webSession.SiteLanguage) + "</td><td nowrap>: " + ((data[i, CstWeb.InStoreInsertionsColumnIndex.TYPE_BOARD_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.TYPE_BOARD_INDEX].ToString() : "") + "</td></tr>");
+                            HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1609, webSession.SiteLanguage) + "</td><td nowrap>: " + ((data[i, CstWeb.InStoreInsertionsColumnIndex.TYPE_SALE_INDEX] != null) ? Convertion.ToHtmlString(TNS.AdExpress.Web.Functions.SQLGenerator.SaleTypeOutdoor(data[i, CstWeb.InStoreInsertionsColumnIndex.TYPE_SALE_INDEX].ToString(), webSession.SiteLanguage)) : "") + "</td></tr>");
+                            HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1611, webSession.SiteLanguage) + "</td><td nowrap>: " + ((data[i, CstWeb.InStoreInsertionsColumnIndex.POSTER_NETWORK_INDEX] != null) ? Convertion.ToHtmlString(data[i, CstWeb.InStoreInsertionsColumnIndex.POSTER_NETWORK_INDEX].ToString()) : "") + "</td></tr>");
+                            HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1660, webSession.SiteLanguage) + "</td><td nowrap>: " + ((data[i, CstWeb.InStoreInsertionsColumnIndex.AGGLOMERATION_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.AGGLOMERATION_INDEX].ToString() : "") + "</td></tr>");
+                            HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(868, webSession.SiteLanguage) + "</td><td nowrap> : " + ((data[i, CstWeb.InStoreInsertionsColumnIndex.EXPENDITURE_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.EXPENDITURE_INDEX].ToString() : "") + "</td></tr>");
+                            HtmlTxt.Append("</TABLE></td>");
+
+                            HtmlTxt.Append("</tr></TABLE></td>");
+                            HtmlTxt.Append("</tr>");
+                            i++;
+                            first = false;
+                        }
+                        #endregion
+
+                        #endregion
+
+                    }
+                    #endregion
+
+                }
+                #endregion
+
+                #endregion
+
+                //fin du tableau générale
+                HtmlTxt.Append("</TABLE>");
+
+                #endregion
+            }
+
+            return HtmlTxt.ToString();
+
+        }
+        #endregion
 
         #region Marketing Direct
         /// <summary>
@@ -1790,14 +2153,23 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 
 			////Pas de droit résultat au détail insertion
-			if ( idVehicle !=null && idVehicle.Length>0 
-				&& VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle)) == CstClassification.DB.Vehicles.names.outdoor 
-				&& !webSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG) 				
-				) {
-                return "<TABLE width=\"500\" class=\"whiteBackGround insertionBorderV2\""
-					+ "cellPadding=\"0\" cellSpacing=\"0\" align=\"center\" border=\"0\">"
-					+ " " + GetUIEmpty(webSession.SiteLanguage, 1882)
-					+ "</TABLE>";
+			if ( idVehicle !=null && idVehicle.Length>0) {
+                if ((VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle)) == CstClassification.DB.Vehicles.names.outdoor
+                    && !webSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG))
+                ) {
+                    return "<TABLE width=\"500\" class=\"whiteBackGround insertionBorderV2\""
+                        + "cellPadding=\"0\" cellSpacing=\"0\" align=\"center\" border=\"0\">"
+                        + " " + GetUIEmpty(webSession.SiteLanguage, 1882)
+                        + "</TABLE>";
+                }
+                if ((VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle)) == CstClassification.DB.Vehicles.names.instore
+                    && !webSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_INSTORE_ACCESS_FLAG))
+                ) {
+                    return "<TABLE width=\"500\" class=\"whiteBackGround insertionBorderV2\""
+                        + "cellPadding=\"0\" cellSpacing=\"0\" align=\"center\" border=\"0\">"
+                        + " " + GetUIEmpty(webSession.SiteLanguage, 2668)
+                        + "</TABLE>";
+                }
 			}
 
             #region Mise en forme des dates et du media
@@ -1865,6 +2237,8 @@ namespace TNS.AdExpress.Web.UI.Results{
                         return GetUITV(tab, webSession, page, periodBegin, periodEnd, idVehicle);
 					case CstClassification.DB.Vehicles.names.outdoor:
                         return GetUIOutDoor(tab, webSession, page, periodBegin, periodEnd, idVehicle);
+                    case CstClassification.DB.Vehicles.names.instore:
+                        return GetUIInStore(tab, webSession, page, periodBegin, periodEnd, idVehicle);
                     case CstClassification.DB.Vehicles.names.directMarketing:
                         return GetUIMD(tab, webSession, page, periodBegin, periodEnd, idVehicle, mediaImpactedList);
 					default:
@@ -2016,12 +2390,23 @@ namespace TNS.AdExpress.Web.UI.Results{
 			if (tab==null || tab[0,0]==null){
 
 				//Pas de droit publicité extérieure
-				if(!webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)
-					&& VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle))==CstClassification.DB.Vehicles.names.outdoor 
+				if((!webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)
+					&& VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle))==CstClassification.DB.Vehicles.names.outdoor) 
+                    ||
+                    (!webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_INSTORE_ACCESS_FLAG)
+                    && VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle)) == CstClassification.DB.Vehicles.names.instore) 
 					){
+                    int idText = -1;
+                    if (!webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)
+                    && VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle)) == CstClassification.DB.Vehicles.names.outdoor) {
+                        idText = 1882;
+                    }
+                    else {
+                        idText = 2668;
+                    }
                     return "<TABLE width=\"500\" class=\"whiteBackGround insertionWhiteBorder\" style=\"MARGIN-TOP: 25px; MARGIN-LEFT: 25px; MARGIN-RIGHT: 25px;\""
 						+"cellPadding=\"0\" cellSpacing=\"0\" align=\"center\" border=\"0\">"
-						+" "+GetUIEmpty(webSession.SiteLanguage,1882)
+                        + " " + GetUIEmpty(webSession.SiteLanguage, idText)
 						+"</TABLE>";				
 				}
 				else
@@ -2046,6 +2431,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 						return GetUITVExcel(tab, webSession, page,dateBegin.ToString(),dateEnd.ToString(), mediaImpactedList,int.Parse(idVehicle));
 					case CstClassification.DB.Vehicles.names.outdoor:
 						return GetUIOutDoorExcel(tab, webSession, page,dateBegin.ToString(),dateEnd.ToString(), mediaImpactedList,int.Parse(idVehicle));
+                    case CstClassification.DB.Vehicles.names.instore:
+                        return GetUIInStoreExcel(tab, webSession, page, dateBegin.ToString(), dateEnd.ToString(), mediaImpactedList, int.Parse(idVehicle));
                     case CstClassification.DB.Vehicles.names.directMarketing:
                         return GetUIMDExcel(tab, webSession, page, dateBegin.ToString(),dateEnd.ToString(), mediaImpactedList, int.Parse(idVehicle));
 					default:
@@ -2991,6 +3378,246 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 		}
 		#endregion
+
+        #region Publicité InTerieur
+        /// <summary>
+        /// Génère le code HTML nécessaire à l'export du détail des insertions Publicité extérieure:
+        ///		data vide : Code HTML spécifiant une erreur (cas normalement impossible)
+        ///		data non vide : 
+        ///			Génération du tableau ordonné par catégorie > support > date > page
+        /// </summary>
+        /// <param name="data">Tableau de données</param>
+        /// <param name="webSession">Session utilisateur</param>
+        /// <param name="page">Page résultat</param>
+        /// <param name="periodBeginning">Période de début d'affichage</param>
+        /// <param name="periodEnd">Période de fin d'affichage</param>
+        /// <param name="mediaImpactedList">Liste de medias impactés</param>
+        /// <param name="idVehicle">Identifiant du media sélectionné</param>
+        /// <returns>Code html Généré</returns>
+        private static string GetUIInStoreExcel(object[,] data, WebSession webSession, Page page, string periodBeginning, string periodEnd, ListDictionary mediaImpactedList, int idVehicle) {
+
+            StringBuilder HtmlTxt = new StringBuilder(1000);
+
+            //Pas de droit publicité extérieure
+            if (!webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_INSTORE_ACCESS_FLAG)) {
+                HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround insertionWhiteBorder\" style=\"MARGIN-TOP: 25px; MARGIN-LEFT: 25px; MARGIN-RIGHT: 25px;\"");
+                HtmlTxt.Append("cellPadding=\"0\" cellSpacing=\"0\" align=\"center\" border=\"0\">");
+                HtmlTxt.Append(GetUIEmpty(webSession.SiteLanguage, 2668));
+                HtmlTxt.Append("</TABLE>");
+
+                return HtmlTxt.ToString();
+            }
+
+            const string CLASSE_1 = "pmmediaxls1";
+            const string CLASSE_2 = "pmmediaxls2";
+
+            int i = 0;
+            int j = 0;
+            bool first = true;
+            string classe = "";
+            bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
+            #region Paramètres du tableau
+            HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
+            HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(webSession, false, periodBeginning, periodEnd, mediaImpactedList, idVehicle));
+            #endregion
+
+            if (MediaInsertionsCreationsRules.IsRequiredGenericColmuns(webSession)) {
+
+                #region Détail des affiches avec gestion des colonnes génériques
+
+                #region variabbles
+                ArrayList idLevelList = null;
+                #endregion
+
+                #region Début du tableau
+                HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround\" cellPadding=\"0\" align=\"center\" border=\"0\">");
+                #endregion
+
+                #region Pas de données à afficher
+                if (data[0, 0] == null) {
+                    return HtmlTxt.Append(GetUIEmptyExcel(webSession.SiteLanguage, 13)).ToString();
+                }
+                #endregion
+
+                else {
+
+                    #region En-têtes de tableaux
+                    HtmlTxt.Append("<tr>");
+                    if (webSession.DetailLevel != null && webSession.DetailLevel.Levels != null && webSession.DetailLevel.Levels.Count > 0) {
+                        foreach (DetailLevelItemInformation currentLevel in webSession.DetailLevel.Levels) {
+                            for (int k = 0; k < data.GetLength(1); k++) {
+                                if (data[0, k] != null && ((currentLevel.DataBaseAliasField == null && currentLevel.DataBaseField != null && data[0, k].ToString().CompareTo(currentLevel.DataBaseField.ToUpper()) == 0)
+                                    || (currentLevel.DataBaseAliasField != null && data[0, k].ToString().CompareTo(currentLevel.DataBaseAliasField.ToUpper()) == 0))
+                                    ) {
+                                    if (currentLevel.Id != DetailLevelItemInformation.Levels.product || showProduct)
+                                        HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(currentLevel.WebTextId, webSession.SiteLanguage) + "</td>");
+                                }
+                            }
+                            if (idLevelList == null) idLevelList = new ArrayList();
+                            idLevelList.Add(currentLevel.Id.GetHashCode());
+                        }
+                    }
+                    if (webSession.GenericInsertionColumns != null && webSession.GenericInsertionColumns.Columns != null && webSession.GenericInsertionColumns.Columns.Count > 0) {
+                        foreach (GenericColumnItemInformation currentColumn in webSession.GenericInsertionColumns.Columns) {
+                            for (int k = 0; k < data.GetLength(1); k++) {
+                                if (data[0, k] != null && ((currentColumn.DataBaseAliasField == null && currentColumn.DataBaseField != null && data[0, k].ToString().CompareTo(currentColumn.DataBaseField.ToUpper()) == 0)
+                                    || (currentColumn.DataBaseAliasField != null && data[0, k].ToString().CompareTo(currentColumn.DataBaseAliasField.ToUpper()) == 0))
+                                    && !(idLevelList != null && idLevelList.Contains(currentColumn.IdDetailLevelMatching)) && !(currentColumn.NotInExcelExport)
+                                    ) {
+                                    if (currentColumn.Id != GenericColumnItemInformation.Columns.product || showProduct)
+                                        HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(currentColumn.WebTextId, webSession.SiteLanguage) + "</td>");
+                                }
+                            }
+                        }
+                    }
+                    HtmlTxt.Append("</tr>");
+                    #endregion
+
+                    #region Corps du tableau
+                    //Parcours du tableau de résultats ( ligne 0 <=> libellés ; lignE >0 <=>valeurs) 
+                    for (i = 1; i < data.GetLength(0); i++) {//A partir de la ligne 1 du tableau
+                        HtmlTxt.Append("<tr>");
+                        if (first) {
+                            first = false;
+                            classe = CLASSE_1;
+                        }
+                        else {
+                            first = true;
+                            classe = CLASSE_2;
+                        }
+                        if (webSession.DetailLevel != null && webSession.DetailLevel.Levels != null && webSession.DetailLevel.Levels.Count > 0) {
+                            foreach (DetailLevelItemInformation currentLevel in webSession.DetailLevel.Levels) {
+                                for (j = 0; j < data.GetLength(1); j++) {
+                                    if (data[0, j] != null && ((currentLevel.DataBaseAliasField == null && currentLevel.DataBaseField != null && data[0, j].ToString().CompareTo(currentLevel.DataBaseField.ToUpper()) == 0)
+                                        || (currentLevel.DataBaseAliasField != null && data[0, j].ToString().CompareTo(currentLevel.DataBaseAliasField.ToUpper()) == 0))
+                                        ) {
+                                        if (currentLevel.Id != DetailLevelItemInformation.Levels.product || showProduct) {
+                                            if (data[i, j] != null) HtmlTxt.Append("<td class=\"" + classe + "\" nowrap>" + data[i, j].ToString() + "</td>");
+                                            else HtmlTxt.Append("<td class=\"" + classe + "\" nowrap>&nbsp;" + "</td>");
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                        if (webSession.GenericInsertionColumns != null && webSession.GenericInsertionColumns.Columns != null && webSession.GenericInsertionColumns.Columns.Count > 0) {
+
+
+                            foreach (GenericColumnItemInformation currentColumn in webSession.GenericInsertionColumns.Columns) {
+                                for (j = 0; j < data.GetLength(1); j++) {
+                                    if (data[0, j] != null && ((currentColumn.DataBaseAliasField == null && currentColumn.DataBaseField != null && data[0, j].ToString().CompareTo(currentColumn.DataBaseField.ToUpper()) == 0)
+                                        || (currentColumn.DataBaseAliasField != null && data[0, j].ToString().CompareTo(currentColumn.DataBaseAliasField.ToUpper()) == 0))
+                                        && !(idLevelList != null && idLevelList.Contains(currentColumn.IdDetailLevelMatching)) && !(currentColumn.NotInExcelExport)
+                                        ) {
+                                        if (currentColumn.Id != GenericColumnItemInformation.Columns.product || showProduct) {
+                                            if (data[i, j] != null) HtmlTxt.Append("<td class=\"" + classe + "\" nowrap>" + data[i, j].ToString() + "</td>");
+                                            else HtmlTxt.Append("<td class=\"" + classe + "\" nowrap>&nbsp;" + "</td>");
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                        HtmlTxt.Append("</tr>");
+                    }
+
+                    #endregion
+                }
+
+                #endregion
+
+            }
+            else {
+
+                #region Détail des affiches sans gestion des colonnes génériques
+
+                #region Début du tableau
+                HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround\" cellPadding=\"0\" align=\"center\" border=\"0\">");
+                #endregion
+
+                #region Pas de donnée à afficher
+                if (data[0, 0] == null) {
+                    return HtmlTxt.Append(GetUIEmptyExcel(webSession.SiteLanguage, 10)).ToString();
+                }
+                #endregion
+
+                #region Entêtes de tableau
+                else {
+                    HtmlTxt.Append("<tr>");
+
+
+                    HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(970, webSession.SiteLanguage) + "</td>");
+                    HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(971, webSession.SiteLanguage) + "</td>");
+                    HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(895, webSession.SiteLanguage) + "</td>");
+                    HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(857, webSession.SiteLanguage) + "</td>");
+                    if (showProduct)
+                        HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(858, webSession.SiteLanguage) + "</td>");
+                    HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(859, webSession.SiteLanguage) + "</td>");
+                    if (!webSession.isCompetitorAdvertiserSelected()) {
+                        HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(1384, webSession.SiteLanguage) + "</td>");
+                        HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(1383, webSession.SiteLanguage) + "</td>");
+                    }
+                    HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(1604, webSession.SiteLanguage) + "</td>");
+                    HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(1420, webSession.SiteLanguage) + "</td>");
+                    HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1609, webSession.SiteLanguage)) + "</td>");
+                    HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1611, webSession.SiteLanguage)) + "</td>");
+                    HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(1660, webSession.SiteLanguage) + "</td>");
+
+                    HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(868, webSession.SiteLanguage) + "</td>");
+                    HtmlTxt.Append("</tr>");
+                }
+                #endregion
+
+                #region Tableau
+                i = 0;
+                first = true;
+                classe = "";
+
+                while (i < data.GetLength(0) && data[i, 0] != null) {
+                    if (first) {
+                        first = false;
+                        classe = CLASSE_1;
+                    }
+                    else {
+                        first = true;
+                        classe = CLASSE_2;
+                    }
+                    HtmlTxt.Append("<tr><td class=\"" + classe + "\" nowrap>" + ((data[i, CstWeb.InStoreInsertionsColumnIndex.CATEGORY_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.CATEGORY_INDEX].ToString() : "") + "</td>");
+                    HtmlTxt.Append("<td class=\"" + classe + "\" nowrap>" + ((data[i, CstWeb.InStoreInsertionsColumnIndex.MEDIA_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.MEDIA_INDEX].ToString() : "") + "</td>");
+                    HtmlTxt.Append("<td class=\"" + classe + "\" nowrap>" + ((data[i, CstWeb.InStoreInsertionsColumnIndex.DATE_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.DATE_INDEX].ToString() : "") + "</td>");
+                    HtmlTxt.Append("<td class=\"" + classe + "\" nowrap>" + ((data[i, CstWeb.InStoreInsertionsColumnIndex.ADVERTISER_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.ADVERTISER_INDEX].ToString() : "") + "</td>");
+                    if (showProduct)
+                        HtmlTxt.Append("<td class=\"" + classe + "\" nowrap>" + ((data[i, CstWeb.InStoreInsertionsColumnIndex.PRODUCT_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.PRODUCT_INDEX].ToString() : "") + "</td>");
+                    HtmlTxt.Append("<td class=\"" + classe + "\" nowrap>" + ((data[i, CstWeb.InStoreInsertionsColumnIndex.GROUP_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.GROUP_INDEX].ToString() : "") + "</td>");
+                    if (!webSession.isCompetitorAdvertiserSelected()) {
+                        HtmlTxt.Append("<td class=\"" + classe + "\" nowrap>" + ((data[i, CstWeb.InStoreInsertionsColumnIndex.INTEREST_CENTER_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.INTEREST_CENTER_INDEX].ToString() : "") + "</td>");
+                        HtmlTxt.Append("<td class=\"" + classe + "\" nowrap>" + ((data[i, CstWeb.InStoreInsertionsColumnIndex.MEDIA_SELLER_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.MEDIA_SELLER_INDEX].ToString() : "") + "</td>");
+                    }
+                    HtmlTxt.Append("<td class=\"" + classe + "\" nowrap align=\"center\">" + ((data[i, CstWeb.InStoreInsertionsColumnIndex.NUMBER_BOARD_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.NUMBER_BOARD_INDEX].ToString() : "") + "</td>");
+                    HtmlTxt.Append("<td class=\"" + classe + "\" nowrap align=\"center\">" + ((data[i, CstWeb.InStoreInsertionsColumnIndex.TYPE_BOARD_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.TYPE_BOARD_INDEX].ToString() : "") + "</td>");
+                    HtmlTxt.Append("<td class=\"" + classe + "\" nowrap align=\"right\">" + ((data[i, CstWeb.InStoreInsertionsColumnIndex.TYPE_SALE_INDEX] != null) ? Convertion.ToHtmlString(TNS.AdExpress.Web.Functions.SQLGenerator.SaleTypeOutdoor(data[i, CstWeb.InStoreInsertionsColumnIndex.TYPE_SALE_INDEX].ToString(), webSession.SiteLanguage)) : "") + "</td>");
+                    HtmlTxt.Append("<td class=\"" + classe + "\" nowrap align=\"right\">" + ((data[i, CstWeb.InStoreInsertionsColumnIndex.POSTER_NETWORK_INDEX] != null) ? Convertion.ToHtmlString(data[i, CstWeb.InStoreInsertionsColumnIndex.POSTER_NETWORK_INDEX].ToString()) : "") + "</td>");
+                    HtmlTxt.Append("<td class=\"" + classe + "\" nowrap align=\"right\">" + ((data[i, CstWeb.InStoreInsertionsColumnIndex.AGGLOMERATION_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.AGGLOMERATION_INDEX].ToString() : "") + "</td>");
+
+                    HtmlTxt.Append("<td class=\"" + classe + "\" nowrap align=\"right\">" + ((data[i, CstWeb.InStoreInsertionsColumnIndex.EXPENDITURE_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.EXPENDITURE_INDEX].ToString() : "") + "</td>");
+                    HtmlTxt.Append("</tr>");
+
+                    i++;
+                }
+
+                HtmlTxt.Append("</TABLE>");
+                #endregion
+
+                #endregion
+
+            }
+            HtmlTxt.Append(ExcelFunction.GetFooter(webSession));
+            return HtmlTxt.ToString();
+
+        }
+        #endregion
+
 
         #region Marketing Direct
         /// <summary>

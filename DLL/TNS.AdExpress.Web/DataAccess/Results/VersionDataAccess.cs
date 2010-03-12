@@ -89,7 +89,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
                 case DBCst.Vehicles.names.outdoor:
                     return GetVersions(versions, webSession, string.Format("{0}{1}",Constantes.DB.Tables.DATA_OUTDOOR,tableSuffix), Constantes.DB.Schema.ADEXPRESS_SCHEMA, creationFileFieldName,period);
-				
+
+                case DBCst.Vehicles.names.instore:
+                    return GetVersions(versions, webSession, string.Format("{0}{1}", Constantes.DB.Tables.DATA_INSTORE, tableSuffix), Constantes.DB.Schema.ADEXPRESS_SCHEMA, creationFileFieldName, period);
+
 				case DBCst.Vehicles.names.press:
 					return GetPressVersions(versions, webSession, string.Format("{0}{1}",Constantes.DB.Tables.DATA_PRESS,tableSuffix), Constantes.DB.Schema.ADEXPRESS_SCHEMA,period);
 				
@@ -132,6 +135,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 					return GetPressVersionsDetails(versions, webSession, string.Format("{0}{1}",Constantes.DB.Tables.DATA_PRESS_INTER, tableSuffix), Constantes.DB.Schema.ADEXPRESS_SCHEMA,Constantes.DB.Tables.DATA_PRESS_INTER_PREFIXE);
                 case DBCst.Vehicles.names.outdoor:
                     return GetOutdoorVersionsDetails(versions, webSession, string.Format("{0}{1}", Constantes.DB.Tables.DATA_OUTDOOR, tableSuffix), Constantes.DB.Schema.ADEXPRESS_SCHEMA, "do");
+                case DBCst.Vehicles.names.instore:
+                    return GetOutdoorVersionsDetails(versions, webSession, string.Format("{0}{1}", Constantes.DB.Tables.DATA_INSTORE, tableSuffix), Constantes.DB.Schema.ADEXPRESS_SCHEMA, "do");
+
 				default :
 					throw new VersionDataAccessException(" Impossible d'indentifier le media (vehicle) à traiter.");
 			}
