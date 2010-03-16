@@ -14,6 +14,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Classification;
 using TNS.Classification.Universe;
+using TNS.AdExpress.Web.Controls.Exceptions;
 
 namespace TNS.AdExpress.Web.Controls.Headers {
     /// <summary>
@@ -21,6 +22,13 @@ namespace TNS.AdExpress.Web.Controls.Headers {
     /// </summary>
     [ToolboxData("<{0}:SectorWebControl runat=server></{0}:SectorWebControl>")]
     public class SectorWebControl : WebControl {
+
+        #region Constantes
+        /// <summary>
+        /// All Sector
+        /// </summary>
+        private const Int64 ALL_SECTOR = -1;
+        #endregion
 
         #region Variables
         /// <summary>
@@ -156,7 +164,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 
                 DataRow row = null;
                 row = dtLine.NewRow();
-                row["id_sector"] = -1;
+                row["id_sector"] = ALL_SECTOR;
                 row["sector"] = "-------------------";
                 dtLine.Rows.Add(row);
                 dtLine.Merge(_dt);
@@ -169,21 +177,33 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 _dropDownList.Items.FindByValue("-1").Selected = true;	
             }
             if(Page.IsPostBack) {
-                // Save SectorID in websession
-                if(_dropDownList.SelectedValue != null && _dropDownList.SelectedValue.Length > 0) {
-                    Dictionary<int, AdExpressUniverse>  universeDictionary = new Dictionary<int, AdExpressUniverse>();
-                    _session.PrincipalProductUniverses.Clear();
-                    AdExpressUniverse adExpressUniverse = new AdExpressUniverse(Dimension.product);
-                    NomenclatureElementsGroup nGroup = new NomenclatureElementsGroup(0, AccessType.includes);
-                    nGroup.AddItem(TNSClassificationLevels.SECTOR, long.Parse(_dropDownList.SelectedValue));
-                    adExpressUniverse.AddGroup(0, nGroup);
-                    universeDictionary.Add(0, adExpressUniverse);
-                    _session.PrincipalProductUniverses = universeDictionary;
+                Int64 idSector = -1;
+                try {
+                    // Save SectorID in websession
+                    if (_dropDownList.SelectedValue != null && _dropDownList.SelectedValue.Length > 0
+                        && Int64.TryParse(_dropDownList.SelectedValue, out idSector)
+                        && idSector != ALL_SECTOR) {
+
+
+                        Dictionary<int, AdExpressUniverse> universeDictionary = new Dictionary<int, AdExpressUniverse>();
+                        _session.PrincipalProductUniverses.Clear();
+
+                        AdExpressUniverse adExpressUniverse = new AdExpressUniverse(Dimension.product);
+                        NomenclatureElementsGroup nGroup = new NomenclatureElementsGroup(0, AccessType.includes);
+                        nGroup.AddItem(TNSClassificationLevels.SECTOR, idSector);
+                        adExpressUniverse.AddGroup(0, nGroup);
+                        universeDictionary.Add(0, adExpressUniverse);
+                        _session.PrincipalProductUniverses = universeDictionary;
+
+                    }
+                    else {
+                        _session.PrincipalProductUniverses = new Dictionary<int, AdExpressUniverse>();
+                    }
+                    _session.Save();
                 }
-                else {
-                    _session.PrincipalProductUniverses = new Dictionary<int, AdExpressUniverse>();
+                catch (Exception er) {
+                    throw new SectorWebControlException("Impossible to get sector selected", er);
                 }
-                _session.Save();
             }
         }
         #endregion
