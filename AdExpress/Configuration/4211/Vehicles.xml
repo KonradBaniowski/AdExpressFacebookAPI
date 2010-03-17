@@ -13,7 +13,7 @@
         <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>                <!-- Media -->
         <allowedMediaLevelItem>category</allowedMediaLevelItem>               <!-- Categorie -->
         <allowedMediaLevelItem>media</allowedMediaLevelItem>                  <!-- Support -->
-        <!--<allowedMediaLevelItem>interestCenter</allowedMediaLevelItem> -->        <!-- Centre d'interet -->
+        <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>        <!-- Centre d'interet -->
         <allowedMediaLevelItem>slogan</allowedMediaLevelItem>                 <!-- Version -->
         <!--<allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>-->         <!-- Groupe de société -->
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>             <!-- Annonceur -->
@@ -32,11 +32,13 @@
     <!--Media detail level in selection-->
     <MediaSelectionDetailLevel>
       <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="25">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
         <defaultMediaSelectionDetailLevel id="25" name="catégorie\support" />       
       </defaultMediaSelectionDetailLevels>
       <allowedMediaSelectionLevelItemsList>
         <allowedMediaSelectionLevelItem id="2"/> <!-- Catégorie-->
-          <allowedMediaSelectionLevelItem id="3"/> <!-- support -->
+        <allowedMediaSelectionLevelItem id="3"/> <!-- support -->
+        <allowedMediaSelectionLevelItem id="4"/> <!-- Centre d 'interet -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!--Allowed universe levels-->
@@ -52,7 +54,7 @@
       <allowedUniverseLevel id="11" name="vehicle"/>
       <allowedUniverseLevel id="12" name="category"/>
       <allowedUniverseLevel id="14" name="media"/>
-      <!--<allowedUniverseLevel id="15" name="interest_center"/>-->
+      <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
   </vehicle>
  

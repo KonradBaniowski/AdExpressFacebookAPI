@@ -387,6 +387,7 @@
             <allowedProductLevelItem id="14" name="Variete"/>
             <allowedProductLevelItem id="10" name="Produit"/>
             <allowedProductLevelItem id="9" name="Marque"/>
+            <allowedProductLevelItem id="4" name="Centre d'interet"/>
             <!--<allowedProductLevelItem id="7" name="Groupe de société"/>-->
             <allowedProductLevelItem id="8" name="Annonceur"/>
             <!--<allowedProductLevelItem id="15" name="Groupe d'agence"/>-->
