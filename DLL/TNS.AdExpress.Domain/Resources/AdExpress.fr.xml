@@ -1854,5 +1854,15 @@
     <item mnemonic="w2666" type="System.String">PUBLICITE INTERIEURE</item>
     <item mnemonic="w2667" type="System.String">Détail des versions de la publicité intérieure</item>
     <item mnemonic="w2668" type="System.String">Aucun résultats : vous n'avez pas les droits suffisants pour accéder aux détails des insertions de la Publicité Intérieure.</item>
+    <item mnemonic="w2669" type="System.String">!</item>
+    <item mnemonic="w2670" type="System.String">!</item>
+    <item mnemonic="w2671" type="System.String">!</item>
+    <item mnemonic="w2672" type="System.String">!</item>
+    <item mnemonic="w2673" type="System.String">!</item>
+    <item mnemonic="w2674" type="System.String">!</item>
+    <item mnemonic="w2675" type="System.String">!</item>
+    <item mnemonic="w2676" type="System.String">!</item>
+    <item mnemonic="w2677" type="System.String">!</item>
+    <item mnemonic="w2678" type="System.String">!</item>
   </items>
 </localization>

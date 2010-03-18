@@ -2536,8 +2536,19 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// adExReport 360
             /// </summary>
-            otherInfo=14
-
+            otherInfo=14,
+            /// <summary>
+            /// 2007 back data
+            /// </summary>
+            backData2007 = 15,
+            /// <summary>
+            /// 2006 back data
+            /// </summary>
+            backData2006 = 16,
+            /// <summary>
+            /// dealer vs. brand advertising
+            /// </summary>
+            dealerVsBrandAdvertising = 17
 
 		}
 
