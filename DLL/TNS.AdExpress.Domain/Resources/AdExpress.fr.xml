@@ -1864,5 +1864,6 @@
     <item mnemonic="w2676" type="System.String">!</item>
     <item mnemonic="w2677" type="System.String">!</item>
     <item mnemonic="w2678" type="System.String">!</item>
+    <item mnemonic="w2679" type="System.String">Il n'est pas possible de rajouter des éléments de ce niveau de nomenclature.</item>
   </items>
 </localization>

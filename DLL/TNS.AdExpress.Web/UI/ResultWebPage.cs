@@ -63,7 +63,21 @@ namespace TNS.AdExpress.Web.UI{
 
                 #region Get Vehicle Selected
                 vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
-                if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0) throw (new TNSExceptions.VehicleException("Selection of media type is not correct"));
+                if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0)
+                {
+                    switch (_webSession.CurrentModule)
+                    {
+                        case WebConstantes.Module.Name.TABLEAU_DE_BORD_PRESSE:
+                        case WebConstantes.Module.Name.TABLEAU_DE_BORD_RADIO:
+                        case WebConstantes.Module.Name.TABLEAU_DE_BORD_TELEVISION:
+                        case WebConstantes.Module.Name.TABLEAU_DE_BORD_PAN_EURO:
+                        case WebConstantes.Module.Name.TABLEAU_DE_BORD_EVALIANT:
+                            vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleException);
+                            break;                       
+                        default: throw (new TNSExceptions.VehicleException("Selection of media type is not correct"));
+                    }
+                    
+                }
                 if (Int64.TryParse(vehicleSelection, out vehicleId)) {
                     vehicleInformation = VehiclesInformation.Get(vehicleId);
                     unitInformationList = _webSession.GetValidUnitForResult();
@@ -74,7 +88,13 @@ namespace TNS.AdExpress.Web.UI{
                 }
                 else {
                     System.Windows.Forms.TreeNode firstNode = _webSession.CurrentUniversMedia.FirstNode;
-                    if (firstNode != null) {
+                    if (firstNode != null
+                        && (((LevelInformation)firstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess
+                        || ((LevelInformation)firstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.vehicleException
+                        || ((LevelInformation)firstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccessForRecap                        
+                        )
+                    )
+                    {
                         Vehicles.names vehicleName = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)firstNode.Tag).ID);
                         vehicleInformation = VehiclesInformation.Get(vehicleName);
                         unitInformationList = _webSession.GetValidUnitForResult();
