@@ -1279,7 +1279,8 @@ namespace TNS.AdExpress.Web.UI.Results {
                                     || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE
                                     || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE
                                     || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE
-                                    || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PORTEFEUILLE)
+                                    || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PORTEFEUILLE
+                                    || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
                                 {
                                     HTML += "<td class=\"" + periodClass + "\" width=\"17px\"><a class=\"pp\" href=\"" + Links.MEDIA_SCHEDULE_POP_UP + "?idSession=" + webSession.IdSession + "&zoomDate=" + tab[0, j].ToString() + "\">&nbsp;" + TNS.FrameWork.Date.MonthString.GetCharacters(int.Parse(tab[0, j].ToString().Substring(4, 2)), cultureInfo, 1) + "&nbsp;</td>";
                                 }
@@ -1300,7 +1301,8 @@ namespace TNS.AdExpress.Web.UI.Results {
                                     || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE
                                     || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE
                                     || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE
-                                    || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PORTEFEUILLE)
+                                    || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PORTEFEUILLE
+                                    || webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
                                 {
                                     HTML += "<td class=\"" + periodClass + "\" width=\"17px\"><a class=\"pp\" href=\"" + Links.MEDIA_SCHEDULE_POP_UP + "?idSession=" + webSession.IdSession + "&zoomDate=" + tab[0, j].ToString() + "\">&nbsp;" + tab[0, j].ToString().Substring(4, 2) + "&nbsp;<a></td>";
                                 }

@@ -1454,6 +1454,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE:
                 case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE:
                 case TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PORTEFEUILLE:
+                case TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES:
                     link = TNS.AdExpress.Constantes.Web.Links.MEDIA_SCHEDULE_POP_UP;
                     break;
                 case TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE:
