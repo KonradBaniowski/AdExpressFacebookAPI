@@ -47,6 +47,7 @@
             <allowedMediaLevelItem id="14" name="Variété"/>
             <!--<allowedMediaLevelItem id="17" name="Titre"/>-->
             <!--<allowedMediaLevelItem id="26" name="Pays"/>-->
+            <allowedMediaLevelItem id="27" name="Basic Media"/>
           </allowedMediaLevelItems>
         </MediaDetailLevel>
         <selections>
@@ -77,6 +78,7 @@
               <allowedUniverseLevel id="12" name="category"/>
               <allowedUniverseLevel id="14" name="media"/>
               <allowedUniverseLevel id="15" name="interest_center"/>
+              <allowedUniverseLevel id="16" name="Basic Media"/>
             </allowedUniverseLevels>
             <allowedUniverseBranches>
               <allowedUniverseBranch id="7" name="vehicle\category\media"/>
@@ -144,6 +146,7 @@
             <allowedColumnDetailLevelItem id="5" name="Régie"/>
             <!--<allowedColumnDetailLevelItem id="17" name="Titre"/>-->
             <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+            <allowedColumnDetailLevelItem id="27" name="Basic Media"/>
           </allowedColumnDetailLevelItems>
         </ColumnDetailLevel>
         <selections>
@@ -401,6 +404,7 @@
             <allowedColumnDetailLevelItem id="5" name="Régie"/>
             <!--<allowedColumnDetailLevelItem id="17" name="Titre"/>-->
             <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+            <allowedColumnDetailLevelItem id="27" name="Basic Media"/>
           </allowedColumnDetailLevelItems>
         </ColumnDetailLevel>
         <selections>

@@ -1146,6 +1146,10 @@ namespace TNS.AdExpress.Web.UI{
                             elementName = new AdExClassification.MediaBranch.PartialMediaListDataAccess(mediaSelectId.ToString(), webSession.DataLanguage, webSession.Source);
 							t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(971,webSession.SiteLanguage) +" : </font> "+ elementName[mediaSelectId].ToString() +"</TD></TR>");
 							break;
+                        case DBCst.Fields.ID_BASIC_MEDIA:
+                            elementName = new AdExClassification.MediaBranch.PartialBasicMediaListDataAccess(mediaSelectId.ToString(), webSession.DataLanguage, webSession.Source);
+                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(2544, webSession.SiteLanguage) + " : </font> " + elementName[mediaSelectId].ToString() + "</TD></TR>");
+                            break;
 						case  DBCst.Fields.ID_SLOGAN :
 							t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(1888,webSession.SiteLanguage) +" : </font> "+ mediaSelectId.ToString() +"</TD></TR>");
 							break;

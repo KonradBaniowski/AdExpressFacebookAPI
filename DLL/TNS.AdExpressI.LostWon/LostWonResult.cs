@@ -960,6 +960,9 @@ namespace TNS.AdExpressI.LostWon {
                 case DetailLevelItemInformation.Levels.interestCenter:
                     levels = new PartialInterestCenterListDataAccess(sIds.ToString(), _session.DataLanguage, _session.Source);
                     break;
+                case DetailLevelItemInformation.Levels.basicMedia:
+                    levels = new PartialBasicMediaListDataAccess(sIds.ToString(), _session.DataLanguage, _session.Source);
+                    break;
 
             }
             #endregion

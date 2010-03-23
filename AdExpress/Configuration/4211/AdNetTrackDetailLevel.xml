@@ -3,7 +3,7 @@
 	<defaultAdNetTrackDetailLevels>
 		<defaultAdNetTrackDetailLevel id="1" name="media\catégorie" /> 
 		<defaultAdNetTrackDetailLevel id="2" name="media\catégorie\support" />
-		<!--<defaultAdNetTrackDetailLevel id="4" name="media\centre d'interet\support" />-->
+		<defaultAdNetTrackDetailLevel id="4" name="media\centre d'interet\support" />
 		<defaultAdNetTrackDetailLevel id="6" name="media\regie\support" />
 		<defaultAdNetTrackDetailLevel id="8" name="media\version\support" />
 	</defaultAdNetTrackDetailLevels>
@@ -11,7 +11,7 @@
 		<allowedAdNetTrackLevelItem id="1" name="Media"/>
 		<allowedAdNetTrackLevelItem id="2" name="Categorie"/>
 		<allowedAdNetTrackLevelItem id="3" name="Support"/>
-		<!--<allowedAdNetTrackLevelItem id="4" name="Centre d'interet"/>-->
+		<allowedAdNetTrackLevelItem id="4" name="Centre d'interet"/>
 		<allowedAdNetTrackLevelItem id="5" name="Régie"/>
 		<allowedAdNetTrackLevelItem id="8" name="Annonceur"/>
 		<allowedAdNetTrackLevelItem id="9" name="Marque"/>	 
@@ -19,5 +19,6 @@
 		<allowedAdNetTrackLevelItem id="11" name="Famille"/>
 		<allowedAdNetTrackLevelItem id="12" name="Classe"/>	
 		<allowedAdNetTrackLevelItem id="13" name="Groupe"/>
+    <allowedAdNetTrackLevelItem id="27" name="Basic Media"/>
 	</allowedAdNetTrackLevelItems>
 </AdNetTrackDetailLevel> 

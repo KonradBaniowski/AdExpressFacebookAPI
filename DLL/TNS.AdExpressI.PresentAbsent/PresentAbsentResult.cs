@@ -1200,6 +1200,9 @@ namespace TNS.AdExpressI.PresentAbsent{
                 case DetailLevelItemInformation.Levels.interestCenter:
                     levels = new DALClassif.MediaBranch.PartialInterestCenterListDataAccess(sIdElments.ToString(), _session.DataLanguage, _session.Source);
                     break;
+                case DetailLevelItemInformation.Levels.basicMedia:
+                    levels = new DALClassif.MediaBranch.PartialBasicMediaListDataAccess(sIdElments.ToString(), _session.DataLanguage, _session.Source);
+                    break;
 
             }
             #endregion

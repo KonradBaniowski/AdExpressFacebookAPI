@@ -203,6 +203,7 @@
         </dbConstraints>
       </constraints>
     </column>
+    <column id="95" name="Basic Media" webTextId="2544" dbId="id_basic_media" dbLabel="basic_media" dbTable="basic_media" dbTablePrefixe="bm" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
   </columnItems>
 
   <detailColumns>

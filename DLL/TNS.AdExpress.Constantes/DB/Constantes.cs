@@ -1264,6 +1264,10 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// Champ identifiant groupe
 		/// </summary>
 		public const string ID_GROUP_="id_group_";
+        /// <summary>
+        /// Champ identifiant support
+        /// </summary>
+        public const string ID_BASIC_MEDIA = "id_basic_media";	
 		#endregion
 	
 	}
