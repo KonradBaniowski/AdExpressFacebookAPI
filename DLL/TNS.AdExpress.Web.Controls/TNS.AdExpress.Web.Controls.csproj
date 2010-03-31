@@ -333,7 +333,7 @@
     <Compile Include="Results\Appm\SectorDataWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Results\BannerInformationWebControl.cs">
+    <Compile Include="Results\_BannerInformationWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Results\ClassificationDescription.cs">
@@ -360,7 +360,7 @@
     <Compile Include="Results\DetailProductLevelWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Results\DisplayBannerWebControl.cs">
+    <Compile Include="Results\_DisplayBannerWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Results\DisplayMediaPagesWebControl.cs" />
@@ -370,7 +370,7 @@
     <Compile Include="Results\MediaAgencyYearWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Results\MediaInsertionsCreationsResultsWebControl.cs">
+    <Compile Include="Results\_MediaInsertionsCreationsResultsWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Results\MediaPlan\AlertAdNetTrackMediaScheduleWebControl.cs">

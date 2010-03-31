@@ -404,7 +404,7 @@ namespace AdExpress.Private.Results{
 					Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"portofolioCreation",TNS.AdExpress.Web.Functions.Script.PortofolioCreation());
 				}		
 			
-				if (!Page.ClientScript.IsClientScriptBlockRegistered("openCreation"))Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"openCreation",WebFunctions.Script.OpenCreation());
+				//if (!Page.ClientScript.IsClientScriptBlockRegistered("openCreation"))Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"openCreation",WebFunctions.Script.OpenCreation());
 
 				// Ouverture de la popup detail portefeuille
 				if (!Page.ClientScript.IsClientScriptBlockRegistered("portofolioDetailMedia")) {

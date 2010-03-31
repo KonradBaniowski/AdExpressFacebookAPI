@@ -1191,7 +1191,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            ThemeName = "DefaultAdExpressFr"
 />
 
-<%-- Media insertions creations result web control --%>
+<%-- Media insertions creations result web control 
 <ctrResults:MediaInsertionsCreationsResultsWebControl 
                            runat="server"
                            CssDefaultListLabel="txtGris11Bold"
@@ -1199,7 +1199,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            CssListBox="txtNoir11Bold"
                            CssCustomSectionTitle="txtViolet11Bold"
                            ThemeName = "DefaultAdExpressFr"
-/>
+/>--%>
 
 <%-- Option layer web control : used to display generic details selection --%>
 <ctrHeader:OptionLayerWebControl 

@@ -27,9 +27,9 @@ function OpenInsertions(idSession,ids,zoomDate){
 	window.open('/Private/Results/Insertions.aspx?idSession='+idSession+'&ids='+ids+'&zoomDate='+zoomDate, '', "top="+(screen.height-600)/2+", left="+(screen.width-1024)/2+", toolbar=0, directories=0, status=0, menubar=0, width=1024, height=600, scrollbars=1, location=0, resizable=1");
 }
 
-function OpenCreation(idSession,ids,zoomDate){
-	window.open('/Private/Results/MediaInsertionsCreationsResults.aspx?idSession='+idSession+'&ids='+ids+'&zoomDate='+zoomDate+'&param='+Math.random(), '', "top="+(screen.height-600)/2+", left="+(screen.width-1024)/2+", toolbar=0, directories=0, status=0, menubar=0, width=1024, height=600, scrollbars=1, location=0, resizable=1");
-}
+//function OpenCreation(idSession,ids,zoomDate){
+//	window.open('/Private/Results/MediaInsertionsCreationsResults.aspx?idSession='+idSession+'&ids='+ids+'&zoomDate='+zoomDate+'&param='+Math.random(), '', "top="+(screen.height-600)/2+", left="+(screen.width-1024)/2+", toolbar=0, directories=0, status=0, menubar=0, width=1024, height=600, scrollbars=1, location=0, resizable=1");
+//}
 
 function OpenProof(idSession,idProduct,idMedia,dateFacial,dateParution,page){
 	window.open('/Private/Results/Proof.aspx?idSession='+idSession+'&idProduct='+idProduct+'&dateFacial='+dateFacial+'&dateParution='+dateParution+'&page='+page+'&idMedia='+idMedia, 'AdExpress', "top="+(screen.height-700)/2+", left="+(screen.width-1024)/2+", toolbar=0, directories=0, status=1, menubar=0, width=1024, height=700, scrollbars=1, location=0, resizable=1");

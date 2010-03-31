@@ -1,4 +1,3 @@
-<%@ Reference Page="~/Private/Results/MediaInsertionsCreationsResults.aspx" %>
 <%@ Register TagPrefix="cc2" Namespace="TNS.AdExpress.Web.Controls.Results.MediaPlan" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc4" Namespace="TNS.AdExpress.Web.Controls.Buttons" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Page language="c#" Inherits="AdExpress.Private.Results.AdNetTrackMediaSchedule" CodeFile="AdNetTrackMediaSchedule.aspx.cs" %>

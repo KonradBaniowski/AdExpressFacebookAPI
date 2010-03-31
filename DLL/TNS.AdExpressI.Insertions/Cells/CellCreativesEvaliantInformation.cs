@@ -65,6 +65,10 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// </summary>
         private const string FLASH_ID = "SWF";
         /// <summary>
+        /// FLV id
+        /// </summary>
+        private const string FLV_ID = "FLV";
+        /// <summary>
         /// Jpeg text
         /// </summary>
         private const string JPEG_TEXT = "JPEG";
@@ -397,8 +401,23 @@ namespace TNS.AdExpressI.Insertions.Cells
                         height);
                     output.Append("\n </OBJECT>");
                 }
-                else
-                {
+                else if (_format.ToUpper() == FLV_ID) {
+                    output.Append("<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0\" width=\"400\" height=\"315\">");
+                    output.Append("<param name=\"movie\" value=\"/Player/playerflv.swf\" />");
+                    output.Append("<param name=\"allowfullscreen\" value=\"true\" />");
+                    output.Append("<param name=\"allowscriptaccess\" value=\"always\" />");
+                    output.Append("<param name=\"flashvars\" value=\"file=" + _visuals[0] + "\" />");
+                    output.Append("<embed type=\"application/x-shockwave-flash\"");
+                    output.Append("src=\"/Player/playerflv.swf\" ");
+                    output.Append("width=\"400\" ");
+                    output.Append("height=\"315\"");
+                    output.Append("allowscriptaccess=\"always\" ");
+                    output.Append("allowfullscreen=\"false\"");
+                    output.Append("flashvars=\"file=" + _visuals[0] + "\" ");
+                    output.Append("/>");
+                    output.Append("</object>");
+                }
+                else {
                     // Other type of media
                     output.Append("\n <br/><br/>");
                     output.AppendFormat("<a href=\"{0}\" target=\"_blank\"><img border=0 src=\"{1}\" border=\"0\"></a>",

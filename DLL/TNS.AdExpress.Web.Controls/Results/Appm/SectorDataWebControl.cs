@@ -158,7 +158,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm
 		/// <param name="e">Arguments</param>
 		protected override void OnPreRender(EventArgs e){
 			base.OnPreRender (e);
-			if (!this.Page.ClientScript.IsClientScriptBlockRegistered("openCreation"))this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"openCreation",WebFunctions.Script.OpenCreation());
+			//if (!this.Page.ClientScript.IsClientScriptBlockRegistered("openCreation"))this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"openCreation",WebFunctions.Script.OpenCreation());
 			if (!this.Page.ClientScript.IsClientScriptBlockRegistered("openPressCreation"))this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"openPressCreation",WebFunctions.Script.OpenPressCreation());
 			if (!this.Page.ClientScript.IsClientScriptBlockRegistered("Popup"))this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"Popup",WebFunctions.Script.Popup());
 		}
