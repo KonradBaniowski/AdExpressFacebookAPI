@@ -105,7 +105,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM {
 			sql.Append(")");
 			//			 group by id_vehicle,vehicle,id_periodicity,periodicity,id_target,target
 			sql.Append(" group by  vehicle ,id_periodicity, periodicity, id_target, target ");
-			sql.Append("   order by  periodicity ");
+            sql.Append("   order by  periodicity, id_target ");
 
 			#region GroupeBy par rappot à l'unité choisit
 //			switch (webSession.Unit){

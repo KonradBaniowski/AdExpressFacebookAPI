@@ -102,7 +102,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM {
 
             sql.Append(")");
             sql.Append(" group by  vehicle ,id_interest_center, interest_center, id_target, target");
-            sql.Append("   order by  interest_center ");
+            sql.Append("   order by  interest_center, id_target ");
 
             #endregion
 
