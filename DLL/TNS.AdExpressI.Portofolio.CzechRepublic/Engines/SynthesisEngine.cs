@@ -85,6 +85,10 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
         protected override List<ICell> ComputeDataSpotNumberByEcran(bool isAlertModule) {
             return null;
         }
+        //_displayTypeSale
+        protected override List<ICell> ComputeDataNetworkType(bool isAlertModule) {
+            return null;
+        }
         #endregion
 
     }
