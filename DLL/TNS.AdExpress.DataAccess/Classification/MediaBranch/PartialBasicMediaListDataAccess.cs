@@ -33,7 +33,7 @@ namespace TNS.AdExpress.DataAccess.Classification.MediaBranch {
 		/// <param name="source">Connexion à la base de données</param>
 		/// <param name="codeList">Liste des codes</param>
         public PartialBasicMediaListDataAccess(string codeList, int language, IDataSource source)
-            : base(TNS.AdExpress.Constantes.Classification.DB.Table.name.media, codeList, language, source) {
+            : base(TNS.AdExpress.Constantes.Classification.DB.Table.name.basic_media, codeList, language, source) {
 		}
 
 		#endregion

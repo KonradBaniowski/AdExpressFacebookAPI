@@ -73,7 +73,11 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
 			/// <summary>
 			/// centre d'intérêt
 			/// </summary>
-			interest_center
+			interest_center,
+            /// <summary>
+            /// Basic Media
+            /// </summary>
+            basic_media
 
 		}
 	}
