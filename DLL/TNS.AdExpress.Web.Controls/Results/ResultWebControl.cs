@@ -2229,8 +2229,8 @@ namespace TNS.AdExpress.Web.Controls.Results{
 				case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
 				case WebConstantes.Module.Name.NEW_CREATIVES:
 					tLabels = new string[_customerWebSession.GenericProductDetailLevel.GetNbLevels];
-					foreach(DetailLevelItemInformation level in _customerWebSession.GenericProductDetailLevel.Levels){
-						tLabels[i] = level.Name;
+					foreach(DetailLevelItemInformation level in _customerWebSession.GenericProductDetailLevel.Levels){						
+                        tLabels[i] = GestionWeb.GetWebWord(level.WebTextId, _customerWebSession.SiteLanguage);
 						i++;
 					}
 					break;
