@@ -238,8 +238,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			int insertions = 0;
 			int creatives = 0;
             int mediaSchedule = 0;
+            int nbColumsProduct = 1;
 			int iNbCol = 0;
-            int columnIndex = (_showMediaSchedule) ? 2 : 1;
+            int columnIndex = (_showMediaSchedule) ? nbColumsProduct+1 : nbColumsProduct;
             System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(@"TNS.FrameWork.WebResultUI");
             Type type;
             Cell cellUnit;
@@ -264,50 +265,15 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 mediaSchedule = 1;
             }
 
-			switch (_vehicleInformation.Id) {
-				case DBClassificationConstantes.Vehicles.names.press:
-                case DBClassificationConstantes.Vehicles.names.newspaper:
-                case DBClassificationConstantes.Vehicles.names.magazine:
-				case DBClassificationConstantes.Vehicles.names.internationalPress:
-                    iNbCol = 5 + creatives + insertions + mediaSchedule;
-					break;
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing:
-					if (_webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_VOLUME_MARKETING_DIRECT)) {
-                        iNbCol = 3 + creatives + insertions + mediaSchedule;
-					}
-					else {
-                        iNbCol = 2 + creatives + insertions + mediaSchedule; 
-					}
-					break;
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio:
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others:
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
-					iNbCol = 4 + creatives + insertions + mediaSchedule;
-                    break;
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
-                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.instore:
-					iNbCol = 3 + creatives + insertions + mediaSchedule;
-                    break;
-				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
-                    iNbCol = 3 + creatives + insertions + mediaSchedule;
-                    break;
-                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.cinema:
-                    iNbCol = 2 + creatives + insertions + mediaSchedule;
-                    break;
-                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
-                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
-                    iNbCol = 3 + creatives + insertions + mediaSchedule;
-                    break;
-				default:
-					throw new PortofolioException("Vehicle unknown.");
-			}
+            iNbCol = nbColumsProduct + creatives + insertions + mediaSchedule + _webSession.GetValidUnitForResult().Count;
+
             cellFactories = new CellUnitFactory[iNbCol];
             lineDelegates = new AffectLine[iNbCol];
             columnsName = new string[iNbCol];
 			cellFactories[0] = null;
 			cellFactories[1] = null;
-			if (_showCreatives) columnsName[1 + creatives] = null;
-			if (_showInsertions) columnsName[1 + creatives + insertions] = null;
+            if (_showCreatives) columnsName[nbColumsProduct + creatives] = null;
+            if (_showInsertions) columnsName[nbColumsProduct + creatives + insertions] = null;
 
             switch (_vehicleInformation.Id) {
                 case DBClassificationConstantes.Vehicles.names.press:
@@ -350,8 +316,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		}
 		#endregion
 
-		#region GetDataForResultTable
-		/// <summary>
+        #region GetDataForResultTable
+        /// <summary>
 		/// Get data for ResultTable result
 		/// </summary>
 		/// <returns></returns>

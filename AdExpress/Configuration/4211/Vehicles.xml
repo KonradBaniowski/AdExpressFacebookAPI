@@ -6,6 +6,8 @@
     <allowedUnits defaultUnit="versionNb">
       <allowedUnit>occurence</allowedUnit>
       <allowedUnit>versionNb</allowedUnit>
+      <allowedUnit>euro</allowedUnit>
+      <allowedUnit>kEuro</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results-->
     <allowedMediaDetailLevels>

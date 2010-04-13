@@ -89,6 +89,37 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
         protected override List<ICell> ComputeDataNetworkType(bool isAlertModule) {
             return null;
         }
+
+        #region ComputeDataInvestissementsTotal
+        /// <summary>
+        /// Compute Data investment Total (override for evaliant SK)
+        /// </summary>
+        /// <returns></returns>
+        protected override List<ICell> ComputeDataInvestissementsTotal() {
+
+            #region Variables
+            List<ICell> data = null;
+            string investment = string.Empty;
+            #endregion
+
+            #region Get Data
+            investment = GetInvestment(GetDataInvestment());
+            #endregion
+
+            #region Compute data
+            if (investment != null && investment.Length > 0 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) {
+                data = new List<ICell>(2);
+                data.Add(new CellLabel(GestionWeb.GetWebWord(1390, _webSession.SiteLanguage)));
+                CellEuro cE = new CellEuro(double.Parse(investment));
+                cE.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).StringFormat;
+                data.Add(cE);
+            }
+            #endregion
+
+            return data;
+
+        }
+        #endregion
         #endregion
 
     }
