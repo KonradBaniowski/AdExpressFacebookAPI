@@ -186,6 +186,8 @@ namespace TNS.AdExpressI.Insertions.Cells
                 }
                 else if (cCell is CellUnit)
                 {
+                    if (g.Id == GenericColumnItemInformation.Columns.numberBoardSum && (cValue == null || cValue.Length == 0))
+                        cValue = "0";
                     ((CellUnit)cCell).Add(Convert.ToDouble(cValue));
                 }
                 else

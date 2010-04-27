@@ -302,11 +302,24 @@ public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.Pr
 				Response.Write(WebFunctions.Script.AlertWithWindowClose(GestionWeb.GetWebWord(925, _webSession.SiteLanguage)));
 			}
 		}
-		catch (System.Exception exc) {
-			if (exc.GetType() != typeof(System.Threading.ThreadAbortException)) {
-				this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
-			}
-		}
+        catch (System.Exception err)
+        {
+            if (err.GetType() == typeof(TNS.Classification.Universe.SecurityException) ||
+                    err.GetBaseException().GetType() == typeof(TNS.Classification.Universe.SecurityException))
+            {
+                _webSession.Source.Close();
+                Response.Write(WebFunctions.Script.AlertWithWindowClose(GestionWeb.GetWebWord(2285, _webSession.SiteLanguage)));
+            }
+            else if (err.GetType() == typeof(TNS.Classification.Universe.CapacityException))
+            {
+                _webSession.Source.Close();
+                Response.Write(WebFunctions.Script.AlertWithWindowClose(GestionWeb.GetWebWord(2286, _webSession.SiteLanguage)));
+            }
+            else if (err.GetType() != typeof(System.Threading.ThreadAbortException))
+            {
+                this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, err, _webSession));
+            }
+        }
 	}
 	#endregion
 
