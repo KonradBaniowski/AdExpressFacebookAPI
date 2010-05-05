@@ -212,7 +212,7 @@
       <columnItem id="42" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <!-- <columnItem id="35" name="Visuel" notInExcelExport="true"/>-->
-     <!-- <columnItem id="34" name="Page"/>-->
+      <columnItem id="34" name="Page"/>
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
@@ -381,7 +381,7 @@
       <columnItem id="42" name="Date du Support" visible="true" isKey="true"/>
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <!-- <columnItem id="35" name="Visuel" notInExcelExport="true"/>-->
-      <!-- <columnItem id="34" name="Page"/>-->
+      <columnItem id="34" name="Page"/>
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
@@ -658,7 +658,7 @@
       <columnItem id="42" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <!-- <columnItem id="35" name="Visuel" notInExcelExport="true"/>-->
-      <!-- <columnItem id="34" name="Page"/>-->
+      <columnItem id="34" name="Page"/>
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
@@ -679,7 +679,7 @@
       <columnItem id="42" name="Date du Support" visible="true" isKey="true"/>
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <!-- <columnItem id="35" name="Visuel" notInExcelExport="true"/>-->
-      <!-- <columnItem id="34" name="Page"/>-->
+      <columnItem id="34" name="Page"/>
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
