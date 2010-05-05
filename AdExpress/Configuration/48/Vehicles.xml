@@ -353,6 +353,8 @@
         <!-- Support -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>
         <!-- Centre d'interet -->
+        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>
+        <!-- Régie -->
         <allowedMediaLevelItem>slogan</allowedMediaLevelItem>
         <!-- Version -->
         <!--<allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>-->
@@ -377,17 +379,19 @@
     <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
       <MediaSelectionParent>interestCenter</MediaSelectionParent>
       <!-- Centre d'interet -->
+      <MediaSelectionParent>mediaSeller</MediaSelectionParent>
+      <!-- Régie -->
     </MediaSelectionParents>
     <!--Media detail level in selection-->
     <MediaSelectionDetailLevel>
-      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="23">
         <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+        <defaultMediaSelectionDetailLevel id="23" name="regie\support" />
       </defaultMediaSelectionDetailLevels>
       <allowedMediaSelectionLevelItemsList>
-        <allowedMediaSelectionLevelItem id="3"/>
-        <!-- Support -->
-        <allowedMediaSelectionLevelItem id="4"/>
-        <!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="3"/> <!-- Support -->
+        <allowedMediaSelectionLevelItem id="4"/> <!-- Centre d 'interet -->
+        <allowedMediaSelectionLevelItem id="5"/> <!-- Régie -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!--Allowed universe levels-->
