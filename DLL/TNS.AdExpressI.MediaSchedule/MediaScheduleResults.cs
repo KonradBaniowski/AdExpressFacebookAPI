@@ -43,7 +43,7 @@ using TNS.AdExpress.Domain.Units;
 using Aspose.Cells;
 using TNS.AdExpressI.MediaSchedule.Functions;
 using TNS.FrameWork.WebResultUI;
-using TNS.AdExpress.Domain.Theme;
+using TNS.FrameWork.WebTheme;
 #endregion
 
 namespace TNS.AdExpressI.MediaSchedule {
@@ -479,7 +479,7 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// <summary>
         /// Get Excel for an excel export by Anubis of the media schedule
         /// </summary>
-        public virtual void GetRawData(Workbook excel, TNS.AdExpress.Domain.Theme.Style style) {
+        public virtual void GetRawData(Workbook excel, TNS.FrameWork.WebTheme.Style style) {
             _isCreativeDivisionMS = false;
             _showValues = false;
             _allowTotal = false;
@@ -2051,7 +2051,7 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// </summary>
         /// <param name="data">Preformated Data</param>
         /// <param name="excel">Object Excel for compute a page lan media</param>
-        protected virtual void ComputeDesignExcel(object[,] data, Workbook excel, TNS.AdExpress.Domain.Theme.Style styleExcel) {
+        protected virtual void ComputeDesignExcel(object[,] data, Workbook excel, TNS.FrameWork.WebTheme.Style styleExcel) {
 
             if(data.GetLength(0) != 0) {
 

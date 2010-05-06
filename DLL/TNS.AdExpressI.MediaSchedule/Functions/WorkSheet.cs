@@ -4,7 +4,7 @@ using Aspose.Cells;
 using System.Drawing;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Constantes.DB;
-using TNS.AdExpress.Domain.Theme;
+using TNS.FrameWork.WebTheme;
 
 namespace TNS.AdExpressI.MediaSchedule.Functions {
     /// <summary>
@@ -23,7 +23,7 @@ namespace TNS.AdExpressI.MediaSchedule.Functions {
         /// <param name="printArea">Zone d'impression</param>
         /// <param name="upperLeftColumn">colone la plus à gauche</param>
         /// <param name="vPageBreaks">saut de page vertical</param>
-        public static void PageSettings(Aspose.Cells.Worksheet sheet, string name, int nbRows, int nbMaxRowByPage, ref int s, int upperLeftColumn, string vPageBreaks, string headerRowIndex, TNS.AdExpress.Domain.Theme.Style style) {
+        public static void PageSettings(Aspose.Cells.Worksheet sheet, string name, int nbRows, int nbMaxRowByPage, ref int s, int upperLeftColumn, string vPageBreaks, string headerRowIndex, TNS.FrameWork.WebTheme.Style style) {
 
             int nbPages = 0;
             int currentNbRowByPage = nbMaxRowByPage;
@@ -77,7 +77,7 @@ namespace TNS.AdExpressI.MediaSchedule.Functions {
         /// <param name="s">compteur de page</param>
         /// <param name="upperLeftColumn">colone la plus à gauche</param>
         /// <param name="headerRowIndex">En-tête</param>
-        public static void PageSettings(Aspose.Cells.Worksheet sheet, string name, ref int s, int upperLeftColumn, string headerRowIndex, TNS.AdExpress.Domain.Theme.Style style) {
+        public static void PageSettings(Aspose.Cells.Worksheet sheet, string name, ref int s, int upperLeftColumn, string headerRowIndex, TNS.FrameWork.WebTheme.Style style) {
             
             int indexPicture = 0;
 
@@ -121,7 +121,7 @@ namespace TNS.AdExpressI.MediaSchedule.Functions {
         /// <param name="isBold">vrai si police en gras</param>
         /// <param name="color">couleur de la police</param>
         /// <param name="size">Taille du texte</param>
-        public static void PutCellValue(Aspose.Cells.Workbook excel, Aspose.Cells.Cells cells, object data, int row, int column, int startColumn, string tagName, string format, TNS.AdExpress.Domain.Theme.Style style) {
+        public static void PutCellValue(Aspose.Cells.Workbook excel, Aspose.Cells.Cells cells, object data, int row, int column, int startColumn, string tagName, string format, TNS.FrameWork.WebTheme.Style style) {
             if (format == null || format.Length < 1)
                 format = "General";
 

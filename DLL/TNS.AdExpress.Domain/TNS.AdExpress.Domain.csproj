@@ -101,19 +101,7 @@
     <Compile Include="Results\DundasConfiguration.cs" />
     <Compile Include="Results\InfoNews.cs" />
     <Compile Include="Results\InfoNewsItem.cs" />
-    <Compile Include="Theme\Line.cs" />
-    <Compile Include="Theme\Colors.cs" />
     <Compile Include="Results\MSCreativesDetails.cs" />
-    <Compile Include="Theme\Border.cs" />
-    <Compile Include="Theme\Borders.cs" />
-    <Compile Include="Theme\Box.cs" />
-    <Compile Include="Theme\Cell.cs" />
-    <Compile Include="Theme\Font.cs" />
-    <Compile Include="Theme\Margin.cs" />
-    <Compile Include="Theme\Picture.cs" />
-    <Compile Include="Theme\Style.cs" />
-    <Compile Include="Theme\Tag.cs" />
-    <Compile Include="Theme\Theme.cs" />
     <Compile Include="Units\AllowUnits.cs" />
     <Compile Include="Units\DefaultUnit.cs" />
     <Compile Include="Units\DefaultUnitList.cs" />
@@ -218,7 +206,6 @@
     <Compile Include="XmlLoader\MSCreativesDetailsXL.cs" />
     <Compile Include="XmlLoader\PortofolioDetailMediaColumnsXL.cs" />
     <Compile Include="XmlLoader\RightOptionsXL.cs" />
-    <Compile Include="XmlLoader\ThemeXL.cs" />
     <Compile Include="XmlLoader\TrendsXL.cs" />
     <Compile Include="XmlLoader\UnitsDescriptionXL.cs" />
     <Compile Include="XmlLoader\VehiclesInformationXL.cs" />
@@ -229,7 +216,6 @@
   <ItemGroup>
     <None Include="Classification\ClassDiagram.cd" />
     <None Include="DataBaseDescription\DataBaseConfiguration.cd" />
-    <None Include="Theme\ClassDiagramTheme.cd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">

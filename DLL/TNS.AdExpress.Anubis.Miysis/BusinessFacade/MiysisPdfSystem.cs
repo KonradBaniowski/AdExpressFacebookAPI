@@ -401,7 +401,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 		html.Append("</TR>");
 		html.Append("<TR>");
 		html.Append("<TD align=\"left\">");
-		html.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversMedia,false,false,false,600,false,false,_webSession.SiteLanguage,2,1,true, _webSession.DataLanguage, _webSession.CustomerDataFilters.DataSource));
+		html.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversMedia,false,false,false,600,false,false,_webSession.SiteLanguage,2,1,true));
 		html.Append("</TD>");
 		html.Append("</TR>");
 		#endregion

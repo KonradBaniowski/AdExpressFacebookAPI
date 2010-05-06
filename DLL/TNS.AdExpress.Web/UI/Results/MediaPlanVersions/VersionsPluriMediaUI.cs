@@ -27,7 +27,7 @@ using TNS.AdExpress.Domain.Classification;
 using DomainResults = TNS.AdExpress.Domain.Results;
 using TNS.AdExpressI.Insertions;
 using TNS.AdExpressI.Insertions.Cells;
-using TNS.AdExpress.Domain.Theme;
+using TNS.FrameWork.WebTheme;
 using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Domain.Web;
 
