@@ -21,12 +21,10 @@ namespace TNS.Ares.StaticNavSession.DAL
 {
     public abstract class StaticNavSessionDAL : IStaticNavSessionDAL {
 
-        #region Constante
-        private const int STATUS_DONE = 3;
-        #endregion
-
         #region Variables
-
+        /// <summary>
+        /// Data Source
+        /// </summary>
         protected IDataSource _source;
 
         #endregion
@@ -53,15 +51,20 @@ namespace TNS.Ares.StaticNavSession.DAL
         public virtual void InsertData(int resultType, string fileName, int alertId, Int64 loginId)
         {
             StringBuilder insertCommand = new StringBuilder();
-            insertCommand.AppendFormat("INSERT INTO {0}.STATIC_NAV_SESSION (ID_STATIC_NAV_SESSION, STATIC_NAV_SESSION, ID_PDF_RESULT_TYPE, PDF_NAME, STATUS, DATE_CREATION, DATE_MODIFICATION, ID_LOGIN, PDF_USER_FILENAME, DATE_EXEC) VALUES({0}.SEQ_STATIC_NAV_SESSION.NEXTVAL, NULL, {1}, '{2}', {3}, SYSDATE, SYSDATE, {4}, '{5}', NULL)",
-                                        DataBaseConfiguration.DataBase.GetSchema(SchemaIds.webnav01).Label,
-                                        resultType, 
-                                        alertId, 
-                                        AresConst.Result.status.newOne.GetHashCode(), 
-                                        loginId, 
-                                        fileName.Replace("'", "''"));
+            try {
+                insertCommand.AppendFormat("INSERT INTO {0}.STATIC_NAV_SESSION (ID_STATIC_NAV_SESSION, STATIC_NAV_SESSION, ID_PDF_RESULT_TYPE, PDF_NAME, STATUS, DATE_CREATION, DATE_MODIFICATION, ID_LOGIN, PDF_USER_FILENAME, DATE_EXEC) VALUES({0}.SEQ_STATIC_NAV_SESSION.NEXTVAL, NULL, {1}, '{2}', {3}, SYSDATE, SYSDATE, {4}, '{5}', NULL)",
+                                            DataBaseConfiguration.DataBase.GetSchema(SchemaIds.webnav01).Label,
+                                            resultType,
+                                            alertId,
+                                            AresConst.Result.status.newOne.GetHashCode(),
+                                            loginId,
+                                            fileName.Replace("'", "''"));
 
-            this._source.Insert(insertCommand.ToString());
+                this._source.Insert(insertCommand.ToString());
+            }
+            catch (Exception e) {
+                throw new StaticNavDALExceptions("Impossible to insert data in InsertData(int resultType, string fileName, int alertId, Int64 loginId). Query : " + insertCommand.ToString(), e);
+            }
         }
 
         /// <summary>
@@ -74,6 +77,7 @@ namespace TNS.Ares.StaticNavSession.DAL
         /// <param name="dateExec">Date Execution</param>
         public virtual void InsertData(int resultType, string fileName, int alertId, Int64 loginId, DateTime dateExec) {
             StringBuilder insertCommand = new StringBuilder();
+            try{
             insertCommand.AppendFormat("INSERT INTO {0}.STATIC_NAV_SESSION (ID_STATIC_NAV_SESSION, STATIC_NAV_SESSION, ID_PDF_RESULT_TYPE, PDF_NAME, STATUS, DATE_CREATION, DATE_MODIFICATION, ID_LOGIN, PDF_USER_FILENAME, DATE_EXEC) VALUES({0}.SEQ_STATIC_NAV_SESSION.NEXTVAL, NULL, {1}, '{2}', {3}, SYSDATE, SYSDATE, {4}, '{5}', to_date('{6}','YYYYMMDDHH24MISS'))",
                                         DataBaseConfiguration.DataBase.GetSchema(SchemaIds.webnav01).Label,
                                         resultType,
@@ -84,6 +88,10 @@ namespace TNS.Ares.StaticNavSession.DAL
                                         dateExec.ToString("yyyyMMddHHmmss"));
 
             this._source.Insert(insertCommand.ToString());
+            }
+            catch (Exception e) {
+                throw new StaticNavDALExceptions("Impossible to insert data in InsertData(int resultType, string fileName, int alertId, Int64 loginId, DateTime dateExec). Query : " + insertCommand.ToString(), e);
+            }
         }
 
         public virtual int InsertData(byte[] binaryData, Int64 loginId, int resultType, string fileName) {
@@ -95,9 +103,10 @@ namespace TNS.Ares.StaticNavSession.DAL
                 connection.Open();
 
             StringBuilder insertCommand = new StringBuilder();
+            OracleCommand command = null;
 
             try {
-                OracleCommand command = connection.CreateCommand();
+                command = connection.CreateCommand();
 
                 // Preparing PL/SQL block
                 insertCommand.Append("BEGIN ");
@@ -121,7 +130,7 @@ namespace TNS.Ares.StaticNavSession.DAL
                 idStaticNavSession = int.Parse(param2.Value.ToString());
             }
             catch (System.Exception e) {
-                throw new BaseException("StaticNavSession.InsertData : Impossible to insert blob in database. ", e);
+                throw new BaseException("StaticNavSession.InsertData : Impossible to insert blob in database."+((command!=null)?(" Command : " + command.CommandText):(string.Empty)), e);
             }
             finally {
                 // Fermeture des structures
@@ -148,20 +157,26 @@ namespace TNS.Ares.StaticNavSession.DAL
         /// <param name="filePath"></param>
         public virtual void DeleteExpiredRequests(Dictionary<PluginType, PluginInformation> pluginList, string filePath)
         {
-            // Selecting the expired rows
-            DataTable expired = GetExpired(pluginList);
+            int rowNb = 1;
+            try {
+                // Selecting the expired rows
+                DataTable expired = GetExpired(pluginList);
 
-            foreach (DataRow row in expired.Rows)
-            {
-                // Checking if the file path 
-                if (filePath.EndsWith("\\") == false)
-                    filePath += "\\";
+                foreach (DataRow row in expired.Rows) {
+                    // Checking if the file path 
+                    if (filePath.EndsWith("\\") == false)
+                        filePath += "\\";
 
-                // Deleting file
-                System.IO.File.Delete(filePath + row["PDF_NAME"].ToString());
+                    // Deleting file
+                    System.IO.File.Delete(filePath + row["PDF_NAME"].ToString());
 
-                // Deleting corresponding row
-                DeleteRow(int.Parse(row["ID_STATIC_NAV_SESSION"].ToString()));
+                    // Deleting corresponding row
+                    DeleteRow(int.Parse(row["ID_STATIC_NAV_SESSION"].ToString()));
+                    rowNb++;
+                }
+            }
+            catch (Exception e) {
+                throw new StaticNavDALExceptions("Impossible to Delete Expired Requests in DeleteExpiredRequests(Dictionary<PluginType, PluginInformation> pluginList, string filePath), row number '" + rowNb + "'", e);
             }
         }
         #endregion
@@ -220,7 +235,7 @@ namespace TNS.Ares.StaticNavSession.DAL
                     return (_source.Fill(sql.ToString()));
                 }
                 catch (System.Exception err) {
-                    throw (new StaticNavDALExceptions("Impossible de charger les données de la table static nav session ", err));
+                    throw (new StaticNavDALExceptions("Impossible de charger les données de la table static nav session. Query : " + sql.ToString(), err));
                 }
                 #endregion
             }
@@ -246,6 +261,7 @@ namespace TNS.Ares.StaticNavSession.DAL
         /// <param name="longevity">How long the record should be valid from the update date</param>
         public virtual void UpdateStatus(Int64 staticNavSessionId, int status)
         {
+            
             StringBuilder sql = new StringBuilder();
             sql.AppendFormat("UPDATE {0}.STATIC_NAV_SESSION ",
                 DataBaseConfiguration.DataBase.GetSchema(SchemaIds.webnav01).Label);
@@ -255,16 +271,25 @@ namespace TNS.Ares.StaticNavSession.DAL
                 staticNavSessionId.ToString());
             // Preparing update command
 
-
-            // Updating
-            this._source.Update(sql.ToString());
+            try {
+                // Updating
+                this._source.Update(sql.ToString());
+            }
+            catch (Exception e) {
+                throw new StaticNavDALExceptions("Impossible to update statut in UpdateStatus(Int64 staticNavSessionId, int status). query : " + sql.ToString(), e);
+            }
         }
         #endregion
 
         #region Sent
         public virtual void Sent(int stativNavSessionId)
         {
-            this.UpdateStatus(stativNavSessionId, AresConst.Result.status.sent.GetHashCode());
+            try {
+                this.UpdateStatus(stativNavSessionId, AresConst.Result.status.sent.GetHashCode());
+            }
+            catch (Exception e) {
+                throw new StaticNavDALExceptions("Impossible to update statut to sent in void Sent(int stativNavSessionId)", e);
+            }
         }
         #endregion
 
@@ -283,7 +308,7 @@ namespace TNS.Ares.StaticNavSession.DAL
                 this._source.Delete(sql.ToString());
             }
             catch (System.Exception err) {
-                throw (new NoDataException("Unable to delete the old requests", err));
+                throw (new NoDataException("Unable to delete the old requests in DeleteRow(long staticNavSessionId). Query : " + sql.ToString(), err));
             }
         }
         #endregion
@@ -296,13 +321,18 @@ namespace TNS.Ares.StaticNavSession.DAL
         /// <returns>A DataRow object</returns>
         public virtual DataRow GetRow(long staticNavSession)
         {
-            string selectCommand = @"
-                    SELECT ID_STATIC_NAV_SESSION, ID_PDF_RESULT_TYPE, PDF_NAME, PDF_USER_FILENAME, STATUS, DATE_CREATION, DATE_MODIFICATION, ID_LOGIN 
-                    FROM " + DataBaseConfiguration.DataBase.GetSchema(SchemaIds.webnav01).Label + ".STATIC_NAV_SESSION " + @"
-                    WHERE ID_STATIC_NAV_SESSION = " + staticNavSession.ToString();
+            StringBuilder selectCommand = new StringBuilder();
+            try {
+                selectCommand.Append(@"SELECT ID_STATIC_NAV_SESSION, ID_PDF_RESULT_TYPE, PDF_NAME, PDF_USER_FILENAME, STATUS, DATE_CREATION, DATE_MODIFICATION, ID_LOGIN "); 
+                selectCommand.Append(@"FROM " + DataBaseConfiguration.DataBase.GetSchema(SchemaIds.webnav01).Label + ".STATIC_NAV_SESSION "); 
+                selectCommand.Append(@"WHERE ID_STATIC_NAV_SESSION = " + staticNavSession.ToString() );
 
-            DataSet data = this._source.Fill(selectCommand);
-            return (data.Tables[0].Rows[0]);
+                DataSet data = this._source.Fill(selectCommand.ToString());
+                return (data.Tables[0].Rows[0]);
+            }
+            catch (Exception e) {
+                throw new StaticNavDALExceptions("Impossible to Get row in GetRow(long staticNavSession). Query : " + selectCommand.ToString(), e);
+            }
         }
         #endregion
 
@@ -315,10 +345,11 @@ namespace TNS.Ares.StaticNavSession.DAL
         public virtual Object LoadData(Int64 idStaticNavSession) {
 
             #region Ouverture de la base de données
-            //TODO : develop IDataSource for blob loading
-            //OracleConnection cnx = new OracleConnection(Connection.SESSION_CONNECTION_STRING_TEST);
-            OracleConnection cnx = (OracleConnection)_source.GetSource();
+            OracleConnection cnx = null;
             try {
+                //TODO : develop IDataSource for blob loading
+                //OracleConnection cnx = new OracleConnection(Connection.SESSION_CONNECTION_STRING_TEST);
+                cnx = (OracleConnection)_source.GetSource();
                 cnx.Open();
             }
             catch (System.Exception e) {
@@ -405,7 +436,7 @@ namespace TNS.Ares.StaticNavSession.DAL
             sql.AppendFormat("UPDATE {0}.STATIC_NAV_SESSION ",
                 DataBaseConfiguration.DataBase.GetSchema(SchemaIds.webnav01).Label);
             sql.AppendFormat("SET STATUS = {0}, pdf_name = '{1}' ",
-                STATUS_DONE.ToString(),
+                AresConst.Result.status.sent.GetHashCode().ToString(),
                 fileName);
             sql.AppendFormat("Where id_static_nav_session = {0} ",
                 idStaticNavSession.ToString());
@@ -416,7 +447,7 @@ namespace TNS.Ares.StaticNavSession.DAL
                 this._source.Update(sql.ToString());
             }
             catch (System.Exception err) {
-                throw (err);
+                throw new StaticNavDALExceptions("Impossible to Register File in RegisterFile(Int64 idStaticNavSession, string fileName). Query : " + sql.ToString(), err);
             }
         }
         #endregion
@@ -484,7 +515,7 @@ namespace TNS.Ares.StaticNavSession.DAL
                 return (this._source.Fill(sql.ToString()).Tables[0]);
             }
             catch (System.Exception err) {
-                throw (new NoDataException("Unable to load the list of files to delete", err));
+                throw (new NoDataException("Unable to load the list of files to delete in Get(int status, Dictionary<PluginType, PluginInformation> pluginList, bool longevityConstraint). Query : " + sql.ToString(), err));
             }
         }
         #endregion

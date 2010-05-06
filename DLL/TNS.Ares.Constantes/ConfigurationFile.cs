@@ -23,6 +23,14 @@ namespace TNS.Ares.Constantes {
         /// Fichier de configuration d'un service client au LS
         /// </summary>
         public const string LS_CLIENT_CONFIGURATION_FILENAME = @"LsClientConfiguration.xml";
+        /// <summary>
+        /// Fichier de configuration d'un service client au LS
+        /// </summary>
+        public const string LS_SERVER_CONFIGURATION_FILENAME = @"LinkServerParameters.xml";
+        /// <summary>
+        /// Fichier de configuration d'une application LS
+        /// </summary>
+        public const string APPLICATION_PARAMETERS_CONFIGURATION_FILENAME = @"ApplicationParameters.xml";
 
     }
 }

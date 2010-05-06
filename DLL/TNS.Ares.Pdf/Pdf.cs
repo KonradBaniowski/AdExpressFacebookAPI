@@ -12,6 +12,11 @@ using TNS.AdExpress.Domain.Translation;
 
 using PDFCreatorPilotLib;
 using TNS.Ares.Pdf.Exceptions;
+using TNS.FrameWork.WebTheme;
+using HTML2PDFAddOn;
+using HtmlSnap2;
+using System.IO;
+using System.Text;
 
 namespace TNS.Ares.Pdf{
 	/// <summary>
@@ -41,7 +46,7 @@ namespace TNS.Ares.Pdf{
         /// <summary>
         /// Style
         /// </summary>
-        private TNS.AdExpress.Domain.Theme.Style _style = null;
+        private Style _style = null;
 		/// <summary>
 		/// Pdf left Margin
 		/// </summary>
@@ -82,20 +87,22 @@ namespace TNS.Ares.Pdf{
         /// <summary>
         /// Get Style
         /// </summary>
-        public TNS.AdExpress.Domain.Theme.Style Style {
+        public Style Style {
             get { return _style; }
         }
 		/// <summary>
-		/// Get the size of the left margin
+		/// Get / Set the size of the left margin
 		/// </summary>
 		public double LeftMargin{
 			get{return _leftMargin;}
+            set{_leftMargin = value;}
 		}
 		/// <summary>
 		/// Get the size of the right margin
 		/// </summary>
 		public double RightMargin{
 			get{return _rightMargin;}
+            set { _rightMargin = value; }
 		}
 		/// <summary>
 		/// Get the size of the top margin
@@ -142,15 +149,20 @@ namespace TNS.Ares.Pdf{
         /// <summary>
         /// Constructeur
         /// </summary>
-        public Pdf(TNS.AdExpress.Domain.Theme.Style style)
+        public Pdf(Style style)
             : base() {
-            _style = style;
-            _leftMargin = ((TNS.AdExpress.Domain.Theme.Box)(_style.GetTag("layout"))).Margin.MarginLeft;
-            _rightMargin = ((TNS.AdExpress.Domain.Theme.Box)(_style.GetTag("layout"))).Margin.MarginRight;
-            _topMargin = ((TNS.AdExpress.Domain.Theme.Box)(_style.GetTag("layout"))).Margin.MarginTop;
-            _bottomMargin = ((TNS.AdExpress.Domain.Theme.Box)(_style.GetTag("layout"))).Margin.MarginBottom;
-            _headerHeight = ((TNS.AdExpress.Domain.Theme.Box)(_style.GetTag("header"))).Height;
-            _footerHeight = ((TNS.AdExpress.Domain.Theme.Box)(style.GetTag("footer"))).Height;
+            try {
+                _style = style;
+                _leftMargin = ((Box)(_style.GetTag("layout"))).Margin.MarginLeft;
+                _rightMargin = ((Box)(_style.GetTag("layout"))).Margin.MarginRight;
+                _topMargin = ((Box)(_style.GetTag("layout"))).Margin.MarginTop;
+                _bottomMargin = ((Box)(_style.GetTag("layout"))).Margin.MarginBottom;
+                _headerHeight = ((Box)(_style.GetTag("header"))).Height;
+                _footerHeight = ((Box)(style.GetTag("footer"))).Height;
+            }
+            catch (Exception e) {
+                throw new PdfException("Error in Constructor Pdf", e);
+            }
         }
 		#endregion
 
@@ -263,84 +275,6 @@ namespace TNS.Ares.Pdf{
 		/// <param name="leftImage">Image located on the left of the header</param>
 		/// <param name="rightImage">Image located on the right of the header</param>
 		/// <param name="title">Title located in the header</param>
-		/// <param name="fontColor">Font color of the watermark</param>
-		/// <param name="font">Font of the headers and footers</param>
-		/// <returns>Index of the watermark in th epdf document</returns>
-        [Obsolete("Use GetWaterMark with theme")]
-        private int GetWaterMark(string leftImage, string rightImage, string title, Color fontColor, Font font) {
-
-			int w = -1,lImg,rImg;
-			double coef;
-
-			if(this.PDFPAGE_Orientation == TxPDFPageOrientation.poPageLandscape){
-
-				if (this.poLandScapeWaterMk<0){
-					w = poLandScapeWaterMk = this.CreateWaterMark();
-				}
-				else
-					return this.poLandScapeWaterMk;
-			}
-
-			if(this.PDFPAGE_Orientation == TxPDFPageOrientation.poPagePortrait){
-				if (this.poPortraitWaterMk<0){
-					w = poPortraitWaterMk = this.CreateWaterMark();
-				}
-				else
-					return this.poPortraitWaterMk;
-			}
-
-			//If watermarck does'nt exist, we build it and return it.
-
-
-			TxPDFPageSize pSize = this.PDFPAGE_Size;
-			TxPDFPageOrientation pOrien = this.PDFPAGE_Orientation;
-
-			this.SwitchedToWatermark = true;
-
-			this.PDFPAGE_Size = pSize;
-			this.PDFPAGE_Orientation = pOrien;
-
-			//left Image
-			if((leftImage != null)&&(leftImage.Length > 0)){
-				coef = 1.0;
-				lImg = this.AddImageFromFilename(leftImage,TxImageCompressionType.itcFlate);
-				Image lgImg = Image.FromFile(leftImage);
-				if(lgImg.Height> _headerHeight)
-					coef = _headerHeight / lgImg.Height;
-				this.PDFPAGE_ShowImage(lImg,_leftMargin,_topMargin,lgImg.Width*coef,lgImg.Height*coef,0);
-			}
-
-			//right image
-			if((rightImage != null)&&(rightImage.Length > 0)){
-				coef = 1.0;
-				rImg = this.AddImageFromFilename(rightImage,TxImageCompressionType.itcFlate);
-				Image rgImg = Image.FromFile(rightImage);
-				if(rgImg.Height> _headerHeight)
-					coef = _headerHeight / rgImg.Height;
-				this.PDFPAGE_ShowImage(rImg,this.PDFPAGE_Width - _rightMargin - (rgImg.Width*coef),_topMargin,rgImg.Width*coef,rgImg.Height*coef,0);
-			}
-			
-			//title
-			this.PDFPAGE_SetActiveFont(font.Name, font.Bold, font.Italic, font.Underline, font.Strikeout, Convert.ToDouble(font.SizeInPoints), 0);
-			this.PDFPAGE_SetRGBColor(((double)fontColor.R)/256.0
-				,((double)fontColor.G)/256.0
-				,((double)fontColor.B)/256.0);
-			//this.PDFPAGE_SetRGBColor(100.0/256.0,72.0/256.0,131.0/256.0);
-			this.PDFPAGE_TextOut(
-				this.PDFPAGE_Width/2 - (this.PDFPAGE_GetTextWidth(title)/2)
-				, (_headerHeight)/2 + _topMargin - font.SizeInPoints/2, 0, title);
-
-			//footer line
-			this.PDFPAGE_SetLineWidth(1);
-			this.PDFPAGE_MoveTo(_leftMargin, this.WorkZoneBottom);
-			this.PDFPAGE_LineTo(this.PDFPAGE_Width - _rightMargin, this.WorkZoneBottom);
-			this.PDFPAGE_FillAndStroke();
-			this.SwitchedToWatermark = false;
-
-			return w;
-
-		}
-
         private int GetWaterMark(bool leftImage , bool rightImage , string title){
 
 			int w = -1,lImg,rImg;
@@ -377,8 +311,18 @@ namespace TNS.Ares.Pdf{
 
 			//left Image
 			if(leftImage){
+                Picture picture = ((Picture)Style.GetTag("pictureLeft"));
+                if (File.Exists(picture.Path)) {
+                    pathPicture = picture.Path;
+                }
+                else if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\" + picture.Path)) {
+                    pathPicture = AppDomain.CurrentDomain.BaseDirectory + @"\" + picture.Path;
+                }
+                else {
+                    pathPicture = picture.Path;
+                }
+
 				coef = 1.0;
-                pathPicture = ((TNS.AdExpress.Domain.Theme.Picture)_style.GetTag("pictureLeft")).Path;
 				lImg = this.AddImageFromFilename(pathPicture,TxImageCompressionType.itcFlate);
                 Image lgImg = Image.FromFile(pathPicture);
 				if(lgImg.Height> _headerHeight)
@@ -388,8 +332,17 @@ namespace TNS.Ares.Pdf{
 
 			//right image
 			if(rightImage){
+                Picture picture = ((Picture)Style.GetTag("pictureRight"));
+                if (File.Exists(picture.Path)) {
+                    pathPicture = picture.Path;
+                }
+                else if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\" + picture.Path)) {
+                    pathPicture = AppDomain.CurrentDomain.BaseDirectory + @"\" + picture.Path;
+                }
+                else {
+                    pathPicture = picture.Path;
+                }
 				coef = 1.0;
-                pathPicture = ((TNS.AdExpress.Domain.Theme.Picture)_style.GetTag("pictureRight")).Path;
                 rImg = this.AddImageFromFilename(pathPicture, TxImageCompressionType.itcFlate);
                 Image rgImg = Image.FromFile(pathPicture);
 				if(rgImg.Height> _headerHeight)
@@ -400,7 +353,7 @@ namespace TNS.Ares.Pdf{
 			//title
             _style.GetTag("headerFont").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
 
-            double fontSize = ((TNS.AdExpress.Domain.Theme.Font)_style.GetTag("headerFont")).Size;
+            double fontSize = ((TNS.FrameWork.WebTheme.Font)_style.GetTag("headerFont")).Size;
 			this.PDFPAGE_TextOut(
 				this.PDFPAGE_Width/2 - (this.PDFPAGE_GetTextWidth(title)/2),
                 (_headerHeight) / 2 + _topMargin - fontSize / 2, 
@@ -420,5 +373,206 @@ namespace TNS.Ares.Pdf{
 
 		#endregion
 
-	}
+        #region ConvertHtmlToPDF
+        /// <summary>
+        /// Transformation du code HTML en une nouvelle page PDF
+        /// </summary>
+        /// <param name="html">Le code HTML</param>
+        /// <param name="charset">Charset</param>
+        /// <param name="themeName">Theme Name</param>
+        /// <param name="serverName">Server Name</param>
+        /// <param name="html2PdfLogin">Html2Pdf Library Login</param>
+        /// <param name="html2PdfPassword">Html2Pdf Library Password</param>
+        /// <returns>Current Page Index of PDF</returns>
+        public virtual int ConvertHtmlToPDF(string html, string charset, string themeName, string serverName, string html2PdfLogin, string html2PdfPassword) {
+            this.NewPage();
+            return ConvertHtmlToPDF(html, charset, themeName, serverName, html2PdfLogin, html2PdfPassword, this.GetCurrentPageIndex());
+        }
+
+        /// <summary>
+        /// Transformation du code HTML en une nouvelle page PDF
+        /// </summary>
+        /// <param name="html">Le code HTML</param>
+        /// <param name="charset">Charset</param>
+        /// <param name="themeName">Theme Name</param>
+        /// <param name="serverName">Server Name</param>
+        /// <param name="html2PdfLogin">Html2Pdf Library Login</param>
+        /// <param name="html2PdfPassword">Html2Pdf Library Password</param>
+        /// <param name="pageNumber">Page Number</param>
+        /// <returns>Current Page Index of PDF</returns>
+        public virtual int ConvertHtmlToPDF(string html, string charset, string themeName, string serverName, string html2PdfLogin, string html2PdfPassword, int pageNumber) {
+
+            #region Traitment
+            try {
+
+                #region Get Temp File
+                string workFile = Path.GetTempFileName();
+                #endregion
+
+                #region HTML
+                StreamWriter sw = null;
+
+                try {
+                    sw = File.CreateText(workFile);
+
+                    #region Html Header
+                    sw.WriteLine(this.GetHtmlHeader(charset, themeName, serverName));
+                    #endregion
+
+                    #region Html Content
+                    sw.Write(html.ToString());
+                    #endregion
+
+                    #region Html Footer
+                    sw.WriteLine(this.GetHtmlFooter());
+                    #endregion
+
+                }
+                catch (Exception e) {
+                    throw new PdfException("Impossible to write HTML to File '" + workFile + "'", e);
+                }
+                finally {
+                    if (sw != null) {
+                        sw.Close();
+                        sw = null;
+                    }
+                }
+                #endregion
+
+                #region Html file loading
+
+                HTML2PDF2Class htmlTmp = null;
+
+                try {
+
+                    #region Create new Page Pdf
+                    this.SetCurrentPage(pageNumber);
+                    this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
+                    #endregion
+
+                    htmlTmp = new HTML2PDF2Class();
+                    htmlTmp.MarginLeft = Convert.ToInt32(this.LeftMargin);
+                    htmlTmp.MarginTop = Convert.ToInt32(this.WorkZoneTop);
+                    htmlTmp.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
+                    htmlTmp.MinimalWidth = this.PDFPAGE_Width - Convert.ToInt32(this.LeftMargin) - Convert.ToInt32(this.RightMargin);
+                    htmlTmp.StartHTMLEngine(html2PdfLogin, html2PdfPassword);
+                    htmlTmp.ConnectToPDFLibrary(this);
+                    htmlTmp.LoadHTMLFile(workFile);
+                    htmlTmp.ConvertAll();
+
+                }
+                catch (Exception e) {
+                    throw new PdfException("Impossible to Convert HTML file to PDF", e);
+                }
+                finally {
+                    if (htmlTmp != null) {
+                        htmlTmp.DisconnectFromPDFLibrary();
+                        htmlTmp.UnloadAll();
+                        htmlTmp = null;
+                    }
+                }
+                #endregion
+
+                #region Clean File
+                File.Delete(workFile);
+                #endregion
+
+                return this.GetCurrentPageIndex();
+            }
+            catch (System.Exception e) {
+                throw (new PdfException("Impossible to Convert HTML to PDF", e));
+            }
+            #endregion
+        }
+
+        #endregion
+
+        #region ConvertHtmlToSnapJpgByte
+        /// <summary>
+        /// Transformation du code HTML en une nouvelle page PDF
+        /// </summary>
+        /// <param name="html">Le code HTML</param>
+        /// <param name="charset">Charset</param>
+        /// <param name="themeName">Theme Name</param>
+        /// <param name="serverName">Server Name</param>
+        /// <param name="html2PdfLogin">Html2Pdf Library Login</param>
+        /// <param name="html2PdfPassword">Html2Pdf Library Password</param>
+        /// <returns>Current Page Index of PDF</returns>
+        public virtual byte[] ConvertHtmlToSnapJpgByte(string html, string charset, string themeName, string serverName) {
+
+            byte[] data = null;
+            CHtmlSnapClass snap = null;
+
+            try {
+                snap = new CHtmlSnapClass();
+                snap.SetTimeOut(100000);
+                snap.SetCode("21063505C78EB32A");
+                snap.SnapHtmlString(GetHtmlHeader(charset, themeName, serverName) + html.ToString() + GetHtmlFooter(), "*");
+
+                data = (byte[])snap.GetImageBytes(".jpg");
+            }
+            finally {
+                if (snap != null) {
+                    snap.Clear();
+                    snap = null;
+                }
+            }
+            return data;
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        #region GetHtmlHeader
+        /// <summary>
+        /// Get Html Header
+        /// </summary>
+        /// <returns>Html Header</returns>
+        protected virtual string GetHtmlHeader(string charset, string themeName, string serverName) {
+            StringBuilder html = new StringBuilder();
+            html.Append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" >");
+            html.Append("<HTML>");
+            html.Append("<HEAD>");
+            html.Append("<META http-equiv=\"Content-Type\" content=\"text/html; charset=" + charset + "\">");
+            html.Append("<meta content=\"Microsoft Visual Studio .NET 7.1\" name=\"GENERATOR\">");
+            html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
+            html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
+            html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
+            html.Append("<LINK href=\"" + serverName + "/App_Themes" + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + serverName + "/App_Themes" + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<LINK href=\"" + serverName + "/App_Themes" + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
+            html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
+            html.Append("<meta http-equiv=\"expires\" content=\"0\">");
+            html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");
+            html.Append("<meta name=\"Cache-control\" content=\"no-cache\">");
+            html.Append("</HEAD>");
+            html.Append("<body "+GetHtmlBodyStyle()+">");
+            html.Append("<form>");
+            return html.ToString();
+        }
+        #endregion
+
+        #region GetHtmlHeader
+        /// <summary>
+        /// Get Html Header
+        /// </summary>
+        /// <returns>Html Header</returns>
+        protected virtual string GetHtmlBodyStyle() {
+            return "style=\"margin-top:0px;\"";
+        }
+        #endregion
+
+        #region GetHtmlFooter
+        /// <summary>
+        /// Get Html Footer
+        /// </summary>
+        /// <returns>Html Footer</returns>
+        protected virtual string GetHtmlFooter() {
+            return "</form></body></HTML>";
+        }
+        #endregion
+
+        #endregion
+    }
 }

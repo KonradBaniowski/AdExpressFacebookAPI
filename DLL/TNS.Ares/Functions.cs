@@ -11,7 +11,7 @@ namespace TNS.Ares {
     public class Functions {
         private static Random r = new Random(unchecked((int)DateTime.Now.Ticks));
 
-        private static char[] characters = new char[47] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_', '[', ']', '(', ')', '{', '}', '+', '=', '!' };
+        private static char[] characters = new char[46] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_', '[', ']', '(', ')', '{', '}', '=', '!' };
 
         #region Random String
         /// <summary>

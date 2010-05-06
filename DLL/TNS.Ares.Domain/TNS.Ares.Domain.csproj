@@ -81,6 +81,7 @@
     <Compile Include="Mail\ReportingSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlLoader\ConfigParamHelper.cs" />
+    <Compile Include="XmlLoader\ApplicationParametersXL.cs" />
     <Compile Include="XmlLoader\LsClientConfigurationXL.cs" />
     <Compile Include="XmlLoader\PluginConfigurationXL.cs" />
     <Compile Include="XmlLoader\DataBaseDescriptionXL.cs" />
