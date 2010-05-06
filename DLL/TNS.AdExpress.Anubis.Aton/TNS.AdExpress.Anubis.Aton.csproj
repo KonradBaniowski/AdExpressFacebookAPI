@@ -83,10 +83,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\DundasWinChart.dll</HintPath>
     </Reference>
-    <Reference Include="Interop.HTML2PDFAddOn, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\Interop.HTML2PDFAddOn.dll</HintPath>
-    </Reference>
     <Reference Include="Interop.PDFCreatorPilotLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\Interop.PDFCreatorPilotLib.dll</HintPath>
@@ -133,10 +129,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\Trunk\TNS.FrameWork.WebResultUI.dll</HintPath>
     </Reference>
-    <ProjectReference Include="..\TNS.AdExpress.Classification\TNS.AdExpress.Classification.csproj">
-      <Project>{85908D78-32C1-4C1B-9E17-0D957B849DFA}</Project>
-      <Name>TNS.AdExpress.Classification</Name>
-    </ProjectReference>
+    <Reference Include="TNS.FrameWork.WebTheme, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.WebTheme.dll</HintPath>
+    </Reference>
     <ProjectReference Include="..\TNS.ADEXPRESS.CONSTANTES\TNS.AdExpress.Constantes.csproj">
       <Name>TNS.AdExpress.Constantes</Name>
       <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
@@ -163,6 +159,10 @@
     <ProjectReference Include="..\TNS.Ares.Constantes\TNS.Ares.Constantes.csproj">
       <Project>{303C6B21-CA16-4D7B-8EDB-E8869B2B3EC9}</Project>
       <Name>TNS.Ares.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.Domain\TNS.Ares.Domain.csproj">
+      <Project>{255834E2-DCA3-4290-9325-FFA4291839A6}</Project>
+      <Name>TNS.Ares.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.Ares.Pdf\TNS.Ares.Pdf.csproj">
       <Project>{B1F6C717-7C8D-4869-9579-A20F14E9DD4C}</Project>
@@ -203,9 +203,6 @@
     <Compile Include="Exceptions\AtonPdfException.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\Functions.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="TreatementSystem.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -218,22 +215,36 @@
     <Compile Include="UI\UISeasonalityGraph.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Content Include="App_Themes\DefaultAdExpressFr\Styles.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Themes\DefaultAdExpressUk\Styles.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\33\LogoAdExpress.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\33\LogoAdExpressWater.bmp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\33\LogoAdExpressWater.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\44\LogoAdExpress.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\44\LogoAdExpress220.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Common\APPM.bmp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Common\logo_Tns.bmp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Configuration\33\Plugins\Aton.xml" />
+    <Content Include="Configuration\33\Plugins\Aton.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="ModelSupport\default.txaPackage" />
     <EmbeddedResource Include="UI\UISeasonalityGraph.resx">
       <DependentUpon>UISeasonalityGraph.cs</DependentUpon>

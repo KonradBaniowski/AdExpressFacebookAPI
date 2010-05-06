@@ -10,8 +10,7 @@ using Aspose.Cells;
 using System.Drawing;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Constantes.DB;
-using TNS.AdExpress.Domain.Theme;
-
+using TNS.FrameWork.WebTheme;
 
 namespace TNS.AdExpress.Anubis.Satet.Functions
 {
@@ -30,7 +29,7 @@ namespace TNS.AdExpress.Anubis.Satet.Functions
 		/// <param name="nbMaxRowByPage">nombre de ligne maximu par page</param>		
 		/// <param name="upperLeftColumn">colone la plus à gauche</param>
 		/// <param name="vPageBreaks">saut de page vertical</param>
-		internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name,int upperLeftColumn, TNS.AdExpress.Domain.Theme.Style style){
+		internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name,int upperLeftColumn, TNS.FrameWork.WebTheme.Style style){
 			// Nom de la feuille
 			sheet.Name=name; 														
 			
@@ -67,7 +66,7 @@ namespace TNS.AdExpress.Anubis.Satet.Functions
 		/// <param name="nbMaxRowByPage">nombre de ligne maximu par page</param>
 		/// <param name="s">compteur de page</param>
 		/// <param name="upperLeftColumn">colone la plus à gauche</param>
-		internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name,int nbRows,int nbMaxRowByPage,ref int s,int upperLeftColumn, TNS.AdExpress.Domain.Theme.Style style){
+        internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name, int nbRows, int nbMaxRowByPage, ref int s, int upperLeftColumn, TNS.FrameWork.WebTheme.Style style) {
             PageSettings(sheet, name, nbRows, nbMaxRowByPage, ref s, upperLeftColumn, "", null, style);
 		}
 
@@ -83,7 +82,7 @@ namespace TNS.AdExpress.Anubis.Satet.Functions
 		/// <param name="printArea">Zone d'impression</param>
 		/// <param name="upperLeftColumn">colone la plus à gauche</param>
 		/// <param name="vPageBreaks">saut de page vertical</param>
-		internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name,int nbRows,int nbMaxRowByPage,ref int s,int upperLeftColumn,string vPageBreaks,string headerRowIndex, TNS.AdExpress.Domain.Theme.Style style){
+		internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name,int nbRows,int nbMaxRowByPage,ref int s,int upperLeftColumn,string vPageBreaks,string headerRowIndex, TNS.FrameWork.WebTheme.Style style){
 			
 			int nbPages=0;
 			int currentNbRowByPage=nbMaxRowByPage;
@@ -137,7 +136,7 @@ namespace TNS.AdExpress.Anubis.Satet.Functions
 		/// <param name="s">compteur de page</param>
 		/// <param name="upperLeftColumn">colone la plus à gauche</param>
 		/// <param name="headerRowIndex">En-tête</param>
-        internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name, ref int s, int upperLeftColumn, string headerRowIndex, TNS.AdExpress.Domain.Theme.Style style) {
+        internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name, ref int s, int upperLeftColumn, string headerRowIndex, TNS.FrameWork.WebTheme.Style style) {
             int indexPicture = 0;
 
             sheet.Name = name; // A mettre dans web word		

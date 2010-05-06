@@ -50,7 +50,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
         /// <summary>
         /// Style
         /// </summary>
-        private TNS.AdExpress.Domain.Theme.Style _style = null;
+        private TNS.FrameWork.WebTheme.Style _style = null;
         /// <summary>
         /// Pie ColorS
         /// </summary>
@@ -58,14 +58,15 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 		#endregion
 
 		#region Constructeur
-		public UIFamilyGraph(WebSession webSession,IDataSource dataSource, AtonConfig config, DataTable dtGraphicsData,TNS.AdExpress.Domain.Theme.Style style):base(){
+        public UIFamilyGraph(WebSession webSession, IDataSource dataSource, AtonConfig config, DataTable dtGraphicsData, TNS.FrameWork.WebTheme.Style style)
+            : base() {
 			_webSession = webSession;
 			_dataSource = dataSource;
 			_config = config;
 			_dtGraphicsData = dtGraphicsData;
             _style = style;
 
-            _newPieColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("FamilyGraphNewPieColors32")).ColorList;
+            _newPieColors = ((TNS.FrameWork.WebTheme.Colors)_style.GetTag("FamilyGraphNewPieColors32")).ColorList;
 		}
 		#endregion
 

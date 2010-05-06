@@ -8,69 +8,245 @@ using TNS.AdExpress.Anubis.Sobek;
 using TNS.Ares;
 using TNS.FrameWork.DB.Common;
 using TNS.FrameWorks.LSConnectivity;
+using TNS.AdExpress.Domain.Web;
+using TNS.Ares.AdExpress.CsvChrono.Exceptions;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Units;
+using TNS.Classification.Universe;
+using TNS.AdExpress.Domain.Web.Navigation;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
+using TNS.Ares.Domain.DataBase;
+using TNS.Ares.Domain.LS;
+using TNS.Ares.Constantes;
+using TNS.FrameWork.Net.Mail;
+using TNS.FrameWork;
+using TNS.FrameWork.Exceptions;
 
 namespace TNS.Ares.AdExpress.CsvChrono
 {
     public class SobekShell : Shell
     {
         #region Variables
-
-        private string _confFile;
+        /// <summary>
+        /// DataSource
+        /// </summary>
         private IDataSource _source;
-
+        /// <summary>
+        /// Path File Of Configuration
+        /// </summary>
+        private string _confFile;
         #endregion
 
-        public SobekShell(string productName, int familyId, string confFile, IDataSource source)
-            : base(productName, familyId)
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="productName">Product Name</param>
+        /// <param name="familyId">Family Id</param>
+        /// <param name="source">DataSource</param>
+        /// <param name="confFile">Path Configuration File</param>
+        public SobekShell(string productName, int familyId, List<ModuleDescription> moduleDescriptionList, string directoryName) :
+            base(productName, familyId, moduleDescriptionList)
         {
-            this._source = source;
-            this._confFile = confFile;
+            this.Initialize(directoryName);
         }
+        #endregion
 
+        #region Initialize
+        /// <summary>
+        /// Initialize
+        /// </summary>
+        protected void Initialize(string directoryName) {
+            try {
+
+                #region WebApplicationParameters
+                try {
+                    new WebApplicationParameters();
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load WebApplicationParameters", e);
+                }
+                #endregion
+
+                #region Product Baal List
+                try {
+                    Product.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load Product Baal List", e);
+                }
+                #endregion
+
+                #region Media Baal List
+                try {
+                    Media.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load Media Baal List", e);
+                }
+                #endregion
+
+                #region UnitsInformation
+                try {
+                    // Units
+                    UnitsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNITS_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load UnitsInformation", e);
+                }
+                #endregion
+
+                #region VehiclesInformation
+                try {
+                    // Vehicles
+                    VehiclesInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.VEHICLES_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load VehiclesInformation", e);
+                }
+                #endregion
+
+                #region UniverseLevels
+                try {
+                    // Universes
+                    UniverseLevels.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load UniverseLevels", e);
+                }
+                #endregion
+
+                #region UniverseLevelsCustomStyles
+                try {
+                    // Charge les styles personnalisés des niveaux d'univers
+                    UniverseLevelsCustomStyles.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CUSTOM_STYLES_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load UniverseLevelsCustomStyles", e);
+                }
+                #endregion
+
+                #region UniverseBranches
+                try {
+                    // Charge la hierachie de niveau d'univers
+                    UniverseBranches.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_BRANCHES_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load UniverseBranches", e);
+                }
+                #endregion
+
+                #region UniverseLevels
+                try {
+                    // Charge les niveaux d'univers
+                    UniverseLevels.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load UniverseLevels", e);
+                }
+                #endregion
+
+                #region AllowedFlags
+                try {
+                    //Load flag list
+                    TNS.AdExpress.Domain.AllowedFlags.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.FLAGS_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load AllowedFlags", e);
+                }
+                #endregion
+
+                #region ModulesList
+                try {
+                    new ModulesList();
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load ModulesList", e);
+                }
+                #endregion
+
+                #region Get Source
+                try {
+                    this._source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(TNS.AdExpress.Domain.DataBaseDescription.DefaultConnectionIds.webAdministration);
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to Get dataSource", e);
+                }
+                #endregion
+
+                #region Ares DataBaseConfiguration
+                try {
+                    // Loading DataBase configuration
+                    DataBaseConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to Load DataBaseConfiguration", e);
+                }
+                #endregion
+
+                #region Ares PluginConfiguration
+                try {
+                    PluginConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.PLUGIN_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to Load Ares PluginConfiguration", e);
+                }
+                #endregion
+
+                this._confFile = WebApplicationParameters.ConfigurationDirectoryRoot + directoryName;
+            }
+            catch (Exception e) {
+                this.sendEmailError("Initialization Error in Shell in Initialize(string directoryName)", e);
+            }
+        }
+        #endregion
+
+        #region DoTask
+        /// <summary>
+        /// Do task
+        /// </summary>
+        /// <param name="oObj">task Execution</param>
         protected override void DoTask(object oObj)
         {
-            TaskExecution oTaskContext = (TaskExecution)oObj;
+            TaskExecution task = (TaskExecution)oObj;
             long staticNavSessionId = -1;
-
-            if (oTaskContext != null)
-            {
-                staticNavSessionId = extractParameterId(oTaskContext);
-                if (staticNavSessionId != -1)
-                {
-                    lock (_oObjectLocker)
-                    {
-                        _oListRunningTasks.Add(staticNavSessionId, oTaskContext);
-                    }
-
-                    TreatementSystem t = new TreatementSystem();
-                    t.OnStartWork += new TNS.Ares.StartWork(t_OnStartWork);
-                    t.OnError += new TNS.Ares.Error(t_OnError);
-                    t.OnStopWorkerJob += new TNS.Ares.StopWorkerJob(t_OnStopWorkerJob);
-                    t.OnSendReport += new TNS.Ares.SendReport(t_OnSendReport);
-                    t.OnMessageAlert += new TNS.Ares.MessageAlert(t_OnMessageAlert);
-                    t.Treatement(this._confFile, this._source, staticNavSessionId);
+            try {
+                if (task != null) {
+                    // Extracting parameter id from task
+                    long staticNavSession = extractParameterId(task);
+                    if (_oListRunningTasks.ContainsKey(staticNavSession) == false)
+                        _oListRunningTasks.Add(staticNavSession, task);
+                        // Preparing treatment
+                        TreatementSystem t = new TreatementSystem();
+                        t.OnStartWork += new TNS.Ares.StartWork(t_OnStartWork);
+                        t.OnError += new TNS.Ares.Error(t_OnError);
+                        t.OnStopWorkerJob += new TNS.Ares.StopWorkerJob(t_OnStopWorkerJob);
+                        t.OnSendReport += new TNS.Ares.SendReport(t_OnSendReport);
+                        t.OnMessageAlert += new TNS.Ares.MessageAlert(t_OnMessageAlert);
+                        t.Treatement(this._confFile, this._source, staticNavSession);
+                }
+                else {
+                    this._oLinkClient.ReleaseTaskInError(task, new LogLine("TaskExecution object is null", eLogCategories.Problem));
                 }
             }
-            else
-                this._oLinkClient.ReleaseTaskInError(oTaskContext, new LogLine("TaskExecution object is null", eLogCategories.Problem));
+            catch (Exception e) {
+                this.sendEmailError("Build Task Error in Shell in DoTask(object oObj)", e);
+                this._oLinkClient.ReleaseTaskInError(task, new LogLine("Build Task Error in Shell in DoTask(object oObj)"));
+            }
 
         }
+        #endregion
 
-        protected override void oLinkClient_evtStateChanged(eClientState eState, Exception oError)
-        {
-            base.oLinkClient_evtStateChanged(eState, oError);
-            if (eState == eClientState.Connected && this._oMonitorServer != null)
-                this._oMonitorServer.Log(new LogLine("Sobek request treatment is ready to receive requests", eLogCategories.Information));
-        }
-
-
+        #region KnownModules
+        /// <summary>
+        /// Known Modules
+        /// </summary>
+        /// <returns>List of Module Description</returns>
         public override List<ModuleDescription> KnownModules()
         {
-            return new List<ModuleDescription>()
-            {
-                new ModuleDescription("Sobek request treatment", 4)
-            };
+            return _moduleDescriptionList;
         }
+        #endregion
 
         #region Plugin event callbacks
 
@@ -86,6 +262,110 @@ namespace TNS.Ares.AdExpress.CsvChrono
                 this._oLinkClient.ReleaseTaskInError(_oListRunningTasks[navSessionId], new LogLine(ex.Message, ex, eLogCategories.Warning));
             }
         }
+
+        #endregion
+
+        #region Email
+        /// <summary>
+        /// Send Mail Error
+        /// </summary>
+        /// <param name="body">Body</param>
+        protected override void sendEmailError(string body) {
+            if (this.SendEmailOnError) {
+                string subject = " " + _strProductName + " (" + Environment.MachineName + ")";
+                SmtpUtilities mailError = new SmtpUtilities(this.SmtpFromAddress, new ArrayList(this.ErrorEmailList.Split(';')), subject, Convertion.ToHtmlString(body), true, this.SmtpServer, this.MailPort);
+                mailError.SendWithoutThread(false);
+            }
+        }
+
+        /// <summary>
+        /// Send Mail Error
+        /// </summary>
+        /// <param name="e">Exception</param>
+        protected override void sendEmailError(Exception e) {
+
+            if (this.SendEmailOnError) {
+
+                string subject = " " + _strProductName + " (" + Environment.MachineName + ")";
+                string stackTrace = string.Empty;
+                string message = string.Empty;
+                string body = string.Empty;
+
+                try {
+                    BaseException err = ((BaseException)((Exception)e));
+                    message = err.Message;
+                    stackTrace = err.GetHtmlDetail();
+                }
+                catch {
+                    try {
+                        message = e.Message;
+                        stackTrace = e.StackTrace;
+                    }
+                    catch (System.Exception es) {
+                        throw (es);
+                    }
+                }
+
+                #region Message d'erreur
+                body = "<html>";
+                body += "<hr>";
+                body += "<u>Message d'erreur:</u><br>" + message + "<br>";
+                if (stackTrace != null)
+                    body += "<u>StackTrace:</u><br>" + stackTrace.Replace("at ", "<br>at ") + "<br>";
+                body += "<hr>";
+                body += "</html>";
+                #endregion
+
+                SmtpUtilities mailError = new SmtpUtilities(this.SmtpFromAddress, new ArrayList(this.ErrorEmailList.Split(';')), subject, Convertion.ToHtmlString(body), true, this.SmtpServer, this.MailPort);
+                mailError.SendWithoutThread(false);
+            }
+        }
+
+        /// <summary>
+        /// Send Mail Error
+        /// </summary>
+        /// <param name="e">Exception</param>
+        /// <param name="message">Message</param>
+        protected void sendEmailError(string message, Exception e) {
+
+            if (this.SendEmailOnError) {
+
+                string subject = " " + _strProductName + " (" + Environment.MachineName + ")";
+                string stackTrace = string.Empty;
+                string body = string.Empty;
+
+                try {
+                    BaseException err = ((BaseException)((Exception)e));
+                    if (message.Trim().Length <= 0)
+                        message = err.Message;
+                    stackTrace = err.GetHtmlDetail();
+                }
+                catch {
+                    try {
+                        if (message.Trim().Length <= 0)
+                            message = e.Message;
+                        stackTrace = e.StackTrace;
+                    }
+                    catch (System.Exception es) {
+                        throw (es);
+                    }
+                }
+
+                #region Message d'erreur
+                body = "<html>";
+                body += "<hr>";
+                body += "<u>Message d'erreur:</u><br>" + message + "<br>";
+                if (stackTrace != null)
+                    body += "<u>StackTrace:</u><br>" + stackTrace.Replace("at ", "<br>at ") + "<br>";
+                body += "<hr>";
+                body += "</html>";
+                #endregion
+
+                SmtpUtilities mailError = new SmtpUtilities(this.SmtpFromAddress, new ArrayList(this.ErrorEmailList.Split(';')), subject, Convertion.ToHtmlString(body), true, this.SmtpServer, this.MailPort);
+                mailError.SendWithoutThread(false);
+            }
+        }
+
 
         #endregion
     }

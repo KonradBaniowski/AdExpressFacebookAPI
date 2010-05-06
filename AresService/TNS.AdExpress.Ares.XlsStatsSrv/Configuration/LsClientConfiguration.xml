@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<configurations>
-  <lsClientConfiguration familyId="123" monitorPort="30239" productName="XlsStats treatment service" maxAvailableSlots="1" directoryName="33\Plugins\Bastet.xml">
-    <moduleDescription description="XlsStats treatment service" moduleId="2"/>
-  </lsClientConfiguration>
-</configurations>

@@ -13,7 +13,6 @@ using TNS.FrameWork.Date;
 using TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Domain.Theme;
 
 namespace TNS.AdExpress.Anubis.Amset.Functions{
 	/// <summary>
@@ -30,7 +29,7 @@ namespace TNS.AdExpress.Anubis.Amset.Functions{
 		/// <param name="nbMaxRowByPage">nombre de ligne maximu par page</param>		
 		/// <param name="upperLeftColumn">colone la plus à gauche</param>
 		/// <param name="vPageBreaks">saut de page vertical</param>
-        internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name, int upperLeftColumn, int language, TNS.AdExpress.Domain.Theme.Style style) {
+        internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name, int upperLeftColumn, int language, TNS.FrameWork.WebTheme.Style style) {
 		
 			// Nom de la feuille
 			sheet.Name=name; 														
@@ -67,7 +66,7 @@ namespace TNS.AdExpress.Anubis.Amset.Functions{
 		/// <param name="printArea">Zone d'impression</param>
 		/// <param name="upperLeftColumn">colone la plus à gauche</param>
 		/// <param name="vPageBreaks">saut de page vertical</param>
-        internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name, int nbRows, int nbMaxRowByPage, int upperLeftColumn, string vPageBreaks, string headerRowIndex, int language, TNS.AdExpress.Domain.Theme.Style style) {
+        internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name, int nbRows, int nbMaxRowByPage, int upperLeftColumn, string vPageBreaks, string headerRowIndex, int language, TNS.FrameWork.WebTheme.Style style) {
 			int nbPages=0;
 			int currentNbRowByPage=nbMaxRowByPage;
 			int first=0;
@@ -124,7 +123,7 @@ namespace TNS.AdExpress.Anubis.Amset.Functions{
         /// <param name="firstColumn">1ere colonne de la collection</param>
         /// <param name="lastColumn">dernière colonne de la collection</param>
         /// <param name="textAlignmentTypeCenter">Alignement du texte</param>
-        internal static void CellsStyle(Aspose.Cells.Workbook excel, Aspose.Cells.Cells cells, Tag tag, object data, int row, int firstColumn, int lastColumn, bool textAlignmentTypeCenter) {
+        internal static void CellsStyle(Aspose.Cells.Workbook excel, Aspose.Cells.Cells cells, TNS.FrameWork.WebTheme.Tag tag, object data, int row, int firstColumn, int lastColumn, bool textAlignmentTypeCenter) {
             for (int i = firstColumn; i <= lastColumn; i++) {
                 if (data != null) cells[row, i].PutValue(data);
                 tag.SetStyleExcel(excel, cells, row, i);
@@ -141,7 +140,7 @@ namespace TNS.AdExpress.Anubis.Amset.Functions{
         /// <param name="firstColumn">1ere colonne de la collection</param>
         /// <param name="lastColumn">dernière colonne de la collection</param>
         /// <param name="textAlignmentTypeCenter">Alignement du texte</param>
-        internal static void CellsStyle(Aspose.Cells.Workbook excel, Aspose.Cells.Cells cells, Tag tag, object data, int firstRow, int lastRow, int firstColumn, int lastColumn, bool textAlignmentTypeCenter) {
+        internal static void CellsStyle(Aspose.Cells.Workbook excel, Aspose.Cells.Cells cells, TNS.FrameWork.WebTheme.Tag tag, object data, int firstRow, int lastRow, int firstColumn, int lastColumn, bool textAlignmentTypeCenter) {
             for (int j = firstRow; j <= lastRow; j++) {
                 for (int i = firstColumn; i <= lastColumn; i++) {
                     if (data != null) cells[j, i].PutValue(data);
@@ -268,7 +267,7 @@ namespace TNS.AdExpress.Anubis.Amset.Functions{
         /// <param name="isBold">vrai si police en gras</param>
         /// <param name="color">couleur de la police</param>
         /// <param name="size">Taille du texte</param>
-        internal static void PutCellValue(Aspose.Cells.Workbook excel, Worksheet sheet, Aspose.Cells.Cells cells, Tag tag, object data, int row, int column, int startColumn) {
+        internal static void PutCellValue(Aspose.Cells.Workbook excel, Worksheet sheet, Aspose.Cells.Cells cells, TNS.FrameWork.WebTheme.Tag tag, object data, int row, int column, int startColumn) {
             cells[row, column].PutValue(data);
             tag.SetStyleExcel(excel, cells, row, column);
             if (column >= startColumn)
@@ -306,7 +305,7 @@ namespace TNS.AdExpress.Anubis.Amset.Functions{
 		/// <param name="root">L'arbre qui contient les headers</param>
 		/// <param name="cellRow">L'index de la prmière ligne</param>
 		/// <param name="cellColumn">L'index de la prmière colonne</param>
-        internal static int RenderHeader(Aspose.Cells.Workbook excel, Worksheet sheet, Cells cells, TNS.AdExpress.Domain.Theme.Style style, HeaderBase root, int cellRow, int cellColumn) {
+        internal static int RenderHeader(Aspose.Cells.Workbook excel, Worksheet sheet, Cells cells, TNS.FrameWork.WebTheme.Style style, HeaderBase root, int cellRow, int cellColumn) {
 		
 			Queue nodes = new Queue();
 			int depth = 0;
@@ -339,7 +338,7 @@ namespace TNS.AdExpress.Anubis.Amset.Functions{
 		/// <param name="indexRow">L'index de la prmière ligne</param>
 		/// <param name="indexColumn">L'index de la prmière colonne</param>
 		/// <param name="depth">La profondeur</param>
-        internal static void Render(Aspose.Cells.Workbook excel, Worksheet sheet, Cells cells,TNS.AdExpress.Domain.Theme.Style style, HeaderBase headerBase, int indexRow, ref int indexColumn, int depth) {
+        internal static void Render(Aspose.Cells.Workbook excel, Worksheet sheet, Cells cells, TNS.FrameWork.WebTheme.Style style, HeaderBase headerBase, int indexRow, ref int indexColumn, int depth) {
 
 			if(headerBase.Count==0){
 				PutCellValue(excel,sheet,cells,style.GetTag("Render"),headerBase.Label,indexRow,indexColumn,2);

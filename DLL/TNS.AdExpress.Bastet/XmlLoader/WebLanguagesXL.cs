@@ -122,37 +122,74 @@ namespace TNS.AdExpress.Bastet.XmlLoader{
             int classificationLanguageId;
             string charset="";
             string contentEncoding = "";
+            string excelContentEncoding = "";
+            string nlsSort = "";
 			bool isUTF8 = false;
-            CultureInfo cInfo = null;
+            BastetCultureInfo cInfo = null;
+            BastetCultureInfo cInfoExcel = null;
             string formatName = string.Empty;
             string format = string.Empty;
+            string excelFormat = string.Empty;
+            string numberGroupSeparator = string.Empty;
+            string numberDecimalSeparator = string.Empty;
             #endregion
 
             try {
                 reader=(XmlTextReader)dataSource.GetSource();
                 while(reader.Read()) {
                     if(reader.NodeType==XmlNodeType.Element) {
-                        name="";
-                        charset="";
-                        contentEncoding="";
-						isUTF8 = false;
+                        name = "";
                         imageSourceText = "";
-                        switch(reader.LocalName) {
+                        charset = "";
+                        contentEncoding = "";
+                        nlsSort = "";
+                        isUTF8 = false;
+                        numberGroupSeparator = string.Empty;
+                        numberDecimalSeparator = string.Empty;
+                        switch (reader.LocalName) {
                             case "language":
-                                if(reader.GetAttribute("id")==null || reader.GetAttribute("id").Length==0) throw (new InvalidXmlValueException("Invalid id parameter"));
-                                id=int.Parse(reader.GetAttribute("id"));
-                                if(reader.GetAttribute("localization")==null || reader.GetAttribute("localization").Length==0) throw (new XmlNullValueException("Invalid localization parameter"));
-                                localization=reader.GetAttribute("localization");
-                                if(reader.GetAttribute("name")!=null) name=reader.GetAttribute("name");
-                                if(reader.GetAttribute("charset")!=null) charset=reader.GetAttribute("charset");
+                                if (reader.GetAttribute("id") == null || reader.GetAttribute("id").Length == 0) throw (new InvalidXmlValueException("Invalid id parameter"));
+                                id = int.Parse(reader.GetAttribute("id"));
+                                if (reader.GetAttribute("localization") == null || reader.GetAttribute("localization").Length == 0) throw (new XmlNullValueException("Invalid localization parameter"));
+                                localization = reader.GetAttribute("localization");
+                                if (reader.GetAttribute("NumberGroupSeparator") != null && reader.GetAttribute("NumberGroupSeparator").Length > 0) numberGroupSeparator = reader.GetAttribute("NumberGroupSeparator");
+                                if (reader.GetAttribute("NumberDecimalSeparator") != null && reader.GetAttribute("NumberDecimalSeparator").Length > 0) numberDecimalSeparator = reader.GetAttribute("NumberDecimalSeparator");
+                                if (reader.GetAttribute("name") != null) name = reader.GetAttribute("name");
+                                if (reader.GetAttribute("charset") != null) charset = reader.GetAttribute("charset");
                                 if (reader.GetAttribute("contentEncoding") != null) contentEncoding = reader.GetAttribute("contentEncoding");
+                                if (reader.GetAttribute("excelContentEncoding") != null) excelContentEncoding = reader.GetAttribute("excelContentEncoding");
                                 if (reader.GetAttribute("imageSourceText") != null) imageSourceText = reader.GetAttribute("imageSourceText");
-                                if(reader.GetAttribute("classificationLanguageId")!=null && reader.GetAttribute("classificationLanguageId").Length>0)
-                                    classificationLanguageId=int.Parse(reader.GetAttribute("classificationLanguageId"));
+                                if (reader.GetAttribute("classificationLanguageId") != null && reader.GetAttribute("classificationLanguageId").Length > 0)
+                                    classificationLanguageId = int.Parse(reader.GetAttribute("classificationLanguageId"));
                                 else
-                                    classificationLanguageId=id;
-                                cInfo = new CultureInfo(localization);
-                                languages.Add(id, new WebLanguage(id, imageSourceText,name, localization, classificationLanguageId, charset, contentEncoding, cInfo));
+                                    classificationLanguageId = id;
+                                if (reader.GetAttribute("nlsSort") != null && reader.GetAttribute("nlsSort").Length > 0)
+                                    nlsSort = reader.GetAttribute("nlsSort");
+                                cInfo = new BastetCultureInfo(localization);
+                                cInfoExcel = new BastetCultureInfo(localization);
+                                if (numberDecimalSeparator.Length > 0) cInfoExcel.NumberFormat.NumberDecimalSeparator = cInfo.NumberFormat.NumberDecimalSeparator = numberDecimalSeparator;
+                                if (numberGroupSeparator.Length > 0) cInfoExcel.NumberFormat.NumberGroupSeparator = cInfo.NumberFormat.NumberGroupSeparator = numberGroupSeparator;
+                                languages.Add(id, new WebLanguage(id, imageSourceText, name, localization, classificationLanguageId, charset, contentEncoding, excelContentEncoding, nlsSort, cInfo, cInfoExcel));
+                                break;
+                            case "unitformat":
+                                if (reader.GetAttribute("name") != null) formatName = reader.GetAttribute("name");
+                                if (reader.GetAttribute("format") != null) format = reader.GetAttribute("format");
+                                if (reader.GetAttribute("excelFormat") != null && reader.GetAttribute("excelFormat").Length > 0) excelFormat = reader.GetAttribute("excelFormat");
+                                else excelFormat = format;
+                                cInfo.AddPattern(formatName, format);
+                                cInfo.AddExcelPattern(formatName, excelFormat);
+                                cInfoExcel.AddPattern(formatName, excelFormat);
+                                cInfoExcel.AddExcelPattern(formatName, excelFormat);
+                                break;
+                            case "dateFormat":
+                                if (reader.GetAttribute("name") != null) formatName = reader.GetAttribute("name");
+                                if (reader.GetAttribute("format") != null) format = reader.GetAttribute("format");
+                                if (reader.GetAttribute("excelFormat") != null && reader.GetAttribute("excelFormat").Length > 0) excelFormat = reader.GetAttribute("excelFormat");
+                                else excelFormat = format;
+                                cInfo.AddPattern(formatName, format);
+                                cInfo.AddExcelPattern(formatName, excelFormat);
+                                cInfoExcel.AddPattern(formatName, excelFormat);
+                                cInfoExcel.AddExcelPattern(formatName, excelFormat);
                                 break;
                         }
                     }

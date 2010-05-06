@@ -27,7 +27,6 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Classification;
 using System.Reflection;
 using TNS.AdExpress.Web.Core.Selection;
-using TNS.AdExpress.Domain.Theme;
 
 namespace TNS.AdExpress.Anubis.Satet.UI
 {
@@ -41,7 +40,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// <summary>
 		/// Calendrier d'actions
 		/// </summary>
-        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource, TNS.AdExpress.Domain.Theme.Style style) {
+        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource, TNS.FrameWork.WebTheme.Style style) {
 
             #region Variables
 			string currentCategoryName=string.Empty;

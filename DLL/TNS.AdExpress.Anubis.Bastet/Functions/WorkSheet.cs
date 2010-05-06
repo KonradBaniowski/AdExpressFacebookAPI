@@ -12,10 +12,12 @@ using TNS.FrameWork.Date;
 using TNS.AdExpress.Constantes.DB;
 using ConstantesTracking=TNS.AdExpress.Constantes.Tracking;
 using BastetFunctions=TNS.AdExpress.Anubis.Bastet.Functions;
-using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Domain.DataBaseDescription;
-using TNS.AdExpress.Domain.Translation;
+
+
+
 using System.IO;
+using TNS.AdExpress.Bastet.Translation;
+using TNS.AdExpress.Bastet.Web;
 namespace TNS.AdExpress.Anubis.Bastet.Functions
 {
 	/// <summary>

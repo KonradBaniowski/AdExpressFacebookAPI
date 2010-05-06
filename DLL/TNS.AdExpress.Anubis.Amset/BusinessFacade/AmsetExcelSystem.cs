@@ -27,7 +27,6 @@ using TNS.AdExpress.Domain.Translation;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Domain.Theme;
 
 namespace TNS.AdExpress.Anubis.Amset.BusinessFacade{
 	/// <summary>
@@ -59,7 +58,7 @@ namespace TNS.AdExpress.Anubis.Amset.BusinessFacade{
 		/// <summary>
 		/// Constructeur
 		/// </summary>
-        public AmsetExcelSystem(IDataSource dataSource, AmsetConfig config, DataRow rqDetails, WebSession webSession, Theme theme)
+        public AmsetExcelSystem(IDataSource dataSource, AmsetConfig config, DataRow rqDetails, WebSession webSession, TNS.FrameWork.WebTheme.Theme theme)
             : base(theme.GetStyle("Amset")) {
 			this._dataSource = dataSource;
 			this._config = config;
@@ -91,27 +90,32 @@ namespace TNS.AdExpress.Anubis.Amset.BusinessFacade{
 		/// </summary>
 		public void Fill(){
 
-			//Page principale
-            this.MainPageDesign(_webSession, _style);
-			//Paramètres d'étude			
-            UI.SessionParameter.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
-			//Synthesis
-            UI.Synthesis.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
-			//Average
-			UI.Average.SetExcelSheet(this._excel,_webSession,_dataSource,_style);
-			//Seasonality
-			if (_webSession.DetailPeriod != WebConstantes.CustomerSessions.Period.DisplayLevel.weekly)
-                UI.Seasonality.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
-			//Interest Family
-            UI.InterestFamily.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
-			//Periodicity
-            UI.Periodicity.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
-			//Affinities
-            UI.Affinities.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
-			
-			if(_excel!=null){
-				this.Save(_excelFilePath);
-			}
+            try {
+                //Page principale
+                this.MainPageDesign(_webSession, _style);
+                //Paramètres d'étude			
+                UI.SessionParameter.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+                //Synthesis
+                UI.Synthesis.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+                //Average
+                UI.Average.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+                //Seasonality
+                if (_webSession.DetailPeriod != WebConstantes.CustomerSessions.Period.DisplayLevel.weekly)
+                    UI.Seasonality.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+                //Interest Family
+                UI.InterestFamily.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+                //Periodicity
+                UI.Periodicity.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+                //Affinities
+                UI.Affinities.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+
+                if (_excel != null) {
+                    this.Save(_excelFilePath);
+                }
+            }
+            catch (Exception e) {
+                throw new AmsetExcelSystemException("Error to Fill Excel File", e);
+            }
 		}
 		#endregion
 
@@ -121,20 +125,25 @@ namespace TNS.AdExpress.Anubis.Amset.BusinessFacade{
 		/// </summary>
 		/// <param name="fileName"></param>
 		internal void Send(){
-			ArrayList to = new ArrayList();
-			foreach(string s in _webSession.EmailRecipient){
-				to.Add(s);
-			}
-			SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
-				Text.SuppressAccent(GestionWeb.GetWebWord(2107,_webSession.SiteLanguage)),
-				Text.SuppressAccent(GestionWeb.GetWebWord(1921,_webSession.SiteLanguage)+"\" "+_webSession.ExportedPDFFileName
-				+ "\""+String.Format(GestionWeb.GetWebWord(1751,_webSession.SiteLanguage),_config.WebServer)				
-				+ "<br><br>"
-				+ GestionWeb.GetWebWord(1776,_webSession.SiteLanguage)),
-				true, _config.CustomerMailServer, _config.CustomerMailPort);
-			
-			mail.mailKoHandler += new TNS.FrameWork.Net.Mail.SmtpUtilities.mailKoEventHandler(mail_mailKoHandler);
-			mail.SendWithoutThread(false);
+            try {
+                ArrayList to = new ArrayList();
+                foreach (string s in _webSession.EmailRecipient) {
+                    to.Add(s);
+                }
+                SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
+                    Text.SuppressAccent(GestionWeb.GetWebWord(2107, _webSession.SiteLanguage)),
+                    Text.SuppressAccent(GestionWeb.GetWebWord(1921, _webSession.SiteLanguage) + "\" " + _webSession.ExportedPDFFileName
+                    + "\"" + String.Format(GestionWeb.GetWebWord(1751, _webSession.SiteLanguage), _config.WebServer)
+                    + "<br><br>"
+                    + GestionWeb.GetWebWord(1776, _webSession.SiteLanguage)),
+                    true, _config.CustomerMailServer, _config.CustomerMailPort);
+
+                mail.mailKoHandler += new TNS.FrameWork.Net.Mail.SmtpUtilities.mailKoEventHandler(mail_mailKoHandler);
+                mail.SendWithoutThread(false);
+            }
+            catch (Exception e) {
+                throw new AmsetExcelSystemException("Impossible to send mail to client", e);
+            }
 		}
 		#endregion
 

@@ -33,15 +33,14 @@
             // 
             // aresXlsCadrageProcessInstaller
             // 
-            this.aresXlsCadrageProcessInstaller.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
             this.aresXlsCadrageProcessInstaller.Password = null;
             this.aresXlsCadrageProcessInstaller.Username = null;
             // 
             // aresXlsCadrageInstaller
             // 
-            this.aresXlsCadrageInstaller.Description = "AdExpress Xls generation service";
-            this.aresXlsCadrageInstaller.DisplayName = "Ares XlsCadrage Service";
-            this.aresXlsCadrageInstaller.ServiceName = "Ares XlsCadrage Service";
+            this.aresXlsCadrageInstaller.Description = "AdExpress Xls Cadrage Chronopresse generation service";
+            this.aresXlsCadrageInstaller.DisplayName = "Ares XlsCadrage Service (Amset)";
+            this.aresXlsCadrageInstaller.ServiceName = "Ares XlsCadrage Service (Amset)";
             this.aresXlsCadrageInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller

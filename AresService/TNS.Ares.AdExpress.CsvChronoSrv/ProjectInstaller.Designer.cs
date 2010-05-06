@@ -33,15 +33,14 @@
             // 
             // serviceProcessInstaller
             // 
-            this.serviceProcessInstaller.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
             this.serviceProcessInstaller.Password = null;
             this.serviceProcessInstaller.Username = null;
             // 
             // aresCsvChronoServiceInstaller
             // 
             this.aresCsvChronoServiceInstaller.Description = "Generates CSV Chronopress files";
-            this.aresCsvChronoServiceInstaller.DisplayName = "Ares CsvChrono Service";
-            this.aresCsvChronoServiceInstaller.ServiceName = "Ares CsvChrono Service";
+            this.aresCsvChronoServiceInstaller.DisplayName = "Ares CsvChrono Service (Sobek)";
+            this.aresCsvChronoServiceInstaller.ServiceName = "Ares CsvChrono Service (Sobek)";
             this.aresCsvChronoServiceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller

@@ -36,7 +36,7 @@ namespace TNS.AdExpress.Bastet.Translation {
 			}
 			catch(System.Exception){
 				// le code langue n'est pas correcte
-				return("!");
+                return ("!");
 			}
         }
         #region Old Code

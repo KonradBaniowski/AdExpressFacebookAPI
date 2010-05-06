@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configurations>
-  <lsClientConfiguration familyId="123" monitorPort="30229" productName="PDF Cadrage Service" maxAvailableSlots="1">
-    <moduleDescription description="PDF Cadrage Service" moduleId="11"/>
+  <lsClientConfiguration familyId="123" monitorPort="30229" productName="Ares Service treatment - PDF Cadrage (Aton)" maxAvailableSlots="1" directoryName="33\Plugins\Aton.xml">
+    <moduleDescription description="Ares Service treatment - PDF Cadrage (Aton)" moduleId="11"/>
   </lsClientConfiguration>
 </configurations>

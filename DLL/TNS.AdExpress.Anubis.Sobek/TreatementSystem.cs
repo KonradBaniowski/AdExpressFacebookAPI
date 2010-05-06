@@ -19,6 +19,8 @@ using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Web;
 using TNS.Ares.StaticNavSession.DAL;
 using System.Reflection;
+using TNS.AdExpress.Anubis.Sobek.Exceptions;
+using TNS.Ares.Domain.LS;
 
 
 namespace TNS.AdExpress.Anubis.Sobek
@@ -72,6 +74,10 @@ namespace TNS.AdExpress.Anubis.Sobek
         /// Data Access Layer
         /// </summary>
         private IStaticNavSessionDAL _dataAccess;
+        /// <summary>
+        /// WebSession
+        /// </summary>
+        private WebSession _webSession = null;
 		#endregion
 
 		#region Constructeur
@@ -103,33 +109,61 @@ namespace TNS.AdExpress.Anubis.Sobek
 		/// <remarks>
 		/// Le traitement se charge de charger les données nécessaires à son execution et de lancer le résultat
 		/// </remarks>
-		public void Treatement(string confifurationFilePath,IDataSource dataSource,Int64 navSessionId){
-			_navSessionId=navSessionId;
+        public void Treatement(string configurationFilePath, IDataSource dataSource, Int64 navSessionId) {
 
-            object[] parameter = new object[1];
-            parameter[0] = dataSource;
-            CoreLayer cl = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.dataAccess];
-            _dataAccess = (IStaticNavSessionDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameter, null, null, null);
+            try {
+                _navSessionId = navSessionId;
 
-			#region Chargement du fichier de configuration
-			if(confifurationFilePath==null){
-				OnError(_navSessionId,"Impossible de lancer le traitement d'un job", new ArgumentNullException("Le nom du fichier de configuration est null."));
-				return;
-			}
-			if(confifurationFilePath.Length==0){
-				OnError(_navSessionId,"Impossible de lancer le traitement d'un job", new ArgumentException("Le nom du fichier de configuration est vide."));
-				return;
-			}
-			try{
-				_sobekConfig=new SobekConfig(new XmlReaderDataSource(confifurationFilePath));
-			}
-			catch(System.Exception err){
-				OnError(_navSessionId,"Impossible de lancer le traitement d'un job <== impossible de charger le fichier de configuration",err);
-				return;
-			}
-			#endregion
+                #region Initialization
 
-			_dataSource=dataSource;
+                #region Create Instance of IStaticNavSessionDAL
+                try {
+                    object[] parameter = new object[1];
+                    parameter[0] = dataSource;
+                    CoreLayer cl = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.dataAccess];
+                    _dataAccess = (IStaticNavSessionDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameter, null, null, null);
+                }
+                catch (Exception e) {
+                    throw new SobekTextFileSystemException("Impossible to Create Instance Of Layer IStaticNavSessionDAL ", e);
+                }
+                #endregion
+
+                #region Check Path File
+                if (configurationFilePath == null) {
+                    throw new SobekTextFileSystemException("Impossible de lancer le traitement d'un job", new ArgumentNullException("Le nom du fichier de configuration est null."));
+                }
+                if (configurationFilePath.Length == 0) {
+                    throw new SobekTextFileSystemException("Impossible de lancer le traitement d'un job", new ArgumentException("Le nom du fichier de configuration est vide."));
+                }
+                #endregion
+
+                #region Initialize Sobek
+                try {
+                    _sobekConfig = new SobekConfig(new XmlReaderDataSource(configurationFilePath));
+                }
+                catch (System.Exception err) {
+                    throw new SobekTextFileSystemException("Impossible de lancer le traitement d'un job <== impossible de charger le fichier de configuration", err);
+                }
+                #endregion
+
+                #region Initialize WebSession
+                try {
+                    _webSession = ((WebSession)_dataAccess.LoadData(_navSessionId));
+                }
+                catch (System.Exception err) {
+                    throw new SobekTextFileSystemException("Error for load session", err);
+                }
+                #endregion
+
+                #endregion
+
+            }
+            catch (Exception e) {
+                _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.error.GetHashCode());
+                OnError(_navSessionId, "Impossible to initialize process ", e);
+                return;
+            }
+            _dataSource = dataSource;
 			
 			ThreadStart myThreadStart = new ThreadStart(ComputeTreatement);
 			_myThread=new Thread(myThreadStart);
@@ -160,19 +194,23 @@ namespace TNS.AdExpress.Anubis.Sobek
 
 				#region csv management
 				
-				csv = new SobekTextFileSystem(_dataSource,_sobekConfig,rqDetails,(WebSession)_dataAccess.LoadData(_navSessionId));
+				csv = new SobekTextFileSystem(_dataSource,_sobekConfig,rqDetails,_webSession);
 				string fileName = csv.Init();
 				//TODO update Database for physical file name
 				csv.Fill();
 				_dataAccess.RegisterFile(_navSessionId,fileName);
 				csv.Send();
 				_dataAccess.UpdateStatus(_navSessionId,TNS.Ares.Constantes.Constantes.Result.status.sent.GetHashCode());
+
+                PluginInformation pluginInformation = PluginConfiguration.GetPluginInformation(PluginType.Sobek);
+                if (pluginInformation != null && pluginInformation.DeleteRowSuccess)
+                    _dataAccess.DeleteRow(_navSessionId);
 				#endregion
 
 				OnStopWorkerJob(_navSessionId,"","",this.GetPluginName()+" finished for "+_navSessionId);
 			}
 			catch(System.Exception err){
-				_dataAccess.UpdateStatus(_navSessionId,TNS.Ares.Constantes.Constantes.Result.status.error.GetHashCode());
+				if(_dataAccess!=null) _dataAccess.UpdateStatus(_navSessionId,TNS.Ares.Constantes.Constantes.Result.status.error.GetHashCode());
 				OnError(_navSessionId,"Erreur lors du traitement du résultat.", err);
 				return;
 			}

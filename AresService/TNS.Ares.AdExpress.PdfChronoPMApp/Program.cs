@@ -18,54 +18,25 @@ using TNS.Ares.Domain.DataBase;
 
 namespace TNS.Ares.AdExpress.PdfChronoPMApp
 {
-
     class Program {
 
+        #region Constante
+        /// <summary>
+        /// Directory configuratyion Name
+        /// </summary>
+        private const string CONFIGURATION_DIRECTORY_NAME = "Configuration";
+        #endregion
+
         static void Main(string[] args) {
+            string configurationDirectoryRoot = AppDomain.CurrentDomain.BaseDirectory + CONFIGURATION_DIRECTORY_NAME + @"\";
+            LsClientConfiguration lsClientConfiguration = TNS.Ares.Domain.XmlLoader.LsClientConfigurationXL.Load(new XmlReaderDataSource(configurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.LS_CLIENT_CONFIGURATION_FILENAME));
 
-            #region Loading application parameters
-            // Initialisation des listes de texte
-            AdExpressWordListLoader.LoadLists();
 
-            Product.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
-            Media.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
-
-            // Units
-            UnitsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNITS_CONFIGURATION_FILENAME));
-
-            // Vehicles
-            VehiclesInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.VEHICLES_CONFIGURATION_FILENAME));
-
-            // Universes
-            UniverseLevels.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CONFIGURATION_FILENAME));
-
-            // Charge les styles personnalisés des niveaux d'univers
-            UniverseLevelsCustomStyles.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CUSTOM_STYLES_CONFIGURATION_FILENAME));
-
-            // Charge la hierachie de niveau d'univers
-            UniverseBranches.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_BRANCHES_CONFIGURATION_FILENAME));
-
-            // Charge les niveaux d'univers
-            UniverseLevels.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CONFIGURATION_FILENAME));
-
-            //Load flag list
-            TNS.AdExpress.Domain.AllowedFlags.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.FLAGS_CONFIGURATION_FILENAME));
-            #endregion
-
-            // Loading DataBase configuration
-            DataBaseConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
-
-            // Loading administration DataSource
-            IDataSource source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.webAdministration);
-            LsClientConfiguration lsClientConfiguration = TNS.Ares.Domain.XmlLoader.LsClientConfigurationXL.Load(new XmlReaderDataSource(WebApplicationParameters.ConfigurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.LS_CLIENT_CONFIGURATION_FILENAME));
-
-            string confFilePath = WebApplicationParameters.ConfigurationDirectoryRoot + lsClientConfiguration.DirectoryName;
-
-            MnevisShell mnevis = new MnevisShell(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, source, confFilePath);
-            mnevis.StartMonitorServer(lsClientConfiguration.MonitorPort);
-            Console.WriteLine("Mnevis request treatment");
+            MnevisShell shell = new MnevisShell(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, lsClientConfiguration.ModuleDescriptionList, lsClientConfiguration.DirectoryName);
+            shell.StartMonitorServer(lsClientConfiguration.MonitorPort);
+            Console.WriteLine("Ares Service treatment - PDF Plan de Roulement (Mnevis)");
             Console.ReadLine();
-            mnevis.Dispose();
+            shell.Dispose();
         }
     }
 }

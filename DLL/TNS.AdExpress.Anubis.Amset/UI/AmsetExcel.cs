@@ -40,14 +40,14 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
         /// <summary>
         /// Style
         /// </summary>
-        protected TNS.AdExpress.Domain.Theme.Style _style;
+        protected TNS.FrameWork.WebTheme.Style _style;
 		#endregion
 
 		#region Constructeur
 		/// <summary>
 		/// Constructeur
 		/// </summary>
-        public AmsetExcel(TNS.AdExpress.Domain.Theme.Style style) {
+        public AmsetExcel(TNS.FrameWork.WebTheme.Style style) {
 
 			_excel = new Workbook();
 			_license = new License();
@@ -74,7 +74,7 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 		/// Page pricipale
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
-        protected void MainPageDesign(WebSession webSession, TNS.AdExpress.Domain.Theme.Style style) {
+        protected void MainPageDesign(WebSession webSession, TNS.FrameWork.WebTheme.Style style) {
 
 			int cellRow =9;
 			int startIndex=cellRow;			

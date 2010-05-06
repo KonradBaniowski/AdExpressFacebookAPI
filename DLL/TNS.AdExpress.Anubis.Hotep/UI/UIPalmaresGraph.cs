@@ -58,11 +58,11 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
         /// <summary>
         /// Style
         /// </summary>
-        private TNS.AdExpress.Domain.Theme.Style _style = null;
+        private TNS.FrameWork.WebTheme.Style _style = null;
 		#endregion
 
 		#region Constructeur
-        public UIPalmaresGraph(WebSession webSession, IDataSource dataSource, HotepConfig config, object[,] tab, TNS.AdExpress.Domain.Theme.Style style)
+        public UIPalmaresGraph(WebSession webSession, IDataSource dataSource, HotepConfig config, object[,] tab, TNS.FrameWork.WebTheme.Style style)
             : base() {
             _webSession = webSession;
             _dataSource = dataSource;
@@ -247,21 +247,12 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
             _style.GetTag("PalmaresGraphTitleFontAxisY").SetStyleDundas(this.ChartAreas[strChartArea].AxisY);
             double dd = Convert.ToDouble(_tab[0, EngineTop.TOTAL_N]);
             double uu = FctUtilities.Units.ConvertUnitValue(dd, _webSession.Unit);
-            if (uu > 0)
-                this.ChartAreas[strChartArea].AxisY.Maximum = uu;
-            else
-                this.ChartAreas[strChartArea].AxisY.Maximum = (double)0.0;
+            if (uu <= 0) this.ChartAreas[strChartArea].AxisY.Maximum = (double)0.0;
 			this.ChartAreas[strChartArea].AxisY.MajorGrid.LineWidth=0;
 			#endregion
 
 			#region Axe des Y2
 			this.ChartAreas[strChartArea].AxisY2.Enabled=AxisEnabled.True;
-			this.ChartAreas[strChartArea].AxisY2.LabelStyle.Enabled=true;
-			this.ChartAreas[strChartArea].AxisY2.LabelsAutoFit=false;
-            _style.GetTag("PalmaresGraphLabelFontAxisY2").SetStyleDundas(this.ChartAreas[strChartArea].AxisY2.LabelStyle);
-            _style.GetTag("PalmaresGraphTitleFontAxisY2").SetStyleDundas(this.ChartAreas[strChartArea].AxisY2);
-			this.ChartAreas[strChartArea].AxisY2.Maximum=100;
-			this.ChartAreas[strChartArea].AxisY2.Title=""+GestionWeb.GetWebWord(1205,_webSession.SiteLanguage)+"";
 			#endregion					
 
 		}

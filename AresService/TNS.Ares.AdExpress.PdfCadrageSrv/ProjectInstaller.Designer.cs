@@ -33,15 +33,14 @@
             // 
             // serviceProcessInstaller
             // 
-            this.serviceProcessInstaller.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
             this.serviceProcessInstaller.Password = null;
             this.serviceProcessInstaller.Username = null;
             // 
             // aresPdfCadrageServiceInstaller
             // 
             this.aresPdfCadrageServiceInstaller.Description = "Generates PdfCadrage files";
-            this.aresPdfCadrageServiceInstaller.DisplayName = "Ares PdfCadrage Service";
-            this.aresPdfCadrageServiceInstaller.ServiceName = "Ares PdfCadrage Service";
+            this.aresPdfCadrageServiceInstaller.DisplayName = "Ares PdfCadrage Service (Aton)";
+            this.aresPdfCadrageServiceInstaller.ServiceName = "Ares PdfCadrage Service (Aton)";
             this.aresPdfCadrageServiceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller

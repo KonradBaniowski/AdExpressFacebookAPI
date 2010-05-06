@@ -28,8 +28,9 @@ using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Domain.Theme;
 using TNS.AdExpress.Domain.Level;
+using TNS.FrameWork.WebTheme;
+using TNS.AdExpress.Anubis.Satet.Exceptions;
 
 namespace TNS.AdExpress.Anubis.Satet.BusinessFacade
 {
@@ -94,53 +95,57 @@ namespace TNS.AdExpress.Anubis.Satet.BusinessFacade
 		/// Génère les résultats APPM dans un document excel
 		/// </summary>
 		public void Fill() {
-			_webSession.PreformatedMediaDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategory;
+            try {
+                _webSession.PreformatedMediaDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategory;
 
-			// Initialisation à media\catégorie
-			#region Niveau de détail media\Catégorie pour les autres planches (Generic)
-			ArrayList levels = new ArrayList();
-			levels.Add(1);
-			levels.Add(2);
-			_webSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-			#endregion
+                // Initialisation à media\catégorie
+                #region Niveau de détail media\Catégorie pour les autres planches (Generic)
+                ArrayList levels = new ArrayList();
+                levels.Add(1);
+                levels.Add(2);
+                _webSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+                #endregion
 
-			//Page principale
-			this.MainPageDesign(_webSession, _style);
-			//Paramètres d'étude			
-			UI.SessionParameter.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
-			//Synthèse
-			UI.Synthesis.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
-			//Calendrier d'actions			
-			#region Niveau de détail Categorie\Support pour plan media (Generic)
-			//Categorie\Support 
-			levels = new ArrayList();
-			levels.Add(2);
-			levels.Add(3);
-			_webSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-			#endregion
-			UI.MediaPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+                //Page principale
+                this.MainPageDesign(_webSession, _style);
+                //Paramètres d'étude			
+                UI.SessionParameter.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+                //Synthèse
+                UI.Synthesis.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+                //Calendrier d'actions			
+                #region Niveau de détail Categorie\Support pour plan media (Generic)
+                //Categorie\Support 
+                levels = new ArrayList();
+                levels.Add(2);
+                levels.Add(3);
+                _webSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+                #endregion
+                UI.MediaPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 
-			//Analyse par titre
-			#region Niveau de détail media\Catégorie pour les autres planches (Generic)
-			levels = new ArrayList();
-			levels.Add(1);
-			levels.Add(2);
-			_webSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-			#endregion
-			UI.SupportPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
-			//Analyse des parts de voix
-			UI.PDVPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
-			//Analyse par périodicité
-			UI.PeriodicityPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
-			//Analyse par famille de presse
-			UI.AnalyseFamilyInterestPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
-			//Affinités
-			UI.Affinities.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+                //Analyse par titre
+                #region Niveau de détail media\Catégorie pour les autres planches (Generic)
+                levels = new ArrayList();
+                levels.Add(1);
+                levels.Add(2);
+                _webSession.GenericMediaDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+                #endregion
+                UI.SupportPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+                //Analyse des parts de voix
+                UI.PDVPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+                //Analyse par périodicité
+                UI.PeriodicityPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+                //Analyse par famille de presse
+                UI.AnalyseFamilyInterestPlan.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
+                //Affinités
+                UI.Affinities.SetExcelSheet(this._excel, _webSession, _dataSource, _style);
 
-			if (_excel != null) {
-				this.Save(_excelFilePath);
-			}
-
+                if (_excel != null) {
+                    this.Save(_excelFilePath);
+                }
+            }
+            catch (Exception e) {
+                throw new SatetDataAccessException("Error in Fill Excel", e);
+            }
 		}
 		#endregion
 
@@ -150,21 +155,26 @@ namespace TNS.AdExpress.Anubis.Satet.BusinessFacade
 		/// </summary>
 		/// <param name="fileName"></param>
 		internal void Send(){
-			ArrayList to = new ArrayList();
-			foreach(string s in _webSession.EmailRecipient){
-				to.Add(s);
-			}
-			//			to.Add("dede.mussuma@tnsmi.fr");//test
-			SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
-				Text.SuppressAccent(GestionWeb.GetWebWord(1920,_webSession.SiteLanguage)),
-				Text.SuppressAccent(GestionWeb.GetWebWord(1921,_webSession.SiteLanguage)+"\" "+_webSession.ExportedPDFFileName
-				+ "\""+String.Format(GestionWeb.GetWebWord(1751,_webSession.SiteLanguage),_config.WebServer)				
-				+ "<br><br>"
-				+ GestionWeb.GetWebWord(1776,_webSession.SiteLanguage)),
-				true, _config.CustomerMailServer, _config.CustomerMailPort);
-			
-			mail.mailKoHandler += new TNS.FrameWork.Net.Mail.SmtpUtilities.mailKoEventHandler(mail_mailKoHandler);
-			mail.SendWithoutThread(false);
+            try {
+                ArrayList to = new ArrayList();
+                foreach (string s in _webSession.EmailRecipient) {
+                    to.Add(s);
+                }
+                //			to.Add("dede.mussuma@tnsmi.fr");//test
+                SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
+                    Text.SuppressAccent(GestionWeb.GetWebWord(1920, _webSession.SiteLanguage)),
+                    Text.SuppressAccent(GestionWeb.GetWebWord(1921, _webSession.SiteLanguage) + "\" " + _webSession.ExportedPDFFileName
+                    + "\"" + String.Format(GestionWeb.GetWebWord(1751, _webSession.SiteLanguage), _config.WebServer)
+                    + "<br><br>"
+                    + GestionWeb.GetWebWord(1776, _webSession.SiteLanguage)),
+                    true, _config.CustomerMailServer, _config.CustomerMailPort);
+
+                mail.mailKoHandler += new TNS.FrameWork.Net.Mail.SmtpUtilities.mailKoEventHandler(mail_mailKoHandler);
+                mail.SendWithoutThread(false);
+            }
+            catch (Exception e) {
+                throw new SatetDataAccessException("Impossibnle to send mail to client", e);
+            }
 		}
 		#endregion
 

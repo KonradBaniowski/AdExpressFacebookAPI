@@ -22,8 +22,9 @@ using TNS.FrameWork.Net.Mail;
 using TNS.FrameWork.DB.Common;
 
 using TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Domain.Translation;
+
 using TNS.AdExpress.Constantes.DB;
+using TNS.AdExpress.Bastet.Translation;
 
 namespace TNS.AdExpress.Anubis.Bastet.BusinessFacade {
 	/// <summary>
@@ -69,7 +70,7 @@ namespace TNS.AdExpress.Anubis.Bastet.BusinessFacade {
 			this._config = config;
 			this._rqDetails = rqDetails;
 			this._parameters = parameters;
-			_language = config.Language;
+            _language = _parameters.SiteLanguage;
 		}
 		#endregion
 			
@@ -151,8 +152,7 @@ namespace TNS.AdExpress.Anubis.Bastet.BusinessFacade {
 
 			if(this._excel!=null){
 				//Sauvegarde du fichier excel
-                if (!Directory.Exists(_excelFilePath))
-                {
+                if (!Directory.Exists(_excelFilePath)) {
                     try { Directory.CreateDirectory(Path.GetDirectoryName(_excelFilePath)); }
                     catch {
                         _excelFilePath = Path.Combine(Path.GetTempPath(), Path.GetFileName(_excelFilePath));
@@ -176,7 +176,8 @@ namespace TNS.AdExpress.Anubis.Bastet.BusinessFacade {
 			try{
 
 				excelFileName = this._config.ExcelPath;
-				excelFileName += @"\" + rqDetails["ID_LOGIN"].ToString() ;
+
+                excelFileName += @"\" + rqDetails["ID_LOGIN"].ToString();
 
 				if(!Directory.Exists(excelFileName)){
 					Directory.CreateDirectory(excelFileName);
@@ -217,8 +218,8 @@ namespace TNS.AdExpress.Anubis.Bastet.BusinessFacade {
 		internal string Init(){
 			try{
 				string shortFName = "";
-				string fName =  GetFileName(_rqDetails, ref shortFName);	
-				_excelFilePath = AppDomain.CurrentDomain.BaseDirectory+fName;
+                string fName = GetFileName(_rqDetails, ref shortFName);
+                _excelFilePath = AppDomain.CurrentDomain.BaseDirectory + fName;
 		
 				return shortFName;
 				
@@ -236,18 +237,18 @@ namespace TNS.AdExpress.Anubis.Bastet.BusinessFacade {
 		/// <param name="fileName"></param>
 		internal void Send(){
 			ArrayList to = new ArrayList();
-			string messageBody=GestionWeb.GetWebWord(1834,Language.FRENCH.GetHashCode());
+			string messageBody=GestionWeb.GetWebWord(1834,_language);
 			if(_excel==null){
-				messageBody=GestionWeb.GetWebWord(1835,Language.FRENCH.GetHashCode());
+                messageBody = GestionWeb.GetWebWord(1835, _language);
 			}
 			foreach(string s in _parameters.EmailsRecipient){
 				to.Add(s);
 			}
 //			to.Add("dede.mussuma@tnsmi.fr");//test
 			SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
-			Text.SuppressAccent(GestionWeb.GetWebWord(1798,Language.FRENCH.GetHashCode())),
-				
-				GestionWeb.GetWebWord(1834,Language.FRENCH.GetHashCode()),
+            Text.SuppressAccent(GestionWeb.GetWebWord(1798, _language)),
+
+                GestionWeb.GetWebWord(1834, _language),
 				true, _config.CustomerMailServer, _config.CustomerMailPort);
 			
 			mail.mailKoHandler += new TNS.FrameWork.Net.Mail.SmtpUtilities.mailKoEventHandler(mail_mailKoHandler);

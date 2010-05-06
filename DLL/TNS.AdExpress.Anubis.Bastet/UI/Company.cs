@@ -17,7 +17,8 @@ using BastetFunctions=TNS.AdExpress.Anubis.Bastet.Functions;
 using BastetRules=TNS.AdExpress.Anubis.Bastet.Rules;
 using TNS.FrameWork.Date;
 using ConstantesTracking=TNS.AdExpress.Constantes.Tracking;
-using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Bastet.Translation;
+
 
 namespace TNS.AdExpress.Anubis.Bastet.UI
 {

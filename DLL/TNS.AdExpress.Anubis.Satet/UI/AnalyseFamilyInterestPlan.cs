@@ -24,7 +24,6 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Units;
 using TNS.FrameWork;
 using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Domain.Theme;
 
 namespace TNS.AdExpress.Anubis.Satet.UI
 {
@@ -48,7 +47,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// <summary>
 		/// Analyse par famille de presse
 		/// </summary>
-        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource, TNS.AdExpress.Domain.Theme.Style style) {
+        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource, TNS.FrameWork.WebTheme.Style style) {
 			
 			#region targets
 			//base target
@@ -86,7 +85,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// </summary>
 		/// <param name="excel">excel</param>
 		/// <param name="periodicityPlanData">source de données</param>
-        private static void GRPTreatment(Workbook excel, WebSession webSession, DataTable analyseFamilyInterestPlanData, TNS.AdExpress.Domain.Theme.Style style) {
+        private static void GRPTreatment(Workbook excel, WebSession webSession, DataTable analyseFamilyInterestPlanData, TNS.FrameWork.WebTheme.Style style) {
 			int s=1;
 			int nbMaxRowByPage=42;		
 			int upperLeftColumn=8;
@@ -218,7 +217,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// </summary>
 		/// <param name="excel">excel</param>
 		/// <param name="periodicityPlanData">source de données</param>
-        private static void SimpleTreatment(Workbook excel, WebSession webSession, DataTable analyseFamilyInterestPlanData, TNS.AdExpress.Domain.Theme.Style style) {
+        private static void SimpleTreatment(Workbook excel, WebSession webSession, DataTable analyseFamilyInterestPlanData, TNS.FrameWork.WebTheme.Style style) {
 			int s=1;
 			int nbMaxRowByPage=42;		
 			int upperLeftColumn=8;

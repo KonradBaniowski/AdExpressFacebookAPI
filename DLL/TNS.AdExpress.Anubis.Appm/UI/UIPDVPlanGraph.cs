@@ -26,6 +26,7 @@ using TNS.FrameWork.DB.Common;
 
 using Dundas.Charting.WinControl;
 using System.Collections.Generic;
+using TNS.FrameWork.WebTheme;
 
 namespace TNS.AdExpress.Anubis.Appm.UI {
 	/// <summary>
@@ -57,7 +58,7 @@ namespace TNS.AdExpress.Anubis.Appm.UI {
         /// <summary>
         /// Style
         /// </summary>
-        private TNS.AdExpress.Domain.Theme.Style _style = null;
+        private TNS.FrameWork.WebTheme.Style _style = null;
         /// <summary>
         /// Pie ColorS
         /// </summary>
@@ -65,14 +66,15 @@ namespace TNS.AdExpress.Anubis.Appm.UI {
 		#endregion
 
 		#region Constructeur
-		public UIPDVPlanGraph(WebSession webSession,IDataSource dataSource, AppmConfig config, DataTable dtGraphicsData, DataTable dtTotalData,TNS.AdExpress.Domain.Theme.Style style):base() {
+        public UIPDVPlanGraph(WebSession webSession, IDataSource dataSource, AppmConfig config, DataTable dtGraphicsData, DataTable dtTotalData, TNS.FrameWork.WebTheme.Style style)
+            : base() {
 			_webSession = webSession;
 			_dataSource = dataSource;
 			_config = config;
 			_dtGraphicsData = dtGraphicsData;
 			_dtTotalData = dtTotalData;
             _style = style;
-            _pieColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("PdvPlanGraphPieColors")).ColorList;
+            _pieColors = ((Colors)_style.GetTag("PdvPlanGraphPieColors")).ColorList;
 		}
 		#endregion
 

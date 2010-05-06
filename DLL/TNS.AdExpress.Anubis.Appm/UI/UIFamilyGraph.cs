@@ -26,6 +26,7 @@ using TNS.AdExpress.Anubis.Appm.Exceptions;
 using Dundas.Charting.WinControl;
 using TNS.FrameWork.DB.Common;
 using System.Collections.Generic;
+using TNS.FrameWork.WebTheme;
 
 
 namespace TNS.AdExpress.Anubis.Appm.UI {
@@ -54,7 +55,7 @@ namespace TNS.AdExpress.Anubis.Appm.UI {
         /// <summary>
         /// Style
         /// </summary>
-        private TNS.AdExpress.Domain.Theme.Style _style = null;
+        private TNS.FrameWork.WebTheme.Style _style = null;
         /// <summary>
         /// Pie ColorS
         /// </summary>
@@ -66,7 +67,7 @@ namespace TNS.AdExpress.Anubis.Appm.UI {
 		#endregion
 
 		#region Constructeur
-        public UIFamilyGraph(WebSession webSession, IDataSource dataSource, AppmConfig config, DataTable dtGraphicsData, TNS.AdExpress.Domain.Theme.Style style)
+        public UIFamilyGraph(WebSession webSession, IDataSource dataSource, AppmConfig config, DataTable dtGraphicsData, TNS.FrameWork.WebTheme.Style style)
             : base() {
 			_webSession = webSession;
 			_dataSource = dataSource;
@@ -74,8 +75,8 @@ namespace TNS.AdExpress.Anubis.Appm.UI {
 			_dtGraphicsData = dtGraphicsData;
             _style = style;
 
-            _pieColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("FamilyGraphPieColors")).ColorList;
-            _barColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("FamilyGraphBarColors")).ColorList;
+            _pieColors = ((Colors)_style.GetTag("FamilyGraphPieColors")).ColorList;
+            _barColors = ((Colors)_style.GetTag("FamilyGraphBarColors")).ColorList;
 		}
 		#endregion
 

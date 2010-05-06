@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configurations>
+  <!-- Config FR (33) -->
+  <lsClientConfiguration familyId="123" monitorPort="30230" productName="Ares Service treatment - PDF Analyse Secto (Hotep)" maxAvailableSlots="1" directoryName="33\Plugins\Hotep.xml">
+    <moduleDescription description="Ares Service treatment - PDF Analyse Secto (Hotep)" moduleId="6"/>
+  </lsClientConfiguration>
+
+  <!-- Config SK (421) 
+  <lsClientConfiguration familyId="130" monitorPort="30259" productName="Ares Service treatment - PDF Analyse Secto (Hotep)" maxAvailableSlots="1" directoryName="421\Plugins\Hotep.xml">
+    <moduleDescription description="Ares Service treatment - PDF Analyse Secto (Hotep)" moduleId="6"/>
+  </lsClientConfiguration>-->
+</configurations>

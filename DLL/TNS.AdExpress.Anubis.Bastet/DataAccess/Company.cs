@@ -17,8 +17,10 @@ using DBSchema=TNS.AdExpress.Constantes.DB.Schema;
 using DBTables=TNS.AdExpress.Constantes.DB.Tables;
 using AnubisBastet=TNS.AdExpress.Anubis.Bastet;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
-using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Bastet.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
+
+
 namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 {
 	/// <summary>
@@ -55,7 +57,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 					+","+groupContactTable.SqlWithPrefix
 					+","+addressTable.SqlWithPrefix+","+companyTable.SqlWithPrefix);
 				//Where
-				sql.Append(" where "+connectionByLoginTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
 				if(parameters!=null && parameters.Logins.Length>0)
 					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
 				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
@@ -115,7 +117,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 					+ "," + groupContactTable.SqlWithPrefix
 					+ "," + addressTable.SqlWithPrefix + "," + companyTable.SqlWithPrefix);
 				//Where
-				sql.Append(" where "+connectionByLoginTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
 				if(parameters!=null && parameters.Logins.Length>0)
 					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
 				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
@@ -128,10 +130,10 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 							
 				//Gourp by
 				sql.Append(" group by "+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,group_contact,date_connection,connection_number");
-				//Order by
-				sql.Append(" order by  "+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,date_connection");
-
+				
 				sql.Append(" ) group by date_connection,id_company,company,group_contact ");
+                //Order by
+                sql.Append(" order by  date_connection, company, id_company ");
 				#endregion
 				
 				#region Execution
@@ -178,7 +180,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 					+ "," + groupContactTable.SqlWithPrefix
 					+ "," + addressTable.SqlWithPrefix + "," + companyTable.SqlWithPrefix);
 				//Where
-				sql.Append(" where "+connectionByLoginTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
 				if(parameters!=null && parameters.Logins.Length>0)
 					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
 				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
@@ -191,10 +193,10 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 							
 				//Gourp by
 				sql.Append(" group by "+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,group_contact,date_connection,connection_number");
-				//Order by
-				sql.Append(" order by  "+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,date_connection");
-
+				
 				sql.Append(" ) group by date_connection,id_company,company,group_contact ");
+                //Order by
+                sql.Append(" order by  date_connection, company, id_company ");
 				#endregion
 				
 				#region Execution

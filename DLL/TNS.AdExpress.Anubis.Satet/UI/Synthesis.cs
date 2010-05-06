@@ -27,7 +27,6 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Domain.Theme;
 
 namespace TNS.AdExpress.Anubis.Satet.UI
 {
@@ -79,7 +78,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
         /// <summary>
 		/// Synthèse
 		/// </summary>
-        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource, TNS.AdExpress.Domain.Theme.Style style) {
+        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource, TNS.FrameWork.WebTheme.Style style) {
 
 			#region variables
 			bool mediaAgencyAccess=false;

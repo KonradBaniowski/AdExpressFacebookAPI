@@ -29,6 +29,7 @@ using TNS.AdExpress.Constantes.Customer;
 using CstRights = TNS.AdExpress.Constantes.Customer.Right;
 using TNS.FrameWork.DB.Common;
 using System.Collections.Generic;
+using TNS.FrameWork.WebTheme;
 
 
 namespace TNS.AdExpress.Anubis.Appm.UI
@@ -71,7 +72,7 @@ namespace TNS.AdExpress.Anubis.Appm.UI
         /// <summary>
         /// Style
         /// </summary>
-        private TNS.AdExpress.Domain.Theme.Style _style = null;
+        private TNS.FrameWork.WebTheme.Style _style = null;
         /// <summary>
         /// Pie ColorS
         /// </summary>
@@ -90,7 +91,7 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 		/// <param name="dataSource">date source</param>
 		/// <param name="config">config parameters</param>
 		/// <param name="dsData">tables de données</param>
-		public UIGRPGraph(WebSession webSession,IDataSource dataSource, AppmConfig config, DataSet dsData,TNS.AdExpress.Domain.Theme.Style style):base() {
+		public UIGRPGraph(WebSession webSession,IDataSource dataSource, AppmConfig config, DataSet dsData,TNS.FrameWork.WebTheme.Style style):base() {
 			_webSession = webSession;
 			_dataSource = dataSource;
 			_config = config;
@@ -100,8 +101,8 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 			_dtPeriodicityData = dsData.Tables["Periodicity"];
             _style = style;
 
-            _pieColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("GrpGraphPieColors")).ColorList;
-            _barColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("GrpGraphBarColors")).ColorList;
+            _pieColors = ((Colors)_style.GetTag("GrpGraphPieColors")).ColorList;
+            _barColors = ((Colors)_style.GetTag("GrpGraphBarColors")).ColorList;
 		}
 		#endregion
 

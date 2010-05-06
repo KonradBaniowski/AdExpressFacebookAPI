@@ -3,7 +3,7 @@
   <CustomerMail server="fitnses-ex01.tnsad.com" port="25" from="tnsadexpress@tnsmi.fi" webServer="http://www.tnsadexpress.fi" subject="TNS AdExpress"/>
   <PdfPath path="\\fitnses-dmzad01\AdExCustomerFiles"/>
   <!--If path empty then path = current directory of executable-->
-  <ThemePath path=""/>
+  <ThemePath path="App_Themes"/>
   <PressScanPath path="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\"/>
   <VMCScanPath path="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\MarketingDirect"/>
   <OutdoorScanPath path="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Outdoor"/>

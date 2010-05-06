@@ -14,8 +14,10 @@ using DBTables=TNS.AdExpress.Constantes.DB.Tables;
 using AnubisBastet=TNS.AdExpress.Anubis.Bastet;
 using TNS.AdExpress.Constantes.DB;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
-using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Bastet.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
+
+
 namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 {
 	/// <summary>
@@ -46,7 +48,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 				sql.Append(" ," + vehicleTable.SqlWithPrefix);
 			
 				//Where
-				sql.Append(" where "+topVehicleTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+                sql.Append(" where " + topVehicleTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
 				if(parameters!=null && parameters.Logins.Length>0){
 					sql.Append(" and "+topVehicleTable.Prefix+".id_login in ("+parameters.Logins+") ");				
 				}
@@ -95,7 +97,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 					sql.Append(" ,"+vehicleTable.SqlWithPrefix+","+moduleTable.SqlWithPrefix);
 			
 					//Where
-					sql.Append(" where "+topVehicleByModuleTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+                    sql.Append(" where " + topVehicleByModuleTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
 					if(parameters!=null && parameters.Logins.Length>0){
 						sql.Append(" and "+topVehicleByModuleTable.Prefix+".id_login in ("+parameters.Logins+") ");				
 					}

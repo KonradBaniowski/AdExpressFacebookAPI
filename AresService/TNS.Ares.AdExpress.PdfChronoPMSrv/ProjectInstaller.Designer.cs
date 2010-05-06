@@ -33,15 +33,14 @@
             // 
             // serviceProcessInstaller
             // 
-            this.serviceProcessInstaller.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
             this.serviceProcessInstaller.Password = null;
             this.serviceProcessInstaller.Username = null;
             // 
             // aresPdfChronoRServiceInstaller
             // 
             this.aresPdfChronoRServiceInstaller.Description = "Generates Pdf for Chronopress Roulement module";
-            this.aresPdfChronoRServiceInstaller.DisplayName = "Ares PdfChronoR Service";
-            this.aresPdfChronoRServiceInstaller.ServiceName = "Ares PdfChronoR Service";
+            this.aresPdfChronoRServiceInstaller.DisplayName = "Ares PdfChronoR Service (Mnevis)";
+            this.aresPdfChronoRServiceInstaller.ServiceName = "Ares PdfChronoR Service (Mnevis)";
             this.aresPdfChronoRServiceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller

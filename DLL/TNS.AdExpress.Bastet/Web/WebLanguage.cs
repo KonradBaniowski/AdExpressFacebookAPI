@@ -54,10 +54,25 @@ namespace TNS.AdExpress.Bastet.Web {
         /// </summary>
         /// <example>France = "utf-8"</example>
         private string _contentEncoding = "utf-8";
-        /// <summary>
-        /// CultureInfo
+        // <summary>
+        /// Content Encoding used for excel aspx page
+        /// By default, the content encoding is set to utf-8
         /// </summary>
-        private CultureInfo _cInfo = null;
+        /// <example>France = "utf-8"</example>
+        private string _excelContentEncoding = "utf-8";
+        /// <summary>
+        /// NLS SORT to use any linguistic sort for an ORDER BY clause
+        /// <example> France ="FRENCH"</example>
+        /// </summary>
+        private string _nlsSort = "";
+        /// <summary>
+        /// Extended culture info for the specific language
+        /// </summary>
+        private BastetCultureInfo _cInfo = null;
+        /// <summary>
+        /// Extended culture info for the specific language in excel reports
+        /// </summary>
+        private BastetCultureInfo _cInfoExcel = null;
         #endregion
 
         #region Constructor
@@ -70,7 +85,7 @@ namespace TNS.AdExpress.Bastet.Web {
         /// <param name="charset">Charset used for the language</param>
         /// <param name="contentEncoding">Content Encoding used for the aspx page</param>
         /// <param name="excelContentEncoding">Content Encoding used for the excel aspx page</param>
-        public WebLanguage(int id, string imageSourceText, string localization, string charset, string contentEncoding) {
+        public WebLanguage(int id, string imageSourceText, string localization, string charset, string contentEncoding, string excelContentEncoding) {
             if(id<0) throw (new ArgumentException("The language Id cannot be inferior to 0"));
             _id=id;
             if (imageSourceText != null) _imageSourceText = imageSourceText;
@@ -79,6 +94,7 @@ namespace TNS.AdExpress.Bastet.Web {
             _localization=localization;
             if(charset!=null && charset.Length!=0) _charset=charset;
             if (contentEncoding != null && contentEncoding.Length != 0) _contentEncoding = contentEncoding;
+            if (ExcelContentEncoding != null && ExcelContentEncoding.Length != 0) _excelContentEncoding = excelContentEncoding;
             _name="Country name is not defined:"+_id.ToString();
             _classificationLanguageId=_id;
 
@@ -97,8 +113,8 @@ namespace TNS.AdExpress.Bastet.Web {
         /// <param name="nlsSort">nls sort</param>
         /// <param name="cInfo">Culture info object</param>
         /// <param name="rss">Rss object</param>
-        public WebLanguage(int id, string imageSourceText, string name, string localization, int classificationLanguageId, string charset, string contentEncoding, CultureInfo cInfo)
-            : this(id, imageSourceText,localization, charset, contentEncoding) {
+        public WebLanguage(int id, string imageSourceText, string name, string localization, int classificationLanguageId, string charset, string contentEncoding, string excelContentEncoding, string nlsSort, BastetCultureInfo cInfo, BastetCultureInfo cInfoExcel)
+            : this(id, imageSourceText,localization, charset, contentEncoding, excelContentEncoding) {
             if(name!=null&&name.Length>0) _name=name;
             if(classificationLanguageId<0) throw (new ArgumentException("The classification language Id cannot be inferior to 0"));
             _classificationLanguageId=classificationLanguageId;
@@ -150,12 +166,30 @@ namespace TNS.AdExpress.Bastet.Web {
             get { return (_contentEncoding); }
         }
         /// <summary>
-        /// Get Set Culture Info for this language in excel reports
+        /// Get Content Encoding used for the excel aspx page
         /// </summary>
-        public CultureInfo CultureInfo
-        {
+        public string ExcelContentEncoding {
+            get { return (_excelContentEncoding); }
+        }
+        /// <summary>
+        /// Get NLS SORT to use any linguistic sort for an ORDER BY clause
+        /// </summary>
+        public string NlsSort {
+            get { return (_nlsSort); }
+        }
+        /// <summary>
+        /// Get Set Bastet Culture Info for this language
+        /// </summary>
+        public BastetCultureInfo CultureInfo {
             get { return _cInfo; }
             set { _cInfo = value; }
+        }
+        /// <summary>
+        /// Get Set Bastet Culture Info for this language in excel reports
+        /// </summary>
+        public BastetCultureInfo CultureInfoExcel {
+            get { return _cInfoExcel; }
+            set { _cInfoExcel = value; }
         }
         #endregion
     }

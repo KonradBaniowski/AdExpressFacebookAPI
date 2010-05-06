@@ -12,6 +12,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Anubis.Sobek.UI;
 using TNS.AdExpress.Anubis.Sobek.Common;
+using TNS.AdExpress.Anubis.Sobek.Exceptions;
 
 namespace TNS.AdExpress.Anubis.Sobek.BusinessFacade
 {
@@ -57,15 +58,18 @@ namespace TNS.AdExpress.Anubis.Sobek.BusinessFacade
 		/// Constructeur
 		/// </summary>
 		public SobekTextFileSystem(IDataSource dataSource, SobekConfig config,DataRow rqDetails, WebSession webSession){
-		
-			this._dataSource = dataSource;		
-			this._config = config;
-			this._rqDetails = rqDetails;
-			this._webSession = webSession;
+            try {
+                this._dataSource = dataSource;
+                this._config = config;
+                this._rqDetails = rqDetails;
+                this._webSession = webSession;
+            }
+            catch (Exception e) {
+                throw new SobekTextFileSystemException("Error in constructor SobekTextFileSystem", e);
+            }
 
 		}
 		#endregion
-
 
 		#region Init
 		/// <summary>
@@ -148,29 +152,33 @@ namespace TNS.AdExpress.Anubis.Sobek.BusinessFacade
 		}
 		#endregion
 
-		
 		#region Send
 		/// <summary>
 		/// Envoie le mail à l'utilisateur avec le fichier excel attaché
 		/// </summary>
 		/// <param name="fileName"></param>
 		internal void Send(){
-			ArrayList to = new ArrayList();
-			foreach(string s in _webSession.EmailRecipient){
-				to.Add(s);
-			}
-//			to.Add("dede.mussuma@tnsmi.fr");//test
-			SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
-				Text.SuppressAccent(GestionWeb.GetWebWord(1917,_webSession.SiteLanguage)),
-				Text.SuppressAccent(GestionWeb.GetWebWord(1918,_webSession.SiteLanguage)+"\" "+_webSession.ExportedPDFFileName
-				+ "\""+String.Format(GestionWeb.GetWebWord(1751,_webSession.SiteLanguage),_config.WebServer)				
-				+ "<br><br>"
-				+ GestionWeb.GetWebWord(1776,_webSession.SiteLanguage)),
-				true, _config.CustomerMailServer, _config.CustomerMailPort);
-			
-			mail.mailKoHandler += new TNS.FrameWork.Net.Mail.SmtpUtilities.mailKoEventHandler(mail_mailKoHandler);
-//			mail.Attach(_textFilePath,SmtpUtilities.AttachmentType.ATTACH_TEXT);// Attache le fichier texte
-			mail.SendWithoutThread(false);
+            try {
+                ArrayList to = new ArrayList();
+                foreach (string s in _webSession.EmailRecipient) {
+                    to.Add(s);
+                }
+                //			to.Add("dede.mussuma@tnsmi.fr");//test
+                SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
+                    Text.SuppressAccent(GestionWeb.GetWebWord(1917, _webSession.SiteLanguage)),
+                    Text.SuppressAccent(GestionWeb.GetWebWord(1918, _webSession.SiteLanguage) + "\" " + _webSession.ExportedPDFFileName
+                    + "\"" + String.Format(GestionWeb.GetWebWord(1751, _webSession.SiteLanguage), _config.WebServer)
+                    + "<br><br>"
+                    + GestionWeb.GetWebWord(1776, _webSession.SiteLanguage)),
+                    true, _config.CustomerMailServer, _config.CustomerMailPort);
+
+                mail.mailKoHandler += new TNS.FrameWork.Net.Mail.SmtpUtilities.mailKoEventHandler(mail_mailKoHandler);
+                //			mail.Attach(_textFilePath,SmtpUtilities.AttachmentType.ATTACH_TEXT);// Attache le fichier texte
+                mail.SendWithoutThread(false);
+            }
+            catch (Exception e) {
+                throw new SobekTextFileSystemException("Mail Send to client Error in Send()", e);
+            }
 		}
 		#endregion
 

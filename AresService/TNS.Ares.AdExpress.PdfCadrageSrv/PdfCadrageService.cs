@@ -23,62 +23,83 @@ namespace TNS.Ares.AdExpress.PdfCadrageSrv
 {
     public partial class PdfCadrageService : ServiceBase {
         
-        public PdfCadrageService() {
+        #region Constante
+        /// <summary>
+        /// Directory configuratyion Name
+        /// </summary>
+        private const string CONFIGURATION_DIRECTORY_NAME = "Configuration";
+        #endregion
+
+        #region Variables
+        /// <summary>
+        /// Current Thread.
+        /// </summary>
+        private Thread _currentThread = null;
+        /// <summary>
+        /// Current Shell.
+        /// </summary>
+        private AtonShell _currentShell;
+        #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public PdfCadrageService()
+        {
             InitializeComponent();
         }
+        #endregion
 
-        private void InitService() {
+        #region Run
+        /// <summary>
+        /// Run
+        /// </summary>
+        public void Run()
+        {
+            try {
+                string configurationDirectoryRoot = AppDomain.CurrentDomain.BaseDirectory + CONFIGURATION_DIRECTORY_NAME + @"\";
+                LsClientConfiguration lsClientConfiguration = TNS.Ares.Domain.XmlLoader.LsClientConfigurationXL.Load(new XmlReaderDataSource(configurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.LS_CLIENT_CONFIGURATION_FILENAME));
 
-            #region Loading application parameters
-            // Initialisation des listes de texte
-            AdExpressWordListLoader.LoadLists();
 
-            Product.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
-            Media.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
+                _currentShell = new AtonShell(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, lsClientConfiguration.ModuleDescriptionList, lsClientConfiguration.DirectoryName);
+                _currentShell.StartMonitorServer(lsClientConfiguration.MonitorPort);
 
-            // Units
-            UnitsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNITS_CONFIGURATION_FILENAME));
-
-            // Vehicles
-            VehiclesInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.VEHICLES_CONFIGURATION_FILENAME));
-
-            // Universes
-            UniverseLevels.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CONFIGURATION_FILENAME));
-
-            // Charge les styles personnalisés des niveaux d'univers
-            UniverseLevelsCustomStyles.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CUSTOM_STYLES_CONFIGURATION_FILENAME));
-
-            // Charge la hierachie de niveau d'univers
-            UniverseBranches.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_BRANCHES_CONFIGURATION_FILENAME));
-
-            // Charge les niveaux d'univers
-            UniverseLevels.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CONFIGURATION_FILENAME));
-
-            //Load flag list
-            TNS.AdExpress.Domain.AllowedFlags.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.FLAGS_CONFIGURATION_FILENAME));
-            #endregion
-
-            IDataSource source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.webAdministration);
-            LsClientConfiguration lsClientConfiguration = TNS.Ares.Domain.XmlLoader.LsClientConfigurationXL.Load(new XmlReaderDataSource(WebApplicationParameters.ConfigurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.LS_CLIENT_CONFIGURATION_FILENAME));
-
-            // Loading DataBase configuration
-            DataBaseConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
-
-            string confFilePath = WebApplicationParameters.ConfigurationDirectoryRoot + lsClientConfiguration.DirectoryName;
-
-            AtonShell aton = new AtonShell(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, source, confFilePath);
-            aton.StartMonitorServer(lsClientConfiguration.MonitorPort);
-            Console.WriteLine("PDF Cadrage Service");
-            Console.ReadLine();
-            aton.Dispose();
-
+                Thread.Sleep(Timeout.Infinite);
+                _currentShell.Dispose();
+            }
+            catch (Exception e) {
+                if(_currentShell!=null)
+                    _currentShell.Dispose();
+            }
         }
+        #endregion
 
-        protected override void OnStart(string[] args) {
-            new Thread(new ThreadStart(this.InitService)).Start();
+        #region OnStart
+        /// <summary>
+        /// OnStart
+        /// </summary>
+        /// <param name="args">Argument</param>
+        protected override void OnStart(string[] args)
+        {
+            _currentThread = new System.Threading.Thread(this.Run);
+            _currentThread.Start();
         }
+        #endregion
 
-        protected override void OnStop() {
+        #region OnStop
+        /// <summary>
+        /// OnStop
+        /// </summary>
+        protected override void OnStop()
+        {
+            if (_currentShell != null) {
+                _currentShell.Dispose();
+                _currentShell = null;
+            }
+
+            _currentThread.Abort();
         }
+        #endregion
     }
 }

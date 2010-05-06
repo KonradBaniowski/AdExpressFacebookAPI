@@ -28,6 +28,7 @@ using TNS.FrameWork.DB.Common;
 
 using Dundas.Charting.WinControl;
 using System.Collections.Generic;
+using TNS.FrameWork.WebTheme;
 
 namespace TNS.AdExpress.Anubis.Appm.UI
 {
@@ -56,7 +57,7 @@ namespace TNS.AdExpress.Anubis.Appm.UI
         /// <summary>
         /// Style
         /// </summary>
-        private TNS.AdExpress.Domain.Theme.Style _style = null;
+        private TNS.FrameWork.WebTheme.Style _style = null;
         /// <summary>
         /// Pie ColorS
         /// </summary>
@@ -75,7 +76,7 @@ namespace TNS.AdExpress.Anubis.Appm.UI
         /// <param name="dataSource">dataSource</param>
         /// <param name="config">config</param>
         /// <param name="dtData">dtData</param>
-        public UIPeriodicityGraph(WebSession webSession, IDataSource dataSource, AppmConfig config, DataTable dtData, TNS.AdExpress.Domain.Theme.Style style)
+        public UIPeriodicityGraph(WebSession webSession, IDataSource dataSource, AppmConfig config, DataTable dtData, TNS.FrameWork.WebTheme.Style style)
             : base()
 		{
 			_webSession = webSession;
@@ -84,8 +85,8 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 			_dtData = dtData;
             _style = style;
 
-            _pieColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("PeriodicityGraphPieColors")).ColorList;
-            _barColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("PeriodicityGraphBarColors")).ColorList;
+            _pieColors = ((Colors)_style.GetTag("PeriodicityGraphPieColors")).ColorList;
+            _barColors = ((Colors)_style.GetTag("PeriodicityGraphBarColors")).ColorList;
 		}
 		#endregion
 

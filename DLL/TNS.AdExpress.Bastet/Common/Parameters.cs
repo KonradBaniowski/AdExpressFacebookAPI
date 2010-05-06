@@ -17,8 +17,8 @@ using DbTables=TNS.AdExpress.Constantes.DB.Tables;
 using DbSchemas=TNS.AdExpress.Constantes.DB.Schema;
 using TNS.AdExpress.Bastet.Exceptions;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Domain.Web;
 using TNS.Ares.StaticNavSession.DAL;
+using TNS.AdExpress.Bastet.Web;
 
 
 namespace TNS.AdExpress.Bastet.Common{
@@ -40,11 +40,11 @@ namespace TNS.AdExpress.Bastet.Common{
 		/// <summary>
 		/// Date de début
 		/// </summary>
-		protected string _periodBeginningDate;
+		protected DateTime _periodBeginningDate;
 		/// <summary>
 		/// Date de fin
 		/// </summary>
-		protected string _periodEndDate;
+        protected DateTime _periodEndDate;
 		/// <summary>
 		/// Logins clients
 		/// </summary>
@@ -57,6 +57,10 @@ namespace TNS.AdExpress.Bastet.Common{
 		/// Nom du fichier Excel
 		/// </summary>
 		protected string _exportExcelFileName;
+        /// <summary>
+        /// SiteLanguage
+        /// </summary>
+        protected int _siteLanguage = 33;
 		#endregion
 
 		#region Constructeurs
@@ -75,7 +79,7 @@ namespace TNS.AdExpress.Bastet.Common{
 		/// <param name="dateEnd">Date de fin</param>
 		/// <param name="loginsList">Logins clients</param>
 		/// <param name="emails">Emails destinataires</param>
-		public Parameters(IDataSource source, Int64 loginId, string dateBegin, string dateEnd, string loginsList, ArrayList emails){
+        public Parameters(IDataSource source, Int64 loginId, DateTime dateBegin, DateTime dateEnd, string loginsList, ArrayList emails, int siteLanguage) {
 			_source = source;
 			_loginId = loginId;
 			_periodBeginningDate = dateBegin;
@@ -83,6 +87,7 @@ namespace TNS.AdExpress.Bastet.Common{
 			_logins = loginsList;
 			_emailsRecipient = emails;
 			_exportExcelFileName = "Tracking_"+dateBegin+"-"+dateEnd;
+            _siteLanguage = siteLanguage;
 		}
 		#endregion
 
@@ -90,7 +95,7 @@ namespace TNS.AdExpress.Bastet.Common{
 		/// <summary>
 		/// Obtient ou défini la date de début
 		/// </summary>
-		public string PeriodBeginningDate{
+        public DateTime PeriodBeginningDate {
 			get{return _periodBeginningDate;}
 			set{_periodBeginningDate = value;}
 		}
@@ -98,7 +103,7 @@ namespace TNS.AdExpress.Bastet.Common{
 		/// <summary>
 		/// Obtient ou défini la date de fin
 		/// </summary>
-		public string PeriodEndDate{
+        public DateTime PeriodEndDate {
 			get{return _periodEndDate;}
 			set{_periodEndDate = value;}
 		}
@@ -126,6 +131,14 @@ namespace TNS.AdExpress.Bastet.Common{
 			get{return _source;}
 			set{_source = value;}
 		}
+
+        /// <summary>
+        /// Obtient ou défini la langue su site
+        /// </summary>
+        public int SiteLanguage {
+            get { return _siteLanguage; }
+            set { _siteLanguage = value; }
+        }
 		#endregion
 
 		#region Blob
@@ -181,14 +194,12 @@ namespace TNS.AdExpress.Bastet.Common{
 			return(idStaticNavSession);
 		}
 
-		/// <summary>
-		/// Méthode pour la récupération et la "deserialization" d'un objet WebSession à partir du champ BLOB de la table des static_nav_sessions
-		/// </summary>
-		/// <returns>Retourne l'objet récupéré ou null si il y a eu un problème non géré</returns>
-		/// <param name="idStaticNavSession">Identifiant de la session sauvegardée</param>
-		public static Object Load(Int64 idStaticNavSession){
-
-            IDataSource dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(TNS.AdExpress.Domain.DataBaseDescription.DefaultConnectionIds.webAdministration);
+        /// <summary>
+        /// Méthode pour la récupération et la "deserialization" d'un objet WebSession à partir du champ BLOB de la table des static_nav_sessions
+        /// </summary>
+        /// <returns>Retourne l'objet récupéré ou null si il y a eu un problème non géré</returns>
+        /// <param name="idStaticNavSession">Identifiant de la session sauvegardée</param>
+        public static Object Load(Int64 idStaticNavSession, IDataSource dataSource) {
 
             TNS.Ares.Domain.Layers.DataAccessLayer dataAccessLayer = TNS.Ares.Domain.LS.PluginConfiguration.GetDataAccessLayer(TNS.Ares.Domain.LS.PluginDataAccessLayerName.Session);
 
@@ -196,8 +207,8 @@ namespace TNS.AdExpress.Bastet.Common{
             parameters[0] = dataSource;
             IStaticNavSessionDAL staticNavSessionDAL = (IStaticNavSessionDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + dataAccessLayer.AssemblyName, dataAccessLayer.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, parameters, null, null, null);
             return staticNavSessionDAL.LoadData(idStaticNavSession);
-			
-		}
+
+        }
 		#endregion
 
 		#endregion

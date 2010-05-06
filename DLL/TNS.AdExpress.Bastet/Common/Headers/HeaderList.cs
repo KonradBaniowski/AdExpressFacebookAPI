@@ -6,8 +6,8 @@
 
 using System;
 using System.Collections;
-using TNS.AdExpress.Bastet.DataAccess.Headers;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.Bastet.XmlLoader;
 
 namespace TNS.AdExpress.Bastet.Common.Headers{
 	/// <summary>

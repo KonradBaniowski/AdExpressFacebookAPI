@@ -50,7 +50,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
         /// <summary>
         /// Style
         /// </summary>
-        private static TNS.AdExpress.Domain.Theme.Style _style = null;
+        private static TNS.FrameWork.WebTheme.Style _style = null;
         /// <summary>
         /// Pie ColorS
         /// </summary>
@@ -58,7 +58,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 		#endregion
 
 		#region Constructeur
-        public UIPeriodicityGraph(WebSession webSession, IDataSource dataSource, AtonConfig config, DataTable dtGraphicsData, TNS.AdExpress.Domain.Theme.Style style)
+        public UIPeriodicityGraph(WebSession webSession, IDataSource dataSource, AtonConfig config, DataTable dtGraphicsData, TNS.FrameWork.WebTheme.Style style)
             : base() {
 			_webSession = webSession;
 			_dataSource = dataSource;
@@ -66,7 +66,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 			_dtGraphicsData = dtGraphicsData;
             _style = style;
 
-            _newPieColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("PeriodicityGraphNewPieColors32")).ColorList;
+            _newPieColors = ((TNS.FrameWork.WebTheme.Colors)_style.GetTag("PeriodicityGraphNewPieColors32")).ColorList;
 		}
 		#endregion
 
@@ -85,8 +85,8 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 
 			#region Constantes
 			//couleurs des tranches du graphique
-            List<Color> pieColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("PeriodicityGraphPieColors12")).ColorList;
-            List<Color> barColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("PeriodicityGraphBarColors")).ColorList;
+            List<Color> pieColors = ((TNS.FrameWork.WebTheme.Colors)_style.GetTag("PeriodicityGraphPieColors12")).ColorList;
+            List<Color> barColors = ((TNS.FrameWork.WebTheme.Colors)_style.GetTag("PeriodicityGraphBarColors")).ColorList;
 			#endregion
 
 			#region Initialisation

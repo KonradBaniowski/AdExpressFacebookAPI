@@ -16,8 +16,10 @@ using BastetCommon=TNS.AdExpress.Bastet.Common;
 using DBSchema=TNS.AdExpress.Constantes.DB.Schema;
 using DBTables=TNS.AdExpress.Constantes.DB.Tables;
 using AnubisBastet=TNS.AdExpress.Anubis.Bastet;
-using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Bastet.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
+
+
 namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 {
 	/// <summary>
@@ -56,7 +58,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 						+ "," + addressTable.SqlWithPrefix + "," + companyTable.SqlWithPrefix);
 				}
 				//Where
-				sql.Append(" where "+connectionTimeTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+                sql.Append(" where " + connectionTimeTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
 				if(parameters!=null && parameters.Logins.Length>0)
 					sql.Append(" and "+connectionTimeTable.Prefix+".id_login in ("+parameters.Logins+") ");
 				sql.Append(" and "+connectionByLoginTable.Prefix+".id_login="+connectionTimeTable.Prefix+".id_login ");

@@ -14,13 +14,16 @@ using TNS.AdExpress.Anubis.Satet.BusinessFacade;
 using TNS.AdExpress.Web.Core.Sessions;
 
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Domain.Theme;
 using TNS.AdExpress.Domain.Web;
 using TNS.Ares;
 using TNS.Ares.StaticNavSession.DAL;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Layers;
 using System.Reflection;
+using TNS.FrameWork.WebTheme;
+using TNS.AdExpress.Anubis.Sobek.Exceptions;
+using System.IO;
+using TNS.Ares.Domain.LS;
 
 namespace TNS.AdExpress.Anubis.Satet {
 	/// <summary>
@@ -80,6 +83,10 @@ namespace TNS.AdExpress.Anubis.Satet {
         /// Data Access Layer
         /// </summary>
         private IStaticNavSessionDAL _dataAccess;
+        /// <summary>
+        /// WebSession
+        /// </summary>
+        private WebSession _webSession = null;
 		#endregion
 
 		#region Constructeur
@@ -111,37 +118,79 @@ namespace TNS.AdExpress.Anubis.Satet {
 		/// <remarks>
 		/// Le traitement se charge de charger les données nécessaires à son execution et de lancer le résultat
 		/// </remarks>
-		public void Treatement(string confifurationFilePath,IDataSource dataSource,Int64 navSessionId){
-			_navSessionId=navSessionId;
-
-            object[] parameter = new object[1];
-            parameter[0] = dataSource;
-            CoreLayer cl = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.dataAccess];
-            _dataAccess = (IStaticNavSessionDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameter, null, null, null);
-
-			#region Chargement du fichier de configuration
-			if(confifurationFilePath==null){
-				OnError(_navSessionId,"Impossible de lancer le traitement d'un job", new ArgumentNullException("Le nom du fichier de configuration est null."));
-				return;
-			}
-			if(confifurationFilePath.Length==0){
-				OnError(_navSessionId,"Impossible de lancer le traitement d'un job", new ArgumentException("Le nom du fichier de configuration est vide."));
-				return;
-			}
-			try{
-				_satetConfig=new SatetConfig(new XmlReaderDataSource(confifurationFilePath));
-			}
-			catch(System.Exception err){
-				OnError(_navSessionId,"Impossible de lancer le traitement d'un job <== impossible de charger le fichier de configuration",err);
-				return;
-			}
+        public void Treatement(string configurationFilePath, IDataSource dataSource, Int64 navSessionId) {
             try {
-                _theme = new Theme(new XmlReaderDataSource(AppDomain.CurrentDomain.BaseDirectory + _satetConfig.ThemePath + @"\App_Themes\" + WebApplicationParameters.Themes[((WebSession)_dataAccess.LoadData(_navSessionId)).SiteLanguage].Name + @"\" + "Styles.xml"));
+                _navSessionId = navSessionId;
+
+                #region Initialization
+
+                #region Create Instance of _webSession
+                try {
+                    object[] parameter = new object[1];
+                    parameter[0] = dataSource;
+                    CoreLayer cl = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.dataAccess];
+                    _dataAccess = (IStaticNavSessionDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameter, null, null, null);
+                }
+                catch (Exception e) {
+                    throw new SatetExcelSystemException("Impossible to Create Instance Of Layer IStaticNavSessionDAL ", e);
+                }
+                #endregion
+
+                #region Check Path File
+                if (configurationFilePath == null) {
+                    throw new SatetExcelSystemException("Impossible de lancer le traitement d'un job", new ArgumentNullException("Le nom du fichier de configuration est null."));
+                }
+                if (configurationFilePath.Length == 0) {
+                    throw new SatetExcelSystemException("Impossible de lancer le traitement d'un job", new ArgumentException("Le nom du fichier de configuration est vide."));
+                }
+                #endregion
+
+                #region Initialize Hotep
+                try {
+                    _satetConfig = new SatetConfig(new XmlReaderDataSource(configurationFilePath));
+                }
+                catch (System.Exception err) {
+                    throw new SatetExcelSystemException("Impossible de lancer le traitement d'un job <== impossible de charger le fichier de configuration", err);
+                }
+                #endregion
+
+                #region Initialize WebSession
+                try {
+                    _webSession = ((WebSession)_dataAccess.LoadData(_navSessionId));
+                }
+                catch (System.Exception err) {
+                    throw new SatetExcelSystemException("Error for load session", err);
+                }
+                #endregion
+
+                #region Initialize Theme
+                string pathFileTheme = string.Empty;
+                try {
+
+                    if (File.Exists(_satetConfig.ThemePath + @"\" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + @"\" + "Styles.xml")) {
+                        pathFileTheme = _satetConfig.ThemePath + @"\" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + @"\" + "Styles.xml";
+                    }
+                    else if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + _satetConfig.ThemePath + @"\" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + @"\" + "Styles.xml")) {
+                        pathFileTheme = AppDomain.CurrentDomain.BaseDirectory + _satetConfig.ThemePath + @"\" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + @"\" + "Styles.xml";
+                    }
+                    else {
+                        pathFileTheme = _satetConfig.ThemePath + @"\" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + @"\" + "Styles.xml";
+                    }
+                    _theme = new TNS.FrameWork.WebTheme.Theme(new XmlReaderDataSource(pathFileTheme));
+                }
+                catch (System.Exception err) {
+                    throw new SatetExcelSystemException(string.Format("File of theme not found ! (in Plugin Hotep in TreatmentSystem class) - Path : '{0}'", pathFileTheme), err);
+                }
+                #endregion
+
+                #endregion
+
             }
-            catch (System.Exception err) {
-                OnError(_navSessionId, "File of theme not found ! (in Plugin Satet in TreatmentSystem class)",err);
+            catch (Exception e) {
+                if(_dataAccess!=null) _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.error.GetHashCode());
+                OnError(_navSessionId, "Impossible to initialize process ", e);
+                return;
             }
-			#endregion
 
 			_dataSource=dataSource;
 			
@@ -174,12 +223,16 @@ namespace TNS.AdExpress.Anubis.Satet {
 
 				#region excel management
 
-                _excel = new SatetExcelSystem(_dataSource, _satetConfig, rqDetails, (WebSession)_dataAccess.LoadData(_navSessionId), _theme);
+                _excel = new SatetExcelSystem(_dataSource, _satetConfig, rqDetails, _webSession, _theme);
 				string fileName = _excel.Init();				
 				_excel.Fill();
                 _dataAccess.RegisterFile(_navSessionId, fileName);
 				_excel.Send();
                 _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.sent.GetHashCode());
+
+                PluginInformation pluginInformation = PluginConfiguration.GetPluginInformation(PluginType.Satet);
+                if (pluginInformation != null && pluginInformation.DeleteRowSuccess)
+                    _dataAccess.DeleteRow(_navSessionId);
 				#endregion
 
 				OnStopWorkerJob(_navSessionId,"","",this.GetPluginName()+" finished for "+_navSessionId);

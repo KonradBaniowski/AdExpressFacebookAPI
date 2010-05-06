@@ -8,6 +8,8 @@ using TNS.Ares.AdExpress.MailAlert;
 using TNS.Alert.Domain;
 using TNS.AdExpress.Domain.XmlLoader;
 using TNS.Ares.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Web;
+using TNS.FrameWork.Exceptions;
 
 namespace TNS.Ares.AdExpress.MailAlertApp
 {
@@ -24,21 +26,18 @@ namespace TNS.Ares.AdExpress.MailAlertApp
 
         static void Main(string[] args)
         {
+            TNS.Ares.Domain.LS.LsClientConfiguration lsClientConfiguration = null;
+
             string configurationDirectoryRoot = AppDomain.CurrentDomain.BaseDirectory + CONFIGURATION_DIRECTORY_NAME + @"\";
-            TNS.Ares.Domain.LS.LsClientConfiguration lsClientConfiguration = TNS.Ares.Domain.XmlLoader.LsClientConfigurationXL.Load(new XmlReaderDataSource(configurationDirectoryRoot + WebConstantes.ConfigurationFile.LS_CLIENT_CONFIGURATION_FILENAME));
-
-            string countryCode = WebParamtersXL.LoadDirectoryName(new XmlReaderDataSource(configurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME));
-            string countryConfigurationDirectoryRoot = configurationDirectoryRoot + countryCode + @"\";
-
-            // Loading administration DataSource
-            TNS.Ares.Domain.DataBase.DataBaseConfiguration.Load(new XmlReaderDataSource(countryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
-            IDataSource source = TNS.Ares.Domain.DataBase.DataBaseConfiguration.DataBase.GetDefaultConnection(DefaultConnectionIds.alert);
-            TNS.Ares.Domain.LS.PluginConfiguration.Load(new XmlReaderDataSource(countryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.PLUGIN_CONFIGURATION_FILENAME));
-            AlertConfiguration.Load(new XmlReaderDataSource(countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.ALERTE_CONFIGURATION));
-
+            try {
+                lsClientConfiguration = TNS.Ares.Domain.XmlLoader.LsClientConfigurationXL.Load(new XmlReaderDataSource(configurationDirectoryRoot + WebConstantes.ConfigurationFile.LS_CLIENT_CONFIGURATION_FILENAME));
+            }
+            catch (Exception e) {
+                throw new BaseException("Impossible to Load LsClientConfiguration", e);
+            }
 
             // Loading Alert Shell and starting monitor server
-            _shell = new AlertShell(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, source, lsClientConfiguration.ModuleDescriptionList, lsClientConfiguration.MaxAvailableSlots, countryCode);
+            _shell = new AlertShell(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, lsClientConfiguration.ModuleDescriptionList, lsClientConfiguration.MaxAvailableSlots);
             _shell.StartMonitorServer(lsClientConfiguration.MonitorPort);
 
             // Stopping program

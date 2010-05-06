@@ -23,6 +23,18 @@ using TNS.FrameWork;
 using TNS.FrameWork.Exceptions;
 using TNS.Ares.Domain.LS;
 using TNS.Alert.Domain;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
+using TNS.Ares.AdExpress.MailAlert.Exceptions;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.Ares.Domain.DataBase;
+
+using ConfigurationFile = TNS.Ares.Constantes.ConfigurationFile;
+using TNS.Classification.Universe;
+using System.Reflection;
+using TNS.Ares.Domain.Layers;
 
 namespace TNS.Ares.AdExpress.MailAlert
 {
@@ -56,10 +68,6 @@ namespace TNS.Ares.AdExpress.MailAlert
         /// Max available slots
         /// </summary>
         private int _maxAvailableSlots;
-        /// <summary>
-        /// Country COde
-        /// </summary>
-        private string _countryCode = string.Empty;
         #endregion
 
         #region Constructor
@@ -70,14 +78,193 @@ namespace TNS.Ares.AdExpress.MailAlert
         /// <param name="familyId">Id used to assemble a group of modules tasks</param>
         /// <param name="source">Data source</param>
         /// <param name="moduleDescriptionList">The list of modules that the client can treat</param>
-        public AlertShell(string productName, int familyId, IDataSource source, List<ModuleDescription> moduleDescriptionList, int maxAvailableSlots, string countryCode)
+        public AlertShell(string productName, int familyId, List<ModuleDescription> moduleDescriptionList, int maxAvailableSlots)
             : base(productName, familyId, moduleDescriptionList) {
-            this._source = source;
-            this._alertDAL = new TNS.Ares.Alerts.DAL.Default.AlertsDAL(this._source);
-            this._navDAL = new TNS.Ares.StaticNavSession.DAL.Default.StaticNavSessionDAL(this._source);
+            this.Initialize();
             this._oLinkClient.AlwaysReconnect = true;
             _maxAvailableSlots = maxAvailableSlots;
-            _countryCode = countryCode;
+        }
+        #endregion
+
+        #region Initialize
+        /// <summary>
+        /// Initialize
+        /// </summary>
+        protected void Initialize() {
+            try {
+
+                #region WebApplicationParameters
+                try {
+                    new WebApplicationParameters();
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load WebApplicationParameters", e);
+                }
+                #endregion
+
+                #region Product Baal List
+                try {
+                    Product.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load Product Baal List", e);
+                }
+                #endregion
+
+                #region Media Baal List
+                try {
+                    Media.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load Media Baal List", e);
+                }
+                #endregion
+
+                #region UnitsInformation
+                try {
+                    // Units
+                    UnitsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNITS_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load UnitsInformation", e);
+                }
+                #endregion
+
+                #region VehiclesInformation
+                try {
+                    // Vehicles
+                    VehiclesInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.VEHICLES_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load VehiclesInformation", e);
+                }
+                #endregion
+
+                #region UniverseLevels
+                try {
+                    // Universes
+                    UniverseLevels.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load UniverseLevels", e);
+                }
+                #endregion
+
+                #region UniverseLevelsCustomStyles
+                try {
+                    // Charge les styles personnalisés des niveaux d'univers
+                    UniverseLevelsCustomStyles.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CUSTOM_STYLES_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load UniverseLevelsCustomStyles", e);
+                }
+                #endregion
+
+                #region UniverseBranches
+                try {
+                    // Charge la hierachie de niveau d'univers
+                    UniverseBranches.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_BRANCHES_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load UniverseBranches", e);
+                }
+                #endregion
+
+                #region UniverseLevels
+                try {
+                    // Charge les niveaux d'univers
+                    UniverseLevels.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load UniverseLevels", e);
+                }
+                #endregion
+
+                #region AllowedFlags
+                try {
+                    //Load flag list
+                    TNS.AdExpress.Domain.AllowedFlags.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.FLAGS_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load AllowedFlags", e);
+                }
+                #endregion
+
+                #region ModulesList
+                try {
+                    new ModulesList();
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to load ModulesList", e);
+                }
+                #endregion
+
+                #region Ares DataBaseConfiguration
+                try {
+                    // Loading DataBase configuration
+                    DataBaseConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to Load DataBaseConfiguration", e);
+                }
+                #endregion
+                
+                #region Get Source
+                try {
+                    this._source = TNS.Ares.Domain.DataBase.DataBaseConfiguration.DataBase.GetDefaultConnection(TNS.Ares.Domain.DataBaseDescription.DefaultConnectionIds.alert);
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to Get dataSource", e);
+                }
+                #endregion
+
+                #region Ares PluginConfiguration
+                try {
+                    PluginConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.PLUGIN_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to Load Ares PluginConfiguration", e);
+                }
+                #endregion
+
+                #region Ares Alert PluginConfiguration
+                try {
+                    AlertConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.ALERTE_CONFIGURATION));
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to Load AlertConfiguration : " + e);
+                }
+                #endregion
+
+                #region Create Instance of Alert DAL
+                try {
+                    object[] parameter = new object[1];
+                    parameter[0] = _source;
+                    DataAccessLayer cl = PluginConfiguration.GetDataAccessLayer(PluginDataAccessLayerName.Alert);
+                    this._alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameter, null, null, null);
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to Create Instance Of Layer IAlertDAL ", e);
+                }
+                #endregion
+
+                #region Create Instance of Static Nav Session
+                try {
+                    object[] parameter = new object[1];
+                    parameter[0] = _source;
+                    DataAccessLayer cl = PluginConfiguration.GetDataAccessLayer(PluginDataAccessLayerName.Session);
+                    this._navDAL = (IStaticNavSessionDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameter, null, null, null);
+                }
+                catch (Exception e) {
+                    throw new ShelInitializationException("Impossible to Create Instance Of Layer IStaticNavSessionDAL ", e);
+                }
+                #endregion
+
+            }
+            catch (Exception e) {
+                this.sendEmailError("Initialization Error in Shell in Initialize()", e);
+                throw new ShelInitializationException("Initialization Error in Shell in Initialize()", e);
+            }
         }
         #endregion
 
@@ -97,9 +284,6 @@ namespace TNS.Ares.AdExpress.MailAlert
 
                 // Getting email content
                 this.Log(new LogLine("Getting email content", eLogCategories.Information, "Alerts"));
-                StreamReader f = File.OpenText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.Combine(Path.Combine("Resources\\Email", _countryCode), "alert.html")));
-                string emailContent = f.ReadToEnd();
-                f.Close();
 
                 if (oTaskExecution != null) {
 
@@ -139,15 +323,12 @@ namespace TNS.Ares.AdExpress.MailAlert
                                         FirstDayNotEnable = WebFunctions.Dates.GetFirstDayNotEnabled(session, selectedVehicle, oldYear, this._source);
                                     }
                                     catch (Exception e) {
-
-                                        this.Log(new LogLine(String.Format("Impossible to get vehicle from session [#{0}]", session.IdSession), e, eLogCategories.Warning, "Alerts"));
-                                        sendEmailError(String.Format("Impossible to get vehicle from session [#{0}]", session.IdSession), e);
-                                    }
+                                        this.Log(new LogLine(String.Format("Impossible to get vehicle from session [#{0}] for alert '{1}'", session.IdSession, alertId.ToString()), e, eLogCategories.Warning, "Alerts"));                                    }
                                 }
 
                             // Updating session dates
                             this.Log(new LogLine(string.Format("Updating session dates for alert '{0}'", alertId.ToString()), eLogCategories.Information, "Alerts"));
-                            session.UpdateDates(FirstDayNotEnable);
+                            session.UpdateDates(FirstDayNotEnable, ((DateTime)this._navDAL.GetRow(getStaticNavSessionId(oTaskExecution))["date_creation"]));
                             // session.PeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDate;
 
                             // Inserting alert occurrence
@@ -156,9 +337,8 @@ namespace TNS.Ares.AdExpress.MailAlert
 
                             // Creating alert content
                             this.Log(new LogLine(string.Format("Creating alert content for alert '{0}'", alertId.ToString()), eLogCategories.Information, "Alerts"));
-                            string alertContent = emailContent;
-                            alertContent = alertContent.Replace("#{ALERT_TITLE}", alert.Title);
-                            alertContent = alertContent.Replace("#{ALERT_LINK}", String.Format("{0}Private/Alerts/ShowAlert.aspx?idAlert={1}&idOcc={2}", TNS.Alert.Domain.AlertConfiguration.MailInformation.TargetHost, alert.AlertId, occId));
+
+                            string alertContent = GetMailContent(alert.Title, String.Format("{0}Private/Alerts/ShowAlert.aspx?idAlert={1}&idOcc={2}", TNS.Alert.Domain.AlertConfiguration.MailInformation.TargetHost, alert.AlertId, occId), session.SiteLanguage);
 
                             // Sending email
                             this.Log(new LogLine(string.Format("Sending email for alert '{0}'", alertId.ToString()), eLogCategories.Information, "Alerts"));
@@ -368,6 +548,34 @@ namespace TNS.Ares.AdExpress.MailAlert
         }
 
 
+        #endregion
+
+        #region Get Email Content
+        /// <summary>
+        /// Get Alert Mail Client Content
+        /// </summary>
+        /// <param name="title">Title</param>
+        /// <param name="link">Link</param>
+        /// <param name="language">Language</param>
+        /// <returns></returns>
+        private string GetMailContent(string title, string link, int language) {
+            StringBuilder mailContent = new StringBuilder();
+
+            mailContent.AppendFormat("<p>{0}</p>",GestionWeb.GetWebWord(2625, language));
+
+            mailContent.AppendFormat("<p>{0} \"{1}\".</p>", 
+                GestionWeb.GetWebWord(2626, language),
+                title);
+
+            mailContent.AppendFormat("<p>{0} <a href=\"{1}\">{2}</a>.</p>", 
+                GestionWeb.GetWebWord(2627, language),
+                link,
+                GestionWeb.GetWebWord(2628, language));
+
+            mailContent.AppendFormat("<p>{0}</p>", GestionWeb.GetWebWord(2629, language));
+
+            return mailContent.ToString();
+        }
         #endregion
 
     }

@@ -30,12 +30,11 @@ using TNS.FrameWork.DB.Common;
 
 using PDFCreatorPilotLib;
 
-using HTML2PDFAddOn;
-
 using TNS.AdExpress.Web.Core.Utilities;
-using TNS.AdExpress.Domain.Theme;
 using TNS.Ares;
 using TNS.Ares.Pdf;
+using TNS.FrameWork.WebTheme;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 {
@@ -102,7 +101,7 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 				return shortFName;
 			}
 			catch(System.Exception e) {
-				throw(e);
+				throw new ShouPdfException("Impossible to init ShouPdfSystem", e);
 			}
 		}
 		#endregion
@@ -113,15 +112,15 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 		/// </summary>
 		internal void Fill() {
 			
-			try {				
+			try {
 				
 				#region Proof Parameters
-				ProofParameters();
+                ProofParameters();
 				#endregion
 				
 				#region Insertion des visuels
-				if(_webSession.Visuals!=null && _webSession.Visuals.Count>0){						
-					Visuals(_webSession.Visuals[0].ToString(),0);
+				if(_webSession.Visuals!=null && _webSession.Visuals.Count>0){
+                    Visuals(_webSession.Visuals[0].ToString(), 0);
 				}	
 				#endregion
 				
@@ -144,19 +143,24 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 		/// </summary>
 		/// <param name="fileName">Nomde du fichier</param>
 		internal void Send(string fileName) {
-			ArrayList to = new ArrayList();
-			foreach(string s in _webSession.EmailRecipient) {
-				to.Add(s);
-			}
-			SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
-			WebFunctions.Text.SuppressAccent(GestionWeb.GetWebWord(2115,_webSession.SiteLanguage)),
-				WebFunctions.Text.SuppressAccent(GestionWeb.GetWebWord(1750,_webSession.SiteLanguage)+"\""+_webSession.ExportedPDFFileName
-				+ "\""+String.Format(GestionWeb.GetWebWord(1751,_webSession.SiteLanguage),_config.WebServer)
-				+ "<br><br>"
-				+ GestionWeb.GetWebWord(1776,_webSession.SiteLanguage)),
-				true, _config.CustomerMailServer, _config.CustomerMailPort);
-			mail.mailKoHandler += new TNS.FrameWork.Net.Mail.SmtpUtilities.mailKoEventHandler(mail_mailKoHandler);
-			mail.SendWithoutThread(false);
+            try {
+                ArrayList to = new ArrayList();
+                foreach (string s in _webSession.EmailRecipient) {
+                    to.Add(s);
+                }
+                SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
+                WebFunctions.Text.SuppressAccent(GestionWeb.GetWebWord(2115, _webSession.SiteLanguage)),
+                    WebFunctions.Text.SuppressAccent(GestionWeb.GetWebWord(1750, _webSession.SiteLanguage) + "\"" + _webSession.ExportedPDFFileName
+                    + "\"" + String.Format(GestionWeb.GetWebWord(1751, _webSession.SiteLanguage), _config.WebServer)
+                    + "<br><br>"
+                    + GestionWeb.GetWebWord(1776, _webSession.SiteLanguage)),
+                    true, _config.CustomerMailServer, _config.CustomerMailPort);
+                mail.mailKoHandler += new TNS.FrameWork.Net.Mail.SmtpUtilities.mailKoEventHandler(mail_mailKoHandler);
+                mail.SendWithoutThread(false);
+            }
+            catch (Exception e) {
+                throw new ShouPdfException("Impossible to send mail to client", e);
+            }
 		}
 		#endregion
 
@@ -206,24 +210,6 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 			}
 			catch(System.Exception e) {
 				throw(new ShouPdfException("Unable to generate file name for request " + _rqDetails["id_static_nav_session"].ToString() +".",e));
-			}
-		}
-		#endregion
-
-		#region GetWorkDirectory
-		/// <summary>
-		/// Provide a work directory. Create it if it doesn't exist or return a path to it
-		/// </summary>
-		/// <returns></returns>
-		internal string GetWorkDirectory() {
-			try {
-				if(!Directory.Exists(@"tmp_"+_rqDetails["id_static_nav_session"].ToString())) {
-					Directory.CreateDirectory(@"tmp_"+_rqDetails["id_static_nav_session"].ToString());
-				}
-				return (@"tmp_"+_rqDetails["id_static_nav_session"].ToString());
-			}
-			catch(System.Exception e) {
-				throw(new ShouPdfException("Unable to provide the working directory", e));
 			}
 		}
 		#endregion
@@ -480,222 +466,209 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 		/// </summary>
 		private void ProofParameters() {
 
-			StreamWriter sw = null;
+            StringBuilder html = new StringBuilder();
 			string styleTitle = "class=\"jusT\"";
 			string styleValue = "class=\"jusV\"";
 			string tableCss = "class=\"jus\"";
+            double currentLeftMargin = this.LeftMargin;
+            double currentRightMargin = this.RightMargin;
 
 			#region GetData
 			DataTable dtResult = TNS.AdExpress.Web.Rules.Results.ProofRules.GetProofFileData(_webSession, _proofDetail.IdMedia, _proofDetail.IdProduct, _proofDetail.DateCover, _proofDetail.MediaPaging, _proofDetail.DateParution);
 
 			#endregion
 
-			try {
+            try {
 
-				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
+                html.Append("<TABLE align=center WIDTH=100%><tr align=center>");
 
-				string workFile = GetWorkDirectory() + @"\SessionParameter" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
+                #region Debut Tableau général
+                html.Append("<table  " + tableCss + " align=\"center\" cellSpacing=\"0\" cellSpacing=\"0\">");
 
-				sw = Functions.Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
-				sw.WriteLine("<TABLE align=center WIDTH=100%><tr align=center>");
+                //Titre
+                html.Append("<TR  align=\"center\" height=\"10\" ><TD class=\"jus\" align=\"center\"  colspan=2>" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1766, _webSession.SiteLanguage)) + "</TD></TR>");
+                html.Append("<tr  align=\"center\" >");
+                #endregion
 
-				#region Debut Tableau général
-				sw.WriteLine("<table  " + tableCss + " align=\"center\" cellSpacing=\"0\" cellSpacing=\"0\">");
-
-				//Titre
-				sw.WriteLine("<TR  align=\"center\" height=\"10\" ><TD class=\"jus\" align=\"center\"  colspan=2>" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1766, _webSession.SiteLanguage)) + "</TD></TR>");
-				sw.WriteLine("<tr  align=\"center\" >");
-				#endregion
-
-				#region Couverture
+                #region Couverture
 
 
 
-				sw.WriteLine("<TD width=\"50%\" valign=\"top\" bgcolor=\"#E9E6EF\" ><TABLE align=\"center\" width=\"100%\" cellpadding=\"0\" cellSpacing=\"0\" border=\"0\">");
-				sw.WriteLine("<tr><td >");//Debut cellule image couverture
-				sw.WriteLine("&nbsp;</td><tr>");//fin cellule image couverture				
+                html.Append("<TD width=\"50%\" valign=\"top\" bgcolor=\"#E9E6EF\" ><TABLE align=\"center\" width=\"100%\" cellpadding=\"0\" cellSpacing=\"0\" border=\"0\">");
+                html.Append("<tr><td >");//Debut cellule image couverture
+                html.Append("&nbsp;</td><tr>");//fin cellule image couverture				
 
-				sw.WriteLine("</TABLE></td>");
-				#endregion
+                html.Append("</TABLE></td>");
+                #endregion
 
-				sw.WriteLine("<td width=\"50%\" valign=\"top\" >");//Debut cellule détail fiche
-				#region Détail fiche justificative
-				sw.WriteLine("<TABLE align=\"center\" width=\"100%\" valign=\"top\" cellpadding=\"0\" cellSpacing=\"0\" border=\"0\">");
+                html.Append("<td width=\"50%\" valign=\"top\" >");//Debut cellule détail fiche
+                #region Détail fiche justificative
+                html.Append("<TABLE align=\"center\" width=\"100%\" valign=\"top\" cellpadding=\"0\" cellSpacing=\"0\" border=\"0\">");
 
-				//Numero de page
-				if (dtResult.Rows[0]["media_paging"] != System.DBNull.Value) {
-					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD  " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(894, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + "  nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["media_paging"].ToString() + "</TD>");
-					sw.WriteLine("</TR>");
-				}
+                //Numero de page
+                if (dtResult.Rows[0]["media_paging"] != System.DBNull.Value) {
+                    html.Append("<TR  valign=\"top\">");
+                    html.Append("<TD  " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(894, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + "  nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["media_paging"].ToString() + "</TD>");
+                    html.Append("</TR>");
+                }
 
-				//Annonceur
-				if (dtResult.Rows[0]["advertiser"] != System.DBNull.Value) {
-					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD  " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(857, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + "  nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["advertiser"].ToString() + "</TD>");
-					sw.WriteLine("</TR>");
-				}
+                //Annonceur
+                if (dtResult.Rows[0]["advertiser"] != System.DBNull.Value) {
+                    html.Append("<TR  valign=\"top\">");
+                    html.Append("<TD  " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(857, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + "  nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["advertiser"].ToString() + "</TD>");
+                    html.Append("</TR>");
+                }
 
-				//Produit
-				if (dtResult.Rows[0]["product"] != System.DBNull.Value) {
-					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD  " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(858, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["product"].ToString() + "</TD>");
-					sw.WriteLine("</TR>");
-				}
+                //Produit
+                if (dtResult.Rows[0]["product"] != System.DBNull.Value) {
+                    html.Append("<TR  valign=\"top\">");
+                    html.Append("<TD  " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(858, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["product"].ToString() + "</TD>");
+                    html.Append("</TR>");
+                }
 
-				//Groupe
-				if (dtResult.Rows[0]["group_"] != System.DBNull.Value) {
-					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(859, _webSession.SiteLanguage)) + " </TD><TD   " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["group_"].ToString() + "</TD>");
-					sw.WriteLine("</TR>");
-				}
+                //Groupe
+                if (dtResult.Rows[0]["group_"] != System.DBNull.Value) {
+                    html.Append("<TR  valign=\"top\">");
+                    html.Append("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(859, _webSession.SiteLanguage)) + " </TD><TD   " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["group_"].ToString() + "</TD>");
+                    html.Append("</TR>");
+                }
 
-				//Surface en page
-				if (dtResult.Rows[0]["area_page"] != System.DBNull.Value) {
-					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1767, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["area_page"].ToString() + "</TD>");
-					sw.WriteLine("</TR>");
-				}
+                //Surface en page
+                if (dtResult.Rows[0]["area_page"] != System.DBNull.Value) {
+                    html.Append("<TR  valign=\"top\">");
+                    html.Append("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1767, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["area_page"].ToString() + "</TD>");
+                    html.Append("</TR>");
+                }
 
-				//Surface en mmc
-				if (dtResult.Rows[0]["area_mmc"] != System.DBNull.Value) {
-					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1768, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["area_mmc"].ToString() + "</TD>");
-					sw.WriteLine("</TR>");
-				}
+                //Surface en mmc
+                if (dtResult.Rows[0]["area_mmc"] != System.DBNull.Value) {
+                    html.Append("<TR  valign=\"top\">");
+                    html.Append("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1768, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["area_mmc"].ToString() + "</TD>");
+                    html.Append("</TR>");
+                }
 
-				//Descriptif
-				if (dtResult.Rows[0]["location"] != System.DBNull.Value) {
-					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1769, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["location"].ToString() + "</TD>");
-					sw.WriteLine("</TR>");
-				}
+                //Descriptif
+                if (dtResult.Rows[0]["location"] != System.DBNull.Value) {
+                    html.Append("<TR  valign=\"top\">");
+                    html.Append("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1769, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["location"].ToString() + "</TD>");
+                    html.Append("</TR>");
+                }
 
-				//Format
-				if (dtResult.Rows[0]["format"] != System.DBNull.Value) {
-					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1420, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["format"].ToString() + "</TD>");
-					sw.WriteLine("</TR>");
-				}
+                //Format
+                if (dtResult.Rows[0]["format"] != System.DBNull.Value) {
+                    html.Append("<TR  valign=\"top\">");
+                    html.Append("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1420, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["format"].ToString() + "</TD>");
+                    html.Append("</TR>");
+                }
 
-				//Couleur
-				if (dtResult.Rows[0]["color"] != System.DBNull.Value) {
-					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD  " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1438, _webSession.SiteLanguage)) + " </TD><TD   " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["color"].ToString() + "</TD>");
-					sw.WriteLine("</TR>");
-				}
+                //Couleur
+                if (dtResult.Rows[0]["color"] != System.DBNull.Value) {
+                    html.Append("<TR  valign=\"top\">");
+                    html.Append("<TD  " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1438, _webSession.SiteLanguage)) + " </TD><TD   " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["color"].ToString() + "</TD>");
+                    html.Append("</TR>");
+                }
 
-				//Rang famille
-				if (dtResult.Rows[0]["rank_sector"] != System.DBNull.Value) {
-					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD  " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1426, _webSession.SiteLanguage)) + " </TD><TD   " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["rank_sector"].ToString() + "</TD>");
-					sw.WriteLine("</TR>");
-				}
+                //Rang famille
+                if (dtResult.Rows[0]["rank_sector"] != System.DBNull.Value) {
+                    html.Append("<TR  valign=\"top\">");
+                    html.Append("<TD  " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1426, _webSession.SiteLanguage)) + " </TD><TD   " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["rank_sector"].ToString() + "</TD>");
+                    html.Append("</TR>");
+                }
 
-				//Rang groupe
-				if (dtResult.Rows[0]["rank_group_"] != System.DBNull.Value) {
-					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1427, _webSession.SiteLanguage)) + " </TD><TD   " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["rank_group_"].ToString() + "</TD>");
-					sw.WriteLine("</TR>");
-				}
+                //Rang groupe
+                if (dtResult.Rows[0]["rank_group_"] != System.DBNull.Value) {
+                    html.Append("<TR  valign=\"top\">");
+                    html.Append("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1427, _webSession.SiteLanguage)) + " </TD><TD   " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["rank_group_"].ToString() + "</TD>");
+                    html.Append("</TR>");
+                }
 
-				//Rang support
-				if (dtResult.Rows[0]["rank_media"] != System.DBNull.Value) {
-					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1428, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["rank_media"].ToString() + "</TD>");
-					sw.WriteLine("</TR>");
-				}
+                //Rang support
+                if (dtResult.Rows[0]["rank_media"] != System.DBNull.Value) {
+                    html.Append("<TR  valign=\"top\">");
+                    html.Append("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1428, _webSession.SiteLanguage)) + " </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["rank_media"].ToString() + "</TD>");
+                    html.Append("</TR>");
+                }
 
-				//Investissement
-				if (dtResult.Rows[0]["expenditure_euro"] != System.DBNull.Value) {
-					sw.WriteLine("<TR  valign=\"top\">");
-					sw.WriteLine("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1770, _webSession.SiteLanguage)) + "  (" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1423, _webSession.SiteLanguage)) + ") </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["expenditure_euro"].ToString() + "</TD>");
-					sw.WriteLine("</TR>");
-				}
+                //Investissement
+                if (dtResult.Rows[0]["expenditure_euro"] != System.DBNull.Value) {
+                    html.Append("<TR  valign=\"top\">");
+                    html.Append("<TD   " + styleTitle + " nowrap>&nbsp;&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1770, _webSession.SiteLanguage)) + "  (" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1423, _webSession.SiteLanguage)) + ") </TD><TD  " + styleValue + " nowrap>  &nbsp;&nbsp;&nbsp;" + dtResult.Rows[0]["expenditure_euro"].ToString() + "</TD>");
+                    html.Append("</TR>");
+                }
 
-				sw.WriteLine("</TABLE>");
+                html.Append("</TABLE>");
 
-				#endregion
-				sw.WriteLine("</td>");//fin cellule détail fiche
+                #endregion
+                html.Append("</td>");//fin cellule détail fiche
 
-				#region Fin Tableau général
-				sw.WriteLine("</tr>");
-				sw.WriteLine("</table>");
-				#endregion
+                #region Fin Tableau général
+                html.Append("</tr>");
+                html.Append("</table>");
+                #endregion
 
-				sw.WriteLine("</TR></TABLE >");
+                html.Append("</TR></TABLE >");
 
-				#region Html file loading
-				Functions.Functions.CloseHtmlFile(sw);
-				HTML2PDF2Class html = new HTML2PDF2Class();
-                html.MarginLeft = 170;	//Convert.ToInt32(this.LeftMargin);		
-				html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
-                html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
-                html.MinimalWidth = this.PDFPAGE_Width - 170 - 170;
-				html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);				
-				html.ConnectToPDFLibrary(this);
-				//html.SetLogFile("LodsHtmlToPdf.txt");
-				html.LoadHTMLFile(workFile);
-				html.ConvertPage(0);
-				html.DisconnectFromPDFLibrary();
+                this.LeftMargin = 170;
+                this.RightMargin = 170;
+                this.ConvertHtmlToPDF(html.ToString(),
+                    WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset,
+                    WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
+                    _config.WebServer,
+                    _config.Html2PdfLogin,
+                    _config.Html2PdfPass,
+                    0);
 
-				#endregion
-
-				#region Clean File
-				File.Delete(workFile);
-				#endregion
-
-				#region Insertion Couverture
+                #region Insertion Couverture
 
                 string imgPath = _config.ScanPath + _proofDetail.IdMedia + @"\" + _proofDetail.DateCover + @"\" + "imagette" + @"\" + TNS.AdExpress.Constantes.Web.CreationServerPathes.COUVERTURE;
-				if (File.Exists(imgPath)) {
-					Image imgG = Image.FromFile(imgPath);
-					double zoomValue = 0.6;
-					int imgI = this.AddImageFromFilename(imgPath, TxImageCompressionType.itcFlate);
-					double w = (double)(this.PDFPAGE_Width - this.LeftMargin - this.RightMargin) / (double)imgG.Width;
-					double coef = Math.Min((double)zoomValue, w);
-					w = (double)(this.WorkZoneBottom - this.WorkZoneTop) / (double)imgG.Height;
-					coef = Math.Min((double)coef, w);
+                if (File.Exists(imgPath)) {
+                    Image imgG = Image.FromFile(imgPath);
+                    double zoomValue = 0.6;
+                    int imgI = this.AddImageFromFilename(imgPath, TxImageCompressionType.itcFlate);
+                    double w = (double)(this.PDFPAGE_Width - this.LeftMargin - this.RightMargin) / (double)imgG.Width;
+                    double coef = Math.Min((double)zoomValue, w);
+                    w = (double)(this.WorkZoneBottom - this.WorkZoneTop) / (double)imgG.Height;
+                    coef = Math.Min((double)coef, w);
 
-					this.PDFPAGE_ShowImage(imgI,250, 85,(double)(coef * imgG.Width), (double)(coef * imgG.Height), 0);
-				}
-				string str = null;
+                    this.PDFPAGE_ShowImage(imgI, 250, 85, (double)(coef * imgG.Width), (double)(coef * imgG.Height), 0);
+                }
+                string str = null;
                 Style.GetTag("ShouTitleFont").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
-				
 
-				//Support
-				if (dtResult.Rows[0]["Media"] != System.DBNull.Value) {
-					str = Convertion.ToHtmlString(GestionWeb.GetWebWord(971, _webSession.SiteLanguage)) + " : " + dtResult.Rows[0]["Media"].ToString();
-					this.PDFPAGE_TextOut(250,
-						300, 0, str);
-					
-				}
-                Style.GetTag("ShouTitleFont").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);				
 
-				//Date de parution
-				if (dtResult.Rows[0]["datePublication"] != System.DBNull.Value) {
-					str = Convertion.ToHtmlString(GestionWeb.GetWebWord(1381, _webSession.SiteLanguage)) + " : " + Dates.DateToString((DateTime)dtResult.Rows[0]["datePublication"], _webSession.SiteLanguage);
-					this.PDFPAGE_TextOut(250,
-						315, 0, str);					
-				}
+                //Support
+                if (dtResult.Rows[0]["Media"] != System.DBNull.Value) {
+                    str = Convertion.ToHtmlString(GestionWeb.GetWebWord(971, _webSession.SiteLanguage)) + " : " + dtResult.Rows[0]["Media"].ToString();
+                    this.PDFPAGE_TextOut(250,
+                        300, 0, str);
 
-				//Nombre de pages
-				if (dtResult.Rows[0]["number_page_media"] != System.DBNull.Value) {
-					str = Convertion.ToHtmlString(GestionWeb.GetWebWord(1385, _webSession.SiteLanguage)) + " : " + dtResult.Rows[0]["number_page_media"].ToString();
-					this.PDFPAGE_TextOut(250,
-						330, 0, str);					
-				}
+                }
+                Style.GetTag("ShouTitleFont").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
 
-				#endregion
+                //Date de parution
+                if (dtResult.Rows[0]["datePublication"] != System.DBNull.Value) {
+                    str = Convertion.ToHtmlString(GestionWeb.GetWebWord(1381, _webSession.SiteLanguage)) + " : " + Dates.DateToString((DateTime)dtResult.Rows[0]["datePublication"], _webSession.SiteLanguage);
+                    this.PDFPAGE_TextOut(250,
+                        315, 0, str);
+                }
 
-			}
-			catch (System.Exception e) {
-				try {
-					sw.Close();
-				}
-				catch (System.Exception) { }
-				throw (new Exceptions.ShouPdfException("Unable to build the session parameter page for request " + _rqDetails["id_static_nav_session"].ToString() + ".", e));
-			}
+                //Nombre de pages
+                if (dtResult.Rows[0]["number_page_media"] != System.DBNull.Value) {
+                    str = Convertion.ToHtmlString(GestionWeb.GetWebWord(1385, _webSession.SiteLanguage)) + " : " + dtResult.Rows[0]["number_page_media"].ToString();
+                    this.PDFPAGE_TextOut(250,
+                        330, 0, str);
+                }
+
+                #endregion
+
+            }
+            catch (System.Exception e) {
+                throw (new Exceptions.ShouPdfException("Unable to build the session parameter page for request " + _rqDetails["id_static_nav_session"].ToString() + ".", e));
+            }
+            finally {
+                this.LeftMargin = currentLeftMargin;
+                this.RightMargin = currentRightMargin;
+            }
 		}
 		#endregion
 

@@ -14,8 +14,9 @@ using BastetCommon=TNS.AdExpress.Bastet.Common;
 using TNS.AdExpress.Constantes.DB;
 using BastetExceptions=TNS.AdExpress.Anubis.Bastet.Exceptions;
 using DateFrameWork=TNS.FrameWork.Date;
-using TNS.AdExpress.Domain.Translation;
+
 using System.IO;
+using TNS.AdExpress.Bastet.Translation;
 
 namespace TNS.AdExpress.Anubis.Bastet.UI
 {

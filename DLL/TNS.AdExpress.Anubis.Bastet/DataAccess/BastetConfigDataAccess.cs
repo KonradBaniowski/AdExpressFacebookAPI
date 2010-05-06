@@ -57,10 +57,6 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 								Value=Reader.GetAttribute("path");
 								if (Value!=null) cfg.ExcelPath = Value;
 								break;								
-							case "language" :
-								Value = Reader.GetAttribute("language");
-								if (Value != null) cfg.Language = int.Parse(Value);
-								break;	
 						}
 					}
 				}

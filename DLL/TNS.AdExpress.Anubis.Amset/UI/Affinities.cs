@@ -81,7 +81,7 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 		/// <summary>
 		/// Affinities
 		/// </summary>
-        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource, TNS.AdExpress.Domain.Theme.Style style) {
+        internal static void SetExcelSheet(Workbook excel, WebSession webSession, IDataSource dataSource, TNS.FrameWork.WebTheme.Style style) {
 
 			try{
 		

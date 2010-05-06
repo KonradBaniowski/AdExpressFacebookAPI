@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+  <pluginConfiguration defaultConnectionId="alert">
+    <dataAccessLayers>
+      <dataAccessLayer enum="Session" name="SessionDAL" assemblyName="TNS.Ares.StaticNavSession.DAL.Default.dll" class="TNS.Ares.StaticNavSession.DAL.Default.StaticNavSessionDAL" />
+    </dataAccessLayers>
+    <plugins description="List of plugins" defaultFamilyId="132" defaultLongevity="30" defaultFilePath="\\fitnses-dmzad01\AdExCustomerFiles" defaultVirtualPath="Export" alertDal="AlertDAL" sessionDal="SessionDAL" defaultThemePath="C:\Dev\Csharp2\AdExpress International Demo\Dev\Anubis">
+      <plugin enumId="Hotep" name="Hotep" resultType="6" longevity="10" deleteExpired="true" extension=".pdf"  />
+      <plugin enumId="Miysis" name="Miysis" resultType="7" longevity="10" deleteExpired="true" extension=".pdf"  />
+      <plugin enumId="Bastet" name="Bastet" resultType="2" longevity="10" deleteExpired="true" extension=".pdf"  />
+    </plugins>
+  </pluginConfiguration>

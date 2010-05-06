@@ -56,11 +56,11 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
         /// <summary>
         /// Style
         /// </summary>
-        private TNS.AdExpress.Domain.Theme.Style _style = null;
+        private TNS.FrameWork.WebTheme.Style _style = null;
 		#endregion
 		
 		#region Constructeur
-        public UIEvolutionGraph(WebSession webSession, IDataSource dataSource, HotepConfig config, object[,] tab, TNS.AdExpress.Domain.Theme.Style style)
+        public UIEvolutionGraph(WebSession webSession, IDataSource dataSource, HotepConfig config, object[,] tab, TNS.FrameWork.WebTheme.Style style)
             : base() {
             _webSession = webSession;
             _dataSource = dataSource;

@@ -41,7 +41,7 @@ namespace TNS.AdExpress.Anubis.BusinessFacade.Result{
         /// <summary>
         /// Style
         /// </summary>
-        private TNS.AdExpress.Domain.Theme.Style _style = null;
+        private TNS.FrameWork.WebTheme.Style _style = null;
 		/// <summary>
 		/// Pdf left Margin
 		/// </summary>
@@ -82,7 +82,7 @@ namespace TNS.AdExpress.Anubis.BusinessFacade.Result{
         /// <summary>
         /// Get Style
         /// </summary>
-        public TNS.AdExpress.Domain.Theme.Style Style {
+        public TNS.FrameWork.WebTheme.Style Style {
             get { return _style; }
         }
 		/// <summary>
@@ -142,15 +142,15 @@ namespace TNS.AdExpress.Anubis.BusinessFacade.Result{
         /// <summary>
         /// Constructeur
         /// </summary>
-        public Pdf(TNS.AdExpress.Domain.Theme.Style style)
+        public Pdf(TNS.FrameWork.WebTheme.Style style)
             : base() {
             _style = style;
-            _leftMargin = ((TNS.AdExpress.Domain.Theme.Box)(_style.GetTag("layout"))).Margin.MarginLeft;
-            _rightMargin = ((TNS.AdExpress.Domain.Theme.Box)(_style.GetTag("layout"))).Margin.MarginRight;
-            _topMargin = ((TNS.AdExpress.Domain.Theme.Box)(_style.GetTag("layout"))).Margin.MarginTop;
-            _bottomMargin = ((TNS.AdExpress.Domain.Theme.Box)(_style.GetTag("layout"))).Margin.MarginBottom;
-            _headerHeight = ((TNS.AdExpress.Domain.Theme.Box)(_style.GetTag("header"))).Height;
-            _footerHeight = ((TNS.AdExpress.Domain.Theme.Box)(style.GetTag("footer"))).Height;
+            _leftMargin = ((TNS.FrameWork.WebTheme.Box)(_style.GetTag("layout"))).Margin.MarginLeft;
+            _rightMargin = ((TNS.FrameWork.WebTheme.Box)(_style.GetTag("layout"))).Margin.MarginRight;
+            _topMargin = ((TNS.FrameWork.WebTheme.Box)(_style.GetTag("layout"))).Margin.MarginTop;
+            _bottomMargin = ((TNS.FrameWork.WebTheme.Box)(_style.GetTag("layout"))).Margin.MarginBottom;
+            _headerHeight = ((TNS.FrameWork.WebTheme.Box)(_style.GetTag("header"))).Height;
+            _footerHeight = ((TNS.FrameWork.WebTheme.Box)(style.GetTag("footer"))).Height;
         }
 		#endregion
 
@@ -378,7 +378,7 @@ namespace TNS.AdExpress.Anubis.BusinessFacade.Result{
 			//left Image
 			if(leftImage){
 				coef = 1.0;
-                pathPicture = ((TNS.AdExpress.Domain.Theme.Picture)_style.GetTag("pictureLeft")).Path;
+                pathPicture = ((TNS.FrameWork.WebTheme.Picture)_style.GetTag("pictureLeft")).Path;
 				lImg = this.AddImageFromFilename(pathPicture,TxImageCompressionType.itcFlate);
                 Image lgImg = Image.FromFile(pathPicture);
 				if(lgImg.Height> _headerHeight)
@@ -389,7 +389,7 @@ namespace TNS.AdExpress.Anubis.BusinessFacade.Result{
 			//right image
 			if(rightImage){
 				coef = 1.0;
-                pathPicture = ((TNS.AdExpress.Domain.Theme.Picture)_style.GetTag("pictureRight")).Path;
+                pathPicture = ((TNS.FrameWork.WebTheme.Picture)_style.GetTag("pictureRight")).Path;
                 rImg = this.AddImageFromFilename(pathPicture, TxImageCompressionType.itcFlate);
                 Image rgImg = Image.FromFile(pathPicture);
 				if(rgImg.Height> _headerHeight)
@@ -400,7 +400,7 @@ namespace TNS.AdExpress.Anubis.BusinessFacade.Result{
 			//title
             _style.GetTag("headerFont").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
 
-            double fontSize = ((TNS.AdExpress.Domain.Theme.Font)_style.GetTag("headerFont")).Size;
+            double fontSize = ((TNS.FrameWork.WebTheme.Font)_style.GetTag("headerFont")).Size;
 			this.PDFPAGE_TextOut(
 				this.PDFPAGE_Width/2 - (this.PDFPAGE_GetTextWidth(title)/2),
                 (_headerHeight) / 2 + _topMargin - fontSize / 2, 

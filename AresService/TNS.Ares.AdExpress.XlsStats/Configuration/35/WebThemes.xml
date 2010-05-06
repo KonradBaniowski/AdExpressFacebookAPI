@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <themes>
+    <theme id="3" description="Default Bastet Theme using English For Finland" name="FinlandBastetUk" siteLanguage="44"/>
+    <theme id="4" description="Default Bastet Theme using finnish" name="FinlandBastetFi" siteLanguage="35"/>
+  </themes>
+</configuration>

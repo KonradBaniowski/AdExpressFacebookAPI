@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configurations>
-  <lsClientConfiguration familyId="123" monitorPort="30232" productName="Mnevis request treatment" maxAvailableSlots="1" directoryName="33\Plugins\Mnevis.xml">
-    <moduleDescription description="Mnevis request treatment" moduleId="8"/>
+  <lsClientConfiguration familyId="123" monitorPort="30232" productName="Ares Service treatment - PDF Chrono Plan Media (Mnevis)" maxAvailableSlots="1" directoryName="33\Plugins\Mnevis.xml">
+    <moduleDescription description="Ares Service treatment - PDF Chrono Plan Media (Mnevis)" moduleId="8"/>
   </lsClientConfiguration>
 </configurations>

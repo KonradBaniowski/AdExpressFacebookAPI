@@ -41,10 +41,7 @@ using TNS.FrameWork;
 using TNS.FrameWork.Net.Mail;
 
 using PDFCreatorPilotLib;
-using HtmlSnap2;
 using TNS.FrameWork.DB.Common;
-
-using HTML2PDFAddOn;
 
 using TNS.AdExpress.Web.Common.Results;
 using TNS.AdExpress.Web.UI.Results.MediaPlanVersions;
@@ -52,8 +49,8 @@ using WebFunctions=TNS.AdExpress.Web.Functions;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Domain.Theme;
 using TNS.Ares.Pdf;
+using TNS.FrameWork.WebTheme;
 #endregion
 
 namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
@@ -226,28 +223,6 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 		}
 		#endregion
 
-		#region GetWorkDirectory
-		/// <summary>
-		/// Provide a work directory. Create it if it doesn't exist or return a path to it
-		/// </summary>
-		/// <returns></returns>
-		internal string GetWorkDirectory()
-		{
-			try
-			{
-				if(!Directory.Exists(@"tmp_"+_rqDetails["id_static_nav_session"].ToString()))
-				{
-					Directory.CreateDirectory(@"tmp_"+_rqDetails["id_static_nav_session"].ToString());
-				}
-				return (@"tmp_"+_rqDetails["id_static_nav_session"].ToString());
-			}
-			catch(System.Exception e)
-			{
-				throw(new MnevisPdfException("Unable to provide the working directory", e));
-			}
-		}
-		#endregion
-
 		#endregion
 
 		#region MainPage
@@ -258,8 +233,19 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 		private void MainPageDesign(){
 		
 			this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-	
-			string imgPath = @"Images\" + _webSession.SiteLanguage + @"\LogoAdExpress.jpg";
+
+            Picture picture = ((Picture)Style.GetTag("pictureTitle"));
+            string imgPath = string.Empty;
+
+            if (File.Exists(picture.Path)) {
+                imgPath = picture.Path;
+            }
+            else if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\" + picture.Path)) {
+                imgPath = AppDomain.CurrentDomain.BaseDirectory + @"\" + picture.Path;
+            }
+            else {
+                imgPath = picture.Path;
+            }
 			Image imgG = Image.FromFile(imgPath);
 			
 			double w = (double)(this.PDFPAGE_Width - this.LeftMargin - this.RightMargin)/(double)imgG.Width;
@@ -301,7 +287,6 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 	
 			#region GETHTML
 			String title="";
-			StringBuilder html=new StringBuilder(10000);
 			StringBuilder htmlHeader=new StringBuilder(10000);
 			MediaPlanResultData result=null;
 			ArrayList partieHTML = new ArrayList();
@@ -313,26 +298,6 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
             string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
 
 			try {
-
-				html.Append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" >");
-				html.Append("<HTML>");
-				html.Append("<HEAD>");
-				html.Append("<META http-equiv=\"Content-Type\" content=\"text/html; charset="+charSet+"\">");
-				html.Append("<meta content=\"Microsoft Visual Studio .NET 7.1\" name=\"GENERATOR\">");
-				html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
-				html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
-				html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-                html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
-                html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
-                html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
-                html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
-				html.Append("<meta http-equiv=\"expires\" content=\"0\">");
-				html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");
-				html.Append("<meta name=\"Cache-control\" content=\"no-cache\">");
-				html.Append("</HEAD>");
-                html.Append("<body style=\"margin-top:0px;\">");
-
-				htmlHeader.Append(html.ToString());
 
 				#region Paramétrage des dates
 				//Formatting date to be used in the tabs which use APPM Press table
@@ -357,7 +322,6 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 
 				ExportVersionsVehicleUI exportVersionsVehicleUI=new ExportVersionsVehicleUI(_webSession,result.VersionsDetail,TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press);
 				VersionsPluriMediaUI versionsUI=new VersionsPluriMediaUI(_webSession,result.VersionsDetail);
-                html.Append("\r\n\t<tr class=\"whiteBackGround\">\r\n\t\t<td>");
 				title=GestionWeb.GetWebWord(1972, this._webSession.SiteLanguage);
 				partieHTMLVersion=versionsUI.GetAPPMHtmlExport(_dataSource,title,ref versionsUIs);
 				startIndex = DecoupageVersionHTML(partieHTMLVersion,true);
@@ -383,7 +347,7 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 		/// <param name="strHtml">Le code HTML à découper</param>
 		/// <param name="nbLines">Nombres de lignes pour le découpage</param>
 		/// <param name="htmlHeader">L'entête HTML</param>
-		private void DecoupageHTML(StringBuilder html,string strHtml, int nbLines,StringBuilder htmlHeader,bool version) {
+		private void DecoupageHTML(StringBuilder html,string strHtml, int nbLines,bool version) {
 
 			int startIndex=0,oldStartIndex=0,tmp;
 			ArrayList partieHTML = new ArrayList();
@@ -416,13 +380,14 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 			
 			for(int i=0; i<partieHTML.Count; i++) {
 				if(i>0)
-					html.Append(GetHeader(htmlHeader));
+                    html.Append("\r\n\t<tr>\r\n\t\t<td>");
 				html.Append(partieHTML[i].ToString());
-				html.Append(GetEnd());
+                html.Append("</table>");
 				if(version)
-					SnapShots(ref html,i,partieHTML,true, ref coef);
+					SnapShots(html.ToString(),i,partieHTML.Count,true, ref coef);
 				else
-					SnapShots(ref html,i,partieHTML,false, ref coef);
+					SnapShots(html.ToString(),i,partieHTML.Count,false, ref coef);
+                html = new StringBuilder();
 			}
 		}
 		/// <summary>
@@ -458,15 +423,17 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 			
 			for(int i=0; i<partieHTML.Count-1; i++)
 			{
-				if(i>0)
-					htmltmp.Append(GetHeader());
+                if (i > 0) {
+                    html.Append("<table cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
+                    html.Append("\r\n\t<tr>\r\n\t\t<td>");
+                }
 				htmltmp.Append(partieHTML[i].ToString());
-				htmltmp.Append(GetEnd());
-				if(version)
-					SnapShots(ref htmltmp,i,partieHTML,true, ref coef);
-				else
-					SnapShots(ref htmltmp,i,partieHTML,false, ref coef);
-
+                htmltmp.Append("</table>");
+                if (version)
+                    SnapShots(htmltmp.ToString(), i, partieHTML.Count, true, ref coef);
+                else
+                    SnapShots(htmltmp.ToString(), i, partieHTML.Count, false, ref coef);
+                htmltmp = new StringBuilder(); 
 			}
 		}
 		/// <summary>
@@ -482,13 +449,15 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 			//htmltmp.Append(html.ToString());
 
 			for(int i=0; i<result.Count; i++) {
-				htmltmp.Append(GetHeader());
-				htmltmp.Append(result[i].ToString()); 
-				htmltmp.Append(GetEnd());
+                htmltmp.Append("<table cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
+                htmltmp.Append("\r\n\t<tr>\r\n\t\t<td>");
+				htmltmp.Append(result[i].ToString());
+                htmltmp.Append("</table>");
 				if(version)
-					SnapShots(ref htmltmp,i,result,true, ref coef);
+					SnapShots(htmltmp.ToString(),i,result.Count,true, ref coef);
 				else
-					SnapShots(ref htmltmp,i,result,false, ref coef);
+					SnapShots(htmltmp.ToString(),i,result.Count,false, ref coef);
+                htmltmp = new StringBuilder();
 			}
 		}
 		/// <summary>
@@ -504,85 +473,39 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 			//htmltmp.Append(html.ToString());
 
 			for(int i=0; i<result.Count; i++) {
-				htmltmp.Append(GetHeader());
+                htmltmp.Append("<table cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
+                htmltmp.Append("\r\n\t<tr>\r\n\t\t<td>");
 				htmltmp.Append(result[i].ToString()); 
-				htmltmp.Append(GetEnd());
-				if(version) {
-					if(i==0)
-						 startIndex = HtmlToPDF(ref htmltmp,i,result,true);
-					else
-						HtmlToPDF(ref htmltmp,i,result,true);
-				}
-				else
-					HtmlToPDF(ref htmltmp,i,result,false);
+				htmltmp.Append("</table>");
+                if (version) {
+                    if (i == 0) {
+                        startIndex = this.ConvertHtmlToPDF(htmltmp.ToString(),
+                                                WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset,
+                                                WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
+                                                _config.WebServer,
+                                                _config.Html2PdfLogin,
+                                                _config.Html2PdfPass);
+                    }
+                    else {
+                        this.ConvertHtmlToPDF(htmltmp.ToString(),
+                                                WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset,
+                                                WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
+                                                _config.WebServer,
+                                                _config.Html2PdfLogin,
+                                                _config.Html2PdfPass);
+                    }
+                }
+                else {
+                    this.ConvertHtmlToPDF(htmltmp.ToString(),
+                                                WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset,
+                                                WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
+                                                _config.WebServer,
+                                                _config.Html2PdfLogin,
+                                                _config.Html2PdfPass);
+                }
+                htmltmp = new StringBuilder();
 			}
 			return startIndex;
-		}
-		#endregion
-
-		#region Fermeture du code HTML
-		/// <summary>
-		/// Fermeture du code HTML
-		/// </summary>
-		/// <returns></returns>
-		private string GetEnd()
-		{
-			StringBuilder html = new StringBuilder(10000);
-			html.Append("</table>");
-			html.Append("</body>");
-			html.Append("</HTML>");
-			return(html.ToString());
-		}
-		#endregion
-
-		#region En tête du code HTML
-		/// <summary>
-		/// En tête du code HTML
-		/// </summary>
-		/// <param name="htmlHeader">L'en tête du tableau (Media Plan)</param>
-		/// <returns></returns>
-		private string GetHeader(StringBuilder htmlHeader)
-		{
-			StringBuilder html = new StringBuilder(10000);
-			
-			html.Append(htmlHeader.ToString());
-			html.Append("\r\n\t<tr>\r\n\t\t<td>");
-			return(html.ToString());
-		}
-		#endregion
-
-		#region En tête du code HTML (Visuel)
-		/// <summary>
-		/// En tête du code HTML
-		/// </summary>
-		/// <returns></returns>
-		private string GetHeader(){
-
-			StringBuilder html = new StringBuilder(10000);
-            string charSet = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset;
-            string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
-
-			html.Append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" >");
-			html.Append("<HTML>");
-			html.Append("<HEAD>");
-			html.Append("<META http-equiv=\"Content-Type\" content=\"text/html; charset="+charSet+"\">");
-			html.Append("<meta content=\"Microsoft Visual Studio .NET 7.1\" name=\"GENERATOR\">");
-			html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
-			html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
-			html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-            html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
-            html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
-            html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
-            html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
-			html.Append("<meta http-equiv=\"expires\" content=\"0\">");
-			html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");
-			html.Append("<meta name=\"Cache-control\" content=\"no-cache\">");
-			html.Append("</HEAD>");
-            html.Append("<body style=\"margin-top:0px;\">");
-			html.Append("<table cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
-			html.Append("\r\n\t<tr>\r\n\t\t<td>");
-			return(html.ToString());
-           
 		}
 		#endregion
 
@@ -593,34 +516,23 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 		/// <param name="html">Le code HTML</param>
 		/// <param name="i">Index d'une partie de code</param>
 		/// <param name="partieHTML">Une partie du code HTML</param>
-		private void SnapShots(ref StringBuilder html, int i, ArrayList partieHTML,bool version, ref double coef)
+        private void SnapShots(string html, int currentIndexPart, int nbPart, bool version, ref double coef)
 		{
 		
-			CHtmlSnapClass snap;
-			IntPtr  hBitmap;
 			string filePath="";
 
 			#region Création et Insertion d'une image dans une nouvelle page du PDF
 
 			this.NewPage();
-
 			this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-
-			hBitmap = IntPtr.Zero;
-			snap = new CHtmlSnapClass();
-			snap.SetTimeOut(100000);
-			snap.SetCode("21063505C78EB32A"); 
-			snap.SnapHtmlString(html.ToString(), "*");
-
-			html=new StringBuilder(10000);
 						
-			//GetBitmapHandle returns a  bitmap handle, it must be deleted like above, or there will
-			//be memory leaks.  
-			hBitmap = (IntPtr)snap.GetBitmapHandle();
-
 			//here demo how to use GetImageBytes.
-			byte[] data = (byte[])snap.GetImageBytes(".jpg");	
-			filePath=GetWorkDirectory() + @"\Campaign_" + _rqDetails["id_static_nav_session"].ToString() + ".jpg";
+            byte[] data = this.ConvertHtmlToSnapJpgByte(html,
+            WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset,
+            WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
+            _config.WebServer);
+
+			filePath=Path.GetTempFileName();
 			FileStream  fs = File.OpenWrite(filePath); 	
 			BinaryWriter br = new BinaryWriter(fs); 
 
@@ -636,8 +548,8 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 			imgI = this.AddImageFromFilename(filePath,TxImageCompressionType.itcFlate);
 			
 			double w = 0;
-			
-			if((i<(partieHTML.Count-1))||(partieHTML.Count==1))	{
+
+            if ((currentIndexPart < (nbPart - 1)) || (nbPart == 1)) {
 				w = (double)(this.PDFPAGE_Width - this.LeftMargin - this.RightMargin)/(double)imgG.Width;
 				coef = Math.Min((double)1.0,w);
 				w = ((double)(this.WorkZoneBottom - this.WorkZoneTop)/(double)imgG.Height);
@@ -646,7 +558,7 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 
 			if(version){
 
-				if(i==(partieHTML.Count-1))	{
+                if (currentIndexPart == (nbPart - 1)) {
 					this.PDFPAGE_ShowImage(imgI,
 						X1, 54,
 						coef * imgG.Width,
@@ -663,8 +575,8 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 			
 			}
 			else{
-			
-				if(i==(partieHTML.Count-1))	{
+
+                if (currentIndexPart == (nbPart - 1)) {
 					this.PDFPAGE_ShowImage(imgI,
 						X1, 64,
 						coef * imgG.Width,
@@ -686,68 +598,6 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 			#region Clean File
 			File.Delete(filePath);
 			#endregion
-
-			#endregion
-		}
-
-		#endregion
-
-		#region Transformation du code HTML en une nouvelle page PDF
-		/// <summary>
-		/// Transformation du code HTML en une nouvelle page PDF
-		/// </summary>
-		/// <param name="html">Le code HTML</param>
-		/// <param name="i">Index d'une partie de code</param>
-		/// <param name="partieHTML">Une partie du code HTML</param>
-		private int HtmlToPDF(ref StringBuilder html, int i, ArrayList partieHTML,bool version) {
-		
-			StreamWriter sw = null;
-
-			#region Trasformation du code HTML
-
-			this.NewPage();
-
-			this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-
-			string workFile = GetWorkDirectory() + @"\SessionParameter" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
-			
-			sw = File.CreateText(workFile);
-			
-			sw.Write(html.ToString());
-
-			
-			try 
-			{
-				html=new StringBuilder(10000);
-							
-				#region Html file loading
-				Functions.Functions.CloseHtmlFile(sw);
-				HTML2PDF2Class htmlTmp = new HTML2PDF2Class();
-				htmlTmp.MarginLeft = Convert.ToInt32(this.LeftMargin);
-				htmlTmp.MarginTop = Convert.ToInt32(this.WorkZoneTop);
-				htmlTmp.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
-                htmlTmp.MinimalWidth = this.PDFPAGE_Width - Convert.ToInt32(this.LeftMargin) - Convert.ToInt32(this.RightMargin);
-				htmlTmp.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
-				htmlTmp.ConnectToPDFLibrary (this);
-				htmlTmp.LoadHTMLFile(workFile);
-				htmlTmp.ConvertAll();
-				htmlTmp.DisconnectFromPDFLibrary ();
-				#endregion
-
-				#region Clean File
-				File.Delete(workFile);
-				#endregion
-
-				return this.GetCurrentPageIndex();
-			}
-			catch(System.Exception e) {
-				try 
-				{
-					sw.Close();
-				}
-				catch(System.Exception e2){}
-				throw(new MnevisPdfException("Unable to build the session parameter page for request " + _rqDetails["id_static_nav_session"].ToString() + ".",e));
-			}
 
 			#endregion
 		}
@@ -904,84 +754,77 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 		private void SessionParameter() 
 		{
 
-			StreamWriter sw = null;
             string classCss = string.Empty;
+            StringBuilder html = new StringBuilder();
 
 			try {
-				this.NewPage();
-
-				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-
-				string workFile = GetWorkDirectory() + @"\SessionParameter" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
-
-                sw = Functions.Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 
 				#region Title
-				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
-				sw.WriteLine("<TR height=\"25\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"14\">");
-				sw.WriteLine("<TD class=\"txtViolet14Bold\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1752,_webSession.SiteLanguage)) + "</TD>");
-				sw.WriteLine("</TR>");
+				html.Append("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
+				html.Append("<TR height=\"25\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"14\">");
+				html.Append("<TD class=\"txtViolet14Bold\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1752,_webSession.SiteLanguage)) + "</TD>");
+				html.Append("</TR>");
 				#endregion
 
 				#region Period
-				sw.WriteLine("<TR height=\"7\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR>");
-				sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1755, _webSession.SiteLanguage)) + " :</TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"20\">");
-				sw.WriteLine("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;&nbsp;&nbsp;"
+				html.Append("<TR height=\"7\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"1\" class=\"lightPurple\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR>");
+				html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1755, _webSession.SiteLanguage)) + " :</TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"20\">");
+				html.Append("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;&nbsp;&nbsp;"
 					+ HtmlFunctions.GetPeriodDetail(_webSession)
 					+ "</TD>");
-				sw.WriteLine("</TR>");
+				html.Append("</TR>");
 				#endregion
 
 				#region Wave
 				//TODO WAVE
-				sw.WriteLine("<TR height=\"7\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR>");
-				sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1771, _webSession.SiteLanguage)) + " :</TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"20\">");
-				sw.WriteLine("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;&nbsp;&nbsp;"
+				html.Append("<TR height=\"7\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"1\" class=\"lightPurple\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR>");
+				html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1771, _webSession.SiteLanguage)) + " :</TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"20\">");
+				html.Append("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;&nbsp;&nbsp;"
 					+ ((LevelInformation)_webSession.SelectionUniversAEPMWave.Nodes[0].Tag).Text
 					+ "</TD>");
-				sw.WriteLine("</TR>");
+				html.Append("</TR>");
 				#endregion
 
 				#region Targets
-				sw.WriteLine("<TR height=\"7\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR>");
-				sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1757, _webSession.SiteLanguage)) + " :</TD>");
-				sw.WriteLine("</TR>");
+				html.Append("<TR height=\"7\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"1\" class=\"lightPurple\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR>");
+				html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1757, _webSession.SiteLanguage)) + " :</TD>");
+				html.Append("</TR>");
 				//Base target
 				string targets = "'" + _webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,CstRights.type.aepmTargetAccess) + "'";
 				//Wave
 				string idWave = ((LevelInformation)_webSession.SelectionUniversAEPMWave.Nodes[0].Tag).ID.ToString();
 				DataSet ds = TargetListDataAccess.GetAEPMTargetListFromIDSDataAccess(idWave, targets, _webSession.Source);
 				foreach(DataRow r in ds.Tables[0].Rows) {
-					sw.WriteLine("<TR height=\"20\">");
-					sw.WriteLine("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;&nbsp;&nbsp;");
-					sw.WriteLine(r["target"].ToString());
-					sw.WriteLine("</TD>");
-					sw.WriteLine("</TR>");
+					html.Append("<TR height=\"20\">");
+					html.Append("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;&nbsp;&nbsp;");
+					html.Append(r["target"].ToString());
+					html.Append("</TD>");
+					html.Append("</TR>");
 				}
 				ds.Dispose();
 				ds = null;
@@ -990,93 +833,77 @@ namespace TNS.AdExpress.Anubis.Mnevis.BusinessFacade{
 				#region Products
 				const int nbLineByPage = 32;
 				int currentLine = 12;
-				sw.WriteLine("<TR height=\"7\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR>");
-				sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1759, _webSession.SiteLanguage)) + " :</TD>");
-				sw.WriteLine("</TR>");
+				html.Append("<TR height=\"7\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"1\" class=\"lightPurple\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR>");
+				html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1759, _webSession.SiteLanguage)) + " :</TD>");
+				html.Append("</TR>");
 				//reference
-				sw.WriteLine("<TR height=\"14\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR>");
-				sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1677, _webSession.SiteLanguage)) + " :</TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR align=\"center\">");
-				sw.WriteLine("<TD><br>");
+				html.Append("<TR height=\"14\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR>");
+				html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1677, _webSession.SiteLanguage)) + " :</TD>");
+				html.Append("</TR>");
+				html.Append("<TR align=\"center\">");
+				html.Append("<TD><br>");
 				if (_webSession.PrincipalProductUniverses != null && _webSession.PrincipalProductUniverses.Count > 0)
-                    sw.WriteLine(DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[0], _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.Source, 600, true, nbLineByPage, ref currentLine));
+                    html.Append(DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[0], _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.Source, 600, true, nbLineByPage, ref currentLine));
 
-				sw.WriteLine("</TD>");
-				sw.WriteLine("</TR>");
+				html.Append("</TD>");
+				html.Append("</TR>");
 				//competitor
-				sw.WriteLine("<TR height=\"14\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR>");
+				html.Append("<TR height=\"14\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR>");
 				if (_webSession.PrincipalProductUniverses.Count > 1) {
-					sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1678, _webSession.SiteLanguage)) + " :</TD>");
+					html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1678, _webSession.SiteLanguage)) + " :</TD>");
 				}
 				else {
-					sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1668, _webSession.SiteLanguage)) + " :</TD>");
+					html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1668, _webSession.SiteLanguage)) + " :</TD>");
 				}
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR align=\"center\">");
-				sw.WriteLine("<TD><br>");
+				html.Append("</TR>");
+				html.Append("<TR align=\"center\">");
+				html.Append("<TD><br>");
 				if (_webSession.PrincipalProductUniverses.Count > 1) {
-                    sw.WriteLine(DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[1], _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.Source, 600, true, nbLineByPage, ref currentLine));
+                    html.Append(DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[1], _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.Source, 600, true, nbLineByPage, ref currentLine));
 				}
 				else {
 					ds = GroupSystem.ListFromSelection(_dataSource, _webSession);
-					sw.WriteLine("<table class=\"txtViolet11Bold\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\">");
+					html.Append("<table class=\"txtViolet11Bold\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\">");
 					for(int i =0; i < ds.Tables[0].Rows.Count; i++) {
-						sw.WriteLine("<tr>");
+						html.Append("<tr>");
 						if((i+1) < ds.Tables[0].Rows.Count) {
                             classCss = "violetBorderWithoutBottom";
 						}
 						else {
                             classCss = "violetBorder";
 						}
-                        sw.WriteLine("<td class=\"" + classCss + "\">&nbsp;&nbsp;");
-						sw.WriteLine(ds.Tables[0].Rows[i][0].ToString());
-						sw.WriteLine("</td>");
-						sw.WriteLine("</tr>");
+                        html.Append("<td class=\"" + classCss + "\">&nbsp;&nbsp;");
+						html.Append(ds.Tables[0].Rows[i][0].ToString());
+						html.Append("</td>");
+						html.Append("</tr>");
 					}
 					ds.Dispose();
 					ds = null;
 				}
-				sw.WriteLine("</TD>");
-				sw.WriteLine("</TR>");
+				html.Append("</TD>");
+				html.Append("</TR>");
 				#endregion
 
-				#region Html file loading
-                Functions.Functions.CloseHtmlFile(sw);
-				HTML2PDF2Class html = new HTML2PDF2Class();
-				html.MarginLeft = Convert.ToInt32(this.LeftMargin);
-				html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
-				html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
-                html.MinimalWidth = this.PDFPAGE_Width - Convert.ToInt32(this.LeftMargin) - Convert.ToInt32(this.RightMargin);
-				html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
-				html.ConnectToPDFLibrary (this);
-				html.LoadHTMLFile(workFile);
-				html.ConvertAll();
-				html.DisconnectFromPDFLibrary ();
-				#endregion
-
-				#region Clean File
-				File.Delete(workFile);
-				#endregion
-			
+                this.ConvertHtmlToPDF(html.ToString(),
+                    WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset,
+                    WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
+                    _config.WebServer,
+                    _config.Html2PdfLogin,
+                    _config.Html2PdfPass);
 			}
 			catch(System.Exception e) {
-				try {
-					sw.Close();
-				}
-				catch(System.Exception e2){}
 				throw(new MnevisPdfException("Unable to build the session parameter page for request " + _rqDetails["id_static_nav_session"].ToString() + ".",e));
 			}
 		}

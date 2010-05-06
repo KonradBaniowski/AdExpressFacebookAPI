@@ -17,8 +17,9 @@ using SessionCst = TNS.AdExpress.Constantes.Web.CustomerSessions;
 using AnubisBastet=TNS.AdExpress.Anubis.Bastet;
 using BastetFunctions=TNS.AdExpress.Anubis.Bastet.Functions;
 using BastetRules=TNS.AdExpress.Anubis.Bastet.Rules;
-using TNS.AdExpress.Domain.Translation;
+
 using System.IO;
+using TNS.AdExpress.Bastet.Translation;
 
 namespace TNS.AdExpress.Anubis.Bastet.UI
 {

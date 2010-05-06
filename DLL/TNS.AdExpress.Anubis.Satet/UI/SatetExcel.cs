@@ -23,6 +23,7 @@ using RulesResultsAPPM=TNS.AdExpress.Web.Rules.Results.APPM;
 using TNS.AdExpress.Constantes.Customer;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Anubis.Satet.Exceptions;
 
 namespace TNS.AdExpress.Anubis.Satet.UI
 {
@@ -39,7 +40,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
         /// <summary>
         /// Composant excel
         /// </summary>
-        protected TNS.AdExpress.Domain.Theme.Style _style;
+        protected TNS.FrameWork.WebTheme.Style _style;
 		/// <summary>
 		/// Licence Aspose Excel
 		/// </summary>
@@ -50,15 +51,19 @@ namespace TNS.AdExpress.Anubis.Satet.UI
         /// <summary>
 		/// Constructeur
 		/// </summary>
-		public SatetExcel(TNS.AdExpress.Domain.Theme.Style style){
-            _excel = new Workbook();
-			_license = new License();
-			_license.SetLicense("Aspose.Cells.lic");
-            _style = style;
-					
-            //initialisation de la palette de couleur Excel
-            _style.InitExcelColorPalette(this._excel);
-			
+        public SatetExcel(TNS.FrameWork.WebTheme.Style style) {
+            try {
+                _excel = new Workbook();
+                _license = new License();
+                _license.SetLicense("Aspose.Cells.lic");
+                _style = style;
+
+                //initialisation de la palette de couleur Excel
+                _style.InitExcelColorPalette(this._excel);
+            }
+            catch (Exception e) {
+                throw new SatetDataAccessException("Error in constructor SatetExcel", e);
+            }
 		}
 		#endregion
 
@@ -77,7 +82,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 		/// Page pricipale
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
-		protected void MainPageDesign(WebSession webSession,TNS.AdExpress.Domain.Theme.Style style){
+        protected void MainPageDesign(WebSession webSession, TNS.FrameWork.WebTheme.Style style) {
 			int cellRow =9;
 			int startIndex=cellRow;
 

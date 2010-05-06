@@ -27,6 +27,7 @@ using TNS.FrameWork;
 using TblFormatCst = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
 using CstComparisonCriterion = TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion;
 using TNS.AdExpressI.ProductClassIndicators.Engines;
+using TNS.FrameWork.WebTheme;
 
 namespace TNS.AdExpress.Anubis.Hotep.UI
 {
@@ -51,7 +52,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
         /// <summary>
         /// Style
         /// </summary>
-        private TNS.AdExpress.Domain.Theme.Style _style = null;
+        private TNS.FrameWork.WebTheme.Style _style = null;
         /// <summary>
         /// Pie ColorS
         /// </summary>
@@ -70,7 +71,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
         public UIMediaStrategyGraph(WebSession webSession, 
             IDataSource dataSource, 
             HotepConfig config, 
-            TNS.AdExpress.Domain.Theme.Style style,
+            TNS.FrameWork.WebTheme.Style style,
             Dictionary<string, Series> listSeriesMedia,
             Dictionary<int, string> listSeriesName)
             : base() {
@@ -78,7 +79,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
             _dataSource = dataSource;
             _config = config;
             _style = style;
-            _pieColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("MediaStrategyGraphPieColors")).ColorList;
+            _pieColors = ((Colors)_style.GetTag("MediaStrategyGraphPieColors")).ColorList;
             _listSeriesMedia = listSeriesMedia;
             _listSeriesName = listSeriesName;
         }

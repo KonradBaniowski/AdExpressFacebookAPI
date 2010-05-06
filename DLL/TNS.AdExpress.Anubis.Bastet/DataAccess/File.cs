@@ -14,8 +14,10 @@ using BastetCommon=TNS.AdExpress.Bastet.Common;
 using DBSchema=TNS.AdExpress.Constantes.DB.Schema;
 using DBTables=TNS.AdExpress.Constantes.DB.Tables;
 using AnubisBastet=TNS.AdExpress.Anubis.Bastet;
-using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Bastet.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
+
+
 
 namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 {
@@ -48,7 +50,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 			sql.Append(" ," + loginTable.SqlWithPrefix + "," + contactTable.SqlWithPrefix
 				+ "," + addressTable.SqlWithPrefix + "," + companyTable.SqlWithPrefix);
 			//Where
-			sql.Append(" where "+topGadTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+            sql.Append(" where " + topGadTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
 			if(parameters!=null && parameters.Logins.Length>0)
 				sql.Append(" and "+topGadTable.Prefix+".id_login in ("+parameters.Logins+") ");
 			sql.Append(" and "+loginTable.Prefix+".id_login="+topGadTable.Prefix+".id_login ");
@@ -96,7 +98,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
 				sql.Append(" ," + loginTable.SqlWithPrefix + "," + contactTable.SqlWithPrefix
 					+ "," + addressTable.SqlWithPrefix + "," + companyTable.SqlWithPrefix);
 				//Where
-				sql.Append(" where "+topMediaAgencyTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+                sql.Append(" where " + topMediaAgencyTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
 				if(parameters!=null && parameters.Logins.Length>0)
 					sql.Append(" and "+topMediaAgencyTable.Prefix+".id_login in ("+parameters.Logins+") ");
 				sql.Append(" and "+loginTable.Prefix+".id_login="+topMediaAgencyTable.Prefix+".id_login ");

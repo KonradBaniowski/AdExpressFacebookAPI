@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?> 
 <Configuration>
-  <CustomerMail server="frmitpu-msprod" port="25" from="tnsadexpress@tnsmi.fr" webServer="http://www.tnsadexpress.com" subject="AdExpress"/>
+	<CustomerMail server="frmitch-msprod" port="25" from="tnsadexpress@tnsmi.fr" webServer="http://www.tnsadexpress.com" subject="AdExpress"/>
   <TextFilePath path="\\testarossa2\adexdatas\AdExCustomerFiles"/>
 </Configuration>

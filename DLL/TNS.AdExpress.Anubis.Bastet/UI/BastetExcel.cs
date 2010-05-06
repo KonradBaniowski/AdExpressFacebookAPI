@@ -14,9 +14,11 @@ using System.Drawing;
 using System.Data;
 using TNS.AdExpress.Anubis.Bastet;
 using BastetCommon=TNS.AdExpress.Bastet.Common;
-using TNS.AdExpress.Domain.Translation;
+
 using TNS.AdExpress.Constantes.DB;
 using BastetExceptions=TNS.AdExpress.Anubis.Bastet.Exceptions;
+using TNS.AdExpress.Bastet.Translation;
+using TNS.AdExpress.Bastet.Web;
 
 
 namespace TNS.AdExpress.Anubis.Bastet.UI {
@@ -338,7 +340,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 				cellRow++;
 
 				//Date de création
-				cells["D" + cellRow].PutValue(" " + GestionWeb.GetWebWord(1922, _language) + " " + DateTime.Now.ToString("ddd dd MMM yyyy"));
+				cells["D" + cellRow].PutValue(" " + GestionWeb.GetWebWord(1922, _language) + " " + DateTime.Now.ToString(WebApplicationParameters.AllowedLanguages[_language].CultureInfo.GetExcelFormatPatternFromStringFormat("{0:customshortdatepattern}")));
 				cells["D"+cellRow].Style.Font.Size =10;
 				cells["D"+cellRow].Style.Font.Color = Color.Black;
 				cells["D"+cellRow].Style.Font.IsBold = true;
@@ -397,10 +399,10 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 				cells["D"+cellRow].Style.Font.IsBold = true;
 			
 				string period ="";
-				if(!parameters.PeriodBeginningDate.Equals(parameters.PeriodEndDate))
-					period = " " + GestionWeb.GetWebWord(124, _language) + " " + parameters.PeriodBeginningDate.Substring(6, 2) + "/" + parameters.PeriodBeginningDate.Substring(4, 2) + "/" + parameters.PeriodBeginningDate.Substring(0, 4)
-						+ " " + GestionWeb.GetWebWord(1730, _language) + " " + parameters.PeriodEndDate.Substring(6, 2) + "/" + parameters.PeriodEndDate.Substring(4, 2) + "/" + parameters.PeriodEndDate.Substring(0, 4); 
-				else period = parameters.PeriodBeginningDate.Substring(6,2)+"/"+parameters.PeriodBeginningDate.Substring(4,2)+"/"+parameters.PeriodBeginningDate.Substring(0,4);
+                if (!parameters.PeriodBeginningDate.ToString("yyyyMMdd").Equals(parameters.PeriodEndDate.ToString("yyyyMMdd")))
+                    period = " " + GestionWeb.GetWebWord(124, _language) + " " + parameters.PeriodBeginningDate.ToString(WebApplicationParameters.AllowedLanguages[_language].CultureInfo.GetExcelFormatPatternFromStringFormat("{0:shortdatepattern}"))
+                        + " " + GestionWeb.GetWebWord(1730, _language) + " " + parameters.PeriodEndDate.ToString(WebApplicationParameters.AllowedLanguages[_language].CultureInfo.GetExcelFormatPatternFromStringFormat("{0:shortdatepattern}"));
+                else period = parameters.PeriodBeginningDate.ToString(WebApplicationParameters.AllowedLanguages[_language].CultureInfo.GetExcelFormatPatternFromStringFormat("{0:shortdatepattern}"));
 											 
 				cells["E"+cellRow].PutValue(period);
 				cells["E"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;

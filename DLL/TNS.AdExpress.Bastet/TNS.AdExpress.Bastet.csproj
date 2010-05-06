@@ -200,11 +200,22 @@
     <Compile Include="Constantes.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Periods\PeriodInformation.cs" />
+    <Compile Include="Periods\PeriodsInformation.cs" />
     <Compile Include="DataAccess\CustomerTypeDataAccess.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Exceptions\WebApplicationInitialisationException.cs" />
     <Compile Include="Functions\Script.cs" />
+    <Compile Include="Translation\BastetCultureInfo.cs" />
+    <Compile Include="Units\UnitInformation.cs" />
+    <Compile Include="Units\UnitsInformation.cs" />
     <Compile Include="WebControls\CalendarWebControl.cs" />
+    <Compile Include="Web\WebServiceRightConfiguration.cs" />
+    <Compile Include="XmlLoader\PeriodsDescriptionXL.cs" />
+    <Compile Include="XmlLoader\UnitsDescriptionXL.cs" />
+    <Compile Include="XmlLoader\WebServiceRightConfigurationXL.cs" />
+    <Compile Include="XmlLoader\CoreLayersXL.cs" />
     <Compile Include="XmlLoader\HeaderXL.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -285,6 +296,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Bastet.fi.xml" />
     <Content Include="Resources\Bastet.en.xml" />
     <Content Include="Resources\Bastet.fr.xml" />
     <Content Include="Resources\Bastet.Project.xml" />

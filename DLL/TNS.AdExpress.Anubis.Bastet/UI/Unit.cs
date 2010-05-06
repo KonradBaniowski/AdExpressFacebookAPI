@@ -15,8 +15,10 @@ using TNS.AdExpress.Constantes.DB;
 //using TNS.AdExpress.Anubis.Bastet.Rules;
 using BastetExceptions=TNS.AdExpress.Anubis.Bastet.Exceptions;
 using SessionCst = TNS.AdExpress.Constantes.Web.CustomerSessions;
-using TNS.AdExpress.Domain.Translation;
+
 using System.IO;
+using TNS.AdExpress.Bastet.Translation;
+using TNS.AdExpress.Bastet.Units;
 
 namespace TNS.AdExpress.Anubis.Bastet.UI
 {
@@ -113,9 +115,8 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 				
 					//top éléments
 				
-					for(int i=0; i<dt.Rows.Count;i++){	
-						
-						cells["B"+cellRow].PutValue(dt.Rows[i]["unit"].ToString());
+					for(int i=0; i<dt.Rows.Count;i++){
+                        cells["B" + cellRow].PutValue(GestionWeb.GetWebWord(UnitsInformation.Get(Int64.Parse(dt.Rows[i]["id_unit"].ToString())).WebTextId, language));
 						cells["B"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
 						cells["B"+cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
 						cells["B"+cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;

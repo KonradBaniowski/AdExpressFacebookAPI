@@ -1,6 +1,7 @@
 using System;
 using TNS.AdExpress.Anubis.Bastet.Exceptions;
-using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Bastet.Translation;
+
 
 namespace TNS.AdExpress.Anubis.Bastet.Functions
 {

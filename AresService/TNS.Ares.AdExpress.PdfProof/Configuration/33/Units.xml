@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<units>
+  <unit id="kEuro"       format="max0"      webTextId="1789"  baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellKEuro"      field="expenditure_euro"  multimediaField="totalunite"       trendsField="expenditure"/>
+  <unit id="euro"        format="max0"      webTextId="938"   baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellEuro"       field="expenditure_euro"  multimediaField="totalunite"       trendsField="expenditure"/>
+  <unit id="spot"        format="max0"      webTextId="939"   baseId ="insertion"  cellType="TNS.FrameWork.WebResultUI.CellInsertion"  field="insertion"         multimediaField="totalinsert"      trendsField="insertion"/>
+  <unit id="insertion"   format="max0"      webTextId="940"   baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellInsertion"  field="insertion"         multimediaField="totalinsert"      trendsField="insertion"/>
+  <unit id="duration"    format="duration"  webTextId="280"   baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellDuration"   field="duration"          multimediaField="totalduree"       trendsField="duration"/>
+  <unit id="mmPerCol"    format="max0"      webTextId="941"   baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellMMC"        field="area_mmc"          multimediaField="totalmmc"         trendsField="mmc"/>
+  <unit id="pages"       format="max3"      webTextId="943"   baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellPage"       field="area_page"         multimediaField="totalpages"       trendsField="page"/>
+  <unit id="numberBoard" format="max0"      webTextId="1604"  baseId ="insertion"  cellType="TNS.FrameWork.WebResultUI.CellInsertion"  field="number_board"      multimediaField="totalinsert"      trendsField="insertion"/>
+  <unit id="grp"         format="max1"      webTextId="1679"  baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellGRP"        field="grp"/>
+  <unit id="volume"      format="max0"      webTextId="2216"  baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellVolume"     field="volume"            multimediaField="totalvolume"/>
+  <unit id="versionNb"   format="max0"      webTextId="2479"  baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellIdsNumber"  field="id_banners"          multimediaField="list_banners"/>
+  <unit id="occurence"   format="max0"      webTextId="940"   baseId ="insertion"  cellType="TNS.FrameWork.WebResultUI.CellInsertion"  field="insertion"         multimediaField="totalinsert"      trendsField="insertion"/>
+</units>

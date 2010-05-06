@@ -4,73 +4,209 @@
     <culture>en</culture>
   </globalization>
   <items>
-        <item mnemonic="w1" type="System.String"></item>
-        <item mnemonic="w2" type="System.String"></item>
-        <item mnemonic="w3" type="System.String"></item>
-        <item mnemonic="w4" type="System.String"></item>
-        <item mnemonic="w5" type="System.String"></item>
+    <item mnemonic="w1" type="System.String">Next ></item>
+    <item mnemonic="w2" type="System.String">Add</item>
+    <item mnemonic="w3" type="System.String">Remove</item>
+    <item mnemonic="w4" type="System.String">Search</item>
+    <item mnemonic="w5" type="System.String">Ok</item>
 
-        <item mnemonic="w6" type="System.String"></item>
-        <item mnemonic="w7" type="System.String"></item>
-        <item mnemonic="w8" type="System.String"></item>
-        <item mnemonic="w9" type="System.String"></item>
-        <item mnemonic="w10" type="System.String"></item>
+    <item mnemonic="w6" type="System.String">Email management</item>
+    <item mnemonic="w7" type="System.String">Period management</item>
+    <item mnemonic="w8" type="System.String">Login management</item>
+    <item mnemonic="w9" type="System.String">ok</item>
+    <item mnemonic="w10" type="System.String">Add an email :</item>
 
-        <item mnemonic="w11" type="System.String"></item>
-        <item mnemonic="w12" type="System.String"></item>
-        <item mnemonic="w13" type="System.String"></item>
-        <item mnemonic="w14" type="System.String"></item>
-        <item mnemonic="w15" type="System.String"></item>
+    <item mnemonic="w11" type="System.String">The recipient list :</item>
+    <item mnemonic="w15" type="System.String">Last months</item>
 
-        <item mnemonic="w16" type="System.String"></item>
-        <item mnemonic="w17" type="System.String"></item>
-        <item mnemonic="w18" type="System.String"></item>
-        <item mnemonic="w19" type="System.String"></item>
-        <item mnemonic="w20" type="System.String"></item>
+    <item mnemonic="w16" type="System.String">Last weeks</item>
+    <item mnemonic="w18" type="System.String">Current year</item>
+    <item mnemonic="w19" type="System.String">Search options</item>
+    <item mnemonic="w20" type="System.String">Company / Login</item>
 
-        <item mnemonic="w21" type="System.String"></item>
-        <item mnemonic="w22" type="System.String"></item>
-        <item mnemonic="w23" type="System.String"></item>
-        <item mnemonic="w24" type="System.String"></item>
-        <item mnemonic="w25" type="System.String"></item>
+    <item mnemonic="w21" type="System.String">All</item>
+    <item mnemonic="w22" type="System.String">No found result</item>
+    <item mnemonic="w23" type="System.String">Search result</item>
+    <item mnemonic="w24" type="System.String">Select/Deselect all login</item>
+    <item mnemonic="w25" type="System.String">Not connected</item>
 
-        <item mnemonic="w26" type="System.String"></item>
-        <item mnemonic="w27" type="System.String"></item>
-        <item mnemonic="w28" type="System.String"></item>
-        <item mnemonic="w29" type="System.String"></item>
-        <item mnemonic="w30" type="System.String"></item>
+    <item mnemonic="w26" type="System.String">Invalid email</item>
+    <item mnemonic="w27" type="System.String">The field cannot be empty</item>
+    <item mnemonic="w28" type="System.String">The list is empty</item>
+    <item mnemonic="w29" type="System.String">The list is empty, you have to enter an email</item>
+    <item mnemonic="w30" type="System.String">The end date cannot be higher than the start date</item>
+    
+    <item mnemonic="w33" type="System.String">You must select at least one item in the list</item>
+    <item mnemonic="w34" type="System.String">You cannot save more than 1000 items</item>
+    <item mnemonic="w35" type="System.String">Access is denied, you must login</item>
 
-        <item mnemonic="w31" type="System.String"></item>
-        <item mnemonic="w32" type="System.String"></item>
-        <item mnemonic="w33" type="System.String"></item>
-        <item mnemonic="w34" type="System.String"></item>
-        <item mnemonic="w35" type="System.String"></item>
+    <item mnemonic="w36" type="System.String">Error: no email saved in the session</item>
+    <item mnemonic="w37" type="System.String">Error: no date saved in the session</item>
+    <item mnemonic="w38" type="System.String">An error occurred, the page requested cannot be displayed</item>
+    <item mnemonic="w39" type="System.String">Client error</item>
+    <item mnemonic="w40" type="System.String">Server :</item>
 
-        <item mnemonic="w36" type="System.String"></item>
-        <item mnemonic="w37" type="System.String"></item>
-        <item mnemonic="w38" type="System.String"></item>
-        <item mnemonic="w39" type="System.String"></item>
-        <item mnemonic="w40" type="System.String"></item>
+    <item mnemonic="w41" type="System.String">Requested page :</item>
+    <item mnemonic="w42" type="System.String">Browser :</item>
+    <item mnemonic="w43" type="System.String">Operating system :</item>
+    <item mnemonic="w44" type="System.String">Error message :</item>
+    <item mnemonic="w45" type="System.String">StackTrace :</item>
 
-        <item mnemonic="w41" type="System.String"></item>
-        <item mnemonic="w42" type="System.String"></item>
-        <item mnemonic="w43" type="System.String"></item>
-        <item mnemonic="w44" type="System.String"></item>
-        <item mnemonic="w45" type="System.String"></item>
+    <item mnemonic="w46" type="System.String">Tracking</item>
+    <item mnemonic="w47" type="System.String">Indicators</item>
+    <item mnemonic="w48" type="System.String">Module selection</item>
+    <item mnemonic="w49" type="System.String">To be redirected, click</item>
+    <item mnemonic="w50" type="System.String">here</item>
 
-        <item mnemonic="w46" type="System.String"></item>
-        <item mnemonic="w47" type="System.String"></item>
-        <item mnemonic="w48" type="System.String"></item>
-        <item mnemonic="w49" type="System.String"></item>
-        <item mnemonic="w50" type="System.String"></item>
+    <item mnemonic="w51" type="System.String">Period selection</item>
+    <item mnemonic="w52" type="System.String">Excel export</item>
+    <item mnemonic="w53" type="System.String">No data on the period of</item>
+    <item mnemonic="w54" type="System.String">to</item>
+    <item mnemonic="w55" type="System.String">Updates indicators</item>
 
-        <item mnemonic="w51" type="System.String"></item>
-        <item mnemonic="w52" type="System.String"></item>
-        <item mnemonic="w53" type="System.String"></item>
-        <item mnemonic="w54" type="System.String"></item>
-        <item mnemonic="w55" type="System.String"></item>
+    <item mnemonic="w56" type="System.String">Media Vehicle</item>
 
-        <item mnemonic="w56" type="System.String"></item>
-      </items>
-    </localization>
+    <item mnemonic="w57" type="System.String">Calendar per days</item>
+    <item mnemonic="w58" type="System.String">Calendar per weeks</item>
+    <item mnemonic="w59" type="System.String">Calendar per months</item>
+    <item mnemonic="w60" type="System.String">N last days</item>
+    <item mnemonic="w61" type="System.String">N last weeks</item>
+    <item mnemonic="w62" type="System.String">N last months</item>
+    <item mnemonic="w63" type="System.String">N last years</item>
+    <item mnemonic="w64" type="System.String">Previous week</item>
+    <item mnemonic="w65" type="System.String">Previous month</item>
+    <item mnemonic="w66" type="System.String">Current year</item>
+    <item mnemonic="w67" type="System.String">Previous year</item>
+    <item mnemonic="w68" type="System.String">N-2 year</item>
+    <item mnemonic="w69" type="System.String">Year to date</item>
+    <item mnemonic="w70" type="System.String">Last uploaded week</item>
+    <item mnemonic="w71" type="System.String">Last uploaded month</item>
+    <item mnemonic="w72" type="System.String">Previous day</item>
+
+    <!-- AdExpress Text -->
+    <item mnemonic="w124" type="System.String">From</item>
+
+    <item mnemonic="w201" type="System.String">All</item>
+
+    <item mnemonic="w280" type="System.String">Duration</item>
+    
+    <item mnemonic="w776" type="System.String">Search by Calendar Period</item>
+    <item mnemonic="w777" type="System.String">Search by Rolling Period</item>
+    
+    <item mnemonic="w785" type="System.String">In the last:</item>
+    <item mnemonic="w786" type="System.String">Or in the last</item>
+    
+    <item mnemonic="w885" type="System.String">You must select a time period</item>
+    <item mnemonic="w886" type="System.String">You must select a start and an end date before validating</item>
+    
+    <item mnemonic="w894" type="System.String">Page</item>
+
+    <item mnemonic="w938" type="System.String">Euros</item>
+    <item mnemonic="w939" type="System.String">Spots</item>
+    <item mnemonic="w940" type="System.String">Insertions</item>
+    <item mnemonic="w941" type="System.String">mm/col</item>
+    <item mnemonic="w943" type="System.String">Pages</item>
+    
+    <item mnemonic="w1132" type="System.String">Company</item>
+
+    <item mnemonic="w1292" type="System.String">Media</item>
+
+    <item mnemonic="w1401" type="System.String">Total</item>
+
+    <item mnemonic="w1554" type="System.String">Monday</item>
+    <item mnemonic="w1555" type="System.String">Tuesday</item>
+    <item mnemonic="w1556" type="System.String">Wednesday</item>
+    <item mnemonic="w1557" type="System.String">Thursday</item>
+    <item mnemonic="w1558" type="System.String">Friday</item>
+    <item mnemonic="w1559" type="System.String">Saturday</item>
+    <item mnemonic="w1560" type="System.String">Sunday</item>
+
+    <item mnemonic="w1604" type="System.String">Numbre of boards</item>
+
+    <item mnemonic="w1679" type="System.String">GRP</item>
+
+    <item mnemonic="w1730" type="System.String">to</item>
+
+    <item mnemonic="w1752" type="System.String">Study parameters</item>
+
+    <item mnemonic="w1755" type="System.String">Period</item>
+
+    <item mnemonic="w1789" type="System.String">Keuros</item>
+
+    <item mnemonic="w1798" type="System.String">AdExpress -- Excel statistics generated</item>
+
+    <item mnemonic="w1834" type="System.String">The attached Excel file contains the usage statistics of AdExpress, the TNS Media Intelligence AdEx portal.</item>
+    <item mnemonic="w1835" type="System.String">There are no statistics concerning the AdExpress portal for your parameters.</item>
+
+    <item mnemonic="w1859" type="System.String">Module</item>
+
+    <item mnemonic="w1922" type="System.String">Created on</item>
+    
+    <item mnemonic="w1933" type="System.String">Duration</item>
+
+    <item mnemonic="w1989" type="System.String">Selection reminder</item>
+
+    <item mnemonic="w2042" type="System.String">of</item>
+
+    <item mnemonic="w2216" type="System.String">Volumes</item>
+
+    <item mnemonic="w2289" type="System.String">Day</item>
+    <item mnemonic="w2290" type="System.String">Month</item>
+
+    <item mnemonic="w2479" type="System.String">Number of banners</item>
+
+    <item mnemonic="w2481" type="System.String">AdExpress statistics</item>
+    <item mnemonic="w2482" type="System.String">From</item>
+    <item mnemonic="w2483" type="System.String">To</item>
+    <item mnemonic="w2484" type="System.String">Logins</item>
+    <item mnemonic="w2485" type="System.String">Customer</item>
+    <item mnemonic="w2486" type="System.String">Connections</item>
+    <item mnemonic="w2487" type="System.String">Connections by time slot</item>
+    <item mnemonic="w2488" type="System.String">Time slots</item>
+    <item mnemonic="w2489" type="System.String">Number of Connection</item>
+    <item mnemonic="w2490" type="System.String">Number of customer connections</item>
+    <item mnemonic="w2491" type="System.String">Top customers time slot</item>
+    <item mnemonic="w2492" type="System.String">Top customer type time slot</item>
+    <item mnemonic="w2493" type="System.String">Customer type</item>
+    <item mnemonic="w2494" type="System.String">Customer type per month</item>
+
+    <item mnemonic="w2496" type="System.String">Connections per month</item>
+    <item mnemonic="w2497" type="System.String">Top customer type per month</item>
+    <item mnemonic="w2498" type="System.String">Top customers per given day</item>
+    <item mnemonic="w2499" type="System.String">Connections per day</item>
+    <item mnemonic="w2500" type="System.String">Top customers given day</item>
+    <item mnemonic="w2501" type="System.String">Top customer type given day</item>
+    <item mnemonic="w2502" type="System.String">Top customer type per given day</item>
+    <item mnemonic="w2503" type="System.String">Connections per given day</item>
+    <item mnemonic="w2504" type="System.String">Per-customer IP address monitoring</item>
+    <item mnemonic="w2505" type="System.String">Top companies time slot</item>
+    <item mnemonic="w2506" type="System.String">Customer type</item>
+    <item mnemonic="w2507" type="System.String">Top companies per month</item>
+    <item mnemonic="w2508" type="System.String">Top companies given day</item>
+    <item mnemonic="w2509" type="System.String">Average connection time</item>
+    <item mnemonic="w2510" type="System.String">Top file export</item>
+    <item mnemonic="w2511" type="System.String">Number of exports</item>
+    <item mnemonic="w2512" type="System.String">Number of file exports</item>
+    <item mnemonic="w2513" type="System.String">Top Doc Marketing and Media Agencies file</item>
+    <item mnemonic="w2514" type="System.String">Top Doc Marketing file users</item>
+    <item mnemonic="w2515" type="System.String">Number of uses</item>
+    <item mnemonic="w2516" type="System.String">Number of uses for the Doc Marketing file</item>
+    <item mnemonic="w2517" type="System.String">Number of uses for the Media Agencies file</item>
+    <item mnemonic="w2518" type="System.String">Top Media Agencies file users</item>
+    <item mnemonic="w2519" type="System.String">Top modules</item>
+    <item mnemonic="w2520" type="System.String">Top module groups used</item>
+    <item mnemonic="w2521" type="System.String">Number of accesses</item>
+    <item mnemonic="w2522" type="System.String">Top modules used</item>
+    <item mnemonic="w2523" type="System.String">Top periods used</item>
+    <item mnemonic="w2524" type="System.String">Top use saved queries</item>
+    <item mnemonic="w2525" type="System.String">Top customers using saved queries</item>
+    <item mnemonic="w2526" type="System.String">Number of uses for saved queries</item>
+    <item mnemonic="w2527" type="System.String">Top options used</item>
+    <item mnemonic="w2528" type="System.String">Top units used</item>
+    <item mnemonic="w2529" type="System.String">Top media used</item>
+    <item mnemonic="w2530" type="System.String">Top media per module</item>
+    <item mnemonic="w2531" type="System.String">Connections per medium</item>
+    <item mnemonic="w2532" type="System.String">IP Address</item>
+  </items>
+</localization>
   

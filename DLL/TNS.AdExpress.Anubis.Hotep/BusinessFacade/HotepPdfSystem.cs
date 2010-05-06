@@ -41,10 +41,8 @@ using TNS.FrameWork;
 using TNS.FrameWork.Net.Mail;
 
 using Dundas.Charting.WinControl;
-using HTML2PDFAddOn;
 using PDFCreatorPilotLib;
 using TNS.FrameWork.DB.Common;
-using HtmlSnap2;
 using System.Globalization;
 using Oracle.DataAccess.Client;
 
@@ -54,12 +52,13 @@ using TNS.AdExpressI.ProductClassIndicators.DAL;
 using TNS.AdExpressI.ProductClassIndicators.Engines;
 using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Domain.Theme;
 using TNS.AdExpress.Domain.Classification;
 using System.Collections.Generic;
 using TNS.AdExpress.Domain.Exceptions;
 using TNS.Ares.Pdf;
 using TNS.Ares;
+using TNS.FrameWork.WebTheme;
+using System.Net.Mail;
 #endregion
 
 namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
@@ -104,20 +103,25 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
         /// <param name="config">Config</param>
         /// <param name="rqDetails">Request details</param>
         /// <param name="webSession">Web session</param>
-        public HotepPdfSystem(IDataSource dataSource, HotepConfig config, DataRow rqDetails, WebSession webSession, Theme theme)
+        public HotepPdfSystem(IDataSource dataSource, HotepConfig config, DataRow rqDetails, WebSession webSession, TNS.FrameWork.WebTheme.Theme theme)
             :
             base(theme.GetStyle("Hotep")) {
-			this._dataSource = dataSource;
-			this._config = config;
-			this._rqDetails = rqDetails;
-			this._webSession = webSession;
-            this._titleList = new ArrayList();
-            WebNavigation.Module module = WebNavigation.ModulesList.GetModule(CstWeb.Module.Name.INDICATEUR);
-            if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Indicator result"));
-            object[] param = new object[1] { webSession };
-            _productClassIndicator = (IProductClassIndicators)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
-            _productClassIndicator.Pdf = true;
-            _productClassIndicatorDAL = (IProductClassIndicatorsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryDataAccessLayer.AssemblyName, module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            try {
+                this._dataSource = dataSource;
+                this._config = config;
+                this._rqDetails = rqDetails;
+                this._webSession = webSession;
+                this._titleList = new ArrayList();
+                WebNavigation.Module module = WebNavigation.ModulesList.GetModule(CstWeb.Module.Name.INDICATEUR);
+                if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Indicator result"));
+                object[] param = new object[1] { webSession };
+                _productClassIndicator = (IProductClassIndicators)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                _productClassIndicator.Pdf = true;
+                _productClassIndicatorDAL = (IProductClassIndicatorsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryDataAccessLayer.AssemblyName, module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            }
+            catch (Exception e) {
+                throw new HotepPdfException("Error in constructor HotepPdfSystem", e);
+            }
 		}
 		#endregion
 
@@ -140,7 +144,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				return shortFName;
 			}
 			catch(System.Exception e){
-				throw(e);
+                throw new HotepPdfException("Error for initialize HotepPdfSystem",e);
 			}
 		}
 		#endregion
@@ -157,56 +161,56 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				SessionParameter();
 				#endregion
 
-				#region IndicatorSynthesis
-				IndicatorSynthesis();
-				#endregion
+                #region IndicatorSynthesis
+                IndicatorSynthesis();
+                #endregion
 
-				#region IndicatorSeasonality
-				IndicatorSeasonality();
-				#endregion
+                #region IndicatorSeasonality
+                IndicatorSeasonality();
+                #endregion
 
-				#region Indicator Media Strategy
-				IndicatorMediaStrategy();
-				#endregion
+                #region Indicator Media Strategy
+                IndicatorMediaStrategy();
+                #endregion
 
-				#region IndicatorPalmares (advertiserChart)
-				IndicatorPalmares(CstResult.PalmaresRecap.ElementType.advertiser);
-				#endregion
+                #region IndicatorPalmares (advertiserChart)
+                IndicatorPalmares(CstResult.PalmaresRecap.ElementType.advertiser);
+                #endregion
 
-				#region IndicatorPalmares (referenceChart)
-				IndicatorPalmares(CstResult.PalmaresRecap.ElementType.product);
-				#endregion
+                #region IndicatorPalmares (referenceChart)
+                IndicatorPalmares(CstResult.PalmaresRecap.ElementType.product);
+                #endregion
 
-				#region IndicatorEvolution (advertiserChart)
-				IndicatorEvolution(CstResult.EvolutionRecap.ElementType.advertiser);
-				#endregion
+                #region IndicatorEvolution (advertiserChart)
+                IndicatorEvolution(CstResult.EvolutionRecap.ElementType.advertiser);
+                #endregion
 
-				#region IndicatorEvolution (referenceChart)
-				IndicatorEvolution(CstResult.EvolutionRecap.ElementType.product);
-				#endregion
+                #region IndicatorEvolution (referenceChart)
+                IndicatorEvolution(CstResult.EvolutionRecap.ElementType.product);
+                #endregion
 
-				#region Indicator Novelty
-				IndicatorNovelty();
-				#endregion
+                #region Indicator Novelty
+                IndicatorNovelty();
+                #endregion
 
-				#region MainPage
-				MainPageDesign();
-				#endregion
+                #region MainPage
+                MainPageDesign();
+                #endregion
 
-				#region Header and Footer
+                #region Header and Footer
                 string dateString = Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
 
-				this.AddHeadersAndFooters(
+                this.AddHeadersAndFooters(
                 _webSession,
-				imagePosition.leftImage,
+                imagePosition.leftImage,
                 GestionWeb.GetWebWord(1053, _webSession.SiteLanguage) + " - " + dateString,
-				0,-1,true); 
-				#endregion
-				
-			}
-			catch(System.Exception e){
-				throw(e);
-			}
+                0, -1, true);
+                #endregion
+
+            }
+            catch (Exception e) {
+                throw new HotepPdfException("Error in Fill in HotepPdfSystem", e);
+            }
 		}
 		#endregion
 
@@ -216,19 +220,24 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
         /// </summary>
         /// <param name="fileName">File name</param>
 		internal void Send(string fileName){
-			ArrayList to = new ArrayList();
-			foreach(string s in _webSession.EmailRecipient){
-				to.Add(s);
-			}
-			SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
-				Text.SuppressAccent(GestionWeb.GetWebWord(1971,_webSession.SiteLanguage)),
-				Text.SuppressAccent(GestionWeb.GetWebWord(1750,_webSession.SiteLanguage)+"\""+_webSession.ExportedPDFFileName
-				+ "\""+String.Format(GestionWeb.GetWebWord(1751,_webSession.SiteLanguage),_config.WebServer)
-				+ "<br><br>"
-				+ GestionWeb.GetWebWord(1776,_webSession.SiteLanguage)),
-				true, _config.CustomerMailServer, _config.CustomerMailPort);
-			mail.mailKoHandler += new TNS.FrameWork.Net.Mail.SmtpUtilities.mailKoEventHandler(mail_mailKoHandler);
-			mail.SendWithoutThread(false);
+            try{
+                ArrayList to = new ArrayList();
+                foreach (string s in _webSession.EmailRecipient) {
+                    to.Add(s);
+                }
+                SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
+                    GestionWeb.GetWebWord(1971, _webSession.SiteLanguage),
+                    Encoding.GetEncoding(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].ContentEncoding),
+                    GestionWeb.GetWebWord(1750, _webSession.SiteLanguage) + "\"" + _webSession.ExportedPDFFileName + "\"" + String.Format(GestionWeb.GetWebWord(1751, _webSession.SiteLanguage), _config.WebServer) + "<br><br>" + GestionWeb.GetWebWord(1776, _webSession.SiteLanguage),
+                    Encoding.GetEncoding(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].ContentEncoding),
+                    true, _config.CustomerMailServer, _config.CustomerMailPort);
+                mail.mailKoHandler += new TNS.FrameWork.Net.Mail.SmtpUtilities.mailKoEventHandler(mail_mailKoHandler);
+                mail.SendWithoutThread(false);
+
+            }
+            catch (Exception e) {
+                throw new HotepPdfException("Echec lors de l'envoi mail client pour la session " + _webSession.IdSession , e);
+            }
 		}
 		#endregion
 
@@ -282,24 +291,6 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 		}
 		#endregion
 
-		#region GetWorkDirectory
-		/// <summary>
-		/// Provide a work directory. Create it if it doesn't exist or return a path to it
-		/// </summary>
-		/// <returns></returns>
-		internal string GetWorkDirectory(){
-			try{
-				if(!Directory.Exists(@"tmp_"+_rqDetails["id_static_nav_session"].ToString())){
-					Directory.CreateDirectory(@"tmp_"+_rqDetails["id_static_nav_session"].ToString());
-				}
-				return (@"tmp_"+_rqDetails["id_static_nav_session"].ToString());
-			}
-			catch(System.Exception e){
-				throw(new HotepPdfException("Unable to provide the working directory", e));
-			}
-		}
-		#endregion
-
 		#endregion
 
 		#region MainPage
@@ -312,11 +303,20 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
             string charSet = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset;
             string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
 
-			this.SetCurrentPage(0);
+            Picture picture = ((Picture)Style.GetTag("pictureTitle"));
+            string imgPath = string.Empty;
 
-			this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
+            if (File.Exists(picture.Path)) {
+                imgPath = picture.Path;
+            }
+            else if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\" + picture.Path)) {
+                imgPath = AppDomain.CurrentDomain.BaseDirectory + @"\" + picture.Path;
+            }
+            else {
+                imgPath = picture.Path;
+            }
 
-            string imgPath = ((TNS.AdExpress.Domain.Theme.Picture)Style.GetTag("pictureTitle")).Path;
+
 			Image imgG = Image.FromFile(imgPath);
 			
 			double w = (double)(this.PDFPAGE_Width - this.LeftMargin - this.RightMargin)/(double)imgG.Width;
@@ -326,100 +326,62 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			
 			int imgI = this.AddImageFromFilename(imgPath,TxImageCompressionType.itcFlate);
 
-			StreamWriter sw = null;
-			string workFile = GetWorkDirectory() + @"\SessionParameter" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
+            StringBuilder html = new StringBuilder();
 			string str = "";
 
             str = GestionWeb.GetWebWord(1922, _webSession.SiteLanguage) + " " + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
 
-			#region headers
-			sw = File.CreateText(workFile);
-			sw.WriteLine("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" >");
-			sw.WriteLine("<HTML>");
-			sw.WriteLine("<HEAD>");
-            sw.WriteLine("<META http-equiv=\"Content-Type\" content=\"text/html; charset=" + charSet + "\">");
-			sw.WriteLine("<meta content=\"Microsoft Visual Studio .NET 7.1\" name=\"GENERATOR\">");
-			sw.WriteLine("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
-			sw.WriteLine("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
-			sw.WriteLine("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-            sw.WriteLine("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
-            sw.WriteLine("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
-            sw.WriteLine("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
-			sw.WriteLine("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
-			sw.WriteLine("<meta http-equiv=\"expires\" content=\"0\">");
-			sw.WriteLine("<meta http-equiv=\"pragma\" content=\"no-cache\">");
-			sw.WriteLine("<meta name=\"Cache-control\" content=\"no-cache\">");
-			sw.WriteLine("</HEAD>");
-			sw.WriteLine("<body>");
-			sw.WriteLine("<form style=\"WIDTH: 300px; HEIGHT: 75px\">");
-			#endregion
-
-			#region result
-			sw.WriteLine("<TABLE id=\"Table1\" align=\"center\" cellSpacing=\"1\" cellPadding=\"1\" width=\"1100\" border=\"0\" style=\"WIDTH: 1100px; HEIGHT: 2px\">");
-			sw.WriteLine("<P>&nbsp;</P>");
-			sw.WriteLine("<P>&nbsp;</P>");
-			sw.WriteLine("<P>&nbsp;</P>");
-			sw.WriteLine("<TD style=\"HEIGHT: 43px\">");
-            sw.WriteLine("<P align=\"center\"><B><SPAN class=\"TreeTitleViolet40pt\">" + GestionWeb.GetWebWord(1053, _webSession.SiteLanguage) + "</SPAN></B><SPAN class=\"TreeTitleBlack10pt\">");
-			sw.WriteLine("<o:p></o:p></SPAN></P>");
-			sw.WriteLine("</TD>");
-			sw.WriteLine("</TR>");
-			sw.WriteLine("<TR>");
-            sw.WriteLine("<TD><P align=\"center\"><SPAN class=\"TreeTitleViolet\">" + Convertion.ToHtmlString(str) + "</SPAN></P></TD>");
-			sw.WriteLine("</TR>");
-			sw.WriteLine("<P>&nbsp;</P>");
-			sw.WriteLine("<P>&nbsp;</P>");
-			sw.WriteLine("<TR>");
-			sw.WriteLine("<TD>&nbsp;</TD>");
-			sw.WriteLine("</TR>");
-			sw.WriteLine("<TR>");
-			sw.WriteLine("<TD>&nbsp;</TD>");
-			sw.WriteLine("</TR>");
-			sw.WriteLine("<TR>");
-			sw.WriteLine("<TD align=\"center\">");
-            sw.WriteLine("<TABLE  class=\"TreeHeaderVioletBorder\" id=\"Table1\" cellSpacing=\"0\" cellPadding=\"0\" width=\"600\" align=\"center\">");
-			sw.WriteLine("<TR>");
-            sw.WriteLine("<TD colSpan=\"2\" class=\"violetBorderBottom\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1979, _webSession.SiteLanguage)) + "</TD>");
-			sw.WriteLine("</TR>");
-			sw.WriteLine("<TR>");
-			sw.WriteLine("<TD>&nbsp;</TD>");
-			sw.WriteLine("</TR>");
-			sw.WriteLine("<TR>");
+            #region result
+            
+            #region HTML
+            html.Append("<TABLE id=\"Table1\" align=\"center\" cellSpacing=\"1\" cellPadding=\"1\" width=\"1100\" border=\"0\" style=\"WIDTH: 1100px; HEIGHT: 2px\">");
+			html.Append("<P>&nbsp;</P>");
+			html.Append("<P>&nbsp;</P>");
+			html.Append("<P>&nbsp;</P>");
+			html.Append("<TD style=\"HEIGHT: 43px\">");
+            html.Append("<P align=\"center\"><B><SPAN class=\"TreeTitleViolet40pt\">" + GestionWeb.GetWebWord(1053, _webSession.SiteLanguage) + "</SPAN></B><SPAN class=\"TreeTitleBlack10pt\">");
+			html.Append("<o:p></o:p></SPAN></P>");
+			html.Append("</TD>");
+			html.Append("</TR>");
+			html.Append("<TR>");
+            html.Append("<TD><P align=\"center\"><SPAN class=\"TreeTitleViolet\">" + Convertion.ToHtmlString(str) + "</SPAN></P></TD>");
+			html.Append("</TR>");
+			html.Append("<P>&nbsp;</P>");
+			html.Append("<P>&nbsp;</P>");
+			html.Append("<TR>");
+			html.Append("<TD>&nbsp;</TD>");
+			html.Append("</TR>");
+			html.Append("<TR>");
+			html.Append("<TD>&nbsp;</TD>");
+			html.Append("</TR>");
+			html.Append("<TR>");
+			html.Append("<TD align=\"center\">");
+            html.Append("<TABLE  class=\"TreeHeaderVioletBorder\" id=\"Table1\" cellSpacing=\"0\" cellPadding=\"0\" width=\"600\" align=\"center\">");
+			html.Append("<TR>");
+            html.Append("<TD colSpan=\"2\" class=\"violetBorderBottom\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1979, _webSession.SiteLanguage)) + "</TD>");
+			html.Append("</TR>");
+			html.Append("<TR>");
+			html.Append("<TD>&nbsp;</TD>");
+			html.Append("</TR>");
+			html.Append("<TR>");
 			int line=2;
 			foreach(string indicatorName in _titleList){
 				if((line%2==0)&&(line>2)){
-					sw.WriteLine("</TR>");
-					sw.WriteLine("<TR>");
+					html.Append("</TR>");
+					html.Append("<TR>");
 				}
-				sw.WriteLine("<TD><li style=\"LIST-STYLE-TYPE: square\">"+indicatorName+"</li></TD>");
+				html.Append("<TD><li style=\"LIST-STYLE-TYPE: square\">"+indicatorName+"</li></TD>");
 				line++;
 			}
-			sw.WriteLine("</TR>");
-			sw.WriteLine("</TABLE>");
+			html.Append("</TR>");
+			html.Append("</TABLE>");
 
-			sw.WriteLine("</TD>");
-			sw.WriteLine("</TR>");
-			sw.WriteLine("</TABLE>");
-			sw.WriteLine("</form>");
-			sw.WriteLine("</body>");		
+			html.Append("</TD>");
+			html.Append("</TR>");
+			html.Append("</TABLE>");
+            #endregion
 
-			#region Html file loading
-			Functions.Functions.CloseHtmlFile(sw);
-			HTML2PDF2Class html = new HTML2PDF2Class();
-			html.MarginLeft = Convert.ToInt32(this.LeftMargin);
-			html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
-			html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
-            html.MinimalWidth = this.PDFPAGE_Width - Convert.ToInt32(this.LeftMargin) - Convert.ToInt32(this.RightMargin);
-			html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
-			html.ConnectToPDFLibrary (this);
-			html.LoadHTMLFile(workFile);
-			html.ConvertAll();
-			html.DisconnectFromPDFLibrary ();
-			#endregion
-
-			#region Clean File
-			File.Delete(workFile);
-			#endregion
+            this.ConvertHtmlToPDF(html.ToString(), charSet, themeName, _config.WebServer, _config.Html2PdfLogin, _config.Html2PdfPass, 0);
 
 			this.PDFPAGE_ShowImage(imgI,
 				(double)(this.PDFPAGE_Width/2 - coef*imgG.Width/2), (double)(this.WorkZoneBottom - coef*imgG.Height - 50),
@@ -436,21 +398,13 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 		/// </summary>
 		private void SessionParameter(){
 
-			StreamWriter sw = null;
 			int nbLinesEnd=0;
 			int j=0;
+            StringBuilder html = new StringBuilder();
 			bool showProductSelection = false;
 			IList nbLinesSelectionMedia=new ArrayList(), nbLinesSelectionDetailMedia=new ArrayList(), nbLinesSelectionProduct=new ArrayList();
 
 			try{
-				this.NewPage();
-
-				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-
-				string workFile = GetWorkDirectory() + @"\SessionParameter" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
-
-                sw = Functions.Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
-
 				IList SelectionMedia = ToHtml(_webSession.SelectionUniversMedia,false,false,600,false,_webSession.SiteLanguage,2,1,true,20,ref nbLinesEnd,ref nbLinesSelectionMedia);
 				nbLinesEnd=27;
 
@@ -466,81 +420,80 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					nbLinesEnd=27-(int)nbLinesSelectionDetailMedia[nbLinesSelectionDetailMedia.Count-1];
 
 				#region Title
-				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
-				sw.WriteLine("<TR height=\"25\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"14\">");
-                sw.WriteLine("<TD class=\"TreeTitleViolet20px\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1752, _webSession.SiteLanguage)) + "</TD>");
-				sw.WriteLine("</TR>");
+				html.Append("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
+				html.Append("<TR height=\"25\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"14\">");
+                html.Append("<TD class=\"TreeTitleViolet20px\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1752, _webSession.SiteLanguage)) + "</TD>");
+				html.Append("</TR>");
 				#endregion
 
 				#region Etude comparative
 				if(_webSession.ComparativeStudy){
-					sw.WriteLine("<TR height=\"7\">");
-					sw.WriteLine("<TD></TD>");
-					sw.WriteLine("</TR>");
-					sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
-					sw.WriteLine("<TD></TD>");
-					sw.WriteLine("</TR>");
-					sw.WriteLine("<TR>");
-					sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1118, _webSession.SiteLanguage)) + " </TD>");
-					sw.WriteLine("</TR>");
+					html.Append("<TR height=\"7\">");
+					html.Append("<TD></TD>");
+					html.Append("</TR>");
+					html.Append("<TR height=\"1\" class=\"lightPurple\">");
+					html.Append("<TD></TD>");
+					html.Append("</TR>");
+					html.Append("<TR>");
+					html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1118, _webSession.SiteLanguage)) + " </TD>");
+					html.Append("</TR>");
 				}
 				#endregion
 
 				#region Period
-				sw.WriteLine("<TR height=\"7\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR>");
-				sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1755, _webSession.SiteLanguage)) + " :</TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"20\">");
-				sw.WriteLine("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;"
+				html.Append("<TR height=\"7\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"1\" class=\"lightPurple\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR>");
+				html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1755, _webSession.SiteLanguage)) + " :</TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"20\">");
+				html.Append("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;"
 					+ HtmlFunctions.GetPeriodDetail(_webSession)
 					+ "</TD>");
-				sw.WriteLine("</TR>");
+				html.Append("</TR>");
 				#endregion
 
 				#region Média
-				sw.WriteLine("<TR height=\"7\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR>");
-				sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1292, _webSession.SiteLanguage)) + " :</TD>");
-				sw.WriteLine("<TR>");
-                sw.WriteLine("<TD align=\"left\">");
-				sw.WriteLine(SelectionMedia[0].ToString());
-				sw.WriteLine("</TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("</TR>");
+				html.Append("<TR height=\"7\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"1\" class=\"lightPurple\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR>");
+				html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1292, _webSession.SiteLanguage)) + " :</TD>");
+				html.Append("<TR>");
+                html.Append("<TD align=\"left\">");
+				html.Append(SelectionMedia[0].ToString());
+				html.Append("</TD>");
+				html.Append("</TR>");
+				html.Append("</TR>");
 				#endregion
 
 				if (SelectionDetailMedia !=null && SelectionDetailMedia.Count > 0) {
 
 					#region Détail Média
-				    mediaDetail(ref sw,SelectionDetailMedia,true,0);
+				    html.Append(GetMediaDetail(SelectionDetailMedia,true,0));
 					for(j=1; j<SelectionDetailMedia.Count; j++){
 
-						#region Html file loading
-						htmlFileLoading(sw,workFile);
-						#endregion
+                        this.ConvertHtmlToPDF(html.ToString(),
+                            WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset,
+                            WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
+                            _config.WebServer,
+                            _config.Html2PdfLogin,
+                            _config.Html2PdfPass);
 
-						this.NewPage();
-
-						this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-
-                        sw = Functions.Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
+                        html = new StringBuilder();
 
 						#region Détail Média
-						mediaDetail(ref sw,SelectionDetailMedia,false,j);
+                        html.Append(GetMediaDetail(SelectionDetailMedia, false, j));
 						#endregion
 					}
 					#endregion
@@ -549,20 +502,20 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
 				#region Unité
 				if (SelectionDetailMedia == null || SelectionDetailMedia.Count == 0) {
-					sw.WriteLine("<TR height=\"7\">");
-					sw.WriteLine("<TD></TD>");
-					sw.WriteLine("</TR>");
-					sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
-					sw.WriteLine("<TD></TD>");
-					sw.WriteLine("</TR>");
-					sw.WriteLine("<TR>");
-					sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1795, _webSession.SiteLanguage)) + " :</TD>");
-					sw.WriteLine("</TR>");
-					sw.WriteLine("<TR height=\"20\">");
-					sw.WriteLine("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;"
+					html.Append("<TR height=\"7\">");
+					html.Append("<TD></TD>");
+					html.Append("</TR>");
+					html.Append("<TR height=\"1\" class=\"lightPurple\">");
+					html.Append("<TD></TD>");
+					html.Append("</TR>");
+					html.Append("<TR>");
+					html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1795, _webSession.SiteLanguage)) + " :</TD>");
+					html.Append("</TR>");
+					html.Append("<TR height=\"20\">");
+					html.Append("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;"
                         + GestionWeb.GetWebWord(_webSession.GetSelectedUnit().WebTextId, _webSession.SiteLanguage)
 						+ "</TD>");
-					sw.WriteLine("</TR>");
+					html.Append("</TR>");
 				}
 				#endregion
 				
@@ -576,78 +529,83 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					if (SelectionDetailMedia != null && SelectionDetailMedia.Count > 0) {
 						currentLine = 3;
 						nbLineByPage = 34;
-						#region Html file loading
-						htmlFileLoading(sw, workFile);
-						#endregion
 
-						this.NewPage();
+                        this.ConvertHtmlToPDF(html.ToString(),
+                            WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset,
+                            WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
+                            _config.WebServer,
+                            _config.Html2PdfLogin,
+                            _config.Html2PdfPass);
 
-						this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
+                        html = new StringBuilder();
 
-                        sw = Functions.Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
-						sw.WriteLine("<TABLE id=\"Table1\" align=\"center\" cellSpacing=\"1\" cellPadding=\"1\" width=\"1100\" border=\"0\" style=\"WIDTH: 1100px; HEIGHT: 2px\">");
+						html.Append("<TABLE id=\"Table1\" align=\"center\" cellSpacing=\"1\" cellPadding=\"1\" width=\"1100\" border=\"0\" style=\"WIDTH: 1100px; HEIGHT: 2px\">");
 
 					}
-					sw.WriteLine("<TR height=\"7\">");
-					sw.WriteLine("<TD></TD>");
-					sw.WriteLine("</TR>");
-					sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
-					sw.WriteLine("<TD></TD>");
-					sw.WriteLine("</TR>");
-					sw.WriteLine("<TR>");
-					sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1759, _webSession.SiteLanguage)) + " :</TD>");
-					sw.WriteLine("<TR><TD>&nbsp;</TD>");
-					sw.WriteLine("</TR>");
-					sw.WriteLine("<TR>");
-					sw.WriteLine("<TD align=\"center\">");
+					html.Append("<TR height=\"7\">");
+					html.Append("<TD></TD>");
+					html.Append("</TR>");
+					html.Append("<TR height=\"1\" class=\"lightPurple\">");
+					html.Append("<TD></TD>");
+					html.Append("</TR>");
+					html.Append("<TR>");
+					html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1759, _webSession.SiteLanguage)) + " :</TD>");
+					html.Append("<TR><TD>&nbsp;</TD>");
+					html.Append("</TR>");
+					html.Append("<TR>");
+					html.Append("<TD align=\"center\">");
 
-                    sw.WriteLine(Convertion.ToHtmlString(TNS.AdExpress.Web.Functions.DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[0], _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.Source, 600, true, nbLineByPage, ref currentLine)));
+                    html.Append(Convertion.ToHtmlString(TNS.AdExpress.Web.Functions.DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[0], _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.Source, 600, true, nbLineByPage, ref currentLine)));
 					showProductSelection = true;
 
 					if (showProductSelection) {
-						sw.WriteLine("<br>");
-						sw.WriteLine("<div class=\"txtViolet11Bold\" align=\"left\" >" + "&nbsp;&nbsp;" + GestionWeb.GetWebWord(1601, _webSession.SiteLanguage) + "</div>");
-						sw.WriteLine(TNS.AdExpress.Web.BusinessFacade.Selections.Products.SectorsSelectedBusinessFacade.GetSectorsSelected(_webSession, false));
+						html.Append("<br>");
+						html.Append("<div class=\"txtViolet11Bold\" align=\"left\" >" + "&nbsp;&nbsp;" + GestionWeb.GetWebWord(1601, _webSession.SiteLanguage) + "</div>");
+						html.Append(TNS.AdExpress.Web.BusinessFacade.Selections.Products.SectorsSelectedBusinessFacade.GetSectorsSelected(_webSession, false));
 					}
-					sw.WriteLine("</TD>");
-					sw.WriteLine("</TR>");
-					sw.WriteLine("</TR>");
+					html.Append("</TD>");
+					html.Append("</TR>");
+					html.Append("</TR>");
 
 				}
 				#endregion
 
 				#region Unité
 				if (SelectionDetailMedia != null && SelectionDetailMedia.Count > 0) {
-					sw.WriteLine("<TR height=\"7\">");
-					sw.WriteLine("<TD></TD>");
-					sw.WriteLine("</TR>");
-					sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
-					sw.WriteLine("<TD></TD>");
-					sw.WriteLine("</TR>");
-					sw.WriteLine("<TR>");
-					sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1795, _webSession.SiteLanguage)) + " :</TD>");
-					sw.WriteLine("</TR>");
-					sw.WriteLine("<TR height=\"20\">");
-					sw.WriteLine("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;"
+					html.Append("<TR height=\"7\">");
+					html.Append("<TD></TD>");
+					html.Append("</TR>");
+					html.Append("<TR height=\"1\" class=\"lightPurple\">");
+					html.Append("<TD></TD>");
+					html.Append("</TR>");
+					html.Append("<TR>");
+					html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1795, _webSession.SiteLanguage)) + " :</TD>");
+					html.Append("</TR>");
+					html.Append("<TR height=\"20\">");
+					html.Append("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;"
                         + GestionWeb.GetWebWord(_webSession.GetSelectedUnit().WebTextId, _webSession.SiteLanguage)
 						+ "</TD>");
-					sw.WriteLine("</TR>");
+					html.Append("</TR>");
 				}
 				#endregion
 
-				#region Html file loading
-				sw.WriteLine("</TABLE>");
-				htmlFileLoading(sw,workFile);
-				#endregion
+
+				html.Append("</TABLE>");
+
+                this.ConvertHtmlToPDF(html.ToString(),
+                            WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset,
+                            WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
+                            _config.WebServer,
+                            _config.Html2PdfLogin,
+                            _config.Html2PdfPass);
+
+                html = new StringBuilder();
+
 
 				_titleList.Add(Convertion.ToHtmlString(GestionWeb.GetWebWord(1752,_webSession.SiteLanguage)));
 			
 			}
 			catch(System.Exception e){
-				try{
-					sw.Close();
-				}
-				catch(System.Exception e2){}
 				throw(new HotepPdfException("Unable to build the session parameter page for request " + _rqDetails["id_static_nav_session"].ToString() + ".",e));
 			}
 		}
@@ -659,63 +617,43 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 		/// </summary>
 		private void IndicatorSynthesis(){
 
-			StreamWriter sw = null;
+            StringBuilder html = new StringBuilder();
 
 			try{
-				this.NewPage();
-
-				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-
-				string workFile = GetWorkDirectory() + @"\Campaign_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
-
-                sw = Functions.Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
+                html.Append("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
 
 				#region Title
-				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
-				sw.WriteLine("<TR height=\"25\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"14\">");
-                sw.WriteLine("<TD class=\"TreeTitleViolet20px\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1664, _webSession.SiteLanguage)) + "</TD>");
-				sw.WriteLine("</TR>");
+				html.Append("<TR height=\"25\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"14\">");
+                html.Append("<TD class=\"TreeTitleViolet20px\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1664, _webSession.SiteLanguage)) + "</TD>");
+				html.Append("</TR>");
 				#endregion
 				
 				#region result
-				sw.WriteLine("<TR height=\"25\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR align=\"center\"><td>");
-                sw.WriteLine(_productClassIndicator.GetSummary());
-				sw.WriteLine("</td></tr>");
+				html.Append("<TR height=\"25\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR align=\"center\"><td>");
+                html.Append(_productClassIndicator.GetSummary());
+				html.Append("</td></tr>");
 				#endregion
 
-				#region Html file loading
-				sw.WriteLine("</table>");
-                Functions.Functions.CloseHtmlFile(sw);
-				HTML2PDF2Class html = new HTML2PDF2Class();
-				html.MarginLeft = Convert.ToInt32(this.LeftMargin);
-				html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
-				html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
-                html.MinimalWidth = this.PDFPAGE_Width - Convert.ToInt32(this.LeftMargin) - Convert.ToInt32(this.RightMargin);
-				html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
-				html.ConnectToPDFLibrary (this);
-				html.LoadHTMLFile(workFile);
-				html.ConvertAll();
-				html.DisconnectFromPDFLibrary ();
-				#endregion
+                html.Append("</table>");
 
-				#region Clean File
-				File.Delete(workFile);
-				#endregion
+                this.ConvertHtmlToPDF(html.ToString(),
+                            WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset,
+                            WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
+                            _config.WebServer,
+                            _config.Html2PdfLogin,
+                            _config.Html2PdfPass);
+
 
 				_titleList.Add(Convertion.ToHtmlString(GestionWeb.GetWebWord(1664,_webSession.SiteLanguage)));
 			
 			}
 			catch(System.Exception e){
-				try{
-					sw.Close();
-				}
-				catch(System.Exception e2){}
 				throw(new HotepPdfException("Unable to process the synthesis result for request " + _rqDetails["id_static_nav_session"].ToString() + ".",e)); 
 			}
 		}
@@ -749,7 +687,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
 					this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
 
-					string workFile = GetWorkDirectory() + @"\Grp_" + _rqDetails["id_static_nav_session"]+ ".bmp";
+					string workFile = Path.GetTempFileName();
 
 					#region Title
                     Style.GetTag("SeasonalityGraphTitleFontPage").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
@@ -823,7 +761,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
 					this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
 
-					string workFile = GetWorkDirectory() + @"\Grp_" + _rqDetails["id_static_nav_session"]+ ".bmp";
+					string workFile = Path.GetTempFileName();
 
 					#region Title
                     Style.GetTag("PalmaresGraphTitleFontPage").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
@@ -890,13 +828,26 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
                 IList result = new ArrayList();
                 IList resultAdvertiser = new ArrayList();
+                object[,] resultObject = null;
 
                 #region result
                 EngineNovelty engine = new EngineNovelty(_webSession, _productClassIndicatorDAL);
                 engine.ClassifLevel = CstResult.Novelty.ElementType.product;
-                result = GetIndicatorNoveltyGraphicHtmlUI(engine.GetData(), _webSession, CstResult.Novelty.ElementType.product);
+                try {
+                    resultObject = engine.GetData();
+                }
+                catch (TNS.AdExpress.Domain.Exceptions.NoDataException) {
+                    resultObject = null;
+                }
+                result = GetIndicatorNoveltyGraphicHtmlUI(resultObject, _webSession, CstResult.Novelty.ElementType.product);
                 engine.ClassifLevel = CstResult.Novelty.ElementType.advertiser;
-                resultAdvertiser = GetIndicatorNoveltyGraphicHtmlUI(engine.GetData(), _webSession, CstResult.Novelty.ElementType.advertiser);
+                try {
+                    resultObject = engine.GetData();
+                }
+                catch (TNS.AdExpress.Domain.Exceptions.NoDataException) {
+                    resultObject = null;
+                }
+                resultAdvertiser = GetIndicatorNoveltyGraphicHtmlUI(resultObject, _webSession, CstResult.Novelty.ElementType.advertiser);
                 #endregion
 
                 #region Html file loading
@@ -925,8 +876,6 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
                 }
                 #endregion
 
-            }
-            catch (TNS.AdExpress.Domain.Exceptions.NoDataException excepNoData) {
             }
             catch (System.Exception e) {
                 throw (new HotepPdfException("Unable to process the Indicator Novelty result for request " + _rqDetails["id_static_nav_session"].ToString() + ".", e));
@@ -962,7 +911,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
 					this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
 
-					string workFile = GetWorkDirectory() + @"\Grp_" + _rqDetails["id_static_nav_session"]+ ".bmp";
+					string workFile = Path.GetTempFileName();
 
 					#region Title
                     Style.GetTag("EvolutionGraphTitleFontPage").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
@@ -1553,7 +1502,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
                             this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
 
-                            string workFile = GetWorkDirectory() + @"\Grp_" + _rqDetails["id_static_nav_session"] + ".bmp";
+                            string workFile = Path.GetTempFileName();
 
 
                             if (first) {
@@ -1898,77 +1847,55 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 		#endregion
 
 		#region Détail Média
-		private void mediaDetail(ref StreamWriter sw,IList SelectionDetailMedia,bool first,int j){
-			
+		private string GetMediaDetail(IList SelectionDetailMedia,bool first,int j){
+
+            StringBuilder html = new StringBuilder();
 			// Détail référence média
 			if(_webSession.isReferenceMediaSelected()){
 							
-				sw.WriteLine("<TR height=\"7\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
+				html.Append("<TR height=\"7\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"1\" class=\"lightPurple\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
 				if(first){
-					sw.WriteLine("<TR>");
-					sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" +Convertion.ToHtmlString(GestionWeb.GetWebWord(1194,_webSession.SiteLanguage))+" :</TD>");
-					sw.WriteLine("<TR><TD>&nbsp;</TD>");
-					sw.WriteLine("</TR>");
+					html.Append("<TR>");
+					html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" +Convertion.ToHtmlString(GestionWeb.GetWebWord(1194,_webSession.SiteLanguage))+" :</TD>");
+					html.Append("<TR><TD>&nbsp;</TD>");
+					html.Append("</TR>");
 				}
-				sw.WriteLine("<TR>");
-				sw.WriteLine("<TD align=\"center\">");
-				sw.WriteLine(SelectionDetailMedia[j].ToString());
-				sw.WriteLine("</TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("</TR>");
+				html.Append("<TR>");
+				html.Append("<TD align=\"center\">");
+				html.Append(SelectionDetailMedia[j].ToString());
+				html.Append("</TD>");
+				html.Append("</TR>");
+				html.Append("</TR>");
 			}
 
 			// Détail Média
 			if(_webSession.SelectionUniversMedia.FirstNode!=null && _webSession.SelectionUniversMedia.FirstNode.Nodes.Count>0){
 			
-				sw.WriteLine("<TR height=\"7\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
+				html.Append("<TR height=\"7\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"1\" class=\"lightPurple\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
 				if(first){
-					sw.WriteLine("<TR>");
-					sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;"+Convertion.ToHtmlString(GestionWeb.GetWebWord(1194,_webSession.SiteLanguage))+" :</TD>");
-					sw.WriteLine("<TR><TD>&nbsp;</TD>");
-					sw.WriteLine("</TR>");
+					html.Append("<TR>");
+					html.Append("<TD class=\"txtViolet11Bold\">&nbsp;"+Convertion.ToHtmlString(GestionWeb.GetWebWord(1194,_webSession.SiteLanguage))+" :</TD>");
+					html.Append("<TR><TD>&nbsp;</TD>");
+					html.Append("</TR>");
 				}
-				sw.WriteLine("<TR>");
-				sw.WriteLine("<TD align=\"center\">");
-				sw.WriteLine(SelectionDetailMedia[j].ToString());
-				sw.WriteLine("</TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("</TR>");
+				html.Append("<TR>");
+				html.Append("<TD align=\"center\">");
+				html.Append(SelectionDetailMedia[j].ToString());
+				html.Append("</TD>");
+				html.Append("</TR>");
+				html.Append("</TR>");
 			}
-		}
-		#endregion
-
-		#region Html file loading
-		private void htmlFileLoading(StreamWriter sw, String workFile){
-		
-			#region Html file loading
-			Functions.Functions.CloseHtmlFile(sw);
-			HTML2PDF2Class html = new HTML2PDF2Class();
-			html.MarginLeft = Convert.ToInt32(this.LeftMargin);
-			html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
-			html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
-            html.MinimalWidth = this.PDFPAGE_Width - Convert.ToInt32(this.LeftMargin) - Convert.ToInt32(this.RightMargin);
-			html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
-			html.ConnectToPDFLibrary (this);
-			html.LoadHTMLFile(workFile);
-			html.ConvertAll();
-			html.DisconnectFromPDFLibrary ();
-			#endregion
-
-			#region Clean File
-			File.Delete(workFile);
-			#endregion
-
+            return html.ToString();
 		}
 		#endregion
 
@@ -2008,7 +1935,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			#endregion
 
 			#region Pas de données à afficher
-			if(tab.GetLength(0)==0)
+            if (tab==null || tab.GetLength(0) == 0)
 			{
 				if(elementType==CstResult.Novelty.ElementType.product){
 					htmlTableList.Add(GestionWeb.GetWebWord(1238,webSession.SiteLanguage));
@@ -2070,7 +1997,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 				//Période d'inactivité
 				t.Append("<td  nowrap  class=\"p2\">"+GestionWeb.GetWebWord(1220,webSession.SiteLanguage)+"</td>");			
 				//Colonne separation nbre de mois d'inactivité/ graphique dernier mois actif sur N-1
-                t.Append("<td class=\"columnSeparatorWithVioletBackGround\"><img width=2px></td>");
+                t.Append("<td style=\"border-bottom: 0px; border-left: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px; border-top: 0px; border-right: 0px; padding-top: 0px;height: 100%;\"><div class=\"gSepBackGround\"></div></td>");
 
 				//Cellules mois  de l'année N-1
 				for (int j=1;j<=12;j++){
@@ -2079,7 +2006,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					t.Append("<td nowrap  class=\"p2\">&nbsp;"+pluszero+j+"-"+PeriodEndDate.AddYears(-1).Year+"</td>");
 				}
 				//Colonne separation année N/N-1
-                t.Append("<td class=\"columnSeparatorWithVioletBackGround\"><img width=2px></td>");
+                t.Append("<td style=\"border-bottom: 0px; border-left: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px; border-top: 0px; border-right: 0px; padding-top: 0px;height: 100%;\"><div class=\"gSepBackGround\"></div></td>");
 
 				//cellules mois de la période N
 				for(int m=1;m<currentMonthDate.Month;m++){
@@ -2088,7 +2015,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					t.Append("<td nowrap  class=\"p2\">&nbsp;"+pluszero+m+"-"+PeriodEndDate.Year+"</td>");
 				}
 				//Colonne separation miis actif année N / et mois inactif année N
-                t.Append("<td class=\"columnSeparatorWithVioletBackGround\"><img width=2px></td>");
+                t.Append("<td style=\"border-bottom: 0px; border-left: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px; border-top: 0px; border-right: 0px; padding-top: 0px;height: 100%;\"><div class=\"gSepBackGround\"></div></td>");
 				//Colonne mois en cours (KE)
 				if(currentMonthDate.Month<10)pluszero="0";
 				else pluszero="";
@@ -2127,7 +2054,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					if(tab[i,CstResult.Novelty.INACTIVITY_PERIOD_COLUMN_INDEX]!=null)t.Append("<td nowrap  class="+classe+">"+tab[i,CstResult.Novelty.INACTIVITY_PERIOD_COLUMN_INDEX].ToString()+"</td>");
 					else t.Append("<td nowrap  class="+classe+">&nbsp;</td>");
 					//Colonne separation nbre de mois d'inactivité/ graphique dernier mois actif sur N-1
-                    t.Append("<td class=\"columnSeparatorWithVioletBackGround\"><img width=2px></td>");
+                    t.Append("<td style=\"border-bottom: 0px; border-left: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px; border-top: 0px; border-right: 0px; padding-top: 0px;height: 100%;\"><div class=\"gSepBackGround\"></div></td>");
 
 					//Cellules mois  de l'année N-1
 					for (int k=1;k<=12;k++){
@@ -2145,7 +2072,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 						else t.Append("<td nowrap >&nbsp;</td>");
 					}
 					//Colonne separation année N/N-1
-                    t.Append("<td class=\"columnSeparatorWithVioletBackGround\"><img width=2px></td>");
+                    t.Append("<td style=\"border-bottom: 0px; border-left: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px; border-top: 0px; border-right: 0px; padding-top: 0px;height: 100%;\"><div class=\"gSepBackGround\"></div></td>");
 					//cellules mois de la période N
 					for(int l=1;l<currentMonthDate.Month;l++){
 						if(PreviousYearActiveMonth)t.Append("<td nowrap class="+classe3+">&nbsp;</td>");
@@ -2153,7 +2080,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 					}
 					PreviousYearActiveMonth=false;
 					//Colonne separation mois actif année N / et mois inactif année N
-                    t.Append("<td class=\"columnSeparatorWithVioletBackGround\"><img width=2px></td>");
+                    t.Append("<td style=\"border-bottom: 0px; border-left: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px; border-top: 0px; border-right: 0px; padding-top: 0px;height: 100%;\"><div class=\"gSepBackGround\"></div></td>");
 
 					//Colonne mois en cours (KE)
 					if(tab[i,CstResult.Novelty.CURRENT_MONTH_INVEST_COLUMN_INDEX]!=null && !tab[i,CstResult.Novelty.CURRENT_MONTH_INVEST_COLUMN_INDEX].ToString().Equals("-"))
@@ -2178,7 +2105,10 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
 						t = new System.Text.StringBuilder(10000);
 
-						GetHtmlHeader(t);
+                        t.Append("<TR height=\"25\">");
+                        t.Append("<TD></TD>");
+                        t.Append("</TR>");
+                        t.Append("<TR align=\"center\"><td>");
 						t.Append("\n<TABLE border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"p2\"><TR><TD>");
 
 						#region ligne libellés
@@ -2193,7 +2123,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 						//Période d'inactivité
 						t.Append("<td  nowrap  class=\"p2\">"+GestionWeb.GetWebWord(1220,webSession.SiteLanguage)+"</td>");			
 						//Colonne separation nbre de mois d'inactivité/ graphique dernier mois actif sur N-1
-                        t.Append("<td class=\"columnSeparatorWithVioletBackGround\"><img width=2px></td>");
+                        t.Append("<td style=\"border-bottom: 0px; border-left: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px; border-top: 0px; border-right: 0px; padding-top: 0px;height: 100%;\"><div class=\"gSepBackGround\"></div></td>");
 
 						//Cellules mois  de l'année N-1
 						for (int j=1;j<=12;j++){
@@ -2202,7 +2132,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 							t.Append("<td nowrap  class=\"p2\">&nbsp;"+pluszero+j+"-"+PeriodEndDate.AddYears(-1).Year+"</td>");
 						}
 						//Colonne separation année N/N-1
-                        t.Append("<td class=\"columnSeparatorWithVioletBackGround\"><img width=2px></td>");
+                        t.Append("<td style=\"border-bottom: 0px; border-left: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px; border-top: 0px; border-right: 0px; padding-top: 0px;height: 100%;\"><div class=\"gSepBackGround\"></div></td>");
 
 						//cellules mois de la période N
 						for(int m=1;m<currentMonthDate.Month;m++){
@@ -2211,7 +2141,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 							t.Append("<td nowrap  class=\"p2\">&nbsp;"+pluszero+m+"-"+PeriodEndDate.Year+"</td>");
 						}
 						//Colonne separation miis actif année N / et mois inactif année N
-                        t.Append("<td class=\"columnSeparatorWithVioletBackGround\"><img width=2px></td>");
+                        t.Append("<td style=\"border-bottom: 0px; border-left: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px; border-top: 0px; border-right: 0px; padding-top: 0px;height: 100%;\"><div class=\"gSepBackGround\"></div></td>");
 						//Colonne mois en cours (KE)
 						if(currentMonthDate.Month<10)pluszero="0";
 						else pluszero="";
@@ -2245,40 +2175,6 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 		}
 		#endregion
 
-		#region Get HTML Header
-		private void GetHtmlHeader(System.Text.StringBuilder html){
-
-            string charSet = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset;
-            string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
-
-			#region headers
-			html.Append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" >");
-			html.Append("<HTML>");
-			html.Append("<HEAD>");
-			html.Append("<META http-equiv=\"Content-Type\" content=\"text/html; charset="+charSet+"\">");
-			html.Append("<meta content=\"Microsoft Visual Studio .NET 7.1\" name=\"GENERATOR\">");
-			html.Append("<meta content=\"C#\" name=\"CODE_LANGUAGE\">");
-			html.Append("<meta content=\"JavaScript\" name=\"vs_defaultClientScript\">");
-			html.Append("<meta content=\"http://schemas.microsoft.com/intellisense/ie5\" name=\"vs_targetSchema\">");
-            html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/AdExpress.css\" type=\"text/css\" rel=\"stylesheet\">");
-            html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/GenericUI.css\" type=\"text/css\" rel=\"stylesheet\">");
-            html.Append("<LINK href=\"" + _config.WebServer + "/App_Themes" + "/" + themeName + "/Css/MediaSchedule.css\" type=\"text/css\" rel=\"stylesheet\">");
-			html.Append("<meta http-equiv=\"expires\" content=\"Wed, 23 Feb 1999 10:49:02 GMT\">");
-			html.Append("<meta http-equiv=\"expires\" content=\"0\">");
-			html.Append("<meta http-equiv=\"pragma\" content=\"no-cache\">");
-			html.Append("<meta name=\"Cache-control\" content=\"no-cache\">");
-			html.Append("</HEAD>");
-			html.Append("<body>");
-			html.Append("<form>");
-			html.Append("<TR height=\"25\">");
-			html.Append("<TD></TD>");
-			html.Append("</TR>");
-			html.Append("<TR align=\"center\"><td>");
-			#endregion
-
-		}
-		#endregion
-
 		#region Ajout de l'image qui correspond au tableau de nouveautés 
         /// <summary>
         /// addNoveltyPicture
@@ -2288,14 +2184,15 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
         /// <param name="withTitle"></param>
 		private void addNoveltyPicture(IList result,int i,bool withTitle){
 		
-			CHtmlSnapClass snap;
-			IntPtr  hBitmap;
 			StringBuilder htmlTMP=null;
 			string filePath="";
 		
 			htmlTMP=new StringBuilder();
 
-			GetHtmlHeader(htmlTMP);
+            htmlTMP.Append("<TR height=\"25\">");
+            htmlTMP.Append("<TD></TD>");
+            htmlTMP.Append("</TR>");
+            htmlTMP.Append("<TR align=\"center\"><td>");
 			htmlTMP.Append(result[i]);
 			htmlTMP.Append("</td></tr>");
 
@@ -2312,19 +2209,12 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 
 			}
 
-			hBitmap = IntPtr.Zero;
-			snap = new CHtmlSnapClass();
-			snap.SetTimeOut(100000);
-			snap.SetCode("21063505C78EB32A");
-			snap.SnapHtmlString(htmlTMP.ToString(), "*");
-						
-			//GetBitmapHandle returns a  bitmap handle, it must be deleted like above, or there will
-			//be memory leaks.  
-			hBitmap = (IntPtr)snap.GetBitmapHandle();
-
-			//here demo how to use GetImageBytes.
-			byte[] data = (byte[])snap.GetImageBytes(".jpg");	
-			filePath=GetWorkDirectory() + @"\Campaign_" + _rqDetails["id_static_nav_session"].ToString() + ".jpg";
+            byte[] data = this.ConvertHtmlToSnapJpgByte(htmlTMP.ToString(),
+                WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset,
+                WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
+                _config.WebServer);
+	
+			filePath=Path.GetTempFileName();
 			FileStream  fs = File.OpenWrite(filePath); 	
 			BinaryWriter br = new BinaryWriter(fs); 
 
@@ -2362,15 +2252,15 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 		
 		#endregion
 
-		#region Evenement Envoi mail client
-		/// <summary>
-		/// Rise exception when the customer mail has not been sent
-		/// </summary>
-		/// <param name="source">Error source></param>
-		/// <param name="message">Error message</param>
-		private void mail_mailKoHandler(object source, string message){
-			throw new Exceptions.HotepPdfException("Echec lors de l'envoi mail client pour la session " + _webSession.IdSession + " : " + message);
-		}
-		#endregion
+        #region Evenement Envoi mail client
+        /// <summary>
+        /// Rise exception when the customer mail has not been sent
+        /// </summary>
+        /// <param name="source">Error source></param>
+        /// <param name="message">Error message</param>
+        private void mail_mailKoHandler(object source, string message) {
+            throw new Exceptions.HotepPdfException("Echec lors de l'envoi mail client pour la session " + _webSession.IdSession + " : " + message);
+        }
+        #endregion
 	}
 }

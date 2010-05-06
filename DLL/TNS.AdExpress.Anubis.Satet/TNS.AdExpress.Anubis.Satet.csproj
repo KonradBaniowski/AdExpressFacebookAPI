@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{CD735B8C-C50F-4E93-A8FA-B70C421B8A35}</ProjectGuid>
     <SccProjectName>SAK</SccProjectName>
@@ -118,10 +118,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.Net.dll</HintPath>
     </Reference>
-    <ProjectReference Include="..\TNS.AdExpress.Classification\TNS.AdExpress.Classification.csproj">
-      <Project>{85908D78-32C1-4C1B-9E17-0D957B849DFA}</Project>
-      <Name>TNS.AdExpress.Classification</Name>
-    </ProjectReference>
+    <Reference Include="TNS.FrameWork.WebTheme, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.WebTheme.dll</HintPath>
+    </Reference>
     <ProjectReference Include="..\TNS.ADEXPRESS.CONSTANTES\TNS.AdExpress.Constantes.csproj">
       <Name>TNS.AdExpress.Constantes</Name>
       <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
@@ -155,6 +155,10 @@
     <ProjectReference Include="..\TNS.Ares.Constantes\TNS.Ares.Constantes.csproj">
       <Project>{303C6B21-CA16-4D7B-8EDB-E8869B2B3EC9}</Project>
       <Name>TNS.Ares.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.Domain\TNS.Ares.Domain.csproj">
+      <Project>{255834E2-DCA3-4290-9325-FFA4291839A6}</Project>
+      <Name>TNS.Ares.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.Ares.StaticNavSession.DAL\TNS.Ares.StaticNavSession.DAL.csproj">
       <Project>{4762D913-FC82-42BD-840F-5BCB43E5979D}</Project>
@@ -217,13 +221,51 @@
     <Compile Include="UI\Synthesis.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Content Include="App_Themes\DefaultAdExpressFr\Styles.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Themes\DefaultAdExpressUk\Styles.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\33\LogoAdExpress.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\33\LogoAdExpress220.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\33\LogoAdExpressWater.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\33\LogoAdExpressWater.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\44\LogoAdExpress.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\44\LogoAdExpress220.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\checkbox.GIF">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\checkbox_not_checked.GIF">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Configuration\33\Plugins\Satet.xml" />
+    <Content Include="Configuration\33\Plugins\Satet.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Common\APPM.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Common\logo_Tns.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\logoTNSMedia.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Aspose.Cells.lic">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="ModelSupport\default.txaPackage" />
   </ItemGroup>
   <ItemGroup>

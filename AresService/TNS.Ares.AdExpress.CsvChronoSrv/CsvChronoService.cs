@@ -24,66 +24,83 @@ namespace TNS.Ares.AdExpress.CsvChronoSrv
 {
     public partial class CsvChronoService : ServiceBase
     {
-        private SobekShell _shell;
+        #region Constante
+        /// <summary>
+        /// Directory configuratyion Name
+        /// </summary>
+        private const string CONFIGURATION_DIRECTORY_NAME = "Configuration";
+        #endregion
 
+        #region Variables
+        /// <summary>
+        /// Current Thread.
+        /// </summary>
+        private Thread _currentThread = null;
+        /// <summary>
+        /// Current Shell.
+        /// </summary>
+        private SobekShell _currentShell;
+        #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public CsvChronoService()
         {
             InitializeComponent();
         }
+        #endregion
 
-        protected void InitService()
+        #region Run
+        /// <summary>
+        /// Run
+        /// </summary>
+        public void Run()
         {
-            #region Loading application parameters
-            // Initialisation des listes de texte
-            AdExpressWordListLoader.LoadLists();
+            try {
+                string configurationDirectoryRoot = AppDomain.CurrentDomain.BaseDirectory + CONFIGURATION_DIRECTORY_NAME + @"\";
+                LsClientConfiguration lsClientConfiguration = TNS.Ares.Domain.XmlLoader.LsClientConfigurationXL.Load(new XmlReaderDataSource(configurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.LS_CLIENT_CONFIGURATION_FILENAME));
 
-            Product.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
-            Media.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.BAAL_CONFIGURATION_FILENAME));
 
-            // Units
-            UnitsInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNITS_CONFIGURATION_FILENAME));
+                _currentShell = new SobekShell(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, lsClientConfiguration.ModuleDescriptionList, lsClientConfiguration.DirectoryName);
+                _currentShell.StartMonitorServer(lsClientConfiguration.MonitorPort);
 
-            // Vehicles
-            VehiclesInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.VEHICLES_CONFIGURATION_FILENAME));
-
-            // Universes
-            UniverseLevels.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CONFIGURATION_FILENAME));
-
-            // Charge les styles personnalisés des niveaux d'univers
-            UniverseLevelsCustomStyles.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CUSTOM_STYLES_CONFIGURATION_FILENAME));
-
-            // Charge la hierachie de niveau d'univers
-            UniverseBranches.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_BRANCHES_CONFIGURATION_FILENAME));
-
-            // Charge les niveaux d'univers
-            UniverseLevels.getInstance(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.UNIVERSE_LEVELS_CONFIGURATION_FILENAME));
-
-            //Load flag list
-            TNS.AdExpress.Domain.AllowedFlags.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.FLAGS_CONFIGURATION_FILENAME));
-            #endregion
-
-            // Loading administration DataSource
-            IDataSource source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.webAdministration);
-            LsClientConfiguration lsClientConfiguration = TNS.Ares.Domain.XmlLoader.LsClientConfigurationXL.Load(new XmlReaderDataSource(WebApplicationParameters.ConfigurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.LS_CLIENT_CONFIGURATION_FILENAME));
-
-            // Loading DataBase configuration
-            DataBaseConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
-
-            string confFilePath = WebApplicationParameters.ConfigurationDirectoryRoot + lsClientConfiguration.DirectoryName;
-
-            _shell = new SobekShell(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, confFilePath, source);
-            _shell.StartMonitorServer(lsClientConfiguration.MonitorPort);
-            _shell.Dispose();
+                Thread.Sleep(Timeout.Infinite);
+                _currentShell.Dispose();
+            }
+            catch (Exception e) {
+                if(_currentShell!=null)
+                    _currentShell.Dispose();
+            }
         }
+        #endregion
 
+        #region OnStart
+        /// <summary>
+        /// OnStart
+        /// </summary>
+        /// <param name="args">Argument</param>
         protected override void OnStart(string[] args)
         {
-            new Thread(new ThreadStart(this.InitService)).Start();
+            _currentThread = new System.Threading.Thread(this.Run);
+            _currentThread.Start();
         }
+        #endregion
 
+        #region OnStop
+        /// <summary>
+        /// OnStop
+        /// </summary>
         protected override void OnStop()
         {
-            _shell.Dispose();
+            if (_currentShell != null) {
+                _currentShell.Dispose();
+                _currentShell = null;
+            }
+
+            _currentThread.Abort();
         }
+        #endregion
     }
 }

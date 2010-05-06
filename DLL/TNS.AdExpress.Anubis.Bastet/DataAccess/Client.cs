@@ -17,8 +17,10 @@ using DBSchema=TNS.AdExpress.Constantes.DB.Schema;
 using DBTables=TNS.AdExpress.Constantes.DB.Tables;
 using AnubisBastet=TNS.AdExpress.Anubis.Bastet;
 using DBConstantes=TNS.AdExpress.Constantes.DB;
-using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Bastet.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
+
+
 
 namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 	/// <summary>
@@ -54,7 +56,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				sql.Append(" ," + companyTable.SqlWithPrefix + "," + contactTable.SqlWithPrefix
 					+","+addressTable.SqlWithPrefix+","+loginTable.SqlWithPrefix);
 				//Where
-				sql.Append(" where "+connectionByLoginTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
 				if(parameters!=null && parameters.Logins.Length>0)
 					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
 				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
@@ -107,7 +109,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 					+ "," + groupContactTable.SqlWithPrefix);
 					
 				//Where
-				sql.Append(" where "+connectionByLoginTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyyMMdd"));
 				if(parameters!=null && parameters.Logins.Length>0)
 					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
 				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
@@ -163,7 +165,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				sql.Append(" ,"+loginTable.SqlWithPrefix+","+contactTable.SqlWithPrefix
 				+","+addressTable.SqlWithPrefix+","+companyTable.SqlWithPrefix);
 				//Where
-				sql.Append(" where "+connectionByLoginTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
 				if(parameters!=null && parameters.Logins.Length>0)
 					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
 				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
@@ -174,10 +176,10 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 							
 				//Gourp by
 				sql.Append(" group by "+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,"+connectionByLoginTable.Prefix+".id_login,login,date_connection,connection_number");
-				//Order by
-				sql.Append(" order by  "+connectionByLoginTable.Prefix+".id_login,login,date_connection");
 
 				sql.Append(" ) group by date_connection,id_company,company,id_login,login ");
+                //Order by
+                sql.Append(" order by  date_connection, login, id_login ");
 				#endregion
 				
 				#region Execution
@@ -224,7 +226,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 					+","+groupContactTable.SqlWithPrefix);
 					
 				//Where
-				sql.Append(" where "+connectionByLoginTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
 				if(parameters!=null && parameters.Logins.Length>0)
 					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
 				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
@@ -235,10 +237,10 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 							
 				//Gourp by
 				sql.Append(" group by "+contactTable.Prefix+".id_group_contact,group_contact,date_connection,connection_number");
-				//Order by
-				sql.Append(" order by  "+contactTable.Prefix+".id_group_contact,group_contact,date_connection");
 
 				sql.Append(" ) group by date_connection,id_group_contact,group_contact ");
+                //Order by
+                sql.Append(" order by  date_connection, group_contact, id_group_contact ");
 				#endregion
 				
 				#region Execution
@@ -284,7 +286,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				sql.Append(" ," + loginTable.SqlWithPrefix + "," + contactTable.SqlWithPrefix
 				+ "," + addressTable.SqlWithPrefix + "," + companyTable.SqlWithPrefix);
 				//Where
-				sql.Append(" where "+connectionByLoginTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
 				if(parameters!=null && parameters.Logins.Length>0)
 					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
 				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
@@ -295,10 +297,10 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 							
 				//Gourp by
 				sql.Append(" group by "+companyTable.Prefix+".id_company ,"+companyTable.Prefix+".company,"+connectionByLoginTable.Prefix+".id_login,login,date_connection,connection_number");
-				//Order by
-				sql.Append(" order by  "+connectionByLoginTable.Prefix+".id_login,login,date_connection");
 
 				sql.Append(" ) group by date_connection,id_company,company,id_login,login ");
+                //Order by
+                sql.Append(" order by  date_connection, login, id_login");
 				#endregion
 				
 				#region Execution
@@ -344,7 +346,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				+ "," + groupContactTable.SqlWithPrefix );
 				
 				//Where
-				sql.Append(" where "+connectionByLoginTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
 				if(parameters!=null && parameters.Logins.Length>0)
 					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
 				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
@@ -355,10 +357,10 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 							
 				//Gourp by
 				sql.Append(" group by "+contactTable.Prefix+".id_group_contact,group_contact,date_connection,connection_number");
-				//Order by
-				sql.Append(" order by  "+contactTable.Prefix+".id_group_contact,group_contact,date_connection");
 
 				sql.Append(" ) group by date_connection,id_group_contact,group_contact ");
+                //Order by
+                sql.Append(" order by  date_connection, group_contact, id_group_contact ");
 				#endregion
 				
 				#region Execution
@@ -399,7 +401,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				sql.Append(" ,"+loginTable.SqlWithPrefix+","+contactTable.SqlWithPrefix
 					+","+addressTable.SqlWithPrefix+","+companyTable.SqlWithPrefix);
 				//Where
-				sql.Append(" where "+ipLoginTable.Prefix+".date_connection  between "+parameters.PeriodBeginningDate+" and "+parameters.PeriodEndDate);
+                sql.Append(" where " + ipLoginTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
 				if(parameters!=null && parameters.Logins.Length>0)
 					sql.Append(" and "+ipLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
 				sql.Append(" and "+loginTable.Prefix+".id_login="+ipLoginTable.Prefix+".id_login ");

@@ -14,6 +14,7 @@ using TNS.AdExpress.Domain.XmlLoader;
 using TNS.FrameWork.Exceptions;
 using TNS.Ares.Domain.DataBaseDescription;
 using TNS.Alert.Domain;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.Ares.AdExpress.MailAlertSrv
 {
@@ -37,55 +38,19 @@ namespace TNS.Ares.AdExpress.MailAlertSrv
         {
             try {
                 EventLog.WriteEntry("Ares Alert Treatment service is starting", EventLogEntryType.Information);
-                IDataSource source = null;
                 TNS.Ares.Domain.LS.LsClientConfiguration lsClientConfiguration = null;
-                string countryCode = string.Empty;
 
                 string configurationDirectoryRoot = AppDomain.CurrentDomain.BaseDirectory + CONFIGURATION_DIRECTORY_NAME + @"\";
-                try {
-                    countryCode = WebParamtersXL.LoadDirectoryName(new XmlReaderDataSource(configurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME));
-                }
-                catch {
-                    throw new BaseException("Impossible to Load WebParamters");
-                }
-
-                string countryConfigurationDirectoryRoot = configurationDirectoryRoot + countryCode + @"\";
-
+                
                 try {
                     lsClientConfiguration = TNS.Ares.Domain.XmlLoader.LsClientConfigurationXL.Load(new XmlReaderDataSource(configurationDirectoryRoot + WebConstantes.ConfigurationFile.LS_CLIENT_CONFIGURATION_FILENAME));
                 }
                 catch {
                     throw new BaseException("Impossible to Load LsClientConfiguration");
                 }
-                try {
-                    TNS.Ares.Domain.DataBase.DataBaseConfiguration.Load(new XmlReaderDataSource(countryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
-                }
-                catch (Exception e) {
-                    throw new BaseException("Impossible to Load ARES DataBaseConfiguration : " + e.Message);
-                }
-                try {
-                    // Loading administration DataSource
-                    source = TNS.Ares.Domain.DataBase.DataBaseConfiguration.DataBase.GetDefaultConnection(DefaultConnectionIds.alert);
-                }
-                catch (Exception e) {
-                    throw new BaseException("Impossible to Init Source : " + e.Message);
-                }
-
-                try {
-                    TNS.Ares.Domain.LS.PluginConfiguration.Load(new XmlReaderDataSource(countryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.PLUGIN_CONFIGURATION_FILENAME));
-                }
-                catch (Exception e) {
-                    throw new BaseException("Impossible to Load PluginConfiguration : " + e.Message);
-                }
-                try {
-                    AlertConfiguration.Load(new XmlReaderDataSource(countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.ALERTE_CONFIGURATION));
-                }
-                catch (Exception e) {
-                    throw new BaseException("Impossible to Load AlertConfiguration : " + e.Message);
-                }
-
+                
                 // Loading Alert Shell and starting monitor server
-                _shell = new AlertShell(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, source, lsClientConfiguration.ModuleDescriptionList, lsClientConfiguration.MaxAvailableSlots, countryCode);
+                _shell = new AlertShell(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, lsClientConfiguration.ModuleDescriptionList, lsClientConfiguration.MaxAvailableSlots);
                 _shell.StartMonitorServer(lsClientConfiguration.MonitorPort);
             }
             catch (Exception e) {

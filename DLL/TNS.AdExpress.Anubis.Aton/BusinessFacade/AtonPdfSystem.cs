@@ -17,7 +17,6 @@ using System.Windows.Forms;
 using TNS.AdExpress.Anubis.Aton.Common;
 using TNS.AdExpress.Anubis.Aton.Exceptions;
 using TNS.AdExpress.Anubis.Aton.UI;
-using AtonFunctions=TNS.AdExpress.Anubis.Aton.Functions;
 
 using TNS.AdExpress.Constantes.Customer;
 using CstRights = TNS.AdExpress.Constantes.Customer.Right;
@@ -39,7 +38,7 @@ using TNS.FrameWork;
 using TNS.FrameWork.Net.Mail;
 
 using Dundas.Charting.WinControl;
-using HTML2PDFAddOn;
+
 using PDFCreatorPilotLib;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Web.Common.Results;
@@ -47,11 +46,11 @@ using TNS.AdExpress.Web.UI.Results.MediaPlanVersions;
 using TNS.FrameWork.WebResultUI;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Domain.Theme;
 using System.Globalization;
 using TNS.AdExpress.Domain.Web;
 using TNS.Ares.Pdf;
 using TNS.Ares;
+using TNS.FrameWork.WebTheme;
 
 namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 	/// <summary>
@@ -185,19 +184,24 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 
 		#region Send
 		internal void Send(string fileName){
-			ArrayList to = new ArrayList();
-			foreach(string s in _webSession.EmailRecipient){
-				to.Add(s);
-			}
-			SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
-				WebFunctions.Text.SuppressAccent(GestionWeb.GetWebWord(2116,_webSession.SiteLanguage)),
-				WebFunctions.Text.SuppressAccent(GestionWeb.GetWebWord(1750,_webSession.SiteLanguage)+"\""+_webSession.ExportedPDFFileName
-				+ "\""+String.Format(GestionWeb.GetWebWord(1751,_webSession.SiteLanguage),_config.WebServer)
-				+ "<br><br>"
-				+ GestionWeb.GetWebWord(1776,_webSession.SiteLanguage)),
-				true, _config.CustomerMailServer, _config.CustomerMailPort);
-			mail.mailKoHandler += new TNS.FrameWork.Net.Mail.SmtpUtilities.mailKoEventHandler(mail_mailKoHandler);
-			mail.SendWithoutThread(false);
+            try {
+                ArrayList to = new ArrayList();
+                foreach (string s in _webSession.EmailRecipient) {
+                    to.Add(s);
+                }
+                SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
+                    WebFunctions.Text.SuppressAccent(GestionWeb.GetWebWord(2116, _webSession.SiteLanguage)),
+                    WebFunctions.Text.SuppressAccent(GestionWeb.GetWebWord(1750, _webSession.SiteLanguage) + "\"" + _webSession.ExportedPDFFileName
+                    + "\"" + String.Format(GestionWeb.GetWebWord(1751, _webSession.SiteLanguage), _config.WebServer)
+                    + "<br><br>"
+                    + GestionWeb.GetWebWord(1776, _webSession.SiteLanguage)),
+                    true, _config.CustomerMailServer, _config.CustomerMailPort);
+                mail.mailKoHandler += new TNS.FrameWork.Net.Mail.SmtpUtilities.mailKoEventHandler(mail_mailKoHandler);
+                mail.SendWithoutThread(false);
+            }
+            catch (Exception e) {
+                throw new AtonPdfException("Impossible to send mail to client in Send(string fileName)", e);
+            }
 		}
 		#endregion
 
@@ -251,24 +255,6 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 		}
 		#endregion
 
-		#region GetWorkDirectory
-		/// <summary>
-		/// Provide a work directory. Create it if it doesn't exist or return a path to it
-		/// </summary>
-		/// <returns></returns>
-		internal string GetWorkDirectory(){
-			try{
-				if(!Directory.Exists(@"tmp_"+_rqDetails["id_static_nav_session"].ToString())){
-					Directory.CreateDirectory(@"tmp_"+_rqDetails["id_static_nav_session"].ToString());
-				}
-				return (@"tmp_"+_rqDetails["id_static_nav_session"].ToString());
-			}
-			catch(System.Exception e){
-				throw(new AtonPdfException("Unable to provide the working directory", e));
-			}
-		}
-		#endregion
-
 		#endregion
 
 		#region MainPage
@@ -280,7 +266,19 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 		
 			this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
 
-            string imgPath = ((TNS.AdExpress.Domain.Theme.Picture)Style.GetTag("pictureTitle")).Path;
+            Picture picture = ((Picture)Style.GetTag("pictureTitle"));
+            string imgPath = string.Empty;
+
+            if (File.Exists(picture.Path)) {
+                imgPath = picture.Path;
+            }
+            else if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\" + picture.Path)) {
+                imgPath = AppDomain.CurrentDomain.BaseDirectory + @"\" + picture.Path;
+            }
+            else {
+                imgPath = picture.Path;
+            }
+
 			System.Drawing.Image imgG = System.Drawing.Image.FromFile(imgPath);
             string pdfTitle = GestionWeb.GetWebWord(2182, _webSession.SiteLanguage);
 			
@@ -312,84 +310,77 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 		/// </summary>
 		private void SessionParameter(){
 
-			StreamWriter sw = null;
+            StringBuilder html = new StringBuilder();
             string classCss = string.Empty;
 
 			try{
-				this.NewPage();
-
-				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-
-				string workFile = GetWorkDirectory() + @"\SessionParameter" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
-
-                sw = AtonFunctions.Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 
 				#region Title
-				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
-				sw.WriteLine("<TR height=\"25\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"14\">");
-				sw.WriteLine("<TD class=\"txtViolet14Bold\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1752,_webSession.SiteLanguage)) + "</TD>");
-				sw.WriteLine("</TR>");
+				html.Append("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
+				html.Append("<TR height=\"25\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"14\">");
+				html.Append("<TD class=\"txtViolet14Bold\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1752,_webSession.SiteLanguage)) + "</TD>");
+				html.Append("</TR>");
 				#endregion
 
 				#region Period
-				sw.WriteLine("<TR height=\"7\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR>");
-				sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1755, _webSession.SiteLanguage)) + " :</TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"20\">");
-				sw.WriteLine("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;&nbsp;&nbsp;"
+				html.Append("<TR height=\"7\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"1\" class=\"lightPurple\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR>");
+				html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1755, _webSession.SiteLanguage)) + " :</TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"20\">");
+				html.Append("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;&nbsp;&nbsp;"
 					+ HtmlFunctions.GetPeriodDetail(_webSession)
 					+ "</TD>");
-				sw.WriteLine("</TR>");
+				html.Append("</TR>");
 				#endregion
 
 				#region Wave
 				//TODO WAVE
-				sw.WriteLine("<TR height=\"7\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR>");
-				sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1771, _webSession.SiteLanguage)) + " :</TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"20\">");
-				sw.WriteLine("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;&nbsp;&nbsp;"
+				html.Append("<TR height=\"7\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"1\" class=\"lightPurple\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR>");
+				html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1771, _webSession.SiteLanguage)) + " :</TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"20\">");
+				html.Append("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;&nbsp;&nbsp;"
 					+ ((LevelInformation)_webSession.SelectionUniversAEPMWave.Nodes[0].Tag).Text
 					+ "</TD>");
-				sw.WriteLine("</TR>");
+				html.Append("</TR>");
 				#endregion
 
 				#region Targets
-				sw.WriteLine("<TR height=\"7\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR>");
-				sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1757, _webSession.SiteLanguage)) + " :</TD>");
-				sw.WriteLine("</TR>");
+				html.Append("<TR height=\"7\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"1\" class=\"lightPurple\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR>");
+				html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1757, _webSession.SiteLanguage)) + " :</TD>");
+				html.Append("</TR>");
 				//Base target
 				string targets = "'" + _webSession.GetSelection(_webSession.SelectionUniversAEPMTarget,CstRights.type.aepmTargetAccess) + "'";
 				//Wave
 				string idWave = ((LevelInformation)_webSession.SelectionUniversAEPMWave.Nodes[0].Tag).ID.ToString();
 				DataSet ds = TargetListDataAccess.GetAEPMTargetListFromIDSDataAccess(idWave, targets, _webSession.Source);
 				foreach(DataRow r in ds.Tables[0].Rows){
-					sw.WriteLine("<TR height=\"20\">");
-					sw.WriteLine("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;&nbsp;&nbsp;");
-					sw.WriteLine( Convertion.ToHtmlString(r["target"].ToString()));
-					sw.WriteLine("</TD>");
-					sw.WriteLine("</TR>");
+					html.Append("<TR height=\"20\">");
+					html.Append("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;&nbsp;&nbsp;");
+					html.Append( Convertion.ToHtmlString(r["target"].ToString()));
+					html.Append("</TD>");
+					html.Append("</TR>");
 				}
 				ds.Dispose();
 				ds = null;
@@ -398,83 +389,68 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				#region Products
 				const int nbLineByPage = 32;
 				int currentLine = 12;
-				sw.WriteLine("<TR height=\"7\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"1\" class=\"lightPurple\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR>");
-				sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1759, _webSession.SiteLanguage)) + " :</TD>");
-				sw.WriteLine("</TR>");
+				html.Append("<TR height=\"7\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"1\" class=\"lightPurple\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR>");
+				html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1759, _webSession.SiteLanguage)) + " :</TD>");
+				html.Append("</TR>");
 				//reference
-				sw.WriteLine("<TR height=\"14\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR>");
-				sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1677, _webSession.SiteLanguage)) + " :</TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR align=\"center\">");
-				sw.WriteLine("<TD><br>");
-				//sw.WriteLine(WebFunctions.DisplayTreeNode.ToHtml(_webSession.CurrentUniversAdvertiser,false,true,true,600,true,false,_webSession.SiteLanguage,3,1,false));								
+				html.Append("<TR height=\"14\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR>");
+				html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1677, _webSession.SiteLanguage)) + " :</TD>");
+				html.Append("</TR>");
+				html.Append("<TR align=\"center\">");
+				html.Append("<TD><br>");
+				//html.Append(WebFunctions.DisplayTreeNode.ToHtml(_webSession.CurrentUniversAdvertiser,false,true,true,600,true,false,_webSession.SiteLanguage,3,1,false));								
 				if(_webSession.PrincipalProductUniverses != null && _webSession.PrincipalProductUniverses.Count>0)
-                    sw.WriteLine(WebFunctions.DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[0], _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.Source, 600, true, nbLineByPage, ref currentLine));
-				sw.WriteLine("</TD>");
-				sw.WriteLine("</TR>");
+                    html.Append(WebFunctions.DisplayUniverse.ToHtml(_webSession.PrincipalProductUniverses[0], _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.Source, 600, true, nbLineByPage, ref currentLine));
+				html.Append("</TD>");
+				html.Append("</TR>");
 				//competitor
-				sw.WriteLine("<TR height=\"14\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR>");
-				sw.WriteLine("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1668, _webSession.SiteLanguage)) + " :</TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR align=\"center\">");
-				sw.WriteLine("<TD><br>");
+				html.Append("<TR height=\"14\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR>");
+				html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1668, _webSession.SiteLanguage)) + " :</TD>");
+				html.Append("</TR>");
+				html.Append("<TR align=\"center\">");
+				html.Append("<TD><br>");
 				ds = GroupSystem.ListFromSelection(_dataSource, _webSession);
-				sw.WriteLine("<table class=\"txtViolet11Bold\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\">");
+				html.Append("<table class=\"txtViolet11Bold\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\">");
 				for(int i =0; i < ds.Tables[0].Rows.Count; i++){
-					sw.WriteLine("<tr>");
+					html.Append("<tr>");
 					if((i+1) < ds.Tables[0].Rows.Count){
                         classCss = "violetBorderWithoutBottom";
 					}
 					else{
                         classCss = "violetBorder";
 					}
-                    sw.WriteLine("<td class=\"" + classCss + "\">&nbsp;&nbsp;");
-					sw.WriteLine(ds.Tables[0].Rows[i][0].ToString());
-					sw.WriteLine("</td>");
-					sw.WriteLine("</tr>");
+                    html.Append("<td class=\"" + classCss + "\">&nbsp;&nbsp;");
+					html.Append(ds.Tables[0].Rows[i][0].ToString());
+					html.Append("</td>");
+					html.Append("</tr>");
 				}
 				ds.Dispose();
 				ds = null;
-				sw.WriteLine("</TD>");
-				sw.WriteLine("</TR>");
+				html.Append("</TD>");
+				html.Append("</TR>");
 				#endregion
 
-				#region Html file loading
-				AtonFunctions.Functions.CloseHtmlFile(sw);
-				HTML2PDF2Class html = new HTML2PDF2Class();
-				html.MarginLeft = Convert.ToInt32(this.LeftMargin);
-				html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
-				html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
-                html.MinimalWidth = this.PDFPAGE_Width - Convert.ToInt32(this.LeftMargin) - Convert.ToInt32(this.RightMargin);
-				html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
-				html.ConnectToPDFLibrary (this);
-				html.LoadHTMLFile(workFile);
-				html.ConvertAll();
-				html.DisconnectFromPDFLibrary ();
-				#endregion
-
-				#region Clean File
-				File.Delete(workFile);
-				#endregion
+                this.ConvertHtmlToPDF(html.ToString(),
+                    WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset,
+                    WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
+                    _config.WebServer,
+                    _config.Html2PdfLogin,
+                    _config.Html2PdfPass);
 			
 			}
 			catch(System.Exception e){
-				try{
-					sw.Close();
-				}
-				catch(System.Exception e2){}
 				throw(new AtonPdfException("Unable to build the session parameter page for request " + _rqDetails["id_static_nav_session"].ToString() + ".",e));
 			}
 		}
@@ -485,8 +461,8 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 		/// Synthesis
 		/// </summary>
 		private void Synthesis(){
-		
-			StreamWriter sw = null;
+
+            StringBuilder html = new StringBuilder();
 
 			try{
 
@@ -501,29 +477,21 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				_idWave=Int64.Parse(_webSession.GetSelection(_webSession.SelectionUniversAEPMWave,CstRights.type.aepmWaveAccess));									
 				#endregion
 
-				this.NewPage();
-
-				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-
-				string workFile = GetWorkDirectory() + @"\Synthesis_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
-
-                sw = AtonFunctions.Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
-
 				#region Title
-				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
-				sw.WriteLine("<TR height=\"25\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"14\">");
-				sw.WriteLine("<TD class=\"txtViolet14Bold\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(2114,_webSession.SiteLanguage)) + "</TD>");
-				sw.WriteLine("</TR>");
+				html.Append("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
+				html.Append("<TR height=\"25\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"14\">");
+				html.Append("<TD class=\"txtViolet14Bold\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(2114,_webSession.SiteLanguage)) + "</TD>");
+				html.Append("</TR>");
 				#endregion
 				
 				#region result
-				sw.WriteLine("<TR height=\"25\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR align=\"center\"><td>");
+				html.Append("<TR height=\"25\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR align=\"center\"><td>");
 
 				ResultTable resultTable = APPMRules.SectorDataSynthesisRules.GetSynthesisFormattedTable(_webSession,int.Parse(_webSession.PeriodBeginningDate),int.Parse(_webSession.PeriodEndDate),_idBaseTarget,_idAdditionalTarget);
 				WebControlResultTable webControlResultTable=new WebControlResultTable();
@@ -535,36 +503,22 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				webControlResultTable.CssTitle="title";
 				webControlResultTable.Title=GestionWeb.GetWebWord(2114 ,_webSession.SiteLanguage);
 
-				sw.WriteLine(webControlResultTable.GetHTML());
+				html.Append(webControlResultTable.GetHTML());
 
-				sw.WriteLine("</td></tr>");
+				html.Append("</td></tr>");
 				#endregion
 
-				#region Html file loading
-				sw.WriteLine("</table>");
-				AtonFunctions.Functions.CloseHtmlFile(sw);
-				HTML2PDF2Class html = new HTML2PDF2Class();
-				html.MarginLeft = 0;
-				html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
-				html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
-                html.MinimalWidth = this.PDFPAGE_Width - Convert.ToInt32(this.LeftMargin) - Convert.ToInt32(this.RightMargin);
-				html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
-				html.ConnectToPDFLibrary (this);
-				html.LoadHTMLFile(workFile);
-				html.ConvertAll();
-				html.DisconnectFromPDFLibrary ();
-				#endregion
+				html.Append("</table>");
 
-				#region Clean File
-				File.Delete(workFile);
-				#endregion
+                this.ConvertHtmlToPDF(html.ToString(),
+                    WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset,
+                    WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
+                    _config.WebServer,
+                    _config.Html2PdfLogin,
+                    _config.Html2PdfPass);
 			
 			}
 			catch(System.Exception e){
-				try{
-					sw.Close();
-				}
-				catch(System.Exception e2){}
 				throw(new AtonPdfException("Unable to process the synthesis result for request " + _rqDetails["id_static_nav_session"].ToString() + ".",e)); 
 			}
 		
@@ -576,18 +530,10 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 		/// Average
 		/// </summary>
 		private void Average(){
-		
-			StreamWriter sw = null;
+
+            StringBuilder html = new StringBuilder();
 
 			try{
-
-				this.NewPage();
-
-				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-
-				string workFile = GetWorkDirectory() + @"\Average_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
-
-                sw = AtonFunctions.Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
 
 				#region Title
 
@@ -602,20 +548,20 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 					productDetail=GestionWeb.GetWebWord(858,_webSession.SiteLanguage);
 				#endregion
 
-				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
-				sw.WriteLine("<TR height=\"25\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"14\">");
-				sw.WriteLine("<TD class=\"txtViolet14Bold\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(2081,_webSession.SiteLanguage)) + " par " + productDetail + "</TD>");
-				sw.WriteLine("</TR>");
+				html.Append("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
+				html.Append("<TR height=\"25\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"14\">");
+				html.Append("<TD class=\"txtViolet14Bold\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(2081,_webSession.SiteLanguage)) + " par " + productDetail + "</TD>");
+				html.Append("</TR>");
 				#endregion
 				
 				#region result
-				sw.WriteLine("<TR height=\"25\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR align=\"center\"><td>");
+				html.Append("<TR height=\"25\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR align=\"center\"><td>");
 
 				ResultTable resultTable = APPMRules.SectorDataAverageRules.GetAverageFormattedTable(_webSession,int.Parse(_webSession.PeriodBeginningDate),int.Parse(_webSession.PeriodEndDate),_idBaseTarget,_idAdditionalTarget);
 				WebControlResultTable webControlResultTable=new WebControlResultTable();
@@ -627,36 +573,22 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				webControlResultTable.CssL3="avgLv0";
 				webControlResultTable.CssLHeader="h2";
 
-				sw.WriteLine(webControlResultTable.GetHTML());
+				html.Append(webControlResultTable.GetHTML());
 
-				sw.WriteLine("</td></tr>");
+				html.Append("</td></tr>");
 				#endregion
 
-				#region Html file loading
-				sw.WriteLine("</table>");
-				AtonFunctions.Functions.CloseHtmlFile(sw);
-				HTML2PDF2Class html = new HTML2PDF2Class();
-				html.MarginLeft = 0;
-				html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
-				html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
-                html.MinimalWidth = this.PDFPAGE_Width - Convert.ToInt32(this.LeftMargin) - Convert.ToInt32(this.RightMargin);
-				html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
-				html.ConnectToPDFLibrary (this);
-				html.LoadHTMLFile(workFile);
-				html.ConvertAll();
-				html.DisconnectFromPDFLibrary ();
-				#endregion
+				html.Append("</table>");
 
-				#region Clean File
-				File.Delete(workFile);
-				#endregion
-			
+                this.ConvertHtmlToPDF(html.ToString(),
+                    WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset,
+                    WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
+                    _config.WebServer,
+                    _config.Html2PdfLogin,
+                    _config.Html2PdfPass);
+		
 			}
 			catch(System.Exception e){
-				try{
-					sw.Close();
-				}
-				catch(System.Exception e2){}
 				throw(new AtonPdfException("Unable to process the average result for request " + _rqDetails["id_static_nav_session"].ToString() + ".",e)); 
 			}
 		
@@ -668,34 +600,26 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 		/// Affinities
 		/// </summary>
 		private void Affinities(){
-		
-			StreamWriter sw = null;
+
+            StringBuilder html = new StringBuilder();
 
 			try{
 
-				this.NewPage();
-
-				this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
-
-				string workFile = GetWorkDirectory() + @"\Affinities_" + _rqDetails["id_static_nav_session"].ToString() + ".htm";
-
-                sw = AtonFunctions.Functions.GetHtmlFile(workFile, _webSession, _config.WebServer);
-
 				#region Title
-				sw.WriteLine("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
-				sw.WriteLine("<TR height=\"25\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR height=\"14\">");
-				sw.WriteLine("<TD class=\"txtViolet14Bold\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1687,_webSession.SiteLanguage)) + "</TD>");
-				sw.WriteLine("</TR>");
+				html.Append("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
+				html.Append("<TR height=\"25\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR height=\"14\">");
+				html.Append("<TD class=\"txtViolet14Bold\">" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1687,_webSession.SiteLanguage)) + "</TD>");
+				html.Append("</TR>");
 				#endregion
 				
 				#region result
-				sw.WriteLine("<TR height=\"25\">");
-				sw.WriteLine("<TD></TD>");
-				sw.WriteLine("</TR>");
-				sw.WriteLine("<TR align=\"center\"><td>");
+				html.Append("<TR height=\"25\">");
+				html.Append("<TD></TD>");
+				html.Append("</TR>");
+				html.Append("<TR align=\"center\"><td>");
 
 				ResultTable resultTable = APPMRules.SectorDataAffintiesRules.GetData(_webSession,_webSession.Source,int.Parse(_webSession.PeriodBeginningDate),int.Parse(_webSession.PeriodEndDate),_idBaseTarget,_idWave);
 				WebControlResultTable webControlResultTable=new WebControlResultTable();
@@ -706,36 +630,22 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 				webControlResultTable.CssLTotal="lv0";
 				webControlResultTable.CssLHeader="h2";
 
-				sw.WriteLine(webControlResultTable.GetHTML());
+				html.Append(webControlResultTable.GetHTML());
 
-				sw.WriteLine("</td></tr>");
+				html.Append("</td></tr>");
 				#endregion
 
-				#region Html file loading
-				sw.WriteLine("</table>");
-				AtonFunctions.Functions.CloseHtmlFile(sw);
-				HTML2PDF2Class html = new HTML2PDF2Class();
-				html.MarginLeft = 0;
-				html.MarginTop = Convert.ToInt32(this.WorkZoneTop);
-				html.MarginBottom = Convert.ToInt32(this.PDFPAGE_Height - this.WorkZoneBottom + 1);
-                html.MinimalWidth = this.PDFPAGE_Width - Convert.ToInt32(this.LeftMargin) - Convert.ToInt32(this.RightMargin);
-				html.StartHTMLEngine(_config.Html2PdfLogin, _config.Html2PdfPass);
-				html.ConnectToPDFLibrary (this);
-				html.LoadHTMLFile(workFile);
-				html.ConvertAll();
-				html.DisconnectFromPDFLibrary ();
-				#endregion
+				html.Append("</table>");
 
-				#region Clean File
-				File.Delete(workFile);
-				#endregion
+                this.ConvertHtmlToPDF(html.ToString(),
+                    WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset,
+                    WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
+                    _config.WebServer,
+                    _config.Html2PdfLogin,
+                    _config.Html2PdfPass);
 			
 			}
 			catch(System.Exception e){
-				try{
-					sw.Close();
-				}
-				catch(System.Exception e2){}
 				throw(new AtonPdfException("Unable to process the affinities result for request " + _rqDetails["id_static_nav_session"].ToString() + ".",e)); 
 			}
 		
@@ -831,7 +741,7 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 
 			try{
 				
-				string workFile = GetWorkDirectory() + @"\"+fileName+"" + _rqDetails["id_static_nav_session"]+ ".bmp";
+				string workFile = Path.GetTempFileName();
 
 				UISeasonalityGraph graph = new UISeasonalityGraph(_webSession, _dataSource, _config, seasonalityPlanData,Style);
 
@@ -894,8 +804,8 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 			Image img = null;
 
 			try{
-				
-				string workFile = GetWorkDirectory() + @"\"+fileName+"" + _rqDetails["id_static_nav_session"]+ ".bmp";
+
+                string workFile = Path.GetTempFileName();
 
 				UIFamilyGraph graph = new UIFamilyGraph(_webSession, _dataSource, _config, InterestFamilyPlanData,Style);
 
@@ -957,8 +867,8 @@ namespace TNS.AdExpress.Anubis.Aton.BusinessFacade{
 			Image img = null;
 
 			try{
-				
-				string workFile = GetWorkDirectory() + @"\"+fileName+"" + _rqDetails["id_static_nav_session"]+ ".bmp";
+
+                string workFile = Path.GetTempFileName();
 
 				UIPeriodicityGraph graph = new UIPeriodicityGraph(_webSession, _dataSource, _config, periodicityPlanData,Style);
 

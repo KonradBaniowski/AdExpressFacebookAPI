@@ -24,9 +24,13 @@ using Aspose.Cells;
 using TNS.Ares;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using TNS.Ares.StaticNavSession.DAL;
-using TNS.AdExpress.Domain.Layers;
+
 using System.Reflection;
-using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Bastet.Web;
+using TNS.AdExpress.Domain.Layers;
+using TNS.Ares.Domain.LS;
+using TNS.AdExpress.Anubis.Bastet.Exceptions;
+
 
 namespace TNS.AdExpress.Anubis.Bastet {
 	/// <summary>
@@ -130,31 +134,51 @@ namespace TNS.AdExpress.Anubis.Bastet {
 		/// <param name="navSessionId"></param>
 		/// <param name="confifurationFilePath"></param>
 		/// <param name="dataSource">source de données</param>
-		public void Treatement(string confifurationFilePath,IDataSource dataSource,Int64 navSessionId){
-			_navSessionId=navSessionId;
+        public void Treatement(string configurationFilePath, IDataSource dataSource, Int64 navSessionId) {
 
-            object[] parameter = new object[1];
-            parameter[0] = dataSource;
-            CoreLayer cl = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.dataAccess];
-            _dataAccess = (IStaticNavSessionDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameter, null, null, null);
-	
-			#region Chargement du fichier de configuration
-			if(confifurationFilePath==null){
-				OnError(_navSessionId,"Impossible to launch job treatment", new ArgumentNullException("Configuration file name is null."));
-				return;
-			}
-			if(confifurationFilePath.Length==0){
-				OnError(_navSessionId, "Impossible to launch job treatment", new ArgumentException("Configuration file name is null."));
-				return;
-			}
-			try{
-				_bastetConfig=new BastetConfig(new XmlReaderDataSource(confifurationFilePath));
-			}
-			catch(System.Exception err){
-                OnError(_navSessionId,"Impossible to launch job treatment <== impossible to load configuration file: Path="+confifurationFilePath,err);
-				return;
-			}
-			#endregion
+            try {
+                _navSessionId = navSessionId;
+
+                #region Initialization
+
+                #region Create Instance of _webSession
+                try {
+                    object[] parameter = new object[1];
+                    parameter[0] = dataSource;
+                    CoreLayer cl = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.dataAccess];
+                    _dataAccess = (IStaticNavSessionDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameter, null, null, null);
+                }
+                catch (Exception e) {
+                    throw new BastetExcelException("Impossible to Create Instance Of Layer IStaticNavSessionDAL ", e);
+                }
+                #endregion
+
+                #region Check Path File
+                if (configurationFilePath == null) {
+                    throw new BastetExcelException("Impossible de lancer le traitement d'un job", new ArgumentNullException("Le nom du fichier de configuration est null."));
+                }
+                if (configurationFilePath.Length == 0) {
+                    throw new BastetExcelException("Impossible de lancer le traitement d'un job", new ArgumentException("Le nom du fichier de configuration est vide."));
+                }
+                #endregion
+
+                #region Initialize Bastet
+                try {
+                    _bastetConfig = new BastetConfig(new XmlReaderDataSource(configurationFilePath));
+                }
+                catch (System.Exception err) {
+                    throw new BastetExcelException("Impossible de lancer le traitement d'un job <== impossible de charger le fichier de configuration", err);
+                }
+                #endregion
+
+                #endregion
+
+            }
+            catch (Exception e) {
+                _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.error.GetHashCode());
+                OnError(_navSessionId, "Impossible to initialize process ", e);
+                return;
+            }
 
 			_dataSource=dataSource;
 			
@@ -188,14 +212,15 @@ namespace TNS.AdExpress.Anubis.Bastet {
 
 				#region Excel management
 				
-				_excel = new BastetExcelSystem(_dataSource,_bastetConfig,rqDetails,(Parameters)Parameters.Load(_navSessionId));
+				_excel = new BastetExcelSystem(_dataSource,_bastetConfig,rqDetails,(Parameters)Parameters.Load(_navSessionId, _dataSource));
 				string fileName = _excel.Init();
 				_excel.Fill();
                 _dataAccess.RegisterFile(_navSessionId, fileName);
 				_excel.Send();
                 _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.sent.GetHashCode());
-                _dataAccess.DeleteRow(_navSessionId);			
-				
+                PluginInformation pluginInformation = PluginConfiguration.GetPluginInformation(PluginType.Bastet);
+                if (pluginInformation != null && pluginInformation.DeleteRowSuccess)
+                    _dataAccess.DeleteRow(_navSessionId);				
 				#endregion
 
 				OnStopWorkerJob(_navSessionId,"","",this.GetPluginName()+" finished for "+_navSessionId);
@@ -207,9 +232,9 @@ namespace TNS.AdExpress.Anubis.Bastet {
 			}
 			finally{
 				try{
-					if (File.Exists(_excel.ExcelFilePath)) {
-						File.Delete(_excel.ExcelFilePath);
-					}
+                    //if (File.Exists(_excel.ExcelFilePath)) {
+                    //    File.Delete(_excel.ExcelFilePath);
+                    //}
 				}
 				catch(System.Exception){					
 				}

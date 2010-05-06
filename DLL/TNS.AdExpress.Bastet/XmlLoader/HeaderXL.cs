@@ -11,7 +11,7 @@ using TNS.AdExpress.Bastet.Common.Headers;
 using TNS.AdExpress.Bastet.Exceptions;
 using TNS.FrameWork.DB.Common;
 
-namespace TNS.AdExpress.Bastet.DataAccess.Headers{
+namespace TNS.AdExpress.Bastet.XmlLoader {
 	/// <summary>
 	/// Classe pour le chargement du header
 	/// </summary>

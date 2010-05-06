@@ -95,7 +95,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
         /// <summary>
         /// Style
         /// </summary>
-        private TNS.AdExpress.Domain.Theme.Style _style = null;
+        private TNS.FrameWork.WebTheme.Style _style = null;
         /// <summary>
         /// Pie ColorS
         /// </summary>
@@ -107,7 +107,7 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 		#endregion
 
 		#region Constructeur
-        public UISeasonalityGraph(WebSession webSession, IDataSource dataSource, AtonConfig config, DataTable dtGraphicsData, TNS.AdExpress.Domain.Theme.Style style)
+        public UISeasonalityGraph(WebSession webSession, IDataSource dataSource, AtonConfig config, DataTable dtGraphicsData, TNS.FrameWork.WebTheme.Style style)
             : base()
 		{
 			_webSession = webSession;
@@ -116,8 +116,8 @@ namespace TNS.AdExpress.Anubis.Aton.UI{
 			_dtGraphicsData = dtGraphicsData;
             _style = style;
 
-            _pieColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("SeasonalityGraphPieColors")).ColorList;
-            _barColors = ((TNS.AdExpress.Domain.Theme.Colors)_style.GetTag("SeasonalityGraphBarColors")).ColorList;
+            _pieColors = ((TNS.FrameWork.WebTheme.Colors)_style.GetTag("SeasonalityGraphPieColors")).ColorList;
+            _barColors = ((TNS.FrameWork.WebTheme.Colors)_style.GetTag("SeasonalityGraphBarColors")).ColorList;
 		}
 		#endregion
 
