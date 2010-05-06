@@ -212,7 +212,6 @@
       <columnItem id="42" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <!-- <columnItem id="35" name="Visuel" notInExcelExport="true"/>-->
-      <columnItem id="34" name="Page"/>
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
@@ -223,6 +222,7 @@
       <!--<columnItem id="12" name="Surface"/>-->
       <columnItem id="13" name="Couleur"/>
       <columnItem id="36" name="Position"/>
+      <columnItem id="34" name="Page"/>
       <columnItem id="14" name="Prix"/>
       <!--<columnItem id="93" name="Descriptif"/>-->
       <!--<columnItem id="57" name="Date de couverture" visible="false"/>-->
@@ -381,13 +381,13 @@
       <columnItem id="42" name="Date du Support" visible="true" isKey="true"/>
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <!-- <columnItem id="35" name="Visuel" notInExcelExport="true"/>-->
-      <columnItem id="34" name="Page"/>
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <columnItem id="11" name="Format" idDetailLevelMatching="20"/>
       <!-- <columnItem id="12" name="Surface"/>-->
       <columnItem id="13" name="Couleur"/>
+      <columnItem id="34" name="Page"/>
       <columnItem id="14" name="Prix"/>
       <!--<columnItem id="93" name="Descriptif"/>-->
       <!--<columnItem id="57" name="Date de couverture" visible="false"/>-->
@@ -658,7 +658,6 @@
       <columnItem id="42" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <!-- <columnItem id="35" name="Visuel" notInExcelExport="true"/>-->
-      <columnItem id="34" name="Page"/>
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
@@ -669,6 +668,7 @@
       <!-- <columnItem id="12" name="Surface"/>-->
       <columnItem id="13" name="Couleur"/>
       <columnItem id="36" name="Position"/>
+      <columnItem id="34" name="Page"/>
       <columnItem id="14" name="Prix"/>
       <!--<columnItem id="94" name="Descriptif"/>-->
       <!--<columnItem id="57" name="Date de couverture" visible="false"/>-->
@@ -679,13 +679,13 @@
       <columnItem id="42" name="Date du Support" visible="true" isKey="true"/>
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <!-- <columnItem id="35" name="Visuel" notInExcelExport="true"/>-->
-      <columnItem id="34" name="Page"/>
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <columnItem id="11" name="Format" idDetailLevelMatching="20"/>
       <!-- <columnItem id="12" name="Surface"/>-->
       <columnItem id="13" name="Couleur"/>
+      <columnItem id="34" name="Page"/>
       <columnItem id="14" name="Prix"/>
       <!-- <columnItem id="94" name="Descriptif"/>-->
       <!--<columnItem id="57" name="Date de couverture" visible="false"/>-->
