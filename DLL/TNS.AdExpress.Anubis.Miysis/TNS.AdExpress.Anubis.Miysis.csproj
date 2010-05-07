@@ -79,9 +79,9 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Interop.PDFCreatorPilotLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Interop.PDFCreatorPilotLib, Version=1.0.0.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\Interop.PDFCreatorPilotLib.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\Pdf lib v4.3.3133\Interop.PDFCreatorPilotLib.dll</HintPath>
     </Reference>
     <Reference Include="Oracle.DataAccess, Version=2.102.2.20, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -231,6 +231,9 @@
     </Content>
     <Content Include="Configuration\35\Plugins\Miysis.xml" />
     <Content Include="Configuration\421\Plugins\Miysis.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configuration\4211\Plugins\Miysis.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\33\LogoAdExpress.jpg">

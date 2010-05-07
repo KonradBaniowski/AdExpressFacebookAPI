@@ -37,15 +37,15 @@
   <ItemGroup>
     <Reference Include="Interop.HTML2PDFAddOn, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\Interop.HTML2PDFAddOn.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\HTML2PDF v4.0.73\Interop.HTML2PDFAddOn.dll</HintPath>
     </Reference>
     <Reference Include="Interop.HtmlSnap2, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\Interop.HtmlSnap2.dll</HintPath>
     </Reference>
-    <Reference Include="Interop.PDFCreatorPilotLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Interop.PDFCreatorPilotLib, Version=1.0.0.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\Interop.PDFCreatorPilotLib.dll</HintPath>
+      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\Pdf lib v4.3.3133\Interop.PDFCreatorPilotLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

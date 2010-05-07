@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Configuration>
-  <CustomerMail server="fitnses-ex01.tnsad.com" port="25" from="tnsadexpress@tnsmi.fi" webServer="http://www.tnsadexpress.fi" subject="TNS AdExpress"/>
-  <PdfPath path="\\fitnses-dmzad01\AdExCustomerFiles"/>
+
+  <CustomerMail server="frmitpu-msprod" port="25" from="tnsadexpress@tnsmi.fr" webServer="http://www.internet.tnsadexpress.sk" subject="AdExpress"/>
+  <PdfPath path="C:\"/>
+  <!--<PdfPath path="AdExCustomerFiles"/>-->
   <!--If path empty then path = current directory of executable-->
   <ThemePath path="App_Themes"/>
   <PressScanPath path="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\"/>

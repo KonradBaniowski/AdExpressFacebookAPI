@@ -8,9 +8,7 @@
   <PressScanPath path="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\"/>
   <VMCScanPath path="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\MarketingDirect"/>
   <OutdoorScanPath path="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Outdoor"/>
-  <!--<PdfCreatorPilot login="and@tns-global.com" pass="2SN7J-6TWNG-VCQKV-7XCCT-45YEH"/>-->
-  <PdfCreatorPilot login="laurent.roucaute@tnsmi.fr" pass="WHBRS-AAQWR-7QC3S-9H28E"/>
-  <!--<Html2Pdf login="An DangDuy" pass="3GKL5-4UFS4-F4HZ4-EK6WY"/>-->
-  <Html2Pdf login="laurent.roucaute@tnsmi.fr" pass="FBZ9Q-CQHV9-VTC8P-DFD9V"/>
+  <PdfCreatorPilot login="KantarMedia" pass="53HN7-JV7XK-Z7JBD-RTA92"/>
+  <Html2Pdf login="KantarMedia" pass="T83L6-ZMNJ8-33Y93-CT3Y8"/>
   <PdfProperties author="TNS Media Intelligence" subject="Plan Média" title="Plan Média" producer="TNS AdExpress (Anubis)" keywords="Plan Média,adExpress,TNS Media Intelligence"/>
 </Configuration>
