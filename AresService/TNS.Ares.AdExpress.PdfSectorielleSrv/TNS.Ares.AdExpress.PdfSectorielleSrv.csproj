@@ -170,7 +170,22 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>rmdir /S /Q "$(TargetDir)Bin\"
+mkdir "$(TargetDir)Bin\"
+copy "$(TargetDir)TNS.Ares.StaticNavSession.DAL.Default.dll" "$(TargetDir)Bin\TNS.Ares.StaticNavSession.DAL.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.ProductClassIndicators.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.ProductClassIndicators.DAL.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.ProductClassIndicators.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.ProductClassIndicators.Default.dll" /Y</PostBuildEvent>
+    <PreBuildEvent>echo ----------------------------------------------
+echo -                      Pre buid
+echo ----------------------------------------------
+echo  -- Suppression du lecteur I --
+subst i: /D
+echo  -- Obtention du répertoire où seront les librairies --
+set toto="$(TargetDir)"
+echo  -- Suppression du \ de fin; et ajout du " de fin --
+set toto=%25toto:~0,-2%25"
+echo  -- Définition d'un lecteur pointant sur le répertoire où seront les librairies --
+subst i: %25toto%25
+</PreBuildEvent>
   </PropertyGroup>
 </Project>

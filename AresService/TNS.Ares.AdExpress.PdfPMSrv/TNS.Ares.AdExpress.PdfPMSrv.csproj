@@ -186,7 +186,26 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>rmdir /S /Q "$(TargetDir)Bin\"
+mkdir "$(TargetDir)Bin\"
+copy "$(TargetDir)TNS.Ares.StaticNavSession.DAL.Default.dll" "$(TargetDir)Bin\TNS.Ares.StaticNavSession.DAL.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Insertions.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Insertions.DAL.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Insertions.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Insertions.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.Appm.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.Appm.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.DAL.Appm.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.DAL.Appm.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.DAL.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.DAL.Finland.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.DAL.Finland.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.Default.dll" /Y</PostBuildEvent>
+    <PreBuildEvent>echo ----------------------------------------------
+echo -                      Pre buid
+echo ----------------------------------------------
+echo  -- Suppression du lecteur I --
+subst i: /D
+echo  -- Obtention du répertoire où seront les librairies --
+set toto="$(TargetDir)"
+echo  -- Suppression du \ de fin; et ajout du " de fin --
+set toto=%25toto:~0,-2%25"
+echo  -- Définition d'un lecteur pointant sur le répertoire où seront les librairies --
+subst i: %25toto%25</PreBuildEvent>
   </PropertyGroup>
 </Project>
