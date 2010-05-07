@@ -12,8 +12,8 @@
     <defaultConnection enumId="4" description="Geb" dataBaseEnumId="2" login="adexpr03_proc_7" password="pushit76"              dataSource="adexwebsk01.test" connectionTimeOut="120" pooling="false" isUtf8="true"/>
     <defaultConnection enumId="5" description="Hermes" dataBaseEnumId="2" login="adexpr03_proc_8" password="lnampt8"            dataSource="adexwebsk01.test" connectionTimeOut="120" pooling="false" isUtf8="true"/>
     <defaultConnection enumId="6" description="Publication" dataBaseEnumId="2" login="user_web" password="zebony8"              dataSource="adexwebsk01.test" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <defaultConnection enumId="7" description="Web Adminisration" dataBaseEnumId="2" login="tnssk01" password="tnssk01"    dataSource="adexwebsk01.test" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <defaultConnection enumId="8" description="Alerts" dataBaseEnumId="2" login="tnssk01" password="tnssk01"            dataSource="adexwebsk01.test" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="7" description="Web Administration" dataBaseEnumId="2" login="tnssk01" password="tnssk01"        dataSource="adexwebsk01.test" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="8" description="Alerts" dataBaseEnumId="2" login="tnssk01" password="tnssk01"                    dataSource="adexwebsk01.test" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
   </defaultConnections>
   <schemas>
     <schema enumId="0" description="AdExpress Data (AdExpr03)" label="adexprsk01"/>
@@ -186,7 +186,19 @@
     <table enumId="169" description="Data: Press: Newspaper 4M" schemaEnumId="0" label="data_newspaper_4M" prefix="wp"/>
     <table enumId="170" description="Data: Press: Magazine" schemaEnumId="0" label="data_magazine" prefix="wp"/>
     <table enumId="171" description="Data: Press: Magazine 4M" schemaEnumId="0" label="data_magazine_4M" prefix="wp"/>
+    <table enumId="172" description="Recap Data: Newspaper" schemaEnumId="4" label="recap_newspaper" prefix="rcp"/>
+    <table enumId="173" description="Recap Data: Magazine" schemaEnumId="4" label="recap_magazine" prefix="rcp"/>
+    <table enumId="174" description="Recap Data: Newspaper Segment" schemaEnumId="4" label="recap_newspaper_segment" prefix="rcp"/>
+    <table enumId="175" description="Recap Data: Magazine Segment" schemaEnumId="4" label="recap_magazine_segment" prefix="rcp"/>
 
+    <table enumId="176" description="Classif: Data location" schemaEnumId="0" label="data_location_magazine" prefix="dl"/>
+    <table enumId="177" description="Classif: Data location" schemaEnumId="0" label="data_location_newspaper" prefix="dl"/>
+    
+    <table enumId="178" description="Recap Data: Instore" schemaEnumId="4" label="recap_instore" prefix="rcp"/>
+    <table enumId="179" description="Recap Data: Instore Segment" schemaEnumId="4" label="recap_instore_segment" prefix="rcp"/>
+    <table enumId="180" description="Data: Instore" schemaEnumId="0" label="data_instore" prefix="wp"/>
+    <table enumId="181" description="Data: Instore 4M" schemaEnumId="0" label="data_instore_4M" prefix="wp"/>
+    
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>
     <table enumId="302" description="Alert Schedule" schemaEnumId="10" label="alert_schedule" prefix="as"/>

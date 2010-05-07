@@ -203,6 +203,7 @@
         </dbConstraints>
       </constraints>
     </column>
+    <column id="95" name="Basic Media" webTextId="2544" dbId="id_basic_media" dbLabel="basic_media" dbTable="basic_media" dbTablePrefixe="bm" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
   </columnItems>
 
   <detailColumns>
@@ -212,6 +213,7 @@
       <columnItem id="42" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <!-- <columnItem id="35" name="Visuel" notInExcelExport="true"/>-->
+      <!-- <columnItem id="34" name="Page"/>-->
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
@@ -222,7 +224,6 @@
       <!--<columnItem id="12" name="Surface"/>-->
       <columnItem id="13" name="Couleur"/>
       <columnItem id="36" name="Position"/>
-      <columnItem id="34" name="Page"/>
       <columnItem id="14" name="Prix"/>
       <!--<columnItem id="93" name="Descriptif"/>-->
       <!--<columnItem id="57" name="Date de couverture" visible="false"/>-->
@@ -261,7 +262,7 @@
       <columnItem id="5" name="Régie" idDetailLevelMatching="5"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="17" name="Top de diffusion"/>
-      <columnItem id="27" name="Code écran" idDetailLevelMatching="21" isKey="true"/>
+      <!-- <columnItem id="27" name="Code écran" idDetailLevelMatching="21" isKey="true"/>-->
       <columnItem id="18" name="Durée" idDetailLevelMatching="19"/>
       <columnItem id="20" name="Position" isKey="true"/>
       <!-- <columnItem id="21" name="Durée écran"/>-->
@@ -269,11 +270,11 @@
       <columnItem id="14" name="Prix"/>
       <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
     </detailColumn>
-    <!--Outdoor / InStore-->
+    <!--Outdoor-->
     <detailColumn id="4" name="Affiche\Annonceur\Produit\Groupe\Centre d'interet\Régie\Nombre de panneaux\Format du panneau\Type de réseau\Réseau afficheur\Agglomeration\Prix">
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
-      <!--<columnItem id="56" name="Id_data_outdoor" visible="false" isKey="true"/>-->
+      <columnItem id="56" name="Id_data_outdoor" visible="false" isKey="true"/>
       <columnItem id="41" name="Affiche" notInExcelExport="true"/>
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
@@ -282,8 +283,8 @@
       <columnItem id="5" name="Régie"/>
       <columnItem id="28" name="Nombre de panneaux"/>
       <columnItem id="29" name="Format du panneau" idDetailLevelMatching="22"/>
-      <!--<columnItem id="30" name="Type de réseau"/>-->
-      <!--<columnItem id="31" name="Réseau afficheur"/>-->
+      <columnItem id="30" name="Type de réseau"/>
+      <columnItem id="31" name="Réseau afficheur"/>
       <columnItem id="32" name="Agglomeration"/>
       <columnItem id="14" name="Prix"/>
     </detailColumn>
@@ -381,13 +382,13 @@
       <columnItem id="42" name="Date du Support" visible="true" isKey="true"/>
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <!-- <columnItem id="35" name="Visuel" notInExcelExport="true"/>-->
+      <!-- <columnItem id="34" name="Page"/>-->
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <columnItem id="11" name="Format" idDetailLevelMatching="20"/>
       <!-- <columnItem id="12" name="Surface"/>-->
       <columnItem id="13" name="Couleur"/>
-      <columnItem id="34" name="Page"/>
       <columnItem id="14" name="Prix"/>
       <!--<columnItem id="93" name="Descriptif"/>-->
       <!--<columnItem id="57" name="Date de couverture" visible="false"/>-->
@@ -510,7 +511,7 @@
       <columnItem id="79" name="Dimension banner" filter="true"/>
       <columnItem id="88" name="First parution"/>
       <columnItem id="80" name="url" visible="false"/>
-      <columnItem id="87" name="Gad" visible="false"/>
+      <!--<columnItem id="87" name="Gad" visible="false"/>-->
       <columnItem id="81" name="hashcode" visible="false"  isKey="true"/>
       <columnItem id="75" name="Banner"/>
     </detailColumn>
@@ -598,7 +599,7 @@
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="17" name="Top de diffusion"/>
-      <columnItem id="27" name="Code écran" idDetailLevelMatching="21" isKey="true"/>
+      <!--<columnItem id="27" name="Code écran" idDetailLevelMatching="21" isKey="true"/>-->
       <columnItem id="18" name="Durée" idDetailLevelMatching="19"/>
       <columnItem id="20" name="Position" isKey="true"/>
       <!-- <columnItem id="21" name="Durée écran"/>-->
@@ -658,6 +659,7 @@
       <columnItem id="42" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <!-- <columnItem id="35" name="Visuel" notInExcelExport="true"/>-->
+      <!-- <columnItem id="34" name="Page"/>-->
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
@@ -668,7 +670,6 @@
       <!-- <columnItem id="12" name="Surface"/>-->
       <columnItem id="13" name="Couleur"/>
       <columnItem id="36" name="Position"/>
-      <columnItem id="34" name="Page"/>
       <columnItem id="14" name="Prix"/>
       <!--<columnItem id="94" name="Descriptif"/>-->
       <!--<columnItem id="57" name="Date de couverture" visible="false"/>-->
@@ -679,13 +680,13 @@
       <columnItem id="42" name="Date du Support" visible="true" isKey="true"/>
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <!-- <columnItem id="35" name="Visuel" notInExcelExport="true"/>-->
+      <!-- <columnItem id="34" name="Page"/>-->
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <columnItem id="11" name="Format" idDetailLevelMatching="20"/>
       <!-- <columnItem id="12" name="Surface"/>-->
       <columnItem id="13" name="Couleur"/>
-      <columnItem id="34" name="Page"/>
       <columnItem id="14" name="Prix"/>
       <!-- <columnItem id="94" name="Descriptif"/>-->
       <!--<columnItem id="57" name="Date de couverture" visible="false"/>-->

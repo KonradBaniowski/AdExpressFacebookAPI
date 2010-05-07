@@ -1,31 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <database>
   <customerConnections>
-   
-    <customerConnection enumId="0" description="AdExpress user connection" dataBaseEnumId="2"  dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <!--<customerConnection enumId="0" description="AdExpress user connection" dataBaseEnumId="2"  dataSource="adexprpzl01.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>-->
+    <customerConnection enumId="0" description="AdExpress user connection" dataBaseEnumId="2"  dataSource="adexwebsk01.test" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
   </customerConnections>
   <defaultConnections>
-    <defaultConnection enumId="0" description="Session" dataBaseEnumId="2" login="mou01_session_1" password="sessionmolle1"     dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <defaultConnection enumId="1" description="Translation" dataBaseEnumId="2" login="admin_web" password="zepabony9"           dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="2" login="recap01" password="itulatif8"  dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <!--<defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="2" login="gfacon" password="sandie5"  dataSource="adexpr04.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="false"/>-->
+    <defaultConnection enumId="0" description="Session" dataBaseEnumId="2" login="mou01_session_1" password="MOUROUNDY34"       dataSource="adexwebsk01.test" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="1" description="Translation" dataBaseEnumId="2" login="admin_web" password="YOUPLAA90"           dataSource="adexwebsk01.test" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="2" login="RECAPSK01" password="recapsk01"  dataSource="adexwebsk01.test" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="3" description="APPM (Chronopresse)" dataBaseEnumId="2" login="grp" password="rpgdoom3"          dataSource="PITAFR02.PIGE" connectionTimeOut="120" isUtf8="true"/>
-    <defaultConnection enumId="4" description="Geb" dataBaseEnumId="2" login="adexpr03_proc_7" password="pushit76"              dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" isUtf8="true"/>
-    <defaultConnection enumId="5" description="Hermes" dataBaseEnumId="2" login="adexpr03_proc_8" password="lnampt8"            dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" isUtf8="true"/>
-    <defaultConnection enumId="6" description="Publication" dataBaseEnumId="2" login="user_web" password="zebony8"              dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <defaultConnection enumId="7" description="Web Administration" dataBaseEnumId="2" login="admin_web" password="zepabony9"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <defaultConnection enumId="8" description="Alerts" dataBaseEnumId="2" login="adexpr03_proc_11" password="trela5"            dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <defaultConnection enumId="9" description="EasyMusic" dataBaseEnumId="2" login="nicotest3000" password="nicotest3000"       dataSource="music01_test.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <!--Test default rights connection-->
-    <defaultConnection enumId="10" description="Rights" dataBaseEnumId="2" login="gfacon" password="sandie5"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="4" description="Geb" dataBaseEnumId="2" login="adexpr03_proc_7" password="pushit76"              dataSource="adexwebsk01.test" connectionTimeOut="120" pooling="false" isUtf8="true"/>
+    <defaultConnection enumId="5" description="Hermes" dataBaseEnumId="2" login="adexpr03_proc_8" password="lnampt8"            dataSource="adexwebsk01.test" connectionTimeOut="120" pooling="false" isUtf8="true"/>
+    <defaultConnection enumId="6" description="Publication" dataBaseEnumId="2" login="user_web" password="zebony8"              dataSource="adexwebsk01.test" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="7" description="Web Administration" dataBaseEnumId="2" login="tnssk01" password="tnssk01"        dataSource="adexwebsk01.test" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="8" description="Alerts" dataBaseEnumId="2" login="tnssk01" password="tnssk01"                    dataSource="adexwebsk01.test" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
   </defaultConnections>
   <schemas>
-    <schema enumId="0" description="AdExpress Data (AdExpr03)" label="adexpr03"/>
+    <schema enumId="0" description="AdExpress Data (AdExpr03)" label="adexprsk02"/>
     <schema enumId="1" description="APPM (Chronopress)" label="appm01"/>
     <schema enumId="2" description="Right" label="mau01"/>
     <schema enumId="3" description="Mou" label="mou01"/>
-    <schema enumId="4" description="Product class analysis" label="recap01"/>
-    <schema enumId="5" description="Web" label="webnav01"/>
+    <schema enumId="4" description="Product class analysis" label="recapsk01"/>
+    <schema enumId="5" description="Web" label="webnav02"/>
     <schema enumId="10" description="Alert" label="mau01"/>
   </schemas>
   <tables defaultResultTablesPrefix="wp">
@@ -181,7 +177,6 @@
     <table enumId="161" description="Data: Evaliant mobile" schemaEnumId="0" label="data_mobile" prefix="wp"/>
     <table enumId="162" description="Data: Evaliant mobile" schemaEnumId="0" label="data_mobile_4M" prefix="wp"/>
     <table enumId="163" description="Data: banners mobile" schemaEnumId="0" label="banners_mobile" prefix="wp"/>
-
     <table enumId="164" description="Trends: Month" schemaEnumId="0" label="tendency_month" prefix="tm"/>
     <table enumId="165" description="Trends: Total Month" schemaEnumId="0" label="total_tendency_month" prefix="ttm"/>
     <table enumId="166" description="Trends: Week" schemaEnumId="0" label="tendency_week" prefix="tm"/>
@@ -191,7 +186,6 @@
     <table enumId="169" description="Data: Press: Newspaper 4M" schemaEnumId="0" label="data_newspaper_4M" prefix="wp"/>
     <table enumId="170" description="Data: Press: Magazine" schemaEnumId="0" label="data_magazine" prefix="wp"/>
     <table enumId="171" description="Data: Press: Magazine 4M" schemaEnumId="0" label="data_magazine_4M" prefix="wp"/>
-
     <table enumId="172" description="Recap Data: Newspaper" schemaEnumId="4" label="recap_newspaper" prefix="rcp"/>
     <table enumId="173" description="Recap Data: Magazine" schemaEnumId="4" label="recap_magazine" prefix="rcp"/>
     <table enumId="174" description="Recap Data: Newspaper Segment" schemaEnumId="4" label="recap_newspaper_segment" prefix="rcp"/>
@@ -209,9 +203,6 @@
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>
     <table enumId="302" description="Alert Schedule" schemaEnumId="10" label="alert_schedule" prefix="as"/>
     <table enumId="400" description="Static Nav Session" schemaEnumId="5" label="static_nav_session" prefix="snv"/>
-
-    
-
   </tables>
   <views>
     <view enumId="0" description="Classif: all media" schemaEnumId="0" label="all_media_" prefix="allm"/>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <vehicleGroups>
+    <vehicle id="0"   name="AdNetTrack">
+      <detailColumns>
+        <detailColumn id="17">
+          <allowedModules>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="Present/Absent" privilegecode="278"/>
+            <allowedModule name="Lost/Won" privilegecode="197"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+            <allowedModule name="New banners" privilegecode="4369"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+    </vehicle>
+  </vehicleGroups>
+</configuration>
+
