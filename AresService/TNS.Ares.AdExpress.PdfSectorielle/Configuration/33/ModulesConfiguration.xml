@@ -37,6 +37,7 @@
             <allowedMediaLevelItem id="4" name="Centre d'interet"/>
             <allowedMediaLevelItem id="5" name="Régie"/>
             <allowedMediaLevelItem id="6" name="Version"/>
+            <allowedMediaLevelItem id="7" name="holding_company"/>
             <allowedMediaLevelItem id="8" name="Annonceur"/>
             <allowedMediaLevelItem id="9" name="Marque"/>
             <allowedMediaLevelItem id="10" name="Produit"/>
@@ -44,6 +45,8 @@
             <allowedMediaLevelItem id="12" name="Classe"/>
             <allowedMediaLevelItem id="13" name="Groupe"/>
             <allowedMediaLevelItem id="14" name="Variété"/>
+            <allowedMediaLevelItem id="15" name="Groupe d'agence"/>
+            <allowedMediaLevelItem id="16" name="Agence"/>
             <allowedMediaLevelItem id="17" name="Titre"/>
             <allowedMediaLevelItem id="26" name="Pays"/>
           </allowedMediaLevelItems>
@@ -106,10 +109,8 @@
       </module>
       <!-- *****************************************      Present / Absent                    *****************************************-->
       <module name="Present/Absent" privilegecode="278" traductioncode="2167" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2196" descriptionImageName="/Images/Common/Infobulle/Concurrentiels.png">
-      <!-- <RulesLayer name="Default Present Absent rules layers" assemblyName="TNS.AdExpressI.PresentAbsent.Default.dll" class="TNS.AdExpressI.PresentAbsent.Default.PresentAbsentResult"/>
-        <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.Default.dll" class="TNS.AdExpressI.PresentAbsent.DAL.Default.PresentAbsentDAL"/>-->
-        <RulesLayer name="Default Present Absent rules layers" assemblyName="TNS.AdExpressI.PresentAbsent.Russia.dll" class="TNS.AdExpressI.PresentAbsent.Russia.PresentAbsentResult"/>
-        <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.Russia.dll" class="TNS.AdExpressI.PresentAbsent.DAL.Russia.PresentAbsentDAL"/>
+       <RulesLayer name="Default Present Absent rules layers" assemblyName="TNS.AdExpressI.PresentAbsent.Default.dll" class="TNS.AdExpressI.PresentAbsent.Default.PresentAbsentResult"/>
+        <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.Default.dll" class="TNS.AdExpressI.PresentAbsent.DAL.Default.PresentAbsentDAL"/>       
         <ModuleAllowedMediaUniverse initFromBaal="true" baalId="333">
         <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="1,2,3,5,6,7,8,11,15"/>-->
@@ -1018,7 +1019,8 @@
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="3" name="Date"/>
-              <detailSelection id="5" name="Vehicle Selected"/>            
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="4" name="Unit"/>
             </detailSelections>
           </page>
         </results>

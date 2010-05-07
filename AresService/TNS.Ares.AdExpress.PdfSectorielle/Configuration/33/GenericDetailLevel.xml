@@ -151,6 +151,25 @@
       <levelItem id="2" name="Category"/>
       <levelItem id="17" name="titre"/>
     </detailLevel>
+    <detailLevel id="29" name="support">
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="30" name="region\support">
+      <levelItem id="30" name="Region"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="31" name="publishing house\support">
+      <levelItem id="34" name="Publishing house"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="32" name="syndicate\support">
+      <levelItem id="35" name="Syndicate"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="33" name="edition type\support">
+      <levelItem id="37" name="Edition type"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
 	</detailLevels>
 </genericDetailLevel>
 
