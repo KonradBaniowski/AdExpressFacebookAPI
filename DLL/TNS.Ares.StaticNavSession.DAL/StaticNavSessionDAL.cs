@@ -353,7 +353,10 @@ namespace TNS.Ares.StaticNavSession.DAL
                 cnx.Open();
             }
             catch (System.Exception e) {
-                throw (new StaticNavDALExceptions("Impossible d'ouvrir la base de données", e));
+                if(cnx!=null)
+                    throw (new StaticNavDALExceptions("Impossible d'ouvrir la base de données with connexion string : '" + cnx.ConnectionString + "'. Connexion State : '" + cnx.State.ToString() + "'", e));
+                else
+                    throw (new StaticNavDALExceptions("Impossible d'ouvrir la base de données", e));
             }
             #endregion
 

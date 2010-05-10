@@ -190,7 +190,10 @@ namespace TNS.AdExpress.Anubis.Miysis
             }
             catch (Exception e) {
                 if (_dataAccess != null) {
-                    _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.error.GetHashCode());
+                    try {
+                        _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.error.GetHashCode());
+                    }
+                    catch { }
                 }
                 OnError(_navSessionId, "Impossible to initialize process ", e);
                 return;
