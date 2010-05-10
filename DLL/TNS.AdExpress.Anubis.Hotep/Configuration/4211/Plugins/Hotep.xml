@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Configuration>
   <CustomerMail server="localhost.hobbit.tns-global.sk" port="25" from="tnsadexpress@tnsmi.fr" webServer="http://www.internet.tnsadexpress.sk" subject="AdExpress"/>
-  <PdfPath path="D:\ClientFiles"/>
+  <PdfPath path="C:\"/>
   <!--If path empty then path = current directory of executable-->
   <ThemePath path="App_Themes"/>
   <PdfCreatorPilot login="KantarMedia" pass="53HN7-JV7XK-Z7JBD-RTA92"/>
