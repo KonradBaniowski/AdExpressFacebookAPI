@@ -745,7 +745,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                                     return string.Format(" max({0}DURATION_WEEK(date_media_num,duration)) as period_count ", _schAdexpr03.Sql);
                                 default:
                                     if (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.instore
-                                        || CstDBClassif.Vehicles.names.instore == CstDBClassif.Vehicles.names.outdoor) {
+                                        || VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.outdoor) {
                                         return (" trunc(CEIL(max(duration)/86400)) as period_count ");
                                     }
                                     else {
