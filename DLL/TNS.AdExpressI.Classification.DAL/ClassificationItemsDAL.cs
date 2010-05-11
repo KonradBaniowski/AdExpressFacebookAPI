@@ -154,10 +154,10 @@ namespace TNS.AdExpressI.Classification.DAL {
             //Key word allows to search for classication items via labels 			
 			wordToSearch = wordToSearch.ToUpper().Replace("'", " ");
 			wordToSearch = wordToSearch.ToUpper().Replace("*", "%");
-			wordToSearch = "'" + wordToSearch.Trim() + "%'";
+			wordToSearch = wordToSearch.Trim() + "%";
 
             /*Query conditions */
-            sql.AppendFormat(" where wp.{0} like {1}", classificationLevelLabel, wordToSearch);
+            sql.AppendFormat(" where upper(wp.{0}) like upper('{1}')", classificationLevelLabel, wordToSearch);
 
             /*Query tables joins */
             GetJointClause(sql, oView, classificationLevelLabel, _dimension, classificationRight, useView);
