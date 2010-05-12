@@ -40,8 +40,8 @@
             // aresPdfPMServiceInstaller
             // 
             this.aresPdfPMServiceInstaller.Description = "Generates Plan Media Pdf";
-            this.aresPdfPMServiceInstaller.DisplayName = "Ares PdfPM Service (Myisis)";
-            this.aresPdfPMServiceInstaller.ServiceName = "Ares PdfPM Service (Myisis)";
+            this.aresPdfPMServiceInstaller.DisplayName = "Ares PdfPM Service Myisis";
+            this.aresPdfPMServiceInstaller.ServiceName = "Ares PdfPM Service Myisis";
             this.aresPdfPMServiceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller
