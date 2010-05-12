@@ -766,7 +766,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 			this.PDFPAGE_Orientation = TxPDFPageOrientation.poPageLandscape;
 
             byte[] data = this.ConvertHtmlToSnapJpgByte(html,
-            WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset,
+            WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].PdfContentEncoding,
             WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
             _config.WebServer);
 
