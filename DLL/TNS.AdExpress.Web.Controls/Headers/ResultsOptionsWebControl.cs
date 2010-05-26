@@ -1064,38 +1064,18 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				}
 				else if (customerWebSession.CurrentModule == WebConstantes.Module.Name.INDICATEUR || customerWebSession.CurrentModule == WebConstantes.Module.Name.TABLEAU_DYNAMIQUE) {
 					VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID);
-					switch (vehicleInfo.Id) {
-						case ClassificationCst.DB.Vehicles.names.tv:
-						case ClassificationCst.DB.Vehicles.names.radio:
-						case ClassificationCst.DB.Vehicles.names.outdoor:
-                        case ClassificationCst.DB.Vehicles.names.instore:
-						case ClassificationCst.DB.Vehicles.names.mediasTactics:						
-							mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
-							if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category)) 
-								mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
-							if (customerWebSession.CurrentModule != WebConstantes.Module.Name.INDICATEUR && vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media))
-								mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1544, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMedia.GetHashCode().ToString()));
-							if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category) && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media)) 
-								mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1143, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategoryMedia.GetHashCode().ToString()));
-							break;
-						case ClassificationCst.DB.Vehicles.names.press:
-                        case ClassificationCst.DB.Vehicles.names.newspaper:
-                        case ClassificationCst.DB.Vehicles.names.magazine:
-						case ClassificationCst.DB.Vehicles.names.internationalPress:
-						case ClassificationCst.DB.Vehicles.names.internet:
-						case ClassificationCst.DB.Vehicles.names.mobileTelephony:
-						case ClassificationCst.DB.Vehicles.names.emailing:
-						case ClassificationCst.DB.Vehicles.names.plurimedia:
-						case ClassificationCst.DB.Vehicles.names.directMarketing:
-							mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
-							if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category)) 
-							mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
-							break;
-						default:
-							mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
-							mediaDetail.Enabled = false;
-							break;
-					}
+
+                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
+                    
+                    if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category))
+                        mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
+                    if (customerWebSession.CurrentModule != WebConstantes.Module.Name.INDICATEUR && vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media))
+                        mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1544, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMedia.GetHashCode().ToString()));
+                    if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category) && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media))
+                        mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1143, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategoryMedia.GetHashCode().ToString()));
+
+                    if((mediaDetail.Items.Count == 1) && (mediaDetail.Items[0].Value == SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()))
+                        mediaDetail.Enabled = false;
 				}
 				else{
 					VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID);					

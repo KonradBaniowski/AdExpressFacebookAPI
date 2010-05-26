@@ -376,6 +376,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 				case DBClassificationConstantes.Vehicles.names.radio :
 				case DBClassificationConstantes.Vehicles.names.tv :
 				case DBClassificationConstantes.Vehicles.names.others :
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.cinema:
 					return "id_media,TO_CHAR( duration)  as advertDimension, TO_CHAR(associated_file) as sloganFile";
 				case DBClassificationConstantes.Vehicles.names.internationalPress :
 				case DBClassificationConstantes.Vehicles.names.press :

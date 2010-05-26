@@ -1911,5 +1911,6 @@
     <item mnemonic="w2723" type="System.String">!</item>
     <item mnemonic="w2724" type="System.String">!</item>
     <item mnemonic="w2725" type="System.String">!</item>
+    <item mnemonic="w2726" type="System.String">CINEMA</item>
   </items>
 </localization>

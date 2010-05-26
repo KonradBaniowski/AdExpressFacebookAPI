@@ -152,6 +152,7 @@ namespace TNS.AdExpressI.Insertions
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.instore));
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.radio));
                 vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.tv));
+                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.cinema));
 
             }
             for (int i = vehicles.Count-1; i >= 0; i-- )

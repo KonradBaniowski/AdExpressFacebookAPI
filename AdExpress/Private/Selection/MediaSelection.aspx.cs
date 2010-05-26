@@ -421,6 +421,9 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 			else if(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID==(long)DBClassificationConstantes.Vehicles.names.internet.GetHashCode()){
 				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaInternet;
 			}
+            else if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == (long)DBClassificationConstantes.Vehicles.names.cinema.GetHashCode()){
+                branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaCinema;
+            }
 
 
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode ();

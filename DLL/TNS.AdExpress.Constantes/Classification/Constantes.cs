@@ -87,6 +87,10 @@ namespace TNS.AdExpress.Constantes.Classification{
             /// type Instore
             /// </summary>
             mediaInstore = 16,
+            /// <summary>
+            /// type Cinema
+            /// </summary>
+            mediaCinema = 17,
 		}
 		#endregion
 

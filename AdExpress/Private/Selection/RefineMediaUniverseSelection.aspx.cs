@@ -408,6 +408,9 @@ namespace AdExpress.Private.Selection
 			else if(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID==(long)DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode()){
 				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaInternationalPress;
 			}
+            else if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == (long)DBClassificationConstantes.Vehicles.names.cinema.GetHashCode()){
+                branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaCinema;
+            }
 
 
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode ();
