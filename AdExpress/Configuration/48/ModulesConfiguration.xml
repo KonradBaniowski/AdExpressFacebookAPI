@@ -611,7 +611,7 @@
         <RulesLayer name="Default Product Class Rules Layers" assemblyName="TNS.AdExpressI.ProductClassReports.Default.dll" class="TNS.AdExpressI.ProductClassReports.Default.ProductClassReports"/>
         <DataAccessLayer name="Default Product Class Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassReports.DAL.Default.dll" class="TNS.AdExpressI.ProductClassReports.DAL.Default.ProductClassReportDAL"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="1,2,3,5,50"/>
+          <ModuleVehicles list="1,2,3,5,7,50"/>
         </ModuleAllowedMediaUniverse>
         <ResultLimitation size="25000"/>
         <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
@@ -664,7 +664,7 @@
         <RulesLayer name="Default Product Class Indicators Rules Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.Default.ProductClassIndicators"/>
         <DataAccessLayer name="Default Product Class Indicators Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.DAL.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.DAL.Default.ProductClassIndicatorsDAL"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="1,2,3,5,50"/>
+          <ModuleVehicles list="1,2,3,5,7,50"/>
         </ModuleAllowedMediaUniverse>
         <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <selections>

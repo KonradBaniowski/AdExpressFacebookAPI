@@ -633,7 +633,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 string currentMonth = "";//Mois courant
                 int tempTotalRef = 0;// investissement temporaire total des références
                 ArrayList tempAdvertiser = new ArrayList();//liste temporaire des annonceurs
-                Int64 oldIdAdvertiser = 0;//ID ancien annonceur                
+                Int64 oldIdAdvertiser = long.MinValue;//ID ancien annonceur                
                 Decimal currentComparMonthInvest = (Decimal)0.0;//Investissement du mois N-1               
                 string currentComparMonth = ""; //Mois courant période N-1
                 Int64 oldCurrentLine = 0;//index ancienne ligne du tableau de résultats
@@ -875,7 +875,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             RefValues = new string[MonthsInterval, 3];
             int start = 0;
             Int64 nbTabLines = 0;
-            Int64 oldIdAdvertiser = 0;
+            Int64 oldIdAdvertiser = long.MinValue;
             int indexLine = 0;
             int t = 0;
 			bool containsAdvertiser = false;
@@ -891,7 +891,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             int indexLineRef = 0;
             int nbProduct = 0;
             int nbAdvertiser = 0;
-			Int64 oldIdProduct = 0, currentIdProduct = -1;
+			Int64 oldIdProduct = long.MinValue, currentIdProduct = -1;
             Int64 TotStartIndex = 0;
             object[,] tab = null;
             int[] TotNbRefByMonth = new int[MonthsInterval];
@@ -1105,209 +1105,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
             return AdObject;
         }
-        #endregion
-
-		#region  Old - Calculs totaux univers ou marché ou famille
-		///// <summary>
-		///// Retourne le nombre d'annonceurs ou références , le 1er annonceur ou référence et son investissement
-		///// </summary>
-		///// <param name="dt">DataTable</param>
-		///// <param name="isAdvertCalculation">Est ce que le calcule concerne les annonceurs</param>
-		///// <param name="showProduct">True if show product</param>
-		///// <returns> object[] avec nombre d'annonceurs , le 1er annonceur et son investissement</returns>
-		//protected object[] GetGlobalParams(DataTable dt, bool isAdvertCalculation, bool showProduct) {
-
-		//    #region Variables annonceurs
-		//    Decimal TempFirstAdInvest = (Decimal)0.0;
-		//    string TempFirstAdInvestName = "";
-		//    object TempForAdSov = "";
-		//    object TempForRefSov = "";
-		//    string currentMonth = "";
-		//    ArrayList TempAdvertiserIds = new ArrayList();
-		//    int MonthsInterval = (_periodEnd.Month - _periodBegin.Month) + 1;
-		//    string[,] AdValues = null;
-		//    string[,] RefValues = null;
-		//    object[] AdObject = new object[5];
-		//    if (MonthsInterval > 0)
-		//        AdValues = new string[MonthsInterval, 3];
-		//    RefValues = new string[MonthsInterval, 3];
-		//    int start = 0;
-		//    Int64 nbTabLines = 0;
-		//    Int64 oldIdAdvertiser = 0;
-		//    int indexLine = 0;
-		//    int t = 0;
-		//    #endregion
-
-		//    #region variables références
-		//    ArrayList IdProductComputedList = new ArrayList();
-		//    Decimal TempFirstRefInvest = (Decimal)0.0;
-		//    string TempFirstRefInvestName = "";
-		//    int startRef = 0;
-		//    int indexLineRef = 0;
-		//    int nbProduct = 0;
-		//    int nbAdvertiser = 0;
-		//    Int64 oldIdProduct = 0;
-		//    Int64 TotStartIndex = 0;
-		//    object[,] tab = null;
-		//    int[] TotNbRefByMonth = new int[MonthsInterval];
-		//    #endregion
-
-		//    #region Calcul investissement, 1er référence, 1er annonceur
-		//    //Calcul nombre annonceurs, 1er annonceur et son investissement
-		//    if (dt.Rows.Count > 0) {
-		//        foreach (DataRow currentRow in dt.Rows) {
-
-		//            #region annonceur
-		//            if (dt.Columns.Contains("id_advertiser") && oldIdAdvertiser != (Int64)currentRow["id_advertiser"]) {
-		//                //nombre d'annonceurs
-		//                nbAdvertiser++;
-		//                //Investissement annonceur courant
-		//                if (!isAdvertCalculation) {
-		//                    TempFirstAdInvestName = currentRow["advertiser"].ToString();
-		//                    for (int s = (int)_periodBegin.Month; s <= (int)_periodEnd.Month; s++) {
-		//                        currentMonth = FctUtilities.Dates.GetMonthAlias(s, _iYearID, 3, _session);
-		//                        if (FctUtilities.CheckedText.IsNotEmpty(currentMonth))
-		//                            TempFirstAdInvest = Decimal.Parse(dt.Compute("Sum(" + currentMonth + ")", "id_advertiser = " + currentRow["id_advertiser"].ToString() + "").ToString());
-		//                        if (start == 0) {
-		//                            AdValues[indexLine, 0] = s.ToString();
-		//                            AdValues[indexLine, 1] = TempFirstAdInvest.ToString();
-		//                            AdValues[indexLine, 2] = TempFirstAdInvestName;
-		//                        }
-		//                        else if (AdValues[indexLine, 1] != null && Decimal.Parse(AdValues[indexLine, 1].ToString()) < TempFirstAdInvest) {
-		//                            AdValues[indexLine, 0] = s.ToString();
-		//                            AdValues[indexLine, 1] = TempFirstAdInvest.ToString();
-		//                            AdValues[indexLine, 2] = TempFirstAdInvestName;
-		//                        }
-		//                        indexLine++;
-		//                    }
-		//                    indexLine = 0;
-		//                    TempFirstAdInvest = (Decimal)0.0;
-		//                }
-		//            }
-		//            start = 1;
-		//            oldIdAdvertiser = (Int64)currentRow["id_advertiser"];
-		//            #endregion
-
-		//            #region produit
-		//            if (showProduct && oldIdProduct != (Int64)currentRow["id_product"] && !IdProductComputedList.Contains(Int64.Parse(currentRow["id_product"].ToString())) && start == 1) {
-		//                //nombre de produits
-		//                nbProduct++;
-		//                //Investissement produit courant
-		//                if (!isAdvertCalculation) {
-		//                    TempFirstRefInvestName = currentRow["product"].ToString();
-		//                    for (int p = (int)_periodBegin.Month; p <= (int)_periodEnd.Month; p++) {
-		//                        currentMonth = FctUtilities.Dates.GetMonthAlias(p, _iYearID, 3, _session);
-		//                        if (FctUtilities.CheckedText.IsNotEmpty(currentMonth))
-		//                            TempFirstRefInvest = Decimal.Parse(dt.Compute("Sum(" + currentMonth + ")", "id_product = " + currentRow["id_product"].ToString() + "").ToString());
-		//                        if (startRef == 0) {
-		//                            RefValues[indexLineRef, 0] = p.ToString();
-		//                            RefValues[indexLineRef, 1] = TempFirstRefInvest.ToString();
-		//                            RefValues[indexLineRef, 2] = TempFirstRefInvestName.ToString();
-		//                        }
-		//                        else if (RefValues[indexLineRef, 1] != null && Decimal.Parse(RefValues[indexLineRef, 1].ToString()) < TempFirstRefInvest) {
-		//                            RefValues[indexLineRef, 0] = p.ToString();
-		//                            RefValues[indexLineRef, 1] = TempFirstRefInvest.ToString();
-		//                            RefValues[indexLineRef, 2] = TempFirstRefInvestName.ToString();
-		//                        }
-		//                        indexLineRef++;
-		//                    }
-		//                    indexLineRef = 0;
-		//                    TempFirstRefInvest = (Decimal)0.0;
-		//                }
-		//                IdProductComputedList.Add(Int64.Parse(currentRow["id_product"].ToString()));
-		//            }
-		//            startRef = 1;
-		//            oldIdProduct = (Int64)currentRow["id_product"];
-		//            #endregion
-
-		//        }
-		//    }
-
-		//    #region totaux nombre de références
-		//    try {
-		//        if (!isAdvertCalculation) {
-		//            t = 0;
-		//            for (int n = (int)_periodBegin.Month; n <= (int)_periodEnd.Month; n++) {
-		//                currentMonth = FctUtilities.Dates.GetMonthAlias(n, _iYearID, 3, _session);
-		//                TotNbRefByMonth[t] = int.Parse(dt.Compute("count(" + currentMonth + ")", "" + currentMonth.ToString() + " >0 ").ToString());
-		//                t++;
-		//            }
-		//        }
-		//    }
-		//    catch (Exception nbRefErr) {
-		//        throw (new ProductClassIndicatorsException("Impossible de déterminer le nombre de références pour chaque mois :", nbRefErr));
-		//    }
-		//    #endregion
-
-		//    //Calcul nombre de référence par mois (seulement pour total univers ou famille ou marché)
-
-		//    TotStartIndex = (Int64)1;
-		//    //Nombre total de lignes
-		//    if (isAdvertCalculation)
-		//        nbTabLines = (nbAdvertiser > 0) ? ((Int64)nbAdvertiser * (Int64)MonthsInterval) + 1 : MonthsInterval + 1;
-		//    else nbTabLines = (Int64)MonthsInterval + 1;
-		//    // Tableau de résultat 	
-		//    if (tab == null) tab = new object[nbTabLines, NB_MAX_COLUMN];
-		//    if (!isAdvertCalculation) {
-		//        tab = GlobalCompute(dt, tab, TotStartIndex, nbProduct, TotNbRefByMonth);
-		//    }
-		//    //On rempli le tableau avec 1er annonceur, 1ere référence, SOV par mois
-		//    if (!isAdvertCalculation && tab != null) {
-		//        indexLine = 0;
-		//        t = 0;
-		//        for (int m = (int)_periodBegin.Month; m <= (int)_periodEnd.Month; m++) {
-		//            //nolmbre de références par mois
-		//            if (TotNbRefByMonth != null) tab[TotStartIndex, REFERENCE_COLUMN_INDEX] = TotNbRefByMonth[t].ToString();
-		//            if (AdValues != null && AdValues.Length > 0) {
-		//                //1er annonceur			
-		//                if (AdValues[indexLine, 2] != null) tab[TotStartIndex, FIRST_ADVERTISER_COLUMN_INDEX] = AdValues[indexLine, 2].ToString();
-		//                if (AdValues[indexLine, 1] != null) {
-		//                    //investissement 1er annonceur				
-		//                    tab[TotStartIndex, FIRST_ADVERTISER_INVEST_COLUMN_INDEX] = AdValues[indexLine, 1].ToString();
-		//                    //SOV 1er annonceur				
-		//                    TempForAdSov = tab[TotStartIndex, INVESTMENT_COLUMN_INDEX];
-		//                    tab[TotStartIndex, FIRST_ADVERTISER_SOV_COLUMN_INDEX] =
-		//                        (TempForAdSov != null && Decimal.Parse(tab[TotStartIndex, INVESTMENT_COLUMN_INDEX].ToString()) > (Decimal)0.0) ? (Decimal.Parse(AdValues[indexLine, 1].ToString()) * (Decimal)100.0) / Decimal.Parse(tab[TotStartIndex, INVESTMENT_COLUMN_INDEX].ToString()) : (Decimal)0.0;
-		//                }
-		//            }
-		//            if (showProduct && RefValues != null && RefValues.Length > 0) {
-		//                //1ere référence
-		//                if (RefValues[indexLine, 2] != null) tab[TotStartIndex, FIRST_PRODUCT_COLUMN_INDEX] = RefValues[indexLine, 2].ToString();
-		//                if (RefValues[indexLine, 2] != null) {
-		//                    //investissement 1ere référence
-		//                    tab[TotStartIndex, FIRST_PRODUCT_INVEST_COLUMN_INDEX] = RefValues[indexLine, 1].ToString();
-		//                    //SOV 1ere  référence = ((N-(N-1))*100)/N-1
-		//                    TempForRefSov = tab[TotStartIndex, INVESTMENT_COLUMN_INDEX];
-		//                    tab[TotStartIndex, FIRST_PRODUCT_SOV_COLUMN_INDEX] = (TempForRefSov != null && Decimal.Parse(tab[TotStartIndex, INVESTMENT_COLUMN_INDEX].ToString()) > (Decimal)0.0) ? (Decimal.Parse(RefValues[indexLine, 1].ToString()) * (Decimal)100.0) / Decimal.Parse(tab[TotStartIndex, INVESTMENT_COLUMN_INDEX].ToString()) : (Decimal)0.0;
-		//                }
-		//            }
-		//            TotStartIndex++;
-		//            indexLine++;
-		//            t++;
-		//        }
-		//    }
-		//    #endregion
-
-		//    bool hasData = false;
-		//    for (int i = 0; i < TotNbRefByMonth.Length; i++) {
-		//        if (TotNbRefByMonth[i] > 0) {
-		//            hasData = true;
-		//            break;
-		//        }
-		//    }
-		//    if (!hasData && !isAdvertCalculation) {
-		//        tab = null;
-		//    }
-
-		//    AdObject[0] = nbAdvertiser;
-		//    AdObject[1] = nbProduct;
-		//    AdObject[2] = tab;
-		//    AdObject[3] = nbTabLines;
-		//    AdObject[4] = TotNbRefByMonth;
-
-		//    return AdObject;
-		//}
-		#endregion
+        #endregion		
 
         #region calcul totaux investissement, evolution, nb référence, budget moyen
         /// <summary>
