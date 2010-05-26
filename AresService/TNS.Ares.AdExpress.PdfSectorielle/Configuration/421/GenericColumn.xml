@@ -203,6 +203,7 @@
         </dbConstraints>
       </constraints>
     </column>
+    <column id="95" name="Duration spot" webTextId="861"  dbLabel="duration_spot" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="duration"/>
   </columnItems>
 
   <detailColumns>
@@ -285,6 +286,22 @@
       <!--<columnItem id="30" name="Type de réseau"/>-->
       <!--<columnItem id="31" name="Réseau afficheur"/>-->
       <columnItem id="32" name="Agglomeration"/>
+      <columnItem id="14" name="Prix"/>
+    </detailColumn>
+    <!--Cinema-->
+    <detailColumn id="30" name="Support\Date du Support\Annonceur\Produit\Centre d'interet\Régie\Groupe\Durée\Prix">
+      <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
+      <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
+      <!--<columnItem id="10" name="Spot" notInExcelExport="true"/>-->
+      <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
+      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
+      <!--<columnItem id="6" name="Version" idDetailLevelMatching="6"/>-->
+      <columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>
+      <columnItem id="5" name="Régie" idDetailLevelMatching="5"/>
+      <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
+      <columnItem id="95" name="Duration spot" idDetailLevelMatching="28"/>
+      <!-- <columnItem id="21" name="Durée écran"/>-->
+      <!-- <columnItem id="22" name="Nombre Spots écran"/>-->
       <columnItem id="14" name="Prix"/>
     </detailColumn>
     <!--TV Parrainage-->
@@ -712,6 +729,22 @@
       <columnItem id="46" name="Rang famille"/>
       <columnItem id="47" name="Rang groupe"/>
       <columnItem id="48" name="Rang support"/>
+    </detailColumn>
+    <!--Cinema-->
+    <detailColumn id="31" name="Support\Date du Support\Annonceur\Produit\Groupe\Durée\Prix">
+      <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
+      <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
+      <!--<columnItem id="10" name="Spot" notInExcelExport="true"/>-->
+      <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
+      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
+      <!--<columnItem id="6" name="Version" idDetailLevelMatching="6"/>
+      <columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>
+      <columnItem id="5" name="Régie" idDetailLevelMatching="5"/>-->
+      <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
+      <columnItem id="95" name="Duration spot" idDetailLevelMatching="28"/>
+      <!-- <columnItem id="21" name="Durée écran"/>-->
+      <!-- <columnItem id="22" name="Nombre Spots écran"/>-->
+      <columnItem id="14" name="Prix"/>
     </detailColumn>
   </detailColumns>
 </genericColumn>
