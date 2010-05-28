@@ -415,9 +415,9 @@
         <!-- Centre d'interet -->
         <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>
         <!-- Régie -->
-        <allowedMediaLevelItem>slogan</allowedMediaLevelItem>
+        <!--<allowedMediaLevelItem>slogan</allowedMediaLevelItem>-->
         <!-- Version -->
-        <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>
+        <!--<allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>-->
         <!-- Groupe de société -->
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>
         <!-- Annonceur -->
@@ -433,13 +433,13 @@
         <!-- Groupe -->
         <allowedMediaLevelItem>segment</allowedMediaLevelItem>
         <!-- Variété -->
-        <allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>
+        <!--<allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>-->
         <!-- Groupe d'agences -->
-        <allowedMediaLevelItem>agency</allowedMediaLevelItem>
+        <!--<allowedMediaLevelItem>agency</allowedMediaLevelItem>-->
         <!-- Agence -->
         <!--<allowedMediaLevelItem>title</allowedMediaLevelItem>-->
         <!-- Titre -->
-        <allowedMediaLevelItem>country</allowedMediaLevelItem>
+        <!--<allowedMediaLevelItem>country</allowedMediaLevelItem>-->
         <!-- Pays -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
@@ -487,7 +487,7 @@
       <allowedUniverseLevel id="2" name="subsector"/>
       <allowedUniverseLevel id="3" name="group_"/>
       <allowedUniverseLevel id="4" name="segment"/>
-      <allowedUniverseLevel id="7" name="holding_company"/>
+      <!--<allowedUniverseLevel id="7" name="holding_company"/>-->
       <allowedUniverseLevel id="6" name="advertiser"/>
       <allowedUniverseLevel id="8" name="brand"/>
       <allowedUniverseLevel id="5" name="product"/>
@@ -518,9 +518,9 @@
         <!-- Centre d'interet -->
         <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>
         <!-- Régie -->
-        <allowedMediaLevelItem>slogan</allowedMediaLevelItem>
+        <!--<allowedMediaLevelItem>slogan</allowedMediaLevelItem>-->
         <!-- Version -->
-        <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>
+        <!--<allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>-->
         <!-- Groupe de société -->
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>
         <!-- Annonceur -->
@@ -536,13 +536,13 @@
         <!-- Groupe -->
         <allowedMediaLevelItem>segment</allowedMediaLevelItem>
         <!-- Variété -->
-        <allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>
+        <!--<allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>-->
         <!-- Groupe d'agences -->
-        <allowedMediaLevelItem>agency</allowedMediaLevelItem>
+        <!--<allowedMediaLevelItem>agency</allowedMediaLevelItem>-->
         <!-- Agence -->
-        <allowedMediaLevelItem>title</allowedMediaLevelItem>
+        <!--<allowedMediaLevelItem>title</allowedMediaLevelItem>-->
         <!-- Titre -->
-        <allowedMediaLevelItem>country</allowedMediaLevelItem>
+        <!--<allowedMediaLevelItem>country</allowedMediaLevelItem>-->
         <!-- Pays -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
@@ -590,7 +590,7 @@
       <allowedUniverseLevel id="2" name="subsector"/>
       <allowedUniverseLevel id="3" name="group_"/>
       <allowedUniverseLevel id="4" name="segment"/>
-      <allowedUniverseLevel id="7" name="holding_company"/>
+      <!--<allowedUniverseLevel id="7" name="holding_company"/>-->
       <allowedUniverseLevel id="6" name="advertiser"/>
       <allowedUniverseLevel id="8" name="brand"/>
       <allowedUniverseLevel id="5" name="product"/>
