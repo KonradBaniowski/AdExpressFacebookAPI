@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<dataBaseConfiguration>
+<dataBase description="Hathor" user="tendency_robot" password="iatendence1" tns="adexprfi01.pige" pooling="false" timeout="120"/>
+</dataBaseConfiguration>
