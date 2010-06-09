@@ -108,15 +108,15 @@
   <ItemGroup>
     <Reference Include="Bastet.Localization, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\Bastet.Localization.dll</HintPath>
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\Bastet.Localization.dll</HintPath>
     </Reference>
     <Reference Include="obout_Calendar2_Net, Version=2.8.3.0, Culture=neutral, PublicKeyToken=b114d8766feff9ce, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\obout_Calendar2_Net.dll</HintPath>
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\obout_Calendar2_Net.dll</HintPath>
     </Reference>
     <Reference Include="Oracle.DataAccess, Version=2.102.2.20, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\Oracle.DataAccess.dll</HintPath>
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\Oracle.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -133,27 +133,34 @@
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
+    <Reference Include="TNS.Ares.Constantes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.Ares.Constantes.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.Ares.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.Ares.Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.Ares.StaticNavSession.DAL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.Ares.StaticNavSession.DAL.dll</HintPath>
+    </Reference>
     <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.dll</HintPath>
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.dll</HintPath>
     </Reference>
     <Reference Include="TNS.FrameWork.Date, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0e2d78f24e5a5f7a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.Date.dll</HintPath>
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.Date.dll</HintPath>
     </Reference>
     <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.DB.dll</HintPath>
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.DB.dll</HintPath>
     </Reference>
     <Reference Include="TNS.Isis.Constantes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.Isis.Constantes.dll</HintPath>
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.Isis.Constantes.dll</HintPath>
     </Reference>
-    <ProjectReference Include="..\TNS.ADEXPRESS.ANUBIS.CONSTANTES\TNS.AdExpress.Anubis.Constantes.csproj">
-      <Name>TNS.AdExpress.Anubis.Constantes</Name>
-      <Project>{87716AC8-B9D2-432C-84F7-885A73B77141}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
     <ProjectReference Include="..\TNS.ADEXPRESS.CONSTANTES\TNS.AdExpress.Constantes.csproj">
       <Name>TNS.AdExpress.Constantes</Name>
       <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
@@ -162,14 +169,6 @@
     <ProjectReference Include="..\TNS.AdExpress.Domain\TNS.AdExpress.Domain.csproj">
       <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
       <Name>TNS.AdExpress.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TNS.Ares.Domain\TNS.Ares.Domain.csproj">
-      <Project>{255834E2-DCA3-4290-9325-FFA4291839A6}</Project>
-      <Name>TNS.Ares.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TNS.Ares.StaticNavSession.DAL\TNS.Ares.StaticNavSession.DAL.csproj">
-      <Project>{4762D913-FC82-42BD-840F-5BCB43E5979D}</Project>
-      <Name>TNS.Ares.StaticNavSession.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

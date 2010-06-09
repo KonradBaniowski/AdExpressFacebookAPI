@@ -11,7 +11,6 @@ using System.Data;
 using System.Runtime.Serialization.Formatters.Binary;
 using Oracle.DataAccess.Client;
 using Oracle.DataAccess.Types;
-using AnubisConstantes=TNS.AdExpress.Anubis.Constantes;
 using TNS.AdExpress.Constantes.DB;
 using DbTables=TNS.AdExpress.Constantes.DB.Tables;
 using DbSchemas=TNS.AdExpress.Constantes.DB.Schema;
