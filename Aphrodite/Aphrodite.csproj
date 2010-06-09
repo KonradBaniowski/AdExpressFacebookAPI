@@ -154,7 +154,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>--COPY "$(ProjectDir)Configuration\*.*"  "$(ProjectDir)$(OutDir)Configuration\*.*"
---COPY "$(ProjectDir)Configuration\35\*.*"  "$(ProjectDir)$(OutDir)Configuration\35\*.*"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
