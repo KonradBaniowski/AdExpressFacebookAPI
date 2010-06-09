@@ -138,11 +138,21 @@ namespace TNS.AdExpress.Constantes.Web {
         /// Alertes AdExpress Configuration
         /// </summary>
         public const string ALERTE_CONFIGURATION = @"PluginAlerteConfiguration.xml";
+        /// <summary>
+        /// WebService Right Configuration file
+        /// </summary>
+        public const string WEB_SERVICE_RIGHT_CONFIGURATION = @"WebServiceRightConfiguration.xml";
 
         /// <summary>
         /// Trends configuration file
         /// </summary>
         public const string TRENDS_FILENAME = @"Trends.xml";
+
+        /// <summary>
+        /// Campaign Types configuration file
+        /// </summary>
+        public const string CAMPAIGN_TYPES_CONFIGURATION_FILENAME = @"CampaignTypes.xml";
+
 
 
     }
