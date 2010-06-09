@@ -113,7 +113,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Configuration\ApplicationParameters.xml" />
+    <Resource Include="Configuration\ApplicationParameters.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DLL\KMI.AdExpress.Aphrodite.Domain\KMI.AdExpress.Aphrodite.Domain.csproj">
@@ -130,8 +132,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Configuration\35\Database.xml" />
-    <Resource Include="Configuration\35\MediaTypes.xml" />
+    <Resource Include="Configuration\35\Database.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Configuration\35\MediaTypes.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Gray.gif" />
@@ -148,7 +154,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>COPY "$(ProjectDir)Configuration\*.*"  "$(ProjectDir)$(OutDir)Configuration\*.*"
-COPY "$(ProjectDir)Configuration\35\*.*"  "$(ProjectDir)$(OutDir)Configuration\35\*.*"</PostBuildEvent>
+    <PostBuildEvent>--COPY "$(ProjectDir)Configuration\*.*"  "$(ProjectDir)$(OutDir)Configuration\*.*"
+--COPY "$(ProjectDir)Configuration\35\*.*"  "$(ProjectDir)$(OutDir)Configuration\35\*.*"</PostBuildEvent>
   </PropertyGroup>
 </Project>
