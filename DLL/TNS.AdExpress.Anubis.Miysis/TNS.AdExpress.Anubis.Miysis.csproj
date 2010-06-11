@@ -236,6 +236,9 @@
     <Content Include="Configuration\4211\Plugins\Miysis.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Configuration\48\Plugins\Miysis.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\33\LogoAdExpress.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -258,6 +261,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\44\LogoAdExpress220.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\48\LogoAdExpress.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\48\LogoAdExpress220.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Common\logo_Tns.bmp">

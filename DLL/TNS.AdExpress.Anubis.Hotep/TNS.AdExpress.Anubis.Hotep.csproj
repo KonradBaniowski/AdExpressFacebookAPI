@@ -258,6 +258,9 @@
     <Content Include="Configuration\4211\Plugins\Hotep.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Configuration\48\Plugins\Hotep.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\33\LogoAdExpress.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+  <CustomerMail server="localhost.hobbit.tns-global.sk" port="25" from="tnsadexpress@kantarmedia.com" webServer="http://www.tnsadexpress.pl" subject="AdExpress"/>
+  <PdfPath path="C:\"/>
+  <!--If path empty then path = current directory of executable-->
+  <ThemePath path="App_Themes"/>
+  <PdfCreatorPilot login="KantarMedia" pass="53HN7-JV7XK-Z7JBD-RTA92"/>
+  <Html2Pdf login="KantarMedia" pass="T83L6-ZMNJ8-33Y93-CT3Y8"/>
+  <PdfProperties author="TNS Media Intelligence" subject="Indicateurs" title="Analyses Sectorielles" producer="TNS AdExpress (Anubis)" keywords="Analyses Sectorielles, adExpress, Indicateurs, TNS Media Intelligence"/>
+</Configuration>

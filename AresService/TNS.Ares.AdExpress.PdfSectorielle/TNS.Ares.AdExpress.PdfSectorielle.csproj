@@ -482,6 +482,38 @@
     <Content Include="Configuration\421\WebThemes.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Configuration\48\AdExpressConfiguration.xml" />
+    <Content Include="Configuration\48\AdNetTrackDetailLevel.xml" />
+    <Content Include="Configuration\48\BaalList.xml" />
+    <Content Include="Configuration\48\CoreLayersConfiguration.xml" />
+    <Content Include="Configuration\48\CreativesAccess.xml" />
+    <Content Include="Configuration\48\CreativesConfiguration.xml" />
+    <Content Include="Configuration\48\CssConfiguration.xml" />
+    <Content Include="Configuration\48\CustomerErrorMail.xml" />
+    <Content Include="Configuration\48\Database.xml" />
+    <Content Include="Configuration\48\DundasConfiguration.xml" />
+    <Content Include="Configuration\48\Flags.xml" />
+    <Content Include="Configuration\48\GenericColumn.xml" />
+    <Content Include="Configuration\48\GenericDetailLevel.xml" />
+    <Content Include="Configuration\48\HeaderConfiguration.xml" />
+    <Content Include="Configuration\48\InfoNews.xml" />
+    <Content Include="Configuration\48\Lists.xml" />
+    <Content Include="Configuration\48\MediaPlanInsertionConfiguration.xml" />
+    <Content Include="Configuration\48\ModuleCategory.xml" />
+    <Content Include="Configuration\48\ModulesConfiguration.xml" />
+    <Content Include="Configuration\48\MSCreativesDetails.xml" />
+    <Content Include="Configuration\48\PluginConfiguration.xml" />
+    <Content Include="Configuration\48\PortofolioDetailMediaConfiguration.xml" />
+    <Content Include="Configuration\48\ResultOptions.xml" />
+    <Content Include="Configuration\48\RightOptions.xml" />
+    <Content Include="Configuration\48\Trends.xml" />
+    <Content Include="Configuration\48\Units.xml" />
+    <Content Include="Configuration\48\UniverseBranches.xml" />
+    <Content Include="Configuration\48\UniverseLevels.xml" />
+    <Content Include="Configuration\48\UniverseLevelsCustomStyles.xml" />
+    <Content Include="Configuration\48\Vehicles.xml" />
+    <Content Include="Configuration\48\WebLanguages.xml" />
+    <Content Include="Configuration\48\WebThemes.xml" />
     <Content Include="Configuration\ErrorMail.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
