@@ -149,11 +149,16 @@ namespace AdExpress.Private.Results{
 				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
 					_ResultWebControl.SkinID = "portofolioSynthesisResultTable";
 					_ResultWebControl.ShowContainer = false;
+                    _ResultWebControl.UseLimitation = false;
 					break;
 				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
 				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
 					_ResultWebControl.SkinID = "portofolioResultTable";
+                    _ResultWebControl.UseLimitation = true;
 					break;
+                default:
+                    _ResultWebControl.UseLimitation = true;
+                    break;
 			}
 		}
 		#endregion
@@ -221,6 +226,7 @@ namespace AdExpress.Private.Results{
 				
 				//Choix de la planche à afficher
 				_ResultWebControl.Visible = false;
+                vehicleItemsNavigatorWebControl1.Visible = false;
 				_genericProductLevel = false;
 				portofolioChartWebControl1.Visible = false;
 				if(DBClassificationConstantes.Vehicles.names.press==vehicleName 
@@ -237,14 +243,18 @@ namespace AdExpress.Private.Results{
 						_genericProductLevel = false;
                         ResultsOptionsWebControl1.UnitOption = false;
                         ResultsOptionsWebControl1.InsertOption = false;
+                        vehicleItemsNavigatorWebControl1.Visible = true;
+                        vehicleItemsNavigatorWebControl1.ResultType = TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS;
                         break;
                     case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
                         ResultsOptionsWebControl1.UnitOption = false;
+                        vehicleItemsNavigatorWebControl1.Visible = true;
+                        vehicleItemsNavigatorWebControl1.ResultType = TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA;
                         break;
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
 						_ResultWebControl.Visible = true;
 						_genericProductLevel = true;
-                        ResultsOptionsWebControl1.UnitOption = false;	
+                        ResultsOptionsWebControl1.UnitOption = false;
 						break;								
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
 						_genericMediaLevelDetailSelectionWebControl.Visible = false;
@@ -341,6 +351,8 @@ namespace AdExpress.Private.Results{
 			MenuWebControl2.CustomerWebSession = _webSession;
 			_genericMediaLevelDetailSelectionWebControl.CustomerWebSession = _webSession;
 			_ResultWebControl.CustomerWebSession = _webSession;
+            vehicleItemsNavigatorWebControl1.CustomerWebSession = _webSession;
+            vehicleItemsNavigatorWebControl1.Excel = false;
 
 			portofolioChartWebControl1.CustomerWebSession = _webSession;
 			portofolioChartWebControl1.TypeFlash = true;
@@ -368,9 +380,6 @@ namespace AdExpress.Private.Results{
 
 			switch (_webSession.CurrentTab) {
 
-				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
-                    result = (_webSession.CustomerPeriodSelected.IsSliding4M) ? portofolioResult.GetVehicleViewHtml(false, FrameWorkConstantes.Portofolio.SYNTHESIS) : "";
-					break;
 				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
 					result = portofolioResult.GetDetailMediaHtml(false);
 					break;

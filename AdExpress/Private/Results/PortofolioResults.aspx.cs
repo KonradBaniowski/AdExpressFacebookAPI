@@ -463,9 +463,6 @@ namespace AdExpress.Private.Results{
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
 						break;
-                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
-                        result = portofolioResult.GetVehicleViewHtml(false, FrameWorkConstantes.Portofolio.SYNTHESIS); 
-                        break;
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
                         result = portofolioResult.GetDetailMediaHtml(false);
                         break;

@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F9CEFF0A-7A0A-4724-8B68-2A9DB9FBCC51}</ProjectGuid>
     <SccProjectName>SAK</SccProjectName>
@@ -333,6 +333,11 @@
     <Compile Include="Results\Appm\SectorDataWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Results\VehicleView\CoverItemWebControl.cs" />
+    <Compile Include="Results\VehicleView\CoverLinkItemSynthesisWebControl.cs" />
+    <Compile Include="Results\VehicleView\CoverLinkItemWebControl.cs" />
+    <Compile Include="Results\VehicleView\VehicleItemsNavigatorWebControl.cs" />
+    <Compile Include="Results\VehicleView\VehicleItemWebControl.cs" />
     <Compile Include="Results\_BannerInformationWebControl.cs">
       <SubType>Code</SubType>
     </Compile>

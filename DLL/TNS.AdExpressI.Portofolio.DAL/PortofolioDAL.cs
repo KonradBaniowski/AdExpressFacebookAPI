@@ -286,7 +286,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 
 			#region Construction de la requête
             sql += " select " + insertionFieldNameSumWithAlias + "," + euroFieldNameSumWithAlias + ",date_cover_num date1";
-			sql += "  from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressAlert).Sql + "  " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;//+ DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.ALERT_DATA_PRESS + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+            sql += "  from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress).Sql + "  " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;//+ DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.ALERT_DATA_PRESS + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
 			sql += " where id_media=" + _idMedia + " ";
 			if (_beginingDate.Length > 0)
 				sql += " and date_media_num>=" + _beginingDate + " ";

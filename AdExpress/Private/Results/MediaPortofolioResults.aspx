@@ -2,6 +2,7 @@
 <%@ Register TagPrefix="dcwc" Namespace="TNS.AdExpress.Web.UI.Results" Assembly="TNS.AdExpress.Web" %>
 <%@ Register TagPrefix="cc4" Namespace="TNS.AdExpress.Web.Controls.Selections" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc5" Namespace="TNS.AdExpress.Web.Controls.Results" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="cc6" Namespace="TNS.AdExpress.Web.Controls.Results.VehicleView" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc3" Namespace="TNS.AdExpress.Web.Controls.Translation" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc1" Namespace="TNS.AdExpress.Web.Controls.Buttons" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc2" Namespace="TNS.AdExpress.Web.Controls.Headers" Assembly="TNS.AdExpress.Web.Controls" %>
@@ -18,6 +19,9 @@
 		<meta http-equiv="expires" content="0"/>
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta content="no-cache" name="Cache-control"/>
+		<script type="text/javascript" src="/scripts/dom-drag.js"></script>
+		<script type="text/javascript" src="/scripts/min.js"></script>
+		<script type="text/javascript" src="/scripts/scrollTo.js"></script>
 	</HEAD>
 	<body class="bodyStyle" onload="javascript:activateActiveX();">
 		<form id="Form2" method="post" runat="server">
@@ -145,6 +149,11 @@
 											AllowPaging="True" SkinID="portofolioResultTable"></cc5:resultwebcontrol>
 										<%=result%>
 									</td>
+								</tr>
+								<tr>
+								    <td class="whiteBackGround">
+								         <cc6:VehicleItemsNavigatorWebControl id="vehicleItemsNavigatorWebControl1" runat="server"></cc6:VehicleItemsNavigatorWebControl>
+								    </td>
 								</tr>
 								<tr>
 									<td style="HEIGHT: 5px" class="whiteBackGround"></td>

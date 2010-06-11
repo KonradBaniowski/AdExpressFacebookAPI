@@ -11,6 +11,8 @@ using AbstractResult=TNS.AdExpressI.Portofolio;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpressI.Portofolio.Exceptions;
+using System.Data;
+using System.Collections;
 
 namespace TNS.AdExpressI.Portofolio.Finland {
     /// <summary>
@@ -82,19 +84,18 @@ namespace TNS.AdExpressI.Portofolio.Finland {
 		/// <returns></returns>
 		public override Dictionary<string, string> GetVisualList(string beginDate, string endDate) {
 			return null;
-		}
-
-		/// <summary>
-		/// Get view of the vehicle (HTML)
-		/// </summary>
-		/// <param name="excel">True for excel result</param>
-        /// <param name="resultType">Result Type (Synthesis, MediaDetail)</param>
-		/// <returns>HTML code</returns>
-		public override string GetVehicleViewHtml(bool excel, int resultType) {
-			
-			return "";
-		}			
-
+        }
+        /// <summary>
+        /// Get data for vehicle view
+        /// </summary>
+        /// <param name="dtVisuel">Visuel information</param>
+        /// <param name="htValue">investment values</param>
+        /// <returns>Media name</returns>
+        override public string GetVehicleViewData(out DataTable dtVisuel, out Hashtable htValue){
+            dtVisuel = null;
+            htValue = null;
+            return "";
+        }
         #endregion
 
     }

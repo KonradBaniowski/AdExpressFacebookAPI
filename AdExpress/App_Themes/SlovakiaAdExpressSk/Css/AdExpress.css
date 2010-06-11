@@ -246,6 +246,23 @@ background:url(/App_Themes/SlovakiaAdExpressSk/Images/Common/dupli_2.gif);
 	border-bottom: #644883 1px solid;
 	font-size: 12px
 }
+.portofolioSynthesisBorderRight{
+	border-right: #644883 1px solid; 
+	border-top: #644883 1px solid; 
+	border-bottom: #644883 1px solid;
+	font-size: 12px
+}
+.portofolioSynthesisBorderBottom{
+	border-right: #644883 1px solid; 
+	border-bottom: #644883 1px solid;
+	border-left: #644883 1px solid; 
+	font-size: 12px
+}
+.portofolioSynthesisBorderBottomRight{
+	border-right: #644883 1px solid; 
+	border-bottom: #644883 1px solid;
+	font-size: 12px
+}
 .portofolioSynthesisBorderNone{
 	border-top-style: none; 
 	border-right-style: none; 

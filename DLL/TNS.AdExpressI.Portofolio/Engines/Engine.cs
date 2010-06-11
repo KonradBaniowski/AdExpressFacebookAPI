@@ -113,150 +113,39 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		/// <returns></returns>
 		public virtual string GetHtmlResult() {
 			return BuildHtmlResult();
-		}
+        }
 
-		#region HTML for vehicle view
-		/// <summary>
-		/// Get view of the vehicle (HTML)
-		/// </summary>
-		/// <param name="excel">True for excel result</param>
-        /// <param name="resultType">Result Type (Synthesis, MediaDetail)</param>
-		/// <returns>HTML code</returns>
-        public virtual string GetVehicleViewHtml(bool excel, int resultType) {
+        #region Data for vehicle view
+        /// <summary>
+        /// Get data for vehicle view
+        /// </summary>
+        /// <param name="dtVisuel">Visuel information</param>
+        /// <param name="htValue">investment values</param>
+        /// <returns>Media name</returns>
+        public string GetVehicleViewData(out DataTable dtVisuel, out Hashtable htValue) {
 
-			#region Variables
-			string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
-			StringBuilder t = new StringBuilder(5000);
-			DataSet dsVisuel = null;
-			string pathWeb = "";
             string media = "";
-			#endregion
+            DataSet dsVisuel;
 
-			#region Accès aux tables
-			if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
-			object[] parameters = new object[5];
-			parameters[0] = _webSession;
-			parameters[1] = _vehicleInformation;
-			parameters[2] = _idMedia;
-			parameters[3] = _periodBeginning;
-			parameters[4] = _periodEnd;
-			IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+            if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
+            object[] parameters = new object[5];
+            parameters[0] = _webSession;
+            parameters[1] = _vehicleInformation;
+            parameters[2] = _idMedia;
+            parameters[3] = _periodBeginning;
+            parameters[4] = _periodEnd;
+            IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 
-			dsVisuel = portofolioDAL.GetListDate(true, DBCst.TableType.Type.dataVehicle4M);
-			DataTable dtVisuel = dsVisuel.Tables[0];
+            dsVisuel = portofolioDAL.GetListDate(true, DBCst.TableType.Type.dataVehicle);
+            dtVisuel = dsVisuel.Tables[0];
             if (dtVisuel.Rows.Count > 0)
                 media = dtVisuel.Rows[0]["media"].ToString();
-			#endregion
 
-			// Vérifie si le client a le droit aux créations
-			if (_webSession.CustomerLogin.ShowCreatives(_vehicleInformation.Id)) {
-				if (!excel) {
-					if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
-						|| _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress
-                        || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
-                        || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
-                        ) {
+            htValue = portofolioDAL.GetInvestmentByMedia();
 
-						Hashtable htValue = portofolioDAL.GetInvestmentByMedia();
-
-						//t.Append("</table>");
-
-						int compteur = 0;
-						string endBalise = "";
-						string day = "";
-						t.Append("<table  border=1 cellpadding=0 cellspacing=0 width=600 align=center class=\"paleVioletBackGroundV2 violetBorder\">");
-						//Vehicle view
-                        switch (resultType) { 
-                            case FrameWorkResultsConstantes.Portofolio.SYNTHESIS:
-                                t.Append("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc12Bold violetBackGround portofolioSynthesisBorder\" align=\"center\">" + GestionWeb.GetWebWord(1397, _webSession.SiteLanguage) + "</td></tr>");
-                                break;
-                            case FrameWorkResultsConstantes.Portofolio.DETAIL_MEDIA:
-                                t.Append("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc14Bold violetBackGround portofolioSynthesisBorder\" align=\"center\">" + media + "</td></tr>");
-                                break;
-                        }
-						
-                        CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
-						if (_mediaList == null) {
-							try {
-								string[] mediaList = Media.GetItemsList(WebCst.AdExpressUniverse.CREATIVES_KIOSQUE_LIST_ID).MediaList.Split(',');
-								if (mediaList != null && mediaList.Length > 0)
-									_mediaList = new List<Int64>(Array.ConvertAll<string, Int64>(mediaList, (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); }));
-							}
-							catch { }
-						}
-						for (int i = 0; i < dtVisuel.Rows.Count; i++) {
-							//date_media_num
-
-							if (dtVisuel.Rows[i]["disponibility_visual"] != System.DBNull.Value && int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10) {
-								if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
-									pathWeb = WebCst.CreationServerPathes.IMAGES + "/" + _idMedia.ToString() + "/" + dtVisuel.Rows[i]["date_media_num"].ToString() + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "";
-								else pathWeb = WebCst.CreationServerPathes.IMAGES + "/" + _idMedia.ToString() + "/" + dtVisuel.Rows[i]["date_cover_num"].ToString() + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "";
-							}
-							else {
-								pathWeb = "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif";
-							}
-							DateTime dayDT = new DateTime(int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(0, 4)), int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(4, 2)), int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(6, 2)));
-							day = DayString.GetCharacters(dayDT, cultureInfo) + " " + DateString.dateTimeToDD_MM_YYYY(dayDT,_webSession.SiteLanguage); 
-							
-							if (compteur == 0) {
-								t.Append("<tr>");
-								compteur = 1;
-								endBalise = "";
-							}
-							else if (compteur == 1) {
-								compteur = 2;
-								endBalise = "";
-							}
-							else {
-								compteur = 0;
-								endBalise = "</td></tr>";
-
-							}
-							t.Append("<td class=\"portofolioSynthesisBorder\"><table  border=0 cellpadding=0 cellspacing=0 width=100% >");
-							t.Append("<tr><td class=\"portofolioSynthesis\" align=center >" + day + "</td><tr>");
-							t.Append("<tr><td align=\"center\" class=\"portofolioSynthesis\" >");
-							if (dtVisuel.Rows[i]["disponibility_visual"] != System.DBNull.Value && int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10) {
-
-                                if (resultType == FrameWorkResultsConstantes.Portofolio.SYNTHESIS) {
-                                    if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
-                                        t.Append("<a href=\"javascript:portofolioCreation('" + _webSession.IdSession + "','" + _idMedia + "','" + dtVisuel.Rows[i]["date_media_num"].ToString() + "','" + dtVisuel.Rows[i]["date_media_num"].ToString() + "','" + dtVisuel.Rows[i]["media"] + "','" + dtVisuel.Rows[i]["number_page_media"].ToString() + "');\" >");
-                                    else t.Append("<a href=\"javascript:portofolioCreation('" + _webSession.IdSession + "','" + _idMedia + "','" + dtVisuel.Rows[i]["date_media_num"].ToString() + "','" + dtVisuel.Rows[i]["date_cover_num"].ToString() + "','" + dtVisuel.Rows[i]["media"] + "','" + dtVisuel.Rows[i]["number_page_media"].ToString() + "');\" >");
-                                    t.Append(" <img alt=\"" + GestionWeb.GetWebWord(1409, _webSession.SiteLanguage) + "\" src='" + pathWeb + "' border=\"0\" width=180 height=220>");
-                                }
-                                else if (resultType == FrameWorkResultsConstantes.Portofolio.DETAIL_MEDIA) {
-                                    t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','" + dtVisuel.Rows[i]["date_media_num"].ToString() + "','');\" >");
-                                    t.Append(" <img alt=\"\" src='" + pathWeb + "' border=\"0\" width=180 height=220>");
-                                }
-							}
-							if (dtVisuel.Rows[i]["disponibility_visual"] != System.DBNull.Value && int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10) {
-								t.Append("</a>");
-							}
-							t.Append("</td></tr>");
-							if (htValue.Count > 0) {
-								if (htValue.ContainsKey(dtVisuel.Rows[i]["date_cover_num"])) {
-									t.Append("<tr><td class=\"portofolioSynthesis\" align=\"center\">" + GestionWeb.GetWebWord(1398, _webSession.SiteLanguage) + " : " + ((string[])htValue[dtVisuel.Rows[i]["date_cover_num"]])[1] + "</td><tr>");
-									t.Append("<tr><td class=\"portofolioSynthesis\" align=\"center\">" + GestionWeb.GetWebWord(1399, _webSession.SiteLanguage) + " :" + int.Parse(((string[])htValue[dtVisuel.Rows[i]["date_cover_num"]])[0]).ToString("### ### ### ###") + "</td><tr>");
-								}
-								else {
-									t.Append("<tr><td class=\"portofolioSynthesis\" align=\"center\">" + GestionWeb.GetWebWord(1398, _webSession.SiteLanguage) + " : 0</td><tr>");
-									t.Append("<tr><td class=\"portofolioSynthesis\" align=\"center\">" + GestionWeb.GetWebWord(1399, _webSession.SiteLanguage) + " : 0</td><tr>");
-
-								}
-							}
-							t.Append("</table></td>");
-							t.Append(endBalise);
-						}
-						if (compteur != 0)
-							t.Append("</tr>");
-
-						t.Append("</table>");
-					}
-				}
-			}
-
-			return t.ToString();
-		}
-		#endregion
+            return media;
+        }
+        #endregion
 
 		#region Get All Period Insertions
 		/// <summary>

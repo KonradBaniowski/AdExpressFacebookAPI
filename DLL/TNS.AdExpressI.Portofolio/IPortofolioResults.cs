@@ -12,6 +12,7 @@ using System.Web.UI;
 using System.Collections.Generic;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.FrameWork.WebResultUI;
+using System.Collections;
 
 
 namespace TNS.AdExpressI.Portofolio {
@@ -45,12 +46,12 @@ namespace TNS.AdExpressI.Portofolio {
 		/// <returns>Result Table</returns>
 		ResultTable GetInsertionDetailResultTable();
         /// <summary>
-        /// Get view of the vehicle (HTML)
+        /// Get data for vehicle view
         /// </summary>
-        /// <param name="excel">True for excel result</param>
-        /// <param name="resultType">Result Type (Synthesis, MediaDetail)</param>
-        /// <returns>HTML Code</returns>
-        string GetVehicleViewHtml(bool excel, int resultType);
+        /// <param name="dtVisuel">Visuel information</param>
+        /// <param name="htValue">investment values</param>
+        /// <returns>Media name</returns>
+        string GetVehicleViewData(out DataTable dtVisuel, out Hashtable htValue);
         /// <summary>
         /// Get detail media html
         /// </summary>
