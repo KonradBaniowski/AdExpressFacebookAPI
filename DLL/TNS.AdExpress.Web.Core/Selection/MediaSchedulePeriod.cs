@@ -194,23 +194,32 @@ namespace TNS.AdExpress.Web.Core.Selection
 
                     //Join the day after the last complete month or week
                     tmpEnd = _end;
-                    if (isMonthBD && tmpEnd.Day != tmpEnd.AddMonths(1).AddDays(-tmpEnd.AddMonths(1).Day).Day)
+                    if (isMonthBD)
                     {
-                        //Get Min between the last data update date and the day after the complete period suite
-                        tmpEnd = Min(
-                            today.AddMonths(-1).AddDays(1 - today.Day),
-                            tmpEnd.AddDays(1 - tmpEnd.Day));
-                        subPeriodAddOn.AddSubPeriod(tmpEnd, _end);
-                        tmpEnd = tmpEnd.AddDays(-1);
+                        if ((tmpEnd.Day != tmpEnd.AddMonths(1).AddDays(-tmpEnd.AddMonths(1).Day).Day)
+                            || InLastTwoMonths(tmpEnd))
+                        {
+                            //Get Min between the last data update date and the day after the complete period suite
+                            tmpEnd = Min(
+                                today.AddMonths(-1).AddDays(1 - today.Day),
+                                tmpEnd.AddDays(1 - tmpEnd.Day));
+                            subPeriodAddOn.AddSubPeriod(tmpEnd, _end);
+                            tmpEnd = tmpEnd.AddDays(-1);
+                        }
                     }
-                    else if (!isMonthBD && tmpEnd.DayOfWeek != DayOfWeek.Sunday)
+                    else if (!isMonthBD)
                     {
-                        //Get Min between the last data update date and the day after the complete period suite
-                        tmpEnd = Min(
-                            today.AddDays(-35).AddDays(1 - today.DayOfWeek.GetHashCode()),
-                            tmpEnd.AddDays(1 - tmpEnd.DayOfWeek.GetHashCode()));
-                        subPeriodAddOn.AddSubPeriod(tmpEnd, _end);
-                        tmpEnd = tmpEnd.AddDays(-1);
+                        if ((tmpEnd.DayOfWeek != DayOfWeek.Sunday)
+                            || InLastTwoMonths(tmpEnd))
+                        {
+
+                            //Get Min between the last data update date and the day after the complete period suite
+                            tmpEnd = Min(
+                                today.AddDays(-35).AddDays(1 - today.DayOfWeek.GetHashCode()),
+                                tmpEnd.AddDays(1 - tmpEnd.DayOfWeek.GetHashCode()));
+                            subPeriodAddOn.AddSubPeriod(tmpEnd, _end);
+                            tmpEnd = tmpEnd.AddDays(-1);
+                        }
                     }
 
 
@@ -257,6 +266,25 @@ namespace TNS.AdExpress.Web.Core.Selection
         }
         #endregion
 
+        #region If date is in last two months
+        /// <summary>
+        /// If date is in last two months
+        /// </summary>
+        /// <param name="date">date</param>
+        /// <returns></returns>
+        private bool InLastTwoMonths(DateTime date) {
+
+            DateTime today = DateTime.Now.Date;
+
+            if ((date.Month == today.Month && date.Year == today.Year)
+                || (date.Month == today.AddMonths(-1).Month && date.Year == today.AddMonths(-1).Year)
+                || date > today)
+                return true;
+
+            return false;
+
+        }
+        #endregion
 
     }
     #endregion
