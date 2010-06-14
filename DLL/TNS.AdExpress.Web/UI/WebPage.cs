@@ -116,21 +116,31 @@ namespace TNS.AdExpress.Web.UI {
                 }
             }
             cwe.SendMail();
-            manageCustomerError(cwe);
+            manageCustomerError(cwe, errorArgs);
 
         }
 
         /// <summary>
         /// Traite l'affichage d'erreur en fonction du mode compilation
         /// </summary>
-        private void manageCustomerError(object source) {
+        private void manageCustomerError(object source, EventArgs errorArgs) {
 #if DEBUG
             throw ((TNS.AdExpress.Web.Exceptions.CustomerWebException)source);
 #else
 				// Script
 				if (!Page.ClientScript.IsClientScriptBlockRegistered("redirectError")){
+                    TNS.AdExpress.Web.Core.Sessions.WebSession webSession = null;
+                    try {
+                        webSession = ((TNS.AdExpress.Web.Core.Sessions.WebSession)((ErrorEventArgs)errorArgs)[ErrorEventArgs.argsName.custormerSession]);
+                    }
+                    catch { webSession = null; }
 					//Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"redirectError",WebFunctions.Script.redirectError(((TNS.AdExpress.Web.Core.Sessions.WebSession)((ErrorEventArgs)e)[ErrorEventArgs.argsName.custormerSession]).SiteLanguage.ToString()));	
-					Response.Write(WebFunctions.Script.RedirectError(((TNS.AdExpress.Web.Core.Sessions.WebSession)((ErrorEventArgs)_errorArgs)[ErrorEventArgs.argsName.custormerSession]).SiteLanguage.ToString()));		
+                    if (webSession != null) {
+                        Response.Write(TNS.AdExpress.Web.Functions.Script.RedirectError(webSession.SiteLanguage.ToString()));
+                    }
+                    else {
+                        Response.Write(TNS.AdExpress.Web.Functions.Script.RedirectError(_siteLanguage.ToString()));
+                    }
 					Response.Flush();
 					Response.End();
 				}
