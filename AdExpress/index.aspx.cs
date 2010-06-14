@@ -198,8 +198,9 @@ namespace AdExpress{
 				Response.Write("<script language=javascript>");
 				Response.Write("	alert(\""+GestionWeb.GetWebWord(880,this._siteLanguage)+"\");");
 				Response.Write("</script>");
-
-                OnError(new ErrorEventArgs(this, ex, _webSession));
+                if (ex.GetType() != typeof(System.Threading.ThreadAbortException)) {
+                    OnError(new ErrorEventArgs(this, ex, _webSession));
+                }
 
 			}
 			catch(TNS.AdExpress.Web.Core.Exceptions.WebSessionException ex){
@@ -207,7 +208,9 @@ namespace AdExpress{
 				Response.Write("<script language=javascript>");
 				Response.Write("	alert(\""+GestionWeb.GetWebWord(880,this._siteLanguage)+"\");");
 				Response.Write("</script>");
-                OnError(new ErrorEventArgs(this, ex, _webSession));
+                if (ex.GetType() != typeof(System.Threading.ThreadAbortException)) {
+                    OnError(new ErrorEventArgs(this, ex, _webSession));
+                }
 			}
             catch (System.Exception ex)
             {
@@ -215,7 +218,9 @@ namespace AdExpress{
                 Response.Write("<script language=javascript>");
                 Response.Write("	alert(\"" + GestionWeb.GetWebWord(880, this._siteLanguage) + "\");");
                 Response.Write("</script>");
-                OnError(new ErrorEventArgs(this, ex, _webSession));
+                if (ex.GetType() != typeof(System.Threading.ThreadAbortException)) {
+                    OnError(new ErrorEventArgs(this, ex, _webSession));
+                }
             }
 		}
 		#endregion
