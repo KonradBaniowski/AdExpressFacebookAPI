@@ -123,7 +123,7 @@ namespace TNS.AdExpress.Web.UI {
         /// <summary>
         /// Traite l'affichage d'erreur en fonction du mode compilation
         /// </summary>
-        private void manageCustomerError(object source, EventArgs errorArgs) {
+        protected virtual void manageCustomerError(object source, EventArgs errorArgs) {
 #if DEBUG
             throw ((TNS.AdExpress.Web.Exceptions.CustomerWebException)source);
 #else

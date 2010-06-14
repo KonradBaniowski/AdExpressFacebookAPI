@@ -225,6 +225,15 @@ namespace AdExpress{
 		}
 		#endregion
 
+        /// <summary>
+        /// Traite l'affichage d'erreur en fonction du mode compilation
+        /// </summary>
+        protected override void manageCustomerError(object source, EventArgs errorArgs) {
+#if DEBUG
+            base.manageCustomerError(source, errorArgs);
+#endif
+        }
+
 		#endregion
 
 		#region Code généré par le Concepteur Web Form
