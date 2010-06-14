@@ -28,6 +28,10 @@ using TNS.Ares.Domain.LS;
 using TNS.Ares.Domain.Layers;
 using TNS.Ares.Alerts.DAL;
 using TNS.AdExpressI.Date.DAL;
+using TNS.FrameWork.Exceptions;
+using TNS.AdExpress.Web.UI;
+using TNS.FrameWork.Net.Mail;
+using TNS.FrameWork;
 
 
 namespace AdExpress{
@@ -189,27 +193,29 @@ namespace AdExpress{
                 }
                 #endregion
             }
-            catch(TNS.AdExpress.Exceptions.AdExpressCustomerException){
+            catch(TNS.AdExpress.Exceptions.AdExpressCustomerException ex){
 				// Erreur de droits
 				Response.Write("<script language=javascript>");
 				Response.Write("	alert(\""+GestionWeb.GetWebWord(880,this._siteLanguage)+"\");");
 				Response.Write("</script>");
 
+                OnError(new ErrorEventArgs(this, ex, _webSession));
+
 			}
-			catch(TNS.AdExpress.Web.Core.Exceptions.WebSessionException){
+			catch(TNS.AdExpress.Web.Core.Exceptions.WebSessionException ex){
 				// Erreur Web
 				Response.Write("<script language=javascript>");
 				Response.Write("	alert(\""+GestionWeb.GetWebWord(880,this._siteLanguage)+"\");");
 				Response.Write("</script>");
-
+                OnError(new ErrorEventArgs(this, ex, _webSession));
 			}
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
                 // Erreur Web
                 Response.Write("<script language=javascript>");
                 Response.Write("	alert(\"" + GestionWeb.GetWebWord(880, this._siteLanguage) + "\");");
                 Response.Write("</script>");
-
+                OnError(new ErrorEventArgs(this, ex, _webSession));
             }
 		}
 		#endregion

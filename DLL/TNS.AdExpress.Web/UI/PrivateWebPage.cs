@@ -86,10 +86,6 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		protected WebNavigation.Module _currentModule; 
 		/// <summary>
-		/// Argument de l'exception levée s'il y a une erreur
-		/// </summary>
-		private EventArgs _errorArgs;
-		/// <summary>
 		/// ?????
 		/// </summary>
 		protected WebConstantes.ErrorManager.selectedUnivers _selectionError=WebConstantes.ErrorManager.selectedUnivers.none;
@@ -235,58 +231,6 @@ namespace TNS.AdExpress.Web.UI{
 			}
 		}
 		
-		#endregion
-
-		#region Gestion des erreurs
-		/// <summary>
-		/// Evènement d'erreur
-		/// </summary>
-		/// <param name="e">Argument</param>
-		protected override void OnError(EventArgs e) {
-			_errorArgs=e;
-			if(e.GetType()!=typeof(TNS.AdExpress.Web.UI.ErrorEventArgs)){
-				base.OnError(_errorArgs);
-				return;
-			}
-			if(e==EventArgs.Empty){
-				base.OnError(_errorArgs);
-				return;
-			}
-			TNS.AdExpress.Web.Exceptions.CustomerWebException cwe=null;
-			try{
-				BaseException err=((BaseException)((ErrorEventArgs)e)[ErrorEventArgs.argsName.error]);
-				cwe=new TNS.AdExpress.Web.Exceptions.CustomerWebException((System.Web.UI.Page)(((ErrorEventArgs)_errorArgs)[ErrorEventArgs.argsName.sender]),err.Message,err.GetHtmlDetail(),((TNS.AdExpress.Web.Core.Sessions.WebSession)((ErrorEventArgs)_errorArgs)[ErrorEventArgs.argsName.custormerSession]));
-			}
-			catch(System.Exception){
-				try{
-					cwe=new TNS.AdExpress.Web.Exceptions.CustomerWebException((System.Web.UI.Page)(((ErrorEventArgs)_errorArgs)[ErrorEventArgs.argsName.sender]),((System.Exception)((ErrorEventArgs)_errorArgs)[ErrorEventArgs.argsName.error]).Message,((System.Exception)((ErrorEventArgs)_errorArgs)[ErrorEventArgs.argsName.error]).StackTrace,((TNS.AdExpress.Web.Core.Sessions.WebSession)((ErrorEventArgs)_errorArgs)[ErrorEventArgs.argsName.custormerSession]));
-				}
-				catch(System.Exception es){
-					throw(es);
-				}
-			}
-			cwe.SendMail();
-			manageCustomerError(cwe);
-			
-		}
-
-		/// <summary>
-		/// Traite l'affichage d'erreur en fonction du mode compilation
-		/// </summary>
-		private void manageCustomerError(object source){
-			#if DEBUG			
-				throw((TNS.AdExpress.Web.Exceptions.CustomerWebException)source);				
-			#else
-				// Script
-				if (!Page.ClientScript.IsClientScriptBlockRegistered("redirectError")){
-					//Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"redirectError",WebFunctions.Script.redirectError(((TNS.AdExpress.Web.Core.Sessions.WebSession)((ErrorEventArgs)e)[ErrorEventArgs.argsName.custormerSession]).SiteLanguage.ToString()));	
-					Response.Write(WebFunctions.Script.RedirectError(((TNS.AdExpress.Web.Core.Sessions.WebSession)((ErrorEventArgs)_errorArgs)[ErrorEventArgs.argsName.custormerSession]).SiteLanguage.ToString()));		
-					Response.Flush();
-					Response.End();
-				}
-				//this.Response.Redirect("/Public/Message.aspx?msgCode=5&siteLanguage="+((TNS.AdExpress.Web.Core.Sessions.WebSession)((ErrorEventArgs)e)[ErrorEventArgs.argsName.custormerSession]).SiteLanguage);
-			#endif
-		}
 		#endregion
 
 		#region Initialisation de la page

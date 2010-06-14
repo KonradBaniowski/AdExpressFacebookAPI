@@ -15,6 +15,7 @@ using System.Web.UI.HtmlControls;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Translation;
+using TNS.FrameWork.Exceptions;
 
 namespace TNS.AdExpress.Web.UI {
     /// <summary>
@@ -83,6 +84,58 @@ namespace TNS.AdExpress.Web.UI {
             }
             Page.ClientScript.RegisterClientScriptInclude(this.GetType(), "activateActiveX", ResolveClientUrl("~/scripts/activateActiveX.js"));
 
+        }
+        #endregion
+
+        #region Gestion des erreurs
+        /// <summary>
+        /// Evènement d'erreur
+        /// </summary>
+        /// <param name="e">Argument</param>
+        protected override void OnError(EventArgs e) {
+            EventArgs errorArgs = e;
+            if (e.GetType() != typeof(TNS.AdExpress.Web.UI.ErrorEventArgs)) {
+                base.OnError(errorArgs);
+                return;
+            }
+            if (e == EventArgs.Empty) {
+                base.OnError(errorArgs);
+                return;
+            }
+            TNS.AdExpress.Web.Exceptions.CustomerWebException cwe = null;
+            try {
+                BaseException err = ((BaseException)((ErrorEventArgs)e)[ErrorEventArgs.argsName.error]);
+                cwe = new TNS.AdExpress.Web.Exceptions.CustomerWebException((System.Web.UI.Page)(((ErrorEventArgs)errorArgs)[ErrorEventArgs.argsName.sender]), err.Message, err.GetHtmlDetail(), ((TNS.AdExpress.Web.Core.Sessions.WebSession)((ErrorEventArgs)errorArgs)[ErrorEventArgs.argsName.custormerSession]));
+            }
+            catch (System.Exception) {
+                try {
+                    cwe = new TNS.AdExpress.Web.Exceptions.CustomerWebException((System.Web.UI.Page)(((ErrorEventArgs)errorArgs)[ErrorEventArgs.argsName.sender]), ((System.Exception)((ErrorEventArgs)errorArgs)[ErrorEventArgs.argsName.error]).Message, ((System.Exception)((ErrorEventArgs)errorArgs)[ErrorEventArgs.argsName.error]).StackTrace, ((TNS.AdExpress.Web.Core.Sessions.WebSession)((ErrorEventArgs)errorArgs)[ErrorEventArgs.argsName.custormerSession]));
+                }
+                catch (System.Exception es) {
+                    throw (es);
+                }
+            }
+            cwe.SendMail();
+            manageCustomerError(cwe);
+
+        }
+
+        /// <summary>
+        /// Traite l'affichage d'erreur en fonction du mode compilation
+        /// </summary>
+        private void manageCustomerError(object source) {
+#if DEBUG
+            throw ((TNS.AdExpress.Web.Exceptions.CustomerWebException)source);
+#else
+				// Script
+				if (!Page.ClientScript.IsClientScriptBlockRegistered("redirectError")){
+					//Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"redirectError",WebFunctions.Script.redirectError(((TNS.AdExpress.Web.Core.Sessions.WebSession)((ErrorEventArgs)e)[ErrorEventArgs.argsName.custormerSession]).SiteLanguage.ToString()));	
+					Response.Write(WebFunctions.Script.RedirectError(((TNS.AdExpress.Web.Core.Sessions.WebSession)((ErrorEventArgs)_errorArgs)[ErrorEventArgs.argsName.custormerSession]).SiteLanguage.ToString()));		
+					Response.Flush();
+					Response.End();
+				}
+				//this.Response.Redirect("/Public/Message.aspx?msgCode=5&siteLanguage="+((TNS.AdExpress.Web.Core.Sessions.WebSession)((ErrorEventArgs)e)[ErrorEventArgs.argsName.custormerSession]).SiteLanguage);
+#endif
         }
         #endregion
 
