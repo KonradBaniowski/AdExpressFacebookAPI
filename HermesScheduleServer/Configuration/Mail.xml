@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<smtp>
+    <server adress="smtp.secodip.com" port="25"/>
+    <message from="hermesScheduleServer@adexpress.com">
+        <to>benjamin.masson@tnsmi.fr</to>
+    </message>
+</smtp>

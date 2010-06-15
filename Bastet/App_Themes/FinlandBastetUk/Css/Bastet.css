@@ -1,0 +1,505 @@
+BODY { BACKGROUND-IMAGE: none; MARGIN: 0px; BACKGROUND-COLOR: #ffffff }
+
+.headerBackGround{
+background:url(/App_Themes/FinlandBastetUk/Images/Common/dupli_2.gif);
+}
+
+.dupli1BackGround{
+background:url(/App_Themes/FinlandBastetUk/Images/Common/dupli_1.gif);
+}
+
+.imageBackGround{
+	background:url(/App_Themes/FinlandBastetUk/Images/Common/dupli_fond.gif);
+}
+
+/*image drop down list*/
+.ddlOut{
+	background-color: #ffffff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #000000;
+}
+.ddlOver{
+	background-color: #DED8E5;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #000000;
+}
+.ddlOut1{
+	/*background-color: #73598F;*/
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: bold;
+	color: #FFFFFF;
+	vertical-align:middle;
+}
+.ddlOver1{
+	background-color: #DED8E5;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: bold;
+	color: #000000;
+	vertical-align:middle;
+}
+.imgVAlign{
+	vertical-align:bottom;	
+}  
+
+/* Login Control */
+.loginWebControlTable
+{
+	width:240px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	color: #000000;
+}
+
+/*couleurs*/
+.lightPurple{
+	background-color:#DED8E5;
+}
+.mediumPurple{
+background-color:#D6CBDE
+}
+.mediumPurple1{
+background-color:#D0C8DA
+}
+.DarkGrey
+{
+	background-color:#9D9885;
+}
+.DarkGreen
+{
+	background-color:#AAFFAA;
+}
+.Green
+{
+	background-color:#CAFFCA;
+}
+.LightGreen
+{
+	background-color:#E6FFE6;
+}
+.LightLightGreen
+{
+	background-color:#F2FFF2;
+}
+.DarkRed
+{
+	background-color:#FF9D9D;
+}
+.Red
+{
+	background-color:#FFD7D7;
+}
+.LightRed
+{
+	background-color:#FFEAEA;
+}
+.LightLightRed
+{
+	background-color:#FFF0F0;
+}
+/**/
+/*image drop down list*/
+.ddlOut
+{
+	background-color: #ffffff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #000000;
+}
+
+.ddlOver
+{
+	background-color: #DED8E5;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #000000;
+}
+/**/
+
+/*tableau d'advertiser*/
+caption.divTable
+{
+	background-color:#ffffff;
+	border:solid 1px #644883;
+	text-align:left;
+}
+
+table.divTable
+{
+	background-color:#DED8E5;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #644883;
+	font-weight: bold;
+	border:solid 1px #644883;
+}
+/**/
+
+.input
+{
+	color: #644883;
+	font-size: 11px;
+}
+
+/*entête commune ( flash, menu)*/
+td.headerLeft
+{
+	background-color:#644883;
+}
+
+table.header
+{
+	background-color:#644883;
+	COLOR: #FFFFFF;
+	font-weight:bold;
+	border:0;
+	margin:0;
+}
+
+table.menu
+{
+	background-color:#644883;
+	COLOR: #ffffff;
+	font-weight:bold;
+	border:0;
+	margin:0;
+}
+
+a.menu
+{
+	color:#FFFFFF;
+	font-family:Bookman Old Style;
+	font-weight:bold;
+	text-decoration:none;
+}
+/**/
+
+/*Présentation des textes*/
+.navigation{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #999999;
+}
+
+.txtBlanc11{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #ffffff;
+	font-weight: normal;
+}
+
+.txtBlanc11Bold{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #ffffff;
+	font-weight: bold;
+}
+
+.txtBlanc14Bold{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #ffffff;
+	font-weight: bold;
+}
+
+.txtRouge12Bold{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #FF0000;
+	font-weight: bold;
+}
+
+.txtViolet11Bold{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #644883;
+	font-weight: bold;
+}
+
+.txtViolet12Bold{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #644883;
+	font-weight: bold;
+}
+
+.txtViolet12BoldTitle{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #644883;
+	font-weight: bold;
+	background-color:#DED8E5;
+}
+
+.txtViolet14Bold{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #644883;
+	font-weight: bold;
+}
+
+.txtViolet11Bold{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #644883;
+	font-weight: bold;
+}
+
+.txtViolet11{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #644883;
+	font-weight: normal;
+}
+
+.txtViolet10{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #644883;
+	font-weight: normal;
+}
+
+.txtGris11Bold{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #999999;
+	font-weight: bold;
+}
+.txtGris11{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #999999;
+	font-weight: normal;
+}
+
+.txtGris10{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #999999;
+	font-weight: normal;
+}
+
+.txtNoir11{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	font-weight: normal;
+}
+.txtNoir11Bold{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	font-weight: bold;
+}
+.txtNoir12{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	font-weight: normal;
+}
+
+.txtNoir12Bold{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	font-weight: bold;
+}
+
+.txtNoir13{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #000000;
+	font-weight: bold;
+}
+
+/**/
+
+/*Images lien avec un cadre violet*/
+input.image, input.image:active, input.image:visited
+{
+ text-decoration: none;
+ border: solid thin #644883;
+}
+
+input.image:hover
+{
+ text-decoration: none;
+ border: solid thin #D0C8DA;
+}
+
+a.image, a.image:active, a.image:visited
+{
+ text-decoration: none;
+ border: solid thin #644883;
+}
+
+a.image:hover
+{
+ text-decoration: none;
+ border: solid thin #D0C8DA;
+}
+/**/
+
+/*Liens du site*/
+a.roll01, a.roll01:active, a.roll01:visited {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 11px;
+ font-weight: bold;
+ color : #ffffff;
+ text-decoration : none;
+}
+a.roll01:hover {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 11px;
+ color : #FF05B6;
+ font-weight: bold;
+ text-decoration : none;
+}
+a.txtGroupViolet11Bold{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #644883;
+	font-weight: bold;
+	text-decoration : none;	
+}
+a.txtGroupViolet11Bold:hover{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #FF05B6;
+	font-weight: bold;
+	text-decoration : none;	
+}
+a.roll02, a.roll02:active, a.roll02:visited {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 11px;
+ font-weight: normal;
+ color : #644883;
+ text-decoration : none;
+}
+a.roll02:hover {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 11px;
+ color : #9D9885;
+ font-weight: normal;
+ text-decoration : none;
+}
+a.roll03, a.roll03:active, a.roll03:visited {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 11px;
+ font-weight: bold;
+ color : #999999;
+ text-decoration : none;
+}
+a.roll03:hover {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 11px;
+ color : #000000;
+ font-weight: bold;
+ text-decoration : none;
+}
+
+a.roll04{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #FF05B6;
+	font-weight: normal;
+	text-decoration : none;
+}
+
+a.roll04:hover{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #9378B3;
+	font-weight: normal;
+}
+
+a.roll05, a.roll05:active, a.roll05:visited {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 11px;
+ color : #FF05B6;
+ text-decoration : none;
+}
+
+a.roll05:hover {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 11px;
+ color : #CCCCCC;
+ text-decoration : none;
+}
+
+td.line{
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-width:0px;
+	border-right-color:#644883;
+	border-right-width: 1px; 
+	border-right-style:solid;
+}
+
+/*Tableau datagrid*/
+tr.titles{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #FFFFFF;
+	font-weight: bold;
+	text-decoration : none;
+	background-color: #644883;
+}
+
+tr.lines{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #644883;
+	text-decoration : none;
+	background-color: #FFFFFF;
+}
+
+td.lines a, a:active, a:visited {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 11px;
+ color : #644883;
+ text-decoration : underline;
+}
+
+td.lines a:hover {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 11px;
+ color : #FF05B6;
+ text-decoration : none;
+}
+/*Fin tableau datagrid*/
+
+/* Css Excel */
+.txtBoldGrisExcel{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color : #808080;
+	font-weight:bold;
+}
+td.excelDataItalic{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color : #808080;
+	font-style:italic;
+	font-weight:bold;
+	text-decoration : none;
+	background-color: #FFFFFF;	
+	padding-left:4px;
+}
+td.excelData{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color : #000000;
+	font-weight:bold;
+	text-decoration : none;
+	background-color: #FFFFFF;	
+	padding-left:4px;
+}

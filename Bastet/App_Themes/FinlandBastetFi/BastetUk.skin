@@ -1,0 +1,31 @@
+﻿<%--
+Modèle d'apparence par défaut. Les apparences sont fournies uniquement à titre d'exemple.
+
+1. Apparence de contrôle nommée. Le SkinId doit être défini de manière unique, car
+ un type de contrôle d’un même thème ne peut pas compter de SkinId dupliqués.
+
+<asp:GridView runat="server" SkinId="gridviewSkin" BackColor="White" >
+   <AlternatingRowStyle BackColor="Blue" />
+</asp:GridView>
+
+2. Apparence par défaut. Le SkinId n'est pas défini. Une seule apparence 
+de contrôle par défaut par type de contrôle est autorisée dans le même thème.
+
+<asp:Image runat="server" ImageUrl="~/images/image1.jpg" />
+
+--%>
+
+<%@ Register TagPrefix="ctrHeader" Namespace="TNS.AdExpress.Bastet.WebControls" Assembly="TNS.AdExpress.Bastet" %>
+
+<asp:image runat="server" ImageUrl="Images/Common/pixel.gif" SkinID="pixel" />
+<asp:image runat="server" ImageUrl="Images/Common/logoTNShome.gif" SkinID="logoTNShome" />
+<asp:image runat="server" ImageUrl="Images/Common/iconCalendar.gif" SkinID="iconCalendar" />
+<asp:image runat="server" ImageUrl="Images/Common/iconExcel.gif" SkinID="iconExcel" />
+
+<ctrHeader:HeaderWebControl
+                                runat="server"
+                                ImgUrl="/App_Themes/FinlandBastetFi/Images/Common/dupli_2.gif" 
+                                FlashUrl="/App_Themes/FinlandBastetFi/Flash/Common/HeaderStrip.swf" 
+                                MissingFlashUrl="/App_Themes/FinlandBastetFi/Images/Common/FlashReplacement/HeaderStrip.gif"
+                                SkinID="HeaderWebControl"
+/>

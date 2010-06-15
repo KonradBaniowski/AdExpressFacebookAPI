@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+	<header name="homepage" skinId="HeaderWebControl">
+	</header>
+  <header name="generic" skinId="HeaderWebControl">
+    <menuItem id="1" name="stats" headerType="homepage" idWebText="46" Text="Statistiques" href="/MailSelection.aspx" display="true" />
+    <menuItem id="2" name="indicators" headerType="homepage" idWebText="47" Text="Indicateurs" href="/DateSelection.aspx?moduleId=2" display="true" />
+  </header>
+</configuration>

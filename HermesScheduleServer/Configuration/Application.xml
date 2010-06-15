@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<configuration>
+	<!-- Frequency : valeur défini en seconde (900sec = 15min) -->
+	<frequency value="900" />
+	<dataBaseConfiguration>
+		<dataBase description="AdExpress" user="adexpr03_proc_8" password="lnampt8" tns="adexpr03.pige" pooling="false" timeout="120" /> 
+	</dataBaseConfiguration>
+</configuration>
