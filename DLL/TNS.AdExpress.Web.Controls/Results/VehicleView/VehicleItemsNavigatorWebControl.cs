@@ -541,7 +541,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView{
 
             sb.Append("<div id=\"ItemsCollectionNavigator\">");
 
-            sb.Append("<div id=\"previous\" height=\"548px\" width=\"20px\"><img id=\"imgPrevious\" src='/App_Themes/" + WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name + "/Images/Common/Button/preview.gif' onMouseOver=\"this.src='/App_Themes/" + WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name + "/Images/Common/Button/previewUp.gif'\" onMouseOut=\"this.src='/App_Themes/" + WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name + "/Images/Common/Button/preview.gif'\" style=\"cursor : pointer; margin-top:264px; margin-right:5px;margin-left:5px;\" onclick=\"javascript:prevPos_" + _controlName + "();\" /></div>");
+            sb.Append("<div id=\"previous\" height=\"548px\" width=\"20px\"><img id=\"imgPrevious\" src='/App_Themes/" + WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name + "/Images/Common/Button/preview.gif' onMouseOver=\"this.src='/App_Themes/" + WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name + "/Images/Common/Button/previewUp.gif'\" onMouseOut=\"this.src='/App_Themes/" + WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name + "/Images/Common/Button/preview.gif'\" style=\"cursor : pointer; margin-top:264px; margin-right:5px;margin-left:5px; visibility:hidden;\" onclick=\"javascript:prevPos_" + _controlName + "();\" /></div>");
 
             sb.Append("<div id=\"container\">");
             sb.Append("<div id=\"itemLoading\" class=\"item content\" style =\"display : none; text-align:center;\">");
@@ -615,7 +615,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView{
 
             sb.Append("</div>");
 
-            sb.Append("<div id=\"next\" height=\"548px\" width=\"20px\"><img id=\"imgNext\" src='/App_Themes/" + WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name + "/Images/Common/Button/next.gif' onMouseOver=\"this.src='/App_Themes/" + WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name + "/Images/Common/Button/nextUp.gif'\" onMouseOut=\"this.src='/App_Themes/" + WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name + "/Images/Common/Button/next.gif'\"  style=\"cursor : pointer; margin-top:264px; margin-right:5px;margin-left:5px;\" onclick=\"javascipt:nextPos_" + _controlName + "();\"/></div>");
+            sb.Append("<div id=\"next\" height=\"548px\" width=\"20px\"><img id=\"imgNext\" src='/App_Themes/" + WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name + "/Images/Common/Button/next.gif' onMouseOver=\"this.src='/App_Themes/" + WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name + "/Images/Common/Button/nextUp.gif'\" onMouseOut=\"this.src='/App_Themes/" + WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name + "/Images/Common/Button/next.gif'\"  style=\"cursor : pointer; margin-top:264px; margin-right:5px;margin-left:5px; visibility:hidden;\" onclick=\"javascipt:nextPos_" + _controlName + "();\"/></div>");
 
 
             sb.Append("</div>");
