@@ -1695,6 +1695,11 @@ namespace TNS.AdExpress.Constantes.DB{
         /// Identifiant du flag d'accès aux créations créations Affisource
         /// </summary>
         public const Int64 ID_INSTORE_CREATION_ACCESS_FLAG = 287;
+        /// <summary>
+        /// Right Flag  of  segment level
+        /// </summary>
+        /// <remarks>Used for Finland</remarks>
+        public const Int64 ID_SEGMENT_LEVEL_ACCESS_FLAG = 293;
     }
 	#endregion
 

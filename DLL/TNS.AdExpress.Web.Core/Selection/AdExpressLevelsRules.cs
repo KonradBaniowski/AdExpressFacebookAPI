@@ -97,6 +97,7 @@ namespace TNS.AdExpress.Web.Core.Selection {
 			if ((levelId == TNS.Classification.Universe.TNSClassificationLevels.BRAND && !_webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE))//No brand rights
 				|| (levelId == TNS.Classification.Universe.TNSClassificationLevels.HOLDING_COMPANY && !_webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY))//No holding group rights
 				|| (levelId == TNS.Classification.Universe.TNSClassificationLevels.PRODUCT && !_webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))//No Product level rights (For Finland)
+                || (levelId == TNS.Classification.Universe.TNSClassificationLevels.SEGMENT && !_webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_SEGMENT_LEVEL_ACCESS_FLAG))//No Segment level rights (For Finland)
 				) return false;
 
 			switch (_dimension) {								

@@ -127,6 +127,11 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// </summary>
 		protected string _tableTitle="";
 
+        /// <summary>
+        /// Show segment flag
+        /// </summary>
+        private bool _showSegment = false;
+
 		/// <summary>
 		/// Selected Media universe
 		/// </summary>
@@ -747,7 +752,8 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			NomenclatureElementsGroup nomenclatureElementsGroup = null;
 			Dictionary<int, AdExpressUniverse> adExpressUniverseDictionary = null;
 			bool showProduct = customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG) ;
-			
+            _showSegment = customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SEGMENT_LEVEL_ACCESS_FLAG);
+
 			#region products APPM
 			if ( showProduct) {
 				products = new DropDownList();
@@ -1138,7 +1144,8 @@ namespace TNS.AdExpress.Web.Controls.Headers{
                 }
 
 				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1110, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.group.GetHashCode().ToString()));
-				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1144, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.groupSegment.GetHashCode().ToString()));
+                if(_showSegment)
+				    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1144, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.groupSegment.GetHashCode().ToString()));
 				//Rights verification for Brand
 				if(customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
 				{
@@ -1148,10 +1155,11 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1112, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.groupProduct.GetHashCode().ToString()));
 				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1145, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.groupAdvertiser.GetHashCode().ToString()));
 				//modifications for segmentAdvertiser,segmentProduct,SegmentBrand(3 new items added in the dropdownlist)
-				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1577, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.segmentAdvertiser.GetHashCode().ToString()));
-				if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) 
-				productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1578, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.segmentProduct.GetHashCode().ToString()));
-				if(customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
+                if(_showSegment)
+				    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1577, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.segmentAdvertiser.GetHashCode().ToString()));
+				if ((customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) && _showSegment)
+				    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1578, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.segmentProduct.GetHashCode().ToString()));
+                if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE) && _showSegment)
 				{
 					productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1579, customerWebSession.SiteLanguage),SessionCst.PreformatedDetails.PreformatedProductDetails.segmentBrand.GetHashCode().ToString()));
 				}

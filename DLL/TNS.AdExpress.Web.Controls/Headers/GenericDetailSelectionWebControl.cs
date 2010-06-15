@@ -812,8 +812,9 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				case DetailLevelItemInformation.Levels.sector:
 				case DetailLevelItemInformation.Levels.subSector:
 				case DetailLevelItemInformation.Levels.group:
+                    return (CheckProductDetailLevelAccess());
 				case DetailLevelItemInformation.Levels.segment:
-					return(CheckProductDetailLevelAccess());
+                    return (CheckProductDetailLevelAccess() && _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SEGMENT_LEVEL_ACCESS_FLAG));
 				case DetailLevelItemInformation.Levels.holdingCompany:
 					return(CheckProductDetailLevelAccess());
 				case DetailLevelItemInformation.Levels.groupMediaAgency:

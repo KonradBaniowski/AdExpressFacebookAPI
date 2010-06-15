@@ -23,4 +23,5 @@
   <flag id="261" description="Accès Parrainage dans analyse sectorielle"/>
   <flag id="266" description="Accéder Spot à Spot TNT"/>
   <flag id="271" description="Accès aux Produits (Finlande)"/>
+  <flag id="293" description="Accès aux Variétés (Finlande)"/>
 </flags>
