@@ -2548,7 +2548,24 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// dealer vs. brand advertising
             /// </summary>
-            dealerVsBrandAdvertising = 17
+            dealerVsBrandAdvertising = 17,
+            /// <summary>
+            /// back data N - 1
+            /// </summary>
+            backDataN1 = 18,
+            /// <summary>
+            /// back data N - 2
+            /// </summary>
+            backDataN2 = 19,
+            /// <summary>
+            /// Archive current year
+            /// </summary>
+            archiveCurrentYear = 20,
+            /// <summary>
+            /// International trends
+            /// </summary>
+            internationaTrends = 21
+
 
 		}
 

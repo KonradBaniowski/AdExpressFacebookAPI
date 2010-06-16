@@ -1912,5 +1912,9 @@
     <item mnemonic="w2724" type="System.String">!</item>
     <item mnemonic="w2725" type="System.String">!</item>
     <item mnemonic="w2726" type="System.String">CINEMA</item>
+    <item mnemonic="w2727" type="System.String">!</item>
+    <item mnemonic="w2728" type="System.String">!</item>
+    <item mnemonic="w2729" type="System.String">!</item>
+    <item mnemonic="w2730" type="System.String">!</item>
   </items>
 </localization>
