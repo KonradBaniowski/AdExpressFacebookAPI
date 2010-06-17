@@ -11,14 +11,13 @@
     <directory id="moduleDescriptions" description="Moduulikuvaukset" webTextId="2599" virtualPath="/InfoNews/ModuleDescriptions/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\ModuleDescriptions"/>
     <directory id="archive" description="Arkisto" webTextId="2622" virtualPath="/InfoNews/Archive/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\Archive"/>
     <directory id="instructions" description="Ohjeet" webTextId="2623" virtualPath="/InfoNews/Instructions/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\Instructions"/>
-    <directory id="otherInfo" description="Ajankohtaista" webTextId="2624" virtualPath="/InfoNews/OtherInfo/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\OtherInfo"/>    
-    <directory id="backData2007" description="Back data N-3" webTextId="2676" virtualPath="/InfoNews/BackDataN3/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\BackDataN-3"/>
-    <directory id="backData2006" description="Back data N-4" webTextId="2677" virtualPath="/InfoNews/BackDataN4/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\BackDataN-4"/>
+    <directory id="otherInfo" description="Ajankohtaista" webTextId="2624" virtualPath="/InfoNews/OtherInfo/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\OtherInfo"/>
+    <directory id="backDataN1" description="Back data N-1" webTextId="2729" virtualPath="/InfoNews/BackDataN-1/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\BackDataN-1"/>
+    <directory id="backDataN2" description="Back data N-2" webTextId="2730" virtualPath="/InfoNews/BackDataN-2/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\BackDataN-2"/>
+    <directory id="backData2007" description="Back data N-3" webTextId="2676" virtualPath="/InfoNews/BackDataN-3/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\BackDataN-3"/>
+    <directory id="backData2006" description="Back data N-4" webTextId="2677" virtualPath="/InfoNews/BackDataN-4/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\BackDataN-4"/>
     <directory id="dealerVsBrandAdvertising" description="jälleenmyyjä vs. merkkimainonta" webTextId="2678" virtualPath="/InfoNews/DealerBrandAdvertising/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\DealerBrandAdvertising"/>
-    <directory id="backDataN1" description="Back data N-1" webTextId="2729" virtualPath="/InfoNews/BackDataN1/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\BackDataN-1"/>
-    <directory id="backDataN2" description="Back data N-2" webTextId="2730" virtualPath="/InfoNews/BackDataN2/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\BackDataN-2"/>
     <directory id="archiveCurrentYear" description="Archive current year" webTextId="2727" virtualPath="/InfoNews/ArchiveCurrentYear/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\ArchiveCurrentYear"/>
     <directory id="internationaTrends" description="International trends" webTextId="2728" virtualPath="/InfoNews/InternationalTrends/" physicalPath="\\Fitnses-dmzad01\GenericInfoNews\InternationalTrends"/>
   </directories>
 </infoNews>
-
