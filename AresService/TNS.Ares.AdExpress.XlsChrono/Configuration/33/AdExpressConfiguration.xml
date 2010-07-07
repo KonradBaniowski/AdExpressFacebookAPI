@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<adexpress>
-  <configuration>
-    <database server="Wallis" tns="Adexpr04.pige"/>
-    <streaming>
-      <real>rtsp://realvideo.axime.com/secodip/scanpub.secodip.com/Multimedia/RM/3/</real>
-    </streaming>
-  </configuration>
-</adexpress>
