@@ -6,7 +6,7 @@
 
 using System;
 
-namespace TNS.AdExpress.Bastet{
+namespace TNS.AdExpress.Bastet.Constantes.Web {
 	/// <summary>
 	/// Constantes
 	/// </summary>

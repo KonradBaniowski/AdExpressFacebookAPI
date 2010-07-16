@@ -125,7 +125,7 @@ namespace TNS.AdExpress.Bastet.Functions {
 
             script.Append("\n <script language=\"JavaScript\" type=\"text/JavaScript\">");
             script.Append("\n var language = " + siteLanguage + ";");
-            script.Append("\n var cook = GetCookie('" + WebApplicationParameters.WebSiteName + TNS.AdExpress.Bastet.Cookies.LANGUAGE + "');");
+            script.Append("\n var cook = GetCookie('" + WebApplicationParameters.WebSiteName + TNS.AdExpress.Bastet.Constantes.Web.Cookies.LANGUAGE + "');");
             script.Append("\n if (cook != null){");
             script.Append("\n if (language != cook){");
             script.Append("\n document.location=\"" + link + "\"+cook;");
@@ -145,7 +145,7 @@ namespace TNS.AdExpress.Bastet.Functions {
 
             StringBuilder script = new StringBuilder(500);
             script.Append("\n <script language=\"JavaScript\" type=\"text/JavaScript\">");
-            script.Append("\n setPermanentCookie('" + WebApplicationParameters.WebSiteName + TNS.AdExpress.Bastet.Cookies.LANGUAGE + "','" + siteLanguage + "');");
+            script.Append("\n setPermanentCookie('" + WebApplicationParameters.WebSiteName + TNS.AdExpress.Bastet.Constantes.Web.Cookies.LANGUAGE + "','" + siteLanguage + "');");
             script.Append("\n</script>");
 
             return script.ToString();

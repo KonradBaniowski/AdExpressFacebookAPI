@@ -32,11 +32,13 @@ namespace TNS.AdExpress.Bastet.DataAccess{
 			#region Requête
 			StringBuilder sql = new StringBuilder();
             Table rightContactGroup = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContactGroup);
-            
+
 			sql.Append(" select id_group_contact, group_contact ");
             sql.Append(" from " + rightContactGroup.Sql + " ");
-			sql.Append(" where group_contact like 'Client%' ");
-			sql.Append(" and activation < "+ AdExpressDBConstante.ActivationValues.UNACTIVATED);
+            sql.Append(" where ");
+            if (WebApplicationParameters.GroupContactFilterList != null && WebApplicationParameters.GroupContactFilterList.Count > 0)
+                sql.Append(" id_group_contact in (" + string.Join(",", (WebApplicationParameters.GroupContactFilterList.ConvertAll(new Converter<Int64, string>(Int64ToString))).ToArray()) + ") and ");
+			sql.Append(" activation < "+ AdExpressDBConstante.ActivationValues.UNACTIVATED);
 			sql.Append(" order by group_contact");
 			#endregion
 
@@ -50,6 +52,10 @@ namespace TNS.AdExpress.Bastet.DataAccess{
 			#endregion
 
 		}
+
+        private static string Int64ToString(Int64 pf) {
+            return pf.ToString();
+        }
 
 	}
 }

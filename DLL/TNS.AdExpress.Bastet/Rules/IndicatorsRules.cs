@@ -13,7 +13,7 @@ using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Bastet.Exceptions;
 using TNS.AdExpress.Bastet.DataAccess;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
-using Cst=TNS.AdExpress.Bastet.Constantes;
+using Cst = TNS.AdExpress.Bastet.Constantes.Web.Constantes;
 #endregion
 
 namespace TNS.AdExpress.Bastet.Rules{

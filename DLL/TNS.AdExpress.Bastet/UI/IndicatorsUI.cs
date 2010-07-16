@@ -16,7 +16,7 @@ using TNS.AdExpress.Bastet.Rules;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using FrkDate=TNS.FrameWork.Date;
 using TNS.FrameWork.Date;
-using Cst=TNS.AdExpress.Bastet.Constantes;
+using Cst = TNS.AdExpress.Bastet.Constantes.Web.Constantes;
 using TNS.AdExpress.Bastet.Functions;
 using TNS.AdExpress.Bastet.Translation;
 using TNS.AdExpress.Bastet.Web;

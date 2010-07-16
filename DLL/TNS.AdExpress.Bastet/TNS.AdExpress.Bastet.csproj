@@ -196,9 +196,10 @@
     <Compile Include="Common\Parameters.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Constantes.cs">
+    <Compile Include="Constante\Constantes.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Constante\Web\ConfigurationFile.cs" />
     <Compile Include="Periods\PeriodInformation.cs" />
     <Compile Include="Periods\PeriodsInformation.cs" />
     <Compile Include="DataAccess\CustomerTypeDataAccess.cs">
@@ -211,6 +212,7 @@
     <Compile Include="Units\UnitsInformation.cs" />
     <Compile Include="WebControls\CalendarWebControl.cs" />
     <Compile Include="Web\WebServiceRightConfiguration.cs" />
+    <Compile Include="XmlLoader\GroupContactFilterXL.cs" />
     <Compile Include="XmlLoader\PeriodsDescriptionXL.cs" />
     <Compile Include="XmlLoader\UnitsDescriptionXL.cs" />
     <Compile Include="XmlLoader\WebServiceRightConfigurationXL.cs" />

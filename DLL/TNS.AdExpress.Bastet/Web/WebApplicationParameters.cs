@@ -73,6 +73,10 @@ namespace TNS.AdExpress.Bastet.Web {
         /// WebService Right Configuration
         /// </summary>
         protected static WebServiceRightConfiguration _webServiceRightConfiguration = null;
+        /// <summary>
+        /// Group Contact Filter Configuration
+        /// </summary>
+        protected static List<Int64> _groupContactFilterList = null;
         #endregion
         
         #region Contructeur
@@ -93,6 +97,7 @@ namespace TNS.AdExpress.Bastet.Web {
                 _dataBase = new DataBase(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
                 _coreLayers = CoreLayersXL.Load(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.CORE_LAYERS_CONFIGURATION_FILENAME));
                 _webServiceRightConfiguration = WebServiceRightConfigurationXL.Load(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.WEB_SERVICE_RIGHT_CONFIGURATION));
+                _groupContactFilterList = GroupContactFilterXL.Load(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Bastet.Constantes.Web.ConfigurationFile.GROUP_CONTACT_FILTER_CONFIGURATION_FILENAME));
             }
             catch (Exception e) {
                 throw new WebApplicationInitialisationException("Initialization Error in WebApplicationParameters constructor", e);
@@ -168,6 +173,13 @@ namespace TNS.AdExpress.Bastet.Web {
         /// </summary>
         public static WebServiceRightConfiguration WebServiceRightConfiguration {
             get { return _webServiceRightConfiguration; }
+        }
+
+        /// <summary>
+        /// Get Group contact Filter Configuration
+        /// </summary>
+        public static List<Int64> GroupContactFilterList {
+            get { return _groupContactFilterList; }
         }
         #endregion
 
