@@ -84,224 +84,193 @@
 	<body style="margin-bottom:0px; margin-left:0px; margin-top:0px;" onload="javascript:selectedItem(7);javascript:activateActiveX();" class="bodyStyle">
 		<form id="Form2" method="post" runat="server">
 			<table id="Table1" style="height:600px" cellspacing="0" cellpadding="0" width="800" border="0">
+				<!-- Gradient -->
+				<tr>
+					<td colspan="7" height="3" class="gradientBar"></td>
+				</tr>
 				<tr>
 					<!-- marge de gauche-->
-					<td valign="top" width="10">
-						<table id="Table3" cellspacing="0" cellpadding="0" border="0">
-							<tr>
-								<td><asp:Image runat="server" height="100" SkinID="logo_cote_gauche" /></td>
-							</tr>
-							<tr>
-								<td class="whiteBackGround"><asp:Image runat="server" height="1" SkinID="pixel" width="1" /></td>
-							</tr>
-						</table>
+					<td vAlign="top" class="whiteBackGround">
+						<asp:Image ID="Image1" runat="server" height="100" width="10" SkinID="logo_cote_gauche" />
 					</td>
+					
 					<!-- menu -->
-					<td valign="top" width="185" class="imageBackGround">
-						<table id="Table6" cellspacing="0" cellpadding="0" width="10" border="0">
-							<tr valign="top" class="whiteBackGround">
+					<td vAlign="top" class="whiteBackGround">
+						<table cellSpacing="0" cellPadding="0" border="0">
+							<tr vAlign="top" class="whiteBackGround logoCoteDroitBackGround">
 								<!-- Logo -->
-								<td><asp:Image runat="server" height="90" SkinID="logo" /></td>
+								<td><asp:Image ID="Image2" runat="server" border="0" SkinID="logo" /></td>
 							</tr>
 							<tr>
-								<td><asp:Image runat="server" height="5" SkinID="plus_sous_logo" /></td>
+								<td class="txtBlanc11Bold" width="185" height="9">
+									
+									<table id="Table6" cellspacing="0" cellpadding="0" width="10" border="0">
+										<tr>
+											<td><asp:Image ID="Image3" runat="server" height="5" SkinID="plus_sous_logo" /></td>
+										</tr>
+										<tr>
+											<td><asp:Image ID="Image4" runat="server" height="10" width="1" SkinID="pixel" /></td>
+										</tr>
+										
+										<!-- éléments variables du menus de gauche -->
+										<tr valign="top">
+											<td id="pageTitle">
+												<cc2:moduletitlewebcontrol id="ModuleTitleWebControl1" runat="server" CodeDescription="800"></cc2:moduletitlewebcontrol>
+											</td>
+										</tr>
+										
+										<!-- Info bt droit -->
+										<tr>
+											<td><asp:Image ID="Image5" runat="server" height="5" width="1" SkinID="pixel" /></td>
+										</tr>
+										<tr>
+											<td>
+												<cc2:informationwebcontrol id="InformationWebControl1" runat="server" 
+                                                    BackGroundColor=""></cc2:informationwebcontrol></td>
+										</tr>
+										
+									</table>
+									
+								</td>
 							</tr>
 							<tr>
-								<td><asp:Image runat="server" height="10" SkinID="pixel" width="1" /></td>
-							</tr>
-							<!-- éléments variables du menus de gauche -->
-							<tr valign="top">
-								<td id="pageTitle"><cc2:moduletitlewebcontrol id="ModuleTitleWebControl1" runat="server" CodeDescription="800"></cc2:moduletitlewebcontrol></td>
-							</tr>
-							<!-- Info bt droit -->
-							<tr>
-								<td><asp:Image runat="server" height="5" SkinID="pixel" width="1" /></td>
-							</tr>
-							<tr>
-								<td><cc2:informationwebcontrol id="InformationWebControl1" runat="server"></cc2:informationwebcontrol></td>
-							</tr>
-						</table>
-					</td>
-					<!-- Séparateur -->
-					<td valign="top">
-						<table id="Table5" cellspacing="0" cellpadding="0" border="0">
-							<tr>
-								<td><asp:Image runat="server" height="100" SkinID="logo_cote_droit" width="5" /></td>
-							</tr>
-							<tr>
-								<td class="whiteBackGround"><asp:Image runat="server" height="1" SkinID="pixel" width="1" /></td>
-							</tr>
-						</table>
-					</td>
-					<td class="violetBackGround"><asp:Image runat="server" height="1" SkinID="pixel" width="1" /></td>
-					<td width="10" class="imageBackGround">&nbsp;</td>
-					<td width="10" class="whiteBackGround">&nbsp;</td>
-					<!-- droite-->
-					<td id="sertARien" valign="top">
-						<table id="Table10" style="height:100%" cellspacing="0" cellpadding="0" width="100%" border="0">
-							<tbody>
-								<tr>
-									<!-- Menu du haut-->
-									<td valign="top" height="1%"><cc2:headerwebcontrol language="33" id="HeaderWebControl1" runat="server" Type_de_page="generic"></cc2:headerwebcontrol></td>
-								</tr>
-								<tr>
-									<!-- ligne du haut a droite -->
-									<td id="lineAVIrer" valign="top" class="imageBackGround" height="1%">
-										<table id="Table2" cellspacing="0" cellpadding="0" width="100%" border="0">
-											<tr>
-												<td valign="top" align="left" height="1%"><asp:Image runat="server" height="5" SkinID="croix" width="5" /></td>
-												<td height="1%"><asp:Image runat="server" height="17" SkinID="pixel" width="1" /></td>
-												<td valign="top" align="right" height="1%"><asp:Image runat="server" height="5" SkinID="croix" width="5" /></td>
-											</tr>
-										</table>
-									</td>
-								</tr>
-								<!-- Centre -->
-								<tr>
-									<!--debut elements-->
-									<td>
-										<table id="Table4" cellspacing="0" cellpadding="0" width="100%" border="0">
-											<tr>
-												<td>
-													<table id="Table9" cellspacing="0" cellpadding="3" width="100%" border="0">
-														<tr>
-															<td></td>
-															<td class="txtViolet12Bold" colspan="2"><cc1:adexpresstext language="33" id="title1AdExpTxt" runat="server" Code="776"></cc1:adexpresstext></td>
-														</tr>
-														<tr>
-															<td></td>
-															<td width="15"></td>
-															<td>
-																<table cellpadding="0" width="100%" class="whiteBackGround" border="0">
-																	<tr>
-																		<td>
-																			<p id="dateBegin" onclick="javascript:selectedItem(6)"><cc3:daycalendarwebcontrol language="33" id="dayCalendarBeginWebControl" runat="server" CalendarType="dateBegin"
-																					PeriodLength="23"></cc3:daycalendarwebcontrol></p>
-																		</td>
-																		<td>
-																			<p id="dateEnd" onclick="javascript:selectedItem(7)"><cc3:daycalendarwebcontrol language="33" id="dayCalendarEndWebControl" runat="server" CalendarType="dateEnd"
-																					PeriodLength="23"></cc3:daycalendarwebcontrol></p>
-																		</td>
-																	</tr>
-																</table>
-															</td>
-														</tr>
-														<tr style="height:5px">
-															<td colspan="3"></td>
-														</tr>
-													</table>
-												</td>
-											</tr>
-											<tr>
-												<td valign="top" class="imageBackGround" height="35">
-													<table id="Table11" cellspacing="0" cellpadding="0" width="100%" border="0">
-														<tr>
-															<td width="150"></td>
-															<td><cc4:imagebuttonrolloverwebcontrol id="validateButton1" runat="server" SkinID="validateButton" onclick="validateButton1_Click"></cc4:imagebuttonrolloverwebcontrol></td>
-														</tr>
-													</table>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<table id="Table13" cellspacing="0" cellpadding="3" width="100%" border="0">
-														<tr>
-															<td></td>
-															<td class="txtViolet12Bold" colspan="2"><cc1:adexpresstext language="33" id="title2AdExpTxt" runat="server" Code="777"></cc1:adexpresstext></td>
-														</tr>
-														<tr>
-															<td></td>
-															<td class="txtGris11Bold" colspan="2"><cc1:adexpresstext language="33" id="comment2AdExpressText" runat="server" Code="785"></cc1:adexpresstext></td>
-														</tr>
-														<tr>
-															<td></td>
-															<td width="15"></td>
-															<td class="txtNoir11"><span onclick="javascript:selectedItem(1)"><cc3:datelistwebcontrol id="monthDateList" runat="server" ListTypeDisplay="month" ModuleType="tvSponsorship"
-																		CssClass="txtNoir11"></cc3:datelistwebcontrol></span>&nbsp;
-																<cc1:adexpresstext language="33" id="monthAdExpressText" runat="server" Code="783"></cc1:adexpresstext></td>
-														</tr>
-														<tr>
-															<td></td>
-															<td width="15"></td>
-															<td class="txtNoir11"><span onclick="javascript:selectedItem(2)"><cc3:datelistwebcontrol id="weekDateList" runat="server" ListTypeDisplay="week" ModuleType="tvSponsorship"
-																		CssClass="txtNoir11"></cc3:datelistwebcontrol></span>&nbsp;
-																<cc1:adexpresstext language="33" id="weekAdExpressText" runat="server" Code="784"></cc1:adexpresstext></td>
-														</tr>
-														<tr>
-															<td></td>
-															<td class="txtGris11Bold" colspan="2"><cc1:adexpresstext language="33" id="lastPeriodAdexpresstext" runat="server" Code="786"></cc1:adexpresstext></td>
-														</tr>
-														<tr>
-															<td></td>
-															<td width="15"></td>
-															<td class="txtNoir11"><input id="currentYear" onclick="javascript:selectedCheck(8)" type="checkbox"/><label for="currentYear"><%=currentYear%></label></td>
-														</tr>
-														<tr>
-															<td></td>
-															<td width="15"></td>
-															<td class="txtNoir11"><input id="previousYear" onclick="javascript:selectedCheck(3)" type="checkbox"/><label for="previousYear"><%=previousYear%></label></td>
-														</tr>
-														<tr>
-															<td></td>
-															<td width="15"></td>
-															<td class="txtNoir11"><input id="previousMonth" onclick="javascript:selectedCheck(4)" type="checkbox"/><label for="previousMonth"><%=previousMonth%></label></td>
-														</tr>
-														<tr>
-															<td></td>
-															<td width="15"></td>
-															<td class="txtNoir11"><input id="previousWeek" onclick="javascript:selectedCheck(5)" type="checkbox"/><label for="previousWeek"><%=previousWeek%></label></td>
-														</tr>
-														<tr style="height:5px">
-															<td colspan="4"></td>
-														</tr>
-													</table>
-												</td>
-											</tr>
-											<tr>
-												<td valign="top" class="imageBackGround" height="35">
-													<table id="Table12" cellspacing="0" cellpadding="0" width="100%" border="0">
-														<tr>
-															<td width="150"></td>
-															<td><cc4:imagebuttonrolloverwebcontrol id="validateButton2" SkinID="validateButton" runat="server" onclick="validateButton2_Click"></cc4:imagebuttonrolloverwebcontrol></td>
-														</tr>
-													</table>
-												</td>
-											</tr>
-										</table>
-									</td>
-									<!--fin elements--></tr>
-							</tbody>
-						</table>
-					</td>
-					<!-- la fin -->
-					<td valign="top" class="imageBackGround"></td>
-				</tr>
-				<!-- ligne du bas a droite -->
-				<tr style="height:5px">	
-					<td valign="top" class="imageBackGround"></td>				
-					<td valign="top" class="imageBackGround">
-						<table id="Table7" cellspacing="0" cellpadding="0" width="100%" border="0">
-							<tr>
-								<td valign="bottom"><asp:Image runat="server" height="5" SkinID="croix" width="5" /></td>
-								<td></td>
-								<td valign="bottom" align="right"><asp:Image runat="server" height="5" SkinID="croix" width="5" /></td>
-							</tr>
-						</table>
-					</td>
-					<td></td>
-					<td class="violetBackGround"></td>
-					<td class="imageBackGround"></td>
-					<td></td>
-					<td id="dellCel" valign="top" class="imageBackGround">
-						<table id="Table8" cellspacing="0" cellpadding="0" width="100%" border="0">
-							<tr>
-								<td valign="bottom"><asp:Image runat="server" height="5" SkinID="croix" width="5" /></td>
-								<td><cc2:menuwebcontrol id="MenuWebControl2" runat="server"></cc2:menuwebcontrol></td>
-								<td valign="bottom" align="right"><asp:Image runat="server" height="5" SkinID="croix" width="5" /></td>
+								<td><asp:Image ID="Image6" runat="server" height="10" width="1" SkinID="pixel" /></td>
 							</tr>
 						</table>
 					</td>
 					
+					<!-- New separator -->
+					<td vAlign="top" class="whiteBackGround"><asp:Image ID="Image7" runat="server" height="100" width="5" SkinID="logo_cote_droit" /></td>
+					<td class="lineVerticalBackGround2px"><asp:Image ID="Image8" runat="server" height="1" width="2" SkinID="pixel" /></td>
+					<td class="lineVerticalBackGround1px"><asp:Image ID="Image9" runat="server" height="1" width="2" SkinID="pixel" /></td>
+					<td class="lineVerticalBackGround"><asp:Image ID="Image10" runat="server" height="1" width="2" SkinID="pixel" /></td>
+					
+					<!-- Right column -->
+					<td vAlign="top">
+						<table cellSpacing="0" cellPadding="0" border="0">
+						  <!-- Menu haut -->
+							<tr>
+								<td><cc2:headerwebcontrol language="33" id="HeaderWebControl1" runat="server" Type_de_page="generic"></cc2:headerwebcontrol></td>
+							</tr>
+							<!-- Centre -->
+							<tr>
+								<td>
+									
+									<table id="Table4" cellspacing="0" cellpadding="0" width="100%" border="0">
+										<tr>
+											<td>
+												<table id="Table9" cellspacing="0" cellpadding="3" width="100%" border="0">
+													<tr>
+														<td></td>
+														<td class="txtViolet12Bold" colspan="2"><cc1:adexpresstext language="33" id="title1AdExpTxt" runat="server" Code="776"></cc1:adexpresstext></td>
+													</tr>
+													<tr>
+														<td></td>
+														<td width="15"></td>
+														<td>
+															<table cellpadding="0" width="100%" border="0">
+																<tr>
+																	<td>
+																		<p id="dateBegin" onclick="javascript:selectedItem(6)"><cc3:daycalendarwebcontrol language="33" id="dayCalendarBeginWebControl" runat="server" CalendarType="dateBegin"
+																				PeriodLength="23"></cc3:daycalendarwebcontrol></p>
+																	</td>
+																	<td>
+																		<p id="dateEnd" onclick="javascript:selectedItem(7)"><cc3:daycalendarwebcontrol language="33" id="dayCalendarEndWebControl" runat="server" CalendarType="dateEnd"
+																				PeriodLength="23"></cc3:daycalendarwebcontrol></p>
+																	</td>
+																</tr>
+															</table>
+														</td>
+													</tr>
+													<tr style="height:5px">
+														<td colspan="3"></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr>
+											<td valign="top" class="imageBackGround" height="35">
+												<table id="Table11" cellspacing="0" cellpadding="0" width="100%" border="0">
+													<tr>
+														<td width="150"></td>
+														<td><cc4:imagebuttonrolloverwebcontrol id="validateButton1" runat="server" SkinID="validateButton" onclick="validateButton1_Click"></cc4:imagebuttonrolloverwebcontrol></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<table id="Table13" cellspacing="0" cellpadding="3" width="100%" border="0">
+													<tr>
+														<td></td>
+														<td class="txtViolet12Bold" colspan="2"><cc1:adexpresstext language="33" id="title2AdExpTxt" runat="server" Code="777"></cc1:adexpresstext></td>
+													</tr>
+													<tr>
+														<td></td>
+														<td class="txtGris11Bold" colspan="2"><cc1:adexpresstext language="33" id="comment2AdExpressText" runat="server" Code="785"></cc1:adexpresstext></td>
+													</tr>
+													<tr>
+														<td></td>
+														<td width="15"></td>
+														<td class="txtNoir11"><span onclick="javascript:selectedItem(1)"><cc3:datelistwebcontrol id="monthDateList" runat="server" ListTypeDisplay="month" ModuleType="tvSponsorship"
+																	CssClass="txtNoir11"></cc3:datelistwebcontrol></span>&nbsp;
+															<cc1:adexpresstext language="33" id="monthAdExpressText" runat="server" Code="783"></cc1:adexpresstext></td>
+													</tr>
+													<tr>
+														<td></td>
+														<td width="15"></td>
+														<td class="txtNoir11"><span onclick="javascript:selectedItem(2)"><cc3:datelistwebcontrol id="weekDateList" runat="server" ListTypeDisplay="week" ModuleType="tvSponsorship"
+																	CssClass="txtNoir11"></cc3:datelistwebcontrol></span>&nbsp;
+															<cc1:adexpresstext language="33" id="weekAdExpressText" runat="server" Code="784"></cc1:adexpresstext></td>
+													</tr>
+													<tr>
+														<td></td>
+														<td class="txtGris11Bold" colspan="2"><cc1:adexpresstext language="33" id="lastPeriodAdexpresstext" runat="server" Code="786"></cc1:adexpresstext></td>
+													</tr>
+													<tr>
+														<td></td>
+														<td width="15"></td>
+														<td class="txtNoir11"><input id="currentYear" onclick="javascript:selectedCheck(8)" type="checkbox"/><label for="currentYear"><%=currentYear%></label></td>
+													</tr>
+													<tr>
+														<td></td>
+														<td width="15"></td>
+														<td class="txtNoir11"><input id="previousYear" onclick="javascript:selectedCheck(3)" type="checkbox"/><label for="previousYear"><%=previousYear%></label></td>
+													</tr>
+													<tr>
+														<td></td>
+														<td width="15"></td>
+														<td class="txtNoir11"><input id="previousMonth" onclick="javascript:selectedCheck(4)" type="checkbox"/><label for="previousMonth"><%=previousMonth%></label></td>
+													</tr>
+													<tr>
+														<td></td>
+														<td width="15"></td>
+														<td class="txtNoir11"><input id="previousWeek" onclick="javascript:selectedCheck(5)" type="checkbox"/><label for="previousWeek"><%=previousWeek%></label></td>
+													</tr>
+													<tr style="height:5px">
+														<td colspan="4"></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr>
+											<td valign="top" class="imageBackGround" height="35">
+												<table id="Table12" cellspacing="0" cellpadding="0" width="100%" border="0">
+													<tr>
+														<td width="150"></td>
+														<td><cc4:imagebuttonrolloverwebcontrol id="validateButton2" SkinID="validateButton" runat="server" onclick="validateButton2_Click"></cc4:imagebuttonrolloverwebcontrol></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr>
+											<td><cc2:menuwebcontrol id="MenuWebControl2" runat="server"></cc2:menuwebcontrol></td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
 				</tr>
 			</table>
 			<input id="selectedItemIndex" type="hidden" value="-1" name="selectedItemIndex" />

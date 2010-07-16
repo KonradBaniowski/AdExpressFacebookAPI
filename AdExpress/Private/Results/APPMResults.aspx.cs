@@ -117,8 +117,6 @@ namespace AdExpress.Private.Results{
 		protected void Page_Load(object sender, System.EventArgs e) {
 			try {
 
-
-
 				#region Url Suivante
 				if(_nextUrl.Length!=0) {
 					_webSession.Source.Close();
@@ -215,7 +213,7 @@ namespace AdExpress.Private.Results{
                 #region Period Detail
                 if (_webSession.CurrentTab == TNS.AdExpress.Constantes.FrameWork.Results.APPM.mediaPlan &&_zoom != null && _zoom != string.Empty)
                 {
-                    zoomButton = string.Format("<tr class=\"whiteBackGround\" ><td align=\"left\"><object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"30\" height=\"8\" VIEWASTEXT><param name=movie value=\"/App_Themes/" + this.Theme + "/Flash/Common/Arrow_Back.swf\"><param name=quality value=\"high\"><param name=menu value=\"false\"><embed src=\"/App_Themes/" + this.Theme + "/Flash/Common/Arrow_Back.swf\" width=\"30\" height=\"8\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" menu=\"false\"></embed></object><a class=\"roll06\" href=\"/Private/Results/APPMResults.aspx?idSession={0}\">{2}</a></td></tr><tr><td class=\"whiteBackGround\" height=\"5\"></td></tr>",
+                    zoomButton = string.Format("<tr><td align=\"left\"><object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"30\" height=\"8\" VIEWASTEXT><param name=movie value=\"/App_Themes/" + this.Theme + "/Flash/Common/Arrow_Back.swf\"><param name=quality value=\"high\"><param name=menu value=\"false\"><embed src=\"/App_Themes/" + this.Theme + "/Flash/Common/Arrow_Back.swf\" width=\"30\" height=\"8\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" menu=\"false\"></embed></object><a class=\"roll06\" href=\"/Private/Results/APPMResults.aspx?idSession={0}\">{2}</a></td></tr><tr><td height=\"5\"></td></tr>",
                         _webSession.IdSession,
                         _webSession.SiteLanguage,
                         GestionWeb.GetWebWord(2309, _webSession.SiteLanguage));
@@ -224,8 +222,6 @@ namespace AdExpress.Private.Results{
                 #endregion
 
                 _webSession.Save();
-			
-
 			}
 			catch(System.Exception exc) {
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)) {

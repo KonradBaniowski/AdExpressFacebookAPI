@@ -478,7 +478,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                         RenderFiltersScripts(output);
                         output.WriteLine(this.AjaxEventScript());
 
-                        output.WriteLine("<table align=\"center\" class=\"whiteBackGround\" cellpadding=\"0\" cellspacing=\"2\" border=\"0\" >");
+                        output.WriteLine("<table align=\"center\" class=\"backGroundWhite\" cellpadding=\"0\" cellspacing=\"2\" border=\"0\" >");
                         output.WriteLine("<tr width=\"100%\"><td width=\"100%\">");
                         _header.RenderControl(output);
                         output.WriteLine("</td></tr>");

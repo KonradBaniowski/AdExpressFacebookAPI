@@ -585,12 +585,12 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             // table de personnalisation
             output.Write("<tr>");
             output.Write("<td>");
-            output.Write("<table class=\"whiteBackGround violetBorder\" cellSpacing=\"0\" cellPadding=\"0\" width=\"" + this.Width + "\" border=\"0\">");
+            output.Write("<table class=\"backgroundGenericMediaLevelDetail genericMediaLevelDetailBorder\" cellSpacing=\"0\" cellPadding=\"0\" width=\"" + this.Width + "\" border=\"0\">");
             output.Write("<tr onclick=\"DivDisplayer('detailledLevelContent');\" class=\"cursorHand\">");
             //Titre de la section
             output.Write("<td class=\"" + _cssCustomSectionTitle + "\">&nbsp;" + GestionWeb.GetWebWord(1896, _customerWebSession.SiteLanguage) + "&nbsp;</td>");
             // Image d'ouverture de la section
-            output.Write("<td align=\"right\" class=\"arrowBackGround\"></td>");
+            output.Write("<td align=\"right\" class=\"arrowBackGroundGenericMediaLevelDetail\"></td>");
             output.Write("</tr>");
             output.Write("</table>");
             // Section

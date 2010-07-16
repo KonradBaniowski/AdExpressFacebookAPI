@@ -39,7 +39,7 @@ namespace AdExpress.Private.Results{
 		/// </summary>
 		#endregion
 				
-		#region Variables		
+		#region Variables
 		/// <summary>
 		/// Identifiant de session
 		/// </summary>
@@ -93,9 +93,6 @@ namespace AdExpress.Private.Results{
 				#endregion
 
 				#region Résultat
-
-				//result = TNS.AdExpress.Web.BusinessFacade.Results.InfoNewsSystem.GetHtml(this.Page, _webSession);
-
 				TNS.AdExpress.Domain.Results.InfoNews infosnews =  WebApplicationParameters.InfoNewsInformations;
 				if (infosnews != null) {
 					if (infosnews.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the InfoNews result"));

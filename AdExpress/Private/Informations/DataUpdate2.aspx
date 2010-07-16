@@ -13,7 +13,7 @@
 <body class="popUpBackGround" onload="javascript:activateActiveX();">
     <form id="form1" runat="server">
     <div>
-<table border="0" align="center" cellpadding="3" cellspacing="0" class="whiteBackGround">
+<table border="0" align="center" cellpadding="3" cellspacing="0" class="backGroundWhite">
   <!-- Titre -->
   <tr>
     <td class="txtViolet14Bold"><cc1:AdExpressText ID="AdExpressText1" runat="server" Code="1831" Language="33" /></td>
@@ -27,7 +27,7 @@
   </td></tr>
   <tr>
     <td>
-    <table width="935" border="0" cellpadding="1" cellspacing="0" class="whiteBackGround txtViolet11">
+    <table width="935" border="0" cellpadding="1" cellspacing="0" class="backGroundWhite txtViolet11">
       <!-- HEADER -->
       <tr align="center" class="txtBlanc11Bold"> 
         <td width="99" class="violetBackGround CellSolid"><cc1:AdExpressText ID="AdExpressText3" runat="server" Code="2310" Language="33" /></td>

@@ -404,11 +404,10 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 					t.Append("<a href=\"javascript: ExpandColapseAllDivs('");
 					insertIndex = t.Length;
 					t.Append("')\" class=\"roll04\" >&nbsp;&nbsp;&nbsp;"+textOpenclose+"</a>");	
-					//t.Append("<td><tr>");
 				}
 
-                t.Append("<tr class=\"whiteBackGround\"><td  vAlign=\"top\"><table >");
-                t.Append("<tr><td vAlign=\"top\" class=\"whiteBackGround\">");
+                t.Append("<tr class=\"backGroundWhite\"><td  vAlign=\"top\"><table >");
+                t.Append("<tr><td vAlign=\"top\" class=\"backGroundWhite\">");
 
 				if(dsListMedia!=null && !isEmptyList && IsMediaFound(keyWord,eventButton,isEmptyList)){
                     foreach(DataRow currentRow in dsListMedia.Tables[0].Rows) {
@@ -573,7 +572,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				#region  Message d'erreurs
 				// Message d'erreur : veuillez saisir 2 caractères minimums
 				if(keyWord.Length<2 && keyWord.Length>0 && eventButton==constEvent.eventSelection.OK_EVENT){
-                    t.Append("<tr class=\"whiteBackGround\" ><td class=\"whiteBackGround txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+                    t.Append("<tr class=\"backGroundWhite\" ><td class=\"backGroundWhite txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 					t.Append(" "+GestionWeb.GetWebWord(1473,webSession.SiteLanguage)+" "+keyWord+".</p> ");
 					t.Append("</table>");
 					t.Append("</td>");
@@ -583,7 +582,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				}
 					// Message d'erreur : mot incorrect
 				else if(!TNS.AdExpress.Web.Functions.CheckedText.CheckedProductText(keyWord) && keyWord.Length>0 && eventButton==constEvent.eventSelection.OK_EVENT && isEmptyList){
-                    t.Append("<tr><td class=\"whiteBackGround txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+                    t.Append("<tr><td class=\"backGroundWhite txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 					t.Append(" "+GestionWeb.GetWebWord(1088,webSession.SiteLanguage)+" "+keyWord+".</p> ");
 					t.Append("</table>");
 					t.Append("</td>");
@@ -594,7 +593,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 					// Message d'erreur : aucun résultat avec le mot clé
 				else if(dsListMedia!=null){
 					if(dsListMedia.Tables[0].Rows.Count==0 || isEmptyList){
-                        t.Append("<tr><td class=\"whiteBackGround txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+                        t.Append("<tr><td class=\"backGroundWhite txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 						t.Append(" "+GestionWeb.GetWebWord(819,webSession.SiteLanguage)+" "+keyWord+".</p> ");
 						t.Append("</table>");
 						t.Append("</td>");
@@ -625,13 +624,13 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				if( (eventButton==constEvent.eventSelection.LOAD_EVENT && loadIsPossible) || eventButton==constEvent.eventSelection.SAVE_EVENT ){
 				
 					t.Append("<tr class=\"txtGris11Bold\">");
-                    t.Append("<td class=\"whiteBackGround\"  >");
+                    t.Append("<td class=\"backGroundWhite\"  >");
 					t.Append(""+GestionWeb.GetWebWord(812,webSession.SiteLanguage)+"</td></tr>");
 
 
-                    t.Append("<tr height=5px class=\"whiteBackGround\"><td></td></tr>");
-                    t.Append("<tr><td class=\"whiteBackGround\" vAlign=\"top\">");
-                    t.Append("<table class=\"whiteBackGround\">");				
+                    t.Append("<tr height=5px class=\"backGroundWhite\"><td></td></tr>");
+                    t.Append("<tr><td class=\"backGroundWhite\" vAlign=\"top\">");
+                    t.Append("<table class=\"backGroundWhite\">");				
 					t.Append("<tr><td>");	
 					// Affichage des annonceur à partir de SelectionUniversAdvertiser où CurrentUniversAdvertiser
 							
@@ -646,7 +645,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
 			// Message d'erreur : Chargement de l'univers impossible
 			if(!loadIsPossible){
-                t.Append("<tr class=\"whiteBackGround\" ><td class=\"whiteBackGround txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+                t.Append("<tr class=\"backGroundWhite\" ><td class=\"backGroundWhite txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 				t.Append(" "+GestionWeb.GetWebWord(1086,webSession.SiteLanguage)+"</p> ");			
 				t.Append(" </td> ");
 				t.Append(" </tr> ");

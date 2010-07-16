@@ -50,7 +50,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 				
 					if (currentName!=null){
 						if (start==1){
-                            t.Append("\n<table class=\"txtViolet11Bold violetBorder whiteBackGround\"  cellpadding=0 cellspacing=0 width=\"650\">");
+                            t.Append("\n<table class=\"txtViolet11Bold violetBorder backGroundWhite\"  cellpadding=0 cellspacing=0 width=\"650\">");
 							t.Append("\n<tr onClick=\"javascript : showHideContent('"+currentName.Name+"');\" style=\"cursor : hand\">");
 							t.Append("\n<td>&nbsp;"+ currentName.Name + "</td>");
                             t.Append("\n<td align=\"right\" width=\"15\"><IMG src=\"/App_Themes/" + themeName + "/Images/Common/Button/bt_arrow_down.gif\" width=\"15\" height=\"15\"></td>");
@@ -58,7 +58,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 							start=0;
 						}
 						else if (start==0){
-                            t.Append("\n<table class=\"txtViolet11Bold violetBorderWithoutTop whiteBackGround\"  cellpadding=0 cellspacing=0 width=\"650\">");
+                            t.Append("\n<table class=\"txtViolet11Bold violetBorderWithoutTop backGroundWhite\"  cellpadding=0 cellspacing=0 width=\"650\">");
 							t.Append("\n<tr onClick=\"javascript : showHideContent('"+currentName.Name+"');\" style=\"cursor : hand\">");
 							t.Append("\n<td>&nbsp;"+ currentName.Name + "</td>");
                             t.Append("\n<td align=\"right\" width=\"15\"><IMG src=\"/App_Themes/" + themeName + "/Images/Common/button/bt_arrow_down.gif\" width=\"15\" height=\"15\"></td>");

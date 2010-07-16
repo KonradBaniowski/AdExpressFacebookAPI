@@ -2113,7 +2113,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
             for (int yearIndex = _startYear; yearIndex <= _stopYear; yearIndex++) {
                 if (yearIndex == _selectedYear) display = "";
                 else if (display.Length == 0) display = "none";
-                html.Append("<table class=\"SMParent\" border=0 cellspacing=0 cellpadding=0 width=\"100%\" style=\"cursor:pointer;\"><tr onClick=\"javascript:ShowHideCalendar('Parent_" + yearIndex.ToString() + "');\"><td style=\"font-size-adjust: 0.58;font-family: Arial;font:bold 12px arial;color: #644882;\">" + yearIndex.ToString() + "</td><td><IMG height=\"15\" align=\"right\" src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/bt_arrow_down.gif\" width=\"15\"></td></tr></table>");
+                html.Append("<table class=\"SMParent\" border=0 cellspacing=0 cellpadding=0 width=\"100%\" style=\"cursor:pointer;\"><tr onClick=\"javascript:ShowHideCalendar('Parent_" + yearIndex.ToString() + "');\"><td class=\"txtGroupViolet11Bold\" >" + yearIndex.ToString() + "</td><td><IMG height=\"15\" align=\"right\" src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/bt_arrow_down.gif\" width=\"15\"></td></tr></table>");
                 html.Append("<div style=\"padding:0;margin:0; display :" + display + "; \" id=\"Parent_" + yearIndex.ToString() + "Content\">");
                 if (IsRestricted)
                     html.Append(GetRestrictedYearHTML(yearIndex));
@@ -2162,7 +2162,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
             htmlBuilder.Append("\r\n\t<table border=0 cellspacing=0 cellpadding=0 width=\"100%\">");
             if (_periodRestrictedLabel.Length > 0 && IsRestricted) {
                 htmlBuilder.Append("\r\n\t<tr>");
-                htmlBuilder.Append("\r\n\t\t<TD class=\"txtViolet11\" colSpan=\"2\" nowrap>");
+                htmlBuilder.Append("\r\n\t\t<TD class=\"txtNoir11\" colSpan=\"2\" nowrap>");
                 htmlBuilder.Append("\r\n\t " + _periodRestrictedLabel + "");
                 htmlBuilder.Append("\r\n\t\t</td>");
                 htmlBuilder.Append("\r\n\t</tr>");
@@ -2449,7 +2449,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
             DayCalendar dayCalendar = new DayCalendar(yearMonth);
             StringBuilder htmlBuilder = new StringBuilder(6500);
 
-            htmlBuilder.Append("\r\n\t\t\t\t<table cellspacing=1 cellpadding=0 border=0 class=\"whiteBackGround\">");
+            htmlBuilder.Append("\r\n\t\t\t\t<table cellspacing=1 cellpadding=0 border=0 >");
             // Noms des colonnes
             htmlBuilder.Append("\r\n\t\t\t\t\t<tr>");
             htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Day_1.gif\" border=0></td>");
@@ -2494,7 +2494,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
             DayCalendar dayCalendar = new DayCalendar(yearMonth);
             StringBuilder htmlBuilder = new StringBuilder(6500);
 
-            htmlBuilder.Append("\r\n\t\t\t\t<table cellspacing=1 cellpadding=0 border=0 class=\"whiteBackGround\">");
+            htmlBuilder.Append("\r\n\t\t\t\t<table cellspacing=1 cellpadding=0 border=0 >");
             // Noms des colonnes
             htmlBuilder.Append("\r\n\t\t\t\t\t<tr>");
             htmlBuilder.Append("\r\n\t\t\t\t\t\t<td cellpadding=5><img src=\"/App_Themes/" + _themeName + "/Images/Culture/GlobalCalendar/Day_1.gif\" border=0></td>");

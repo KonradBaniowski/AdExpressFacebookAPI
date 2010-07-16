@@ -171,7 +171,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 			output.Write("\n<script language=\"javascript\" type=\"text/javascript\">");
 			output.Write("\nif(hasRightFlashVersion==true){");
 			output.Write("\ndocument.writeln('<OBJECT id=\"Shockwaveflash1\" codeBase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\"');");
-			output.Write("\ndocument.writeln('height=\"31\" width=\"733\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" VIEWASTEXT>');");
+			output.Write("\ndocument.writeln('height=\"60\" width=\"648\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" VIEWASTEXT>');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"_cx\" VALUE=\"19394\">');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"_cy\" VALUE=\"820\">');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"FlashVars\" VALUE=\"\">');");
@@ -193,10 +193,10 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 			output.Write("\ndocument.writeln('<PARAM NAME=\"MovieData\" VALUE=\"\">');");
 			output.Write("\ndocument.writeln('<PARAM NAME=\"SeamlessTabbing\" VALUE=\"1\">');");
             output.Write("\ndocument.writeln('<embed src=\"" + flashUrl + "\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\"');");
-            output.Write("\ndocument.writeln('type=\"application/x-shockwave-flash\" wmode=\"opaque\" width=\"733\" height=\"31\"> </embed>');");
+            output.Write("\ndocument.writeln('type=\"application/x-shockwave-flash\" wmode=\"opaque\" width=\"648\" height=\"60\"> </embed>');");
 			output.Write("\ndocument.writeln('</OBJECT>');");
 			output.Write("\n}\nelse{");
-            output.Write("\ndocument.writeln('<img src=\"" + missingFlashUrl + "\" width=\"733\" height=\"31\">');");
+            output.Write("\ndocument.writeln('<img src=\"" + missingFlashUrl + "\" width=\"648\" height=\"60\">');");
 			output.Write("\n}");
 			output.Write("\n</script>");
 			output.Write("\n</td>");
@@ -278,8 +278,14 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 
                 languageSelectionWebControl = new LanguageSelectionWebControl();
                 languageSelectionWebControl.Language = language;
-                languageSelectionWebControl.BackColor = Color.FromArgb(143, 123, 166);
-                languageSelectionWebControl.BorderColor = Color.FromArgb(143, 123, 166);
+                
+                // Adexpress color
+                //languageSelectionWebControl.BackColor = Color.FromArgb(143, 123, 166);
+                //languageSelectionWebControl.BorderColor = Color.FromArgb(143, 123, 166);
+                // Kantar color
+                languageSelectionWebControl.BackColor = Color.FromArgb(92, 92, 92);
+                languageSelectionWebControl.BorderColor = Color.FromArgb(92, 92, 92);
+
                 languageSelectionWebControl.BorderWidth = new System.Web.UI.WebControls.Unit(0);
                 languageSelectionWebControl.ImageButtonArrow = "/App_Themes/" + themeName + "/Images/Common/Button/bt_arrow_down_white.gif";
                 languageSelectionWebControl.ID = "DDL" + this.ID;

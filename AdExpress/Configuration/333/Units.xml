@@ -11,5 +11,5 @@
   <unit id="grp"         format="max1"      webTextId="1679"  baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellGRP"        field="grp"/>
   <unit id="volume"      format="max0"      webTextId="2216"  baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellVolume"     field="volume"            multimediaField="totalvolume"/>
   <unit id="versionNb"   format="max0"      webTextId="2479"  baseId ="none"       cellType="TNS.FrameWork.WebResultUI.CellIdsNumber"  field="id_banners"          multimediaField="list_banners"/>
-  <unit id="occurence"   format="max0"      webTextId="940"   baseId ="insertion"  cellType="TNS.FrameWork.WebResultUI.CellInsertion"  field="insertion"         multimediaField="totalinsert"/>
+  <unit id="occurence"   format="max0"      webTextId="940"   baseId ="insertion"  cellType="TNS.FrameWork.WebResultUI.CellInsertion"  field="insertion"         multimediaField="totalinsert"      trendsField="insertion"/>
 </units>

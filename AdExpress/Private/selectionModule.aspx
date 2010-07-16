@@ -19,6 +19,10 @@
 	<body class="bodyStyle" onload="javascript:activateActiveX();">
 		<form id="Form1" method="post" runat="server">
 			<table cellspacing="0" cellpadding="0" width="600" border="0">
+			    <!-- Gradient -->
+			    <tr>
+			        <td colspan="2" height="3" class="gradientBar"></td>
+			    </tr>
 				<tr valign="top">
 					<td width="209">
 						<!-- Logo --><asp:Image runat="server" border="0" SkinID="LogoAdexpress" />
@@ -39,7 +43,9 @@
 					<td colspan="2" height="10"><!-- Vide --></td>
 				</tr>
 				<tr>
-					<td colspan="2"><!-- Modules --><cc2:moduleselection2webcontrol id="ModuleSelection2WebControl1" runat="server" Width="800px" ColumnInformationWidth="40%"
+					<td colspan="2"><!-- Modules -->
+                        <cc2:moduleselection2webcontrol id="ModuleSelection2WebControl1" runat="server" 
+                            Width="100%" ColumnInformationWidth="40%"
 							 ColumnLeftWidth="10px"></cc2:moduleselection2webcontrol></td>
 				</tr>
 			</table>

@@ -607,6 +607,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
             _initializeProductWebControl.CustomerWebSession = customerWebSession;
             _initializeProductWebControl.AutoPostBackOption = this.autoPostBackOption;
             _initializeProductWebControl.EnableViewState = true;
+            _initializeProductWebControl.CommonCssClass = "txtOrange11Bold";
             _initializeProductWebControl.initializeAdvertiserCheckBox.EnableViewState = true;
             _initializeProductWebControl.InitializeAdvertiser = InializeAdVertiserOption;
             _initializeProductWebControl.ID = this.ID + "_initializeAdvertiser";
@@ -925,7 +926,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			}
 			#endregion
 		
-
 			#region Encart
 			if(insertOption && WebApplicationParameters.AllowInsetOption)
 			{
@@ -950,7 +950,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			if(percentage){
 				percentageCheckBox=new System.Web.UI.WebControls.CheckBox();
 				percentageCheckBox.ID="_percentage";
-				percentageCheckBox.CssClass=cssClass;
+                percentageCheckBox.CssClass = "txtBlanc11Bold";
 				percentageCheckBox.AutoPostBack=autoPostBackOption;
 				percentageCheckBox.Text=GestionWeb.GetWebWord(806,customerWebSession.SiteLanguage);
 				percentageCheckBox.Checked=customerWebSession.Percentage;
@@ -962,7 +962,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				PdmCheckBox=new System.Web.UI.WebControls.CheckBox();
 				PdmCheckBox.ID=this.ID + "_pdm";
 				PdmCheckBox.ToolTip = GestionWeb.GetWebWord(1179,customerWebSession.SiteLanguage);
-				PdmCheckBox.CssClass=cssClass;
+                PdmCheckBox.CssClass = "txtBlanc11Bold";
 				PdmCheckBox.AutoPostBack=autoPostBackOption;
 				PdmCheckBox.Text=GestionWeb.GetWebWord(806,customerWebSession.SiteLanguage);
 				PdmCheckBox.Checked=customerWebSession.PDM;
@@ -972,7 +972,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				PdvCheckBox=new System.Web.UI.WebControls.CheckBox();
 				PdvCheckBox.ID=this.ID + "_pdv";
 				PdvCheckBox.ToolTip = GestionWeb.GetWebWord(1180,customerWebSession.SiteLanguage);
-				PdvCheckBox.CssClass=cssClass;
+                PdvCheckBox.CssClass = "txtBlanc11Bold";
 				PdvCheckBox.AutoPostBack=autoPostBackOption;
 				PdvCheckBox.Text=GestionWeb.GetWebWord(1166,customerWebSession.SiteLanguage);
 				PdvCheckBox.Checked=customerWebSession.PDV;
@@ -981,7 +981,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			if(evolutionOption){
 				EvolutionCheckBox=new System.Web.UI.WebControls.CheckBox();
 				EvolutionCheckBox.ID=this.ID + "_evol";
-				EvolutionCheckBox.CssClass=cssClass;
+                EvolutionCheckBox.CssClass = "txtBlanc11Bold";
 				EvolutionCheckBox.ToolTip = GestionWeb.GetWebWord(1178,customerWebSession.SiteLanguage);
 				EvolutionCheckBox.AutoPostBack=autoPostBackOption;
 				EvolutionCheckBox.Text=GestionWeb.GetWebWord(1168,customerWebSession.SiteLanguage);
@@ -993,7 +993,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				PersonalizedElementsCheckBox=new System.Web.UI.WebControls.CheckBox();
 				PersonalizedElementsCheckBox.ID=this.ID + "_perso";
 				PersonalizedElementsCheckBox.ToolTip = GestionWeb.GetWebWord(1181,customerWebSession.SiteLanguage);
-				PersonalizedElementsCheckBox.CssClass=cssClass;
+                PersonalizedElementsCheckBox.CssClass = "txtBlanc11Bold";
 				PersonalizedElementsCheckBox.AutoPostBack=autoPostBackOption;
 				PersonalizedElementsCheckBox.Text=GestionWeb.GetWebWord(1174,customerWebSession.SiteLanguage);
 				PersonalizedElementsCheckBox.Checked=customerWebSession.PersonalizedElementsOnly;
@@ -1003,14 +1003,12 @@ namespace TNS.AdExpress.Web.Controls.Headers{
                 AutopromoEvaliantCheckBox = new System.Web.UI.WebControls.CheckBox();
                 AutopromoEvaliantCheckBox.ID = this.ID + "_autopromoEvaliant";
                 AutopromoEvaliantCheckBox.ToolTip = GestionWeb.GetWebWord(2476, customerWebSession.SiteLanguage);
-                AutopromoEvaliantCheckBox.CssClass = cssClass;
+                AutopromoEvaliantCheckBox.CssClass = "txtBlanc11Bold";
                 AutopromoEvaliantCheckBox.AutoPostBack = autoPostBackOption;
                 AutopromoEvaliantCheckBox.Text = GestionWeb.GetWebWord(2476, customerWebSession.SiteLanguage);
                 AutopromoEvaliantCheckBox.Checked = customerWebSession.AutopromoEvaliant;
                 Controls.Add(AutopromoEvaliantCheckBox);
             }
-
-			
 
 			if(mediaDetailOption){
 				mediaDetail = new DropDownList();
@@ -1293,7 +1291,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			output.Write("\n<tr>");
 			output.Write("\n<td style=\"HEIGHT: 14px\" vAlign=\"top\"><IMG height=\"12\" src=\"/App_Themes/"+themeName+"/Images/Common/block_fleche.gif\" width=\"12\"></td>");
             output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" class=\"blockBackGround\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"13\"></td>");
-            output.Write("\n<td class=\"txtNoir11Bold titleUppercase\" width=\"100%\">" + GestionWeb.GetWebWord(792, customerWebSession.SiteLanguage) + "</td>");
+            output.Write("\n<td class=\"txtNoir11Bold backGroundModuleTitle titleUppercase\" width=\"100%\">" + GestionWeb.GetWebWord(792, customerWebSession.SiteLanguage) + "</td>");
             output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"1\"></td>");
 			output.Write("\n</tr>");
 			output.Write("\n<tr>");
@@ -1311,7 +1309,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			//option unité
 			if (unitOption){
 				output.Write("\n<tr>");
-				output.Write("\n<td title=\"" + GestionWeb.GetWebWord(1182,customerWebSession.SiteLanguage) + "\" class=\"txtGris11Bold\">");
+                output.Write("\n<td title=\"" + GestionWeb.GetWebWord(1182, customerWebSession.SiteLanguage) + "\" class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(304,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
@@ -1338,7 +1336,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			//option unité Appm
 			if (unitOptionAppm){
 				output.Write("\n<tr>");
-				output.Write("\n<td title=\"" + GestionWeb.GetWebWord(1182,customerWebSession.SiteLanguage) + "\" class=\"txtGris11Bold\">");
+                output.Write("\n<td title=\"" + GestionWeb.GetWebWord(1182, customerWebSession.SiteLanguage) + "\" class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(304,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
@@ -1356,7 +1354,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			//option detail media
 			if (mediaDetailOption){
 				output.Write("\n<tr>");
-				output.Write("\n<td class=\"txtGris11Bold\">");
+                output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1150,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
@@ -1372,7 +1370,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			//option choix d'un encart
 			if (insertOption && WebApplicationParameters.AllowInsetOption){
 				output.Write("\n<tr>");
-				output.Write("\n<td class=\"txtGris11Bold\">");
+                output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1400,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
@@ -1388,7 +1386,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			//option detail produit
 			if (productDetailOption){
 				output.Write("\n<tr>");
-				output.Write("\n<td class=\"txtGris11Bold\">");
+                output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1124,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
@@ -1405,7 +1403,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			//option format de tableau
 			if (tblChoiceOption){
 				output.Write("\n<tr>");
-				output.Write("\n<td class=\"txtGris11Bold\">");
+                output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1140,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
@@ -1422,7 +1420,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			//options PDM, PDV, evolution
 			if (pdmOption || pdvOption || evolutionOption){
 				output.Write("\n<tr>");
-				output.Write("\n<td>");
+                output.Write("\n<td class=\"txtBlanc11Bold\">");
 				if(evolutionOption){
 					if (!customerWebSession.ComparativeStudy){
 						EvolutionCheckBox.Enabled = false;
@@ -1497,7 +1495,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			//option résultat
 			if (resultOption){
 				output.Write("\n<tr>");
-				output.Write("\n<td class=\"txtGris11Bold\">");
+                output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(793,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
@@ -1516,7 +1514,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				if(products.Items.Count>0)
 				{
 					output.Write("\n<tr>");
-					output.Write("\n<td class=\"txtGris11Bold\">");
+                    output.Write("\n<td class=\"txtBlanc11Bold\">");
 					output.Write(GestionWeb.GetWebWord(1164,customerWebSession.SiteLanguage));
 					output.Write("\n</td>");
 					output.Write("\n</tr>");
@@ -1533,7 +1531,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			
 			if(_resultFormat){
 				output.Write("\n<tr>");
-				output.Write("\n<td class=\"txtGris11Bold\">");
+                output.Write("\n<td class=\"txtBlanc11Bold\">");
 				graphRadioButton.RenderControl(output);
 				if(graphRadioButton.Visible)output.Write("<A onmouseover=\"graph.src = '/App_Themes/" + themeName + "/Images/Common/Button/chart_down.gif';\" onclick=\"graphRadioButton.checked=true;\" onmouseout=\"graph.src = '/App_Themes/" + themeName + "/Images/Common/Button/chart_up.gif';\" href=\"#\"><IMG id=graph title=\"" + ChartTitle + "\" src=\"/App_Themes/" + themeName + "/Images/Common/Button/chart_up.gif\" border=0 ></A>&nbsp;");
 				tableRadioButton.RenderControl(output);
@@ -1549,7 +1547,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			if (_percentageTypeOption){
 				
 					output.Write("\n<tr>");
-					output.Write("\n<td class=\"txtGris11Bold\">");
+                    output.Write("\n<td class=\"txtBlanc11Bold\">");
 					output.Write(GestionWeb.GetWebWord(1236,customerWebSession.SiteLanguage));
 					output.Write("\n</td>");
 					output.Write("\n</tr>");

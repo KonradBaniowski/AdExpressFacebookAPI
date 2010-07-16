@@ -18,23 +18,23 @@
     <title>AdExpress</title>
     
 </head>
-<body style="margin:0px; background-attachment: fixed; background-repeat: repeat; " class="popupBackGround whiteBackGround" onload="javascript:activateActiveX();">
+<body style="margin:0px; background-attachment: fixed; background-repeat: repeat; " class="popupBackGround backGroundWhite" onload="javascript:activateActiveX();">
 
     <form id="form1" runat="server">
         <div style="text-align:center;margin:0">
             <asp:HiddenField ID="zoomParam" runat="server" EnableViewState="true"/>
 
-            <table height="300" width="100%" style="margin-top: 25px; margin-left: 0px; margin-right: 25px;" class="whiteBackGround" cellpadding="0" cellspacing="0" border="0">
+            <table height="300" width="100%" style="margin-top: 25px; margin-left: 0px; margin-right: 25px;" class="backGroundWhite" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                     <td colspan="2">
                         <cc1:informationwebcontrol id="InformationWebControl1" runat="server" inleftmenu="False" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="whiteBackGround" height="15"></td>
+                    <td class="backGroundWhite" height="15"></td>
                 </tr>
 			    <%=zoomButton%>
-                <tr class="whiteBackGround">
+                <tr class="backGroundWhite">
                     <td height="100%">
                         <cc1:OptionLayerWebControl id="OptionLayerWebControl1" runat="server" GenericDetailLevelComponentProfile="media" GenericDetailLevelType="mediaSchedule"
 							Width="200px" DisplayInformationComponent="False" RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx" SaveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelSave.aspx"></cc1:OptionLayerWebControl>
@@ -43,7 +43,7 @@
                         <table>
                             <tr valign="top"><td valign="top"><cc1:SubPeriodSelectionWebControl id="SubPeriodSelectionWebControl1" runat="server" /></td></tr>
                             <tr>
-                                <td class="whiteBackGround" height="15">
+                                <td class="backGroundWhite" height="15">
                                 </td>
                             </tr>
                             <tr valign="middle"><td valign="middle"><cc3:GenericMediaScheduleWebControl id="GenericMediaScheduleWebControl1" runat="server" AjaxProTimeOut="240" ShowVersion="True" /></td></tr>

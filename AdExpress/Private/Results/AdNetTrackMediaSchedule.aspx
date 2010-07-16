@@ -29,7 +29,7 @@
 		        }
 		    </script>
 
-			<table style="margin-top: 25px; margin-left: 0px; margin-right: 0px" class="whiteBackGround" cellspacing="0" cellpadding="0" width="100%" border="0">
+			<table style="margin-top: 25px; margin-left: 0px; margin-right: 0px" class="backGroundWhite" cellspacing="0" cellpadding="0" width="100%" border="0">
 
 				<tr>
 					<td colSpan="3"><asp:Image runat="server" vspace="10" hspace="5" border="0" SkinID="Logo_Adnettrack" /></td>

@@ -549,7 +549,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		protected override void Render(HtmlTextWriter output){
 
 			#region Début du tableau (support et dates)
-            output.Write("<table width=\"500\" class=\"whiteBackGround\" style=\"MARGIN-LEFT: 5px; MARGIN-RIGHT: 0px;BORDER:SOLID 0px;\"");
+            output.Write("<table width=\"500\" class=\"backGroundWhite\" style=\"MARGIN-LEFT: 5px; MARGIN-RIGHT: 0px;BORDER:SOLID 0px;\"");
 			output.Write("cellPadding=\"0\" cellSpacing=\"0\" align=\"left\" border=\"0\">");
 			#endregion
 
@@ -559,7 +559,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				output.Write("<tr>");
 				output.Write("<td>");
                 #region Title Bar
-                    output.Write("<table class=\"whiteBackGround violetBorder\" style=\"MARGIN-LEFT: 0px;\" cellSpacing=\"0\" cellPadding=\"0\" width=\"990px\" border=\"0\">");
+                    output.Write("<table class=\"backGroundWhite violetBorder\" style=\"MARGIN-LEFT: 0px;\" cellSpacing=\"0\" cellPadding=\"0\" width=\"990px\" border=\"0\">");
                         output.Write("<tr onclick=\"DivDisplayer('detailledLevelContent');\" style=\"CURSOR: pointer\">");
                             output.Write("<td class=\"txtViolet11Bold\">&nbsp;" + GestionWeb.GetWebWord(1896, _customerWebSession.SiteLanguage) + "&nbsp;</td>");
                             output.Write("<td align=\"right\" class=\"arrowBackGround\"></td>");

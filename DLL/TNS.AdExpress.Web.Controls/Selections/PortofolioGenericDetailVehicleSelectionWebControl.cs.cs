@@ -143,7 +143,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 
 				//Start Global Table
 				#region Debut Tableau global
-				t.Append("<tr class=\"whiteBackGround\"><td  vAlign=\"top\"><table  vAlign=\"top\">");
+				t.Append("<tr class=\"backGroundWhite\"><td  vAlign=\"top\"><table  vAlign=\"top\">");
 				t.Append("<a href=\"javascript: ExpandColapseAllDivs('");
 				insertIndex = t.Length;
 				t.Append("')\" class=\"roll04\" >&nbsp;&nbsp;&nbsp;" + textOpenclose + "</a>");
@@ -350,14 +350,14 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 			#region  Message d'erreurs
 			// Message d'erreur : veuillez saisir 3 caractères minimums
 			if (_keyWord.Length < 3 && _keyWord.Length > 0 && _eventButton == constEvent.eventSelection.OK_EVENT) {
-				t.Append("<tr class=\"whiteBackGround\" ><td class=\"whiteBackGround txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+				t.Append("<tr class=\"backGroundWhite\" ><td class=\"backGroundWhite txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 				t.Append(" " + GestionWeb.GetWebWord(352, _webSession.SiteLanguage) + " " + _keyWord + ".</p> ");
 				t.Append("</td>");
 				t.Append("</tr>");
 			}
 			// Message d'erreur : mot incorrect
 			else if (!TNS.AdExpress.Web.Functions.CheckedText.CheckedProductText(_keyWord) && _keyWord.Length > 0 && _eventButton == constEvent.eventSelection.OK_EVENT) {
-				t.Append("<tr><td class=\"whiteBackGround txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+				t.Append("<tr><td class=\"backGroundWhite txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 				t.Append(" " + GestionWeb.GetWebWord(1088, _webSession.SiteLanguage) + " " + _keyWord + ".</p> ");
 				t.Append("</td>");
 				t.Append("</tr>");
@@ -365,7 +365,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 			// Message d'erreur : aucun résultat avec le mot clé
 			else if (_dsListMedia != null) {
 				if (_dsListMedia.Tables[0].Rows.Count == 0) {
-					t.Append("<tr><td class=\"whiteBackGround txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+					t.Append("<tr><td class=\"backGroundWhite txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 					t.Append(" " + GestionWeb.GetWebWord(819, _webSession.SiteLanguage) + " " + _keyWord + ".</p> ");
 					t.Append("</td>");
 					t.Append("</tr>");
@@ -375,7 +375,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 
 			// Message d'erreur : Chargement de l'univers impossible
 			if (!_canLoadUnivese) {
-				t.Append("<tr class=\"whiteBackGround\" ><td class=\"whiteBackGround txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+				t.Append("<tr class=\"backGroundWhite\" ><td class=\"backGroundWhite txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 				t.Append(" " + GestionWeb.GetWebWord(1086, _webSession.SiteLanguage) + "</p> ");
 				t.Append(" </td> ");
 				t.Append(" </tr> ");

@@ -286,12 +286,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
             IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
 
-            t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 align=center>");
+            t.Append("<table class=\"backGroundWhite\" border=0 cellpadding=0 cellspacing=0 align=center>");
 
             #region Headers
             t.Append("\r\n\t<tr height=\"20px\">");
             //N
-            t.Append("<td  class=\"whiteBackGround\" nowrap  valign=\"middle\">&nbsp;</td>");
+            t.Append("<td  class=\"backGroundWhite\" nowrap  valign=\"middle\">&nbsp;</td>");
             t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssHeader, tab[0, TOTAL_N_COLUMN_INDEX]);
             if (_session.ComparativeStudy)
             {
@@ -364,7 +364,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 t.Append("</tr>");
 
                 if (!_excel && (i == PDV_UNIV_TOTAL_MARKET_LINE_INDEX || i == AVERAGE_INVEST_BY_ADVERTISER_LINE_INDEX)){
-                    t.AppendFormat("<tr><td class=\"whiteBackGround whiteBottomBorder\" style=\"HEIGHT: 5px; BORDER-TOP: white 0px solid;\" colspan={0}></td></tr>"
+                    t.AppendFormat("<tr><td class=\"backGroundWhite whiteBottomBorder\" style=\"HEIGHT: 5px; BORDER-TOP: white 0px solid;\" colspan={0}></td></tr>"
                         ,(_session.ComparativeStudy) ? 5 : 3);
                 }
 

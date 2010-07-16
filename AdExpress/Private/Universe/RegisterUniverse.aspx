@@ -56,16 +56,16 @@
 				</TR>
 				<TR>
 					<TD></TD>
-					<TD class="whiteBackGround"></TD>
+					<TD class="backGroundWhite"></TD>
 				</TR>
 				<TR>
 					<TD></TD>
-					<TD class="txtViolet11Bold whiteBackGround" height="20">&gt;
+					<TD class="txtViolet11Bold backGroundWhite" height="20">&gt;
 						<cc2:adexpresstext language="33" id="AdExpressText1" runat="server" Code="917"></cc2:adexpresstext></TD>
 				</TR>
 				<TR height="40">
 					<TD></TD>
-					<TD vAlign="top" class="whiteBackGround">&nbsp;
+					<TD vAlign="top" class="backGroundWhite">&nbsp;
 						<asp:DropDownList id="directoryDropDownList" runat="server" Width="168px" CssClass="txtNoir11"></asp:DropDownList></TD>
 				</TR>
 				<TR height="10">
@@ -75,12 +75,12 @@
 				<!--Debut liste des univers sauvegardés-------------->
                 <TR>
 	                <TD></TD>
-	                <TD class="txtViolet11Bold whiteBackGround" height="20">&gt;
+	                <TD class="txtViolet11Bold backGroundWhite" height="20">&gt;
 		                <cc2:adexpresstext language="33" id="AdExpressText3" runat="server" Code="2261"></cc2:adexpresstext></TD>
                 </TR>
                 <TR height="40">
 	                <TD></TD>
-	                <TD vAlign="top" class="whiteBackGround">&nbsp;
+	                <TD vAlign="top" class="backGroundWhite">&nbsp;
 		                <asp:DropDownList id="universeDropDownList" runat="server" Width="168px" CssClass="txtNoir11"></asp:DropDownList></TD>
                 </TR>
                 <TR height="10">
@@ -90,12 +90,12 @@
                 <!--Fin listes univers sauvegardés------------------->
 				<TR>
 					<TD></TD>
-					<TD class="txtViolet11Bold whiteBackGround">&gt;
+					<TD class="txtViolet11Bold backGroundWhite">&gt;
 						<cc2:adexpresstext language="33" id="AdExpressText2" runat="server" Code="2268"></cc2:adexpresstext>&nbsp;</TD>
 				</TR>
 				<TR height="40">
 					<TD></TD>
-					<TD vAlign="top" class="whiteBackGround">&nbsp;
+					<TD vAlign="top" class="backGroundWhite">&nbsp;
 						<asp:TextBox id="universeTextBox" runat="server" CssClass="txtNoir11" Width="200px"></asp:TextBox></TD>
 				</TR>
 				<TR height="20">

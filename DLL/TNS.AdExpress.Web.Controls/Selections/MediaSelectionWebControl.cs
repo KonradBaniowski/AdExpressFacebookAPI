@@ -221,14 +221,13 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				try{
 					savedMedia = new List<Int64>(Array.ConvertAll<string, Int64>(webSession.GetSelection(webSession.CurrentUniversMedia, RightConstantes.type.mediaAccess).Split(delimiter), (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); }));					
 				}catch(Exception){}
-			}		
-			
+			}
 			#endregion
 
-			#region Affichage à partir du groupe de données (DataSet)			
+			#region Affichage à partir du groupe de données (DataSet)
 			if(dsListMedia != null && dsListMedia.Tables[0].Rows.Count >0) {
 				
-				#region variables locales				
+				#region variables locales
 				//variables du niveau  Media
 				Int64 idVehicleOld=-1;
 				Int64 idVehicle;										
@@ -264,7 +263,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				//Récupération de la liste des média autorisés pour l'utilisateur courant
 				getListIdVehicle(ref vhlist, ref VehicleIds, vhSeparator);				
 				//Tableau global 
-                t.Append("\n<tr vAlign=\"top\" height=\"1%\">\n<td class=\"whiteBackGround\">\n");	
+                t.Append("\n<tr vAlign=\"top\" height=\"1%\">\n<td>\n");	
 				t.Append("<a href=\"javascript: ExpandColapseAllDivs('");
 				insertIndex = t.Length;
 				t.Append("')\" class=\"roll04\" >&nbsp;&nbsp;&nbsp;"+GestionWeb.GetWebWord(1617,webSession.SiteLanguage)+"</a>");									
@@ -301,7 +300,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
                             if (idVehicleOld == -1) classBorder = "violetBorder";
                             else classBorder = "violetBorderWithoutTop";
 
-                            t.Append("\n<table class=\"txtViolet11Bold whiteBackGround\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
+                            t.Append("\n<table class=\"txtViolet11Bold backGroundWhite\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
 
 							//Curseur sur toute la ligne
 							t.Append("\n<tr  style=\"cursor : hand\"><td>");
@@ -346,7 +345,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 							startVehicle=0;
 
                             t.Append("<Div class=\"" + classBorder + "\" style=\"width:100%;\">");
-                            t.Append("\n<table class=\"txtViolet11Bold whiteBackGround\"  cellpadding=0 cellspacing=0 width=\"100%\">\n");
+                            t.Append("\n<table class=\"txtViolet11Bold backGroundWhite\"  cellpadding=0 cellspacing=0 width=\"100%\">\n");
                             t.Append("<tr><td>");
 					
 							//checkbox média 

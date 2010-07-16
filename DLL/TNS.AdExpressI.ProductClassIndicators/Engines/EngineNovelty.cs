@@ -498,7 +498,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 t.AppendFormat("<td nowrap class=\"p2\">{0}</td>", GestionWeb.GetWebWord(1220, _session.SiteLanguage));
                 if (!_excel)
                 {
-                    t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                    t.Append("<td bgcolor=\"#646262\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
                 }
 
                 //N-1 year cells
@@ -509,7 +509,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 //Year separator
                 if (!_excel)
                 {
-                    t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                    t.Append("<td bgcolor=\"#646262\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
                 }
 
                 //N cells
@@ -520,7 +520,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 //Separator
                 if (!_excel)
                 {
-                    t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                    t.Append("<td bgcolor=\"#646262\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
                 }
                 //Currnet month
                 t.AppendFormat("<td nowrap align=center class=\"p2\">{2}<br>{0}-{1}</td>", _periodEnd.Month.ToString("00"), _periodEnd.Year, GestionWeb.GetWebWord(1221, _session.SiteLanguage));
@@ -587,7 +587,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     //Separator
                     if (!_excel)
                     {
-                        t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                        t.Append("<td bgcolor=\"#646262\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
                     }
 
                     //N-1 cells
@@ -618,7 +618,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     //Separator
                     if (!_excel)
                     {
-                        t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                        t.Append("<td bgcolor=\"#646262\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
                     }
                     //N Cells
                     for (int l = 1; l < _periodEnd.Month; l++)
@@ -635,7 +635,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     //Separator
                     if (!_excel)
                     {
-                        t.Append("<td bgcolor=\"#644883\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
+                        t.Append("<td bgcolor=\"#646262\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
                     }
 
                     //Current month

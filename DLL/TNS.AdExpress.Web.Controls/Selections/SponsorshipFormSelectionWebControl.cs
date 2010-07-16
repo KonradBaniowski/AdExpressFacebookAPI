@@ -321,25 +321,25 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 
 					if(dsListSponsorshipForm.Tables[0].Rows.Count>0) {	
 						t.Append("<tr class=\"txtGris11Bold\">");
-                        t.Append("<td class=\"whiteBackGround\">");
-						t.Append(""+GestionWeb.GetWebWord(812,webSession.SiteLanguage)+"</td></tr>");
+                        t.Append("<td class=\"backGroundWhite\">");
+						t.Append("&nbsp;"+GestionWeb.GetWebWord(812,webSession.SiteLanguage)+"</td></tr>");
 					}
 				}
-                t.Append("<tr height=5px class=\"whiteBackGround\"><td></td></tr>");
-				//t.Append("<tr><td class=\"whiteBackGround\"><img src=\"images/pixel.gif\" width=\"1\" height=\"5\"></td></tr>");
-                t.Append("<tr><td class=\"whiteBackGround\"><img src=\"/App_Themes/"+themeName+"/Images/Common/pixel.gif\" width=\"1\" height=\"20\"></td></tr> ");
+                t.Append("<tr height=5px class=\"backGroundWhite\"><td></td></tr>");
+				//t.Append("<tr><td class=\"backGroundWhite\"><img src=\"images/pixel.gif\" width=\"1\" height=\"5\"></td></tr>");
+                t.Append("<tr><td class=\"backGroundWhite\"><img src=\"/App_Themes/"+themeName+"/Images/Common/pixel.gif\" width=\"1\" height=\"20\"></td></tr> ");
 
 				#endregion
 			
 				//Tableau global
-				t.Append("<tr><td class=\"whiteBackGround\" valign=\"top\"><table>");		
+				t.Append("<tr><td class=\"backGroundWhite\" valign=\"top\"><table>");		
 	            t.Append("<tr><td vAlign=\"top\">");
 
 				#region 1 niveaux
 				
 				if(dsListSponsorshipForm!=null) {
 					if(dsListSponsorshipForm.Tables[0].Rows.Count!=0) {
-                        t.Append("<table class=\"violetBorderWithoutBottom whiteBackGround\" width=645>");
+                        t.Append("<table class=\"violetBorderWithoutBottom backGroundWhite\" width=645>");
 						t.Append("<tr><td class=\"txtViolet11Bold\" align=\"left\" height=\"10\" valign=\"middle\" nowrap>");
 						t.Append("<label for=\"Formes de parrainages\">" + GestionWeb.GetWebWord(2052,webSession.SiteLanguage) + "");
 						t.Append("</label>");
@@ -412,34 +412,34 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 				if(sponsorshipFormText.Length<2 && eventButton==2) {							
 					//if(programTypeText.Length<2 && eventButton==constEvent.eventSelection.OK_EVENT) {
 					// Saississez 2 caractères au minimum
-                    t.Append("<tr><td class=\"txtGris11Bold whiteBackGround\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+                    t.Append("<tr><td class=\"txtGris11Bold backGroundWhite\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 					t.Append(" "+GestionWeb.GetWebWord(1473,webSession.SiteLanguage)+" "+sponsorshipFormText+".</p> ");
 					t.Append(" </td> ");
 					t.Append(" </tr> ");
 				}	
 				else if(!TNS.AdExpress.Web.Functions.CheckedText.CheckedProductText(sponsorshipFormText) && eventButton==2) {
 					//else if(!TNS.AdExpress.Web.Functions.CheckedText.CheckedProductText(programTypeText) && eventButton==constEvent.eventSelection.OK_EVENT) {
-                    t.Append("<tr><td class=\"txtGris11Bold whiteBackGround\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+                    t.Append("<tr><td class=\"txtGris11Bold backGroundWhite\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 					t.Append(" "+GestionWeb.GetWebWord(820,webSession.SiteLanguage)+" "+sponsorshipFormText+".</p> ");
 					t.Append(" </td> ");
 					t.Append(" </tr> ");
 				}	
 				else if(dsListSponsorshipForm!=null) {
 					if(dsListSponsorshipForm.Tables[0].Rows.Count==0) {
-                        t.Append("<tr><td class=\"txtGris11Bold whiteBackGround\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+                        t.Append("<tr><td class=\"txtGris11Bold backGroundWhite\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 						t.Append(" "+GestionWeb.GetWebWord(819,webSession.SiteLanguage)+" "+sponsorshipFormText+".</p> ");
 						t.Append(" </td> ");
 						t.Append(" </tr> ");
 					}
 				}
 				else if(ErrorMessage.Length>0) {
-                    t.Append("<tr><td class=\"txtGris11Bold whiteBackGround\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+                    t.Append("<tr><td class=\"txtGris11Bold backGroundWhite\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 					t.Append(ErrorMessage);
 					t.Append("</td></tr>");
 				}			
 				//Fin du tableau global
 				t.Append("</td></tr></table></td></tr>");
-                t.Append("<tr><td class=\"whiteBackGround\"><IMG height=\"20\" src=\"App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"1\"></td></tr>");
+                t.Append("<tr><td class=\"backGroundWhite\"><IMG height=\"20\" src=\"App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"1\"></td></tr>");
 				t.Append("<tr><td></td></tr>");	
 
 				output.Write(t.ToString());		
@@ -453,13 +453,13 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 				if(eventButton==4 || eventButton==3) {
 					//if(eventButton==constEvent.eventSelection.LOAD_EVENT || eventButton==constEvent.eventSelection.SAVE_EVENT) {
 					t.Append("<tr class=\"txtGris11Bold\">");
-                    t.Append("<td class=\"whiteBackGround\">");
+                    t.Append("<td class=\"backGroundWhite\">");
 					t.Append(""+GestionWeb.GetWebWord(812,webSession.SiteLanguage)+"</td></tr>");
 				}
 				
-				t.Append("<tr height=5px class=\"whiteBackGround\"><td></td></tr>");				
-				t.Append("<tr><td class=\"whiteBackGround\" vAlign=\"top\">");
-				t.Append("<table class=\"whiteBackGround\">");				
+				t.Append("<tr height=5px class=\"backGroundWhite\"><td></td></tr>");				
+				t.Append("<tr><td class=\"backGroundWhite\" vAlign=\"top\">");
+				t.Append("<table class=\"backGroundWhite\">");				
 				t.Append("<tr> ");
 				t.Append("</td></tr><tr><td>");	
 
@@ -468,7 +468,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 					//if(eventButton==constEvent.eventSelection.LOAD_EVENT || eventButton==constEvent.eventSelection.SAVE_EVENT || eventButton==8) {
 					
 					#region 1 niveaux
-                    t.Append("<table class=\"whiteBackGround violetBorderWithoutBottom\" width=645>");
+                    t.Append("<table class=\"backGroundWhite violetBorderWithoutBottom\" width=645>");
 					t.Append("<tr><td class=\"txtViolet11Bold\" align=\"left\" height=\"10\" valign=\"middle\" nowrap>");
 					t.Append("<label for=\"Formes de parrainages\">" + GestionWeb.GetWebWord(2052,webSession.SiteLanguage) + "");
 					t.Append("</label>");

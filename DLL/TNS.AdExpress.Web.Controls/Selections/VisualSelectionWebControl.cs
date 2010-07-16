@@ -317,7 +317,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			output.Write("\n<tr>");
 			output.Write("\n<td width=\"100%\" colspan=2 >");
 			output.Write("\n<div  id=\"md_0\" style=\" display : "+display+"; \">");
-            output.Write("\n<Table class=\"txtViolet11Bold paleVioletBackGroundV2 violetBorder\" cellpadding=5 cellspacing=0 width=\"100%\">\n");
+            output.Write("\n<Table class=\"txtViolet11Bold paleVioletBackGroundV2\" cellpadding=5 cellspacing=0 width=\"100%\">\n");
 		
 			//option supports
 			if (_mediasOption){

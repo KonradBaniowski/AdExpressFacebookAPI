@@ -452,21 +452,19 @@ namespace TNS.AdExpress.Web.Controls.Selections
 
 					if(dsListProgramType.Tables[0].Rows.Count>0) {	
 						t.Append("<tr class=\"txtGris11Bold\">");
-                        t.Append("<td class=\"whiteBackGround\"  >");
-						t.Append(""+GestionWeb.GetWebWord(812,webSession.SiteLanguage)+"</td></tr>");
+                        t.Append("<td class=\"backGroundWhite\"  >");
+						t.Append("&nbsp;"+GestionWeb.GetWebWord(812,webSession.SiteLanguage)+"</td></tr>");
 					}
 				}
-                t.Append("<tr height=5px class=\"whiteBackGround\"><td></td></tr>");
-				//t.Append("<tr><td bgcolor=\"#ffffff\"><img src=\"images/pixel.gif\" width=\"1\" height=\"5\"></td></tr>");
-                t.Append("<tr><td class=\"whiteBackGround\"><img src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"1\" height=\"20\"></td></tr> ");
+                t.Append("<tr><td class=\"backGroundWhite\"><img src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"1\" height=\"20\"></td></tr> ");
 
 				textOpenclose = GestionWeb.GetWebWord(2054,webSession.SiteLanguage);
 
 				if(dsListProgramType!=null) {
 					if(dsListProgramType.Tables[0].Rows.Count>0) {
 
-                        t.Append("<tr class=\"whiteBackGround\"> ");
-                        t.Append("<td class=\"whiteBackGround\"> ");
+                        t.Append("<tr class=\"backGroundWhite\"> ");
+                        t.Append("<td class=\"backGroundWhite\"> ");
 						t.Append("<a href=\"javascript: ExpandColapseAllDivs('");
 						insertIndex = t.Length;
 						t.Append("')\" class=\"roll04\" >&nbsp;&nbsp;&nbsp;"+textOpenclose+"</a>");	
@@ -480,7 +478,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				int nbLinesTest=0;
 			
 				//Tableau global
-                t.Append("<tr><td class=\"whiteBackGround\" vAlign=\"top\"><table>");			
+                t.Append("<tr><td class=\"backGroundWhite\" vAlign=\"top\"><table>");			
 				t.Append("<tr><td vAlign=\"top\">");
 
 				Int64 idParentOld=-1;
@@ -686,34 +684,34 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				if(programTypeText.Length<2 && eventButton==2) {							
 				//if(programTypeText.Length<2 && eventButton==constEvent.eventSelection.OK_EVENT) {
 					// Saississez 2 caractères au minimum
-                    t.Append("<tr><td class=\"txtGris11Bold whiteBackGround\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+                    t.Append("<tr><td class=\"txtGris11Bold backGroundWhite\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 					t.Append(" "+GestionWeb.GetWebWord(1473,webSession.SiteLanguage)+" "+programTypeText+".</p> ");
 					t.Append(" </td> ");
 					t.Append(" </tr> ");
 				}	
 				else if(!TNS.AdExpress.Web.Functions.CheckedText.CheckedProductText(programTypeText) && eventButton==2) {
 				//else if(!TNS.AdExpress.Web.Functions.CheckedText.CheckedProductText(programTypeText) && eventButton==constEvent.eventSelection.OK_EVENT) {
-                    t.Append("<tr><td class=\"txtGris11Bold whiteBackGround\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+                    t.Append("<tr><td class=\"txtGris11Bold backGroundWhite\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 					t.Append(" "+GestionWeb.GetWebWord(820,webSession.SiteLanguage)+" "+programTypeText+".</p> ");
 					t.Append(" </td> ");
 					t.Append(" </tr> ");
 				}	
 				else if(dsListProgramType!=null) {
 					if(dsListProgramType.Tables[0].Rows.Count==0) {
-                        t.Append("<tr><td class=\"txtGris11Bold whiteBackGround\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+                        t.Append("<tr><td class=\"txtGris11Bold backGroundWhite\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 						t.Append(" "+GestionWeb.GetWebWord(819,webSession.SiteLanguage)+" "+programTypeText+".</p> ");
 						t.Append(" </td> ");
 						t.Append(" </tr> ");
 					}
 				}
 				else if(ErrorMessage.Length>0) {
-                    t.Append("<tr><td class=\"txtGris11Bold whiteBackGround\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+                    t.Append("<tr><td class=\"txtGris11Bold backGroundWhite\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 					t.Append(ErrorMessage);
 					t.Append("</td></tr>");
 				}			
 				//Fin du tableau global
 				t.Append("</td></tr></table></td></tr>");
-                t.Append("<tr><td class=\"whiteBackGround\"><IMG height=\"20\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"1\"></td></tr>");
+                t.Append("<tr><td class=\"backGroundWhite\"><IMG height=\"20\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"1\"></td></tr>");
 				t.Append("<tr><td></td></tr>");	
 
 				if (vhList!="") {
@@ -730,13 +728,13 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				if(eventButton==4 || eventButton==3) {
 				//if(eventButton==constEvent.eventSelection.LOAD_EVENT || eventButton==constEvent.eventSelection.SAVE_EVENT) {
 					t.Append("<tr class=\"txtGris11Bold\">");
-                    t.Append("<td class=\"whiteBackGround\"  >");
+                    t.Append("<td class=\"backGroundWhite\"  >");
 					t.Append(""+GestionWeb.GetWebWord(812,webSession.SiteLanguage)+"</td></tr>");
 				}
 
-                t.Append("<tr height=5px class=\"whiteBackGround\"><td></td></tr>");
-                t.Append("<tr><td class=\"whiteBackGround\" valign=\"top\">");
-                t.Append("<table width=\"100%\" class=\"whiteBackGround\">");				
+                t.Append("<tr height=5px class=\"backGroundWhite\"><td></td></tr>");
+                t.Append("<tr><td class=\"backGroundWhite\" valign=\"top\">");
+                t.Append("<table width=\"100%\" class=\"backGroundWhite\">");				
 				t.Append("<tr> ");
 				
 				t.Append("</td></tr><tr><td>");	

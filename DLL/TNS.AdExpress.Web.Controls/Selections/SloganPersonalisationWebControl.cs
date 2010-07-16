@@ -309,7 +309,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 				#endregion
 
 				#region Debut Tableau global 
-                output.Write("<tr vAlign=\"top\" height=\"100%\" align=\"center\"><td class=\"whiteBackGround\"><table  vAlign=\"top\">");		
+                output.Write("<tr vAlign=\"top\" height=\"100%\" align=\"center\"><td class=\"backGroundWhite\"><table  vAlign=\"top\">");		
 				//				output.Write("<a href=\"javascript: ExpandColapseAllDivs('");
 				output.Write("<a href=\"javascript: SelectAllChilds('selectAllSlogans");
 				//				insertIndex = t.Length;
@@ -627,7 +627,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 				#endregion
 			}
 			else {
-                output.Write("<tr><td class=\"whiteBackGround txtGris11Bold\"><div align=\"center\" class=\"txtGris11Bold\">" + GestionWeb.GetWebWord(177, webSession.SiteLanguage)
+                output.Write("<tr><td class=\"backGroundWhite txtGris11Bold\"><div align=\"center\" class=\"txtGris11Bold\">" + GestionWeb.GetWebWord(177, webSession.SiteLanguage)
 					+"</div><br> </td>  </tr>");
 			}
 			#endregion

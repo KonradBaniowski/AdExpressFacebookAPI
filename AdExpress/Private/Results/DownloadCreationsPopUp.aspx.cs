@@ -317,7 +317,7 @@ namespace AdExpress.Private.Results{
 				//Aucun fichier n'est dispo	
 				res.Append("<TABLE height=\"40%\"><TR><TD>&nbsp;</TD></TR></TABLE>");
 				res.Append("<TABLE cellSpacing=\"0\" cellPadding=\"10\" width=\"440\" border=\"0\" align=\"center\" height=\"10%\" ><TR valign=\"middle\">");
-                res.Append("<TD  align=\"center\" class=\"txtViolet11Bold whiteBackGround\" >");
+                res.Append("<TD  align=\"center\" class=\"txtViolet11Bold backGroundWhite\" >");
 				res.Append( GestionWeb.GetWebWord(892,_webSession.SiteLanguage));
 				res.Append("</TD>");
 				
@@ -379,7 +379,7 @@ namespace AdExpress.Private.Results{
 			ds = TNS.AdExpress.Web.DataAccess.Results.VersionDataAccess.GetVersion(file,_webSession.SiteLanguage.ToString(),_webSession.Source);
 			
 			if((ds!=null && ds.Tables[0].Rows.Count>0) || (_hasCreationDownloadRights)){
-                result.Append("<TD><TABLE height=\"326\" cellPadding=\"5\" width=\"394\" align=\"center\" class=\"whiteBackGround\"><TBODY><TR><TD vAlign=\"top\">");
+                result.Append("<TD><TABLE height=\"326\" cellPadding=\"5\" width=\"394\" align=\"center\" class=\"backGroundWhite\"><TBODY><TR><TD vAlign=\"top\">");
 				//Détail version
 			
 				if(ds!=null && ds.Tables[0].Rows.Count>0){
@@ -573,7 +573,7 @@ namespace AdExpress.Private.Results{
 				res.Append(" \n\t setCookie('"+CstWeb.Cookies.SpotFileType+"','"+REAL_MEDIA_PLAYER_FORMAT+"');");
 				res.Append(" \n } "); 
 				res.Append("\n else{ ");
-                res.Append(" document.write('<TD><TABLE height=\"326\" cellPadding=\"5\" width=\"368\" align=\"center\" class=\"whiteBackGround\"><TBODY><TR><TD>');");
+                res.Append(" document.write('<TD><TABLE height=\"326\" cellPadding=\"5\" width=\"368\" align=\"center\" class=\"backGroundWhite\"><TBODY><TR><TD>');");
 				res.Append("\n  document.write('"+DownLoadPlayerRender(windowsFormatFound, realFormatFound,_webSession)+"');");
 				res.Append("  document.write('</TD></TR></TBODY></TABLE></TD>');");
 				res.Append("\n } "); 
@@ -606,7 +606,7 @@ namespace AdExpress.Private.Results{
 			StringBuilder res = new StringBuilder(2000);
 			res.Append("<script language=\"JavaScript\" type=\"text/javascript\">"); 			
 			res.Append(" function GetObjectWindowsMediaPlayerRender(filepath){");
-            res.Append(" document.write('<TD><TABLE height=\"326\" cellPadding=\"5\" width=\"368\" align=\"center\" class=\"whiteBackGround\"><TBODY><TR><TD>');");
+            res.Append(" document.write('<TD><TABLE height=\"326\" cellPadding=\"5\" width=\"368\" align=\"center\" class=\"backGroundWhite\"><TBODY><TR><TD>');");
 			//Lecture par Media player
 			res.Append(" document.write('<object id=\"video1\"  classid=\"CLSID:22D6F312-B0F6-11D0-94AB-0080C74C7E95\" height=\"288\" width=\"352\" align=\"middle\"  codebase=\"http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=6,4,5,715\"  standby=\""+GestionWeb.GetWebWord(1911,siteLanguage)+"\" type=\"application/x-oleobject\">');"); 			
 			res.Append(" document.write('<param name=\"FileName\" value='+filepath+' >');");
@@ -629,7 +629,7 @@ namespace AdExpress.Private.Results{
 			StringBuilder res = new StringBuilder(2000);
 			res.Append("<script language=\"JavaScript\" type=\"text/javascript\">");		
 			res.Append(" function GetObjectRealPlayer(filepath){");
-            res.Append(" document.write('<TD><TABLE height=\"326\" cellPadding=\"5\" width=\"368\" align=\"center\" class=\"whiteBackGround\"><TBODY><TR><TD>');");
+            res.Append(" document.write('<TD><TABLE height=\"326\" cellPadding=\"5\" width=\"368\" align=\"center\" class=\"backGroundWhite\"><TBODY><TR><TD>');");
 			//Lecture par Real player
 			res.Append(" document.write('<object classid=\"clsid:CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA\"  ID=\"Realaudio1\" height=\"288\" width=\"352\">');");
 			res.Append(" document.write('<param name=\"console\" value=\"video\">');");

@@ -243,7 +243,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// </summary>
 		[Bindable(true),DefaultValue("txtNoir11Bold"),
 		Description("classe de style")]
-		protected string cssClass = "txtNoir11Bold";
+        protected string cssClass = "txtNoir11Bold";
 		/// <summary></summary>
 		public string CommonCssClass{
 			get{return cssClass;}
@@ -820,7 +820,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			if(percentage){
 				percentageCheckBox=new  System.Web.UI.WebControls.CheckBox();
 				percentageCheckBox.ID="_percentage";
-				percentageCheckBox.CssClass=cssClass;
+                percentageCheckBox.CssClass = "checkBoxOption";
 				percentageCheckBox.AutoPostBack=autoPostBackOption;
 				percentageCheckBox.Text=GestionWeb.GetWebWord(1588,customerWebSession.SiteLanguage);				
 				percentageCheckBox.Checked=customerWebSession.Percentage;
@@ -834,7 +834,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				PdmCheckBox=new System.Web.UI.WebControls.CheckBox();
 				PdmCheckBox.ID=this.ID + "_pdm";
 				PdmCheckBox.ToolTip = GestionWeb.GetWebWord(1179,customerWebSession.SiteLanguage);
-				PdmCheckBox.CssClass=cssClass;
+                PdmCheckBox.CssClass = "checkBoxOption";
 				PdmCheckBox.AutoPostBack=autoPostBackOption;				  
 				PdmCheckBox.Text=GestionWeb.GetWebWord(806,customerWebSession.SiteLanguage);
 				PdmCheckBox.Checked=customerWebSession.PDM;
@@ -848,7 +848,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				PdvCheckBox=new System.Web.UI.WebControls.CheckBox();
 				PdvCheckBox.ID=this.ID + "_pdv";
 				PdvCheckBox.ToolTip = GestionWeb.GetWebWord(1180,customerWebSession.SiteLanguage);
-				PdvCheckBox.CssClass=cssClass;
+                PdvCheckBox.CssClass = "checkBoxOption";
 				PdvCheckBox.AutoPostBack=autoPostBackOption;
 				PdvCheckBox.Text=GestionWeb.GetWebWord(1166,customerWebSession.SiteLanguage);
 				PdvCheckBox.Checked=customerWebSession.PDV;
@@ -860,7 +860,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			if(evolutionOption){
 				EvolutionCheckBox=new System.Web.UI.WebControls.CheckBox();
 				EvolutionCheckBox.ID=this.ID + "_evol";
-				EvolutionCheckBox.CssClass=cssClass;
+                EvolutionCheckBox.CssClass = "checkBoxOption";
 				EvolutionCheckBox.ToolTip = GestionWeb.GetWebWord(1178,customerWebSession.SiteLanguage);
 				EvolutionCheckBox.AutoPostBack=autoPostBackOption;
 				EvolutionCheckBox.Text=GestionWeb.GetWebWord(1168,customerWebSession.SiteLanguage);
@@ -876,7 +876,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				CumulPeriodCheckBox=new System.Web.UI.WebControls.CheckBox();
 				CumulPeriodCheckBox.ID="_cumulPeriodCheckBox";
 				CumulPeriodCheckBox.ToolTip = GestionWeb.GetWebWord(1528,customerWebSession.SiteLanguage);
-				CumulPeriodCheckBox.CssClass=cssClass;
+                CumulPeriodCheckBox.CssClass = "checkBoxOption";
 				CumulPeriodCheckBox.AutoPostBack=autoPostBackOption;				
 				CumulPeriodCheckBox.Attributes["onclick"]="javascript:SelectPeriod('_cumulPeriodCheckBox');";  				
 				CumulPeriodCheckBox.Text=GestionWeb.GetWebWord(1527,customerWebSession.SiteLanguage);				
@@ -990,7 +990,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 AutopromoEvaliantCheckBox = new System.Web.UI.WebControls.CheckBox();
                 AutopromoEvaliantCheckBox.ID = this.ID + "_autopromoEvaliant";
                 AutopromoEvaliantCheckBox.ToolTip = GestionWeb.GetWebWord(2476, customerWebSession.SiteLanguage);
-                AutopromoEvaliantCheckBox.CssClass = cssClass;
+                AutopromoEvaliantCheckBox.CssClass = "checkBoxOption";
                 AutopromoEvaliantCheckBox.AutoPostBack = autoPostBackOption;
                 AutopromoEvaliantCheckBox.Text = GestionWeb.GetWebWord(2476, customerWebSession.SiteLanguage);
                 AutopromoEvaliantCheckBox.Checked = customerWebSession.AutopromoEvaliant;
@@ -1190,7 +1190,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				output.Write("\n<tr>");
                 output.Write("\n<td style=\"HEIGHT: 14px\" vAlign=\"top\"><IMG height=\"12\" src=\"/App_Themes/" + themeName + "/Images/Common/block_fleche.gif\" width=\"12\"></td>");
                 output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" background=\"/App_Themes/" + themeName + "/Images/Common/block_dupli.gif\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"13\"></td>");
-				output.Write("\n<td class=\"txtNoir11Bold\" style=\"PADDING-RIGHT: 5px; PADDING-LEFT: 5px; TEXT-TRANSFORM: uppercase; HEIGHT: 14px\" width=\"100%\">"+GestionWeb.GetWebWord(792,customerWebSession.SiteLanguage)+"</td>");
+                output.Write("\n<td class=\"txtNoir11Bold backGroundModuleTitle\" style=\"PADDING-RIGHT: 5px; PADDING-LEFT: 5px; TEXT-TRANSFORM: uppercase; HEIGHT: 14px\" width=\"100%\">" + GestionWeb.GetWebWord(792, customerWebSession.SiteLanguage) + "</td>");
                 output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"1\"></td>");
 				output.Write("\n</tr>");
 				output.Write("\n<tr>");
@@ -1208,7 +1208,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			//option detail media
 			if (mediaDetailOption){
 				output.Write("\n<tr>");
-				output.Write("\n<td class=\"txtGris11Bold\">");
+				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1150,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
@@ -1226,7 +1226,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
             if (insertOption && WebApplicationParameters.AllowInsetOption)
             {
 				output.Write("\n<tr>");
-				output.Write("\n<td class=\"txtGris11Bold\">");
+				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1400,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
@@ -1255,7 +1255,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			//option choix d'une famille
 			if (sectorListOption){
 				output.Write("\n<tr>");
-				output.Write("\n<td class=\"txtGris11Bold\">");
+				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1103,customerWebSession.SiteLanguage)+" : ");
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
@@ -1272,7 +1272,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			//option choix d'une centre d'interet
 			if (interestCenterListOption){
 				output.Write("\n<tr>");
-				output.Write("\n<td class=\"txtGris11Bold\">");
+				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1576,customerWebSession.SiteLanguage)+" : ");
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
@@ -1288,7 +1288,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			//option unité
 			if (unitOption){
 				output.Write("\n<tr>");
-				output.Write("\n<td class=\"txtGris11Bold\">");
+				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(849,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
@@ -1305,7 +1305,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			//Option choix du format spots
 			if (formatOption){
 				output.Write("\n<tr>");
-				output.Write("\n<td class=\"txtGris11Bold\">");
+				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1420,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
@@ -1321,7 +1321,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			//Option choix d'un jour nommé
 			if (namedDayOption){
 				output.Write("\n<tr>");
-				output.Write("\n<td class=\"txtGris11Bold\">");
+				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1574,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
@@ -1337,7 +1337,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			//Option choix d'une tranche horaire
 			if (timeIntervalOption){
 				output.Write("\n<tr>");
-				output.Write("\n<td class=\"txtGris11Bold\">");
+				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1575,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
@@ -1353,7 +1353,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			//Option choix d'un mois
 			if (monthlyDateOption){
 				output.Write("\n<tr>");
-				output.Write("\n<td class=\"txtGris11Bold\">");
+				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1526,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
@@ -1369,7 +1369,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			//Option choix d'une semaine
 			if (weeklyDateOption){
 				output.Write("\n<tr>");
-				output.Write("\n<td class=\"txtGris11Bold\">");
+				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1525,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
@@ -1385,7 +1385,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			//option format de tableau
 			if (tblChoiceOption){
 				output.Write("\n<tr>");
-				output.Write("\n<td class=\"txtGris11Bold\">");
+				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1140,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
@@ -1401,7 +1401,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			//options PDM ,PDV,cumul date,pourcentage
 			if (pdmOption || pdvOption || percentage || cumulPeriodOption){
 				output.Write("\n<tr>");
-				output.Write("\n<td>");
+                output.Write("\n<td>");
 				if(cumulPeriodOption){					
 					CumulPeriodCheckBox.RenderControl(output);
 					output.Write("&nbsp;&nbsp;");

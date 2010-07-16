@@ -18,34 +18,29 @@
 	</head>
 	<body class="bodyStyle" onload="javascript:activateActiveX();">
 		<form id="Form2" method="post" runat="server">
-			<table cellSpacing="0" cellPadding="0" border="0">
+			<table cellspacing="0" cellpadding="0" border="0">
+			    <!-- Gradient -->
+			    <tr>
+			        <td colspan="7" height="3" class="gradientBar"></td>
+			    </tr>
 				<tr>
 					<!-- marge de gauche-->
-					<td vAlign="top">
-						<table cellSpacing="0" cellPadding="0" border="0">
-							<tr>
-								<td><asp:Image runat="server" height="100" width="10" SkinID="logo_cote_gauche" /></td>
-							</tr>
-							<tr>
-								<td class="whiteBackGround"><asp:Image runat="server" height="1" width="1" SkinID="pixel" /></td>
-							</tr>
-						</table>
+					<td vAlign="top" class="whiteBackGround">
+						<asp:Image ID="Image4" runat="server" height="100" width="10" SkinID="logo_cote_gauche" />
 					</td>
+					
 					<!-- menu -->
-					<td vAlign="top" class="imageBackGround">
+					<td vAlign="top" class="whiteBackGround">
 						<table cellSpacing="0" cellPadding="0" border="0">
 							<tr vAlign="top" class="whiteBackGround">
 								<!-- Logo -->
 								<td><asp:Image runat="server" height="90" width="185" SkinID="logoTNShome" /></td>
 							</tr>
 							<tr>
-								<td><asp:Image runat="server" height="5" width="185" SkinID="plus_sous_logo" /></td>
-							</tr>
-							<tr>
 								<td><asp:Image runat="server" height="40" width="1" SkinID="pixel" /></td>
 							</tr>
 							<tr>
-								<td class="txtNoir11Bold whiteBackGround" width="185" height="9">
+								<td class="txtBlanc11Bold whiteBackGround" width="185" height="9">
 									<p class="paragraphePadding tableFont">
 										<cc1:AdExpressText language="33" id="AdExpressText3" runat="server" Code="821"></cc1:AdExpressText>
 									</p>
@@ -54,8 +49,12 @@
 							<tr>
 								<td><asp:Image runat="server" height="10" width="1" SkinID="pixel" /></td>
 							</tr>
+							
+							<!-- HR -->
+							<tr><td><hr/></td></tr>
 							<tr>
 								<td class="whiteBackGround">
+								    <!-- login / password / button -->
 									<table id="Table4" cellspacing="0" cellpadding="0" border="0">
 										<tr>
 											<td colspan="2"><asp:Image runat="server" height="5" width="6" SkinID="pixel" /></td>
@@ -84,43 +83,25 @@
 									</table>
 								</td>
 							</tr>
+							<!-- HR -->
+							<tr><td><hr/></td></tr>
 						</table>
 					</td>
-					<!-- Séparateur -->
-					<td vAlign="top">
-						<table id="Table5" cellSpacing="0" cellPadding="0" border="0">
-							<tr>
-								<td><asp:Image runat="server" height="100" width="5" SkinID="logo_cote_droit" /></td>
-							</tr>
-							<tr>
-								<td class="whiteBackGround"><asp:Image runat="server" height="1" width="1" SkinID="pixel" /></td>
-							</tr>
-						</table>
-					</td>
-					<td class="violetBackGround"><asp:Image runat="server" height="1" width="1" SkinID="pixel" /></td>
-					<td width="10" class="imageBackGround">&nbsp;</td>
-					<td  width="10" class="whiteBackGround">&nbsp;</td>
-					<!-- droite-->
+					
+					<!-- New separator -->
+					<td vAlign="top" class="whiteBackGround"><asp:Image ID="Image3" runat="server" height="100" width="5" SkinID="logo_cote_droit" /></td>
+					<td class="lineVerticalBackGround2px"><asp:Image runat="server" height="1" width="2" SkinID="pixel" /></td>
+					<td class="lineVerticalBackGround1px"><asp:Image ID="Image1" runat="server" height="1" width="2" SkinID="pixel" /></td>
+					<td class="lineVerticalBackGround"><asp:Image ID="Image2" runat="server" height="1" width="2" SkinID="pixel" /></td>
+					
+					<!-- Right column -->
 					<td>
 						<table cellSpacing="0" cellPadding="0" border="0">
+						    <!-- Menu haut -->
 							<tr>
-								<!-- Menu du haut-->
-								<td>
-									<cc3:HeaderWebControl id="HeaderWebControl1" runat="server"></cc3:HeaderWebControl></td>
+								<td><cc3:HeaderWebControl id="HeaderWebControl1" runat="server"></cc3:HeaderWebControl></td>
 							</tr>
-							<tr>
-								<!-- ligne du haut a droite -->
-								<td class="dupli3BackGround">
-									<table id="Table2" cellSpacing="0" cellPadding="0" width="100%" border="0">
-										<tr>
-											<td vAlign="top" align="left"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></td>
-											<td><asp:Image runat="server" height="17" width="1" SkinID="pixel" /></td>
-											<td vAlign="top" align="right"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-							<!-- Centre -->
+							<!-- Flash Homepage -->
 							<tr>
 								<td>
 								    <cc3:FlashWebControl ID="flashWebControl1" runat="server" Width="733" Height="484"></cc3:FlashWebControl>
@@ -128,35 +109,7 @@
 							</tr>
 						</table>
 					</td>
-					<!-- la fin -->
-					<td></td>
 				</tr>
-				<!-- ligne du bas a droite -->
-				<TR height="5">
-					<TD></TD>
-					<TD valign="top" class="imageBackGround">
-						<TABLE id="Table7" cellSpacing="0" cellPadding="0" width="100%" border="0">
-							<TR>
-								<TD vAlign="top"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></TD>
-								<TD></TD>
-								<TD vAlign="top" align="right"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></TD>
-							</TR>
-						</TABLE>
-					</TD>
-					<TD></TD>
-					<TD class="violetBackGround"></TD>
-					<TD class="imageBackGround"></TD>
-					<TD></TD>
-					<TD id="dellCel" valign="top" class="imageBackGround">
-						<TABLE id="Table8" cellSpacing="0" cellPadding="0" width="100%" border="0">
-							<TR>
-								<TD vAlign="top"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></TD>
-								<TD></TD>
-								<TD vAlign="top" align="right"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></TD>
-							</TR>
-						</TABLE>
-					</TD>
-				</TR>
 			</table>
 		</form>
 	</body>

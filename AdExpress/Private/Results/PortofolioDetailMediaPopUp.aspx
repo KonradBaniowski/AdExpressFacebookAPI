@@ -17,7 +17,7 @@
 	<body class="darkBackGround" bottomMargin="25" leftMargin="0" topMargin="25" rightMargin="0" onload="javascript:activateActiveX();">
 		<form id="Form1" method="post" runat="server">
 			<cc1:MenuWebControl id="MenuWebControl2" runat="server"></cc1:MenuWebControl>
-			<table border="0" width="100%" align="center" cellpadding="0" cellspacing="0" class="whiteBackGround">
+			<table border="0" width="100%" align="center" cellpadding="0" cellspacing="0" class="backGroundWhite">
 				<tr>
 					<td>
 						<cc1:InformationWebControl id="InformationWebControl1" runat="server" InLeftMenu="False"></cc1:InformationWebControl>

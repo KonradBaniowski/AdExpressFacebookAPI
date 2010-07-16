@@ -317,7 +317,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             #region No Data
             if (tab.GetLongLength(0) == 0)
             {
-                t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+                t.Append("<table class=\"backGroundWhite\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
                 t.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
                 if (classifLevel == CstResult.MotherRecap.ElementType.advertiser)
                 {
@@ -393,7 +393,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 			//}
 			#endregion
 
-			t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+			t.Append("<table class=\"backGroundWhite\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
 
             #region Headers
             t.Append("\r\n\t<tr height=\"30px\" >");
@@ -582,7 +582,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 if (periodBegin.Year.Equals(System.DateTime.Now.Year - 3))
                 {
-                    t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+                    t.Append("<table class=\"backGroundWhite\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
                     t.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
                     t.Append(GestionWeb.GetWebWord(177, _session.SiteLanguage));
                     t.Append("</td></tr></table>");
@@ -593,7 +593,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 if (periodBegin.Year.Equals(System.DateTime.Now.Year - 2))
                 {
-                    t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+                    t.Append("<table class=\"backGroundWhite\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
                     t.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
                     t.Append(GestionWeb.GetWebWord(177, _session.SiteLanguage));
                     t.Append("</td></tr></table>");

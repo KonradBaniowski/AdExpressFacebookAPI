@@ -960,7 +960,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
             else
                 js.Append("\r\n\t\t sb.append('<tr> <td align=\"center\" class=\"resultTableWithoutBorder\">');");
 
-            js.Append("\r\n\t\t sb.append('<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0>');");
+            js.Append("\r\n\t\t sb.append('<table class=\"backGroundWhite\" border=0 cellpadding=0 cellspacing=0>');");
 			//for (int n = 0; n < _nbTableBeginningLinesToRepeat; n++) {
             for (int n = 0; n < 1; n++)
             {

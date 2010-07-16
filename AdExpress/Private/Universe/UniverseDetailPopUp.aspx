@@ -26,16 +26,16 @@
 				<!--Annonceurs / Références ...-->
 				<TR>
 					<TD style="HEIGHT: 18px"></TD>
-					<TD class="txtViolet11Bold whiteBackGround" style="HEIGHT: 18px">&nbsp;
+					<TD class="txtViolet11Bold backGroundWhite" style="HEIGHT: 18px">&nbsp;
 						<cc1:adexpresstext language="33" id="advertiserAdexpressText" runat="server" Code="0"></cc1:adexpresstext></TD>
 				</TR>
 				<TR height="20">
 					<TD></TD>
-					<TD vAlign="top" align="center" class="whiteBackGround"><%=advertiserText%></TD>
+					<TD vAlign="top" align="center" class="backGroundWhite"><%=advertiserText%></TD>
 				</TR>
 				<TR height="5">
 					<TD></TD>
-					<TD class="whiteBackGround"></TD>
+					<TD class="backGroundWhite"></TD>
 				</TR>
 				<TR height="7">
 					<TD colSpan="2"></TD>

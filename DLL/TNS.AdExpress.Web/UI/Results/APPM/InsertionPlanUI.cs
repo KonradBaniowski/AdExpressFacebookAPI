@@ -51,13 +51,13 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
             IFormatProvider fp = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo;
 
 			if (dtResult.Rows.Count > 0){
-                html.Append("<TABLE  class=\"insertionBorderV2 whiteBackGround\"");
+                html.Append("<TABLE  class=\"insertionBorderV2 backGroundWhite\"");
 				html.Append("cellPadding=\"0\" cellSpacing=\"1\" align=\"center\" border=\"0\">");					
 
-				#region TEMP : Info sur le clic droit de la souris
+				#region Info sur le clic droit de la souris
 				if (!excel){
 					html.Append("<tr><td>");
-					html.Append("\n<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#DED8E5\">");
+                    html.Append("\n<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"headerTabBackGround\">");
 					html.Append("\n<tr><td>");
 					html.Append("\n<script language=\"javascript\" type=\"text/javascript\">");
 					html.Append("\nif(hasRightFlashVersion==true){");

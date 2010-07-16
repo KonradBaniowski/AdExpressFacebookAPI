@@ -90,21 +90,21 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 description=GestionWeb.GetWebWord(codeDescription, customerWebSession.SiteLanguage);
             }
 
-		    output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"whiteBackGround\">");
+            output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"backGroundModuleTitleBorder\">");
 		    output.Write("\n<tr>");
 		    output.Write("\n<td>");
 		    //debut tableau titre
-		    output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
+            output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
 		    output.Write("\n<TR>");
 		    output.Write("\n<TD height=\"5\"></TD>");
 		    output.Write("\n</TR>");
 		    output.Write("\n<tr>");
 		    output.Write("\n<td class=\"headerLeft\" colSpan=\"4\"><IMG height=\"1\" src=\"/App_Themes/"+themeName+"/Images/Common/pixel.gif\"></td>");
 		    output.Write("\n</tr>");
-		    output.Write("\n<tr>");
+            output.Write("\n<tr>");
 		    output.Write("\n<td style=\"HEIGHT: 14px\" vAlign=\"top\"><IMG height=\"12\" src=\""+blockFlechePath+"\" width=\"12\"></td>");
 		    output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" background=\""+blockDupliPath+"\"><IMG height=\"1\" src=\"/App_Themes/"+themeName+"/Images/Common/pixel.gif\" width=\"13\"></td>");
-            output.Write("\n<td class=\"txtNoir11Bold " + titleUppercaseCss + "\" width=\"100%\">"
+            output.Write("\n<td class=\"txtNoir11Bold backGroundModuleTitle " + titleUppercaseCss + "\" width=\"100%\">"
 			    +moduleTitle
 			    +"</td>");
             output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\" width=\"1\"></td>");
@@ -122,7 +122,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		    output.Write("\n<TD height=\"5\"></TD>");
 		    output.Write("\n</TR>");
 		    output.Write("\n<tr>");
-		    output.Write("\n<td class=\"txtGris11Bold\">");
+            output.Write("\n<td class=\"txtBlanc11Bold\">");
             output.Write(description);
 		    output.Write("\n</td>");
 		    output.Write("\n</tr>");

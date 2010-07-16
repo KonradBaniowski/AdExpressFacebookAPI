@@ -296,7 +296,7 @@ namespace TNS.AdExpress.Web.UI.Results {
 						if(tab[i,ResultConstantes.ID_ELMT_L1_COLUMN_INDEX]!=null && tab[i,ResultConstantes.ID_ELMT_L2_COLUMN_INDEX]==null && tab[i,ResultConstantes.ID_ELMT_L3_COLUMN_INDEX]==null){
 							classCss="acl11";
 							if(!label1){
-                                html.Append("\r\n\t<tr align=\"right\"  class=\"whiteBackGround\" height=\"20px\" >\r\n\t\t<td align=\"left\" class=\"" + classCss + "\" nowrap >" + (tab[i, ResultConstantes.LABEL_ELMT_L1_COLUMN_INDEX].ToString()) + "</td>");
+                                html.Append("\r\n\t<tr align=\"right\"  class=\"backGroundWhite\" height=\"20px\" >\r\n\t\t<td align=\"left\" class=\"" + classCss + "\" nowrap >" + (tab[i, ResultConstantes.LABEL_ELMT_L1_COLUMN_INDEX].ToString()) + "</td>");
 								label1=true;	
 								tempoLabel2= tempoLabel1;
 							}
@@ -320,8 +320,8 @@ namespace TNS.AdExpress.Web.UI.Results {
 							if(!label2){
 								html.Append("</tr>");
 								tempoLabel2= tempoLabel1;
-                                html.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 >");
-                                html.Append("\r\n\t<tr align=\"right\"  class=\"whiteBackGround\" height=\"20px\" >\r\n\t\t<td align=\"left\" class=\"" + classCss + "\" nowrap>" + space2 + "" + (tab[i, ResultConstantes.LABEL_ELMT_L2_COLUMN_INDEX].ToString()) + "</td>");
+                                html.Append("<table class=\"backGroundWhite\" border=0 cellpadding=0 cellspacing=0 >");
+                                html.Append("\r\n\t<tr align=\"right\"  class=\"backGroundWhite\" height=\"20px\" >\r\n\t\t<td align=\"left\" class=\"" + classCss + "\" nowrap>" + space2 + "" + (tab[i, ResultConstantes.LABEL_ELMT_L2_COLUMN_INDEX].ToString()) + "</td>");
 								tempId=int.Parse(tab[i,ResultConstantes.ID_ELMT_L2_COLUMN_INDEX].ToString());
 							}
 						}
@@ -337,8 +337,8 @@ namespace TNS.AdExpress.Web.UI.Results {
 							if(!label3){
 								html.Append("</tr>");
 								tempoLabel2= tempoLabel1;
-                                html.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 >");
-                                html.Append("\r\n\t<tr align=\"right\"  class=\"whiteBackGround\" height=\"20px\" >\r\n\t\t<td align=\"left\" class=\"" + classCss + "\" nowrap>" + space3 + "" + (tab[i, ResultConstantes.LABEL_ELMT_L3_COLUMN_INDEX].ToString()) + "</td>");
+                                html.Append("<table class=\"backGroundWhite\" border=0 cellpadding=0 cellspacing=0 >");
+                                html.Append("\r\n\t<tr align=\"right\"  class=\"backGroundWhite\" height=\"20px\" >\r\n\t\t<td align=\"left\" class=\"" + classCss + "\" nowrap>" + space3 + "" + (tab[i, ResultConstantes.LABEL_ELMT_L3_COLUMN_INDEX].ToString()) + "</td>");
 								tempId=int.Parse(tab[i,ResultConstantes.ID_ELMT_L3_COLUMN_INDEX].ToString());
 							}
 						}
@@ -496,7 +496,7 @@ namespace TNS.AdExpress.Web.UI.Results {
 					}else classCss="acl1";
 								
 					if(!label1){
-                        html.Append("\r\n\t<tr align=\"right\"  class=\"whiteBackGround\" height=\"20px\" >\r\n\t\t<td align=\"left\"  class=\"" + classCss + "\" nowrap >" + tab[i, ResultConstantes.LABEL_ELMT_L1_COLUMN_INDEX].ToString() + "</td>");
+                        html.Append("\r\n\t<tr align=\"right\"  class=\"backGroundWhite\" height=\"20px\" >\r\n\t\t<td align=\"left\"  class=\"" + classCss + "\" nowrap >" + tab[i, ResultConstantes.LABEL_ELMT_L1_COLUMN_INDEX].ToString() + "</td>");
 						html.Append("<td class=\""+classCss+"\" nowrap colspan="+nbCol+" >&nbsp;</td>");
 						html.Append("</tr>");
 						label1=true;

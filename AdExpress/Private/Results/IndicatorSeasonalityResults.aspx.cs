@@ -21,23 +21,18 @@ using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using System.Windows.Forms;
 using Oracle.DataAccess.Client;
-
 using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstPreformatedDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
 using CstComparisonCriterion = TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
-
-
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Web.Translation.Functions;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using TNS.AdExpress.Web.Core.Sessions;
-
-
 #endregion
 
 namespace AdExpress.Private.Results {
@@ -166,7 +161,7 @@ namespace AdExpress.Private.Results {
                     totalRadioButtonList.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1189, _webSession.SiteLanguage), TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.sectorTotal.GetHashCode().ToString()));
                     totalRadioButtonList.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1190, _webSession.SiteLanguage), TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.marketTotal.GetHashCode().ToString()));
                     totalRadioButtonList.Items[0].Selected = true;
-                    totalRadioButtonList.CssClass = "txtNoir11";
+                    //totalRadioButtonList.CssClass = "txtGris11Bold";
                     #endregion
 
                     ResultsOptionsWebControl1.GraphRadioButton.Checked = _webSession.Graphics;

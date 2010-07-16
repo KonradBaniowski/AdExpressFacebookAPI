@@ -186,14 +186,14 @@ namespace TNS.AdExpress.Web.Controls.Selections
             string themeName = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
 			int i = 0;
 			if(noneWave){
-				output.Write("<div align=\"center\" class=\"txtViolet11Bold\">"+GestionWeb.GetWebWord(1656,webSession.SiteLanguage)
+                output.Write("<div align=\"center\" class=\"txtBlanc11Bold\">" + GestionWeb.GetWebWord(1656, webSession.SiteLanguage)
                     + "<br><br><a href=\"javascript:history.back()\" onmouseover=\"bouton.src='/App_Themes/" + themeName + "/Images/Culture/button/back_down.gif';\" onmouseout=\"bouton.src = '/App_Themes/" + themeName + "/Images/Culture/button/back_up.gif';\">"
                     + "<img src=\"/App_Themes/" + themeName + "/Images/Culture/button/back_up.gif\" border=0 name=bouton></a>"
 					+"</div><br>");
 			}else{				
 				
 				//cibles supplémentaires
-                output.Write("<tr><td colspan=\"3\" class=\"txtViolet11Bold whiteBackGround\">&nbsp;&nbsp;" + GestionWeb.GetWebWord(code, webSession.SiteLanguage) + "</td></tr><tr><td>");
+                output.Write("<tr><td colspan=\"3\" class=\"txtViolet11Bold backGroundWhite\">&nbsp;&nbsp;" + GestionWeb.GetWebWord(code, webSession.SiteLanguage) + "</td></tr><tr><td>");
                 output.Write("<table id=\"centerTable\" height=\"100%\" cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"txtViolet11Bold lightPurple\">");
 				output.Write("<tr valign=\"top\"><td >");
 

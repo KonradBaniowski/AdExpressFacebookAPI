@@ -19,23 +19,24 @@
 						<cc1:adexpresstext language="33" id="saveTitle" runat="server" Code="1912"></cc1:adexpresstext></td>
 				</tr>
 				<tr>
-					<td colspan="2">
+				    <td></td>
+					<td>
 						<table id="SaveData" cellspacing="0" cellpadding="0" width="100%" border="0">
-							<tr height="35">
+							<tr height="35" class="backGroundWhite">
 								<td class="txtViolet11Bold" width="150"><cc1:adexpresstext language="33" id="FileNameLabel" runat="server" Code="1746"></cc1:adexpresstext></td>
 								<td><asp:textbox id="tbxFileName" runat="server" Width="300px"></asp:textbox></td>
 							</tr>
-							<tr>
+							<tr class="backGroundWhite">
 								<td class="txtViolet11Bold" width="150"><cc1:adexpresstext language="33" id="MailLabel" runat="server" Code="1136"></cc1:adexpresstext></td>
 								<td><asp:textbox id="tbxMail" runat="server" Width="300px"></asp:textbox></td>
 							</tr>
-							<tr>
+							<tr class="backGroundWhite">
 								<td colspan="2">&nbsp;</td>
 							</tr>
-							<tr>
+							<tr class="backGroundWhite">
 								<td class="txtViolet11Bold" colspan="2"><asp:CheckBox id="cbxRegisterMail" runat="server" Visible="False"></asp:CheckBox></td>
 							</tr>
-							<tr>
+							<tr class="backGroundWhite">
 								<td colspan="2">&nbsp;</td>
 							</tr>
 							<tr>

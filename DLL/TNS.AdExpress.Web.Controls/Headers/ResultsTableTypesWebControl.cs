@@ -235,7 +235,6 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		}
 		#endregion
 
-
 		#region Render
 		/// <summary> 
 		/// Génère ce contrôle dans le paramètre de sortie spécifié.
@@ -243,12 +242,12 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// <param name="output"> Le writer HTML vers lequel écrire </param>
 		protected override void Render(HtmlTextWriter output) {
 			//Debut du tableau
-            output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"whiteBackGround\">");
+            output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"backGroundModuleTitleBorder\">");
 
 			//format de tableau
 			
 			output.Write("\n<tr>");
-			output.Write("\n<td class=\"txtGris11Bold\">");
+			output.Write("\n<td class=\"txtBlanc11Bold\">");
 			output.Write(GestionWeb.GetWebWord(1140,customerWebSession.SiteLanguage));
 			output.Write("\n</td>");
 			output.Write("\n</tr>");

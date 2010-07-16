@@ -62,7 +62,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
         private const string COMPONENT_BACK_GROUND = "violetBackGroundV2";
         private const int TRACK_WIDTH = 50;
         private const int TRACK_HEIGHT = 5;
-        private const string WHITE_BACK_GROUND = "whiteBackGround";
+        private const string WHITE_BACK_GROUND = "backGroundWhite";
         #endregion
 
         #region Properties
@@ -562,7 +562,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 }
                 if (labBegin != labEnd)
                 {
-                    sb.AppendFormat("\r\n<tr valign=\"top\"><td witdh=\"1\" class=\"txtViolet12Bold valign=\"top\">{0} {1} {2} {3}</td></tr>",
+                    sb.AppendFormat("\r\n<tr valign=\"top\"><td witdh=\"1\" class=\"txtViolet12Bold\" valign=\"top\">{0} {1} {2} {3}</td></tr>",
                         GestionWeb.GetWebWord(896, _webSession.SiteLanguage),
                         labBegin,
                         GestionWeb.GetWebWord(897, _webSession.SiteLanguage),

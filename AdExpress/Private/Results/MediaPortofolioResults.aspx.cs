@@ -392,7 +392,7 @@ namespace AdExpress.Private.Results{
 			base.OnPreRender (e);
 			try{
 
-				#region MAJ _webSession         
+				#region MAJ _webSession
 				_webSession.LastReachedResultUrl=Page.Request.Url.AbsolutePath;
 				_webSession.Save();
 				#endregion

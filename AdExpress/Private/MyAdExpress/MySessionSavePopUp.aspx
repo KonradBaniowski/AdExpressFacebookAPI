@@ -24,16 +24,16 @@
 				</tr>
 				<tr>
 					<td></td>
-					<td class="whiteBackGround"></td>
+					<td class="backGroundWhite"></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td class="txtViolet11Bold whiteBackGround" height="20">&gt;
+					<td class="txtViolet11Bold backGroundWhite" height="20">&gt;
 						<cc2:adexpresstext language="33" id="AdExpressText1" runat="server" Code="702"></cc2:adexpresstext></td>
 				</tr>
 				<tr height="40">
 					<td></td>
-					<td valign="top" class="whiteBackGround">&nbsp;
+					<td valign="top" class="backGroundWhite">&nbsp;
 						<asp:dropdownlist id="directoryDropDownList" runat="server" Width="200px" CssClass="txtNoir11">												
 						</asp:dropdownlist></td>
 				</tr>
@@ -44,12 +44,12 @@
 				<!---Debut liste des résultats-->
 				<tr>
 	                <td></td>
-	                <td class="txtViolet11Bold whiteBackGround" height="20">&gt;
+	                <td class="txtViolet11Bold backGroundWhite" height="20">&gt;
 		                <cc2:adexpresstext language="33" id="AdExpressText3" runat="server" Code="2261"></cc2:adexpresstext></td>
                 </tr>
                 <tr height="40">
 	                <td></td>
-	                <td valign="top" class="whiteBackGround">&nbsp;
+	                <td valign="top" class="backGroundWhite">&nbsp;
 		                <asp:dropdownlist id="sessionDropDownList" runat="server" Width="200px" CssClass="txtNoir11">		                
 		                </asp:dropdownlist></td>
                 </tr>
@@ -60,12 +60,12 @@
 				<!---Fin liste des résultats-->
 				<tr>
 					<td></td>
-					<td class="txtViolet11Bold whiteBackGround" >&gt;
+					<td class="txtViolet11Bold backGroundWhite" >&gt;
 						<cc2:adexpresstext language="33" id="AdExpressText2" runat="server" Code="2263"></cc2:adexpresstext></td>
 				</tr>
 				<tr height="40">
 					<td></td>
-					<td valign="top" class="whiteBackGround">&nbsp;
+					<td valign="top" class="backGroundWhite">&nbsp;
 						<asp:textbox id="mySessionTextBox" runat="server" Width="200px" CssClass="txtNoir11"></asp:textbox></td>
 				</tr>
 				<tr height="20">

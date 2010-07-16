@@ -32,7 +32,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		ToolboxData("<{0}:SegmentSelectionWebControl runat=server></{0}:SegmentSelectionWebControl>")]
 	public class RecapAdvertiserSelectionWebControl : System.Web.UI.WebControls.CheckBoxList
 	{
-		#region Variables		     
+		#region Variables
 		/// <summary>
 		/// Dataset contenant la liste des variétés
 		/// </summary>
@@ -169,7 +169,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				#endregion
 
 				#region Début du tableau global
-                t.Append("<tr vAlign=\"top\" height=\"99%\" align=\"center\" class=\"whiteBackGround\"><td><br><div width=\"80%\" vAlign=\"top\" id=\"advertisers\"><table class=\"divTable\" vAlign=\"top\" cellSpacing=\"0\">");
+                t.Append("<tr vAlign=\"top\" height=\"99%\" align=\"center\" class=\"backGroundWhite\"><td><br><div width=\"80%\" vAlign=\"top\" id=\"advertisers\"><table class=\"divTable\" vAlign=\"top\" cellSpacing=\"0\">");
 				t.Append("<caption class=\"divTable\">" + title + "</caption>");
 				t.Append("<tr><td colspan=\"3\"><a href=\"javascript: SelectAllChilds('advertisers')\" title=\""+GestionWeb.GetWebWord(816,webSession.SiteLanguage)+"\" class=\"roll04\">"+GestionWeb.GetWebWord(816,webSession.SiteLanguage)+"</a></a></td></tr>");
 				#endregion
@@ -195,7 +195,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			#region Pas d'annonceurs
 			else
 			{
-                t.Append("<tr vAlign=\"top\" ><td class=\"whiteBackGround txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+                t.Append("<tr vAlign=\"top\" ><td class=\"backGroundWhite txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 				t.Append(" "+GestionWeb.GetWebWord(1095,webSession.SiteLanguage)+"</p> ");
 				t.Append(" </td> ");
 				t.Append(" </tr> ");

@@ -253,10 +253,10 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 					t=new StringBuilder(3500);
 					t.Append("<table  border=0 cellpadding=0 cellspacing=0 width=600 >");			
 
-					#region TEMP : Info sur le clic droit de la souris
-					if(!excel){file:///C:\Dev\Csharp2\AdExpress International Demo\Trunk\AdExpress\App_Themes\DefaultAdExpressFr\Images\Common\block_fleche.gif
+					#region Info sur le clic droit de la souris
+					if(!excel){
 						t.Append("<tr><td colspan=2>");
-                        t.Append("\n<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"lightPurple\">");
+                        t.Append("\n<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"headerTabBackGround\">");
 						t.Append("\n<tr><td>");
 						t.Append("\n<script language=\"javascript\" type=\"text/javascript\">");
 						t.Append("\nif(hasRightFlashVersion==true){");
@@ -278,7 +278,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 					#endregion
 
 					//titre
-                    t.Append("\r\n\t<tr height=\"30px\"><td colspan=2 class=\"p2\" align=\"center\" class=\"synthesisUiTitle\">" + GestionWeb.GetWebWord(2003, webSession.SiteLanguage) + "</td></tr>");	
+                    t.Append("\r\n\t<tr height=\"30px\"><td colspan=2 align=\"center\" class=\"synthesisUiTitle\">" + GestionWeb.GetWebWord(2003, webSession.SiteLanguage) + "</td></tr>");	
 						
 						//Numéro de version
 						t.Append("\r\n\t<tr ><td class=\""+styleTitle+"\" width=50%>"+GestionWeb.GetWebWord(2005,webSession.SiteLanguage)+" : "+"</td><td class=\""+styleValue+"\" width=50%>&nbsp;&nbsp;&nbsp;&nbsp;"+synthesisData["version"]+"</td></tr>");

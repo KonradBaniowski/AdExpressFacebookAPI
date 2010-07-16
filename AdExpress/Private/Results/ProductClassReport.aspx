@@ -24,145 +24,108 @@
 	<body onclick="<%=scriptBody%>" class="bodyStyle" onload="javascript:activateActiveX();">
 		<form id="Form2" method="post" runat="server">
 			<table height="600" cellSpacing="0" cellPadding="0" width="800" border="0">
+				<!-- Gradient -->
+				<tr>
+					<td colspan="7" height="3" class="gradientBar"></td>
+				</tr>
 				<tr>
 					<!-- marge de gauche-->
-					<td vAlign="top">
+					<td vAlign="top" class="whiteBackGround">
+						<asp:Image ID="Image1" runat="server" height="100" width="10" SkinID="logo_cote_gauche" />
+					</td>
+					
+					<!-- menu -->
+					<td vAlign="top" class="whiteBackGround">
 						<table cellSpacing="0" cellPadding="0" border="0">
-							<tr>
-								<td><asp:Image runat="server" height="100" width="10" SkinID="logo_cote_gauche" /></td>
+							<tr vAlign="top" class="whiteBackGround logoCoteDroitBackGround">
+								<!-- Logo -->
+								<td><asp:Image ID="Image2" runat="server" border="0" SkinID="logo" /></td>
 							</tr>
 							<tr>
-								<td class="whiteBackGround"><asp:Image runat="server" height="1" width="1" SkinID="pixel" /></td>
+								<td class="txtBlanc11Bold" width="185" height="9">
+									
+									<table id="Table6" cellspacing="0" cellpadding="0" width="10" border="0">
+										<tr>
+											<td><asp:Image ID="Image3" runat="server" height="5" SkinID="plus_sous_logo" /></td>
+										</tr>
+										<tr>
+											<td><asp:Image ID="Image4" runat="server" height="10" width="1" SkinID="pixel" /></td>
+										</tr>
+										
+										<!-- éléments variables du menus de gauche -->
+										<tr valign="top">
+											<td id="pageTitle">
+												<cc2:moduletitlewebcontrol id="Moduletitlewebcontrol2" runat="server" CodeDescription="900"></cc2:moduletitlewebcontrol>
+											</td>
+										</tr>
+										
+										<!-- Options -->
+										<tr vAlign="top">
+											<td><asp:Image ID="Image5" runat="server" height="10" width="1" SkinID="pixel" /></td>
+										</tr>
+										<tr vAlign="top">
+											<TD vAlign="top"><cc2:resultsoptionswebcontrol id="ResultsOptionsWebControl1" runat="server" EvolutionOption="True" PdvOption="True"
+													PdmOption="True" Width="120px" PreformatedTableOption="True" ShowPictures="True" ResultOption="False"
+													AutoPostBackOption="False" ProductDetailOption="True" MediaDetailOption="True"
+													UnitOption="False" PersonalizedElementsOption="True" InializeAdVertiserOption="True" SkinID="resultsOptionsASDynamicTables"></cc2:resultsoptionswebcontrol></TD><!--MediaOptionOption="True" --><!--2005MI-->
+										</tr>
+										<TR>
+											<TD style="HEIGHT: 12px" vAlign="top"><cc1:imagebuttonrolloverwebcontrol id="ValidateSelectionButton" runat="server" 
+																																											onclick="ValidateSelectionButton_Click" SkinID="okButton"></cc1:imagebuttonrolloverwebcontrol></TD>
+										<tr vAlign="top">
+											<td><asp:Image ID="Image6" runat="server" height="20" width="1" SkinID="pixel" /></td>
+										</tr>
+										<tr vAlign="top">
+											<td><cc2:modulebridgewebcontrol id="ModuleBridgeWebControl1" runat="server"></cc2:modulebridgewebcontrol></td>
+										</tr>
+										
+										<!-- Info bt droit -->
+										<tr>
+											<td><asp:Image ID="Image8" runat="server" height="5" width="1" SkinID="pixel" /></td>
+										</tr>
+										<tr>
+											<td>
+												<cc2:InformationWebControl id="InformationWebControl1" runat="server" 
+                                                    BackGroundColor=""></cc2:InformationWebControl></td>
+										</tr>
+										
+									</table>
+									
+								</td>
+							</tr>
+							<tr>
+								<td><asp:Image ID="Image9" runat="server" height="10" width="1" SkinID="pixel" /></td>
 							</tr>
 						</table>
 					</td>
-					<!-- menu -->
-					<td vAlign="top" width="1%" class="imageBackGround">
-						<table id="tableMenu" cellSpacing="0" cellPadding="0" width="10" border="0">
-							
-								<tr vAlign="top" class="whiteBackGround">
-									<!-- Logo -->
-									<td class="logoCoteDroitBackGround"><asp:Image runat="server" height=90 width=185 SkinID="logo" /></td>
-								</tr>
-								<tr>
-									<td><asp:Image runat="server" height="5" width="185" SkinID="plus_sous_logo" /></td>
-								</tr>
-								<tr>
-									<td><asp:Image runat="server" height="10" width="1" SkinID="pixel" /></td>
-								</tr>
-								<tr vAlign="top">
-									<td><cc2:moduletitlewebcontrol id="Moduletitlewebcontrol2" runat="server" CodeDescription="900"></cc2:moduletitlewebcontrol></td>
-								</tr>
-								<tr vAlign="top">
-									<td><asp:Image runat="server" height="10" width="1" SkinID="pixel" /></td>
-								</tr>
-								<tr vAlign="top">
-									<TD vAlign="top"><cc2:resultsoptionswebcontrol id="ResultsOptionsWebControl1" runat="server" EvolutionOption="True" PdvOption="True"
-											PdmOption="True" Width="120px" PreformatedTableOption="True" ShowPictures="True" ResultOption="False"
-											AutoPostBackOption="False" ProductDetailOption="True" MediaDetailOption="True"
-											UnitOption="False" PersonalizedElementsOption="True" InializeAdVertiserOption="True" SkinID="resultsOptionsASDynamicTables"></cc2:resultsoptionswebcontrol></TD><!--MediaOptionOption="True" --><!--2005MI-->
-								</tr>
-				<TR>
-					<TD style="HEIGHT: 12px" vAlign="top" class="whiteBackGround"><cc1:imagebuttonrolloverwebcontrol id="ValidateSelectionButton" runat="server" 
-					                                                                onclick="ValidateSelectionButton_Click" SkinID="okButton"></cc1:imagebuttonrolloverwebcontrol></TD>
-				<tr vAlign="top" class="whiteBackGround">
-					<td><asp:Image runat="server" height="10" width="1" SkinID="pixel" /></td>
-				</tr>
-				<tr vAlign="top">
-					<td id="premeriEspece"><asp:Image runat="server" height="10" width="1" SkinID="pixel" /></td>
-				</tr>
-				<tr vAlign="top">
-					<td><cc2:modulebridgewebcontrol id="ModuleBridgeWebControl1" runat="server"></cc2:modulebridgewebcontrol></td>
-				</tr>
-				<!-- Info bt droit -->
-				<tr>
-					<td><asp:Image runat="server" height="5" width="1" SkinID="pixel" /></td>
-				</tr>
-				<tr>
-					<td>
-						<cc2:InformationWebControl id="InformationWebControl1" runat="server"></cc2:InformationWebControl></td>
-				</tr>
-			</table>
-			</TD> 
-			<!-- Séparateur -->
-			<td vAlign="top">
-				<table id="Table5" cellSpacing="0" cellPadding="0" border="0">
-					<tr>
-						<td><asp:Image runat="server" height="100" width="5" SkinID="logo_cote_droit" /></td>
-					</tr>
-					<tr>
-						<td class="whiteBackGround"><asp:Image runat="server" height="1" width="1" SkinID="pixel" /></td>
-					</tr>
-				</table>
-			</td>
-			<td class="violetBackGround"><asp:Image runat="server" height="1" width="1" SkinID="pixel" /></td>
-			<td width="10" class="imageBackGround">&nbsp;</td>
-			<td width="10" class="whiteBackGround">&nbsp;</td>
-			<!-- droite-->
-			<td vAlign="top" class="imageBackGround">
-				<table cellSpacing="0" cellPadding="0" border="0">
-					<tr>
-						<!-- Menu du haut-->
-						<td><cc2:headerwebcontrol language="33" id="HeaderWebControl1" runat="server" Type_de_page="generic"></cc2:headerwebcontrol></td>
-					</tr>
-					<tr>
-						<!-- ligne du haut a droite -->
-						<td>
-							<table id="Table2" cellSpacing="0" cellPadding="0" width="100%" border="0">
-								<tr>
-									<td vAlign="top" align="left"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></td>
-									<td><asp:Image runat="server" height="17" width="1" SkinID="pixel" /></td>
-									<td vAlign="top" align="right"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></td>
-								</tr>
-							</table>
-						</td>
-					</tr>
-					<!-- Centre -->
-					<tr>
-						<td class="whiteBackGround" height="10"></td>
-					</tr>
-					<tr width="100%">
-						<!-- Tableau de Résultat -->
-						<td style="HEIGHT: 19px" align="center" class="whiteBackGround">
-                            <cc5:ProductClassReportWebControl ID="ResultWebControl1" runat="server" SkinID="productClassResultTable" AllowPaging="true" AllowRepeatHeader="true" AjaxProTimeOut="240" />
-                            <%=result%>
-						</td>
-					</tr>
-					<tr>
-						<td class="whiteBackGround" height="10"></td>
-					</tr>
-				</table>
-			</td>
-			<!-- la fin -->
-			<td></td>
-			</TR> 
-			<!-- ligne du bas a droite -->
-			<TR height="5">
-				<TD></TD>
-				<TD vAlign="top" class="imageBackGround">
-					<TABLE id="Table7" cellSpacing="0" cellPadding="0" width="100%" border="0">
-						<TR>
-							<TD vAlign="top"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></TD>
-							<TD></TD>
-							<TD vAlign="top" align="right"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></TD>
-						</TR>
-					</TABLE>
-				</TD>
-				<TD></TD>
-				<TD></TD>
-				<TD></TD>
-				<TD></TD>
-				<TD id="dellCel" vAlign="top" class="imageBackGround">
-					<TABLE id="Table8" cellSpacing="0" cellPadding="0" width="100%" border="0">
-						<TR>
-							<TD vAlign="top"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></TD>
-							<TD>
-								<cc2:MenuWebControl id="MenuWebControl2" runat="server"></cc2:MenuWebControl></TD>
-							<TD vAlign="top" align="right"><asp:Image runat="server" height="5" width="5" SkinID="croix" /></TD>
-						</TR>
-					</TABLE>
-				</TD>
-			</TR>
+					
+					<!-- New separator -->
+					<td vAlign="top" class="whiteBackGround"><asp:Image ID="Image10" runat="server" height="100" width="5" SkinID="logo_cote_droit" /></td>
+					<td class="lineVerticalBackGround2px"><asp:Image ID="Image11" runat="server" height="1" width="2" SkinID="pixel" /></td>
+					<td class="lineVerticalBackGround1px"><asp:Image ID="Image12" runat="server" height="1" width="2" SkinID="pixel" /></td>
+					<td class="lineVerticalBackGround"><asp:Image ID="Image13" runat="server" height="1" width="2" SkinID="pixel" /></td>
+					
+					<!-- Right column -->
+					<td vAlign="top">
+						<table cellSpacing="0" cellPadding="0" border="0">
+						  <!-- Menu haut -->
+							<tr>
+								<td><cc2:headerwebcontrol language="33" id="HeaderWebControl1" runat="server" Type_de_page="generic"></cc2:headerwebcontrol></td>
+							</tr>
+					        <!-- Centre -->
+					        <tr width="100%">
+						        <!-- Tableau de Résultat -->
+						        <td style="HEIGHT: 19px" align="center">
+                                    <cc5:ProductClassReportWebControl ID="ResultWebControl1" runat="server" SkinID="productClassResultTable" AllowPaging="true" AllowRepeatHeader="true" AjaxProTimeOut="240" />
+                                    <%=result%>
+						        </td>
+					        </tr>
+					        <tr>
+						        <td><cc2:MenuWebControl id="MenuWebControl2" runat="server"></cc2:MenuWebControl></td>
+					        </tr>
+				        </table>
+			        </td>
+                </TR>
 			</TABLE>
 		</form>
 		<%=divClose%>

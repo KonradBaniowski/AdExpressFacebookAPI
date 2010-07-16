@@ -386,7 +386,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 			DetailLevelItemInformation currentLevel = null;
 			#endregion
 
-			#region Show Messages 			
+			#region Show Messages
 			t.Append(GetMessage());			
 			#endregion
 
@@ -403,7 +403,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 				//Start Global Table
 				//t.Append(" <table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\">");
 				#region Debut Tableau global
-				t.Append("<tr class=\"whiteBackGround\"><td  vAlign=\"top\"><table  vAlign=\"top\">");
+				t.Append("<tr ><td  vAlign=\"top\"><table  vAlign=\"top\">");
 				t.Append("<a href=\"javascript: ExpandColapseAllDivs('");
 				insertIndex = t.Length;
 				t.Append("')\" class=\"roll04\" >&nbsp;&nbsp;&nbsp;" + textOpenclose + "</a>");

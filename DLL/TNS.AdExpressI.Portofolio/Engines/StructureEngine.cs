@@ -184,7 +184,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) {
 				
 				dt = ds.Tables[0];
-				t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 >");
+				t.Append("<table class=\"backGroundWhite\" border=0 cellpadding=0 cellspacing=0 >");
 				foreach (DataRow dr in dt.Rows) {
 					if (oldIdVentilationType != int.Parse(dr["ventilationType"].ToString())) {
 						switch ((FrameWorkResultConstantes.PortofolioStructure.Ventilation)long.Parse(dr["ventilationType"].ToString())) {
@@ -204,13 +204,13 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 								throw new PortofolioException("GetVentilationLines: Ventilation type unknown.");
 						}
 						//labels
-						t.Append("\r\n\t<tr  onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='violetBackGroundV3';\"  class=\"violetBackGroundV3\" height=\"20px\" >");
+						t.Append("\r\n\t<tr  onmouseover=\"this.className='backGroundWhite';\" onmouseout=\"this.className='violetBackGroundV3';\"  class=\"violetBackGroundV3\" height=\"20px\" >");
 						t.Append("\r\n\t<td align=\"left\" class=\"p2\" nowrap><b>" + GestionWeb.GetWebWord(labelCode, _webSession.SiteLanguage) + "</b></td>");
 						t.Append("\r\n\t<td  class=\"p2\"  nowrap>" + GestionWeb.GetWebWord(1398, _webSession.SiteLanguage) + "</td>");
 						t.Append("</tr>");
 					}
 					//Nb insertion			
-					t.Append("\r\n\t<tr  onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='violetBackGroundV3';\"  class=\"violetBackGroundV3\" height=\"20px\" >");
+					t.Append("\r\n\t<tr  onmouseover=\"this.className='backGroundWhite';\" onmouseout=\"this.className='violetBackGroundV3';\"  class=\"violetBackGroundV3\" height=\"20px\" >");
 					if (dr["ventilation"] != null)
 						t.Append("\r\n\t<td align=\"left\" class=\"" + classCss + "\" nowrap>&nbsp;&nbsp;&nbsp;" + dr["ventilation"].ToString() + "</td>");
 					else t.Append("\r\n\t<td class=\"" + classCss + "\" nowrap>&nbsp;</td>");
@@ -245,7 +245,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			DataTable dt = null;
             List<UnitInformation> unitInformationList = new List<UnitInformation>();
 			string P2 = "p2";
-			string backGround = "whiteBackGround";
+			string backGround = "backGroundWhite";
 			string classCss = "acl1";
 			string hourIntervallLabel = "";
 			double totalUnit = 0;
@@ -277,7 +277,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
                 unitInformationList = _webSession.GetValidUnitForResult();   
                     
-				t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 >");
+				t.Append("<table class=\"backGroundWhite\" border=0 cellpadding=0 cellspacing=0 >");
 
 				#region libellés colonnes
 				// Première ligne
@@ -294,7 +294,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				t.Append("</tr>");
 				#endregion
                 
-				t.Append("\r\n\t<tr align=\"right\" onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='" + backGround + "';\"  class=\"" + backGround + "\" height=\"20px\" >");
+				t.Append("\r\n\t<tr align=\"right\" onmouseover=\"this.className='backGroundWhite';\" onmouseout=\"this.className='" + backGround + "';\"  class=\"" + backGround + "\" height=\"20px\" >");
 				//time interval										
 				t.Append("\r\n\t<td align=\"left\" class=\"" + classCss + "\" nowrap>" + GestionWeb.GetWebWord(1401,_webSession.SiteLanguage) + "</td>");
                 ////line total units
@@ -321,7 +321,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 					classCss = "acl1";
 					hourIntervallLabel = GestionWeb.GetWebWord(GetHourIntervalWebWordCode()[dr["HourInterval"].ToString()], _webSession.SiteLanguage);
 
-					t.Append("\r\n\t<tr align=\"right\" onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='" + backGround + "';\"  class=\"" + backGround + "\" height=\"20px\" >");
+					t.Append("\r\n\t<tr align=\"right\" onmouseover=\"this.className='backGroundWhite';\" onmouseout=\"this.className='" + backGround + "';\"  class=\"" + backGround + "\" height=\"20px\" >");
 					//time interval										
 					t.Append("\r\n\t<td align=\"left\" class=\"" + classCss + "\" nowrap>" + hourIntervallLabel + "</td>");
                     //Unit Value

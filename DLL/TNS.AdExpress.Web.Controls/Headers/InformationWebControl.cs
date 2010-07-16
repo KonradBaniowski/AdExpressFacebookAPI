@@ -188,7 +188,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			}
 			else{
 				// Design sur une ligne du composant situé en haut des pops up
-                output.Write("\n<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"paleVioletBackGround\">");
+                output.Write("\n<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"headerTabBackGround\">");
 				output.Write("\n<tr><td>");
 				output.Write("\n<script language=\"javascript\" type=\"text/javascript\">");
 				output.Write("\nif(hasRightFlashVersion==true){");

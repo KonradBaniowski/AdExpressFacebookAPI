@@ -299,7 +299,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
                 if (classifLevel == CstResult.PalmaresRecap.ElementType.advertiser)
                 {
-                    t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+                    t.Append("<table class=\"backGroundWhite\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
                     t.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
                     t.AppendFormat("{0}<br>{1} {2}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(2474, _session.SiteLanguage), periodDate);
                     t.Append("</td></tr></table>");
@@ -308,7 +308,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
             }
 
-            t.Append("<table class=\"whiteBackGround\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+            t.Append("<table class=\"backGroundWhite\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
 
             #region Headers
             t.Append("\r\n\t<tr height=\"30px\" >");

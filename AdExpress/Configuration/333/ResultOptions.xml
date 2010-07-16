@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resultOptions>
-  <inset available="true" description="Specify if the option inset is available overall the website"/>
+  <inset available="true" description="Specify if the option inset is available overall the website">
+    <insetItem  id="encart" dataBaseId="108"/>
+    <insetItem  id="flyingEncart" dataBaseId="85"/>
+    <insetItem  id="Excart" dataBaseId="999"/>
+    <insetItem  id="subScriberEncart" dataBaseId="1983"/>
+  </inset>
 </resultOptions>

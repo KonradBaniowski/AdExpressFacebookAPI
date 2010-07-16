@@ -22,56 +22,48 @@
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta name="Cache-control" content="no-cache"/>
 	</head>
-	<body class="imageBackGround" onload="javascript:activateActiveX();">
+	<body onload="javascript:activateActiveX();">
 		<form id="Form1" method="post" runat="server">
 			<table id="SaveTable" cellspacing="0" cellpadding="0" width="100%" border="0">
-				<tr class="violetBackGround" height="14">
+				<tr height="14">
 					<td width="14"><asp:Image runat="server" SkinID="fleche_1" /></td>
 					<td class="txtBlanc11Bold bandeauTitreBackGround">&nbsp;
 						<cc2:adexpresstext language="33" id="AdExpressText4" runat="server" Code="769"></cc2:adexpresstext></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td class="whiteBackGround"></td>
+					<td></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td class="txtViolet11Bold whiteBackGround" height="20">&gt;
+					<td class="txtViolet11Bold" height="20">&gt;
 						<cc2:adexpresstext language="33" id="AdExpressText1" runat="server" Code="917"></cc2:adexpresstext></td>
 				</tr>
 				<tr height="40">
 					<td></td>
-					<td valign="top" class="whiteBackGround">&nbsp;
+					<td valign="top" >&nbsp;
 						<asp:DropDownList id="directoryDropDownList" runat="server" Width="168px" CssClass="txtNoir11"></asp:DropDownList></td>
-				</tr>
-				<tr height="10">
-					<td></td>
-					<td></td>
 				</tr>
 				<!--Debut liste des univers sauvegardés-------------->
                 <tr>
 	                <td></td>
-	                <td class="txtViolet11Bold whiteBackGround" height="20">&gt;
+	                <td class="txtViolet11Bold" height="20">&gt;
 		                <cc2:adexpresstext language="33" id="AdExpressText3" runat="server" Code="2261"></cc2:adexpresstext></td>
                 </tr>
                 <tr height="40">
 	                <td></td>
-	                <td vAlign="top" class="whiteBackGround">&nbsp;
+	                <td vAlign="top" >&nbsp;
 		                <asp:DropDownList id="universeDropDownList" runat="server" Width="168px" CssClass="txtNoir11"></asp:DropDownList></td>
-                </tr>
-                <tr height="10">
-	                <td></td>
-	                <td></td>
                 </tr>
                 <!--Fin listes univers sauvegardés------------------->
 				<tr>
 					<td></td>
-					<td class="txtViolet11Bold whiteBackGround">&gt;
+					<td class="txtViolet11Bold">&gt;
 						<cc2:adexpresstext language="33" id="AdExpressText2" runat="server" Code="2268"></cc2:adexpresstext>&nbsp;</td>
 				</tr>
 				<tr height="40">
 					<td></td>
-					<td vAlign="top" class="whiteBackGround">&nbsp;
+					<td vAlign="top">&nbsp;
 						<asp:TextBox id="universeTextBox" runat="server" CssClass="txtNoir11" Width="200px"></asp:TextBox></td>
 				</tr>
 				<tr height="20">
@@ -79,8 +71,8 @@
 					<td valign="top" align="right">
 						<cc1:ImageButtonRollOverWebControl id="okButton" runat="server" onclick="okButton_Click" SkinID="validateButton"></cc1:ImageButtonRollOverWebControl>&nbsp
 						<a href="javascript:cancel();"
-						onmouseover="bouton.src='/App_Themes/<%= this.Theme %>/Images/Culture/Button/annuler_up.gif';" 
-						onmouseout="bouton.src = '/App_Themes/<%= this.Theme %>/Images/Culture/Button/annuler_down.gif';">
+						onmouseover="bouton.src='/App_Themes/<%= this.Theme %>/Images/Culture/Button/annuler_down.gif';" 
+						onmouseout="bouton.src = '/App_Themes/<%= this.Theme %>/Images/Culture/Button/annuler_up.gif';">
 						<img src="/App_Themes/<%= this.Theme %>/Images/Culture/Button/annuler_up.gif" border="0" name="bouton">
 						</a>
 					</td>

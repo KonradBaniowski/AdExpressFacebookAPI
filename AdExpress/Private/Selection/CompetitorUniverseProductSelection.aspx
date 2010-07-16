@@ -58,117 +58,108 @@
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta content="no-cache" name="Cache-control"/>
 	</head>
-<body onload="initjsDOMenu();<%=saveScript%>javascript:activateActiveX();" class="bodyStyle">
+    <body onload="initjsDOMenu();<%=saveScript%>javascript:activateActiveX();" class="bodyStyle">
 		<form id="Form2" method="post" runat="server">
 			<table cellspacing="0" cellpadding="0" border="0" style="height:600px;">
+				<!-- Gradient -->
+				<tr>
+					<td colspan="7" height="3" class="gradientBar"></td>
+				</tr>
 				<tr>	
-					<td valign="top"><!-- marge de gauche-->
-						<table cellspacing="0" cellpadding="0" border="0">
-							<tr>
-								<td><asp:Image runat="server" height="100" SkinID="logo_cote_gauche" width="10" /></td>
-							</tr>
-							<tr>
-								<td class="whiteBackGround"><asp:Image runat="server" height="1" SkinID="pixel" width="1" /></td>
-							</tr>
-						</table>
+					<!-- marge de gauche-->
+					<td vAlign="top" class="whiteBackGround">
+						<asp:Image ID="Image1" runat="server" height="100" width="10" SkinID="logo_cote_gauche" />
 					</td>
 					<!-- menu -->
-					<td valign="top" class="imageBackGround">
-						<table cellspacing="0" cellpadding="0" width="10" border="0">
-							<tr valign="top" class="whiteBackGround">
+					<td vAlign="top" class="whiteBackGround">
+						<table cellSpacing="0" cellPadding="0" border="0">
+							<tr vAlign="top" class="whiteBackGround logoCoteDroitBackGround">
 								<!-- Logo -->
-								<td><asp:Image runat="server" height="90" SkinID="logo" width="185" /></td>
+								<td><asp:Image ID="Image2" runat="server" border="0" SkinID="logo" /></td>
 							</tr>
 							<tr>
-								<td><asp:Image runat="server" height="5" SkinID="plus_sous_logo" width="185" /></td>
-							</tr>
-							<tr>
-								<td><asp:Image runat="server" height="5" SkinID="pixel" width="1" /></td>
-							</tr>
-							<!-- éléments variables du menus de gauche -->
-							<tr valign="top">
-								<td id="pageTitle"><cc1:moduletitlewebcontrol id="ModuleTitleWebControl1" runat="server" CodeDescription="772"></cc1:moduletitlewebcontrol></td>
-							</tr>
-							<!-- Info bt droit -->
-							<tr>
-								<td><asp:Image runat="server" height="5" SkinID="pixel" width="1" /></td>
-							</tr>
-							<tr>
-								<td><cc1:InformationWebControl id="InformationWebControl1" runat="server" InLeftMenu="True"></cc1:InformationWebControl></td>
-							</tr>
-						</table>
-					</td>
-					<!-- Séparateur -->
-					<td valign="top">
-						<table id="Table5" cellspacing="0" cellpadding="0" border="0">
-							<tr>
-								<td><asp:Image runat="server" height="100" SkinID="logo_cote_droit" width="5" /></td>
-							</tr>
-							<tr>
-								<td class="whiteBackGround"><asp:Image runat="server" height="1" SkinID="pixel" width="1" /></td>
-							</tr>
-						</table>
-					</td>
-					<td class="violetBackGround"><asp:Image runat="server" height="1" SkinID="pixel" width="1" /></td>
-					<td width="10" class="imageBackGround">&nbsp;</td>
-					<td width="10" class="whiteBackGround">&nbsp;</td>
-					<!-- droite-->
-					<td style="WIDTH: 731px" valign="top" class="imageBackGround">
-						<table cellspacing="0" cellpadding="0" border="0">
-							<tr>
-								<!-- Menu du haut-->
-								<td style="WIDTH: 772px"><cc1:headerwebcontrol language="33" id="HeaderWebControl1" runat="server" Type_de_page="generic"></cc1:headerwebcontrol></td>
-							</tr>
-							<tr>
-								<!-- ligne du haut a droite -->
-								<td id="lineAVIrer" style="WIDTH: 773px" valign="top" class="imageBackGround"
-									height="1%">
-									<table id="Table2" cellspacing="0" cellpadding="0" width="100%" border="0">
+								<td class="txtBlanc11Bold" width="185" height="9">
+									
+									<table id="Table6" cellspacing="0" cellpadding="0" width="10" border="0">
 										<tr>
-											<td valign="top" align="left" height="1%"><asp:Image runat="server" height="5" SkinID="croix" width="5" /></td>
-											<td height="1%"><asp:Image runat="server" height="17" SkinID="pixel" width="1" /></td>
-											<td valign="top" align="right" height="1%"><asp:Image runat="server" height="5" SkinID="croix" width="5" /></td>
+											<td><asp:Image ID="Image3" runat="server" height="5" SkinID="plus_sous_logo" /></td>
 										</tr>
+										<tr>
+											<td><asp:Image ID="Image4" runat="server" height="10" width="1" SkinID="pixel" /></td>
+										</tr>
+										
+										<!-- éléments variables du menus de gauche -->
+										<tr valign="top">
+											<td id="pageTitle">
+												<cc1:moduletitlewebcontrol id="ModuleTitleWebControl1" runat="server" CodeDescription="772"></cc1:moduletitlewebcontrol>
+											</td>
+										</tr>
+										
+										<!-- Info bt droit -->
+										<tr>
+											<td><asp:Image ID="Image5" runat="server" height="5" width="1" SkinID="pixel" /></td>
+										</tr>
+										<tr>
+											<td>
+												<cc1:InformationWebControl id="InformationWebControl1" runat="server" 
+                                                    InLeftMenu="True" BackGroundColor=""></cc1:InformationWebControl></td>
+										</tr>
+										
 									</table>
+									
 								</td>
 							</tr>
-							<!-- Centre -->
-							
 							<tr>
-								<td style="WIDTH: 773px" class="whiteBackGround">
+								<td><asp:Image ID="Image6" runat="server" height="10" width="1" SkinID="pixel" /></td>
+							</tr>
+						</table>
+					</td>
+					
+					<!-- New separator -->
+					<td vAlign="top" class="whiteBackGround"><asp:Image ID="Image7" runat="server" height="100" width="5" SkinID="logo_cote_droit" /></td>
+					<td class="lineVerticalBackGround2px"><asp:Image ID="Image8" runat="server" height="1" width="2" SkinID="pixel" /></td>
+					<td class="lineVerticalBackGround1px"><asp:Image ID="Image9" runat="server" height="1" width="2" SkinID="pixel" /></td>
+					<td class="lineVerticalBackGround"><asp:Image ID="Image10" runat="server" height="1" width="2" SkinID="pixel" /></td>
+					
+					<!-- Right column -->
+					<td vAlign="top">
+						<table cellSpacing="0" cellPadding="0" border="0">
+						  <!-- Menu haut -->
+							<tr>
+								<td><cc1:headerwebcontrol language="33" id="HeaderWebControl1" runat="server" Type_de_page="generic"></cc1:headerwebcontrol></td>
+							</tr>
+							<!-- Centre -->
+							<tr>
+								<td>
 									<table cellspacing="0" cellpadding="0" width="100%" border="0">
-										<tr style="HEIGHT: 5px">
-											<td style="WIDTH: 478px" colspan="5"></td>
-										</tr>
-										<!--emplacement du chargement des univers-->
 										<tr>
-											<td colspan="5">
+											<td style="padding-left:5px;">
 												<!--Chargement mes univers-->
 												<cc4:loadableuniverswebcontrol id="LoadableUniversWebControl1" runat="server"></cc4:loadableuniverswebcontrol>											
-												</td>
+											</td>
 										</tr>
 										<tr style="HEIGHT: 5px">
-											<td colspan="6"></td>
+											<td></td>
 										</tr>
 										<tr style="HEIGHT: 10px">
 											<td style="WIDTH: 478px" width="478" class="imageBackGround" colspan="6"></td>
 										</tr>
 										<tr style="HEIGHT: 5px">
-											<td colspan="6"></td>
+											<td></td>
 										</tr>																				
 									</table>
 								</td>
 							</tr>
 							<tr>
-								<td style="WIDTH: 772px" class="whiteBackGround"><asp:Image runat="server" height="5" SkinID="pixel" width="1" /></td>
+								<td><asp:Image runat="server" height="5" SkinID="pixel" width="1" /></td>
 							</tr>														
 							<tr>
-								<td class="whiteBackGround"><!--<img height="15" src="/Images/Common/pixel.gif" width="1"> -->
+								<td><!--<img height="15" src="/Images/Common/pixel.gif" width="1"> -->
 									<cc4:SelectItemsInClassificationWebControl id="SelectItemsInClassificationWebControl1" runat="server" ChildNodeExcludeCss="txtChildNodeExcludeCss" ChildNodeIncludeCss="txtChildNodeIncludeCss" CustomSelectCss="customSelectCss" DefaultBranchId="1" LabelNbCurrentElementCss="labelNbelements" ListBoxBodyCss="listBoxBodyCss" ListBoxCss="listBoxCss" ListBoxHeaderCss="listBoxHeaderCss" NbMaxIncludeTree="2" ParentNodeChildExcludeCss="txtParentNodeChildExcludeCss" ParentNodeChildIncludeCss="txtParentNodeChildIncludeCss" SelectOptionItemDefaultCss="optionItemDefault" SelectOptionItemHierarchyCss="optionItemHierarchy" TrashNodeCss="trashNodeCss" TreeExcludeFrameBodyCss="treeExcludeFrameBodyCss" TreeExcludeFrameCss="treeExcludeFrameCss" TreeExcludeFrameHeaderCss="treeExcludeFrameHeaderCss" TreeIncludeFrameBodyCss="treeIncludeFrameBodyCss" TreeIncludeFrameCss="treeIncludeFrameCss" TreeIncludeFrameHeaderCss="treeIncludeFrameHeaderCss" TreeViewIcons="/Styles/TreeView/Icons" TreeViewScripts="/Styles/TreeView/Scripts" TreeViewStyles="/Styles/TreeView/Css" DBSchema="adexpr03"></cc4:SelectItemsInClassificationWebControl>
 									</td>
 							</tr>
 							<tr>
-								<td style="WIDTH: 772px">
+								<td>
 									<table cellspacing="0" cellpadding="0" width="100%" border="0">
 									    <tr>
 											<td class="txtViolet11Bold" align="center"><cc3:adexpresstext language="33" id="universAdExpressText" runat="server" Code="855"></cc3:adexpresstext></td>
@@ -187,37 +178,11 @@
 								</td>
 							</tr>
 						</table>
-						<cc2:redirectwebcontrol id="RedirectWebControl" runat="server"></cc2:redirectwebcontrol><cc1:menuwebcontrol id="MenuWebControl2" runat="server"></cc1:menuwebcontrol>
-						</td>
-					<!--</td>--></tr>
-				<!-- ligne du bas a droite -->
-				<tr style="height:5px;">
-					<td></td>
-					<td valign="top" class="imageBackGround">
-						<table id="Table7" cellspacing="0" cellpadding="0" width="100%" border="0">
-							<tr>
-								<td valign="bottom"><asp:Image runat="server" height="5" SkinID="croix" width="5" />&nbsp;</td>
-								<td></td>
-								<td valign="bottom" align="right"><asp:Image runat="server" height="5" SkinID="croix" width="5" /></td>
-							</tr>
-						</table>
-					</td>
-					<td></td>
-					<td class="violetBackGround"></td>
-					<td class="imageBackGround"></td>
-					<td></td>
-					<td id="dellCel" style="WIDTH: 732px" valign="top" class="imageBackGround">
-						<table id="Table8" cellspacing="0" cellpadding="0" width="100%" border="0">
-							<tr>
-								<td valign="bottom"><asp:Image runat="server" height="5" SkinID="croix" width="5" /></td>
-								<td>&nbsp;</td>
-								<td valign="bottom" align="right"><asp:Image runat="server" height="5" SkinID="croix" width="5" /></td>
-							</tr>
-						</table>
+						<cc2:redirectwebcontrol id="RedirectWebControl" runat="server"></cc2:redirectwebcontrol>
+						<cc1:menuwebcontrol id="MenuWebControl2" runat="server"></cc1:menuwebcontrol>
 					</td>
 				</tr>
 			</table>
-			
 		</form>
 		<%=divClose%>
 	</body>

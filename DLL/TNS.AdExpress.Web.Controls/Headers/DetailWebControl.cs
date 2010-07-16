@@ -154,13 +154,13 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// </summary>
 		/// <param name="output"> Le writer HTML vers lequel écrire </param>
 		protected override void Render(HtmlTextWriter output){
-			output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" bgcolor=\"#FFFFFF\">");
+			output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
 			//Descriptif
 			output.Write("\n<TR>");
 			output.Write("\n<TD height=\"5\"></TD>");
 			output.Write("\n</TR>");
 			output.Write("\n<tr>");
-			output.Write("\n<td class=\"txtGris11Bold\">");
+            output.Write("\n<td class=\"txtBlanc11Bold\">");
 			output.Write(GestionWeb.GetWebWord(2082,customerWebSession.SiteLanguage));
 			output.Write("\n</td>");
 			output.Write("\n</tr>");
@@ -171,7 +171,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			//détail produit
 			if (advertiserBrandProductOption){
 				output.Write("\n<tr>");
-				output.Write("\n<td class=\"txtGris11Bold\">");
+                output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
 				output.Write("\n<tr>");

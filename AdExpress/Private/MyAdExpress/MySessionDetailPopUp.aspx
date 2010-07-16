@@ -26,12 +26,12 @@
 				<!--Choix de l'etude-->
 				<TR>
 					<TD></TD>
-					<TD class="txtViolet11Bold whiteBackGround">&nbsp;
+					<TD class="txtViolet11Bold backGroundWhite">&nbsp;
 						<cc1:adexpresstext language="33" id="AdExpressText1" runat="server" Code="842"></cc1:adexpresstext></TD>
 				</TR>
 				<TR height="20">
 					<TD></TD>
-					<TD class="txtViolet11 whiteBackGround" vAlign="top">&nbsp;
+					<TD class="txtViolet11 backGroundWhite" vAlign="top">&nbsp;
 						<asp:label id="moduleLabel" runat="server"></asp:label></TD>
 				</TR>
 				<TR height="7">
@@ -41,7 +41,7 @@
 				<%if(comparativeStudy){%>
 				<TR height="5">
 					<TD></TD>
-					<TD class="txtViolet11Bold whiteBackGround" vAlign="top">&nbsp;&nbsp;<%=comparativeStudyText%></TD>
+					<TD class="txtViolet11Bold backGroundWhite" vAlign="top">&nbsp;&nbsp;<%=comparativeStudyText%></TD>
 				</TR>
 				<TR height="7">
 					<TD colSpan="2"></TD>
@@ -51,12 +51,12 @@
 				<%if(displayPeriod){%>
 				<TR>
 					<TD></TD>
-					<TD class="txtViolet11Bold whiteBackGround">&nbsp;
+					<TD class="txtViolet11Bold backGroundWhite">&nbsp;
 						<cc1:adexpresstext language="33" id="AdExpressText3" runat="server" Code="2369"></cc1:adexpresstext></TD>
 				</TR>
 				<TR height="20">
 					<TD></TD>
-					<TD class="txtViolet11 whiteBackGround" vAlign="top">&nbsp;
+					<TD class="txtViolet11 backGroundWhite" vAlign="top">&nbsp;
 						<asp:label id="infoDateLabel1" runat="server"></asp:label></TD>
 				</TR>
 				<TR height="7">
@@ -67,12 +67,12 @@
 				<%if(displayStudyPeriod){%>
 				<TR>
 					<TD></TD>
-					<TD class="txtViolet11Bold whiteBackGround">&nbsp;
+					<TD class="txtViolet11Bold backGroundWhite">&nbsp;
 						<cc1:adexpresstext language="33" id="AdExpressText13" runat="server" Code="2291"></cc1:adexpresstext></TD>
 				</TR>
 				<TR height="20">
 					<TD></TD>
-					<TD class="txtViolet11 whiteBackGround" vAlign="top">&nbsp;
+					<TD class="txtViolet11 backGroundWhite" vAlign="top">&nbsp;
 						<asp:label id="StudyPeriod" runat="server"></asp:label></TD>
 				</TR>
 				<TR height="7">
@@ -83,12 +83,12 @@
 				<%if(displayComparativePeriod){%>
 				<TR>
 					<TD></TD>
-					<TD class="txtViolet11Bold whiteBackGround">&nbsp;
+					<TD class="txtViolet11Bold backGroundWhite">&nbsp;
 						<cc1:adexpresstext language="33" id="AdExpressText14" runat="server" Code="2292"></cc1:adexpresstext></TD>
 				</TR>
 				<TR height="20">
 					<TD></TD>
-					<TD class="txtViolet11 whiteBackGround" vAlign="top">&nbsp;
+					<TD class="txtViolet11 backGroundWhite" vAlign="top">&nbsp;
 						<asp:label id="comparativePeriod" runat="server"></asp:label></TD>
 				</TR>
 				<TR height="7">
@@ -99,12 +99,12 @@
 				<%if (displayComparativePeriodType) {%>
 				<TR>
 					<TD></TD>
-					<TD class="txtViolet11Bold whiteBackGround">&nbsp;
+					<TD class="txtViolet11Bold backGroundWhite">&nbsp;
 						<cc1:adexpresstext language="33" id="AdExpressText15" runat="server" Code="2293"></cc1:adexpresstext></TD>
 				</TR>
 				<TR height="20">
 					<TD></TD>
-					<TD class="txtViolet11 whiteBackGround" vAlign="top">&nbsp;
+					<TD class="txtViolet11 backGroundWhite" vAlign="top">&nbsp;
 						<asp:label id="ComparativePeriodType" runat="server"></asp:label></TD>
 				</TR>
 				<TR height="7">
@@ -115,12 +115,12 @@
 				<%if (displayPeriodDisponibilityType) {%>
 				<TR>
 					<TD></TD>
-					<TD class="txtViolet11Bold whiteBackGround">&nbsp;
+					<TD class="txtViolet11Bold backGroundWhite">&nbsp;
 						<cc1:adexpresstext language="33" id="AdExpressText16" runat="server" Code="2296"></cc1:adexpresstext></TD>
 				</TR>
 				<TR height="20">
 					<TD></TD>
-					<TD class="txtViolet11 whiteBackGround" vAlign="top">&nbsp;
+					<TD class="txtViolet11 backGroundWhite" vAlign="top">&nbsp;
 						<asp:label id="PeriodDisponibilityType" runat="server"></asp:label></TD>
 				</TR>
 				<TR height="7">
@@ -131,12 +131,12 @@
 				<%if(displayMediaAgency){%>
 				<TR>
 					<TD></TD>
-					<TD class="txtViolet11Bold whiteBackGround">&nbsp;
+					<TD class="txtViolet11Bold backGroundWhite">&nbsp;
 						<cc1:adexpresstext language="33" id="Adexpresstext6" runat="server" Code="1580"></cc1:adexpresstext></TD>
 				</TR>
 				<TR height="20">
 					<TD></TD>
-					<TD class="txtViolet11 whiteBackGround" vAlign="top">&nbsp;
+					<TD class="txtViolet11 backGroundWhite" vAlign="top">&nbsp;
 						<asp:label id="MediaAgency" runat="server"></asp:label></TD>
 				</TR>
 				<TR height="7">
@@ -147,16 +147,16 @@
 				<%if(displayMedia){%>
 				<TR>
 					<TD></TD>
-					<TD class="txtViolet11Bold whiteBackGround">&nbsp;
+					<TD class="txtViolet11Bold backGroundWhite">&nbsp;
 						<cc1:adexpresstext language="33" id="AdExpressText4" runat="server" Code="845"></cc1:adexpresstext></TD>
 				</TR>
 				<TR height="20">
 					<TD></TD>
-					<TD align="center" vAlign="top" class="txtViolet11 whiteBackGround"><%=mediaText%></TD>
+					<TD align="center" vAlign="top" class="txtViolet11 backGroundWhite"><%=mediaText%></TD>
 				</TR>
 				<TR height="5">
 					<TD></TD>
-					<TD class="whiteBackGround"></TD>
+					<TD class="backGroundWhite"></TD>
 				</TR>
 				<TR height="7">
 					<TD colSpan="2"></TD>
@@ -166,21 +166,18 @@
 				<%if(displayDetailMedia){%>
 				<TR height="5">
 					<TD></TD>
-					<TD align="center" vAlign="top" class="txtViolet11 whiteBackGround"><%=mediaDetailText%></TD>
+					<TD align="center" vAlign="top" class="txtViolet11 backGroundWhite"><%=mediaDetailText%></TD>
 				</TR>
 				<TR height="5">
 					<TD></TD>
-					<TD class="whiteBackGround"></TD>
+					<TD class="backGroundWhite"></TD>
 				</TR>
-				<!--<TR height="7">
-					<TD colSpan="2"></TD>
-				</TR>-->
 				<% }%>
 				<!--Reference média -->
 				<%if(displayReferenceDetailMedia){%>
 				<TR height="5">
 					<TD></TD>
-					<TD class="txtViolet11 whiteBackGround" vAlign="top" align="center"><%=referenceMediaDetailText%></TD>
+					<TD class="txtViolet11 backGroundWhite" vAlign="top" align="center"><%=referenceMediaDetailText%></TD>
 				</TR>
 				<TR height="7">
 					<TD colSpan="2"></TD>
@@ -190,12 +187,12 @@
 				<!--Unité-->
 				<TR>
 					<TD></TD>
-					<TD class="txtViolet11Bold whiteBackGround">&nbsp;
+					<TD class="txtViolet11Bold backGroundWhite">&nbsp;
 						<cc1:adexpresstext language="33" id="Adexpresstext5" runat="server" Code="849"></cc1:adexpresstext></TD>
 				</TR>
 				<TR height="20">
 					<TD></TD>
-					<TD class="txtViolet11 whiteBackGround" vAlign="top">&nbsp;
+					<TD class="txtViolet11 backGroundWhite" vAlign="top">&nbsp;
 						<asp:Label id="unitLabel" runat="server"></asp:Label></TD>
 				</TR>
 				<TR height="7">
@@ -205,16 +202,16 @@
 				<%if(displayProduct){%>
 				<TR>
 					<TD></TD>
-					<TD class="txtViolet11Bold whiteBackGround">&nbsp;
+					<TD class="txtViolet11Bold backGroundWhite">&nbsp;
 						<cc1:AdExpressText language="33" id="productAdExpressText" runat="server" Code="0"></cc1:AdExpressText></TD>
 				</TR>
 				<TR height="20">
 					<TD></TD>
-					<TD vAlign="top" align="center" class="whiteBackGround"><%=productText%></TD>
+					<TD vAlign="top" align="center" class="backGroundWhite"><%=productText%></TD>
 				</TR>
 				<TR height="5">
 					<TD></TD>
-					<TD class="whiteBackGround"></TD>
+					<TD class="backGroundWhite"></TD>
 				</TR>
 				<TR height="7">
 					<TD colSpan="2"></TD>
@@ -224,12 +221,12 @@
 				<%if(displayAdvertiser){%>
 				<TR>
 					<TD style="HEIGHT: 18px"></TD>
-					<TD class="txtViolet11Bold whiteBackGround" style="HEIGHT: 18px">&nbsp;
+					<TD class="txtViolet11Bold backGroundWhite" style="HEIGHT: 18px">&nbsp;
 						<cc1:adexpresstext language="33" id="advertiserAdexpresstext" runat="server" Code="0"></cc1:adexpresstext></TD>
 				</TR>
 				<TR height="20">
 					<TD></TD>
-					<TD align="center" vAlign="top" class="whiteBackGround"><%=advertiserText%></TD>
+					<TD align="center" vAlign="top" class="backGroundWhite"><%=advertiserText%></TD>
 				</TR>
 				<TR height="7">
 					<TD colSpan="2"></TD>
@@ -238,12 +235,12 @@
 				<%if(referenceAdvertiserDisplay){%>
 				<TR>
 					<TD style="HEIGHT: 18px"></TD>
-					<TD class="txtViolet11Bold whiteBackGround" style="HEIGHT: 18px">&nbsp;
+					<TD class="txtViolet11Bold backGroundWhite" style="HEIGHT: 18px">&nbsp;
 						<cc1:adexpresstext language="33" id="referenceAdvertiserAdexpresstext" runat="server" Code="0"></cc1:adexpresstext></TD>
 				</TR>
 				<TR height="20">
 					<TD></TD>
-					<TD align="center" vAlign="top" class="whiteBackGround"><%=referenceAdvertiserText%></TD>
+					<TD align="center" vAlign="top" class="backGroundWhite"><%=referenceAdvertiserText%></TD>
 				</TR>
 				<TR height="7">
 					<TD colSpan="2"></TD>
@@ -252,14 +249,14 @@
 				<%if(competitorAdvertiserDisplay){%>
 				<!--<TR>
 					<TD style="HEIGHT: 18px"></TD>
-					<TD class="txtViolet11Bold whiteBackGround">&nbsp;
+					<TD class="txtViolet11Bold backGroundWhite">&nbsp;
 						<cc1:adexpresstext language="33" id="competitorAdvertiserAdexpressText" runat="server" Code="0"></cc1:adexpresstext></TD>
 				</TR>-->
 				<%=competitorAdvertiserText%>
 				<%}%>
 				<!--	<TR height="5">
 					<TD></TD>
-					<TD class="whiteBackGround"></TD>
+					<TD class="backGroundWhite"></TD>
 				</TR> -->
 				<TR height="7">
 					<TD colSpan="2"></TD>

@@ -12,7 +12,7 @@
 		<meta http-equiv="pragma" content="no-cache">
 		<meta name="Cache-control" content="no-cache">
 	</HEAD>
-	<body class="darkBackGround whiteBackGround">
+	<body class="darkBackGround backGroundWhite">
 		<form id="Form1" method="post" runat="server">
 			<%=result%>
 		</form>
