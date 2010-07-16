@@ -1,0 +1,365 @@
+﻿/*
+Menu related selectors
+*/
+.jsdomenudiv {
+	background-color: #FFFFFF;
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/menu_left_grey.png);
+	background-repeat: repeat-y;
+	border: 1px solid #8A867A;
+	cursor: default;
+	padding-bottom: 1px;
+	padding-top: 1px;
+	position: absolute; /* Do not alter this line! */
+	visibility: hidden;
+	z-index: 10;
+}
+
+.jsdomenuitem,
+.jsdomenuitemdisabled 
+{
+	background: transparent;
+	border: none;
+	padding:5px 15px 3px 1px;
+	border: 1px solid transparent !important;
+	border: none;
+	padding-bottom: 3px;
+	padding-left: 1px;
+	padding-right: 15px;
+	padding-top: 5px;
+	position: relative; /* Do not alter this line! */
+	position: relative; /* Do not alter this line! */
+}
+
+.jsdomenuitemover,
+.jsdomenuitemdisabledover {
+	background-color: #FFF0C0;
+	border: 1px solid #FFC06F;
+	padding:5px 15px 3px 1px !important;
+	padding:4px 15px 2px 0px;
+	position: relative; /* Do not alter this line! */
+}
+
+.jsdomenuitem p 
+{
+	top:0px;
+	font-family: Tahoma, Helvetica, sans, Arial, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	padding-left:28px;
+	margin:0px 0px 0px 0px;
+}
+
+.jsdomenuitemover p 
+{
+	top:0px;
+	font-family: Tahoma, Helvetica, sans, Arial, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	padding-left:28px;
+	margin:0px 0px 0px 0px;
+}
+
+.jsdomenuitemdisabled p 
+{
+	top:0px;
+	font-family: Tahoma, Helvetica, sans, Arial, sans-serif;
+	font-size: 12px;
+	color: #A7A6AA;
+	padding-left:28px;
+	height:100%;
+	margin:0px 0px 0px 0px;
+}
+
+.jsdomenuitemdisabledover p 
+{
+	top:0px;
+	font-family: Tahoma, Helvetica, sans, Arial, sans-serif;
+	font-size: 12px;
+	color: #A7A6AA;
+	padding-left:20px !important;
+	height:100%;
+	margin:0px 0px 0px 0px;
+}
+
+.jsdomenuarrow {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/menu_arrow2.gif);
+	background-repeat: no-repeat; /* Do not alter this line! */
+	height: 20px;
+	position: absolute; /* Do not alter this line! */
+	right: 8px;
+	width: 4px;
+	top:0px;
+}
+
+
+.jsdomenuarrowover {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/menu_arrow_o2.gif);
+	background-repeat: no-repeat; /* Do not alter this line! */
+	height: 20px;
+	position: absolute; /* Do not alter this line! */
+	right: 8px;
+	width: 4px;
+	top:0px;
+}
+
+.jsdomenusep {
+	padding-left: 28px;
+}
+
+.jsdomenusep hr {
+}
+
+/*
+Menu bar related selectors
+*/
+.jsdomenubardiv {
+	background-color: #ECE9D8;
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/menu_divider.png);
+	background-position: left;
+	background-repeat: no-repeat;
+	border: 1px outset;
+	cursor: default;
+	padding-bottom: 3px;
+	padding-left: 1px;
+	padding-right: 1px;
+	padding-top: 3px;
+	position: absolute; /* Do not alter this line! */
+	visibility: visible;
+}
+
+.jsdomenubardragdiv {
+	cursor: move;
+	display: inline;
+	font-family: Tahoma, Helvetica, sans, Arial, sans-serif;
+	font-size: 12px;
+	padding-bottom: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 2px;
+	position: relative; /* Do not alter this line! */
+	visibility: hidden;
+	width: 9px;
+}
+
+.jsdomenubaritem {
+	background-color: #EFEDDE;
+	border: none;
+	color: #000000;
+	display: inline;
+	font-family: Tahoma, Helvetica, sans, Arial, sans-serif;
+	font-size: 12px;
+	padding-bottom: 2px;
+	padding-left: 24px;
+	padding-right: 10px;
+	padding-top: 2px;
+	position: relative; /* Do not alter this line! */
+}
+
+.jsdomenubaritemover {
+	background-color: #FFF0C0;
+	border: 1px solid #FFC06F;
+	color: #000000;
+	display: inline;
+	font-family: Tahoma, Helvetica, sans, Arial, sans-serif;
+	font-size: 12px;
+	padding-bottom: 2px;
+	padding-left: 23px;
+	padding-right: 9px;
+	padding-top: 2px;
+	position: relative; /* Do not alter this line! */
+}
+
+.jsdomenubaritemclick {
+	background-color: #EFEDDE;
+	border: 1px solid #8A867A;
+	color: #000000;
+	display: inline;
+	font-family: Tahoma, Helvetica, sans, Arial, sans-serif;
+	font-size: 12px;
+	padding-bottom: 2px;
+	padding-left: 23px;
+	padding-right: 9px;
+	padding-top: 2px;
+	position: relative; /* Do not alter this line! */
+}
+
+/*
+Example of selectors for icons. Change the height and width to match the actual 
+height and width of the icon image.
+*/
+.calendarMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/calendarMenuIcon.gif);
+	background-repeat: no-repeat; /* Do not alter this line! */
+	height: 20px;
+	left: 2px;
+	position: absolute; /* Do not alter this line! */
+	width: 20px;
+}
+.excelColMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/excelColMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.excelExportMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/excelExportMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.excelMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/excelMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.excelUnitMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/excelUnitMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.helpMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/helpMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.jpegExportMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/jpegExportMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.mediaMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/mediaMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.alertMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/createAlertMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.programMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/programMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.sponsorshipMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/sponsorshipMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.pdfExportMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/pdfExportMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.printColMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/printColMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.printMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/printMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.printHTMLMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/printHTMLMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.productMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/productMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.resultMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/resultMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.saveMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/saveMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.selectedMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/selectedMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.sloganMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/sloganMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.targetMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/targetMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.textExportMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/textExportMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
