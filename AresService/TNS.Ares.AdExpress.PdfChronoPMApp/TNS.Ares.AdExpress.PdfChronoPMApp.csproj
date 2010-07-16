@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6BE9B7DE-7140-493F-8806-2CB8F65B5F09}</ProjectGuid>
+    <ProjectGuid>{72A747A2-06D8-4892-982A-8309EACDED5E}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TNS.Ares.AdExpress.PdfChronoPMApp</RootNamespace>
