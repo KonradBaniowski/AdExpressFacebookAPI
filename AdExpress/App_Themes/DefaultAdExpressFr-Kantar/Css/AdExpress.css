@@ -29,6 +29,10 @@ hr
 }
 .backGroundModuleTitle{
 	background-color : #FFFFFF;
+	/*background-color : #FFC06F; orange*/
+}
+.backGroundModuleTitleWhite{
+	background-color : #FFFFFF;
 }
 .backGroundWhite{
 	background-color : #FFFFFF;
