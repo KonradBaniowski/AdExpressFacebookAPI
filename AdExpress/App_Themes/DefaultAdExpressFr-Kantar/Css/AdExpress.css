@@ -2944,29 +2944,29 @@ td.pmcategorynb
 }
 /* Styles utilisés pour AdExpress et Anubis */
 .UniverseItemsStyle{
-	border-left :#644883 1px solid; 
-	border-right :#644883 1px solid; 
-	border-bottom :#644883 1px solid;
-	background-color : #DED8E5;
+	border-left :#646262 1px solid; 
+	border-right :#646262 1px solid; 
+	border-bottom :#646262 1px solid;
+	background-color : #E9E9E9;
 }
 .UniverseHeaderStyle{
-	border-color : #644883;
-	border-top :#644883 1px solid; 
-	border-left :#644883 1px solid; 
-	border-right :#644883 1px solid; 
-	border-bottom :#644883 1px solid;
+	border-color : #646262;
+	border-top :#646262 1px solid; 
+	border-left :#646262 1px solid; 
+	border-right :#646262 1px solid; 
+	border-bottom :#646262 1px solid;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color: #644883;
+	color: #646262;
 	font-weight: bold;
 }
 .UniverseHeaderStyleWithoutTop{
-	border-left :#644883 1px solid; 
-	border-right :#644883 1px solid; 
-	border-bottom :#644883 1px solid;
+	border-left :#646262 1px solid; 
+	border-right :#646262 1px solid; 
+	border-bottom :#646262 1px solid;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color: #644883;
+	color: #646262;
 	font-weight: bold;
 }
 td.acl2Bg{
