@@ -253,7 +253,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
 
         output.Write("<div id=\"listAdvertiserContent6\" class=\"violetBorderWithoutTop\" style=\"DISPLAY: none; WIDTH: 620px;\">");
-        output.Write("<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" align=\"center\" class=\"mediumPurple1\" border=\"0\">");
+        output.Write("<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" align=\"center\" class=\"backGroundWhite\" border=\"0\">");
 		output.Write("<tr>");
 		output.Write("<td width=\"199\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\"></td>");
         output.Write("<td class=\"violetBorderTop\" width=\"421\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\"></td>");
