@@ -229,6 +229,9 @@
     <Compile Include="UI\UIPeriodicityGraph.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Content Include="App_Themes\DefaultAdExpressFr-Kantar\Styles.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Themes\DefaultAdExpressFr\Styles.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
