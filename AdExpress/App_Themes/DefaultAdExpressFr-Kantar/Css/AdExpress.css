@@ -3029,26 +3029,30 @@ td.acl2Bg{
 }
 
 .TreeTitleViolet{
-	COLOR: #644883; 
-	FONT-FAMILY: Arial;
+	COLOR: #646262; 
+	font-family: Arial, Helvetica, sans-serif; 
 }
 
 .TreeTitleViolet20px{
 	font-family: Arial, Helvetica, sans-serif; 
 	font-size: 20px; 
-	color: #644883; 
+	color: #646262; 
 	font-weight: bold;
 }
 
-.TreeTitleViolet40pt{
+.TreeTitleViolet40pt
+{
+	font-family: Arial, Helvetica, sans-serif; 
+	font-weight: bold;
 	FONT-SIZE: 40pt; 
-	COLOR: #646262; 
-	FONT-FAMILY: 'Arial Bold';
+	COLOR: #646262;
 }
-.TreeTitleBlack10pt{
+.TreeTitleBlack10pt
+{
+	font-family: Arial, Helvetica, sans-serif; 
+	font-weight: bold;
 	FONT-SIZE: 10pt; 
 	COLOR: black; 
-	FONT-FAMILY: 'Arial Bold';
 }
 
 
@@ -3057,7 +3061,7 @@ td.acl2Bg{
 {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
-	color : #6B598B;
+	color : #646262;
 	font-weight:bold;
 	background-color : #FFFFFF;
 	white-space:nowrap;
@@ -3071,7 +3075,7 @@ td.acl2Bg{
 {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
-	color : #6B598B;
+	color : #646262;
 	font-weight:normal;
 	background-color : #FFFFFF;
 	white-space:nowrap;
@@ -3089,10 +3093,10 @@ table.jus
 	border-spacing: 0px;
 	height : 340px;
 	width : 100%;
-	border-bottom : #644883 1px solid;
-	border-right: #644883 1px solid;
-	border-top: #644883 0px solid;
-	border-left:#644883 1px solid;
+	border-bottom : #646262 1px solid;
+	border-right: #646262 1px solid;
+	border-top: #646262 0px solid;
+	border-left:#646262 1px solid;
 }
 td.jus
 {
@@ -3101,19 +3105,19 @@ td.jus
 	color : #FFFFFF;
 	font-weight: bold;
 	text-decoration : none;
-	background-color: #644883;
+	background-color: #646262;
 	padding-left:5px;
 	padding-right:5px;
 	border-left-width:1px;
-	border-left-color:#644883;
+	border-left-color:#646262;
 	border-left-style:solid;
 	border-top-width:0px;
-	border-top-color:#644883;
+	border-top-color:#646262;
 	border-top-style:solid;
-	border-bottom-color:#644883;
+	border-bottom-color:#646262;
 	border-bottom-width:1px;
 	border-bottom-style:solid;
-	border-right-color:#644883;
+	border-right-color:#646262;
 	border-right-width: 1px; 
 	border-right-style:solid;
 }

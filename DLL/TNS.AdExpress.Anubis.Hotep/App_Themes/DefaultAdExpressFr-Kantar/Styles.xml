@@ -382,17 +382,17 @@
     </colorList>
     <colorList name="pieColors7">
       <color>100,98,98</color>
-      <color>177,163,193</color>
-      <color>208,200,218</color>
-      <color>225,224,218</color>
+      <color>160,161,167</color>
+      <color>195,199,208</color>
+      <color>217,224,206</color>
       <color>255,215,215</color>
       <color>255,240,240</color>
       <color>202,255,202</color>
     </colorList>
     <colorList name="newPieColors">
       <color>100,98,98</color>
-      <color>177,163,193</color>
-      <color>208,200,218</color>
+      <color>160,161,167</color>
+      <color>195,199,208</color>
       <color>245,236,255</color>
       <color>57,85,115</color>
       <color>107,129,153</color>
@@ -442,7 +442,7 @@
       <color>222,255,222</color>
     </colorList>
     <colorList name="purpleV8Color">
-      <color>148,121,181</color>
+      <color>255,113,0</color>
     </colorList>
     <colorList name="lightPinkColor">
       <color>255, 223, 222</color>

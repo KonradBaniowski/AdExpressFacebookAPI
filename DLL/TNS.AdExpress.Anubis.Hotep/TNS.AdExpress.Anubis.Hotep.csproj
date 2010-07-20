@@ -231,6 +231,9 @@
     <Compile Include="UI\UISeasonalityGraph.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Content Include="App_Themes\DefaultAdExpressFr-Kantar\Styles.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Themes\SlovakiaAdExpressSk\Styles.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

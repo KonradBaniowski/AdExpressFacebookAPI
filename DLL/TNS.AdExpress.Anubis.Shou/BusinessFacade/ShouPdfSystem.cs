@@ -494,7 +494,7 @@ namespace TNS.AdExpress.Anubis.Shou.BusinessFacade
 
 
 
-                html.Append("<TD width=\"50%\" valign=\"top\" bgcolor=\"#E9E6EF\" ><TABLE align=\"center\" width=\"100%\" cellpadding=\"0\" cellSpacing=\"0\" border=\"0\">");
+                html.Append("<TD width=\"50%\" valign=\"top\" class=\"lightPurple\" ><TABLE align=\"center\" width=\"100%\" cellpadding=\"0\" cellSpacing=\"0\" border=\"0\">");
                 html.Append("<tr><td >");//Debut cellule image couverture
                 html.Append("&nbsp;</td><tr>");//fin cellule image couverture				
 

@@ -354,8 +354,11 @@ namespace TNS.AdExpress.Anubis.Appm.UI
 					this.ChartAreas.Add(cAreaFamily);
 					this.ChartAreas.Add(cAreaPeriodicity);
 
+                    Color colorTemp = Color.Black;
+                    _style.GetTag("GrpGraphBgColor").SetStyleDundas(ref colorTemp);
 					cAreaFamily.Area3DStyle.Enable3D = cAreaPeriodicity.Area3DStyle.Enable3D = false;
-					cAreaFamily.BackColor = cAreaPeriodicity.BackColor = Color.FromArgb(222,207,231);
+                    cAreaFamily.BackColor = cAreaPeriodicity.BackColor = colorTemp;
+                    
                     _style.GetTag("CgrpGraphDefaultFont").SetStyleDundas(cAreaFamily.AxisY.LabelStyle);
                     _style.GetTag("CgrpGraphDefaultFont").SetStyleDundas(cAreaFamily.AxisX.LabelStyle);
                     _style.GetTag("CgrpGraphDefaultFont").SetStyleDundas(cAreaPeriodicity.AxisY.LabelStyle);

@@ -86,35 +86,35 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
             try {
 
 				#region Title
-				AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1752,webSession.SiteLanguage),cellRow-1,1,false,8,2);
-				AmsetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,3,true,Color.FromArgb(100,72,131),Color.White,Color.FromArgb(222,216,229),CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,11,false);
+                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_tagTitle), GestionWeb.GetWebWord(1752, webSession.SiteLanguage), cellRow - 1, 1, 2);
+                AmsetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagTitle), null, cellRow - 1, 1, 3, false);
 				cellRow+=2;
 				#endregion
 
 				#region Period
-				AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1755,webSession.SiteLanguage)+" :",cellRow-1,1,false,8,2);
-				AmsetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,3,true,Color.FromArgb(100,72,131),Color.White,Color.FromArgb(222,216,229),CellBorderType.None,CellBorderType.None,CellBorderType.Thin,CellBorderType.None,10,false);
+                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_tagPeriodTitle), GestionWeb.GetWebWord(1755, webSession.SiteLanguage) + " :", cellRow - 1, 1, 2);
+                AmsetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagPeriodTitle), null, cellRow - 1, 1, 3, false);
 				cellRow++;
-				AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,HtmlFunctions.GetPeriodDetailForExcel(webSession),cellRow-1,1,false,8,2);
-				AmsetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,1,true,Color.FromArgb(100,72,131),Color.White,Color.White,CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
+                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_tagPeriodValue), HtmlFunctions.GetPeriodDetailForExcel(webSession), cellRow - 1, 1, 2);
+                AmsetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagPeriodValue), null, cellRow - 1, 1, 1, false);
 				cells[cellRow-1,1].Style.IndentLevel=1;
 				cellRow+=2;
 				#endregion
 
 				#region Wave
-				AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1771,webSession.SiteLanguage)+" :",cellRow-1,1,false,8,2);
-				AmsetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,3,true,Color.FromArgb(100,72,131),Color.White,Color.FromArgb(222,216,229),CellBorderType.None,CellBorderType.None,CellBorderType.Thin,CellBorderType.None,10,false);
+                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_tagWaveTitle), GestionWeb.GetWebWord(1771, webSession.SiteLanguage) + " :", cellRow - 1, 1, 2);
+                AmsetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagWaveTitle), null, cellRow - 1, 1, 3, false);
 				cellRow++;
-				AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,((LevelInformation)webSession.SelectionUniversAEPMWave.Nodes[0].Tag).Text,cellRow-1,1,false,8,2);
-				AmsetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,1,true,Color.FromArgb(100,72,131),Color.White,Color.White,CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
+                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_tagWaveValue), ((LevelInformation)webSession.SelectionUniversAEPMWave.Nodes[0].Tag).Text, cellRow - 1, 1, 2);
+                AmsetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagWaveValue), null, cellRow - 1, 1, 1, false);
 				cells[cellRow-1,1].Style.IndentLevel=1;
 				cellRow+=2;
 				#endregion
 
 				#region Targets
 
-				AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1757,webSession.SiteLanguage)+" :",cellRow-1,1,false,8,2);
-				AmsetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,3,true,Color.FromArgb(100,72,131),Color.White,Color.FromArgb(222,216,229),CellBorderType.None,CellBorderType.None,CellBorderType.Thin,CellBorderType.None,10,false);
+                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_tagTargetTitle), GestionWeb.GetWebWord(1757, webSession.SiteLanguage) + " :", cellRow - 1, 1, 2);
+                AmsetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagTargetTitle), null, cellRow - 1, 1, 3, false);
 				cellRow++;
 
 				//Base target
@@ -124,8 +124,8 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 				DataSet ds = TargetListDataAccess.GetAEPMTargetListFromIDSDataAccess(idWave, targets, webSession.CustomerLogin.Source);//.OracleConnectionString
 
 				foreach(DataRow r in ds.Tables[0].Rows){
-					AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,r["target"].ToString(),cellRow-1,1,false,8,2);
-					AmsetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,1,true,Color.FromArgb(100,72,131),Color.White,Color.White,CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
+                    AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_tagTargetValue), r["target"].ToString(), cellRow - 1, 1, 2);
+                    AmsetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagTargetValue), null, cellRow - 1, 1, 1, false);
 					cells[cellRow-1,1].Style.IndentLevel=1;
 					cellRow++;
 				}
@@ -135,11 +135,11 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 				#endregion
 
 				#region Products
-				AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1759,webSession.SiteLanguage)+" :",cellRow-1,1,false,8,2);
+                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_tagProductTitle), GestionWeb.GetWebWord(1759, webSession.SiteLanguage) + " :", cellRow - 1, 1, 2);
                 AmsetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagProductTitle), null, cellRow - 1, 1, 3, false);
 				cellRow++;
 				//reference
-				AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1677,webSession.SiteLanguage)+" :",cellRow-1,1,false,8,2);
+                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_tagProductValue), GestionWeb.GetWebWord(1677, webSession.SiteLanguage) + " :", cellRow - 1, 1, 2);
                 AmsetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagProductValue), GestionWeb.GetWebWord(1677, webSession.SiteLanguage) + " :", cellRow - 1, 1, 1, false);
 				cellRow+=2;			
 
@@ -147,9 +147,9 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 					TNS.AdExpress.Anubis.Amset.UI.SessionParameter.ToExcel(webSession.PrincipalProductUniverses[0], excel, webSession, sheet, ref cellRow, cells, webSession.CustomerLogin.Source,style);//.OracleConnectionString
 
 				cellRow++;
-			
-				AmsetFunctions.WorkSheet.PutCellValue(sheet,cells,GestionWeb.GetWebWord(1668, webSession.SiteLanguage)+" :",cellRow-1,1,false,8,2);
-				AmsetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,1,true,Color.FromArgb(100,72,131),Color.White,Color.FromArgb(222,216,229),CellBorderType.None,CellBorderType.None,CellBorderType.None,CellBorderType.None,8,false);
+
+                AmsetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_tagGroupTitle), GestionWeb.GetWebWord(1668, webSession.SiteLanguage) + " :", cellRow - 1, 1, 2);
+                AmsetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_tagGroupValue), null, cellRow - 1, 1, 1, false);
 				cellRow+=2;
 
 				ds = GroupSystem.ListFromSelection(dataSource, webSession);
