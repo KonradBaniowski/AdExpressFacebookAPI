@@ -107,9 +107,9 @@ namespace TNS.AdExpress.Anubis.Amset.UI{
 				Int64 idWave = Int64.Parse(webSession.GetSelection(webSession.SelectionUniversAEPMWave, CustomerConstantes.Right.type.aepmWaveAccess));									
 				#endregion
 
-				ResultTable resultTable = APPMRules.SectorDataSeasonalityRules.GetSeasonalityResultTable(webSession,webSession.Source,idWave,int.Parse(webSession.PeriodBeginningDate),int.Parse(webSession.PeriodEndDate),idBaseTarget,idAdditionalTarget);					
+				ResultTable resultTable = APPMRules.SectorDataSeasonalityRules.GetSeasonalityResultTable(webSession,webSession.Source,idWave,int.Parse(webSession.PeriodBeginningDate),int.Parse(webSession.PeriodEndDate),idBaseTarget,idAdditionalTarget);
 
-				if(resultTable.LinesNumber>0){
+                if (resultTable!=null && resultTable.LinesNumber > 0) {
 			
 					Worksheet sheet = excel.Worksheets[excel.Worksheets.Add()];
 					Cells cells = sheet.Cells;

@@ -85,12 +85,12 @@ namespace TNS.AdExpress.Bastet.WebControls{
         /// <summary>
         /// Image URL
         /// </summary>
-        protected string _imgUrl = string.Empty;
+        protected string _cssClassBis = string.Empty;
         /// <summary>
         /// Set Image URL
         /// </summary>
-        public string ImgUrl {
-            set { _imgUrl = value; }
+        public string CssClassBis {
+            set { _cssClassBis = value; }
         }
         /// <summary>
         /// Flash URL
@@ -163,10 +163,10 @@ namespace TNS.AdExpress.Bastet.WebControls{
 		protected override void Render(HtmlTextWriter output) {
 			Hashtable headers = HeaderList.List;
 			
-			output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" border=\"0\" width=\"100%\">");
+			output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" border=\"0\" width=\"100%\" >");
 			output.Write("\n<tr>");
 			output.Write("\n<td colspan=\"2\">");
-			output.Write("\n<table  class=\"header\" cellSpacing=\"0\" cellPadding=\"0\" border=\"0\">");
+            output.Write("\n<table  class=\"" + this.CssClass + "\" cellSpacing=\"0\" cellPadding=\"0\" border=\"0\">");
 			output.Write("\n<td width=\"1%\">");
 			output.Write("\n<script language=\"javascript\" type=\"text/javascript\">");
 			output.Write("\nif(hasRightFlashVersion==true){");
@@ -205,11 +205,11 @@ namespace TNS.AdExpress.Bastet.WebControls{
 			output.Write("\n</td>");
 			output.Write("\n</tr>");
 			output.Write("\n<tr>");
-            output.Write("\n<td colspan=\"2\" class=\"dupli1BackGround\"><IMG height=\"1\" src=\"" + "/App_Themes/" + TNS.AdExpress.Bastet.Web.WebApplicationParameters.Themes[_siteLanguage].Name + "/Images/Common/pixel.gif\" width=\"1\"></td>");
+            output.Write("\n<td colspan=\"2\" class=\"dupli1BackGround\"></td>");
 			output.Write("\n</tr>");
-			output.Write("\n<tr class=\"txtBlanc11\" style=\"BACKGROUND-IMAGE: url("+_imgUrl+")\">");
+			output.Write("\n<tr class=\""+_cssClassBis+"\">");
 			output.Write("\n<td>");
-			output.Write("\n<p style=\"PADDING-LEFT: 10px; PADDING-BOTTOM: 40px; PADDING-TOP: 4px\">");
+			output.Write("\n<p>");
 			int i=0;
 			string menus="";
 			string href="";

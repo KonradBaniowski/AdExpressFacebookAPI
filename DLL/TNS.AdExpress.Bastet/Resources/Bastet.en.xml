@@ -207,6 +207,12 @@
     <item mnemonic="w2530" type="System.String">Top media per module</item>
     <item mnemonic="w2531" type="System.String">Connections per medium</item>
     <item mnemonic="w2532" type="System.String">IP Address</item>
+
+    <item mnemonic="w2646" type="System.String">RUB</item>
+    <item mnemonic="w2647" type="System.String">KRUB</item>
+    <item mnemonic="w2648" type="System.String">USD</item>
+    <item mnemonic="w2649" type="System.String">KUSD</item>
+    <item mnemonic="w2681" type="System.String">pages A2</item>
   </items>
 </localization>
   

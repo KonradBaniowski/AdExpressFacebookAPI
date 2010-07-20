@@ -159,7 +159,7 @@ namespace TNS.AdExpress.Anubis.Sobek
 
             }
             catch (Exception e) {
-                _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.error.GetHashCode());
+                if(_dataAccess!=null) _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.error.GetHashCode());
                 OnError(_navSessionId, "Impossible to initialize process ", e);
                 return;
             }

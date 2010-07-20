@@ -260,7 +260,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			#region Total
             SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTotalFirstCol), GestionWeb.GetWebWord(1401, webSession.SiteLanguage), cellRow - 1, 3, 4);
             cells[cellRow - 1, 3].Style.HorizontalAlignment = TextAlignmentType.Left;
-            SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTotal), Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[0]["totalBaseTargetUnit"]).ToString(), webSession.Unit, false, WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo)), cellRow - 1, 4, 4);
+            SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTotal), Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[0]["totalBaseTargetUnit"]).ToString(), webSession.Unit, false, WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo), WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo), cellRow - 1, 4, 4);
             cells[cellRow - 1, 4].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax0); //"# ### ##0";
             cells[cellRow - 1, 4].Style.HorizontalAlignment = TextAlignmentType.Right;
             SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowTotal), 1, cellRow - 1, 5, 4);
@@ -274,7 +274,7 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 			for(int i=1; i<periodicityPlanData.Rows.Count-1;i++){
                 SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowDefaultFirstCol), periodicityPlanData.Rows[i]["periodicity"], cellRow - 1, 3, 4);
                 cells[cellRow - 1, 3].Style.HorizontalAlignment = TextAlignmentType.Left;
-                SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowDefault), Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[i]["unitBase"]).ToString(), webSession.Unit, false, WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo)), cellRow - 1, 4, 4);
+                SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowDefault), Convert.ToDouble(WebFunctions.Units.ConvertUnitValueAndPdmToString(Convert.ToDouble(periodicityPlanData.Rows[i]["unitBase"]).ToString(), webSession.Unit, false, WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo), WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo), cellRow - 1, 4, 4);
                 cells[cellRow - 1, 4].Style.Custom = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo.GetExcelFormatPattern(excelPatternNameMax0); //"# ### ##0";
                 cells[cellRow - 1, 4].Style.HorizontalAlignment = TextAlignmentType.Right;
                 SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_rowDefault), Convert.ToDouble(periodicityPlanData.Rows[i]["distributionBase"]) / 100, cellRow - 1, 5, 4);

@@ -546,6 +546,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
 		/// <param name="date">Date to fromat</param>
 		/// <param name="language">Site langage </param>
 		/// <returns>dd/MM/YYYY ou MM/dd/YYYY or MM.dd.YYYY etc</returns>
+        /// <remarks>Warning : The '/' caractere define to xml can change with culture of Operating System</remarks>
 		public static string DateToString(DateTime date, int language) {
 
 			AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[language].CultureInfo;

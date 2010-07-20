@@ -209,5 +209,11 @@
     <item mnemonic="w2530" type="System.String">Top médias par module</item>
     <item mnemonic="w2531" type="System.String">Connections par média</item>
     <item mnemonic="w2532" type="System.String">Adresse IP</item>
+
+    <item mnemonic="w2646" type="System.String">!</item>
+    <item mnemonic="w2647" type="System.String">!</item>
+    <item mnemonic="w2648" type="System.String">!</item>
+    <item mnemonic="w2649" type="System.String">!</item>
+    <item mnemonic="w2681" type="System.String">!</item>
   </items>
 </localization>
