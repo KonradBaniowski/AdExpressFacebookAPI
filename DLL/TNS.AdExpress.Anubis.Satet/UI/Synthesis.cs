@@ -223,7 +223,8 @@ namespace TNS.AdExpress.Anubis.Satet.UI
 				Array.Sort(groups);
 				foreach(string gr in groups){
                     SatetFunctions.WorkSheet.PutCellValue(excel, sheet, cells, style.GetTag(_referenceValue), gr, cellRow - 1, 2,  2);
-					//SatetFunctions.WorkSheet.CellsStyle(cells,null,cellRow-1,1,2,true,Color.FromArgb(107,89,139),Color.FromArgb(233,230,239),Color.FromArgb(100,72,131),CellBorderType.Thin,CellBorderType.Thin,CellBorderType.None,CellBorderType.None,10,false);
+                    SatetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_referenceValue), null, cellRow - 1, 2, 2, false);
+                    SatetFunctions.WorkSheet.CellsStyle(excel, cells, style.GetTag(_referenceTitle), null, cellRow - 1, 1, 1, false);
 					cells[cellRow-1,2].Style.IndentLevel = 2;
                     
 					cellRow++;
