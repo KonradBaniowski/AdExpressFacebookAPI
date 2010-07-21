@@ -546,7 +546,7 @@ td.p4{
 	border-right-color:#A0A1A7;
 	border-right-width: 1px; 
 	border-right-style:solid;
-	background-color: #646262;
+	background-color: #FF9900; /* #646262;*/
 	color:#FFFFFF;
 	width:17px;
 }
@@ -560,7 +560,7 @@ td.p5{
 	border-right-color:#A0A1A7;
 	border-right-width: 1px; 
 	border-right-style:solid;
-	background-color: #CCCCCC;
+	background-color: #FFCC99; /* #CCCCCC;*/
 	color:#CCCCCC;
 	width:17px;
 }
@@ -769,7 +769,7 @@ td.p4X
 	border-right-color:#A0A1A7;
 	border-right-width: 1px; 
 	border-right-style:solid;
-	background-color: #646262;
+	background-color: #FF9900; /*#646262;*/
 	/*color:#646262;*/
 	color:#FFFFFF;
 }
@@ -784,7 +784,7 @@ td.p5X
 	border-right-color:#A0A1A7;
 	border-right-width: 1px; 
 	border-right-style:solid;
-	background-color: #C0C0C0;
+	background-color: #FFCC99; /*#C0C0C0;*/
 	color:#C0C0C0;
 }
 /* Excel level */
