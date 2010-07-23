@@ -89,6 +89,7 @@
     <Compile Include="Classification\ProductItemsList.cs" />
     <Compile Include="Classification\VehicleInformation.cs" />
     <Compile Include="Classification\VehiclesInformation.cs" />
+    <Compile Include="Exceptions\RightMenuLinksXLException.cs" />
     <Compile Include="Exceptions\ModulesListXLException.cs" />
     <Compile Include="Exceptions\ResultPageInformationException.cs" />
     <Compile Include="Exceptions\TrendsXLException.cs" />
@@ -106,6 +107,8 @@
     <Compile Include="Units\DefaultUnit.cs" />
     <Compile Include="Units\DefaultUnitList.cs" />
     <Compile Include="Web\Navigation\ModuleAssignment.cs" />
+    <Compile Include="Web\Navigation\RightMenuLinks.cs" />
+    <Compile Include="Web\Navigation\RightMenuLinksItem.cs" />
     <Compile Include="Web\Rss.cs" />
     <Compile Include="XmlLoader\CoreLayersXL.cs" />
     <Compile Include="XmlLoader\DundasConfigurationXL.cs" />
@@ -205,6 +208,7 @@
     <Compile Include="XmlLoader\ModulesListXL.cs" />
     <Compile Include="XmlLoader\MSCreativesDetailsXL.cs" />
     <Compile Include="XmlLoader\PortofolioDetailMediaColumnsXL.cs" />
+    <Compile Include="XmlLoader\RightMenuLinksXL.cs" />
     <Compile Include="XmlLoader\RightOptionsXL.cs" />
     <Compile Include="XmlLoader\TrendsXL.cs" />
     <Compile Include="XmlLoader\UnitsDescriptionXL.cs" />

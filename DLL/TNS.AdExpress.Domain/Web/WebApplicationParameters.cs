@@ -17,6 +17,7 @@ using TNS.AdExpress.Constantes.Web;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.ModulesDescritpion;
 using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Domain.Web.Navigation;
 
 namespace TNS.AdExpress.Domain.Web {
 
@@ -119,8 +120,15 @@ namespace TNS.AdExpress.Domain.Web {
 		/// True if must use right defaut connection
 		/// </summary>
 		protected static bool _useRightDefaultConnection = false;
-
+        /// <summary>
+        /// Trends
+        /// </summary>
         protected static Trends _trends = null;
+
+        /// <summary>
+        /// RightMenuLinks configuration
+        /// </summary>
+        protected static RightMenuLinks _RightMenuLinks = null;
         #endregion
         
         #region Contructeur
@@ -134,10 +142,13 @@ namespace TNS.AdExpress.Domain.Web {
             _webSiteName=WebParamtersXL.LoadSiteName(new XmlReaderDataSource(_configurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME));
             _countryCode = WebParamtersXL.LoadDirectoryName(new XmlReaderDataSource(_configurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME));
             _countryConfigurationDirectoryRoot = _configurationDirectoryRoot + _countryCode + @"\";
+            
             // Initialisation des descriptions des éléments de niveaux de détail
             DetailLevelItemsInformation.Init(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + ConfigurationFile.GENERIC_DETAIL_LEVEL_ITEMS_CONFIGURATION_FILENAME));
+            
             // Initialisation des descriptions des niveaux de détail
             DetailLevelsInformation.Init(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + ConfigurationFile.GENERIC_DETAIL_LEVEL_CONFIGURATION_FILENAME)); 				
+            
             _defaultDataLanguage=WebLanguagesXL.LoadDefaultDataLanguage(new XmlReaderDataSource(_countryConfigurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBLANGUAGES_CONFIGURATION_FILENAME));
 			_defaultLanguage = WebLanguagesXL.LoadDefaultLanguage(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBLANGUAGES_CONFIGURATION_FILENAME));
             _allowedLanguages=WebLanguagesXL.LoadLanguages(new XmlReaderDataSource(_countryConfigurationDirectoryRoot+TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBLANGUAGES_CONFIGURATION_FILENAME));
@@ -153,7 +164,8 @@ namespace TNS.AdExpress.Domain.Web {
 			_infoNewsInformations = new InfoNews(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.INFO_NEWS_FILENAME));
 			_coreLayers = CoreLayersXL.Load(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.CORE_LAYERS_CONFIGURATION_FILENAME));
             _trends = new Trends(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.TRENDS_FILENAME));
-			
+
+            _RightMenuLinks = new RightMenuLinks(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.RIGHT_MENU_LINKS_FILENAME));
         }
         #endregion
 
@@ -183,7 +195,6 @@ namespace TNS.AdExpress.Domain.Web {
         public static string CountryConfigurationDirectoryRoot {
             get { return _countryConfigurationDirectoryRoot; }
         }
-        
         /// <summary>
         /// Get Default Language
         /// </summary>
@@ -202,14 +213,12 @@ namespace TNS.AdExpress.Domain.Web {
         public static Dictionary<Int64,WebLanguage> AllowedLanguages {
             get { return _allowedLanguages; }
         }
-
         /// <summary>
         /// Get themes List 
         /// </summary>
         public static Dictionary<Int64,WebTheme> Themes {
             get { return _themes; }
         }
-
         /// <summary>
         /// Get Database description
         /// </summary>
@@ -311,13 +320,20 @@ namespace TNS.AdExpress.Domain.Web {
 				_useRightDefaultConnection = value;
 			}
 		}
-
         /// <summary>
         /// Get trends information
         /// </summary>
         public static Trends TrendsInformations
         {
             get { return _trends; }
+        }
+
+        /// <summary>
+        /// Get RightMenuLinks information
+        /// </summary>
+        public static RightMenuLinks RightMenuLinksInformations
+        {
+            get { return _RightMenuLinks; }
         }
         #endregion
 

@@ -17,7 +17,6 @@ using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
-
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Translation;
@@ -359,127 +358,157 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// Méthode pour la construction de la fonction javascript du menu contextuel
 		/// </summary>
 		/// <returns>Code Javascript</returns>
-		private string GetMenuCreation(){
+		private string GetMenuCreation()
+        {
+            bool export = false;
+            string jsTmp = string.Empty;
+            StringBuilder js = new StringBuilder(10000);
+            js.Append("\r\n<script>");
+            js.Append("\r\n\tfunction createjsDOMenu() {");
+            js.Append("\r\n\t\t" + MAIN_MENU + " = new jsDOMenu(205);");
 
-			//Module loading
+            // Module loading
 			_module=_webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
 
-			//Get current page
-			PageInformation pInfo = _module.GetPageInformation(this.Page.Request.Url.AbsolutePath, _webSession.CurrentTab);
+            if(_module != null)
+            {
+                // Get current page
+                PageInformation pInfo = _module.GetPageInformation(this.Page.Request.Url.AbsolutePath, _webSession.CurrentTab);
 
-
-			string jsTmp = string.Empty;
-			StringBuilder js = new StringBuilder(10000);
-
-
-			js.Append("\r\n<script>");
-			js.Append("\r\n\tfunction createjsDOMenu() {");
-			js.Append("\r\n\t\t" + MAIN_MENU + " = new jsDOMenu(205);");
-
-			// Recall Selection
-			if (pInfo!= null && pInfo.AllowRecall && !this._forbidRecall){
-				jsTmp = GetRecallSelectionItem(MAIN_MENU, pInfo);
-				js.Append(jsTmp);
-			}
-
-			//Result pages managment
-			bool export = false;
-			if (pInfo!=null && pInfo.GetType() == typeof(ResultPageInformation)){
-				//separator
-				if(jsTmp.Length > 0)
-					js.Append(GetSeparator(MAIN_MENU));   
-				//Selection refine
-				jsTmp = GetRefineSelectionItem(MAIN_MENU);
-				js.Append(jsTmp);
-				//separator
-				if(jsTmp.Length > 0)
-					js.Append(GetSeparator(MAIN_MENU));
-				//Save
-                if (!_forbidSave)
+                if(pInfo != null)
                 {
-                    jsTmp = this.GetSaveItem(MAIN_MENU);
-                    js.Append(jsTmp);
+                    // Recall Selection
+                    if(pInfo != null && pInfo.AllowRecall && !this._forbidRecall)
+                    {
+                        jsTmp = GetRecallSelectionItem(MAIN_MENU, pInfo);
+                        js.Append(jsTmp);
+                    }
+
+                    // Result pages managment
+                    export = false;
+                    if(pInfo != null && pInfo.GetType() == typeof(ResultPageInformation))
+                    {
+                        // Separator
+                        if(jsTmp.Length > 0)
+                            js.Append(GetSeparator(MAIN_MENU));
+
+                        // Selection refine
+                        jsTmp = GetRefineSelectionItem(MAIN_MENU);
+                        js.Append(jsTmp);
+
+                        // Separator
+                        if(jsTmp.Length > 0)
+                            js.Append(GetSeparator(MAIN_MENU));
+
+                        // Save
+                        if(!_forbidSave)
+                        {
+                            jsTmp = this.GetSaveItem(MAIN_MENU);
+                            js.Append(jsTmp);
+                        }
+
+                        // Alert
+                        if(AlertConfiguration.IsActivated
+                            && ((ResultPageInformation)pInfo).CreateAlertUrl != ""
+                            && _webSession.CustomerLogin.HasModuleAssignmentAlertsAdExpress()
+                            && _webSession.CustomerLogin.IsModuleAssignmentValidDateAlertsAdExpress())
+                        {
+                            DataAccessLayer layer = PluginConfiguration.GetDataAccessLayer(PluginDataAccessLayerName.Alert);
+                            TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
+                            IAlertDAL alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, new object[] { src }, null, null, null);
+                            int nbUserAlert = alertDAL.GetAlerts(_webSession.CustomerLogin.IdLogin).Count;
+                            if(_webSession.CustomerLogin.GetNbAlertsAdExpress() > nbUserAlert)
+                            {
+                                jsTmp = this.GetCreateAlertItem(MAIN_MENU, (ResultPageInformation)pInfo, true);
+                            }
+                            else
+                            {
+                                // Grisé
+                                jsTmp = this.GetCreateAlertItem(MAIN_MENU, (ResultPageInformation)pInfo, false);
+                            }
+                            js.Append(jsTmp);
+                        }
+
+                        // Export
+                        int jsLength = js.Length;
+                        jsTmp = this.GetExportItems(MAIN_MENU, (ResultPageInformation)pInfo);
+                        js.Append(jsTmp);
+                        if(js.Length > jsLength)
+                            export = true;
+                    }
                 }
 
-                // Alert
-                if (AlertConfiguration.IsActivated 
-                    && ((ResultPageInformation)pInfo).CreateAlertUrl != ""
-                    && _webSession.CustomerLogin.HasModuleAssignmentAlertsAdExpress()
-                    && _webSession.CustomerLogin.IsModuleAssignmentValidDateAlertsAdExpress())
+                // Force Print
+                string exportMenu = EXCEL_MENU;
+                if(!export)
                 {
-                    DataAccessLayer layer = PluginConfiguration.GetDataAccessLayer(PluginDataAccessLayerName.Alert);
-                    TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
-                    IAlertDAL alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, new object[] { src }, null, null, null);
-                    int nbUserAlert = alertDAL.GetAlerts(_webSession.CustomerLogin.IdLogin).Count;
-                    if (_webSession.CustomerLogin.GetNbAlertsAdExpress() > nbUserAlert) {
-                        jsTmp = this.GetCreateAlertItem(MAIN_MENU, (ResultPageInformation)pInfo, true);
-                    }
-                    else {
-                        //Grisé
-                        jsTmp = this.GetCreateAlertItem(MAIN_MENU, (ResultPageInformation)pInfo, false);
-                    }
-                    js.Append(jsTmp);
+                    exportMenu = MAIN_MENU;
+                }
+                if(_displayHtmlPrint)
+                {
+                    js.Append(this.GetExportSubMenu("htmlPrintItem", GestionWeb.GetWebWord(2044, _webSession.SiteLanguage), exportMenu, "javascript:self.print();", "printHTMLMenuIcon"));
+                    jsTmp = " ";
+                }
+                if(_forcePrint.Length > 0)
+                {
+                    if(this._forcePrintTraductionCode > -1)
+                        js.Append(this.GetExportSubMenu("printMenuItem", GestionWeb.GetWebWord(this._forcePrintTraductionCode, _webSession.SiteLanguage), exportMenu, "javascript:OpenNewWindow('" + _forcePrint + "');", "printMenuIcon"));
+                    else js.Append(this.GetExportSubMenu("printMenuItem", GestionWeb.GetWebWord(1996, _webSession.SiteLanguage), exportMenu, "javascript:OpenNewWindow('" + _forcePrint + "');", "printMenuIcon"));
+                    jsTmp = " ";
                 }
 
-				//Export
-				int jsLength = js.Length;
-                jsTmp = this.GetExportItems(MAIN_MENU, (ResultPageInformation)pInfo);
-				js.Append(jsTmp);
-				if (js.Length > jsLength)
-					export = true;
-			}
+                // Force Excel Export
+                if(_forceExcelUnit.Length > 0)
+                {
+                    js.Append(this.GetExportSubMenu("excelUnitItem", GestionWeb.GetWebWord(1997, _webSession.SiteLanguage), exportMenu, "javascript:OpenNewWindow('" + _forceExcelUnit + "');", "excelUnitMenuIcon"));
+                    jsTmp = " ";
+                }
 
-			//Force Print
-			string exportMenu = EXCEL_MENU;
-			if (!export){
-				exportMenu = MAIN_MENU;
-			}
+                // Force Pdf Export
+                if(_forcePdfExportResult.Length > 0)
+                {
+                    js.Append(this.GetExportSubMenu("pdfExportResultItem", GestionWeb.GetWebWord(2017, _webSession.SiteLanguage), exportMenu, "javascript:popupOpenBis('" + _forcePdfExportResult + "','470','210','yes');", "pdfExportMenuIcon"));
+                    jsTmp = " ";
+                }
 
-			if (_displayHtmlPrint){
-				js.Append(this.GetExportSubMenu("htmlPrintItem",GestionWeb.GetWebWord(2044,_webSession.SiteLanguage),exportMenu,"javascript:self.print();","printHTMLMenuIcon" ));
-				jsTmp = " ";
-			}
+                // Other
+                if(!_forbidHelpPages && pInfo != null)
+                {
+                    // Separator
+                    if(jsTmp.Length > 0)
+                        js.Append(GetSeparator(MAIN_MENU));
 
-			if (_forcePrint.Length > 0){
-				if(this._forcePrintTraductionCode> -1)
-				js.Append(this.GetExportSubMenu("printMenuItem",GestionWeb.GetWebWord(this._forcePrintTraductionCode,_webSession.SiteLanguage),exportMenu,"javascript:OpenNewWindow('"+ _forcePrint + "');","printMenuIcon" ));
-				else js.Append(this.GetExportSubMenu("printMenuItem",GestionWeb.GetWebWord(1996,_webSession.SiteLanguage),exportMenu,"javascript:OpenNewWindow('"+ _forcePrint + "');","printMenuIcon" ));
-				jsTmp = " ";
-			}
+                    // Rappel de sélection
+                    js.Append(GetDetailSelectionItem(MAIN_MENU));
 
-			//Force Excel Export
-			if (_forceExcelUnit.Length > 0){
-				js.Append(this.GetExportSubMenu("excelUnitItem",GestionWeb.GetWebWord(1997,_webSession.SiteLanguage),exportMenu,"javascript:OpenNewWindow('"+ _forceExcelUnit + "');","excelUnitMenuIcon" ));
-				jsTmp = " ";
-			}
+                    // Aide
+                    js.Append(GetHelpItem(MAIN_MENU));
 
-			//Force Pdf Export
-			if (_forcePdfExportResult.Length > 0){
-				js.Append(this.GetExportSubMenu("pdfExportResultItem",GestionWeb.GetWebWord(2017,_webSession.SiteLanguage),exportMenu,"javascript:popupOpenBis('"+ _forcePdfExportResult + "','470','210','yes');","pdfExportMenuIcon" ));
-				jsTmp = " ";
-			}
+                    jsTmp = " ";
+                }
+                else if(_forceHelp.Length > 0)
+                {
+                    // Separator
+                    if(jsTmp.Length > 0)
+                        js.Append(GetSeparator(MAIN_MENU));
 
+                    // Aide
+                    if(_forceHelp.IndexOf("?") > 0) _forceHelp += "&siteLanguage=" + _webSession.SiteLanguage;
+                    else _forceHelp += "?siteLanguage=" + _webSession.SiteLanguage;
+                    js.Append(this.GetExportSubMenu("helpItem", GestionWeb.GetWebWord(1988, _webSession.SiteLanguage), MAIN_MENU,
+                        "javascript:popupRecallOpen('" + _forceHelp + ((_urlParameters.Length > 0) ? "&" + _urlParameters : "") + "','" + HELP_PAGE_WIDTH + "','" + HELP_PAGE_HEIGHT + "');"
+                        , "helpMenuIcon"));
 
-			if (!_forbidHelpPages){
-				//Separator
-				if(jsTmp.Length > 0)
-					js.Append(GetSeparator(MAIN_MENU));
-				// Rappel de sélection
-				js.Append(GetDetailSelectionItem(MAIN_MENU));
-				// Aide
-				js.Append(GetHelpItem(MAIN_MENU));
-			}
-			else if (_forceHelp.Length > 0){
-				//Separator
-				if(jsTmp.Length > 0)
-					js.Append(GetSeparator(MAIN_MENU));
-				// Aide
-				if(_forceHelp.IndexOf("?")>0)_forceHelp+="&siteLanguage="+_webSession.SiteLanguage;
-				else _forceHelp+="?siteLanguage="+_webSession.SiteLanguage;
-				js.Append(this.GetExportSubMenu("helpItem",GestionWeb.GetWebWord(1988,_webSession.SiteLanguage),MAIN_MENU,
-                    "javascript:popupRecallOpen('" + _forceHelp + ((_urlParameters.Length > 0)?"&"+_urlParameters:"") + "','" + HELP_PAGE_WIDTH + "','" + HELP_PAGE_HEIGHT + "');"
-					,"helpMenuIcon"));
-			}
+                    jsTmp = " ";
+                }
+            }
+
+            // Separator
+            if(jsTmp.Length > 0)
+                js.Append(GetSeparator(MAIN_MENU));
+            
+            // Links (display in all pages)
+            js.Append(GetLinksItem(MAIN_MENU));
 
 			js.Append("\r\n\t\tsetPopUpMenu("+ MAIN_MENU + ");");
 			js.Append("\r\n\t\tactivatePopUpMenuBy(1, 2);");
@@ -553,7 +582,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			return(js);
 		}
 
-
 		/// <summary>
 		/// Rappel de sélection
 		/// </summary>
@@ -579,6 +607,86 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			return(js);
 		}
 
+        /// <summary>
+        /// Liens
+        /// </summary>
+        /// <param name="menuObjectName">Nom de l'objet menu</param>
+        /// <returns>Code Javascript</returns>
+        private string GetLinksItem(string menuObjectName)
+        {
+            string href = string.Empty;
+            string hrefTmp = string.Empty;
+            string languageString = string.Empty;
+            string idSessionString = string.Empty;
+            bool firstParameter = true;
+
+            string js = string.Empty;
+            RightMenuLinks links = WebApplicationParameters.RightMenuLinksInformations;
+            foreach(RightMenuLinksItem cItem in links.RightMenuLinksList)
+            {
+                href = "";
+                hrefTmp = "";
+                languageString = "";
+                idSessionString = "";
+                firstParameter = true;
+
+                #region Building URL
+                if(cItem.UseLanguage)
+                {
+                    languageString = "siteLanguage=" + _webSession.SiteLanguage;
+                    if(firstParameter)
+                    {
+                        languageString = "?" + languageString;
+                        firstParameter = false;
+                    }
+                    else
+                    {
+                        languageString = "&" + languageString;
+                    }
+                }
+                if(cItem.UseSessionId)
+                {
+                    idSessionString = "idSession=" + _webSession.IdSession;
+                    if(firstParameter)
+                    {
+                        idSessionString = "?" + idSessionString;
+                        firstParameter = false;
+                    }
+                    else
+                    {
+                        idSessionString = "&" + idSessionString;
+                    }
+                }
+                href = cItem.Url + languageString + idSessionString;
+                #endregion
+
+                if(cItem.DisplayInPopUp)
+                {
+                    if(cItem.JavascriptFunctionName.Length > 0 && cItem.WidthPopUp.Length > 0 && cItem.HeightPopUp.Length > 0)
+                    {
+                        js += "\r\n\t\t" + menuObjectName 
+                            + ".addMenuItem(new menuItem(\""
+                            + GestionWeb.GetWebWord(cItem.WebTextId, _webSession.SiteLanguage)
+                            + "\", \"" + cItem.IconName + "Item\",\"javascript:" + cItem.JavascriptFunctionName + "('" + href + "','" + cItem.WidthPopUp + "','" + cItem.HeightPopUp + "','yes');\"));";
+                        js += "\r\n\t\t" + menuObjectName + ".items."
+                            + cItem.IconName + "Item.showIcon(\"" + cItem.IconName + "\", \"" + cItem.IconName + "\");";
+                    }
+                }
+                else
+                {
+                    if(cItem.Target.Length > 0) 
+                        hrefTmp += href + "','_blank";
+                    js += "\r\n\t\t" + menuObjectName
+                        + ".addMenuItem(new menuItem(\""
+                        + GestionWeb.GetWebWord(cItem.WebTextId, _webSession.SiteLanguage)
+                        + "\", \"" + cItem.IconName + "Item\",\"code:window.open('" + hrefTmp + "')\"));";
+                    js += "\r\n\t\t" + menuObjectName + ".items."
+                        + cItem.IconName + "Item.showIcon(\"" + cItem.IconName + "\", \"" + cItem.IconName + "\");";
+                }
+            }
+            return (js);
+        }
+
 		/// <summary>
 		/// Séparateur
 		/// </summary>
@@ -600,6 +708,13 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				+ "\r\n\t\t"+menuObjectName+".items.saveMenuItem.showIcon(\"saveMenuIcon\", \"saveMenuIcon\");");
 		}
 
+        /// <summary>
+        /// Alert
+        /// </summary>
+        /// <param name="menuObjectName">nom de l'objet menu</param>
+        /// <param name="pInfo"></param>
+        /// <param name="isValid"></param>
+        /// <returns>Code Javascript</returns>
         private string GetCreateAlertItem(string menuObjectName, ResultPageInformation pInfo, bool isValid) {
             if(isValid)
                 return ("\r\n\t\t" + menuObjectName + ".addMenuItem(new menuItem(\"" + GestionWeb.GetWebWord(2578, _webSession.SiteLanguage) + "\", \"alertMenuItem\",\"javascript:popupOpenBis('" + pInfo.CreateAlertUrl + "?idSession=" + _webSession.IdSession + ((_urlParameters.Length > 0) ? "&" + _urlParameters : "") + "&param=" + generateNumber() + "','470','450','no');\"));"
@@ -608,7 +723,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
                 return ("\r\n\t\t" + menuObjectName + ".addMenuItem(new menuItem(\"" + GestionWeb.GetWebWord(2578, _webSession.SiteLanguage) + "\", \"alertMenuItem\", \"\", false, \"jsdomenuitemdisabled\", \"jsdomenuitemdisabledover\"));"
                    + "\r\n\t\t" + menuObjectName + ".items.alertMenuItem.showIcon(\"alertMenuIcon\", \"alertMenuIcon\");"); 
         }
-
 
 		/// <summary>
 		/// Generate scripts for export menus
@@ -709,7 +823,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			DateTime dt=DateTime.Now;
 			return(dt.Year.ToString()+dt.Month.ToString()+dt.Day.ToString()+dt.Hour.ToString()+dt.Minute.ToString()+dt.Second.ToString()+dt.Millisecond.ToString()+new Random().Next(1000));
 		}
-
 		#endregion
+
 	}
 }

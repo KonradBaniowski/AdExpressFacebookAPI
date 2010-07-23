@@ -289,6 +289,8 @@ namespace AdExpress{
 					LoginInformationWebControl1.CustomerSession = _webSession;
 					ActualitiesWebControl1.LanguageId = _webSession.SiteLanguage;
 				}
+
+                MenuWebControl1.CustomerWebSession = _webSession;
 			}
 			catch(System.Exception exc) {
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){

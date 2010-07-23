@@ -49,6 +49,7 @@
 							 ColumnLeftWidth="10px"></cc2:moduleselection2webcontrol></td>
 				</tr>
 			</table>
+		    <cc1:MenuWebControl ID="MenuWebControl1" runat="server" />
 		</form>
 	</body>
 </html>

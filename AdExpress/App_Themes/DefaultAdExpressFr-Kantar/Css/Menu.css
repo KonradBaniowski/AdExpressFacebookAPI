@@ -363,3 +363,20 @@ height and width of the icon image.
 	position: absolute;
 	width: 20px;
 }
+
+.updateDateMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/updateDateMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
+.kantarWebsiteMenuIcon {
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Menu/kantarWebsiteMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}

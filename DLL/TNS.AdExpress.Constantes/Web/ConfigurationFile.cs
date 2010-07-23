@@ -153,7 +153,9 @@ namespace TNS.AdExpress.Constantes.Web {
         /// </summary>
         public const string CAMPAIGN_TYPES_CONFIGURATION_FILENAME = @"CampaignTypes.xml";
 
-
-
+        /// <summary>
+        /// Right Menu Links configuration file
+        /// </summary>
+        public const string RIGHT_MENU_LINKS_FILENAME = @"RightMenuLinks.xml";
     }
 }
