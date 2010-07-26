@@ -1518,6 +1518,10 @@ namespace TNS.AdExpress.Constantes.Web{
 		/// Item Presentation
 		/// </summary>
 		public const int PRESENTATION = 757;
+        /// <summary>
+        /// Item Configuration
+        /// </summary>
+        public const int CONFIGURATION = 990;
 	}
 	#endregion
 

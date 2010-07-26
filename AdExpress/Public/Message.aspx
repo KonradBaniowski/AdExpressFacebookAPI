@@ -37,12 +37,9 @@
 							<!-- titre et descriptif-->
 							<tr>
 								<td>
-								    <table id="Table6" cellspacing="0" cellpadding="0" width="10" border="0">
+								    <table id="Table6" cellspacing="0" cellpadding="0" width="185" border="0">
 										<tr>
-											<td><asp:Image ID="Image3" runat="server" height="5" SkinID="plus_sous_logo" /></td>
-										</tr>
-										<tr>
-											<td><asp:Image ID="Image4" runat="server" height="10" width="1" SkinID="pixel" /></td>
+											<td class="backGroundBlack"><asp:Image ID="Image4" runat="server" height="19" width="1" SkinID="pixel" /></td>
 										</tr>
 										<tr>
 											<td><a onmouseover="bouton.src='/App_Themes/<%= this.Theme %>/Images/Culture/Button/back_down.gif';" onmouseout="bouton.src = '/App_Themes/<%= this.Theme %>/Images/Culture/Button/back_up.gif';" href="javascript:history.back(-<%=backPageNb%>);" ><img src="/App_Themes/<%= this.Theme %>/Images/Culture/Button/back_up.gif" border=0 name=bouton></a></td>

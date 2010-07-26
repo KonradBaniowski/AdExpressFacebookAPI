@@ -739,11 +739,22 @@ namespace TNS.AdExpress.Web.Controls.Headers{
             output.Write("<td align=\"right\" class=\"arrowBackGroundGenericMediaLevelDetail\"></td>");
 			output.Write("</tr>");
 			output.Write("</table>");
-			// Section
+			
+            // Section
             output.Write("\r\n<div id=\"detailledLevelContent\" class=\"GenericMediaLevelDetailSelectionSection\" style=\"DISPLAY: none; WIDTH: " + this.Width + "px;\">");
 			output.Write("\r\n<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" ID=\"Section\">");
-			output.Write("\r\n<tr>");
-			// Niveaux personnalisés déjà enregistrés
+
+            // Niveaux détaillés par (liste par défaut)
+            output.Write("\r\n<tr>");
+            output.Write("\r\n<td class=\"" + _cssListLabel + "\">" + GestionWeb.GetWebWord(1886, _customerWebSession.SiteLanguage) + " :</td>");
+            output.Write("\r\n</tr>");
+			
+
+
+
+
+            // Niveaux personnalisés déjà enregistrés
+            output.Write("\r\n<tr>");
 			output.Write("\r\n<td class=\""+_cssListLabel+"\">"+ GestionWeb.GetWebWord(1897,_customerWebSession.SiteLanguage) +" :</td>");
 			output.Write("\r\n</tr>");
 			output.Write("\r\n<tr>");
@@ -751,13 +762,18 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			_customDetail.RenderControl(output);
 			output.Write("\r\n</td>");
 			output.Write("\r\n</tr>");
+            // Espace blanc
+            output.Write("\r\n<tr>");
+            output.Write("\r\n<td colspan=2><img src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" border=\"0\" height=\"5\"></td>");
+            output.Write("\r\n</tr>");
 			// Bouton supprimer
-			output.Write("\r\n<tr>");
-			output.Write("\r\n<td align=\"right\"><a class=\"roll03\" href=\"javascript: remove();\"  onmouseover=\"deleteButton.src='/App_Themes/"+themeName+"/Images/Common/button/bt_delete_down.gif';\" onmouseout=\"deleteButton.src ='/App_Themes/"+themeName+"/Images/Common/button/bt_delete_up.gif';\"><img name=deleteButton border=0 src=\"/App_Themes/"+themeName+"/Images/Common/button/bt_delete_up.gif\" alt=\""+ GestionWeb.GetWebWord(1951,_customerWebSession.SiteLanguage) +"\"></a></td>");	
+			output.Write("\r\n<tr height=\"15\">");
+            output.Write("\r\n<td align=\"right\"><a class=\"roll03\" href=\"javascript: remove();\"  onmouseover=\"deleteButton.src='/App_Themes/" + themeName + "/Images/Common/button/bt_delete2_down.gif';\" onmouseout=\"deleteButton.src ='/App_Themes/" + themeName + "/Images/Common/button/bt_delete2_up.gif';\"><img name=deleteButton border=0 src=\"/App_Themes/" + themeName + "/Images/Common/button/bt_delete2_up.gif\" alt=\"" + GestionWeb.GetWebWord(1951, _customerWebSession.SiteLanguage) + "\"></a>&nbsp;</td>");	
 			output.Write("\r\n</tr>");
 			output.Write("\r\n<tr>");
 			output.Write("\r\n<td>");
-			// Sélection des niveaux de détail
+			
+            // Sélection des niveaux de détail
 			output.Write("\r\n<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" ID=\"levelSelection\">");
 			output.Write("\r\n<tr>");
 			// Construction des niveaux
@@ -780,14 +796,14 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				output.Write("\r\n</tr>");
 			}
 			// Bouton de sauvegarde
-			output.Write("\r\n<tr>");
+            output.Write("\r\n<tr height=\"15\">");
 			output.Write("\r\n<td colspan=2 align=\"right\">");
 			if(_saveASPXFilePath!=null && _saveASPXFilePath.Length>1)
-                output.Write("<a class=\"roll03\" href=\"javascript: save();\"  onmouseover=\"saveLevelDetailButton.src='/App_Themes/" + themeName + "/Images/Common/button/save_down.gif';\" onmouseout=\"saveLevelDetailButton.src ='/App_Themes/" + themeName + "/Images/Common/button/save_up.gif';\"><img name=saveLevelDetailButton border=0 src=\"/App_Themes/" + themeName + "/Images/Common/button/save_up.gif\" alt=\"" + GestionWeb.GetWebWord(1952, _customerWebSession.SiteLanguage) + "\"></a>");
+                output.Write("<a class=\"roll03\" href=\"javascript: save();\"  onmouseover=\"saveLevelDetailButton.src='/App_Themes/" + themeName + "/Images/Common/button/bt_save_down.gif';\" onmouseout=\"saveLevelDetailButton.src ='/App_Themes/" + themeName + "/Images/Common/button/bt_save_up.gif';\"><img name=saveLevelDetailButton border=0 src=\"/App_Themes/" + themeName + "/Images/Common/button/bt_save_up.gif\" alt=\"" + GestionWeb.GetWebWord(1952, _customerWebSession.SiteLanguage) + "\"></a>&nbsp;");
 			else
 				output.Write("&nbsp;");
 			output.Write("</td>");	
-			//<img src=\"/Images/Common/button/save_up.gif\" border=\"0\"></td>");
+
 			// Fin niveau de détaille N1...
 			output.Write("\r\n</tr>");
 			output.Write("\r\n</table>");

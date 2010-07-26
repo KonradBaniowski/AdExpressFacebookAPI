@@ -66,12 +66,9 @@
 							<tr>
 								<td class="txtBlanc11Bold" width="185" height="9">
 									
-									<table id="Table6" cellspacing="0" cellpadding="0" width="10" border="0">
+									<table id="Table6" cellspacing="0" cellpadding="0" width="185" border="0">
 										<tr>
-											<td><asp:Image ID="Image3" runat="server" height="5" SkinID="plus_sous_logo" /></td>
-										</tr>
-										<tr>
-											<td><asp:Image ID="Image4" runat="server" height="10" width="1" SkinID="pixel" /></td>
+											<td class="backGroundBlack"><asp:Image ID="Image4" runat="server" height="19" width="1" SkinID="pixel" /></td>
 										</tr>
 										
 										<!-- éléments variables du menus de gauche -->
@@ -126,19 +123,19 @@
 					<td class="lineVerticalBackGround"><asp:Image ID="Image12" runat="server" height="1" width="2" SkinID="pixel" /></td>
 
 					<!-- droite-->
-					<td style="WIDTH: 731px" valign="top" >
+					<td valign="top" >
 						<table cellspacing="0" cellpadding="0" border="0">
 							<tr>
 								<!-- Menu du haut-->
-								<td style="WIDTH: 772px"><cc2:headerwebcontrol language="33" id="HeaderWebControl2" runat="server" Type_de_page="generic"></cc2:headerwebcontrol></td>
+								<td><cc2:headerwebcontrol language="33" id="HeaderWebControl2" runat="server" Type_de_page="generic"></cc2:headerwebcontrol></td>
 							</tr>
 							<!-- Centre -->
 							<tr>
-								<td style="WIDTH: 773px" >
+								<td >
 									
 									<table cellspacing="0" cellpadding="0" width="100%" border="0">
 										<tr style="HEIGHT: 5px">
-											<td style="WIDTH: 478px" colspan="5"></td>
+											<td colspan="5"></td>
 										</tr>
 										<tr>
 											<td colspan="5" style="padding-left:5px;">
@@ -149,7 +146,7 @@
 											<td colspan="6"></td>
 										</tr>
 										<tr style="HEIGHT: 10px">
-											<td style="WIDTH: 478px" width="478" class="imageBackGround" colspan="6"></td>
+											<td class="imageBackGround" colspan="6"></td>
 										</tr>
 										<tr style="HEIGHT: 5px">
 											<td colspan="6"></td>
@@ -174,30 +171,29 @@
 								</td>
 							</tr>
 							<tr>
-								<td style="WIDTH: 772px" ><asp:Image ID="Image16" runat="server" height="5" width="1" SkinID="pixel" /></td>
+								<td ><asp:Image ID="Image16" runat="server" height="5" width="1" SkinID="pixel" /></td>
 							</tr>
 							<tr>
-								<td style="WIDTH: 772px; HEIGHT: 27px">&nbsp;&nbsp; <a id="A1" onmouseover="MM_swapImage('ok','','/images/Common/button/ok_down.gif',1)"
+								<td style="HEIGHT: 27px">&nbsp;&nbsp; <a id="A1" onmouseover="MM_swapImage('ok','','/images/Common/button/ok_down.gif',1)"
 										onclick="javascript:createLists();" onmouseout="MM_swapImgRestore()" href="javascript:__doPostBack('ok','')" runat="server">
 									</a>
 								</td>
 							</tr>
 							
 							<tr >
-								<td style="WIDTH: 772px; HEIGHT: 18px"><cc3:genericdetailvehicleselectionwebcontrol id="GenericDetailVehicleSelectionWebControl1" runat="server"></cc3:genericdetailvehicleselectionwebcontrol></td>
+								<td style="HEIGHT: 18px"><cc3:genericdetailvehicleselectionwebcontrol id="GenericDetailVehicleSelectionWebControl1" runat="server"></cc3:genericdetailvehicleselectionwebcontrol></td>
 							</tr>
 							<tr>
-								<td style="WIDTH: 772px">
+								<td align="right">
 									<table cellspacing="0" cellpadding="0" border="0">
 										<tr>
-											<td align="right" width="649">
+											<td align="right">
 											    <cc4:imagebuttonrolloverwebcontrol id="saveImageButtonRollOverWebControl" runat="server" Visible="False" onclick="saveImageButtonRollOverWebControl_Click" SkinID="saveButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;
 											    <cc4:imagebuttonrolloverwebcontrol id="nextImageButtonRollOverWebControl" runat="server" Visible="False" onclick="nextImageButtonRollOverWebControl_Click" SkinID="nextButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;
 											    <cc4:imagebuttonrolloverwebcontrol id="programTypeImageButtonRollOverWebControl" runat="server" Visible="False" onclick="programTypeImageButtonRollOverWebControl_Click" SkinID="EmissionButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;
 											    <cc4:imagebuttonrolloverwebcontrol id="formSponsoringshipImageButtonRollOverWebControl" runat="server" Visible="False" onclick="formSponsoringshipImageButtonRollOverWebControl_Click" SkinID="formButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;
-											    <cc4:imagebuttonrolloverwebcontrol id="validImageButtonRollOverWebControl" runat="server" Visible="False" onclick="validImageButtonRollOverWebControl_Click" SkinID="validateButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;&nbsp;
+											    <cc4:imagebuttonrolloverwebcontrol id="validImageButtonRollOverWebControl" runat="server" Visible="False" onclick="validImageButtonRollOverWebControl_Click" SkinID="validateButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;
 											</td>
-											<td width="1%"></td>
 										</tr>
 									</table>
 								</td>

@@ -28,8 +28,8 @@ hr
 	background-color : #5C5C5C;
 }
 .backGroundModuleTitle{
-	background-color : #FFFFFF;
-	/*background-color : #FFC06F; orange*/
+	/*background-color : #FFFFFF;*/
+	background-color : #FFC06F; /*orange*/
 }
 .backGroundModuleTitleWhite{
 	background-color : #FFFFFF;
@@ -37,16 +37,35 @@ hr
 .backGroundWhite{
 	background-color : #FFFFFF;
 }
+.backGroundOptions{
+	background-color : #7D7D7D;
+}
+.backGroundOptionsPadding{
+	background-color : #7D7D7D;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+.backGroundBlack{
+	background-color : #000;
+}
 .backgroundGenericMediaLevelDetail
 {
-	background-color:#B0BBC1;
+	/*background-color:#B0BBC1;*/
+	background-color:#FFFFFF;
 }
 .genericMediaLevelDetailBorder{
+	/*
 	border-color : #7D7D7D;
 	border-top :#7D7D7D 1px solid; 
 	border-left :#7D7D7D 1px solid; 
 	border-right :#7D7D7D 1px solid; 
 	border-bottom :#7D7D7D 1px solid;
+	*/
+	border-color : #A7A6AA;
+	border-top :#A7A6AA 1px solid; 
+	border-left :#A7A6AA 1px solid; 
+	border-right :#A7A6AA 1px solid; 
+	border-bottom :#A7A6AA 1px solid;
 }
 .arrowBackGroundGenericMediaLevelDetail{
 	background-image:url(/App_Themes/DefaultAdExpressFr-Kantar/images/Common/button/bt_arrow_down.gif);
@@ -54,7 +73,8 @@ hr
 	background-position:right;
 	width:15px;
 	height:15px;
-	background-color:#B0BBC1;
+	/*background-color:#B0BBC1;*/
+	background-color:#FFFFFF;
 }
 .headerTabBackGround{
 	background-color : #5C5C5C;
@@ -217,18 +237,19 @@ hr
 	background-color : #E1E0DA;
 }
 .dupli3BackGround{
-background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dupli_3.gif);
+	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dupli_3.gif);
 }
 .dupli1BackGround{
-background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dupli_1.gif);
+	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dupli_1.gif);
 }
 .headerBackGround{
-background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dupli_2.gif);
+	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dupli_2.gif);
+	BACKGROUND-REPEAT: repeat-x;
 }
 .darkBackGround{
 	BACKGROUND-ATTACHMENT: fixed; 
 	BACKGROUND-IMAGE: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dark_back.bmp); 
-	BACKGROUND-REPEAT: repeat-x
+	BACKGROUND-REPEAT: repeat-x;
 }
 .creationDarkBackGround{
 	background-attachment: fixed; 

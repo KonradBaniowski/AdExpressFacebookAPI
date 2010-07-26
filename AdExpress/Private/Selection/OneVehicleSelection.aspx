@@ -40,12 +40,9 @@
 							<tr>
 								<td class="txtBlanc11Bold" width="185" height="9">
 									
-									<table id="Table6" cellspacing="0" cellpadding="0" width="10" border="0">
+									<table id="Table6" cellspacing="0" cellpadding="0" width="185" border="0">
 										<tr>
-											<td><asp:Image ID="Image5" runat="server" height="5" SkinID="plus_sous_logo" /></td>
-										</tr>
-										<tr>
-											<td><asp:Image ID="Image6" runat="server" height="10" width="1" SkinID="pixel" /></td>
+											<td class="backGroundBlack"><asp:Image ID="Image4" runat="server" height="19" width="1" SkinID="pixel" /></td>
 										</tr>
 										<!-- éléments variables du menus de gauche -->
 										<tr valign="top">
@@ -87,12 +84,11 @@
 							</tr>
 							<!-- Center -->
 							<tr>
-								<td>
-									<table id="data" height="100%" cellpadding="3" cellspacing="0" width="100%" border="0">
-										<tr valign="top">
-											<td width="10">&nbsp;</td>
+								<td style="padding:0px 50px 0px 50px;">
+									<table id="data" width="100%" height="100%" cellpadding="3" cellspacing="0" border="0">
+										<tr valign="top" align="right">
 											<td>
-												<table cellpadding="0" cellspacing="1" width="90%" class="violetBackGround">
+												<table cellpadding="0" cellspacing="1" width="100%" class="violetBackGround">
 													<tr class="backGroundWhite">
 														<td class="txtViolet11Bold">&nbsp;<cc1:AdExpressText language="33" id="titreAdexpresstext" runat="server" Code="1065"></cc1:AdExpressText></td>
 													</tr>
@@ -110,12 +106,10 @@
 											</td>
 										</tr>
 										<tr valign="top" align="right">
-											<td colspan="2"><cc4:imagebuttonrolloverwebcontrol id="validateButton" runat="server" onclick="validateButton_Click" SkinID="validateButton"></cc4:imagebuttonrolloverwebcontrol>
-											<asp:Image ID="Image13" runat="server" width="100" height="1" SkinID="pixel" /></td>
+											<td><cc4:imagebuttonrolloverwebcontrol id="validateButton" runat="server" onclick="validateButton_Click" SkinID="validateButton"></cc4:imagebuttonrolloverwebcontrol></td>
 										</tr>
 										<tr valign="top" height="100%">
-											<td colspan="2">&nbsp;
-												<cc2:MenuWebControl id="MenuWebControl2" runat="server"></cc2:MenuWebControl></td>
+											<td><cc2:MenuWebControl id="MenuWebControl2" runat="server"></cc2:MenuWebControl></td>
 										</tr>
 									</table>
 								</td>

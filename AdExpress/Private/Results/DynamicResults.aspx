@@ -44,10 +44,7 @@
 									
 									<table id="Table6" cellspacing="0" cellpadding="0" width="10" border="0">
 										<tr>
-											<td><asp:Image ID="Image3" runat="server" height="5" SkinID="plus_sous_logo" /></td>
-										</tr>
-										<tr>
-											<td><asp:Image ID="Image4" runat="server" height="10" width="1" SkinID="pixel" /></td>
+											<td class="backGroundBlack"><asp:Image ID="Image4" runat="server" height="19" width="1" SkinID="pixel" /></td>
 										</tr>
 										
 										<!-- éléments variables du menus de gauche -->
@@ -66,29 +63,24 @@
 				                        </tr>
 
 				                        <!--Niveaux Produits-->
-				                        <tr class="whiteBackGround" height="3">
-					                        <td></td>
-				                        </tr>
-				                        <tr vAlign="top">
+				                        <tr vAlign="top" class="backGroundOptionsPadding">
 					                        <TD vAlign="top"><cc2:GenericColumnLevelDetailSelectionWebControl id="_genericColumnLevelDetailSelectionWebControl1" runat="server" Width="200px" GenericColumnDetailLevelType="dynamicCompetitorPotential"
 							                        NbColumnDetailLevelItemList="1"></cc2:GenericColumnLevelDetailSelectionWebControl></TD>
 				                        </tr>
-				                        <tr class="whiteBackGround">
+				                        <tr class="backGroundOptionsPadding">
 					                        <td><cc2:genericmedialeveldetailselectionwebcontrol id="_genericMediaLevelDetailSelectionWebControl" runat="server" NbDetailLevelItemList="3"
 							                        SaveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelSave.aspx" RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx"
 							                        GenericDetailLevelComponentProfile="product" GenericDetailLevelType="dynamicCompetitorPotential" Width="200px"></cc2:genericmedialeveldetailselectionwebcontrol></td>
 				                        </tr>
-				                        <tr class="whiteBackGround" height="5">
+				                        <tr class="backGroundOptionsPadding" height="5">
 					                        <td><cc2:initializeproductwebcontrol id="InitializeProductWebControl1" 
                                                     runat="server" AutoPostBackOption="False" InitializeProduct="True" 
                                                     CommonCssClass="txtOrange11Bold"></cc2:initializeproductwebcontrol></td>
 				                        </tr>
-				                        <tr class="whiteBackGround">
+				                        <tr class="backGroundOptionsPadding" height="30" valign="bottom">
 					                        <td><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="okButton"></cc1:imagebuttonrolloverwebcontrol></td>
 				                        </tr>
-				                        <tr class="whiteBackGround" height="5">
-					                        <td></td>
-				                        </tr>
+
 				                        <!--Fin Niveaux Produits-->
 				                        <tr vAlign="top">
 					                        <td id="premeriEspece"><asp:Image ID="Image6" runat="server" height="10" width="1" SkinID="pixel" /></td>

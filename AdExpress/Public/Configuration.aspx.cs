@@ -11,12 +11,20 @@ using System.Web.UI.HtmlControls;
 using TNS.AdExpress.Web.UI;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Constantes.Web;
 
 namespace AdExpress.Public{
 	/// <summary>
 	/// Page Web Expliquant la configuration nécessaire au site AdExpress
 	/// </summary>
 	public partial class Configuration : WebPage{
+
+        #region Variables
+        /// <summary>
+        /// Langue du site
+        /// </summary>
+        public int _siteLanguage = TNS.AdExpress.Constantes.DB.Language.FRENCH;
+        #endregion
 	
 		#region Evènements
 
@@ -27,14 +35,36 @@ namespace AdExpress.Public{
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Arguments</param>
 		private void Page_Load(object sender, System.EventArgs e){
-            if(Page.Request.QueryString.Get("siteLanguage") == null) {
-                _siteLanguage = TNS.AdExpress.Constantes.DB.Language.FRENCH;
+            try
+            {
+                if(Page.Request.QueryString.Get("siteLanguage") == null)
+                {
+                    _siteLanguage = TNS.AdExpress.Constantes.DB.Language.FRENCH;
+                    PageTitleWebControl1.Language = _siteLanguage;
+                }
+                else
+                {
+                    _siteLanguage = int.Parse(Page.Request.QueryString.Get("siteLanguage").ToString());
+                    PageTitleWebControl1.Language = _siteLanguage;
+                }
+                foreach(Control current in this.Controls[3].Controls)
+                {
+                    if(current.GetType() == typeof(TNS.AdExpress.Web.Controls.Translation.AdExpressText))
+                    {
+                        ((TNS.AdExpress.Web.Controls.Translation.AdExpressText)current).Language = _siteLanguage;
+                    }
+                }
+                //Modification de la langue pour les Textes AdExpress
+                //TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_siteLanguage);
+
+                //langage de l'entête
+                HeaderWebControl1.Language = _siteLanguage;
+                HeaderWebControl1.ActiveMenu = MenuTraductions.CONFIGURATION;
             }
-            else {
-                _siteLanguage = int.Parse(Page.Request.QueryString.Get("siteLanguage").ToString());
+            catch(System.Exception et)
+            {
+                Response.Redirect("/Public/Message.aspx?msgTxt=" + et.Message.Replace("&", " ") + "&back=2&siteLanguage=" + _siteLanguage);
             }
-			//Modification de la langue pour les Textes AdExpress
-			//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_siteLanguage);
 		}
 		#endregion
 	

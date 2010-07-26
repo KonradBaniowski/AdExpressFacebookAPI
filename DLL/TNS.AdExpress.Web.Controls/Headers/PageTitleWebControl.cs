@@ -81,29 +81,36 @@ namespace TNS.AdExpress.Web.Controls.Headers
             output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"backGroundModuleTitleBorder\">");
 			output.Write("\n<tr>");
 			output.Write("\n<td>");
-			//debut tableau titre
+			
+            // Debut tableau titre
 			output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
-			output.Write("\n<TR>");
-			output.Write("\n<TD height=\"5\"></TD>");
-			output.Write("\n</TR>");
-			output.Write("\n<tr>");
-            output.Write("\n<td class=\"headerLeft\" colSpan=\"4\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\"></td>");
+			
+            output.Write("\n<tr>");
+			output.Write("\n<td height=\"5\"></td>");
 			output.Write("\n</tr>");
-			output.Write("\n<tr>");
-            output.Write("\n<td style=\"HEIGHT: 14px\" vAlign=\"top\"><IMG height=\"12\" src=\"/App_Themes/" + themeName + "/Images/Common/block_fleche.gif\" width=\"12\"></td>");
+			
+            output.Write("\n<tr>");
+            output.Write("\n<td class=\"headerLeft\" colspan=\"3\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\"></td>");
+			output.Write("\n</tr>");
+			
+            output.Write("\n<tr>");
+            //output.Write("\n<td style=\"HEIGHT: 14px\" vAlign=\"top\"><IMG height=\"12\" src=\"/App_Themes/" + themeName + "/Images/Common/block_fleche.gif\" width=\"12\"></td>");
             output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" class=\"blockBackGround\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"13\"></td>");
             output.Write("\n<td class=\"txtNoir11Bold backGroundModuleTitle\" style=\"PADDING-RIGHT: 5px; PADDING-LEFT: 5px; TEXT-TRANSFORM: uppercase; HEIGHT: 14px\" width=\"100%\">" + GestionWeb.GetWebWord(codeTitle, siteLang) + "</td>");
             output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\" width=\"1\"></td>");
 			output.Write("\n</tr>");
-			output.Write("\n<tr>");
-			output.Write("\n<td></td>");
-            output.Write("\n<td class=\"headerLeft\" colSpan=\"3\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\"></td>");
+			
+            output.Write("\n<tr>");
+			//output.Write("\n<td></td>");
+            output.Write("\n<td class=\"headerLeft\" colspan=\"3\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\"></td>");
 			output.Write("\n</tr>");
-			output.Write("\n</table>");
-			//fin tableau titre
+			
+            output.Write("\n</table>");
+            // Fin tableau titre
 			output.Write("\n</td>");
 			output.Write("\n</tr>");
-			//Descriptif
+			
+            //Descriptif
 			output.Write("\n<TR>");
 			output.Write("\n<TD height=\"5\"></TD>");
 			output.Write("\n</TR>");

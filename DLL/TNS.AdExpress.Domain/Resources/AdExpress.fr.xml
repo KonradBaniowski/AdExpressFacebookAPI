@@ -1113,7 +1113,7 @@
     <item mnemonic="w1882" type="System.String">Aucun résultats : vous n'avez pas les droits suffisants pour accéder aux détails des insertions de la Publicité Extérieure.</item>
     <item mnemonic="w1884" type="System.String">Ce bouton vous permet d'exporter le tableau de résultats tel qu'il se présente à l'écran afin de l'imprimer. En cliquant sur ce bouton, les valeurs du calendrier seront copiées dans une feuille Excel ouverte automatiquement. Vous pourrez ensuite l'enregistrer pour la conserver.</item>
     <item mnemonic="w1885" type="System.String">Dans un plan media présenté par version, la présence d'une version est symbolisée par un X sur fond coloré. Ce symbole est placé dans la période où se trouve l'investissement. Les versions sont différenciées par des couleurs distinctes (20 couleurs au maximum).&lt;br&gt;Les versions sont présentées par N° de versions. Si un spot n'est pas pigé à la version, un niveau théorique est créé. Il porte le N° 0. Le code couleur utilisé est le suivant : &lt;br&gt;&lt;IMG src="/Images/Common/Help/accroche0.gif"&gt;&lt;br&gt;Le plan media par accroche est proposé à partir d'une sélection d'éléments de niveaux marques ou produits.</item>
-    <item mnemonic="w1886" type="System.String">Niveaux détaillés par:</item>
+    <item mnemonic="w1886" type="System.String">Niveaux détaillés par :</item>
     <item mnemonic="w1887" type="System.String">C. intérêt</item>
     <item mnemonic="w1888" type="System.String">Version</item>
     <item mnemonic="w1889" type="System.String">Marque</item>

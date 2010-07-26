@@ -30,7 +30,6 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 		generic
 	}
 
-
 	/// <summary>
 	/// Description résumée de Header.
 	/// </summary>
@@ -122,12 +121,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 		/// PréRendu
 		/// </summary>
 		/// <param name="e">Arguments</param>
-		protected override void OnPreRender(EventArgs e) {
-            //if (!Page.IsClientScriptBlockRegistered("detectFlash")) {
-            //    string tmp = "\n<SCRIPT LANGUAGE=\"JavaScript\" type=\"text/javascript\" src=\"/scripts/FlashChecking.js\"></SCRIPT>";
-            //    Page.RegisterClientScriptBlock("detectFlash", tmp);
-            //}
-
+		protected override void OnPreRender(EventArgs e)
+        {
             if(!Page.ClientScript.IsClientScriptBlockRegistered("detectFlash")) {
                 string tmp = "\n<SCRIPT LANGUAGE=\"JavaScript\" type=\"text/javascript\" src=\"/scripts/FlashChecking.js\"></SCRIPT>";
                 Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "detectFlash", tmp);
@@ -163,12 +158,15 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 		protected override void Render(HtmlTextWriter output) {
             Dictionary<string,WebHeader> headers = WebHeaders.HeadersList;
             string themeName = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[language].Name;
-			output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" border=\"0\" width=\"100%\">");
+			
+            output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" border=\"0\" width=\"100%\">");
 			output.Write("\n<tr>");
 			output.Write("\n<td colspan=\"2\">");
-			output.Write("\n<table  class=\"header\" cellSpacing=\"0\" cellPadding=\"0\" border=\"0\">");
+
+            #region Flash
+            output.Write("\n<table  class=\"header\" cellSpacing=\"0\" cellPadding=\"0\" border=\"0\">");
 			output.Write("\n<td width=\"1%\">");
-			output.Write("\n<script language=\"javascript\" type=\"text/javascript\">");
+            output.Write("\n<script language=\"javascript\" type=\"text/javascript\">");
 			output.Write("\nif(hasRightFlashVersion==true){");
 			output.Write("\ndocument.writeln('<OBJECT id=\"Shockwaveflash1\" codeBase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\"');");
 			output.Write("\ndocument.writeln('height=\"60\" width=\"648\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" VIEWASTEXT>');");
@@ -195,41 +193,52 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             output.Write("\ndocument.writeln('<embed src=\"" + flashUrl + "\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\"');");
             output.Write("\ndocument.writeln('type=\"application/x-shockwave-flash\" wmode=\"opaque\" width=\"648\" height=\"60\"> </embed>');");
 			output.Write("\ndocument.writeln('</OBJECT>');");
-			output.Write("\n}\nelse{");
+			output.Write("\n}");
+            output.Write("\nelse{");
             output.Write("\ndocument.writeln('<img src=\"" + missingFlashUrl + "\" width=\"648\" height=\"60\">');");
 			output.Write("\n}");
 			output.Write("\n</script>");
 			output.Write("\n</td>");
-			output.Write("\n<td></td>");
-			output.Write("\n</table>");//
-			output.Write("\n</td>");
+			output.Write("\n</table>");
+            #endregion
+
+            output.Write("\n</td>");
 			output.Write("\n</tr>");
-			output.Write("\n<tr>");
-            output.Write("\n<td colspan=\"2\" class=\"dupli1BackGround\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"1\"></td>");
-			output.Write("\n</tr>");
-            output.Write("\n<tr class=\"txtBlanc11 headerBackGround\">");
+
+            output.Write("\n<tr>");
+            output.Write("\n<td colspan=\"2\" class=\"backGroundBlack\" ><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"1\"></td>");
+            output.Write("\n</tr>");
+
+            // Tabs
+            output.Write("\n<tr class=\"headerBackGround\">");
 			output.Write("\n<td>");
-            output.Write("\n<p class=\"paragraphePaddingHeader\">");
-			int i = 0;
+            output.Write("\n<div id=\"tabsH\">");
+			output.Write("\n<ul>");
+			
+            int i = 0;
 			string menus = "";
 			string href = "";
-			string look = "";
+            string currentItem = "";
 			string languageString, idSessionString;
 			bool firstParameter;
+            bool oneActivatedMenuItem = false;
+
 			WebHeaderMenuItem currentHeaderMenuItem = null;
-			for (i = 0; i < headers[pageType.ToString()].MenuItems.Count; i++) {
+			
+            for (i = 0; i < headers[pageType.ToString()].MenuItems.Count; i++) {
 				languageString = "";
 				idSessionString = "";
 				firstParameter = true;
 				currentHeaderMenuItem = (WebHeaderMenuItem)headers[pageType.ToString()].MenuItems[i];
-				//Options dans l url suivant le menuItem
-				//Differenciation et inactivation du menu actif si nécessaire
+				
 				if (activeMenu == currentHeaderMenuItem.IdMenu) {
 					href = "#";
-					look = "roll03";
+                    currentItem = " id=\"current\" ";
+                    oneActivatedMenuItem = true;
 				}
-				else {
-					look = "roll01";
+				else 
+                {
+                    currentItem = "";
 
 					#region Gestion des Paramètres
 
@@ -240,9 +249,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 							languageString = "?" + languageString;
 							firstParameter = false;
 						}
-						else {
+						else
 							languageString = "&" + languageString;
-						}
 					}
 					#endregion
 
@@ -253,9 +261,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 							idSessionString = "?" + idSessionString;
 							firstParameter = false;
 						}
-						else {
+						else
 							idSessionString = "&" + idSessionString;
-						}
 					}
 					#endregion
 
@@ -266,26 +273,31 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                         href += "\" target=\"" + currentHeaderMenuItem.Target + "\"";
 				}
                 if(currentHeaderMenuItem.DisplayInPopUp)
-                    menus += "\n<A class=\"" + look + "\" href=\"javascript:popupOpenBis('" + href + "','975','600','yes');\">" + GestionWeb.GetWebWord((int)((WebHeaderMenuItem)headers[pageType.ToString()].MenuItems[i]).IdMenu, language) + "</A> |";
+                    menus += "<li" + currentItem + "><a href=\"javascript:popupOpenBis('" + href + "','975','600','yes');\"><span>" + GestionWeb.GetWebWord((int)((WebHeaderMenuItem)headers[pageType.ToString()].MenuItems[i]).IdMenu, language) + "</span></a></li>";
                 else
-                 menus += "\n<A class=\"" + look + "\" href=\"" + href + "\">" + GestionWeb.GetWebWord((int)((WebHeaderMenuItem)headers[pageType.ToString()].MenuItems[i]).IdMenu, language) + "</A> |";
+                    menus += "<li" + currentItem + "><a href=\"" + href + "\"><span>" + GestionWeb.GetWebWord((int)((WebHeaderMenuItem)headers[pageType.ToString()].MenuItems[i]).IdMenu, language) + "</span></a></li>";
 			}
-			menus = menus.Substring(0, menus.Length - 2);
-			output.Write("{0}\n</p>", menus);
+
+            // Add tabs in a result page
+            if(pageType == PageType.generic && !oneActivatedMenuItem)
+            {
+                menus += "<li id=\"current\" ><a href=\"#\"><span>"
+                    + GestionWeb.GetWebWord(793, language) 
+                    + "</span></a></li>";
+            }
+
+            output.Write("\n{0}", menus);
+            output.Write("\n</ul>");
+            output.Write("\n</div>");
 			output.Write("\n</td>");
 
-            if (WebApplicationParameters.AllowedLanguages.Count > 1) {
-
+            // Language
+            if (WebApplicationParameters.AllowedLanguages.Count > 1) 
+            {
                 languageSelectionWebControl = new LanguageSelectionWebControl();
                 languageSelectionWebControl.Language = language;
-                
-                // Adexpress color
-                //languageSelectionWebControl.BackColor = Color.FromArgb(143, 123, 166);
-                //languageSelectionWebControl.BorderColor = Color.FromArgb(143, 123, 166);
-                // Kantar color
                 languageSelectionWebControl.BackColor = Color.FromArgb(92, 92, 92);
                 languageSelectionWebControl.BorderColor = Color.FromArgb(92, 92, 92);
-
                 languageSelectionWebControl.BorderWidth = new System.Web.UI.WebControls.Unit(0);
                 languageSelectionWebControl.ImageButtonArrow = "/App_Themes/" + themeName + "/Images/Common/Button/bt_arrow_down_white.gif";
                 languageSelectionWebControl.ID = "DDL" + this.ID;
@@ -303,19 +315,14 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 else {
                     languageSelectionWebControl.Width = new System.Web.UI.WebControls.Unit("25");
                 }
-
                 Controls.Add(languageSelectionWebControl);
-
-
                 output.Write("\n<td align=\"right\" valign=\"top\">");
                 languageSelectionWebControl.RenderControl(output);
-                output.Write("</td>");
-
+                output.Write("\n</td>");
             }
 
             output.Write("\n</tr>");
 			output.Write("\n</table>");
-
 		}
 		#endregion
 

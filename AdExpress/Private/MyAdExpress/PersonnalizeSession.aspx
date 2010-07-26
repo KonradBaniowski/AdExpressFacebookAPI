@@ -71,16 +71,14 @@
 							</tr>
 							<tr>
 								<td class="txtBlanc11Bold" width="185" height="9">
-									<table id="Table6" cellspacing="0" cellpadding="0" width="10" border="0">
+									<table id="Table6" cellspacing="0" cellpadding="0" width="185" border="0">
 										<tr>
-											<td><asp:Image ID="Image3" runat="server" height="5" SkinID="plus_sous_logo" /></td>
-										</tr>
-										<tr>
-											<td><asp:Image ID="Image4" runat="server" height="10" width="1" SkinID="pixel" /></td>
+											<td class="backGroundBlack"><asp:Image ID="Image4" runat="server" height="19" width="1" SkinID="pixel" /></td>
 										</tr>
 									</table>
 								</td>
 							</tr>
+							<tr><td>&nbsp;</td></tr>
 							<!--Mon Adexpress-->
 							<tr>
 								<td class="whiteBackGround">
