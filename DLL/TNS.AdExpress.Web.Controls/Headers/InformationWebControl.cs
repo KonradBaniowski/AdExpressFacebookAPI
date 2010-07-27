@@ -152,7 +152,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				// Design du composant dans le menu de gauche
 				output.Write("\n<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" bgcolor=\""+_backgroundColor+"\">");
                 output.Write("\n<tr><td><IMG height=10 src=\"/App_Themes/"+themeName+"/images/Common/pixel.gif\" width=\"1\"></td></tr>");
-				output.Write("\n<tr><td>");
+				output.Write("\n<tr><td align=\"center\" >");
 
                 output.Write("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td>");
 				output.Write("\n<script language=\"javascript\" type=\"text/javascript\">");
@@ -162,13 +162,13 @@ namespace TNS.AdExpress.Web.Controls.Headers{
                 output.Write("\nif (navigator.appName == \"Microsoft Internet Explorer\"){");
                 output.Write("\nclassborder = 'class=\"pinkBackGround\"';}");
 
-                output.Write("\ndocument.writeln('<object id=\"infoOptionFlash\" '+classborder+' classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"185\" height=\"48\" VIEWASTEXT>');");
+                output.Write("\ndocument.writeln('<object id=\"infoOptionFlash\" '+classborder+' classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"200\" height=\"48\" VIEWASTEXT>');");
 
 				output.Write("\ndocument.writeln('<param name=\"movie\" value=\""+_flashPath+"\">');");
 				output.Write("\ndocument.writeln('<param name=\"quality\" value=\"high\">');");
 				output.Write("\ndocument.writeln('<param name=\"menu\" value=\"false\">');");
 				output.Write("\ndocument.writeln('<param name=\"wmode\" value=\"transparent\">');");
-				output.Write("\ndocument.writeln('<embed src=\""+_flashPath+"\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" wmode=\"opaque\" width=\"185\" height=\"48\"></embed>');");
+				output.Write("\ndocument.writeln('<embed src=\""+_flashPath+"\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" wmode=\"opaque\" width=\"200\" height=\"48\"></embed>');");
 				output.Write("\ndocument.writeln('</object></td>');");
 				output.Write("\n}\nelse{");
 				output.Write("\ndocument.writeln('<img src=\""+_flashReplacementPath+"\"></td>');");

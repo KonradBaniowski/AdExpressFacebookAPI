@@ -342,8 +342,8 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			// Bouton
 			_imageButtonRollOverWebControl=new TNS.AdExpress.Web.Controls.Buttons.ImageButtonRollOverWebControl();
 			_imageButtonRollOverWebControl.ID = "ImageButtonRollOverWebControl_"+this.ID;
-			_imageButtonRollOverWebControl.ImageUrl = "/App_Themes/"+_themeName+"/Images/Common/Button/ok_up.gif";
-			_imageButtonRollOverWebControl.RollOverImageUrl = "/App_Themes/"+_themeName+"/Images/Common/Button/ok_down.gif";
+            _imageButtonRollOverWebControl.ImageUrl = "/App_Themes/" + _themeName + "/Images/Common/Button/bt_valid_up.gif";
+            _imageButtonRollOverWebControl.RollOverImageUrl = "/App_Themes/" + _themeName + "/Images/Common/Button/bt_valid_down.gif";
 			this.Controls.Add(_imageButtonRollOverWebControl);
 
 			switch((WebConstantes.GenericDetailLevel.ComponentProfile)_componentProfile){
@@ -462,9 +462,9 @@ namespace TNS.AdExpress.Web.Controls.Headers{
             {
                 output.Write("<tr>");
                 output.Write("<td width=\"3\" bgColor=\"" + _backgroundColor + "\">&nbsp;</td>");
-                output.Write("<td>");
+                output.Write("<td align=\"right\" >");
                 _imageButtonRollOverWebControl.RenderControl(output);
-                output.Write("</td>");
+                output.Write("&nbsp;</td>");
                 output.Write("</tr>");
 
                 output.Write("<tr>");
@@ -513,8 +513,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		#endregion
 
 		#endregion
-
-
 
 	}
 }

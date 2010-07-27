@@ -744,15 +744,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
             output.Write("\r\n<div id=\"detailledLevelContent\" class=\"GenericMediaLevelDetailSelectionSection\" style=\"DISPLAY: none; WIDTH: " + this.Width + "px;\">");
 			output.Write("\r\n<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" ID=\"Section\">");
 
-            // Niveaux détaillés par (liste par défaut)
-            output.Write("\r\n<tr>");
-            output.Write("\r\n<td class=\"" + _cssListLabel + "\">" + GestionWeb.GetWebWord(1886, _customerWebSession.SiteLanguage) + " :</td>");
-            output.Write("\r\n</tr>");
-			
-
-
-
-
             // Niveaux personnalisés déjà enregistrés
             output.Write("\r\n<tr>");
 			output.Write("\r\n<td class=\""+_cssListLabel+"\">"+ GestionWeb.GetWebWord(1897,_customerWebSession.SiteLanguage) +" :</td>");

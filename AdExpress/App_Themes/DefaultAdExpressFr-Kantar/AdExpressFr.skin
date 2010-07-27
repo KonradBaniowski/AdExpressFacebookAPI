@@ -131,6 +131,14 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            SkinID="okButton"
 />
 
+<%-- Valid Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol  
+                           runat="server" 
+                           ImageUrl="/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Button/bt_valid_up.gif" 
+                           RollOverImageUrl="/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Button/bt_valid_down.gif" 
+                           SkinID="validButton"
+/>
+
 <%-- Initialize Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 

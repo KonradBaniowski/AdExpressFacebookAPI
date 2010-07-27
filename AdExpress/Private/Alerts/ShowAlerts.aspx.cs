@@ -378,7 +378,7 @@ namespace AdExpress.Private.Alerts{
 		protected void personalizeImagebuttonrolloverwebcontrol_Click(object sender, System.EventArgs e) {
 			try{
                 _webSession.Source.Close();
-                Response.Redirect("/Private/MyAdexpress/PersonalizeAlerts.aspx?idSession=" + _webSession.IdSession + "");
+                Response.Redirect("/Private/MyAdexpress/PersonnalizeSession.aspx?idSession=" + _webSession.IdSession + "");
 			}
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){

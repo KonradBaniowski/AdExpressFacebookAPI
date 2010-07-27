@@ -59,7 +59,7 @@
 					<!-- menu -->
 					<td vAlign="top" class="whiteBackGround">
 						<table cellSpacing="0" cellPadding="0" border="0">
-							<tr vAlign="top" class="whiteBackGround">
+							<tr vAlign="top" class="backGroundBlack">
 								<!-- Logo -->
 								<td><asp:Image ID="Image2" runat="server" border="0" SkinID="logo" /></td>
 							</tr>

@@ -35,19 +35,16 @@
 					<!-- menu -->
 					<td vAlign="top" class="whiteBackGround">
 						<table cellSpacing="0" cellPadding="0" border="0">
-							<tr vAlign="top" class="whiteBackGround logoCoteDroitBackGround">
+							<tr vAlign="top" class="backGroundBlack">
 								<!-- Logo -->
 								<td><asp:Image ID="Image2" runat="server" border="0" SkinID="logo" /></td>
 							</tr>
 							<tr>
 								<td class="txtBlanc11Bold" width="185" height="9">
 									
-									<table id="Table6" cellspacing="0" cellpadding="0" width="10" border="0">
+									<table id="Table6" cellspacing="0" cellpadding="0" width="185" border="0">
 										<tr>
-											<td><asp:Image ID="Image3" runat="server" height="5" SkinID="plus_sous_logo" /></td>
-										</tr>
-										<tr>
-											<td><asp:Image ID="Image4" runat="server" height="10" width="1" SkinID="pixel" /></td>
+											<td class="backGroundBlack"><asp:Image ID="Image4" runat="server" height="19" width="1" SkinID="pixel" /></td>
 										</tr>
 										
 										<!-- éléments variables du menus de gauche -->

@@ -37,11 +37,12 @@ hr
 .backGroundWhite{
 	background-color : #FFFFFF;
 }
-.backGroundOptions{
-	background-color : #7D7D7D;
+.backGroundOptions
+{
+	background-color : #8D8E8E; /*#9D9F9F;*/
 }
 .backGroundOptionsPadding{
-	background-color : #7D7D7D;
+	background-color : #8D8E8E; /*#9D9F9F;*/
 	padding-left: 3px;
 	padding-right: 3px;
 }

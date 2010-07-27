@@ -33,7 +33,7 @@
 					<!-- menu -->
 					<td vAlign="top" class="whiteBackGround">
 						<table cellSpacing="0" cellPadding="0" border="0">
-							<tr vAlign="top" class="whiteBackGround">
+							<tr vAlign="top" class="backGroundBlack">
 								<!-- Logo -->
 								<td><asp:Image ID="Image2" runat="server" border="0" SkinID="logo" /></td>
 							</tr>
@@ -76,7 +76,7 @@
 					<td class="lineVerticalBackGround"><asp:Image ID="Image12" runat="server" height="1" width="2" SkinID="pixel" /></td>
 					
 					<!-- Right column -->
-					<td>
+					<td vAlign="top">
 						<table cellSpacing="0" cellPadding="0" border="0">
 						    <!-- Menu haut -->
 							<tr>
