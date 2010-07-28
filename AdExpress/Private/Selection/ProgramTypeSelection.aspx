@@ -141,16 +141,17 @@
 											<td colspan="6"></td>
 										</tr>
 										<tr>
-											<td class="txtViolet11Bold" style="WIDTH: 83px">&nbsp;
-												<cc3:adexpresstext language="33" id="AdExpressText4" runat="server" Code="972"></cc3:adexpresstext>&nbsp;:
+											<td>
+											    <table cellspacing="0" cellpadding="0" border="0">
+										            <tr>
+										                <td class="txtViolet11Bold" style="width:83px;" >&nbsp;&nbsp;
+										                    <cc3:adexpresstext language="33" id="AdExpressText4" runat="server" Code="972"></cc3:adexpresstext>&nbsp;:
+										                </td>
+										                <td ><asp:textbox id="textBoxProgramTypeChoice" runat="server"></asp:textbox></td>
+											            <td style="width:200px;" valign="bottom" >&nbsp;<cc2:imagebuttonrolloverwebcontrol id="okButtonRollOverWebControl2" SkinID="okLoupeButton" runat="server" onclick="okButtonRollOverWebControl2_Click"></cc2:imagebuttonrolloverwebcontrol>&nbsp;<cc2:imagebuttonrolloverwebcontrol id="initializeImageButtonRollOverWebControl1" runat="server" SkinID="initializeButton" onclick="initializeImageButtonRollOverWebControl1_Click"></cc2:imagebuttonrolloverwebcontrol></td>
+										            </tr>
+											    </table>
 											</td>
-											<td style="WIDTH: 150px"><asp:textbox id="textBoxProgramTypeChoice" runat="server"></asp:textbox></td>
-											<td style="WIDTH: 150px; HEIGHT: 18px">&nbsp;&nbsp; <a id="A1" onmouseover="MM_swapImage('ok','','/images/Common/button/ok_down.gif',1)"
-													onclick="javascript:createLists();" onmouseout="MM_swapImgRestore()" href="javascript:__doPostBack('ok','')" runat="server">
-												</a>
-												<cc2:imagebuttonrolloverwebcontrol id="okButtonRollOverWebControl2" SkinID="okButton" runat="server" onclick="okButtonRollOverWebControl2_Click"></cc2:imagebuttonrolloverwebcontrol></td>
-											<td style="WIDTH: 630px" valign="middle"><cc2:imagebuttonrolloverwebcontrol id="initializeImageButtonRollOverWebControl1" runat="server" SkinID="initializeButton" onclick="initializeImageButtonRollOverWebControl1_Click"></cc2:imagebuttonrolloverwebcontrol></td>
-											<td colspan="3">&nbsp;</td>
 										</tr>
 								    </table>
 								    
@@ -172,7 +173,7 @@
 									<table cellspacing="0" cellpadding="0" border="0" style="WIDTH: 100%">
 										<tr>
 											<td align="right" width="100%">&nbsp;
-												<cc2:imagebuttonrolloverwebcontrol SkinID="saveButton" id="saveUniverseImageButtonRollOverWebControl" runat="server" onclick="saveUniverseImageButtonRollOverWebControl_Click"></cc2:imagebuttonrolloverwebcontrol>&nbsp;<cc2:imagebuttonrolloverwebcontrol id="formSponsoringshipImageButtonRollOverWebControl" runat="server" SkinID="formButton" onclick="formSponsoringshipImageButtonRollOverWebControl_Click"></cc2:imagebuttonrolloverwebcontrol>&nbsp;<cc2:imagebuttonrolloverwebcontrol id="validateButton" runat="server" onclick="validateButton_Click" SkinID="validateButton"></cc2:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+												<cc2:imagebuttonrolloverwebcontrol SkinID="saveButton" id="saveUniverseImageButtonRollOverWebControl" runat="server" onclick="saveUniverseImageButtonRollOverWebControl_Click"></cc2:imagebuttonrolloverwebcontrol>&nbsp;<cc2:imagebuttonrolloverwebcontrol id="formSponsoringshipImageButtonRollOverWebControl" runat="server" SkinID="formButton" onclick="formSponsoringshipImageButtonRollOverWebControl_Click"></cc2:imagebuttonrolloverwebcontrol>&nbsp;<cc2:imagebuttonrolloverwebcontrol id="validateButton" runat="server" onclick="validateButton_Click" SkinID="validateButton"></cc2:imagebuttonrolloverwebcontrol>&nbsp;</td>
 											<td width="1%"></td>
 										</tr>
 									</table>

@@ -131,6 +131,14 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            SkinID="okButton"
 />
 
+<%-- Ok Loupe Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol  
+                           runat="server" 
+                           ImageUrl="/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Button/bt_loupe_up.gif" 
+                           RollOverImageUrl="/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Button/bt_loupe_down.gif" 
+                           SkinID="okLoupeButton"
+/>
+
 <%-- Valid Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
@@ -331,9 +339,9 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            runat="server"
                            TableBorderColor = "#9D9885"
                            TableColor = "#FFFFFF"
-                           TableColorSelectedDate = "#644883"
-                           TitleBackgroundColor = "#644883"
-                           FontColor = "#644883"
+                           TableColorSelectedDate = "#646262"
+                           TitleBackgroundColor = "#646262"
+                           FontColor = "#646262"
                            FontColorSelectedDate = "#FFFFFF"
                            TableColorNoDate = "#9378B3"
                            TdBgcolor = "#FFFFFF"

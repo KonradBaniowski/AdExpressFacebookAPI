@@ -2764,6 +2764,7 @@ table.divTable{
 	color: #646262;
 	font-weight: bold;
 	border:solid 1px #646262;
+	width:100%;
 }
 
 td.affinitiesBorderImg

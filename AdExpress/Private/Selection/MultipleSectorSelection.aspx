@@ -85,13 +85,15 @@
 							</tr>
 							<!-- Centre -->
 							<tr valign="top">
-								<td align="center">
-									<table id="data" cellspacing="0" cellpadding="0" width="100%">
+								<td style="padding:0px 0px 0px 10px;" >
+									
+									<table id="data" cellspacing="0" cellpadding="3" width="100%">
 										<tr>
 											<td colspan="5" style="padding-left:5px;">
 												<cc3:LoadableUniversWebControl id="LoadableUniversWebControl1" runat="server"></cc3:LoadableUniversWebControl>
 											</td>
 										</tr>
+										<tr style="HEIGHT: 5px"><td></td></tr>
 										<tr style="HEIGHT: 10px">
 											<td style="WIDTH: 478px" width="478" class="imageBackGround" colspan="6"></td>
 										</tr>
@@ -101,10 +103,12 @@
 										<tr valign="top">
 											<td align="right">
 												<cc4:imagebuttonrolloverwebcontrol id="saveUniverseImageButtonRollOverWebControl" runat="server" SkinID="saveButton" onclick="saveUniverseImageButtonRollOverWebControl_Click"></cc4:imagebuttonrolloverwebcontrol>&nbsp;
-												<cc4:imagebuttonrolloverwebcontrol id="validateButton" runat="server" CommandName="next" onclick="validateButton_Click" SkinID="validateButton"></cc4:imagebuttonrolloverwebcontrol><asp:Image runat="server"  SkinID="pixel" width="100" height="1" /></td>
+												<cc4:imagebuttonrolloverwebcontrol id="validateButton" runat="server" CommandName="next" onclick="validateButton_Click" SkinID="validateButton"></cc4:imagebuttonrolloverwebcontrol>
+											</td>
 										</tr>
 										<tr><td><cc2:MenuWebControl id="MenuWebControl2" runat="server"></cc2:MenuWebControl></td></tr>
 									</table>
+									
 								</td>
 							</tr>
 						</table>

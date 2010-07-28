@@ -139,40 +139,30 @@
 
 							<!-- Centre -->
 							<tr>
-								<td style="WIDTH: 773px" >
-									<table cellSpacing="0" cellPadding="0" width="100%" border="0">
+								<td>
+									<table cellspacing="0" cellpadding="0" border="0">
 										<tr>
-											<td class="txtViolet11Bold" width="15%">&nbsp;&nbsp;
+											<td class="txtViolet11Bold" style="width:83px;" >&nbsp;&nbsp;
 												<cc1:adexpresstext language="33" id="keyWord" runat="server" Code="972"></cc1:adexpresstext>&nbsp;:
 											</td>
-											<td width="10%"><asp:textbox id="keyWordTextBox" runat="server"></asp:textbox></td>
-											<td vAlign="middle" align="left" width="10%">&nbsp;
-												<cc4:imagebuttonrolloverwebcontrol id="OkImageButtonRollOverWebControl" runat="server" SkinID="okButton"></cc4:imagebuttonrolloverwebcontrol></td>
-											<td align="center" width="10%"><cc4:imagebuttonrolloverwebcontrol id="initializeButton" runat="server" SkinID="initializeButton"></cc4:imagebuttonrolloverwebcontrol></td>
-											<td width="10%"></td>
-											<td width="55%">&nbsp;</td>
+											<td ><asp:textbox id="keyWordTextBox" runat="server"></asp:textbox></td>
+											<td style="width:200px;" valign="bottom" >&nbsp;<cc4:imagebuttonrolloverwebcontrol id="OkImageButtonRollOverWebControl" runat="server" SkinID="okLoupeButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="initializeButton" runat="server" SkinID="initializeButton"></cc4:imagebuttonrolloverwebcontrol></td>
 										</tr>
 									</table>
 								</td>
 							</tr>
+							<tr><td>&nbsp;</td></tr>
 							<tr>
-								<td style="WIDTH: 772px; HEIGHT: 18px">&nbsp;&nbsp; <A id="A1" onmouseover="MM_swapImage('ok','','/images/Common/button/ok_down.gif',1)"
-										onclick="javascript:createLists();" onmouseout="MM_swapImgRestore()" href="javascript:__doPostBack('ok','')" runat="server">
-									</A>
-								</td>
-							</tr>
-							<tr>
-								<td style="WIDTH: 772px; HEIGHT: 17px">
+								<td>
 									<cc3:PortofolioGenericDetailVehicleSelectionWebControl id="GenericDetailVehicleSelectionWebControl1" runat="server"></cc3:PortofolioGenericDetailVehicleSelectionWebControl>
 									<input id="idMedia" type="hidden" name="nameMedia">
 								</td>
 							</tr>
 							<tr>
-								<td style="WIDTH: 772px">
-									<table cellSpacing="0" cellPadding="0" border="0">
+								<td>
+									<table cellSpacing="0" cellPadding="0" border="0" width="100%">
 										<tr>
-											<td align="right" width="649">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<cc4:imagebuttonrolloverwebcontrol id="validImageButtonRollOverWebControl" runat="server" onclick="validImageButtonRollOverWebControl_Click" SkinID="validateButton"></cc4:imagebuttonrolloverwebcontrol></td>
-											<td width="1%"></td>
+											<td align="right">&nbsp;<cc4:imagebuttonrolloverwebcontrol id="validImageButtonRollOverWebControl" runat="server" onclick="validImageButtonRollOverWebControl_Click" SkinID="validateButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;</td>
 										</tr>
 									</table>
 								</td>

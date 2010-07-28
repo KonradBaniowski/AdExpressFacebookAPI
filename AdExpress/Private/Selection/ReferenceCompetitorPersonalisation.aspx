@@ -88,7 +88,7 @@
 							</tr>
 							<!-- Centre -->
 							<tr valign="top">
-								<td align="center">
+								<td  style="padding:0px 0px 0px 10px;">
 									<table id="data" height="100%" cellspacing="0" cellpadding="3" width="100%" border="0">
 										<cc3:recapadvertiserselectionwebcontrol id="recapAdvertiserSelectionWebControl" runat="server"></cc3:recapadvertiserselectionwebcontrol>
 										<tr>

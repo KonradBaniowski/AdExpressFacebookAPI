@@ -478,7 +478,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				int nbLinesTest=0;
 			
 				//Tableau global
-                t.Append("<tr><td class=\"backGroundWhite\" vAlign=\"top\"><table>");			
+                t.Append("<tr><td class=\"backGroundWhite\" vAlign=\"top\"><table width=\"100%\" >");			
 				t.Append("<tr><td vAlign=\"top\">");
 
 				Int64 idParentOld=-1;

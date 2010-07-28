@@ -99,16 +99,14 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			output.Write("\n<TD height=\"5\"></TD>");
 			output.Write("\n</TR>");
 			output.Write("\n<tr>");
-            output.Write("\n<td class=\"headerLeft\" colSpan=\"4\"><IMG height=\"1\" src=\"/App_Themes/"+themeName+"/Images/Common/pixel.gif\"></td>");
+            output.Write("\n<td class=\"headerLeft\" colSpan=\"3\"><IMG height=\"1\" src=\"/App_Themes/"+themeName+"/Images/Common/pixel.gif\"></td>");
 			output.Write("\n</tr>");
 			output.Write("\n<tr>");
-            output.Write("\n<td style=\"HEIGHT: 14px\" vAlign=\"top\"><IMG height=\"12\" src=\"" + blockFlechePath + "\" width=\"12\"></td>");
             output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" background=\"" + blockDupliPath + "\"><IMG height=\"1\" src=\"/App_Themes/"+themeName+"/Images/Common/pixel.gif\" width=\"13\"></td>");
             output.Write("\n<td class=\"txtNoir11Bold backGroundModuleTitle " + titleUppercaseCss + "\" width=\"100%\">" + GestionWeb.GetWebWord(794, webSession.SiteLanguage) + "</td>");
             output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\" width=\"1\"></td>");
 			output.Write("\n</tr>");
 			output.Write("\n<tr>");
-			output.Write("\n<td></td>");
 			output.Write("\n<td class=\"headerLeft\" colSpan=\"3\"><IMG height=\"1\" src=\"/App_Themes/"+themeName+"/images/Common/pixel.gif\"></td>");
 			output.Write("\n</tr>");
 			output.Write("\n</table>");
@@ -119,8 +117,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			output.Write("\n<TD height=\"5\"></TD>");
 			output.Write("\n</TR>");
 
-			//Exemple, a changer ultérieurement
-			//webSession.CustomerLogin.ModuleList();
             Module currentModule=webSession.CustomerLogin.GetModule(webSession.CurrentModule);
             foreach(Int64 current in currentModule.Bridges) {
 				if (webSession.CustomerLogin.GetModule(current)!=null){ 

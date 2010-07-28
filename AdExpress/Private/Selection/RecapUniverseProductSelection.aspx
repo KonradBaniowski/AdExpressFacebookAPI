@@ -148,21 +148,18 @@
 								<td style="WIDTH: 772px"><asp:Image ID="Image11" runat="server" height="5" width="1" SkinID="pixel" /></td>
 							</tr>														
 							<tr>
-								<td><!--<img height="15" src="/Images/Common/pixel.gif" width="1"> -->
-									<cc4:SelectRecapItemsInClassificationWebControl id="SelectItemsInClassificationWebControl1" runat="server" DefaultBranchId="1" NbMaxIncludeTree="2"></cc4:SelectRecapItemsInClassificationWebControl>
-								</td>
-							</tr>
-							<tr>
-								<td style="WIDTH: 772px">
-									<table cellspacing="0" cellpadding="0" border="0">
-										<tr>
-											<td align="right" width="649">&nbsp;
-												<a style="cursor:hand;" onmouseover="getElementById('saveButton').src='/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_down.gif';" onmouseout="getElementById('saveButton').src = '/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_up.gif';" onclick="ouvre_popup_univers('<%=sessionId%>');" >
-													<asp:Image ID="saveButton" runat="server" SkinID="enregistrer_univers" border="0" name="saveButton" /></a>&nbsp;
+								<td>
+								    <table border="0" cellpadding="0" cellspacing="0">
+								        <tr>
+								            <td><cc4:SelectRecapItemsInClassificationWebControl id="SelectItemsInClassificationWebControl1" runat="server" DefaultBranchId="1" NbMaxIncludeTree="2"></cc4:SelectRecapItemsInClassificationWebControl></td>
+								        </tr>
+								        <tr>
+								            <td style="padding-left:188px;">
+								                &nbsp;<a style="cursor:hand;" onmouseover="getElementById('saveButton').src='/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_down.gif';" onmouseout="getElementById('saveButton').src = '/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_up.gif';" onclick="ouvre_popup_univers('<%=sessionId%>');" ><asp:Image ID="saveButton" runat="server" SkinID="enregistrer_univers" border="0" name="saveButton" /></a>&nbsp;
 												&nbsp;<cc2:imagebuttonrolloverwebcontrol SkinID="validateButton" id="validateButton" runat="server" onclick="validateButton_Click"></cc2:imagebuttonrolloverwebcontrol>
-											<td width="1%"></td>
-										</tr>
-									</table>
+								            </td>
+								        </tr>
+								    </table>
 								</td>
 							</tr>
 						</table>

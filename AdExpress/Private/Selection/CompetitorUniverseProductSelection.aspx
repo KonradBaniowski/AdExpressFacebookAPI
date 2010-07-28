@@ -151,27 +151,22 @@
 								<td><asp:Image runat="server" height="5" SkinID="pixel" width="1" /></td>
 							</tr>														
 							<tr>
-								<td><!--<img height="15" src="/Images/Common/pixel.gif" width="1"> -->
-									<cc4:SelectItemsInClassificationWebControl id="SelectItemsInClassificationWebControl1" runat="server" ChildNodeExcludeCss="txtChildNodeExcludeCss" ChildNodeIncludeCss="txtChildNodeIncludeCss" CustomSelectCss="customSelectCss" DefaultBranchId="1" LabelNbCurrentElementCss="labelNbelements" ListBoxBodyCss="listBoxBodyCss" ListBoxCss="listBoxCss" ListBoxHeaderCss="listBoxHeaderCss" NbMaxIncludeTree="2" ParentNodeChildExcludeCss="txtParentNodeChildExcludeCss" ParentNodeChildIncludeCss="txtParentNodeChildIncludeCss" SelectOptionItemDefaultCss="optionItemDefault" SelectOptionItemHierarchyCss="optionItemHierarchy" TrashNodeCss="trashNodeCss" TreeExcludeFrameBodyCss="treeExcludeFrameBodyCss" TreeExcludeFrameCss="treeExcludeFrameCss" TreeExcludeFrameHeaderCss="treeExcludeFrameHeaderCss" TreeIncludeFrameBodyCss="treeIncludeFrameBodyCss" TreeIncludeFrameCss="treeIncludeFrameCss" TreeIncludeFrameHeaderCss="treeIncludeFrameHeaderCss" TreeViewIcons="/Styles/TreeView/Icons" TreeViewScripts="/Styles/TreeView/Scripts" TreeViewStyles="/Styles/TreeView/Css" DBSchema="adexpr03"></cc4:SelectItemsInClassificationWebControl>
-									</td>
-							</tr>
-							<tr>
 								<td>
-									<table cellspacing="0" cellpadding="0" width="100%" border="0">
-									    <tr>
-											<td class="txtViolet11Bold" align="center"><cc3:adexpresstext language="33" id="universAdExpressText" runat="server" Code="855"></cc3:adexpresstext></td>
-											<td align="left"><asp:textbox id="idUnivers" runat="server"></asp:textbox></td>
-										</tr>
-										<tr>
-										    <td>&nbsp;</td>
-											<td align="right">
-                                            <a style="cursor:hand;" onmouseover="getElementById('saveButton').src='/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_down.gif';" onmouseout="getElementById('saveButton').src = '/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_up.gif';" onclick="ouvre_popup_univers('<%=sessionId%>');" >
-													<asp:Image ID="saveButton" runat="server" SkinID="enregistrer_univers" border="0" name="saveButton" /></a>&nbsp;
-													<cc2:imagebuttonrolloverwebcontrol SkinID="nextButton" id="NextImageButtonRollOverWebControl" runat="server" onclick="NextImageButtonRollOverWebControl_Click"></cc2:imagebuttonrolloverwebcontrol>&nbsp;
-												<cc2:imagebuttonrolloverwebcontrol SkinID="validateButton" id="validateButton" runat="server" onclick="validateButton_Click"></cc2:imagebuttonrolloverwebcontrol>
-											</td>
-										</tr>
-									</table>
+								    <table border="0" cellpadding="0" cellspacing="0">
+								        <tr>
+								            <td><cc4:SelectItemsInClassificationWebControl id="SelectItemsInClassificationWebControl1" runat="server" ChildNodeExcludeCss="txtChildNodeExcludeCss" ChildNodeIncludeCss="txtChildNodeIncludeCss" CustomSelectCss="customSelectCss" DefaultBranchId="1" LabelNbCurrentElementCss="labelNbelements" ListBoxBodyCss="listBoxBodyCss" ListBoxCss="listBoxCss" ListBoxHeaderCss="listBoxHeaderCss" NbMaxIncludeTree="2" ParentNodeChildExcludeCss="txtParentNodeChildExcludeCss" ParentNodeChildIncludeCss="txtParentNodeChildIncludeCss" SelectOptionItemDefaultCss="optionItemDefault" SelectOptionItemHierarchyCss="optionItemHierarchy" TrashNodeCss="trashNodeCss" TreeExcludeFrameBodyCss="treeExcludeFrameBodyCss" TreeExcludeFrameCss="treeExcludeFrameCss" TreeExcludeFrameHeaderCss="treeExcludeFrameHeaderCss" TreeIncludeFrameBodyCss="treeIncludeFrameBodyCss" TreeIncludeFrameCss="treeIncludeFrameCss" TreeIncludeFrameHeaderCss="treeIncludeFrameHeaderCss" TreeViewIcons="/Styles/TreeView/Icons" TreeViewScripts="/Styles/TreeView/Scripts" TreeViewStyles="/Styles/TreeView/Css" DBSchema="adexpr03"></cc4:SelectItemsInClassificationWebControl></td>
+								        </tr>
+								        <tr style="height:60px;">
+								            <td class="txtViolet11Bold">&nbsp;&nbsp;<cc3:adexpresstext language="33" id="universAdExpressText" runat="server" Code="855"></cc3:adexpresstext>&nbsp;&nbsp;<asp:textbox id="idUnivers" runat="server"></asp:textbox></td>
+								        </tr>
+								        <tr>
+								            <td style="padding-left:188px;">
+								                &nbsp;<a style="cursor:hand;" onmouseover="getElementById('saveButton').src='/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_down.gif';" onmouseout="getElementById('saveButton').src = '/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_up.gif';" onclick="ouvre_popup_univers('<%=sessionId%>');" ><asp:Image ID="saveButton" runat="server" SkinID="enregistrer_univers" border="0" name="saveButton" /></a>&nbsp;
+											    &nbsp;<cc2:imagebuttonrolloverwebcontrol SkinID="nextButton" id="NextImageButtonRollOverWebControl" runat="server" onclick="NextImageButtonRollOverWebControl_Click"></cc2:imagebuttonrolloverwebcontrol>
+												&nbsp;<cc2:imagebuttonrolloverwebcontrol SkinID="validateButton" id="validateButton" runat="server" onclick="validateButton_Click"></cc2:imagebuttonrolloverwebcontrol>
+								            </td>
+								        </tr>
+								    </table>
 								</td>
 							</tr>
 						</table>

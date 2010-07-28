@@ -153,15 +153,13 @@
 										</tr>
 										<tr>
 										    <td colspan="6">
-										        <table cellspacing="0" cellpadding="0" width="400px" border="0">
+										        <table cellspacing="0" cellpadding="0" border="0">
 										            <tr>
-										                <td class="txtViolet11Bold">&nbsp;&nbsp;
+										                <td class="txtViolet11Bold" style="width:83px;" >&nbsp;&nbsp;
 											                <cc1:adexpresstext language="33" id="AdExpressText2" runat="server" Code="972"></cc1:adexpresstext>&nbsp;:
 										                </td>
-										                <td valign="middle" align="left"><asp:textbox id="keyWordTextBox" runat="server"></asp:textbox>&nbsp;
-											                <cc4:imagebuttonrolloverwebcontrol id="OkImageButtonRollOverWebControl" runat="server" SkinID="okButton" onclick="OkImageButtonRollOverWebControl_Click"></cc4:imagebuttonrolloverwebcontrol></td>
-										                <td valign="middle" align="left">
-										                    <cc4:imagebuttonrolloverwebcontrol id="initializeButton" runat="server" SkinID="initializeButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="initializeAllButton" runat="server" SkinID="initializeAllButton"></cc4:imagebuttonrolloverwebcontrol></td>
+										                <td ><asp:textbox id="keyWordTextBox" runat="server"></asp:textbox></td>
+										                <td style="width:200px;" valign="bottom" >&nbsp;<cc4:imagebuttonrolloverwebcontrol id="OkImageButtonRollOverWebControl" runat="server" SkinID="okLoupeButton" onclick="OkImageButtonRollOverWebControl_Click"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="initializeButton" runat="server" SkinID="initializeButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="initializeAllButton" runat="server" SkinID="initializeAllButton"></cc4:imagebuttonrolloverwebcontrol></td>
 												    </tr>
 											    </table>
 											</td>
@@ -171,16 +169,9 @@
 								</td>
 							</tr>
 							<tr>
-								<td ><asp:Image ID="Image16" runat="server" height="5" width="1" SkinID="pixel" /></td>
+								<td><asp:Image ID="Image16" runat="server" height="5" width="1" SkinID="pixel" /></td>
 							</tr>
 							<tr>
-								<td style="HEIGHT: 27px">&nbsp;&nbsp; <a id="A1" onmouseover="MM_swapImage('ok','','/images/Common/button/ok_down.gif',1)"
-										onclick="javascript:createLists();" onmouseout="MM_swapImgRestore()" href="javascript:__doPostBack('ok','')" runat="server">
-									</a>
-								</td>
-							</tr>
-							
-							<tr >
 								<td style="HEIGHT: 18px"><cc3:genericdetailvehicleselectionwebcontrol id="GenericDetailVehicleSelectionWebControl1" runat="server"></cc3:genericdetailvehicleselectionwebcontrol></td>
 							</tr>
 							<tr>

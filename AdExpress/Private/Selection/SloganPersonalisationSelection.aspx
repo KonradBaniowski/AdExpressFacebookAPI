@@ -87,11 +87,11 @@
 							</tr>
 							<!-- Centre -->
 							<tr valign="top">
-								<td align="center">
+								<td  style="padding:0px 10px 0px 10px;">
 									<table id="data" height="100%" cellpadding="3" cellspacing="0" width="100%" border="0">
 										<tr valign="top">
 											<td>
-												<table cellspacing="0" cellpadding="0" width="90%" class="violetBackGround" align="center">
+												<table cellspacing="0" cellpadding="0" width="100%" class="violetBackGround" align="center">
 													<tr>
 														<td>
 															<table id="centerTable" height="100%" cellspacing="0" cellpadding="0" width="100%" class="whiteBackGround"
@@ -106,8 +106,7 @@
 											</td>
 										</tr>
 										<tr height="100%" valign="top">
-											<td align="right">
-												<cc4:ImageButtonRollOverWebControl id="validateButton" runat="server" onclick="validateButton_Click" SkinID="validateButton"></cc4:ImageButtonRollOverWebControl>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+											<td align="right"><cc4:ImageButtonRollOverWebControl id="validateButton" runat="server" onclick="validateButton_Click" SkinID="validateButton"></cc4:ImageButtonRollOverWebControl>&nbsp;</td>
 										</tr>
 										<tr>
 											<td>&nbsp;<cc2:MenuWebControl id="MenuWebControl2" runat="server"></cc2:MenuWebControl></td>

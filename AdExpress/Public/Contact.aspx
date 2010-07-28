@@ -216,7 +216,8 @@
 										</tr>
 										<!-- bouton de validation -->
 										<tr>
-											<td align="center" colSpan="2"><cc2:imagebuttonrolloverwebcontrol id="validateButton" runat="server"></cc2:imagebuttonrolloverwebcontrol></td>
+											<td align="right"><cc2:imagebuttonrolloverwebcontrol id="validateButton" runat="server"></cc2:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;</td>
+											<td>&nbsp;</td>
 										</tr>
 									</table>
 									

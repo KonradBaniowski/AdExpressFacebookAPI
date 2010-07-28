@@ -87,14 +87,14 @@
 								<td><cc2:headerwebcontrol language="33" id="HeaderWebControl1" runat="server" Type_de_page="generic"></cc2:headerwebcontrol></td>
 							</tr>
 							<!-- Centre -->
-							<TR valign="top">
-								<TD align="center">
+							<TR valign="top" height="400">
+								<TD style="padding:0px 50px 0px 50px;">
 								
 									<TABLE id="data" height="100%" cellPadding="3" cellspacing="0" width="100%" border="0">
 										<TR valign="top">
 											<TD width="10">&nbsp;</TD>
 											<TD>
-												<table cellpadding="0" cellspacing="1" class="violetBackGround" width="90%">
+												<table cellpadding="0" cellspacing="1" class="violetBackGround" width="100%">
 													<tr class="backGroundWhite">
 														<td class="txtViolet11Bold">&nbsp;<cc1:AdExpressText language="33" id="titreAdexpresstext" runat="server" Code="1017"></cc1:AdExpressText></td>
 													</tr>
@@ -118,7 +118,7 @@
 											</TD>
 										</TR>
 										<tr valign="top" align="right">
-											<td colspan="2"><cc4:imagebuttonrolloverwebcontrol id="validateButton" runat="server" onclick="validateButton_Click" SkinID="validateButton"></cc4:imagebuttonrolloverwebcontrol><img src="/Images/Common/pixel.gif" width="100" height="1"></td>
+											<td colspan="2"><cc4:imagebuttonrolloverwebcontrol id="validateButton" runat="server" onclick="validateButton_Click" SkinID="validateButton"></cc4:imagebuttonrolloverwebcontrol></td>
 										</tr>
 										<tr valign="top" height="100%">
 											<td colspan="2">&nbsp;<cc2:MenuWebControl id="MenuWebControl2" runat="server"></cc2:MenuWebControl></td>

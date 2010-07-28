@@ -97,7 +97,7 @@
 											</td>
 										</tr>
 										<tr valign="top" align="right" >
-											<td colspan="2"><cc4:imagebuttonrolloverwebcontrol SkinID="validateButton" id="validateButton" runat="server" onclick="validateButton_Click"></cc4:imagebuttonrolloverwebcontrol><asp:Image runat="server" height="1" SkinID="pixel" width="100" /></td>
+											<td colspan="2"><cc4:imagebuttonrolloverwebcontrol SkinID="validateButton" id="validateButton" runat="server" onclick="validateButton_Click"></cc4:imagebuttonrolloverwebcontrol></td>
 										</tr>
 										<tr valign="top" style="height:100%">
 											<td colspan="2">&nbsp;<cc2:MenuWebControl id="MenuWebControl2" runat="server"></cc2:MenuWebControl></td>

@@ -25,8 +25,6 @@ using VhCstes=TNS.AdExpress.Constantes.Classification.DB.Vehicles.names;
 using TableName=TNS.AdExpress.Constantes.Classification.DB.Table.name;
 using TNS.AdExpress.Domain.Level;
 
-
-
 namespace TNS.AdExpress.Web.Controls.Selections
 {
 	/// <summary>
@@ -172,7 +170,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 
 			if (dtVehicle != null && dtVehicle.Rows.Count > 0)
 			{
-				#region variables locales				
+				#region variables locales
 				//variables du niveau  Media
 				Int64 idVehicleOld=-1;
 				Int64 idVehicle = -2;										
@@ -200,7 +198,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				}
 
 				//Global table 
-                t.Append("\n<tr vAlign=\"top\" height=\"1%\">\n<td class=\"whiteBackGround\">\n");	
+                t.Append("\n<tr vAlign=\"top\" height=\"1%\">\n<td class=\"backGroundWhite\" >\n");	
 				t.Append("<a href=\"javascript: ExpandColapseAllDivs('"+vhlist+"')\" ");
 				t.Append("\" class=\"roll04\" >&nbsp;&nbsp;&nbsp;"+GestionWeb.GetWebWord(1117,webSession.SiteLanguage)+"</a>");	
 				
@@ -209,8 +207,8 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				if (vehicleInfo != null) {
 					//Top table border
 					t.Append("\n<tr><td><div style=\"MARGIN-LEFT: 10px\" id=\"vh_" + vehicleInfo.DatabaseId.ToString() + "\" >");
-					if (idVehicleOld == -1) t.Append("\n<table class=\"whiteBackGround violetBorderWithoutBottom txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n<tr>");
-					else t.Append("\n<table class=\"whiteBackGround violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n<tr>");
+					if (idVehicleOld == -1) t.Append("\n<table class=\"backGroundWhite violetBorderWithoutBottom txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n<tr>");
+					else t.Append("\n<table class=\"backGroundWhite violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n<tr>");
 					t.Append("\n<td align=\"left\" height=\"10\" valign=\"top\" width=100%>");
 					t.Append("\n<input type=checkbox name=\"SectorAnalysisVehicleSelectionWebControl1$" + i + "\" name=\"SectorAnalysisVehicleSelectionWebControl1_" + i + "\" onClick=\"CheckAllChilds('vh_" + vehicleInfo.DatabaseId.ToString() + "','" + VehicleIds + "','vh_" + vehicleInfo.DatabaseId.ToString() + "')\" value=\"vh_" + vehicleInfo.DatabaseId.ToString() + "\">" + GestionWeb.GetWebWord(210, webSession.SiteLanguage) + "");
 					t.Append("\n</td>\n</tr>");
@@ -255,8 +253,8 @@ namespace TNS.AdExpress.Web.Controls.Selections
 					if (idVehicle != idVehicleOld) {
 						//Border top table						
 						t.Append("\n<tr><td><div style=\"MARGIN-LEFT: 10px\" id=\"vh_" + idVehicle + "\" >");
-						if (idVehicleOld == -1) t.Append("\n<table class=\"whiteBackGround violetBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
-						else t.Append("\n<table class=\"whiteBackGround violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
+						if (idVehicleOld == -1) t.Append("\n<table class=\"backGroundWhite violetBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
+						else t.Append("\n<table class=\"backGroundWhite violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\">\n");
 
 						//Cursor on  line
 						if (OpenVehicleDiv(idVehicle))

@@ -116,20 +116,16 @@
 					<td class="lineVerticalBackGround"><asp:Image ID="Image10" runat="server" height="1" width="2" SkinID="pixel" /></td>
 					
 					<!-- Right column -->
-					<td style="WIDTH: 731px" valign="top">
+					<td valign="top">
 						<table cellspacing="0" cellpadding="0" border="0">
 						    <!-- Menu du haut-->
 							<tr>
-								<td style="WIDTH: 772px"><cc1:headerwebcontrol language="33" id="HeaderWebControl1" runat="server" Type_de_page="generic"></cc1:headerwebcontrol></td>
+								<td><cc1:headerwebcontrol language="33" id="HeaderWebControl1" runat="server" Type_de_page="generic"></cc1:headerwebcontrol></td>
 							</tr>
 							<!-- Centre -->
 							<tr>
-								<td style="WIDTH: 773px">
-								
+								<td>
 									<table cellspacing="0" cellpadding="0" width="100%" border="0">
-										<tr style="HEIGHT: 5px">
-											<td style="WIDTH: 478px" colspan="5"></td>
-										</tr>
 										<tr>
 											<td colspan="5" style="padding-left:5px;">
 												<cc4:loadableuniverswebcontrol id="LoadableUniversWebControl1" runat="server"></cc4:loadableuniverswebcontrol>											
@@ -139,36 +135,30 @@
 											<td colspan="6"></td>
 										</tr>
 										<tr style="HEIGHT: 10px">
-											<td style="WIDTH: 478px" width="478" class="imageBackGround" colspan="6"></td>
+											<td width="100%" class="imageBackGround" colspan="6"></td>
 										</tr>
 										<tr style="HEIGHT: 5px">
 											<td colspan="6"></td>
 										</tr>																				
 									</table>
-									
 								</td>
 							</tr>
 							<tr>
-								<td style="WIDTH: 772px"><asp:Image runat="server" height="5" width="1" SkinID="pixel" /></td>
+								<td><asp:Image runat="server" height="5" width="1" SkinID="pixel" /></td>
 							</tr>														
 							<tr>
 								<td>
-									<cc4:SelectItemsInClassificationWebControl id="SelectItemsInClassificationWebControl1" runat="server" DefaultBranchId="1" NbMaxIncludeTree="2"></cc4:SelectItemsInClassificationWebControl>
-								</td>
-							</tr>
-							<tr>
-								<td style="WIDTH: 772px">
-								
-									<table cellspacing="0" cellpadding="0" border="0">
-										<tr>
-											<td align="right" width="649">&nbsp;
-												<a style="cursor:hand;" onmouseover="getElementById('saveButton').src='/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_down.gif';" onmouseout="getElementById('saveButton').src = '/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_up.gif';" onclick="ouvre_popup_univers('<%=sessionId%>');" >
-													<asp:Image ID="saveButton" runat="server" SkinID="enregistrer_univers" border="0" name="saveButton" /></a>&nbsp;
+								    <table border="0" cellpadding="0" cellspacing="0">
+								        <tr>
+								            <td><cc4:SelectItemsInClassificationWebControl id="SelectItemsInClassificationWebControl1" runat="server" DefaultBranchId="1" NbMaxIncludeTree="2"></cc4:SelectItemsInClassificationWebControl></td>
+								        </tr>
+								        <tr>
+								            <td style="padding-left:188px;">
+								                &nbsp;<a style="cursor:hand;" onmouseover="getElementById('saveButton').src='/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_down.gif';" onmouseout="getElementById('saveButton').src = '/App_Themes/<%= this.Theme %>/Images/Culture/button/enregistrer_univers_up.gif';" onclick="ouvre_popup_univers('<%=sessionId%>');" ><asp:Image ID="saveButton" runat="server" SkinID="enregistrer_univers" border="0" name="saveButton" /></a>&nbsp;
 												&nbsp;<cc2:imagebuttonrolloverwebcontrol SkinID="validateButton" id="validateButton" runat="server" onclick="validateButton_Click"></cc2:imagebuttonrolloverwebcontrol>
-											<td width="1%"></td>
-										</tr>
-									</table>
-									
+								            </td>
+								        </tr>
+								    </table>
 								</td>
 							</tr>
 						</table>
