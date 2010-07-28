@@ -76,14 +76,14 @@
 					<td class="lineVerticalBackGround"><asp:Image ID="Image12" runat="server" height="1" width="2" SkinID="pixel" /></td>
 					
 					<!-- Right column -->
-					<td vAlign="top">
-						<table cellSpacing="0" cellPadding="0" border="0">
+					<td valign="top">
+						<table cellSpacing="0" cellPadding="0" border="0" >
 						    <!-- Menu haut -->
 							<tr>
 								<td><cc2:headerwebcontrol language="33" id="HeaderWebControl1" runat="server" Type_de_page="generic"></cc2:headerwebcontrol></td>
 							</tr>
 							<!-- Center -->
-							<tr>
+							<tr height="400" >
 								<td style="padding:0px 50px 0px 50px;">
 									<table id="data" width="100%" height="100%" cellpadding="3" cellspacing="0" border="0">
 										<tr valign="top" align="right">

@@ -95,66 +95,61 @@
 							<tr>
 								<td align="center">
 									
-								    <table cellSpacing="0" cellPadding="0" width="98%" align="center" class="backGroundWhite" border="0">
+								    <table cellspacing="0" cellpadding="0" width="98%" align="center" class="backGroundWhite" border="0">
 				                        <TR>
-					                        <td class="violetBackGround" colSpan="2"><font class="txtBlanc14Bold">&nbsp;<cc1:adexpresstext language="33" id="titreAdExpressText" runat="server" Code="982"></cc1:adexpresstext>
+					                        <td class="violetBackGround" colspan="2"><font class="txtBlanc14Bold">&nbsp;<cc1:adexpresstext language="33" id="titreAdExpressText" runat="server" Code="982"></cc1:adexpresstext>
 						                        </font><font class="txtBlanc11Bold">&nbsp;<cc1:adexpresstext language="33" id="versionAdExpressText" runat="server" Code="983"></cc1:adexpresstext>
 						                        </font>
 					                        </td>
 				                        </TR>
 				                        <tr>
-					                        <td colSpan="2"><asp:Image ID="Image3" runat="server" SkinID="pixel" height="15" width="100%" /></td>
+					                        <td colspan="2">&nbsp;</td>
 				                        </tr>
 				                        <tr>
-					                        <td vAlign="top"><IMG src="/App_Themes/<%= this.Theme %>/Images/Common/ConfigurationLogo/computer.gif">&nbsp;
-					                        </td>
+					                        <td width="130" align="center"><IMG src="/App_Themes/<%= this.Theme %>/Images/Common/ConfigurationLogo/computer.gif">&nbsp;</td>
 					                        <td class="txtViolet11"><cc1:adexpresstext language="33" id="computerAdExpressText" runat="server" Code="981"></cc1:adexpresstext></td>
 				                        </tr>
 				                        <tr>
-					                        <td colSpan="2"><asp:Image ID="Image12" runat="server" SkinID="pixel" height="15" width="100%" /></td>
+					                        <td colspan="2"><hr class="hrConfigPage" /></td>
 				                        </tr>
 				                        <tr>
-					                        <td vAlign="top"><IMG src="/App_Themes/<%= this.Theme %>/Images/Common/ConfigurationLogo/iexplorer.gif">&nbsp;
-					                        </td>
+					                        <td width="130" align="center"><IMG src="/App_Themes/<%= this.Theme %>/Images/Common/ConfigurationLogo/iexplorer.gif">&nbsp;</td>
 					                        <td class="txtViolet11"><cc1:adexpresstext language="33" id="iexplorerAdexpresstext" runat="server" Code="980"></cc1:adexpresstext></td>
 				                        </tr>
 				                        <tr>
-					                        <td colSpan="2"><asp:Image ID="Image13" runat="server" SkinID="pixel" height="15" width="100%" /></td>
+					                        <td colspan="2"><hr class="hrConfigPage" /></td>
 				                        </tr>
 				                        <tr>
-					                        <td vAlign="top"><IMG src="/App_Themes/<%= this.Theme %>/Images/Common/ConfigurationLogo/screen.gif">&nbsp;
-					                        </td>
+					                        <td width="130" align="center"><IMG src="/App_Themes/<%= this.Theme %>/Images/Common/ConfigurationLogo/screen.gif">&nbsp;</td>
 					                        <td class="txtViolet11"><cc1:adexpresstext language="33" id="screenAdexpresstext" runat="server" Code="984"></cc1:adexpresstext></td>
 				                        </tr>
 				                        <tr>
-					                        <td colSpan="2"><asp:Image ID="Image14" runat="server" SkinID="pixel" height="15" width="100%" /></td>
+					                        <td colspan="2"><hr class="hrConfigPage" /></td>
 				                        </tr>
 				                        <tr>
-					                        <td vAlign="top"><IMG src="/App_Themes/<%= this.Theme %>/Images/Common/ConfigurationLogo/excel.gif">&nbsp;
-					                        </td>
+					                        <td width="130" align="center"><IMG src="/App_Themes/<%= this.Theme %>/Images/Common/ConfigurationLogo/excel.gif">&nbsp;</td>
 					                        <td class="txtViolet11"><cc1:adexpresstext language="33" id="excelAdexpresstext" runat="server" Code="985"></cc1:adexpresstext></td>
 				                        </tr>
 				                        <tr>
-					                        <td colSpan="2"><asp:Image ID="Image15" runat="server" SkinID="pixel" height="15" width="100%" /></td>
+					                        <td colspan="2"><hr class="hrConfigPage" /></td>
 				                        </tr>
 				                        <tr>
-					                        <td vAlign="top"><IMG src="/App_Themes/<%= this.Theme %>/Images/Common/ConfigurationLogo/adobe.gif">&nbsp;
-					                        </td>
+					                        <td width="130" align="center"><IMG src="/App_Themes/<%= this.Theme %>/Images/Common/ConfigurationLogo/adobe.gif">&nbsp;</td>
 					                        <td class="txtViolet11"><cc1:adexpresstext language="33" id="adobeAdexpresstext" runat="server" Code="986"></cc1:adexpresstext></td>
 				                        </tr>
 				                        <tr>
-					                        <td colSpan="2"><asp:Image ID="Image16" runat="server" SkinID="pixel" height="15" width="100%" /></td>
+					                        <td colspan="2"><hr class="hrConfigPage" /></td>
 				                        </tr>
 				                        <tr>
-					                        <td vAlign="top"><IMG src="/App_Themes/<%= this.Theme %>/Images/Common/ConfigurationLogo/flash.gif">&nbsp;
-					                        </td>
+					                        <td width="130" align="center"><IMG src="/App_Themes/<%= this.Theme %>/Images/Common/ConfigurationLogo/flash.gif">&nbsp;</td>
 					                        <td class="txtViolet11"><cc1:adexpresstext language="33" id="flashAdexpresstext" runat="server" Code="987"></cc1:adexpresstext></td>
 				                        </tr>
 				                        <tr>
-					                        <td colSpan="2"><asp:Image ID="Image17" runat="server" SkinID="pixel" height="15" width="100%" /></td>
+					                        <td colspan="2"><hr class="hrConfigPage" /></td>
 				                        </tr>
 				                        <tr>
-					                        <td vAlign="top"><IMG src="/App_Themes/<%= this.Theme %>/Images/Common/ConfigurationLogo/realOne.gif">&nbsp;<br>
+					                        <td width="130" align="center">
+					                            <IMG src="/App_Themes/<%= this.Theme %>/Images/Common/ConfigurationLogo/realOne.gif">&nbsp;<br>
 						                        <br>
 						                        <IMG src="/App_Themes/<%= this.Theme %>/Images/Common/ConfigurationLogo/mediaPlayer.gif">&nbsp;
 					                        </td>
