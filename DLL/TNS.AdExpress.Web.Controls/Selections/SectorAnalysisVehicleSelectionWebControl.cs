@@ -178,7 +178,10 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				string vhSeparator="";
 				string VehicleIds="";
 				string[] VehicleIdsArr=null;
-				string 	vhlist="";								
+				
+                string vhlist="";
+                string vhlistSeparator = "";
+
 				//variables du niveau Category
 				Int64 idCategoryOld=-1;
 				Int64 idCategory = -2;										
@@ -192,14 +195,19 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				if (_currentVehicleList != null && _currentVehicleList.Count>0) {
 					
 					for (int v = 0; v < _currentVehicleList.Count; v++) {
-						if (v > 0) vhSeparator = "-";
+                        if(v > 0)
+                        {
+                            vhSeparator = "-";
+                            vhlistSeparator = ",";
+                        }
 						VehicleIds += vhSeparator + "vh_" + _currentVehicleList[v].ToString();
+                        vhlist += vhlistSeparator + "vhDiv" + _currentVehicleList[v].ToString();
 					}					
 				}
 
 				//Global table 
-                t.Append("\n<tr vAlign=\"top\" height=\"1%\">\n<td class=\"backGroundWhite\" >\n");	
-				t.Append("<a href=\"javascript: ExpandColapseAllDivs('"+vhlist+"')\" ");
+                t.Append("\n<tr vAlign=\"top\" height=\"1%\">\n<td class=\"backGroundWhite\" >\n");
+                t.Append("<a href=\"javascript: ExpandColapseAllDivs('" + vhlist + "')\" ");
 				t.Append("\" class=\"roll04\" >&nbsp;&nbsp;&nbsp;"+GestionWeb.GetWebWord(1117,webSession.SiteLanguage)+"</a>");	
 				
 				#region  PluriMedia
