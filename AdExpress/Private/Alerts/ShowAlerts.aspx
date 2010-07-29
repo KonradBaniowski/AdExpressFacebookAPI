@@ -75,7 +75,6 @@
 								<td>
 									<table cellspacing="0" cellpadding="0" border="0" width="185">
 										<tr>
-											<td valign="top"><asp:Image ID="Image5" runat="server" SkinID="block_fleche" height="12" width="12" /></td>
 											<td class="blockdupliBackGround"><asp:Image ID="Image6" runat="server" SkinID="pixel" height="1" width="13" /></td>
 											<td class="txtNoir11Bold backGroundModuleTitle" width="100%">
 												<p style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px"><cc1:adexpresstext language="33" id="AdExpressText1" runat="server" Code="829"></cc1:adexpresstext></p>
@@ -115,7 +114,6 @@
 								<td>
 									<table cellspacing="0" cellpadding="0" border="0" width="185">
 										<tr>
-											<td valign="top"><asp:Image ID="Image9" runat="server" SkinID="block_fleche" height="12" width="12" /></td>
 											<td class="blockdupliBackGround"><asp:Image ID="Image10" runat="server" SkinID="pixel" height="1" width="13" /></td>
 											<td class="txtNoir11Bold backGroundModuleTitle" width="100%">
 												<p style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px"><cc1:adexpresstext language="33" id="Adexpresstext3" runat="server" Code="875"></cc1:adexpresstext></p>
@@ -149,7 +147,6 @@
 								<td>
 									<table cellspacing="0" cellpadding="0" border="0" width="185">
 										<tr>
-											<td valign="top"><asp:Image ID="Image13" runat="server" SkinID="block_fleche" height="12" width="12" /></td>
 											<td class="blockdupliBackGround"><asp:Image ID="Image14" runat="server" SkinID="pixel" height="1" width="13" /></td>
 											<td class="txtNoir11Bold backGroundModuleTitle" width="100%">
 												<p style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px"><cc1:adexpresstext language="33" id="Adexpresstext7" runat="server" Code="1778"></cc1:adexpresstext></p>
@@ -183,7 +180,6 @@
 								<td>
 									<table cellspacing="0" cellpadding="0" border="0" width="185">
 										<tr>
-											<td valign="top"><asp:Image ID="Image17" runat="server" SkinID="block_fleche" height="12" width="12" /></td>
 											<td class="blockdupliBackGround"><asp:Image ID="Image18" runat="server" SkinID="pixel" height="1" width="13" /></td>
 											<td class="txtNoir11Bold backGroundModuleTitle" width="100%">
 												<p style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px"><cc1:adexpresstext language="33" id="Adexpresstext9" runat="server" Code="2585"></cc1:adexpresstext></p>
