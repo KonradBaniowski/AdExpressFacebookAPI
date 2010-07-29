@@ -2188,12 +2188,10 @@ namespace TNS.AdExpress.Web.Controls.Selections {
             htmlBuilder.Append("\r\n\t</table>");
             htmlBuilder.Append("\r\n\t<table id=\"Table11\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" border=\"0\">");
             htmlBuilder.Append("\r\n\t<tr>");
-            htmlBuilder.Append("\r\n\t<td valign=\"top\" class=\"imageBackGround\" height=\"25\">");
+            htmlBuilder.Append("\r\n\t<td>");
             htmlBuilder.Append("\r\n\t<table id=\"Table12\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" border=\"0\">");
             htmlBuilder.Append("\r\n\t<tr>");
-            htmlBuilder.Append("\r\n\t</tr>");
-            htmlBuilder.Append("\r\n\t<tr>");
-            htmlBuilder.Append("\r\n\t<td width=\"135\"></td>");
+            htmlBuilder.Append("\r\n\t<td width=\"10\">&nbsp;</td>");
             htmlBuilder.Append("\r\n\t<td><img id=\"valider\" src=\"/App_Themes/" + _themeName + "/Images/Culture/button/valider_up.gif\" onmouseover=\"valider.src='/App_Themes/" + _themeName + "/Images/Culture/button/valider_down.gif';\" onmouseout=\"valider.src='/App_Themes/" + _themeName + "/Images/Culture/button/valider_up.gif';\" onclick=\"PostBack('" + this.ID + "');\" style=\"cursor:pointer\"/></td>");
             htmlBuilder.Append("\r\n\t</tr>");
             htmlBuilder.Append("\r\n\t</table>");

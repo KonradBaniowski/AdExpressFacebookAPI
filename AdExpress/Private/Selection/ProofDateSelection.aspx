@@ -154,16 +154,14 @@
 								<td>
 									
 									<table id="Table4" cellspacing="0" cellpadding="0" width="100%" border="0">
+									    <tr>
+											<td class="txtViolet12Bold" style="padding-left:20px;"><cc1:adexpresstext language="33" id="title1AdExpTxt" runat="server" Code="776"></cc1:adexpresstext></td>
+										</tr>
 										<tr>
 											<td>
-												<table id="Table9" cellspacing="0" cellpadding="3" width="100%" border="0">
+												<table id="Table9" cellspacing="0" cellpadding="5" width="100%" border="0">
 													<tr>
-														<td></td>
-														<td class="txtViolet12Bold" colspan="2"><cc1:adexpresstext language="33" id="title1AdExpTxt" runat="server" Code="776"></cc1:adexpresstext></td>
-													</tr>
-													<tr>
-														<td></td>
-														<td width="15"></td>
+														<td width="10">&nbsp;</td>
 														<td>
 															<table cellpadding="0" width="100%" border="0">
 																<tr>
@@ -179,82 +177,74 @@
 															</table>
 														</td>
 													</tr>
-													<tr style="height:5px">
-														<td colspan="3"></td>
-													</tr>
-												</table>
-											</td>
-										</tr>
-										<tr>
-											<td valign="top" class="imageBackGround" height="35">
-												<table id="Table11" cellspacing="0" cellpadding="0" width="100%" border="0">
-													<tr>
-														<td width="150"></td>
-														<td><cc4:imagebuttonrolloverwebcontrol id="validateButton1" runat="server" SkinID="validateButton" onclick="validateButton1_Click"></cc4:imagebuttonrolloverwebcontrol></td>
-													</tr>
 												</table>
 											</td>
 										</tr>
 										<tr>
 											<td>
-												<table id="Table13" cellspacing="0" cellpadding="3" width="100%" border="0">
+												<table id="Table11" cellspacing="0" cellpadding="0" width="100%" border="0">
 													<tr>
-														<td></td>
-														<td class="txtViolet12Bold" colspan="2"><cc1:adexpresstext language="33" id="title2AdExpTxt" runat="server" Code="777"></cc1:adexpresstext></td>
+														<td width="27">&nbsp;</td>
+														<td><cc4:imagebuttonrolloverwebcontrol id="validateButton1" runat="server" SkinID="validateButton" onclick="validateButton1_Click"></cc4:imagebuttonrolloverwebcontrol></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr style="height:10px;"><td></td></tr>
+										
+										<tr class="imageBackGround" style="height:10px;"><td></td></tr>
+									    <tr style="height:10px;"><td></td></tr>
+									    <tr>
+										    <td class="txtViolet12Bold" style="padding-left:20px;"><cc1:adexpresstext language="33" id="title2AdExpTxt" runat="server" Code="777"></cc1:adexpresstext></td>
+										</tr>
+										
+										<tr>
+											<td>
+												<table id="Table13" cellspacing="0" cellpadding="5" width="100%" border="0">
+													<tr>
+														<td width="20">&nbsp;</td>
+														<td class="txtGris11Bold"><cc1:adexpresstext language="33" id="comment2AdExpressText" runat="server" Code="785"></cc1:adexpresstext></td>
 													</tr>
 													<tr>
-														<td></td>
-														<td class="txtGris11Bold" colspan="2"><cc1:adexpresstext language="33" id="comment2AdExpressText" runat="server" Code="785"></cc1:adexpresstext></td>
-													</tr>
-													<tr>
-														<td></td>
-														<td width="15"></td>
+														<td width="20">&nbsp;</td>
 														<td class="txtNoir11"><span onclick="javascript:selectedItem(1)"><cc3:datelistwebcontrol id="monthDateList" runat="server" ListTypeDisplay="month" ModuleType="tvSponsorship"
 																	CssClass="txtNoir11"></cc3:datelistwebcontrol></span>&nbsp;
 															<cc1:adexpresstext language="33" id="monthAdExpressText" runat="server" Code="783"></cc1:adexpresstext></td>
 													</tr>
 													<tr>
-														<td></td>
-														<td width="15"></td>
+														<td width="20">&nbsp;</td>
 														<td class="txtNoir11"><span onclick="javascript:selectedItem(2)"><cc3:datelistwebcontrol id="weekDateList" runat="server" ListTypeDisplay="week" ModuleType="tvSponsorship"
 																	CssClass="txtNoir11"></cc3:datelistwebcontrol></span>&nbsp;
 															<cc1:adexpresstext language="33" id="weekAdExpressText" runat="server" Code="784"></cc1:adexpresstext></td>
 													</tr>
 													<tr>
-														<td></td>
-														<td class="txtGris11Bold" colspan="2"><cc1:adexpresstext language="33" id="lastPeriodAdexpresstext" runat="server" Code="786"></cc1:adexpresstext></td>
+														<td width="20">&nbsp;</td>
+														<td class="txtGris11Bold"><cc1:adexpresstext language="33" id="lastPeriodAdexpresstext" runat="server" Code="786"></cc1:adexpresstext></td>
 													</tr>
 													<tr>
-														<td></td>
-														<td width="15"></td>
+														<td width="20">&nbsp;</td>
 														<td class="txtNoir11"><input id="currentYear" onclick="javascript:selectedCheck(8)" type="checkbox"/><label for="currentYear"><%=currentYear%></label></td>
 													</tr>
 													<tr>
-														<td></td>
-														<td width="15"></td>
+														<td width="20">&nbsp;</td>
 														<td class="txtNoir11"><input id="previousYear" onclick="javascript:selectedCheck(3)" type="checkbox"/><label for="previousYear"><%=previousYear%></label></td>
 													</tr>
 													<tr>
-														<td></td>
-														<td width="15"></td>
+														<td width="20">&nbsp;</td>
 														<td class="txtNoir11"><input id="previousMonth" onclick="javascript:selectedCheck(4)" type="checkbox"/><label for="previousMonth"><%=previousMonth%></label></td>
 													</tr>
 													<tr>
-														<td></td>
-														<td width="15"></td>
+														<td width="20">&nbsp;</td>
 														<td class="txtNoir11"><input id="previousWeek" onclick="javascript:selectedCheck(5)" type="checkbox"/><label for="previousWeek"><%=previousWeek%></label></td>
-													</tr>
-													<tr style="height:5px">
-														<td colspan="4"></td>
 													</tr>
 												</table>
 											</td>
 										</tr>
 										<tr>
-											<td valign="top" class="imageBackGround" height="35">
-												<table id="Table12" cellspacing="0" cellpadding="0" width="100%" border="0">
+											<td >
+												<table id="Table12" cellspacing="0" cellpadding="5" width="100%" border="0">
 													<tr>
-														<td width="150"></td>
+														<td width="20">&nbsp;</td>
 														<td><cc4:imagebuttonrolloverwebcontrol id="validateButton2" SkinID="validateButton" runat="server" onclick="validateButton2_Click"></cc4:imagebuttonrolloverwebcontrol></td>
 													</tr>
 												</table>

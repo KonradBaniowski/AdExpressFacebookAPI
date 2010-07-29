@@ -153,29 +153,30 @@
 												</td>
 											</tr>
 											<tr>
-												<td valign="top" class="imageBackGround" height="35">
-													<table id="Table11" cellspacing="0" cellpadding="0" width="100%" border="0">
+												<td>
+													<table id="Table11" cellspacing="0" cellpadding="5" width="100%" border="0">
 														<tr>
-															<td width="150"></td>
+															<td width="20">&nbsp;</td>
 															<td><cc4:imagebuttonrolloverwebcontrol SkinID="validateButton" id="validateButton1" runat="server" onclick="validateButton1_Click"></cc4:imagebuttonrolloverwebcontrol></td>
 														</tr>
 													</table>
 												</td>
 											</tr>
+
+											<tr class="imageBackGround" style="height:10px;"><td></td></tr>
+										    <tr style="height:10px;"><td></td></tr>
+										    <tr>
+											    <td class="txtViolet12Bold" style="padding-left:20px;"><cc1:adexpresstext language="33" id="title2AdExpTxt" runat="server" Code="777"></cc1:adexpresstext></td>
+											</tr>
 											<tr>
 												<td>
-													<table id="Table13" cellspacing="0" cellpadding="3" width="100%" border="0">
+													<table id="Table13" cellspacing="0" cellpadding="5" width="100%" border="0">
 														<tr>
-															<td></td>
-															<td class="txtViolet12Bold" colspan="2"><cc1:adexpresstext language="33" id="title2AdExpTxt" runat="server" Code="777"></cc1:adexpresstext></td>
+															<td width="20">&nbsp;</td>
+															<td class="txtGris11Bold"><cc1:adexpresstext language="33" id="comment2AdExpressText" runat="server" Code="785"></cc1:adexpresstext></td>
 														</tr>
 														<tr>
-															<td></td>
-															<td class="txtGris11Bold" colspan="2"><cc1:adexpresstext language="33" id="comment2AdExpressText" runat="server" Code="785"></cc1:adexpresstext></td>
-														</tr>
-														<tr>
-															<td></td>
-															<td width="15"></td>
+															<td width="20">&nbsp;</td>
 															<td class="txtNoir11">
 																<span onclick="javascript:selectedItem(1)">
 																	<cc3:datelistwebcontrol id="monthDateList" runat="server" CssClass="txtNoir11" ModuleType="analysis" ListTypeDisplay="month"></cc3:datelistwebcontrol></span>&nbsp;
@@ -183,8 +184,7 @@
 															</td>
 														</tr>
 														<tr>
-															<td></td>
-															<td width="15"></td>
+															<td width="20">&nbsp;</td>
 															<td class="txtNoir11">
 																<span onclick="javascript:selectedItem(2)">
 																	<cc3:datelistwebcontrol id="weekDateList" runat="server" CssClass="txtNoir11" ModuleType="analysis" ListTypeDisplay="week"></cc3:datelistwebcontrol></span>&nbsp;
@@ -195,12 +195,11 @@
 												</td>
 											</tr>
 											<tr>
-												<td class="imageBackGround" valign="top" height="35">
-													<table class="imageBackGround" id="Table12" cellspacing="0" cellpadding="0"
-														width="100%" border="0">
+												<td>
+													<table id="Table12" cellspacing="0" cellpadding="5" width="100%" border="0">
 														<tr>
-															<td width="150" class="imageBackGround"></td>
-															<td class="imageBackGround"><cc4:imagebuttonrolloverwebcontrol SkinID="validateButton"  id="validateButton2" runat="server" onclick="validateButton2_Click"></cc4:imagebuttonrolloverwebcontrol></td>
+															<td width="20">&nbsp;</td>
+															<td><cc4:imagebuttonrolloverwebcontrol SkinID="validateButton"  id="validateButton2" runat="server" onclick="validateButton2_Click"></cc4:imagebuttonrolloverwebcontrol></td>
 														</tr>
 													</table>
 												</td>

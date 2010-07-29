@@ -152,11 +152,12 @@ namespace AdExpress.Private.Selection {
                 }
                 #region Script
                 //Gestion de la sélection comparative
-                if (!Page.ClientScript.IsClientScriptBlockRegistered("PostBack")) {
-                    if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE) 
-                        Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "PostBack", TNS.AdExpress.Web.Functions.Script.PostBack(_webSession.SiteLanguage,true,GlobalCalendarWebControl1.ID,validateButton2.ID,"comparativeLink",monthDateList.ID,weekDateList.ID,dayDateList.ID,previousWeekCheckBox.ID,previousDayCheckBox.ID,currentYearCheckbox.ID,previousYearCheckbox.ID,previousMonthCheckbox.ID,"dateSelectedItem"));
+                if(!Page.ClientScript.IsClientScriptBlockRegistered("PostBack"))
+                {
+                    if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
+                        Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "PostBack", TNS.AdExpress.Web.Functions.Script.PostBack(_webSession.SiteLanguage, true, GlobalCalendarWebControl1.ID, validateButton2.ID, "comparativeLink", monthDateList.ID, weekDateList.ID, dayDateList.ID, previousWeekCheckBox.ID, previousDayCheckBox.ID, currentYearCheckbox.ID, previousYearCheckbox.ID, previousMonthCheckbox.ID, "dateSelectedItem"));
                     else
-                        Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "PostBack", TNS.AdExpress.Web.Functions.Script.PostBack(_webSession.SiteLanguage,false, GlobalCalendarWebControl1.ID, validateButton2.ID, "comparativeLink",monthDateList.ID, weekDateList.ID, dayDateList.ID,previousWeekCheckBox.ID,previousDayCheckBox.ID,currentYearCheckbox.ID,previousYearCheckbox.ID,previousMonthCheckbox.ID, "dateSelectedItem"));
+                        Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "PostBack", TNS.AdExpress.Web.Functions.Script.PostBack(_webSession.SiteLanguage, false, GlobalCalendarWebControl1.ID, validateButton2.ID, "comparativeLink", monthDateList.ID, weekDateList.ID, dayDateList.ID, previousWeekCheckBox.ID, previousDayCheckBox.ID, currentYearCheckbox.ID, previousYearCheckbox.ID, previousMonthCheckbox.ID, "dateSelectedItem"));
                 }
                 #endregion
             }

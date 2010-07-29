@@ -201,16 +201,14 @@
 									<td>
 										
 										<table id="Table4" cellspacing="0" cellpadding="0" width="100%" border="0">
+										    <tr>
+											    <td class="txtViolet12Bold" style="padding-left:20px;"><cc1:adexpresstext language="33" id="title1AdExpTxt" runat="server" Code="776"></cc1:adexpresstext></td>
+											</tr>
 											<tr>
 												<td>
-													<table id="Table9" cellspacing="0" cellpadding="3" width="100%" border="0">
+													<table id="Table9" cellspacing="0" cellpadding="5" width="100%" border="0">
 														<tr>
-															<td></td>
-															<td class="txtViolet12Bold" colspan="2"><cc1:adexpresstext language="33" id="title1AdExpTxt" runat="server" Code="776"></cc1:adexpresstext></td>
-														</tr>
-														<tr>
-															<td></td>
-															<td width="15"></td>
+															<td width="20">&nbsp;</td>
 															<td>
 															    <table cellpadding="0" cellspacing="0" border="0">
                                                                     <tr>
@@ -221,135 +219,109 @@
                                                                  </table>
 															</td>
 														</tr>
-														<tr height="5">
-															<td colspan="3">
-															</td>
+													</table>
+												</td>
+											</tr>
+											<tr class="imageBackGround" style="height:10px;"><td></td></tr>
+										    <tr style="height:10px;"><td></td></tr>
+										    <tr>
+											    <td class="txtViolet12Bold" style="padding-left:20px;"><cc1:adexpresstext language="33" id="title2AdExpTxt" runat="server" Code="777"></cc1:adexpresstext></td>
+											</tr>
+											<tr>
+												<td>
+													<table id="Table13" cellspacing="0" cellpadding="5" width="100%" border="0">
+														<tr>
+														    <td>
+														        
+														        <table id="Table14" cellspacing="0" cellpadding="0" border="0">
+														            <tr style="height:30px;">
+															            <td width="15">&nbsp;</td>
+															            <td class="txtGris11Bold" colspan="5"><cc1:adexpresstext language="33" id="comment2AdExpressText" runat="server" Code="785"></cc1:adexpresstext></td>
+															            <%if (!isDynamicModule) { %>
+															            <td colspan="2">&nbsp;</td>
+															            <%} %>
+														            </tr>
+														            
+														            <tr>
+														                <%if (!isDynamicModule) { %>
+															            <td width="15">&nbsp;</td>
+															            <td class="txtNoir11">
+																            <span id="item0" onclick="javascript:selectedItem(0)">
+																	            <cc3:datelistwebcontrol id="yearDateList" runat="server" CssClass="txtNoir11" ModuleType="analysis" ListTypeDisplay="year"></cc3:datelistwebcontrol></span>&nbsp;
+																            <cc1:adexpresstext language="33" id="yearAdExpressText" runat="server" Code="781"></cc1:adexpresstext>
+															            </td>
+														                <%} %>
+
+															            <td width="15">&nbsp;</td>
+															            <td class="txtNoir11">
+																            <span onclick="javascript:selectedItem(1)">
+																	            <cc3:datelistwebcontrol id="monthDateList" runat="server" CssClass="txtNoir11" ModuleType="analysis" ListTypeDisplay="month"></cc3:datelistwebcontrol></span>&nbsp;
+																            <cc1:adexpresstext language="33" id="monthAdExpressText" runat="server" Code="783"></cc1:adexpresstext>
+															            </td>
+
+															            <td width="15">&nbsp;</td>
+															            <td class="txtNoir11">
+																            <span onclick="javascript:selectedItem(2)">
+																	            <cc3:datelistwebcontrol id="weekDateList" runat="server" CssClass="txtNoir11" ModuleType="analysis" ListTypeDisplay="week"></cc3:datelistwebcontrol></span>&nbsp;
+																            <cc1:adexpresstext language="33" id="weekAdExpressText" runat="server" Code="784"></cc1:adexpresstext>
+															            </td>
+
+															            <td width="15">&nbsp;</td>
+															            <td class="txtNoir11">
+																            <span onclick="javascript:selectedItem(3)">
+																	            <cc3:datelistwebcontrol id="dayDateList" runat="server" CssClass="txtNoir11" ModuleType="alert" ListTypeDisplay="day"></cc3:datelistwebcontrol></span>&nbsp;
+																            <cc1:adexpresstext language="33" id="dayAdExpressText" runat="server" Code="1974"></cc1:adexpresstext>
+															            </td>
+														            </tr>
+													            </table>
+													            
+												            </td>
+											            </tr>
+														<tr>
+														    <td>
+														        <table id="Table15" cellspacing="0" cellpadding="0" border="0">
+														            <tr style="height:30px;">
+															            <td width="15">&nbsp;</td>
+															            <td class="txtGris11Bold" colspan="9"><cc1:adexpresstext language="33" id="lastPeriodAdexpresstext" runat="server" Code="786"></cc1:adexpresstext></td>
+														            </tr>
+														            <tr>
+															            <td width="15">&nbsp;</td>
+															            <td class="txtNoir11">
+															                <cc4:adexpresscheckbox id="currentYearCheckbox"   Code="1119" TextAlign="Right"  onClick="javascript:selectedCheck(8)" runat="server"></cc4:adexpresscheckbox>
+															            </td>	
+            														
+															            <td width="15">&nbsp;</td>
+															            <td class="txtNoir11">
+																            <cc4:adexpresscheckbox id="previousYearCheckbox"   Code="787" TextAlign="Right"  onClick="javascript:selectedCheck(4)" runat="server"></cc4:adexpresscheckbox>															
+															            </td>
+            														
+															            <td width="15">&nbsp;</td>
+															            <td class="txtNoir11">
+																            <cc4:adexpresscheckbox id="previousMonthCheckbox"   Code="788" TextAlign="Right"  onClick="javascript:selectedCheck(5)" runat="server"></cc4:adexpresscheckbox>															
+															            </td>
+            														
+															            <td width="15">&nbsp;</td>
+															            <td class="txtNoir11">
+																            <cc4:adexpresscheckbox id="previousWeekCheckBox"   Code="789" TextAlign="Right"  onClick="javascript:selectedCheck(6)" runat="server"></cc4:adexpresscheckbox>																																
+															            </td>
+            														
+														                <td width="15">&nbsp;</td>
+														                <td class="txtNoir11">
+														                    <cc4:adexpresscheckbox ID="previousDayCheckBox" Code="1975" TextAlign="Right" OnClick="javascript:selectedCheck(7)" runat="server"></cc4:adexpresscheckbox>
+														                </td>
+														            </tr>
+														        </table>
+														    </td>
 														</tr>
 													</table>
+													
 												</td>
 											</tr>
 											<tr>
 												<td>
-													<table id="Table13" cellspacing="0" cellpadding="3" width="100%" border="0">
-													
-													<tr><td><table id="Table11" cellspacing="0" cellpadding="3" width="100%" border="0">
-													
+													<table id="Table12" cellspacing="0" cellpadding="5" width="100%" border="0">
 														<tr>
-															
-															<td class="txtViolet12Bold" colspan="2"><cc1:adexpresstext language="33" id="title2AdExpTxt" runat="server" Code="777"></cc1:adexpresstext></td>
-														</tr>
-														</table></td></tr>
-														<tr><td><table id="Table14" cellspacing="0" cellpadding="3" border="0">
-														<!--<tr>
-														    <td></td>
-														    <td>
-														        <table id="Table113" cellspacing="0" cellpadding="3" width="100%" border="0">
-														        <tr>
-														        <td valign=top><table id="Table11" cellspacing="0" cellpadding="3" width="100%" border="0"><tr valign=top><td>
-														-->
-														<tr valign=top>
-															<td style="HEIGHT: 18px"></td>
-															<td class="txtGris11Bold" colspan="2" style="HEIGHT: 18px"><cc1:adexpresstext language="33" id="comment2AdExpressText" runat="server" Code="785"></cc1:adexpresstext></td>
-														</tr>
-														<tr valign=top>
-														<%if (!isDynamicModule) { %>
-														
-															<td></td>
-															<td width="15"></td>
-															<td class="txtNoir11">
-																<span id="item0" onclick="javascript:selectedItem(0)">
-																	<cc3:datelistwebcontrol id="yearDateList" runat="server" CssClass="txtNoir11" ModuleType="analysis" ListTypeDisplay="year"></cc3:datelistwebcontrol></span>&nbsp;
-																<cc1:adexpresstext language="33" id="yearAdExpressText" runat="server" Code="781"></cc1:adexpresstext>
-															</td>
-														
-														<%} %>
-														
-															<td></td>
-															<td width="15"></td>
-															<td class="txtNoir11">
-																<span onclick="javascript:selectedItem(1)">
-																	<cc3:datelistwebcontrol id="monthDateList" runat="server" CssClass="txtNoir11" ModuleType="analysis" ListTypeDisplay="month"></cc3:datelistwebcontrol></span>&nbsp;
-																<cc1:adexpresstext language="33" id="monthAdExpressText" runat="server" Code="783"></cc1:adexpresstext>
-															</td>
-														
-															<td></td>
-															<td width="15"></td>
-															<td class="txtNoir11">
-																<span onclick="javascript:selectedItem(2)">
-																	<cc3:datelistwebcontrol id="weekDateList" runat="server" CssClass="txtNoir11" ModuleType="analysis" ListTypeDisplay="week"></cc3:datelistwebcontrol></span>&nbsp;
-																<cc1:adexpresstext language="33" id="weekAdExpressText" runat="server" Code="784"></cc1:adexpresstext>
-															</td>
-														
-															<td></td>
-															<td width="15"></td>
-															<td class="txtNoir11">
-																<span onclick="javascript:selectedItem(3)">
-																	<cc3:datelistwebcontrol id="dayDateList" runat="server" CssClass="txtNoir11" ModuleType="alert" ListTypeDisplay="day"></cc3:datelistwebcontrol></span>&nbsp;
-																<cc1:adexpresstext language="33" id="dayAdExpressText" runat="server" Code="1974"></cc1:adexpresstext>
-															</td>
-														</tr>
-														
-														</table></td></tr>
-														<!--</td></tr></table>
-														</td>
-														<td>
-														<table id="Table14" cellspacing="0" cellpadding="3" width="100%" border="0">
-														<tr><td>-->
-														<tr><td><table id="Table15" cellspacing="0" cellpadding="3" border="0">
-														
-														<tr>
-															<td></td>
-															<td class="txtGris11Bold" colspan="2">
-																<cc1:adexpresstext language="33" id="lastPeriodAdexpresstext" runat="server" Code="786"></cc1:adexpresstext></td>
-														</tr>
-														<tr>
-														
-															<td></td>
-															<td width="15"></td>
-															<td class="txtNoir11">
-															<cc4:adexpresscheckbox id="currentYearCheckbox"   Code="1119" TextAlign="Right"  onClick="javascript:selectedCheck(8)" runat="server"></cc4:adexpresscheckbox>
-															</td>	
-														
-															<td></td>
-															<td width="15"></td>
-															<td class="txtNoir11">
-																<cc4:adexpresscheckbox id="previousYearCheckbox"   Code="787" TextAlign="Right"  onClick="javascript:selectedCheck(4)" runat="server"></cc4:adexpresscheckbox>															
-															</td>
-														
-															<td></td>
-															<td width="15"></td>
-															<td class="txtNoir11">
-																<cc4:adexpresscheckbox id="previousMonthCheckbox"   Code="788" TextAlign="Right"  onClick="javascript:selectedCheck(5)" runat="server"></cc4:adexpresscheckbox>															
-															</td>
-														
-															<td></td>
-															<td width="15"></td>
-															<td class="txtNoir11">
-																<cc4:adexpresscheckbox id="previousWeekCheckBox"   Code="789" TextAlign="Right"  onClick="javascript:selectedCheck(6)" runat="server"></cc4:adexpresscheckbox>																																
-															</td>
-														
-														    <td></td>
-														    <td width="15"></td>
-														    <td class="txtNoir11">
-														        <cc4:adexpresscheckbox ID="previousDayCheckBox" Code="1975" TextAlign="Right" OnClick="javascript:selectedCheck(7)" runat="server"></cc4:adexpresscheckbox>
-														    </td>
-														</tr>
-														</table></td></tr>
-														<tr height="5">
-															<td colspan="4"></td>
-														</tr>
-														<!--</td></tr></table>
-														</td></tr></table>
-														</td>
-														</tr>-->
-													</table>
-												</td>
-											</tr>
-											<tr>
-												<td valign="top" class="imageBackGround" height="20">
-													<table id="Table12" cellspacing="0" cellpadding="0" width="100%" border="0">
-														<tr>
-															<td width="150"></td>
+															<td width="10">&nbsp;</td>
 															<td>
 															    <!--<cc4:imagebuttonrolloverwebcontrol id="validateButton2" runat="server" onclick="validateButton2_Click"></cc4:imagebuttonrolloverwebcontrol>-->
 															    <img id="validateButton2" src="/App_Themes/<%= this.Theme %>/Images/Culture/button/valider_up.gif" onmouseover="validateButton2.src='/App_Themes/<%= this.Theme %>/Images/Culture/button/valider_down.gif';" onmouseout="validateButton2.src='/App_Themes/<%= this.Theme %>/Images/Culture/button/valider_up.gif';" onclick="PostBack('validateButton2');" style="cursor:pointer"/>
@@ -367,11 +339,9 @@
 							</tbody>
 						</table>
 					</td>
-					<!-- la fin -->
-					<td></td>
 				</tr>
-				
 			</table>
+			
 			
 			<input id="selectedItemIndex" type="hidden" value="-1" name="selectedItemIndex"/>
 			<input id="dateSelectedItem" type="hidden" value="-1" name="dateSelectedItem"/>
@@ -454,9 +424,7 @@
 		                            <td>        
 		                                <img align=right id="selectionTypeButton" src="/App_Themes/<%= this.Theme %>/Images/Culture/button/valider_up.gif" onmouseover="selectionTypeButton.src='/App_Themes/<%= this.Theme %>/Images/Culture/button/valider_down.gif';" onmouseout="selectionTypeButton.src='/App_Themes/<%= this.Theme %>/Images/Culture/button/valider_up.gif';" onclick="__doPostBack(''+buttonName+'',''+buttonNameValue+'');" style="cursor:pointer"/>
 		                            </td>
-		                        </tr>    
-		            
-		             
+		                        </tr>
 		                    </table>
 		                </td>
 		            </tr>

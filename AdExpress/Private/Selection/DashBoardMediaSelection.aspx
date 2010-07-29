@@ -115,13 +115,16 @@
 							</tr>
 							<!-- Centre -->
 							<tr>
-								<td style="WIDTH: 773px">
+								<td>
 									<table cellspacing="0" cellpadding="0" width="100%" border="0">
 										<tr style="padding-left:5px;">
 											<td colspan="5"><cc3:loadableuniverswebcontrol id="LoadableUniversWebControl1" runat="server"></cc3:loadableuniverswebcontrol></td>
 										</tr>
-										<tr style="HEIGHT: 15px">
-											<td style="WIDTH: 478px" width="478" class="imageBackGround" colspan="6"></td>
+										<tr style="HEIGHT: 10px">
+											<td style="WIDTH: 478px" colspan="6"></td>
+										</tr>
+										<tr style="HEIGHT: 10px">
+											<td style="WIDTH: 478px" class="imageBackGround" colspan="6"></td>
 										</tr>
 									</table> 
 								</td>
@@ -134,11 +137,10 @@
 								</td>
 							</tr>
 							<tr>
-								<td style="WIDTH: 772px">
-									<table cellspacing="0" cellpadding="0" border="0">
+								<td>
+									<table cellspacing="0" cellpadding="0" border="0" width="100%">
 										<tr>
-											<td align="right" width="649"><cc4:imagebuttonrolloverwebcontrol id="saveImageButtonRollOverWebControl" runat="server" SkinID="saveButton" onclick="saveImageButtonRollOverWebControl_Click"></cc4:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;<cc4:imagebuttonrolloverwebcontrol id="validImageButtonRollOverWebControl" runat="server" SkinID="validateButton" onclick="validImageButtonRollOverWebControl_Click"></cc4:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;&nbsp;</td>
-											<td width="1%"></td>
+											<td align="right" ><cc4:imagebuttonrolloverwebcontrol id="saveImageButtonRollOverWebControl" runat="server" SkinID="saveButton" onclick="saveImageButtonRollOverWebControl_Click"></cc4:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;<cc4:imagebuttonrolloverwebcontrol id="validImageButtonRollOverWebControl" runat="server" SkinID="validateButton" onclick="validImageButtonRollOverWebControl_Click"></cc4:imagebuttonrolloverwebcontrol></td>
 										</tr>
 									</table> 
 								</td>

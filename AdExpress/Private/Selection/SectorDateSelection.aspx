@@ -132,20 +132,19 @@
 								<td>
 									
 									<!--debut elements-->
-									<TABLE id="Table4" cellSpacing="0" cellPadding="0" width="100%" border="0">
+									<table id="Table4" cellSpacing="0" cellPadding="0" width="100%" border="0">
 										<TBODY>
-											<TR>
-												<TD>
-													<TABLE id="Table9" cellSpacing="0" cellPadding="3" width="100%" border="0">
+											<tr>
+												<td>
+													<table id="Table9" cellSpacing="0" cellPadding="5" width="100%" border="0">
 														<TBODY>
-															<TR>
-																<td style="HEIGHT: 25px"></td>
-																<TD class="txtViolet12Bold" style="HEIGHT: 25px" colSpan="2"><cc1:adexpresstext language="33" id="title1AdExpTxt" runat="server" Code="776"></cc1:adexpresstext></TD>
-															</TR>
-															<TR>
-																<td></td>
-																<TD width="15"></TD>
-																<TD>
+															<tr>
+																<td width="15">&nbsp;</td>
+																<td class="txtViolet12Bold" style="HEIGHT: 25px" colSpan="2"><cc1:adexpresstext language="33" id="title1AdExpTxt" runat="server" Code="776"></cc1:adexpresstext></td>
+															</tr>
+															<tr>
+																<td width="15">&nbsp;</td>
+																<td>
 																	<table cellPadding="0" width="100%" border="0">
 																		<tr>
 																			<td>
@@ -156,44 +155,45 @@
 																			</td>
 																		</tr>
 																	</table>
-																</TD>
-															</TR>
+																</td>
+															</tr>
 															<tr>
-																<td></td>
-																<TD width="15"></TD>
+																<td width="15">&nbsp;</td>
 																<td class="txtGris11Bold" onclick="javascript:selectedCheck(8)" colSpan="3"><cc1:adexpresstext language="33" id="CompetitorStudy1Adexpresstext" runat="server" Code="1118" Width="56px"></cc1:adexpresstext>
 																	:
 																	<asp:checkbox id="CompetitorSudy1Ckbx" runat="server"></asp:checkbox></td>
 															</tr>
-														
-													</TABLE>
-												</TD>
-											</TR>
-											<TR>
-												<TD style="HEIGHT: 37px" vAlign="top" class="imageBackGround" height="37">
-													<TABLE id="Table11" cellSpacing="0" cellPadding="0" width="100%" border="0">
-														<TR>
-															<TD width="150"></TD>
-															<TD><cc4:imagebuttonrolloverwebcontrol id="validateButton1" runat="server" onclick="validateButton1_Click" SkinID="validateButton"></cc4:imagebuttonrolloverwebcontrol></TD>
-														</TR>
-													</TABLE>
-												</TD>
-											</TR>
-											<TR>
-												<TD>
-													<TABLE id="Table13" cellSpacing="0" cellPadding="3" width="100%" border="0">
-														<TR>
-															<td></td>
-															<TD class="txtViolet12Bold" colSpan="2"><cc1:adexpresstext language="33" id="title2AdExpTxt" runat="server" Code="777"></cc1:adexpresstext></TD>
-														</TR>
-														<TR>
-															<td style="HEIGHT: 24px"></td>
-															<TD class="txtGris11Bold" style="HEIGHT: 24px" colSpan="2"><cc1:adexpresstext language="33" id="comment2AdExpressText" runat="server" Code="785"></cc1:adexpresstext></TD>
-														</TR>
-														<TR>
-															<td style="HEIGHT: 2px"></td>
-															<TD style="HEIGHT: 2px" width="15"></TD>
-															<TD style="HEIGHT: 2px">
+													</table>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<table id="Table11" cellSpacing="0" cellPadding="0" width="100%" border="0">
+														<tr>
+															<td width="30">&nbsp;</td>
+															<td><cc4:imagebuttonrolloverwebcontrol id="validateButton1" runat="server" onclick="validateButton1_Click" SkinID="validateButton"></cc4:imagebuttonrolloverwebcontrol></td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+											<tr style="height:10px;"><td></td></tr>
+											
+											<tr class="imageBackGround" style="height:10px;"><td></td></tr>
+									        <tr style="height:10px;"><td></td></tr>
+									        <tr>
+										        <td class="txtViolet12Bold" style="padding-left:20px;"><cc1:adexpresstext language="33" id="title2AdExpTxt" runat="server" Code="777"></cc1:adexpresstext></td>
+										    </tr>
+	
+											<tr>
+												<td>
+													<table id="Table13" cellSpacing="0" cellPadding="5" width="100%" border="0">
+														<tr style="height:30px;">
+															<td width="15">&nbsp;</td>
+															<td class="txtGris11Bold"><cc1:adexpresstext language="33" id="comment2AdExpressText" runat="server" Code="785"></cc1:adexpresstext></td>
+														</tr>
+														<tr>
+															<td width="15">&nbsp;</td>
+															<td>
 																<p class="txtNoir11" onclick="javascript:selectedItem(1)"><cc3:datelistwebcontrol id="monthDateList" runat="server" ModuleType="recap" CssClass="txtNoir11" ListTypeDisplay="month">
 																		<asp:ListItem Value="0">----</asp:ListItem>
 																		<asp:ListItem Value="1">1</asp:ListItem>
@@ -210,74 +210,63 @@
 																		<asp:ListItem Value="12">12</asp:ListItem>
 																	</cc3:datelistwebcontrol>&nbsp;
 																	<cc1:adexpresstext language="33" id="monthAdExpressText" runat="server" Code="1846"></cc1:adexpresstext></p>
-															</TD>
-														</TR>
-														<TR>
-															<td></td>
-															<TD class="txtGris11Bold" colSpan="2"><cc1:adexpresstext language="33" id="lastPeriodAdexpresstext" runat="server" Code="786"></cc1:adexpresstext></TD>
-														</TR>
-														<TR>
-															<td style="HEIGHT: 23px"></td>
-															<TD style="HEIGHT: 23px" width="15"></TD>
-															<TD style="HEIGHT: 23px">
+															</td>
+														</tr>
+														<tr>
+															<td width="15">&nbsp;</td>
+															<td class="txtGris11Bold"><cc1:adexpresstext language="33" id="lastPeriodAdexpresstext" runat="server" Code="786"></cc1:adexpresstext></td>
+														</tr>
+														<tr>
+															<td width="15">&nbsp;</td>
+															<td>
 																<p class="txtNoir11" onclick="javascript:selectedCheck(2)"><asp:radiobutton id="CurrentYearRadioButton" runat="server" GroupName="SectorYearChoice"></asp:radiobutton>&nbsp;
 																	<cc1:adexpresstext language="33" id="CurrentYearAdExpressText" runat="server" Code="1119"></cc1:adexpresstext>&nbsp;(<%=downloadDate%>)</p>
-															</TD>
-														</TR>
-														<TR>
-															<td style="HEIGHT: 26px"></td>
-															<TD style="HEIGHT: 26px" width="15"></TD>
-															<TD style="HEIGHT: 26px">
+															</td>
+														</tr>
+														<tr>
+															<td width="15">&nbsp;</td>
+															<td>
 																<p class="txtNoir11" onclick="javascript:selectedCheck(3)"><asp:radiobutton id="PreviousYearRadioButton" runat="server" GroupName="SectorYearChoice"></asp:radiobutton>&nbsp;
 																	<cc1:adexpresstext language="33" id="PreviousYearAdExpressText" runat="server" Code="1121"></cc1:adexpresstext></p>
-															</TD>
-														</TR>
-														<TR>
-															<td></td>
-															<TD width="15"></TD>
-															<TD>
+															</td>
+														</tr>
+														<tr>
+															<td width="15">&nbsp;</td>
+															<td>
 																<p class="txtNoir11" onclick="javascript:selectedCheck(4)"><asp:radiobutton id="TwoYearAgoRadioButton" runat="server" GroupName="SectorYearChoice"></asp:radiobutton>&nbsp;
 																	<cc1:adexpresstext language="33" id="TwoYearAgoAdexpresstext" runat="server" Code="1120"></cc1:adexpresstext></p>
-															</TD>
-														</TR>
-														<TR>
-															<td></td>
-															<TD class="txtGris11Bold" style="HEIGHT: 17px" onclick="javascript:selectedCheck(5)"
+															</td>
+														</tr>
+														<tr>
+															<td width="15">&nbsp;</td>
+															<td class="txtGris11Bold" onclick="javascript:selectedCheck(5)"
 																colSpan="2"><cc1:adexpresstext language="33" id="CompetitorStudy2Adexpresstext" runat="server" Code="1118" Width="24px"></cc1:adexpresstext>
 																:
-																<asp:checkbox id="CompetitorSudy2Ckbx" runat="server" CssClass="txtNoir11"></asp:checkbox></TD>
-														</TR>
-														<TR>
-															<td></td>
-															<TD width="15"></TD>
-															<TD></TD>
-														</TR>
-														<tr height="5">
-															<td colSpan="3"></td>
+																<asp:checkbox id="CompetitorSudy2Ckbx" runat="server" CssClass="txtNoir11"></asp:checkbox></td>
 														</tr>
-													</TABLE>
-												</TD>
-											</TR>
-											<TR>
-												<TD vAlign="top" class="imageBackGround" height="35">
-													<TABLE id="Table12" cellSpacing="0" cellPadding="0" width="100%" border="0">
-														<TR>
-															<TD width="150"></TD>
-															<TD><cc4:imagebuttonrolloverwebcontrol id="validateButton2" runat="server" onclick="validateButton2_Click" SkinID="validateButton"></cc4:imagebuttonrolloverwebcontrol></TD>
-														</TR>
-													</TABLE>
-												</TD>
-											</TR>
+													</table>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<table id="Table12" cellspacing="0" cellpadding="5" width="100%" border="0">
+														<tr>
+															<td width="20">&nbsp;</td>
+															<td><cc4:imagebuttonrolloverwebcontrol id="validateButton2" runat="server" onclick="validateButton2_Click" SkinID="validateButton"></cc4:imagebuttonrolloverwebcontrol></td>
+														</tr>
+													</table>
+												</td>
+											</tr>
 											<tr><td><cc2:MenuWebControl id="MenuWebControl2" runat="server"></cc2:MenuWebControl></td></tr>
 										</TBODY>
-									</TABLE>
+									</table>
 									
 								</td>
-							</TR>
-						</TABLE>
-					</TD>
-				</TR>
-			</TABLE>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
 			<input id="selectedItemIndex" type="hidden" value="-1" name="selectedItemIndex">
 			<input id="selectedComparativeStudy" type="hidden" value="-1" name="selectedComparativeStudy">
 		</FORM>

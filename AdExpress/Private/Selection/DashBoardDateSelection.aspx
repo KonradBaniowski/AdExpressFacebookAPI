@@ -141,16 +141,14 @@
 								<td>
 									<table id="Table4" cellspacing="0" cellpadding="0" width="100%" border="0">
 										<tr>
+											<td class="txtViolet12Bold" style="padding-left:20px;"><cc1:adexpresstext language="33" id="title1AdExpTxt" runat="server" Code="776"></cc1:adexpresstext></td>
+										</tr>
+										<tr>
 											<td>
-												<table id="Table9" cellspacing="0" cellpadding="3" width="100%" border="0">
+												<table id="Table9" cellspacing="0" cellpadding="5" width="100%" border="0">
 													<tbody>
 														<tr>
-															<td style="HEIGHT: 25px"></td>
-															<td class="txtViolet12Bold" style="HEIGHT: 25px" colspan="2"><cc1:adexpresstext language="33" id="title1AdExpTxt" runat="server" Code="776"></cc1:adexpresstext></td>
-														</tr>
-														<tr>
-															<td></td>
-															<td width="15"></td>
+															<td width="20">&nbsp;</td>
 															<td>
 																<table cellpadding="0" width="100%" border="0">
 																	<tr>
@@ -167,8 +165,7 @@
 															</td>
 														</tr>
 														<tr>
-															<td></td>
-															<td width="15"></td>
+															<td width="20">&nbsp;</td>
 															<td class="txtGris11Bold" onclick="javascript:selectedCheck(8)" colspan="3"><cc1:adexpresstext language="33" id="CompetitorStudy1Adexpresstext" runat="server" Code="1118" Width="56px"></cc1:adexpresstext>:
 																<asp:checkbox id="CompetitorSudy1Ckbx" runat="server"></asp:checkbox></td>
 														</tr>
@@ -177,81 +174,74 @@
 											</td>
 										</tr>
 										<tr>
-											<td style="HEIGHT: 37px" valign="top" class="imageBackGround" height="37">
-												<table id="Table11" cellspacing="0" cellpadding="0" width="100%" border="0">
+											<td>
+												<table id="Table11" cellspacing="0" cellpadding="5" width="100%" border="0">
 													<tr>
-														<td width="150"></td>
+														<td width="20">&nbsp;</td>
 														<td><cc4:imagebuttonrolloverwebcontrol id="validateButton1" SkinID="validateButton" runat="server" onclick="validateButton1_Click"></cc4:imagebuttonrolloverwebcontrol></td>
 													</tr>
 												</table>
 											</td>
 										</tr>
+										<tr class="imageBackGround" style="height:10px;"><td></td></tr>
+										<tr style="height:10px;"><td></td></tr>
 										<tr>
-											<td class="txtViolet12Bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<cc1:adexpresstext language="33" id="title2AdExpTxt" runat="server" Code="777"></cc1:adexpresstext></td>
+											<td class="txtViolet12Bold" style="padding-left:20px;"><cc1:adexpresstext language="33" id="title2AdExpTxt" runat="server" Code="777"></cc1:adexpresstext></td>
 										</tr>
 										<tr>
 											<td>
-												<table id="Table13" cellspacing="0" cellpadding="2" width="100%" border="0">
+												<table id="Table13" cellspacing="0" cellpadding="5" width="100%" border="0">
                                                     <%if (!finland){ %>
 													<tr>
-														<td style="HEIGHT: 26px" width="50"></td>
-														<td style="HEIGHT: 26px" colspan="2">
+														<td width="20">&nbsp;</td>
+														<td >
 															<p class="txtNoir11" onclick="javascript:selectedCheck(9)"><asp:radiobutton id="LastLoadedWeekRadioButton" runat="server" GroupName="SectorYearChoice"></asp:radiobutton>&nbsp;
 																<cc1:adexpresstext language="33" id="LastLoadedWeekText" runat="server" Code="1618"></cc1:adexpresstext></p>
 														</td>
 													</tr>
                                                     <%} %>
 													<tr>
-														<td style="HEIGHT: 26px"></td>
-														<td style="HEIGHT: 26px" colspan="2">
+														<td width="20">&nbsp;</td>
+														<td>
 															<p class="txtNoir11" onclick="javascript:selectedCheck(1)"><asp:radiobutton id="LastLoadedMonthRadiobutton" runat="server" GroupName="SectorYearChoice"></asp:radiobutton>&nbsp;
 																<cc1:adexpresstext language="33" id="LastLoadedMonthText" runat="server" Code="1619"></cc1:adexpresstext></p>
 														</td>
 													</tr>
 													<tr>
-														<td style="HEIGHT: 23px"></td>
-														<td style="HEIGHT: 23px" colspan="2">
+														<td width="20">&nbsp;</td>
+														<td>
 															<p class="txtNoir11" onclick="javascript:selectedCheck(2)"><asp:radiobutton id="CurrentYearRadioButton" runat="server" GroupName="SectorYearChoice"></asp:radiobutton>&nbsp;
-																<cc1:adexpresstext language="33" id="CurrentYearAdExpressText" runat="server" Code="1119"></cc1:adexpresstext>&nbsp;(<%=currentYear%>
-																)</p>
+																<cc1:adexpresstext language="33" id="CurrentYearAdExpressText" runat="server" Code="1119"></cc1:adexpresstext>&nbsp;(<%=currentYear%>)</p>
 														</td>
 													</tr>
 													<tr>
-														<td style="HEIGHT: 26px"></td>
-														<td style="HEIGHT: 26px" colspan="2">
+														<td width="20">&nbsp;</td>
+														<td>
 															<p class="txtNoir11" onclick="javascript:selectedCheck(3)"><asp:radiobutton id="PreviousYearRadioButton" runat="server" GroupName="SectorYearChoice"></asp:radiobutton>&nbsp;
 																<cc1:adexpresstext language="33" id="PreviousYearAdExpressText" runat="server" Code="1121"></cc1:adexpresstext></p>
 														</td>
 													</tr>
 													<tr>
-														<td></td>
-														<td colspan="2">
+														<td width="20">&nbsp;</td>
+														<td>
 															<p class="txtNoir11" onclick="javascript:selectedCheck(4)"><asp:radiobutton id="TwoYearAgoRadioButton" runat="server" GroupName="SectorYearChoice"></asp:radiobutton>&nbsp;
 																<cc1:adexpresstext language="33" id="TwoYearAgoAdexpresstext" runat="server" Code="1120"></cc1:adexpresstext></p>
 														</td>
 													</tr>
 													<tr>
-														<td></td>
+														<td width="20">&nbsp;</td>
 														<td class="txtGris11Bold" style="HEIGHT: 17px" onclick="javascript:selectedCheck(5)"
 															colspan="2"><cc1:adexpresstext language="33" id="CompetitorStudy2Adexpresstext" runat="server" Code="1118" Width="24px"></cc1:adexpresstext>:
 															<asp:checkbox id="CompetitorSudy2Ckbx" runat="server" CssClass="txtNoir11"></asp:checkbox></td>
-													</tr>
-													<tr>
-														<td></td>
-														<td width="15"></td>
-														<td></td>
-													</tr>
-													<tr style="height:5px">
-														<td colspan="3"></td>
 													</tr>
 												</table>
 											</td>
 										</tr>
 										<tr>
-											<td valign="top" class="imageBackGround" height="35">
-												<table id="Table12" cellspacing="0" cellpadding="0" width="100%" border="0">
+											<td>
+												<table id="Table12" cellspacing="0" cellpadding="5" width="100%" border="0">
 													<tr>
-														<td width="150"></td>
+														<td width="20">&nbsp;</td>
 														<td><cc4:imagebuttonrolloverwebcontrol id="validateButton2" SkinID="validateButton" runat="server" onclick="validateButton2_Click"></cc4:imagebuttonrolloverwebcontrol></td>
 													</tr>
 												</table>
