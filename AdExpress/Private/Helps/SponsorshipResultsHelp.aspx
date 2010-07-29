@@ -13,9 +13,9 @@
 		<meta http-equiv="pragma" content="no-cache">
 		<meta name="Cache-control" content="no-cache">
 	</HEAD>
-	<body class="darkBackGround whiteBackGround" bottomMargin="25" leftMargin="0" topMargin="25" rightMargin="0">
+	<body class="darkBackGround backGroundWhite" bottomMargin="25" leftMargin="0" topMargin="25" rightMargin="0">
 		<form id="Form1" method="post" runat="server">
-			<table cellSpacing="0" cellPadding="0" width="98%" align="center" class="whiteBackGround" border="0">
+			<table cellSpacing="0" cellPadding="0" width="98%" align="center" class="backGroundWhite" border="0">
 				<TR>
 					<td colSpan="2">
 						<table cellPadding="0" width="100%" class="violetBackGround" border="0">
@@ -213,7 +213,7 @@
 								<td class="txtViolet11"><cc1:adexpresstext language="33" id="Adexpresstext20" runat="server" Code="2129"></cc1:adexpresstext></td>
 							</tr>
 							<tr>
-								<td align="center" width="40"><asp:Image ID="Image76" runat="server" SkinID="delete" /></td>
+								<td align="center" width="40"><asp:Image ID="Image76" runat="server" SkinID="delete2" /></td>
 								<td class="txtViolet11"><cc1:adexpresstext language="33" id="Adexpresstext21" runat="server" Code="2130"></cc1:adexpresstext></td>
 							</tr>
 						</table>
@@ -447,7 +447,7 @@
 					<td colSpan="2"><asp:Image ID="Image26" runat="server" SkinID="pixel" height="10" width="100%" /></td>
 				</tr>
 				<tr>
-					<td align="right" class="whiteBackGround" colSpan="2"><A onmouseover="bouton.src='/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_down.gif';" onmouseout="bouton.src = '/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_up.gif';" href="javascript:window.close();" ><img src="/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_up.gif" border=0 name=bouton></A>&nbsp;&nbsp;</td>
+					<td align="right" class="backGroundWhite" colSpan="2"><A onmouseover="bouton.src='/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_down.gif';" onmouseout="bouton.src = '/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_up.gif';" href="javascript:window.close();" ><img src="/App_Themes/<%= this.Theme %>/Images/Culture/Button/fermer_up.gif" border=0 name=bouton></A>&nbsp;&nbsp;</td>
 				</tr>
 			</table>
 		</form>
