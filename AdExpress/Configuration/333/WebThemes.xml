@@ -2,6 +2,6 @@
 <configuration>
   <themes>
     <theme id="1" description="Default AdExpress Theme using French"  name="DefaultAdExpressFr-Kantar" siteLanguage="33"/>
-    <theme id="2" description="Default AdExpress Theme using English" name="DefaultAdExpressUk" siteLanguage="44"/>
+    <theme id="2" description="Default AdExpress Theme using English" name="DefaultAdExpressUk-Kantar" siteLanguage="44"/>
   </themes>
 </configuration>
