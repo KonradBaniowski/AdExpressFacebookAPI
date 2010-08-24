@@ -1949,5 +1949,28 @@
     <!--Additional columns for Russia-->
     <item mnemonic="w2757" type="System.String">!</item>
     <item mnemonic="w2758" type="System.String">!</item>
+    <item mnemonic="w2759" type="System.String">5-9</item>
+    <item mnemonic="w2760" type="System.String">24-5</item>
+    <item mnemonic="w2761" type="System.String">!</item>
+    <item mnemonic="w2762" type="System.String">!</item>
+    <item mnemonic="w2763" type="System.String">!</item>
+    <item mnemonic="w2764" type="System.String">!</item>
+    <item mnemonic="w2765" type="System.String">!</item>
+    <item mnemonic="w2766" type="System.String">!</item>
+    <item mnemonic="w2767" type="System.String">!</item>
+    <item mnemonic="w2768" type="System.String">!</item>
+    <item mnemonic="w2769" type="System.String">!</item>
+    <item mnemonic="w2770" type="System.String">!</item>
+    <item mnemonic="w2771" type="System.String">!</item>
+    <item mnemonic="w2772" type="System.String">!</item>
+    <item mnemonic="w2773" type="System.String">!</item>
+    <item mnemonic="w2774" type="System.String">!</item>
+    <item mnemonic="w2775" type="System.String">!</item>
+    <item mnemonic="w2776" type="System.String">!</item>
+    <item mnemonic="w2777" type="System.String">!</item>
+    <item mnemonic="w2778" type="System.String">!</item>
+    <item mnemonic="w2779" type="System.String">!</item>
+    <item mnemonic="w2780" type="System.String">!</item>
+    <item mnemonic="w2781" type="System.String">!</item>
   </items>
 </localization>
