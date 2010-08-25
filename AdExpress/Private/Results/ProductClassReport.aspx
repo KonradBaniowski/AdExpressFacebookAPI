@@ -64,11 +64,11 @@
 											<TD vAlign="top"><cc2:resultsoptionswebcontrol id="ResultsOptionsWebControl1" runat="server" EvolutionOption="True" PdvOption="True"
 													PdmOption="True" Width="120px" PreformatedTableOption="True" ShowPictures="True" ResultOption="False"
 													AutoPostBackOption="False" ProductDetailOption="True" MediaDetailOption="True"
-													UnitOption="False" PersonalizedElementsOption="True" InializeAdVertiserOption="True" SkinID="resultsOptionsASDynamicTables"></cc2:resultsoptionswebcontrol></TD><!--MediaOptionOption="True" --><!--2005MI-->
+													UnitOption="False" PersonalizedElementsOption="True" InializeAdVertiserOption="True" SkinID="resultsOptionsASDynamicTables"></cc2:resultsoptionswebcontrol></TD>
 										</tr>
-										<TR>
-											<TD style="HEIGHT: 12px" vAlign="top"><cc1:imagebuttonrolloverwebcontrol id="ValidateSelectionButton" runat="server" 
-																																											onclick="ValidateSelectionButton_Click" SkinID="okButton"></cc1:imagebuttonrolloverwebcontrol></TD>
+										<TR class="backGroundOptions">
+											<TD style="padding:0px 5px 5px 0px;" align="right"><cc1:imagebuttonrolloverwebcontrol id="ValidateSelectionButton" runat="server" onclick="ValidateSelectionButton_Click" SkinID="validButton"></cc1:imagebuttonrolloverwebcontrol></TD>
+										</TR>
 										<tr vAlign="top">
 											<td><asp:Image ID="Image6" runat="server" height="20" width="1" SkinID="pixel" /></td>
 										</tr>

@@ -690,6 +690,12 @@ table.creationWhiteBorder{
 	color: #644883;
 	font-weight: bold;
 }
+.txtInitialize{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #FFC06F;
+	font-weight: bold;
+}
 .pinkTextColor{
 	/*color:#FF0099;*/
 	color:#FF7100;
@@ -783,7 +789,6 @@ a.roll04{
 	font-weight: normal;
 	text-decoration : none;
 }
-
 a.roll04:hover{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10px;
@@ -791,28 +796,24 @@ a.roll04:hover{
 	color: #646262;
 	font-weight: normal;
 }
-
 a.roll05, a.roll05:active, a.roll05:visited {
  font-family: Arial, Helvetica, sans-serif;
  font-size: 11px;
  color : #FF7100;
  text-decoration : none;
 }
-
 a.roll05:hover {
  font-family: Arial, Helvetica, sans-serif;
  font-size: 11px;
  color : #CCCCCC;
  text-decoration : none;
 }
-
 a.roll06, a.roll06:active, a.roll06:visited {
  font-family: Arial, Helvetica, sans-serif;
  font-size: 11px;
  color : #FF7100;
  text-decoration : none;
 }
-
 a.roll06:hover {
  font-family: Arial, Helvetica, sans-serif;
  font-size: 11px;
@@ -847,6 +848,20 @@ a.txtLinkBlack11:hover{
 	color: #000000;
 	font-weight: normal;
 	text-decoration : none;
+}
+a.txtBridge, a.txtBridge:active, a.txtBridge:visited {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 11px;
+ font-weight: bold;
+ color : #FFFFFF;
+ text-decoration : none;
+}
+a.txtBridge:hover {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 11px;
+ color : #000000;
+ font-weight: bold;
+ text-decoration : none;
 }
 /* Portofolio Creation */
 .portofolioCreation

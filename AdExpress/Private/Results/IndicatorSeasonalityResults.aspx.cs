@@ -17,22 +17,22 @@ using System.Drawing;
 using System.Web;
 using System.Web.SessionState;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using Oracle.DataAccess.Client;
-using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
-using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
-using CstWeb = TNS.AdExpress.Constantes.Web;
-using CstPreformatedDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
-using CstComparisonCriterion = TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion;
-using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Domain.Classification;
-using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Level;
-using TNS.AdExpress.Web.Translation.Functions;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Web.Translation.Functions;
+using CstComparisonCriterion = TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion;
+using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
+using CstPreformatedDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
+using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
+using CstWeb = TNS.AdExpress.Constantes.Web;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 #endregion
 
 namespace AdExpress.Private.Results {
@@ -62,14 +62,9 @@ namespace AdExpress.Private.Results {
 		/// </summary>
         public bool totalChoice = true;
 		/// <summary>
-		/// Taille de l'image dans un plus gd format
-		/// </summary>
-		public bool bigFormat=false;
-		/// <summary>
 		/// Commentaire Agrandissement de l'image
 		/// </summary>
 		public string zoomTitle="";
-
 		#endregion
 		
 		#region Constructeur
@@ -93,10 +88,8 @@ namespace AdExpress.Private.Results {
 		/// <param name="e"></param>
         protected void Page_Load(object sender, System.EventArgs e)
         {
-
             try
             {
-
                 #region Gestion du flash d'attente
                 if (Page.Request.Form.GetValues("__EVENTTARGET") != null)
                 {
@@ -151,19 +144,10 @@ namespace AdExpress.Private.Results {
 				else {
 					ResultsOptionsWebControl1.GraphRadioButton.Visible = true;
 					ResultsOptionsWebControl1.TableRadioButton.Visible = true;
-				}
+                }
 
                 if (!IsPostBack)
                 {
-
-                    #region Création de totalRadioButtonList
-                    totalRadioButtonList.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1188, _webSession.SiteLanguage), TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.universTotal.GetHashCode().ToString()));
-                    totalRadioButtonList.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1189, _webSession.SiteLanguage), TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.sectorTotal.GetHashCode().ToString()));
-                    totalRadioButtonList.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1190, _webSession.SiteLanguage), TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.marketTotal.GetHashCode().ToString()));
-                    totalRadioButtonList.Items[0].Selected = true;
-                    //totalRadioButtonList.CssClass = "txtGris11Bold";
-                    #endregion
-
                     ResultsOptionsWebControl1.GraphRadioButton.Checked = _webSession.Graphics;
                     ResultsOptionsWebControl1.TableRadioButton.Checked = !_webSession.Graphics;
                 }
@@ -181,152 +165,54 @@ namespace AdExpress.Private.Results {
                         _webSession.Graphics = ResultsOptionsWebControl1.GraphRadioButton.Checked;
                     }
                 }
-
-                if (_webSession.CurrentTab == CstResult.SynthesisRecap.PALMARES && _webSession.Graphics)
-                {
-                    for (int itemIndex = 0; itemIndex < totalRadioButtonList.Items.Count; itemIndex++)
-                        if (totalRadioButtonList.Items[itemIndex] != null) totalRadioButtonList.Items[itemIndex].Enabled = false;
-                }
-                else
-                {
-                    for (int itemIndex = 0; itemIndex < totalRadioButtonList.Items.Count; itemIndex++)
-                        if (totalRadioButtonList.Items[itemIndex] != null) totalRadioButtonList.Items[itemIndex].Enabled = true;
-                }
-
-                #region Suppression du total univers
-                if ((_webSession.CurrentTab == CstResult.PalmaresRecap.SEASONALITY 
-                    || _webSession.CurrentTab == CstResult.PalmaresRecap.MEDIA_STRATEGY)
-                    && _webSession.CurrentTab != CstResult.SynthesisRecap.SYNTHESIS
-                    )
-                {
-                    totalRadioButtonList.Items.Remove(totalRadioButtonList.Items.FindByValue("2"));
-                }
-                #endregion
-
-                #region Ajout du total univers
-                if ((_webSession.CurrentTab == CstResult.PalmaresRecap.PALMARES 
-                    || _webSession.CurrentTab == CstResult.PalmaresRecap.NOVELTY)
-                    && _webSession.CurrentTab != CstResult.SynthesisRecap.SYNTHESIS)
-                {
-                    try
-                    {
-                        if (totalRadioButtonList.Items.FindByValue("2").Value != null) { }
-                    }
-                    catch (Exception)
-                    {
-                        ListItem listitem = new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1188, _webSession.SiteLanguage), CstComparisonCriterion.universTotal.GetHashCode().ToString());
-                        if (_webSession.CurrentTab == CstResult.SynthesisRecap.PALMARES && _webSession.Graphics) listitem.Enabled = false;
-                        else listitem.Enabled = true;
-                        totalRadioButtonList.Items.Insert(0, listitem);
-                    }
-                }
-                #endregion
-
-                #region radioButton sélectionné
-                if (_webSession.CurrentTab != CstResult.SynthesisRecap.SYNTHESIS)
-                {
-                    try
-                    {
-                        totalRadioButtonList.Items.FindByValue(totalRadioButtonList.SelectedItem.Value).Selected = true;
-                    }
-                    catch (Exception)
-                    {
-                        if (_webSession.CurrentTab == CstResult.PalmaresRecap.PALMARES || _webSession.CurrentTab == CstResult.PalmaresRecap.NOVELTY)
-                        {
-                            totalRadioButtonList.Items.FindByValue(CstComparisonCriterion.universTotal.GetHashCode().ToString()).Selected = true;
-                        }
-                        else if (_webSession.CurrentTab == CstResult.PalmaresRecap.SEASONALITY || _webSession.CurrentTab == CstResult.PalmaresRecap.MEDIA_STRATEGY)
-                        {
-                            totalRadioButtonList.Items.FindByValue(CstComparisonCriterion.sectorTotal.GetHashCode().ToString()).Selected = true;
-                        }
-                    }
-                }
-                #endregion
-
-                #region ComparaisonCriterion
-                if (_webSession.CurrentTab != CstResult.PalmaresRecap.EVOLUTION && _webSession.CurrentTab != CstResult.SynthesisRecap.SYNTHESIS)
-                {
-                    _webSession.ComparaisonCriterion = (CstComparisonCriterion)Convert.ToInt32(totalRadioButtonList.Items.FindByValue(totalRadioButtonList.SelectedItem.Value).Value);
-                }
-                #endregion
-
+                
                 #region Résultat
-
                 ResultsOptionsWebControl1.ResultFormat = true;
-                InitializeProductWebControl1.Visible = true;
                 ResultsOptionsWebControl1.MediaDetailOption = false;
-                bigFormat = false;
-
-
                 try
                 {
-                    //Summary
-                    if (_webSession.CurrentTab == CstResult.SynthesisRecap.SYNTHESIS)
-                    {
-                        totalChoice = false;
-                        ResultsOptionsWebControl1.ResultFormat = false;
-                        InitializeProductWebControl1.Visible = false;
-                    }
-                    //Seasonality and palmares
-                    else if (_webSession.CurrentTab == CstResult.Seasonality.SEASONALITY || _webSession.CurrentTab == CstResult.PalmaresRecap.PALMARES)
-                    {
-                        totalChoice = true;
-                        if (_webSession.CurrentTab == CstResult.Seasonality.SEASONALITY && _webSession.Graphics)
-                        {
-                            bigFormat = true;
-                            ProductClassContainerWebControl1.BigSize = this.bigFormatCheckBox.Checked;
-                        }
-                    }
-                    //Novelty
-                    else if (_webSession.CurrentTab == CstResult.Novelty.NOVELTY)
-                    {
-                        totalChoice = false;
-                    }
-
-                    //EVOL
-                    else if (_webSession.CurrentTab == CstResult.PalmaresRecap.EVOLUTION)
-                    {
-                        totalChoice = false;
-
-                        if (_webSession.Graphics)
-                        {
-                            //Cas année N-2
-                            DateTime PeriodBeginningDate = FctUtilities.Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
-                            if ((PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year - 2) && DateTime.Now.Year <= _webSession.DownLoadDate)
-                                || (PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year - 3) && DateTime.Now.Year > _webSession.DownLoadDate)
-                                )
-                            {
-                                _webSession.Graphics = false;
+                    switch(_webSession.CurrentTab){
+                        case CstResult.SynthesisRecap.SYNTHESIS: //Summary                          
+                            ResultsOptionsWebControl1.ResultFormat = false;
+                            break;
+                        case CstResult.SynthesisRecap.SEASONALITY: //Seasonality
+                            if(_webSession.Graphics)
+                                ProductClassContainerWebControl1.BigSize = ResultsOptionsWebControl1.IsZoomGraphicChecked;
+                            break;
+                        case CstResult.SynthesisRecap.PALMARES: //palmares (the coponent detects if it is a grop or not)
+                            break;
+                        case CstResult.Novelty.NOVELTY: //Novelty
+                            break;
+                        case CstResult.PalmaresRecap.EVOLUTION: //EVOL
+                            if(_webSession.Graphics){
+                                // Cas année N-2
+                                DateTime PeriodBeginningDate = FctUtilities.Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
+                                if((PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year - 2) && DateTime.Now.Year <= _webSession.DownLoadDate)
+                                    || (PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year - 3) && DateTime.Now.Year > _webSession.DownLoadDate)){
+                                    _webSession.Graphics = false;
+                                }
                             }
-                        }
+                            break;
+                        case CstResult.MediaStrategy.MEDIA_STRATEGY:
+                            ResultsOptionsWebControl1.MediaDetailOption = true;
+                            if(_webSession.Graphics){
+                                if(vehicleInfo != null){
+                                    // si WebSession est au niveau media on se met au niveau categorie/media
+                                    if(_webSession.PreformatedMediaDetail == CstPreformatedDetail.PreformatedMediaDetails.vehicle && vehicleInfo.Id != CstDBClassif.Vehicles.names.plurimedia){
+                                        _webSession.PreformatedMediaDetail = CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory;
+                                    }
+                                }
+                            }
+                            break;
                     }
-
-                    //Media Strategy
-                    else if (_webSession.CurrentTab == CstResult.MediaStrategy.MEDIA_STRATEGY)
-                    {
-                        ResultsOptionsWebControl1.MediaDetailOption = true;
-                        totalChoice = true;
-                        if (_webSession.Graphics)
-                        {
-							if (vehicleInfo != null ) {
-								// si WebSession est au niveau media on se met au niveau categorie/media
-								if (_webSession.PreformatedMediaDetail == CstPreformatedDetail.PreformatedMediaDetails.vehicle && vehicleInfo.Id != CstDBClassif.Vehicles.names.plurimedia) {
-									_webSession.PreformatedMediaDetail = CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory;
-								}
-							}
-                        }
-                    }
-
                 }
-                catch (System.Exception)
-                {
+                catch (System.Exception){
                     result = noResult("");
                 }
                 #endregion
 
                 #region MAJ _webSession
                 _webSession.LastReachedResultUrl = Page.Request.Url.AbsolutePath;
-                _webSession.Save();
                 #endregion
 
             }
@@ -340,8 +226,19 @@ namespace AdExpress.Private.Results {
         }
 		#endregion
 
-		#region DeterminePostBackMode
-		/// <summary>
+        #region OnLoadComplete
+        /// <summary>
+        /// OnLoadComplete
+        /// </summary>
+        /// <param name="e">Args</param>
+        protected override void  OnLoadComplete(EventArgs e){
+            _webSession.Save();
+ 	        base.OnLoadComplete(e);
+        }
+        #endregion
+
+        #region DeterminePostBackMode
+        /// <summary>
 		/// Initialisation des composants
 		/// </summary>
 		/// <returns></returns>
@@ -349,19 +246,27 @@ namespace AdExpress.Private.Results {
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();			
 			Moduletitlewebcontrol2.CustomerWebSession=_webSession;
 			ModuleBridgeWebControl1.CustomerWebSession=_webSession;
-			ResultsOptionsWebControl1.CustomerWebSession=_webSession;		
-			InitializeProductWebControl1.CustomerWebSession=_webSession;
+			ResultsOptionsWebControl1.CustomerWebSession=_webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
             ProductClassContainerWebControl1.Session = _webSession;
-			
 			return tmp;
 		}
 		#endregion
 
 		#endregion
 
-		#region Code généré par le Concepteur Web Form
-		/// <summary>
+        #region OnPreInit
+        /// <summary>
+        /// OnPreInit
+        /// </summary>
+        /// <param name="e">Args</param>
+        protected override void OnPreInit(EventArgs e) {
+            base.OnPreInit(e);
+        }
+        #endregion
+
+        #region Code généré par le Concepteur Web Form
+        /// <summary>
 		/// Initialisation
 		/// </summary>
 		/// <param name="e">Arguments</param>
@@ -370,6 +275,7 @@ namespace AdExpress.Private.Results {
 			// CODEGEN : Cet appel est requis par le Concepteur Web Form ASP.NET.
 			//
 			InitializeComponent();
+
 			base.OnInit(e);
 		}
 		

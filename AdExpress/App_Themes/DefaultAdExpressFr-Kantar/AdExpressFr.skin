@@ -1154,7 +1154,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%-- Initialize product web control : used to initialize products selection txtNoir11Bold --%>
 <ctrHeader:InitializeProductWebControl  
                            runat="server"
-                           CssClass="txtOrange11Bold" 
+                           CssClass="txtInitialize" 
 />
 
 <%-- Generic media level detail selection web control--%>

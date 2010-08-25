@@ -90,14 +90,12 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 
             string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
 
-            output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"whiteBackGround\">");
+            output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"backGroundOptions\">");
 			output.Write("\n<tr>");
 			output.Write("\n<td>");
-			//debut tableau titre
-			output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
-			output.Write("\n<TR>");
-			output.Write("\n<TD height=\"5\"></TD>");
-			output.Write("\n</TR>");
+
+            #region Titre
+            output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
 			output.Write("\n<tr>");
             output.Write("\n<td class=\"headerLeft\" colSpan=\"3\"><IMG height=\"1\" src=\"/App_Themes/"+themeName+"/Images/Common/pixel.gif\"></td>");
 			output.Write("\n</tr>");
@@ -110,8 +108,9 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			output.Write("\n<td class=\"headerLeft\" colSpan=\"3\"><IMG height=\"1\" src=\"/App_Themes/"+themeName+"/images/Common/pixel.gif\"></td>");
 			output.Write("\n</tr>");
 			output.Write("\n</table>");
-			//fin tableau titre
-			output.Write("\n</td>");
+            #endregion
+
+            output.Write("\n</td>");
 			output.Write("\n</tr>");
 			output.Write("\n<TR>");
 			output.Write("\n<TD height=\"5\"></TD>");
@@ -119,10 +118,9 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 
             Module currentModule=webSession.CustomerLogin.GetModule(webSession.CurrentModule);
             foreach(Int64 current in currentModule.Bridges) {
-				if (webSession.CustomerLogin.GetModule(current)!=null){ 
-					output.Write("\n<tr>");
-					output.Write("\n<td><A class=\"roll03\" href=\"" +((ResultPageInformation)(webSession.CustomerLogin.GetModule(current)).GetResultPageInformation(0)).Url + "?idSession=" + webSession.IdSession + "\">&gt; "+GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(current),webSession.SiteLanguage)+"</td>");
-					output.Write("\n</td>");
+				if (webSession.CustomerLogin.GetModule(current)!=null){
+                    output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                    output.Write("\n<td><A class=\"txtBridge\" href=\"" + ((ResultPageInformation)(webSession.CustomerLogin.GetModule(current)).GetResultPageInformation(0)).Url + "?idSession=" + webSession.IdSession + "\">&gt; " + GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(current), webSession.SiteLanguage) + "</td>");
 					output.Write("\n</tr>");
 				}
 			}
@@ -130,7 +128,6 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			output.Write("\n<TD height=\"5\"></TD>");
 			output.Write("\n</TR>");
 			output.Write("</table>");
-			
 		}
 		#endregion
 

@@ -61,34 +61,13 @@
 											<td><asp:Image ID="Image5" runat="server" height="10" width="1" SkinID="pixel" /></td>
 										</tr>
 										<tr valign="top">
-											<td valign="top"><cc2:resultsoptionswebcontrol id="ResultsOptionsWebControl1" runat="server" UnitOption="False" Percentage="False"
-													AutoPostBackOption="False" ResultOption="True" MediaDetailOption="True"></cc2:resultsoptionswebcontrol></td>
+											<td valign="top"><cc2:resultsoptionswebcontrol id="ResultsOptionsWebControl1" 
+                                                    runat="server" UnitOption="False" Percentage="False"
+													AutoPostBackOption="False" ResultOption="True" MediaDetailOption="True" TotalChoice="True" ZoomGraphic="True" 
+                                                    InializeAdVertiserOption="True"></cc2:resultsoptionswebcontrol></td>
 										</tr>
-										<!--Niveaux Produits-->
-										<tr height="5">
-											<td></td>
-										</tr>
-										<%if(totalChoice){%>
-										<tr>
-											<td><asp:radiobuttonlist id="totalRadioButtonList" runat="server" 
-                                                    CssClass="txtGris11Bold"></asp:radiobuttonlist></td>
-										</tr>
-										<%}%>
-										<%if(bigFormat){%>
-										<tr>
-											<td><asp:checkbox id="bigFormatCheckBox" runat="server"></asp:checkbox><A onmouseover="zoom.src = '/App_Themes/<%= this.Theme %>/Images/Common/Button/loupe_zoom_down.gif';" onclick="bigFormatCheckBox.checked=!bigFormatCheckBox.checked;"
-													onmouseout="zoom.src = '/App_Themes/<%= this.Theme %>/Images/Common/Button/loupe_zoom_up.gif';" href="#"><IMG id=zoom title="<%=zoomTitle%>" src="/App_Themes/<%= this.Theme %>/Images/Common/Button/loupe_zoom_up.gif" border=0 ></A>
-											</td>
-										</tr>
-										<%}%>
-										<tr height="5">
-											<td>
-												<cc2:InitializeProductWebControl id="InitializeProductWebControl1" 
-                                                    runat="server" AutoPostBackOption="False" InitializeAdvertiser="True" 
-                                                    CommonCssClass="txtOrange11Bold"></cc2:InitializeProductWebControl></td>
-										</tr>
-										<tr>
-											<td><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="okButton"></cc1:imagebuttonrolloverwebcontrol></td>
+										<tr class="backGroundOptions">
+											<td style="padding:0px 5px 5px 0px;" align="right"><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="validButton"></cc1:imagebuttonrolloverwebcontrol></td>
 										</tr>
 										<tr height="5">
 											<td></td>
