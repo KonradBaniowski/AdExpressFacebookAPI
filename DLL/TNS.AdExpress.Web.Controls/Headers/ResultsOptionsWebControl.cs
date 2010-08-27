@@ -1270,6 +1270,24 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
+            #region Options Generic Media Level Detail
+            if(GenericMediaLevelDetailSelectionOptions) {
+                switch(customerWebSession.CurrentTab) {
+                    case Portofolio.SYNTHESIS:
+                    case Portofolio.DETAIL_MEDIA:
+                    case Portofolio.STRUCTURE:
+                        _genericMediaLevelDetailSelectionWebControl.Visible = false;
+                        break;
+                    case Portofolio.DETAIL_PORTOFOLIO:
+                    case Portofolio.CALENDAR:
+                        _genericMediaLevelDetailSelectionWebControl.Visible = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            #endregion
+
             base.OnLoad(e);
         }
         #endregion
@@ -1847,7 +1865,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Option Generic Media Level Detail
-            if(GenericMediaLevelDetailSelectionOptions) {
+            if(GenericMediaLevelDetailSelectionOptions && _genericMediaLevelDetailSelectionWebControl.Visible) {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td><hr class=\"hrSpacer\" />");
                 _genericMediaLevelDetailSelectionWebControl.RenderControl(output);

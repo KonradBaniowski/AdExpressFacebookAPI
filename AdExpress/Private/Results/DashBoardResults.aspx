@@ -69,21 +69,8 @@
 													TimeSlliceOption="True" NamedDayOption="True" TimeIntervalOption="True"  PreformatedTableOption="True"
 													Width="120px" PdvOption="True" Percentage="True" InterestCenterListOption="True" EvolutionOption="True"></cc2:resultsdashboardoptionswebcontrol></td>
 										</tr>
-										<tr style="height:5px">
-											<td></td>
-										</tr>
-										<tr>
-											<td><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="okButton"></cc1:imagebuttonrolloverwebcontrol></td>
-										</tr>
-										<tr style="height:5px">
-											<td></td>
-										</tr>
-										<!--Fin Niveaux Produits-->
-										<tr valign="top">
-											<td><asp:Image ID="Image6" runat="server" height="10" SkinID="pixel" width="1" /></td>
-										</tr>
-										<tr valign="top">
-											<td><cc2:modulebridgewebcontrol id="ModuleBridgeWebControl1" runat="server" Visible="False"></cc2:modulebridgewebcontrol></td>
+										<tr class="backGroundOptions">
+											<td style="padding:0px 5px 5px 0px;" align="right"><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="validButton"></cc1:imagebuttonrolloverwebcontrol></td>
 										</tr>
 										
 										<!-- Info bt droit -->

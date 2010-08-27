@@ -55,15 +55,17 @@
 												<cc2:moduletitlewebcontrol id="Moduletitlewebcontrol2" runat="server" CodeDescription="900"></cc2:moduletitlewebcontrol>
 											</td>
 										</tr>
-										
+
+				                        <!-- Options -->
 										<tr valign="top">
-					                        <td><asp:Image ID="Image5" runat="server" height="20" SkinID="pixel" width="1"/></td>
-				                        </tr>
-										            <tr class="whiteBackGround">
-					                        <td><cc2:initializeproductwebcontrol id="InitializeProductWebControl1" 
-                                                    runat="server" AutoPostBackOption="true" InitializeSlogans="True" 
-                                                    InitializeProduct="False" CommonCssClass="txtOrange11Bold"></cc2:initializeproductwebcontrol></td>
-				                        </tr>
+											<td><asp:Image ID="Image12" runat="server" height="10" width="1" SkinID="pixel" /></td>
+										</tr>
+										<tr valign="top">
+											<td valign="top"><cc2:ResultsOptionsWebControl ID="ResultsOptionsWebControl1" 
+                                                    runat="server" InializeSlogansOption="True" ResultOption="False" 
+                                                    ShowPictures="False" UnitOption="False" />
+                                            </td>
+										</tr>
 
 										<!-- Info bt droit -->
 										<tr>

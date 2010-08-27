@@ -5,6 +5,7 @@
 // 
 #endregion
 
+#region Namespaces
 using System;
 using System.Collections;
 using System.ComponentModel;
@@ -13,32 +14,32 @@ using System.Drawing;
 using System.Web;
 using System.Web.SessionState;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 using System.Windows.Forms;
-using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
-using WebExceptions=TNS.AdExpress.Web.Exceptions;
-using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Constantes;
 using TNS.AdExpress.Constantes.Customer;
-//using AdExpressException=AdExpress.Exceptions;
-using WebConstantes=TNS.AdExpress.Constantes.Web;
-using TNS.FrameWork.Date;
-using FunctionsScript = TNS.AdExpress.Web.Functions.Script;
-using ControlsHeaders=TNS.AdExpress.Web.Controls.Headers;
-using TNS.AdExpress.Web.UI.Results;
-using TNS.AdExpress.Web.Core.Sessions;
-using CstPeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type;
-using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel;
-using CstCustomerSession=TNS.AdExpress.Constantes.Web.CustomerSessions;
-using WebModule=TNS.AdExpress.Constantes.Web.Module;
-using WebSystem=TNS.AdExpress.Web.BusinessFacade;
-using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
-using WebFunctions=TNS.AdExpress.Web.Functions;
-using TNS.Classification.Universe;
-using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
+using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Web.UI.Results;
+using TNS.Classification.Universe;
+using TNS.FrameWork.Date;
+using ControlsHeaders = TNS.AdExpress.Web.Controls.Headers;
+using CstCustomerSession = TNS.AdExpress.Constantes.Web.CustomerSessions;
+using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel;
+using CstPeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type;
+using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
+using DBFunctions = TNS.AdExpress.Web.DataAccess.Functions;
+using FunctionsScript = TNS.AdExpress.Web.Functions.Script;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
+using WebExceptions = TNS.AdExpress.Web.Exceptions;
+using WebFunctions = TNS.AdExpress.Web.Functions;
+using WebModule = TNS.AdExpress.Constantes.Web.Module;
+using WebSystem = TNS.AdExpress.Web.BusinessFacade;
+#endregion
 
 namespace AdExpress.Private.Results{
 	/// <summary>
@@ -151,13 +152,8 @@ namespace AdExpress.Private.Results{
 				#endregion
 
 				#region Textes et Langage du site
-                //for (int i = 0; i < this.Controls.Count; i++) {
-                //    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
-                //}
 				Moduletitlewebcontrol2.CustomerWebSession=_webSession;
-				ModuleBridgeWebControl1.CustomerWebSession=_webSession;
 				InformationWebControl1.Language = _webSession.SiteLanguage;
-//				ExportWebControl1.CustomerWebSession=_webSession;			
 				#endregion
 			
 				#region scripts
@@ -199,7 +195,6 @@ namespace AdExpress.Private.Results{
 		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
    			DashBoardOptionsWebControl();						
-			//recallWebControl.CustomerWebSession=_webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
 
             // Option autopromo (Evaliant)

@@ -71,10 +71,6 @@ namespace AdExpress.Private.Results{
 		/// </summary>
 		public bool press=false;
 		/// <summary>
-		/// Si true si la planche est un détail de portefeuille
-		/// </summary>
-		public bool _genericProductLevel = false;
-		/// <summary>
 		/// libellé nouveau produit
 		/// </summary>
 		public string newProductText="";
@@ -224,10 +220,9 @@ namespace AdExpress.Private.Results{
 					_webSession.Save();
 				}
 				
-				//Choix de la planche à afficher
+				// Choix de la planche à afficher
 				_ResultWebControl.Visible = false;
                 vehicleItemsNavigatorWebControl1.Visible = false;
-				_genericProductLevel = false;
 				portofolioChartWebControl1.Visible = false;
 				if(DBClassificationConstantes.Vehicles.names.press==vehicleName 
 					|| DBClassificationConstantes.Vehicles.names.internationalPress==vehicleName
@@ -236,11 +231,12 @@ namespace AdExpress.Private.Results{
                 {
 					ResultsOptionsWebControl1.InsertOption=true;	
 				}			
-				else ResultsOptionsWebControl1.InsertOption=false;	
-				switch(_webSession.CurrentTab){					
+				else 
+                    ResultsOptionsWebControl1.InsertOption=false;
+				
+                switch(_webSession.CurrentTab){					
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
 						_ResultWebControl.Visible = true;// false;
-						_genericProductLevel = false;
                         ResultsOptionsWebControl1.UnitOption = false;
                         ResultsOptionsWebControl1.InsertOption = false;
                         vehicleItemsNavigatorWebControl1.Visible = true;
@@ -253,11 +249,9 @@ namespace AdExpress.Private.Results{
                         break;
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
 						_ResultWebControl.Visible = true;
-						_genericProductLevel = true;
                         ResultsOptionsWebControl1.UnitOption = false;
 						break;								
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
-						_genericMediaLevelDetailSelectionWebControl.Visible = false;
 						ResultsOptionsWebControl1.InsertOption = false;
 						ResultsOptionsWebControl1.UnitOption = false;
 						ResultsOptionsWebControl1.Percentage = false;
@@ -287,8 +281,6 @@ namespace AdExpress.Private.Results{
 						break;
 
 					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
-						_genericProductLevel = true;
-						_genericMediaLevelDetailSelectionWebControl.Visible = true;
 						ResultsOptionsWebControl1.UnitOption = true;
 						ResultsOptionsWebControl1.Percentage = true;
 						_ResultWebControl.Visible = true;
@@ -347,9 +339,7 @@ namespace AdExpress.Private.Results{
 			Moduletitlewebcontrol2.CustomerWebSession=_webSession;
 			ResultsOptionsWebControl1.CustomerWebSession=_webSession;
 			ResultsOptionsWebControl1.SelectedMediaUniverse = GetSelectedUniverseMedia();
-			InitializeProductWebControl1.CustomerWebSession=_webSession;	
 			MenuWebControl2.CustomerWebSession = _webSession;
-			_genericMediaLevelDetailSelectionWebControl.CustomerWebSession = _webSession;
 			_ResultWebControl.CustomerWebSession = _webSession;
             vehicleItemsNavigatorWebControl1.CustomerWebSession = _webSession;
             vehicleItemsNavigatorWebControl1.Excel = false;

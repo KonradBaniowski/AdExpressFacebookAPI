@@ -67,41 +67,34 @@
 													UnitOption="False"></cc2:resultsdashboardoptionswebcontrol></td>
 										</tr>
 										<%if(displayMonthes){%>
-										<tr style="height:5px"><td></td></tr>
-										<tr style="height:5px">
+										<tr class="backGroundOptions" height="5"><td></td></tr>
+										<tr class="backGroundOptionsPadding" >
 											<td class="txtBlanc11Bold"><cc3:adexpresstext language="33" id="AdExpressText1" runat="server" CssClass="txtGris11Bold" Code="1526"></cc3:adexpresstext></td>
 										</tr>
-										<tr>
+										<tr class="backGroundOptionsPadding" >
 											<td style="HEIGHT: 22px"><cc2:resultsdatelistwebcontrol id="ResultsDateListWebControl1" runat="server" DetailPeriod="monthly" CssClass="txtNoir11Bold">
 													<asp:ListItem Value="0">------------------------------</asp:ListItem>
 												</cc2:resultsdatelistwebcontrol></td>
 										</tr>
+										<tr class="backGroundOptions" height="5"><td></td></tr>
 										<%}%>
 										<%if (displayWeeks){%>
-										<tr style="height:5px"><td></td></tr>
-										<tr style="height:5px">
+										<tr class="backGroundOptions" height="5"><td></td></tr>
+										<tr  class="backGroundOptionsPadding" >
 											<td class="txtBlanc11Bold"><cc3:adexpresstext language="33" id="AdExpressText2" runat="server" Code="1525"></cc3:adexpresstext></td>
 										</tr>
-										<tr>
+										<tr class="backGroundOptionsPadding" >
 											<td style="HEIGHT: 22px"><cc2:resultsdatelistwebcontrol id="ResultsDateListWebControl2" runat="server" DetailPeriod="weekly" CssClass="txtNoir11Bold">
 													<asp:ListItem Value="0">-------------------------------------------</asp:ListItem>
 												</cc2:resultsdatelistwebcontrol></td>
 										</tr>
+										<tr class="backGroundOptions" height="5"><td></td></tr>
 										<%}%>
-										<tr style="height:5px"><td></td></tr>
-										<tr>
-											<td><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="okButton"></cc1:imagebuttonrolloverwebcontrol></td>
-										</tr>
-										<tr style="height:5px">
-											<td></td>
+										<tr class="backGroundOptions">
+											<td style="padding:0px 5px 5px 0px;" align="right"><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="validButton"></cc1:imagebuttonrolloverwebcontrol></td>
 										</tr>
 										<!--Fin Niveaux Produits-->
-										<tr valign="top">
-											<td><asp:Image ID="Image6" runat="server" height="10" SkinID="pixel" width="1" /></td>
-										</tr>
-										<tr valign="top">
-											<td><cc2:modulebridgewebcontrol id="ModuleBridgeWebControl1" runat="server" Visible="False"></cc2:modulebridgewebcontrol></td>
-										</tr>
+										
 										
 										<!-- Info bt droit -->
 										<tr>

@@ -5,38 +5,38 @@
 // 
 #endregion
 
+#region Namespaces
 using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Reflection;
 using System.Web;
 using System.Web.SessionState;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
-using DBFunctions = TNS.AdExpress.Web.DataAccess.Functions;
-using WebExceptions = TNS.AdExpress.Web.Exceptions;
-using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
+using System.Web.UI.WebControls;
 using TNS.AdExpress.Constantes;
 using TNS.AdExpress.Constantes.Customer;
-//using AdExpressException=AdExpress.Exceptions;
-using WebConstantes = TNS.AdExpress.Constantes.Web;
-using TNS.FrameWork.Date;
-using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
-using TNS.AdExpress.Domain.Web.Navigation;
-using TNS.AdExpressI.Trends.DAL;
-using System.Reflection;
+using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.ModulesDescritpion;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Domain.ModulesDescritpion;
-using TNS.AdExpress.Constantes.FrameWork.Results;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
+using TNS.AdExpressI.Trends.DAL;
+using TNS.FrameWork.Date;
+using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
+using DBFunctions = TNS.AdExpress.Web.DataAccess.Functions;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
+using WebExceptions = TNS.AdExpress.Web.Exceptions;
 using WebFunctions = TNS.AdExpress.Web.Functions;
+#endregion
 
 namespace AdExpress.Private.Results
 {
-
     /// <summary>
     /// Page de résultat du module Tendance
     /// </summary>
@@ -45,36 +45,9 @@ namespace AdExpress.Private.Results
 
         #region Variables MMI
         /// <summary>
-        /// Contrôle : Titre du Module
-        /// </summary>
-        /// <summary>
         /// Contrôle : Options
         /// </summary>
         protected TNS.AdExpress.Web.Controls.Headers.ResultsOptionsWebControl ResultsOptionsWebControl1;
-        /// <summary>
-        /// bouton de validation des options
-        /// </summary>
-        /// <summary>
-        /// module bridge
-        /// </summary>
-        /// <summary>
-        /// Contrôle En-tête
-        /// </summary>
-        /// <summary>
-        /// Contrôle options des tendances
-        /// </summary>
-        /// <summary>
-        /// Contrôle choix dates mensuelles
-        /// </summary>
-        /// <summary>
-        /// Contrôle choix dates hebdomadaires
-        /// </summary>
-        /// <summary>
-        /// texte
-        /// </summary>
-        /// <summary>
-        /// texte
-        /// </summary>
         #endregion
 
         #region Variables
@@ -83,22 +56,24 @@ namespace AdExpress.Private.Results
         /// </summary>
         public string result = "";
         /// <summary>
-        /// Menu contextuel
-        /// </summary>
-        /// <summary>
         /// Script de fermeture du flash d'attente
         /// </summary>
         public string divClose = LoadingSystem.GetHtmlCloseDiv();
-
         /// <summary>
         /// Résultat HTML
         /// </summary>
         public bool displayWeeks = true;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public bool displayMonthes = true;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public bool displayCumul = true;
-
+        /// <summary>
+        /// 
+        /// </summary>
         private bool fromSave = false;
         #endregion
 
@@ -120,7 +95,6 @@ namespace AdExpress.Private.Results
         /// <param name="e">Arguments</param>
         protected void Page_Load(object sender, System.EventArgs e)
         {
-
             try
             {
 
@@ -152,7 +126,6 @@ namespace AdExpress.Private.Results
 
                 #region Textes et Langage du site
                 Moduletitlewebcontrol2.CustomerWebSession = _webSession;
-                ModuleBridgeWebControl1.CustomerWebSession = _webSession;
                 InformationWebControl1.Language = _webSession.SiteLanguage;
                 #endregion
 

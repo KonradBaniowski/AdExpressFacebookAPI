@@ -563,7 +563,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		}
 		#endregion
 
-		#region constructeur(s)
+		#region Constructeur
 		/// <summary>
 		/// Constructeur
 		/// </summary>
@@ -1171,236 +1171,224 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		protected override void Render(HtmlTextWriter output) {
             string themeName = WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name;
 
-            output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"whiteBackGround\">");
-			output.Write("\n<TR>");
-			output.Write("\n<TD height=\"5\"></TD>");
-			output.Write("\n</TR>");
-			
-			if(titleOption){
+            output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"backGroundOptions\">");
+
+            if(titleOption){
 				output.Write("\n<tr>");
 				output.Write("\n<td>");
-				//debut tableau titre
-				output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
-				output.Write("\n<TR>");
-				output.Write("\n<TD height=\"5\"></TD>");
-				output.Write("\n</TR>");
-				output.Write("\n<tr>");
-                output.Write("\n<td class=\"headerLeft\" colSpan=\"4\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\"></td>");
-				output.Write("\n</tr>");
-				output.Write("\n<tr>");
-                output.Write("\n<td style=\"HEIGHT: 14px\" vAlign=\"top\"><IMG height=\"12\" src=\"/App_Themes/" + themeName + "/Images/Common/block_fleche.gif\" width=\"12\"></td>");
-                output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" background=\"/App_Themes/" + themeName + "/Images/Common/block_dupli.gif\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"13\"></td>");
-                output.Write("\n<td class=\"txtNoir11Bold backGroundModuleTitle\" style=\"PADDING-RIGHT: 5px; PADDING-LEFT: 5px; TEXT-TRANSFORM: uppercase; HEIGHT: 14px\" width=\"100%\">" + GestionWeb.GetWebWord(792, customerWebSession.SiteLanguage) + "</td>");
+
+                #region Titre
+                output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
+                output.Write("\n<tr>");
+                output.Write("\n<td class=\"headerLeft\" colspan=\"3\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\"></td>");
+                output.Write("\n</tr>");
+                output.Write("\n<tr>");
+                output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" class=\"blockBackGround\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"13\"></td>");
+                output.Write("\n<td class=\"txtNoir11Bold backGroundWhite titleUppercase\" width=\"100%\">" + GestionWeb.GetWebWord(792, customerWebSession.SiteLanguage) + "</td>");
                 output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"1\"></td>");
+                output.Write("\n</tr>");
+                output.Write("\n<tr>");
+                output.Write("\n<td class=\"headerLeft\" colspan=\"3\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\"></td>");
+                output.Write("\n</tr>");
+                output.Write("\n</table>");
+                #endregion
+
+                output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<tr>");
-				output.Write("\n<td></td>");
-                output.Write("\n<td class=\"headerLeft\" colSpan=\"3\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\"></td>");
-				output.Write("\n</tr>");
-				output.Write("\n</table>");
-				//fin tableau titre
-				output.Write("\n</td>");
-				output.Write("\n</tr>");
-				output.Write("\n<TR>");
-				output.Write("\n<TD height=\"5\"></TD>");
-				output.Write("\n</TR>");
-			}		
-			//option detail media
-			if (mediaDetailOption){
-				output.Write("\n<tr>");
+				output.Write("\n<tr><td height=\"5\"></td></tr>");
+            }
+
+            #region Option detail media
+            if (mediaDetailOption){
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1150,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<tr>");
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td>");
 				mediaDetail.RenderControl(output);				
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<TR>");
-				output.Write("\n<TD height=\"5\"></TD>");
-				output.Write("\n</TR>");
-			}
+                output.Write("\n<tr><td height=\"5\"></td></tr>");
+            }
+            #endregion
 
-			//option choix d'un encart
+            #region Option choix d'un encart
             if (insertOption && WebApplicationParameters.AllowInsetOption)
             {
-				output.Write("\n<tr>");
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1400,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<tr>");
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td>");
 				listInsert.RenderControl(output);
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<TR>");
-				output.Write("\n<TD height=\"5\"></TD>");
-				output.Write("\n</TR>");
-			}
+                output.Write("\n<tr><td height=\"5\"></td></tr>");
+            }
+            #endregion
 
-            // Option auto-promo Evaliant
+            #region Option auto-promo Evaliant
             if (autopromoEvaliantOption) {
-                output.Write("\n<tr>");
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td>");
                 AutopromoEvaliantCheckBox.RenderControl(output);
                 output.Write("\n</td>");
                 output.Write("\n</tr>");
-                output.Write("\n<TR>");
-                output.Write("\n<TD height=\"5\"></TD>");
-                output.Write("\n</TR>");
+                output.Write("\n<tr><td height=\"5\"></td></tr>");
             }
+            #endregion
 
-			//option choix d'une famille
-			if (sectorListOption){
-				output.Write("\n<tr>");
+            #region Option choix d'une famille
+            if (sectorListOption){
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1103,customerWebSession.SiteLanguage)+" : ");
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<tr>");
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td>");
 				sectorList.RenderControl(output);				
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<TR>");
-				output.Write("\n<TD height=\"5\"></TD>");
-				output.Write("\n</TR>");
-			}
+                output.Write("\n<tr><td height=\"5\"></td></tr>");
+            }
+            #endregion
 
-			//option choix d'une centre d'interet
-			if (interestCenterListOption){
-				output.Write("\n<tr>");
+            #region Option choix d'une centre d'interet
+            if (interestCenterListOption){
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1576,customerWebSession.SiteLanguage)+" : ");
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<tr>");
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td>");
 				interestCenterList.RenderControl(output);				
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<TR>");
-				output.Write("\n<TD height=\"5\"></TD>");
-				output.Write("\n</TR>");
-			}
-			//option unité
-			if (unitOption){
-				output.Write("\n<tr>");
+                output.Write("\n<tr><td height=\"5\"></td></tr>");
+            }
+            #endregion
+
+            #region Option unité
+            if (unitOption){
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(849,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<tr>");
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td>");
 				list.RenderControl(output);								
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<TR>");
-				output.Write("\n<TD height=\"5\"></TD>");
-				output.Write("\n</TR>");
-				
-			}
-			//Option choix du format spots
-			if (formatOption){
-				output.Write("\n<tr>");
+                output.Write("\n<tr><td height=\"5\"></td></tr>");
+            }
+            #endregion
+
+            #region Option choix du format spots
+            if (formatOption){
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1420,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<tr>");
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td>");
 				format.RenderControl(output);				
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<TR>");
-				output.Write("\n<TD height=\"5\"></TD>");
-				output.Write("\n</TR>");
-			}
-			//Option choix d'un jour nommé
-			if (namedDayOption){
-				output.Write("\n<tr>");
+                output.Write("\n<tr><td height=\"5\"></td></tr>");
+            }
+            #endregion
+
+            #region Option choix d'un jour nommé
+            if (namedDayOption){
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1574,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<tr>");
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td>");
 				namedDay.RenderControl(output);				
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<TR>");
-				output.Write("\n<TD height=\"5\"></TD>");
-				output.Write("\n</TR>");
-			}
-			//Option choix d'une tranche horaire
-			if (timeIntervalOption){
-				output.Write("\n<tr>");
+                output.Write("\n<tr><td height=\"5\"></td></tr>");
+            }
+            #endregion
+
+            #region Option choix d'une tranche horaire
+            if (timeIntervalOption){
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1575,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<tr>");
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td>");
 				drpTimeInterval.RenderControl(output);				
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<TR>");
-				output.Write("\n<TD height=\"5\"></TD>");
-				output.Write("\n</TR>");
-			}
-			//Option choix d'un mois
-			if (monthlyDateOption){
-				output.Write("\n<tr>");
+                output.Write("\n<tr><td height=\"5\"></td></tr>");
+            }
+            #endregion
+
+            #region Option choix d'un mois
+            if (monthlyDateOption){
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1526,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<tr>");
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td>");
 				monthlyDate.RenderControl(output);				
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<TR>");
-				output.Write("\n<TD height=\"5\"></TD>");
-				output.Write("\n</TR>");
-			}
-			//Option choix d'une semaine
-			if (weeklyDateOption){
-				output.Write("\n<tr>");
+                output.Write("\n<tr><td height=\"5\"></td></tr>");
+            }
+            #endregion
+
+            #region Option choix d'une semaine
+            if (weeklyDateOption){
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1525,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<tr>");
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td>");
 				weeklyDate.RenderControl(output);				
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<TR>");
-				output.Write("\n<TD height=\"5\"></TD>");
-				output.Write("\n</TR>");
-			}
-			//option format de tableau
-			if (tblChoiceOption){
-				output.Write("\n<tr>");
+                output.Write("\n<tr><td height=\"5\"></td></tr>");
+            }
+            #endregion
+
+            #region Option format de tableau
+            if (tblChoiceOption){
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td class=\"txtBlanc11Bold\">");
 				output.Write(GestionWeb.GetWebWord(1140,customerWebSession.SiteLanguage));
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<tr>");
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td>");
 				tblChoice.RenderControl(output);
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<TR>");
-				output.Write("\n<TD height=\"5\"></TD>");
-				output.Write("\n</TR>");
-			}
-			//options PDM ,PDV,cumul date,pourcentage
-			if (pdmOption || pdvOption || percentage || cumulPeriodOption){
-				output.Write("\n<tr>");
+                output.Write("\n<tr><td height=\"5\"></td></tr>");
+            }
+            #endregion
+
+            #region Options PDM ,PDV, cumul date, pourcentage
+            if (pdmOption || pdvOption || percentage || cumulPeriodOption){
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td>");
 				if(cumulPeriodOption){					
 					CumulPeriodCheckBox.RenderControl(output);
@@ -1421,13 +1409,13 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				}
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<TR>");
-				output.Write("\n<TD height=\"5\"></TD>");
-				output.Write("\n</TR>");
-			}
-			//Evolution
-			if (evolutionOption){
-				output.Write("\n<tr>");
+                output.Write("\n<tr><td height=\"5\"></td></tr>");
+            }
+            #endregion
+
+            #region Evolution
+            if (evolutionOption){
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td>");				
 					if (!customerWebSession.ComparativeStudy){
 						EvolutionCheckBox.Enabled = false;
@@ -1437,28 +1425,28 @@ namespace TNS.AdExpress.Web.Controls.Headers
 					output.Write("&nbsp;&nbsp;");			
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
-				output.Write("\n<TR>");
-				output.Write("\n<TD height=\"5\"></TD>");
-				output.Write("\n</TR>");
-			}
-			
-			output.Write("\n</table>");
+                output.Write("\n<tr><td height=\"5\"></td></tr>");
+            }
+            #endregion
+
+            output.Write("\n</table>");
 		}
 		#endregion
 
 		#endregion
 
-		#region Méthodes internes	
+		#region Méthodes internes
 		/// <summary>
 		///Crée une liste de dates hebdomadaires	 
 		/// </summary>					
 		private void FillWeeklyDate(){
-			//Variables
-			 AtomicPeriodWeek currentPeriod;
+			// Variables
+			AtomicPeriodWeek currentPeriod;
 			int year = int.Parse(customerWebSession.PeriodBeginningDate.ToString().Substring(0,4));
 			int BeginningWeek=int.Parse(customerWebSession.PeriodBeginningDate.ToString().Substring(4,2));
 			int EndWeek=int.Parse(customerWebSession.PeriodEndDate.ToString().Substring(4,2));;
-			//Crée une liste de dates hebdomadaires																			
+			
+            // Crée une liste de dates hebdomadaires																			
 			string split="/";			
 			string ItemValue="";
 			weeklyDate.Items.Add(new ListItem("-------------------------------------------","0"));					
