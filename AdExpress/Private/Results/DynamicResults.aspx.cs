@@ -267,11 +267,7 @@ namespace AdExpress.Private.Results{
 		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
 			ResultsOptionsWebControl1.CustomerWebSession = _webSession;
-			InitializeProductWebControl1.CustomerWebSession=_webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
-			_genericMediaLevelDetailSelectionWebControl.CustomerWebSession=_webSession;
-            _genericColumnLevelDetailSelectionWebControl1.CustomerWebSession = _webSession;
-
 			resultwebcontrol1.CustomerWebSession = _webSession;
 
             #region Option autopromo (Evaliant)
@@ -281,7 +277,6 @@ namespace AdExpress.Private.Results{
 				ResultsOptionsWebControl1.AutopromoEvaliantOption = VehiclesInformation.Get(id).Autopromo; 
             }
             #endregion
-
 
 			return tmp;
 		}

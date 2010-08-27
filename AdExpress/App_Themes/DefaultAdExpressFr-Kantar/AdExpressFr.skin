@@ -1156,6 +1156,11 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            runat="server"
                            CssClass="txtInitialize" 
 />
+<%-- Initialize Media web control : used to initialize products selection --%>
+<ctrHeader:InitializeMediaWebControl  
+                           runat="server"
+                           CssClass="txtInitialize" 
+/>
 
 <%-- Generic media level detail selection web control--%>
 <ctrHeader:genericmedialeveldetailselectionwebcontrol 

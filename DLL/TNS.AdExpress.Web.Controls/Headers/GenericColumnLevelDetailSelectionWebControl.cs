@@ -255,10 +255,10 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             _columnDetailLevel.RenderControl(output);
             output.Write("</td>");
             output.Write("</tr>");
-            // Espace blanc
-            output.Write("<tr>");
-            output.Write("<td><img src=\"/App_Themes/"+WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name+"/Images/Common/pixel.gif\" border=\"0\" height=\"10\"></td>");
-            output.Write("</tr>");
+            //// Espace blanc
+            //output.Write("<tr>");
+            //output.Write("<td><img src=\"/App_Themes/"+WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name+"/Images/Common/pixel.gif\" border=\"0\" height=\"10\"></td>");
+            //output.Write("</tr>");
             output.Write("\r\n</table>");
         }
         #endregion

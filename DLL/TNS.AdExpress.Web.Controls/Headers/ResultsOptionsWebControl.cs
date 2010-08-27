@@ -43,6 +43,21 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// </summary>
         protected bool _forceMediaDetailForSlogan = false;
         /// <summary>
+        /// Titre du graphique
+        /// </summary>
+        protected string _chartTitle = "";
+        /// <summary>
+        /// Titre du tableau
+        /// </summary>
+        protected string _tableTitle = "";
+        /// <summary>
+        /// Show segment flag
+        /// </summary>
+        private bool _showSegment = false;
+        #endregion
+
+        #region Variables MMI
+        /// <summary>
         /// List des unités sélectionnable
         /// </summary>
         protected DropDownList list;
@@ -98,7 +113,6 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// Checkbox dédiée à l'auto-promo Evaliant
         /// </summary>
         protected System.Web.UI.WebControls.CheckBox AutopromoEvaliantCheckBox;
-
         /// <summary>
         /// Contrôle Choix du type de résultat sous forme graphique
         /// </summary>
@@ -107,7 +121,6 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// Contrôle Choix du type de résultat sous forme de tableau
         /// </summary>
         protected System.Web.UI.WebControls.RadioButton tableRadioButton;
-
         /// <summary>
         /// Contrôle Choix du type de pourcentage (horizontal ou vertical)
         /// </summary>
@@ -116,25 +129,28 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// Total comparaison choice for AS
         /// </summary>
         protected System.Web.UI.WebControls.RadioButtonList _totalChoiceRadioButtonList;
-
         /// <summary>
-        /// Initiailisation des éléments de référence
+        /// Initialisation des éléments de référence
         /// </summary>
         protected TNS.AdExpress.Web.Controls.Headers.InitializeProductWebControl _initializeProductWebControl;
+        /// <summary>
+        /// Initialisation des éléments média
+        /// </summary>
+        protected TNS.AdExpress.Web.Controls.Headers.InitializeMediaWebControl _initializeMediaWebControl;
+        
+        /// <summary>
+        /// Generic Column Level Detail Selection WebControl
+        /// </summary>
+        protected TNS.AdExpress.Web.Controls.Headers.GenericColumnLevelDetailSelectionWebControl _genericColumnLevelDetailSelectionWebControl;
+        /// <summary>
+        /// Generic Media Level Detail Selection WebControl
+        /// </summary>
+        protected TNS.AdExpress.Web.Controls.Headers.GenericMediaLevelDetailSelectionWebControl _genericMediaLevelDetailSelectionWebControl;
 
         /// <summary>
-        /// Titre du graphique
+        /// Period Detail WebControl
         /// </summary>
-        protected string _chartTitle = "";
-        /// <summary>
-        /// Titre du tableau
-        /// </summary>
-        protected string _tableTitle = "";
-
-        /// <summary>
-        /// Show segment flag
-        /// </summary>
-        private bool _showSegment = false;
+        protected TNS.AdExpress.Web.Controls.Headers.PeriodDetailWebControl _periodDetailWebControl;
 
         /// <summary>
         /// Selected Media universe
@@ -320,117 +336,6 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             set { tblChoiceOption = value; }
         }
 
-        #region Propriétés de TblChoice
-        /// <summary>
-        /// hauteur de l'image
-        /// </summary>
-        [Bindable(true), Category("Appearance")]
-        private double imageHeight = 15.0;
-        /// <summary></summary>
-        public double ImageHeight {
-            get { return imageHeight; }
-            set { imageHeight = value; }
-        }
-
-        /// <summary>
-        /// largeur de l'image
-        /// </summary>
-        [Bindable(true), Category("Appearance")]
-        private double imageWidth = 15.0;
-        /// <summary></summary>
-        public double ImageWidth {
-            get { return imageWidth; }
-            set { imageWidth = value; }
-        }
-
-        /// <summary>
-        /// largeur des bordures
-        /// </summary>
-        [Bindable(true), Category("Appearance"), DefaultValue(1.0)]
-        private double borderWidth = 1.0;
-        /// <summary></summary>
-        public new double BorderWidth {
-            get { return borderWidth; }
-            set { borderWidth = Math.Max(0, value); }
-        }
-
-        /// <summary>
-        /// option afficher images
-        /// </summary>
-        [Bindable(true), DefaultValue(true)]
-        protected bool pictShow = true;
-        /// <summary></summary>
-        public bool ShowPictures {
-            get { return pictShow; }
-            set { pictShow = value; }
-        }
-        /// <summary>
-        ///feuille de style 
-        /// </summary>
-        [Bindable(true), DefaultValue("ddlOut")]
-        protected string outCssClass = "ddlOut";
-        /// <summary></summary>
-        public string OutCssClass {
-            get { return outCssClass; }
-            set { outCssClass = value; }
-        }
-
-        /// <summary>
-        ///feuille de style pour l'élément en roll-over 
-        /// </summary>
-        [Bindable(true), DefaultValue("ddlOver")]
-        protected string overCssClass = "ddlOver";
-        /// <summary></summary>
-        public string OverCssClass {
-            get { return overCssClass; }
-            set { overCssClass = value; }
-        }
-
-        /// <summary>
-        /// liste des éléments
-        /// </summary>
-        [Bindable(true), DefaultValue("")]
-        private string texts = "";
-        /// <summary></summary>
-        public string List {
-            get { return texts; }
-            set { texts = value; }
-        }
-
-        /// <summary>
-        /// liste des unités APPM
-        /// </summary>
-        [Bindable(true), DefaultValue("")]
-        private string textsAppm = "";
-        /// <summary> liste des unités APPM</summary>
-        public string ListUnitAppm {
-            get { return textsAppm; }
-            set { textsAppm = value; }
-        }
-
-        /// <summary>
-        ///noms des images 
-        /// </summary>
-        [Bindable(true), DefaultValue("")]
-        private string images = "";
-        /// <summary></summary>
-        public string Images {
-            get { return images; }
-            set { images = value; }
-        }
-
-        /// <summary>
-        /// index liste
-        /// </summary>
-        [Bindable(true), DefaultValue(0)]
-        private int index;
-        /// <summary></summary>
-        public int ListIndex {
-            get { return index; }
-            set { index = Math.Min(value, texts.Split('|').Length - 1); }
-        }
-        #endregion
-
         /// <summary>
         /// Autopostback Vrai par défaut
         /// </summary>
@@ -580,18 +485,59 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             get { return _initializeProductWebControl; }
             set { _initializeProductWebControl = value; }
         }
+        /// <summary>
+        /// Initialisation des éléments média
+        /// </summary>
+        public TNS.AdExpress.Web.Controls.Headers.InitializeMediaWebControl InitializeMediaWebControl {
+            get { return _initializeMediaWebControl; }
+            set { _initializeMediaWebControl = value; }
+        }
 
         /// <summary>
         /// Option initialisation des annonceurs de concurrents
         /// </summary>
         [Bindable(true),
-        Description("Option initialisation des annoneceurs de concurrents")]
+        Description("Option initialisation des annonceurs de concurrents")]
         protected bool _inializeAdvertiserOption = false;
         /// <summary>Option initialisation des annonceurs de concurrents</summary>
         public bool InializeAdVertiserOption {
             get { return _inializeAdvertiserOption; }
             set { _inializeAdvertiserOption = value; }
         }
+        /// <summary>
+        /// Option initialisation des produits
+        /// </summary>
+        [Bindable(true),
+        Description("Option initialisation des produits")]
+        protected bool _initializeProductOption = false;
+        /// <summary>Option initialisation des produits</summary>
+        public bool InializeProductOption {
+            get { return _initializeProductOption; }
+            set { _initializeProductOption = value; }
+        }
+        /// <summary>
+        /// Option initialisation des slogans
+        /// </summary>
+        [Bindable(true),
+        Description("Option initialisation des slogans")]
+        protected bool _inializeSlogansOption = false;
+        /// <summary>Option initialisation des slogans</summary>
+        public bool InializeSlogansOption {
+            get { return _inializeSlogansOption; }
+            set { _inializeSlogansOption = value; }
+        }
+        /// <summary>
+        /// Option initialisation des supports
+        /// </summary>
+        [Bindable(true),
+        Description("Option initialisation des supports")]
+        protected bool _initializeMediaOption = false;
+        /// <summary></summary>
+        public bool InializeMediaOption {
+            get { return _initializeMediaOption; }
+            set { _initializeMediaOption = value; }
+        }
+
 
         /// <summary>
         /// Option type de pourcentage (horizontal ou vertical)
@@ -620,6 +566,279 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             get { return _selectedMediaUniverse; }
             set { _selectedMediaUniverse = value; }
         }
+
+        /// <summary>
+        /// Period Detail Options
+        /// </summary>		
+        [Bindable(true),
+        Description("Period Detail Options")]
+        protected bool _periodDetailOptions = false;
+        /// <summary>
+        /// Get/Set Period Detail Options
+        /// </summary>
+        public bool PeriodDetailOptions {
+            get { return _periodDetailOptions; }
+            set { _periodDetailOptions = value; }
+        }
+
+        #region Propriétés de TblChoice
+        /// <summary>
+        /// hauteur de l'image
+        /// </summary>
+        [Bindable(true), Category("Appearance")]
+        private double imageHeight = 15.0;
+        /// <summary></summary>
+        public double ImageHeight {
+            get { return imageHeight; }
+            set { imageHeight = value; }
+        }
+
+        /// <summary>
+        /// largeur de l'image
+        /// </summary>
+        [Bindable(true), Category("Appearance")]
+        private double imageWidth = 15.0;
+        /// <summary></summary>
+        public double ImageWidth {
+            get { return imageWidth; }
+            set { imageWidth = value; }
+        }
+
+        /// <summary>
+        /// largeur des bordures
+        /// </summary>
+        [Bindable(true), Category("Appearance"), DefaultValue(1.0)]
+        private double borderWidth = 1.0;
+        /// <summary></summary>
+        public new double BorderWidth {
+            get { return borderWidth; }
+            set { borderWidth = Math.Max(0, value); }
+        }
+
+        /// <summary>
+        /// option afficher images
+        /// </summary>
+        [Bindable(true), DefaultValue(true)]
+        protected bool pictShow = true;
+        /// <summary></summary>
+        public bool ShowPictures {
+            get { return pictShow; }
+            set { pictShow = value; }
+        }
+        /// <summary>
+        ///feuille de style 
+        /// </summary>
+        [Bindable(true), DefaultValue("ddlOut")]
+        protected string outCssClass = "ddlOut";
+        /// <summary></summary>
+        public string OutCssClass {
+            get { return outCssClass; }
+            set { outCssClass = value; }
+        }
+
+        /// <summary>
+        ///feuille de style pour l'élément en roll-over 
+        /// </summary>
+        [Bindable(true), DefaultValue("ddlOver")]
+        protected string overCssClass = "ddlOver";
+        /// <summary></summary>
+        public string OverCssClass {
+            get { return overCssClass; }
+            set { overCssClass = value; }
+        }
+
+        /// <summary>
+        /// liste des éléments
+        /// </summary>
+        [Bindable(true), DefaultValue("")]
+        private string texts = "";
+        /// <summary></summary>
+        public string List {
+            get { return texts; }
+            set { texts = value; }
+        }
+
+        /// <summary>
+        /// liste des unités APPM
+        /// </summary>
+        [Bindable(true), DefaultValue("")]
+        private string textsAppm = "";
+        /// <summary> liste des unités APPM</summary>
+        public string ListUnitAppm {
+            get { return textsAppm; }
+            set { textsAppm = value; }
+        }
+
+        /// <summary>
+        ///noms des images 
+        /// </summary>
+        [Bindable(true), DefaultValue("")]
+        private string images = "";
+        /// <summary></summary>
+        public string Images {
+            get { return images; }
+            set { images = value; }
+        }
+
+        /// <summary>
+        /// index liste
+        /// </summary>
+        [Bindable(true), DefaultValue(0)]
+        private int index;
+        /// <summary></summary>
+        public int ListIndex {
+            get { return index; }
+            set { index = Math.Min(value, texts.Split('|').Length - 1); }
+        }
+        #endregion
+
+        #region GenericColumnLevelDetailSelectionWebControl
+        /// <summary>
+        /// Generic Column Level Detail Selection Options
+        /// </summary>		
+        [Bindable(true),
+        Description("Generic Column Level Detail Selection Options")]
+        protected bool _GenericColumnLevelDetailSelectionOptions = false;
+        /// <summary>
+        /// Generic Column Level Detail Selection Options
+        /// </summary>
+        public bool GenericColumnLevelDetailSelectionOptions {
+            get { return _GenericColumnLevelDetailSelectionOptions; }
+            set { _GenericColumnLevelDetailSelectionOptions = value; }
+        }
+
+        /// <summary>
+        /// Generic Column Detail Level Type
+        /// </summary>
+        protected WebConstantes.GenericDetailLevel.Type _genericColumnDetailLevelType;
+        /// <summary>
+        /// Obtient ou définit le type des niveaux de détail colonne
+        /// </summary>
+        [Bindable(true),
+        Category("Appearance"),
+        Description("Type des niveaux de détail colonne")]
+        public WebConstantes.GenericDetailLevel.Type GenericColumnDetailLevelType {
+            get { return (_genericColumnDetailLevelType); }
+            set { _genericColumnDetailLevelType = value; }
+        }
+
+        /// <summary>
+        /// Nb Column Detail Level Item List
+        /// </summary>
+        protected int _nbColumnDetailLevelItemList = 1;
+        /// <summary>
+        /// Obtient ou définit le nombre de niveaux de détaille personnalisés
+        /// </summary>
+        [Bindable(true),
+        Category("Appearance"),
+        DefaultValue("4")]
+        public int NbColumnDetailLevelItemList {
+            get { return (_nbColumnDetailLevelItemList); }
+            set {
+                if(value < 1 || value > 1) throw (new ArgumentOutOfRangeException("The value of NbDetailLevelItemList must be between 1 and 4"));
+                _nbColumnDetailLevelItemList = value;
+            }
+        }
+        #endregion
+
+        #region GenericMediaLevelDetailSelectionWebControl
+        /// <summary>
+        /// Generic Media Level Detail Selection Options
+        /// </summary>		
+        [Bindable(true),
+        Description("Generic Media Level Detail Selection Options")]
+        protected bool _GenericMediaLevelDetailSelectionOptions = false;
+        /// <summary>
+        /// Generic Media Level Detail Selection Options
+        /// </summary>
+        public bool GenericMediaLevelDetailSelectionOptions {
+            get { return _GenericMediaLevelDetailSelectionOptions; }
+            set { _GenericMediaLevelDetailSelectionOptions = value; }
+        }
+
+        /// <summary>
+        /// Generic Detail Level Type
+        /// </summary>
+        protected WebConstantes.GenericDetailLevel.Type _genericDetailLevelType;
+        /// <summary>
+        /// Obtient ou définit le type des niveaux de détail
+        /// </summary>
+        [Bindable(true),
+        Category("Appearance"),
+        Description("Type des niveaux de détail")]
+        public WebConstantes.GenericDetailLevel.Type GenericDetailLevelType {
+            get { return (_genericDetailLevelType); }
+            set { _genericDetailLevelType = value; }
+        }
+
+        ///<summary>
+        /// Profile du composant
+        /// </summary>
+        protected WebConstantes.GenericDetailLevel.ComponentProfile _componentProfile;
+        /// <summary>
+        /// Obtient ou définit Le profile du coposant
+        /// </summary>
+        [Bindable(true),
+        Category("Appearance"),
+        Description("Profile du composant"),
+        DefaultValue("media")
+        ]
+        public WebConstantes.GenericDetailLevel.ComponentProfile GenericDetailLevelComponentProfile {
+            get { return (_componentProfile); }
+            set { _componentProfile = value; }
+        }
+
+        /// <summary>
+        /// Page permettant de sauvegarer le niveaux de détail
+        /// </summary>
+        protected string _removeASPXFilePath = string.Empty;
+        /// <summary>
+        /// Obtient ou définit la Page permettant de sauvegarer le niveaux de détail
+        /// </summary>
+        [Bindable(true),
+        Category("Appearance"),
+        DefaultValue("test.aspx"),
+        Description("Page permettant de supprimer un niveaux de détail sauvegardé")]
+        public string RemoveASPXFilePath {
+            get { return (_removeASPXFilePath); }
+            set { _removeASPXFilePath = value; }
+        }
+
+        /// <summary>
+        /// Page permettant de sauvegarer le niveaux de détail
+        /// </summary>
+        protected string _saveASPXFilePath = string.Empty;
+        /// <summary>
+        /// Obtient ou définit la Page permettant de sauvegarer le niveaux de détail
+        /// </summary>
+        [Bindable(true),
+        Category("Appearance"),
+        DefaultValue("test.aspx"),
+        Description("Page permettant de sauvegarer le niveaux de détail")]
+        public string SaveASPXFilePath {
+            get { return (_saveASPXFilePath); }
+            set { _saveASPXFilePath = value; }
+        }
+        
+        /// <summary>
+        /// Nb Detail Level Item List
+        /// </summary>
+        protected int _nbDetailLevelItemList = 1;
+        /// <summary>
+        /// Obtient ou définit le nombre de niveaux de détaille personnalisés
+        /// </summary>
+        [Bindable(true),
+        Category("Appearance"),
+        DefaultValue("4")]
+        public int NbDetailLevelItemList {
+            get { return (_nbDetailLevelItemList); }
+            set {
+                if(value < 1 || value > 4) throw (new ArgumentOutOfRangeException("The value of NbDetailLevelItemList must be between 1 and 4"));
+                _nbDetailLevelItemList = value;
+            }
+        }
+        #endregion
+
         #endregion
 
         #region Constructeur
@@ -641,8 +860,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// </summary>
         /// <param name="e">Arguments</param>
         protected override void OnInit(EventArgs e) {
-            
-            // Option Initialisation des éléments de références
+
+            #region Option Initialisation des éléments de référence
             _initializeProductWebControl = new TNS.AdExpress.Web.Controls.Headers.InitializeProductWebControl();
             _initializeProductWebControl.CustomerWebSession = customerWebSession;
             _initializeProductWebControl.AutoPostBackOption = this.autoPostBackOption;
@@ -650,8 +869,57 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             _initializeProductWebControl.CommonCssClass = "txtInitialize";
             _initializeProductWebControl.initializeAdvertiserCheckBox.EnableViewState = true;
             _initializeProductWebControl.InitializeAdvertiser = InializeAdVertiserOption;
+            _initializeProductWebControl.initializeProductCheckBox.EnableViewState = true;
+            _initializeProductWebControl.InitializeProduct = InializeProductOption;
+            _initializeProductWebControl.InitializeSlogans = InializeSlogansOption;
             _initializeProductWebControl.ID = this.ID + "_initializeAdvertiser";
             Controls.Add(_initializeProductWebControl);
+            #endregion
+
+            #region Option Initialisation des éléments média
+            _initializeMediaWebControl = new TNS.AdExpress.Web.Controls.Headers.InitializeMediaWebControl();
+            _initializeMediaWebControl.CustomerWebSession = customerWebSession;
+            _initializeMediaWebControl.AutoPostBackOption = this.autoPostBackOption;
+            _initializeMediaWebControl.EnableViewState = true;
+            _initializeMediaWebControl.CommonCssClass = "txtInitialize";
+            _initializeMediaWebControl.InitializeMedia = InializeMediaOption;
+            _initializeMediaWebControl.ID = this.ID + "_initializeMediaWebControl";
+            Controls.Add(_initializeMediaWebControl);
+            #endregion
+
+            #region Option Period Detail
+            if(PeriodDetailOptions) {
+                _periodDetailWebControl = new PeriodDetailWebControl();
+                _periodDetailWebControl.Session = customerWebSession;
+                _periodDetailWebControl.LanguageCode = customerWebSession.SiteLanguage;
+                _periodDetailWebControl.ID = this.ID + "_periodDetailWebControl";
+                _periodDetailWebControl.SkinID = "PeriodDetailWebControl";
+                Controls.Add(_periodDetailWebControl);
+
+                if(Page.Request.QueryString.Get("zoomDate") != null
+                    && Page.Request.QueryString.Get("zoomDate") != string.Empty) {
+                    _periodDetailWebControl.Visible = false;
+                }
+                else {
+                    _periodDetailWebControl.Visible = true;
+                    customerWebSession.DetailPeriod = _periodDetailWebControl.SelectedValue;
+
+                    if(customerWebSession.DetailPeriod == TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.dayly) {
+                        if(TNS.AdExpress.Web.Functions.Dates.getPeriodBeginningDate(customerWebSession.PeriodBeginningDate, TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDate)
+                            < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3)) {
+                            customerWebSession.DetailPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.monthly;
+                        }
+                    }
+                }
+
+                if(!Page.IsPostBack) {
+                    _periodDetailWebControl.Select(customerWebSession.DetailPeriod);
+                }
+                else {
+                    customerWebSession.DetailPeriod = _periodDetailWebControl.SelectedValue;
+                }
+            }
+            #endregion
 
             #region IsPostBack
             if(Page.IsPostBack) {
@@ -772,9 +1040,11 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             Controls.Add(tableRadioButton);
             #endregion
 
+            #region Set result pages options
             if(resultOption) {
                 SetResultPageOption();
             }
+            #endregion
 
             #region Option spécifiques AS
             if(TotalChoice) {
@@ -793,6 +1063,31 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 _zoomGraphicCheckBox.ID = this.ID + "_zoomGraphicCheckBox";
                 _zoomGraphicCheckBox.AutoPostBack = autoPostBackOption;
                 Controls.Add(_zoomGraphicCheckBox);
+            }
+            #endregion
+
+            #region Option Generic Column Level Detail
+            if(GenericColumnLevelDetailSelectionOptions) {
+                _genericColumnLevelDetailSelectionWebControl = new GenericColumnLevelDetailSelectionWebControl();
+                _genericColumnLevelDetailSelectionWebControl.CustomerWebSession = customerWebSession;
+                _genericColumnLevelDetailSelectionWebControl.GenericColumnDetailLevelType = GenericColumnDetailLevelType;
+                _genericColumnLevelDetailSelectionWebControl.NbColumnDetailLevelItemList = NbColumnDetailLevelItemList;
+                _genericColumnLevelDetailSelectionWebControl.Width = 194;
+                Controls.Add(_genericColumnLevelDetailSelectionWebControl);
+            }
+            #endregion
+
+            #region Options Generic Media Level Detail
+            if(GenericMediaLevelDetailSelectionOptions) {
+                _genericMediaLevelDetailSelectionWebControl = new GenericMediaLevelDetailSelectionWebControl();
+                _genericMediaLevelDetailSelectionWebControl.CustomerWebSession = customerWebSession;
+                _genericMediaLevelDetailSelectionWebControl.GenericDetailLevelComponentProfile = GenericDetailLevelComponentProfile;
+                _genericMediaLevelDetailSelectionWebControl.GenericDetailLevelType = GenericDetailLevelType;
+                _genericMediaLevelDetailSelectionWebControl.NbDetailLevelItemList = NbDetailLevelItemList;
+                _genericMediaLevelDetailSelectionWebControl.RemoveASPXFilePath = RemoveASPXFilePath;
+                _genericMediaLevelDetailSelectionWebControl.SaveASPXFilePath = SaveASPXFilePath;
+                _genericMediaLevelDetailSelectionWebControl.Width = 194;
+                Controls.Add(_genericMediaLevelDetailSelectionWebControl);
             }
             #endregion
 
@@ -901,6 +1196,26 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
+            #region InitializeProductWebControl display (PM)
+            if(this._initializeProductWebControl != null && (this._inializeAdvertiserOption || this.InializeProductOption || this.InializeSlogansOption)) {
+                switch(customerWebSession.CurrentModule) {
+                    case WebConstantes.Module.Name.ALERTE_PLAN_MEDIA:
+                    case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+                        if((!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(customerWebSession)
+                            || !customerWebSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)) //droits affiner univers Versions
+                            || customerWebSession.DetailPeriod != TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.dayly) {
+                            _initializeProductWebControl.Visible = false;
+                        }
+                        else
+                            _initializeProductWebControl.Visible = true;
+                        break;
+                    default:
+                        _initializeProductWebControl.Visible = true;
+                        break;
+                }
+            }
+            #endregion
+
             #region Total Choice (AS)
             if(TotalChoice) {
                 if(_totalChoiceRadioButtonList.Items.FindByValue(TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.universTotal.GetHashCode().ToString()) == null) _totalChoiceRadioButtonList.Items.Insert(0, new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1188, customerWebSession.SiteLanguage), TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.universTotal.GetHashCode().ToString()));
@@ -966,6 +1281,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <param name="sender">object qui lance l'évènement</param>
         /// <param name="e">arguments</param>
         private void Custom_PreRender(object sender, System.EventArgs e) {
+
             string themeName = WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name;
 
             #region Unité
@@ -1374,6 +1690,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// </summary>
         /// <param name="output"> Le writer HTML vers lequel écrire </param>
         protected override void Render(HtmlTextWriter output) {
+
             string themeName = WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name;
             bool showProduct = customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
@@ -1496,6 +1813,45 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 output.Write("\n<td>");
                 listInsert.RenderControl(output);
                 output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<TR>");
+                output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n</TR>");
+            }
+            #endregion
+
+            #region Option Period Detail
+            if(PeriodDetailOptions) {
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                output.Write("\n<td>");
+                _periodDetailWebControl.RenderControl(output);
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<TR>");
+                output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n</TR>");
+            }
+            #endregion
+
+            #region Option Generic Column Level Detail
+            if(GenericColumnLevelDetailSelectionOptions) {
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                output.Write("\n<td>");
+                _genericColumnLevelDetailSelectionWebControl.RenderControl(output);
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<TR>");
+                output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n</TR>");
+            }
+            #endregion
+
+            #region Option Generic Media Level Detail
+            if(GenericMediaLevelDetailSelectionOptions) {
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                output.Write("\n<td><hr class=\"hrSpacer\" />");
+                _genericMediaLevelDetailSelectionWebControl.RenderControl(output);
+                output.Write("\n<hr class=\"hrSpacer\" /></td>");
                 output.Write("\n</tr>");
                 output.Write("\n<TR>");
                 output.Write("\n<TD height=\"5\"></TD>");
@@ -1689,11 +2045,24 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
-            #region Initialisation des annonceurs de références
-            if(this._initializeProductWebControl != null && this._inializeAdvertiserOption) {
+            #region Initialisation
+            if(this._initializeProductWebControl != null 
+                && 
+                (this._inializeAdvertiserOption || this.InializeProductOption || this.InializeSlogansOption)
+                ) {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td>");
                 this._initializeProductWebControl.RenderControl(output);
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<TR>");
+                output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n</TR>");
+            }
+            if(this._initializeMediaWebControl != null && this.InializeMediaOption) {
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                output.Write("\n<td>");
+                this._initializeMediaWebControl.RenderControl(output);
                 output.Write("\n</td>");
                 output.Write("\n</tr>");
                 output.Write("\n<TR>");

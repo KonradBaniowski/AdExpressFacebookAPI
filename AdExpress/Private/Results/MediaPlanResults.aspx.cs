@@ -167,7 +167,6 @@ namespace AdExpress.Private.Results{
 					else {
 						if (Page.Request.Form.GetValues("__EVENTARGUMENT")[0] == "7") withZoomDateEventArguments = true;
 					}
-					
                 }
                 else
                 {
@@ -177,13 +176,11 @@ namespace AdExpress.Private.Results{
                 #endregion
 
                 #region Url Suivante
-                //				_nextUrl=this.recallWebControl.NextUrl;
                 if (_nextUrl.Length != 0)
                 {
                     _webSession.Source.Close();
 					Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession + ((withZoomDateEventArguments && _zoom != null && _zoom.Length > 0) ? "&zoomDate=" + _zoom + "&detailPeriod=" + _savePeriod.GetHashCode() : ""));
                 }
-
                 #endregion
 
                 #region Validation du menu
@@ -194,45 +191,39 @@ namespace AdExpress.Private.Results{
                 #endregion
 
                 #region Texte et langage du site
-                //for (int i = 0; i < this.Controls.Count; i++) {
-                //    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
-                //}
                 Moduletitlewebcontrol2.CustomerWebSession = _webSession;
-                ModuleBridgeWebControl1.CustomerWebSession = _webSession;
                 InformationWebControl1.Language = _webSession.SiteLanguage;
-                //				ExportWebControl1.CustomerWebSession=_webSession;
-                //Bouton valider dans la sous sélection
-                //okImageButton.ImageUrl = "/Images/" + _webSession.SiteLanguage + "/button/valider_up.gif";
-                //okImageButton.RollOverImageUrl = "/Images/" + _webSession.SiteLanguage + "/button/valider_down.gif";
                 #endregion
 
                 #region Period Detail
-                if (_zoom == null || _zoom == string.Empty)
-                {
-                    if (!IsPostBack)
-                    {
-                        PeriodDetailWebControl1.Select(_webSession.DetailPeriod);
-                    }
-                    else {
-                        _webSession.DetailPeriod = PeriodDetailWebControl1.SelectedValue;
-                    }
-                }
-                else
-                {
-                    zoomButton = string.Format("<tr><td align=\"left\"><object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"30\" height=\"8\" VIEWASTEXT><param name=movie value=\"/App_Themes/"+this.Theme+"/Flash/Common/Arrow_Back.swf\"><param name=quality value=\"high\"><param name=menu value=\"false\"><embed src=\"/App_Themes/"+this.Theme+"/Flash/Common/Arrow_Back.swf\" width=\"30\" height=\"8\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" menu=\"false\"></embed></object><a class=\"roll06\" href=\"/Private/Results/MediaPlanResults.aspx?idSession={0}\">{2}</a></td></tr><tr><td height=\"5\"></td></tr>",
+                //if(_zoom == null || _zoom == string.Empty) {
+                //    //if(!IsPostBack) {
+                //    //    PeriodDetailWebControl1.Select(_webSession.DetailPeriod);
+                //    //}
+                //    //else {
+                //    //    _webSession.DetailPeriod = PeriodDetailWebControl1.SelectedValue;
+                //    //}
+                //}
+                //else {
+                //    zoomButton = string.Format("<tr><td align=\"left\"><object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"30\" height=\"8\" VIEWASTEXT><param name=movie value=\"/App_Themes/" + this.Theme + "/Flash/Common/Arrow_Back.swf\"><param name=quality value=\"high\"><param name=menu value=\"false\"><embed src=\"/App_Themes/" + this.Theme + "/Flash/Common/Arrow_Back.swf\" width=\"30\" height=\"8\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" menu=\"false\"></embed></object><a class=\"roll06\" href=\"/Private/Results/MediaPlanResults.aspx?idSession={0}\">{2}</a></td></tr><tr><td height=\"5\"></td></tr>",
+                //        _webSession.IdSession,
+                //        _webSession.SiteLanguage,
+                //        GestionWeb.GetWebWord(2309, _webSession.SiteLanguage));
+                //}
+                if(_zoom != null && _zoom != string.Empty && _zoom.Length > 0) {
+                    zoomButton = string.Format("<tr><td align=\"left\"><object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"30\" height=\"8\" VIEWASTEXT><param name=movie value=\"/App_Themes/" + this.Theme + "/Flash/Common/Arrow_Back.swf\"><param name=quality value=\"high\"><param name=menu value=\"false\"><embed src=\"/App_Themes/" + this.Theme + "/Flash/Common/Arrow_Back.swf\" width=\"30\" height=\"8\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" menu=\"false\"></embed></object><a class=\"roll06\" href=\"/Private/Results/MediaPlanResults.aspx?idSession={0}\">{2}</a></td></tr><tr><td height=\"5\"></td></tr>",
                         _webSession.IdSession,
                         _webSession.SiteLanguage,
                         GestionWeb.GetWebWord(2309, _webSession.SiteLanguage));
-
                 }
                 #endregion
 
-				//Annuler l'univers de version
-				if (_webSession.DetailPeriod != ConstantesPeriod.DisplayLevel.dayly) {
+                #region Annuler l'univers de version
+                if (_webSession.DetailPeriod != ConstantesPeriod.DisplayLevel.dayly) {
 					_webSession.IdSlogans = new ArrayList();
 					_webSession.SloganIdZoom = -1;
-					//_webSession.Save();
-				}
+                }
+                #endregion
             }
             catch (System.Exception exc)
             {
@@ -287,25 +278,19 @@ namespace AdExpress.Private.Results{
         /// <returns>DeterminePostBackMode</returns>
         protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode(){
             System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
-            GenericMediaLevelDetailSelectionWebControl1.CustomerWebSession = _webSession;
             ResultsOptionsWebControl1.CustomerWebSession = _webSession;
             MenuWebControl2.CustomerWebSession = _webSession;
-            PeriodDetailWebControl1.Session = _webSession;
-			PeriodDetailWebControl1.LanguageCode = _webSession.SiteLanguage;
             GenericMediaScheduleWebControl1.CustomerWebSession = _webSession;
             SubPeriodSelectionWebControl1.WebSession = _webSession;
 
             #region Period Detail
             _zoom = Page.Request.QueryString.Get("zoomDate");
-            if (_zoom != null && _zoom != string.Empty)
-            {
-                if (Page.Request.Form.GetValues("zoomParam") != null && Page.Request.Form.GetValues("zoomParam")[0].Length > 0)
-                {
+            if(_zoom != null && _zoom != string.Empty) {
+                if(Page.Request.Form.GetValues("zoomParam") != null && Page.Request.Form.GetValues("zoomParam")[0].Length > 0) {
                     _zoom = Page.Request.Form.GetValues("zoomParam")[0];
                 }
                 MenuWebControl2.UrlPameters = string.Format("zoomDate={0}", _zoom);
                 MenuWebControl2.ForbidSave = true;
-                PeriodDetailWebControl1.Visible = false;
                 SubPeriodSelectionWebControl1.Visible = true;
                 SubPeriodSelectionWebControl1.AllPeriodAllowed = false;
                 _savePeriod = _webSession.DetailPeriod;
@@ -338,32 +323,22 @@ namespace AdExpress.Private.Results{
                 SetZoom = js.ToString();
                 #endregion
 
-                #region script
-                if (!this.ClientScript.IsClientScriptBlockRegistered("SetZoom")) this.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetZoom", SetZoom);
+                #region Script
+                if(!this.ClientScript.IsClientScriptBlockRegistered("SetZoom"))
+                    this.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetZoom", SetZoom);
                 #endregion
 
             }
-            else
-            {
-                PeriodDetailWebControl1.Visible = true;
+            else {
                 SubPeriodSelectionWebControl1.Visible = false;
-                _webSession.DetailPeriod = PeriodDetailWebControl1.SelectedValue;
-                if (_webSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly)
-                {
-                    if (Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, ConstantesPeriod.Type.dateToDate)
-                        < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
-                    {
+                if(_webSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly) {
+                    if(Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, ConstantesPeriod.Type.dateToDate)
+                        < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3)) {
                         _webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.monthly;
                     }
                 }
-
-
             }
             #endregion
-			
-			InitializeProductWebControl1.CustomerWebSession = _webSession;
-            InitializeMediaWebcontrol1.CustomerWebSession = _webSession;
-			SetSloganUniverseOptions();
 
             #region Option par media (Evaliant)
             string vehicleListId = _webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess);
@@ -398,6 +373,8 @@ namespace AdExpress.Private.Results{
         {
             try
             {
+                // Clic droit (Indique si le client peut affiner l'univers de versions)
+                SetSloganUniverseOptions();
 
                 #region MAJ _webSession
                 if (_zoom != null && _zoom != string.Empty)
@@ -438,13 +415,10 @@ namespace AdExpress.Private.Results{
 		/// </summary>		
 		private void SetSloganUniverseOptions() {
 			if ((!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(_webSession) || !_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG)) //droits affiner univers Versions
-					||  _webSession.DetailPeriod != ConstantesPeriod.DisplayLevel.dayly
-				) {
-				InitializeProductWebControl1.Visible = false;
+                || _webSession.DetailPeriod != ConstantesPeriod.DisplayLevel.dayly) {
                 ArrayList forbiddenOptions = new ArrayList();
                 forbiddenOptions.Add(7);
                 MenuWebControl2.ForbidOptionPagesList = forbiddenOptions;
-				//MenuWebControl2.ForbidOptionPages = true;
 			}
 		}
 		#endregion

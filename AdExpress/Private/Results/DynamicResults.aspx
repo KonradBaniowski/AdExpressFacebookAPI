@@ -58,27 +58,18 @@
 					                        <td><asp:Image ID="Image5" runat="server" height="10" width="1" SkinID="pixel" /></td>
 				                        </tr>
 				                        <tr vAlign="top">
-					                        <TD vAlign="top"><cc2:resultsoptionswebcontrol id="ResultsOptionsWebControl1" runat="server" InsertOption="True" Percentage="True"
-							                        AutoPostBackOption="False" ResultOption="True"></cc2:resultsoptionswebcontrol></TD>
+					                        <TD vAlign="top"><cc2:resultsoptionswebcontrol id="ResultsOptionsWebControl1" 
+                                                    runat="server" InsertOption="True" Percentage="True"
+							                        AutoPostBackOption="False" ResultOption="True" 
+                                                    GenericColumnDetailLevelType="dynamicCompetitorPotential" 
+                                                    GenericColumnLevelDetailSelectionOptions="True" 
+                                                    GenericDetailLevelComponentProfile="product" 
+                                                    GenericDetailLevelType="dynamicCompetitorPotential" 
+                                                    GenericMediaLevelDetailSelectionOptions="True" InializeProductOption="True" 
+                                                    NbDetailLevelItemList="3"></cc2:resultsoptionswebcontrol></TD>
 				                        </tr>
-				                        
-				                        <!--Niveaux Produits-->
-				                        <tr vAlign="top" class="backGroundOptionsPadding">
-					                        <TD vAlign="top"><cc2:GenericColumnLevelDetailSelectionWebControl id="_genericColumnLevelDetailSelectionWebControl1" runat="server" Width="200px" GenericColumnDetailLevelType="dynamicCompetitorPotential"
-							                        NbColumnDetailLevelItemList="1"></cc2:GenericColumnLevelDetailSelectionWebControl></TD>
-				                        </tr>
-				                        <tr class="backGroundOptionsPadding">
-					                        <td><cc2:genericmedialeveldetailselectionwebcontrol id="_genericMediaLevelDetailSelectionWebControl" runat="server" NbDetailLevelItemList="3"
-							                        SaveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelSave.aspx" RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx"
-							                        GenericDetailLevelComponentProfile="product" GenericDetailLevelType="dynamicCompetitorPotential" Width="200px"></cc2:genericmedialeveldetailselectionwebcontrol></td>
-				                        </tr>
-				                        <tr class="backGroundOptionsPadding" height="5">
-					                        <td><cc2:initializeproductwebcontrol id="InitializeProductWebControl1" 
-                                                    runat="server" AutoPostBackOption="False" InitializeProduct="True" 
-                                                    CommonCssClass="txtOrange11Bold"></cc2:initializeproductwebcontrol></td>
-				                        </tr>
-				                        <tr class="backGroundOptionsPadding" height="30" valign="middle" align="right">
-					                        <td><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="validButton"></cc1:imagebuttonrolloverwebcontrol>&nbsp;</td>
+				                        <tr class="backGroundOptions">
+											<td style="padding:0px 5px 5px 0px;" align="right"><cc1:imagebuttonrolloverwebcontrol id="validButton" runat="server" SkinID="validButton"></cc1:imagebuttonrolloverwebcontrol>&nbsp;</td>
 				                        </tr>
 
 				                        <!--Fin Niveaux Produits-->

@@ -61,44 +61,18 @@
 											<td><asp:Image ID="Image5" runat="server" height="10" width="1" SkinID="pixel" /></td>
 										</tr>
 										<tr valign="top">
-											<td valign="top"><cc2:resultsoptionswebcontrol id="ResultsOptionsWebControl1" runat="server" AutoPostBackOption="False" ResultOption="False"
-													MediaDetailOption="False"></cc2:resultsoptionswebcontrol></td>
+											<td valign="top">
+                                                <cc2:resultsoptionswebcontrol id="ResultsOptionsWebControl1" 
+                                                    runat="server" AutoPostBackOption="False" ResultOption="False"
+													MediaDetailOption="False" GenericDetailLevelComponentProfile="media" GenericDetailLevelType="mediaSchedule" 
+                                                    GenericMediaLevelDetailSelectionOptions="True" NbDetailLevelItemList="4" 
+                                                    RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx" 
+                                                    SaveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelSave.aspx" 
+                                                    InializeSlogansOption="True" InializeMediaOption="True" 
+                                                    PeriodDetailOptions="True"></cc2:resultsoptionswebcontrol></td>
 										</tr>
-										<tr valign="top" class="whiteBackGround">
-											<td><cc2:PeriodDetailWebControl ID="PeriodDetailWebControl1" runat="server" SkinID="PeriodDetailWebControl">
-																						</cc2:PeriodDetailWebControl></td>
-										</tr>
-										<tr valign="top" class="whiteBackGround">
-											<td><asp:Image ID="Image6" runat="server" height="5" width="1" SkinID="pixel" /></td>
-										</tr>
-										<tr valign="top">
-											<td vAlign="top"><cc2:genericmedialeveldetailselectionwebcontrol id="GenericMediaLevelDetailSelectionWebControl1" runat="server" Width="200px" NbDetailLevelItemList="4"
-													RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx" SaveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelSave.aspx"></cc2:genericmedialeveldetailselectionwebcontrol></td>
-										</tr>
-										<tr  class="whiteBackGround">
-											<td><cc2:initializeproductwebcontrol id="InitializeProductWebControl1" 
-                                                    runat="server" AutoPostBackOption="False" InitializeSlogans="True"
-													InitializeProduct="False" CommonCssClass="txtOrange11Bold"></cc2:initializeproductwebcontrol></td>
-										</tr>
-										<tr class="whiteBackGround" height="5">
-											<td><cc2:InitializeMediaWebControl id="InitializeMediaWebcontrol1" runat="server" 
-                                                    AutoPostBackOption="False" InitializeMedia="True" 
-                                                    CommonCssClass="txtOrange11Bold"></cc2:InitializeMediaWebControl></td>
-										</tr>
-										<tr valign="top" class="whiteBackGround">
-											<td><asp:Image ID="Image7" runat="server" height="5" width="1" SkinID="pixel" /></td>
-										</tr>
-										<tr vAlign="top">
-											<td id="Espace"><asp:Image ID="Image8" runat="server" height="10" width="1" SkinID="pixel" /></td>
-										</tr>
-										<tr vAlign="top">
-											<td align="left"><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="validateButton"></cc1:imagebuttonrolloverwebcontrol></td>
-										</tr>
-										<tr vAlign="top">
-											<td id="premeriEspece"><asp:Image ID="Image9" runat="server" height="10" width="1" SkinID="pixel" /></td>
-										</tr>
-										<tr vAlign="top">
-											<td><cc2:modulebridgewebcontrol id="ModuleBridgeWebControl1" runat="server" Visible="False"></cc2:modulebridgewebcontrol></td>
+										<tr class="backGroundOptions">
+											<td style="padding:0px 5px 5px 0px;" align="right"><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="validButton"></cc1:imagebuttonrolloverwebcontrol></td>
 										</tr>
 										
 										<!-- Info bt droit -->

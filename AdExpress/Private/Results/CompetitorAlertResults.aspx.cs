@@ -300,7 +300,7 @@ namespace AdExpress.Private.Results{
 				#region MAJ _webSession
 				_webSession.LastReachedResultUrl=Page.Request.Url.AbsolutePath;
 				_webSession.ReachedModule=true;
-				_webSession.Save();
+				//_webSession.Save();
 				#endregion
 			}
 			catch(System.Exception exc){
@@ -321,6 +321,17 @@ namespace AdExpress.Private.Results{
 		protected void Page_UnLoad(object sender, System.EventArgs e){			
 		}
 		#endregion
+
+        #region OnLoadComplete
+        /// <summary>
+        /// OnLoadComplete
+        /// </summary>
+        /// <param name="e">Args</param>
+        protected override void OnLoadComplete(EventArgs e) {
+            _webSession.Save();
+            base.OnLoadComplete(e);
+        }
+        #endregion
 		
 		#region DeterminePostBackMode
 		/// <summary>
@@ -332,10 +343,6 @@ namespace AdExpress.Private.Results{
 		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
 			ResultsOptionsWebControl1.CustomerWebSession = _webSession;
-			_genericMediaLevelDetailSelectionWebControl.CustomerWebSession=_webSession;
-            _genericColumnLevelDetailSelectionWebControl1.CustomerWebSession = _webSession;
-			InitializeProductWebControl1.CustomerWebSession=_webSession;
-			//MediaAgencyYearWebControl1.WebSession=_webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
 
 			#region Gestion PDM (on affiche pas PDM si un seul support est selectionné)

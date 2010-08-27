@@ -24,6 +24,10 @@ hr
 	height:1px;
 	color:#8F8C8C;
 }
+.hrSpacer {
+	height:1px;
+	color:#5C5C5C;
+}
 .backGroundModuleTitleBorder{
 	background-color : #5C5C5C;
 }

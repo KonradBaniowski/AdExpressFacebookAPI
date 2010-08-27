@@ -58,27 +58,22 @@
 											<td><asp:Image ID="Image5" runat="server" height="10" width="1" SkinID="pixel" /></td>
 										</tr>
 										<tr vAlign="top">
-											<TD vAlign="top"><cc2:resultsoptionswebcontrol id="ResultsOptionsWebControl1" runat="server" ProductDetailOption="False" InsertOption="True"
-													ResultOption="True" AutoPostBackOption="False" Percentage="True"></cc2:resultsoptionswebcontrol></TD>
+											<TD vAlign="top">
+                                                <cc2:resultsoptionswebcontrol id="ResultsOptionsWebControl1" 
+                                                    runat="server" ProductDetailOption="False" InsertOption="True"
+													ResultOption="True" AutoPostBackOption="False" Percentage="True" InializeAdVertiserOption="False" 
+                                                    InitializeProductsSelectionOption="True" 
+                                                    GenericColumnDetailLevelType="dynamicCompetitorPotential" 
+                                                    GenericColumnLevelDetailSelectionOptions="True" 
+                                                    GenericDetailLevelComponentProfile="product" 
+                                                    GenericDetailLevelType="dynamicCompetitorPotential" 
+                                                    GenericMediaLevelDetailSelectionOptions="True" NbDetailLevelItemList="3" 
+                                                    RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx" 
+                                                    SaveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelSave.aspx" 
+                                                    InializeProductOption="True"></cc2:resultsoptionswebcontrol></TD>
 										</tr>
-										
-										<!-- Niveaux Produits-->
-										<tr vAlign="top" class="backGroundOptionsPadding" >
-											<TD vAlign="top"><cc2:GenericColumnLevelDetailSelectionWebControl id="_genericColumnLevelDetailSelectionWebControl1" runat="server" Width="200px" GenericColumnDetailLevelType="dynamicCompetitorPotential"
-													NbColumnDetailLevelItemList="1"></cc2:GenericColumnLevelDetailSelectionWebControl></TD>
-										</tr>
-										<tr vAlign="top" class="backGroundOptionsPadding" >
-											<TD vAlign="top"><cc2:genericmedialeveldetailselectionwebcontrol id="_genericMediaLevelDetailSelectionWebControl" runat="server" Width="200px" GenericDetailLevelType="dynamicCompetitorPotential"
-													GenericDetailLevelComponentProfile="product" RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx" SaveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelSave.aspx"
-													NbDetailLevelItemList="3"></cc2:genericmedialeveldetailselectionwebcontrol></TD>
-										</tr>
-										<tr class="backGroundOptionsPadding" >
-											<td><cc2:initializeproductwebcontrol id="InitializeProductWebControl1" 
-                                                    runat="server" AutoPostBackOption="False" InitializeProduct="True" 
-                                                    CommonCssClass="txtOrange11Bold"></cc2:initializeproductwebcontrol></td>
-										</tr>
-										<tr class="backGroundOptionsPadding" height="30" valign="middle" align="right">
-											<td><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="validButton"></cc1:imagebuttonrolloverwebcontrol></td>
+										<tr class="backGroundOptions">
+											<td style="padding:0px 5px 5px 0px;" align="right"><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="validButton"></cc1:imagebuttonrolloverwebcontrol></td>
 										</tr>
 										
 										<!--Fin Niveaux Produits-->
