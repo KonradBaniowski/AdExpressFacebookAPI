@@ -146,12 +146,14 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// Generic Media Level Detail Selection WebControl
         /// </summary>
         protected TNS.AdExpress.Web.Controls.Headers.GenericMediaLevelDetailSelectionWebControl _genericMediaLevelDetailSelectionWebControl;
-
         /// <summary>
         /// Period Detail WebControl
         /// </summary>
         protected TNS.AdExpress.Web.Controls.Headers.PeriodDetailWebControl _periodDetailWebControl;
-
+        /// <summary>
+        /// Sector WebControl
+        /// </summary>
+        protected TNS.AdExpress.Web.Controls.Headers.SectorWebControl _sectorWebControl;
         /// <summary>
         /// Selected Media universe
         /// </summary>
@@ -579,6 +581,20 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         public bool PeriodDetailOptions {
             get { return _periodDetailOptions; }
             set { _periodDetailOptions = value; }
+        }
+
+        /// <summary>
+        /// Sector Selection Options
+        /// </summary>		
+        [Bindable(true),
+        Description("Sector Selection Options")]
+        protected bool _sectorSelectionOptions = false;
+        /// <summary>
+        /// Sector Selection Options
+        /// </summary>
+        public bool SectorSelectionOptions {
+            get { return _sectorSelectionOptions; }
+            set { _sectorSelectionOptions = value; }
         }
 
         #region Propriétés de TblChoice
@@ -1091,6 +1107,17 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
+            #region Option Sector Selection
+            if(SectorSelectionOptions) {
+                _sectorWebControl = new SectorWebControl();
+                _sectorWebControl.Session = customerWebSession;
+                _sectorWebControl.LanguageCode = customerWebSession.SiteLanguage;
+                _sectorWebControl.ID = this.ID + "_sectorWebControl";
+                _sectorWebControl.SkinID = "SectorWebControl";
+                Controls.Add(_sectorWebControl);
+            }
+            #endregion
+
             base.OnInit(e);
         }
         #endregion
@@ -1272,17 +1299,25 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 
             #region Options Generic Media Level Detail
             if(GenericMediaLevelDetailSelectionOptions) {
-                switch(customerWebSession.CurrentTab) {
-                    case Portofolio.SYNTHESIS:
-                    case Portofolio.DETAIL_MEDIA:
-                    case Portofolio.STRUCTURE:
-                        _genericMediaLevelDetailSelectionWebControl.Visible = false;
+
+                switch(customerWebSession.CurrentModule) {
+                    case WebConstantes.Module.Name.ALERTE_PORTEFEUILLE:
+                    case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+                        switch(customerWebSession.CurrentTab) {
+                            case Portofolio.SYNTHESIS:
+                            case Portofolio.DETAIL_MEDIA:
+                            case Portofolio.STRUCTURE:
+                                _genericMediaLevelDetailSelectionWebControl.Visible = false;
+                                break;
+                            case Portofolio.DETAIL_PORTOFOLIO:
+                            case Portofolio.CALENDAR:
+                                _genericMediaLevelDetailSelectionWebControl.Visible = true;
+                                break;
+                        }
                         break;
-                    case Portofolio.DETAIL_PORTOFOLIO:
-                    case Portofolio.CALENDAR:
-                        _genericMediaLevelDetailSelectionWebControl.Visible = true;
-                        break;
+
                     default:
+                        _genericMediaLevelDetailSelectionWebControl.Visible = true;
                         break;
                 }
             }
@@ -1830,6 +1865,19 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td>");
                 listInsert.RenderControl(output);
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<TR>");
+                output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n</TR>");
+            }
+            #endregion
+
+            #region Option Sector Selection
+            if(SectorSelectionOptions) {
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                output.Write("\n<td>");
+                _sectorWebControl.RenderControl(output);
                 output.Write("\n</td>");
                 output.Write("\n</tr>");
                 output.Write("\n<TR>");

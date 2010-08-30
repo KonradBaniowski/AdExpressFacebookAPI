@@ -50,7 +50,7 @@ namespace AdExpress.Private.Results{
 	/// </summary>
     public partial class NewCreativesResults : TNS.AdExpress.Web.UI.ResultWebPage {
 
-        #region variables publiques
+        #region Variables
         /// <summary>
 		/// Code HTML des résultats
 		/// </summary>
@@ -118,22 +118,22 @@ namespace AdExpress.Private.Results{
 				}
 				#endregion
 
-                #region Period Detail
-                if(!IsPostBack)
-                    PeriodDetailWebControl1.Select(_webSession.DetailPeriod);
-                else 
-                    _webSession.DetailPeriod = PeriodDetailWebControl1.SelectedValue;
-                #endregion
+                //#region Period Detail
+                //if(!IsPostBack)
+                //    PeriodDetailWebControl1.Select(_webSession.DetailPeriod);
+                //else 
+                //    _webSession.DetailPeriod = PeriodDetailWebControl1.SelectedValue;
+                //#endregion
 
-				#region Résultat
-				// Affichage de tous les produits
-				if(Request.Form.Get("__EVENTTARGET")=="InitializeButton"){
-					_webSession.CurrentUniversProduct.Nodes.Clear();
-					_webSession.SelectionUniversProduct.Nodes.Clear();
-					_webSession.Save();
-				}
-                _webSession.Save();
-				#endregion
+                //#region Résultat
+                //// Affichage de tous les produits
+                //if(Request.Form.Get("__EVENTTARGET")=="InitializeButton"){
+                //    _webSession.CurrentUniversProduct.Nodes.Clear();
+                //    _webSession.SelectionUniversProduct.Nodes.Clear();
+                //    _webSession.Save();
+                //}
+                //_webSession.Save();
+                //#endregion
 						
 				#region Textes et Langage du site
 				InformationWebControl1.Language = _webSession.SiteLanguage;
@@ -152,12 +152,12 @@ namespace AdExpress.Private.Results{
                 //}	
 				#endregion              
                 
-                #region Sector list
-                DataTable dt = new TNS.AdExpress.DataAccess.Classification.ProductBranch.AllSectorLevelListDataAccess(_webSession.DataLanguage, _webSession.Source).GetDataTable;
-                SectorWebControl1.Session = _webSession;
-                SectorWebControl1.DataTable = dt;
-                SectorWebControl1.LanguageCode = _webSession.SiteLanguage;
-                #endregion
+                //#region Sector list
+                //DataTable dt = new TNS.AdExpress.DataAccess.Classification.ProductBranch.AllSectorLevelListDataAccess(_webSession.DataLanguage, _webSession.Source).GetDataTable;
+                //SectorWebControl1.Session = _webSession;
+                //SectorWebControl1.DataTable = dt;
+                //SectorWebControl1.LanguageCode = _webSession.SiteLanguage;
+                //#endregion
 
             }			
 			catch(System.Exception exc){
@@ -176,14 +176,18 @@ namespace AdExpress.Private.Results{
 		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();			
             Moduletitlewebcontrol2.CustomerWebSession=_webSession;
-            MenuWebControl2.CustomerWebSession = _webSession;            
-            PeriodDetailWebControl1.Session = _webSession;
-            PeriodDetailWebControl1.LanguageCode = _webSession.SiteLanguage;
-            _genericMediaLevelDetailSelectionWebControl.CustomerWebSession = _webSession;
+            MenuWebControl2.CustomerWebSession = _webSession;
+
+            ResultsOptionsWebControl1.CustomerWebSession = _webSession;
+
+            //PeriodDetailWebControl1.Session = _webSession;
+            //PeriodDetailWebControl1.LanguageCode = _webSession.SiteLanguage;
+            //_genericMediaLevelDetailSelectionWebControl.CustomerWebSession = _webSession;
             _ResultWebControl.CustomerWebSession = _webSession;
+            
             // Period
-            PeriodDetailWebControl1.Visible = true;
-            _webSession.DetailPeriod = PeriodDetailWebControl1.SelectedValue;
+            //PeriodDetailWebControl1.Visible = true;
+            //_webSession.DetailPeriod = PeriodDetailWebControl1.SelectedValue;
             if(_webSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly) {
                 if(WebFunctions.Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, ConstantesPeriod.Type.dateToDate)
                     < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3)) {

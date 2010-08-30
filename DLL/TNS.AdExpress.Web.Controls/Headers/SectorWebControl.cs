@@ -143,6 +143,9 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// </summary>
         /// <param name="e">Event params</param>
         protected override void OnInit(EventArgs e) {
+
+            _dt = new TNS.AdExpress.DataAccess.Classification.ProductBranch.AllSectorLevelListDataAccess(_session.DataLanguage, _session.Source).GetDataTable;
+
             _dropDownList.EnableViewState = true;
             this.Controls.Add(_dropDownList);
 

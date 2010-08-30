@@ -52,40 +52,30 @@
 												<cc2:moduletitlewebcontrol id="Moduletitlewebcontrol2" runat="server" CodeDescription="900"></cc2:moduletitlewebcontrol>
 											</td>
 										</tr>
-										<tr vAlign="top">
-					                        <td><asp:Image ID="Image5" runat="server" height="10" width="1" SkinID="pixel" /></td>
-				                        </tr>
-                                        <!-- familles -->
-				                        <tr vAlign="top">
-					                        <TD vAlign="top">
-					                        <cc2:SectorWebControl ID="SectorWebControl1" runat="server" 
-                                                    SkinID="SectorWebControl" BackgroundColor="">
-                                                </cc2:SectorWebControl>
-					                        </TD>
-                                        </tr>
-                                        <tr height="5">
-					                        <td style="HEIGHT: 14px"></td>
-				                        </tr>
-				                        <!-- période détaillée par -->
-				                        <tr valign="top" >
-					                        <td><cc2:PeriodDetailWebControl ID="PeriodDetailWebControl1" runat="server" 
-                                                    SkinID="PeriodDetailWebControl" BackgroundColor="">
-                                                </cc2:PeriodDetailWebControl></td>
-				                        </tr>
-				                        <!-- generic product -->
-				                        <tr height="5">
-					                        <td class="txtGris11Bold" style="HEIGHT: 14px"></td>
-				                        </tr>
-				                        <tr height="5">
-					                        <td><cc2:genericmedialeveldetailselectionwebcontrol id="_genericMediaLevelDetailSelectionWebControl" runat="server" SaveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelSave.aspx"
-							                        RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx" GenericDetailLevelType="dynamicCompetitorPotential"
-							                        GenericDetailLevelComponentProfile="product" Width="200px" NbDetailLevelItemList="3"></cc2:genericmedialeveldetailselectionwebcontrol></td>
-				                        </tr>
-                                        <tr height="5">
-					                        <td class="txtGris11Bold" style="HEIGHT: 14px"></td>
-				                        </tr>
-				                        <tr vAlign="top">
-					                        <td><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="okButton"></cc1:imagebuttonrolloverwebcontrol></td>
+										
+										<!-- Options -->
+										<tr valign="top">
+											<td><asp:Image ID="Image5" runat="server" height="10" width="1" SkinID="pixel" /></td>
+										</tr>
+										<tr valign="top">
+											<td valign="top">
+											
+											    <cc2:ResultsOptionsWebControl ID="ResultsOptionsWebControl1" runat="server" 
+                                                    AutoPostBackOption="False" GenericColumnDetailLevelType="unknown" 
+                                                    GenericDetailLevelComponentProfile="product" 
+                                                    GenericDetailLevelType="dynamicCompetitorPotential" 
+                                                    GenericMediaLevelDetailSelectionOptions="True" MediaDetailOption="False" 
+                                                    NbDetailLevelItemList="3" PeriodDetailOptions="True" 
+                                                    RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx" 
+                                                    ResultOption="False" 
+                                                    SaveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelSave.aspx" 
+                                                    UnitOption="False" SectorSelectionOptions="True" />
+											
+											</td>
+										</tr>
+
+				                        <tr class="backGroundOptions">
+											<td style="padding:0px 5px 5px 0px;" align="right"><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="validButton"></cc1:imagebuttonrolloverwebcontrol></td>
 				                        </tr>
 										
 										<!-- Info bt droit -->
