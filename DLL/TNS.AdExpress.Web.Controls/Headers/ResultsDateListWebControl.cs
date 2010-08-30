@@ -38,7 +38,6 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		#endregion
 
 		#region Accesseurs
-		
 		/// <summary>
 		/// Obtient et définit le type du module
 		/// </summary>
@@ -55,19 +54,15 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			get{return webSession;}
 			set{webSession=value;}
 		}
-
 		#endregion
 
 		#region Evènements
-
 		/// <summary>
 		/// Initialisation
 		/// </summary>
 		/// <param name="e">Arguments</param>
 		protected override void OnInit(EventArgs e) {	
-	
-			
-			#region initialisation de la liste des dates
+			// initialisation de la liste des dates
 			this.Items.Clear();	
 			
 			switch(detailPeriod){
@@ -96,9 +91,6 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				default :
 					throw(new WebControlInitializationException("Il est impossible de définir une liste de dates à afficher."));
 			}			
-
-			#endregion
-
 			base.OnInit(e);
 		}
 
@@ -111,8 +103,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		}
 		#endregion
 
-		#region Méthodes internes	
-
+		#region Méthodes internes
 		/// <summary>
 		///Crée une liste de dates hebdomadaires	 
 		/// </summary>

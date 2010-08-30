@@ -466,6 +466,10 @@ namespace AdExpress.Private.Results
             _webSession.Save();
         }
 
+        /// <summary>
+        /// Change Country
+        /// </summary>
+        /// <returns>ChangeCountry bool</returns>
         private bool ChangeCountry()
         {
             return (Page.Request.UrlReferrer == null && !Page.IsPostBack && _webSession.LastReachedResultUrl.Trim().Equals(Page.Request.Url.AbsolutePath.Trim()));
