@@ -307,7 +307,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            BlockFlechePath="/App_Themes/DefaultAdExpressUk-Kantar/Images/Common/block_fleche.gif" 
                            BlockDupliPath="/App_Themes/DefaultAdExpressUk-Kantar/Images/Common/block_dupli.gif" 
                            TitleUppercaseCss="titleUppercase" 
-                           CommonCssClass="txtOrange11Bold" 
+                           CommonCssClass="txtBlanc11Bold" 
 />
 
 <%-- Information web control : used to show information about how to use the web menu --%>

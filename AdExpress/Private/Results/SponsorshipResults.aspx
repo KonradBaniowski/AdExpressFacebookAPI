@@ -58,51 +58,21 @@
 											<td><asp:Image ID="Image5" runat="server" height="10" SkinID="pixel" width="1" /></td>
 										</tr>
 										<tr valign="top">
-											<td valign="top"><cc2:resultsoptionswebcontrol SkinID="resultsOptionsASDynamicTables" id="ResultsOptionsWebControl1" runat="server" PercentageTypeOption="True" ShowPictures="False"
+											<td valign="top">
+                                                <cc2:resultsoptionswebcontrol SkinID="resultsOptionsASDynamicTables" 
+                                                    id="ResultsOptionsWebControl1" runat="server" PercentageTypeOption="True" ShowPictures="False"
 													InsertOption="False" Percentage="False" AutoPostBackOption="False" ResultOption="False" PreformatedTableOption="False"
-													Width="120px" ImageHeight="26" ImageWidth="139"></cc2:resultsoptionswebcontrol></td>
+													Width="120px" ImageHeight="26" ImageWidth="139" GenericDetailLevelComponentProfile="media" 
+                                                    GenericDetailLevelType="devicesAnalysis" 
+                                                    GenericMediaLevelDetailSelectionOptions="True" InializeMediaOption="True" 
+                                                    InializeProductOption="True" NbDetailLevelItemList="4" 
+                                                    RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx" 
+                                                    SaveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelSave.aspx" 
+                                                    ResultsTableTypesOptions="True"></cc2:resultsoptionswebcontrol></td>
 										</tr>
-										<!--Niveaux Produits-->
-										<tr height="3">
-											<td></td>
-										</tr>
-										<tr>
-											<td><cc2:genericmedialeveldetailselectionwebcontrol SkinID="genericmedialeveldetailselectionwebcontrol" 
-                                                    id="_genericMediaLevelDetailSelectionWebControl" runat="server" Width="200px" NbDetailLevelItemList="4"
-													SaveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelSave.aspx" RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx"
-													GenericDetailLevelComponentProfile="media" GenericDetailLevelType="devicesAnalysis" BackGroundColor="" 
-                                                    CssDefaultListLabel="txtBlanc11Bold"></cc2:genericmedialeveldetailselectionwebcontrol></td>
-										</tr>
-										<tr height="5">
-											<td><cc2:initializeproductwebcontrol id="InitializeProductWebControl1" 
-                                                    runat="server" AutoPostBackOption="False" InitializeProduct="True" 
-                                                    CommonCssClass="txtOrange11Bold"></cc2:initializeproductwebcontrol></td>
-										</tr>
-										<tr height="5">
-											<td><cc2:InitializeMediaWebControl id="InitializeMediaWebcontrol1" runat="server" 
-                                                    AutoPostBackOption="False" InitializeMedia="True" 
-                                                    CommonCssClass="txtOrange11Bold"></cc2:InitializeMediaWebControl></td>
-										</tr>
-										<!--Fin Niveaux Produits-->
 										
-										<!--Debut Type de tableau-->
-										<tr valign="top">
-											<td valign="top"><cc2:resultstabletypeswebcontrol id="ResultsTableTypesWebControl1" runat="server" ShowPictures="True" AutoPostBackOption="False"
-													Width="120px" SkinID = "ResultsTableTypesWebControl1" ImageHeight="26" ImageWidth="139"></cc2:resultstabletypeswebcontrol></td>
-										</tr>
-										<!--Fin Type de tableau-->
-										
-										<tr>
-											<td><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="okButton"></cc1:imagebuttonrolloverwebcontrol></td>
-										</tr>
-										<tr height="5">
-											<td></td>
-										</tr>
-										<tr valign="top">
-											<td><asp:Image ID="Image6" runat="server" height="10" SkinID="pixel" width="1" /></td>
-										</tr>
-										<tr valign="top">
-											<td><cc2:modulebridgewebcontrol id="ModuleBridgeWebControl1" runat="server" Visible="False"></cc2:modulebridgewebcontrol></td>
+										<tr class="backGroundOptions">
+											<td style="padding:0px 5px 5px 0px;" align="right"><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="validButton"></cc1:imagebuttonrolloverwebcontrol></td>
 										</tr>
 										
 										<!-- Info bt droit -->

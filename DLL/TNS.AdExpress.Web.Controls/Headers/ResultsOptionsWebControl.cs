@@ -137,7 +137,6 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// Initialisation des éléments média
         /// </summary>
         protected TNS.AdExpress.Web.Controls.Headers.InitializeMediaWebControl _initializeMediaWebControl;
-        
         /// <summary>
         /// Generic Column Level Detail Selection WebControl
         /// </summary>
@@ -154,6 +153,12 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// Sector WebControl
         /// </summary>
         protected TNS.AdExpress.Web.Controls.Headers.SectorWebControl _sectorWebControl;
+
+        /// <summary>
+        /// Results Table Types WebControl
+        /// </summary>
+        protected TNS.AdExpress.Web.Controls.Headers.ResultsTableTypesWebControl _resultsTableTypesWebControl;
+
         /// <summary>
         /// Selected Media universe
         /// </summary>
@@ -585,7 +590,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 
         /// <summary>
         /// Sector Selection Options
-        /// </summary>		
+        /// </summary>
         [Bindable(true),
         Description("Sector Selection Options")]
         protected bool _sectorSelectionOptions = false;
@@ -595,6 +600,20 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         public bool SectorSelectionOptions {
             get { return _sectorSelectionOptions; }
             set { _sectorSelectionOptions = value; }
+        }
+
+        /// <summary>
+        /// Results Table Types Options
+        /// </summary>		
+        [Bindable(true),
+        Description("Results Table Types Options")]
+        protected bool _resultsTableTypesOptions = false;
+        /// <summary>
+        /// Results Table Types Options
+        /// </summary>
+        public bool ResultsTableTypesOptions {
+            get { return _resultsTableTypesOptions; }
+            set { _resultsTableTypesOptions = value; }
         }
 
         #region Propriétés de TblChoice
@@ -1062,7 +1081,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
-            #region Option spécifiques AS
+            #region Option spécifique AS
             if(TotalChoice) {
                 _totalChoiceRadioButtonList = new RadioButtonList();
                 _totalChoiceRadioButtonList.ID = this.ID + "_totalChoice";
@@ -1079,6 +1098,21 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 _zoomGraphicCheckBox.ID = this.ID + "_zoomGraphicCheckBox";
                 _zoomGraphicCheckBox.AutoPostBack = autoPostBackOption;
                 Controls.Add(_zoomGraphicCheckBox);
+            }
+            #endregion
+
+            #region Options Results Table Types (An. Dispositifs)
+            if(ResultsTableTypesOptions) {
+                _resultsTableTypesWebControl = new ResultsTableTypesWebControl();
+                _resultsTableTypesWebControl.CustomerWebSession = customerWebSession;
+                _resultsTableTypesWebControl.ID = "DDLResultsTableTypesWebControl1";
+                _resultsTableTypesWebControl.ShowPictures = true;
+                _resultsTableTypesWebControl.OutCssClass = this.outCssClass;
+                _resultsTableTypesWebControl.OverCssClass = this.overCssClass;
+                _resultsTableTypesWebControl.SkinID = "ResultsTableTypesWebControl1";
+                _resultsTableTypesWebControl.ImageHeight = 26;
+                _resultsTableTypesWebControl.ImageWidth = 139;
+                Controls.Add(_resultsTableTypesWebControl);
             }
             #endregion
 
@@ -1223,8 +1257,9 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
-            #region InitializeProductWebControl display (PM)
+            #region InitializeProductWebControl display
             if(this._initializeProductWebControl != null && (this._inializeAdvertiserOption || this.InializeProductOption || this.InializeSlogansOption)) {
+                
                 switch(customerWebSession.CurrentModule) {
                     case WebConstantes.Module.Name.ALERTE_PLAN_MEDIA:
                     case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
@@ -1236,8 +1271,27 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                         else
                             _initializeProductWebControl.Visible = true;
                         break;
+
+                    case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
+                        _initializeProductWebControl.Visible = false;
+                        break;
+
                     default:
                         _initializeProductWebControl.Visible = true;
+                        break;
+                }
+
+            }
+            #endregion
+
+            #region InitializeMediaWebControl display
+            if(this._initializeMediaWebControl != null && this._initializeMediaOption) {
+                switch(customerWebSession.CurrentModule) {
+                    case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
+                        _initializeMediaWebControl.Visible = false;
+                        break;
+                    default:
+                        _initializeMediaWebControl.Visible = true;
                         break;
                 }
             }
@@ -1316,8 +1370,46 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                         }
                         break;
 
+                    case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
+                        _genericMediaLevelDetailSelectionWebControl.GenericDetailLevelType = WebConstantes.GenericDetailLevel.Type.devicesAnalysis;
+                        break;
+                    case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
+                        _genericMediaLevelDetailSelectionWebControl.GenericDetailLevelType = WebConstantes.GenericDetailLevel.Type.programAnalysis;
+                        break;
+
                     default:
                         _genericMediaLevelDetailSelectionWebControl.Visible = true;
+                        break;
+                }
+            }
+            #endregion
+
+            #region Option Results Table Types
+            if(ResultsTableTypesOptions) {
+                TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedTables PreformatedTable = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Media;
+                Int64 indexPreformatedTable;
+                Int64 sponsorshipListIndex = 24;
+                
+                // Bouton valider
+                if(Page.Request.Form.Get("__EVENTTARGET") == "validButton") {
+                    // Tableau demandé
+                    indexPreformatedTable = Int64.Parse(Page.Request.Form.GetValues("DDLResultsTableTypesWebControl1")[0]);
+
+                    PreformatedTable = (TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedTables)(indexPreformatedTable + sponsorshipListIndex);
+                    customerWebSession.PreformatedTable = PreformatedTable;
+                }
+                
+                switch(customerWebSession.PreformatedTable) {
+                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Media:
+                        UnitOption = true;
+                        break;
+                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Period:
+                        UnitOption = true;
+                        break;
+                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units:
+                        if(customerWebSession.PercentageAlignment == WebConstantes.Percentage.Alignment.horizontal)
+                            customerWebSession.PercentageAlignment = WebConstantes.Percentage.Alignment.none;
+                        UnitOption = false;
                         break;
                 }
             }
@@ -1711,14 +1803,14 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 _percentageTypeDropDownList = new System.Web.UI.WebControls.DropDownList();
                 _percentageTypeDropDownList.ID = "_percentageTypePercentageDropDownList";
 
-                //				if(!Page.IsPostBack||_percentageTypeDropDownList.Items.Count<=0){
+                //if(!Page.IsPostBack||_percentageTypeDropDownList.Items.Count<=0){
                 _percentageTypeDropDownList.CssClass = cssClass;
                 _percentageTypeDropDownList.AutoPostBack = autoPostBackOption;
                 _percentageTypeDropDownList.Items.Add(new ListItem("----------------------", WebConstantes.Percentage.Alignment.none.GetHashCode().ToString()));
                 _percentageTypeDropDownList.Items.Add(new ListItem(GestionWeb.GetWebWord(2065, customerWebSession.SiteLanguage), WebConstantes.Percentage.Alignment.vertical.GetHashCode().ToString()));
                 if(customerWebSession.PreformatedTable != WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units)
                     _percentageTypeDropDownList.Items.Add(new ListItem(GestionWeb.GetWebWord(2064, customerWebSession.SiteLanguage), WebConstantes.Percentage.Alignment.horizontal.GetHashCode().ToString()));
-                //				}
+                //}
                 try {
                     _percentageTypeDropDownList.Items.FindByValue(customerWebSession.PercentageAlignment.GetHashCode().ToString()).Selected = true;
 
@@ -1891,6 +1983,24 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td>");
                 _periodDetailWebControl.RenderControl(output);
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<TR>");
+                output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n</TR>");
+            }
+            #endregion
+
+            #region Option type de pourcentage (horizontal ou vertical)
+            if(_percentageTypeOption) {
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                output.Write("\n<td class=\"txtBlanc11Bold\">");
+                output.Write(GestionWeb.GetWebWord(1236, customerWebSession.SiteLanguage));
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                output.Write("\n<td>");
+                _percentageTypeDropDownList.RenderControl(output);
                 output.Write("\n</td>");
                 output.Write("\n</tr>");
                 output.Write("\n<TR>");
@@ -2080,7 +2190,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
-            #region Total comparaison (As)
+            #region Total comparaison (AS)
             if(TotalChoice && _totalChoiceRadioButtonList.Items.Count > 0) {
                 output.Write("\n<tr  >");
                 output.Write("\n<td class=\"txtBlanc11Bold\">");
@@ -2093,16 +2203,24 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
-            #region Option type de pourcentage (horizontal ou vertical)
-            if(_percentageTypeOption) {
-                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+            #region Total comparaison (AS)
+            if(TotalChoice && _totalChoiceRadioButtonList.Items.Count > 0) {
+                output.Write("\n<tr  >");
                 output.Write("\n<td class=\"txtBlanc11Bold\">");
-                output.Write(GestionWeb.GetWebWord(1236, customerWebSession.SiteLanguage));
+                _totalChoiceRadioButtonList.RenderControl(output);
                 output.Write("\n</td>");
                 output.Write("\n</tr>");
+                output.Write("\n<TR>");
+                output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n</TR>");
+            }
+            #endregion
+
+            #region Option Results Table Types
+            if(ResultsTableTypesOptions) {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td>");
-                _percentageTypeDropDownList.RenderControl(output);
+                _resultsTableTypesWebControl.RenderControl(output);
                 output.Write("\n</td>");
                 output.Write("\n</tr>");
                 output.Write("\n<TR>");

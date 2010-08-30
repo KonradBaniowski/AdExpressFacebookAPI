@@ -69,47 +69,6 @@ namespace AdExpress.Private.Results
 		public string scriptBody="";	
 		#endregion
 
-		#region variables MMI
-		/// <summary>
-		/// Contrôle Titre du module
-		/// </summary>
-		/// <summary>
-		/// Contrôle Options des résultats //ResultsTableTypesWebControl1
-		/// </summary>
-		/// <summary>
-		/// Contrôle Type de tableau de résultats
-		/// </summary>
-		/// <summary>
-		/// Annnule la personnalisation des éléments de références et concurrents
-		/// </summary>
-		/// <summary>
-		/// Bouton de validation
-		/// </summary>
-		/// <summary>
-		/// Contrôle passerelle vres les autres modules
-		/// </summary>
-		/// <summary>
-		/// Contrôle menu d'entête 
-		/// </summary>
-		/// <summary>
-		/// Contrôle information
-		/// </summary>
-		/// <summary>
-		/// Contrôle niveau de détail générique
-		/// </summary>
-
-		/// <summary>
-		/// Composant tableau de résultat
-		/// </summary>
-		/// <summary>
-		/// Option affiner univers support
-		/// </summary>
-		/// <summary>
-		/// Menu contextuel
-		/// </summary>
-		
-		#endregion
-
 		#region Evènements
 
 		#region Chargement de la page
@@ -156,35 +115,12 @@ namespace AdExpress.Private.Results
 				#endregion
 
 				#region Textes et Langage du site
-                //for (int i = 0; i < this.Controls.Count; i++) {
-                //    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
-                //}
-                
 				Moduletitlewebcontrol2.CustomerWebSession=_webSession;
-				ModuleBridgeWebControl1.CustomerWebSession=_webSession;
 				#endregion
 
-				#region scripts
-                if (!Page.ClientScript.IsClientScriptBlockRegistered("ImageDropDownListScripts")) {
-                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "ImageDropDownListScripts", TNS.AdExpress.Web.Functions.Script.ImageDropDownListScripts(ResultsTableTypesWebControl1.ShowPictures));
-                }
-
-				//scripts = TNS.AdExpress.Web.Functions.Script.ImageDropDownListScripts(ResultsTableTypesWebControl1.ShowPictures);
+				#region Scripts
 				scriptBody = "javascript:openMenuTest();";
 				#endregion								
-
-				#region Option affiner supports ou produits
-				if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS){
-					InitializeProductWebControl1.Visible = false;
-					_webSession.Save();
-			
-													
-				}else if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES){
-					InitializeMediaWebcontrol1.Visible = false;
-					_webSession.Save();								
-				}
-				#endregion
-
 			}			
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
@@ -202,25 +138,11 @@ namespace AdExpress.Private.Results
 		/// </summary>
 		/// <returns></returns>
 		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
-
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
-			
-			ResultsTableTypesWebControl1.CustomerWebSession = _webSession;
-			InitializeProductWebControl1.CustomerWebSession=_webSession;
-			InitializeMediaWebcontrol1.CustomerWebSession = _webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
-			
-			_genericMediaLevelDetailSelectionWebControl.CustomerWebSession=_webSession;
-			if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS) {				
-				_genericMediaLevelDetailSelectionWebControl.GenericDetailLevelType = WebConstantes.GenericDetailLevel.Type.devicesAnalysis;
-			}
-			else if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
-				_genericMediaLevelDetailSelectionWebControl.GenericDetailLevelType = WebConstantes.GenericDetailLevel.Type.programAnalysis;
-			
 			resultwebcontrol1.CustomerWebSession = _webSession;
-			SponsorshipOptionsWebControl();
-
-			return tmp;
+            ResultsOptionsWebControl1.CustomerWebSession = _webSession;
+            return tmp;
 		}
 		#endregion
 
@@ -283,38 +205,5 @@ namespace AdExpress.Private.Results
 		}
 		#endregion
 
-		#region Méthodes privées
-		/// <summary>
-		/// Options des Contrôles fils à afficher dans le contrôle du choix des options du parrainage
-		/// </summary>
-		private void SponsorshipOptionsWebControl(){
-			TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedTables PreformatedTable = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Media;
-			Int64 indexPreformatedTable;
-			 Int64 sponsorshipListIndex=24;
-			//Bouton valider
-			if(Request.Form.Get("__EVENTTARGET")=="okImageButton"){
-				//Tableau demandé
-				indexPreformatedTable = Int64.Parse(Page.Request.Form.GetValues("DDLResultsTableTypesWebControl1")[0]);
-				
-				PreformatedTable = (TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedTables) (indexPreformatedTable+sponsorshipListIndex) ;
-				_webSession.PreformatedTable = PreformatedTable;
-			}
-			ResultsOptionsWebControl1.CustomerWebSession = _webSession;	
-			switch(_webSession.PreformatedTable){
-				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Media :
-					ResultsOptionsWebControl1.UnitOption = true;		
-					break;	
-				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Period :
-					ResultsOptionsWebControl1.UnitOption = true;
-					break;	
-				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units :
-					if(_webSession.PercentageAlignment == WebConstantes.Percentage.Alignment.horizontal)
-					_webSession.PercentageAlignment = WebConstantes.Percentage.Alignment.none;
-					ResultsOptionsWebControl1.UnitOption = false;
-					break;	
-			}
-				_webSession.Save();
-		}
-		#endregion
 	}
 }

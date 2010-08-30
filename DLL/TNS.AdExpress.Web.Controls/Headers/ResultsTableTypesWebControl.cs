@@ -5,6 +5,7 @@
  * Modifications:
  * */
 #endregion
+
 using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -47,7 +48,6 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			set{customerWebSession=value;}
 		}
 				
-
 		#region Propriétés de TblChoice
 		/// <summary>
 		/// hauteur de l'image
@@ -172,7 +172,6 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			this.EnableViewState = true;
 			this.PreRender += new EventHandler(Custom_PreRender);
 		}
-
 		#endregion
 
 		#region Init
@@ -181,17 +180,28 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// </summary>
 		/// <param name="e">Arguments</param>
 		protected override void OnInit(EventArgs e) {
-			
-			if (Page.IsPostBack){
+			if(Page.IsPostBack){
 				Int64 formatTable = _sponsorshipListIndex + Int64.Parse(Page.Request.Form.GetValues("DDL"+this.ID)[0]);
 				customerWebSession.PreformatedTable = (CustomerSessions.PreformatedDetails.PreformatedTables) formatTable;
 			}
 		}
 		#endregion
 
-		#region Custom PreRender
+        #region OnPreRender
+        /// <summary>
+        /// OnPreRender
+        /// </summary>
+        /// <param name="e">Args</param>
+        protected override void OnPreRender(EventArgs e) {
+            if(!Page.ClientScript.IsClientScriptBlockRegistered("ImageDropDownListScripts")) {
+                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "ImageDropDownListScripts", TNS.AdExpress.Web.Functions.Script.ImageDropDownListScripts(this.ShowPictures));
+            }
+            base.OnPreRender(e);
+        }
+        #endregion
 
-		/// <summary>
+        #region Custom PreRender
+        /// <summary>
 		///custom prerender 
 		/// </summary>
 		/// <param name="sender">object qui lance l'évènement</param>
@@ -209,7 +219,6 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				if (this.List!="") tblChoice.List = this.List;
 				else{					
 						tblChoice.List = "&nbsp;|&nbsp;|&nbsp;";
-				
 				}
 				if (this.images!="") tblChoice.Images = this.images;
 				else{
@@ -230,8 +239,6 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				tblChoice.Width = new System.Web.UI.WebControls.Unit("121");
 				tblChoice.ShowPictures = this.pictShow;
 				Controls.Add(tblChoice);
-							
-		
 		}
 		#endregion
 
@@ -242,10 +249,9 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// <param name="output"> Le writer HTML vers lequel écrire </param>
 		protected override void Render(HtmlTextWriter output) {
 			//Debut du tableau
-            output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"backGroundModuleTitleBorder\">");
+            output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" >");
 
 			//format de tableau
-			
 			output.Write("\n<tr>");
 			output.Write("\n<td class=\"txtBlanc11Bold\">");
 			output.Write(GestionWeb.GetWebWord(1140,customerWebSession.SiteLanguage));
@@ -262,7 +268,6 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			
 			//fin tableau
 			output.Write("\n</table>");
-			
 		}
 		#endregion
 	}

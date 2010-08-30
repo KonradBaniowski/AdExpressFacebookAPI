@@ -82,19 +82,16 @@
 										<tr>
 											<td><asp:Image ID="Image5" runat="server" height="10" width="1" SkinID="pixel" /></td>
 										</tr>
-									
+
 										<tr >
 											<td><cc2:genericmediadetailselectionwebcontrol id="_genericMediaDetailSelectionWebControl" 
                                                     runat="server" NbDetailLevelItemList="3"							            
-													GenericDetailLevelComponentProfile="media" GenericDetailLevelType="dynamicCompetitorPotential" Width="185px" 
+													GenericDetailLevelComponentProfile="media" GenericDetailLevelType="dynamicCompetitorPotential" Width="194px" 
                                                     BackGroundColor="" CssDefaultListLabel="txtBlanc11Bold"></cc2:genericmediadetailselectionwebcontrol>
 											</td>
 										</tr>
-										<tr>
-											<td><asp:Image ID="Image6" runat="server" height="5" width="1" SkinID="pixel" /></td>
-										</tr>
-				                        <tr class="whiteBackGround">
-					                        <td><cc4:imagebuttonrolloverwebcontrol id="okDetailMediaImageButton" runat="server" SkinID="okButton"></cc4:imagebuttonrolloverwebcontrol></td>
+										<tr class="backGroundOptions">
+											<td style="padding:0px 5px 5px 0px;" align="right"><cc4:imagebuttonrolloverwebcontrol id="okDetailMediaImageButton" runat="server" SkinID="validButton"></cc4:imagebuttonrolloverwebcontrol></td>
 				                        </tr>
 										
 										<!-- Info bt droit -->

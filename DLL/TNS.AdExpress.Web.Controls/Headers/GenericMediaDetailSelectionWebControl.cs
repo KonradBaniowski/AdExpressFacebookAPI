@@ -158,8 +158,6 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             set { _componentProfile = value; }
         }
 
-       
-      
         #region Css
         /// <summary>
         /// Obtient ou définit la couleur de fond du composant
@@ -568,34 +566,65 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 
             string themeName = WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name;
 
-            output.Write("<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" bgcolor=\"" + _backgroundColor + "\">");
-            output.Write("<tr>");
+            output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"backGroundOptions\">");
+            output.Write("\n<tr>");
+            output.Write("\n<td>");
+
+            #region Titre
+            output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
+            output.Write("\n<tr>");
+            output.Write("\n<td class=\"headerLeft\" colspan=\"3\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\"></td>");
+            output.Write("\n</tr>");
+            output.Write("\n<tr>");
+            output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" class=\"blockBackGround\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"13\"></td>");
+            output.Write("\n<td class=\"txtNoir11Bold backGroundWhite titleUppercase\" width=\"100%\">" + GestionWeb.GetWebWord(792, _customerWebSession.SiteLanguage) + "</td>");
+            output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"1\"></td>");
+            output.Write("\n</tr>");
+            output.Write("\n<tr>");
+            output.Write("\n<td class=\"headerLeft\" colspan=\"3\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\"></td>");
+            output.Write("\n</tr>");
+            output.Write("\n</table>");
+            #endregion
+
+            output.Write("\n</td>");
+            output.Write("\n</tr>");
+            output.Write("\n<TR>");
+            output.Write("\n<TD height=\"5\"></TD>");
+            output.Write("\n</TR>");
+
+            // Texte
+            output.Write("<tr class=\"backGroundOptionsPadding\" >");
 			output.Write("<td class=\"" + _cssDefaultListLabel + "\">" + GestionWeb.GetWebWord(1606, _customerWebSession.SiteLanguage) + "</td>");//1886
             output.Write("</tr>");
-            output.Write("<tr>");
-            output.Write("<td>");
+
             // Liste par défaut
+            output.Write("<tr class=\"backGroundOptionsPadding\" >");
+            output.Write("<td>");
             _defaultDetail.RenderControl(output);
             output.Write("</td>");
             output.Write("</tr>");
-            // Espace blanc
             output.Write("<tr>");
             output.Write("<td><img src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" border=\"0\" height=\"10\"></td>");
             output.Write("</tr>");
-            // table de personnalisation
-            output.Write("<tr>");
+            
+            // Table de personnalisation
+            output.Write("<tr class=\"backGroundOptionsPadding\" >");
             output.Write("<td>");
             output.Write("<table class=\"backgroundGenericMediaLevelDetail genericMediaLevelDetailBorder\" cellSpacing=\"0\" cellPadding=\"0\" width=\"" + this.Width + "\" border=\"0\">");
             output.Write("<tr onclick=\"DivDisplayer('detailledLevelContent');\" class=\"cursorHand\">");
-            //Titre de la section
+            
+            // Titre de la section
             output.Write("<td class=\"" + _cssCustomSectionTitle + "\">&nbsp;" + GestionWeb.GetWebWord(1896, _customerWebSession.SiteLanguage) + "&nbsp;</td>");
+            
             // Image d'ouverture de la section
             output.Write("<td align=\"right\" class=\"arrowBackGroundGenericMediaLevelDetail\"></td>");
             output.Write("</tr>");
             output.Write("</table>");
+            
             // Section
             output.Write("\r\n<div id=\"detailledLevelContent\" class=\"GenericMediaLevelDetailSelectionSection\" style=\"DISPLAY: none; WIDTH: " + this.Width + "px;\">");
             output.Write("\r\n<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" ID=\"Section\">");
+            
             //output.Write("\r\n<tr>");
             //// Niveaux personnalisés déjà enregistrés
             //output.Write("\r\n<td class=\"" + _cssListLabel + "\">" + GestionWeb.GetWebWord(1897, _customerWebSession.SiteLanguage) + " :</td>");
@@ -609,11 +638,14 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             //output.Write("\r\n<tr>");
             //output.Write("\r\n<td align=\"right\"><a class=\"roll03\" href=\"javascript: remove();\"  onmouseover=\"deleteButton.src='/App_Themes/" + themeName + "/Images/Common/button/bt_delete_down.gif';\" onmouseout=\"deleteButton.src ='/App_Themes/" + themeName + "/Images/Common/button/bt_delete_up.gif';\"><img name=deleteButton border=0 src=\"/App_Themes/" + themeName + "/Images/Common/button/bt_delete_up.gif\" alt=\"" + GestionWeb.GetWebWord(1951, _customerWebSession.SiteLanguage) + "\"></a></td>");
             //output.Write("\r\n</tr>");
+            
             output.Write("\r\n<tr>");
             output.Write("\r\n<td>");
+            
             // Sélection des niveaux de détail
             output.Write("\r\n<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" ID=\"levelSelection\">");
             output.Write("\r\n<tr>");
+            
             // Construction des niveaux
             output.Write("\r\n<td colspan=\"2\" class=\"txtViolet11Bold\">" + GestionWeb.GetWebWord(1899, _customerWebSession.SiteLanguage) + " :</td>");
             output.Write("\r\n</tr>");
@@ -646,11 +678,15 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             output.Write("\r\n</table>");
             output.Write("\r\n</td>");
             output.Write("\r\n</tr>");
+            
             //Fin table Avant Div
             output.Write("\r\n</table>");
             output.Write("\r\n</div>");
             output.Write("\r\n</td>");
             output.Write("\r\n</tr>");
+            output.Write("\n<TR>");
+            output.Write("\n<TD height=\"5\"></TD>");
+            output.Write("\n</TR>");
             output.Write("\r\n</table>");
         }
         #endregion

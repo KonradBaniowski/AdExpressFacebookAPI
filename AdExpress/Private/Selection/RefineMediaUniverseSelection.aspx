@@ -125,31 +125,26 @@
 							<tr>
 								<td style="WIDTH: 773px">
 									
-									<table cellSpacing="0" cellPadding="0" width="100%" border="0">
+									<table cellSpacing="0" cellPadding="0" width="645" border="0">
 										<tr>
-											<td colSpan="5" style="padding-left:5px;">
+											<td colspan="2" style="padding-left:5px;">
 												<!--Chargement mes univers-->
 												<cc3:loadableuniverswebcontrol id="LoadableUniversWebControl1" runat="server"></cc3:loadableuniverswebcontrol></td>
 										</tr>
 										<tr style="HEIGHT: 5px">
-											<td colSpan="6"></td>
+											<td colspan="2"></td>
 										</tr>
 										<tr style="HEIGHT: 10px">
-											<td style="WIDTH: 478px" width="478" class="imageBackGround" colSpan="6"></td>
+											<td style="WIDTH: 478px" width="478" class="imageBackGround" colspan="2"></td>
 										</tr>
 										<tr style="HEIGHT: 5px">
-											<td colSpan="6"></td>
+											<td colspan="2"></td>
 										</tr>
-										<tr>
-											<td class="txtViolet11Bold" width="15%">&nbsp;&nbsp;
+										<tr style="height: 5px;">
+											<td class="txtViolet11Bold" style="width: 83px;">&nbsp;&nbsp;
 												<cc1:adexpresstext language="33" id="AdExpressText2" runat="server" Code="972"></cc1:adexpresstext>&nbsp;:
 											</td>
-											<td width="10%"><asp:textbox id="keyWordTextBox" runat="server"></asp:textbox></td>
-											<td vAlign="middle" align="left" width="10%">&nbsp;
-												<cc4:imagebuttonrolloverwebcontrol id="OkImageButtonRollOverWebControl" runat="server" SkinID="okButton"></cc4:imagebuttonrolloverwebcontrol></td>
-											<td align="center" width="10%"><cc4:imagebuttonrolloverwebcontrol id="initializeButton" runat="server" SkinID="initializeButton"></cc4:imagebuttonrolloverwebcontrol></td>
-											<td width="10%"><cc4:imagebuttonrolloverwebcontrol id="initializeAllButton" runat="server" SkinID="initializeAllButton" ></cc4:imagebuttonrolloverwebcontrol></td>
-											<td width="55%">&nbsp;</td>
+											<td><asp:textbox id="keyWordTextBox" runat="server"></asp:textbox>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="OkImageButtonRollOverWebControl" runat="server" SkinID="okLoupeButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="initializeButton" runat="server" SkinID="initializeButton"></cc4:imagebuttonrolloverwebcontrol>&nbsp;<cc4:imagebuttonrolloverwebcontrol id="initializeAllButton" runat="server" SkinID="initializeAllButton" ></cc4:imagebuttonrolloverwebcontrol></td>
 										</tr>
 									</table>
 								</td>

@@ -7,35 +7,35 @@
 
 using System;
 using System.Collections;
-using System.Configuration;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Web;
-using System.Web.UI.WebControls.WebParts;
-using System.Windows.Forms;
 using System.Web.SessionState;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
-
-using TNS.AdExpress.Web.Controls.Selections;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Windows.Forms;
 using Oracle.DataAccess.Client;
-using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web.Navigation;
-using DBFunctions = TNS.AdExpress.Web.DataAccess.Functions;
-using WebFunctions = TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Web.Controls.Selections;
+using TNS.AdExpress.Web.Core.Sessions;
+using constEvent = TNS.AdExpress.Constantes.FrameWork.Selection;
 using CstWebCustomer = TNS.AdExpress.Constantes.Customer;
+using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
+using DBFunctions = TNS.AdExpress.Web.DataAccess.Functions;
 using SessionCst = TNS.AdExpress.Constantes.Web.CustomerSessions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
-using constEvent = TNS.AdExpress.Constantes.FrameWork.Selection;
-using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
-using TNS.AdExpress.Domain.Level;
-using TNS.AdExpress.Domain.Classification;
+using WebFunctions = TNS.AdExpress.Web.Functions;
 
 public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.SelectionWebPage{
+
     #region Constantes
     /// <summary>
     /// L'Id de la sub section qui represente la page ProgramType
@@ -256,7 +256,7 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 				keyWordTextBox.Text=TNS.AdExpress.Web.Functions.CheckedText.NewText(keyWordTextBox.Text);
 				#endregion
 
-				#region Boutons RollOver										
+				#region Boutons RollOver
 
 				#region test
 				if(!Page.IsPostBack){

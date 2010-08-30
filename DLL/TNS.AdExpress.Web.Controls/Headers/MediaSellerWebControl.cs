@@ -6,24 +6,23 @@
 #endregion
 
 using System;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
-using System.Collections;
-using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Domain.Web.Navigation;
-using TNS.AdExpress.Web.Controls.Results;
-using TNS.AdExpress.Web.Controls.Buttons;
-
-using SessionCst = TNS.AdExpress.Constantes.Web.CustomerSessions;
-using CustomerCst = TNS.AdExpress.Constantes.Customer.Right;
-using WebFunctions = TNS.AdExpress.Web.Functions;
-using ClassificationCst = TNS.AdExpress.Constantes.Classification;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Web.Controls.Buttons;
+using TNS.AdExpress.Web.Controls.Results;
+using TNS.AdExpress.Web.Core.Sessions;
+using ClassificationCst = TNS.AdExpress.Constantes.Classification;
+using CustomerCst = TNS.AdExpress.Constantes.Customer.Right;
+using SessionCst = TNS.AdExpress.Constantes.Web.CustomerSessions;
+using WebFunctions = TNS.AdExpress.Web.Functions;
 
 namespace TNS.AdExpress.Web.Controls.Headers
 {
@@ -274,8 +273,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
             #region bouton OK
             _buttonOk = new ImageButtonRollOverWebControl();
             _buttonOk.ID = "okImageButton";
-            _buttonOk.ImageUrl = "/App_Themes/" + WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name + "/Images/Common/Button/ok_up.gif";
-            _buttonOk.RollOverImageUrl = "/App_Themes/" + WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name + "/Images/Common/Button/ok_down.gif";
+            _buttonOk.ImageUrl = "/App_Themes/" + WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name + "/Images/Common/Button/bt_valid_up.gif";
+            _buttonOk.RollOverImageUrl = "/App_Themes/" + WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name + "/Images/Common/Button/bt_valid_down.gif";
             Controls.Add(_buttonOk);
             #endregion
 
@@ -337,35 +336,53 @@ namespace TNS.AdExpress.Web.Controls.Headers
             string themeName = WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name;
 
             if (mediaSellerOption) {
-                output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"whiteBackGround\">");
+                output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"backGroundOptions\">");
                 output.Write("\n<tr>");
                 output.Write("\n<td>");
-                //debut tableau titre
+
+                #region Titre
                 output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
-                output.Write("\n<TR>");
-                output.Write("\n<TD height=\"5\"></TD>");
-                output.Write("\n</TR>");
                 output.Write("\n<tr>");
-                output.Write("\n<td class=\"headerLeft\" colSpan=\"4\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\"></td>");
+                output.Write("\n<td class=\"headerLeft\" colspan=\"3\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\"></td>");
                 output.Write("\n</tr>");
                 output.Write("\n<tr>");
-                output.Write("\n<td style=\"HEIGHT: 14px\" vAlign=\"top\"><IMG height=\"12\" src=\"" + blockFlechePath + "\" width=\"12\"></td>");
-                output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" background=\"" + blockDupliPath + "\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"13\"></td>");
-                output.Write("\n<td class=\"txtNoir11Bold backGroundModuleTitle " + titleUppercaseCss + "\" width=\"100%\">" + GestionWeb.GetWebWord(1605, customerWebSession.SiteLanguage) + "</td>");
-                output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\" width=\"1\"></td>");
+                output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" class=\"blockBackGround\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"13\"></td>");
+                output.Write("\n<td class=\"txtNoir11Bold backGroundWhite titleUppercase\" width=\"100%\">" + GestionWeb.GetWebWord(1605, customerWebSession.SiteLanguage) + "</td>");
+                output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"1\"></td>");
                 output.Write("\n</tr>");
                 output.Write("\n<tr>");
-                output.Write("\n<td></td>");
-                output.Write("\n<td class=\"headerLeft\" colSpan=\"3\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\"></td>");
+                output.Write("\n<td class=\"headerLeft\" colspan=\"3\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\"></td>");
                 output.Write("\n</tr>");
                 output.Write("\n</table>");
-                output.Write("\n</td>");
-                output.Write("\n</tr>");
-                //Descriptif
+                #endregion
+                
+                ////debut tableau titre
+                //output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
+                //output.Write("\n<TR>");
+                //output.Write("\n<TD height=\"5\"></TD>");
+                //output.Write("\n</TR>");
+                //output.Write("\n<tr>");
+                //output.Write("\n<td class=\"headerLeft\" colSpan=\"4\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\"></td>");
+                //output.Write("\n</tr>");
+                //output.Write("\n<tr>");
+                //output.Write("\n<td style=\"HEIGHT: 14px\" vAlign=\"top\"><IMG height=\"12\" src=\"" + blockFlechePath + "\" width=\"12\"></td>");
+                //output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" background=\"" + blockDupliPath + "\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"13\"></td>");
+                //output.Write("\n<td class=\"txtNoir11Bold backGroundModuleTitle " + titleUppercaseCss + "\" width=\"100%\">" + GestionWeb.GetWebWord(1605, customerWebSession.SiteLanguage) + "</td>");
+                //output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\" width=\"1\"></td>");
+                //output.Write("\n</tr>");
+                //output.Write("\n<tr>");
+                //output.Write("\n<td></td>");
+                //output.Write("\n<td class=\"headerLeft\" colSpan=\"3\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\"></td>");
+                //output.Write("\n</tr>");
+                //output.Write("\n</table>");
+                //output.Write("\n</td>");
+                //output.Write("\n</tr>");
+
+                // Descriptif
                 output.Write("\n<TR>");
                 output.Write("\n<TD height=\"5\"></TD>");
                 output.Write("\n</TR>");
-                output.Write("\n<tr>");
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td class=\"txtBlanc11Bold\">");
                 output.Write(GestionWeb.GetWebWord(1606, customerWebSession.SiteLanguage));
                 output.Write("\n</td>");
@@ -374,7 +391,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 output.Write("\n<TD height=\"5\"></TD>");
                 output.Write("\n</TR>");
 
-                //détail média
+                // Détail média
                 output.Write("\n<tr>");
                 output.Write("\n<td class=\"txtGris11Bold\">");
                 output.Write("\n</td>");
@@ -388,23 +405,15 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 output.Write("\n<TD height=\"5\"></TD>");
                 output.Write("\n</TR>");
 
-                #region Button
-                output.Write("\n<tr class=\"whiteBackGround\">");
-			    output.Write("\n<td height=\"10\"></td>");
-				output.Write("\n</tr>");
-				output.Write("\n<TR>");
-                output.Write("\n<td class=\"whiteBackGround\">");
+                // Button
+				output.Write("\n<tr class=\"backGroundOptions\">");
+                output.Write("\n<td style=\"padding:0px 5px 5px 0px;\" align=\"right\">");
                 _buttonOk.RenderControl(output); 
                 output.Write("\n</td>");
-                output.Write("\n</TR>");
-				output.Write("\n<TR>");
-				output.Write("\n<TD class=\"whiteBackGround\" height=\"5\"></TD>");
-				output.Write("\n</TR>");
-                #endregion
+                output.Write("\n</tr>");
 
                 output.Write("\n</table>");
             }
-
 		}
 		#endregion
 
