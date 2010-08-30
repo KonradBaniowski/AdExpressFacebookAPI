@@ -200,12 +200,12 @@ namespace AdExpress.Private.Results{
 				#region Option affiner version 
 				if (!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(_webSession) || !_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG)
 					|| _webSession.CurrentTab!=TNS.AdExpress.Constantes.FrameWork.Results.APPM.mediaPlanByVersion){//droits affiner univers Versions				
-					InitializeProductWebControl1.Visible = false;
+					//InitializeProductWebControl1.Visible = false;
 					MenuWebControl2.ForbidOptionPages = true;
 					_webSession.IdSlogans=new ArrayList();
 				
 				}else{
-					InitializeProductWebControl1.Visible = true;
+					//InitializeProductWebControl1.Visible = true;
 					MenuWebControl2.ForbidOptionPages = false;
 				}
 				#endregion
@@ -356,7 +356,7 @@ namespace AdExpress.Private.Results{
             #endregion
 
 
-			InitializeProductWebControl1.CustomerWebSession	=_webSession;		
+			//InitializeProductWebControl1.CustomerWebSession	=_webSession;		
 			
 			_webSession.Save();
 			return tmp;

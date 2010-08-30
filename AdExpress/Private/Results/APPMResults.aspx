@@ -63,24 +63,13 @@
 											<td><asp:Image ID="Image5" runat="server" height="10" SkinID="pixel" width="1" /></td>
 										</tr>
 										<tr valign="top">
-											<td valign="top"><cc2:resultsoptionswebcontrol id="ResultsOptionsWebControl1" runat="server" UnitOptionAppm="False" ProductDetailOption="False"
+											<td valign="top"><cc2:resultsoptionswebcontrol id="ResultsOptionsWebControl1" 
+                                                    runat="server" UnitOptionAppm="False" ProductDetailOption="False"
 													InsertOption="False" MediaDetailOption="False" ResultOption="True" AutoPostBackOption="False" Percentage="False" UnitOption="False"
-													ShowPictures="False" ></cc2:resultsoptionswebcontrol></td> <!--InitializeProduct="True"--><!--2005MI-->
+													ShowPictures="False" InializeSlogansOption="True" ></cc2:resultsoptionswebcontrol></td>
 										</tr>
-										<tr valign="top">
-											<td id="premeriEspece"><asp:Image ID="Image6" runat="server" height="10" SkinID="pixel" width="1" />
-											</td>
-										</tr>
-										<tr>
-											<td><cc2:initializeproductwebcontrol id="InitializeProductWebControl1" 
-                                                    runat="server" AutoPostBackOption="False" InitializeSlogans="True"
-													InitializeProduct="False" CommonCssClass="txtOrange11Bold"></cc2:initializeproductwebcontrol></td>
-										</tr>			                   
-										<tr>
-											<td style="HEIGHT: 9px"></td>
-										</tr>
-										<tr valign="top">
-											<td><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="okButton"></cc1:imagebuttonrolloverwebcontrol></td>
+										<tr class="backGroundOptions">
+											<td style="padding:0px 5px 5px 0px;" align="right"><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="validButton"></cc1:imagebuttonrolloverwebcontrol></td>
 										</tr>
 										
 										<!-- Info bt droit -->

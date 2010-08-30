@@ -1264,7 +1264,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                     case WebConstantes.Module.Name.ALERTE_PLAN_MEDIA:
                     case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
                         if((!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(customerWebSession)
-                            || !customerWebSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)) //droits affiner univers Versions
+                            || !customerWebSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG))
                             || customerWebSession.DetailPeriod != TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.dayly) {
                             _initializeProductWebControl.Visible = false;
                         }
@@ -1274,6 +1274,16 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 
                     case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
                         _initializeProductWebControl.Visible = false;
+                        break;
+
+                    case WebConstantes.Module.Name.BILAN_CAMPAGNE:
+                        if(!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(customerWebSession) 
+                            || !customerWebSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)
+                            || customerWebSession.CurrentTab != TNS.AdExpress.Constantes.FrameWork.Results.APPM.mediaPlanByVersion) {
+                            _initializeProductWebControl.Visible = false;
+                        }
+                        else
+                            _initializeProductWebControl.Visible = true;
                         break;
 
                     default:
