@@ -3,7 +3,7 @@
 
 <html>
   <head id="Head1" runat="server">
-    <title>APPMResults</title>
+    <title>AdExpress</title>
     <meta name="GENERATOR" Content="Microsoft Visual Studio .NET 7.1" />
     <meta name="CODE_LANGUAGE" Content="C#"/>
     <meta name="vs_defaultClientScript" content="JavaScript"/>

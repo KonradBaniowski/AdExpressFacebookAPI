@@ -2,7 +2,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
 	<HEAD runat="server">
-		<title>AdExpress 3.0</title>
+		<title>AdExpress</title>
 		<meta http-equiv="Content-Type" content="application/vnd.ms-excel;"/>
 		<meta name="GENERATOR" Content="Microsoft Visual Studio .NET 7.1"/>
 		<meta name="CODE_LANGUAGE" Content="C#"/>

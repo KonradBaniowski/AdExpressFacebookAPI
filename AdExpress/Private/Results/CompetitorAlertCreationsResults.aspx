@@ -3,7 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head runat="server">
-		<title>AdExpress 3.0</title>
+		<title>AdExpress</title>
 		<meta http-equiv="Content-Type" content="text/html;"/>
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema"/>
         <script type="text/javascript" src="/scripts/dom-drag.js"></script>
