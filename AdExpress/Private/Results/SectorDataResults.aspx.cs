@@ -4,6 +4,7 @@
 // Date de modification: 
 #endregion
 
+#region Namespaces
 using System;
 using System.Collections;
 using System.ComponentModel;
@@ -12,31 +13,32 @@ using System.Drawing;
 using System.Web;
 using System.Web.SessionState;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 using System.Windows.Forms;
+using Dundas.Charting.WebControl;
 using Oracle.DataAccess.Client;
-using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Constantes.Customer;
+using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
+using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.DataAccess.Results;
 using TNS.AdExpress.Web.Rules.Results;
 using TNS.AdExpress.Web.UI.Results;
-using TNS.AdExpress.Domain.Web.Navigation;
-using WebConstantes=TNS.AdExpress.Constantes.Web;
 using ClassificationCst = TNS.AdExpress.Constantes.Classification;
-using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
-using WebFunctions=TNS.AdExpress.Web.Functions;
-using FrameWorkConstantes= TNS.AdExpress.Constantes.FrameWork.Results;
-using ConstResults=TNS.AdExpress.Constantes.FrameWork.Results;
-using WebBF=TNS.AdExpress.Web.BusinessFacade;
-using WebExceptions=TNS.AdExpress.Web.Exceptions;
-using DBConstantes=TNS.AdExpress.Constantes.DB;
-using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
-using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
-using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
-using Dundas.Charting.WebControl;
-using TNS.AdExpress.Domain.Level;
+using ConstResults = TNS.AdExpress.Constantes.FrameWork.Results;
+using CustomerRightConstante = TNS.AdExpress.Constantes.Customer.Right;
+using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
+using DBConstantes = TNS.AdExpress.Constantes.DB;
+using DBFunctions = TNS.AdExpress.Web.DataAccess.Functions;
+using FrameWorkConstantes = TNS.AdExpress.Constantes.FrameWork.Results;
+using WebBF = TNS.AdExpress.Web.BusinessFacade;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
+using WebExceptions = TNS.AdExpress.Web.Exceptions;
+using WebFunctions = TNS.AdExpress.Web.Functions;
+#endregion
 
 namespace AdExpress.Private.Results
 {
@@ -126,28 +128,8 @@ namespace AdExpress.Private.Results
                 HeaderWebControl1.Language = _siteLanguage;
 				#endregion
 
-				SectorDataContainerWebControl1.Source = this._dataSource;	
+				SectorDataContainerWebControl1.Source = this._dataSource;
 
-				if(_webSession.CurrentTab==1)
-					displayDetailOption=true;
-
-				if((_webSession.PreformatedProductDetail!=WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiser)&&(_webSession.PreformatedProductDetail!=WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.brand)&&(_webSession.PreformatedProductDetail!=WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.product))
-					_webSession.PreformatedProductDetail =WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiser;
-
-				// Bouton ok Option
-				if(Request.Form.Get("__EVENTTARGET")=="okImageButton") {
-					if( Page.Request.Form.GetValues("productDetail_DetailWebControl1")!=null &&
-						Page.Request.Form.GetValues("productDetail_DetailWebControl1")[0].ToString()=="AdvertiserBrandProduct_"+TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiser.GetHashCode().ToString()){
-						_webSession.PreformatedProductDetail =WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiser;																	
-					}
-					else if(Page.Request.Form.GetValues("productDetail_DetailWebControl1")!=null && Page.Request.Form.GetValues("productDetail_DetailWebControl1")[0].ToString()=="AdvertiserBrandProduct_"+TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.brand.GetHashCode().ToString()){
-						_webSession.PreformatedProductDetail =WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.brand;
-					}
-					else if(Page.Request.Form.GetValues("productDetail_DetailWebControl1")!=null && Page.Request.Form.GetValues("productDetail_DetailWebControl1")[0].ToString()=="AdvertiserBrandProduct_"+TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.product.GetHashCode().ToString()){
-						_webSession.PreformatedProductDetail =WebConstantes.CustomerSessions.PreformatedDetails.PreformatedProductDetails.product;
-					}
-				}
-				
 				#region Niveau de détail media (Generic)
 				_webSession.PreformatedMediaDetail=TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategory;
 					
@@ -158,7 +140,7 @@ namespace AdExpress.Private.Results
 				_webSession.GenericMediaDetailLevel=new GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
 				#endregion
 				
-				_webSession.Save();
+				//_webSession.Save();
 			}
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
@@ -176,11 +158,13 @@ namespace AdExpress.Private.Results
 		/// <param name="e">arguments</param>
 		protected override void OnPreRender(EventArgs e){
 			try{
+
 				#region MAJ _webSession
 				_webSession.LastReachedResultUrl=Page.Request.Url.AbsolutePath;
 				_webSession.ReachedModule=true;
 				_webSession.Save();
 				#endregion
+
 			}	
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
@@ -201,15 +185,8 @@ namespace AdExpress.Private.Results
 			Moduletitlewebcontrol2.CustomerWebSession=_webSession;
 			ResultsOptionsWebControl1.CustomerWebSession=_webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
-			DetailWebControl1.CustomerWebSession = _webSession;
-			DetailWebControl1.ShowProduct = _webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
-			#region chargement de l'univers
-						
-			//_webSession.CurrentUniversAdvertiser=(System.Windows.Forms.TreeNode)((TNS.AdExpress.Web.Core.Sessions.CompetitorAdvertiser)_webSession.CompetitorUniversAdvertiser[1]).TreeCompetitorAdvertiser;			
 
-			#endregion
-
-			//Conteneur des composants de l'APPM
+			// Conteneur des composants de l'APPM
 			SectorDataContainerWebControl1.CustomerWebSession = _webSession;
 			SectorDataContainerWebControl1.ImageType = ChartImageType.Flash;
 			_webSession.Save();

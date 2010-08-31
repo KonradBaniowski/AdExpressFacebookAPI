@@ -153,12 +153,14 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// Sector WebControl
         /// </summary>
         protected TNS.AdExpress.Web.Controls.Headers.SectorWebControl _sectorWebControl;
-
         /// <summary>
         /// Results Table Types WebControl
         /// </summary>
         protected TNS.AdExpress.Web.Controls.Headers.ResultsTableTypesWebControl _resultsTableTypesWebControl;
-
+        /// <summary>
+        /// Detail Advertiser Brand Product WebControl
+        /// </summary>
+        protected TNS.AdExpress.Web.Controls.Headers.DetailWebControl _detailAdvertiserBrandProductWebControl;
         /// <summary>
         /// Selected Media universe
         /// </summary>
@@ -545,7 +547,6 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             set { _initializeMediaOption = value; }
         }
 
-
         /// <summary>
         /// Option type de pourcentage (horizontal ou vertical)
         /// </summary>
@@ -595,7 +596,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Sector Selection Options")]
         protected bool _sectorSelectionOptions = false;
         /// <summary>
-        /// Sector Selection Options
+        /// Get/Set Sector Selection Options
         /// </summary>
         public bool SectorSelectionOptions {
             get { return _sectorSelectionOptions; }
@@ -604,16 +605,30 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 
         /// <summary>
         /// Results Table Types Options
-        /// </summary>		
+        /// </summary>
         [Bindable(true),
         Description("Results Table Types Options")]
         protected bool _resultsTableTypesOptions = false;
         /// <summary>
-        /// Results Table Types Options
+        /// Get/Set Results Table Types Options
         /// </summary>
         public bool ResultsTableTypesOptions {
             get { return _resultsTableTypesOptions; }
             set { _resultsTableTypesOptions = value; }
+        }
+
+        /// <summary>
+        /// Detail Advertiser Brand Product Options
+        /// </summary>
+        [Bindable(true),
+        Description("Detail Advertiser Brand Product Options")]
+        protected bool _detailAdvertiserBrandProductOptions = false;
+        /// <summary>
+        /// Get/Set Detail Advertiser Brand Product Options
+        /// </summary>
+        public bool DetailAdvertiserBrandProductOptions {
+            get { return _detailAdvertiserBrandProductOptions; }
+            set { _detailAdvertiserBrandProductOptions = value; }
         }
 
         #region Propriétés de TblChoice
@@ -896,7 +911,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <param name="e">Arguments</param>
         protected override void OnInit(EventArgs e) {
 
-            #region Option Initialisation des éléments de référence
+            #region Options Initialisation des éléments de référence
             _initializeProductWebControl = new TNS.AdExpress.Web.Controls.Headers.InitializeProductWebControl();
             _initializeProductWebControl.CustomerWebSession = customerWebSession;
             _initializeProductWebControl.AutoPostBackOption = this.autoPostBackOption;
@@ -911,7 +926,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             Controls.Add(_initializeProductWebControl);
             #endregion
 
-            #region Option Initialisation des éléments média
+            #region Options Initialisation des éléments média
             _initializeMediaWebControl = new TNS.AdExpress.Web.Controls.Headers.InitializeMediaWebControl();
             _initializeMediaWebControl.CustomerWebSession = customerWebSession;
             _initializeMediaWebControl.AutoPostBackOption = this.autoPostBackOption;
@@ -922,7 +937,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             Controls.Add(_initializeMediaWebControl);
             #endregion
 
-            #region Option Period Detail
+            #region Options Period Detail
             if(PeriodDetailOptions) {
                 _periodDetailWebControl = new PeriodDetailWebControl();
                 _periodDetailWebControl.Session = customerWebSession;
@@ -1061,7 +1076,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
-            #region Option format du résultat (graphique ou tableau)
+            #region Options format du résultat (graphique ou tableau)
             graphRadioButton = new System.Web.UI.WebControls.RadioButton();
             graphRadioButton.EnableViewState = true;
             graphRadioButton.ID = "graphRadioButton";
@@ -1075,13 +1090,13 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             Controls.Add(tableRadioButton);
             #endregion
 
-            #region Set result pages options
+            #region Options Set result pages
             if(resultOption) {
                 SetResultPageOption();
             }
             #endregion
 
-            #region Option spécifique AS
+            #region Options spécifique AS
             if(TotalChoice) {
                 _totalChoiceRadioButtonList = new RadioButtonList();
                 _totalChoiceRadioButtonList.ID = this.ID + "_totalChoice";
@@ -1116,7 +1131,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
-            #region Option Generic Column Level Detail
+            #region Options Generic Column Level Detail
             if(GenericColumnLevelDetailSelectionOptions) {
                 _genericColumnLevelDetailSelectionWebControl = new GenericColumnLevelDetailSelectionWebControl();
                 _genericColumnLevelDetailSelectionWebControl.CustomerWebSession = customerWebSession;
@@ -1141,7 +1156,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
-            #region Option Sector Selection
+            #region Options Sector Selection
             if(SectorSelectionOptions) {
                 _sectorWebControl = new SectorWebControl();
                 _sectorWebControl.Session = customerWebSession;
@@ -1149,6 +1164,19 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 _sectorWebControl.ID = this.ID + "_sectorWebControl";
                 _sectorWebControl.SkinID = "SectorWebControl";
                 Controls.Add(_sectorWebControl);
+            }
+            #endregion
+
+            #region Options Detail Advertiser Brand Product
+            if(DetailAdvertiserBrandProductOptions) {
+                _detailAdvertiserBrandProductWebControl = new DetailWebControl();
+                _detailAdvertiserBrandProductWebControl.CustomerWebSession = customerWebSession;
+                _detailAdvertiserBrandProductWebControl.ShowProduct = customerWebSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+                _detailAdvertiserBrandProductWebControl.ID = "productDetail_DetailWebControl1";
+                _detailAdvertiserBrandProductWebControl.AdvertiserBrandProductOption = true;
+                _detailAdvertiserBrandProductWebControl.AutoPostBackOption = autoPostBackOption;
+                _detailAdvertiserBrandProductWebControl.CommonCssClass = "txtBlanc11Bold";
+                Controls.Add(_detailAdvertiserBrandProductWebControl);
             }
             #endregion
 
@@ -1394,22 +1422,9 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
-            #region Option Results Table Types
+            #region Options Results Table Types (An. Dispositifs)
             if(ResultsTableTypesOptions) {
-                TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedTables PreformatedTable = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Media;
-                Int64 indexPreformatedTable;
-                Int64 sponsorshipListIndex = 24;
-                
-                // Bouton valider
-                if(Page.Request.Form.Get("__EVENTTARGET") == "validButton") {
-                    // Tableau demandé
-                    indexPreformatedTable = Int64.Parse(Page.Request.Form.GetValues("DDLResultsTableTypesWebControl1")[0]);
-
-                    PreformatedTable = (TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedTables)(indexPreformatedTable + sponsorshipListIndex);
-                    customerWebSession.PreformatedTable = PreformatedTable;
-                }
-                
-                switch(customerWebSession.PreformatedTable) {
+                 switch(customerWebSession.PreformatedTable) {
                     case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Media:
                         UnitOption = true;
                         break;
@@ -1422,6 +1437,16 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                         UnitOption = false;
                         break;
                 }
+            }
+            #endregion
+
+            #region Options Detail Advertiser Brand Product
+            if(DetailAdvertiserBrandProductOptions) {
+                
+                if(customerWebSession.CurrentTab == 1)
+                    _detailAdvertiserBrandProductWebControl.Visible = true;
+                else
+                    _detailAdvertiserBrandProductWebControl.Visible = false;
             }
             #endregion
 
@@ -2226,11 +2251,24 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
-            #region Option Results Table Types
+            #region Options Results Table Types (An. Dispositifs)
             if(ResultsTableTypesOptions) {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td>");
                 _resultsTableTypesWebControl.RenderControl(output);
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<TR>");
+                output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n</TR>");
+            }
+            #endregion
+
+            #region Options Detail Advertiser Brand Product
+            if(DetailAdvertiserBrandProductOptions) {
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                output.Write("\n<td>");
+                _detailAdvertiserBrandProductWebControl.RenderControl(output);
                 output.Write("\n</td>");
                 output.Write("\n</tr>");
                 output.Write("\n<TR>");

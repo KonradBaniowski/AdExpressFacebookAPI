@@ -6,7 +6,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head runat="server">
-		<title>APPMDateSelection</title>
+		<title>AdExpress</title>
 		<meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1" />
 		<meta name="CODE_LANGUAGE" content="C#" />
 		<meta name="vs_defaultClientScript" content="JavaScript" />

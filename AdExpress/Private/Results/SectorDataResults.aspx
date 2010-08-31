@@ -59,22 +59,13 @@
 											<td><asp:Image ID="Image5" runat="server" height="10" SkinID="pixel" width="1"/></td>
 										</tr>
 										<tr valign="top">
-											<td valign="top"><cc2:resultsoptionswebcontrol id="ResultsOptionsWebControl1" runat="server"  UnitOptionAppm="False" ProductDetailOption="False"
+											<td valign="top"><cc2:resultsoptionswebcontrol id="ResultsOptionsWebControl1" 
+                                                    runat="server"  UnitOptionAppm="False" ProductDetailOption="False"
 													InsertOption="False" MediaDetailOption="False" ResultOption="True" AutoPostBackOption="False" Percentage="False" UnitOption="False"
-													ShowPictures="False" InitializeProduct="True"></cc2:resultsoptionswebcontrol></td>
+													ShowPictures="False" InitializeProduct="True" DetailAdvertiserBrandProductOptions="True"></cc2:resultsoptionswebcontrol></td>
 										</tr>
-										<%if(displayDetailOption){%>
-										<tr valign="top">
-											<td id="selectionAdvertiser"><cc2:detailwebcontrol id="DetailWebControl1" 
-                                                    runat="server"  AdvertiserBrandProductOption="True" 
-                                                    CommonCssClass="txtOrange11Bold"></cc2:detailwebcontrol></td>
-										</tr>
-										<%}%>
-										<tr>
-											<td>&nbsp;</td>
-										</tr>
-										<tr valign="top" class="whiteBackGround">
-											<td><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="okButton"> </cc1:imagebuttonrolloverwebcontrol></td>
+										<tr class="backGroundOptions">
+											<td style="padding:0px 5px 5px 0px;" align="right"><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="validButton"> </cc1:imagebuttonrolloverwebcontrol></td>
 										</tr>
 										
 										<!-- Info bt droit -->
