@@ -3,7 +3,7 @@
   <themes>
     <!--<theme id="1" description="Default AdExpress Theme using French"  name="DefaultAdExpressFr" siteLanguage="33"/>
     <theme id="2" description="Default AdExpress Theme using English" name="DefaultAdExpressUk" siteLanguage="44"/>-->
-    <theme id="3" description="Default AdExpress Theme using English For Finland" name="FinlandAdExpressUk" siteLanguage="44"/>
-    <theme id="4" description="Default AdExpress Theme using finnish" name="FinlandAdExpressFi" siteLanguage="35"/>
+    <theme id="3" description="Default AdExpress Theme using English For Finland" name="FinlandAdExpressUk-Kantar" siteLanguage="44"/>
+    <theme id="4" description="Default AdExpress Theme using finnish" name="FinlandAdExpressFi-Kantar" siteLanguage="35"/>
   </themes>
 </configuration>
