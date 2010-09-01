@@ -2238,19 +2238,6 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
-            #region Total comparaison (AS)
-            if(TotalChoice && _totalChoiceRadioButtonList.Items.Count > 0) {
-                output.Write("\n<tr  >");
-                output.Write("\n<td class=\"txtBlanc11Bold\">");
-                _totalChoiceRadioButtonList.RenderControl(output);
-                output.Write("\n</td>");
-                output.Write("\n</tr>");
-                output.Write("\n<TR>");
-                output.Write("\n<TD height=\"5\"></TD>");
-                output.Write("\n</TR>");
-            }
-            #endregion
-
             #region Options Results Table Types (An. Dispositifs)
             if(ResultsTableTypesOptions) {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
