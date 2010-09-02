@@ -944,7 +944,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            OverCssClass="ddlOver" 
                            BorderColor="#BBBFC6"
                            ImageWidth="139" 
-                           ImageHeight="26" 
+                           ImageHeight="32" 
                            SkinID="resultsOptionsASDynamicTables"
 />
 
@@ -1253,8 +1253,8 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            BorderColor="#BBBFC6"
                            CommonCssClass="txtNoir11Bold" 
                            ImageButtonArrow="/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Button/bt_arrow_tall_top.gif"
-                           ImageWidth="139" 
-                           ImageHeight="26"
+                           ImageWidth="145" 
+                           ImageHeight="28"
 						   SkinID = "ResultsDashBoardOptionsWebControl1"
 />
 
