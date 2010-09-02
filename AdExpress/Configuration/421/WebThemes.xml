@@ -2,6 +2,6 @@
 <configuration>
   <themes>
     <theme id="1" description="AdExpress Theme using Slovakia" name="SlovakiaAdExpressSk" siteLanguage="421"/>
-    <theme id="2" description="AdExpress Theme using English" name="SlovakiaAdExpressUk" siteLanguage="44"/>
+    <theme id="2" description="AdExpress Theme using English" name="SlovakiaAdExpressUk-Kantar" siteLanguage="44"/>
   </themes>
 </configuration>
