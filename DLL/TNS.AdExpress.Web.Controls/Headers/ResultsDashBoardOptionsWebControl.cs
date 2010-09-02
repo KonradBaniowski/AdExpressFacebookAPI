@@ -1246,7 +1246,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
             if (sectorListOption){
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td class=\"txtBlanc11Bold\">");
-				output.Write(GestionWeb.GetWebWord(1103,customerWebSession.SiteLanguage)+" : ");
+                output.Write(GestionWeb.GetWebWord(1103, customerWebSession.SiteLanguage) + " : ");
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
@@ -1294,7 +1294,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
             if (formatOption){
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td class=\"txtBlanc11Bold\">");
-				output.Write(GestionWeb.GetWebWord(1420,customerWebSession.SiteLanguage));
+                output.Write(GestionWeb.GetWebWord(1420, customerWebSession.SiteLanguage) + " : ");
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
@@ -1310,7 +1310,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
             if (namedDayOption){
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td class=\"txtBlanc11Bold\">");
-				output.Write(GestionWeb.GetWebWord(1574,customerWebSession.SiteLanguage));
+                output.Write(GestionWeb.GetWebWord(1574, customerWebSession.SiteLanguage) + " : ");
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
@@ -1326,7 +1326,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
             if (timeIntervalOption){
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
 				output.Write("\n<td class=\"txtBlanc11Bold\">");
-				output.Write(GestionWeb.GetWebWord(1575,customerWebSession.SiteLanguage));
+                output.Write(GestionWeb.GetWebWord(1575, customerWebSession.SiteLanguage) + " : ");
 				output.Write("\n</td>");
 				output.Write("\n</tr>");
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");

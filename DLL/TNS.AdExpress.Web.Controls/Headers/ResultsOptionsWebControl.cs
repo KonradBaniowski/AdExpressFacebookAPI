@@ -1286,7 +1286,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region InitializeProductWebControl display
-            if(this._initializeProductWebControl != null && (this._inializeAdvertiserOption || this.InializeProductOption || this.InializeSlogansOption)) {
+            if(this._initializeProductWebControl != null 
+                && (this._inializeAdvertiserOption || this.InializeProductOption || this.InializeSlogansOption)) {
                 
                 switch(customerWebSession.CurrentModule) {
                     case WebConstantes.Module.Name.ALERTE_PLAN_MEDIA:
@@ -1310,6 +1311,13 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                             || customerWebSession.CurrentTab != TNS.AdExpress.Constantes.FrameWork.Results.APPM.mediaPlanByVersion) {
                             _initializeProductWebControl.Visible = false;
                         }
+                        else
+                            _initializeProductWebControl.Visible = true;
+                        break;
+
+                    case WebConstantes.Module.Name.INDICATEUR:
+                        if(customerWebSession.CurrentTab == SynthesisRecap.SYNTHESIS)
+                            _initializeProductWebControl.Visible = false;
                         else
                             _initializeProductWebControl.Visible = true;
                         break;
@@ -1904,7 +1912,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             if(resultOption) {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td class=\"txtBlanc11Bold\">");
-                output.Write(GestionWeb.GetWebWord(793, customerWebSession.SiteLanguage));
+                output.Write(GestionWeb.GetWebWord(793, customerWebSession.SiteLanguage) + " : ");
                 output.Write("\n</td>");
                 output.Write("\n</tr>");
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
@@ -1922,7 +1930,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             if(unitOption) {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td title=\"" + GestionWeb.GetWebWord(1182, customerWebSession.SiteLanguage) + "\" class=\"txtBlanc11Bold\">");
-                output.Write(GestionWeb.GetWebWord(304, customerWebSession.SiteLanguage));
+                output.Write(GestionWeb.GetWebWord(304, customerWebSession.SiteLanguage) + " : ");
                 output.Write("\n</td>");
                 output.Write("\n</tr>");
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
@@ -1950,7 +1958,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             if(unitOptionAppm) {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td title=\"" + GestionWeb.GetWebWord(1182, customerWebSession.SiteLanguage) + "\" class=\"txtBlanc11Bold\">");
-                output.Write(GestionWeb.GetWebWord(304, customerWebSession.SiteLanguage));
+                output.Write(GestionWeb.GetWebWord(304, customerWebSession.SiteLanguage) + " : ");
                 output.Write("\n</td>");
                 output.Write("\n</tr>");
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
@@ -2030,7 +2038,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             if(_percentageTypeOption) {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td class=\"txtBlanc11Bold\">");
-                output.Write(GestionWeb.GetWebWord(1236, customerWebSession.SiteLanguage));
+                output.Write(GestionWeb.GetWebWord(1236, customerWebSession.SiteLanguage) + " : ");
                 output.Write("\n</td>");
                 output.Write("\n</tr>");
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
@@ -2177,7 +2185,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 if(products.Items.Count > 0) {
                     output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                     output.Write("\n<td class=\"txtBlanc11Bold\">");
-                    output.Write(GestionWeb.GetWebWord(1164, customerWebSession.SiteLanguage));
+                    output.Write(GestionWeb.GetWebWord(1164, customerWebSession.SiteLanguage) + " : ");
                     output.Write("\n</td>");
                     output.Write("\n</tr>");
                     output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
