@@ -15,6 +15,6 @@
 		<!--<menuItem name="news" idWebText="762" href="#" language="false" idSession="false"/>-->
     <!--<menuItem name="MAJ des données" idWebText="1253" href="/Private/Informations/DataUpdate2.aspx" language="false" idSession="true" displayInPopUp="true"/>-->
 		<!--<menuItem name="contact" idWebText="763" href="/Public/Contact.aspx" language="true" idSession="false"/>-->
-		<menuItem name="TNS" idWebText="758" href="http://www.tns-gallup.fi/mainonnan-maara" target="blank" language="false" idSession="false"/>
+		<!--<menuItem name="TNS" idWebText="758" href="http://www.tns-gallup.fi/mainonnan-maara" target="blank" language="false" idSession="false"/>-->
 	</header>
 </configuration>
