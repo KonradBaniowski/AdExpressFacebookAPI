@@ -46,68 +46,64 @@
 		<meta http-equiv="pragma" content="no-cache">
 		<meta name="Cache-control" content="no-cache">
 	</HEAD>
-	<body class="imageBackGround" onload="GetSelectedItemsLevel();javascript:activateActiveX();">
+	<body class="popUpbody" onload="GetSelectedItemsLevel();javascript:activateActiveX();">
 		<form id="Form1" method="post" runat="server" >
-			<TABLE id="SaveTable" cellSpacing="0" cellPadding="0" width="100%" border="0">
-				<TR class="violetBackGround" height="14">
-					<TD width="14"><asp:Image ID="Image153" runat="server" SkinID="fleche_1" /></TD>
-					<TD class="txtBlanc11Bold bandeauTitreBackGround">&nbsp;
-						<cc2:adexpresstext language="33" id="AdExpressText4" runat="server" Code="769"></cc2:adexpresstext></TD>
-				</TR>
-				<TR>
-					<TD></TD>
-					<TD class="backGroundWhite"></TD>
-				</TR>
-				<TR>
-					<TD></TD>
-					<TD class="txtViolet11Bold backGroundWhite" height="20">&gt;
-						<cc2:adexpresstext language="33" id="AdExpressText1" runat="server" Code="917"></cc2:adexpresstext></TD>
-				</TR>
-				<TR height="40">
-					<TD></TD>
-					<TD vAlign="top" class="backGroundWhite">&nbsp;
-						<asp:DropDownList id="directoryDropDownList" runat="server" Width="168px" CssClass="txtNoir11"></asp:DropDownList></TD>
-				</TR>
-				<TR height="10">
-					<TD></TD>
-					<TD></TD>
-				</TR>
-				<!--Debut liste des univers sauvegardés-------------->
-                <TR>
-	                <TD></TD>
-	                <TD class="txtViolet11Bold backGroundWhite" height="20">&gt;
-		                <cc2:adexpresstext language="33" id="AdExpressText3" runat="server" Code="2261"></cc2:adexpresstext></TD>
-                </TR>
-                <TR height="40">
-	                <TD></TD>
-	                <TD vAlign="top" class="backGroundWhite">&nbsp;
-		                <asp:DropDownList id="universeDropDownList" runat="server" Width="168px" CssClass="txtNoir11"></asp:DropDownList></TD>
-                </TR>
-                <TR height="10">
-	                <TD></TD>
-	                <TD></TD>
-                </TR>
-                <!--Fin listes univers sauvegardés------------------->
-				<TR>
-					<TD></TD>
-					<TD class="txtViolet11Bold backGroundWhite">&gt;
-						<cc2:adexpresstext language="33" id="AdExpressText2" runat="server" Code="2268"></cc2:adexpresstext>&nbsp;</TD>
-				</TR>
-				<TR height="40">
-					<TD></TD>
-					<TD vAlign="top" class="backGroundWhite">&nbsp;
-						<asp:TextBox id="universeTextBox" runat="server" CssClass="txtNoir11" Width="200px"></asp:TextBox></TD>
-				</TR>
-				<TR height="20">
-					<TD></TD>
-					<TD vAlign="top" align="right">
-						<cc1:ImageButtonRollOverWebControl id="okButton" runat="server" onclick="okButton_Click" SkinID="validateButton"></cc1:ImageButtonRollOverWebControl>&nbsp
-						<A onmouseover="bouton.src='/App_Themes/<%= this.Theme %>/Images/Culture/Button/annuler_up.gif';" onmouseout="bouton.src = '/App_Themes/<%= this.Theme %>/Images/Culture/Button/annuler_down.gif';" href="javascript:cancel();" ><img src="/App_Themes/<%= this.Theme %>/Images/Culture/Button/annuler_up.gif" border=0 name=bouton></A>
-				</TR>
-			</TABLE>
+			<table cellSpacing="0" cellPadding="0" width="100%" height="100%" border="0">
+				<!-- Header -->
+				<tr>
+					<td class="popUpHeaderBackground popUpTextHeader">&nbsp;<cc2:adexpresstext language="33" id="AdExpressText4" runat="server" Code="769"></cc2:adexpresstext>
+					</td>
+				</tr>
+
+				<!-- Content -->
+				<tr>
+					<td style="height:100%;background-color:#FFF;padding:10;" valign="top">
+					
+					    <TABLE id="SaveTable" cellSpacing="0" cellPadding="0" width="100%" border="0">
+				            <TR>
+					            <TD class="txtViolet11Bold backGroundWhite" height="20">
+						            <cc2:adexpresstext language="33" id="AdExpressText1" runat="server" Code="917"></cc2:adexpresstext></TD>
+				            </TR>
+				            <TR height="40">
+					            <TD vAlign="top" class="backGroundWhite">
+						            <asp:DropDownList id="directoryDropDownList" runat="server" Width="168px" CssClass="txtNoir11"></asp:DropDownList></TD>
+				            </TR>
+				            <TR height="10">
+					            <TD></TD>
+				            </TR>
+				            <!--Debut liste des univers sauvegardés-------------->
+                            <TR>
+	                            <TD class="txtViolet11Bold backGroundWhite" height="20">
+		                            <cc2:adexpresstext language="33" id="AdExpressText3" runat="server" Code="2261"></cc2:adexpresstext></TD>
+                            </TR>
+                            <TR height="40">
+	                            <TD vAlign="top" class="backGroundWhite">
+		                            <asp:DropDownList id="universeDropDownList" runat="server" Width="168px" CssClass="txtNoir11"></asp:DropDownList></TD>
+                            </TR>
+                            <TR height="10">
+	                            <TD></TD>
+                            </TR>
+                            <!--Fin listes univers sauvegardés------------------->
+				            <TR>
+					            <TD class="txtViolet11Bold backGroundWhite">
+						            <cc2:adexpresstext language="33" id="AdExpressText2" runat="server" Code="2268"></cc2:adexpresstext>&nbsp;</TD>
+				            </TR>
+				            <TR height="40">
+					            <TD vAlign="top" class="backGroundWhite">
+						            <asp:TextBox id="universeTextBox" runat="server" CssClass="txtNoir11" Width="200px"></asp:TextBox></TD>
+				            </TR>
+			            </TABLE>
+			
+					</td>
+				</tr>
+				
+				<!-- Footer -->
+				<tr>
+					<td class="popUpFooterBackground" align="right"><cc1:ImageButtonRollOverWebControl id="okButton" runat="server" onclick="okButton_Click" SkinID="validateButton"></cc1:ImageButtonRollOverWebControl>&nbsp;<A onmouseover="bouton.src='/App_Themes/<%= this.Theme %>/Images/Culture/Button/annuler_down.gif';" onmouseout="bouton.src = '/App_Themes/<%= this.Theme %>/Images/Culture/Button/annuler_up.gif';" href="javascript:cancel();" ><img src="/App_Themes/<%= this.Theme %>/Images/Culture/Button/annuler_up.gif" border=0 name=bouton></A>&nbsp;&nbsp;</td>
+				</tr>
+			</table>
 			<input type="hidden" id="LevelsIdsHiddenField" name="LevelsIdsHiddenField" />
 		</form>
-		
 	</body>
 </HTML>
 

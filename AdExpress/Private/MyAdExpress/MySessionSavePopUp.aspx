@@ -14,66 +14,65 @@
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta name="Cache-control" content="no-cache"/>
 	</head>
-	<body class="imageBackGround" onload="javascript:activateActiveX();">
+	<body class="popUpbody" onload="javascript:activateActiveX();">
 		<form id="Form1" method="post" runat="server">
-			<table id="SaveTable" cellspacing="0" cellpadding="0" width="100%" border="0">
-				<tr class="violetBackGround" height="14">
-					<td width="14"><asp:Image ID="Image153" runat="server" SkinID="fleche_1" /></td>
-					<td class="txtBlanc11Bold bandeauTitreBackGround">&nbsp;
-						<cc2:adexpresstext language="33" id="AdExpressText4" runat="server" Code="908"></cc2:adexpresstext></td>
-				</tr>
+			<table cellSpacing="0" cellPadding="0" width="100%" height="100%" border="0">
+				<!-- Header -->
 				<tr>
-					<td></td>
-					<td class="backGroundWhite"></td>
+					<td class="popUpHeaderBackground popUpTextHeader">&nbsp;<cc2:adexpresstext language="33" id="AdExpressText4" runat="server" Code="908"></cc2:adexpresstext>
+					</td>
 				</tr>
+
+				<!-- Content -->
 				<tr>
-					<td></td>
-					<td class="txtViolet11Bold backGroundWhite" height="20">&gt;
-						<cc2:adexpresstext language="33" id="AdExpressText1" runat="server" Code="702"></cc2:adexpresstext></td>
+					<td style="height:100%;background-color:#FFF;padding:10;" valign="top">
+					
+					    <table id="SaveTable" cellspacing="0" cellpadding="0" width="100%" border="0">
+				            <tr>
+					            <td class="txtViolet11Bold backGroundWhite" height="20">
+						            <cc2:adexpresstext language="33" id="AdExpressText1" runat="server" Code="702"></cc2:adexpresstext></td>
+				            </tr>
+				            <tr height="40">
+					            <td valign="top" class="backGroundWhite">
+						            <asp:dropdownlist id="directoryDropDownList" runat="server" Width="200px" CssClass="txtNoir11">												
+						            </asp:dropdownlist></td>
+				            </tr>
+				            <tr height="10">
+					            <td></td>
+				            </tr>
+				            <!---Debut liste des résultats-->
+				            <tr>
+	                            <td class="txtViolet11Bold backGroundWhite" height="20">
+		                            <cc2:adexpresstext language="33" id="AdExpressText3" runat="server" Code="2261"></cc2:adexpresstext></td>
+                            </tr>
+                            <tr height="40">
+	                            <td valign="top" class="backGroundWhite">
+		                            <asp:dropdownlist id="sessionDropDownList" runat="server" Width="200px" CssClass="txtNoir11">		                
+		                            </asp:dropdownlist></td>
+                            </tr>
+                            <tr height="10">
+	                            <td></td>
+                            </tr>
+				            <!---Fin liste des résultats-->
+				            <tr>
+					            <td class="txtViolet11Bold backGroundWhite" >
+						            <cc2:adexpresstext language="33" id="AdExpressText2" runat="server" Code="2263"></cc2:adexpresstext></td>
+				            </tr>
+				            <tr height="40">
+					            <td valign="top" class="backGroundWhite">
+						            <asp:textbox id="mySessionTextBox" runat="server" Width="200px" CssClass="txtNoir11"></asp:textbox></td>
+				            </tr>
+			            </table>
+			
+					</td>
 				</tr>
-				<tr height="40">
-					<td></td>
-					<td valign="top" class="backGroundWhite">&nbsp;
-						<asp:dropdownlist id="directoryDropDownList" runat="server" Width="200px" CssClass="txtNoir11">												
-						</asp:dropdownlist></td>
-				</tr>
-				<tr height="10">
-					<td></td>
-					<td></td>
-				</tr>
-				<!---Debut liste des résultats-->
+				
+				<!-- Footer -->
 				<tr>
-	                <td></td>
-	                <td class="txtViolet11Bold backGroundWhite" height="20">&gt;
-		                <cc2:adexpresstext language="33" id="AdExpressText3" runat="server" Code="2261"></cc2:adexpresstext></td>
-                </tr>
-                <tr height="40">
-	                <td></td>
-	                <td valign="top" class="backGroundWhite">&nbsp;
-		                <asp:dropdownlist id="sessionDropDownList" runat="server" Width="200px" CssClass="txtNoir11">		                
-		                </asp:dropdownlist></td>
-                </tr>
-                <tr height="10">
-	                <td></td>
-	                <td></td>
-                </tr>
-				<!---Fin liste des résultats-->
-				<tr>
-					<td></td>
-					<td class="txtViolet11Bold backGroundWhite" >&gt;
-						<cc2:adexpresstext language="33" id="AdExpressText2" runat="server" Code="2263"></cc2:adexpresstext></td>
-				</tr>
-				<tr height="40">
-					<td></td>
-					<td valign="top" class="backGroundWhite">&nbsp;
-						<asp:textbox id="mySessionTextBox" runat="server" Width="200px" CssClass="txtNoir11"></asp:textbox></td>
-				</tr>
-				<tr height="20">
-					<td></td>
-					<td valign="top" align="right"><cc1:imagebuttonrolloverwebcontrol id="oKImageButtonRollOverWebControl" runat="server" onclick="oKImageButtonRollOverWebControl_Click" SkinID="okButton"></cc1:imagebuttonrolloverwebcontrol>
-					&nbsp;<cc1:imagebuttonrolloverwebcontrol id="cancelImageButtonRollOverWebControl" runat="server" onclick="cancelImageButtonRollOverWebControl_Click" SkinID="annulerButton"></cc1:imagebuttonrolloverwebcontrol></td>
+					<td class="popUpFooterBackground" align="right"><cc1:imagebuttonrolloverwebcontrol id="oKImageButtonRollOverWebControl" runat="server" onclick="oKImageButtonRollOverWebControl_Click" SkinID="okButton"></cc1:imagebuttonrolloverwebcontrol>&nbsp;<cc1:imagebuttonrolloverwebcontrol id="cancelImageButtonRollOverWebControl" runat="server" onclick="cancelImageButtonRollOverWebControl_Click" SkinID="annulerButton"></cc1:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;</td>
 				</tr>
 			</table>
+
 		</form>
 	</body>
 </html>
