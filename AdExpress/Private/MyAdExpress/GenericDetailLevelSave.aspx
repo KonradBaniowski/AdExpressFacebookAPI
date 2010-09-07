@@ -13,7 +13,7 @@
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta name="Cache-control" content="no-cache"/>
 	</head>
-	<body class="imageBackGround" onload="javascript:activateActiveX();">
+	<body class="popUpbody" onload="javascript:activateActiveX();">
 		<form id="Form1" method="post" runat="server">
 			<table width="100%" height="100%">
 				<tr>

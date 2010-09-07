@@ -11,50 +11,49 @@
 		<meta content="JavaScript" name="vs_defaultClientScript"/>
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema"/>
 	</head>
-	<body class="imageBackGround" onload="javascript:activateActiveX();">
+	<body class="popUpbody" onload="javascript:activateActiveX();">
 		<form id="Form1" method="post" runat="server">
-			<table id="SaveTable" cellspacing="0" cellpadding="0" width="100%" border="0">
-				<tr class="violetBackGround" style="height:14px">
-					<td style="WIDTH: 14px; HEIGHT: 13px"><asp:Image runat="server" SkinID="fleche_1"/></td>
-					<td class="txtBlanc11Bold bandeauTitreBackGround" style="WIDTH: 100%; HEIGHT: 13px">&nbsp;
-						<cc1:adexpresstext language="33" id="saveTitle" runat="server" Code="1747"></cc1:adexpresstext></td>
-				</tr>
-				<tr>
-				    <td></td>
-					<td>
-						<table id="SaveData" cellspacing="0" cellpadding="0" width="100%" border="0">
-							<tr height="35" class="backGroundWhite">
+		    <table cellSpacing="0" cellPadding="0" width="100%" height="100%" border="0">
+		        <!-- Header -->
+		        <tr>
+			        <td class="popUpHeaderBackground popUpTextHeader">&nbsp;<cc1:adexpresstext language="33" id="saveTitle" runat="server" Code="1747"></cc1:adexpresstext></td>
+		        </tr>
+
+		        <!-- Content -->
+		        <tr>
+			        <td style="height:100%;background-color:#FFF;padding:10;" valign="top">
+			        
+			            <table id="SaveData" cellspacing="2" cellpadding="0" width="100%" border="0">
+							<tr>
 								<td class="txtViolet11Bold" width="150"><cc1:adexpresstext language="33" id="FileNameLabel" runat="server" Code="1746"></cc1:adexpresstext></td>
 								<td><asp:textbox id="tbxFileName" runat="server" Width="300px"></asp:textbox></td>
 							</tr>
-							<tr class="backGroundWhite">
+							<tr>
 								<td class="txtViolet11Bold" width="150"><cc1:adexpresstext language="33" id="MailLabel" runat="server" Code="1136"></cc1:adexpresstext></td>
 								<td><asp:textbox id="tbxMail" runat="server" Width="300px"></asp:textbox></td>
 							</tr>
-							<tr class="backGroundWhite">
-								<td colspan="2">&nbsp;</td>
-							</tr>
-							<tr class="backGroundWhite">
-								<td class="txtViolet11Bold" colspan="2"><asp:CheckBox id="cbxRegisterMail" runat="server" Visible="False"></asp:CheckBox></td>
-							</tr>
-							<tr class="backGroundWhite">
-								<td colspan="2">&nbsp;</td>
-							</tr>							
-							<tr class="backGroundWhite">
-								<td colspan="2" width="100%"><cc3:visualselectionwebcontrol id="VisualSelectionWebControl1" runat="server" CssClass="txtViolet11Bold"></cc3:visualselectionwebcontrol></td>
-							</tr>
-							<tr class="backGroundWhite">
+							<tr>
 								<td colspan="2">&nbsp;</td>
 							</tr>
 							<tr>
-								<td align="right" colspan="2"><cc2:imagebuttonrolloverwebcontrol id="validateRollOverWebControl" SkinID="validateButton" runat="server" onclick="validateRollOverWebControl_Click"></cc2:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;
-									<cc2:imagebuttonrolloverwebcontrol id="closeRollOverWebControl" SkinID="fermerButton" runat="server" onclick="closeRollOverWebControl_Click"></cc2:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;
-								</td>
+								<td class="txtViolet11Bold" colspan="2"><asp:CheckBox id="cbxRegisterMail" runat="server" Visible="False"></asp:CheckBox></td>
+							</tr>
+							<tr>
+								<td colspan="2">&nbsp;</td>
+							</tr>							
+							<tr>
+								<td colspan="2" width="100%"><cc3:visualselectionwebcontrol id="VisualSelectionWebControl1" runat="server" CssClass="txtViolet11Bold"></cc3:visualselectionwebcontrol></td>
 							</tr>
 						</table>
-					</td>
-				</tr>
-			</table>
+						
+			        </td>
+		        </tr>
+
+		        <!-- Footer -->
+		        <tr>
+			        <td class="popUpFooterBackground" align="right"><cc2:imagebuttonrolloverwebcontrol id="validateRollOverWebControl" SkinID="validateButton" runat="server" onclick="validateRollOverWebControl_Click"></cc2:imagebuttonrolloverwebcontrol>&nbsp;<cc2:imagebuttonrolloverwebcontrol id="closeRollOverWebControl" SkinID="fermerButton" runat="server" onclick="closeRollOverWebControl_Click"></cc2:imagebuttonrolloverwebcontrol>&nbsp;&nbsp;</td>
+		        </tr>
+	        </table>
 		</form>
 	</body>
 </html>
