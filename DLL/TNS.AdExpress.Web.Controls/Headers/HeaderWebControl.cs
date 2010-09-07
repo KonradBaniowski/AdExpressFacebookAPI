@@ -161,7 +161,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 			
             output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" border=\"0\" width=\"100%\">");
 			output.Write("\n<tr>");
-			output.Write("\n<td colspan=\"2\">");
+            output.Write("\n<td colspan=\"2\" class=\"backGroundBlack\" >");
 
             #region Flash
             output.Write("\n<table  class=\"header\" cellSpacing=\"0\" cellPadding=\"0\" border=\"0\">");

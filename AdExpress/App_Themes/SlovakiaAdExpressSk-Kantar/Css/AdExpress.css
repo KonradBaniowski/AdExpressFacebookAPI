@@ -1,16 +1,13 @@
 ﻿/* NEW */
-.lineVerticalBackGround2px
-{
+.lineVerticalBackGround2px{
 	background-color:#000000;
 	border-right:solid 2px #5C5C5C;
 }
-.lineVerticalBackGround1px
-{
+.lineVerticalBackGround1px{
 	background-color:#000000;
 	border-right:solid 1px #5C5C5C;
 }
-.lineVerticalBackGround
-{
+.lineVerticalBackGround{
 	background-color:#000000;
 }
 .gradientBar {
@@ -19,8 +16,7 @@
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#F70000,endColorstr=#FF8F00, GradientType=1);
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#F70000,endColorstr=#FF8F00, GradientType=1)";
 }
-hr 
-{
+hr {
 	height:1px;
 	color:#8F8C8C;
 }
@@ -32,7 +28,6 @@ hr
 	background-color : #5C5C5C;
 }
 .backGroundModuleTitle{
-	/*background-color : #FFFFFF;*/
 	background-color : #FFC06F; /*orange*/
 }
 .backGroundModuleTitleWhite{
@@ -41,31 +36,21 @@ hr
 .backGroundWhite{
 	background-color : #FFFFFF;
 }
-.backGroundOptions
-{
-	background-color : #8D8E8E; /*#9D9F9F;*/
+.backGroundOptions{
+	background-color : #8D8E8E;
 }
 .backGroundOptionsPadding{
-	background-color : #8D8E8E; /*#9D9F9F;*/
+	background-color : #8D8E8E;
 	padding-left: 3px;
 	padding-right: 3px;
 }
 .backGroundBlack{
 	background-color : #000;
 }
-.backgroundGenericMediaLevelDetail
-{
-	/*background-color:#B0BBC1;*/
+.backgroundGenericMediaLevelDetail{
 	background-color:#FFFFFF;
 }
 .genericMediaLevelDetailBorder{
-	/*
-	border-color : #7D7D7D;
-	border-top :#7D7D7D 1px solid; 
-	border-left :#7D7D7D 1px solid; 
-	border-right :#7D7D7D 1px solid; 
-	border-bottom :#7D7D7D 1px solid;
-	*/
 	border-color : #A7A6AA;
 	border-top :#A7A6AA 1px solid; 
 	border-left :#A7A6AA 1px solid; 
@@ -73,12 +58,11 @@ hr
 	border-bottom :#A7A6AA 1px solid;
 }
 .arrowBackGroundGenericMediaLevelDetail{
-	background-image:url(/App_Themes/SlovakiaAdExpressSk-Kantar/images/Common/button/bt_arrow_down.gif);
+	background-image:url(/App_Themes/DefaultAdExpressFr-Kantar/images/Common/button/bt_arrow_down.gif);
 	background-repeat:no-repeat;
 	background-position:right;
 	width:15px;
 	height:15px;
-	/*background-color:#B0BBC1;*/
 	background-color:#FFFFFF;
 }
 .headerTabBackGround{
@@ -90,11 +74,29 @@ hr
 	color: #FFC06F;
 	font-weight: bold;
 }
-
-.hrConfigPage
-{
+.hrConfigPage{
 	height:1px; 
 	color:#DFDFDF;
+}
+.popUpbody {
+	margin: 0;
+	padding: 0;
+}
+.popUpHeaderBackground{
+	background-image:url(/App_Themes/DefaultAdExpressFr-Kantar/images/Common/PopUp_Header.gif);
+	background-repeat:repeat-x;
+	height:21px;
+}
+.popUpFooterBackground{
+	background-image:url(/App_Themes/DefaultAdExpressFr-Kantar/images/Common/PopUp_Footer.gif);
+	background-repeat:repeat-x;
+	height:40px;
+}
+.popUpTextHeader{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	font-weight: bold;
 }
 /* FIN NEW */
 
@@ -102,7 +104,7 @@ hr
 
 /* Back ground style*/
 .imageBackGround{
-	background:url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/dupli_fond.gif);
+	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dupli_fond.gif);
 }
 .gSepBackGround{
 	background:url(/I/gsep.gif);
@@ -110,32 +112,32 @@ hr
 	height:100%;
 }
 .checkboxBackGround{
-	background:url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/checkbox.GIF);
+	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/checkbox.GIF);
 }
 .blockBackGround{
-	background:url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/block_dupli.gif);
+	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/block_dupli.gif);
 }
 .imageBackGround3bis{
-	background:url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/dupli_3bis.gif);
+	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dupli_3bis.gif);
 }
 .bandeauTitreBackGround{
-	background:url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/bandeau_titre.gif);
+	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/bandeau_titre.gif);
 }
 .blockdupliBackGround{
-	background:url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/block_dupli.gif);
+	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/block_dupli.gif);
 }
 .popupBackGround{
-	background:url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/backgroundPopUp.gif);
+	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/backgroundPopUp.gif);
 }
 .arrowBackGround{
-	background-image:url(/App_Themes/SlovakiaAdExpressSk-Kantar/images/Common/button/bt_arrow_down.gif);
+	background-image:url(/App_Themes/DefaultAdExpressFr-Kantar/images/Common/button/bt_arrow_down.gif);
 	background-repeat:no-repeat;
 	background-position:right;
 	width:15px;
 	height:15px;
 }
 .logoCoteDroitBackGround{
-	background:url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/logo_cote_droit.gif);
+	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/logo_cote_droit.gif);
 }
 .greenBackGround{
 	background-color:#CAFFCA;
@@ -144,7 +146,7 @@ hr
 	background-color:#FFD7D7;
 }
 .audioFileBackGround{
-	background:url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/audioFile.gif);
+	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/audioFile.gif);
 	background-repeat:no-repeat;
 	width:128px;
 	height:128px;
@@ -152,7 +154,7 @@ hr
 	text-align: center;
 }
 .videoFileBackGround{
-	background:url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/videoFile.gif);
+	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/videoFile.gif);
 	background-repeat:no-repeat;
 	width:128px;
 	height:128px;
@@ -160,7 +162,6 @@ hr
 	text-align: center;
 }
 .whiteBackGround{
-	/*background-color : #FFFFFF;*/
 	background-color : #5C5C5C;
 }
 .whiteBackGround2{
@@ -168,14 +169,12 @@ hr
 	width:100%
 }
 .lightPurple{
-	/*background-color:#DED8E5;*/
 	background-color:#E9E9E9;
 }
 .mediumPurple{
 	background-color:#D6CBDE
 }
 .mediumPurple1{
-	/*background-color:#D0C8DA;*/
 	background-color:#E9E9E9;
 }
 .DarkGrey{
@@ -205,39 +204,31 @@ hr
 .LightLightRed{
 	background-color:#FFF0F0;
 }
-.palePink
-{
+.palePink{
 	background-color:#FF99CC;
 }
 .violetBackGround{
-	/*background-color : #644883;*/
 	background-color : #656565;
 }
 .violetBackGroundV2{
-	/*background-color : #D0C8DA;*/
 	background-color : #C3C7D0;
 }
 .violetBackGroundV3{
 	background-color : #A0A1A7;
 }
 .violetBackGroundV4{
-	/*background-color : #A794BE;*/
 	background-color : #A9A9A9;
 }
 .violetCalendarBackGround{
-	/*background-color : #9378B3;*/
 	background-color : #A9A9A9;
 }
 .sloganVioletBackGround{
-	/*background-color : #E0D7EC;*/
 	background-color : #DFDFDF;
 }
 .paleVioletBackGround{
-	/*background-color : #DED8E5;*/
 	background-color : #E9E9E9;
 }
 .paleVioletBackGroundV2{
-	/*background-color : #E9E6EF;*/
 	background-color : #DFDFDF;
 }
 .pinkBackGround{
@@ -247,37 +238,37 @@ hr
 	background-color : #E1E0DA;
 }
 .dupli3BackGround{
-	background:url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/dupli_3.gif);
+	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dupli_3.gif);
 }
 .dupli1BackGround{
-	background:url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/dupli_1.gif);
+	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dupli_1.gif);
 }
 .headerBackGround{
-	background:url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/dupli_2.gif);
+	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dupli_2.gif);
 	BACKGROUND-REPEAT: repeat-x;
 }
 .darkBackGround{
 	BACKGROUND-ATTACHMENT: fixed; 
-	BACKGROUND-IMAGE: url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/dark_back.bmp); 
+	BACKGROUND-IMAGE: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dark_back.bmp); 
 	BACKGROUND-REPEAT: repeat-x;
 }
 .creationDarkBackGround{
 	background-attachment: fixed; 
-	background-image: url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/dark_back.bmp); 
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dark_back.bmp); 
 	background-repeat: repeat-x; 
 	background-color:#FFFFFF; 
 	margin:25 0 25 0; 
 	text-align:center;
 }
 .popUpBackGround{
-	background:url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/backgroundPopUp.gif);
+	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/backgroundPopUp.gif);
 }
 .creationpopUpBackGround{
 	background-position: right; 
-	background-image: url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/bandeau_titre.gif);
+	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/bandeau_titre.gif);
 	background-repeat: repeat-y
 }
-/* Body Style*/
+/* Body Style */
 .bodyStyle{
 	background-image: none; 
 	margin: 0px; 
@@ -300,7 +291,6 @@ hr
 	color: #000000;
 }
 .ddlOut1{
-	/*background-color: #73598F;*/
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10px;
 	font-weight: bold;
@@ -308,12 +298,10 @@ hr
 	vertical-align:middle;
 }
 .ddlOver1{
-	/*background-color: #DED8E5;*/
 	background-color: #767676;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10px;
 	font-weight: bold;
-	/*color: #000000;*/
 	color: #FFFFFF;
 	vertical-align:middle;
 }
@@ -332,7 +320,6 @@ hr
 	border-right : #646262 1px solid;
 	border-left : #646262 1px solid; 
 	border-bottom : #646262 1px solid;
-	/*background-color:#D0C8DA;*/
 	background-color:#E9E9E9;
 	padding-left:2px;
 	vertical-align:top;
@@ -386,9 +373,9 @@ hr
 	border-bottom-style: none;
 }
 .listMediaHeaderBorder{
-	border-bottom :#644883 1px solid; 
-	border-left :#644883 1px solid; 
-	border-right :#644883 1px solid;
+	border-bottom :#646262 1px solid; 
+	border-left :#646262 1px solid; 
+	border-right :#646262 1px solid;
 }
 .listMediaHeaderBorderNone{
 	border-bottom: #ffffff 0px solid; 
@@ -396,10 +383,10 @@ hr
 	border-right: #ffffff 0px solid; 
 }
 .listMediaBorder{
-	border-top :#644883 1px solid; 
-	border-left :#644883 1px solid; 
-	border-right :#644883 1px solid; 
-	border-bottom :#644883 1px solid;
+	border-top :#646262 1px solid; 
+	border-left :#646262 1px solid; 
+	border-right :#646262 1px solid; 
+	border-bottom :#646262 1px solid;
 }
 .BlancBorder{
 	border-color : #FFFFFF;
@@ -409,26 +396,16 @@ hr
 	border-left: #ffffff 0px solid; 
 	border-right: #ffffff 0px solid;
 }
-
 .BlancNoBorderColor{
 	border-bottom: #ffffff 0px solid; 
 	border-left: #ffffff 0px solid; 
 	border-right: #ffffff 0px solid;
 	border-top: #ffffff 0px solid;
 }
-
 .BlancTopBorder{
 	border-top : #FFFFFF 1px solid;
 }
-.violetBorder
-{
-	/*
-	border-color : #644883;
-	border-top :#644883 1px solid; 
-	border-left :#644883 1px solid; 
-	border-right :#644883 1px solid; 
-	border-bottom :#644883 1px solid;
-*/
+.violetBorder{
 	border-color : #656565;
 	border-top :#656565 1px solid; 
 	border-left :#656565 1px solid; 
@@ -436,16 +413,13 @@ hr
 	border-bottom :#656565 1px solid;
 }
 .violetBorderColor{
-	border-color : #644883;
-	border-top :#644883 2px solid; 
-	border-left :#644883 2px solid; 
-	border-right :#644883 2px solid; 
-	border-bottom :#644883 2px solid;
+	border-color : #646262;
+	border-top :#646262 2px solid; 
+	border-left :#646262 2px solid; 
+	border-right :#646262 2px solid; 
+	border-bottom :#646262 2px solid;
 }
 .violetBorderWithoutTop{
-	/*border-left :#644883 1px solid; 
-	border-right :#644883 1px solid; 
-	border-bottom :#644883 1px solid;*/
 	border-left :#656565 1px solid; 
 	border-right :#656565 1px solid; 
 	border-bottom :#656565 1px solid;
@@ -456,11 +430,10 @@ hr
 	border-top :#646262 1px solid;
 }
 .violetBorderTop{
-	/*border-top :#644883 1px solid;*/
 	border-top :#656565 1px solid;
 }
 .violetBorderBottom{
-	border-bottom :#644883 1px solid; 
+	border-bottom :#646262 1px solid;
 }
 .violetRightBorder{
 	border-right:solid 1px #B1A3C1; 
@@ -486,7 +459,7 @@ hr
 }
 .RecapProductSelectionVioletTopBorder{
 	background-color:#B1A3C1; 
-	border-top :#644883 1px solid;
+	border-top :#646262 1px solid;
 }
 .greyRightBorder{
 	border-right:solid 1px #808080; 
@@ -560,7 +533,7 @@ table.creationWhiteBorder{
 .columnSeparatorWithVioletBackGround{
 	border-right: white 2px solid;
 	border-left: white 1px solid;
-	background-color: #644883;
+	background-color: #646262;
 }
 
 .selectionErrorBorder{
@@ -579,47 +552,41 @@ table.creationWhiteBorder{
 	color : #D0C8DA;
 }
 .txtViolet{
-	/*color : #644883;*/
 	color : #646262;
 }
 .txtViolet11Bold{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	/*color: #644883;*/
 	color: #646262;
 	font-weight: bold;
 }
 .txtViolet12Bold{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
-	/*color: #644883;*/
 	color: #646262;
 	font-weight: bold;
 }
 .txtViolet12{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
-	color: #644883;
+	color: #646262;
 	font-weight: normal;
 }	   
 .txtViolet14Bold{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
-	/*color: #644883;*/
 	color: #646262;
 	font-weight: bold;
 }
 .txtViolet11{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	/*color: #644883;*/
 	color: #646262;
 	font-weight: normal;
 }
 .txtViolet10{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10px;
-	/*color: #644883;*/
 	color: #646262;
 	font-weight: normal;
 }
@@ -678,7 +645,6 @@ table.creationWhiteBorder{
 .txtOrange10{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10px;
-	/*color: #FF6319;*/
 	color: #FF7100;
 	font-weight: normal;
 }
@@ -691,7 +657,7 @@ table.creationWhiteBorder{
 .txtViolet14BoldWhiteBG{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
-	color: #644883;
+	color: #646262;
 	font-weight: bold;
 }
 .txtInitialize{
@@ -701,7 +667,6 @@ table.creationWhiteBorder{
 	font-weight: bold;
 }
 .pinkTextColor{
-	/*color:#FF0099;*/
 	color:#FF7100;
 }
 .txtNowrap{
@@ -728,9 +693,8 @@ table.creationWhiteBorder{
 	padding-top: 4px;
 }
 
-/*Commun header (flash, menu)*/
+/* Commun header (flash, menu) */
 table.header{
-	/*background-color:#644883;*/
 	background-color:#000000;
 	COLOR: #FFFFFF;
 	font-weight:bold;
@@ -738,10 +702,9 @@ table.header{
 	margin:0;
 }
 td.headerLeft{
-	/*background-color:#644883;*/
 	background-color:#7D7D7D;
 }
-/*Site links*/
+/* Site links */
 a.roll01, a.roll01:active, a.roll01:visited {
  font-family: Arial, Helvetica, sans-serif;
  font-size: 11px;
@@ -752,11 +715,11 @@ a.roll01, a.roll01:active, a.roll01:visited {
 a.roll01:hover {
  font-family: Arial, Helvetica, sans-serif;
  font-size: 11px;
- /*color : #FF7100;*/
  color: #FF7100;
  font-weight: bold;
  text-decoration : none;
 }
+
 a.roll02, a.roll02:active, a.roll02:visited, a.roll06, a.roll06:active, a.roll06:visited,a.roll06:hover {
  font-family: Arial, Helvetica, sans-serif;
  font-size: 11px;
@@ -771,6 +734,7 @@ a.roll02:hover {
  font-weight: normal;
  text-decoration : none;
 }
+
 a.roll03, a.roll03:active, a.roll03:visited {
  font-family: Arial, Helvetica, sans-serif;
  font-size: 11px;
@@ -785,10 +749,10 @@ a.roll03:hover {
  font-weight: bold;
  text-decoration : none;
 }
+
 a.roll04{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10px;
-	/*color: #FF7100;*/
 	color: #FF7100;
 	font-weight: normal;
 	text-decoration : none;
@@ -796,10 +760,10 @@ a.roll04{
 a.roll04:hover{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10px;
-	/*color: #9378B3;*/
 	color: #646262;
 	font-weight: normal;
 }
+
 a.roll05, a.roll05:active, a.roll05:visited {
  font-family: Arial, Helvetica, sans-serif;
  font-size: 11px;
@@ -812,6 +776,7 @@ a.roll05:hover {
  color : #CCCCCC;
  text-decoration : none;
 }
+
 a.roll06, a.roll06:active, a.roll06:visited {
  font-family: Arial, Helvetica, sans-serif;
  font-size: 11px;
@@ -824,10 +789,11 @@ a.roll06:hover {
  color : #646262;
  text-decoration : none;
 }
+
 a.txtGroupViolet11Bold{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color: #644883;
+	color: #646262;
 	font-weight: bold;
 	text-decoration : none;	
 }
@@ -838,6 +804,7 @@ a.txtGroupViolet11Bold:hover{
 	font-weight: bold;
 	text-decoration : none;	
 }
+
 a.txtLinkBlack11{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -852,6 +819,7 @@ a.txtLinkBlack11:hover{
 	font-weight: normal;
 	text-decoration : none;
 }
+
 a.txtBridge, a.txtBridge:active, a.txtBridge:visited {
  font-family: Arial, Helvetica, sans-serif;
  font-size: 11px;
@@ -866,11 +834,11 @@ a.txtBridge:hover {
  font-weight: bold;
  text-decoration : none;
 }
+
 /* Portofolio Creation */
-.portofolioCreation
-{
+.portofolioCreation{
 	background-color: #E9E6EF;
-	border-color:#644883;
+	border-color:#646262;
 }
 
 td.portofolioCreation1,
@@ -914,7 +882,6 @@ td.portofolioCreation111
 tr.portofolioSynthesisL1 td{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
-	/*color : #6B598B;*/
 	color : #646262;
 	height:20px;	
 	white-space:nowrap;
@@ -976,7 +943,7 @@ td.portofolio11{
 td.portofolioSynthesisExcel1{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
-	color : #644883;
+	color : #646262;
 	text-align:left;
 	font-weight:bold;
 	text-decoration : none;
@@ -1012,7 +979,6 @@ td.portofolioSynthesis{
 tr.portofolioSynthesisL2 td{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
-	/*color : #6B598B;*/
 	color : #646262;
 	font-weight:bold;
 	height:20px;	
@@ -1076,7 +1042,7 @@ td.portofolio22{
 td.portofolioSynthesisExcel2{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
-	color : #644883;
+	color : #646262;
 	font-weight:bold;
 	text-decoration : none;
 	text-align:left;
@@ -1246,7 +1212,6 @@ td.LevelRightBottomBorder1{
 	font-size:5px;
 }
 td.Level2{
-	/*background-color:#FF99CC;*/
 	background-color:#C3C7D0;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -1254,7 +1219,6 @@ td.Level2{
 	font-weight: bold;
 }
 td.LevelRightBorder2{
-	/*background-color:#FF99CC;*/
 	background-color:#C3C7D0;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -1264,7 +1228,6 @@ td.LevelRightBorder2{
 	width:10px;
 }
 td.LevelRightBottomBorder2{
-	/*background-color:#FF99CC;*/
 	background-color:#C3C7D0;
 	font-family: Arial, Helvetica, sans-serif;
 	color : #000000;
@@ -1479,20 +1442,20 @@ td.acl31{
 td.nav{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color : #644883;
+	color : #646262;
 	text-align:left;
 	padding-left:5px;
 }
 .navBarTop{
-	background: white url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/Result/header.gif) top left repeat-x;
+	background: white url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Result/header.gif) top left repeat-x;
 }
 .navBarBottom{
-	background: white url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/Result/footer.gif) bottom left repeat-x;	
+	background: white url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Result/footer.gif) bottom left repeat-x;	
 }
 /*Images link with violet border */
 input.image, input.image:active, input.image:visited{
  text-decoration: none;
- border: solid thin #644883;
+ border: solid thin #646262;
 }
 input.image:hover{
  text-decoration: none;
@@ -1500,7 +1463,7 @@ input.image:hover{
 }
 a.image, a.image:active, a.image:visited{
  text-decoration: none;
- border: solid thin #644883;
+ border: solid thin #646262;
 }
 a.image:hover{
  text-decoration: none;
@@ -1509,8 +1472,8 @@ a.image:hover{
 /* Images link with violet border */
 input.imageMD, input.imageMD:active, input.imageMD:visited{
  text-decoration: none;
- border-bottom: solid thin #644883;
- border-left: solid thin #644883;
+ border-bottom: solid thin #646262;
+ border-left: solid thin #646262;
 }
 input.imageMD:hover{
  text-decoration: none;
@@ -1519,8 +1482,8 @@ input.imageMD:hover{
 }
 a.imageMD, a.imageMD:active, a.imageMD:visited{
  text-decoration: none;
- border-bottom: solid thin #644883;
- border-left: solid thin #644883;
+ border-bottom: solid thin #646262;
+ border-left: solid thin #646262;
 }
 a.imageMD:hover{
  text-decoration: none;
@@ -1551,7 +1514,7 @@ padding: 3px 7px;
 margin-right: 3px;
 border: 1px solid #646262;
 color: #646262;
-background: white url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/Result/footer.gif) bottom left repeat-x;
+background: white url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Result/footer.gif) bottom left repeat-x;
 }
 .shadetabs li a:hover{
 color: #FF7100;
@@ -1560,12 +1523,14 @@ color: #FF7100;
 position: relative;
 color:#FF7100;
 }
-.shadetabs li.selected a{ /*selected main tab style */
-background: white url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/Result/header.gif) top left repeat-x;
+/*selected main tab style */
+.shadetabs li.selected a{
+background: white url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Result/header.gif) top left repeat-x;
 color:#FF7100;
 }
-.shadetabs li.selected a:hover{ /*selected main tab style */
-background: white url(/App_Themes/SlovakiaAdExpressSk-Kantar/Images/Common/Result/header.gif) top left repeat-x;
+/*selected main tab style */
+.shadetabs li.selected a:hover{
+background: white url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Result/header.gif) top left repeat-x;
 text-decoration: none;
 color:#FF7100;
 }
@@ -1611,7 +1576,6 @@ td.popuptitle1{
 	font-weight: bold;
 	text-decoration : none;
 	padding-left:4px;
-	/*background-color: #644883;*/
 	background-color: #454343;
 }
 
@@ -1622,7 +1586,7 @@ td.popuptitle2{
 	font-weight: bold;
 	text-decoration : none;
 	padding-left:4px;
-	background-color: #644883;
+	background-color: #646262;
 }
 td.popuptitle3{
 	font-family: Arial, Helvetica, sans-serif;
@@ -1644,7 +1608,7 @@ td.insertionCategory{
 	font-weight: bold;
 	text-decoration : none;
 	padding-left:4px;
-	background-color: #644883;
+	background-color: #646262;
 	border-top-color:#FFFFFF;
 	border-top-width:4px;
 	border-top-style:solid;
@@ -1659,7 +1623,7 @@ td.insertionMedia{
 	font-weight: bold;
 	text-decoration : none;
 	padding-left:4px;
-	background-color: #644883;
+	background-color: #646262;
 	border-top-color:#FFFFFF;
 	border-top-width:2px;
 	border-top-style:solid;
@@ -1685,7 +1649,7 @@ td.insertionHeader{
 	border-right-width: 1px; 
 	border-right-style:solid;
 }
-/*Excel Indicateur */
+/* Excel Indicateur */
 td.p142{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -1922,7 +1886,7 @@ td.p141{
 	padding-right:4px;
 	text-align:right
 }
-/*ligne de niveau hiérarchique 5 = données*/
+/* ligne de niveau hiérarchique 5 = données*/
 tr.asl5{
 	background-color:#E1E0DA;
 	font-family: Arial, Helvetica, sans-serif;
@@ -2520,7 +2484,7 @@ tr.asl3brx{
 	border-right-style:solid;	
 	height:18px;
 }
-/*Hierarchical level line 4*/
+/* Hierarchical level line 4*/
 tr.asl4{
 	background-color:#C3C7D0;
 	font-family: Arial, Helvetica, sans-serif;
@@ -2766,10 +2730,9 @@ tr.asl5brx{
 	border-right-style:solid;	
 	height:18px;
 }
-/*Advertiser table*/
+/* Advertiser table */
 caption.divTable{
 	background-color:#ffffff;
-	/*border:solid 1px #646262;*/
 	border-left:solid 1px #646262;
 	border-right:solid 1px #646262;
 	border-top:solid 1px #646262;
@@ -2785,9 +2748,8 @@ table.divTable{
 	width:100%;
 }
 
-td.affinitiesBorderImg
-{
-	background-color:#644883;
+td.affinitiesBorderImg{
+	background-color: #646262;
 	border-right-width: 1px; 
 	border-right-color:#FFFFFF;
 	border-right-style:solid;	
@@ -2796,8 +2758,7 @@ td.affinitiesBorderImg
 	border-right-style:solid;
 }
 
-td.synthesisUiTitle
-{
+td.synthesisUiTitle{
 	border-right: #646262 1px solid;
 	border-top: #646262 1px solid; 
 	border-left: #646262 1px solid; 
@@ -2810,8 +2771,7 @@ td.synthesisUiTitle
 	font-weight: bold;
 }
 
-td.pmcategoryb
-{
+td.pmcategoryb{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color : #000000;
@@ -2830,9 +2790,7 @@ td.pmcategoryb
 	padding-left:4px;
 	padding-right:4px;
 }
-/*
-Indicators
-*/
+/* Indicators */
 td.p9ind
 {
 	font-family: Arial, Helvetica, sans-serif;
@@ -2877,20 +2835,20 @@ td.pmcategorynb
 }
 /* DetailSelection */
 .detailSelectionH{
-	border-bottom :#644883 1px solid; 
-	border-top :#644883 1px solid; 
-	border-left :#644883 1px solid; 
-	border-right :#644883 1px solid;	
+	border-bottom :#646262 1px solid; 
+	border-top :#646262 1px solid; 
+	border-left :#646262 1px solid; 
+	border-right :#646262 1px solid;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color: #644883;
+	color: #646262;
 	font-weight: bold;
 }
 .detailSelection{
 	background-color:#FFFFFF;
-	border-bottom :#644883 1px solid; 
-	border-left :#644883 1px solid; 
-	border-right :#644883 1px solid;
+	border-bottom :#646262 1px solid; 
+	border-left :#646262 1px solid; 
+	border-right :#646262 1px solid;
 }
 
 /* Style des bordures des cellules du tableau de la page Dates de Mises à jour */
@@ -3058,7 +3016,6 @@ td.acl2Bg{
 .TreeHeaderBlancBorder{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	/*color: #644883;*/
 	color: #646262;
 	font-weight: bold;
 	border-color : #FFFFFF;
@@ -3073,38 +3030,31 @@ td.acl2Bg{
 	border-color : #FFFFFF;
 	background-color:#E9E9E9;
 }
-
 .TreeTitleViolet{
 	COLOR: #646262; 
 	font-family: Arial, Helvetica, sans-serif; 
 }
-
 .TreeTitleViolet20px{
 	font-family: Arial, Helvetica, sans-serif; 
 	font-size: 20px; 
 	color: #646262; 
 	font-weight: bold;
 }
-
-.TreeTitleViolet40pt
-{
+.TreeTitleViolet40pt{
 	font-family: Arial, Helvetica, sans-serif; 
 	font-weight: bold;
 	FONT-SIZE: 40pt; 
 	COLOR: #646262;
 }
-.TreeTitleBlack10pt
-{
+.TreeTitleBlack10pt{
 	font-family: Arial, Helvetica, sans-serif; 
 	font-weight: bold;
 	FONT-SIZE: 10pt; 
 	COLOR: black; 
 }
 
-
-/*justif*/
-.jusT
-{
+/* Justif */
+.jusT{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
 	color : #646262;
@@ -3117,8 +3067,7 @@ td.acl2Bg{
     padding-bottom: 0px;
     padding-left: 4px;
 }
-.jusV
-{
+.jusV{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
 	color : #646262;
@@ -3131,8 +3080,7 @@ td.acl2Bg{
     padding-left: 4px;
 	text-decoration : none;
 }
-table.jus
-{
+table.jus{
 	background-color : #FFFFFF;
 	white-space:nowrap;
 	padding :0px;
@@ -3144,8 +3092,7 @@ table.jus
 	border-top: #646262 0px solid;
 	border-left:#646262 1px solid;
 }
-td.jus
-{
+td.jus{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
 	color : #FFFFFF;

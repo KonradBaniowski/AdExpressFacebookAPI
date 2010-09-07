@@ -1927,6 +1927,34 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Option unité
+
+            // ANCIENNE VERSION AFFICHEE
+            //if(unitOption) {
+            //    output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+            //    output.Write("\n<td title=\"" + GestionWeb.GetWebWord(1182, customerWebSession.SiteLanguage) + "\" class=\"txtBlanc11Bold\">");
+            //    output.Write(GestionWeb.GetWebWord(304, customerWebSession.SiteLanguage) + " : ");
+            //    output.Write("\n</td>");
+            //    output.Write("\n</tr>");
+            //    output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+            //    output.Write("\n<td>");
+            //    output.Write("\n<div>");
+            //    output.Write("\n<div class=\"unitSelectOption\">");
+            //    list.RenderControl(output);
+            //    output.Write("\n</div>");
+
+            //    output.Write("\n<div class=\"percentageOption\">");
+            //    if(percentage) {
+            //        percentageCheckBox.RenderControl(output);
+            //    }
+            //    output.Write("\n</div>");
+            //    output.Write("\n</div>");
+            //    output.Write("\n</td>");
+            //    output.Write("\n</tr>");
+            //    output.Write("\n<TR>");
+            //    output.Write("\n<TD height=\"5\"></TD>");
+            //    output.Write("\n</TR>");
+            //}
+
             if(unitOption) {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td title=\"" + GestionWeb.GetWebWord(1182, customerWebSession.SiteLanguage) + "\" class=\"txtBlanc11Bold\">");
@@ -1935,19 +1963,23 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 output.Write("\n</tr>");
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td>");
-                output.Write("\n<div>");
-                output.Write("\n<div class=\"unitSelectOption\">");
-                list.RenderControl(output);
-                output.Write("\n</div>");
 
-                output.Write("\n<div class=\"percentageOption\">");
+                output.Write("\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" >");
+                output.Write("\n<tr>");
+                output.Write("\n<td>");
+                list.RenderControl(output);
+                output.Write("\n</td>");
                 if(percentage) {
+                    output.Write("\n<td>");
                     percentageCheckBox.RenderControl(output);
+                    output.Write("\n</td>");
                 }
-                output.Write("\n</div>");
-                output.Write("\n</div>");
+                output.Write("\n</tr>");
+                output.Write("\n</table>");
+
                 output.Write("\n</td>");
                 output.Write("\n</tr>");
+
                 output.Write("\n<TR>");
                 output.Write("\n<TD height=\"5\"></TD>");
                 output.Write("\n</TR>");
