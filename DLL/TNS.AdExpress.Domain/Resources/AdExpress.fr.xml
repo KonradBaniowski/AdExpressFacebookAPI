@@ -1972,23 +1972,25 @@
     <item mnemonic="w2779" type="System.String">!</item>
     <item mnemonic="w2780" type="System.String">!</item>
     <item mnemonic="w2781" type="System.String">!</item>
-    <item mnemonic="w2782" type="System.String">!</item>
-    <item mnemonic="w2783" type="System.String">!</item>
-    <item mnemonic="w2784" type="System.String">!</item>
-    <item mnemonic="w2785" type="System.String">!</item>
-    <item mnemonic="w2786" type="System.String">!</item>
-    <item mnemonic="w2787" type="System.String">!</item>
-    <item mnemonic="w2788" type="System.String">!</item>
-    <item mnemonic="w2789" type="System.String">!</item>
-    <item mnemonic="w2790" type="System.String">!</item>
-    <item mnemonic="w2791" type="System.String">!</item>
-    <item mnemonic="w2792" type="System.String">!</item>
-    <item mnemonic="w2793" type="System.String">!</item>
-    <item mnemonic="w2794" type="System.String">!</item>
-    <item mnemonic="w2795" type="System.String">!</item>
-    <item mnemonic="w2796" type="System.String">!</item>
-    <item mnemonic="w2797" type="System.String">!</item>
-    <item mnemonic="w2798" type="System.String">!</item>
+    <!-- Currency text managment (Add to manage PLN currency for POLAND and need modifications for all countries)-->
+    <item mnemonic="w2782" type="System.String">année n</item>                              
+    <item mnemonic="w2783" type="System.String">-</item>                                
+    <item mnemonic="w2784" type="System.String">-</item>                              
+    <item mnemonic="w2785" type="System.String">-</item>                                
+    <item mnemonic="w2786" type="System.String">Mois en cours</item>                        
+    <item mnemonic="w2787" type="System.String">Total investissements</item>                
+    <item mnemonic="w2788" type="System.String">Budget brut</item>                          
+    <item mnemonic="w2789" type="System.String">-</item>                               
+    <item mnemonic="w2790" type="System.String">Total sélection</item>                      
+    <item mnemonic="w2791" type="System.String">Total familles</item>                       
+    <item mnemonic="w2792" type="System.String">Total marché pub</item>                     
+    <item mnemonic="w2793" type="System.String">par annonceurs (Total sélection)</item>     
+    <item mnemonic="w2794" type="System.String">par produit (Total sélection)</item>        
+    <item mnemonic="w2795" type="System.String">-</item>                                
+    <item mnemonic="w2796" type="System.String">Budgets bruts</item>                        
+    <item mnemonic="w2797" type="System.String">€</item>
+    <item mnemonic="w2798" type="System.String">K€</item>
+    <!-- ****************************************************************************************************** -->
     <item mnemonic="w2799" type="System.String">!</item>
     <item mnemonic="w2800" type="System.String">!</item>
     <item mnemonic="w2801" type="System.String">!</item>
