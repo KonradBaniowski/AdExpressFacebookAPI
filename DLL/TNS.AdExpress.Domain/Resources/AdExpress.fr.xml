@@ -2001,5 +2001,8 @@
     <item mnemonic="w2806" type="System.String">!</item>
     <!--Texte de gestion des historiques de données dans AdExpress pour tous les pays-->
     <item mnemonic="w2807" type="System.String">Une étude comparative ne peut pas être effectuée avec l'année N-{0}.</item>
+    <!-- Specific unit text for Poland -->
+    <item mnemonic="w2808" type="System.String">!</item>
+    <!-- ***************************** -->
   </items>
 </localization>
