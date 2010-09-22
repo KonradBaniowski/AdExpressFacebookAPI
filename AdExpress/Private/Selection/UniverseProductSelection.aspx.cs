@@ -371,6 +371,9 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
 			case WebConstantes.Module.Name.DONNEES_DE_CADRAGE:
 				SelectItemsInClassificationWebControl1.DefaultBranchId = 1;//Branche famille par défaut
 				break;
+            case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
+                SelectItemsInClassificationWebControl1.DefaultBranchId = 10;//Branche Agence par défaut
+                break;
 			case WebConstantes.Module.Name.INDICATEUR:
 			case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
 				SelectItemsInClassificationWebControl1.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.recap01).Label;
