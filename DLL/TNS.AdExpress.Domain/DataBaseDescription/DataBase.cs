@@ -883,7 +883,11 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// All Recap Product
         /// </summary>
-        allRecapProduct=3
+        allRecapProduct=3,
+        /// <summary>
+        /// All advertising agency
+        /// </summary>
+        allAdvAgency=4
     }
     #endregion
 

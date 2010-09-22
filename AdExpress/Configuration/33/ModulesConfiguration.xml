@@ -1256,8 +1256,8 @@
         <selections>
           <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
             <allowedUniverseLevels>
-              <allowedUniverseLevel id="16" name="Groupe d'agence"/>
-              <allowedUniverseLevel id="17" name="Agence"/>
+              <allowedUniverseLevel id="19" name="Groupe d'agence"/>
+              <allowedUniverseLevel id="20" name="Agence"/>
             </allowedUniverseLevels>
             <allowedUniverseBranches>
               <allowedUniverseBranch id="10" name="Groupe d'agence\Agence"/>

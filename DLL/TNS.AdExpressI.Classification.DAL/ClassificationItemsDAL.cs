@@ -621,6 +621,14 @@ namespace TNS.AdExpressI.Classification.DAL {
                         default:
                             throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));
                     }
+                case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES:
+                    switch (dimension)
+                    {
+                        case Dimension.product:
+                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allAdvAgency);
+                        default:
+                            throw (new Exceptions.ClassificationItemsDALException("Unknown nomenclature dimension"));
+                    }
                 default:
                     /* Obtains user View of the product or media classification for the others modules */
                     switch (dimension)

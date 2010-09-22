@@ -40,7 +40,7 @@
     <level id="6" name ="advertiser"/>
   </branch>
   <branch id="10" name="Agence" labelId="1891">
-    <level id="16" name="Groupe d'agence"/>
-    <level id="17" name="Agence"/>
+    <level id="19" name="Groupe d'agence"/>
+    <level id="20" name="Agence"/>
   </branch>
 </universeBranches>

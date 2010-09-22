@@ -207,6 +207,7 @@
     <view enumId="1" description="Classif: all product" schemaEnumId="0" label="all_product_" prefix="allp"/>
     <view enumId="2" description="Classif: all Recap media" schemaEnumId="4" label="all_media_" prefix="allrm"/>
     <view enumId="3" description="Classif: all Recap product" schemaEnumId="4" label="all_product_" prefix="allrp"/>
+    <view enumId="4" description="Classif: all Adv Agency" schemaEnumId="0" label="all_adv_agency_" prefix="allaa"/>
   </views>
 </database>
 
