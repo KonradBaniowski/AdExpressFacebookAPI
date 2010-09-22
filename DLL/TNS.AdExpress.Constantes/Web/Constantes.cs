@@ -1466,6 +1466,10 @@ namespace TNS.AdExpress.Constantes.Web{
             /// Alert AdExpress
             /// </summary>
             public const int ALERT_ADEXPRESS = 5931;
+            /// <summary>
+            /// Analyse des mandataires
+            /// </summary>
+            public const int ANALYSE_MANDATAIRES = 7216;
 		}
 		#endregion
 
