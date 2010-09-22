@@ -106,6 +106,11 @@ namespace TNS.AdExpress.Domain.Classification {
         /// Determine if show trends monthly selection
         /// </summary>
         private bool _showTrendsMonthlySelection = false;
+
+        /// <summary>
+        /// Media agency flag 
+        /// </summary>
+        private Int64 _mediaAgencyFlag = -1;
         #endregion
 
         #region Constructor
@@ -392,6 +397,14 @@ namespace TNS.AdExpress.Domain.Classification {
         {
             get { return _showTrendsWeeklySelection; }
             set { _showTrendsWeeklySelection = value; }
+        }
+        /// <summary>
+        /// Get/set Media Agency Flag 
+        /// </summary>
+        public Int64 MediaAgencyFlag
+        {
+            get { return _mediaAgencyFlag; }
+            set { _mediaAgencyFlag = value; }
         }
         #endregion
 

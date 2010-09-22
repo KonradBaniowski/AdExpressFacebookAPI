@@ -407,7 +407,9 @@ namespace TNS.AdExpressI.LostWon {
             nbLine = 4;
 			if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) nbLine++;
             if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE)) nbLine++;
-            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)) {
+            //if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)) {
+            if (_session.CustomerLogin.CustomerMediaAgencyFlagAccess(_vehicleInformation.DatabaseId))
+            {
                 if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
                     nbLine++;
                 if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
@@ -501,7 +503,9 @@ namespace TNS.AdExpressI.LostWon {
             groupLineIndex = resultTable.AddNewLine(LineType.level1);
             resultTable[groupLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1849, _session.SiteLanguage));
             // Groupe d'Agence && Agence
-            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)) {
+            //if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)) {
+            if (_session.CustomerLogin.CustomerMediaAgencyFlagAccess(_vehicleInformation.DatabaseId))
+            {
                 if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency)) {
                     agencyGroupLineIndex = resultTable.AddNewLine(LineType.level1);
                     resultTable[agencyGroupLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1850, _session.SiteLanguage));
@@ -606,7 +610,8 @@ namespace TNS.AdExpressI.LostWon {
                     groups.Add(currentRow["id_group_"].ToString());
                 }
 
-                if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)) {//droits agences média					
+                //if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)) {//droits agences média					
+                if (_session.CustomerLogin.CustomerMediaAgencyFlagAccess(_vehicleInformation.DatabaseId)){
                     //activité publicitaire Groupes d'agences
                     if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency) && currentRow["ID_GROUP_ADVERTISING_AGENCY"] != null && currentRow["ID_GROUP_ADVERTISING_AGENCY"] != System.DBNull.Value && !agencyGroups.Contains(currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString())) {
                         filterN = "ID_GROUP_ADVERTISING_AGENCY=" + currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))";

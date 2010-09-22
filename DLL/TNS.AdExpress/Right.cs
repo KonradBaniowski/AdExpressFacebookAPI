@@ -1,3 +1,4 @@
+
 using System;
 using System.Data;
 using System.Collections;
@@ -13,6 +14,7 @@ using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.DataAccess;
 using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Constantes.Customer.DB;
+using TNS.AdExpress.Domain.Classification;
 
 
 
@@ -803,6 +805,81 @@ namespace TNS.AdExpress {
 				throw (new RightException("Impossible to retreive flags rights",err));
 			}
 		}
+
+        #region Media agency / Flag
+       
+        /// <summary>
+        /// Verify if vehicles Id list have all media agencies flags
+        /// </summary>
+        /// <param name="vehicleIds">vehicle Ids</param>
+        /// <returns>True if vehicles Id list have all media agencies flags</returns>
+        public bool CustomerMediaAgencyFlagAccess(List<Int64> vehicleIds)
+        {
+            try
+            {
+                if (VehiclesInformation.ContainsMediaAgencyFlag(vehicleIds))
+                {
+                    List<Int64> ids = VehiclesInformation.GetMediaAgencyFlagIds(vehicleIds);
+                    for (int i = 0; i < ids.Count; i++)
+                    {
+                        if (_flagsRights == null || _flagsRights.Count == 0 
+                            || !_flagsRights.ContainsKey(ids[i]))
+                             return (false);                       
+                    }
+                    return true;
+                }
+                return false;
+            }
+            catch (System.Exception err)
+            {
+                throw (new RightException("Impossible to retreive Media Agency flags rights", err));
+            }
+        }
+        /// <summary>
+        /// Verify if vehicles Id list have all media agencies flags
+        /// </summary>
+        /// <param name="vehicleId">vehicle Id</param>
+        /// <returns>True if vehicles Id list have all media agencies flags</returns>
+        public bool CustomerMediaAgencyFlagAccess(Int64 vehicleId)
+        {
+            try
+            {
+                if (VehiclesInformation.ContainsMediaAgencyFlag(vehicleId))
+                {
+                   Int64 id = VehiclesInformation.GetMediaAgencyFlagId(vehicleId);
+                   if (id != long.MinValue)
+                    {
+                        if (_flagsRights == null || _flagsRights.Count == 0
+                            || !_flagsRights.ContainsKey(id))
+                            return (false);
+                    }
+                    return true;
+                }
+                return false;
+            }
+            catch (System.Exception err)
+            {
+                throw (new RightException("Impossible to retreive Media Agency flags rights", err));
+            }
+        }
+
+        /// <summary>
+        /// Check if customer has at least one media agency flag
+        /// </summary>
+        /// <returns>True if customer has at least one media agency flag</returns>
+        public bool HasAtLeastOneMediaAgencyFlag()
+        {
+            if (_flagsRights != null || _flagsRights.Count > 0)
+            {
+                List<Int64> ids = VehiclesInformation.GetAllMediaAgencyFlagIds();
+                for (int i = 0; i < ids.Count; i++)
+                {
+                    if(_flagsRights.ContainsKey(ids[i]))return true;
+                }
+            }
+            return false;
+        }
+        #endregion
 
         #region Creation flag / vehicle
         /// <summary>

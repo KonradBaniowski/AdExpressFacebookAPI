@@ -1700,6 +1700,29 @@ namespace TNS.AdExpress.Constantes.DB{
         /// </summary>
         /// <remarks>Used for Finland</remarks>
         public const Int64 ID_SEGMENT_LEVEL_ACCESS_FLAG = 293;
+
+
+        /// <summary>
+        /// Identifier of PRESS's media agency flag
+        /// </summary>
+        public const Int64 ID_PRESS_MEDIA_AGENCY_FLAG = 298;  
+        /// <summary>
+        /// Identifier of RADIO's media agency flag
+        /// </summary>
+        public const Int64 ID_RADIO_MEDIA_AGENCY_FLAG = 299;
+        /// <summary>
+        /// Identifier of TV's media agency flag
+        /// </summary>
+        public const Int64 ID_TV_MEDIA_AGENCY_FLAG = 300;  
+        /// <summary>
+        /// Identifier of INTERNET's media agency flag
+        /// </summary>
+        public const Int64 ID_INTERNET_MEDIA_AGENCY_FLAG = 302;
+        /// <summary>
+        /// Identifier of OUTDOOR's media agency flag
+        /// </summary>
+        public const Int64 ID_OUTDOOR_MEDIA_AGENCY_FLAG = 301;          
+        
     }
 	#endregion
 

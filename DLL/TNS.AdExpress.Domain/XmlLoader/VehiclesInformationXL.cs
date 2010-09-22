@@ -55,7 +55,8 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 			bool autopromo = false;
             string readString = string.Empty;
             CustomerSessions.Unit defaultAllowUnit;
-            AllowUnits allowUnits = new AllowUnits(); ;
+            AllowUnits allowUnits = new AllowUnits(); 
+            Int64 mediaAgencyFlag = -1;
             #endregion
 
             try {
@@ -74,6 +75,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                     vhInfo.TrendsDefaultMediaSelectionDetailLevel = trendsDefaultMediaSelectionDetailLevel;
 									vhInfo.Autopromo = autopromo;
 									vhInfo.AllowedUniverseLevels = allowedUniverseLevels;
+                                    vhInfo.MediaAgencyFlag = mediaAgencyFlag;
                                     list.Add(vhInfo);
                                     id = string.Empty;
                                     showActiveMedia = false;
@@ -89,6 +91,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                     trendsDefaultMediaSelectionDetailLevel = null;
 									autopromo = false;
 									allowedUniverseLevels = new List<long>();
+                                    mediaAgencyFlag = -1;
                                 }
                                 if (reader.GetAttribute("id") == null || reader.GetAttribute("id").Length == 0) throw (new InvalidXmlValueException("Invalid id parameter"));
                                 id = reader.GetAttribute("id");
@@ -104,6 +107,8 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                     needLastAvailableDate = bool.Parse(reader.GetAttribute("needLastAvailableDate"));
 								if (reader.GetAttribute("autopromo") != null && reader.GetAttribute("autopromo").Length > 0)
 									autopromo = bool.Parse(reader.GetAttribute("autopromo"));
+                                if (reader.GetAttribute("mediaAgencyFlag") != null && reader.GetAttribute("mediaAgencyFlag").Length > 0)
+                                    mediaAgencyFlag = Int64.Parse(reader.GetAttribute("mediaAgencyFlag"));
                                 break;
                             case "allowedUnits":
                                 defaultAllowUnit = (CustomerSessions.Unit)Enum.Parse(typeof(CustomerSessions.Unit), reader.GetAttribute("defaultUnit"));
@@ -187,6 +192,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                     vhInfo.TrendsDefaultMediaSelectionDetailLevel = trendsDefaultMediaSelectionDetailLevel;
 					vhInfo.Autopromo = autopromo;
 					vhInfo.AllowedUniverseLevels = allowedUniverseLevels;
+                    vhInfo.MediaAgencyFlag = mediaAgencyFlag;
                     list.Add(vhInfo);
                 }
             }

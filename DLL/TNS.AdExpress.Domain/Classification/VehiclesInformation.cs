@@ -31,6 +31,16 @@ namespace TNS.AdExpress.Domain.Classification {
         /// Vehicles description list
         /// </summary>
         private static Dictionary<Int64, VehicleInformation> _listDataBaseId = new Dictionary<Int64, VehicleInformation>();
+
+        ///<summary>
+        /// Media Agency Flag by Vehicles  names list
+        /// </summary>
+        private static Dictionary<Vehicles.names, Int64> _listMediaAgencyFlagByVehicleNames = new Dictionary<Vehicles.names, Int64>();
+
+        ///<summary>
+        /// Media Agency Flag by Vehicles Ids list
+        /// </summary>
+        private static Dictionary<Int64, Int64> _listMediaAgencyFlagByVehicleIds = new Dictionary<Int64, Int64>();
         #endregion
 
         #region Constructeur
@@ -55,7 +65,21 @@ namespace TNS.AdExpress.Domain.Classification {
             if(list.Length>0) list=list.Substring(0,list.Length-1);
             return (list);
         }
-
+        /// <summary>
+        /// Get Media Agency Ids
+        /// </summary>
+        /// <remarks>List like 1,2,3</remarks>
+        /// <returns>Id list</returns>
+        public static string GetMediaAgencyIds()
+        {
+            string list = "";
+            foreach (Int64 currentMediaAgencyId in _listMediaAgencyFlagByVehicleNames.Values)
+            {
+                list += currentMediaAgencyId.ToString() + ",";
+            }
+            if (list.Length > 0) list = list.Substring(0, list.Length - 1);
+            return (list);
+        }
         #region Convert
 
         #region Convert Enum Id to databaseId
@@ -157,8 +181,79 @@ namespace TNS.AdExpress.Domain.Classification {
         }
         #endregion
 
-		#region Contains
-		/// <summary>
+        #region Get Media Agency Flag
+        /// <summary>
+        /// Get Media Agency Flag ID
+        /// </summary>
+        public static Int64 GetMediaAgencyFlag(Vehicles.names id)
+        {
+            try
+            {
+                return (_listMediaAgencyFlagByVehicleNames[id]);
+            }
+            catch (System.Exception)
+            {
+                return -1;
+            }
+        }
+        /// <summary>
+        /// Get Media Agency Flag ID
+        /// </summary>
+        public static Int64 GetMediaAgencyFlagId(Int64 dataBaseVehicleId)
+        {
+            try
+            {
+                return (_listMediaAgencyFlagByVehicleIds[dataBaseVehicleId]);
+            }
+            catch (System.Exception)
+            {
+                return long.MinValue;
+            }
+        }
+        /// <summary>
+        /// Get Media Agency Flag ID list
+        /// </summary>
+        public static List<Int64> GetMediaAgencyFlagIds(List<Int64> dataBaseVehicleIds)
+        {
+            List<Int64> ids = new List<long>();
+            try
+            {
+                for (int i = 0; i < dataBaseVehicleIds.Count; i++)
+                {
+                    if(_listMediaAgencyFlagByVehicleIds.ContainsKey(dataBaseVehicleIds[i]))
+                        ids.Add(_listMediaAgencyFlagByVehicleIds[dataBaseVehicleIds[i]]);
+                }
+                return (ids);
+            }
+            catch (System.Exception)
+            {
+                return new List<long>(); 
+            }
+        }
+
+        /// <summary>
+        /// Get All Media Agency Flag Ids
+        /// </summary>
+        /// <returns>Flag Ids</returns>
+        public static List<Int64> GetAllMediaAgencyFlagIds(){
+            List<Int64> ids = new List<long>();
+            try
+            {
+                foreach (KeyValuePair<Int64,Int64> kpv in _listMediaAgencyFlagByVehicleIds)
+                {
+                    ids.Add(kpv.Value);
+                }
+                return (ids);
+            }
+            catch (System.Exception)
+            {
+                return new List<long>();
+            }
+        }
+        #endregion
+
+        #region Contains
+        /// <summary>
 		/// Verifiy if contains vehicle Id
 		/// </summary>
 		/// <param name="dataBaseVehicleId">Database vehicle Id</param>
@@ -185,6 +280,59 @@ namespace TNS.AdExpress.Domain.Classification {
 				throw (new ArgumentException("impossible to reteive the requested vehicle", err));
 			}
 		}
+        /// <summary>
+        /// Verifiy if contains Media Agency flag for current vehicle Id
+        /// </summary>
+        /// <param name="dataBaseVehicleId">Database vehicle Id</param>
+        /// <returns></returns>
+        public static bool ContainsMediaAgencyFlag(Int64 dataBaseVehicleId)
+        {
+            try
+            {
+                return (_listMediaAgencyFlagByVehicleIds.ContainsKey(dataBaseVehicleId));
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+        }
+        /// <summary>
+        /// Verifiy if contains Media Agency flag for all vehicle Ids
+        /// </summary>
+        /// <param name="dataBaseVehicleIds">Database vehicle Id</param>
+        /// <returns></returns>
+        public static bool ContainsMediaAgencyFlag(List<Int64> dataBaseVehicleIds)
+        {
+            try
+            {
+                if (dataBaseVehicleIds == null || dataBaseVehicleIds.Count == 0) return false;
+                for (int i = 0; i < dataBaseVehicleIds.Count; i++)
+                {
+                    if (!_listMediaAgencyFlagByVehicleIds.ContainsKey(dataBaseVehicleIds[i])) return false;
+                }
+                return true;
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+        }
+        /// <summary>
+        // Verifiy if contains Media Agency flag for current vehicle  Name
+        /// </summary>
+        /// <param name="dataBaseVehicleId">Database vehicle Id</param>
+        /// <returns></returns>
+        public static bool ContainsMediaAgencyFlag(Vehicles.names vehicle)
+        {
+            try
+            {
+                return (_listMediaAgencyFlagByVehicleNames.ContainsKey(vehicle));
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+        }
 		#endregion
 
 		#region Get commun UnitInformation list
@@ -343,11 +491,17 @@ namespace TNS.AdExpress.Domain.Classification {
         public static void Init(IDataSource source) {
             _listVehicleNames.Clear();
             _listDataBaseId.Clear();
+            _listMediaAgencyFlagByVehicleNames.Clear();
             List<VehicleInformation> vehicles = VehiclesInformationXL.Load(source);
             try {
                 foreach (VehicleInformation currentVehicle in vehicles) {
                     _listVehicleNames.Add(currentVehicle.Id, currentVehicle);
                     _listDataBaseId.Add(currentVehicle.DatabaseId, currentVehicle);
+                    if (currentVehicle.MediaAgencyFlag >= 0)
+                    {
+                        _listMediaAgencyFlagByVehicleNames.Add(currentVehicle.Id, currentVehicle.MediaAgencyFlag);
+                        _listMediaAgencyFlagByVehicleIds.Add(currentVehicle.DatabaseId, currentVehicle.MediaAgencyFlag);
+                    }
                 }
             }
             catch (System.Exception err) {

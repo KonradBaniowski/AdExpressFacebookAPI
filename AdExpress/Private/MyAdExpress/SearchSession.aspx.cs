@@ -443,7 +443,7 @@ namespace AdExpress.Private.MyAdExpress{
 					#region Vérification des flags produit pour le niveau de détail produit					
 					if((!_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_HOLDING_COMPANY) && (webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("holdingcompany")>=0))||
 						(!_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MARQUE) && (webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("brand") >= 0))
-						|| (!_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_AGENCY) && (webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("agency") >= 0))
+						|| (!_webSession.CustomerLogin.HasAtLeastOneMediaAgencyFlag() && (webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("agency") >= 0))
 						){
 						_webSession.PreformatedProductDetail=TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiser;
 					}
@@ -889,8 +889,8 @@ namespace AdExpress.Private.MyAdExpress{
 					}					
 					
 					//Année agence média
-					_webSession.MediaAgencyFileYear=webSessionSave.MediaAgencyFileYear;					
-					if(_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_AGENCY) && (webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("agency")>=0)
+					_webSession.MediaAgencyFileYear=webSessionSave.MediaAgencyFileYear;
+                    if (_webSession.CustomerLogin.HasAtLeastOneMediaAgencyFlag() && (webSessionSave.PreformatedProductDetail.ToString().ToLower().IndexOf("agency") >= 0)
 						&& !WebFunctions.CheckedText.IsStringEmpty(_webSession.MediaAgencyFileYear)
 						&& _webSession.PeriodBeginningDate.Length>0
 						){

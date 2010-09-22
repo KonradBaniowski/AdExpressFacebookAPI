@@ -52,7 +52,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		protected override void OnPreRender(EventArgs e) {
 			if(webSession!=null){
 				VehicleListDataAccess vl=new VehicleListDataAccess(webSession);
-				this.DataSource=vl.List;
+				this.DataSource = FilteringWithMediaAgencyFlag(vl.List);
 				this.DataTextField="vehicle";
 				this.DataValueField="idVehicle";
 				this.DataBind();
@@ -91,5 +91,53 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			base.OnLoad (e);
 		}
 		#endregion
-	}
+
+
+        #region  FilteringWithMediaAgencyFlag
+        /// <summary>
+        /// Filtering with media agency flag by media type
+        /// </summary>
+        /// <param name="dt">Data Table</param>
+        /// <returns>Data Table </returns>
+        protected DataTable FilteringWithMediaAgencyFlag(DataTable dt)
+        {
+            switch (webSession.CurrentModule)
+            {
+                case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES :
+                    DataTable dataTable = new DataTable();
+                    DataColumn dataColumn;
+
+                    //ID Vehicle
+                    dataColumn = new DataColumn();
+                    dataColumn.DataType = Type.GetType("System.Int64");
+                    dataColumn.ColumnName = "idVehicle";
+                    dataTable.Columns.Add(dataColumn);
+
+                    //Vehicle label
+                    dataColumn = new DataColumn();
+                    dataColumn.DataType = Type.GetType("System.String");
+                    dataColumn.ColumnName = "vehicle";
+                    dataTable.Columns.Add(dataColumn);
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        DataRow dr;
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            Int64 idV = Convert.ToInt64(row["idVehicle"].ToString());
+                            if (webSession.CustomerLogin.CustomerMediaAgencyFlagAccess(idV))
+                            {
+                                dr = dataTable.NewRow();
+                                dr["idVehicle"] = idV;
+                                dr["vehicle"] = row["vehicle"].ToString();
+                                dataTable.Rows.Add(dr);
+                            }
+                        }
+                    }
+                    return dataTable;                   
+                default : return dt;
+            }            
+        }
+        #endregion
+    }
 }

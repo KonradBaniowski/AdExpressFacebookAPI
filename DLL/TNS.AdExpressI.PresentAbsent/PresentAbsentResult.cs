@@ -563,7 +563,8 @@ namespace TNS.AdExpressI.PresentAbsent{
             nbLine = 4;
 			if (showProduct) nbLine++;
             if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE)) nbLine++;
-			if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)) {
+            //if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)) {
+             if (_session.CustomerLogin.CustomerMediaAgencyFlagAccess(_vehicleInformation.DatabaseId)){
 				if(_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))nbLine++;
 				if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency)) nbLine++;
 			}
@@ -629,7 +630,8 @@ namespace TNS.AdExpressI.PresentAbsent{
             groupLineIndex = resultTable.AddNewLine(LineType.level1);
             resultTable[groupLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1849, _session.SiteLanguage));
             // Groupe d'Agence && Agence
-            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY))
+            //if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY))
+            if (_session.CustomerLogin.CustomerMediaAgencyFlagAccess(_vehicleInformation.DatabaseId))
             {
 				if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency)) {
 					agencyGroupLineIndex = resultTable.AddNewLine(LineType.level1);
@@ -773,8 +775,8 @@ namespace TNS.AdExpressI.PresentAbsent{
                         }
 
 
-                        if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY))
-                        {
+                        //if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)){
+                          if (_session.CustomerLogin.CustomerMediaAgencyFlagAccess(_vehicleInformation.DatabaseId)){
                             //activité publicitaire Groupes d'agences
                             if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency) && currentRow["ID_GROUP_ADVERTISING_AGENCY"] != null && currentRow["ID_GROUP_ADVERTISING_AGENCY"] != System.DBNull.Value && !agencyGroups.Contains(currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString()))
                             {

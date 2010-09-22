@@ -796,7 +796,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		///  </returns>
 		///  <url>element://model:project::TNS.AdExpress.Web.Controls/design:view:::a6hx33ynklrfe4g_v</url>
 		private bool CanAddDetailLevelItem(DetailLevelItemInformation currentDetailLevel){
-			
+           
 			switch(currentDetailLevel.Id){
 				case DetailLevelItemInformation.Levels.slogan:
 					return _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG);
@@ -819,7 +819,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
 					return(CheckProductDetailLevelAccess());
 				case DetailLevelItemInformation.Levels.groupMediaAgency:
 				case DetailLevelItemInformation.Levels.agency:
-					return ((CheckProductDetailLevelAccess()) && _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_AGENCY));
+                    List<Int64> vehicleList = GetVehicles();
+                    return ((CheckProductDetailLevelAccess()) && _customerWebSession.CustomerLogin.CustomerMediaAgencyFlagAccess(vehicleList));
 				default:
 					return(true);
 			}
@@ -901,8 +902,25 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			return (_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG));
 			
 		}
-		
-		
+
+        private List<Int64> GetVehicles()
+        {
+            List<Int64> vehicleList = new List<Int64>();
+            string listStr = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+            if (listStr != null && listStr.Length > 0)
+            {
+                string[] list = listStr.Split(',');
+                for (int i = 0; i < list.Length; i++)
+                    vehicleList.Add(Convert.ToInt64(list[i]));
+            }
+            else
+            {
+                //When a vehicle is not checked but one or more category, this get the vehicle correspondly
+                string Vehicle = ((LevelInformation)_customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
+                vehicleList.Add(Convert.ToInt64(Vehicle));
+            }
+            return vehicleList;
+        }
 		#endregion
 
 

@@ -313,7 +313,8 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 			//To check if the user has a right to view the media agency or not
 			//mediaAgencyAccess flag is used in the rest of the classes which indicates whethere the user has access 
 			//to media agency or not
-			if (_webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY))
+            string listStr = _webSession.GetSelection(_webSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+            if (_webSession.CustomerLogin.CustomerMediaAgencyFlagAccess(Int64.Parse(listStr)))
 				mediaAgencyAccess=true;
 
 			#endregion

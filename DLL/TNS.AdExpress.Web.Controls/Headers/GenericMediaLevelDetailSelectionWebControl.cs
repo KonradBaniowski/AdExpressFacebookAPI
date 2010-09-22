@@ -868,21 +868,14 @@ namespace TNS.AdExpress.Web.Controls.Headers{
         /// <returns>Detail level list</returns>
         private List<DetailLevelItemInformation.Levels> GetVehicleAllowedDetailLevelItems(){
 
-            List<Int64> vehicleList = new List<Int64>();
-            string listStr = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
-            if (listStr != null && listStr.Length > 0) {
-                string[] list = listStr.Split(',');
-                for (int i = 0; i < list.Length; i++)
-                    vehicleList.Add(Convert.ToInt64(list[i]));
-            }
-            else {
-                //When a vehicle is not checked but one or more category, this get the vehicle correspondly
-                string Vehicle = ((LevelInformation)_customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
-                vehicleList.Add(Convert.ToInt64(Vehicle));
-            }
+            List<Int64> vehicleList = GetVehicles();          
+            List<DetailLevelItemInformation.Levels> levelList = VehiclesInformation.GetCommunDetailLevelList(vehicleList);
+           
+            return levelList;
 
-            return VehiclesInformation.GetCommunDetailLevelList(vehicleList);
         }
+
+      
 
 		/// <summary>
 		/// Retourne le niveau de détail par defaut
@@ -998,7 +991,8 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// <param name="module">Module</param>
 		/// <returns>True si oui false sinon</returns>
 		private bool CanAddDetailLevelItem(DetailLevelItemInformation currentDetailLevelItem,Int64 module){
-			switch(module){
+            List<Int64> vehicleList = null;
+            switch(module){
 				case WebConstantes.Module.Name.ALERTE_CONCURENTIELLE:
 				case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
 				case WebConstantes.Module.Name.ALERTE_POTENTIELS:
@@ -1110,10 +1104,11 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 								#region Agences et groupe d'agence
 							case DetailLevelItemInformation.Levels.groupMediaAgency:
 							case DetailLevelItemInformation.Levels.agency:
+                                vehicleList = GetVehicles();                               
 								if(
 									CheckProductDetailLevelAccess() &&
 									// Droit sur les agences media
-									_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_AGENCY)
+                                    _customerWebSession.CustomerLogin.CustomerMediaAgencyFlagAccess(vehicleList)									
 									)return(true);
 								return(false);
 								#endregion
@@ -1178,7 +1173,8 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 							#region Agences et groupe d'agence
 							case DetailLevelItemInformation.Levels.groupMediaAgency:
 							case DetailLevelItemInformation.Levels.agency:
-								return(_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_AGENCY));
+                                vehicleList = GetVehicles();
+                                return (_customerWebSession.CustomerLogin.CustomerMediaAgencyFlagAccess(vehicleList));
 								
 								#endregion
 
@@ -1298,10 +1294,11 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 						#region Agences et groupe d'agence
 					case DetailLevelItemInformation.Levels.groupMediaAgency:
 					case DetailLevelItemInformation.Levels.agency:
+                        vehicleList = GetVehicles();  
 						if(
 							CheckProductDetailLevelAccess() &&
 							// Droit sur les agences media
-							_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_AGENCY)
+                             _customerWebSession.CustomerLogin.CustomerMediaAgencyFlagAccess(vehicleList)									
 							)return(true);
 						return(false);
 						#endregion
@@ -1538,7 +1535,26 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		protected bool CheckProductDetailLevelAccess(){
 			return (_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.MEDIA_SCHEDULE_PRODUCT_DETAIL_ACCESS_FLAG));
 		}
-		
+
+
+        private List<Int64> GetVehicles()
+        {
+            List<Int64> vehicleList = new List<Int64>();
+            string listStr = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+            if (listStr != null && listStr.Length > 0)
+            {
+                string[] list = listStr.Split(',');
+                for (int i = 0; i < list.Length; i++)
+                    vehicleList.Add(Convert.ToInt64(list[i]));
+            }
+            else
+            {
+                //When a vehicle is not checked but one or more category, this get the vehicle correspondly
+                string Vehicle = ((LevelInformation)_customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
+                vehicleList.Add(Convert.ToInt64(Vehicle));
+            }
+            return vehicleList;
+        }
 		#endregion
 
 	}

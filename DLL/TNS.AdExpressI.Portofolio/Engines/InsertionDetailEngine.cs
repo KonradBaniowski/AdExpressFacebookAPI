@@ -163,7 +163,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				if (_webSession.CustomerLogin.ShowCreatives(_vehicleInformation.Id) && _vehicleInformation.ShowCreations) showCreative = true;
 				// Show media agency
 				bool showMediaAgency = false;
-				if (_webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_MEDIA_AGENCY) && dt.Columns.Contains("advertising_agency")) {
+                if (_webSession.CustomerLogin.CustomerMediaAgencyFlagAccess(_vehicleInformation.DatabaseId) && dt.Columns.Contains("advertising_agency"))
+                {
 					showMediaAgency = true;
 				}
 				//Show diffusion date
