@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <flags>
-  <flag id="141" description="Doc Marketing (fiche détaillée)"/>
-  <flag id="146" description="Accès Agences Media"/>
+  <flag id="141" description="Doc Marketing (fiche détaillée)"/>  
   <flag id="200" description="Accéder aux créations"/>
   <flag id="201" description="Télécharger les créations"/>
   <flag id="211" description="Accès Marques"/>
