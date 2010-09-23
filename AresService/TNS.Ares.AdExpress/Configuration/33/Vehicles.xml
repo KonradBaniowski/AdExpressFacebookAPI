@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <vehicles>
   <!-- PRESS -->
-  <vehicle id="press" databaseId="1" showInsertions="true" showCreations="true">
+  <vehicle id="press" databaseId="1" showInsertions="true" showCreations="true" mediaAgencyFlag="298">
     <!-- Units-->
     <allowedUnits defaultUnit="pages">
       <allowedUnit>euro</allowedUnit>
@@ -80,7 +80,7 @@
     </allowedUniverseLevels>
   </vehicle>
   <!-- RADIO -->
-  <vehicle id="radio" databaseId="2" showInsertions="true" showCreations="true">
+  <vehicle id="radio" databaseId="2" showInsertions="true" showCreations="true"  mediaAgencyFlag="299">
     <!-- Units-->
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
@@ -158,7 +158,7 @@
     </allowedUniverseLevels>
   </vehicle>
   <!-- TV -->
-  <vehicle id="tv" databaseId="3" showInsertions="true" showCreations="true">
+  <vehicle id="tv" databaseId="3" showInsertions="true" showCreations="true" mediaAgencyFlag="300">
     <!-- Units-->
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
@@ -394,7 +394,7 @@
     </allowedUniverseLevels>
   </vehicle>
   <!-- INTERNET -->
-  <vehicle id="internet" databaseId="7" showInsertions="false" showCreations="true" showActiveMedia="true">
+  <vehicle id="internet" databaseId="7" showInsertions="false" showCreations="true" showActiveMedia="true" mediaAgencyFlag="302">
     <!-- Units-->
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
@@ -467,7 +467,7 @@
     </allowedUniverseLevels>
   </vehicle>
   <!-- OUTDOOR -->
-  <vehicle id="outdoor" databaseId="8" showInsertions="true" showCreations="true">
+  <vehicle id="outdoor" databaseId="8" showInsertions="true" showCreations="true" mediaAgencyFlag="301">
     <!-- Units-->
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
