@@ -395,7 +395,7 @@
     </allowedUniverseLevels>
   </vehicle>
   <!-- INTERNET -->
-  <vehicle id="internet" databaseId="7" showInsertions="false" showCreations="true" showActiveMedia="true"  mediaAgencyFlag="302">
+  <vehicle id="internet" databaseId="7" showInsertions="false" showCreations="true" showActiveMedia="true" mediaAgencyFlag="302">
     <!-- Units-->
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
@@ -468,7 +468,7 @@
     </allowedUniverseLevels>
   </vehicle>
   <!-- OUTDOOR -->
-  <vehicle id="outdoor" databaseId="8" showInsertions="true" showCreations="true"  mediaAgencyFlag="301">
+  <vehicle id="outdoor" databaseId="8" showInsertions="true" showCreations="true" mediaAgencyFlag="301">
     <!-- Units-->
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>

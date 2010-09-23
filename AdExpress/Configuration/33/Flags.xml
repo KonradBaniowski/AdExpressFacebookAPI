@@ -27,5 +27,5 @@
   <flag id="299" description="Accès Agences Media par RADIO"/>
   <flag id="300" description="Accès Agences Media par TV"/>
   <flag id="301" description="Accès Agences Media par OUTDOOR"/>
-  <flag id="302" description="Accès Agences Media par INTERNET"/> 
+  <flag id="302" description="Accès Agences Media par INTERNET"/>
 </flags>

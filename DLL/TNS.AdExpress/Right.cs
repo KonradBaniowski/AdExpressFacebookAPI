@@ -822,6 +822,7 @@ namespace TNS.AdExpress {
                     List<Int64> ids = VehiclesInformation.GetMediaAgencyFlagIds(vehicleIds);
                     for (int i = 0; i < ids.Count; i++)
                     {
+                        if(!Domain.AllowedFlags.ContainFlag(ids[i])) throw new RightException(" Media Agency flag "+ ids[i].ToString() +" must be defined in both files Vehicles.XML and Flags.xml" );
                         if (_flagsRights == null || _flagsRights.Count == 0 
                             || !_flagsRights.ContainsKey(ids[i]))
                              return (false);                       
@@ -849,6 +850,7 @@ namespace TNS.AdExpress {
                    Int64 id = VehiclesInformation.GetMediaAgencyFlagId(vehicleId);
                    if (id != long.MinValue)
                     {
+                        if (!Domain.AllowedFlags.ContainFlag(id)) throw new RightException(" Media Agency flag " + id.ToString() + " must be defined in both files Vehicles.XML and Flags.xml");
                         if (_flagsRights == null || _flagsRights.Count == 0
                             || !_flagsRights.ContainsKey(id))
                             return (false);
