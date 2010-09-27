@@ -137,9 +137,12 @@ namespace AdExpress{
 			try{                
                 #region Nouvelle version
                 //Right Object Creation
-
-				TNS.AdExpress.Right newRight = new TNS.AdExpress.Right(login, password, _siteLanguage);
-                if(newRight.CanAccessToAdExpress()) {
+                TNS.AdExpress.Right newRight = null;
+                try {
+                    newRight = new TNS.AdExpress.Right(login, password, _siteLanguage);
+                }
+                catch (ArgumentException) { }
+                if (newRight!=null && newRight.CanAccessToAdExpress()) {
                     newRight.SetModuleRights();
                     newRight.SetFlagsRights();
                     newRight.SetRights();
