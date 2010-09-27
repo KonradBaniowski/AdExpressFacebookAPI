@@ -71,6 +71,13 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// Data base schema
         /// </summary>
         protected string _dBSchema = null;
+        /// <summary>
+        /// Filters (that we can apply for a specific level)
+        /// we can add severals filters
+        /// The key represents the level filter
+        /// The value represents the list of ids to exclude (example of a list : 9999,999,2541)
+        /// </summary>
+        protected Dictionary<long, string> _filters = new Dictionary<long, string>();
 		#endregion
 
 		#region Constructors
@@ -118,7 +125,13 @@ namespace TNS.AdExpressI.Classification.DAL {
                 _dBSchema = value;
             }        
         }
-     
+        /// <summary>
+        /// Get/Set Control filters
+        /// </summary>
+        public Dictionary<long, string> Filters{
+            get { return _filters; }
+            set { _filters = value; }
+        }
         #endregion
 
         #region IClassificationDAL Implementation
@@ -258,13 +271,14 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <returns>Data set with data table[id_item,item] : identifer and label of a level of brand classification</returns>
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">Throw exception when error occurs during 
         /// execution or building of the query</exception>
-		public virtual DataSet GetItems(string classificationLevelLabel, string wordToSearch) {
+		public virtual DataSet GetItems(int classificationLevelId, string wordToSearch) {
             //Calling the engine which compute data
             if (_dBSchema == null || _dBSchema.Length == 0)
                 throw (new ArgumentException("Invalid dBSchema parameter"));//Excepted for france data base, can be null for other country         
             ClassificationItemsDAL engineDal = new ClassificationItemsDAL(_session,_dimension);
             engineDal.DBSchema = _dBSchema;
-            return engineDal.GetItems(classificationLevelLabel, wordToSearch);
+            engineDal.Filters = _filters;
+            return engineDal.GetItems(classificationLevelId, wordToSearch);
 		}
 
         /// <summary>
@@ -341,14 +355,15 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <returns>Data set with data table[id_item,item] : identifer and label of a level of brand classification</returns>
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">Throw exception when error occurs during 
         /// execution or building of the query</exception>
-        public virtual DataSet GetItems(string classificationLevelLabel, string selectedClassificationLevelIds, string selectedClassificationLevelLabel)
+        public virtual DataSet GetItems(int classificationLevelId, string selectedClassificationLevelIds, string selectedClassificationLevelLabel)
         {
             //Calling the engine which compute data
             if (_dBSchema == null || _dBSchema.Length == 0)
                 throw (new ArgumentException("Invalid dBSchema parameter"));//Excepted for france data base, can be null for other country         
             ClassificationItemsDAL engineDal = new ClassificationItemsDAL(_session, _dimension);
             engineDal.DBSchema = _dBSchema;
-            return engineDal.GetItems(classificationLevelLabel, selectedClassificationLevelIds, selectedClassificationLevelLabel);
+            engineDal.Filters = _filters;
+            return engineDal.GetItems(classificationLevelId, selectedClassificationLevelIds, selectedClassificationLevelLabel);
 		}
 
 

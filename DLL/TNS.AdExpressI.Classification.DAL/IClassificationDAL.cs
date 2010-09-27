@@ -176,7 +176,7 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <returns>Data set with data table[id_item,item] : identifer and label of a level of brand classification</returns>
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">Throw exception when error occurs during 
         /// execution or building of the query</exception>
-        DataSet GetItems(string classificationLevelLabel, string wordToSearch);
+        DataSet GetItems(int classificationLevelInt, string wordToSearch);
 
         /// <summary>
         ///  Search function for Product or vehicle classification Items. The data will be filter 
@@ -254,7 +254,7 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <returns>Data set with data table[id_item,item] : identifer and label of a level of brand classification</returns>
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">Throw exception when error occurs during 
         /// execution or building of the query</exception>
-        DataSet GetItems(string classificationLevelLabel, string selectedClassificationLevelIds, string selectedClassificationLevelLabel);
+        DataSet GetItems(int classificationLevelInt, string selectedClassificationLevelIds, string selectedClassificationLevelLabel);
 
         /// <summary>
         ///  Search function for Product or vehicle classification Items. The data will be filter 

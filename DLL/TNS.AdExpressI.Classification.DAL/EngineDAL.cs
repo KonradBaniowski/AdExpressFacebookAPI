@@ -51,6 +51,13 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// Data base scheme
         /// </summary>
         protected string _dBSchema = null;
+        /// <summary>
+        /// Filters (that we can apply for a specific level)
+        /// we can add severals filters
+        /// The key represents the level filter
+        /// The value represents the list of ids to exclude (example of a list : 9999,999,2541)
+        /// </summary>
+        protected Dictionary<long, string> _filters = new Dictionary<long, string>();
 		#endregion
 
 		#region Constructor		
@@ -79,7 +86,14 @@ namespace TNS.AdExpressI.Classification.DAL {
                 _dBSchema = value;
             }
         }
-
+        /// <summary>
+        /// Get/Set Control filters
+        /// </summary>
+        public Dictionary<long, string> Filters
+        {
+            get { return _filters; }
+            set { _filters = value; }
+        }
         #endregion
 
         /// <summary>

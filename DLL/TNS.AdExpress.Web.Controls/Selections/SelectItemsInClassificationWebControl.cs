@@ -71,6 +71,13 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// Code error
 		/// </summary>
 		protected int _errorCode = 0;
+        /// <summary>
+        /// Filters (that we can apply for a specific level)
+        /// we can add severals filters
+        /// The key represents the level filter
+        /// The value represents the list of ids to exclude (example of a list : 9999,999,2541)
+        /// </summary>
+        protected Dictionary<long, string> _filters = new Dictionary<long, string>();
 		#endregion
 
 		#region Accesseurs
@@ -115,6 +122,14 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			get { return _errorCode; }
 			set { _errorCode = value; }
 		}
+
+        /// <summary>
+        /// Get/Set Control filters
+        /// </summary>
+        public Dictionary<long, string> Filters{
+            get { return _filters; }
+            set { _filters = value; }
+        }
 		#endregion
 
 		#region JavaScript
@@ -130,6 +145,12 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			js.Append("\r\n<SCRIPT language=javascript>\r\n<!--");
 			js.Append("\r\n\nfunction SaveSessionParametersScript(obj){");
 			js.Append("\r\n\t obj.IdSession = '" + _idSession + "';");
+
+            js.Append("\r\n\t obj.Filters = new Array();");
+            int i = 0;
+            foreach(int filterId in _filters.Keys)
+                js.Append("\r\n\t obj.Filters[" + (i++) + "] = '" + filterId + ";" + _filters[filterId] + "';");
+
 			js.Append("\r\n }");
 			js.Append("\r\n\t SaveSessionParametersScript(savedParameters);");
 			js.Append("\r\n-->\r\n</SCRIPT>");
@@ -145,6 +166,14 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			if (o.Contains("IdSession")) {
 				this._idSession = o["IdSession"].Value.Replace("\"", "");
 			}
+            if (o.Contains("Filters")){
+                ArrayList filters = (ArrayList)o["Filters"];
+                for(int j=0; j<filters.Count; j++)
+                {
+                    string[] s = ((AjaxPro.JavaScriptString)filters[j]).Value.Replace("\"", "").Split(';');
+                    _filters.Add(int.Parse(s[0]), s[1]);
+                }
+            }
 		}
 		#endregion
 
@@ -1024,7 +1053,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                 //IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                 TNS.AdExpressI.Classification.DAL.ClassificationDAL classficationDAL = (TNS.AdExpressI.Classification.DAL.ClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                 classficationDAL.DBSchema = _dBSchema;
-				return classficationDAL.GetItems(UniverseLevels.Get(universeLevelId).TableName, selectedItemIds, UniverseLevels.Get(universeLevelOfSelectedItem).TableName).Tables[0];
+                classficationDAL.Filters = _filters;
+				return classficationDAL.GetItems(universeLevelId, selectedItemIds, UniverseLevels.Get(universeLevelOfSelectedItem).TableName).Tables[0];
 			}
 			catch (Exception err) {
 				throw new TNS.AdExpress.Web.Controls.Exceptions.SelectItemsInClassificationWebControlException("Impossible d'obtenir les données.", err);
@@ -1051,8 +1081,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                 //IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                 TNS.AdExpressI.Classification.DAL.ClassificationDAL classficationDAL = (TNS.AdExpressI.Classification.DAL.ClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                 classficationDAL.DBSchema = _dBSchema;
-                
-                return classficationDAL.GetItems(UniverseLevels.Get(universeLevelId).TableName, wordToSearch).Tables[0];
+                classficationDAL.Filters = _filters;
+                return classficationDAL.GetItems(universeLevelId, wordToSearch).Tables[0];
 			}
 			catch (Exception err) {
 				throw new TNS.AdExpress.Web.Controls.Exceptions.SelectItemsInClassificationWebControlException("Impossible d'obtenir les données.", err);

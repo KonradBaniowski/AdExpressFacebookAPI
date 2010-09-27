@@ -842,8 +842,23 @@ namespace TNS.AdExpress.Constantes.Web{
 				/// <summary>
 				/// Tableau détaillé par Media / Titre/ Supports
 				/// </summary>
-				vehicleCountryMedia
-						
+				vehicleCountryMedia,
+                /// <summary>
+                /// Tableau détaillé par catégorie
+                /// </summary>
+                category,
+                /// <summary>
+                /// Tableau détaillé par Régie
+                /// </summary>
+                mediaSeller,
+                /// <summary>
+                /// Tableau détaillé par Régie / Media
+                /// </summary>
+                mediaSellerVehicle,
+                /// <summary>
+                /// Tableau détaillé par Régie / Catégorie
+                /// </summary>
+                mediaSellerCategory
 			}
 
 	
@@ -3319,7 +3334,11 @@ namespace TNS.AdExpress.Constantes.Web{
 			/// <summary>
 			/// media group of list
 			/// </summary>
-			media = 2
+			media = 2,
+            /// <summary>
+            /// Advertising agency
+            /// </summary>
+            agency = 3
 		}
 		/// <summary>
 		/// Category of vehicle list
@@ -3366,9 +3385,15 @@ namespace TNS.AdExpress.Constantes.Web{
 			/// <summary>
 			/// ID media to force exclusion of Sponsorship TNT
 			/// </summary>			
-			excludeDigitalSponsorship = 9
-
-
+			excludeDigitalSponsorship = 9,
+            /// <summary>
+            /// Advertising Agency
+            /// </summary>
+            advertisingAgency = 10,
+            /// <summary>
+            /// Group Advertising Agency
+            /// </summary>
+            groupAdvertisingAgency = 11
 		}
 	}
 	#endregion

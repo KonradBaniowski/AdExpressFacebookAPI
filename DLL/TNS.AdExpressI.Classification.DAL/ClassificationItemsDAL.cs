@@ -109,13 +109,14 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <returns>Data set with data table[id_item,item] : identifer and label of a level of brand classification</returns>
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">Throw exception when error occurs during 
         /// execution or building of the query</exception>
-        public virtual DataSet GetItems(string classificationLevelLabel, string wordToSearch)
+        public virtual DataSet GetItems(int classificationLevelId, string wordToSearch)
         {
 
 			#region Tables initilization
 			View oView = null;
 			string classificationRight = "";
 			bool useView = true;
+            string classificationLevelLabel = UniverseLevels.Get(classificationLevelId).TableName;
 
 			try {
                 /* The search of classification items is done on a View of product or vehicle classification.
@@ -161,6 +162,14 @@ namespace TNS.AdExpressI.Classification.DAL {
 
             /*Query tables joins */
             GetJointClause(sql, oView, classificationLevelLabel, _dimension, classificationRight, useView);
+
+            foreach (int filterId in Filters.Keys)
+            {
+                if (filterId == classificationLevelId)
+                {
+                    sql.AppendFormat(" and wp.id_{0} not in ( {1} ) ", classificationLevelLabel, Filters[filterId]);
+                }
+            }
 
             /*Query orders fields by items' labels */
             sql.AppendFormat(" order by  {0}", classificationLevelLabel);
@@ -251,13 +260,14 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <returns>Data set with data table[id_item,item] : identifer and label of a level of brand classification</returns>
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">Throw exception when error occurs during 
         /// execution or building of the query</exception>
-        public virtual DataSet GetItems(string classificationLevelLabel, string selectedClassificationLevelIds, string selectedItemTableName)
+        public virtual DataSet GetItems(int classificationLevelId, string selectedClassificationLevelIds, string selectedItemTableName)
         {
 
 			#region Tables initilization
 			View oView = null;
 			string classificationRight = "";
 			StringBuilder sql = new StringBuilder(1000);
+            string classificationLevelLabel = UniverseLevels.Get(classificationLevelId).TableName;
 
 			try {
                 /* The search of classification items is done on a View of product or vehicle classification.
@@ -294,6 +304,12 @@ namespace TNS.AdExpressI.Classification.DAL {
 			if (classificationRight != null && classificationRight.Length > 0) {
 				sql.Append(classificationRight);
 			}
+
+            foreach (int filterId in Filters.Keys) {
+                if (filterId == classificationLevelId) {
+                    sql.AppendFormat(" and wp.id_{0} not in ( {1} ) ", classificationLevelLabel, Filters[filterId]);
+                }
+            }
 			
             /*If the current module is Media Schedule the data must be filtered 
              * on the medias selected by the customer*/

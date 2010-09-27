@@ -19,6 +19,7 @@ using WebFunctions = TNS.AdExpress.Web.Functions;
 using FrameWorkSelection=TNS.AdExpress.Constantes.FrameWork.Selection;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Domain.Web;
+using CstWeb = TNS.AdExpress.Constantes.Web;
 
 /// <summary>
 /// Class used to select product universe
@@ -373,6 +374,8 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
 				break;
             case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
                 SelectItemsInClassificationWebControl1.DefaultBranchId = 10;//Branche Agence par défaut
+                SelectItemsInClassificationWebControl1.Filters.Add(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISING_AGENCY, TNS.AdExpress.Domain.Lists.GetIdList(CstWeb.GroupList.ID.agency, CstWeb.GroupList.Type.advertisingAgency));
+                SelectItemsInClassificationWebControl1.Filters.Add(TNS.Classification.Universe.TNSClassificationLevels.GROUP_ADVERTISING_AGENCY, TNS.AdExpress.Domain.Lists.GetIdList(CstWeb.GroupList.ID.agency, CstWeb.GroupList.Type.groupAdvertisingAgency));
                 break;
 			case WebConstantes.Module.Name.INDICATEUR:
 			case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
