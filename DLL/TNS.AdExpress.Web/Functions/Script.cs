@@ -14,6 +14,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Web;
+using System.Collections.Generic;
 
 namespace TNS.AdExpress.Web.Functions{
 	/// <summary>
@@ -1193,8 +1194,69 @@ namespace TNS.AdExpress.Web.Functions{
 
 		#endregion
 
-		#region DivDisplayer
-		/// <summary>
+        #region MutualExclusion
+        /// <summary>
+        /// Be able to check only one option between PDM and PDV
+        /// </summary>
+        /// <param name="checkBoxNameList">CheckBox Name List</param>
+        /// <returns>JavaScript Code</returns>
+        public static string MutualExclusion(List<string> checkBoxNameList)
+        {
+            System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
+
+            t.Append("\n<script language=\"JavaScrip\" type=\"text/JavaScript\">                 ");
+            t.Append("\nfunction MutualExclusion(id)                                             ");
+            t.Append("\n{                                                                        ");
+            t.Append("\n\t    var objArray = new Array();                                        ");
+            t.Append("\n\t    var arrayIndex = 0;                                                ");
+            foreach (string name in checkBoxNameList)
+            {
+                t.Append("\n\t    objArray[arrayIndex] = document.getElementById('" + name + "');");
+                t.Append("\n\t    if (id !='" + name + "')                                       ");
+                t.Append("\n\t\t      objArray[arrayIndex++].checked = false;                    ");
+            }
+            t.Append("\n}                                                                        ");
+            t.Append("\n</script>                                                                ");
+
+            return t.ToString();
+        }
+        #endregion
+
+        #region EnableCheckBoxList
+        /// <summary>
+        /// allows a checkbox list to be selectionable only if the reference one is checked
+        /// </summary>
+        /// <param name="checkBoxNameList">CheckBox Name List</param>
+        /// <returns>JavaScript Code</returns>
+        public static string EnableCheckBoxList(List<string> checkBoxNameList)
+        {
+            System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
+
+            t.Append("\n<script language=\"JavaScrip\" type=\"text/JavaScript\">                 ");
+            t.Append("\nfunction EnableCheckBoxList(id)                                          ");
+            t.Append("\n{                                                                        ");
+            t.Append("\n\t    var oReference = document.getElementById(id);                      ");
+            t.Append("\n\t    if(oReference.checked == true) {                                   ");
+            foreach (string name in checkBoxNameList)
+            {
+                t.Append("\n\t    document.getElementById('" + name + "').disabled = false;      ");
+            }
+            t.Append("\n      }                                                                  ");
+            t.Append("\n\t    else {                                                             ");
+            foreach (string name in checkBoxNameList)
+            {
+                t.Append("\n\t    document.getElementById('" + name + "').disabled = true;       ");
+            }
+            t.Append("\n      }                                                                  ");
+            t.Append("\n}                                                                        ");
+            t.Append("\n</script>                                                                ");
+
+            return t.ToString();
+        }
+        #endregion
+
+        #region DivDisplayer
+        /// <summary>
 		/// Javascript permettant d'ouvrir/Fermer un div 
 		/// </summary>
 		/// <remarks>

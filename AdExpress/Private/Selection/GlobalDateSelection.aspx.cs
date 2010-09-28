@@ -105,7 +105,8 @@ namespace AdExpress.Private.Selection {
                 CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.dateDAL];
                 IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
 
-                if (_webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA) {
+                if (_webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA
+                    && _webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_MANDATAIRES){
 
                     if (Page.Request.Form.GetValues("selectionType") != null) selectionType = Page.Request.Form.GetValues("selectionType")[0];
                     
@@ -136,7 +137,9 @@ namespace AdExpress.Private.Selection {
                     GlobalCalendarWebControl1.StartYear = DateTime.Now.AddYears(-2).Year;
                 }
 
-                if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA || _webSession.CurrentModule == WebConstantes.Module.Name.NEW_CREATIVES)
+                if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA 
+                    || _webSession.CurrentModule == WebConstantes.Module.Name.NEW_CREATIVES
+                    || _webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
                     GlobalCalendarWebControl1.IsRestricted = false;
                 else{
                     GlobalCalendarWebControl1.IsRestricted = true;

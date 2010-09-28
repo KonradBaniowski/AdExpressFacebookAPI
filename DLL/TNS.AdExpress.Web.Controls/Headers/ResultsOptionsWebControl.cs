@@ -28,6 +28,7 @@ using SessionCst = TNS.AdExpress.Constantes.Web.CustomerSessions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Constantes.FrameWork.Results;
+using TNS.AdExpress.Web.Controls.Selections;
 #endregion
 
 namespace TNS.AdExpress.Web.Controls.Headers {
@@ -54,6 +55,14 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// Show segment flag
         /// </summary>
         private bool _showSegment = false;
+        /// <summary>
+        /// If mutualExclusion == true we need to add CheckBoxsMutualExclusion control
+        /// </summary>
+        private bool _mutualExclusion = false;
+        /// <summary>
+        /// If dependentSelection == true we allow a checkbox list to be selectionable only if the reference one is checked
+        /// </summary>
+        private bool _dependentSelection = false;
         #endregion
 
         #region Variables MMI
@@ -169,6 +178,18 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// Zoom Graphic CheckBox
         /// </summary>
         protected System.Web.UI.WebControls.CheckBox _zoomGraphicCheckBox;
+        /// <summary>
+        /// Web control used to handle mutual exclusion between a list of checkboxs
+        /// </summary>
+        protected CheckBoxsMutualExclusion _checkBoxsMutualExclusion;
+        /// <summary>
+        /// Web control used to allow a checkbox list to be selectionable only if the reference one is checked
+        /// </summary>
+        protected CheckBoxsDependentSelection _checkBoxsDependentSelection;
+        /// <summary>
+        /// CheckBox to indicate a comparative study
+        /// </summary>
+        protected System.Web.UI.WebControls.CheckBox ComparativeStudyCheckBox;
         #endregion
 
         #region Accessors
@@ -631,6 +652,36 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             set { _detailAdvertiserBrandProductOptions = value; }
         }
 
+        /// <summary>
+        /// Get / Set Mutual Exclusion option
+        /// </summary>
+        public bool MutualExclusion {
+            get { return _mutualExclusion; }
+            set { _mutualExclusion = value; }
+        }
+
+        /// <summary>
+        /// Get / Set Dependent Selection option
+        /// </summary>
+        public bool DependentSelection
+        {
+            get { return _dependentSelection; }
+            set { _dependentSelection = value; }
+        }
+
+        /// <summary>
+        /// Comparative Study Option
+        /// </summary>
+        [Bindable(true),
+        Description("Comparative Study Option")]
+        protected bool comparativeStudyOption = false;
+        /// <summary></summary>
+        public bool ComparativeStudyOption
+        {
+            get { return comparativeStudyOption; }
+            set { comparativeStudyOption = value; }
+        }
+
         #region Propriétés de TblChoice
         /// <summary>
         /// hauteur de l'image
@@ -1020,6 +1071,17 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                     }
                     catch(System.Exception) {
                         customerWebSession.Evolution = false;
+                    }
+                }
+                if (comparativeStudyOption)
+                {
+                    try
+                    {
+                        if (Page.Request.Form.GetValues(this.ID + "_comparativeStudy")[0] != null) customerWebSession.ComparativeStudy = true;
+                    }
+                    catch (System.Exception)
+                    {
+                        customerWebSession.ComparativeStudy = false;
                     }
                 }
                 if(personalizedElementsOption) {
@@ -1471,6 +1533,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         private void Custom_PreRender(object sender, System.EventArgs e) {
 
             string themeName = WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name;
+            List<System.Web.UI.WebControls.CheckBox> _checkBoxListMutualExclusion = new List<System.Web.UI.WebControls.CheckBox>();
+            List<System.Web.UI.WebControls.CheckBox> _checkBoxListDependentSelection = new List<System.Web.UI.WebControls.CheckBox>();
 
             #region Unité
             if(unitOption) {
@@ -1546,7 +1610,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region PDM
-            if(pdmOption) {
+            if (pdmOption) {
                 PdmCheckBox = new System.Web.UI.WebControls.CheckBox();
                 PdmCheckBox.ID = this.ID + "_pdm";
                 PdmCheckBox.ToolTip = GestionWeb.GetWebWord(1179, customerWebSession.SiteLanguage);
@@ -1554,7 +1618,10 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 PdmCheckBox.AutoPostBack = autoPostBackOption;
                 PdmCheckBox.Text = GestionWeb.GetWebWord(806, customerWebSession.SiteLanguage);
                 PdmCheckBox.Checked = customerWebSession.PDM;
-                Controls.Add(PdmCheckBox);
+                if (!_mutualExclusion)
+                    Controls.Add(PdmCheckBox);
+                else
+                    _checkBoxListMutualExclusion.Add(PdmCheckBox);
             }
             #endregion
 
@@ -1567,12 +1634,23 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 PdvCheckBox.AutoPostBack = autoPostBackOption;
                 PdvCheckBox.Text = GestionWeb.GetWebWord(1166, customerWebSession.SiteLanguage);
                 PdvCheckBox.Checked = customerWebSession.PDV;
-                Controls.Add(PdvCheckBox);
+                if (!_mutualExclusion)
+                    Controls.Add(PdvCheckBox);
+                else
+                    _checkBoxListMutualExclusion.Add(PdvCheckBox);
+            }
+            #endregion
+
+            #region CheckBoxs Mutual Exclusion
+            if (_mutualExclusion)
+            {
+                _checkBoxsMutualExclusion = new CheckBoxsMutualExclusion(_checkBoxListMutualExclusion);
+                Controls.Add(_checkBoxsMutualExclusion);
             }
             #endregion
 
             #region Evolution
-            if(evolutionOption) {
+            if (evolutionOption) {
                 EvolutionCheckBox = new System.Web.UI.WebControls.CheckBox();
                 EvolutionCheckBox.ID = this.ID + "_evol";
                 EvolutionCheckBox.CssClass = "txtBlanc11Bold";
@@ -1580,7 +1658,33 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 EvolutionCheckBox.AutoPostBack = autoPostBackOption;
                 EvolutionCheckBox.Text = GestionWeb.GetWebWord(1168, customerWebSession.SiteLanguage);
                 EvolutionCheckBox.Checked = customerWebSession.Evolution;
-                Controls.Add(EvolutionCheckBox);
+                if (!_dependentSelection)
+                    Controls.Add(EvolutionCheckBox);
+                else
+                    _checkBoxListDependentSelection.Add(EvolutionCheckBox);
+            }
+            #endregion
+
+            #region Comparative Study
+            if (comparativeStudyOption)
+            {
+                ComparativeStudyCheckBox = new System.Web.UI.WebControls.CheckBox();
+                ComparativeStudyCheckBox.ID = this.ID + "_comparativeStudy";
+                ComparativeStudyCheckBox.ToolTip = GestionWeb.GetWebWord(1118, customerWebSession.SiteLanguage);
+                ComparativeStudyCheckBox.CssClass = "txtBlanc11Bold";
+                ComparativeStudyCheckBox.AutoPostBack = autoPostBackOption;
+                ComparativeStudyCheckBox.Text = GestionWeb.GetWebWord(1118, customerWebSession.SiteLanguage);
+                ComparativeStudyCheckBox.Checked = customerWebSession.ComparativeStudy;
+                if (!_dependentSelection)
+                    Controls.Add(ComparativeStudyCheckBox);
+            }
+            #endregion
+
+            #region CheckBoxs Dependent Selection
+            if (_dependentSelection)
+            {
+                _checkBoxsDependentSelection = new CheckBoxsDependentSelection(ComparativeStudyCheckBox, _checkBoxListDependentSelection);
+                Controls.Add(_checkBoxsDependentSelection);
             }
             #endregion
 
@@ -1682,9 +1786,21 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                     if((mediaDetail.Items.Count == 1) && (mediaDetail.Items[0].Value == SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()))
                         mediaDetail.Enabled = false;
                 }
-                else {
+                else if (customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES) {
+                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
+                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1382, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.category.GetHashCode().ToString()));
+                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(18, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.Media.GetHashCode().ToString()));
+                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
+                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1544, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMedia.GetHashCode().ToString()));
+                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1860, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMediaSeller.GetHashCode().ToString()));
+                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1383, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.mediaSeller.GetHashCode().ToString()));
+                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2812, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.mediaSellerVehicle.GetHashCode().ToString()));
+                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1862, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.mediaSellerMedia.GetHashCode().ToString()));
+                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2813, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.mediaSellerCategory.GetHashCode().ToString()));
+                }
+                else{
                     VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID);
-                    switch(vehicleInfo.Id) {
+                    switch (vehicleInfo.Id){
                         case ClassificationCst.DB.Vehicles.names.tv:
                         case ClassificationCst.DB.Vehicles.names.radio:
                         case ClassificationCst.DB.Vehicles.names.outdoor:
@@ -1692,7 +1808,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                         case ClassificationCst.DB.Vehicles.names.mediasTactics:
                             mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
                             mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
-                            if(customerWebSession.CurrentModule != WebConstantes.Module.Name.INDICATEUR) mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1544, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMedia.GetHashCode().ToString()));
+                            if (customerWebSession.CurrentModule != WebConstantes.Module.Name.INDICATEUR) mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1544, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMedia.GetHashCode().ToString()));
                             mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1143, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategoryMedia.GetHashCode().ToString()));
                             break;
                         case ClassificationCst.DB.Vehicles.names.press:
@@ -2150,20 +2266,51 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             if(pdmOption || pdvOption || evolutionOption) {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td class=\"txtBlanc11Bold\">");
-                if(evolutionOption) {
-                    if(!customerWebSession.ComparativeStudy) {
-                        EvolutionCheckBox.Enabled = false;
+
+                if (!_dependentSelection)
+                {
+                    if (evolutionOption)
+                    {
+                        if (!customerWebSession.ComparativeStudy)
+                        {
+                            EvolutionCheckBox.Enabled = false;
+                            EvolutionCheckBox.Checked = false;
+                        }
+                        EvolutionCheckBox.RenderControl(output);
+                        output.Write("&nbsp;&nbsp;");
+                    }
+                }
+                else {
+                    if (!customerWebSession.ComparativeStudy)
+                    {
+                        //EvolutionCheckBox.Enabled = false;
+                        EvolutionCheckBox.InputAttributes.Add("disabled","true");
                         EvolutionCheckBox.Checked = false;
                     }
-                    EvolutionCheckBox.RenderControl(output);
-                    output.Write("&nbsp;&nbsp;");
+                    _checkBoxsDependentSelection.RenderControl(output);
+                    output.Write("\n</td>");
+                    output.Write("\n</tr>");
+                    output.Write("\n<TR>");
+                    output.Write("\n<TD height=\"5\"></TD>");
+                    output.Write("\n</TR>");
                 }
-                if(pdmOption) {
-                    PdmCheckBox.RenderControl(output);
-                    output.Write("&nbsp;&nbsp;");
+
+                if (!_mutualExclusion){
+                    if (pdmOption)
+                    {
+                        PdmCheckBox.RenderControl(output);
+                        output.Write("&nbsp;&nbsp;");
+                    }
+                    if (pdvOption)
+                    {
+                        PdvCheckBox.RenderControl(output);
+                    }
                 }
-                if(pdvOption) {
-                    PdvCheckBox.RenderControl(output);
+                else
+                {
+                    output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                    output.Write("\n<td class=\"txtBlanc11Bold\">");
+                    _checkBoxsMutualExclusion.RenderControl(output);
                 }
                 output.Write("\n</td>");
                 output.Write("\n</tr>");
