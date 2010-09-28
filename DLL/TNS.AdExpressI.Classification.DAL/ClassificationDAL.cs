@@ -78,6 +78,10 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// The value represents the list of ids to exclude (example of a list : 9999,999,2541)
         /// </summary>
         protected Dictionary<long, string> _filters = new Dictionary<long, string>();
+        /// <summary>
+        /// Get if data items shiould be in lower case
+        /// </summary>
+        protected bool _toLowerCase = false;
 		#endregion
 
 		#region Constructors
@@ -88,6 +92,7 @@ namespace TNS.AdExpressI.Classification.DAL {
 		public ClassificationDAL(WebSession session) {
             //Set  customer web session
 			_session = session;
+            _toLowerCase = true;
 		}
 		
 		/// <summary>
@@ -99,6 +104,7 @@ namespace TNS.AdExpressI.Classification.DAL {
 			: this(session) {
                 //Set  Current classification brand (product or vehicle)
 			_dimension = dimension;
+            _toLowerCase = true;
 		}
 		/// <summary>
 		/// Default Constructor
@@ -112,6 +118,7 @@ namespace TNS.AdExpressI.Classification.DAL {
 			_genericDetailLevel = genericDetailLevel;
             //Set List of vehicles selected by the user
             _vehicleList = vehicleList;
+            _toLowerCase = true;
 		}
 		#endregion
 
@@ -490,6 +497,17 @@ namespace TNS.AdExpressI.Classification.DAL {
             return engineDal.GetRecapItems(classificationLevelLabel, customerRightType);
 		}
 		#endregion
+
+        /// <summary>
+        ///  Get if data items shiould be in lower case
+        /// </summary>
+        public bool ToLowerCase
+        {
+            get
+            {
+                return _toLowerCase;
+            }
+        }
 
 		#endregion
 	}

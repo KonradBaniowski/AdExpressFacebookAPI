@@ -53,6 +53,10 @@ namespace TNS.AdExpressI.Classification.DAL {
 		/// Data Source
 		/// </summary>
 		IDataSource _source = null;
+        /// <summary>
+        /// Get if data items shiould be in lower case
+        /// </summary>
+        protected bool _toLowerCase = false;
 		#endregion
 
 		#region Constructors
@@ -65,6 +69,7 @@ namespace TNS.AdExpressI.Classification.DAL {
 			if (source == null) throw (new NullReferenceException(" Parameter source is Null"));
 			_source = source;
 			_language = language;
+            _toLowerCase = true;
 		}
 		#endregion
 
@@ -185,6 +190,17 @@ namespace TNS.AdExpressI.Classification.DAL {
 		public virtual ClassificationLevelListDAL CreateDefaultClassificationLevelListDAL(string table, string idList) {
 			return new ClassificationLevelListDAL(table, idList, _language, _source);
 		}
+
+        /// <summary>
+        ///  Get if data items shiould be in lower case
+        /// </summary>
+        public bool ToLowerCase
+        {
+            get
+            {
+                return _toLowerCase;
+            }
+        }
 		#endregion
 
 	}

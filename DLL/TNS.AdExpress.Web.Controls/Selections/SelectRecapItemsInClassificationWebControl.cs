@@ -197,6 +197,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 			try {
 				_webSession = (WebSession)WebSession.Load(_idSession);
 				accessItemIds = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.SearchLevelDataAccess.GetAccessRights(_webSession, universeLevelId, "id_" + UniverseLevels.Get(universeLevelId).TableName,true);
+                _lowerCase = true;
 				//Show only access items when first access to the current branch
 				if (accessItemIds != null && accessItemIds.Length > 0) {
 					dt = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.SearchLevelDataAccess.GetRecapItems(UniverseLevels.Get(universeLevelId).TableName, _webSession, _dBSchema, universeLevelId, _dimension).Tables[0];

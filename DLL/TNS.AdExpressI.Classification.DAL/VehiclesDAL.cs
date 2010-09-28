@@ -57,7 +57,7 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// Impossible to execute query
         /// </exception>
 		public virtual DataSet GetData() {
-			DataSet ds = null;
+			DataSet ds = null, ds2 = new DataSet();;
 			string sql = "";			
 
 			//Determine if data row is active or obsolete
@@ -128,18 +128,67 @@ namespace TNS.AdExpressI.Classification.DAL {
                  * and the second the label of the media ("mediaType").*/
                 ds.Tables[0].Columns[0].ColumnName = "idMediaType";
 				ds.Tables[0].Columns[1].ColumnName = "mediaType";
-				
+
+               
+				ds2.Tables.Add(FilteringWithMediaAgencyFlag(ds.Tables[0]));
 			}
 			catch (System.Exception err) {
 				throw (new Exceptions.DetailMediaDALException("Impossible to execute query", err));
 			}
 			#endregion
 
-			return ds;
+            return ds2;
 		}
 		#endregion
 
 	
 		#endregion
+
+        #region  FilteringWithMediaAgencyFlag
+        /// <summary>
+        /// Filtering with media agency flag by media type
+        /// </summary>
+        /// <param name="dt">Data Table</param>
+        /// <returns>Data Table </returns>
+        protected DataTable FilteringWithMediaAgencyFlag(DataTable dt)
+        {
+            switch (_session.CurrentModule)
+            {
+                case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES:
+                    DataTable dataTable = new DataTable();
+                    DataColumn dataColumn;
+
+                    //ID Vehicle
+                    dataColumn = new DataColumn();
+                    dataColumn.DataType = Type.GetType("System.Int64");
+                    dataColumn.ColumnName = "idMediaType";
+                    dataTable.Columns.Add(dataColumn);
+
+                    //Vehicle label
+                    dataColumn = new DataColumn();
+                    dataColumn.DataType = Type.GetType("System.String");
+                    dataColumn.ColumnName = "mediaType";
+                    dataTable.Columns.Add(dataColumn);
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        DataRow dr;
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            Int64 idV = Convert.ToInt64(row["idVehicle"].ToString());
+                            if (_session.CustomerLogin.CustomerMediaAgencyFlagAccess(idV))
+                            {
+                                dr = dataTable.NewRow();
+                                dr["idMediaType"] = idV;
+                                dr["mediaType"] = row["vehicle"].ToString();
+                                dataTable.Rows.Add(dr);
+                            }
+                        }
+                    }
+                    return dataTable;
+                default: return dt;
+            }
+        }
+        #endregion
 	}
 }

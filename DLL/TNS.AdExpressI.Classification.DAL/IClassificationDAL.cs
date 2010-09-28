@@ -361,6 +361,11 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">Throw exception when error occurs during 
         /// execution or building of the query</exception>
         DataSet GetRecapItems(string classificationLevelLabel, CustomerRightConstante.type customerRightType);
+
+        /// <summary>
+        /// Get if data items shiould be in lower case
+        /// </summary>
+        bool ToLowerCase { get; }
 			
 		
 	}

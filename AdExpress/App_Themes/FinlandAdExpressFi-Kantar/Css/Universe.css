@@ -58,35 +58,35 @@ td.txtChildNodeExcludeCss{
     font-size: 11px;
     color: #DC121B;
     font-weight: normal;
-    text-transform : inherit;
+    text-transform : capitalize;
 }
 td.txtChildNodeIncludeCss{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
     color: #646262;
     font-weight: normal;
-     text-transform : inherit;
+     text-transform : capitalize;
 }
 tr.txtChildNodeExcludeCss{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
     color: #DC121B;
     font-weight: normal;
-     text-transform : inherit;
+     text-transform : capitalize;
 }
 tr.txtChildNodeIncludeCss{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
     color: #646262;
     font-weight: normal;
-     text-transform : inherit;
+     text-transform : capitalize;
 }
 div.txtChildNodeExcludeCss{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
     color: #DC121B;
     font-weight: normal;
-      text-transform : inherit;  
+    text-transform : capitalize;
     width:150px;
 }
 div.txtChildNodeIncludeCss{
@@ -94,7 +94,7 @@ div.txtChildNodeIncludeCss{
     font-size: 11px;
     color: #646262;
     font-weight: normal;
-      text-transform : inherit;
+      text-transform : capitalize;
     width:150px;     
 }
 /*Fin Styles Arbre de niveaux des univers*/
@@ -115,19 +115,19 @@ select.customSelectCss{
 	font-size: 11px;
     color: #646262;
     font-weight: normal;
-       text-transform : inherit;
+     text-transform : capitalize;
 }
 .optionItemDefault{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 9px;
     color: #646262;
     font-weight: normal;
-      text-transform : inherit;	
+     text-transform : capitalize;
 }
 .optionItemHierarchy{
     color: #646262;
     background-color:#FFDBBF;
-    text-transform : inherit;
+    text-transform : capitalize;
 }
 tr.labelNbelements{
 	font-family: Arial, Helvetica, sans-serif;
@@ -151,11 +151,13 @@ a.trashNodeCss,a.trashNodeCss:active, a.trashNodeCss:visited,a.trashNodeCss:hove
 }
 /*Autres*/	
 tr.listBoxHeaderCss{
-	height:10%;
+	/*height:10%;*/
+	height:19px;
     text-align:left;
 }
 tr.listBoxBodyCss{
-	height:90%;
+	/*height:90%;*/
+	height : 177px;
     background-color:#ffffff;
     text-align:center;
 }
@@ -178,3 +180,18 @@ tr.listBoxBodyCss{
 	font-weight: normal;
 	width :480px;
 }
+div.scrollable 
+{
+	text-align:left;
+	margin:0px;
+	padding:0px;
+	position:absolute;
+ } 
+ 
+ div.scrollableContainer
+ {
+	overflow:auto; 
+	height:177px;
+	position:relative;
+	text-align:left;
+ }
