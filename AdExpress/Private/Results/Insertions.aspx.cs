@@ -20,8 +20,6 @@ using System.Text;
 using TNS.FrameWork.Date;
 
 namespace Private.Results {
-
-
     /// <summary>
     /// Insertions
     /// </summary>
@@ -101,7 +99,7 @@ namespace Private.Results {
             System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
             MenuWebControl2.CustomerWebSession = _webSession;
             MenuWebControl2.ForbidHelpPages = true;
-
+            MenuWebControl2.ForceDetailSelection = true;
 
             string setParameters = string.Empty;
 

@@ -27,7 +27,11 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 		/// <summary>
 		/// Pages des mosules
 		/// </summary>
-		generic
+		generic,
+        /// <summary>
+        /// Page d'index
+        /// </summary>
+        index
 	}
 
 	/// <summary>
@@ -210,7 +214,11 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             output.Write("\n</tr>");
 
             // Tabs
-            output.Write("\n<tr class=\"headerBackGround\">");
+            if(pageType == PageType.index)
+                output.Write("\n<tr style=\"background-color:#000000;\">");
+            else
+                output.Write("\n<tr class=\"headerBackGround\">");
+                
 			output.Write("\n<td>");
             output.Write("\n<div id=\"tabsH\">");
 			output.Write("\n<ul>");

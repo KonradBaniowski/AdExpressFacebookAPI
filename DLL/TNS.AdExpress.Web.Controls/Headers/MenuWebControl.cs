@@ -93,6 +93,12 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// Use to forbid the actions to display help and selection detail pages (kind of rescue wheel)
 		/// </summary>
 		protected bool _forbidHelpPages = false;
+
+        /// <summary>
+        /// Boolean to force the displaying of detail selection
+        /// </summary>
+        protected bool _forceDetailSelection = false;
+
 		/// <summary>
 		/// Force the menu to display the print function
 		/// </summary>
@@ -173,6 +179,16 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			get{return _forbidHelpPages;}
 			set{_forbidHelpPages = value;}
 		}
+
+        /// <summary>
+        /// Use to force the displaying of detail selection
+        /// </summary>
+        public bool ForceDetailSelection
+        {
+            get { return _forceDetailSelection; }
+            set { _forceDetailSelection = value; }
+        }
+
 		/// <summary>
 		/// Force the menu to display the print function
 		/// </summary>
@@ -492,6 +508,14 @@ namespace TNS.AdExpress.Web.Controls.Headers{
                     if(jsTmp.Length > 0)
                         js.Append(GetSeparator(MAIN_MENU));
 
+                    
+                    if(ForceDetailSelection)
+                    {
+                        // Rappel de sélection
+                        js.Append(GetDetailSelectionItem(MAIN_MENU));
+                    }
+
+                    
                     // Aide
                     if(_forceHelp.IndexOf("?") > 0) _forceHelp += "&siteLanguage=" + _webSession.SiteLanguage;
                     else _forceHelp += "?siteLanguage=" + _webSession.SiteLanguage;

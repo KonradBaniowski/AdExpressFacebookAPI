@@ -99,7 +99,8 @@
 						<table cellSpacing="0" cellPadding="0" border="0">
 						    <!-- Menu haut -->
 							<tr>
-								<td><cc3:HeaderWebControl id="HeaderWebControl1" runat="server"></cc3:HeaderWebControl></td>
+								<td><cc3:HeaderWebControl id="HeaderWebControl1" runat="server" 
+                                        Type_de_page="index"></cc3:HeaderWebControl></td>
 							</tr>
 							<!-- Flash Homepage -->
 							<tr>
