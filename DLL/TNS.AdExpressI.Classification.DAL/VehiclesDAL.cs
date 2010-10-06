@@ -57,7 +57,7 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// Impossible to execute query
         /// </exception>
 		public virtual DataSet GetData() {
-			DataSet ds = null, ds2 = new DataSet();;
+			DataSet ds = null;
 			string sql = "";			
 
 			//Determine if data row is active or obsolete
@@ -128,16 +128,14 @@ namespace TNS.AdExpressI.Classification.DAL {
                  * and the second the label of the media ("mediaType").*/
                 ds.Tables[0].Columns[0].ColumnName = "idMediaType";
 				ds.Tables[0].Columns[1].ColumnName = "mediaType";
-
-               
-				ds2.Tables.Add(FilteringWithMediaAgencyFlag(ds.Tables[0]));
+                
+				return FilteringWithMediaAgencyFlag(ds);
 			}
 			catch (System.Exception err) {
 				throw (new Exceptions.DetailMediaDALException("Impossible to execute query", err));
 			}
 			#endregion
 
-            return ds2;
 		}
 		#endregion
 
@@ -148,15 +146,17 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <summary>
         /// Filtering with media agency flag by media type
         /// </summary>
-        /// <param name="dt">Data Table</param>
-        /// <returns>Data Table </returns>
-        protected DataTable FilteringWithMediaAgencyFlag(DataTable dt)
+        /// <param name="ds">Data Set</param>
+        /// <returns>Data Set </returns>
+        protected DataSet FilteringWithMediaAgencyFlag(DataSet ds)
         {
+
             switch (_session.CurrentModule)
             {
                 case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES:
                     DataTable dataTable = new DataTable();
                     DataColumn dataColumn;
+                    DataTable dt = ds.Tables[0];
 
                     //ID Vehicle
                     dataColumn = new DataColumn();
@@ -185,8 +185,10 @@ namespace TNS.AdExpressI.Classification.DAL {
                             }
                         }
                     }
-                    return dataTable;
-                default: return dt;
+                    DataSet newDS = new DataSet();
+                    newDS.Tables.Add(dataTable);
+                    return (newDS);
+                default: return ds;
             }
         }
         #endregion
