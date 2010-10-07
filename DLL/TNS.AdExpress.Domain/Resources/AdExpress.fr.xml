@@ -2008,6 +2008,8 @@
     <item mnemonic="w2809" type="System.String">Analyse des mandataires</item>
     <item mnemonic="w2810" type="System.String">Approche agence media</item>
     <item mnemonic="w2811" type="System.String">Description Web Text For The New Module : Approche agence media</item>
+    <item mnemonic="w2812" type="System.String">Régie/Média</item>
+    <item mnemonic="w2813" type="System.String">Régie/Catégorie</item>
     <!-- ********************************* -->
   </items>
 </localization>
