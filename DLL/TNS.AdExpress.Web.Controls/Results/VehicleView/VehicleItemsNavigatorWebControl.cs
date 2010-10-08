@@ -315,7 +315,9 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView{
 
                         if (_itemsCollection != null && _itemsCollection.Count > 0)
                         {
-
+                            //TODO We've removed this control because is not very accurate for our customer 
+                            //This test is only temporary until we've time to develop a better solution (08/10/2010)
+                            groupDivNumber = 0;
                             if (groupDivNumber > 1)
                             {
                                 sb.Append("<tr><td>");
