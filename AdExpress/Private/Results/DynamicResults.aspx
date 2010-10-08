@@ -64,7 +64,9 @@
                                                     GenericColumnDetailLevelType="dynamicCompetitorPotential" 
                                                     GenericColumnLevelDetailSelectionOptions="True" 
                                                     GenericDetailLevelComponentProfile="product" 
-                                                    GenericDetailLevelType="dynamicCompetitorPotential" 
+                                                    GenericDetailLevelType="dynamicCompetitorPotential"
+                                                    RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx" 
+                                                    SaveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelSave.aspx"  
                                                     GenericMediaLevelDetailSelectionOptions="True" InializeProductOption="True" 
                                                     NbDetailLevelItemList="3"></cc2:resultsoptionswebcontrol></TD>
 				                        </tr>
