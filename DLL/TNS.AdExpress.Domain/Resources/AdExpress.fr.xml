@@ -2011,5 +2011,8 @@
     <item mnemonic="w2812" type="System.String">Régie/Média</item>
     <item mnemonic="w2813" type="System.String">Régie/Catégorie</item>
     <!-- ********************************* -->
+    <!-- *************Width and Height use in Russia ofr Internet Banner******************** -->
+    <item mnemonic="w2814" type="System.String">Largeur</item>
+    <item mnemonic="w2815" type="System.String">Hauteur</item>
   </items>
 </localization>
