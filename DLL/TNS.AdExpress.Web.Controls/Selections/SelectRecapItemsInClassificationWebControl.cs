@@ -84,6 +84,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 					js.Append("\r\nfunction showRecap_" + _allowedLevels[i].ID + "_callback(res){");
 					js.Append("\r\n\tvar oN = document.getElementById('universeZone_" + _allowedLevels[i].ID + "');");
 					js.Append("\r\n\toN.innerHTML = res.value;");
+                    js.Append("\r\n\tActualizeListBox_" + this.ID + "('classificationList_" + _allowedLevels[i].ID + "', 'listBoxContent_" + _allowedLevels[i].ID + "', 'listBoxContainer_" + _allowedLevels[i].ID + "');");
 					js.Append("\r\n}\r\n");
 					#endregion				
 				}

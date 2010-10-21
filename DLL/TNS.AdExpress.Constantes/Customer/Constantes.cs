@@ -174,7 +174,31 @@ namespace TNS.AdExpress.Constantes.Customer{
 			/// <summary>
 			/// Basic media in exception
 			/// </summary>
-			basicMediaException
+			basicMediaException,
+            /// <summary>
+            /// region in exception
+            /// </summary>
+            regionException,
+            /// <summary>
+            /// regionin Access
+            /// </summary>
+            regionAccess,
+            /// <summary>
+            /// Sous Marque en accès
+            /// </summary>
+            subBrandAccess,
+            /// <summary>
+            /// Sous Marque en exception
+            /// </summary>
+            subBrandException,
+            /// <summary>
+            /// Type d'annonce en accès
+            /// </summary>
+            advertisementTypeAccess,
+            /// <summary>
+            /// Type d'annonce en exception
+            /// </summary>
+            advertisementTypeException
 
 		}
 		#endregion

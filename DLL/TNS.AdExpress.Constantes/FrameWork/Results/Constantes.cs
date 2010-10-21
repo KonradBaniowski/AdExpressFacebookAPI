@@ -2271,6 +2271,62 @@ namespace TNS.AdExpress.Constantes.FrameWork.Results{
             /// Number of banners (Evaliant)
             /// </summary>
             numberBanners,
+            /// <summary>
+            /// Number of brand (Russia)
+            /// </summary>
+            numberBrand,
+            /// <summary>
+            /// Number of sub brand (Russia)
+            /// </summary>
+            numberSubBrand,
+            /// <summary>
+            /// Number of Sponsorship (Russia)
+            /// </summary>
+            numberSponsorship,
+            /// <summary>
+            /// Market (Russia)
+            /// </summary>
+            market,
+            /// <summary>
+            /// Holding (Russia)
+            /// </summary>
+            holding,
+            /// <summary>
+            /// Region (Russia)
+            /// </summary>
+            region,
+            /// <summary>
+            /// Publishing House (Russia)
+            /// </summary>
+            publishingHouse,
+            /// <summary>
+            /// Syndicate (Russia)
+            /// </summary>
+            syndicate,
+            /// <summary>
+            /// Edition Type (Russia)
+            /// </summary>
+            editionType,
+            /// <summary>
+            /// Issue Format (Russia)
+            /// </summary>
+            issueFormat,
+            /// <summary>
+            /// Page Self Promo (Russia)
+            /// </summary>
+            pageSelfPromo,
+            /// <summary>
+            /// Carrier Type (Russia)
+            /// </summary>
+            carrierType,
+            /// <summary>
+            /// Administrative District (Russia)
+            /// </summary>
+            administrativeDistrict,
+            /// <summary>
+            /// Network (Russia)
+            /// </summary>
+            network
         }
 	}
 

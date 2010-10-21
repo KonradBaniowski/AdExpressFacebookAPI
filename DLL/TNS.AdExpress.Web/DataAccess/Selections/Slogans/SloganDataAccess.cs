@@ -131,7 +131,8 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
             Table TblFormat = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.format);
             #endregion
 
-            if (vehicleInformation != null && vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet)
+            if (vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.slogan)
+                && vehicleInformation != null && vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet)
             {
 
                 #region Récupération des noms de tables et de champs suivant le média(vehcile)

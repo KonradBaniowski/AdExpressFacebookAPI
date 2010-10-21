@@ -91,6 +91,50 @@ namespace TNS.AdExpress.Constantes.Classification{
             /// type Cinema
             /// </summary>
             mediaCinema = 17,
+            /// <summary>
+            /// type Indoor
+            /// </summary>
+            mediaIndoor = 18,
+            /// <summary>
+            /// type radio general
+            /// </summary>
+            mediaRadioGeneral = 19,
+            /// <summary>
+            /// type radio music
+            /// </summary>
+            mediaRadioMusic = 20,
+            /// <summary>
+            /// type radio sponsorship
+            /// </summary>
+            mediaRadioSponsorship = 21,
+            /// <summary>
+            /// type tv general
+            /// </summary>
+            mediaTvGeneral = 22,
+            /// <summary>
+            /// type tv sponsorshîp
+            /// </summary>
+            mediaTvSponsorshipRu = 23,
+            /// <summary>
+            /// type tv announces
+            /// </summary>
+            mediaTvAnnounces = 24,
+            /// <summary>
+            /// type tv non terrestrials
+            /// </summary>
+            mediaTvNonTerrestrials = 25,
+            /// <summary>
+            /// type tv niche channels
+            /// </summary>
+            mediaTvNicheChannels = 26,
+            /// <summary>
+            /// type media Editorial
+            /// </summary>
+            mediaEditorial = 27,
+            /// <summary>
+            /// Advertisement Type
+            /// </summary>
+            advertisementType = 28
 		}
 		#endregion
 
@@ -149,7 +193,19 @@ namespace TNS.AdExpress.Constantes.Classification{
 			/// <summary>
 			/// Niveau de nomenclature marque
 			/// </summary>
-			brand
+			brand,
+              /// <summary>
+            /// Niveau de nomenclature sous marque
+            /// </summary>
+            subBrand,
+            /// <summary>
+            /// Niveau de nomenclature type d'annonce
+            /// </summary>
+            advertisementType,
+            /// <summary>
+            /// Niveau de nomenclature region
+            /// </summary>
+            region
 
 		}
 		#endregion

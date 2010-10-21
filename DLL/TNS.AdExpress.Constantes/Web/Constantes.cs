@@ -702,7 +702,50 @@ namespace TNS.AdExpress.Constantes.Web{
                 /// <summary>
                 /// Nomenclature produit détaillée au niveau Classe -> Annonceur
                 /// </summary>
-                subSectorAdvertiser
+                subSectorAdvertiser,
+                /// <summary>
+                ///  Table detailed by advertiser / Segment
+                /// </summary>
+                advertiserSegment,
+                /// <summary>
+                ///  Table detailed by advertiser / Group
+                /// </summary>
+                advertiserGroup,
+                /// <summary>
+                ///  Table detailed by advertiser / subbrand
+                /// </summary>
+                advertiserSubbrand,
+                /// <summary>
+                ///  Table detailed by Brand / Segment
+                /// </summary>
+                brandSegment,
+                /// <summary>
+                ///  Table detailed by Brand / Product
+                /// </summary>
+                brandProduct,
+                /// <summary>
+                ///  Table detailed by segment
+                /// </summary>
+                segment,
+                /// <summary>
+                ///  Table detailed by subSector / Sector
+                /// </summary>
+                subSectorSector,
+                ///  Table detailed by subSector / Product
+                /// </summary>
+                subSectorProduct,
+                ///  Table detailed by group / Subbrand
+                /// </summary>
+                groupSubbrand,
+                ///  Table detailed by Sector / brand
+                /// </summary>
+                sectorBrand,
+                ///  Table detailed by Segment / Subbrand
+                /// </summary>
+                segmentSubbrand,
+                ///  Table detailed by Sector / Subbrand
+                /// </summary>
+                subbrand
 			}
 
 	
@@ -843,6 +886,22 @@ namespace TNS.AdExpress.Constantes.Web{
 				/// Tableau détaillé par Media / Titre/ Supports
 				/// </summary>
 				vehicleCountryMedia,
+                /// <summary>
+                /// Table detailed by Media /Region
+                /// </summary>
+                vehicleRegion,                
+                /// <summary>
+                /// Table detailed by Region
+                /// </summary>
+                region,
+                /// <summary>
+                /// Table detailed by Media /Region/Vehicle
+                /// </summary>
+                vehicleRegionMedia,
+                /// <summary>
+                /// Table detailed by Region/ Media
+                /// </summary>
+                regionVehicle,
                 /// <summary>
                 /// Tableau détaillé par catégorie
                 /// </summary>
