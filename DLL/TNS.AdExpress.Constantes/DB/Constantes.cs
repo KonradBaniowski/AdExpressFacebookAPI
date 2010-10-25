@@ -1721,8 +1721,36 @@ namespace TNS.AdExpress.Constantes.DB{
         /// <summary>
         /// Identifier of OUTDOOR's media agency flag
         /// </summary>
-        public const Int64 ID_OUTDOOR_MEDIA_AGENCY_FLAG = 301;          
-        
+        public const Int64 ID_OUTDOOR_MEDIA_AGENCY_FLAG = 301;
+
+        /// <summary>
+        /// Identifier of INTERNATIONAL PRESS's media agency flag
+        /// </summary>
+        public const Int64 ID_INTERNATIONAL_PRESS_MEDIA_AGENCY_FLAG = 303;
+        /// <summary>
+        /// Identifier of OTHERS' media agency flag
+        /// </summary>
+        public const Int64 ID_OTHERS_MEDIA_AGENCY_FLAG = 304;
+        /// <summary>
+        /// Identifier of MARKETING DIRECT 's media agency flag
+        /// </summary>
+        public const Int64 ID_MARKETING_DIRECT_MEDIA_AGENCY_FLAG = 305;
+        /// <summary>
+        /// Identifier of EVALIANT MOBILE's media agency flag
+        /// </summary>
+        public const Int64 ID_EVALIANT_MOBILE_MEDIA_AGENCY_FLAG = 306;
+        /// <summary>
+        /// Identifier of INTERNATIONAL EVALIANT's media agency flag
+        /// </summary>
+        public const Int64 ID_INTERNET_EVALIANT_MEDIA_AGENCY_FLAG = 307;
+        /// <summary>
+        /// Identifier of MEDIA TACTIQUE's media agency flag
+        /// </summary>
+        public const Int64 ID_MEDIA_TACTIQUE_MEDIA_AGENCY_FLAG = 308;
+        /// <summary>
+        /// Identifier of MEDIA CINEMA's media agency flag
+        /// </summary>
+        public const Int64 ID_MEDIA_CINEMA_MEDIA_AGENCY_FLAG = 309;    
     }
 	#endregion
 

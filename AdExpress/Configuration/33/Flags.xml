@@ -23,9 +23,16 @@
   <flag id="266" description="Accéder Spot à Spot TNT"/>
   <flag id="276" description="Accéder aux création Evaliant Mobile"/>
   <!--Flags agence média par média--> 
-  <flag id="298" description="Accès Agences Media par PRESS"/>
-  <flag id="299" description="Accès Agences Media par RADIO"/>
-  <flag id="300" description="Accès Agences Media par TV"/>
-  <flag id="301" description="Accès Agences Media par OUTDOOR"/>
-  <flag id="302" description="Accès Agences Media par INTERNET"/>
+  <flag id="298" description="Accès Agences Media PRESS"/>
+  <flag id="299" description="Accès Agences Media RADIO"/>
+  <flag id="300" description="Accès Agences Media TV"/>
+  <flag id="301" description="Accès Agences Media OUTDOOR"/>
+  <flag id="302" description="Accès Agences Media INTERNET"/>
+  <flag id="303" description="Accès Agences Media PRESSE INTERNATIONALE"/>
+  <flag id="304" description="Accès Agences Media AUTRES"/>
+  <flag id="305" description="Accès Agences Media COURRIER"/>
+  <flag id="306" description="Accès Agences Media EVALIANT MOBILE"/>
+  <flag id="307" description="Accès Agences Media INTERNET EVALIANT"/>
+  <flag id="308" description="Accès Agences Media MEDIA TACTIQUE"/>
+  <flag id="309" description="Accès Agences Media CINEMA"/>
 </flags>
