@@ -146,6 +146,26 @@ namespace TNS.AdExpress.Web.Core.Utilities
         }
 
         /// <summary>
+        ///  Get Period label in product class analysis depending on selected year
+        /// </summary>
+        /// <param name="_session">User session</param>
+        /// <param name="beginPeriod">Begin Period</param>
+        /// <param name="endPeriod">End Period</param>
+        /// <returns>Label describing period in Product Class Analysis depending on selected year</returns>
+        public static string getPeriodLabel(WebSession _session, string beginPeriod, string endPeriod)
+        {
+            string periodText;
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
+
+            if (beginPeriod != endPeriod)
+                periodText = MonthString.GetCharacters(int.Parse(beginPeriod.Substring(4, 2)), cultureInfo, 0) + "-" + MonthString.GetCharacters(int.Parse(endPeriod.Substring(4, 2)), cultureInfo, 0) + " " + beginPeriod.Substring(0, 4);
+            else
+                periodText = MonthString.GetCharacters(int.Parse(beginPeriod.Substring(4, 2)), cultureInfo, 0) + " " + beginPeriod.Substring(0, 4);
+
+            return periodText;
+        }
+
+        /// <summary>
         /// Display of period in product classs analysis
         /// </summary>
         /// <param name="_session">User session</param>
