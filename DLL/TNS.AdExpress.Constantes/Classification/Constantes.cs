@@ -134,7 +134,11 @@ namespace TNS.AdExpress.Constantes.Classification{
             /// <summary>
             /// Advertisement Type
             /// </summary>
-            advertisementType = 28
+            advertisementType = 28,
+            /// <summary>
+            /// Advertising agency
+            /// </summary>
+            advertisingAgency
 		}
 		#endregion
 
