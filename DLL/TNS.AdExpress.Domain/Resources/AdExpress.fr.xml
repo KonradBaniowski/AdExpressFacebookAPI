@@ -14,7 +14,7 @@
     <item mnemonic="w72" type="System.String">Code postal</item>
     <item mnemonic="w73" type="System.String">Ville</item>
     <item mnemonic="w74" type="System.String">Commentaires</item>
-    <item mnemonic="w75" type="System.String">Vous pouvez également contacter les membres du Pôle Investissements Publicitaires de TNS Media Intelligence</item>
+    <item mnemonic="w75" type="System.String">Vous pouvez également contacter les membres du Pôle Investissements Publicitaires de Kantar Media</item>
     <item mnemonic="w76" type="System.String">Directeur du Pôle Investissements Publicitaires</item>
     <item mnemonic="w77" type="System.String">Directrice Commerciale</item>
     <item mnemonic="w119" type="System.String">P&amp;eacute;riode</item>
@@ -101,7 +101,7 @@
     <item mnemonic="w751" type="System.String">Plan Média</item>
     <item mnemonic="w756" type="System.String">Demande d'information</item>
     <item mnemonic="w757" type="System.String">Présentation</item>
-    <item mnemonic="w758" type="System.String">TNS Media Intelligence</item>
+    <item mnemonic="w758" type="System.String">Kantar Media</item>
     <item mnemonic="w759" type="System.String">Identification</item>
     <item mnemonic="w760" type="System.String">Modules</item>
     <item mnemonic="w761" type="System.String">Mon AdExpress</item>
@@ -152,7 +152,7 @@
     <item mnemonic="w817" type="System.String">Sélectionner/désélectionner toutes les références</item>
     <item mnemonic="w819" type="System.String">Il n'y a aucun nouveau résultat avec le mot</item>
     <item mnemonic="w820" type="System.String">Il n'y a aucun résultat  avec le mot </item>
-    <item mnemonic="w821" type="System.String">Bienvenue sur AdExpress, le portail du Pôle Investissements Publicitaires de TNS Media Intelligence.&lt;br&gt;Afin d'accéder à tous nos services, veuillez entrer votre login et votre mot de passe.</item>
+    <item mnemonic="w821" type="System.String">Bienvenue sur AdExpress, le portail du Pôle Investissements Publicitaires de Kantar Media.&lt;br&gt;Afin d'accéder à tous nos services, veuillez entrer votre login et votre mot de passe.</item>
     <item mnemonic="w822" type="System.String">Veuillez entrer un nom pour la sauvegarde de votre requête</item>
     <item mnemonic="w823" type="System.String">Vous ne pouvez pas saisir un nom suppérieur à 50 caractères</item>
     <item mnemonic="w824" type="System.String">Impossible de sauvegarder, une requête déjà existante porte le même nom</item>
@@ -610,7 +610,7 @@
     <item mnemonic="w1321" type="System.String">&lt;table cellspaccing=0 cellpadding=0 border=0 align="left" class="txtViolet11"&gt;&lt;tr&gt;&lt;td width="10px"&gt;&lt;img src="/Images/Common/pixel.gif" width="10px"&gt;&lt;/td&gt;&lt;td align="left"&gt;&lt;li&gt;l'année courante,&lt;li&gt;l'année N-1,&lt;li&gt;l'année N-2.&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</item>
     <item mnemonic="w1322" type="System.String">Si l'année N-2 est sélectionnée comme année de référence, il n'y aura pas d'étude comparative.&lt;br&gt;&lt;br&gt;</item>
     <item mnemonic="w1323" type="System.String">Pour chaque module vous pouvez consulter l'évolution de la mise à jour du site à l'aide des tableaux ci-contre.</item>
-    <item mnemonic="w1324" type="System.String">Vous pouvez consulter l'ensemble des produits d'information du Pôle Investissements Publicitaires de TNS Media Intelligence dans les listes déroulantes ci-contre.</item>
+    <item mnemonic="w1324" type="System.String">Vous pouvez consulter l'ensemble des produits d'information du Pôle Investissements Publicitaires de Kantar Media dans les listes déroulantes ci-contre.</item>
     <item mnemonic="w1325" type="System.String">Dans une étude Plurimedia, l'option suivante </item>
     <item mnemonic="w1327" type="System.String">n'est pas active, car seul le niveau media est accessible dans une étude Plurimedia.</item>
     <item mnemonic="w1328" type="System.String">L'option « Produits détaillés par » permet de modifier le niveau de détail de la dimension produits en le sélectionnant dans la liste déroulante.</item>
@@ -1007,7 +1007,7 @@
     <item mnemonic="w1773" type="System.String">Calendrier d'actions</item>
     <item mnemonic="w1774" type="System.String">Types de périodicités</item>
     <item mnemonic="w1775" type="System.String">Répartition des PDV en GRP</item>
-    <item mnemonic="w1776" type="System.String">Pour tout renseignement, rendez-vous sur tnsadexpress.com ou contactez les membres du Pôle Investissements Publicitaires de TNS Media Intelligence.</item>
+    <item mnemonic="w1776" type="System.String">Pour tout renseignement, rendez-vous sur tnsadexpress.com ou contactez les membres du Pôle Investissements Publicitaires de Kantar Media.</item>
     <item mnemonic="w1777" type="System.String">Familles de Presse</item>
     <item mnemonic="w1778" type="System.String">Mes téléchargements</item>
     <item mnemonic="w1779" type="System.String">PUBLICITE EXTERIEURE</item>
@@ -1062,7 +1062,7 @@
     <item mnemonic="w1831" type="System.String">Liste des supports disponibles (en alerte)</item>
     <item mnemonic="w1832" type="System.String">Liste des supports disponibles</item>
     <item mnemonic="w1833" type="System.String">Fichier non disponible</item>
-    <item mnemonic="w1834" type="System.String">Le fichier excel ci-joint presente les statistiques d'utilisation d' AdExpress, le portail du Pole Investissements Publicitaires de TNS Media Intelligence.</item>
+    <item mnemonic="w1834" type="System.String">Le fichier excel ci-joint presente les statistiques d'utilisation d' AdExpress, le portail du Pole Investissements Publicitaires de Kantar Media.</item>
     <item mnemonic="w1835" type="System.String">Aucune statistique du portail AdExpress pour les paramètres fournis.</item>
     <item mnemonic="w1836" type="System.String">Affichez la liste des spots sur l'ensemble de la période intérrogée</item>
     <item mnemonic="w1837" type="System.String">Affichez la liste des insertions sur l'ensemble de la période intérrogée</item>
@@ -1393,7 +1393,7 @@
     <item mnemonic="w2187" type="System.String">Vous travaillez sur les données les plus récentes, bénéficiez ici des dernières mises à jour et d'un accès direct aux données les plus détaillées (insertion).</item>
     <item mnemonic="w2188" type="System.String">Sur un média ou en plurimédia, jusqu’au niveau le plus fin de notre nomenclature produits, vous comparez les stratégies media et disposez de données détaillées sur les derniers mois ou d’analyses synthétiques sur un historique long.</item>
     <item mnemonic="w2189" type="System.String">Toutes les interventions publicitaires hors écran par émission ou par forme de parrainage sur les 7 chaînes hertziennes sont ici recensées.</item>
-    <item mnemonic="w2190" type="System.String">Lancé en partenariat avec l'APPM, Chronopresse est le premier outil en ligne mixant la pige presse de TNS Media Intelligence avec les audiences des magazines et des quotidiens nationaux mesurés par les enquêtes AEPM et EPIQ.</item>
+    <item mnemonic="w2190" type="System.String">Lancé en partenariat avec l'APPM, Chronopresse est le premier outil en ligne mixant la pige presse de Kantar Media avec les audiences des magazines et des quotidiens nationaux mesurés par les enquêtes AEPM et EPIQ.</item>
     <item mnemonic="w2193" type="System.String">Analyser la constitution du portefeuille d'un support concurrent en temps réel</item>
     <item mnemonic="w2196" type="System.String">Préparer vos réunions commerciales et détecter les territoires de prospection: secteurs / annonceurs / produits absents / présents d'un univers de concurrence</item>
     <item mnemonic="w2197" type="System.String">Diagnostiquer les points forts / faibles du portefeuille d'un support: analyse des niveaux de part de marché de secteurs / annonceurs versus la moyenne</item>
@@ -1462,7 +1462,7 @@
     <item mnemonic="w2263" type="System.String">Nouveau résultat :</item>
     <item mnemonic="w2264" type="System.String">Vous devez sélectionner moins de 200 éléments</item>
     <item mnemonic="w2265" type="System.String">Vous devez sélectionner moins de 1000 éléments</item>
-    <item mnemonic="w2266" type="System.String">(c) Copyright TNS SAS</item>
+    <item mnemonic="w2266" type="System.String">(c) Copyright Kantar SAS</item>
     <item mnemonic="w2267" type="System.String">Date du support</item>
     <item mnemonic="w2268" type="System.String">Nouvel univers :</item>
     <item mnemonic="w2269" type="System.String">Exclure</item>
@@ -1741,7 +1741,7 @@
     <item mnemonic="w2553" type="System.String">L’option "personnaliser les supports" vous permet dans un Plan media au niveau du tableau de résultat final, d’effectuer une sélection sur certains supports uniquement et non de travailler sur l’ensemble de la presse sélectionné par défaut.</item>
     <item mnemonic="w2554" type="System.String">En presse, vous avez la possibilité de travailler en Encart ou Hors encart</item>
     <item mnemonic="w2555" type="System.String">Evaliant</item>
-    <item mnemonic="w2556" type="System.String">Evaliant est l’outil de tracking des bannières publicitaires en temps réel de TNS media intelligence.</item>
+    <item mnemonic="w2556" type="System.String">Evaliant est l’outil de tracking des bannières publicitaires en temps réel de Kantar Media.</item>
     <item mnemonic="w2557" type="System.String">Les nouvelles créations</item>
     <item mnemonic="w2558" type="System.String">Visualisez les bannières publicitaires d’un secteur ou d’un annonceur en temps réel.</item>
     <item mnemonic="w2559" type="System.String">Démo</item>
@@ -1811,10 +1811,10 @@
     <item mnemonic="w2623" type="System.String">Instructions</item>
     <item mnemonic="w2624" type="System.String">Autres info</item>
     <item mnemonic="w2625" type="System.String">Bonjour,</item>
-    <item mnemonic="w2626" type="System.String">Vous recevez cet email suite à la mise en place d'une alerte sur le site TNS AdExpress. Une nouvelle échéance est arrivée pour l'alerte</item>
+    <item mnemonic="w2626" type="System.String">Vous recevez cet email suite à la mise en place d'une alerte sur le site Kantar AdExpress. Une nouvelle échéance est arrivée pour l'alerte</item>
     <item mnemonic="w2627" type="System.String">Vous pouvez consulter cette alerte en cliquant</item>
     <item mnemonic="w2628" type="System.String">ici</item>
-    <item mnemonic="w2629" type="System.String">TNS AdExpress</item>
+    <item mnemonic="w2629" type="System.String">Kantar AdExpress</item>
     <item mnemonic="w2630" type="System.String">Radio General</item>
     <item mnemonic="w2631" type="System.String">Radio Music</item>
     <item mnemonic="w2632" type="System.String">Raido Sponsorship</item>
@@ -1845,7 +1845,7 @@
     <item mnemonic="w2657" type="System.String">!</item>
     <item mnemonic="w2658" type="System.String">!</item>
     <item mnemonic="w2659" type="System.String">!</item>    
-    <item mnemonic="w2660" type="System.String">Votre alerte a bien été prise en compte. Elle sera validée par TNS dans les plus brefs délais.</item>
+    <item mnemonic="w2660" type="System.String">Votre alerte a bien été prise en compte. Elle sera validée par Kantar Media dans les plus brefs délais.</item>
     <item mnemonic="w2661" type="System.String">Variétés</item>
     <item mnemonic="w2662" type="System.String">Sous marques</item>
     <item mnemonic="w2663" type="System.String">!</item>
