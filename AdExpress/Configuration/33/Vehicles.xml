@@ -270,7 +270,7 @@
     </allowedUniverseLevels>
   </vehicle>
   <!-- OTHERS -->
-  <vehicle id="others" databaseId="5" showInsertions="true" showCreations="true">
+  <vehicle id="others" databaseId="5" showInsertions="true" showCreations="true" mediaAgencyFlag="304">
     <!-- Units-->
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
@@ -570,7 +570,7 @@
     </allowedUniverseLevels>
   </vehicle>
   <!-- DIRECT_MARKETING -->
-  <vehicle id="directMarketing" databaseId="10" showInsertions="true" showCreations="true">
+  <vehicle id="directMarketing" databaseId="10" showInsertions="true" showCreations="true" mediaAgencyFlag="305">
     <!-- Units-->
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
@@ -645,7 +645,7 @@
     </allowedUniverseLevels>
   </vehicle>
   <!-- INTERNATIONAL_PRESS -->
-  <vehicle id="internationalPress" databaseId="11" showInsertions="true" showCreations="true">
+  <vehicle id="internationalPress" databaseId="11" showInsertions="true" showCreations="true" mediaAgencyFlag="303">
     <!-- Units-->
     <allowedUnits defaultUnit="pages">
       <allowedUnit>euro</allowedUnit>

@@ -2014,5 +2014,6 @@
     <!-- *************Width and Height use in Russia ofr Internet Banner******************** -->
     <item mnemonic="w2814" type="System.String">Largeur</item>
     <item mnemonic="w2815" type="System.String">Hauteur</item>
+    <item mnemonic="w2816" type="System.String">!</item>
   </items>
 </localization>
