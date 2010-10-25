@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AdvertisingAgencyResults.aspx.cs" Inherits="Private_Results_AdvertisingAgencyResults" %>
 <%@ Register TagPrefix="cc2" Namespace="TNS.AdExpress.Web.Controls.Headers" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc1" Namespace="TNS.AdExpress.Web.Controls.Buttons" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="cc3" Namespace="TNS.AdExpress.Web.Controls.Results" Assembly="TNS.AdExpress.Web.Controls" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 
@@ -62,7 +63,7 @@
                                                     RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx" 
                                                     SaveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelSave.aspx" 
                                                     InializeSlogansOption="False" InializeMediaOption="True" 
-                                                    PeriodDetailOptions="False"></cc2:resultsoptionswebcontrol>
+                                                    InializeProductOption="False" PeriodDetailOptions="False"></cc2:resultsoptionswebcontrol>
                                         </td>
 									</tr>
 									<tr class="backGroundOptions">
@@ -102,12 +103,17 @@
 					    <tr>
 					        <td>
 						        <table cellspacing="0" cellpadding="0" width="100%" border="0">
-                                    <tr>
-                                        <td height="10"></td>
-                                    </tr>
-								    <tr>
-								        <td><cc2:MenuWebControl id="MenuWebControl2" runat="server"></cc2:MenuWebControl></td>
-								    </tr>
+                                   <tr>
+									   <!-- Tableau de Résultat -->
+									   <td bgColor="#ffffff" style="HEIGHT: 37px">
+									       <cc3:ResultWebControl id="_resultWebControl" runat="server" JavascriptFilePath='/scripts/WebResult4.js' 
+											        PageSizeOptions="100,200,500,1000" AllowPaging="True" AjaxProTimeOut="120" OutputType="html" 
+											        SkinID="mediaAgencyResultTable"></cc3:ResultWebControl>
+									   </td>
+								   </tr>
+								   <tr valign="top" height="100%">
+								        <td>&nbsp;<cc2:menuwebcontrol id="MenuWebControl2" runat="server"></cc2:menuwebcontrol></td>
+								   </tr>
 							    </table>
 						    </td>
 					    </tr>

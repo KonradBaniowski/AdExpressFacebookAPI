@@ -1138,6 +1138,14 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
+            #region Evolution For 'Manadataires' module
+            /* For 'Mandataires' module the evolution option is false by default,
+             * so we need to initialize it to false
+             * */
+            if (_dependentSelection && !customerWebSession.ComparativeStudy)
+                customerWebSession.Evolution = false;
+            #endregion
+
             #region Options format du résultat (graphique ou tableau)
             graphRadioButton = new System.Web.UI.WebControls.RadioButton();
             graphRadioButton.EnableViewState = true;
@@ -2286,6 +2294,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                         //EvolutionCheckBox.Enabled = false;
                         EvolutionCheckBox.InputAttributes.Add("disabled","true");
                         EvolutionCheckBox.Checked = false;
+                        customerWebSession.Evolution = false;
                     }
                     _checkBoxsDependentSelection.RenderControl(output);
                     output.Write("\n</td>");

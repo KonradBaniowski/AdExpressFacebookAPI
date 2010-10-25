@@ -395,14 +395,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 						case Dimension.product:
 							return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allRecapProduct);							
 						case Dimension.media:
-							return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allRecapMedia);							
-						default:
-							throw (new CoreExceptions.SearchLevelDataAccessException("Unknown nomenclature dimension"));
-					}
-				case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES:
-                    switch (dimension) {
-						case Dimension.product:
-							return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allAdvAgency);
+							return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allRecapMedia);
 						default:
 							throw (new CoreExceptions.SearchLevelDataAccessException("Unknown nomenclature dimension"));
 					}
@@ -411,7 +404,9 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 						case Dimension.product:
 							return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);							
 						case Dimension.media:
-							return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia);							
+                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia);
+                        case Dimension.advertisingAgency:
+                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allAdvAgency);
 						default:
 							throw (new CoreExceptions.SearchLevelDataAccessException("Unknown nomenclature dimension"));
 					}					
@@ -436,6 +431,8 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 				case Dimension.media:
 					classificationRight = getCustomerMediaRight(webSession, "wp", true);
 					break;
+                case Dimension.advertisingAgency:
+                    return string.Empty;
 				default:
 					throw (new CoreExceptions.SearchLevelDataAccessException("Unknown nomenclature dimension"));
 			}

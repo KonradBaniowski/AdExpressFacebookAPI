@@ -71,7 +71,8 @@ namespace TNS.AdExpress.Web.Core.Selection {
 		public virtual List<int> GetAuthorizedBranches() {
 			List<int> tempList = new List<int>();
 			switch (_dimension) {
-				case TNS.Classification.Universe.Dimension.product:
+                case TNS.Classification.Universe.Dimension.product:
+				case TNS.Classification.Universe.Dimension.advertisingAgency:
 					for (int i = 0; i < _branchesIds.Count; i++) {
 						if (!CanAddBranch(_branchesIds[i]))continue;
 						tempList.Add(_branchesIds[i]);
@@ -104,6 +105,7 @@ namespace TNS.AdExpress.Web.Core.Selection {
 				case TNS.Classification.Universe.Dimension.media:
 					return IsValidLevels(levelId);
 				case TNS.Classification.Universe.Dimension.product:
+                case TNS.Classification.Universe.Dimension.advertisingAgency:
 				default :
 					return true; 	
 			}

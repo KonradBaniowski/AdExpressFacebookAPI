@@ -160,30 +160,26 @@ namespace TNS.AdExpressI.AdvertisingAgency
             Headers headers = new Headers();
             headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1164, _session.SiteLanguage), ID_PRODUCT));
             string vehicleLabel = dtData.Rows[0]["M1"].ToString();
-            string[] listVehicles = null;
+            List<long> itemsList = new List<long>();
             int optionsIndex = 2;
-            listVehicles = _session.GetSelection(_session.SelectionUniversMedia, CstRight.type.vehicleAccess).Split(new char[] { ',' });
 
-            if (listVehicles.Length > 1)
+            headers.Root.Add(new Header(true, GetTotalMediaText().ToUpper(), ID_TOTAL));
+            headers.Root[1].Add(new Header(true, labelN, 1));
+            if(_session.ComparativeStudy)
+                headers.Root[1].Add(new Header(true, labelN1, optionsIndex++));
+            if (_session.Evolution)
+                headers.Root[1].Add(new Header(true, GestionWeb.GetWebWord(1207, _session.SiteLanguage), optionsIndex++));
+            if (_session.PDM)
             {
-                headers.Root.Add(new Header(true, GestionWeb.GetWebWord(210, _session.SiteLanguage).ToUpper(), ID_TOTAL));
-                headers.Root[1].Add(new Header(true, labelN, 1));
+                headers.Root[1].Add(new Header(true, GestionWeb.GetWebWord(806, _session.SiteLanguage) + GestionWeb.GetWebWord(1187, _session.SiteLanguage) + labelN, optionsIndex++));
                 if(_session.ComparativeStudy)
-                    headers.Root[1].Add(new Header(true, labelN1, optionsIndex++));
-                if (_session.Evolution)
-                    headers.Root[1].Add(new Header(true, GestionWeb.GetWebWord(1207, _session.SiteLanguage), optionsIndex++));
-                if (_session.PDM)
-                {
-                    headers.Root[1].Add(new Header(true, GestionWeb.GetWebWord(806, _session.SiteLanguage) + GestionWeb.GetWebWord(1187, _session.SiteLanguage) + labelN, optionsIndex++));
-                    if(_session.ComparativeStudy)
-                        headers.Root[1].Add(new Header(true, GestionWeb.GetWebWord(806, _session.SiteLanguage) + GestionWeb.GetWebWord(1187, _session.SiteLanguage) + labelN1, optionsIndex++));
-                }
-                if (_session.PDV)
-                {
-                    headers.Root[1].Add(new Header(true, GestionWeb.GetWebWord(1166, _session.SiteLanguage) + GestionWeb.GetWebWord(1187, _session.SiteLanguage) + labelN, optionsIndex++));
-                    if(_session.ComparativeStudy)
-                        headers.Root[1].Add(new Header(true, GestionWeb.GetWebWord(1166, _session.SiteLanguage) + GestionWeb.GetWebWord(1187, _session.SiteLanguage) + labelN1, optionsIndex));
-                }
+                    headers.Root[1].Add(new Header(true, GestionWeb.GetWebWord(806, _session.SiteLanguage) + GestionWeb.GetWebWord(1187, _session.SiteLanguage) + labelN1, optionsIndex++));
+            }
+            if (_session.PDV)
+            {
+                headers.Root[1].Add(new Header(true, GestionWeb.GetWebWord(1166, _session.SiteLanguage) + GestionWeb.GetWebWord(1187, _session.SiteLanguage) + labelN, optionsIndex++));
+                if(_session.ComparativeStudy)
+                    headers.Root[1].Add(new Header(true, GestionWeb.GetWebWord(1166, _session.SiteLanguage) + GestionWeb.GetWebWord(1187, _session.SiteLanguage) + labelN1, optionsIndex));
             }
                 
             //Go threw data to extract media levels
@@ -275,6 +271,10 @@ namespace TNS.AdExpressI.AdvertisingAgency
                             RES_MEDIA_HEADERS.Add(MEDIA_IDS[tableIndex].Id + "_" + cId[i] + "_Period1", (Header)MEDIA_IDS[i][0]);
                             labelsList.Add("Period1");
                             optionsIndex = 2;
+                            
+                            if (!itemsList.Contains(MEDIA_IDS[tableIndex].Id))
+                                itemsList.Add(MEDIA_IDS[tableIndex].Id);
+
                             if (_session.ComparativeStudy)
                             {
                                 MEDIA_IDS[i].Add(new Header(true, labelN1, optionsIndex));
@@ -316,19 +316,19 @@ namespace TNS.AdExpressI.AdvertisingAgency
                                 }
                             }
 
-                            //RES_MEDIA_HEADERS.Add(cId, (Header)MEDIA_IDS[i]);
                             pHeaderBase.Add(MEDIA_IDS[i]);
                             if (pHeaderBase is HeaderGroup)
                             {
                                 RES_MEDIA_SUBTOTAL.Add(MEDIA_IDS[tableIndex].Id + "_" + cId[i], SUB_TOTALS[SUB_TOTALS.Count - 1]);
-                                //for(int mediaIndex=0; mediaIndex < MEDIA_IDS[i].Count; mediaIndex++)
-                                    //RES_MEDIA_SUBTOTAL.Add(MEDIA_IDS[tableIndex].Id + "_" + cId[i] + "_" + labelsList[mediaIndex], SUB_TOTALS[SUB_TOTALS.Count - 1]);
                             }
                         }
                     }
                 }
 
             }
+
+            if (itemsList.Count == 1)
+                headers.Root.RemoveAt(1);
             #endregion
 
             #region Init Result Table
@@ -338,11 +338,13 @@ namespace TNS.AdExpressI.AdvertisingAgency
             cell.DisplayContent = false;
             CellUnitFactory cellHiddenFactory = new CellUnitFactory(cell);
             CellLevel[] parents = new CellLevel[DATA_PRODUCT_INDEXES.Count + 1];
+            /* This variable is used to reintialize PDV and PDM total cells in the case of an empty column result
+             * For the total PDV and PDM cells, we always display 100%, because we consider that the column must be filled with data
+             * ther no reason to have a PDV or PDM column, if we don't have data.
+             * However, for the 'Manadataires' module, we can have PDV or PDM columns with empty data
+             * */
+            Dictionary<int, bool> reInitPDVPDMVoidColumns = new Dictionary<int, bool>();
             #endregion
-
-            //tab.AddNewLine(LineType.total);
-            //for (int i = 1; i <= tab.ColumnsNumber - 2; i++)
-            //    tab[0, i] = new CellLabel("jlkkjljkl");
 
             #region Total line
             List<Int64> keys = new List<Int64>();
@@ -350,7 +352,8 @@ namespace TNS.AdExpressI.AdvertisingAgency
             //Total
             int cLine = 0;
             int columnIndex = 1;
-
+            Int64 columnId = 0;
+            string columnKey = string.Empty;
 
             cLine = tab.AddNewLine(LineType.total);
             //Total
@@ -375,13 +378,88 @@ namespace TNS.AdExpressI.AdvertisingAgency
                 {
                     tab[cLine, k + RES_PDV_N_OFFSET] = new CellPDM(0.0, null);
                     ((CellPDM)tab[cLine, k + RES_PDV_N_OFFSET]).StringFormat = "{0:percentage}";
+                    reInitPDVPDMVoidColumns.Add(k + RES_PDV_N_OFFSET, false);
                 }
                 //PDV N1
                 if (RES_PDV_N1_OFFSET > 0)
                 {
                     tab[cLine, k + RES_PDV_N1_OFFSET] = new CellPDM(0.0, null);
                     ((CellPDM)tab[cLine, k + RES_PDV_N1_OFFSET]).StringFormat = "{0:percentage}";
+                    reInitPDVPDMVoidColumns.Add(k + RES_PDV_N1_OFFSET, false);
                 }
+            }
+             //PDM N
+                if (RES_PDM_N_OFFSET > 0)
+                {
+                    tab[cLine, 1 + RES_PDM_N_OFFSET] = new CellPDM(0.0, null);
+                    ((CellPDM)tab[cLine, 1 + RES_PDM_N_OFFSET]).StringFormat = "{0:percentage}";
+                    reInitPDVPDMVoidColumns.Add(1 + RES_PDM_N_OFFSET, false);
+                }
+                //PDM N1
+                if (RES_PDM_N1_OFFSET > 0)
+                {
+                    tab[cLine, 1 + RES_PDM_N1_OFFSET] = new CellPDM(0.0, null);
+                    ((CellPDM)tab[cLine, 1 + RES_PDM_N1_OFFSET]).StringFormat = "{0:percentage}";
+                    reInitPDVPDMVoidColumns.Add(1 + RES_PDM_N1_OFFSET, false);
+                }
+            ////Init sub total PDM
+            foreach (HeaderBase h in SUB_TOTALS)
+            {
+                //PDM N
+                if (RES_PDM_N_OFFSET > 0)
+                {
+                    tab[cLine, h.IndexInResultTable + RES_PDM_N_OFFSET - 1] = new CellPDM(0.0, (CellUnit)tab[cLine, 2]);
+                    ((CellPDM)tab[cLine, h.IndexInResultTable + RES_PDM_N_OFFSET - 1]).StringFormat = "{0:percentage}";
+                    reInitPDVPDMVoidColumns.Add(h.IndexInResultTable + RES_PDM_N_OFFSET - 1, false);
+                }
+                //PDM N1
+                if (RES_PDM_N1_OFFSET > 0)
+                {
+                    tab[cLine, h.IndexInResultTable + RES_PDM_N1_OFFSET - 1] = new CellPDM(0.0, (CellUnit)tab[cLine, 3]);
+                    ((CellPDM)tab[cLine, h.IndexInResultTable + RES_PDM_N1_OFFSET - 1]).StringFormat = "{0:percentage}";
+                    reInitPDVPDMVoidColumns.Add(h.IndexInResultTable + RES_PDM_N1_OFFSET - 1, false);
+                }
+            }
+            ////Init Media PDM
+            foreach (KeyValuePair<string, Header> record in RES_MEDIA_HEADERS)
+            {
+                string[] subString = record.Key.Split('_');
+                string subKey = subString[0] + "_" + subString[1];
+                if (subString[2].Equals("PDM"))
+                {
+                    //PDM N
+                    if (RES_PDM_N_OFFSET > 0)
+                    {
+                        if (RES_MEDIA_SUBTOTAL.ContainsKey(subKey))
+                        {
+                            tab[cLine, record.Value.IndexInResultTable] = new CellPDM(0.0, (CellUnit)tab[cLine, RES_MEDIA_SUBTOTAL[subKey].IndexInResultTable]);
+                        }
+                        else
+                        {
+                            tab[cLine, record.Value.IndexInResultTable] = new CellPDM(0.0, (CellUnit)tab[cLine, 2]);
+                        }
+                        ((CellPDM)tab[cLine, record.Value.IndexInResultTable]).StringFormat = "{0:percentage}";
+                        reInitPDVPDMVoidColumns.Add(record.Value.IndexInResultTable, false);
+                    }
+                }
+                if (subString[2].Equals("PDM1"))
+                {
+                    //PDM N1
+                    if (RES_PDM_N1_OFFSET > 0)
+                    {
+                        if (RES_MEDIA_SUBTOTAL.ContainsKey(subKey))
+                        {
+                            tab[cLine, record.Value.IndexInResultTable] = new CellPDM(0.0, (CellUnit)tab[cLine, RES_MEDIA_SUBTOTAL[subKey].IndexInResultTable + 1]);
+                        }
+                        else
+                        {
+                            tab[cLine, record.Value.IndexInResultTable] = new CellPDM(0.0, (CellUnit)tab[cLine, 3]);
+                        }
+                        ((CellPDM)tab[cLine, record.Value.IndexInResultTable]).StringFormat = "{0:percentage}";
+                        reInitPDVPDMVoidColumns.Add(record.Value.IndexInResultTable, false);
+                    }
+                }
+
             }
             #endregion
 
@@ -391,10 +469,7 @@ namespace TNS.AdExpressI.AdvertisingAgency
             Double valueN = 0;
             Double valueN1 = 0;
             Int32 subTotalIndex = -1;
-            Int64 columnId = 0;
-            string columnKey = string.Empty;
-            List<DetailLevelItemInformation> levels = DetailLevelItemsInformation.Translate(_session.PreformatedProductDetail);
-            levels.Insert(0, DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.sector));
+            GenericDetailLevel detailLevel = _session.GenericProductDetailLevel; 
 
             foreach (DataRow row in dtData.Rows)
             {
@@ -403,6 +478,7 @@ namespace TNS.AdExpressI.AdvertisingAgency
                     columnId = Convert.ToInt64(row[DATA_PRODUCT_INDEXES[i]]);
                     if (parents[i + 1] == null || columnId != parents[i + 1].Id)
                     {
+
                         for (int j = parents.Length - 1; j > i; j--)
                         {
                             parents[j] = null;
@@ -414,10 +490,10 @@ namespace TNS.AdExpressI.AdvertisingAgency
                         }
                         keys.Add(columnId);
 
-                        #region Init cells
+                        #region Add new line and Init cells
                         //Total
                         cLine = tab.AddNewLine(lTypes[i]);
-                        tab[cLine, 1] = new CellLevel(columnId, row[DATA_PRODUCT_INDEXES[i] + 1].ToString(), (CellLevel)tab[parents[0].LineIndexInResultTable, 1], i + 1, cLine);
+                        tab[cLine, 1] = parents[i + 1] = new CellLevel(columnId, row[DATA_PRODUCT_INDEXES[i] + 1].ToString(), (CellLevel)tab[parents[i].LineIndexInResultTable, 1], i + 1, cLine);
                         for (int k = columnIndex; k <= tab.DataColumnsNumber - labelsList.Count; k += labelsList.Count)
                         {
                             //YearN
@@ -436,78 +512,207 @@ namespace TNS.AdExpressI.AdvertisingAgency
                             //PDV N
                             if (RES_PDV_N_OFFSET > 0)
                             {
-                                tab[cLine, k + RES_PDV_N_OFFSET] = new CellPDM(0.0, (CellUnit)tab[parents[0].LineIndexInResultTable, k + RES_PDV_N_OFFSET]);
+                                tab[cLine, k + RES_PDV_N_OFFSET] = new CellPDM(0.0, (CellUnit)tab[parents[i].LineIndexInResultTable, k + RES_PDV_N_OFFSET]);
                                 ((CellPDM)tab[cLine, k + RES_PDV_N_OFFSET]).StringFormat = "{0:percentage}";
                             }
                             //PDV N1
                             if (RES_PDV_N1_OFFSET > 0)
                             {
-                                tab[cLine, k + RES_PDV_N1_OFFSET] = new CellPDM(0.0, (CellUnit)tab[parents[0].LineIndexInResultTable, k + RES_PDV_N1_OFFSET]);
+                                tab[cLine, k + RES_PDV_N1_OFFSET] = new CellPDM(0.0, (CellUnit)tab[parents[i].LineIndexInResultTable, k + RES_PDV_N1_OFFSET]);
                                 ((CellPDM)tab[cLine, k + RES_PDV_N1_OFFSET]).StringFormat = "{0:percentage}";
+                            }
+                        }
+                        //PDM N
+                        if (RES_PDM_N_OFFSET > 0)
+                        {
+                            tab[cLine, 1 + RES_PDM_N_OFFSET] = new CellPDM(0.0, null);
+                            ((CellPDM)tab[cLine, 1+ RES_PDM_N_OFFSET]).StringFormat = "{0:percentage}";
+                        }
+                        //PDM N1
+                        if (RES_PDM_N1_OFFSET > 0)
+                        {
+                            tab[cLine, 1 + RES_PDM_N1_OFFSET] = new CellPDM(0.0, null);
+                            ((CellPDM)tab[cLine, 1 + RES_PDM_N1_OFFSET]).StringFormat = "{0:percentage}";
+                        }
+                        //Init sub total PDM
+                        foreach (HeaderBase h in SUB_TOTALS)
+                        {
+                            //PDM N
+                            if (RES_PDM_N_OFFSET > 0)
+                            {
+                                tab[cLine, h.IndexInResultTable + RES_PDM_N_OFFSET - 1] = new CellPDM(0.0, (CellUnit)tab[cLine, 2]);
+                                ((CellPDM)tab[cLine, h.IndexInResultTable + RES_PDM_N_OFFSET - 1]).StringFormat = "{0:percentage}";
+                            }
+                            //PDM N1
+                            if (RES_PDM_N1_OFFSET > 0)
+                            {
+                                tab[cLine, h.IndexInResultTable + RES_PDM_N1_OFFSET - 1] = new CellPDM(0.0, (CellUnit)tab[cLine, 3]);
+                                ((CellPDM)tab[cLine, h.IndexInResultTable + RES_PDM_N1_OFFSET - 1]).StringFormat = "{0:percentage}";
+                            }
+
+                        }
+                        //Init Media PDM
+                        foreach (KeyValuePair<string, Header> record in RES_MEDIA_HEADERS)
+                        {
+                            string[] subString = record.Key.Split('_');
+                            string subKey = subString[0] + "_" + subString[1];
+                            if (subString[2].Equals("PDM"))
+                            {
+                                //PDM N
+                                if (RES_PDM_N_OFFSET > 0)
+                                {
+                                    if (RES_MEDIA_SUBTOTAL.ContainsKey(subKey))
+                                    {
+                                        tab[cLine, record.Value.IndexInResultTable] = new CellPDM(0.0, (CellUnit)tab[cLine, RES_MEDIA_SUBTOTAL[subKey].IndexInResultTable]);
+                                    }
+                                    else
+                                    {
+                                        tab[cLine, record.Value.IndexInResultTable] = new CellPDM(0.0, (CellUnit)tab[cLine, 2]);
+                                    }
+                                    ((CellPDM)tab[cLine, record.Value.IndexInResultTable]).StringFormat = "{0:percentage}";
+                                }
+                            }
+                            if (subString[2].Equals("PDM1"))
+                            {
+                                //PDM N1
+                                if (RES_PDM_N1_OFFSET > 0)
+                                {
+                                    if (RES_MEDIA_SUBTOTAL.ContainsKey(subKey))
+                                    {
+                                        tab[cLine, record.Value.IndexInResultTable] = new CellPDM(0.0, (CellUnit)tab[cLine, RES_MEDIA_SUBTOTAL[subKey].IndexInResultTable+1]);
+                                    }
+                                    else
+                                    {
+                                        tab[cLine, record.Value.IndexInResultTable] = new CellPDM(0.0, (CellUnit)tab[cLine, 3]);
+                                    }
+                                    ((CellPDM)tab[cLine, record.Value.IndexInResultTable]).StringFormat = "{0:percentage}";
+                                }
                             }
                         }
                         #endregion
 
                     }
 
-                    #region Add Values
-                    columnId = -1;
-                    if (DATA_MEDIA_INDEXES.Count > 0)
+                    if (i == (DATA_PRODUCT_INDEXES.Count - 1))
                     {
-                        columnId = Convert.ToInt32(row[DATA_MEDIA_INDEXES[DATA_MEDIA_INDEXES.Count - 1]]);
-                        columnKey = Convert.ToInt32(row[DATA_MEDIA_INDEXES[0]]) + "_" + columnId;
-                    }
-                    subTotalIndex = (RES_MEDIA_SUBTOTAL.ContainsKey(columnKey)) ? RES_MEDIA_SUBTOTAL[columnKey].IndexInResultTable : -1;
-                    valueN = Convert.ToDouble(row[DATA_YEAR_N]);
-                    if (DATA_YEAR_N1 > -1)
-                    {
-                        valueN1 = Convert.ToDouble(row[DATA_YEAR_N1]);
-                    }
-                    //N
-                    if (columnId > -1)
-                        tab.AffectValueAndAddToHierarchy(1, cLine, RES_MEDIA_HEADERS[columnKey + "_Period1"].IndexInResultTable, valueN);
-                    tab.AffectValueAndAddToHierarchy(1, cLine, RES_YEAR_N_OFFSET + 1, valueN);
-                    if (subTotalIndex > -1)
-                    {
-                        tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex, valueN);
-                    }
-                    //N1
-                    if (RES_YEAR_N1_OFFSET > -1)
-                    {
+                        #region Add Values
+                        columnId = -1;
+                        if (DATA_MEDIA_INDEXES.Count > 0)
+                        {
+                            columnId = Convert.ToInt32(row[DATA_MEDIA_INDEXES[DATA_MEDIA_INDEXES.Count - 1]]);
+                            columnKey = Convert.ToInt32(row[DATA_MEDIA_INDEXES[0]]) + "_" + columnId;
+                        }
+                        subTotalIndex = (RES_MEDIA_SUBTOTAL.ContainsKey(columnKey)) ? RES_MEDIA_SUBTOTAL[columnKey].IndexInResultTable : -1;
+                        valueN = Convert.ToDouble(row[DATA_YEAR_N]);
+                        if (DATA_YEAR_N1 > -1)
+                        {
+                            valueN1 = Convert.ToDouble(row[DATA_YEAR_N1]);
+                        }
+                        //N
                         if (columnId > -1)
-                            tab.AffectValueAndAddToHierarchy(1, cLine, RES_MEDIA_HEADERS[columnKey + "_Period2"].IndexInResultTable, valueN1);
-                        tab.AffectValueAndAddToHierarchy(1, cLine, RES_YEAR_N1_OFFSET + 1, valueN1);
+                            tab.AffectValueAndAddToHierarchy(1, cLine, RES_MEDIA_HEADERS[columnKey + "_Period1"].IndexInResultTable, valueN);
+                        tab.AffectValueAndAddToHierarchy(1, cLine, RES_YEAR_N_OFFSET + 1, valueN);
                         if (subTotalIndex > -1)
                         {
-                            tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex + RES_YEAR_N1_OFFSET - 1, valueN1);
+                            tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex, valueN);
                         }
-                    }
-                    //PDV N
-                    if (RES_PDV_N_OFFSET > -1)
-                    {
-                        if (columnId > -1)
-                            tab.AffectValueAndAddToHierarchy(1, cLine, RES_MEDIA_HEADERS[columnKey + "_PDV"].IndexInResultTable, valueN);
-                        tab.AffectValueAndAddToHierarchy(1, cLine, RES_PDV_N_OFFSET + 1, valueN);
-                        if (subTotalIndex > -1)
+                        //N1
+                        if (RES_YEAR_N1_OFFSET > -1)
                         {
-                            tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex + RES_PDV_N_OFFSET - 1, valueN);
+                            if (columnId > -1)
+                                tab.AffectValueAndAddToHierarchy(1, cLine, RES_MEDIA_HEADERS[columnKey + "_Period2"].IndexInResultTable, valueN1);
+                            tab.AffectValueAndAddToHierarchy(1, cLine, RES_YEAR_N1_OFFSET + 1, valueN1);
+                            if (subTotalIndex > -1)
+                            {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex + RES_YEAR_N1_OFFSET - 1, valueN1);
+                            }
                         }
-                    }
-                    //PDV N1
-                    if (RES_PDV_N1_OFFSET > -1)
-                    {
-                        if (columnId > -1)
-                            tab.AffectValueAndAddToHierarchy(1, cLine, RES_MEDIA_HEADERS[columnKey + "_PDV1"].IndexInResultTable, valueN1);
-                        tab.AffectValueAndAddToHierarchy(1, cLine, RES_PDV_N1_OFFSET + 1, valueN1);
-                        if (subTotalIndex > -1)
+                        //PDV N
+                        if (RES_PDV_N_OFFSET > -1)
                         {
-                            tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex + RES_PDV_N1_OFFSET - 1, valueN1);
+                            if (columnId > -1)
+                            {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, RES_MEDIA_HEADERS[columnKey + "_PDV"].IndexInResultTable, valueN);
+                                if(valueN>0)
+                                    reInitPDVPDMVoidColumns[RES_MEDIA_HEADERS[columnKey + "_PDV"].IndexInResultTable] = true;
+                            }
+                            tab.AffectValueAndAddToHierarchy(1, cLine, RES_PDV_N_OFFSET + 1, valueN);
+                            if (valueN > 0)
+                                reInitPDVPDMVoidColumns[RES_PDV_N_OFFSET + 1] = true;
+                            if (subTotalIndex > -1)
+                            {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex + RES_PDV_N_OFFSET - 1, valueN);
+                                if (valueN > 0)
+                                    reInitPDVPDMVoidColumns[subTotalIndex + RES_PDV_N_OFFSET - 1] = true;
+                            }
                         }
+                        //PDV N1
+                        if (RES_PDV_N1_OFFSET > -1)
+                        {
+                            if (columnId > -1)
+                            {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, RES_MEDIA_HEADERS[columnKey + "_PDV1"].IndexInResultTable, valueN1);
+                                if (valueN1 > 0)
+                                    reInitPDVPDMVoidColumns[RES_MEDIA_HEADERS[columnKey + "_PDV1"].IndexInResultTable] = true;
+                            }
+                            tab.AffectValueAndAddToHierarchy(1, cLine, RES_PDV_N1_OFFSET + 1, valueN1);
+                            if (valueN1 > 0)
+                                reInitPDVPDMVoidColumns[RES_PDV_N1_OFFSET + 1] = true;
+                            if (subTotalIndex > -1)
+                            {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex + RES_PDV_N1_OFFSET - 1, valueN1);
+                                if (valueN1 > 0)
+                                    reInitPDVPDMVoidColumns[subTotalIndex + RES_PDV_N1_OFFSET - 1] = true;
+                            }
+                        }
+                        //PDM N
+                        if (RES_PDM_N_OFFSET > -1)
+                        {
+                            if (columnId > -1)
+                            {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, RES_MEDIA_HEADERS[columnKey + "_PDM"].IndexInResultTable, valueN);
+                                if (valueN > 0)
+                                    reInitPDVPDMVoidColumns[RES_MEDIA_HEADERS[columnKey + "_PDM"].IndexInResultTable] = true;
+                            }
+                            tab.AffectValueAndAddToHierarchy(1, cLine, RES_PDM_N_OFFSET + 1, valueN);
+                            if (valueN > 0)
+                                reInitPDVPDMVoidColumns[RES_PDM_N_OFFSET + 1] = true;
+                            if (subTotalIndex > -1)
+                            {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex + RES_PDM_N_OFFSET - 1, valueN);
+                                if (valueN > 0)
+                                    reInitPDVPDMVoidColumns[subTotalIndex + RES_PDM_N_OFFSET - 1] = true;
+                            }
+                        }
+                        //PDM N1
+                        if (RES_PDM_N1_OFFSET > -1)
+                        {
+                            if (columnId > -1)
+                            {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, RES_MEDIA_HEADERS[columnKey + "_PDM1"].IndexInResultTable, valueN1);
+                                if (valueN1 > 0)
+                                    reInitPDVPDMVoidColumns[RES_MEDIA_HEADERS[columnKey + "_PDM1"].IndexInResultTable] = true;
+                            }
+                            tab.AffectValueAndAddToHierarchy(1, cLine, RES_PDM_N1_OFFSET + 1, valueN1);
+                            if (valueN1 > 0)
+                                reInitPDVPDMVoidColumns[RES_PDM_N1_OFFSET + 1] = true;
+                            if (subTotalIndex > -1)
+                            {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex + RES_PDM_N1_OFFSET - 1, valueN1);
+                                if (valueN1 > 0)
+                                    reInitPDVPDMVoidColumns[subTotalIndex + RES_PDM_N1_OFFSET - 1] = true;
+                            }
+                        }
+                        #endregion
                     }
-                    #endregion
-
                 }
+            }
 
+            foreach (int key in reInitPDVPDMVoidColumns.Keys) {
+
+                if (!reInitPDVPDMVoidColumns[key]) {
+                    tab[0, key] = new CellPercent(0.0);
+                }
             }
             #endregion
 
@@ -533,6 +738,34 @@ namespace TNS.AdExpressI.AdvertisingAgency
                     return true;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Get Total Media Text
+        /// </summary>
+        /// <returns>Total media text</returns>
+        protected string GetTotalMediaText()
+        {
+            switch (_session.PreformatedMediaDetail)
+            {
+                case CstFormat.PreformatedMediaDetails.vehicle:
+                case CstFormat.PreformatedMediaDetails.vehicleCategory:
+                case CstFormat.PreformatedMediaDetails.vehicleCategoryMedia:
+                case CstFormat.PreformatedMediaDetails.vehicleMedia:
+                case CstFormat.PreformatedMediaDetails.vehicleMediaSeller:
+                    return GestionWeb.GetWebWord(1401, _session.SiteLanguage) + " " + GestionWeb.GetWebWord(363, _session.SiteLanguage);
+                case CstFormat.PreformatedMediaDetails.category:
+                    return GestionWeb.GetWebWord(1401, _session.SiteLanguage) + " " + GestionWeb.GetWebWord(1382, _session.SiteLanguage);
+                case CstFormat.PreformatedMediaDetails.mediaSeller:
+                case CstFormat.PreformatedMediaDetails.mediaSellerVehicle:
+                case CstFormat.PreformatedMediaDetails.mediaSellerMedia:
+                case CstFormat.PreformatedMediaDetails.mediaSellerCategory:
+                    return GestionWeb.GetWebWord(1401, _session.SiteLanguage) + " " + GestionWeb.GetWebWord(1383, _session.SiteLanguage);
+                case CstFormat.PreformatedMediaDetails.Media:
+                    return GestionWeb.GetWebWord(1401, _session.SiteLanguage) + " " + GestionWeb.GetWebWord(18, _session.SiteLanguage);
+                default:
+                    return GestionWeb.GetWebWord(1401, _session.SiteLanguage) + " " + GestionWeb.GetWebWord(363, _session.SiteLanguage);
+            }
         }
         #endregion
 

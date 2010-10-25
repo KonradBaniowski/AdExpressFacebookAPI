@@ -1216,14 +1216,16 @@
         </results>
       </module>
       <!-- *****************************************      Analyse des mandataires             *****************************************-->
-      <module name="Analyse des mandataires" privilegecode="7216" traductioncode="2809" moduleCategoryId="13" urlNextPage="/Private/Selection/UniverseProductSelection.aspx" descriptionWebTextId="2811" descriptionImageName="/Images/Common/Infobulle/PlanMedia.png">
+      <module name="Analyse des mandataires" privilegecode="7216" traductioncode="2809" moduleCategoryId="13" urlNextPage="/Private/Selection/UniverseAgencySelection.aspx" descriptionWebTextId="2811" descriptionImageName="/Images/Common/Infobulle/PlanMedia.png">
+        <RulesLayer name="Default Advertising Agency rules layers" assemblyName="TNS.AdExpressI.AdvertisingAgency.Default.dll" class="TNS.AdExpressI.AdvertisingAgency.Default.AdvertisingAgencyResult"/>
+        <DataAccessLayer name="Default Advertising Agency data access layers" assemblyName="TNS.AdExpressI.AdvertisingAgency.DAL.Default.dll" class="TNS.AdExpressI.AdvertisingAgency.DAL.Default.AdvertisingAgencyDAL"/>
         <ModuleAllowedMediaUniverse initFromBaal="true" baalId="445">
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
-            <defaultProductDetailLevel id="10" name="annonceur" />
             <defaultProductDetailLevel id="34" name="Groupe d'agence"/>
             <defaultProductDetailLevel id="35" name="Agence"/>
+            <defaultProductDetailLevel id="10" name="annonceur" />
           </defaultProductDetailLevels>
           <allowedProductLevelItems>
             <allowedProductLevelItem id="11" name="Famille"/>
@@ -1239,7 +1241,7 @@
           </allowedProductLevelItems>
         </ProductDetailLevel>
         <selections>
-          <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
+          <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseAgencySelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
             <allowedUniverseLevels>
               <allowedUniverseLevel id="19" name="Groupe d'agence"/>
               <allowedUniverseLevel id="20" name="Agence"/>
@@ -1251,8 +1253,22 @@
           <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/VehicleSelectionHelp.aspx" validationMethod="isMediaSelected" />
           <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
         </selections>
+        <optionalSelections>
+          <optionalSelection id="6" name="media" traductioncode="2539" url="/Private/Selection/UniverseMediaSelection.aspx" icone="media" menuTextId="2539" helpUrl="/Private/Helps/Default.aspx">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="11" name="vehicle"/>
+              <allowedUniverseLevel id="12" name="category"/>
+              <allowedUniverseLevel id="14" name="media"/>
+              <allowedUniverseLevel id="15" name="interest_center"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches>
+              <allowedUniverseBranch id="7" name="vehicle\category\media"/>
+              <allowedUniverseBranch id="8" name="vehicle\interest_center\media"/>
+            </allowedUniverseBranches>
+          </optionalSelection>
+        </optionalSelections>
         <results>
-          <page id="0" resultid="16" name="Résultats" traductioncode="1474" url="/Private/Results/AdvertisingAgencyResults.aspx" printExcelUrl="" valueExcelUrl="" remoteResultPdfUrl="" menuTextId="1983" helpUrl="" createAlertUrl="">
+          <page id="0" resultid="16" name="Résultats" traductioncode="1474" url="/Private/Results/AdvertisingAgencyResults.aspx" printExcelUrl="/Private/Results/Excel/AdvertisingAgencyResults.aspx" valueExcelUrl="" remoteResultPdfUrl="" menuTextId="1983" helpUrl="" createAlertUrl="">
             <!--<page name="Synthèses" traductioncode="750" url="#" />-->
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -1261,11 +1277,9 @@
               <detailSelection id="5" name="Vehicle Selected"/>
               <detailSelection id="6" name="Product Selected"/>
               <detailSelection id="4" name="Unit"/>
-              <detailSelection id="18" name="Generic Media Level Detail"/>
-              <detailSelection id="19" name="Slogan Selected"/>
+              <detailSelection id="7" name="Media Level Detail"/>
+              <detailSelection id="20" name="Generic Product Level Detail"/>
               <detailSelection id="29" name="Media Personnalized"/>
-              <detailSelection id="10" name="Inset selected"/>
-              <detailSelection id="30" name="Auto promo"/>
             </detailSelections>
           </page>
         </results>

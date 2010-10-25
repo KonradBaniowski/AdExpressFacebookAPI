@@ -396,6 +396,9 @@ namespace AdExpress.Private.Universe{
 			else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.mediaInternet.ToString()) {
 				return TNS.AdExpress.Constantes.Classification.Branch.type.mediaInternet;
 			}
+            else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.advertisingAgency.ToString()) {
+                return TNS.AdExpress.Constantes.Classification.Branch.type.advertisingAgency;
+            }
 			else 
 			return 0;
 
@@ -412,6 +415,7 @@ namespace AdExpress.Private.Universe{
 				case TNS.AdExpress.Constantes.Classification.Branch.type.advertiser:
 					alTreeNodeUniverse.Add(_webSession.SelectionUniversAdvertiser);
 					break;
+                case TNS.AdExpress.Constantes.Classification.Branch.type.advertisingAgency:
 				case TNS.AdExpress.Constantes.Classification.Branch.type.product:
 					if (_webSession.CurrentUniversProduct.FirstNode != null) {
 						alTreeNodeUniverse.Add(_webSession.CurrentUniversProduct);

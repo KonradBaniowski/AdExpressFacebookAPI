@@ -102,6 +102,16 @@ namespace TNS.AdExpress.Web.Functions{
 						return(GestionWeb.GetWebWord(2070,webSession.SiteLanguage));
 					case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.sponsorshipForm:
 						return(GestionWeb.GetWebWord(2052,webSession.SiteLanguage));
+
+                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.category:
+                        return (GestionWeb.GetWebWord(1382, webSession.SiteLanguage));
+                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.mediaSeller:
+                        return (GestionWeb.GetWebWord(1383, webSession.SiteLanguage));
+                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.mediaSellerVehicle:
+                        return (GestionWeb.GetWebWord(1862, webSession.SiteLanguage));
+                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.mediaSellerCategory:
+                        return (GestionWeb.GetWebWord(2813, webSession.SiteLanguage));
+
 					default:
 						return("no value");
 				}

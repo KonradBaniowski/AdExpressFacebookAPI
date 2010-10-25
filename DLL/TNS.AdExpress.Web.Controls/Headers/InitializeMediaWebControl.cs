@@ -110,7 +110,9 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 else initializeMediaCheckBox.Checked = false;
 
                 if(initializeMediaCheckBox.Checked) {
-                    if(customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA) {
+                    if(customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA
+                        || customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
+                    {
                         customerWebSession.SecondaryMediaUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
                         customerWebSession.Save();
                     }

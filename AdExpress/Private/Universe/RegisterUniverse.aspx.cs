@@ -202,10 +202,12 @@ public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.Pr
 		}
 		else if (stringBranch.Equals(TNS.AdExpress.Constantes.Classification.Branch.type.product.GetHashCode().ToString())) {
 			return TNS.AdExpress.Constantes.Classification.Branch.type.product;
-		}		
+		}
+        else if (stringBranch.Equals(TNS.AdExpress.Constantes.Classification.Branch.type.advertisingAgency.GetHashCode().ToString())) {
+            return TNS.AdExpress.Constantes.Classification.Branch.type.advertisingAgency;
+        }
 		else
 			return 0;
-
 	}
 	#endregion
 
@@ -374,6 +376,9 @@ public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.Pr
 					case TNS.AdExpress.Constantes.Classification.Branch.type.media:
 						adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(Dimension.media);
 						break;
+                    case TNS.AdExpress.Constantes.Classification.Branch.type.advertisingAgency:
+                        adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(Dimension.advertisingAgency);
+                        break;
 					default: return null;
 				}
 				

@@ -347,6 +347,7 @@ public partial class Private_Selection_UniverseMediaSelection : TNS.AdExpress.We
 
         switch(_webSession.CurrentModule) {
             case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+            case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
                 SelectItemsInClassificationWebControl1.ForSelectionPage = false;
                 LoadableUniversWebControl1.SelectionPage = false;
                 SelectItemsInClassificationWebControl1.DefaultBranchId = 7;// Branche catégorie par défaut
@@ -364,6 +365,7 @@ public partial class Private_Selection_UniverseMediaSelection : TNS.AdExpress.We
     private bool MustSelectIncludeItems() {
         switch(_webSession.CurrentModule) {
             case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+            case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
                 return true;
             default: return false;
         }

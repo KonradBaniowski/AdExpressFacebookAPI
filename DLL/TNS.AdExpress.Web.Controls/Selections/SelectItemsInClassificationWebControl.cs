@@ -555,8 +555,12 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 							case TNS.Classification.Universe.Dimension.product:
 								universes = _webSession.PrincipalProductUniverses;
 								break;
+                            case TNS.Classification.Universe.Dimension.advertisingAgency:
+                                universes = _webSession.PrincipalProductUniverses;
+                                break;
                             case TNS.Classification.Universe.Dimension.media:
-                                if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA)
+                                if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA
+                                    || _webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
                                     universes = _webSession.SecondaryMediaUniverses;
                                 else
                                     universes = _webSession.PrincipalMediaUniverses;

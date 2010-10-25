@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
+using WebFunctions = TNS.AdExpress.Web.Functions;
 
 public partial class Private_Results_AdvertisingAgencyResults : TNS.AdExpress.Web.UI.BaseResultWebPage
 {
@@ -74,6 +75,8 @@ public partial class Private_Results_AdvertisingAgencyResults : TNS.AdExpress.We
             InformationWebControl1.Language = _webSession.SiteLanguage;
             #endregion
 
+            _webSession.LastReachedResultUrl = Page.Request.Url.AbsolutePath;
+            _webSession.ReachedModule = true;
 
         }
         catch (System.Exception exc)
@@ -130,15 +133,28 @@ public partial class Private_Results_AdvertisingAgencyResults : TNS.AdExpress.We
     protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode()
     {
         System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
+        DateTime begin;
 
         ResultsOptionsWebControl1.CustomerWebSession = _webSession;
+        _resultWebControl.CustomerWebSession = _webSession;
         MenuWebControl2.CustomerWebSession = _webSession;
         ResultsOptionsWebControl1.PdmOption = true;
         ResultsOptionsWebControl1.PdvOption = true;
-        ResultsOptionsWebControl1.EvolutionOption = true;
+
+        begin = WebFunctions.Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
+        if (begin.Year > DateTime.Now.Year - 2)
+        {
+            ResultsOptionsWebControl1.EvolutionOption = true;
+            ResultsOptionsWebControl1.ComparativeStudyOption = true;
+            ResultsOptionsWebControl1.DependentSelection = true;
+        }
+        else 
+        {
+            ResultsOptionsWebControl1.EvolutionOption = false;
+            ResultsOptionsWebControl1.ComparativeStudyOption = false;
+            ResultsOptionsWebControl1.DependentSelection = false;
+        }
         ResultsOptionsWebControl1.MutualExclusion = true;
-        ResultsOptionsWebControl1.ComparativeStudyOption = true;
-        ResultsOptionsWebControl1.DependentSelection = true;
 
         return (tmp);
     }

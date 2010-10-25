@@ -89,11 +89,11 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             //sql.AppendFormat("select {0}, {1}, date_num, {2} from (", mediaDetailLevel.GetSqlFieldsWithoutTablePrefix(), detailLevel.GetSqlFieldsWithoutTablePrefix(), GetUnitFieldNameSumUnionWithAlias(_session));
             N = "sum(case when ((date_num >= " + _period.Begin.ToString("yyyyMMdd") + " and date_num <= " + _period.End.ToString("yyyyMMdd") + ") or (date_num >= " + _period.Begin.ToString("yyyyMM") + " and date_num <= " + _period.End.ToString("yyyyMM") + ") ) then " + _session.GetSelectedUnit().Id.ToString() + " else 0 end) as N1";
             if (!_session.ComparativeStudy)
-                sql.AppendFormat("select {0}, {1}, {2} from (", GetSqlFieldWithAlias(mediaDetailLevel, true), GetSqlFieldWithAlias(detailLevel, false), N);
+                sql.AppendFormat("select {0}, {1}, {2} from (", GetSqlFieldWithAlias(detailLevel, false), GetSqlFieldWithAlias(mediaDetailLevel, true), N);
             else 
             {
                 N1 = "sum(case when ((date_num >= " + comparativePeriod.Begin.ToString("yyyyMMdd") + " and date_num <= " + comparativePeriod.End.ToString("yyyyMMdd") + ") or (date_num >= " + comparativePeriod.Begin.ToString("yyyyMM") + " and date_num <= " + comparativePeriod.End.ToString("yyyyMM") + ") ) then " + _session.GetSelectedUnit().Id.ToString() + " else 0 end) as N2";
-                sql.AppendFormat("select {0}, {1}, {2}, {3} from (", GetSqlFieldWithAlias(mediaDetailLevel, true), GetSqlFieldWithAlias(detailLevel, false), N, N1);
+                sql.AppendFormat("select {0}, {1}, {2}, {3} from (", GetSqlFieldWithAlias(detailLevel, false), GetSqlFieldWithAlias(mediaDetailLevel, true), N, N1);
             }
 
             while (comparativeIndex < 2)
@@ -152,13 +152,13 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             }
 
             sql.Append(") ");
-            sql.AppendFormat(" group by {0}, {1} ", mediaDetailLevel.GetSqlGroupByFieldsWithoutTablePrefix(), detailLevel.GetSqlGroupByFieldsWithoutTablePrefix());
+            sql.AppendFormat(" group by {0}, {1} ", detailLevel.GetSqlGroupByFieldsWithoutTablePrefix(), mediaDetailLevel.GetSqlGroupByFieldsWithoutTablePrefix());
             UnitInformation u = _session.GetSelectedUnit();
             if (u.Id == CstWeb.CustomerSessions.Unit.versionNb)
             {
                 sql.AppendFormat(", {0} ", u.Id.ToString());
             }
-            sql.AppendFormat(" order by {0}, {1} ", mediaDetailLevel.GetSqlOrderFieldsWithoutTablePrefix(), detailLevel.GetSqlOrderFieldsWithoutTablePrefix());
+            sql.AppendFormat(" order by {0}, {1} ", detailLevel.GetSqlOrderFieldsWithoutTablePrefix(), mediaDetailLevel.GetSqlOrderFieldsWithoutTablePrefix());
             #endregion
 
             #region Execution de la requête

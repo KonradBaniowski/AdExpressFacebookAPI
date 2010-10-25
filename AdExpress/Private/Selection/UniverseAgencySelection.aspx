@@ -47,7 +47,7 @@
 			//-->
 			
 			function ouvre_popup_univers(sessionId) {
-                window.open("/Private/Universe/RegisterUniverse.aspx?idSession="+sessionId+"&brancheType=2&idUniverseClientDescription=16","nom_popup","menubar=no, status=no, scrollbars=no, menubar=no, width=450px, height=300px");
+                window.open("/Private/Universe/RegisterUniverse.aspx?idSession="+sessionId+"&brancheType=29&idUniverseClientDescription=16","nom_popup","menubar=no, status=no, scrollbars=no, menubar=no, width=450px, height=300px");
             }
 		</script>
 		<meta http-equiv="expires" content="Wed, 23 Feb 1999 10:49:02 GMT"/>
