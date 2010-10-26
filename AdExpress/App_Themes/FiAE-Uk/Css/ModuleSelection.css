@@ -17,7 +17,7 @@
 }
 
 td.actualities{
-	background-image:url(/App_Themes/FinlandAdExpressUk/Images/Common/dot.gif);
+	background-image:url(/App_Themes/FiAE-Uk/Images/Common/dot.gif);
 	background-repeat: repeat-x;
 	background-position: bottom;
 	font-family: Arial, Helvetica, sans-serif;
@@ -28,13 +28,13 @@ td.actualities{
 
 
 td.moduleGroup{
-	background-image:url(/App_Themes/FinlandAdExpressUk/Images/Common/dot.gif);
+	background-image:url(/App_Themes/FiAE-Uk/Images/Common/dot.gif);
 	background-repeat: repeat-x;
 	background-position: bottom;
 }
 
 td.moduleGroupWithBackgroung{
-	background-image:url(/App_Themes/FinlandAdExpressUk/Images/Common/dot.gif);
+	background-image:url(/App_Themes/FiAE-Uk/Images/Common/dot.gif);
 	background-repeat: repeat-x;
 	background-position: bottom;
 	background-color:#E8E4ED;
@@ -73,7 +73,7 @@ a.module:hover {
 
 /* css for tooltips */
 .moduleTableInfoBulle { 
-	background-image:url(/App_Themes/FinlandAdExpressUk/Images/Common/Infobulle/InfoBulleBackground.gif);
+	background-image:url(/App_Themes/FiAE-Uk/Images/Common/Infobulle/InfoBulleBackground.gif);
 	background-repeat:repeat-x;
 	background-position: top left;
 	background-color: #E8E4ED;
