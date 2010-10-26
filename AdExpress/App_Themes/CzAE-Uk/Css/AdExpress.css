@@ -1,6 +1,6 @@
 ﻿/* Back ground style*/
 .imageBackGround{
-	background:url(/App_Themes/CzechAdExpressUk/Images/Common/dupli_fond.gif);
+	background:url(/App_Themes/CzAE-Uk/Images/Common/dupli_fond.gif);
 }
 .gSepBackGround{
 	background:url(/I/gsep.gif);
@@ -8,32 +8,32 @@
 	height:100%;
 }
 .checkboxBackGround{
-	background:url(/App_Themes/CzechAdExpressUk/Images/Common/checkbox.GIF);
+	background:url(/App_Themes/CzAE-Uk/Images/Common/checkbox.GIF);
 }
 .blockBackGround{
-	background:url(/App_Themes/CzechAdExpressUk/Images/Common/block_dupli.gif);
+	background:url(/App_Themes/CzAE-Uk/Images/Common/block_dupli.gif);
 }
 .imageBackGround3bis{
-	background:url(/App_Themes/CzechAdExpressUk/Images/Common/dupli_3bis.gif);
+	background:url(/App_Themes/CzAE-Uk/Images/Common/dupli_3bis.gif);
 }
 .bandeauTitreBackGround{
-	background:url(/App_Themes/CzechAdExpressUk/Images/Common/bandeau_titre.gif);
+	background:url(/App_Themes/CzAE-Uk/Images/Common/bandeau_titre.gif);
 }
 .blockdupliBackGround{
-	background:url(/App_Themes/CzechAdExpressUk/Images/Common/block_dupli.gif);
+	background:url(/App_Themes/CzAE-Uk/Images/Common/block_dupli.gif);
 }
 .popupBackGround{
-	background:url(/App_Themes/CzechAdExpressUk/Images/Common/backgroundPopUp.gif);
+	background:url(/App_Themes/CzAE-Uk/Images/Common/backgroundPopUp.gif);
 }
 .arrowBackGround{
-	background-image:url(/App_Themes/CzechAdExpressUk/images/Common/button/bt_arrow_down.gif);
+	background-image:url(/App_Themes/CzAE-Uk/images/Common/button/bt_arrow_down.gif);
 	background-repeat:no-repeat;
 	background-position:right;
 	width:15px;
 	height:15px;
 }
 .logoCoteDroitBackGround{
-	background:url(/App_Themes/CzechAdExpressUk/Images/Common/logo_cote_droit.gif);
+	background:url(/App_Themes/CzAE-Uk/Images/Common/logo_cote_droit.gif);
 }
 .greenBackGround{
 	background-color:#CAFFCA;
@@ -42,7 +42,7 @@
 	background-color:#FFD7D7;
 }
 .audioFileBackGround{
-	background:url(/App_Themes/CzechAdExpressUk/Images/Common/audioFile.gif);
+	background:url(/App_Themes/CzAE-Uk/Images/Common/audioFile.gif);
 	background-repeat:no-repeat;
 	width:128px;
 	height:128px;
@@ -50,7 +50,7 @@
 	text-align: center;
 }
 .videoFileBackGround{
-	background:url(/App_Themes/CzechAdExpressUk/Images/Common/videoFile.gif);
+	background:url(/App_Themes/CzAE-Uk/Images/Common/videoFile.gif);
 	background-repeat:no-repeat;
 	width:128px;
 	height:128px;
@@ -135,33 +135,33 @@ background-color:#D6CBDE
 	background-color : #E1E0DA;
 }
 .dupli3BackGround{
-background:url(/App_Themes/CzechAdExpressUk/Images/Common/dupli_3.gif);
+background:url(/App_Themes/CzAE-Uk/Images/Common/dupli_3.gif);
 }
 .dupli1BackGround{
-background:url(/App_Themes/CzechAdExpressUk/Images/Common/dupli_1.gif);
+background:url(/App_Themes/CzAE-Uk/Images/Common/dupli_1.gif);
 }
 .headerBackGround{
-background:url(/App_Themes/CzechAdExpressUk/Images/Common/dupli_2.gif);
+background:url(/App_Themes/CzAE-Uk/Images/Common/dupli_2.gif);
 }
 .darkBackGround{
 	BACKGROUND-ATTACHMENT: fixed; 
-	BACKGROUND-IMAGE: url(/App_Themes/CzechAdExpressUk/Images/Common/dark_back.bmp); 
+	BACKGROUND-IMAGE: url(/App_Themes/CzAE-Uk/Images/Common/dark_back.bmp); 
 	BACKGROUND-REPEAT: repeat-x
 }
 .creationDarkBackGround{
 	background-attachment: fixed; 
-	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/dark_back.bmp); 
+	background-image: url(/App_Themes/CzAE-Uk/Images/Common/dark_back.bmp); 
 	background-repeat: repeat-x; 
 	background-color:#FFFFFF; 
 	margin:25 0 25 0; 
 	text-align:center;
 }
 .popUpBackGround{
-	background:url(/App_Themes/CzechAdExpressUk/Images/Common/backgroundPopUp.gif);
+	background:url(/App_Themes/CzAE-Uk/Images/Common/backgroundPopUp.gif);
 }
 .creationpopUpBackGround{
 	background-position: right; 
-	background-image: url(/App_Themes/CzechAdExpressUk/Images/Common/bandeau_titre.gif);
+	background-image: url(/App_Themes/CzAE-Uk/Images/Common/bandeau_titre.gif);
 	background-repeat: repeat-y
 }
 /* Body Style*/
@@ -1318,10 +1318,10 @@ td.nav{
 	padding-left:5px;
 }
 .navBarTop{
-	background: white url(/App_Themes/CzechAdExpressUk/Images/Common/Result/header.gif) top left repeat-x;
+	background: white url(/App_Themes/CzAE-Uk/Images/Common/Result/header.gif) top left repeat-x;
 }
 .navBarBottom{
-	background: white url(/App_Themes/CzechAdExpressUk/Images/Common/Result/footer.gif) bottom left repeat-x;	
+	background: white url(/App_Themes/CzAE-Uk/Images/Common/Result/footer.gif) bottom left repeat-x;	
 }
 /*Images link with violet border */
 input.image, input.image:active, input.image:visited{
@@ -1385,7 +1385,7 @@ padding: 3px 7px;
 margin-right: 3px;
 border: 1px solid #644883;
 color: #644883;
-background: white url(/App_Themes/CzechAdExpressUk/Images/Common/Result/footer.gif) bottom left repeat-x;
+background: white url(/App_Themes/CzAE-Uk/Images/Common/Result/footer.gif) bottom left repeat-x;
 }
 .shadetabs li a:hover{
 color: #FF05B6;
@@ -1395,11 +1395,11 @@ position: relative;
 color:#FF05B6;
 }
 .shadetabs li.selected a{ /*selected main tab style */
-background: white url(/App_Themes/CzechAdExpressUk/Images/Common/Result/header.gif) top left repeat-x;
+background: white url(/App_Themes/CzAE-Uk/Images/Common/Result/header.gif) top left repeat-x;
 color:#FF05B6;
 }
 .shadetabs li.selected a:hover{ /*selected main tab style */
-background: white url(/App_Themes/CzechAdExpressUk/Images/Common/Result/header.gif) top left repeat-x;
+background: white url(/App_Themes/CzAE-Uk/Images/Common/Result/header.gif) top left repeat-x;
 text-decoration: none;
 color:#FF05B6;
 }
