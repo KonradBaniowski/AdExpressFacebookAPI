@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
   <themes>
-    <theme id="1" description="Russia AdExpress Theme using English" name="RussiaAdExpressUk" siteLanguage="44"/>
-    <theme id="2" description="Russia AdExpress Theme using Russian" name="RussiaAdExpressRu" siteLanguage="7"/>
+    <theme id="1" description="Russia AdExpress Theme using English" name="RuAE-Uk" siteLanguage="44"/>
+    <theme id="2" description="Russia AdExpress Theme using Russian" name="RuAE-Ru" siteLanguage="7"/>
   </themes>
 </configuration>
