@@ -104,170 +104,170 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <ctrHeader:HeaderWebControl  
                             runat="server" 
                             language="33" 
-                            FlashUrl="/App_Themes/FinlandAdExpressUk-Kantar/Flash/Common/HeaderStrip.swf" 
-                            MissingFlashUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/FlashReplacement/HeaderStrip.gif" 
+                            FlashUrl="/App_Themes/FiKMAE-Uk/Flash/Common/HeaderStrip.swf" 
+                            MissingFlashUrl="/App_Themes/FiKMAE-Uk/Images/Common/FlashReplacement/HeaderStrip.gif" 
 />
 
 <%-- Flash web control : used to show a flash animation --%>
 <ctrHeader:FlashWebControl  
                            runat="server" 
-                           FlashUrl="/App_Themes/FinlandAdExpressUk-Kantar/Flash/Culture/anime6.swf" 
-                           MissingFlashUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/FlashReplacement/HomeAnime.gif"
+                           FlashUrl="/App_Themes/FiKMAE-Uk/Flash/Culture/anime6.swf" 
+                           MissingFlashUrl="/App_Themes/FiKMAE-Uk/Images/Culture/FlashReplacement/HomeAnime.gif"
 />
 
 <%-- A list of ImageButtonRollOver web control used in the site--%>
 <%-- Validate Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
-                           ImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/valider_up.gif" 
-                           RollOverImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/valider_down.gif" 
+                           ImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/valider_up.gif" 
+                           RollOverImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/valider_down.gif" 
                            SkinID="validateButton" 
 />
 
 <%-- Ok Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
-                           ImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Button/ok_up.gif" 
-                           RollOverImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Button/ok_down.gif" 
+                           ImageUrl="/App_Themes/FiKMAE-Uk/Images/Common/Button/ok_up.gif" 
+                           RollOverImageUrl="/App_Themes/FiKMAE-Uk/Images/Common/Button/ok_down.gif" 
                            SkinID="okButton"
 />
 
 <%-- Ok Loupe Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
-                           ImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Button/bt_loupe_up.gif" 
-                           RollOverImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Button/bt_loupe_down.gif" 
+                           ImageUrl="/App_Themes/FiKMAE-Uk/Images/Common/Button/bt_loupe_up.gif" 
+                           RollOverImageUrl="/App_Themes/FiKMAE-Uk/Images/Common/Button/bt_loupe_down.gif" 
                            SkinID="okLoupeButton"
 />
 
 <%-- Valid Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
-                           ImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Button/bt_valid_up.gif" 
-                           RollOverImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Button/bt_valid_down.gif" 
+                           ImageUrl="/App_Themes/FiKMAE-Uk/Images/Common/Button/bt_valid_up.gif" 
+                           RollOverImageUrl="/App_Themes/FiKMAE-Uk/Images/Common/Button/bt_valid_down.gif" 
                            SkinID="validButton"
 />
 
 <%-- Initialize Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
-                           ImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/button/initialize_up.gif" 
-                           RollOverImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/button/initialize_down.gif" 
+                           ImageUrl="/App_Themes/FiKMAE-Uk/Images/Common/button/initialize_up.gif" 
+                           RollOverImageUrl="/App_Themes/FiKMAE-Uk/Images/Common/button/initialize_down.gif" 
                            SkinID="initializeButton" 
 />
 
 <%-- Initialize All Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol   
                            runat="server" 
-                           ImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/button/initialize_all_up.gif" 
-                           RollOverImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/button/initialize_all_down.gif" 
+                           ImageUrl="/App_Themes/FiKMAE-Uk/Images/Common/button/initialize_all_up.gif" 
+                           RollOverImageUrl="/App_Themes/FiKMAE-Uk/Images/Common/button/initialize_all_down.gif" 
                            SkinID="initializeAllButton" 
 />
 
 <%-- Next Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
-                           ImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/suivant_up.gif" 
-                           RollOverImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/suivant_down.gif" 
+                           ImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/suivant_up.gif" 
+                           RollOverImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/suivant_down.gif" 
                            SkinID="nextButton" 
 />
 
 <%-- Save Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
-                           ImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/enregistrer_univers_up.gif" 
-                           RollOverImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/enregistrer_univers_down.gif" 
+                           ImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/enregistrer_univers_up.gif" 
+                           RollOverImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/enregistrer_univers_down.gif" 
                            SkinID="saveButton" 
 />
 
 <%-- Load Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol   
                            runat="server" 
-                           ImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/charger_up.gif" 
-                           RollOverImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/charger_down.gif" 
+                           ImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/charger_up.gif" 
+                           RollOverImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/charger_down.gif" 
                            SkinID="loadButton" 
 />
 
 <%-- Open Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
-                           ImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/ouvrir_up.gif" 
-                           RollOverImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/ouvrir_down.gif" 
+                           ImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/ouvrir_up.gif" 
+                           RollOverImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/ouvrir_down.gif" 
                            SkinID="ouvrirButton" 
 />
 
 <%-- Close Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
-                           ImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/fermer_up.gif" 
-                           RollOverImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/fermer_down.gif" 
+                           ImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/fermer_up.gif" 
+                           RollOverImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/fermer_down.gif" 
                            SkinID="fermerButton" 
 />
 
 <%-- Personnaliser Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
-                           ImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/personnaliser_up.gif" 
-                           RollOverImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/personnaliser_down.gif" 
+                           ImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/personnaliser_up.gif" 
+                           RollOverImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/personnaliser_down.gif" 
                            SkinID="personnaliserButton" 
 />
 
 <%-- Cancel Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
-                           ImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/annuler_up.gif" 
-                           RollOverImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/annuler_down.gif" 
+                           ImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/annuler_up.gif" 
+                           RollOverImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/annuler_down.gif" 
                            SkinID="annulerButton" 
 />
 
 <%-- Result Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
-                           ImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/resultat_up.gif" 
-                           RollOverImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/resultat_down.gif" 
+                           ImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/resultat_up.gif" 
+                           RollOverImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/resultat_down.gif" 
                            SkinID="resultatButton" 
 />
 
 <%-- Delete Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
-                           ImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/supprimer_up.gif" 
-                           RollOverImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/supprimer_down.gif" 
+                           ImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/supprimer_up.gif" 
+                           RollOverImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/supprimer_down.gif" 
                            SkinID="supprimerButton" 
 />
 
 <%-- Detail Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol 
                            runat="server" 
-                           ImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/detail_up.gif" 
-                           RollOverImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/detail_down.gif" 
+                           ImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/detail_up.gif" 
+                           RollOverImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/detail_down.gif" 
                            SkinID="detailButton" 
 />
 
 <%-- Form Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
-                           ImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/bt_formes_up.gif" 
-                           RollOverImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/bt_formes_down.gif" 
+                           ImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/bt_formes_up.gif" 
+                           RollOverImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/bt_formes_down.gif" 
                            SkinID="formButton" 
 />
 
 <%-- Emission Button--%>
 <ctrButtons:imagebuttonrolloverwebcontrol  
                            runat="server" 
-                           ImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/bt_emissions_up.gif" 
-                           RollOverImageUrl="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/button/bt_emissions_down.gif" 
+                           ImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/bt_emissions_up.gif" 
+                           RollOverImageUrl="/App_Themes/FiKMAE-Uk/Images/Culture/button/bt_emissions_down.gif" 
                            SkinID="EmissionButton" 
 />
 
 <%-- Actualities web control : used to show the actualities in the selection module page --%>
 <ctrHeader:actualitieswebcontrol  
                            runat="server" 
-                           ImageUrlPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/AdExpressVisu.gif" 
+                           ImageUrlPath="/App_Themes/FiKMAE-Uk/Images/Common/AdExpressVisu.gif" 
                            TitleCss="actualities" 
                            RssTitleCss="txtViolet11Bold" 
                            RssDescriptionCss="txtViolet11" 
-                           ImageRssUrlPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/iconRss.gif" 
+                           ImageRssUrlPath="/App_Themes/FiKMAE-Uk/Images/Common/iconRss.gif" 
 />
 
 <%-- Module selection web control : used to show adexpress modules--%>
@@ -278,34 +278,34 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            ModuleGroupInformationCss="moduleGroupInformation" 
                            ModuleGroupCss="moduleGroup" 
                            ModuleCss="Tips1" 
-                           ImageModuleUrlPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/arrowModule.gif" 
-                           DescriptionImageList="198:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/PlanMedia.png,199:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/PlanMediaConcurrentiel.png,277:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/Concurrentiels.png,280:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/Potentiel.png,
-282:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/Portefeuille.png,196:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/PlanMedia.png,184:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/PlanMediaConcurrentiel.png,278:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/Concurrentiels.png,197:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/Dynamique.png,
-281:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/Potentiel.png,1950:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/Justificatifs.png,283:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/Portefeuille.png,194:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/TableauDynamique.png,195:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/Indicateurs.png,
-450:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/Tendances.png,475:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/TableauBord.png,601:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/TableauBord.png,602:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/TableauBord.png,1036:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/TableauBord.png,
-4370:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/TableauBord.png,546:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/Chronopresse.png,1920:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/Cadrage.png,1780:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/Dispositifs.png,1781:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/Programmes.png,4369:/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Infobulle/Evaliant.png"
+                           ImageModuleUrlPath="/App_Themes/FiKMAE-Uk/Images/Common/arrowModule.gif" 
+                           DescriptionImageList="198:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/PlanMedia.png,199:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/PlanMediaConcurrentiel.png,277:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/Concurrentiels.png,280:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/Potentiel.png,
+282:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/Portefeuille.png,196:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/PlanMedia.png,184:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/PlanMediaConcurrentiel.png,278:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/Concurrentiels.png,197:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/Dynamique.png,
+281:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/Potentiel.png,1950:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/Justificatifs.png,283:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/Portefeuille.png,194:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/TableauDynamique.png,195:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/Indicateurs.png,
+450:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/Tendances.png,475:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/TableauBord.png,601:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/TableauBord.png,602:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/TableauBord.png,1036:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/TableauBord.png,
+4370:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/TableauBord.png,546:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/Chronopresse.png,1920:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/Cadrage.png,1780:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/Dispositifs.png,1781:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/Programmes.png,4369:/App_Themes/FiKMAE-Uk/Images/Common/Infobulle/Evaliant.png"
 />
 <%-- Module title web control : used to show module title --%>
 <ctrHeader:ModuleTitleWebControl  
                            runat="server" 
-                           BlockFlechePath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/block_fleche.gif" 
-                           BlockDupliPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/block_dupli.gif" 
+                           BlockFlechePath="/App_Themes/FiKMAE-Uk/Images/Common/block_fleche.gif" 
+                           BlockDupliPath="/App_Themes/FiKMAE-Uk/Images/Common/block_dupli.gif" 
                            TitleUppercaseCss="titleUppercase" 
 />
 
 <%-- Module bridge web control : used to switch between 2 modules --%>
 <ctrHeader:ModuleBridgeWebControl  
                            runat="server" 
-                           BlockFlechePath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/block_fleche.gif" 
-                           BlockDupliPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/block_dupli.gif" 
+                           BlockFlechePath="/App_Themes/FiKMAE-Uk/Images/Common/block_fleche.gif" 
+                           BlockDupliPath="/App_Themes/FiKMAE-Uk/Images/Common/block_dupli.gif" 
                            TitleUppercaseCss="titleUppercase" 
 />
 
 <%-- Media seller web control : used to show media detail : Media Genre, Title ... --%>
 <ctrHeader:mediasellerwebcontrol  
                            runat="server" 
-                           BlockFlechePath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/block_fleche.gif" 
-                           BlockDupliPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/block_dupli.gif" 
+                           BlockFlechePath="/App_Themes/FiKMAE-Uk/Images/Common/block_fleche.gif" 
+                           BlockDupliPath="/App_Themes/FiKMAE-Uk/Images/Common/block_dupli.gif" 
                            TitleUppercaseCss="titleUppercase" 
                            CommonCssClass="txtBlanc11Bold" 
 />
@@ -313,10 +313,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%-- Information web control : used to show information about how to use the web menu --%>
 <ctrHeader:InformationWebControl  
                            runat="server" 
-                           FlashPath="/App_Themes/FinlandAdExpressUk-Kantar/Flash/Culture/infoOptions.swf" 
-                           FlashReplacementPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/FlashReplacement/infoOptions.gif" 
-                           FlashOneLinePath="/App_Themes/FinlandAdExpressUk-Kantar/Flash/Culture/infoOptionsOneLine.swf" 
-                           FlashOneLineReplacementPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Culture/FlashReplacement/infoOptionsOneLine.gif" 
+                           FlashPath="/App_Themes/FiKMAE-Uk/Flash/Culture/infoOptions.swf" 
+                           FlashReplacementPath="/App_Themes/FiKMAE-Uk/Images/Culture/FlashReplacement/infoOptions.gif" 
+                           FlashOneLinePath="/App_Themes/FiKMAE-Uk/Flash/Culture/infoOptionsOneLine.swf" 
+                           FlashOneLineReplacementPath="/App_Themes/FiKMAE-Uk/Images/Culture/FlashReplacement/infoOptionsOneLine.gif" 
 />
 
 <%-- One vehicle selection web control --%>
@@ -427,10 +427,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            HighlightBackgroundColorSubTotal2="#FFFFFF"
                            HighlightBackgroundColorSubTotal3="#FFFFFF"
                            HighlightBackgroundColorSubTotal4="#FFFFFF"
-                           ImgBtnCroiOverPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_croi3_in.gif" 
-                           ImgBtnCroiPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_croi3.gif" 
-                           ImgBtnDeCroiOverPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_decroi3_in.gif" 
-                           ImgBtnDeCroiPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_decroi3.gif" 
+                           ImgBtnCroiOverPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_croi3_in.gif" 
+                           ImgBtnCroiPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+                           ImgBtnDeCroiOverPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif" 
+                           ImgBtnDeCroiPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
                            CssLTotal="prClLv0" 
                            SkinID="productClassResultTable" 
 />
@@ -493,10 +493,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            HighlightBackgroundColorSubTotal2="#FFFFFF"
                            HighlightBackgroundColorSubTotal3="#FFFFFF"
                            HighlightBackgroundColorSubTotal4="#FFFFFF"
-                           ImgBtnCroiOverPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_croi3_in.gif" 
-                           ImgBtnCroiPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_croi3.gif" 
-                           ImgBtnDeCroiOverPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_decroi3_in.gif" 
-                           ImgBtnDeCroiPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_decroi3.gif" 
+                           ImgBtnCroiOverPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_croi3_in.gif" 
+                           ImgBtnCroiPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+                           ImgBtnDeCroiOverPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif" 
+                           ImgBtnDeCroiPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
                            CssLTotal="prClLv0Excel" 
                            SkinID="productClassResultTableXL" 
 />
@@ -559,10 +559,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            HighlightBackgroundColorSubTotal2="#FFFFFF"
                            HighlightBackgroundColorSubTotal3="#FFFFFF"
                            HighlightBackgroundColorSubTotal4="#FFFFFF"
-                           ImgBtnCroiOverPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_croi3_in.gif" 
-                           ImgBtnCroiPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_croi3.gif" 
-                           ImgBtnDeCroiOverPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_decroi3_in.gif" 
-                           ImgBtnDeCroiPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_decroi3.gif" 
+                           ImgBtnCroiOverPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_croi3_in.gif" 
+                           ImgBtnCroiPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+                           ImgBtnDeCroiOverPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif" 
+                           ImgBtnDeCroiPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
                            CssLTotal="prClLv0" 
                            SkinID="productClassResultTableProductXMedia" 
 />
@@ -620,10 +620,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            HighlightBackgroundColorL1="#FFFFFF" 
                            HighlightBackgroundColorL2="#FFFFFF" 
                            HighlightBackgroundColorL3="#FFFFFF" 
-                           ImgBtnCroiOverPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_croi3_in.gif" 
-                           ImgBtnCroiPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_croi3.gif" 
-                           ImgBtnDeCroiOverPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_decroi3_in.gif" 
-                           ImgBtnDeCroiPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_decroi3.gif" 
+                           ImgBtnCroiOverPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_croi3_in.gif" 
+                           ImgBtnCroiPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+                           ImgBtnDeCroiOverPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif" 
+                           ImgBtnDeCroiPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
                            CssLTotal="lv0" 
                            SkinID="portofolioResultTable" 
 />
@@ -650,10 +650,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            CssL2="prClLv5" 
                            HighlightBackgroundColorL1="#FFFFFF" 
                            HighlightBackgroundColorL2="#FFFFFF" 
-                           ImgBtnCroiOverPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_croi3_in.gif" 
-                           ImgBtnCroiPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_croi3.gif" 
-                           ImgBtnDeCroiOverPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_decroi3_in.gif" 
-                           ImgBtnDeCroiPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_decroi3.gif" 
+                           ImgBtnCroiOverPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_croi3_in.gif" 
+                           ImgBtnCroiPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+                           ImgBtnDeCroiOverPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif" 
+                           ImgBtnDeCroiPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
                            CssLTotal="prClLv0" 
                            SkinID="productClassResultTableClassif1XYear" 
 />
@@ -676,10 +676,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            CssLHeader="exh2" 
                            CssL1="prClLv1Neutral,prClLv1Ref,prClLv1Comp,prClLv1Both" 
                            CssL2="prClLv2TerNeutral,prClLv5Ref,prClLv5Comp,prClLv5Both" 
-                           ImgBtnCroiOverPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_croi3_in.gif" 
-                           ImgBtnCroiPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_croi3.gif" 
-                           ImgBtnDeCroiOverPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_decroi3_in.gif" 
-                           ImgBtnDeCroiPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_decroi3.gif" 
+                           ImgBtnCroiOverPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_croi3_in.gif" 
+                           ImgBtnCroiPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+                           ImgBtnDeCroiOverPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif" 
+                           ImgBtnDeCroiPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
                            CssLTotal="prClLv0Excel" 
                            SkinID="productClassResultTableClassif1XYearXL" 
 />
@@ -703,10 +703,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 						   HighlightBackgroundColorL2="#FFFFFF" 
 						   HighlightBackgroundColorL3="#FFFFFF"  
 						   HighlightBackgroundColorL4="#FFFFFF" 
-						   ImgBtnCroiOverPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_croi3_in.gif"
-						   ImgBtnCroiPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_croi3.gif" 
-						   ImgBtnDeCroiOverPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_decroi3_in.gif"
-						   ImgBtnDeCroiPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_decroi3.gif" 
+						   ImgBtnCroiOverPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_croi3_in.gif"
+						   ImgBtnCroiPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+						   ImgBtnDeCroiOverPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif"
+						   ImgBtnDeCroiPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
 						   PageSizeOptions="100,200,500,1000" 
 						   AllowPaging="True"
 						   CssDetailSelectionBordelLevel="dsBorderLevel"
@@ -773,10 +773,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 						   HighlightBackgroundColorL2="#FFFFFF" 
 						   HighlightBackgroundColorL3="#FFFFFF"  
 						   HighlightBackgroundColorL4="#FFFFFF" 
-						   ImgBtnCroiOverPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_croi3_in.gif"
-						   ImgBtnCroiPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_croi3.gif" 
-						   ImgBtnDeCroiOverPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_decroi3_in.gif"
-						   ImgBtnDeCroiPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_decroi3.gif" 
+						   ImgBtnCroiOverPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_croi3_in.gif"
+						   ImgBtnCroiPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+						   ImgBtnDeCroiOverPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif"
+						   ImgBtnDeCroiPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
 						   DefaultPageSize="10"
 						   PageSizeOptions="10,15,20" 
 						   AllowPaging="True"
@@ -955,10 +955,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            CssL1="lv2" 
                            CssLHeader="h2" 
                            HighlightBackgroundColorL1="#FFFFFF" 
-                           ImgBtnCroiOverPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_croi3_in.gif" 
-                           ImgBtnCroiPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_croi3.gif" 
-                           ImgBtnDeCroiOverPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_decroi3_in.gif" 
-                           ImgBtnDeCroiPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_decroi3.gif" 
+                           ImgBtnCroiOverPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_croi3_in.gif" 
+                           ImgBtnCroiPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+                           ImgBtnDeCroiOverPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif" 
+                           ImgBtnDeCroiPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
                            CssDetailSelectionBordelLevel="dsBorderLevel" 
                            CssDetailSelectionL1="dsLv1" 
                            CssDetailSelectionL2="dsLv2" 
@@ -1040,17 +1040,17 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%-- Creatives web control : to display a set of creations, vehicle by vehicle, depending on a univers of products and media --%>
 <ctrCreatives:CreativesWebControl  
                            runat="server" 
-                           FooterImage="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Result/footer.gif"
-                           HeaderImage="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Result/header.gif"
-                           LoadingImage="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/waitAjax.gif"
-                           ButtonFirstDown="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Result/bt_first_down.gif"
-                           ButtonFirstUp="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Result/bt_first_up.gif"
-                           ButtonLastDown="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Result/bt_last_down.gif"
-                           ButtonLastUp="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Result/bt_last_up.gif"
-                           ButtonNextDown="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Result/bt_next_down.gif"
-                           ButtonNextUp="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Result/bt_next_up.gif"
-                           ButtonPreviousDown="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Result/bt_previous_down.gif"
-                           ButtonPreviousUp="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Result/bt_previous_up.gif"
+                           FooterImage="/App_Themes/FiKMAE-Uk/Images/Common/Result/footer.gif"
+                           HeaderImage="/App_Themes/FiKMAE-Uk/Images/Common/Result/header.gif"
+                           LoadingImage="/App_Themes/FiKMAE-Uk/Images/Common/waitAjax.gif"
+                           ButtonFirstDown="/App_Themes/FiKMAE-Uk/Images/Common/Result/bt_first_down.gif"
+                           ButtonFirstUp="/App_Themes/FiKMAE-Uk/Images/Common/Result/bt_first_up.gif"
+                           ButtonLastDown="/App_Themes/FiKMAE-Uk/Images/Common/Result/bt_last_down.gif"
+                           ButtonLastUp="/App_Themes/FiKMAE-Uk/Images/Common/Result/bt_last_up.gif"
+                           ButtonNextDown="/App_Themes/FiKMAE-Uk/Images/Common/Result/bt_next_down.gif"
+                           ButtonNextUp="/App_Themes/FiKMAE-Uk/Images/Common/Result/bt_next_up.gif"
+                           ButtonPreviousDown="/App_Themes/FiKMAE-Uk/Images/Common/Result/bt_previous_down.gif"
+                           ButtonPreviousUp="/App_Themes/FiKMAE-Uk/Images/Common/Result/bt_previous_up.gif"
 />
 
 <%-- Select items in classification web control : used to select Items in Classification --%>
@@ -1074,19 +1074,19 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            TreeIncludeFrameBodyCss="treeIncludeFrameBodyCss" 
                            TreeIncludeFrameCss="treeIncludeFrameCss" 
                            TreeIncludeFrameHeaderCss="treeIncludeFrameHeaderCss" 
-                           TreeViewIcons="/App_Themes/FinlandAdExpressUk-Kantar/Styles/TreeView/Icons" 
-                           TreeViewScripts="/App_Themes/FinlandAdExpressUk-Kantar/Styles/TreeView/Scripts" 
-                           TreeViewStyles="/App_Themes/FinlandAdExpressUk-Kantar/Styles/TreeView/Css" 
-                           ExcludeImage="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/exclude_item.gif"
-                           IncludeImage="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/include_item.gif"
-                           Intersectionimage="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/intersection.gif"
-                           TrashImage="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/button/bt_delete_up.GIF"
-                           DeleteImage="/App_Themes/FinlandAdExpressUk-Kantar/Styles/TreeView/Css/bt_delete_item.gif"
-                           LoupeUpImage = "/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/button/bt_loupe_up.gif"
-                           LoupeDownImage = "/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/button/bt_loupe_down.gif"
-                           InitializeUpImage = "/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/button/initialize_up.gif"
-                           InitializeDownImage = "/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/button/initialize_down.gif"
-                           WaitLoadingImage = "/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/waitAjax.gif"
+                           TreeViewIcons="/App_Themes/FiKMAE-Uk/Styles/TreeView/Icons" 
+                           TreeViewScripts="/App_Themes/FiKMAE-Uk/Styles/TreeView/Scripts" 
+                           TreeViewStyles="/App_Themes/FiKMAE-Uk/Styles/TreeView/Css" 
+                           ExcludeImage="/App_Themes/FiKMAE-Uk/Images/Common/exclude_item.gif"
+                           IncludeImage="/App_Themes/FiKMAE-Uk/Images/Common/include_item.gif"
+                           Intersectionimage="/App_Themes/FiKMAE-Uk/Images/Common/intersection.gif"
+                           TrashImage="/App_Themes/FiKMAE-Uk/Images/Common/button/bt_delete_up.GIF"
+                           DeleteImage="/App_Themes/FiKMAE-Uk/Styles/TreeView/Css/bt_delete_item.gif"
+                           LoupeUpImage = "/App_Themes/FiKMAE-Uk/Images/Common/button/bt_loupe_up.gif"
+                           LoupeDownImage = "/App_Themes/FiKMAE-Uk/Images/Common/button/bt_loupe_down.gif"
+                           InitializeUpImage = "/App_Themes/FiKMAE-Uk/Images/Common/button/initialize_up.gif"
+                           InitializeDownImage = "/App_Themes/FiKMAE-Uk/Images/Common/button/initialize_down.gif"
+                           WaitLoadingImage = "/App_Themes/FiKMAE-Uk/Images/Common/waitAjax.gif"
 />
 <%-- Select items in classification web control : used to select Items in Classification --%>
 <ctrSelections:SelectRecapItemsInClassificationWebControl  
@@ -1109,27 +1109,27 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            TreeIncludeFrameBodyCss="treeIncludeFrameBodyCss" 
                            TreeIncludeFrameCss="treeIncludeFrameCss" 
                            TreeIncludeFrameHeaderCss="treeIncludeFrameHeaderCss" 
-                           TreeViewIcons="/App_Themes/FinlandAdExpressUk-Kantar/Styles/TreeView/Icons" 
-                           TreeViewScripts="/App_Themes/FinlandAdExpressUk-Kantar/Styles/TreeView/Scripts" 
-                           TreeViewStyles="/App_Themes/FinlandAdExpressUk-Kantar/Styles/TreeView/Css" 
-                           ExcludeImage="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/exclude_item.gif"
-                           IncludeImage="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/include_item.gif"
-                           Intersectionimage="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/intersection.gif"
-                           TrashImage="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/button/bt_delete_up.GIF"
-                           DeleteImage="/App_Themes/FinlandAdExpressUk-Kantar/Styles/TreeView/Css/bt_delete_item.gif"
-                           LoupeUpImage = "/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/button/bt_loupe_up.gif"
-                           LoupeDownImage = "/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/button/bt_loupe_down.gif"
-                           InitializeUpImage = "/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/button/initialize_up.gif"
-                           InitializeDownImage = "/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/button/initialize_down.gif"
-                           WaitLoadingImage = "/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/waitAjax.gif"
+                           TreeViewIcons="/App_Themes/FiKMAE-Uk/Styles/TreeView/Icons" 
+                           TreeViewScripts="/App_Themes/FiKMAE-Uk/Styles/TreeView/Scripts" 
+                           TreeViewStyles="/App_Themes/FiKMAE-Uk/Styles/TreeView/Css" 
+                           ExcludeImage="/App_Themes/FiKMAE-Uk/Images/Common/exclude_item.gif"
+                           IncludeImage="/App_Themes/FiKMAE-Uk/Images/Common/include_item.gif"
+                           Intersectionimage="/App_Themes/FiKMAE-Uk/Images/Common/intersection.gif"
+                           TrashImage="/App_Themes/FiKMAE-Uk/Images/Common/button/bt_delete_up.GIF"
+                           DeleteImage="/App_Themes/FiKMAE-Uk/Styles/TreeView/Css/bt_delete_item.gif"
+                           LoupeUpImage = "/App_Themes/FiKMAE-Uk/Images/Common/button/bt_loupe_up.gif"
+                           LoupeDownImage = "/App_Themes/FiKMAE-Uk/Images/Common/button/bt_loupe_down.gif"
+                           InitializeUpImage = "/App_Themes/FiKMAE-Uk/Images/Common/button/initialize_up.gif"
+                           InitializeDownImage = "/App_Themes/FiKMAE-Uk/Images/Common/button/initialize_down.gif"
+                           WaitLoadingImage = "/App_Themes/FiKMAE-Uk/Images/Common/waitAjax.gif"
 />
 <%-- Select items in classification web control : used to select Items in Classification specific to details selection--%>
 <ctrSelections:SelectItemsInClassificationWebControl  
                            runat="server" 
                            
-                           TreeViewIcons = "/App_Themes/FinlandAdExpressUk-Kantar/Styles/TreeView/Icons"
-                           TreeViewScripts = "/App_Themes/FinlandAdExpressUk-Kantar/Styles/TreeView/Scripts"
-                           TreeViewStyles = "/App_Themes/FinlandAdExpressUk-Kantar/Styles/TreeView/Css"
+                           TreeViewIcons = "/App_Themes/FiKMAE-Uk/Styles/TreeView/Icons"
+                           TreeViewScripts = "/App_Themes/FiKMAE-Uk/Styles/TreeView/Scripts"
+                           TreeViewStyles = "/App_Themes/FiKMAE-Uk/Styles/TreeView/Css"
                            ChildNodeExcludeCss = "txtChildNodeExcludeCss"
                            ChildNodeIncludeCss = "txtChildNodeIncludeCss"
                            ParentNodeChildExcludeCss = "txtParentNodeChildExcludeCss"
@@ -1147,8 +1147,8 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%-- Global calendar web control : used to display the global calendar --%>
 <ctrSelections:GlobalCalendarWebControl  
                            runat="server"
-                           CssPath="Css/FinlandAdExpressUk-Kantar/Calendar.css"
-                           ThemeName="FinlandAdExpressUk-Kantar"
+                           CssPath="Css/FiKMAE-Uk/Calendar.css"
+                           ThemeName="FiKMAE-Uk"
 />
 
 <%-- Initialize product web control : used to initialize products selection txtNoir11Bold --%>
@@ -1195,7 +1195,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%-- generic media schedule web control : used to display a generic media plan --%>
 <ctrMadiaPlan:genericmediaschedulewebcontrol 
                            runat="server"
-                           ThemeName = "FinlandAdExpressUk-Kantar" 
+                           ThemeName = "FiKMAE-Uk" 
 />
 
 <%-- Period Detail Selection WebControl : designed for Media Plan Schedules --%>
@@ -1219,7 +1219,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%-- Generic detail selection web control : used to display columns detail --%>
 <ctrHeader:genericdetailselectionwebcontrol 
                            runat="server"
-                           ThemeName = "FinlandAdExpressUk-Kantar"
+                           ThemeName = "FiKMAE-Uk"
 />
 
 <%-- Media insertions creations result web control 
@@ -1229,7 +1229,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            CssListLabel="txtViolet11Bold"
                            CssListBox="txtNoir11Bold"
                            CssCustomSectionTitle="txtViolet11Bold"
-                           ThemeName = "FinlandAdExpressUk-Kantar"
+                           ThemeName = "FiKMAE-Uk"
 />--%>
 
 <%-- Option layer web control : used to display generic details selection --%>
@@ -1237,14 +1237,14 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            runat="server" 
                            CssDefaultListLabel="txtViolet11Bold"
 						   BackGroundColor="#EEEEEE" 
-						   ThemeName = "FinlandAdExpressUk-Kantar"
+						   ThemeName = "FiKMAE-Uk"
 />
 
 <%-- Option table types web control : used to display format table details selection --%>
 <ctrHeader:ResultsTableTypesWebControl 
                            runat="server" 
                            BorderColor="#BBBFC6"
-                           ImageButtonArrow="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Button/bt_arrow_tall_top.gif"
+                           ImageButtonArrow="/App_Themes/FiKMAE-Uk/Images/Common/Button/bt_arrow_tall_top.gif"
 						   SkinID = "ResultsTableTypesWebControl1"
 />
 <%-- Option Dash Board web control : used to display Dash Board details selection --%>
@@ -1252,7 +1252,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            runat="server" 
                            BorderColor="#BBBFC6"
                            CommonCssClass="txtNoir11Bold" 
-                           ImageButtonArrow="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/Button/bt_arrow_tall_top.gif"
+                           ImageButtonArrow="/App_Themes/FiKMAE-Uk/Images/Common/Button/bt_arrow_tall_top.gif"
                            ImageWidth="139" 
                            ImageHeight="26"
 						   SkinID = "ResultsDashBoardOptionsWebControl1"
@@ -1521,10 +1521,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 						   HighlightBackgroundColorL2="#FFFFFF" 
 						   HighlightBackgroundColorL3="#FFFFFF"  
 						   HighlightBackgroundColorL4="#FFFFFF" 
-						   ImgBtnCroiOverPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_croi3_in.gif"
-						   ImgBtnCroiPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_croi3.gif" 
-						   ImgBtnDeCroiOverPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_decroi3_in.gif"
-						   ImgBtnDeCroiPath="/App_Themes/FinlandAdExpressUk-Kantar/Images/Common/fl_tri_decroi3.gif" 
+						   ImgBtnCroiOverPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_croi3_in.gif"
+						   ImgBtnCroiPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+						   ImgBtnDeCroiOverPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif"
+						   ImgBtnDeCroiPath="/App_Themes/FiKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
 						   PageSizeOptions="100,200,500,1000" 
 						   AllowPaging="True"
 						   CssDetailSelectionBordelLevel="dsBorderLevel"
