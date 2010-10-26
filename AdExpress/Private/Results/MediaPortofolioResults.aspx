@@ -25,7 +25,7 @@
 	</HEAD>
 	<body class="bodyStyle" onload="javascript:activateActiveX();">
 		<form id="Form2" method="post" runat="server">
-			<table height="600" cellSpacing="0" cellPadding="0" width="800" border="0">
+			<table height="600" cellSpacing="0" cellPadding="0" border="0">
 			    <!-- Gradient -->
 				<tr>
 					<td colspan="7" height="3" class="gradientBar"></td>
