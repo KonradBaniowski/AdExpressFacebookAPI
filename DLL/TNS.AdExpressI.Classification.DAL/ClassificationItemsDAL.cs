@@ -564,6 +564,8 @@ namespace TNS.AdExpressI.Classification.DAL {
 				case Dimension.media:
 					classificationRight = GetMediaRights( "wp", true);
 					break;
+                case Dimension.advertisingAgency:
+                    return string.Empty;
 				default:
 					throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));
 			}
@@ -637,14 +639,6 @@ namespace TNS.AdExpressI.Classification.DAL {
                         default:
                             throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));
                     }
-                case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES:
-                    switch (dimension)
-                    {
-                        case Dimension.product:
-                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allAdvAgency);
-                        default:
-                            throw (new Exceptions.ClassificationItemsDALException("Unknown nomenclature dimension"));
-                    }
                 default:
                     /* Obtains user View of the product or media classification for the others modules */
                     switch (dimension)
@@ -652,10 +646,11 @@ namespace TNS.AdExpressI.Classification.DAL {
                         //View for product classification brand
                         case Dimension.product:
                             return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);
-
                         //View for vehicle classification brand
                         case Dimension.media:
                             return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia);
+                        case Dimension.advertisingAgency:
+                            return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allAdvAgency);
                         default:
                             throw (new Exceptions.ClassificationItemsDALException("Unknown classification brand"));
                     }
@@ -728,6 +723,11 @@ namespace TNS.AdExpressI.Classification.DAL {
 						if (dimension == Dimension.media)
 							sql.AppendFormat(" and wp.id_vehicle in ({0}) ", _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess));
 						break;
+                    //For module Advertising Agency the data will be filter on selected media (ex. Identifer of media TELEVISION)
+                    case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES:
+                        if (dimension == Dimension.media)
+                            sql.AppendFormat(" and wp.id_vehicle in ({0}) ", _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess));
+                        break;
 				}
 			}
 			else {
