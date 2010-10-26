@@ -160,18 +160,8 @@
 																<tr>
 																	<td class="txtNoir11Bold"><cc1:adexpresstext language="33" id="contactAdTxt" runat="server" Code="75"></cc1:adexpresstext></td>
 																</tr>
-																<tr>
-																	<td><asp:label class="txtNoir11Bold" id="name1Lab" runat="server">Pierre Marty</asp:label></td>
-																</tr>
-																<tr>
-																	<td class="txtGris11Bold"><cc1:adexpresstext language="33" id="job1AdTxt" runat="server" Code="76"></cc1:adexpresstext></td>
-																</tr>
-																<tr>
-																	<td><asp:label class="txtGris11Bold" id="tel1AdTxt" runat="server">01 30 74 80 27</asp:label></td>
-																</tr>
-																<tr>
-																	<td><asp:label class="txtGris11Bold" id="mail1AdTxt" runat="server">pierre.marty@tns-global.com</asp:label></td>
-																</tr>
+
+																
 																<tr>
 																	<td><asp:label class="txtNoir11Bold" id="name2Lab" runat="server">Sophie Le Barazer</asp:label></td>
 																</tr>
@@ -182,8 +172,10 @@
 																	<td><asp:label class="txtGris11Bold" id="tel2AdTxt" runat="server">01 30 74 80 35</asp:label></td>
 																</tr>
 																<tr>
-																	<td><asp:label class="txtGris11Bold" id="mail12AdTxt" runat="server">sophie.lebarazer@tns-global.com</asp:label></td>
+																	<td><asp:label class="txtGris11Bold" id="mail12AdTxt" runat="server">sophie.lebarazer@kantarmedia.com</asp:label></td>
 																</tr>
+																
+																
 																<tr>
 																	<td><asp:label class="txtNoir11Bold" id="name3Lab" runat="server">Valérie Rombaut</asp:label></td>
 																</tr>
@@ -194,19 +186,35 @@
 																	<td><asp:label class="txtGris11Bold" id="tel3AdTxt" runat="server">01 30 74 80 33</asp:label></td>
 																</tr>
 																<tr>
-																	<td><asp:label class="txtGris11Bold" id="mail3AdTxt" runat="server">valerie.rombaut@tns-global.com</asp:label></td>
+																	<td><asp:label class="txtGris11Bold" id="mail3AdTxt" runat="server">valerie.rombaut@kantarmedia.com</asp:label></td>
+																</tr>
+																
+																
+																<tr>
+																	<td><asp:label class="txtNoir11Bold" id="name1Lab" runat="server">Isabelle Guegan</asp:label></td>
 																</tr>
 																<tr>
-																	<td><asp:label class="txtNoir11Bold" id="name4Lab" runat="server">Eric Trousset</asp:label></td>
+																	<td class="txtGris11Bold"><cc1:adexpresstext language="33" id="job1AdTxt" runat="server" Code="77"></cc1:adexpresstext></td>
+																</tr>
+																<tr>
+																	<td><asp:label class="txtGris11Bold" id="tel1AdTxt" runat="server">01 30 74 80 82</asp:label></td>
+																</tr>
+																<tr>
+																	<td><asp:label class="txtGris11Bold" id="mail1AdTxt" runat="server">isabelle.guegan@kantarmedia.com</asp:label></td>
+																</tr>
+																
+																
+																<tr>
+																	<td><asp:label class="txtNoir11Bold" id="name4Lab" runat="server">Corinne In Albon</asp:label></td>
 																</tr>
 																<tr>
 																	<td class="txtGris11Bold"><cc1:adexpresstext language="33" id="job4AdTxt" runat="server" Code="884"></cc1:adexpresstext></td>
 																</tr>
 																<tr>
-																	<td><asp:label class="txtGris11Bold" id="tel4AdTxt" runat="server">01 30 74 87 70</asp:label></td>
+																	<td><asp:label class="txtGris11Bold" id="tel4AdTxt" runat="server">01 30 74 87 97</asp:label></td>
 																</tr>
 																<tr>
-																	<td><asp:label class="txtGris11Bold" id="mail4AdTxt" runat="server">eric.trousset@tns-global.com</asp:label></td>
+																	<td><asp:label class="txtGris11Bold" id="mail4AdTxt" runat="server">corinne.inalbon@kantarmedia.com</asp:label></td>
 																</tr>
 															</table>
 														</td>

@@ -210,7 +210,7 @@
     <item mnemonic="w881" type="System.String">Sélectionner l'univers à déplacer dans la liste suivante : </item>
     <item mnemonic="w882" type="System.String">Déplacer l'univers sélectionné vers :</item>
     <item mnemonic="w883" type="System.String">Déplacer un univers :</item>
-    <item mnemonic="w884" type="System.String">Directeur Marketing</item>
+    <item mnemonic="w884" type="System.String">Directrice Marketing</item>
     <item mnemonic="w885" type="System.String">Vous devez sélectionner une période</item>
     <item mnemonic="w886" type="System.String">Il est nécessaire de sélectionner deux dates pour valider</item>
     <item mnemonic="w887" type="System.String">Erreur</item>
