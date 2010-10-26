@@ -58,7 +58,7 @@ hr {
 	border-bottom :#A7A6AA 1px solid;
 }
 .arrowBackGroundGenericMediaLevelDetail{
-	background-image:url(/App_Themes/DefaultAdExpressFr-Kantar/images/Common/button/bt_arrow_down.gif);
+	background-image:url(/App_Themes/FiKMAE-Fi/images/Common/button/bt_arrow_down.gif);
 	background-repeat:no-repeat;
 	background-position:right;
 	width:15px;
@@ -83,12 +83,12 @@ hr {
 	padding: 0;
 }
 .popUpHeaderBackground{
-	background-image:url(/App_Themes/DefaultAdExpressFr-Kantar/images/Common/PopUp_Header.gif);
+	background-image:url(/App_Themes/FiKMAE-Fi/images/Common/PopUp_Header.gif);
 	background-repeat:repeat-x;
 	height:21px;
 }
 .popUpFooterBackground{
-	background-image:url(/App_Themes/DefaultAdExpressFr-Kantar/images/Common/PopUp_Footer.gif);
+	background-image:url(/App_Themes/FiKMAE-Fi/images/Common/PopUp_Footer.gif);
 	background-repeat:repeat-x;
 	height:40px;
 }
@@ -104,7 +104,7 @@ hr {
 
 /* Back ground style*/
 .imageBackGround{
-	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dupli_fond.gif);
+	background:url(/App_Themes/FiKMAE-Fi/Images/Common/dupli_fond.gif);
 }
 .gSepBackGround{
 	background:url(/I/gsep.gif);
@@ -112,32 +112,32 @@ hr {
 	height:100%;
 }
 .checkboxBackGround{
-	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/checkbox.GIF);
+	background:url(/App_Themes/FiKMAE-Fi/Images/Common/checkbox.GIF);
 }
 .blockBackGround{
-	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/block_dupli.gif);
+	background:url(/App_Themes/FiKMAE-Fi/Images/Common/block_dupli.gif);
 }
 .imageBackGround3bis{
-	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dupli_3bis.gif);
+	background:url(/App_Themes/FiKMAE-Fi/Images/Common/dupli_3bis.gif);
 }
 .bandeauTitreBackGround{
-	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/bandeau_titre.gif);
+	background:url(/App_Themes/FiKMAE-Fi/Images/Common/bandeau_titre.gif);
 }
 .blockdupliBackGround{
-	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/block_dupli.gif);
+	background:url(/App_Themes/FiKMAE-Fi/Images/Common/block_dupli.gif);
 }
 .popupBackGround{
-	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/backgroundPopUp.gif);
+	background:url(/App_Themes/FiKMAE-Fi/Images/Common/backgroundPopUp.gif);
 }
 .arrowBackGround{
-	background-image:url(/App_Themes/DefaultAdExpressFr-Kantar/images/Common/button/bt_arrow_down.gif);
+	background-image:url(/App_Themes/FiKMAE-Fi/images/Common/button/bt_arrow_down.gif);
 	background-repeat:no-repeat;
 	background-position:right;
 	width:15px;
 	height:15px;
 }
 .logoCoteDroitBackGround{
-	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/logo_cote_droit.gif);
+	background:url(/App_Themes/FiKMAE-Fi/Images/Common/logo_cote_droit.gif);
 }
 .greenBackGround{
 	background-color:#CAFFCA;
@@ -146,7 +146,7 @@ hr {
 	background-color:#FFD7D7;
 }
 .audioFileBackGround{
-	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/audioFile.gif);
+	background:url(/App_Themes/FiKMAE-Fi/Images/Common/audioFile.gif);
 	background-repeat:no-repeat;
 	width:128px;
 	height:128px;
@@ -154,7 +154,7 @@ hr {
 	text-align: center;
 }
 .videoFileBackGround{
-	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/videoFile.gif);
+	background:url(/App_Themes/FiKMAE-Fi/Images/Common/videoFile.gif);
 	background-repeat:no-repeat;
 	width:128px;
 	height:128px;
@@ -238,34 +238,34 @@ hr {
 	background-color : #E1E0DA;
 }
 .dupli3BackGround{
-	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dupli_3.gif);
+	background:url(/App_Themes/FiKMAE-Fi/Images/Common/dupli_3.gif);
 }
 .dupli1BackGround{
-	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dupli_1.gif);
+	background:url(/App_Themes/FiKMAE-Fi/Images/Common/dupli_1.gif);
 }
 .headerBackGround{
-	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dupli_2.gif);
+	background:url(/App_Themes/FiKMAE-Fi/Images/Common/dupli_2.gif);
 	BACKGROUND-REPEAT: repeat-x;
 }
 .darkBackGround{
 	BACKGROUND-ATTACHMENT: fixed; 
-	BACKGROUND-IMAGE: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dark_back.bmp); 
+	BACKGROUND-IMAGE: url(/App_Themes/FiKMAE-Fi/Images/Common/dark_back.bmp); 
 	BACKGROUND-REPEAT: repeat-x;
 }
 .creationDarkBackGround{
 	background-attachment: fixed; 
-	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/dark_back.bmp); 
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/dark_back.bmp); 
 	background-repeat: repeat-x; 
 	background-color:#FFFFFF; 
 	margin:25 0 25 0; 
 	text-align:center;
 }
 .popUpBackGround{
-	background:url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/backgroundPopUp.gif);
+	background:url(/App_Themes/FiKMAE-Fi/Images/Common/backgroundPopUp.gif);
 }
 .creationpopUpBackGround{
 	background-position: right; 
-	background-image: url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/bandeau_titre.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/bandeau_titre.gif);
 	background-repeat: repeat-y
 }
 /* Body Style */
@@ -1447,10 +1447,10 @@ td.nav{
 	padding-left:5px;
 }
 .navBarTop{
-	background: white url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Result/header.gif) top left repeat-x;
+	background: white url(/App_Themes/FiKMAE-Fi/Images/Common/Result/header.gif) top left repeat-x;
 }
 .navBarBottom{
-	background: white url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Result/footer.gif) bottom left repeat-x;	
+	background: white url(/App_Themes/FiKMAE-Fi/Images/Common/Result/footer.gif) bottom left repeat-x;	
 }
 /*Images link with violet border */
 input.image, input.image:active, input.image:visited{
@@ -1514,7 +1514,7 @@ padding: 3px 7px;
 margin-right: 3px;
 border: 1px solid #646262;
 color: #646262;
-background: white url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Result/footer.gif) bottom left repeat-x;
+background: white url(/App_Themes/FiKMAE-Fi/Images/Common/Result/footer.gif) bottom left repeat-x;
 }
 .shadetabs li a:hover{
 color: #FF7100;
@@ -1525,12 +1525,12 @@ color:#FF7100;
 }
 /*selected main tab style */
 .shadetabs li.selected a{
-background: white url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Result/header.gif) top left repeat-x;
+background: white url(/App_Themes/FiKMAE-Fi/Images/Common/Result/header.gif) top left repeat-x;
 color:#FF7100;
 }
 /*selected main tab style */
 .shadetabs li.selected a:hover{
-background: white url(/App_Themes/DefaultAdExpressFr-Kantar/Images/Common/Result/header.gif) top left repeat-x;
+background: white url(/App_Themes/FiKMAE-Fi/Images/Common/Result/header.gif) top left repeat-x;
 text-decoration: none;
 color:#FF7100;
 }

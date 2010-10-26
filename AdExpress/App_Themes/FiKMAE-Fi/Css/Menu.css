@@ -3,7 +3,7 @@ Menu related selectors
 */
 .jsdomenudiv {
 	background-color: #FFFFFF;
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/menu_left_grey.png);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/menu_left_grey.png);
 	background-repeat: repeat-y;
 	border: 1px solid #8A867A;
 	cursor: default;
@@ -82,7 +82,7 @@ Menu related selectors
 }
 
 .jsdomenuarrow {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/menu_arrow2.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/menu_arrow2.gif);
 	background-repeat: no-repeat; /* Do not alter this line! */
 	height: 20px;
 	position: absolute; /* Do not alter this line! */
@@ -93,7 +93,7 @@ Menu related selectors
 
 
 .jsdomenuarrowover {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/menu_arrow_o2.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/menu_arrow_o2.gif);
 	background-repeat: no-repeat; /* Do not alter this line! */
 	height: 20px;
 	position: absolute; /* Do not alter this line! */
@@ -114,7 +114,7 @@ Menu bar related selectors
 */
 .jsdomenubardiv {
 	background-color: #ECE9D8;
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/menu_divider.png);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/menu_divider.png);
 	background-position: left;
 	background-repeat: no-repeat;
 	border: 1px outset;
@@ -188,7 +188,7 @@ Example of selectors for icons. Change the height and width to match the actual
 height and width of the icon image.
 */
 .calendarMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/calendarMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/calendarMenuIcon.gif);
 	background-repeat: no-repeat; /* Do not alter this line! */
 	height: 20px;
 	left: 2px;
@@ -196,7 +196,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .excelColMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/excelColMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/excelColMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -204,7 +204,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .excelExportMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/excelExportMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/excelExportMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -212,7 +212,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .excelMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/excelMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/excelMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -220,7 +220,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .excelUnitMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/excelUnitMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/excelUnitMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -228,7 +228,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .helpMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/helpMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/helpMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -236,7 +236,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .jpegExportMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/jpegExportMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/jpegExportMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -244,7 +244,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .mediaMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/mediaMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/mediaMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -252,7 +252,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .alertMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/createAlertMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/createAlertMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -260,7 +260,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .programMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/programMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/programMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -268,7 +268,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .sponsorshipMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/sponsorshipMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/sponsorshipMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -276,7 +276,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .pdfExportMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/pdfExportMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/pdfExportMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -284,7 +284,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .printColMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/printColMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/printColMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -292,7 +292,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .printMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/printMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/printMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -300,7 +300,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .printHTMLMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/printHTMLMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/printHTMLMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -308,7 +308,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .productMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/productMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/productMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -316,7 +316,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .resultMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/resultMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/resultMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -324,7 +324,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .saveMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/saveMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/saveMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -332,7 +332,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .selectedMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/selectedMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/selectedMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -340,7 +340,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .sloganMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/sloganMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/sloganMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -348,7 +348,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .targetMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/targetMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/targetMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -356,7 +356,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .textExportMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/textExportMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/textExportMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -365,7 +365,7 @@ height and width of the icon image.
 }
 
 .updateDateMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/updateDateMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/updateDateMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -373,7 +373,7 @@ height and width of the icon image.
 	width: 20px;
 }
 .kantarWebsiteMenuIcon {
-	background-image: url(/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/Menu/kantarWebsiteMenuIcon.gif);
+	background-image: url(/App_Themes/FiKMAE-Fi/Images/Common/Menu/kantarWebsiteMenuIcon.gif);
 	background-repeat: no-repeat;
 	height: 20px;
 	left: 2px;
@@ -407,7 +407,7 @@ height and width of the icon image.
 
 #tabsH a {
 	float:left;
-	background:url("/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/TabMenu/tableftH.gif") no-repeat left top;
+	background:url("/App_Themes/FiKMAE-Fi/Images/Common/TabMenu/tableftH.gif") no-repeat left top;
 	margin:0;
 	padding:0 0 0 4px;
 	text-decoration:none;
@@ -416,7 +416,7 @@ height and width of the icon image.
 #tabsH a span {
 	float:left;
 	display:block;
-	background:url("/App_Themes/FinlandAdExpressFi-Kantar/Images/Common/TabMenu/tabrightH.gif") no-repeat right top;
+	background:url("/App_Themes/FiKMAE-Fi/Images/Common/TabMenu/tabrightH.gif") no-repeat right top;
 	padding:4px 10px 2px 10px;
 	color:#FFF;
 }
