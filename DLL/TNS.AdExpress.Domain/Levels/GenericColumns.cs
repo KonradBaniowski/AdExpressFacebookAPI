@@ -122,7 +122,7 @@ namespace TNS.AdExpress.Domain.Level
                 }
                 else {
                     if (currentColumn.GetSqlField() != null && currentColumn.GetSqlField().Length > 0)
-                        sql += string.Format("{0}.stragg({1}) as {2},", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label, currentColumn.DataBaseField, ((currentColumn.DataBaseAliasField != null && currentColumn.DataBaseAliasField.Length > 0) ? currentColumn.DataBaseAliasField : currentColumn.DataBaseField));
+                        sql += string.Format("to_char({0}.stragg2({1})) as {2},", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label, currentColumn.DataBaseField, ((currentColumn.DataBaseAliasField != null && currentColumn.DataBaseAliasField.Length > 0) ? currentColumn.DataBaseAliasField : currentColumn.DataBaseField));
                 }
             }
             if (sql.Length > 0) sql = sql.Substring(0, sql.Length - 1);
@@ -147,7 +147,7 @@ namespace TNS.AdExpress.Domain.Level
                     }
                     else {
                         if (currentColumn.GetSqlField() != null && currentColumn.GetSqlField().Length > 0)
-                            sql += string.Format("{0}.stragg({1}) as {2},", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label, currentColumn.DataBaseField
+                            sql += string.Format("to_char({0}.stragg2({1})) as {2},", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label, currentColumn.DataBaseField
                                 ,((currentColumn.DataBaseAliasField != null && currentColumn.DataBaseAliasField.Length > 0) ? currentColumn.DataBaseAliasField : currentColumn.DataBaseField));
                     }
 				}
@@ -181,7 +181,7 @@ namespace TNS.AdExpress.Domain.Level
                     else
                     {
                         if (currentColumn.GetSqlField() != null && currentColumn.GetSqlField().Length > 0)
-                            sql += string.Format("{0}.stragg(distinct {1}) as {2},"
+                            sql += string.Format("to_char({0}.stragg2(distinct {1})) as {2},"
                                 , WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label
                                 , currentColumn.DataBaseField
                                 , ((currentColumn.DataBaseAliasField != null && currentColumn.DataBaseAliasField.Length > 0) ? currentColumn.DataBaseAliasField : currentColumn.DataBaseField)
