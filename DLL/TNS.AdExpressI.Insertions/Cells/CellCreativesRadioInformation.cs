@@ -246,12 +246,12 @@ namespace TNS.AdExpressI.Insertions.Cells
             int i = -1;
 
             //Table
-            str.Append("<table cellpadding=0 cellspacing=0 width=100% border=\"0\" class=\"whiteBackGround\">");
+            str.Append("<table cellpadding=0 cellspacing=0 width=100% border=\"0\" class=\"backGroundWhite\">");
             //Render Verion visual
             str.Append("<tr><td>");
-            str.Append("<table cellpadding=0 cellspacing=0 border=\"0\" class=\"whiteBackGround\">");
+            str.Append("<table cellpadding=0 cellspacing=0 border=\"0\">");
             //output.Append("<tr>");
-            str.Append("<tr><td class=\"whiteBackGround\"></td></tr>");
+            str.Append("<tr><td></td></tr>");
 
             #region Init Informations
             List<string> cols = new List<string>();
@@ -282,8 +282,8 @@ namespace TNS.AdExpressI.Insertions.Cells
                         style2 = "BORDER-TOP: " + baseColor + " 1px solid; BORDER-RIGHT: " + color + " 1px solid";
                     }
 
-                    tmpStr.AppendFormat("<td width=\"150\" class=\"whiteBackGround\"  style=\"" + style1 + "\"  nowrap><span>{0} <span></td> ", GestionWeb.GetWebWord(g.WebTextId, _session.SiteLanguage));
-                    tmpStr.Append("<td width=\"150\" class=\"whiteBackGround\"  style=\"" + style2 + "\"> ");
+                    tmpStr.AppendFormat("<td width=\"150\" class=\"backGroundWhite\"  style=\"" + style1 + "\"  nowrap><span>{0} <span></td> ", GestionWeb.GetWebWord(g.WebTextId, _session.SiteLanguage));
+                    tmpStr.Append("<td width=\"150\" class=\"backGroundWhite\"  style=\"" + style2 + "\"> ");
                     hasData = false;
                     if (_values[i] != null) {
                         if (!(_values[i] is CellUnit)) {
@@ -322,10 +322,10 @@ namespace TNS.AdExpressI.Insertions.Cells
             }
 
             str.Append("</TABLE></td>");
-            str.Append("<td class=\"whiteBackGround\" style=\"WIDTH: 40px; BORDER-RIGHT: white 0px solid;BORDER-LEFT: white 1px solid\"><font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></td>");
+            str.Append("<td class=\"backGroundWhite\" style=\"WIDTH: 40px; BORDER-RIGHT: white 0px solid;BORDER-LEFT: white 1px solid\"><font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></td>");
 
             str.Append("</tr>");
-            str.Append("<tr><td class=\"whiteBackGround\" style=\"HEIGHT: 50px; BORDER-TOP: white 0px solid;BORDER-BOTTOM: white 1px solid\"></td></tr>");
+            str.Append("<tr><td class=\"backGroundWhite\" style=\"HEIGHT: 50px; BORDER-TOP: white 0px solid;BORDER-BOTTOM: white 1px solid\"></td></tr>");
 
             //End table
             str.Append("</table>");

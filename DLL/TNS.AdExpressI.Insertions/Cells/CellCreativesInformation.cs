@@ -404,13 +404,13 @@ namespace TNS.AdExpressI.Insertions.Cells
             List<string> cols = new List<string>();
 
             //Table
-            str.Append("<table cellpadding=0 cellspacing=0 width=100% border=\"0\" class=\"whiteBackGround\">");
+            str.Append("<table cellpadding=0 cellspacing=0 width=100% border=\"0\" class=\"backGroundWhite\">");
             //Render Verion visual
             str.Append("<tr>");
             str.Append("<TD>");
-            str.Append("<table cellpadding=0 cellspacing=0 border=\"0\" class=\"whiteBackGround\">");
+            str.Append("<table cellpadding=0 cellspacing=0 border=\"0\">");
             str.Append("<tr>");
-            str.Append("<td align=\"left\" class=\"whiteBackGround\">");
+            str.Append("<td align=\"left\">");
             RenderImage(str, index);
             str.Append("</td>");
 
@@ -517,7 +517,7 @@ namespace TNS.AdExpressI.Insertions.Cells
                 }
             }
 
-            output.Append("<table cellpadding=0 cellspacing=0 border=\"0\" class=\"whiteBackGround\">");
+            output.Append("<table cellpadding=0 cellspacing=0 border=\"0\" class=\"backGroundWhite\">");
             output.Append("<tr>");
 
             for (Int64 i = index; i < end; i++) {
