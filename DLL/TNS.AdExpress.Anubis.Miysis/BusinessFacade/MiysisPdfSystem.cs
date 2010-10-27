@@ -573,7 +573,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
                 if (vehicles.Length == 1 && _webSession.DetailPeriod == CustomerSessions.Period.DisplayLevel.dayly && result.VersionsDetail.Count > 0) {
 
                     VersionsPluriMediaUI versionsUI = new VersionsPluriMediaUI(_webSession, period, "");
-                    html.Append("\r\n\t<tr class=\"whiteBackGround\">\r\n\t\t<td>");
+                    //html.Append("\r\n\t<tr class=\"whiteBackGround\">\r\n\t\t<td>");
                     startIndexVisual = decoupageVersionHTML(html, versionsUI.GetExportMSCreativesHtml(ref creativeCells, base.Style), true, int.Parse(vehicles[0]));
                     VehicleInformation currentVehicle = VehiclesInformation.Get(idVehicle);
                     if (currentVehicle.Id != DBCst.Vehicles.names.tv && currentVehicle.Id != DBCst.Vehicles.names.radio)
@@ -712,8 +712,11 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
             }
 
             for (int i = 0; i < partieHTML.Count - 1; i++) {
-                if (((DBCst.Vehicles.names)vehicle == DBCst.Vehicles.names.radio) || ((DBCst.Vehicles.names)vehicle == DBCst.Vehicles.names.tv))
+                if ((((DBCst.Vehicles.names)vehicle == DBCst.Vehicles.names.radio) || ((DBCst.Vehicles.names)vehicle == DBCst.Vehicles.names.tv)) && (i > 0))
+                {
+                    htmltmp.Append("<table cellSpacing=\"0\" cellPadding=\"0\"  border=\"0\">");
                     htmltmp.Append("<tr><td bgcolor=\"#ffffff\" style=\"HEIGHT: 50px; BORDER-TOP: white 0px solid;BORDER-BOTTOM: white 1px solid\"></td></tr>");
+                }
                 htmltmp.Append(partieHTML[i].ToString());
                 if (version) {
                     if (i == 0) {

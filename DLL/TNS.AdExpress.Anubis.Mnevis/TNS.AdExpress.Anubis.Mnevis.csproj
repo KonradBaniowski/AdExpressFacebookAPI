@@ -210,15 +210,16 @@
     <Compile Include="TreatementSystem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Content Include="App_Themes\DefaultAdExpressFr-Kantar\Styles.xml">
+    <Content Include="App_Themes\KMAE-Fr\Styles.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App_Themes\DefaultAdExpressFr\Styles.xml">
+    <Content Include="App_Themes\AE-Fr\Styles.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App_Themes\DefaultAdExpressUk\Styles.xml">
+    <Content Include="App_Themes\AE-Uk\Styles.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Themes\KMAE-Uk\Styles.xml" />
     <Content Include="Configuration\33\Plugins\Mnevis.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
