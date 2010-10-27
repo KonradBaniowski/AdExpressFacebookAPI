@@ -482,12 +482,12 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
             output.Append(_title);
             output.Append("</td></tr>");
 
-            output.Append("<tr><td class=\"whiteBackGround\" style=\"HEIGHT: 40px; BORDER-TOP: white 0px solid;BORDER-BOTTOM: white 1px solid\"></td></tr>");
+            output.Append("<tr><td class=\"backGroundWhite\" style=\"HEIGHT: 40px; BORDER-TOP: white 0px solid;BORDER-BOTTOM: white 1px solid\"></td></tr>");
 
             int columnIndex = 0;
 
             CellCreativesInformation cell;
-
+            
             for (int i = 0; i < resultTable.LinesNumber; i++) {
 
                 cell = (CellCreativesInformation)resultTable[i, 1];
