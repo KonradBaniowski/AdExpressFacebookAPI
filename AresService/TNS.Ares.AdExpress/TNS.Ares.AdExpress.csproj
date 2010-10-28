@@ -132,6 +132,7 @@
     <Content Include="Configuration\33\MSCreativesDetails.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Configuration\33\PluginAlerteConfiguration.xml" />
     <Content Include="Configuration\33\PluginConfiguration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
