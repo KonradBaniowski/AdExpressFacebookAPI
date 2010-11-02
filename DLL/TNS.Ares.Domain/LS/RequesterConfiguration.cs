@@ -33,14 +33,15 @@ namespace TNS.Ares.Domain.LS
         /// Constructor
         /// </summary>
         /// <param name="familyId">Id used to assemble a group of modules tasks</param>
+        /// <param name="familyName">Name used to assemble a group of modules tasks</param>
         /// <param name="monitorPort">Port used by the link watcher to monitor the clients</param>
         /// <param name="productName">Name that appears in the link console</param>
         /// <param name="directoryName">Used to locate the configuration files</param>
         /// <param name="name">Client name</param>
         /// <param name="moduleDescriptionList">The list of modules that the client can treat</param>
         /// <param name="maxAvailableSlots">Max available slots</param>
-        public RequesterConfiguration(int familyId, int monitorPort, string productName, string directoryName, LsClientName name, List<ModuleDescription> moduleDescriptionList, int maxAvailableSlots)
-            : base(familyId, monitorPort, productName, directoryName, moduleDescriptionList, maxAvailableSlots) {
+        public RequesterConfiguration(int familyId, string familyName, int monitorPort, string productName, string directoryName, LsClientName name, List<ModuleDescription> moduleDescriptionList, int maxAvailableSlots)
+            : base(familyId, familyName, monitorPort, productName, directoryName, moduleDescriptionList, maxAvailableSlots) {
             _name = name;
         }
         #endregion

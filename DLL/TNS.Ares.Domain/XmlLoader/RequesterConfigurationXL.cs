@@ -34,10 +34,12 @@ namespace TNS.Ares.Domain.XmlLoader
                 List<ModuleDescription> moduleDescriptionList = null;
                 LsClientName requesterName;
                 Int32 familyId;
+                string familyName;
                 Int32 monitorPort;
                 string productName;
                 string directoryName;
                 Int32 maxAvailableSlots;
+                bool isSelectable = true;
 
                 // Reading configuration
                 while (reader.Read()) {
@@ -47,6 +49,7 @@ namespace TNS.Ares.Domain.XmlLoader
 
                                 requesterName = (LsClientName)Enum.Parse(typeof(LsClientName), reader.GetAttribute("name"));
                                 familyId = Int32.Parse(reader.GetAttribute("familyId"));
+                                familyName = reader.GetAttribute("familyName");
                                 monitorPort = Int32.Parse(reader.GetAttribute("monitorPort"));
                                 productName = reader.GetAttribute("productName");
                                 directoryName = reader.GetAttribute("directoryName");
@@ -61,13 +64,14 @@ namespace TNS.Ares.Domain.XmlLoader
                                     if (subReader.NodeType == XmlNodeType.Element) {
                                         switch (subReader.LocalName) {
                                             case "moduleDescription":
-                                                moduleDescriptionList.Add(new ModuleDescription(subReader.GetAttribute("description"), Int32.Parse(subReader.GetAttribute("moduleId"))));
+                                                if (!bool.TryParse(subReader.GetAttribute("isSelectable"), out isSelectable)) isSelectable = true;
+                                                moduleDescriptionList.Add(new ModuleDescription(subReader.GetAttribute("description"), Int32.Parse(subReader.GetAttribute("moduleId")), isSelectable));
                                                 break;
                                         }
                                     }
                                 }
 
-                                aresConfigurationList.Add(requesterName, new RequesterConfiguration(familyId, monitorPort, productName, directoryName, requesterName, moduleDescriptionList, maxAvailableSlots));
+                                aresConfigurationList.Add(requesterName, new RequesterConfiguration(familyId, familyName, monitorPort, productName, directoryName, requesterName, moduleDescriptionList, maxAvailableSlots));
                                 break;
                         }
                     }

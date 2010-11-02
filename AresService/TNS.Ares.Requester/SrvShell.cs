@@ -95,7 +95,7 @@ namespace TNS.Ares.Requester
         /// <param name="requesterConfiguration">Resquester Configuration</param>
         /// <param name="source">Data Source</param>
         public SrvShell(LsClientName requesterName, RequesterConfiguration requesterConfiguration, IDataSource source) :
-            base(requesterConfiguration.ProductName, requesterConfiguration.FamilyId, requesterConfiguration.ModuleDescriptionList)
+            base(requesterConfiguration.ProductName, requesterConfiguration.FamilyId, requesterConfiguration.FamilyName, null, requesterConfiguration.ModuleDescriptionList)
         {
 
             #region variables

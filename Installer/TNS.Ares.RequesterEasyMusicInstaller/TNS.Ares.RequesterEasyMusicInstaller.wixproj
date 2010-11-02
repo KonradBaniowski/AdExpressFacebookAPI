@@ -3,9 +3,9 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>3.5</ProductVersion>
-    <ProjectGuid>{10b85ccc-befd-4f5d-ba68-211295294dec}</ProjectGuid>
+    <ProjectGuid>{8c9648ff-54f4-4547-bcdb-48138badaebd}</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>TNS.Ares.RequesterInstaller</OutputName>
+    <OutputName>TNS.Ares.RequesterEasyMusicInstaller</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.5\Wix.targets</WixTargetsPath>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.5\Wix.targets</WixTargetsPath>
@@ -30,17 +30,17 @@
     <Compile Include="SrvWixUI_InstallDir.wxs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\AresService\TNS.Ares.RequesterEasyMusicSrv\TNS.Ares.RequesterEasyMusicSrv.csproj">
+      <Name>TNS.Ares.RequesterEasyMusicSrv</Name>
+      <Project>{f2a792a8-a9bc-4a7d-9704-1d9300986561}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <WixExtension Include="WixUIExtension">
       <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
       <Name>WixUIExtension</Name>
     </WixExtension>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\AresService\TNS.Ares.RequesterSrv\TNS.Ares.RequesterSrv.csproj">
-      <Name>TNS.Ares.RequesterSrv</Name>
-      <Project>{117bc878-7920-49d3-bb58-e74960045f0e}</Project>
-      <Private>True</Private>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--

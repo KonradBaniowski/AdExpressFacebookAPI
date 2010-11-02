@@ -2,33 +2,10 @@
 <configurations>
   <!-- Config FR (33)-->
   <aresConfigurations>
-    <lsClientConfiguration name="AdExpress" directoryName="AdExpress\33" familyId="122" monitorPort="30227" productName="AdExpress Request treatment service">
-      <moduleDescription description="AdExpress Ares Requester" moduleId="0"/>
-      <moduleDescription description="Task AdExpress Ares Requester in error" moduleId="2"/>
-      <moduleDescription description="AdExpress Alert generation" moduleId="3"/>
-      <moduleDescription description="Task AdExpress Alert Generation in error" moduleId="4"/>
-      <moduleDescription description="AdExpress Ares Garbage For StaticNavSession" moduleId="10"/>
-      <moduleDescription description="AdExpress Ares Garbage For Alertes" moduleId="11"/>
-    </lsClientConfiguration>
-    <lsClientConfiguration name="EasyMusic" directoryName="EasyMusic\33" familyId="124" monitorPort="30241" productName="EasyMusic Request treatment service">
+    <lsClientConfiguration name="EasyMusic" directoryName="EasyMusic\33" familyId="124" familyName="Kantarmusic FR Requester Treatment service" monitorPort="30241" productName="EasyMusic Request treatment service">
       <moduleDescription description="EasyMusic Ares Requester" moduleId="0"/>
       <moduleDescription description="Task EasyMusic Ares Requester in error" moduleId="2"/>
       <moduleDescription description="EasyMusic Ares Garbage" moduleId="10"/>
     </lsClientConfiguration>
-    <lsClientConfiguration name="PixPalaceRequester" directoryName="PixPalace" familyId="128" monitorPort="30245" productName="PixPalace Requester">
-      <moduleDescription description="PixPalace Requester" moduleId="5"/>      
-    </lsClientConfiguration>
-    <lsClientConfiguration name="PixPalace" directoryName="PixPalace" familyId="127" monitorPort="30244" productName="PixPalace treatment service">
-      <moduleDescription description="PictureTrack service" moduleId="1"/>
-    </lsClientConfiguration>    
   </aresConfigurations>
-  
-  <!-- Config SK (421) 
-  <aresConfigurations>
-    <lsClientConfiguration name="AdExpress" directoryName="AdExpress\421" familyId="129" monitorPort="30258" productName="AdExpress Request treatment service">
-      <moduleDescription description="AdExpress Ares Requester" moduleId="0"/>
-      <moduleDescription description="Task AdExpress Ares Requester in error" moduleId="2"/>
-      <moduleDescription description="AdExpress Ares Garbage For StaticNavSession" moduleId="10"/>
-    </lsClientConfiguration>
-  </aresConfigurations>-->
 </configurations>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="618614c6-5736-4bd6-a4dc-498cba8b7aa0" Name="Kantar AdExpress: Requester AdExpress" Language="1033" Version="1.0.0.0" Manufacturer="Kantar_AdExpress_Requester_AdExpress" UpgradeCode="1971ec74-bb5e-45ff-91c0-10aa834f86ac">
+	<Product Id="618614c6-5736-4bd6-a4dc-498cba8b7aa0" Name="Kantar AdExpress - Requester AdExpress" Language="1033" Version="1.0.0.0" Manufacturer="Kantar_AdExpress_Requester_AdExpress" UpgradeCode="1971ec74-bb5e-45ff-91c0-10aa834f86ac">
 		<Package InstallerVersion="200" Compressed="yes" />
 
 		<Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />

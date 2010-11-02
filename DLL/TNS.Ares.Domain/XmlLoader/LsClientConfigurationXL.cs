@@ -30,10 +30,12 @@ namespace TNS.Ares.Domain.XmlLoader {
                 XmlReader subReader = null;
                 List<ModuleDescription> moduleDescriptionList = null;
                 Int32 familyId;
+                string familyName;
                 Int32 monitorPort;
                 string productName;
                 string directoryName;
                 Int32 maxAvailableSlots;
+                bool isSelectable = true;
 
                 // Reading configuration
                 while (reader.Read()) {
@@ -45,6 +47,7 @@ namespace TNS.Ares.Domain.XmlLoader {
                             case "lsClientConfiguration":
                                 
                                 familyId = Int32.Parse(reader.GetAttribute("familyId"));
+                                familyName = reader.GetAttribute("familyName");
                                 monitorPort = Int32.Parse(reader.GetAttribute("monitorPort"));
                                 productName = reader.GetAttribute("productName");
                                 directoryName = reader.GetAttribute("directoryName");
@@ -61,13 +64,14 @@ namespace TNS.Ares.Domain.XmlLoader {
                                     if (subReader.NodeType == XmlNodeType.Element) {
                                         switch (subReader.LocalName) {
                                             case "moduleDescription":
-                                                moduleDescriptionList.Add(new ModuleDescription(subReader.GetAttribute("description"), Int32.Parse(subReader.GetAttribute("moduleId"))));
+                                                if (!bool.TryParse(subReader.GetAttribute("isSelectable"), out isSelectable)) isSelectable = true;
+                                                moduleDescriptionList.Add(new ModuleDescription(subReader.GetAttribute("description"), Int32.Parse(subReader.GetAttribute("moduleId")), isSelectable));
                                                 break;
                                         }
                                     }
                                 }
 
-                                lsClientConfiguration = new LsClientConfiguration(familyId, monitorPort, productName, directoryName, moduleDescriptionList, maxAvailableSlots);
+                                lsClientConfiguration = new LsClientConfiguration(familyId, familyName, monitorPort, productName, directoryName, moduleDescriptionList, maxAvailableSlots);
                                 break;
                         }
                     }

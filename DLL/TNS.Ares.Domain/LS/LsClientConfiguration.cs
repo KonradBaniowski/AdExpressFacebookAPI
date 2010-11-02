@@ -15,13 +15,17 @@ namespace TNS.Ares.Domain.LS {
         /// </summary>
         private int _familyId;
         /// <summary>
+        /// Name used to assemble a group of modules tasks
+        /// </summary>
+        private string _familyName = string.Empty;
+        /// <summary>
         /// Port used by the link watcher to monitor the clients
         /// </summary>
         private int _monitorPort;
         /// <summary>
         /// Name that appears in the link console
         /// </summary>
-        private string _productName = "";
+        private string _productName = string.Empty;
         /// <summary>
         /// The list of modules that the client can treat
         /// </summary>
@@ -41,13 +45,15 @@ namespace TNS.Ares.Domain.LS {
         /// Constructor
         /// </summary>
         /// <param name="familyId">Id used to assemble a group of modules tasks</param>
+        /// <param name="familyName">Name used to assemble a group of modules tasks</param>
         /// <param name="monitorPort">Port used by the link watcher to monitor the clients</param>
         /// <param name="productName">Name that appears in the link console</param>
         /// <param name="directoryName">Used to locate the configuration files</param>
         /// <param name="moduleDescriptionList">The list of modules that the client can treat</param>
         /// <param name="maxAvailableSlots">Max available slots</param>
-        public LsClientConfiguration(int familyId, int monitorPort, string productName, string directoryName, List<ModuleDescription> moduleDescriptionList, int maxAvailableSlots) {
+        public LsClientConfiguration(int familyId, string familyName, int monitorPort, string productName, string directoryName, List<ModuleDescription> moduleDescriptionList, int maxAvailableSlots) {
             _familyId = familyId;
+            _familyName = familyName;
             _monitorPort = monitorPort;
             _productName = productName;
             _directoryName = directoryName;
@@ -62,6 +68,12 @@ namespace TNS.Ares.Domain.LS {
         /// </summary>
         public Int32 FamilyId {
             get { return (_familyId); }
+        }
+        /// <summary>
+        /// Get Name used to assemble a group of modules tasks
+        /// </summary>
+        public string FamilyName {
+            get { return (_familyName); }
         }
         /// <summary>
         /// Gets Monitor Port (used by the link watcher to monitor the clients)
