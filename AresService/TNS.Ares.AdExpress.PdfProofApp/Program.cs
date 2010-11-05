@@ -30,7 +30,7 @@ namespace TNS.Ares.AdExpress.PdfProofApp
             LsClientConfiguration lsClientConfiguration = TNS.Ares.Domain.XmlLoader.LsClientConfigurationXL.Load(new XmlReaderDataSource(configurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.LS_CLIENT_CONFIGURATION_FILENAME));
 
 
-            ShouShell shell = new ShouShell(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, lsClientConfiguration.ModuleDescriptionList, lsClientConfiguration.DirectoryName);
+            ShouShell shell = new ShouShell(lsClientConfiguration, lsClientConfiguration.DirectoryName);
             shell.StartMonitorServer(lsClientConfiguration.MonitorPort);
             Console.WriteLine("Ares XlsStats treatment service");
             Console.ReadLine();

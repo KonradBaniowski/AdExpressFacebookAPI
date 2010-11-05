@@ -31,7 +31,7 @@ namespace TNS.Ares.AdExpress.XlsChronoApp
             LsClientConfiguration lsClientConfiguration = TNS.Ares.Domain.XmlLoader.LsClientConfigurationXL.Load(new XmlReaderDataSource(configurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.LS_CLIENT_CONFIGURATION_FILENAME));
 
 
-            SatetShell shell = new SatetShell(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, lsClientConfiguration.ModuleDescriptionList, lsClientConfiguration.DirectoryName);
+            SatetShell shell = new SatetShell(lsClientConfiguration, lsClientConfiguration.DirectoryName);
             shell.StartMonitorServer(lsClientConfiguration.MonitorPort);
             Console.WriteLine("Ares XlsStats treatment service");
             Console.ReadLine();

@@ -32,7 +32,7 @@ namespace TNS.Ares.AdExpress.PdfChronoApp
             LsClientConfiguration lsClientConfiguration = TNS.Ares.Domain.XmlLoader.LsClientConfigurationXL.Load(new XmlReaderDataSource(configurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.LS_CLIENT_CONFIGURATION_FILENAME));
 
 
-            AppmShell shell = new AppmShell(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, lsClientConfiguration.ModuleDescriptionList, lsClientConfiguration.DirectoryName);
+            AppmShell shell = new AppmShell(lsClientConfiguration, lsClientConfiguration.DirectoryName);
             shell.StartMonitorServer(lsClientConfiguration.MonitorPort);
             Console.WriteLine("Ares PDF Chrono treatment service");
             Console.ReadLine();

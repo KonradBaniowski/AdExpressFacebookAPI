@@ -32,7 +32,7 @@ namespace TNS.Ares.AdExpress.PdfChronoPMApp
             LsClientConfiguration lsClientConfiguration = TNS.Ares.Domain.XmlLoader.LsClientConfigurationXL.Load(new XmlReaderDataSource(configurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.LS_CLIENT_CONFIGURATION_FILENAME));
 
 
-            MnevisShell shell = new MnevisShell(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, lsClientConfiguration.ModuleDescriptionList, lsClientConfiguration.DirectoryName);
+            MnevisShell shell = new MnevisShell(lsClientConfiguration, lsClientConfiguration.DirectoryName);
             shell.StartMonitorServer(lsClientConfiguration.MonitorPort);
             Console.WriteLine("Ares Service treatment - PDF Plan de Roulement (Mnevis)");
             Console.ReadLine();

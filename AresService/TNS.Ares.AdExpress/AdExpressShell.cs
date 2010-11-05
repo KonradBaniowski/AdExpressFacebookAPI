@@ -45,10 +45,9 @@ namespace TNS.Ares.AdExpress
         /// <param name="familyId">Family Id</param>
         /// <param name="source">DataSource</param>
         /// <param name="confFile">Path Configuration File</param>
-        public AdExpressShell(string productName, int familyId, List<ModuleDescription> moduleDescriptionList, string directoryName) :
-            base(productName, familyId, moduleDescriptionList)
+        public AdExpressShell(LsClientConfiguration lsClientConfiguration, string directoryName) :
+            base(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, lsClientConfiguration.FamilyName, directoryName, lsClientConfiguration.ModuleDescriptionList)
         {
-            this.Initialize(directoryName);
         }
         #endregion
 
@@ -56,7 +55,7 @@ namespace TNS.Ares.AdExpress
         /// <summary>
         /// Initialize
         /// </summary>
-        protected void Initialize(string directoryName) { 
+        protected override void InitializeShell(string pathConfiguration) { 
             try {
 
                 #region WebApplicationParameters
@@ -193,7 +192,9 @@ namespace TNS.Ares.AdExpress
                 }
                 #endregion
 
-                this._confFile = WebApplicationParameters.ConfigurationDirectoryRoot + directoryName;
+                this._confFile = WebApplicationParameters.ConfigurationDirectoryRoot + pathConfiguration;
+
+                base.InitializeShell(pathConfiguration);
             }
             catch (Exception e) {
                 this.sendEmailError("Initialization Error in Shell in Initialize(string directoryName)", e);
@@ -203,7 +204,19 @@ namespace TNS.Ares.AdExpress
         #endregion
 
         #region Plugin event callbacks
-
+        /// <summary>
+        /// On send Report
+        /// </summary>
+        /// <param name="reportTitle">Report Title</param>
+        /// <param name="duration">Duration Traitment</param>
+        /// <param name="endExecutionDateTime">End Execution Traitment</param>
+        /// <param name="reportCore">Report Core</param>
+        /// <param name="mailList">Mail List</param>
+        /// <param name="errorList">Error List</param>
+        /// <param name="from">From</param>
+        /// <param name="mailServer">Mail Server</param>
+        /// <param name="mailPort">%Mail Port</param>
+        /// <param name="navSessionId">Task Id</param>
         protected void t_OnSendReport(string reportTitle, TimeSpan duration, DateTime endExecutionDateTime, string reportCore, ArrayList mailList, ArrayList errorList, string from, string mailServer, int mailPort, long navSessionId)
         {
             ReportingSystem reportingSystem = new ReportingSystem(reportTitle, duration, endExecutionDateTime, reportCore, mailList, errorList, from, mailServer, mailPort, navSessionId);

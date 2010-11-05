@@ -58,7 +58,7 @@ namespace TNS.Ares.AdExpress.XlsStatsSrv
                 LsClientConfiguration lsClientConfiguration = TNS.Ares.Domain.XmlLoader.LsClientConfigurationXL.Load(new XmlReaderDataSource(configurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.LS_CLIENT_CONFIGURATION_FILENAME));
 
 
-                _currentShell = new XlsStatsShell(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, lsClientConfiguration.ModuleDescriptionList, lsClientConfiguration.DirectoryName);
+                _currentShell = new XlsStatsShell(lsClientConfiguration, lsClientConfiguration.DirectoryName);
                 _currentShell.StartMonitorServer(lsClientConfiguration.MonitorPort);
 
                 Thread.Sleep(Timeout.Infinite);

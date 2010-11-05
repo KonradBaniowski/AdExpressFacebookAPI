@@ -63,7 +63,7 @@ namespace TNS.Ares.AdExpress.XlsChronoSrv
                 LsClientConfiguration lsClientConfiguration = TNS.Ares.Domain.XmlLoader.LsClientConfigurationXL.Load(new XmlReaderDataSource(configurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.LS_CLIENT_CONFIGURATION_FILENAME));
 
 
-                _currentShell = new SatetShell(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, lsClientConfiguration.ModuleDescriptionList, lsClientConfiguration.DirectoryName);
+                _currentShell = new SatetShell(lsClientConfiguration, lsClientConfiguration.DirectoryName);
                 _currentShell.StartMonitorServer(lsClientConfiguration.MonitorPort);
 
                 Thread.Sleep(Timeout.Infinite);

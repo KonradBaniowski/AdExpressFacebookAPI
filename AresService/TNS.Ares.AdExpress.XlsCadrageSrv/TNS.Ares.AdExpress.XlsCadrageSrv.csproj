@@ -89,6 +89,18 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Classification.DAL.Default\TNS.AdExpressI.Classification.DAL.Default.csproj">
+      <Project>{28311011-B4C8-47F0-97EB-B94EE8F99900}</Project>
+      <Name>TNS.AdExpressI.Classification.DAL.Default</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Insertions.DAL.Default\TNS.AdExpressI.Insertions.DAL.Default.csproj">
+      <Project>{04D00ADF-5026-4790-9D76-8B9F6F0B6F47}</Project>
+      <Name>TNS.AdExpressI.Insertions.DAL.Default</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Insertions.Default\TNS.AdExpressI.Insertions.Default.csproj">
+      <Project>{DEA1A6A0-32D0-4624-B216-A95B13070078}</Project>
+      <Name>TNS.AdExpressI.Insertions.Default</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.Ares.Constantes\TNS.Ares.Constantes.csproj">
       <Project>{303C6B21-CA16-4D7B-8EDB-E8869B2B3EC9}</Project>
       <Name>TNS.Ares.Constantes</Name>
@@ -96,6 +108,10 @@
     <ProjectReference Include="..\..\DLL\TNS.Ares.Domain\TNS.Ares.Domain.csproj">
       <Project>{255834E2-DCA3-4290-9325-FFA4291839A6}</Project>
       <Name>TNS.Ares.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.Ares.StaticNavSession.DAL.Default\TNS.Ares.StaticNavSession.DAL.Default.csproj">
+      <Project>{5D4C60A4-D7D0-4725-9BA8-57EF44677BC4}</Project>
+      <Name>TNS.Ares.StaticNavSession.DAL.Default</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.Ares.AdExpress.XlsCadrage\TNS.Ares.AdExpress.XlsCadrage.csproj">
       <Project>{4C60E4FD-3D97-4781-BE13-DF189FECB049}</Project>
@@ -126,7 +142,23 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>mkdir Bin
-copy TNS.AdExpressI.Insertions.dll Bin</PostBuildEvent>
+    <PostBuildEvent>rmdir /S /Q "$(TargetDir)Bin\"
+mkdir "$(TargetDir)Bin\"
+copy "$(TargetDir)TNS.Ares.StaticNavSession.DAL.Default.dll" "$(TargetDir)Bin\TNS.Ares.StaticNavSession.DAL.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Insertions.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Insertions.DAL.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Insertions.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Insertions.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Classification.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Classification.DAL.Default.dll" /Y
+</PostBuildEvent>
+    <PreBuildEvent>echo ----------------------------------------------
+echo -                      Pre buid
+echo ----------------------------------------------
+echo  -- Suppression du lecteur I --
+subst i: /D
+echo  -- Obtention du répertoire où seront les librairies --
+set toto="$(TargetDir)"
+echo  -- Suppression du \ de fin; et ajout du " de fin --
+set toto=%25toto:~0,-2%25"
+echo  -- Définition d'un lecteur pointant sur le répertoire où seront les librairies --
+subst i: %25toto%25</PreBuildEvent>
   </PropertyGroup>
 </Project>

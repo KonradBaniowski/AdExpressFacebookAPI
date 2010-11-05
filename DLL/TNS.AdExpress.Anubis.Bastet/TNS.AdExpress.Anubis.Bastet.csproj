@@ -329,8 +329,12 @@
     <Content Include="Configuration\7\Plugins\bastet.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\Bastet.gif" />
-    <Content Include="Images\logoTNSMedia.gif" />
+    <Content Include="Images\Bastet.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\logoTNSMedia.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Aspose.Cells.lic">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

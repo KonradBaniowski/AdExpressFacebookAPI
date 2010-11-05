@@ -53,7 +53,7 @@ namespace TNS.Ares.AdExpress.XlsCadrageSrv
                 LsClientConfiguration lsClientConfiguration = TNS.Ares.Domain.XmlLoader.LsClientConfigurationXL.Load(new XmlReaderDataSource(configurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.LS_CLIENT_CONFIGURATION_FILENAME));
 
 
-                _currentShell = new AmsetShell(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, lsClientConfiguration.ModuleDescriptionList, lsClientConfiguration.DirectoryName);
+                _currentShell = new AmsetShell(lsClientConfiguration, lsClientConfiguration.DirectoryName);
                 _currentShell.StartMonitorServer(lsClientConfiguration.MonitorPort);
 
                 Thread.Sleep(Timeout.Infinite);

@@ -11,7 +11,7 @@
     <DirectoryRef Id="INSTALLDIR" FileSource="PdfSectorielleFiles.wxs"/>
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="INSTALLDIR" Name="Pdf Sectorielle Srv (Hotep)">
+        <Directory Id="INSTALLDIR" Name="Pdf Sectorielle Srv Hotep">
           <Component Id="ProductComponent" Guid="40226a04-17c0-45fc-8fb9-0f989760956b">
             <File Id="HotepPrgFile" Name="$(var.TNS.Ares.AdExpress.PdfSectorielleSrv.TargetFileName)" Source="$(var.TNS.Ares.AdExpress.PdfSectorielleSrv.TargetPath)" DiskId="1" KeyPath="yes" />
             <!-- Service Installation -->
@@ -23,7 +23,7 @@
       </Directory>
     </Directory>
 
-    <Feature Id="ProductFeature" Title="Pdf Sectorielle Srv (Hotep)" Level="1">
+    <Feature Id="ProductFeature" Title="Pdf Sectorielle Srv Hotep" Level="1">
       <ComponentRef Id="ProductComponent" />
       <!-- link to AlertQuotaFiles.wxs component-->
       <ComponentGroupRef Id="HotepPRG1"/>

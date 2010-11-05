@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="f38b1d4f-43bd-412f-a391-a2d8a6f24273" Name="Kantar AdExpress: PdfPMSrv Myisis" Language="1033" Version="1.0.0.0" Manufacturer="Kantar_AdExpress_PdfPMSrv" UpgradeCode="6c9606bf-e1bd-42f0-869c-5cdfe83f6b93">
+  <Product Id="f38b1d4f-43bd-412f-a391-a2d8a6f24273" Name="Kantar AdExpress - PdfPMSrv Myisis" Language="1033" Version="1.0.0.0" Manufacturer="Kantar_AdExpress_PdfPMSrv" UpgradeCode="6c9606bf-e1bd-42f0-869c-5cdfe83f6b93">
     <Package InstallerVersion="200" Compressed="yes" />
     
     <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />

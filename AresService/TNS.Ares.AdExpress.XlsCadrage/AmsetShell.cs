@@ -34,8 +34,8 @@ namespace TNS.Ares.AdExpress.XlsCadrage
         /// <param name="familyId">Family Id</param>
         /// <param name="source">DataSource</param>
         /// <param name="confFile">Path Configuration File</param>
-        public AmsetShell(string productName, int familyId, List<ModuleDescription> moduleDescriptionList, string directoryName) :
-            base(productName, familyId, moduleDescriptionList, directoryName)
+        public AmsetShell(LsClientConfiguration lsClientConfiguration, string directoryName) :
+            base(lsClientConfiguration, directoryName)
         {
         }
         #endregion

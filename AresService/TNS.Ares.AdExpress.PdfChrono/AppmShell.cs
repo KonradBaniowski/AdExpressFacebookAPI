@@ -33,8 +33,8 @@ namespace TNS.Ares.AdExpress.PdfChrono
         /// <param name="familyId">Family Id</param>
         /// <param name="source">DataSource</param>
         /// <param name="confFile">Path Configuration File</param>
-        public AppmShell(string productName, int familyId, List<ModuleDescription> moduleDescriptionList, string directoryName) :
-            base(productName, familyId, moduleDescriptionList, directoryName)
+        public AppmShell(LsClientConfiguration lsClientConfiguration, string directoryName) :
+            base(lsClientConfiguration, directoryName)
         {
         }
         #endregion
@@ -60,7 +60,7 @@ namespace TNS.Ares.AdExpress.PdfChrono
                         t.OnError += new TNS.Ares.Error(t_OnError);
                         t.OnStopWorkerJob += new TNS.Ares.StopWorkerJob(t_OnStopWorkerJob);
                         t.OnSendReport += new TNS.Ares.SendReport(t_OnSendReport);
-                        t.OnMessageAlert += new TNS.Ares.MessageAlert(t_OnMessageAlert);
+                        t.OnMessageAlert += new TNS.Ares.MessageAlert(t_OnMessage);
                         t.Treatement(this._confFile, this._source, staticNavSession);
                 }
                 else {

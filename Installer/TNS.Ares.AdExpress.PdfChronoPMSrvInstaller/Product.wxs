@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="9e0f9c9d-d486-4cc0-91ea-638304f84853" Name="Kantar AdExpress - PdfChronoPMSrv Mnevis" Language="1033" Version="1.0.0.0" Manufacturer="TNS.Ares.AdExpress.PdfChronoPMSrvInstaller" UpgradeCode="2ac823c2-cf92-4834-83b9-234403211ddc">
+		<Package InstallerVersion="200" Compressed="yes" />
+
+		<Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+    <!-- UI Initialisation-->
+    <Property Id="SRVWIXUI_INSTALLDIR" Value="INSTALLDIR" />
+    <UIRef Id="SrvWixUI_InstallDir" />
+    <!-- Add PdfChronoPMFiles.wxs directories -->
+    <DirectoryRef Id="INSTALLDIR" FileSource="PdfChronoPMFiles.wxs"/>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLDIR" Name="Pdf PM Srv Mnevis">
+          <Component Id="ProductComponent" Guid="40226a04-17c0-45fc-8fb9-0f989760956b">
+            <File Id="MnevisPrgFile" Name="$(var.TNS.Ares.AdExpress.PdfChronoPMSrv.TargetFileName)" Source="$(var.TNS.Ares.AdExpress.PdfChronoPMSrv.TargetPath)" DiskId="1" KeyPath="yes" />
+            <!-- Service Installation -->
+            <ServiceInstall Id="MyServiceInstall" DisplayName="Ares Pdf PM Srv Mnevis" Name="$(var.TNS.Ares.AdExpress.PdfChronoPMSrv.TargetFileName)" ErrorControl="normal" Start="demand" Type="ownProcess" Vital="yes" />
+            <ServiceControl Id="MyServiceControl" Name="$(var.TNS.Ares.AdExpress.PdfChronoPMSrv.TargetFileName)" Start="install" Stop="uninstall" Remove="uninstall" />
+            <!-- FIN Service Installation -->
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="ProductFeature" Title="Pdf PM Srv Mnevis" Level="1">
+      <ComponentRef Id="ProductComponent" />
+      <!-- link to AlertQuotaFiles.wxs component-->
+      <ComponentGroupRef Id="MnevisPRG1"/>
+    </Feature>
+  </Product>
+</Wix>

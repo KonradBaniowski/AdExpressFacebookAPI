@@ -38,10 +38,9 @@ namespace TNS.Ares.AdExpress.XlsStats
         /// <param name="familyId">Family Id</param>
         /// <param name="source">DataSource</param>
         /// <param name="confFile">Path Configuration File</param>
-        public XlsStatsShell(string productName, int familyId, List<ModuleDescription> moduleDescriptionList, string directoryName) :
-            base(productName, familyId, moduleDescriptionList)
+        public XlsStatsShell(LsClientConfiguration lsClientConfiguration, string directoryName) :
+            base(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, lsClientConfiguration.FamilyName, directoryName, lsClientConfiguration.ModuleDescriptionList)
         {
-            this.Initialize(directoryName);
         }
         #endregion
 
@@ -49,7 +48,7 @@ namespace TNS.Ares.AdExpress.XlsStats
         /// <summary>
         /// Initialize
         /// </summary>
-        protected void Initialize(string directoryName) {
+        protected override void InitializeShell(string pathConfiguration) {
             try {
                 try {
                     new WebApplicationParameters();
@@ -88,7 +87,8 @@ namespace TNS.Ares.AdExpress.XlsStats
                 catch (Exception e) {
                     throw new ShelInitializationException("Impossible to load Ares PluginConfiguration", e);
                 }
-                this._confFile = WebApplicationParameters.ConfigurationDirectoryRoot + directoryName;
+                this._confFile = WebApplicationParameters.ConfigurationDirectoryRoot + pathConfiguration;
+                base.InitializeShell(pathConfiguration);
             }
             catch (Exception e) {
                 this.sendEmailError("Initialization Error in Shell in Initialize(string directoryName)", e);
@@ -116,7 +116,7 @@ namespace TNS.Ares.AdExpress.XlsStats
                     t.OnStartWork += new TNS.Ares.StartWork(t_OnStartWork);
                     t.OnError += new TNS.Ares.Error(t_OnError);
                     t.OnStopWorkerJob += new TNS.Ares.StopWorkerJob(t_OnStopWorkerJob);
-                    t.OnMessageAlert += new TNS.Ares.MessageAlert(t_OnMessageAlert);
+                    t.OnMessageAlert += new TNS.Ares.MessageAlert(t_OnMessage);
                     t.Treatement(this._confFile, this._source, staticNavSession);
                 }
                 else

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configurations>
-  <lsClientConfiguration familyId="123" monitorPort="30233" productName="Ares Service treatment - Excel Chrono (Satet)" maxAvailableSlots="1" directoryName="33\Plugins\Satet.xml">
+  <lsClientConfiguration familyId="123" familyName="AdExpress FR Treatment service" monitorPort="30233" productName="Ares Service treatment - Excel Chrono (Satet)" maxAvailableSlots="1" directoryName="33\Plugins\Satet.xml">
     <moduleDescription description="Ares Service treatment - Excel Chrono (Satet)" moduleId="5"/>
   </lsClientConfiguration>
 </configurations>
