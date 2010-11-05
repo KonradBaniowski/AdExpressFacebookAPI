@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="7ab4f905-364f-4b67-924f-12277900090e" Name="Kantar AdExpress - XlsStatsSrv Bastet" Language="1033" Version="1.0.0.0" Manufacturer="TNS.Ares.AdExpress.XlsStatsSrvInstaller" UpgradeCode="df714e98-f1ec-44bc-be28-597da4a01edc">
+		<Package InstallerVersion="200" Compressed="yes" />
+
+		<Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+    <!-- UI Initialisation-->
+    <Property Id="SRVWIXUI_INSTALLDIR" Value="INSTALLDIR" />
+    <UIRef Id="SrvWixUI_InstallDir" />
+    <!-- Add XlsStatsFiles.wxs directories -->
+    <DirectoryRef Id="INSTALLDIR" FileSource="XlsStatsFiles.wxs"/>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLDIR" Name="Xls Stats Srv Bastet">
+          <Component Id="ProductComponent" Guid="40226a04-17c0-45fc-8fb9-0f989760956b">
+            <File Id="BastetPrgFile" Name="$(var.TNS.Ares.AdExpress.XlsStatsSrv.TargetFileName)" Source="$(var.TNS.Ares.AdExpress.XlsStatsSrv.TargetPath)" DiskId="1" KeyPath="yes" />
+            <!-- Service Installation -->
+            <ServiceInstall Id="MyServiceInstall" DisplayName="Ares Xls Stats Srv Bastet" Name="$(var.TNS.Ares.AdExpress.XlsStatsSrv.TargetFileName)" ErrorControl="normal" Start="demand" Type="ownProcess" Vital="yes" />
+            <ServiceControl Id="MyServiceControl" Name="$(var.TNS.Ares.AdExpress.XlsStatsSrv.TargetFileName)" Start="install" Stop="uninstall" Remove="uninstall" />
+            <!-- FIN Service Installation -->
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="ProductFeature" Title="Xls Stats Srv Bastet" Level="1">
+      <ComponentRef Id="ProductComponent" />
+      <!-- link to AlertQuotaFiles.wxs component-->
+      <ComponentGroupRef Id="BastetPRG1"/>
+    </Feature>
+  </Product>
+</Wix>

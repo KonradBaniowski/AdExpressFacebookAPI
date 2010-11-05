@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="b1aebb70-80af-40e9-aa2f-3c61bb59d681" Name="Kantar AdExpress - PdfProofSrv Shou" Language="1033" Version="1.0.0.0" Manufacturer="TNS.Ares.AdExpress.PdfProofSrvInstaller" UpgradeCode="d954a69e-5043-45c9-b9b1-dbb423c764d3">
+		<Package InstallerVersion="200" Compressed="yes" />
+
+		<Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+    <!-- UI Initialisation-->
+    <Property Id="SRVWIXUI_INSTALLDIR" Value="INSTALLDIR" />
+    <UIRef Id="SrvWixUI_InstallDir" />
+    <!-- Add PdfProofFiles.wxs directories -->
+    <DirectoryRef Id="INSTALLDIR" FileSource="PdfProofFiles.wxs"/>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLDIR" Name="Pdf Proof Srv Shou">
+          <Component Id="ProductComponent" Guid="40226a04-17c0-45fc-8fb9-0f989760956c">
+            <File Id="ShouPrgFile" Name="$(var.TNS.Ares.AdExpress.PdfProofSrv.TargetFileName)" Source="$(var.TNS.Ares.AdExpress.PdfProofSrv.TargetPath)" DiskId="1" KeyPath="yes" />
+            <!-- Service Installation -->
+            <ServiceInstall Id="MyServiceInstall" DisplayName="Ares Pdf Proof Srv Shou" Name="$(var.TNS.Ares.AdExpress.PdfProofSrv.TargetFileName)" ErrorControl="normal" Start="demand" Type="ownProcess" Vital="yes" />
+            <ServiceControl Id="MyServiceControl" Name="$(var.TNS.Ares.AdExpress.PdfProofSrv.TargetFileName)" Start="install" Stop="uninstall" Remove="uninstall" />
+            <!-- FIN Service Installation -->
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="ProductFeature" Title="Pdf Proof Srv Shou" Level="1">
+      <ComponentRef Id="ProductComponent" />
+      <!-- link to AlertQuotaFiles.wxs component-->
+      <ComponentGroupRef Id="ShouPRG1"/>
+    </Feature>
+  </Product>
+</Wix>
