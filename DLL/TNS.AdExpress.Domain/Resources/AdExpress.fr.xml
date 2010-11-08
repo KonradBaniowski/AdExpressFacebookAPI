@@ -2015,5 +2015,9 @@
     <item mnemonic="w2814" type="System.String">Largeur</item>
     <item mnemonic="w2815" type="System.String">Hauteur</item>
     <item mnemonic="w2816" type="System.String">!</item>
+    <!-- ********************************* -->
+    <!-- Add text for new module in France -->
+    <item mnemonic="w2817" type="System.String">Univers Agence Média</item>
+    <!-- ********************************* -->
   </items>
 </localization>
