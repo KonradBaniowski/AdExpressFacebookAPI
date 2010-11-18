@@ -2,7 +2,7 @@
 <configurations>
   <!-- Config FR (33)-->
   <aresConfigurations>
-    <lsClientConfiguration name="EasyMusic" directoryName="EasyMusic\33" familyId="124" familyName="Kantarmusic FR Requester Treatment service" monitorPort="30241" productName="EasyMusic Request treatment service">
+    <lsClientConfiguration name="EasyMusic" directoryName="EasyMusic\33" familyId="141" familyName="Kantarmusic FR Requester Treatment service" monitorPort="30241" productName="EasyMusic Request treatment service">
       <moduleDescription description="EasyMusic Ares Requester" moduleId="0"/>
       <moduleDescription description="Task EasyMusic Ares Requester in error" moduleId="2"/>
       <moduleDescription description="EasyMusic Ares Garbage" moduleId="10"/>
