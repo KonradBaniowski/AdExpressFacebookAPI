@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="b42488cb-d4b7-4858-bbbb-95a6de16dc92" Name="Kantar - Requester PixPalace" Language="1033" Version="1.0.0.0" Manufacturer="Kantar_Requester_PixPalace" UpgradeCode="0a11776a-1255-44f7-82c5-116779b2ada8">
+		<Package InstallerVersion="200" Compressed="yes" />
+
+		<Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+    
+    <Property Id="SRVWIXUI_INSTALLDIR" Value="INSTALLDIR" />
+    <UIRef Id="SrvWixUI_InstallDir" />
+    <!-- Add PdfPMFiles.wxs directories -->
+    <DirectoryRef Id="INSTALLDIR" FileSource="RequeterFiles.wxs"/>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLDIR" Name="Requester PixPalace">
+          <Component Id="ProductComponent" Guid="1685cf66-38f1-416a-8fc2-f87b5b7ca709">
+            <File Id="RequesterPrgFile" Name="$(var.TNS.Ares.RequesterPixPalaceSrv.TargetFileName)" Source="$(var.TNS.Ares.RequesterPixPalaceSrv.TargetPath)" DiskId="1" KeyPath="yes" />
+            <!-- Service Installation -->
+            <ServiceInstall Id="MyServiceInstall" DisplayName="Ares Requester PixPalace" Name="$(var.TNS.Ares.RequesterPixPalaceSrv.TargetFileName)" ErrorControl="normal" Start="demand" Type="ownProcess" Vital="yes" />
+            <ServiceControl Id="MyServiceControl" Name="$(var.TNS.Ares.RequesterPixPalaceSrv.TargetFileName)" Start="install" Stop="uninstall" Remove="uninstall" />
+            <!-- FIN Service Installation -->
+          </Component>
+        </Directory>
+			</Directory>
+		</Directory>
+
+		<Feature Id="ProductFeature" Title="Requester PixPalace" Level="1">
+			<!-- TODO: Remove the comments around this ComponentRef element and the Component above in order to add resources to this installer. -->
+      <ComponentRef Id="ProductComponent" />
+      <ComponentGroupRef Id="RequesterPRG1"/>
+		</Feature>
+	</Product>
+</Wix>
+
+
