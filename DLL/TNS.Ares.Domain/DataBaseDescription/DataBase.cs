@@ -83,7 +83,11 @@ namespace TNS.Ares.Domain.DataBaseDescription {
         /// <summary>
         /// Alert Music
         /// </summary>
-        musicAlert = 11
+        musicAlert = 11,
+        /// <summary>
+        /// Music Bipp
+        /// </summary>
+        musicBipp = 12
     } 
     #endregion
 

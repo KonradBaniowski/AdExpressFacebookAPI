@@ -20,6 +20,13 @@
         <moduleDescription description="PixPalace Requester" moduleId="5"/>
       </lsClientConfiguration>
     </aresConfigurations>
+    <aresConfigurations>
+      <lsClientConfiguration name="WcbRequester" directoryName="WCB\33" familyId="145" familyName="WCB FR Requester Treatment service" monitorPort="30299" productName="PixPalace Requester">
+        <moduleDescription description="WCB Requester" moduleId="0"/>
+        <moduleDescription description="Task WCB Ares Requester in error" moduleId="2"/>
+        <moduleDescription description="WCB Ares Garbage" moduleId="10"/>
+      </lsClientConfiguration>
+    </aresConfigurations>
   </aresConfigurations>
   
   <!-- Config SK (421) 

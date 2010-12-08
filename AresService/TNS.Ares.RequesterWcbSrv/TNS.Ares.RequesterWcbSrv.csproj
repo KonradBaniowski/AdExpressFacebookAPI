@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F77F07C9-87F4-40DF-9455-584D2E66A9AC}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{F2A792A8-A9BC-4A7D-9704-1D9300986561}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TNS.Ares.Requester</RootNamespace>
-    <AssemblyName>TNS.Ares.Requester</AssemblyName>
+    <RootNamespace>TNS.Ares.RequesterWcbSrv</RootNamespace>
+    <AssemblyName>TNS.Ares.RequesterWcbSrv</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
@@ -36,10 +36,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
     <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -63,13 +67,33 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SrvShell.cs" />
+    <Compile Include="ProjectInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ProjectInstaller.Designer.cs">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RequesterWcbSrvHandler.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RequesterWcbSrvHandler.Designer.cs">
+      <DependentUpon>RequesterWcbSrvHandler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
+      <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
+      <Name>TNS.AdExpress.Constantes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.Alert.Domain\TNS.Alert.Domain.csproj">
       <Project>{741A9674-6545-469F-8528-F96BA2DB3A74}</Project>
       <Name>TNS.Alert.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.Ares.Alerts.DAL.Default\TNS.Ares.Alerts.DAL.Default.csproj">
+      <Project>{4C001E53-0D0B-497B-8EA6-760727D4616C}</Project>
+      <Name>TNS.Ares.Alerts.DAL.Default</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.Ares.Alerts.DAL\TNS.Ares.Alerts.DAL.csproj">
       <Project>{3EDBE8FB-A516-49C9-92FC-B0B0103F7D06}</Project>
@@ -83,51 +107,35 @@
       <Project>{255834E2-DCA3-4290-9325-FFA4291839A6}</Project>
       <Name>TNS.Ares.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.Ares.StaticNavSession.DAL.Default\TNS.Ares.StaticNavSession.DAL.Default.csproj">
+      <Project>{5D4C60A4-D7D0-4725-9BA8-57EF44677BC4}</Project>
+      <Name>TNS.Ares.StaticNavSession.DAL.Default</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.Ares.StaticNavSession.DAL\TNS.Ares.StaticNavSession.DAL.csproj">
       <Project>{4762D913-FC82-42BD-840F-5BCB43E5979D}</Project>
       <Name>TNS.Ares.StaticNavSession.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.Requester\TNS.Ares.Requester.csproj">
+      <Project>{F77F07C9-87F4-40DF-9455-584D2E66A9AC}</Project>
+      <Name>TNS.Ares.Requester</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Configuration\AdExpress\33\PluginAlerteConfiguration.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Configuration\AdExpress\33\Database.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Configuration\AdExpress\33\PluginConfiguration.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Configuration\AdExpress\421\Database.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Configuration\AdExpress\421\PluginConfiguration.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Configuration\AdExpress\35\Database.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Configuration\AdExpress\35\PluginConfiguration.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Configuration\EasyMusic\33\Database.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Configuration\EasyMusic\33\PluginConfiguration.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Configuration\WCB\33\Database.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Configuration\WCB\33\PluginConfiguration.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="ProjectInstaller.resx">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Configuration\PixPalace\" />
+    <Content Include="Configuration\LinkServerParameters.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configuration\RequesterConfiguration.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -137,4 +145,18 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PreBuildEvent>echo ----------------------------------------------
+echo -                      Pre buid
+echo ----------------------------------------------
+echo  -- Suppression du lecteur I --
+subst i: /D
+echo  -- Obtention du répertoire où seront les librairies --
+set toto="$(TargetDir)"
+echo  -- Suppression du \ de fin; et ajout du " de fin --
+set toto=%25toto:~0,-2%25"
+echo  -- Définition d'un lecteur pointant sur le répertoire où seront les librairies --
+subst i: %25toto%25
+</PreBuildEvent>
+  </PropertyGroup>
 </Project>

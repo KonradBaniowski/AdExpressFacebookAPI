@@ -68,7 +68,7 @@ namespace TNS.Ares.Requester
             /// <summary>
             /// Garbage Alertes
             /// </summary>
-            garbageAlertes = 11
+            garbageAlertes = 11,
         }
         #endregion
 
@@ -571,9 +571,7 @@ namespace TNS.Ares.Requester
                     case moduleId.garbageAlertes:
                         this.Log(new LogLine(" - Starting Garbage Alertes process", eLogCategories.Information, "GarbageAlertes"));
                         GenerateGarbageAlerteTask(oTaskContext);
-                        break;
-
-                        
+                        break;                    
                     default:
                         LogLine warning = new LogLine(" - This module id is not implemented by the service", eLogCategories.Warning);
                         this.Log(warning);

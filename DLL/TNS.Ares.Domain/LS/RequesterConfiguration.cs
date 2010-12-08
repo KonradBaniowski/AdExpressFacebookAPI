@@ -13,7 +13,8 @@ namespace TNS.Ares.Domain.LS
         AdExpress,
         EasyMusic,
         PixPalace,
-        PixPalaceRequester
+        PixPalaceRequester,
+        WcbRequester
     }
 
     /// <summary>
