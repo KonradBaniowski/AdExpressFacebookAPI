@@ -1765,7 +1765,24 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Advertising Agency Selected
             /// </summary>
-            advertisingAgencySelected = 31
+            advertisingAgencySelected = 31,           
+            /// <summary>
+            /// Campaing type
+            /// </summary>
+            campaignType = 32,
+            /// <summary>
+            /// Advertisement type selection
+            /// </summary>
+            advertisementType = 33,
+            /// <summary>
+            /// Media sélectionné
+            /// </summary>
+            mediaSelected = 34,
+            /// <summary>
+            /// Selected region
+            /// </summary>
+            regionSelected = 35
+
 		}
 	}
 
