@@ -62,6 +62,14 @@ namespace TNS.Ares.Domain.LS {
         /// easyMusicPdf Plugin
         /// </summary>
         easyMusicPdf = 31,
+        /// <summary>
+        /// wcbExcel Plugin
+        /// </summary>
+        wcbExcel = 40,
+        /// <summary>
+        /// wcbPdf Plugin
+        /// </summary>
+        wcbPdf = 41,
     }
     #endregion
 
