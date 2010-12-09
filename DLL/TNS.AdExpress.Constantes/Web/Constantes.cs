@@ -917,7 +917,11 @@ namespace TNS.AdExpress.Constantes.Web{
                 /// <summary>
                 /// Tableau détaillé par Régie / Catégorie
                 /// </summary>
-                mediaSellerCategory
+                mediaSellerCategory,
+                /// <summary>
+                /// Table detailed by Region/ Vehicle
+                /// </summary>
+                regionMedia
 			}
 
 	
@@ -1757,7 +1761,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Evaliant auto promo
             /// </summary>
-            isAutoPromo = 30
+            isAutoPromo = 30,
+            /// <summary>
+            /// Advertising Agency Selected
+            /// </summary>
+            advertisingAgencySelected = 31
 		}
 	}
 
