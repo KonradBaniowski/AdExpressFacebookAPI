@@ -2019,5 +2019,8 @@
     <!-- Add text for new module in France -->
     <item mnemonic="w2817" type="System.String">Univers Agence Média</item>
     <!-- ********************************* -->
+    <!-- Unit "Quantity" used in Russia -->
+    <item mnemonic="w2818" type="System.String">!</item>
+    <!-- ********************************* -->
   </items>
 </localization>
