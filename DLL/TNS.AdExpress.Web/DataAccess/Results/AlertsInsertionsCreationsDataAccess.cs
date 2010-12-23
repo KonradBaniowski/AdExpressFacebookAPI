@@ -300,7 +300,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", format"
                         + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()
 						+", color"
-                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[UnitsInformation.DefaultCurrency].DatabaseField + " as " + UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()
 						+", location"
 						+", "+prefixeMediaPlanTable+".visual "
 						+", "+prefixeMediaPlanTable+".id_advertisement"
@@ -326,7 +326,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", "+prefixeMediaPlanTable+".rank_wap"
 						+", "+prefixeMediaPlanTable+".duration_com_break_wap"
 						+", "+prefixeMediaPlanTable+".number_spot_com_break_wap"
-                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[UnitsInformation.DefaultCurrency].DatabaseField + " as " + UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()
 						+", "+prefixeMediaPlanTable+".id_cobranding_advertiser"
 						+", "+prefixeMediaPlanTable+".id_slogan"
 						+", vehicle,"+prefixeMediaPlanTable+".id_category,category,"+prefixeMediaPlanTable+".id_media,media ,interest_center,media_seller,"+prefixeMediaPlanTable+".id_slogan";
@@ -344,7 +344,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", "+prefixeMediaPlanTable+".id_rank"
 						+", "+prefixeMediaPlanTable+".duration_commercial_break"
 						+", "+prefixeMediaPlanTable+".number_message_commercial_brea"
-                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[UnitsInformation.DefaultCurrency].DatabaseField + " as " + UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()
 						+", "+prefixeMediaPlanTable+".id_commercial_break"
 						+", "+prefixeMediaPlanTable+".id_slogan"
 						+", vehicle,"+prefixeMediaPlanTable+".id_category,category,"+prefixeMediaPlanTable+".id_media,media ,interest_center,media_seller,"+prefixeMediaPlanTable+".id_slogan";
@@ -362,7 +362,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", "+prefixeMediaPlanTable+".type_sale"
 						+", "+prefixeMediaPlanTable+".poster_network"
 						+", "+DbTables.AGGLOMERATION_PREFIXE+".agglomeration"
-                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                        + ", " + prefixeMediaPlanTable + "." + UnitsInformation.List[UnitsInformation.DefaultCurrency].DatabaseField + " as " + UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()
 					    +", vehicle,"+prefixeMediaPlanTable+".id_category,category,"+prefixeMediaPlanTable+".id_media,media ,interest_center,media_seller,"+prefixeMediaPlanTable+".id_slogan";
 					return sql;
 				case DBClassificationConstantes.Vehicles.names.adnettrack:

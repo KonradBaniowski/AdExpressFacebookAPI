@@ -277,7 +277,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 				mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
 				//listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
 				listProductHap = GetExcludeProducts(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
-                euroFieldNameSumWithAlias = "sum(" + UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.euro].DatabaseField + ") as " + UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.euro].Id.ToString();
+                euroFieldNameSumWithAlias = "sum(" + UnitsInformation.List[UnitsInformation.DefaultCurrency].DatabaseField + ") as " + UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString();
                 insertionFieldNameSumWithAlias = "sum(" + UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].DatabaseField + ") as " + UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].Id.ToString();
 			}
 			catch (System.Exception err) {
@@ -306,7 +306,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 					string[] value1 = null;
 					foreach (DataRow current in ds.Tables[0].Rows) {
 						value1 = new string[2];
-                        value1[0] = current[UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.euro].Id.ToString()].ToString();
+                        value1[0] = current[UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()].ToString();
                         value1[1] = current[UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].Id.ToString()].ToString();
 						htInvestment.Add(current["date1"], value1);
 					}

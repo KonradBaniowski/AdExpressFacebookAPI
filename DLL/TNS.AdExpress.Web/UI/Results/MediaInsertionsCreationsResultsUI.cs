@@ -34,6 +34,7 @@ using FrameWorkResults=TNS.AdExpress.Constantes.FrameWork.Results;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Units;
 #endregion
 
 namespace TNS.AdExpress.Web.UI.Results{
@@ -689,6 +690,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 							oldDate = "";
 							 first = true;
 							 classe="";
+                             UnitInformation defaultCurrency = UnitsInformation.List[UnitsInformation.DefaultCurrency];
 
 							HtmlTxt.Append("<tr>");
 							HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(869,webSession.SiteLanguage)+"</td>");
@@ -709,7 +711,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 							HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(865,webSession.SiteLanguage)+"</td>");
 							HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(866,webSession.SiteLanguage)+"</td>");
 							HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(867,webSession.SiteLanguage)+"</td>");
-							HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(868,webSession.SiteLanguage)+"</td>");					
+                            HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(471, webSession.SiteLanguage) + " (" + defaultCurrency.GetUnitWebText(webSession.SiteLanguage) + ")" + "</td>");
 							HtmlTxt.Append("</tr>");
 							#endregion
 
@@ -1095,6 +1097,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 							oldDate = "";
 						first = true;
 							classe="";
+                            UnitInformation defaultCurrency = UnitsInformation.List[UnitsInformation.DefaultCurrency];
 
 						HtmlTxt.Append("<tr>");
 						HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(869,webSession.SiteLanguage)+"</td>");
@@ -1116,7 +1119,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(862,webSession.SiteLanguage)+"</td>");
 						HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(863,webSession.SiteLanguage)+"</td>");
 						HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(864,webSession.SiteLanguage)+"</td>");
-						HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(868,webSession.SiteLanguage)+"</td>");					
+                        HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(471, webSession.SiteLanguage) + " (" + defaultCurrency.GetUnitWebText(webSession.SiteLanguage) + ")" + "</td>");
 						HtmlTxt.Append("</tr>");
 						#endregion
 
@@ -1483,6 +1486,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 						#region Détail du support courant
 						oldDate = "";						
 						first = true;
+                        UnitInformation defaultCurrency = UnitsInformation.List[UnitsInformation.DefaultCurrency];
                         while (i < data.GetLength(0) && data[i, 0] != null && currentMedia.CompareTo(data[i, CstWeb.OutDoorInsertionsColumnIndex.MEDIA_INDEX].ToString()) == 0) {
                             if (oldDate.CompareTo(data[i, CstWeb.OutDoorInsertionsColumnIndex.DATE_INDEX].ToString()) != 0) {
 								//nouvelle date => nouvelle entête
@@ -1530,7 +1534,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 							HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1609, webSession.SiteLanguage) + "</td><td nowrap>: " + ((data[i, CstWeb.OutDoorInsertionsColumnIndex.TYPE_SALE_INDEX] != null) ? Convertion.ToHtmlString(TNS.AdExpress.Web.Functions.SQLGenerator.SaleTypeOutdoor(data[i, CstWeb.OutDoorInsertionsColumnIndex.TYPE_SALE_INDEX].ToString(), webSession.SiteLanguage)) : "") + "</td></tr>");
 							HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1611, webSession.SiteLanguage) + "</td><td nowrap>: " + ((data[i, CstWeb.OutDoorInsertionsColumnIndex.POSTER_NETWORK_INDEX] != null) ? Convertion.ToHtmlString(data[i, CstWeb.OutDoorInsertionsColumnIndex.POSTER_NETWORK_INDEX].ToString()) : "") + "</td></tr>");
 							HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1660, webSession.SiteLanguage) + "</td><td nowrap>: " + ((data[i, CstWeb.OutDoorInsertionsColumnIndex.AGGLOMERATION_INDEX] != null) ? data[i, CstWeb.OutDoorInsertionsColumnIndex.AGGLOMERATION_INDEX].ToString() : "") + "</td></tr>");
-							HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(868, webSession.SiteLanguage) + "</td><td nowrap> : " + ((data[i, CstWeb.OutDoorInsertionsColumnIndex.EXPENDITURE_INDEX] != null) ? data[i, CstWeb.OutDoorInsertionsColumnIndex.EXPENDITURE_INDEX].ToString() : "") + "</td></tr>");
+                            HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(471, webSession.SiteLanguage) + " (" + defaultCurrency.GetUnitWebText(webSession.SiteLanguage) + ")" + "</td><td nowrap> : " + ((data[i, CstWeb.OutDoorInsertionsColumnIndex.EXPENDITURE_INDEX] != null) ? data[i, CstWeb.OutDoorInsertionsColumnIndex.EXPENDITURE_INDEX].ToString() : "") + "</td></tr>");
 							HtmlTxt.Append("</TABLE></td>");
 
 							HtmlTxt.Append("</tr></TABLE></td>");
@@ -1846,6 +1850,7 @@ namespace TNS.AdExpress.Web.UI.Results{
                         #region Détail du support courant
                         oldDate = "";
                         first = true;
+                        UnitInformation defaultCurrency = UnitsInformation.List[UnitsInformation.DefaultCurrency];
                         while (i < data.GetLength(0) && data[i, 0] != null && currentMedia.CompareTo(data[i, CstWeb.InStoreInsertionsColumnIndex.MEDIA_INDEX].ToString()) == 0) {
                             if (oldDate.CompareTo(data[i, CstWeb.InStoreInsertionsColumnIndex.DATE_INDEX].ToString()) != 0) {
                                 //nouvelle date => nouvelle entête
@@ -1893,7 +1898,7 @@ namespace TNS.AdExpress.Web.UI.Results{
                             HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1609, webSession.SiteLanguage) + "</td><td nowrap>: " + ((data[i, CstWeb.InStoreInsertionsColumnIndex.TYPE_SALE_INDEX] != null) ? Convertion.ToHtmlString(TNS.AdExpress.Web.Functions.SQLGenerator.SaleTypeOutdoor(data[i, CstWeb.InStoreInsertionsColumnIndex.TYPE_SALE_INDEX].ToString(), webSession.SiteLanguage)) : "") + "</td></tr>");
                             HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1611, webSession.SiteLanguage) + "</td><td nowrap>: " + ((data[i, CstWeb.InStoreInsertionsColumnIndex.POSTER_NETWORK_INDEX] != null) ? Convertion.ToHtmlString(data[i, CstWeb.InStoreInsertionsColumnIndex.POSTER_NETWORK_INDEX].ToString()) : "") + "</td></tr>");
                             HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(1660, webSession.SiteLanguage) + "</td><td nowrap>: " + ((data[i, CstWeb.InStoreInsertionsColumnIndex.AGGLOMERATION_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.AGGLOMERATION_INDEX].ToString() : "") + "</td></tr>");
-                            HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(868, webSession.SiteLanguage) + "</td><td nowrap> : " + ((data[i, CstWeb.InStoreInsertionsColumnIndex.EXPENDITURE_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.EXPENDITURE_INDEX].ToString() : "") + "</td></tr>");
+                            HtmlTxt.Append("<tr valign=\"top\" nowrap><td nowrap>&nbsp;" + GestionWeb.GetWebWord(471, webSession.SiteLanguage) + " (" + defaultCurrency.GetUnitWebText(webSession.SiteLanguage) + ")" + "</td><td nowrap> : " + ((data[i, CstWeb.InStoreInsertionsColumnIndex.EXPENDITURE_INDEX] != null) ? data[i, CstWeb.InStoreInsertionsColumnIndex.EXPENDITURE_INDEX].ToString() : "") + "</td></tr>");
                             HtmlTxt.Append("</TABLE></td>");
 
                             HtmlTxt.Append("</tr></TABLE></td>");
@@ -2708,6 +2713,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			int j=0;
 			bool first = true;
 			string classe="";
+            UnitInformation defaultCurrency = UnitsInformation.List[UnitsInformation.DefaultCurrency];
 			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
 			#region Paramètres du tableau
@@ -2857,7 +2863,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(865,webSession.SiteLanguage).Replace("<br>"," ")+"</td>");
 					HtmlTxt.Append("<td class=\"p2\" lign=\"center\" nowrap>"+GestionWeb.GetWebWord(866,webSession.SiteLanguage).Replace("<br>"," ")+"</td>");
 					HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(867,webSession.SiteLanguage).Replace("<br>"," ")+"</td>");
-					HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(868,webSession.SiteLanguage)+"</td>");					
+                    HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(471, webSession.SiteLanguage) + " (" + defaultCurrency.GetUnitWebText(webSession.SiteLanguage) + ")" + "</td>");
 					HtmlTxt.Append("</tr>");
 				}
 					#endregion
@@ -2939,6 +2945,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			int i = 0;			
 			string classe="";
 			int j=0;
+            UnitInformation defaultCurrency = UnitsInformation.List[UnitsInformation.DefaultCurrency];
 			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
 			#region Paramètres du tableau
@@ -3083,7 +3090,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 					HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(862,webSession.SiteLanguage)+"</td>");
 					HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(863,webSession.SiteLanguage).Replace("<br>"," ")+"</td>");
 					HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(864,webSession.SiteLanguage).Replace("<br>"," ")+"</td>");
-					HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(868,webSession.SiteLanguage)+"</td>");					
+                    HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(471, webSession.SiteLanguage) + " (" + defaultCurrency.GetUnitWebText(webSession.SiteLanguage) + ")" + "</td>");
 					HtmlTxt.Append("</tr>");
 				}
 					#endregion
@@ -3178,6 +3185,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			int j=0;
 			bool first = true;
 			string classe="";
+            UnitInformation defaultCurrency = UnitsInformation.List[UnitsInformation.DefaultCurrency];
 			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
 			#region Paramètres du tableau
@@ -3323,10 +3331,10 @@ namespace TNS.AdExpress.Web.UI.Results{
 						HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(1420,webSession.SiteLanguage)+"</td>");
 						HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+Convertion.ToHtmlString(GestionWeb.GetWebWord(1609,webSession.SiteLanguage))+"</td>");
 						HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+Convertion.ToHtmlString(GestionWeb.GetWebWord(1611,webSession.SiteLanguage))+"</td>");
-						HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(1660,webSession.SiteLanguage)+"</td>");		
-					
-						HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>"+GestionWeb.GetWebWord(868,webSession.SiteLanguage)+"</td>");											
-						HtmlTxt.Append("</tr>");
+                        HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(1660, webSession.SiteLanguage) + "</td>");
+
+                        HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(471, webSession.SiteLanguage) + " (" + defaultCurrency.GetUnitWebText(webSession.SiteLanguage) + ")" + "</td>"); 
+                        HtmlTxt.Append("</tr>");
 					}
 					#endregion
 			
@@ -3415,6 +3423,7 @@ namespace TNS.AdExpress.Web.UI.Results{
             int j = 0;
             bool first = true;
             string classe = "";
+            UnitInformation defaultCurrency = UnitsInformation.List[UnitsInformation.DefaultCurrency];
             bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
             #region Paramètres du tableau
@@ -3564,7 +3573,7 @@ namespace TNS.AdExpress.Web.UI.Results{
                     HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + Convertion.ToHtmlString(GestionWeb.GetWebWord(1611, webSession.SiteLanguage)) + "</td>");
                     HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(1660, webSession.SiteLanguage) + "</td>");
 
-                    HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(868, webSession.SiteLanguage) + "</td>");
+                    HtmlTxt.Append("<td class=\"p2\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(471, webSession.SiteLanguage) + " (" + defaultCurrency.GetUnitWebText(webSession.SiteLanguage) + ")" + "</td>");
                     HtmlTxt.Append("</tr>");
                 }
                 #endregion

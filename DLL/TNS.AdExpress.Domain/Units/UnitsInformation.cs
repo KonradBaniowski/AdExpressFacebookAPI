@@ -20,6 +20,14 @@ namespace TNS.AdExpress.Domain.Units {
     public class UnitsInformation {
 
         #region variables
+        /// <summary>
+        /// Default Currency
+        /// </summary>
+        private static CustomerSessions.Unit _defaultCurrency;
+        /// <summary>
+        /// Default K Currency
+        /// </summary>
+        private static CustomerSessions.Unit _defaultKCurrency;
 		///<summary>
 		/// Units description list
 		/// </summary>
@@ -35,6 +43,18 @@ namespace TNS.AdExpress.Domain.Units {
 		#endregion
 
 		#region Accesseurs
+        /// <summary>
+        /// Get default currency
+        /// </summary>
+        public static CustomerSessions.Unit DefaultCurrency {
+            get { return _defaultCurrency; }
+        }
+        /// <summary>
+        /// Get default K currency
+        /// </summary>
+        public static CustomerSessions.Unit DefaultKCurrency {
+            get { return _defaultKCurrency; }
+        }
         /// <summary>
         /// Get units description list
         /// </summary>
@@ -76,7 +96,7 @@ namespace TNS.AdExpress.Domain.Units {
 		/// <param name="source">Source de données</param>
 		public static void Init(IDataSource source){
             _list.Clear();
-			List<UnitInformation> units=UnitsDescriptionXL.Load(source);
+            List<UnitInformation> units = UnitsDescriptionXL.Load(source, out _defaultCurrency, out _defaultKCurrency);
             try{
                 foreach(UnitInformation currentUnit in units){
                     _list.Add(currentUnit.Id,currentUnit);   

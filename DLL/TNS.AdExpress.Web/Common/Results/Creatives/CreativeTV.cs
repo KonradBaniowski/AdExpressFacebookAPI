@@ -102,7 +102,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
         protected override void FieldInstance(DataRow row, CreativeItem item) {
             base.FieldInstance(row, item);
             CreativeTV itemTv = (CreativeTV)item;
-            itemTv.Budget = Convert.ToDecimal(row[UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()]);
+            itemTv.Budget = Convert.ToDecimal(row[UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()]);
             itemTv.MediaNb = Convert.ToInt32(row["nbsupport"]);
             itemTv.Duration = new TimeSpan(0, 0, Convert.ToInt32(row[UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()]));
             itemTv.InsertNb = Convert.ToInt32(row[UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()]);

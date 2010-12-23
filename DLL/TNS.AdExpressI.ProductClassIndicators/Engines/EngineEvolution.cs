@@ -29,6 +29,7 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpressI.ProductClassIndicators.DAL;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpressI.ProductClassIndicators.Engines
 {
@@ -313,6 +314,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             string periodLabel = string.Format("{0}-{1}",FctUtilities.Dates.DateToString( _periodBegin.Date ,_session.SiteLanguage), FctUtilities.Dates.DateToString(_periodEnd.Date,_session.SiteLanguage));
             long last = tab.GetLongLength(0) - 1;
             IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+            UnitInformation defaultKCurrency = UnitsInformation.List[UnitsInformation.DefaultKCurrency];
 
             #region No Data
             if (tab.GetLongLength(0) == 0)
@@ -407,7 +409,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\" align=\"center\">{1}<br>{2}</td>", cssHeader, GestionWeb.GetWebWord(1210, _session.SiteLanguage), periodLabel);
             }
-            t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1170, _session.SiteLanguage));
+            t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1401, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")");
             t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1212, _session.SiteLanguage));
             t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1213, _session.SiteLanguage));
             #endregion
@@ -423,7 +425,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\" align=\"center\">{1}<br>{2}</td>", cssHeader, GestionWeb.GetWebWord(1211, _session.SiteLanguage), periodLabel);
             }
-            t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1170, _session.SiteLanguage));
+            t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1401, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")");
             t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1212, _session.SiteLanguage));
             t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1213, _session.SiteLanguage));
             #endregion

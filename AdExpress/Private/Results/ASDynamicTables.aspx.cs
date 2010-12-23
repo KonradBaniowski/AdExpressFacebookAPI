@@ -31,6 +31,7 @@ using TNS.AdExpressI.ProductClassReports;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Units;
 #endregion
 
 namespace AdExpress{
@@ -91,8 +92,8 @@ namespace AdExpress{
 		public ASDynamicTables():base(){			
 			_webSession.CurrentModule = WebConstantes.Module.Name.TABLEAU_DYNAMIQUE;
 			_webSession.CurrentTab = 0;
-			// On réinitialise en KEuro car d'anciennes sessions peuvent être en Euro
-			_webSession.Unit = WebConstantes.CustomerSessions.Unit.kEuro;
+			// On réinitialise en KCurrency(keuro) car d'anciennes sessions peuvent être en Currency (euro)
+            _webSession.Unit = UnitsInformation.DefaultKCurrency;
 		}
 		#endregion
 

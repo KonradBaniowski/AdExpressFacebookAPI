@@ -23,14 +23,17 @@ namespace TNS.AdExpress.Domain.XmlLoader {
         /// Load unit description list
         /// </summary>
         /// <param name="source">source</param>
+        /// <param name="defaultCurrency">Default currency</param>
+        /// <param name="defaultKCurrency">Default k currency</param>
         /// <returns>flag list</returns>
-        public static List<UnitInformation> Load(IDataSource source) {
-
+        public static List<UnitInformation> Load(IDataSource source,out CustomerSessions.Unit defaultCurrency,out CustomerSessions.Unit defaultKCurrency) {
+            
             #region Variables
             List<UnitInformation> list = new List<UnitInformation>();
             XmlTextReader reader = null;
             string id;
             Int64 webTextId;
+            Int64 webTextSignId;
             string baseId="";
             string databaseField="";
             string databaseMultimediaField="";
@@ -41,11 +44,26 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             #endregion
 
             try {
+                defaultCurrency = CustomerSessions.Unit.none;
+                defaultKCurrency = CustomerSessions.Unit.none;
                 source.Open();
                 reader = (XmlTextReader)source.GetSource();
                 while(reader.Read()) {
                     if(reader.NodeType == XmlNodeType.Element) {
                         switch(reader.LocalName) {
+                            case "units":
+
+                                if (reader.GetAttribute("defaultCurrency") == null || reader.GetAttribute("defaultCurrency").Length == 0)
+                                    throw (new InvalidXmlValueException("Invalid default currency parameter"));
+                                else
+                                    defaultCurrency = (CustomerSessions.Unit)Enum.Parse(typeof(CustomerSessions.Unit), reader.GetAttribute("defaultCurrency"), true);
+
+                                if (reader.GetAttribute("defaultKCurrency") == null || reader.GetAttribute("defaultKCurrency").Length == 0)
+                                    throw (new InvalidXmlValueException("Invalid default KCurrency parameter"));
+                                else
+                                    defaultKCurrency = (CustomerSessions.Unit)Enum.Parse(typeof(CustomerSessions.Unit), reader.GetAttribute("defaultKCurrency"), true);
+
+                                break;
                             case "unit":
                                 if(reader.GetAttribute("id") == null || reader.GetAttribute("id").Length == 0) throw (new InvalidXmlValueException("Invalid id parameter"));
                                 id = reader.GetAttribute("id");
@@ -53,6 +71,10 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 else baseId = reader.GetAttribute("baseId");
                                 if(reader.GetAttribute("webTextId") == null || reader.GetAttribute("webTextId").Length == 0) throw (new InvalidXmlValueException("Invalid webTextId parameter"));
                                 webTextId = Int64.Parse(reader.GetAttribute("webTextId"));
+                                if (reader.GetAttribute("webTextSignId") == null || reader.GetAttribute("webTextSignId").Length == 0)
+                                    webTextSignId = -1;
+                                else
+                                    webTextSignId = Int64.Parse(reader.GetAttribute("webTextSignId"));
                                 if (reader.GetAttribute("cellType") == null || reader.GetAttribute("cellType").Length == 0) cellType = "";
                                 else cellType = reader.GetAttribute("cellType");
                                 if(reader.GetAttribute("field") == null || reader.GetAttribute("field").Length == 0) databaseField="";
@@ -64,7 +86,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 if (reader.GetAttribute("format") == null || reader.GetAttribute("format").Length == 0) format = "";
                                 else format = reader.GetAttribute("format");
 
-                                unit = new UnitInformation(id,format,webTextId,baseId,cellType,databaseField,databaseMultimediaField,databaseTrendsField);
+                                unit = new UnitInformation(id, format, webTextId, webTextSignId, baseId, cellType, databaseField, databaseMultimediaField, databaseTrendsField);
                                 list.Add(unit);
                                 break;
                         }

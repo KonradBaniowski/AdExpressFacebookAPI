@@ -55,6 +55,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			#endregion	
 
             IFormatProvider fp = WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo;
+            UnitInformation defaultKCurrency = UnitsInformation.List[UnitsInformation.DefaultKCurrency];
 
 			t.Append("<table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 >");
 			
@@ -63,7 +64,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			t.Append("\r\n\t<tr height=\"30px\" >");
 			t.Append("<td>&nbsp;</td>");
 			//Investissement
-			t.Append("<td class=\""+P2+"\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>"+GestionWeb.GetWebWord(1206,webSession.SiteLanguage)+"</td>");
+            t.Append("<td class=\"" + P2 + "\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>" + GestionWeb.GetWebWord(1246, webSession.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(webSession.SiteLanguage) + ")</td>");
 
 			switch(vehicleName){
 				case DBClassificationConstantes.Vehicles.names.press:
@@ -128,13 +129,13 @@ namespace TNS.AdExpress.Web.UI.Results{
 				t.Append("<td align=\"left\" class=\""+L1+"\" nowrap>"+GestionWeb.GetWebWord(805,webSession.SiteLanguage)+"</td>");
 			
 				// Investissement
-				totalUnit= ConvertUnitValueAndPdmToString(tab[FrameWorkConstantes.Tendencies.TOTAL_LINE,FrameWorkConstantes.Tendencies.INVEST_N1], WebConstantes.CustomerSessions.Unit.kEuro,webSession.PDM, fp);
+                totalUnit = ConvertUnitValueAndPdmToString(tab[FrameWorkConstantes.Tendencies.TOTAL_LINE, FrameWorkConstantes.Tendencies.INVEST_N1], UnitsInformation.DefaultKCurrency, webSession.PDM, fp);
 				t.Append("<td align=\"right\" class=\""+L1+"\" nowrap>"+totalUnit+"</td>");
-				totalUnit=ConvertUnitValueAndPdmToString(tab[FrameWorkConstantes.Tendencies.TOTAL_LINE,FrameWorkConstantes.Tendencies.INVEST_N], WebConstantes.CustomerSessions.Unit.kEuro,webSession.PDM, fp);
+                totalUnit = ConvertUnitValueAndPdmToString(tab[FrameWorkConstantes.Tendencies.TOTAL_LINE, FrameWorkConstantes.Tendencies.INVEST_N], UnitsInformation.DefaultKCurrency, webSession.PDM, fp);
 				t.Append("<td align=\"right\" class=\""+L1+"\" nowrap>"+totalUnit+"</td>");
 				// Evolution
 				evolPicture=Evol(tab[FrameWorkConstantes.Tendencies.TOTAL_LINE,FrameWorkConstantes.Tendencies.EVOL_INVEST],tab[FrameWorkConstantes.Tendencies.TOTAL_LINE,FrameWorkConstantes.Tendencies.INVEST_N],excel);
-				totalUnit=ConvertUnitValueAndPdmToString(tab[FrameWorkConstantes.Tendencies.TOTAL_LINE,FrameWorkConstantes.Tendencies.EVOL_INVEST],WebConstantes.CustomerSessions.Unit.kEuro,webSession.PDM, fp);
+                totalUnit = ConvertUnitValueAndPdmToString(tab[FrameWorkConstantes.Tendencies.TOTAL_LINE, FrameWorkConstantes.Tendencies.EVOL_INVEST], UnitsInformation.DefaultKCurrency, webSession.PDM, fp);
 				t.Append("<td align=\"right\" class=\""+L1+"\" nowrap>"+totalUnit + evolPicture+"</td>");
 
 				switch(vehicleName){
@@ -187,14 +188,14 @@ namespace TNS.AdExpress.Web.UI.Results{
                     t.Append("\r\n\t<tr align=\"right\" class=\"violetBackGroundV3\" onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='violetBackGroundV3';\" height=\"20px\" >");
 					
 					t.Append("<td align=\"left\" class=\""+L1+"\" nowrap>"+tab[i,FrameWorkConstantes.Tendencies.CATEGORY_INDEX]+"</td>");
-			
-					totalUnit= ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Tendencies.INVEST_N1], WebConstantes.CustomerSessions.Unit.kEuro,webSession.PDM, fp);
+
+                    totalUnit = ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Tendencies.INVEST_N1], UnitsInformation.DefaultKCurrency, webSession.PDM, fp);
 					t.Append("<td class=\""+L1+"\" nowrap>"+totalUnit+"</td>");
-					totalUnit= ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Tendencies.INVEST_N], WebConstantes.CustomerSessions.Unit.kEuro,webSession.PDM, fp);
+                    totalUnit = ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Tendencies.INVEST_N], UnitsInformation.DefaultKCurrency, webSession.PDM, fp);
 					t.Append("<td class=\""+L1+"\" nowrap>"+totalUnit+"</td>");					
 					// Evolution
 					evolPicture=Evol(tab[i,FrameWorkConstantes.Tendencies.EVOL_INVEST],tab[i,FrameWorkConstantes.Tendencies.INVEST_N],excel);
-					totalUnit= ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Tendencies.EVOL_INVEST],WebConstantes.CustomerSessions.Unit.kEuro,webSession.PDM, fp);
+                    totalUnit = ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Tendencies.EVOL_INVEST], UnitsInformation.DefaultKCurrency, webSession.PDM, fp);
 					t.Append("<td class=\""+L1+"\" nowrap>"+totalUnit + evolPicture+"</td>");
 
 					switch(vehicleName){
@@ -247,15 +248,15 @@ namespace TNS.AdExpress.Web.UI.Results{
 					t.Append("<td align=\"left\" class=\""+L2+"\" nowrap>&nbsp;&nbsp;&nbsp;"+tab[i,FrameWorkConstantes.Tendencies.MEDIA_INDEX]+"</td>");
 			
 					//totalUnit= ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Tendencies.INVEST_N1],WebConstantes.CustomerSessions.Unit.euro,webSession.PDM);
-					totalUnit= ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Tendencies.INVEST_N1], WebConstantes.CustomerSessions.Unit.kEuro,webSession.PDM, fp);
+                    totalUnit = ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Tendencies.INVEST_N1], UnitsInformation.DefaultKCurrency, webSession.PDM, fp);
 					t.Append("<td class=\""+L2+"\" nowrap>"+totalUnit+"</td>");
 					//totalUnit= ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Tendencies.INVEST_N],WebConstantes.CustomerSessions.Unit.euro,webSession.PDM);
-					totalUnit= ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Tendencies.INVEST_N], WebConstantes.CustomerSessions.Unit.kEuro,webSession.PDM, fp);
+                    totalUnit = ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Tendencies.INVEST_N], UnitsInformation.DefaultKCurrency, webSession.PDM, fp);
 					t.Append("<td class=\""+L2+"\" nowrap>"+totalUnit+"</td>");
 					// Evolution
 					evolPicture=Evol(tab[i,FrameWorkConstantes.Tendencies.EVOL_INVEST],tab[i,FrameWorkConstantes.Tendencies.INVEST_N],excel);
 					//totalUnit= ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Tendencies.EVOL_INVEST],WebConstantes.CustomerSessions.Unit.euro,true);
-					totalUnit= ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Tendencies.EVOL_INVEST],WebConstantes.CustomerSessions.Unit.kEuro,webSession.PDM, fp);
+                    totalUnit = ConvertUnitValueAndPdmToString(tab[i, FrameWorkConstantes.Tendencies.EVOL_INVEST], UnitsInformation.DefaultKCurrency, webSession.PDM, fp);
 					t.Append("<td class=\""+L2+"\" nowrap>"+totalUnit + evolPicture+"</td>");
 
 					switch(vehicleName){
@@ -340,6 +341,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			#endregion	
 
             IFormatProvider fp = (excel) ? WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfoExcel : WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo;
+            UnitInformation defaultKCurrency = UnitsInformation.List[UnitsInformation.DefaultKCurrency];
 
 			DataTable dt = TNS.AdExpress.Web.DataAccess.Results.TendenciesDataAccess.GetDataTendencies(webSession,vehicleName).Tables[0];
 			DataTable dtTotal = TNS.AdExpress.Web.DataAccess.Results.TendenciesDataAccess.GetTotalTendencies(webSession,vehicleName).Tables[0];
@@ -358,7 +360,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 			t.Append("\r\n\t<tr height=\"30px\" >");
 			t.Append("<td>&nbsp;</td>");
 			//Investissement
-            t.Append("<td class=\"" + P2 + "\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>" + GestionWeb.GetWebWord(1206, webSession.SiteLanguage) + "</td>");
+            t.Append("<td class=\"" + P2 + "\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>" + GestionWeb.GetWebWord(1246, webSession.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(webSession.SiteLanguage) + ")</td>");
 
 			switch(vehicleName){
 				case DBClassificationConstantes.Vehicles.names.press:
@@ -466,13 +468,13 @@ namespace TNS.AdExpress.Web.UI.Results{
 				t.Append("<td align=\"left\" class=\""+L1+"\" nowrap>"+GestionWeb.GetWebWord(805,webSession.SiteLanguage)+"</td>");
 			
 				// Investissement
-				totalUnit= ConvertUnitValueAndPdmToString(dtTotal.Rows[0]["expenditure_cur"], WebConstantes.CustomerSessions.Unit.kEuro,webSession.PDM, fp);
+                totalUnit = ConvertUnitValueAndPdmToString(dtTotal.Rows[0]["expenditure_cur"], UnitsInformation.DefaultKCurrency, webSession.PDM, fp);
 				t.Append("<td align=\"right\" class=\""+L1+"\" nowrap>"+totalUnit+"</td>");
-				totalUnit=ConvertUnitValueAndPdmToString(dtTotal.Rows[0]["expenditure_prev"], WebConstantes.CustomerSessions.Unit.kEuro,webSession.PDM, fp);
+                totalUnit = ConvertUnitValueAndPdmToString(dtTotal.Rows[0]["expenditure_prev"], UnitsInformation.DefaultKCurrency, webSession.PDM, fp);
 				t.Append("<td align=\"right\" class=\""+L1+"\" nowrap>"+totalUnit+"</td>");
 				// Evolution
 				evolPicture=Evol(dtTotal.Rows[0]["expenditure_evol"],dtTotal.Rows[0]["expenditure_cur"],excel);
-				totalUnit=ConvertUnitValueAndPdmToString(dtTotal.Rows[0]["expenditure_evol"],WebConstantes.CustomerSessions.Unit.kEuro,true, fp);
+                totalUnit = ConvertUnitValueAndPdmToString(dtTotal.Rows[0]["expenditure_evol"], UnitsInformation.DefaultKCurrency, true, fp);
 				t.Append("<td align=\"right\" class=\""+L1+"\" nowrap>"+totalUnit + evolPicture+"</td>");
 
 				switch(vehicleName){
@@ -538,15 +540,15 @@ namespace TNS.AdExpress.Web.UI.Results{
 					t.Append("<td align=\"left\" class=\""+L1+"\" nowrap>"+currentRow["category"]+"</td>");
 					
 					//totalUnit= ConvertUnitValueAndPdmToString(currentRow["sub_expenditure_cur"],WebConstantes.CustomerSessions.Unit.euro,webSession.PDM);
-					totalUnit= ConvertUnitValueAndPdmToString(currentRow["sub_expenditure_cur"], WebConstantes.CustomerSessions.Unit.kEuro,webSession.PDM, fp);
+                    totalUnit = ConvertUnitValueAndPdmToString(currentRow["sub_expenditure_cur"], UnitsInformation.DefaultKCurrency, webSession.PDM, fp);
 					t.Append("<td class=\""+L1+"\" nowrap>"+totalUnit+"</td>");
 					
 					//totalUnit= ConvertUnitValueAndPdmToString(currentRow["sub_expenditure_prev"],WebConstantes.CustomerSessions.Unit.euro,webSession.PDM);
-					totalUnit= ConvertUnitValueAndPdmToString(currentRow["sub_expenditure_prev"], WebConstantes.CustomerSessions.Unit.kEuro,webSession.PDM, fp);
+                    totalUnit = ConvertUnitValueAndPdmToString(currentRow["sub_expenditure_prev"], UnitsInformation.DefaultKCurrency, webSession.PDM, fp);
 					t.Append("<td class=\""+L1+"\" nowrap>"+totalUnit+"</td>");
 					
 					//totalUnit= ConvertUnitValueAndPdmToString(currentRow["sub_expenditure_evol"],WebConstantes.CustomerSessions.Unit.euro,true);
-					totalUnit= ConvertUnitValueAndPdmToString(currentRow["sub_expenditure_evol"],WebConstantes.CustomerSessions.Unit.kEuro,true, fp);
+                    totalUnit = ConvertUnitValueAndPdmToString(currentRow["sub_expenditure_evol"], UnitsInformation.DefaultKCurrency, true, fp);
 					evolPicture=Evol(currentRow["sub_expenditure_evol"],currentRow["sub_expenditure_cur"],excel);
 					t.Append("<td class=\""+L1+"\" nowrap>"+totalUnit + evolPicture+"</td>");
 					
@@ -608,15 +610,15 @@ namespace TNS.AdExpress.Web.UI.Results{
 				t.Append("<td align=\"left\" class=\""+L2+"\" nowrap>&nbsp;&nbsp;"+currentRow["media"]+"</td>");
 				
 				//totalUnit= ConvertUnitValueAndPdmToString(currentRow["expenditure_cur"],WebConstantes.CustomerSessions.Unit.euro,webSession.PDM);
-				totalUnit= ConvertUnitValueAndPdmToString(currentRow["expenditure_cur"], WebConstantes.CustomerSessions.Unit.kEuro,webSession.PDM, fp);
+                totalUnit = ConvertUnitValueAndPdmToString(currentRow["expenditure_cur"], UnitsInformation.DefaultKCurrency, webSession.PDM, fp);
 				t.Append("<td class=\""+L2+"\" nowrap>"+totalUnit+"</td>");
 					
 				//totalUnit= ConvertUnitValueAndPdmToString(currentRow["expenditure_prev"],WebConstantes.CustomerSessions.Unit.euro,webSession.PDM);
-				totalUnit= ConvertUnitValueAndPdmToString(currentRow["expenditure_prev"], WebConstantes.CustomerSessions.Unit.kEuro,webSession.PDM, fp);
+                totalUnit = ConvertUnitValueAndPdmToString(currentRow["expenditure_prev"], UnitsInformation.DefaultKCurrency, webSession.PDM, fp);
 				t.Append("<td class=\""+L2+"\" nowrap>"+totalUnit+"</td>");
 					
 				//totalUnit= ConvertUnitValueAndPdmToString(currentRow["expenditure_evol"],WebConstantes.CustomerSessions.Unit.euro,true);
-				totalUnit= ConvertUnitValueAndPdmToString(currentRow["expenditure_evol"],WebConstantes.CustomerSessions.Unit.kEuro,true, fp);
+                totalUnit = ConvertUnitValueAndPdmToString(currentRow["expenditure_evol"], UnitsInformation.DefaultKCurrency, true, fp);
 				evolPicture=Evol(currentRow["expenditure_evol"],currentRow["expenditure_cur"],excel);
 				t.Append("<td class=\""+L2+"\" nowrap>"+totalUnit + evolPicture+"</td>");
 				

@@ -24,6 +24,7 @@ using WebFunctions = TNS.AdExpress.Web.Functions;
 using CstWebCustomer = TNS.AdExpress.Constantes.Customer;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Domain.Units;
 
 namespace AdExpress.Private.Selection
 {
@@ -231,7 +232,7 @@ namespace AdExpress.Private.Selection
 							_webSession.Unit=TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.pages;
 						}
 						else{
-							_webSession.Unit=TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.euro;
+                            _webSession.Unit = UnitsInformation.DefaultCurrency;
 						}
 					}
 					// On sauvegarde la session

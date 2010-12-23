@@ -64,6 +64,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     case CstWeb.CustomerSessions.Unit.duration:
                         return string.Format(fp, f, ConvertToDuration(value));
                     case CstWeb.CustomerSessions.Unit.kEuro:
+                    case CstWeb.CustomerSessions.Unit.kpln:
                         return string.Format(fp, f, ConvertToKEuro(value));
                     case CstWeb.CustomerSessions.Unit.versionNb:
                         if (value is CellIdsNumber) return string.Format(fp, f, ((CellIdsNumber)value).Value);
@@ -73,6 +74,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     case CstWeb.CustomerSessions.Unit.spot:
                     case CstWeb.CustomerSessions.Unit.insertion:
                     case CstWeb.CustomerSessions.Unit.mmPerCol:
+                    case CstWeb.CustomerSessions.Unit.pln:
                     default:
                         return string.Format(fp, f, Convert.ToDouble(value.ToString()));
                 }
@@ -102,6 +104,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case CstWeb.CustomerSessions.Unit.duration:
                     return ConvertToDuration(value);
                 case CstWeb.CustomerSessions.Unit.kEuro:
+                case CstWeb.CustomerSessions.Unit.kpln:
                     return Math.Round(ConvertToKEuro(value));
                 case CstWeb.CustomerSessions.Unit.euro:
                 case CstWeb.CustomerSessions.Unit.grp:
@@ -109,6 +112,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case CstWeb.CustomerSessions.Unit.insertion:
                 case CstWeb.CustomerSessions.Unit.versionNb:
                 case CstWeb.CustomerSessions.Unit.mmPerCol:
+                case CstWeb.CustomerSessions.Unit.pln:
                 default:
                     return Convert.ToDouble(value);
             }
@@ -279,8 +283,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
             }
             else
             {
-                units.Add(CstWeb.CustomerSessions.Unit.kEuro);
-                units.Add(CstWeb.CustomerSessions.Unit.euro);
+                units.Add(UnitsInformation.DefaultKCurrency);
+                units.Add(UnitsInformation.DefaultCurrency);
             }
             return units;
         }

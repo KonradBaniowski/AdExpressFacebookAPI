@@ -29,6 +29,7 @@ using System.Drawing;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpressI.ProductClassIndicators.Engines;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpressI.ProductClassIndicators.Charts
 {
@@ -56,6 +57,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             base.OnPreRender(e);
 
             IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+            UnitInformation defaultKCurrency = UnitsInformation.List[UnitsInformation.DefaultKCurrency];
 
             #region Series Init
             Series series = new Series("Evolution");
@@ -264,7 +266,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             this.ChartAreas[strChartArea].AxisY2.LabelsAutoFit = false;
             this.ChartAreas[strChartArea].AxisY2.LabelStyle.Font = new Font("Arial", (float)10);
             this.ChartAreas[strChartArea].AxisY2.TitleFont = new Font("Arial", (float)10);
-            this.ChartAreas[strChartArea].AxisY2.Title = GestionWeb.GetWebWord(1217, _session.SiteLanguage);
+            this.ChartAreas[strChartArea].AxisY2.Title = GestionWeb.GetWebWord(1213, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")";
 
             #endregion					
 		

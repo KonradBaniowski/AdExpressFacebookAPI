@@ -33,6 +33,7 @@ using TNS.AdExpressI.ProductClassIndicators.DAL;
 using TNS.AdExpressI.ProductClassIndicators.Exceptions;
 using TNS.FrameWork;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpressI.ProductClassIndicators.Engines
 {
@@ -130,6 +131,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         {
 
             object[,] tab = null;
+            UnitInformation defaultKCurrency = UnitsInformation.List[UnitsInformation.DefaultKCurrency];
 
             try
             {
@@ -165,15 +167,15 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         tab[0, EVOLUTION_COLUMN_INDEX] = GestionWeb.GetWebWord(1207, _session.SiteLanguage);
                         tab[0, ECART_COLUMN_INDEX] = GestionWeb.GetWebWord(1213, _session.SiteLanguage);
                     }
-                    tab[1, 0] = GestionWeb.GetWebWord(1900, _session.SiteLanguage);
-                    tab[2, 0] = GestionWeb.GetWebWord(1901, _session.SiteLanguage);
+                    tab[1, 0] = GestionWeb.GetWebWord(1712, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ") (" + GestionWeb.GetWebWord(2790, _session.SiteLanguage) + ")";
+                    tab[2, 0] = GestionWeb.GetWebWord(1712, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ") (" + GestionWeb.GetWebWord(2791, _session.SiteLanguage) + ")";
                     tab[3, 0] = GestionWeb.GetWebWord(1903, _session.SiteLanguage);
-                    tab[4, 0] = GestionWeb.GetWebWord(1902, _session.SiteLanguage);
+                    tab[4, 0] = GestionWeb.GetWebWord(1712, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ") (" + GestionWeb.GetWebWord(2792, _session.SiteLanguage) + ")";
                     tab[5, 0] = GestionWeb.GetWebWord(1904, _session.SiteLanguage);
                     tab[6, 0] = GestionWeb.GetWebWord(1905, _session.SiteLanguage);
-                    tab[7, 0] = GestionWeb.GetWebWord(1907, _session.SiteLanguage);
+                    tab[7, 0] = GestionWeb.GetWebWord(1153, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ") " + GestionWeb.GetWebWord(2793, _session.SiteLanguage);
                     tab[8, 0] = GestionWeb.GetWebWord(1906, _session.SiteLanguage);
-                    tab[9, 0] = GestionWeb.GetWebWord(1908, _session.SiteLanguage);
+                    tab[9, 0] = GestionWeb.GetWebWord(1153, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ") " + GestionWeb.GetWebWord(2794, _session.SiteLanguage);
                     #endregion
 
                     #region Data
@@ -338,14 +340,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     case NB_PRODUCT_LINE_INDEX:
 						
                         //N
-                        t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, TOTAL_N_COLUMN_INDEX], CstUnit.euro, fp));
+                        t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, TOTAL_N_COLUMN_INDEX], UnitsInformation.DefaultCurrency, fp));
                         //N-1
                         if (_session.ComparativeStudy)
                         {
-                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, TOTAL_N1_COLUMN_INDEX], CstUnit.euro, fp));
+                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, TOTAL_N1_COLUMN_INDEX], UnitsInformation.DefaultCurrency, fp));
                             AppendEvol(t, tab, cssNb, i, fp);
                             //Difference
-                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, ECART_COLUMN_INDEX], CstUnit.euro, fp));
+                            t.AppendFormat("\r\n\t<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(tab[i, ECART_COLUMN_INDEX], UnitsInformation.DefaultCurrency, fp));
                         }
                         break;
                     case PDV_UNIV_TOTAL_MARKET_LINE_INDEX:

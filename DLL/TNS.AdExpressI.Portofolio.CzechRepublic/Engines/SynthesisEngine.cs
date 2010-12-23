@@ -100,6 +100,7 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
             #region Variables
             List<ICell> data = null;
             string investment = string.Empty;
+            UnitInformation defaultCurrency = UnitsInformation.List[UnitsInformation.DefaultCurrency];
             #endregion
 
             #region Get Data
@@ -109,9 +110,9 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
             #region Compute data
             if (investment != null && investment.Length > 0 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) {
                 data = new List<ICell>(2);
-                data.Add(new CellLabel(GestionWeb.GetWebWord(1390, _webSession.SiteLanguage)));
+                data.Add(new CellLabel(GestionWeb.GetWebWord(2787, _webSession.SiteLanguage) + " (" + defaultCurrency.GetUnitWebText(_webSession.SiteLanguage) + ")"));
                 CellEuro cE = new CellEuro(double.Parse(investment));
-                cE.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).StringFormat;
+                cE.StringFormat = UnitsInformation.Get(UnitsInformation.DefaultCurrency).StringFormat;
                 data.Add(cE);
             }
             #endregion

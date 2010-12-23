@@ -33,6 +33,7 @@ using TNS.AdExpressI.ProductClassIndicators.Engines;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.ProductClassIndicators.DAL;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Units;
 
 
 namespace TNS.AdExpressI.ProductClassIndicators.Charts
@@ -89,6 +90,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             }
 
             IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+            UnitInformation defaultKCurrency = UnitsInformation.List[UnitsInformation.DefaultKCurrency];
 
             #region Chart Design
             this.Width = new Unit("750px");
@@ -232,7 +234,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             this.ChartAreas[strChartArea].AxisY.LabelsAutoFit = false;
 
             this.ChartAreas[strChartArea].AxisY.LabelStyle.Font = new Font("Arial", (float)10);
-            this.ChartAreas[strChartArea].AxisY.Title = "" + GestionWeb.GetWebWord(1206, _session.SiteLanguage) + "";
+            this.ChartAreas[strChartArea].AxisY.Title = "" + GestionWeb.GetWebWord(1246, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")";
             this.ChartAreas[strChartArea].AxisY.TitleFont = new Font("Arial", (float)10);
             double dd = Convert.ToDouble(tab[0, EngineTop.TOTAL_N]);
             double uu = FctUtilities.Units.ConvertUnitValue(dd, _session.Unit);

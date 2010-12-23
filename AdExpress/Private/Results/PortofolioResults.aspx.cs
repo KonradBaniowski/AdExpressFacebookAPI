@@ -44,6 +44,7 @@ using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using Portofolio = TNS.AdExpressI.Portofolio;
 using Domain = TNS.AdExpress.Domain.Web.Navigation;
 using System.Reflection;
+using TNS.AdExpress.Domain.Units;
 #endregion
 
 namespace AdExpress.Private.Results{
@@ -278,10 +279,10 @@ namespace AdExpress.Private.Results{
                         _resultWebControl.ShowContainer = false;
                         //_resultWebControl.SkinID = "portofolioSynthesisResultTable"; 
                         detailProductLevel = true;
-						
-						if(_webSession.Unit ==WebConstantes.CustomerSessions.Unit.kEuro){
+
+                        if (_webSession.Unit == UnitsInformation.DefaultKCurrency) {
 							//unité en euro pour cette planche
-							_webSession.Unit=WebConstantes.CustomerSessions.Unit.euro;
+                            _webSession.Unit = UnitsInformation.DefaultCurrency;
 							_webSession.Save();
 						}
 						break;
@@ -291,9 +292,9 @@ namespace AdExpress.Private.Results{
 						ResultsOptionsWebControl1.UnitOption=false;	
 						ResultsOptionsWebControl1.Percentage=false;
 
-						if(_webSession.Unit ==WebConstantes.CustomerSessions.Unit.kEuro){
+                        if (_webSession.Unit == UnitsInformation.DefaultKCurrency) {
 							//unité en euro pour cette planche
-							_webSession.Unit=WebConstantes.CustomerSessions.Unit.euro;
+                            _webSession.Unit = UnitsInformation.DefaultCurrency;
 							_webSession.Save();
 						}
 						break;	
@@ -309,10 +310,10 @@ namespace AdExpress.Private.Results{
 							ResultsOptionsWebControl1.InsertOption=true;																	
 						}			
 						else ResultsOptionsWebControl1.InsertOption=false;
-						
-						if(_webSession.Unit ==WebConstantes.CustomerSessions.Unit.kEuro){
+
+                        if (_webSession.Unit == UnitsInformation.DefaultKCurrency) {
 							//unité en euro pour cette planche
-							_webSession.Unit=WebConstantes.CustomerSessions.Unit.euro;
+                            _webSession.Unit = UnitsInformation.DefaultCurrency;
 							_webSession.Save();
 						}
 						break;
@@ -328,9 +329,9 @@ namespace AdExpress.Private.Results{
 							_webSession.NewProduct=TNS.AdExpress.Constantes.Web.CustomerSessions.NewProduct.pige;
 						}
 
-						if(_webSession.Unit ==WebConstantes.CustomerSessions.Unit.kEuro){
+                        if (_webSession.Unit == UnitsInformation.DefaultKCurrency) {
 							//unité en euro pour cette planche
-							_webSession.Unit=WebConstantes.CustomerSessions.Unit.euro;
+                            _webSession.Unit = UnitsInformation.DefaultCurrency;
 						}
 						_webSession.CustomerLogin.ClearModulesList();
 						_webSession.Save();
@@ -365,9 +366,9 @@ namespace AdExpress.Private.Results{
 						}
 						#endregion
 
-						if(_webSession.Unit ==WebConstantes.CustomerSessions.Unit.kEuro){
+                        if (_webSession.Unit == UnitsInformation.DefaultKCurrency) {
 							//unité en euro pour cette planche
-							_webSession.Unit=WebConstantes.CustomerSessions.Unit.euro;
+                            _webSession.Unit = UnitsInformation.DefaultCurrency;
 							_webSession.Save();
 						}
 						break;

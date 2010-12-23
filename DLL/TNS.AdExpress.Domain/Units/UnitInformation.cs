@@ -8,6 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
+using System.Globalization;
 
 namespace TNS.AdExpress.Domain.Units {
     /// <summary>
@@ -24,6 +27,10 @@ namespace TNS.AdExpress.Domain.Units {
         /// Text Id
         /// </summary>
         private Int64 _webTextId;
+        /// <summary>
+        /// Text Id for unit sign (€, $, £ ...)
+        /// </summary>
+        private Int64 _webTextSignId;
         /// <summary>
         /// Parent Id
         /// </summary>
@@ -61,7 +68,7 @@ namespace TNS.AdExpress.Domain.Units {
         /// <param name="baseId">Parent Id</param>
         /// <param name="databaseField">Field name in occurencies data</param>
         /// <param name="databaseMultimediaField">Field name in aggregated data</param>
-        public UnitInformation(string id, string format,Int64 webTextId,string baseId,string cellType,string databaseField,string databaseMultimediaField,string databaseTrendsField) {
+        public UnitInformation(string id, string format, Int64 webTextId, Int64 webTextSignId, string baseId, string cellType, string databaseField, string databaseMultimediaField, string databaseTrendsField) {
             if(id==null || id.Length==0) throw (new ArgumentException("Invalid paramter unit id"));
             if (cellType != null || cellType.Length > 0) _cellType = cellType;
             if(databaseField!=null || databaseField.Length>0) _databaseField=databaseField;
@@ -72,6 +79,7 @@ namespace TNS.AdExpress.Domain.Units {
                 _strFormat = format;
             }
             _webTextId=webTextId;
+            _webTextSignId = webTextSignId;
             try {
                 _id=(CustomerSessions.Unit)Enum.Parse(typeof(CustomerSessions.Unit),id,true);
                 if(baseId!=null && baseId.Length>0) _baseId=(CustomerSessions.Unit)Enum.Parse(typeof(CustomerSessions.Unit),baseId,true);
@@ -95,6 +103,13 @@ namespace TNS.AdExpress.Domain.Units {
         /// </summary>
         public Int64 WebTextId {
             get { return (_webTextId); }
+        }
+
+        /// <summary>
+        /// Get Web Text Id for unit sign
+        /// </summary>
+        public Int64 WebTextSignId {
+            get { return (_webTextSignId); }
         }
 
         /// <summary>
@@ -198,6 +213,34 @@ namespace TNS.AdExpress.Domain.Units {
             return (" sum(" + prefixe + _databaseMultimediaField + ") as " + _id.ToString() + " ");
         }
 
+        #endregion
+
+        #region Web Texts
+        /// <summary>
+        /// Get unit web text
+        /// </summary>
+        /// <param name="siteLanguage">Site language</param>
+        /// <returns>Web text</returns>
+        public string GetUnitWebText(int siteLanguage) {
+            return GestionWeb.GetWebWord(_webTextId, siteLanguage);
+        }
+        /// <summary>
+        /// Get unit capital letter web text
+        /// </summary>
+        /// <param name="siteLanguage">Site language</param>
+        /// <returns>Web text</returns>
+        public string GetUnitCapitalLetterWebText(int siteLanguage) {
+            string unitWebText = GetUnitWebText(siteLanguage);
+            return WebApplicationParameters.AllowedLanguages[siteLanguage].CultureInfo.TextInfo.ToTitleCase(unitWebText);
+        }
+        /// <summary>
+        /// Get unit sign web text
+        /// </summary>
+        /// <param name="siteLanguage">Site language</param>
+        /// <returns>Web text</returns>
+        public string GetUnitSignWebText(int siteLanguage) {
+            return (_webTextSignId > 0) ? GestionWeb.GetWebWord(_webTextSignId, siteLanguage) : GestionWeb.GetWebWord(_webTextId, siteLanguage);
+        }
         #endregion
 
         #endregion

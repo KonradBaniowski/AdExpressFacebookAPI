@@ -37,6 +37,7 @@ using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Units;
 
 
 namespace AdExpress.Private.Results
@@ -292,7 +293,7 @@ namespace AdExpress.Private.Results
 			{
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units :
 					if(_webSession.LastReachedResultUrl.Length==0 || (!fromSearchSession))
-						_webSession.Unit =  WebConstantes.CustomerSessions.Unit.euro;
+                        _webSession.Unit = UnitsInformation.DefaultCurrency;
 					if(!fromSearchSession)
 						_webSession.DetailPeriodBeginningDate = _webSession.DetailPeriodEndDate = "";
 					setRepartitionOption(_webSession);					
@@ -316,7 +317,7 @@ namespace AdExpress.Private.Results
 					break;	
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual :
 					if(_webSession.LastReachedResultUrl.Length==0 || (!fromSearchSession))
-						_webSession.Unit =  WebConstantes.CustomerSessions.Unit.euro;
+                        _webSession.Unit = UnitsInformation.DefaultCurrency;
 					ResultsDashBoardOptionsWebControl1.UnitOption=true;				
 					setPeriodOption(false);
 					setRepartitionOption(_webSession);
@@ -340,7 +341,7 @@ namespace AdExpress.Private.Results
 					break;	
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual :	
 					if(_webSession.LastReachedResultUrl.Length==0 || (!fromSearchSession))
-						_webSession.Unit =  WebConstantes.CustomerSessions.Unit.euro;
+                        _webSession.Unit = UnitsInformation.DefaultCurrency;
 					if(!fromSearchSession)
 						_webSession.DetailPeriodBeginningDate = _webSession.DetailPeriodEndDate = "";
 					setPeriodOption(false);				
@@ -366,7 +367,7 @@ namespace AdExpress.Private.Results
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_NamedDay :					
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_TimeSlice :			
 					if(_webSession.LastReachedResultUrl.Length==0 || (!fromSearchSession))
-						_webSession.Unit =  WebConstantes.CustomerSessions.Unit.euro;
+                        _webSession.Unit = UnitsInformation.DefaultCurrency;
 					ResultsDashBoardOptionsWebControl1.MediaDetailOption=true;
 					ResultsDashBoardOptionsWebControl1.UnitOption=true;
 					setPeriodOption(true);	
@@ -388,7 +389,7 @@ namespace AdExpress.Private.Results
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_NamedDay :												
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.units_X_TimeSlice :
 					if(_webSession.LastReachedResultUrl.Length==0 || (!fromSearchSession))
-						_webSession.Unit =  WebConstantes.CustomerSessions.Unit.euro;
+                        _webSession.Unit = UnitsInformation.DefaultCurrency;
 					ResultsDashBoardOptionsWebControl1.MediaDetailOption=false;
 					ResultsDashBoardOptionsWebControl1.UnitOption=false;
 					ResultsDashBoardOptionsWebControl1.PdvOption = false;
@@ -409,7 +410,7 @@ namespace AdExpress.Private.Results
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Format :				
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_TimeSlice:					
 					if(_webSession.LastReachedResultUrl.Length==0 || (!fromSearchSession))
-						_webSession.Unit =  WebConstantes.CustomerSessions.Unit.euro;
+                        _webSession.Unit = UnitsInformation.DefaultCurrency;
 					ResultsDashBoardOptionsWebControl1.MediaDetailOption=false;
 					ResultsDashBoardOptionsWebControl1.UnitOption=true;
 					setPeriodOption(true);
@@ -429,7 +430,7 @@ namespace AdExpress.Private.Results
 					break;	
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector :
 					if(_webSession.LastReachedResultUrl.Length==0 || (!fromSearchSession))
-						_webSession.Unit =  WebConstantes.CustomerSessions.Unit.euro;
+                        _webSession.Unit = UnitsInformation.DefaultCurrency;
 					ResultsDashBoardOptionsWebControl1.UnitOption=true;				
 					setPeriodOption(true);
 					setRepartitionOption(_webSession);
@@ -474,7 +475,7 @@ namespace AdExpress.Private.Results
 						_webSession.PDV = false;
 						_webSession.PDM =true;
 						_webSession.Percentage = false;
-						_webSession.Unit =  WebConstantes.CustomerSessions.Unit.euro;
+                        _webSession.Unit = UnitsInformation.DefaultCurrency;
 						_webSession.CurrentUniversMedia = new System.Windows.Forms.TreeNode("media");
 					}
 					ResultsDashBoardOptionsWebControl1.PdmOption = true;

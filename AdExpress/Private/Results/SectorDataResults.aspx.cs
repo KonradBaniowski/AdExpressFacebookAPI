@@ -38,6 +38,7 @@ using WebBF = TNS.AdExpress.Web.BusinessFacade;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using WebExceptions = TNS.AdExpress.Web.Exceptions;
 using WebFunctions = TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Domain.Units;
 #endregion
 
 namespace AdExpress.Private.Results
@@ -244,9 +245,9 @@ namespace AdExpress.Private.Results
 				case TNS.AdExpress.Constantes.FrameWork.Results.APPM.sectorDataAffinities:
 				case TNS.AdExpress.Constantes.FrameWork.Results.APPM.sectorDataAverage:
 				case TNS.AdExpress.Constantes.FrameWork.Results.APPM.sectorDataSynthesis :
-                    if (_webSession.Unit == WebConstantes.CustomerSessions.Unit.kEuro) {
+                    if (_webSession.Unit == UnitsInformation.DefaultKCurrency) {
                         //unité en euro pour cette planche
-                        _webSession.Unit = WebConstantes.CustomerSessions.Unit.euro;
+                        _webSession.Unit = UnitsInformation.DefaultCurrency;
                         _webSession.Save();
                     }
 					_webSession.Graphics =false;

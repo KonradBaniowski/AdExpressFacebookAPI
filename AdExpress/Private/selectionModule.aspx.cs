@@ -28,6 +28,7 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Units;
 
 namespace AdExpress{
 	/// <summary>
@@ -120,7 +121,7 @@ namespace AdExpress{
 					_webSession.PeriodEndDate="";
 					_webSession.Graphics=true;
 
-                    _webSession.Unit = CstWeb.CustomerSessions.Unit.euro;
+                    _webSession.Unit = UnitsInformation.DefaultCurrency;
 
                     _webSession.PreformatedProductDetail=WebFunctions.ProductDetailLevel.GetDefault(_webSession);
 

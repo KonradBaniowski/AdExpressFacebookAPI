@@ -901,7 +901,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             string listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
             StringBuilder sql = new StringBuilder();
 
-            UnitInformation unitInformation = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.euro);
+            UnitInformation unitInformation = UnitsInformation.Get(UnitsInformation.DefaultCurrency);
             sql.AppendFormat("select sum({0}) as {1}",unitInformation.DatabaseField,unitInformation.Id.ToString());
 
             sql.AppendFormat(" from {0}{1} {2}", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql, table, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);

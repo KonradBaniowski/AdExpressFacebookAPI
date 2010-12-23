@@ -454,8 +454,47 @@ namespace TNS.AdExpress.Constantes.Web{
 		    /// <summary>
             /// Unité = Nombre d'occurences
             /// </summary>
-            occurence = 11
-
+            occurence = 11,
+            /// <summary>
+            /// Rubles
+            /// </summary>
+            rubles = 12,
+            /// <summary>
+            /// Kilo Rubles
+            /// </summary>
+            kRubles = 13,
+            /// <summary>
+            /// USD
+            /// </summary>
+            usd = 14,
+            /// <summary>
+            /// Kilo USD
+            /// </summary>
+            kusd = 15,
+            /// <summary>
+            /// pages A2
+            /// </summary>
+            pagesA2 = 16,
+            /// <summary>
+            /// Square
+            /// </summary>
+            square = 17,
+            /// <summary>
+            /// Mentions
+            /// </summary>
+            mentions = 18,
+            /// <summary>
+            /// PLN (Poland currency)
+            /// </summary>
+            pln = 19,
+            /// <summary>
+            /// KPLN (Poland currency)
+            /// </summary>
+            kpln = 20,
+            /// <summary>
+            /// Quantity
+            /// </summary>
+            quantity = 21
 		}
 		#endregion
 

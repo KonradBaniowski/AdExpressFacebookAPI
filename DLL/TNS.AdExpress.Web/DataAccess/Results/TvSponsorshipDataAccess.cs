@@ -139,8 +139,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 			if(webSession.PreformatedTable==WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units){
 
                 sql.AppendFormat(" sum({0}) as {1} ,"
-                    , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField
-                    , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString());
+                    , UnitsInformation.List[UnitsInformation.DefaultCurrency].DatabaseField
+                    , UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString());
                 sql.AppendFormat(" sum({0}) as {1} ,"
                     , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].DatabaseField
                     , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.duration].Id.ToString());

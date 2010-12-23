@@ -31,6 +31,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpressI.ProductClassIndicators.DAL;
 using TNS.FrameWork.Date;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpressI.ProductClassIndicators.Engines
 {
@@ -285,6 +286,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
 			CultureInfo cInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
 			DateTimeFormatInfo myDTFI = cInfo.DateTimeFormat;
+            UnitInformation defaultKCurrency = UnitsInformation.List[UnitsInformation.DefaultKCurrency];
 
             if (typeYear == CstResult.PalmaresRecap.typeYearSelected.currentYear) {				
 				periodDate = string.Format("{0}-{1}", FctUtilities.Dates.DateToString(_periodBegin.Date,_session.SiteLanguage), FctUtilities.Dates.DateToString(_periodEnd.Date,_session.SiteLanguage));
@@ -321,7 +323,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\"  align=\"center\">{1}<br>{2}</td>", P2, GestionWeb.GetWebWord(1184, _session.SiteLanguage), periodDate);
             }
             //Unit
-            t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\"  align=\"center\">{1}</td>", P2, GestionWeb.GetWebWord(1170, _session.SiteLanguage));
+            t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\"  align=\"center\">{1}</td>", P2, GestionWeb.GetWebWord(1401, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")");
             //SOV
             t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\"  align=\"center\">{1}</td>", P2, GestionWeb.GetWebWord(1186, _session.SiteLanguage));
             t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\"  align=\"center\">{1}</td>", P2, GestionWeb.GetWebWord(1171, _session.SiteLanguage));

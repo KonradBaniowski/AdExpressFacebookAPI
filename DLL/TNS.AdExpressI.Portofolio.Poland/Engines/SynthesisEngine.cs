@@ -53,6 +53,50 @@ namespace TNS.AdExpressI.Portofolio.Poland.Engines {
         #endregion
 
         #region Protected Methods Override
+
+        #region GetInvestment
+        /// <summary>
+        /// GetInvestment
+        /// </summary>
+        protected override string GetInvestment(DataTable dt)
+        {
+            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.pln) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.pln].Id.ToString()) && dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.pln].Id.ToString()].ToString().Length > 0)
+                return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.pln].Id.ToString()].ToString());
+            else
+                return ("0");
+        }
+        #endregion
+
+        #region ComputeDataInvestissementsTotal
+        protected override List<ICell> ComputeDataInvestissementsTotal()
+        {
+
+            #region Variables
+            List<ICell> data = null;
+            string investment = string.Empty;
+            UnitInformation defaultCurrency = UnitsInformation.List[UnitsInformation.DefaultCurrency];
+            #endregion
+
+            #region Get Data
+            investment = GetInvestment(GetDataInvestment());
+            #endregion
+
+            #region Compute data
+            if (investment != null && investment.Length > 0 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile)
+            {
+                data = new List<ICell>(2);
+                data.Add(new CellLabel(GestionWeb.GetWebWord(2787, _webSession.SiteLanguage) + " (" + defaultCurrency.GetUnitWebText(_webSession.SiteLanguage) + ")"));
+                CellEuro cE = new CellEuro(double.Parse(investment));
+                cE.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.pln).StringFormat;
+                data.Add(cE);
+            }
+            #endregion
+
+            return data;
+
+        }
+        #endregion
+
         //_displayNewProductNumber
         protected override List<ICell> ComputeDataProductNumberInTracking(bool isAlertModule) {
             return null;

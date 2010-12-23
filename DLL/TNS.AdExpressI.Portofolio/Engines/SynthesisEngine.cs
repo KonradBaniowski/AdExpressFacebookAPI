@@ -609,8 +609,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         /// GetInvestment
         /// </summary>
         protected virtual string GetInvestment(DataTable dt) {
-            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.euro) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()) && dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()].ToString().Length > 0)
-                return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()].ToString());
+            if (_vehicleInformation.AllowedUnitEnumList.Contains(UnitsInformation.DefaultCurrency) && dt.Columns.Contains(UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()) && dt.Rows[0][UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()].ToString().Length > 0)
+                return (dt.Rows[0][UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()].ToString());
             else
                 return ("0");
         }
@@ -1372,6 +1372,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #region Variables
             List<ICell> data = null;
             string investment = string.Empty;
+            UnitInformation defaultCurrency = UnitsInformation.List[UnitsInformation.DefaultCurrency];
             #endregion
 
             #region Get Data
@@ -1381,9 +1382,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #region Compute data
             if (investment != null && investment.Length > 0 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) {
                 data = new List<ICell>(2);
-                data.Add(new CellLabel(GestionWeb.GetWebWord(1390, _webSession.SiteLanguage)));
+                data.Add(new CellLabel(GestionWeb.GetWebWord(2787, _webSession.SiteLanguage) + " (" + defaultCurrency.GetUnitWebText(_webSession.SiteLanguage) + ")"));
                 CellEuro cE = new CellEuro(double.Parse(investment));
-                cE.StringFormat = UnitsInformation.Get(WebCst.CustomerSessions.Unit.euro).StringFormat;
+                cE.StringFormat = UnitsInformation.Get(UnitsInformation.DefaultCurrency).StringFormat;
                 data.Add(cE);
             }
             #endregion

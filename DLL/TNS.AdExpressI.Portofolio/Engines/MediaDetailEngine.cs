@@ -319,7 +319,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 #endregion
 
                 #region Column units
-                if (unitInformation.Id == WebCst.CustomerSessions.Unit.euro || unitInformation.Id == WebCst.CustomerSessions.Unit.kEuro)
+                if (unitInformation.Id == UnitsInformation.DefaultCurrency || unitInformation.Id == UnitsInformation.DefaultKCurrency)
                     unitWebText = GestionWeb.GetWebWord(471, _webSession.SiteLanguage) + " (" + GestionWeb.GetWebWord(unitInformation.WebTextId, _webSession.SiteLanguage) + ")";
                 else
                     unitWebText = GestionWeb.GetWebWord(unitInformation.WebTextId, _webSession.SiteLanguage);

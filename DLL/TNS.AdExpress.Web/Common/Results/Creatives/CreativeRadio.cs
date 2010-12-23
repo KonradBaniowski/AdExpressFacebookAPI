@@ -92,7 +92,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
             
             base.FieldInstance(row, item);
             CreativeRadio itemRadio = (CreativeRadio)item;
-            itemRadio.Budget = Convert.ToDecimal(row[UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()]);
+            itemRadio.Budget = Convert.ToDecimal(row[UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()]);
             itemRadio.MediaNb = Convert.ToInt32(row["nbsupport"]);
             itemRadio.Duration = new TimeSpan(0, 0, Convert.ToInt32(row[UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()]));
             itemRadio.InsertNb = Convert.ToInt32(row[UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()]);

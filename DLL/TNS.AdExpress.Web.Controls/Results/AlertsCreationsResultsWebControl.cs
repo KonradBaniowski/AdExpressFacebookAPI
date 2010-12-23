@@ -30,6 +30,7 @@ using TNS.FrameWork.Exceptions;
 using TNS.AdExpress.Web.Controls.Exceptions;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Web.Controls.Results
 {
@@ -380,6 +381,7 @@ namespace TNS.AdExpress.Web.Controls.Results
                     oldDate = "";
                     first = true;
                     classe = "";
+                    UnitInformation defaultCurrency = UnitsInformation.List[UnitsInformation.DefaultCurrency];
 
                     HtmlTxt.Append("<tr>");
                     HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(869, siteLanguage) + "</td>");
@@ -397,7 +399,7 @@ namespace TNS.AdExpress.Web.Controls.Results
                     HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(865, siteLanguage) + "</td>");
                     HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(866, siteLanguage) + "</td>");
                     HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(867, siteLanguage) + "</td>");
-                    HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(868, siteLanguage) + "</td>");
+                    HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(471, siteLanguage) + " (" + defaultCurrency.GetUnitWebText(siteLanguage) + ")" + "</td>");
                     HtmlTxt.Append("</tr>");
                     #endregion
 
@@ -598,6 +600,7 @@ namespace TNS.AdExpress.Web.Controls.Results
                     oldDate = "";
                     first = true;
                     classe = "";
+                    UnitInformation defaultCurrency = UnitsInformation.List[UnitsInformation.DefaultCurrency];
 
                     HtmlTxt.Append("<tr>");
                     HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(869, siteLanguage) + "</td>");
@@ -616,7 +619,7 @@ namespace TNS.AdExpress.Web.Controls.Results
                     HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(862, siteLanguage) + "</td>");
                     HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(863, siteLanguage) + "</td>");
                     HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(864, siteLanguage) + "</td>");
-                    HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(868, siteLanguage) + "</td>");
+                    HtmlTxt.Append("<td class=\"insertionHeader\" align=\"center\" nowrap>" + GestionWeb.GetWebWord(471, siteLanguage) + " (" + defaultCurrency.GetUnitWebText(siteLanguage) + ")" + "</td>");
                     HtmlTxt.Append("</tr>");
                     #endregion
 

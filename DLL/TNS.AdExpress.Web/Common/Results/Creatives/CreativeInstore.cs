@@ -71,7 +71,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
         protected override void FieldInstance(DataRow row, CreativeItem item) {
             base.FieldInstance(row, item);
             CreativeOutdoor itemPress = (CreativeOutdoor)item;
-            itemPress.Budget = Convert.ToDecimal(row[UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()]);
+            itemPress.Budget = Convert.ToDecimal(row[UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()]);
             itemPress.MediaNb = Convert.ToInt32(row["nbsupport"]);
             itemPress.InsertNb = Convert.ToInt32(row[UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString()]);
 

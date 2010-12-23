@@ -293,12 +293,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             if (vehicle != DBClassifCst.Vehicles.names.adnettrack)
             {
                 if (withOutPrefix)
-                    sql.AppendFormat(", {0}", UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString());
+                    sql.AppendFormat(", {0}", UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString());
                 else
                     sql.AppendFormat(", sum({0}{1}) as {2}"
                         , prefix
-                        , UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].DatabaseField
-                        , UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString());
+                        , UnitsInformation.List[UnitsInformation.DefaultCurrency].DatabaseField
+                        , UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString());
 
             }
 
@@ -871,7 +871,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             StringBuilder md = new StringBuilder();
             md.Append("select idadvertiser, advertiser, id_address, idgroup, groupe");
 			if (showProduct) md.Append(", idproduct, product");
-			md.AppendFormat(", {0}", UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString());
+            md.AppendFormat(", {0}", UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString());
             md.Append(", version, media, weight, volume, nbobjet, visuel ");
             md.Append(", format, mail_format, mail_type, standard, rapidity"); 
             md.AppendFormat(",max(decode(id_mail_content,{0},MAIL_CONTENT || ', ')) || ", DBCst.MailContent.ID_LETTRE_ACCOMP_PERSONALIS);
@@ -891,7 +891,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 
             sql.Append(") group by idadvertiser, advertiser, id_address, idgroup, groupe ");
 			if (showProduct) md.Append(", idproduct, product");
-            sql.AppendFormat(", {0}", UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString());
+            sql.AppendFormat(", {0}", UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString());
             sql.Append(", version, media, weight, volume, nbobjet, visuel ");
             sql.Append(", format, mail_format, mail_type, standard, rapidity");
 

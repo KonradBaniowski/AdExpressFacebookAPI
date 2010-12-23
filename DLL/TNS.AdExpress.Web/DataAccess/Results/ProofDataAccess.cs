@@ -181,8 +181,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 			sql.Append(DATA_PRESS_PREFIXE +".id_advertisement, ");
 			sql.AppendFormat("{0}.visual, {0}.{1} as {2}"
                 , DATA_PRESS_PREFIXE
-                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField
-                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString());
+                , UnitsInformation.List[UnitsInformation.DefaultCurrency].DatabaseField
+                , UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString());
 			#endregion
 
 			#region From
@@ -307,8 +307,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 			sql.Append(DBConstantes.Tables.DATA_PRESS_PREFIXE + ".date_cover_num,");
 			sql.AppendFormat("{0}.{1} as {2},"
                 , DBConstantes.Tables.DATA_PRESS_PREFIXE
-                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField
-                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString());			
+                , UnitsInformation.List[UnitsInformation.DefaultCurrency].DatabaseField
+                , UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString());
 			sql.Append(DBConstantes.Tables.LOCATION_PREFIXE + ".location,");			
 			sql.Append(DBConstantes.Tables.DATA_PRESS_PREFIXE+ ".media_paging,");
 			sql.AppendFormat("{0}.{1} as {2},"
@@ -383,7 +383,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 			sql.Append(DBConstantes.Tables.DATA_PRESS_PREFIXE + ".date_cover_num,");
 			sql.AppendFormat("{0}.{1},"
                 , DBConstantes.Tables.DATA_PRESS_PREFIXE
-                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField);			
+                , UnitsInformation.List[UnitsInformation.DefaultCurrency].DatabaseField);
 			sql.Append(DBConstantes.Tables.LOCATION_PREFIXE + ".location,");			
 			sql.Append(DBConstantes.Tables.DATA_PRESS_PREFIXE+ ".media_paging,");
             sql.AppendFormat("{0}.{1},"
@@ -409,7 +409,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 			sql.Append(DBConstantes.Tables.FORMAT_PREFIXE+".format,"+DBConstantes.Tables.FORMAT_PREFIXE + ".id_format,");
             sql.AppendFormat("{0}.{1},"
                 , DBConstantes.Tables.DATA_PRESS_PREFIXE
-                , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField);				
+                , UnitsInformation.List[UnitsInformation.DefaultCurrency].DatabaseField);
 			sql.Append(DBConstantes.Tables.LOCATION_PREFIXE + ".location,");			
 			sql.Append(DBConstantes.Tables.DATA_PRESS_PREFIXE+ ".media_paging,");
             sql.AppendFormat("{0}.{1},"

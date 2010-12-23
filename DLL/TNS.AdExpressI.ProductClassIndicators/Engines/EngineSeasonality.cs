@@ -34,6 +34,7 @@ using TNS.AdExpressI.ProductClassIndicators.DAL;
 using TNS.AdExpressI.ProductClassIndicators.Exceptions;
 using System.Collections;
 using TNS.FrameWork.Date;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpressI.ProductClassIndicators.Engines
 {
@@ -182,6 +183,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             StringBuilder str = new StringBuilder(50000);
 			bool showProduct = _session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 			CultureInfo cInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
+            UnitInformation defaultKCurrency = UnitsInformation.List[UnitsInformation.DefaultKCurrency];
 
             #region CSS Styles
             string cssTotalLabel = "pmtotal";
@@ -266,7 +268,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 			str.Append("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
 
 			#region headers
-			str.AppendFormat("<tr ><td colspan=2 class=\"p2\"></td><td nowrap class=\"p2\">{0} {1}</td>", GestionWeb.GetWebWord(1156,_session.SiteLanguage), _periodBegin.Year);
+            str.AppendFormat("<tr ><td colspan=2 class=\"p2\"></td><td nowrap class=\"p2\">{0} {1}</td>", defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + " (" + GestionWeb.GetWebWord(2782, _session.SiteLanguage) + ")", _periodBegin.Year);
 			//Evol (optionnelle)
 			if(_session.ComparativeStudy){
                 str.AppendFormat("<td nowrap class=\"p2\">{0} {1}/{2}</td>", GestionWeb.GetWebWord(1168,_session.SiteLanguage), _periodBegin.Year, _periodBegin.AddYears(-1).Year);
@@ -1295,7 +1297,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             }
             if (refNb != null)
             {
-                str.AppendFormat("<td nowrap class=\"{1}\">{0}</td>", FctUtilities.Units.ConvertUnitValueToString(refNb, CstUnit.euro, fp), cssNb);
+                str.AppendFormat("<td nowrap class=\"{1}\">{0}</td>", FctUtilities.Units.ConvertUnitValueToString(refNb, UnitsInformation.DefaultCurrency, fp), cssNb);
             }
             else
             {

@@ -1559,7 +1559,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                     if(currentUnit.Id != SessionCst.Unit.volume || customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT))
                         list.Items.Add(new ListItem(GestionWeb.GetWebWord(currentUnit.WebTextId, customerWebSession.SiteLanguage), currentUnit.Id.GetHashCode().ToString()));
                     else if(customerWebSession.Unit == SessionCst.Unit.volume)
-                        customerWebSession.Unit = SessionCst.Unit.euro;
+                        customerWebSession.Unit = UnitsInformation.DefaultCurrency;
                 }
                 if(!units.Contains(UnitsInformation.Get(customerWebSession.Unit))) {
                     customerWebSession.Unit = units[0].Id;

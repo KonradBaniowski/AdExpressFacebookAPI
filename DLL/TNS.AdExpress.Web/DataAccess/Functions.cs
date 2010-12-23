@@ -554,7 +554,7 @@ namespace TNS.AdExpress.Web.DataAccess{
 				case WebConstantes.TVInsertionsColumnIndex.BREAK_SPOTS_NB_INDEX:
 					return DBConstantes.Fields.NUMBER_MESSAGE_COMMERCIAL_BREA;
 				case WebConstantes.TVInsertionsColumnIndex.EXPENDITURE_INDEX:
-                    return UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField;								
+                    return UnitsInformation.List[UnitsInformation.DefaultCurrency].DatabaseField;
 				default :	throw new WebExceptions.FunctionsDataAccessException(" GetTvInsertionsOrder : Impossible de déterminer la colonne à trier."); 		
 			}
 				
@@ -584,7 +584,7 @@ namespace TNS.AdExpress.Web.DataAccess{
 				case WebConstantes.OutDoorInsertionsColumnIndex.POSTER_NETWORK_INDEX:
 					return DBConstantes.Fields.POSTER_NETWORK;				
 				case WebConstantes.OutDoorInsertionsColumnIndex.EXPENDITURE_INDEX:
-                    return UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField;								
+                    return UnitsInformation.List[UnitsInformation.DefaultCurrency].DatabaseField;			
 				default :	throw new WebExceptions.FunctionsDataAccessException(" GetTvInsertionsOrder : Impossible de déterminer la colonne à trier."); 		
 			}
 				

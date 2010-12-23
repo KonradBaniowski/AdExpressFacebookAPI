@@ -297,7 +297,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 						+ ", format"
 						+ ", " + prefix + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.pages].Id.ToString()
 						+ ", color"
-						+ ", " + prefix + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                        + ", " + prefix + UnitsInformation.List[UnitsInformation.DefaultCurrency].DatabaseField + " as " + UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()
 						+ ", location"
 						+ ", " + prefix + "visual "
 						+ ", " + prefix + "id_advertisement"
@@ -323,7 +323,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 						+ ", " + prefix + "rank_wap"
 						+ ", " + prefix + "duration_com_break_wap"
 						+ ", " + prefix + "number_spot_com_break_wap"
-						+ ", " + prefix + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                        + ", " + prefix + UnitsInformation.List[UnitsInformation.DefaultCurrency].DatabaseField + " as " + UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()
 						+ ", " + prefix + "id_cobranding_advertiser"
 						+ ", category"
 						+ ", vehicle"
@@ -341,7 +341,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 						+ ", " + prefix + "id_rank"
 						+ ", " + prefix + "duration_commercial_break"
 						+ ", " + prefix + "number_message_commercial_brea"
-						+ ", " + prefix + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                        + ", " + prefix + UnitsInformation.List[UnitsInformation.DefaultCurrency].DatabaseField + " as " + UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()
 						+ ", " + prefix + "id_commercial_break"
 						+ ", category"
 						+ ", vehicle"
@@ -358,7 +358,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 						+ ", " + prefix + "type_sale"
 						+ ", " + prefix + "poster_network"
 						+ ", " + prefix2 + "agglomeration"
-						+ ", " + prefix + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseField + " as " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString()
+                        + ", " + prefix + UnitsInformation.List[UnitsInformation.DefaultCurrency].DatabaseField + " as " + UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()
 						+ ", " + prefix + "associated_file"
 						+ ", category"
 						+ ", vehicle";
