@@ -344,7 +344,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// <summary>
 		/// Unité utilisé (€, spots...)
 		/// </summary>
-		protected Constantes.Web.CustomerSessions.Unit unit = Constantes.Web.CustomerSessions.Unit.euro;
+        protected Constantes.Web.CustomerSessions.Unit unit = UnitsInformation.DefaultCurrency;
 
 		/// <summary>
 		/// Unité en pourcentage
