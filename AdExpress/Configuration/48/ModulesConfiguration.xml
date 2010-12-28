@@ -553,7 +553,8 @@
           </page>
           <page id="3" resultid="11" name="Détail Support" traductioncode="1378" url="/Private/Results/MediaPortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
             <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
-              <ResultVehicles list="1,2,3,5"/>
+              <!-- Press is not present because not field date_cover_num in dataBase  -->
+              <ResultVehicles list="1,2,5"/>
             </ResultAllowedMediaUniverse>
             <allowedUnits>
               <allowedUnit>pln</allowedUnit>
