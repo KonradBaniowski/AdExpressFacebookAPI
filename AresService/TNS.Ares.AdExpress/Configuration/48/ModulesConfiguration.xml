@@ -528,8 +528,8 @@
           <page id="1" resultid="32" name="Détail du Portefeuille" traductioncode="1376" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPortofolioResultsHelp.aspx">
             <!-- s'il n'y en a pas toutes les unites sont disponibles-->
             <allowedUnits>
-              <!--<allowedUnit>kEuro</allowedUnit>-->
-              <allowedUnit>euro</allowedUnit>
+              <!--<allowedUnit>kpln</allowedUnit>-->
+              <allowedUnit>pln</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>insertion</allowedUnit>
               <allowedUnit>duration</allowedUnit>
@@ -553,10 +553,11 @@
           </page>
           <page id="3" resultid="11" name="Détail Support" traductioncode="1378" url="/Private/Results/MediaPortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
             <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
-              <ResultVehicles list="1,2,3,5"/>
+              <!-- Press is not present because not field date_cover_num in dataBase  -->
+              <ResultVehicles list="1,2,5"/>
             </ResultAllowedMediaUniverse>
             <allowedUnits>
-              <allowedUnit>euro</allowedUnit>
+              <allowedUnit>pln</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>insertion</allowedUnit>
             </allowedUnits>
@@ -574,7 +575,7 @@
               <ResultVehicles list="1,2,3,5"/>
             </ResultAllowedMediaUniverse>
             <allowedUnits>
-              <allowedUnit>euro</allowedUnit>
+              <allowedUnit>pln</allowedUnit>
               <allowedUnit>insertion</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
@@ -614,7 +615,7 @@
           <ModuleVehicles list="1,2,3,5,7,50"/>
         </ModuleAllowedMediaUniverse>
         <ResultLimitation size="25000"/>
-        <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
+        <overrideDefaultUnits unit="kpln"></overrideDefaultUnits>
         <selections>
           <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ASProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
             <allowedUniverseLevels>
@@ -666,7 +667,7 @@
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="1,2,3,5,7,50"/>
         </ModuleAllowedMediaUniverse>
-        <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
+        <overrideDefaultUnits unit="kpln"></overrideDefaultUnits>
         <selections>
           <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ASProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
             <allowedUniverseLevels>

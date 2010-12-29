@@ -4,8 +4,8 @@
   <vehicle id="press" databaseId="3" showInsertions="true" showCreations="false">
     <!-- Units-->
     <allowedUnits defaultUnit="pages">
-      <allowedUnit>euro</allowedUnit>
-      <allowedUnit>kEuro</allowedUnit>
+      <allowedUnit>pln</allowedUnit>
+      <allowedUnit>kpln</allowedUnit>
       <allowedUnit>insertion</allowedUnit>
       <allowedUnit>mmPerCol</allowedUnit>
       <allowedUnit>pages</allowedUnit>
@@ -85,9 +85,9 @@
   <!-- RADIO -->
   <vehicle id="radio" databaseId="2" showInsertions="true" showCreations="false">
     <!-- Units-->
-    <allowedUnits defaultUnit="euro">
-      <allowedUnit>euro</allowedUnit>
-      <allowedUnit>kEuro</allowedUnit>
+    <allowedUnits defaultUnit="pln">
+      <allowedUnit>pln</allowedUnit>
+      <allowedUnit>kpln</allowedUnit>
       <allowedUnit>duration</allowedUnit>
       <allowedUnit>spot</allowedUnit>
     </allowedUnits>
@@ -164,9 +164,9 @@
   <!-- TV -->
   <vehicle id="tv" databaseId="1" showInsertions="true" showCreations="false">
     <!-- Units-->
-    <allowedUnits defaultUnit="euro">
-      <allowedUnit>euro</allowedUnit>
-      <allowedUnit>kEuro</allowedUnit>
+    <allowedUnits defaultUnit="pln">
+      <allowedUnit>pln</allowedUnit>
+      <allowedUnit>kpln</allowedUnit>
       <allowedUnit>duration</allowedUnit>
       <allowedUnit>spot</allowedUnit>
     </allowedUnits>
@@ -246,9 +246,9 @@
   <!-- OUTDOOR -->
   <vehicle id="outdoor" databaseId="5" showInsertions="true" showCreations="false">
     <!-- Units-->
-    <allowedUnits defaultUnit="euro">
-      <allowedUnit>euro</allowedUnit>
-      <allowedUnit>kEuro</allowedUnit>
+    <allowedUnits defaultUnit="pln">
+      <allowedUnit>pln</allowedUnit>
+      <allowedUnit>kpln</allowedUnit>
       <allowedUnit>numberBoard</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results-->
@@ -326,8 +326,8 @@
   <!-- PLURIMEDIA -->
   <vehicle id="plurimedia" databaseId="50" showInsertions="false" showCreations="false">
     <!-- Units-->
-    <allowedUnits defaultUnit="euro">
-      <allowedUnit>euro</allowedUnit>
+    <allowedUnits defaultUnit="pln">
+      <allowedUnit>pln</allowedUnit>
     </allowedUnits>
     <allowedRecapMediaDetailLevels>
       <allowedRecapMediaLevelItems>
@@ -413,9 +413,9 @@
   <!-- INTERNET -->
   <vehicle id="internet" databaseId="7" showInsertions="false" showCreations="false">
     <!-- Units-->
-    <allowedUnits defaultUnit="euro">
-      <allowedUnit>euro</allowedUnit>
-      <allowedUnit>kEuro</allowedUnit>
+    <allowedUnits defaultUnit="pln">
+      <allowedUnit>pln</allowedUnit>
+      <allowedUnit>kpln</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results-->
     <allowedMediaDetailLevels>
