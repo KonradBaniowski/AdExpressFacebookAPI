@@ -2022,5 +2022,13 @@
     <!-- Unit "Quantity" used in Russia -->
     <item mnemonic="w2818" type="System.String">!</item>
     <!-- ********************************* -->
+    <!-- Add text for Media Agency Module -->
+    <item mnemonic="w2819" type="System.String">TV nationale et TV Thématiques (Hors Parrainage)</item>
+    <item mnemonic="w2820" type="System.String">Presse Magazine Grand Public et PQN</item>
+    <item mnemonic="w2821" type="System.String">Radio hors Ile de France</item>
+    <item mnemonic="w2822" type="System.String">Analyse des mandataires (Analyse)</item>
+    <item mnemonic="w2823" type="System.String">Mise à disposition hebdomadaire (le weekend) des nouveaux produits pour les annonceurs déjà renseignés.</item>
+    <item mnemonic="w2824" type="System.String">Mise à disposition mensuelle complète de l’ensemble des medias suivis à partir des déclaratifs des régies.</item>
+    <!-- ********************************* -->
   </items>
 </localization>
