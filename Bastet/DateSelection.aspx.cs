@@ -120,10 +120,10 @@ namespace BastetWeb{
 				#endregion
 
 				#region Vérification des éléments en session
-				if(Session[TNS.AdExpress.Bastet.WebSession.LOGIN] == null) throw(new SystemException("Aucun login en session"));
+                if (Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.LOGIN] == null) throw (new SystemException("Aucun login en session"));
 				switch(_moduleId){
 					case 1: // Stats
-                        if (Session[TNS.AdExpress.Bastet.WebSession.MAILS] == null) throw (new SystemException("Aucun email en session"));
+                        if (Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.MAILS] == null) throw (new SystemException("Aucun email en session"));
 						break;
 				}
 				#endregion
@@ -206,9 +206,9 @@ namespace BastetWeb{
             if (!this.IsPostBack) {
                 DateTime dateTimeBegin = DateTime.Now;
                 DateTime dateTimeEnd = DateTime.Now;
-                if (Session[TNS.AdExpress.Bastet.WebSession.DATE_BEGIN] != null && Session[TNS.AdExpress.Bastet.WebSession.DATE_BEGIN] != null) {
-                    dateTimeBegin = (DateTime)Session[TNS.AdExpress.Bastet.WebSession.DATE_BEGIN];
-                    dateTimeEnd = (DateTime)Session[TNS.AdExpress.Bastet.WebSession.DATE_END];
+                if (Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.DATE_BEGIN] != null && Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.DATE_BEGIN] != null) {
+                    dateTimeBegin = (DateTime)Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.DATE_BEGIN];
+                    dateTimeEnd = (DateTime)Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.DATE_END];
                 }
                 else {
                     dateTimeBegin = DateTime.Now;

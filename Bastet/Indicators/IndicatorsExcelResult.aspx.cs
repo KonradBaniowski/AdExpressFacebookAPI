@@ -45,16 +45,16 @@ namespace BastetWeb.Indicators{
 				// Ecriture des dates dans la session pour tester
 				//Session.Add("DateBegin","20070201");
 				//Session.Add("DateEnd","20070302");
-				Session.Add(TNS.AdExpress.Bastet.WebSession.VEHICLE_LIST,"1,2,3");
+                Session.Add(TNS.AdExpress.Bastet.Constantes.Web.WebSession.VEHICLE_LIST, "1,2,3");
 
-				if(Session[TNS.AdExpress.Bastet.WebSession.LOGIN] == null) throw(new SystemException("Aucun login en session"));
-				if(Session[TNS.AdExpress.Bastet.WebSession.DATE_BEGIN] == null) throw(new SystemException("Aucune date de début en session"));
-				if(Session[TNS.AdExpress.Bastet.WebSession.DATE_END] == null) throw(new SystemException("Aucune date de fin en session"));
-				if(Session[TNS.AdExpress.Bastet.WebSession.VEHICLE_LIST] == null) throw(new SystemException("Aucune média en session"));
+				if(Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.LOGIN] == null) throw(new SystemException("Aucun login en session"));
+                if (Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.DATE_BEGIN] == null) throw (new SystemException("Aucune date de début en session"));
+                if (Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.DATE_END] == null) throw (new SystemException("Aucune date de fin en session"));
+                if (Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.VEHICLE_LIST] == null) throw (new SystemException("Aucune média en session"));
 				#endregion
 
 				#region Résultat
-                _result = IndicatorsBusinessFacade.GetIndicatorsExcel(((IsisCommon.Login)Session[TNS.AdExpress.Bastet.WebSession.LOGIN]).Source, Session[TNS.AdExpress.Bastet.WebSession.VEHICLE_LIST].ToString(), (DateTime)Session[TNS.AdExpress.Bastet.WebSession.DATE_BEGIN], (DateTime)Session[TNS.AdExpress.Bastet.WebSession.DATE_END], _siteLanguage, WebApplicationParameters.AllowedLanguages[_siteLanguage].ClassificationLanguageId);
+                _result = IndicatorsBusinessFacade.GetIndicatorsExcel(((IsisCommon.Login)Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.LOGIN]).Source, Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.VEHICLE_LIST].ToString(), (DateTime)Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.DATE_BEGIN], (DateTime)Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.DATE_END], _siteLanguage, WebApplicationParameters.AllowedLanguages[_siteLanguage].ClassificationLanguageId);
 				#endregion
 
 			}

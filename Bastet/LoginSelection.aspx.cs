@@ -126,10 +126,10 @@ namespace BastetWeb{
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
 			try{
-                if (Session[TNS.AdExpress.Bastet.WebSession.LOGIN] == null) throw (new SystemException("Aucun login en session"));
-                if (Session[TNS.AdExpress.Bastet.WebSession.MAILS] == null) throw (new SystemException("Aucun email en session"));
-                if (Session[TNS.AdExpress.Bastet.WebSession.DATE_BEGIN] == null) throw (new SystemException("Aucune date de début en session"));
-                if (Session[TNS.AdExpress.Bastet.WebSession.DATE_END] == null) throw (new SystemException("Aucune date de fin en session"));
+                if (Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.LOGIN] == null) throw (new SystemException("Aucun login en session"));
+                if (Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.MAILS] == null) throw (new SystemException("Aucun email en session"));
+                if (Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.DATE_BEGIN] == null) throw (new SystemException("Aucune date de début en session"));
+                if (Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.DATE_END] == null) throw (new SystemException("Aucune date de fin en session"));
 
                 HeaderWebControl1.LanguageId = _siteLanguage;
                 HeaderWebControl1.Type_de_page = TNS.AdExpress.Bastet.WebControls.PageType.generic;
@@ -166,7 +166,7 @@ namespace BastetWeb{
 
 				#region Types de client
 				if(!IsPostBack){
-                    TNSSources.IDataSource source = ((IsisCommon.Login)Session[TNS.AdExpress.Bastet.WebSession.LOGIN]).Source;
+                    TNSSources.IDataSource source = ((IsisCommon.Login)Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.LOGIN]).Source;
 					DataSet ds = CustomerTypeBusinessFacade.GetCustomerType(source);
 					CustomerTypeCheckBoxList.DataSource = ds;
 					CustomerTypeCheckBoxList.DataValueField = ds.Tables[0].Columns[0].ToString();
@@ -251,7 +251,7 @@ namespace BastetWeb{
 				if(searchLoginTextBox.Text.Trim().Length > 0){
 					// Variables
 					DataTable dt = null;
-                    TNSSources.IDataSource source = ((IsisCommon.Login)Session[TNS.AdExpress.Bastet.WebSession.LOGIN]).Source;
+                    TNSSources.IDataSource source = ((IsisCommon.Login)Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.LOGIN]).Source;
 				
 					if(IsNumberSearch(searchLoginTextBox.Text)) 
 						// Recherche par identifiant (X) ou par liste d'identifiants (X,X,X,...)
@@ -292,7 +292,7 @@ namespace BastetWeb{
 			try{
 				// Variables
 				DataTable dt = null;
-                TNSSources.IDataSource source = ((IsisCommon.Login)Session[TNS.AdExpress.Bastet.WebSession.LOGIN]).Source;
+                TNSSources.IDataSource source = ((IsisCommon.Login)Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.LOGIN]).Source;
 				string customerTypeId = "";
 
 				// Récupération des identifiants des types sélectionnés
@@ -347,7 +347,7 @@ namespace BastetWeb{
 				
 				if(countLogins < 1000){
 					// Sauvegarde de la demande
-                    Parameters param = new Parameters(((IsisCommon.Login)Session[TNS.AdExpress.Bastet.WebSession.LOGIN]).Source, ((IsisCommon.Login)Session[TNS.AdExpress.Bastet.WebSession.LOGIN]).LoginId, (DateTime)Session[TNS.AdExpress.Bastet.WebSession.DATE_BEGIN], (DateTime)Session[TNS.AdExpress.Bastet.WebSession.DATE_END], loginsIdList, (ArrayList)Session[TNS.AdExpress.Bastet.WebSession.MAILS], _siteLanguage);
+                    Parameters param = new Parameters(((IsisCommon.Login)Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.LOGIN]).Source, ((IsisCommon.Login)Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.LOGIN]).LoginId, (DateTime)Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.DATE_BEGIN], (DateTime)Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.DATE_END], loginsIdList, (ArrayList)Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.MAILS], _siteLanguage);
 					param.Save();
 				
 					// Redirection pour effectuer une nouvelle demande

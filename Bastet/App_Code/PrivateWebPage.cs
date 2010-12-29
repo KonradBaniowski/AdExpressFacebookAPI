@@ -15,6 +15,7 @@ using TNS.AdExpress.Bastet.Translation;
 using TNS.AdExpress.Bastet;
 using System.Web;
 using TNS.AdExpress.Bastet.Web;
+using TNS.AdExpress.Bastet.Constantes.Web;
 
 namespace BastetWeb{
 	/// <summary>
