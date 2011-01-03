@@ -2030,5 +2030,8 @@
     <item mnemonic="w2823" type="System.String">Mise à disposition hebdomadaire (le weekend) des nouveaux produits pour les annonceurs déjà renseignés.</item>
     <item mnemonic="w2824" type="System.String">Mise à disposition mensuelle complète de l’ensemble des medias suivis à partir des déclaratifs des régies.</item>
     <!-- ********************************* -->
+    <!-- Add text for Mutipart Format -->
+    <item mnemonic="w2825" type="System.String">Partie</item>
+    <!-- ********************************* -->
   </items>
 </localization>
