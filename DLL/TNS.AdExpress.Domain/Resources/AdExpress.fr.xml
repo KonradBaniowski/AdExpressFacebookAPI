@@ -2033,5 +2033,21 @@
     <!-- Add text for Mutipart Format -->
     <item mnemonic="w2825" type="System.String">Partie</item>
     <!-- ********************************* -->
+    <!-- Add text for help page -->
+    <item mnemonic="w2826" type="System.String">&lt;ul type="square"&gt;&lt;li&gt;&lt;u&gt;Ajouter des éléments.&lt;/u&gt; Pour ajouter des éléments, sélectionnez les dans les fenêtres affichant ceux issus de votre recherche et cliquez sur la flèche correspondante &lt;img src="/Images/Common/include_item.gif"&gt; pour les ajouter.&lt;br&gt;Au sein d'une même fenêtre, tous les éléments sélectionnés sont ajoutés les uns aux autres.&lt;br&gt;Dans l'exemple ci-dessous, le groupe d’agences Publicis Groupe et l’agence Aegis Media sont ajoutés et l’agence Digitas est en exclusion.&lt;/li&gt;&lt;/ul&gt;</item>
+    <item mnemonic="w2827" type="System.String">Chargement automatique d'univers agences sauvegardés</item>
+    <item mnemonic="w2828" type="System.String">Cette fonction vous permet d’afficher les dates de mises à jour des différents medias dans AdExpress. Il vous permet également d’accéder à la liste des supports disponibles en alerte. Cette fonction est accessible depuis toutes les pages du site, sauf les pages de type pop up.</item>
+    <item mnemonic="w2829" type="System.String">Cette fonction vous permet d’accéder au site institutionnel de Kantar Media. Cette fonction est accessible depuis toutes les pages du site, sauf les pages de type pop up.</item>
+    <item mnemonic="w2830" type="System.String">Enregistrer le visuel</item>
+    <item mnemonic="w2831" type="System.String">Le tableau de résultats par défaut présente en ligne les groupes d’agences, les agences et les annonceurs et en colonne, les medias et la période sélectionnée. Vous pouvez, à l’aide de listes déroulantes situées dans la marge de gauche, modifier certains paramètres du tableau.</item>
+    <item mnemonic="w2832" type="System.String">Le tableau de résultats est affiché par défaut en euros. La fonction Unités vous permet de sélectionner une souhaitée différente de celle affichée par défaut grâce à une liste déroulante.</item>
+    <item mnemonic="w2833" type="System.String">Vous pouvez modifier le niveau de détail des médias de votre tableau en sélectionnant l'un des niveaux de détail prédéfinis, à l'aide des listes déroulantes ci-dessous :</item>
+    <item mnemonic="w2834" type="System.String">Vous pouvez modifier le niveau de détail des produits de votre tableau en sélectionnant l'un des niveaux de détail prédéfinis, à l'aide des listes déroulantes ci-dessous :</item>
+    <item mnemonic="w2835" type="System.String">L'option "Niveaux Personnalisés" vous permet de choisir les niveaux de détail que vous souhaitez afficher dans votre tableau. Vous disposez de 4 niveaux hiérarchiques produits. Utilisez les listes déroulantes pour construire vos propres niveaux personnalisés.</item>
+    <item mnemonic="w2836" type="System.String">Sélection du niveau de détail des médias</item>
+    <item mnemonic="w2837" type="System.String">A l’aide de cette case à cocher, vous pouvez demander que votre étude soit comparative par rapport à la même période précédente.</item>
+    <item mnemonic="w2838" type="System.String">A l’aide de cette case à cocher, vous pouvez ajouter une évolution en % dans votre tableau.</item>
+    <item mnemonic="w2839" type="System.String">A l’aide de cette case à cocher, vous pouvez ajouter dans votre tableau une part de marché.</item>
+    <item mnemonic="w2840" type="System.String">A l’aide de cette case à cocher, vous pouvez ajouter dans votre tableau une part de voix.</item>
   </items>
 </localization>

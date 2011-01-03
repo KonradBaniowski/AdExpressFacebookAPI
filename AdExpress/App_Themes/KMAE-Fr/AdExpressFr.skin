@@ -52,6 +52,8 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <asp:image runat="server" ImageUrl="Images/Common/Menu/programMenuIcon.gif" SkinID="program" />
 <asp:image runat="server" ImageUrl="Images/Common/Menu/helpMenuIcon.gif" SkinID="help" />
 <asp:image runat="server" ImageUrl="Images/Common/Menu/createAlertMenuIcon.gif" SkinID="createAlert" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/updateDateMenuIcon.gif" SkinID="updateDate" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/kantarWebsiteMenuIcon.gif" SkinID="website" />
 
 <%-- Alert--%>
 <asp:image runat="server" ImageUrl="Images/Common/flagPending.gif" SkinID="alertFlagPending" />
@@ -84,6 +86,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <asp:image runat="server" ImageUrl="Images/Common/Button/bt_arrow_down.gif" SkinID="bt_arrow_down" />
 <asp:image runat="server" ImageUrl="Images/Common/Button/bt_loupe_up.gif" SkinID="bt_loupe" />
 <asp:image runat="server" ImageUrl="Images/Common/Button/bt_delete_item.gif" SkinID="bt_delete_item" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/bt_valid_up.gif" SkinID="bt_valider" />
 
 
 
