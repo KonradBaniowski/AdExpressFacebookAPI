@@ -275,10 +275,17 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// Secondary dictionary of universe media selection
 		/// </summary>	
 		protected Dictionary<int, AdExpressUniverse> _secondaryMediaUniverses = new Dictionary<int, AdExpressUniverse>();
-
+		/// <summary>
+		/// Principal dictionary of  universe advertising agnecy selection
+		/// </summary>				
+		protected Dictionary<int, AdExpressUniverse> _principalAdvertisingAgnecyUniverses = new Dictionary<int, AdExpressUniverse>();
+		/// <summary>
+		/// Secondary dictionary of universe advertising agnecy selection
+		/// </summary>	
+		protected Dictionary<int, AdExpressUniverse> _secondaryAdvertisingAgnecyUniverses = new Dictionary<int, AdExpressUniverse>();
 		#endregion
 
-		#endregion
+        #endregion
 
 		#region Période
 		/// <summary>
@@ -1321,7 +1328,39 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 				modificationDate = DateTime.Now;
 			}
 		}
-		#endregion
+
+    /// <summary>
+    ///Get/Set Pricinpal dictionary of  universe advertising agnecy selection
+    /// </summary>
+    public Dictionary<int, AdExpressUniverse> PrincipalAdvertisingAgnecyUniverses
+    {
+        get
+        {
+            return (_principalAdvertisingAgnecyUniverses);
+        }
+        set
+        {
+            _principalAdvertisingAgnecyUniverses = value;
+            modificationDate = DateTime.Now;
+        }
+    }
+
+    /// <summary>
+    ///Get/Set secondary dictionary of  universe advertising agnecy selection
+    /// </summary>
+    public Dictionary<int, AdExpressUniverse> SecondaryAdvertisingAgnecyUniverses
+    {
+        get
+        {
+            return (_secondaryAdvertisingAgnecyUniverses);
+        }
+        set
+        {
+            _secondaryAdvertisingAgnecyUniverses = value;
+            modificationDate = DateTime.Now;
+        }
+    }
+    #endregion
 
 		/// <summary>
 		/// Obtient ou définit Ecart
@@ -2906,6 +2945,17 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		}
 		#endregion
 
+		#region Advertising Agency
+		/// <summary>
+		/// Return if an advertising agency univers is selected
+		/// </summary>
+		/// <returns>True if an advertising agency univers is selected</returns>
+		public bool isAdvertisingAgencySelected() {
+			if (this.PrincipalAdvertisingAgnecyUniverses.Count > 0) return (true);
+			return (false);
+		}
+		#endregion
+
 		#region Media
 
 		/// <summary>
@@ -3438,10 +3488,14 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		#endregion 
 
         #region Dates
-
-        public CustomerPeriod UpdateDates(DateTime FirstDayNotEnable)
+        // TO ROLLBACK AFTER UNIVERS ADAPTATION 04/11/2011
+        //public CustomerPeriod UpdateDates(DateTime FirstDayNotEnable, DateTime dateRef) 
+        public CustomerPeriod UpdateDates(DateTime FirstDayNotEnable) 
         {
             bool isLastCompletePeriod = false;
+            // TO ROLLBACK AFTER UNIVERS ADAPTATION 04/11/2011
+            //DateTime lastDayEnable = dateRef;
+            //DateTime tmp = dateRef;
             DateTime lastDayEnable = DateTime.Now;
             DateTime tmp = DateTime.Now;
 
@@ -3462,6 +3516,9 @@ namespace TNS.AdExpress.Web.Core.Sessions {
             {
                 #region nLastYears
                 case CustPeriodType.nLastYear:
+                    // TO ROLLBACK AFTER UNIVERS ADAPTATION 04/11/2011
+                    //this.PeriodBeginningDate = dateRef.AddYears(1 - this.PeriodLength).ToString("yyyy0101");
+                    //this.PeriodEndDate = dateRef.ToString("yyyyMMdd");
                     this.PeriodBeginningDate = DateTime.Now.AddYears(1 - this.PeriodLength).ToString("yyyy0101");
                     this.PeriodEndDate = DateTime.Now.ToString("yyyyMMdd");
                     break;
@@ -3516,6 +3573,9 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 
                 #region previousYear
                 case CustPeriodType.previousYear:
+                    // TO ROLLBACK AFTER UNIVERS ADAPTATION 04/11/2011
+                    //this.PeriodBeginningDate = dateRef.AddYears(-1).ToString("yyyy0101");
+                    //this.PeriodEndDate = dateRef.AddYears(-1).ToString("yyyy1231");
                     this.PeriodBeginningDate = DateTime.Now.AddYears(-1).ToString("yyyy0101");
                     this.PeriodEndDate = DateTime.Now.AddYears(-1).ToString("yyyy1231");
                     break;
