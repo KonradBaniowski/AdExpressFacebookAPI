@@ -2049,5 +2049,17 @@
     <item mnemonic="w2838" type="System.String">A l’aide de cette case à cocher, vous pouvez ajouter une évolution en % dans votre tableau.</item>
     <item mnemonic="w2839" type="System.String">A l’aide de cette case à cocher, vous pouvez ajouter dans votre tableau une part de marché.</item>
     <item mnemonic="w2840" type="System.String">A l’aide de cette case à cocher, vous pouvez ajouter dans votre tableau une part de voix.</item>
+    <!-- ********************************* -->
+    <!-- Add text for company name management -->
+    <item mnemonic="w2841" type="System.String">TNS Media Intelligence</item>
+    <item mnemonic="w2842" type="System.String">TNS</item>
+    <item mnemonic="w2843" type="System.String">Kantar</item>
+    <item mnemonic="w2844" type="System.String">Bienvenue sur AdExpress, le portail du Pôle Investissements Publicitaires de</item>
+    <item mnemonic="w2845" type="System.String">.&lt;br&gt;Afin d'accéder à tous nos services, veuillez entrer votre login et votre mot de passe.</item>
+    <item mnemonic="w2846" type="System.String">Vous pouvez consulter l'ensemble des produits d'information du Pôle Investissements Publicitaires de</item>
+    <item mnemonic="w2847" type="System.String">dans les listes déroulantes ci-contre.</item>
+    <item mnemonic="w2848" type="System.String">(c) Copyright</item>
+    <item mnemonic="w2849" type="System.String">SAS</item>
+    <!-- ********************************* -->
   </items>
 </localization>
