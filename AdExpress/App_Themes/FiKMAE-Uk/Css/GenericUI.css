@@ -1588,3 +1588,50 @@ tr.synthesisTitleEx{
 	COLOR: #646262;
 	BACKGROUND-COLOR: #ffffff
 }
+
+
+/* Creatives Mutipart*/
+.creativeTableDescriptor
+{
+	border:1px solid #ccc;
+	padding:0px;
+}
+
+td.creativeTableDescriptorTdLabel
+{
+	border-left:0px solid #ccc;
+	border-right:0px solid #ccc;
+	border-top:0px solid #ccc;
+	border-bottom:1px solid #ccc;
+	padding:0px;
+	background-color:White;
+	padding:0px !important;
+	background:url(/App_Themes/KMAE-Fr/Images/Common/Result/header.gif) white repeat-x left top !important;
+}
+
+td.creativeTableDescriptorTdLabel table
+{
+	border-width:0px  !important;
+}
+
+.creativeTableDescriptorLabel td
+{
+	background-color:Transparent !important;
+	padding:0px 5px 0px 5px;
+}
+
+.creativeTableDescriptorLabel select
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color : #646262;
+	text-align:left;
+	height:15px;
+}
+
+td.creativeTableDescriptorTdVisual
+{
+	padding:0px;
+	padding:0px !important;
+	text-align:center;
+}
