@@ -2060,6 +2060,7 @@
     <item mnemonic="w2847" type="System.String">dans les listes déroulantes ci-contre.</item>
     <item mnemonic="w2848" type="System.String">(c) Copyright</item>
     <item mnemonic="w2849" type="System.String">SAS</item>
+    <item mnemonic="w2850" type="System.String">Evaliant est l’outil de tracking des bannières publicitaires en temps réel de TNS Media Intelligence.</item>
     <!-- ********************************* -->
   </items>
 </localization>
