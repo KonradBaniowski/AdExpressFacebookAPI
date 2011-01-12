@@ -57,6 +57,10 @@ namespace AdExpress.Private.Selection{
 		/// Texte
 		/// </summary>
 		public string productAdExpressText;
+        /// <summary>
+        /// Advertising Agency Texte
+        /// </summary>
+        public string advertisingAgencyAdExpressText;
 		#endregion
 
 		#region Variables
@@ -144,6 +148,10 @@ namespace AdExpress.Private.Selection{
 		/// Indique si on affiche type de pourcentage
 		/// </summary>
 		public bool displayPercentageAlignment = false;
+        /// <summary>
+        /// True if we need to display advertising agency
+        /// </summary>
+        public bool displayAdvertisingAgency = false;
 		/// <summary>
 		/// Code html pour afficher les annonceurs de références séléctionnée
 		/// </summary>
@@ -160,6 +168,10 @@ namespace AdExpress.Private.Selection{
 		/// Texte
 		/// </summary>
 		public string productText="";
+        /// <summary>
+        /// Adevrtising Agency Texte
+        /// </summary>
+        public string advertisingAgencyText = "";
 		/// <summary>
 		/// Choix de l'étude
 		/// </summary>
@@ -436,6 +448,15 @@ namespace AdExpress.Private.Selection{
 					|| _webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE 
 					){
 					idAdvertiser=0;
+                }
+                #endregion
+
+                #region Advertising Agency Selected
+                advertisingAgencyText = Convertion.ToHtmlString(TNS.AdExpress.Web.UI.ExcelWebPage.GetAdvertisingAgencySelected(_webSession));
+                if (advertisingAgencyText != null && advertisingAgencyText.Length > 0)
+                {
+                    advertisingAgencyText = "<table>" + advertisingAgencyText + "</table>";
+                    displayAdvertisingAgency = true;
                 }
                 #endregion
 

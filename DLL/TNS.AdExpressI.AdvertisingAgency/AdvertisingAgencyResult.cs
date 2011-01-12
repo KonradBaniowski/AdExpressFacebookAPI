@@ -19,6 +19,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpressI.AdvertisingAgency.Exceptions;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Web.Core.Result;
 
 
 namespace TNS.AdExpressI.AdvertisingAgency
@@ -145,8 +146,8 @@ namespace TNS.AdExpressI.AdvertisingAgency
             List<Int64> keyPdmYearN = new List<Int64>(); keyPdmYearN.Add(ID_PDM_N);
             Int32 RES_PDM_N1_OFFSET = (yearN1 > 0 && _session.PDM) ? RES_PDM_N_OFFSET + 1 : -1;
             List<Int64> keyPdmYearN1 = new List<Int64>(); keyPdmYearN1.Add(ID_PDM_N1);
-            string labelN = FctUtilities.Dates.getPeriodLabel(_session, _session.PeriodBeginningDate, _session.PeriodEndDate);
-            string labelN1 = FctUtilities.Dates.getPeriodLabel(_session, comparativePeriod.Begin.ToString("yyyyMMdd"), comparativePeriod.End.ToString("yyyyMMdd"));
+            string labelN = FctUtilities.Dates.getPeriodLabelComparative(_session, _session.PeriodBeginningDate, _session.PeriodEndDate);
+            string labelN1 = FctUtilities.Dates.getPeriodLabelComparative(_session, comparativePeriod.Begin.ToString("yyyyMMdd"), comparativePeriod.End.ToString("yyyyMMdd"));
             string labelEvol = GestionWeb.GetWebWord(1168, _session.SiteLanguage);
             string labelPDMN = string.Format("{0}{1}{2}", GestionWeb.GetWebWord(806, _session.SiteLanguage), GestionWeb.GetWebWord(1187, _session.SiteLanguage), labelN);
             string labelPDMN1 = string.Format("{0}{1}{2}", GestionWeb.GetWebWord(806, _session.SiteLanguage), GestionWeb.GetWebWord(1187, _session.SiteLanguage), labelN1);
@@ -337,7 +338,7 @@ namespace TNS.AdExpressI.AdvertisingAgency
             CellUnit cell = cellFactory.Get(0.0);
             cell.DisplayContent = false;
             CellUnitFactory cellHiddenFactory = new CellUnitFactory(cell);
-            CellLevel[] parents = new CellLevel[DATA_PRODUCT_INDEXES.Count + 1];
+            AdExpressCellLevel[] parents = new AdExpressCellLevel[DATA_PRODUCT_INDEXES.Count + 1];
             /* This variable is used to reintialize PDV and PDM total cells in the case of an empty column result
              * For the total PDV and PDM cells, we always display 100%, because we consider that the column must be filled with data
              * ther no reason to have a PDV or PDM column, if we don't have data.
@@ -357,7 +358,7 @@ namespace TNS.AdExpressI.AdvertisingAgency
 
             cLine = tab.AddNewLine(LineType.total);
             //Total
-            tab[cLine, columnIndex] = parents[0] = new CellLevel(ID_TOTAL, GestionWeb.GetWebWord(1401, _session.SiteLanguage), 0, cLine);
+            tab[cLine, columnIndex] = parents[0] = new AdExpressCellLevel(ID_TOTAL, GestionWeb.GetWebWord(1401, _session.SiteLanguage), 0, cLine,_session);
             for (int k = columnIndex; k <= tab.DataColumnsNumber - labelsList.Count; k += labelsList.Count)
             {
                 //YearN
@@ -378,14 +379,16 @@ namespace TNS.AdExpressI.AdvertisingAgency
                 {
                     tab[cLine, k + RES_PDV_N_OFFSET] = new CellPDM(0.0, null);
                     ((CellPDM)tab[cLine, k + RES_PDV_N_OFFSET]).StringFormat = "{0:percentage}";
-                    reInitPDVPDMVoidColumns.Add(k + RES_PDV_N_OFFSET, false);
+                    if(!reInitPDVPDMVoidColumns.ContainsKey(k + RES_PDV_N_OFFSET))
+                        reInitPDVPDMVoidColumns.Add(k + RES_PDV_N_OFFSET, false);
                 }
                 //PDV N1
                 if (RES_PDV_N1_OFFSET > 0)
                 {
                     tab[cLine, k + RES_PDV_N1_OFFSET] = new CellPDM(0.0, null);
                     ((CellPDM)tab[cLine, k + RES_PDV_N1_OFFSET]).StringFormat = "{0:percentage}";
-                    reInitPDVPDMVoidColumns.Add(k + RES_PDV_N1_OFFSET, false);
+                    if(!reInitPDVPDMVoidColumns.ContainsKey(k + RES_PDV_N1_OFFSET))
+                        reInitPDVPDMVoidColumns.Add(k + RES_PDV_N1_OFFSET, false);
                 }
             }
              //PDM N
@@ -393,14 +396,16 @@ namespace TNS.AdExpressI.AdvertisingAgency
                 {
                     tab[cLine, 1 + RES_PDM_N_OFFSET] = new CellPDM(0.0, null);
                     ((CellPDM)tab[cLine, 1 + RES_PDM_N_OFFSET]).StringFormat = "{0:percentage}";
-                    reInitPDVPDMVoidColumns.Add(1 + RES_PDM_N_OFFSET, false);
+                    if(!reInitPDVPDMVoidColumns.ContainsKey(1 + RES_PDM_N_OFFSET))
+                        reInitPDVPDMVoidColumns.Add(1 + RES_PDM_N_OFFSET, false);
                 }
                 //PDM N1
                 if (RES_PDM_N1_OFFSET > 0)
                 {
                     tab[cLine, 1 + RES_PDM_N1_OFFSET] = new CellPDM(0.0, null);
                     ((CellPDM)tab[cLine, 1 + RES_PDM_N1_OFFSET]).StringFormat = "{0:percentage}";
-                    reInitPDVPDMVoidColumns.Add(1 + RES_PDM_N1_OFFSET, false);
+                    if(!reInitPDVPDMVoidColumns.ContainsKey(1 + RES_PDM_N1_OFFSET))
+                        reInitPDVPDMVoidColumns.Add(1 + RES_PDM_N1_OFFSET, false);
                 }
             ////Init sub total PDM
             foreach (HeaderBase h in SUB_TOTALS)
@@ -410,14 +415,16 @@ namespace TNS.AdExpressI.AdvertisingAgency
                 {
                     tab[cLine, h.IndexInResultTable + RES_PDM_N_OFFSET - 1] = new CellPDM(0.0, (CellUnit)tab[cLine, 2]);
                     ((CellPDM)tab[cLine, h.IndexInResultTable + RES_PDM_N_OFFSET - 1]).StringFormat = "{0:percentage}";
-                    reInitPDVPDMVoidColumns.Add(h.IndexInResultTable + RES_PDM_N_OFFSET - 1, false);
+                    if(!reInitPDVPDMVoidColumns.ContainsKey(h.IndexInResultTable + RES_PDM_N_OFFSET - 1))
+                        reInitPDVPDMVoidColumns.Add(h.IndexInResultTable + RES_PDM_N_OFFSET - 1, false);
                 }
                 //PDM N1
                 if (RES_PDM_N1_OFFSET > 0)
                 {
                     tab[cLine, h.IndexInResultTable + RES_PDM_N1_OFFSET - 1] = new CellPDM(0.0, (CellUnit)tab[cLine, 3]);
                     ((CellPDM)tab[cLine, h.IndexInResultTable + RES_PDM_N1_OFFSET - 1]).StringFormat = "{0:percentage}";
-                    reInitPDVPDMVoidColumns.Add(h.IndexInResultTable + RES_PDM_N1_OFFSET - 1, false);
+                    if(!reInitPDVPDMVoidColumns.ContainsKey(h.IndexInResultTable + RES_PDM_N1_OFFSET - 1))
+                        reInitPDVPDMVoidColumns.Add(h.IndexInResultTable + RES_PDM_N1_OFFSET - 1, false);
                 }
             }
             ////Init Media PDM
@@ -439,7 +446,8 @@ namespace TNS.AdExpressI.AdvertisingAgency
                             tab[cLine, record.Value.IndexInResultTable] = new CellPDM(0.0, (CellUnit)tab[cLine, 2]);
                         }
                         ((CellPDM)tab[cLine, record.Value.IndexInResultTable]).StringFormat = "{0:percentage}";
-                        reInitPDVPDMVoidColumns.Add(record.Value.IndexInResultTable, false);
+                        if(!reInitPDVPDMVoidColumns.ContainsKey(record.Value.IndexInResultTable))
+                            reInitPDVPDMVoidColumns.Add(record.Value.IndexInResultTable, false);
                     }
                 }
                 if (subString[2].Equals("PDM1"))
@@ -456,7 +464,8 @@ namespace TNS.AdExpressI.AdvertisingAgency
                             tab[cLine, record.Value.IndexInResultTable] = new CellPDM(0.0, (CellUnit)tab[cLine, 3]);
                         }
                         ((CellPDM)tab[cLine, record.Value.IndexInResultTable]).StringFormat = "{0:percentage}";
-                        reInitPDVPDMVoidColumns.Add(record.Value.IndexInResultTable, false);
+                        if (!reInitPDVPDMVoidColumns.ContainsKey(record.Value.IndexInResultTable))
+                            reInitPDVPDMVoidColumns.Add(record.Value.IndexInResultTable, false);
                     }
                 }
 
@@ -493,7 +502,15 @@ namespace TNS.AdExpressI.AdvertisingAgency
                         #region Add new line and Init cells
                         //Total
                         cLine = tab.AddNewLine(lTypes[i]);
-                        tab[cLine, 1] = parents[i + 1] = new CellLevel(columnId, row[DATA_PRODUCT_INDEXES[i] + 1].ToString(), (CellLevel)tab[parents[i].LineIndexInResultTable, 1], i + 1, cLine);
+                        tab[cLine, 1] = parents[i + 1] = new AdExpressCellLevel(columnId, row[DATA_PRODUCT_INDEXES[i] + 1].ToString(), (AdExpressCellLevel)tab[parents[i].LineIndexInResultTable, 1], i + 1, cLine, _session);
+
+                        ////Gad
+                        if (_session.GenericProductDetailLevel.DetailLevelItemLevelIndex(DetailLevelItemInformation.Levels.advertiser) == ((AdExpressCellLevel)tab[cLine, 1]).Level)
+                        {
+                            if(row[row.ItemArray.Length-1].ToString().Length >0)
+                                ((AdExpressCellLevel)tab[cLine, 1]).AddressId = (Int64)row[row.ItemArray.Length-1];
+                        }
+
                         for (int k = columnIndex; k <= tab.DataColumnsNumber - labelsList.Count; k += labelsList.Count)
                         {
                             //YearN
@@ -611,7 +628,8 @@ namespace TNS.AdExpressI.AdvertisingAgency
                         //N
                         if (columnId > -1)
                             tab.AffectValueAndAddToHierarchy(1, cLine, RES_MEDIA_HEADERS[columnKey + "_Period1"].IndexInResultTable, valueN);
-                        tab.AffectValueAndAddToHierarchy(1, cLine, RES_YEAR_N_OFFSET + 1, valueN);
+                        if(RES_MEDIA_HEADERS[columnKey + "_Period1"].IndexInResultTable != RES_YEAR_N_OFFSET + 1)
+                            tab.AffectValueAndAddToHierarchy(1, cLine, RES_YEAR_N_OFFSET + 1, valueN);
                         if (subTotalIndex > -1)
                         {
                             tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex, valueN);
@@ -621,7 +639,8 @@ namespace TNS.AdExpressI.AdvertisingAgency
                         {
                             if (columnId > -1)
                                 tab.AffectValueAndAddToHierarchy(1, cLine, RES_MEDIA_HEADERS[columnKey + "_Period2"].IndexInResultTable, valueN1);
-                            tab.AffectValueAndAddToHierarchy(1, cLine, RES_YEAR_N1_OFFSET + 1, valueN1);
+                            if(RES_MEDIA_HEADERS[columnKey + "_Period2"].IndexInResultTable != RES_YEAR_N1_OFFSET + 1)
+                                tab.AffectValueAndAddToHierarchy(1, cLine, RES_YEAR_N1_OFFSET + 1, valueN1);
                             if (subTotalIndex > -1)
                             {
                                 tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex + RES_YEAR_N1_OFFSET - 1, valueN1);
@@ -633,12 +652,15 @@ namespace TNS.AdExpressI.AdvertisingAgency
                             if (columnId > -1)
                             {
                                 tab.AffectValueAndAddToHierarchy(1, cLine, RES_MEDIA_HEADERS[columnKey + "_PDV"].IndexInResultTable, valueN);
-                                if(valueN>0)
+                                if (valueN > 0)
                                     reInitPDVPDMVoidColumns[RES_MEDIA_HEADERS[columnKey + "_PDV"].IndexInResultTable] = true;
                             }
-                            tab.AffectValueAndAddToHierarchy(1, cLine, RES_PDV_N_OFFSET + 1, valueN);
-                            if (valueN > 0)
-                                reInitPDVPDMVoidColumns[RES_PDV_N_OFFSET + 1] = true;
+                            if (RES_MEDIA_HEADERS[columnKey + "_PDV"].IndexInResultTable != RES_PDV_N_OFFSET + 1)
+                            {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, RES_PDV_N_OFFSET + 1, valueN);
+                                if (valueN > 0)
+                                    reInitPDVPDMVoidColumns[RES_PDV_N_OFFSET + 1] = true;
+                            }
                             if (subTotalIndex > -1)
                             {
                                 tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex + RES_PDV_N_OFFSET - 1, valueN);
@@ -655,9 +677,12 @@ namespace TNS.AdExpressI.AdvertisingAgency
                                 if (valueN1 > 0)
                                     reInitPDVPDMVoidColumns[RES_MEDIA_HEADERS[columnKey + "_PDV1"].IndexInResultTable] = true;
                             }
-                            tab.AffectValueAndAddToHierarchy(1, cLine, RES_PDV_N1_OFFSET + 1, valueN1);
-                            if (valueN1 > 0)
-                                reInitPDVPDMVoidColumns[RES_PDV_N1_OFFSET + 1] = true;
+                            if (RES_MEDIA_HEADERS[columnKey + "_PDV1"].IndexInResultTable != RES_PDV_N1_OFFSET + 1)
+                            {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, RES_PDV_N1_OFFSET + 1, valueN1);
+                                if (valueN1 > 0)
+                                    reInitPDVPDMVoidColumns[RES_PDV_N1_OFFSET + 1] = true;
+                            }
                             if (subTotalIndex > -1)
                             {
                                 tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex + RES_PDV_N1_OFFSET - 1, valueN1);
@@ -674,9 +699,12 @@ namespace TNS.AdExpressI.AdvertisingAgency
                                 if (valueN > 0)
                                     reInitPDVPDMVoidColumns[RES_MEDIA_HEADERS[columnKey + "_PDM"].IndexInResultTable] = true;
                             }
-                            tab.AffectValueAndAddToHierarchy(1, cLine, RES_PDM_N_OFFSET + 1, valueN);
-                            if (valueN > 0)
-                                reInitPDVPDMVoidColumns[RES_PDM_N_OFFSET + 1] = true;
+                            if (RES_MEDIA_HEADERS[columnKey + "_PDM"].IndexInResultTable != RES_PDM_N_OFFSET + 1)
+                            {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, RES_PDM_N_OFFSET + 1, valueN);
+                                if (valueN > 0)
+                                    reInitPDVPDMVoidColumns[RES_PDM_N_OFFSET + 1] = true;
+                            }
                             if (subTotalIndex > -1)
                             {
                                 tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex + RES_PDM_N_OFFSET - 1, valueN);
@@ -693,9 +721,12 @@ namespace TNS.AdExpressI.AdvertisingAgency
                                 if (valueN1 > 0)
                                     reInitPDVPDMVoidColumns[RES_MEDIA_HEADERS[columnKey + "_PDM1"].IndexInResultTable] = true;
                             }
-                            tab.AffectValueAndAddToHierarchy(1, cLine, RES_PDM_N1_OFFSET + 1, valueN1);
-                            if (valueN1 > 0)
-                                reInitPDVPDMVoidColumns[RES_PDM_N1_OFFSET + 1] = true;
+                            if (RES_MEDIA_HEADERS[columnKey + "_PDM1"].IndexInResultTable != RES_PDM_N1_OFFSET + 1)
+                            {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, RES_PDM_N1_OFFSET + 1, valueN1);
+                                if (valueN1 > 0)
+                                    reInitPDVPDMVoidColumns[RES_PDM_N1_OFFSET + 1] = true;
+                            }
                             if (subTotalIndex > -1)
                             {
                                 tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex + RES_PDM_N1_OFFSET - 1, valueN1);

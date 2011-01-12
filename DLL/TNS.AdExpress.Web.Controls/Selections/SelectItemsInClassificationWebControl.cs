@@ -556,7 +556,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 								universes = _webSession.PrincipalProductUniverses;
 								break;
                             case TNS.Classification.Universe.Dimension.advertisingAgency:
-                                universes = _webSession.PrincipalProductUniverses;
+                                universes = _webSession.PrincipalAdvertisingAgnecyUniverses;
                                 break;
                             case TNS.Classification.Universe.Dimension.media:
                                 if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA

@@ -1035,8 +1035,7 @@ namespace AdExpress.Private.Alerts{
                     html.AppendFormat("<td>{0}</td>", GestionWeb.GetWebWord(2580, lang));
                     html.Append("</tr><tr>");
                     html.AppendFormat("<th>{0}</th>", GestionWeb.GetWebWord(2603, lang));
-                    html.AppendFormat("<td>{0}</td>", GestionWeb.GetWebWord(2604, lang));
-                    html.Append(dayName);
+                    html.AppendFormat("<td>{0} {1}</td>", GestionWeb.GetWebWord(2604, lang), dayName);
                     html.Append("</tr>");
                     break;
                 case TNS.Ares.Constantes.Constantes.Alerts.AlertPeriodicity.Monthly:

@@ -142,7 +142,8 @@ public partial class Private_Results_AdvertisingAgencyResults : TNS.AdExpress.We
         ResultsOptionsWebControl1.PdvOption = true;
 
         begin = WebFunctions.Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
-        if (begin.Year > DateTime.Now.Year - 2)
+        begin = begin.AddMonths(-12);
+        if (begin.Year >= DateTime.Now.Year - 2)
         {
             ResultsOptionsWebControl1.EvolutionOption = true;
             ResultsOptionsWebControl1.ComparativeStudyOption = true;
@@ -153,6 +154,8 @@ public partial class Private_Results_AdvertisingAgencyResults : TNS.AdExpress.We
             ResultsOptionsWebControl1.EvolutionOption = false;
             ResultsOptionsWebControl1.ComparativeStudyOption = false;
             ResultsOptionsWebControl1.DependentSelection = false;
+            _webSession.ComparativeStudy = false;
+            _webSession.Evolution = false;
         }
         ResultsOptionsWebControl1.MutualExclusion = true;
 

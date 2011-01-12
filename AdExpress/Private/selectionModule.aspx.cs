@@ -172,18 +172,27 @@ namespace AdExpress{
 						#endregion
 
 						#region Niveau de détail produit (Generic)
+                        CstWeb.GenericDetailLevel.SelectedFrom selectedFrom;
 						// Initialisation à annonceur
 						levels.Clear();
                         switch(_webSession.CurrentModule) {
                             case TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES:
                                 // Famille
                                 levels.Add(11);
+                                selectedFrom = TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels;
+                                break;
+                            case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES:
+                                levels.Add(15);
+                                levels.Add(16);
+                                levels.Add(8);
+                                selectedFrom = TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.customLevels;
                                 break;
                             default:
                                 levels.Add(8);
+                                selectedFrom = TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels;
                                 break;
                         }
-						_webSession.GenericProductDetailLevel=new GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+						_webSession.GenericProductDetailLevel=new GenericDetailLevel(levels,selectedFrom);
 						#endregion
 
                         #region Niveau de détail colonne (Generic)
@@ -255,6 +264,11 @@ namespace AdExpress{
                     _webSession.Sort = 0;
                     _webSession.SortKey = string.Empty;
 
+                    if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES) {
+                        _webSession.ComparativeStudy = false;
+                        _webSession.Evolution = false;
+                    }
+
 					//Défintion des medias et  périodes par défaut pour les modules d'Analyses Sectorielles
 					if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE
 						|| _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR) {
@@ -268,6 +282,9 @@ namespace AdExpress{
                     //Nouveaux univers media
                     _webSession.PrincipalMediaUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
                     _webSession.SecondaryMediaUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                    //New advertising agency univers
+                    _webSession.PrincipalAdvertisingAgnecyUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                    _webSession.SecondaryAdvertisingAgnecyUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 
                     //Initialisation de customerPeriod
                     try {

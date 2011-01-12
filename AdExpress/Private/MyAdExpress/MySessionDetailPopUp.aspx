@@ -159,6 +159,17 @@
 				            <TR height="10"><TD></TD></TR>
 				            <%}%>
 				            
+				            <!--Advertising Agency-->
+				            <%if(displayAdvertisingAgency){%>
+				            <TR>
+					            <TD class="txtViolet11Bold backGroundWhite">&nbsp;<cc1:AdExpressText language="33" id="advertisingAgencyAdExpressText" runat="server" Code="0"></cc1:AdExpressText></TD>
+				            </TR>
+				            <TR height="20">
+					            <TD vAlign="top" align="center" class="backGroundWhite"><%=advertisingAgencyText%></TD>
+				            </TR>
+				            <TR height="10"><TD></TD></TR>
+				            <%}%>
+				            
 				            <!--Annonceurs / Références ...-->
 				            <%if(displayAdvertiser){%>
 				            <TR>

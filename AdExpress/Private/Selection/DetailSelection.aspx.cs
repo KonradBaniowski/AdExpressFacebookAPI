@@ -220,7 +220,14 @@ namespace AdExpress.Private.Selection{
         protected bool displayMediaPersonnalized = false;
         protected bool displayInset = false;
         protected bool displayAutoPromo = false;
-
+        /// <summary>
+        /// Si vrai affiche les agence media dans la page aspx
+        /// </summary>
+        public bool displayAdvertisingAgency = false;
+        /// <summary>
+        /// Advertising Agency Text
+        /// </summary>
+        public string advertisingAgencyText = string.Empty;
 		#endregion
 
 		#region Constructeur
@@ -570,6 +577,41 @@ namespace AdExpress.Private.Selection{
                     selectItemsInClassificationWebControl.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
 
                     mediaPersonnalizedText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryMediaUniverses[0], _webSession.DataLanguage, _webSession.Source);
+                }
+                #endregion
+
+                #region Univers agence media sélectionné
+                if (_webSession.PrincipalAdvertisingAgnecyUniverses != null && _webSession.PrincipalAdvertisingAgnecyUniverses.Count > 0)
+                {
+                    System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
+                    string nameAdvertisingAgency = "";
+
+                    displayAdvertisingAgency = true;
+                    advertisingAgencyAdExpressText.Code = 2817;
+
+                    TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl selectItemsInClassificationWebControl = new TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl();
+                    selectItemsInClassificationWebControl.TreeViewIcons = "/App_Themes/" + themeName + "/Styles/TreeView/Icons";
+                    selectItemsInClassificationWebControl.TreeViewScripts = "/App_Themes/" + themeName + "/Styles/TreeView/Scripts";
+                    selectItemsInClassificationWebControl.TreeViewStyles = "/App_Themes/" + themeName + "/Styles/TreeView/Css";
+                    selectItemsInClassificationWebControl.ChildNodeExcludeCss = "txtChildNodeExcludeCss";
+                    selectItemsInClassificationWebControl.ChildNodeIncludeCss = "txtChildNodeIncludeCss";
+                    selectItemsInClassificationWebControl.ParentNodeChildExcludeCss = "txtParentNodeChildExcludeCss";
+                    selectItemsInClassificationWebControl.ParentNodeChildIncludeCss = "txtParentNodeChildIncludeCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameBodyCss = "treeExcludeFrameBodyCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameCss = "treeExcludeFrameCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameHeaderCss = "treeExcludeFrameHeaderCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameBodyCss = "treeIncludeFrameBodyCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameCss = "treeIncludeFrameCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameHeaderCss = "treeIncludeFrameHeaderCss";
+                    selectItemsInClassificationWebControl.SiteLanguage = _webSession.SiteLanguage;
+                    selectItemsInClassificationWebControl.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
+                    for (int k = 0; k < _webSession.PrincipalAdvertisingAgnecyUniverses.Count; k++)
+                    {
+                        if (_webSession.PrincipalAdvertisingAgnecyUniverses.ContainsKey(k))
+                        {
+                            advertisingAgencyText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalAdvertisingAgnecyUniverses[k], _webSession.DataLanguage, _webSession.Source);
+                        }
+                    }
                 }
                 #endregion
 

@@ -959,6 +959,9 @@ namespace AdExpress.Private.MyAdExpress{
 					//Nouveaux univers Media
 					_webSession.PrincipalMediaUniverses = webSessionSave.PrincipalMediaUniverses;
 					_webSession.SecondaryMediaUniverses = webSessionSave.SecondaryMediaUniverses;
+                    //New univers Advertising Agency
+                    _webSession.PrincipalAdvertisingAgnecyUniverses = webSessionSave.PrincipalAdvertisingAgnecyUniverses;
+                    _webSession.SecondaryAdvertisingAgnecyUniverses = webSessionSave.SecondaryAdvertisingAgnecyUniverses;
 
 					if(notValidPeriod){
 						//Erreur : période non disponible

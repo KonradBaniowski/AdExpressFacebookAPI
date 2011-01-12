@@ -20,6 +20,7 @@ using FctWeb = TNS.AdExpress.Web.Functions;
 using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Web.Navigation;
 using System.Collections;
+using TNS.AdExpress.Web.Core.Exceptions;
 
 namespace TNS.AdExpressI.AdvertisingAgency.DAL
 {
@@ -75,6 +76,9 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             MediaSchedulePeriod comparativePeriod = null;
             int comparativeIndex = 1;
             string N = string.Empty, N1 = string.Empty;
+            string dataFieldsForGad = "";
+            //Get Table GAD
+            Table tblGad = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad);
             #endregion
 
             #region Query Building
@@ -85,15 +89,25 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                 comparativeIndex = 0;
             }
 
+            //Get filter options for the GAD (company's informations)
+            if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
+            {
+                try
+                {
+                    dataFieldsForGad = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad("");
+                }
+                catch (SQLGeneratorException) { ;}
+            }
+
             // Select
             //sql.AppendFormat("select {0}, {1}, date_num, {2} from (", mediaDetailLevel.GetSqlFieldsWithoutTablePrefix(), detailLevel.GetSqlFieldsWithoutTablePrefix(), GetUnitFieldNameSumUnionWithAlias(_session));
             N = "sum(case when ((date_num >= " + _period.Begin.ToString("yyyyMMdd") + " and date_num <= " + _period.End.ToString("yyyyMMdd") + ") or (date_num >= " + _period.Begin.ToString("yyyyMM") + " and date_num <= " + _period.End.ToString("yyyyMM") + ") ) then " + _session.GetSelectedUnit().Id.ToString() + " else 0 end) as N1";
             if (!_session.ComparativeStudy)
-                sql.AppendFormat("select {0}, {1}, {2} from (", GetSqlFieldWithAlias(detailLevel, false), GetSqlFieldWithAlias(mediaDetailLevel, true), N);
+                sql.AppendFormat("select {0}, {1}, {2} {3} from (", GetSqlFieldWithAlias(detailLevel, false), GetSqlFieldWithAlias(mediaDetailLevel, true), N, dataFieldsForGad);
             else 
             {
                 N1 = "sum(case when ((date_num >= " + comparativePeriod.Begin.ToString("yyyyMMdd") + " and date_num <= " + comparativePeriod.End.ToString("yyyyMMdd") + ") or (date_num >= " + comparativePeriod.Begin.ToString("yyyyMM") + " and date_num <= " + comparativePeriod.End.ToString("yyyyMM") + ") ) then " + _session.GetSelectedUnit().Id.ToString() + " else 0 end) as N2";
-                sql.AppendFormat("select {0}, {1}, {2}, {3} from (", GetSqlFieldWithAlias(detailLevel, false), GetSqlFieldWithAlias(mediaDetailLevel, true), N, N1);
+                sql.AppendFormat("select {0}, {1}, {2}, {3} {4} from (", GetSqlFieldWithAlias(detailLevel, false), GetSqlFieldWithAlias(mediaDetailLevel, true), N, N1, dataFieldsForGad);
             }
 
             while (comparativeIndex < 2)
@@ -140,7 +154,7 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                                 }
                             }
                             if (vehicleIdListTmp != null && vehicleIdListTmp.Count > 0)
-                                sql.AppendFormat("({0})", GetQueryForWebPlanEvaliant(detailLevel, mediaDetailLevel, _period.PeriodDetailLEvel, subPeriods.SubPeriodType, subPeriods.Items, string.Empty));
+                                sql.AppendFormat("({0})", GetQueryForEvaliant(detailLevel, mediaDetailLevel, _period.PeriodDetailLEvel, subPeriods.SubPeriodType, subPeriods.Items, string.Empty));
                             else
                                 sql.AppendFormat("({0})", GetQuery(detailLevel, mediaDetailLevel, _period.PeriodDetailLEvel, subPeriods.SubPeriodType, -1, subPeriods.Items, string.Empty));
                             break;
@@ -152,13 +166,13 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             }
 
             sql.Append(") ");
-            sql.AppendFormat(" group by {0}, {1} ", detailLevel.GetSqlGroupByFieldsWithoutTablePrefix(), mediaDetailLevel.GetSqlGroupByFieldsWithoutTablePrefix());
+            sql.AppendFormat(" group by {0}, {1} {2} ", detailLevel.GetSqlGroupByFieldsWithoutTablePrefix(), mediaDetailLevel.GetSqlGroupByFieldsWithoutTablePrefix(), dataFieldsForGad);
             UnitInformation u = _session.GetSelectedUnit();
             if (u.Id == CstWeb.CustomerSessions.Unit.versionNb)
             {
                 sql.AppendFormat(", {0} ", u.Id.ToString());
             }
-            sql.AppendFormat(" order by {0}, {1} ", detailLevel.GetSqlOrderFieldsWithoutTablePrefix(), mediaDetailLevel.GetSqlOrderFieldsWithoutTablePrefix());
+            sql.AppendFormat(" order by {0}, {1} {2} ", detailLevel.GetSqlOrderFieldsWithoutTablePrefix(), mediaDetailLevel.GetSqlOrderFieldsWithoutTablePrefix(), dataFieldsForGad);
             #endregion
 
             #region Execution de la requête
@@ -175,7 +189,7 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
         }
         #endregion
 
-        #region GetQuery
+         #region GetQuery
         /// <summary>
         /// Build query
         /// </summary>
@@ -206,6 +220,9 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             string groupByFieldName = null;
             string groupByOptional = null;
             VehicleInformation vehicleInfo = null;
+            string dataTableNameForGad = "";
+            string dataFieldsForGad = "";
+            string dataJointForGad = "";
             #endregion
 
             if (VehiclesInformation.Contains(vehicleId))
@@ -225,6 +242,9 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                 // Get unit field
                 dateFieldName = FctWeb.SQLGenerator.GetDateFieldName(periodBreakDown);
                 unitAlias = FctWeb.SQLGenerator.GetUnitAlias(_session);
+
+                //Get Table GAD
+                Table tblGad = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad);
 
                 // Get classification fields
                 if (VehiclesInformation.Contains(vehicleId) && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack
@@ -251,6 +271,18 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                 // Get joins for classification
                 productJoinCondition = detailLevel.GetSqlJoins(_session.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                 mediaJoinCondition = mediaDetailLevel.GetSqlJoins(_session.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+
+                //Get filter options for the GAD (company's informations)
+                if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
+                {
+                    try
+                    {
+                        dataTableNameForGad = ", " + tblGad.SqlWithPrefix;
+                        dataFieldsForGad = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad(tblGad.Prefix);
+                        dataJointForGad = "and " + FctWeb.SQLGenerator.GetJointForGad(tblGad.Prefix, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                    }
+                    catch (SQLGeneratorException) { ;}
+                }
             }
             catch (System.Exception err)
             {
@@ -258,7 +290,7 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             }
 
             // Select : Media classificaion selection
-            sql.AppendFormat("select {0}, {1} ", mediaDetailLevel.GetSqlFields(), mediaFieldName);
+            sql.AppendFormat("select {0}, {1} {2} ", mediaDetailLevel.GetSqlFields(), mediaFieldName, dataFieldsForGad);
 
             // Date selection
             if (periodDisplay != CstPeriod.DisplayLevel.dayly
@@ -298,11 +330,13 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                 sql.AppendFormat("sum({0}) as {1}", unitFieldName, unitAlias);
 
             // From : Tables
-            sql.AppendFormat(" from {0}{1}, {2} ", productTableName, tableName, mediaTableName);
+            sql.AppendFormat(" from {0}{1}, {2} {3} ", productTableName, tableName, mediaTableName, dataTableNameForGad);
 
             // Where : Conditions media
-            sql.AppendFormat("where 0=0 {0}", productJoinCondition);
+            sql.AppendFormat(" where 0=0 {0}", productJoinCondition);
             sql.AppendFormat(" {0} ", mediaJoinCondition);
+            //Adding GAD filter
+            sql.AppendFormat(" {0} ", dataJointForGad);
 
             // Period
             bool first = true;
@@ -384,8 +418,12 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             #endregion
 
             #region Sélection produit
-            // product
-            sql.Append(GetProductSelection(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+            // Advertising Agency
+            sql.Append(GetAdvertisingAgencySelection(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+
+            // Refine Product Selection
+            if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
+                sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             #endregion
 
             #region Sélection support
@@ -417,7 +455,7 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             #endregion
 
             // Order
-            sql.AppendFormat("Group by {0} ,{1} {2} ", mediaDetailLevel.GetSqlGroupByFields(), groupByFieldName, groupByOptional);
+            sql.AppendFormat("Group by {0} ,{1} {2} {3} ", mediaDetailLevel.GetSqlGroupByFields(), groupByFieldName, dataFieldsForGad, groupByOptional);
             // And date
             sql.AppendFormat(", {0} ", dateFieldName);
             #endregion
@@ -426,7 +464,7 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
         }
         #endregion
 
-        #region GetQuery web plan evaliant and evaliant mobile
+        #region GetQuery evaliant and evaliant mobile
         /// <summary>
         /// Build query
         /// </summary>
@@ -439,7 +477,7 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
         /// <param name="endDate">Period End</param>
         /// <param name="additionalConditions">Addtional conditions such as AdNetTrack Baners...</param>
         /// <returns>Sql query as a string</returns>
-        protected virtual string GetQueryForWebPlanEvaliant(GenericDetailLevel detailLevel, GenericDetailLevel mediaDetailLevel, CstPeriod.DisplayLevel periodDisplay, CstPeriod.PeriodBreakdownType periodBreakDown, List<PeriodItem> periodItems, string additionalConditions)
+        protected virtual string GetQueryForEvaliant(GenericDetailLevel detailLevel, GenericDetailLevel mediaDetailLevel, CstPeriod.DisplayLevel periodDisplay, CstPeriod.PeriodBreakdownType periodBreakDown, List<PeriodItem> periodItems, string additionalConditions)
         {
 
             #region Variables
@@ -457,6 +495,9 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             string mediaJoinCondition = null;
             string groupByFieldName = null;
             string groupByOptional = null;
+            string dataTableNameForGad = "";
+            string dataFieldsForGad = "";
+            string dataJointForGad = "";
             #endregion
 
             #region Construction de la requête
@@ -477,6 +518,9 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                 //Get unit field
                 unitFieldName = _session.GetSelectedUnit().DatabaseMultimediaField;
 
+                //Get Table GAD
+                Table tblGad = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.gad);
+
                 // Get the classification table
                 productTableName = detailLevel.GetSqlTables(_schAdexpr03.Label);
                 // Get the media classification table
@@ -495,6 +539,18 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                 // Get joins for classification
                 productJoinCondition = detailLevel.GetSqlJoins(_session.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                 mediaJoinCondition = mediaDetailLevel.GetSqlJoins(_session.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+
+                //Get filter options for the GAD (company's informations)
+                if (_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
+                {
+                    try
+                    {
+                        dataTableNameForGad = ", " + tblGad.SqlWithPrefix;
+                        dataFieldsForGad = ", " + FctWeb.SQLGenerator.GetFieldsAddressForGad(tblGad.Prefix);
+                        dataJointForGad = "and " + FctWeb.SQLGenerator.GetJointForGad(tblGad.Prefix, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                    }
+                    catch (SQLGeneratorException) { ;}
+                }
             }
             catch (System.Exception err)
             {
@@ -502,7 +558,7 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             }
 
             // Select : Media classificaion selection
-            sql.AppendFormat("select {0}, {1} ", mediaDetailLevel.GetSqlFields(), mediaFieldName);
+            sql.AppendFormat("select {0}, {1} {2} ", mediaDetailLevel.GetSqlFields(), mediaFieldName, dataFieldsForGad);
 
             // Date selection
             if (periodDisplay != CstPeriod.DisplayLevel.dayly
@@ -536,14 +592,16 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             sql.AppendFormat("{0}", unitFieldName);
 
             // From : Tables
-            sql.AppendFormat(" from {0}{1}, {2} ", productTableName, tableName, mediaTableName);
+            sql.AppendFormat(" from {0}{1}, {2} {3} ", productTableName, tableName, mediaTableName, dataTableNameForGad);
 
             // Where : Conditions media
-            sql.AppendFormat("where 0=0 {0}", productJoinCondition);
+            sql.AppendFormat(" where 0=0 {0}", productJoinCondition);
             sql.AppendFormat(" {0} ", mediaJoinCondition);
+            
+            //Adding GAD filter
+            sql.AppendFormat(" {0} ", dataJointForGad);
 
             // Period
-
             bool first = true;
             foreach (PeriodItem periodItem in periodItems)
             {
@@ -608,8 +666,12 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             #endregion
 
             #region Sélection produit
-            // product
-            sql.Append(GetProductSelection(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+            // Advertising Agency
+            sql.Append(GetAdvertisingAgencySelection(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+
+            // Refine Product Selection
+            if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
+                sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             #endregion
 
             #region Sélection support
@@ -637,7 +699,7 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             #endregion
 
             // Order
-            sql.AppendFormat("Group by {0} ,{1} {2} ", mediaDetailLevel.GetSqlGroupByFields(), groupByFieldName, groupByOptional);
+            sql.AppendFormat("Group by {0} ,{1} {2} {3} ", mediaDetailLevel.GetSqlGroupByFields(), groupByFieldName, dataFieldsForGad, groupByOptional);
             // And date
             sql.AppendFormat(", {0} ", dateFieldName);
             #endregion
@@ -666,7 +728,7 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
         }
         #endregion
 
-        #region GetProductSelection
+        #region GetAdvertisingAgencySelection
         /// <summary>
         /// Get product selection
         /// </summary>
@@ -675,11 +737,11 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
         /// </remarks>
         /// <param name="dataTablePrefixe">data table prefixe</param>
         /// <returns>product selection to add as condition into a sql query</returns>
-        protected virtual string GetProductSelection(string dataTablePrefixe)
+        protected virtual string GetAdvertisingAgencySelection(string dataTablePrefixe)
         {
             string sql = "";
-            if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
-                sql = _session.PrincipalProductUniverses[0].GetSqlConditions(dataTablePrefixe, true);
+            if (_session.PrincipalAdvertisingAgnecyUniverses != null && _session.PrincipalAdvertisingAgnecyUniverses.Count > 0)
+                sql = _session.PrincipalAdvertisingAgnecyUniverses[0].GetSqlConditions(dataTablePrefixe, true);
             return sql;
         }
         #endregion

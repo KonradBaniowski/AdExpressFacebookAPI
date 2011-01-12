@@ -175,7 +175,7 @@ public partial class Private_Selection_UniverseAgencySelection : TNS.AdExpress.W
 				 if ((MustSelectIncludeItems() && nGroups != null && nGroups.Count > 0) || !MustSelectIncludeItems()) {
 					 Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universeDictionary = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 					 universeDictionary.Add(universeDictionary.Count, universe);
-					 _webSession.PrincipalProductUniverses = universeDictionary;
+					 _webSession.PrincipalAdvertisingAgnecyUniverses = universeDictionary;
 					 _webSession.Save();
 					 _webSession.Source.Close();
 					 Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession + "");
@@ -194,7 +194,7 @@ public partial class Private_Selection_UniverseAgencySelection : TNS.AdExpress.W
 			}
 		}		
 		catch (TNS.Classification.Universe.SecurityException) {
-			_webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+			_webSession.PrincipalAdvertisingAgnecyUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 			_webSession.Save();
 			SelectItemsInClassificationWebControl1.ErrorCode = FrameWorkSelection.error.SECURITY_EXCEPTION;
 			Response.Write("<script language=javascript>");
@@ -202,7 +202,7 @@ public partial class Private_Selection_UniverseAgencySelection : TNS.AdExpress.W
 			Response.Write("</script>");
 		}
 		catch (TNS.Classification.Universe.CapacityException) {
-			_webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+			_webSession.PrincipalAdvertisingAgnecyUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 			_webSession.Save();
 			SelectItemsInClassificationWebControl1.ErrorCode = FrameWorkSelection.error.MAX_ELEMENTS;
 			Response.Write("<script language=javascript>");
@@ -232,7 +232,7 @@ public partial class Private_Selection_UniverseAgencySelection : TNS.AdExpress.W
 			if (universe != null && universe.Count() > 0) {
 				Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universeDictionary = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 				universeDictionary.Add(universeDictionary.Count, universe);
-				_webSession.PrincipalProductUniverses = universeDictionary;
+				_webSession.PrincipalAdvertisingAgnecyUniverses = universeDictionary;
 				_webSession.Save();
 				_webSession.Source.Close();				
 				saveScript = "window.showModalDialog('/Private/Universe/RegisterUniverse.aspx?idSession=" + _webSession.IdSession + "&brancheType=" + branchType
@@ -245,14 +245,14 @@ public partial class Private_Selection_UniverseAgencySelection : TNS.AdExpress.W
 			}
 		}		
 		catch (TNS.Classification.Universe.SecurityException) {
-			_webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+			_webSession.PrincipalAdvertisingAgnecyUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 			_webSession.Save();
 			SelectItemsInClassificationWebControl1.ErrorCode = FrameWorkSelection.error.SECURITY_EXCEPTION;
 			Response.Write("<script language=javascript>");
 			Response.Write("alert(\"" + GestionWeb.GetWebWord(2285, _webSession.SiteLanguage) + "\");");		
 			Response.Write("</script>");
 		}catch(TNS.Classification.Universe.CapacityException){
-			_webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+			_webSession.PrincipalAdvertisingAgnecyUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 			_webSession.Save();
 			SelectItemsInClassificationWebControl1.ErrorCode = FrameWorkSelection.error.MAX_ELEMENTS;
 			Response.Write("<script language=javascript>");
@@ -288,7 +288,7 @@ public partial class Private_Selection_UniverseAgencySelection : TNS.AdExpress.W
 			}
 
 			Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> Universes = (Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>)TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetObjectUniverses(idUniverse, _webSession);
-			_webSession.PrincipalProductUniverses = Universes;
+			_webSession.PrincipalAdvertisingAgnecyUniverses = Universes;
 			_webSession.Save();			
 			selectionnedUnivers = true;
 
@@ -322,13 +322,14 @@ public partial class Private_Selection_UniverseAgencySelection : TNS.AdExpress.W
 	/// </summary>
 	private void ComponentsInitOptions() {
 
-		if (!Page.IsPostBack && _webSession.LastWebPage.IndexOf(this.Page.Request.Url.AbsolutePath) < 0) _webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+		if (!Page.IsPostBack && _webSession.LastWebPage.IndexOf(this.Page.Request.Url.AbsolutePath) < 0) _webSession.PrincipalAdvertisingAgnecyUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 
 		MenuWebControl2.CustomerWebSession = _webSession;
         SelectItemsInClassificationWebControl1.DBSchema=WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
 		SelectItemsInClassificationWebControl1.CustomerWebSession = _webSession;
 		SelectItemsInClassificationWebControl1.SearchRulesTextCode = 2287;
 		SelectItemsInClassificationWebControl1.SearchRulesTextCss = "SearchRulesTextCss";
+        SelectItemsInClassificationWebControl1.NbMaxIncludeTree = 1;
 		LoadableUniversWebControl1.CustomerWebSession = _webSession;
 		LoadableUniversWebControl1.ListBranchType = TNS.AdExpress.Constantes.Classification.Branch.type.advertisingAgency.GetHashCode().ToString();
 		LoadableUniversWebControl1.Dimension_ = TNS.Classification.Universe.Dimension.advertisingAgency;

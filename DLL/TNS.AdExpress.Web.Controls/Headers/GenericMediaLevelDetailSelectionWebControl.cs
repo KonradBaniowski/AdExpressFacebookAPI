@@ -1332,7 +1332,131 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 						return(true);
 				}
 
-               
+                case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
+                switch (currentDetailLevelItem.Id)
+                {
+                    #region Annonceur
+                    case DetailLevelItemInformation.Levels.advertiser:
+                        if (
+                            // Accès si sélection en groupe de société, annonceur, marque, produit, groupe et variété
+                            (_customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.PRODUCT, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.BRAND, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.ADVERTISER, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.HOLDING_COMPANY, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.GROUP_, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.SEGMENT, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.ADVERTISING_AGENCY, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.GROUP_ADVERTISING_AGENCY, AccessType.includes) 
+                            ) &&
+                            // Pas de famille, classe
+                            !_customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.SECTOR, AccessType.includes) &&
+                            !_customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.SUB_SECTOR, AccessType.includes)
+                            )
+                            return (true);
+                        return (false);
+                    #endregion
+
+                    #region Product
+                    case DetailLevelItemInformation.Levels.product:
+                        if (
+                            // Products rights
+                            _customerWebSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG) &&
+                            // Accès si sélection en groupe de société, annonceur, marque, produit, groupe et variété
+                            (_customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.PRODUCT, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.BRAND, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.ADVERTISER, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.HOLDING_COMPANY, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.GROUP_, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.SEGMENT, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.ADVERTISING_AGENCY, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.GROUP_ADVERTISING_AGENCY, AccessType.includes) 
+                            ) &&
+                            // Pas de famille, classe
+                            !_customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.SECTOR, AccessType.includes) &&
+                            !_customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.SUB_SECTOR, AccessType.includes)
+                            )
+                            return (true);
+                        return (false);
+                    #endregion
+
+                    #region Marques
+                    case DetailLevelItemInformation.Levels.brand:
+
+                        if (
+                             // Droit sur les groupe de société
+                            _customerWebSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE) &&
+                            // Accès si sélection en groupe de société, annonceur, marque, produit, groupe et variété
+                            (_customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.PRODUCT, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.BRAND, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.ADVERTISER, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.HOLDING_COMPANY, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.GROUP_, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.SEGMENT, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.ADVERTISING_AGENCY, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.GROUP_ADVERTISING_AGENCY, AccessType.includes) 
+                            ) &&
+                            // Pas de famille, classe
+                            !_customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.SECTOR, AccessType.includes) &&
+                            !_customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.SUB_SECTOR, AccessType.includes)
+                            )
+                            return (true);
+                        return (false);
+                    #endregion
+
+                    #region Famille, classe, groupe, variété
+                    case DetailLevelItemInformation.Levels.sector:
+                    case DetailLevelItemInformation.Levels.subSector:
+                    case DetailLevelItemInformation.Levels.group:
+                        return (true);
+                    case DetailLevelItemInformation.Levels.segment:
+                        if (_customerWebSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.DB.Flags.ID_SEGMENT_LEVEL_ACCESS_FLAG)) return (true);
+                        return (false);
+                    #endregion
+
+                    #region Groupe de société
+                    case DetailLevelItemInformation.Levels.holdingCompany:
+
+                        if (
+                            // Droit sur les groupe de société
+                            _customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_HOLDING_COMPANY) &&
+                            // Accès si sélection en groupe de société, annonceur, marque, produit, groupe et variété
+                            (_customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.PRODUCT, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.BRAND, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.ADVERTISER, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.HOLDING_COMPANY, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.GROUP_, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.SEGMENT, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.ADVERTISING_AGENCY, AccessType.includes) ||
+                            _customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.GROUP_ADVERTISING_AGENCY, AccessType.includes) 
+                            ) &&
+                            // Pas de famille, classe
+                            !_customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.SECTOR, AccessType.includes) &&
+                            !_customerWebSession.PrincipalAdvertisingAgnecyUniverses[0].ContainsLevel(TNSClassificationLevels.SUB_SECTOR, AccessType.includes)
+                            )
+                            return (true);
+                        return (false);
+                    #endregion
+
+                    #region Agences et groupe d'agence
+                    case DetailLevelItemInformation.Levels.groupMediaAgency:
+                    case DetailLevelItemInformation.Levels.agency:
+                        vehicleList = GetVehicles();
+                        if (
+                            // Droit sur les agences media
+                             _customerWebSession.CustomerLogin.CustomerMediaAgencyFlagAccess(vehicleList)
+                            ) return (true);
+                        return (false);
+                    #endregion
+
+                    #region Version
+                    case DetailLevelItemInformation.Levels.slogan:
+                        return (false);
+
+                    #endregion
+
+                    default:
+                        return (true);
+                }
 
 				case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
 				switch(currentDetailLevelItem.Id){

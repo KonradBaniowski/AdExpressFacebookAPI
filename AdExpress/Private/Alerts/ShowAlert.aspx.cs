@@ -128,6 +128,7 @@ public partial class Private_Alerts_ShowAlert : TNS.AdExpress.Web.UI.PrivateWebP
                             case ModuleName.ANALYSE_DES_DISPOSITIFS:
                             case ModuleName.ANALYSE_DES_PROGRAMMES:
                             case ModuleName.NEW_CREATIVES:
+                            case ModuleName.ANALYSE_MANDATAIRES:
                                 _webSession.PeriodType = CustomerSessions.Period.Type.dateToDate;
                                 _webSession.PeriodBeginningDate = occ.DateBeginStudy.ToString("yyyyMMdd");
                                 _webSession.PeriodEndDate = occ.DateEndStudy.ToString("yyyyMMdd");
@@ -149,6 +150,7 @@ public partial class Private_Alerts_ShowAlert : TNS.AdExpress.Web.UI.PrivateWebP
                             case ModuleName.ANALYSE_CONCURENTIELLE:
                             case ModuleName.ANALYSE_PORTEFEUILLE:
                             case ModuleName.NEW_CREATIVES:
+                            case ModuleName.ANALYSE_MANDATAIRES:
                                 // Updated customer period (module use globalCalendar)
                                 _webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(occ.DateBeginStudy.ToString("yyyyMMdd"), occ.DateEndStudy.ToString("yyyyMMdd"),
                                                                                                        _webSession.CustomerPeriodSelected.WithComparativePeriod, _webSession.CustomerPeriodSelected.ComparativePeriodType,

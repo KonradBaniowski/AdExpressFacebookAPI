@@ -342,7 +342,10 @@ public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.Pr
                     universes = _webSession.SecondaryMediaUniverses;
                 else
                     universes = _webSession.PrincipalMediaUniverses;
-				break;			
+				break;
+			case TNS.AdExpress.Constantes.Classification.Branch.type.advertisingAgency:
+                universes = _webSession.PrincipalAdvertisingAgnecyUniverses;
+                break;
 			default: break;
 		}
 

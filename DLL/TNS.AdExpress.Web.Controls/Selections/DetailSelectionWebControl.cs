@@ -537,6 +537,9 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 						case WebConstantes.DetailSelection.Type.productSelected:
 							t.Append(GetProductSelected(_webSession));
 							break;
+                        case WebConstantes.DetailSelection.Type.advertisingAgencySelected:
+                            t.Append(GetAdvertisingAgencySelected(_webSession));
+                            break;
 						case WebConstantes.DetailSelection.Type.mediaLevelDetail:
 							t.Append(GetMediaLevelDetail(_webSession));
 							break;
@@ -650,7 +653,10 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			#region CopyRight TNS
 			t.Append("<table cellpadding=0 cellspacing=0 width=100% >");
 			t.Append(GetBlankLine());
-			t.Append("<tr><td " + cssTitleData + "> " + GestionWeb.GetWebWord(2266, _webSession.SiteLanguage) + "  " + DateTime.Now.Year.ToString() + "</td></tr>");
+			t.Append("<tr><td " + cssTitleData + "> " + GestionWeb.GetWebWord(2848, _webSession.SiteLanguage) + " "
+                                                + WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CompanyNameTexts.GetCompanyShortName(_webSession.SiteLanguage) + " "
+                                                + GestionWeb.GetWebWord(2849, _webSession.SiteLanguage) 
+                                                + "  " + DateTime.Now.Year.ToString() + "</td></tr>");
 			t.Append(GetBlankLine());
 			t.Append("</table><br>");
 			#endregion
@@ -1116,8 +1122,31 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		}
 		#endregion
 
-		#region Niveau de détail support (Média détaillé par)
+        #region Advertising Agency Selected
 		/// <summary>
+        /// Advertising Agency Selected
+		/// </summary>
+		/// <param name="webSession">Customer Session</param>
+		/// <returns>HTML</returns>
+        private string GetAdvertisingAgencySelected(WebSession webSession) {
+
+            StringBuilder t = new StringBuilder();
+            AdExpressUniverse adExpressUniverse = null;
+
+            if (webSession.PrincipalAdvertisingAgnecyUniverses.Count == 1)
+            {
+                t.Append(GetBlankLine());
+                t.Append("<TR><TD colspan=4 " + cssTitleData + " ><font " + cssTitle + ">" + GestionWeb.GetWebWord(2817, webSession.SiteLanguage) + " :</font></TD></TR>");
+                adExpressUniverse = webSession.PrincipalAdvertisingAgnecyUniverses[0];
+                t.Append(ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.Source));//TNS.AdExpress.Web.Functions.DisplayUniverse
+            }
+
+            return t.ToString();
+        }
+        #endregion
+
+        #region Niveau de détail support (Média détaillé par)
+        /// <summary>
 		/// Niveau de détail support (Média détaillé par)
 		/// </summary>
 		/// <param name="webSession">Session du client</param>

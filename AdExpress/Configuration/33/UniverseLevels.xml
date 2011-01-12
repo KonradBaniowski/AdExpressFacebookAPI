@@ -12,6 +12,6 @@
   <level id="12" name="category" labelId="1382" dbId="id_category" dbTable="category"/>
   <level id="14" name="media" labelId="971" dbId="id_media" dbTable="media"/>
   <level id="15" name="interest_center" labelId="1384" dbId="id_interest_center" dbTable="interest_center"/>
-  <level id="19" name="media_agency" labelId="1891" dbId="id_advertising_agency" dbTable="advertising_agency"/>
   <level id="20" name="group_media_agency" labelId="1890" dbId="id_group_advertising_agency" dbTable="group_advertising_agency"/>
+  <level id="19" name="media_agency" labelId="1891" dbId="id_advertising_agency" dbTable="advertising_agency"/>
 </universeLevels>

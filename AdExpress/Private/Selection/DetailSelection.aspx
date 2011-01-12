@@ -229,6 +229,16 @@
                             </tr>
                             <TR height="10"><TD></TD></TR>
                             <%} %>
+                            <!--Advertising Agnecy-->
+				            <%if(displayAdvertisingAgency){%>
+				            <TR>
+					            <TD class="txtViolet11Bold">&nbsp;<cc1:adexpresstext language="33" id="advertisingAgencyAdExpressText" runat="server" Code="0"></cc1:adexpresstext></TD>
+				            </TR>
+				            <TR height="20">
+					            <TD vAlign="top" align="center"><%=advertisingAgencyText%></TD>
+				            </TR>
+				            <TR height="10"><TD></TD></TR>
+				            <%}%>
                             <!--Produits-->
 				            <%if(displayProduct){%>
 				            <TR>

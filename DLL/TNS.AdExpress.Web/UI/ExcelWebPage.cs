@@ -129,7 +129,10 @@ namespace TNS.AdExpress.Web.UI{
 			#region CopyRight TNS
 			t.Append("<table cellpadding=0 cellspacing=0 width=100% >");
 			t.Append(GetBlankLine());
-			t.Append("<tr><td class=\"excelData\"> " + GestionWeb.GetWebWord(2266, webSession.SiteLanguage) +"&nbsp;"+ DateTime.Now.Year.ToString() + "</td></tr>");
+            t.Append("<tr><td class=\"excelData\"> " + GestionWeb.GetWebWord(2848, webSession.SiteLanguage) + "&nbsp;"
+                     + WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CompanyNameTexts.GetCompanyShortName(webSession.SiteLanguage) + "&nbsp;"
+                     + GestionWeb.GetWebWord(2849, webSession.SiteLanguage) 
+                     +"&nbsp;"+ DateTime.Now.Year.ToString() + "</td></tr>");
 			t.Append(GetBlankLine());
 			t.Append("</table><br>");
 			#endregion
@@ -208,6 +211,9 @@ namespace TNS.AdExpress.Web.UI{
 						case WebConstantes.DetailSelection.Type.productSelected:
 							t.Append(GetProductSelected(webSession)); 
 							break;
+                        case WebConstantes.DetailSelection.Type.advertisingAgencySelected:
+                            t.Append(GetAdvertisingAgencySelected(webSession));
+                            break;
 						case WebConstantes.DetailSelection.Type.mediaLevelDetail:
 							t.Append(GetMediaLevelDetail(webSession));
 							break;
@@ -643,6 +649,34 @@ namespace TNS.AdExpress.Web.UI{
             #endregion
 
             return (t.ToString());
+        }
+        #endregion
+
+        #region Advertising Agency Selected
+        /// <summary>
+        /// Advertising Agency Selected
+        /// </summary>
+        /// <param name="webSession">Customer session</param>
+        /// <returns>HTML</returns>
+        public static string GetAdvertisingAgencySelected(WebSession webSession)
+        {
+            int universeCodeTitle = 2817;
+            string advertisingAgencySelection = "";
+
+            AdExpressUniverse adExpressUniverse = null;
+
+            #region Principal Advertising Agency Selected 
+            if (webSession.PrincipalAdvertisingAgnecyUniverses.Count == 1)
+            {
+                advertisingAgencySelection += GetBlankLine();
+                advertisingAgencySelection += "<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
+                adExpressUniverse = webSession.PrincipalAdvertisingAgnecyUniverses[0];
+
+                advertisingAgencySelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.DataLanguage, webSession.Source);
+            }
+            #endregion
+
+            return (advertisingAgencySelection);
         }
         #endregion
 

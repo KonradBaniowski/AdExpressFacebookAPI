@@ -63,7 +63,7 @@
                                                     RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx" 
                                                     SaveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelSave.aspx" 
                                                     InializeSlogansOption="False" InializeMediaOption="True" 
-                                                    InializeProductOption="False" PeriodDetailOptions="False"></cc2:resultsoptionswebcontrol>
+                                                    InializeProductOption="True" PeriodDetailOptions="False"></cc2:resultsoptionswebcontrol>
                                         </td>
 									</tr>
 									<tr class="backGroundOptions">

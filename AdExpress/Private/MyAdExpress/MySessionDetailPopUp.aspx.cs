@@ -143,6 +143,14 @@ namespace AdExpress.Private.MyAdExpress{
         /// Affiche les media dans page aspx
         /// </summary>
         public bool displayMedia = false;
+        /// <summary>
+        /// Display Advertising Agency
+        /// </summary>
+        public bool displayAdvertisingAgency;
+        /// <summary>
+        /// Adevrtising Agency Text
+        /// </summary>
+        public string advertisingAgencyText = string.Empty;
 		#endregion
 		
 		#region Constructeur
@@ -623,10 +631,49 @@ namespace AdExpress.Private.MyAdExpress{
 						if (webSessionSave.SecondaryProductUniverses.Count > 1)
 							competitorAdvertiserText = t.ToString();
 					}
-				}
+                }
 
-				#region Medias concurrents
-				if (webSessionSave.isCompetitorMediaSelected()){
+                #region Advertising Agency Univers
+                //Univers advertising agency principal sélectionné
+                string nameAdvertisingAgnecy = "";
+                System.Text.StringBuilder tmp = null;
+                if (webSessionSave.PrincipalAdvertisingAgnecyUniverses != null && webSessionSave.PrincipalAdvertisingAgnecyUniverses.Count > 0)
+                {
+
+                    tmp = new System.Text.StringBuilder(1000);
+                    nameAdvertisingAgnecy = "";
+
+                    displayAdvertisingAgency = true;
+                    advertisingAgencyAdExpressText.Code = 2817;
+
+                    TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl selectItemsInClassificationWebControl = new TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl();
+                    selectItemsInClassificationWebControl.TreeViewIcons = "/App_Themes/" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + "/Styles/TreeView/Icons";
+                    selectItemsInClassificationWebControl.TreeViewScripts = "/App_Themes/" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + "/Styles/TreeView/Scripts";
+                    selectItemsInClassificationWebControl.TreeViewStyles = "/App_Themes/" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + "/Styles/TreeView/Css";
+                    selectItemsInClassificationWebControl.ChildNodeExcludeCss = "txtChildNodeExcludeCss";
+                    selectItemsInClassificationWebControl.ChildNodeIncludeCss = "txtChildNodeIncludeCss";
+                    selectItemsInClassificationWebControl.ParentNodeChildExcludeCss = "txtParentNodeChildExcludeCss";
+                    selectItemsInClassificationWebControl.ParentNodeChildIncludeCss = "txtParentNodeChildIncludeCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameBodyCss = "treeExcludeFrameBodyCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameCss = "treeExcludeFrameCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameHeaderCss = "treeExcludeFrameHeaderCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameBodyCss = "treeIncludeFrameBodyCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameCss = "treeIncludeFrameCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameHeaderCss = "treeIncludeFrameHeaderCss";
+                    selectItemsInClassificationWebControl.SiteLanguage = _webSession.SiteLanguage;
+                    selectItemsInClassificationWebControl.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
+                    for (int k = 0; k < webSessionSave.PrincipalAdvertisingAgnecyUniverses.Count; k++)
+                    {
+                        if (webSessionSave.PrincipalAdvertisingAgnecyUniverses.ContainsKey(k))
+                        {
+                                advertisingAgencyText += selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.PrincipalAdvertisingAgnecyUniverses[k], _webSession.DataLanguage, _webSession.Source);
+                        }
+                    }
+                }
+                #endregion
+
+                #region Medias concurrents
+                if (webSessionSave.isCompetitorMediaSelected()){
 					displayDetailMedia=true;
 					System.Text.StringBuilder mediaSB=new System.Text.StringBuilder(1000);
 				

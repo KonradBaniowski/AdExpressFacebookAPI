@@ -359,6 +359,7 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
 			case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE :
 			case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE :
 			case WebConstantes.Module.Name.ALERTE_PORTEFEUILLE :
+            case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
 				SelectItemsInClassificationWebControl1.ForSelectionPage = false;
 				LoadableUniversWebControl1.SelectionPage = false;
 				break;

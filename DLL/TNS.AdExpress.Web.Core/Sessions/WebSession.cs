@@ -3488,16 +3488,11 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		#endregion 
 
         #region Dates
-        // TO ROLLBACK AFTER UNIVERS ADAPTATION 04/11/2011
-        //public CustomerPeriod UpdateDates(DateTime FirstDayNotEnable, DateTime dateRef) 
-        public CustomerPeriod UpdateDates(DateTime FirstDayNotEnable) 
+        public CustomerPeriod UpdateDates(DateTime FirstDayNotEnable, DateTime dateRef) 
         {
             bool isLastCompletePeriod = false;
-            // TO ROLLBACK AFTER UNIVERS ADAPTATION 04/11/2011
-            //DateTime lastDayEnable = dateRef;
-            //DateTime tmp = dateRef;
-            DateTime lastDayEnable = DateTime.Now;
-            DateTime tmp = DateTime.Now;
+            DateTime lastDayEnable = dateRef;
+            DateTime tmp = dateRef;
 
             // In the case of a LostWin study, if the period disponibility
             // selected is a complete period, we change the flag and the
@@ -3516,11 +3511,8 @@ namespace TNS.AdExpress.Web.Core.Sessions {
             {
                 #region nLastYears
                 case CustPeriodType.nLastYear:
-                    // TO ROLLBACK AFTER UNIVERS ADAPTATION 04/11/2011
-                    //this.PeriodBeginningDate = dateRef.AddYears(1 - this.PeriodLength).ToString("yyyy0101");
-                    //this.PeriodEndDate = dateRef.ToString("yyyyMMdd");
-                    this.PeriodBeginningDate = DateTime.Now.AddYears(1 - this.PeriodLength).ToString("yyyy0101");
-                    this.PeriodEndDate = DateTime.Now.ToString("yyyyMMdd");
+                    this.PeriodBeginningDate = dateRef.AddYears(1 - this.PeriodLength).ToString("yyyy0101");
+                    this.PeriodEndDate = dateRef.ToString("yyyyMMdd");
                     break;
                 #endregion
 
@@ -3573,11 +3565,8 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 
                 #region previousYear
                 case CustPeriodType.previousYear:
-                    // TO ROLLBACK AFTER UNIVERS ADAPTATION 04/11/2011
-                    //this.PeriodBeginningDate = dateRef.AddYears(-1).ToString("yyyy0101");
-                    //this.PeriodEndDate = dateRef.AddYears(-1).ToString("yyyy1231");
-                    this.PeriodBeginningDate = DateTime.Now.AddYears(-1).ToString("yyyy0101");
-                    this.PeriodEndDate = DateTime.Now.AddYears(-1).ToString("yyyy1231");
+                    this.PeriodBeginningDate = dateRef.AddYears(-1).ToString("yyyy0101");
+                    this.PeriodEndDate = dateRef.AddYears(-1).ToString("yyyy1231");
                     break;
                 #endregion
 
