@@ -234,7 +234,9 @@
     <Content Include="App_Themes\KMAE-Fr\Styles.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App_Themes\KMAE-Uk\Styles.xml" />
+    <Content Include="App_Themes\KMAE-Uk\Styles.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Themes\SkAE-Sk\Styles.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
