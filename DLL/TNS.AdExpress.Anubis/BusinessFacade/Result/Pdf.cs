@@ -12,6 +12,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 
 using PDFCreatorPilotLib;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Anubis.BusinessFacade.Result{
 	/// <summary>
@@ -205,7 +206,9 @@ namespace TNS.AdExpress.Anubis.BusinessFacade.Result{
 						, this.WorkZoneBottom + this._footerHeight/2, 0, str);
 
 					if(withCopyright){
-                        string strCopyright = GestionWeb.GetWebWord(2266, webSession.SiteLanguage);
+                        string strCopyright = GestionWeb.GetWebWord(2848, webSession.SiteLanguage) + " "
+                                                + WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CompanyNameTexts.GetCompanyShortName(webSession.SiteLanguage) + " "
+                                                + GestionWeb.GetWebWord(2849, webSession.SiteLanguage);
                         _style.GetTag("copyright").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
                         this.PDFPAGE_TextOut(
                             

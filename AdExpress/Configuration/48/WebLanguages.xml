@@ -20,6 +20,7 @@
         <dateFormat name="shortdatepattern" format="MM/dd/yyyy"             excelFormat="MM/dd/yyyy"/>
         <dateFormat name="customdatepattern" format="ddd, MMM dd, yyyy"   excelFormat="ddd, MMM dd, yyyy"/>
       </dateFormats>
+      <companyNameTexts companyName="758" companyShortName="2843"/>
     </language>
   </languages>
 </configuration>

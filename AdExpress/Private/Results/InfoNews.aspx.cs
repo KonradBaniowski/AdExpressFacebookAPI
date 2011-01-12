@@ -81,7 +81,8 @@ namespace AdExpress.Private.Results{
 			
 				HeaderWebControl1.ActiveMenu = WebCst.MenuTraductions.NEWS;
                 HeaderWebControl1.Language = _webSession.SiteLanguage;
-				PageTitleWebControl1.Language = _webSession.SiteLanguage;
+                CustomizePageTitleWebControl1.Language = _webSession.SiteLanguage;
+                CustomizePageTitleWebControl1.CodeDescriptionList = "2846," + WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CompanyNameTexts.CompanyNameCode + ",2847";
 				#endregion
 
 				#region Script

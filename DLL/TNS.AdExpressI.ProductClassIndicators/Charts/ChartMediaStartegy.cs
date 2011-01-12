@@ -767,7 +767,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             #region Copyright & Logo
             if (this._chartType != ChartImageType.Flash)
             {
-                Title title = new Title("" + GestionWeb.GetWebWord(2266, _session.SiteLanguage) + "");
+                Title title = new Title("" + GestionWeb.GetWebWord(2848, _session.SiteLanguage) + " "
+                                           + WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CompanyNameTexts.GetCompanyShortName(_session.SiteLanguage) + " "
+                                           + GestionWeb.GetWebWord(2849, _session.SiteLanguage) + "");
                 title.Font = new Font("Arial", (float)8);
                 title.DockInsideChartArea = false;
                 title.Docking = Docking.Bottom;

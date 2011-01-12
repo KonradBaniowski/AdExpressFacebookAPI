@@ -934,7 +934,7 @@
     <!-- ***************************************************************************************************************************-->
     <!-- ***************************************************************************************************************************-->
 
-    <moduleGroup name="Evaliant" type="1" privilegecode="150" traductioncode="2555" flashUrl="/Flash/Common/GroupedeModuleAlerte.swf" missingFlashUrl="/Images/Common/FlashReplacement/GroupedeModuleAlerte.gif" descriptionWebTextId="2556">
+    <moduleGroup name="Evaliant" type="1" privilegecode="150" traductioncode="2555" flashUrl="/Flash/Common/GroupedeModuleAlerte.swf" missingFlashUrl="/Images/Common/FlashReplacement/GroupedeModuleAlerte.gif" descriptionWebTextId="2850">
       <!-- *****************************************      Nouvelles créations              *****************************************-->
       <module name="Les nouvelles créations" privilegecode="4369" traductioncode="2557" moduleCategoryId="0" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2558" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
         <RulesLayer name="Default New Creatives rules layers" assemblyName="TNS.AdExpressI.NewCreatives.Default.dll" class="TNS.AdExpressI.NewCreatives.Default.NewCreativesResult"/>

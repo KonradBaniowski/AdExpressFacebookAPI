@@ -222,7 +222,9 @@ namespace TNS.AdExpress.Web.Controls.Results {
 								InitializeComponent(chartArea, _typeFlash, _webSession, _defaultBorderLineColor, _chartBorderLineColor, _titleColor, indexTitle, nbItem,ref posY);
 								if (!_typeFlash) {
 									//CopyRight
-									Title title = new Title("" + GestionWeb.GetWebWord(2266, _webSession.SiteLanguage) + "");
+									Title title = new Title("" + GestionWeb.GetWebWord(2848, _webSession.SiteLanguage) + " "
+                                                               + WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CompanyNameTexts.GetCompanyShortName(_webSession.SiteLanguage) + " "
+                                                               + GestionWeb.GetWebWord(2849, _webSession.SiteLanguage) + "");
 									title.Font = new Font("Arial", (float)8);
 									title.DockInsideChartArea = false;
 									title.Docking = Docking.Bottom;

@@ -70,7 +70,7 @@
 										<!-- éléments variables du menus de gauche -->
 										<tr valign="top">
 											<td id="pageTitle">
-												<cc1:pagetitlewebcontrol id="PageTitleWebControl1" runat="server" CodeTitle="762" CodeDescription="1324"></cc1:pagetitlewebcontrol>
+												<cc1:CustomizePageTitleWebControl id="CustomizePageTitleWebControl1" runat="server" CodeTitle="762"></cc1:CustomizePageTitleWebControl>
 											</td>
 										</tr>
 										

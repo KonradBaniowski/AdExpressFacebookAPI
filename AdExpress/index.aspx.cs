@@ -120,6 +120,7 @@ namespace AdExpress{
 			
 				#region Textes et langage du site
 				_setLanguage = string.Empty;
+                companyNameText.Code = WebApplicationParameters.AllowedLanguages[_siteLanguage].CompanyNameTexts.CompanyNameCode;
 				#endregion
 
             }

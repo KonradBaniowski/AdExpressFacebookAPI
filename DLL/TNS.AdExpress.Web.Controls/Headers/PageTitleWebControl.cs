@@ -81,32 +81,9 @@ namespace TNS.AdExpress.Web.Controls.Headers
             output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\" class=\"backGroundModuleTitleBorder\">");
 			output.Write("\n<tr>");
 			output.Write("\n<td>");
-			
-            // Debut tableau titre
-			output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
-			
-            output.Write("\n<tr>");
-			output.Write("\n<td height=\"5\"></td>");
-			output.Write("\n</tr>");
-			
-            output.Write("\n<tr>");
-            output.Write("\n<td class=\"headerLeft\" colspan=\"3\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\"></td>");
-			output.Write("\n</tr>");
-			
-            output.Write("\n<tr>");
-            //output.Write("\n<td style=\"HEIGHT: 14px\" vAlign=\"top\"><IMG height=\"12\" src=\"/App_Themes/" + themeName + "/Images/Common/block_fleche.gif\" width=\"12\"></td>");
-            output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" class=\"blockBackGround\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"13\"></td>");
-            output.Write("\n<td class=\"txtNoir11Bold backGroundModuleTitle\" style=\"PADDING-RIGHT: 5px; PADDING-LEFT: 5px; TEXT-TRANSFORM: uppercase; HEIGHT: 14px\" width=\"100%\">" + GestionWeb.GetWebWord(codeTitle, siteLang) + "</td>");
-            output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\" width=\"1\"></td>");
-			output.Write("\n</tr>");
-			
-            output.Write("\n<tr>");
-			//output.Write("\n<td></td>");
-            output.Write("\n<td class=\"headerLeft\" colspan=\"3\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\"></td>");
-			output.Write("\n</tr>");
-			
-            output.Write("\n</table>");
-            // Fin tableau titre
+
+            TableRender(output, themeName);
+            
 			output.Write("\n</td>");
 			output.Write("\n</tr>");
 			
@@ -114,16 +91,64 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			output.Write("\n<TR>");
 			output.Write("\n<TD height=\"5\"></TD>");
 			output.Write("\n</TR>");
-			output.Write("\n<tr>");
-            output.Write("\n<td class=\"txtBlanc11Bold\">");
-			output.Write(GestionWeb.GetWebWord(codeDescription,siteLang));
-			output.Write("\n</td>");
-			output.Write("\n</tr>");
+
+            DescriptionRender(output);
+
 			output.Write("\n<TR>");
 			output.Write("\n<TD height=\"5\"></TD>");
 			output.Write("\n</TR>");
 			output.Write("\n</table>");
 		}
 		#endregion
-	}
+
+        #region Private Methods
+        /// <summary>
+        /// Table Render
+        /// </summary>
+        /// <param name="themeName">Theme Name</param>
+        /// <param name="output">Le writer HTML vers lequel écrire</param>
+        private void TableRender(HtmlTextWriter output, string themeName) {
+
+            // Debut tableau titre
+            output.Write("\n<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
+
+            output.Write("\n<tr>");
+            output.Write("\n<td height=\"5\"></td>");
+            output.Write("\n</tr>");
+
+            output.Write("\n<tr>");
+            output.Write("\n<td class=\"headerLeft\" colspan=\"3\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\"></td>");
+            output.Write("\n</tr>");
+
+            output.Write("\n<tr>");
+            //output.Write("\n<td style=\"HEIGHT: 14px\" vAlign=\"top\"><IMG height=\"12\" src=\"/App_Themes/" + themeName + "/Images/Common/block_fleche.gif\" width=\"12\"></td>");
+            output.Write("\n<td style=\"HEIGHT: 14px\" width=\"1%\" class=\"blockBackGround\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/Images/Common/pixel.gif\" width=\"13\"></td>");
+            output.Write("\n<td class=\"txtNoir11Bold backGroundModuleTitle\" style=\"PADDING-RIGHT: 5px; PADDING-LEFT: 5px; TEXT-TRANSFORM: uppercase; HEIGHT: 14px\" width=\"100%\">" + GestionWeb.GetWebWord(codeTitle, siteLang) + "</td>");
+            output.Write("\n<td style=\"HEIGHT: 14px\" class=\"headerLeft\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\" width=\"1\"></td>");
+            output.Write("\n</tr>");
+
+            output.Write("\n<tr>");
+            //output.Write("\n<td></td>");
+            output.Write("\n<td class=\"headerLeft\" colspan=\"3\"><IMG height=\"1\" src=\"/App_Themes/" + themeName + "/images/Common/pixel.gif\"></td>");
+            output.Write("\n</tr>");
+
+            output.Write("\n</table>");
+            // Fin tableau titre
+
+        }
+        /// <summary>
+        /// Description Render
+        /// </summary>
+        /// <param name="output">Le writer HTML vers lequel écrire</param>
+        virtual protected void DescriptionRender(HtmlTextWriter output) {
+
+            output.Write("\n<tr>");
+            output.Write("\n<td class=\"txtBlanc11Bold\">");
+            output.Write(GestionWeb.GetWebWord(codeDescription, siteLang));
+            output.Write("\n</td>");
+            output.Write("\n</tr>");
+
+        }
+        #endregion
+    }
 }

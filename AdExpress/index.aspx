@@ -42,7 +42,7 @@
 							<tr>
 								<td class="txtBlanc11Bold whiteBackGround" width="185" height="9">
 									<p class="paragraphePadding tableFont">
-										<cc1:AdExpressText language="33" id="AdExpressText3" runat="server" Code="821"></cc1:AdExpressText>
+										<cc1:AdExpressText language="33" id="AdExpressText3" runat="server" Code="2844"/>&nbsp;<cc1:AdExpressText language="33" id="companyNameText" runat="server"/><cc1:AdExpressText language="33" id="AdExpressText111" runat="server" Code="2845"/>
 									</p>
 								</td>
 							</tr>

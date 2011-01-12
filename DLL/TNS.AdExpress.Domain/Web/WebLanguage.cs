@@ -82,6 +82,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// Rss Description
         /// </summary>
         private Rss _rss;
+        /// <summary>
+        /// Company Name Texts
+        /// </summary>
+        private CompanyNameTexts _companyNameTexts;
         #endregion
 
         #region Constructor
@@ -132,6 +136,32 @@ namespace TNS.AdExpress.Domain.Web {
             _cInfo = cInfo;
             _cInfoExcel = cInfoExcel;
             _rss = rss;
+        }
+        /// <summary>
+        /// Contructor
+        /// </summary>
+        /// <param name="id">Language Id</param>
+        /// <param name="name">Language name</param>
+        /// <param name="imageSourceText">Language Image</param>
+        /// <param name="localization">Localisation text string id</param>
+        /// <param name="classificationLanguageId">Classification language Id</param>
+        /// <param name="charset">Charset used for the language</param>
+        /// <param name="contentEncoding">Content Encoding used for the aspx page</param>
+        /// <param name="excelContentEncoding">Content Encoding used for the excel aspx page</param>
+        /// <param name="nlsSort">nls sort</param>
+        /// <param name="cInfo">Culture info object</param>
+        /// <param name="rss">Rss object</param>
+        /// <param name="companyNameTexts">Company Name Texts</param>
+        public WebLanguage(int id, string name, string imageSourceText, string localization, int classificationLanguageId, string charset, string contentEncoding, string excelContentEncoding, string pdfContentEncoding, string nlsSort, AdExpressCultureInfo cInfo, AdExpressCultureInfo cInfoExcel, Rss rss, CompanyNameTexts companyNameTexts)
+            : this(id, imageSourceText, localization, charset, contentEncoding, excelContentEncoding, pdfContentEncoding) {
+            if (name != null && name.Length > 0) _name = name;
+            if (nlsSort != null && nlsSort.Length > 0) _nlsSort = nlsSort;
+            if (classificationLanguageId < 0) throw (new ArgumentException("The classification language Id cannot be inferior to 0"));
+            _classificationLanguageId = classificationLanguageId;
+            _cInfo = cInfo;
+            _cInfoExcel = cInfoExcel;
+            _rss = rss;
+            _companyNameTexts = companyNameTexts;
         }
         #endregion
 
@@ -218,6 +248,12 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         public Rss Rss {
             get { return _rss; }
+        }
+        /// <summary>
+        /// Get Company Name Texts
+        /// </summary>
+        public CompanyNameTexts CompanyNameTexts {
+            get { return _companyNameTexts; }
         }
         #endregion
     }

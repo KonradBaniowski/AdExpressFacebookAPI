@@ -133,6 +133,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
             string numberGroupSeparator = string.Empty;
             string numberDecimalSeparator = string.Empty;
             Rss rss = null;
+            CompanyNameTexts companyNameTexts = null;
             #endregion
 
             try {
@@ -172,7 +173,8 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                 if (numberDecimalSeparator.Length > 0) cInfoExcel.NumberFormat.NumberDecimalSeparator = cInfo.NumberFormat.NumberDecimalSeparator = numberDecimalSeparator;
                                 if (numberGroupSeparator.Length > 0) cInfoExcel.NumberFormat.NumberGroupSeparator = cInfo.NumberFormat.NumberGroupSeparator = numberGroupSeparator;
                                 rss = new Rss();
-                                languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset,contentEncoding,excelContentEncoding,pdfContentEncoding,nlsSort, cInfo, cInfoExcel, rss));
+                                companyNameTexts = new CompanyNameTexts();
+                                languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset,contentEncoding,excelContentEncoding,pdfContentEncoding,nlsSort, cInfo, cInfoExcel, rss, companyNameTexts));
                                 break;
                             case "unitformat":
                                 if(reader.GetAttribute("name")!=null) formatName=reader.GetAttribute("name");
@@ -198,6 +200,10 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                 if(reader.GetAttribute("display") != null) rss.Display = bool.Parse(reader.GetAttribute("display"));
                                 if(reader.GetAttribute("filePath") != null) rss.FilePath = reader.GetAttribute("filePath");
                                 if(reader.GetAttribute("link") != null) rss.Link = reader.GetAttribute("link");
+                                break;
+                            case "companyNameTexts":
+                                if (reader.GetAttribute("companyName") != null) companyNameTexts.CompanyNameCode = int.Parse(reader.GetAttribute("companyName"));
+                                if (reader.GetAttribute("companyShortName") != null) companyNameTexts.CompanyShortNameCode = int.Parse(reader.GetAttribute("companyShortName"));
                                 break;
                         }
                     }

@@ -212,6 +212,7 @@
     <Compile Include="Headers\ActualitiesWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Headers\CustomizePageTitleWebControl.cs" />
     <Compile Include="Headers\DetailInsertionPeriodNavigationWebControl.cs">
       <SubType>Code</SubType>
     </Compile>

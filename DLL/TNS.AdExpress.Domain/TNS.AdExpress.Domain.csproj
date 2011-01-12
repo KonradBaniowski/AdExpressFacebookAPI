@@ -106,6 +106,7 @@
     <Compile Include="Units\AllowUnits.cs" />
     <Compile Include="Units\DefaultUnit.cs" />
     <Compile Include="Units\DefaultUnitList.cs" />
+    <Compile Include="Web\CompanyNameTexts.cs" />
     <Compile Include="Web\Navigation\ModuleAssignment.cs" />
     <Compile Include="Web\Navigation\RightMenuLinks.cs" />
     <Compile Include="Web\Navigation\RightMenuLinksItem.cs" />

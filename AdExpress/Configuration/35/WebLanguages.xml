@@ -20,6 +20,7 @@
       <dateFormat name="shortdatepattern" format="dd.MM.yyyy"           excelFormat="dd.MM.yyyy"/>
       <dateFormat name="customdatepattern" format="ddd, MMM dd, yyyy"   excelFormat="ddd, MMM dd, yyyy"/>
     </dateFormats>
+    <companyNameTexts companyName="2841" companyShortName="2842"/>
     </language>
   <language id="35" name="Finnish" imageSourceText="/Images/Common/finland.gif"  localization="fi-FI" classificationLanguageId="35" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="windows-1252" pdfContentEncoding="windows-1252" nlsSort="finnish" NumberDecimalSeparator="," NumberGroupSeparator=" ">
   <rss display="true" filePath="http://localhost/Rss/44/AdExpressFeed.xml" link="http://www.tnsadexpress.fi/Rss/44/AdExpressFeed.xml"/>
@@ -40,6 +41,7 @@
     <dateFormat name="shortdatepattern" format="dd.MM.yyyy"           excelFormat="dd.MM.yyyy"/>
     <dateFormat name="customdatepattern" format="ddd, MMM dd, yyyy"   excelFormat="ddd, MMM dd, yyyy"/>
   </dateFormats>
+    <companyNameTexts companyName="2841" companyShortName="2842"/>
     </language>
   </languages>
 </configuration>
