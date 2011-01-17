@@ -258,7 +258,6 @@ namespace TNS.Ares.AdExpress.MailAlert
                 }
                 #endregion
 
-                this._oLinkClient.AlwaysReconnect = true;
                 _maxAvailableSlots = Int32.Parse(pathConfiguration);
 
                 base.InitializeShell(pathConfiguration);
@@ -437,110 +436,6 @@ namespace TNS.Ares.AdExpress.MailAlert
             }
             return (alertId);
         }
-        #endregion
-
-        #region Email
-        /// <summary>
-        /// Send Mail Error
-        /// </summary>
-        /// <param name="body">Body</param>
-        protected override void sendEmailError(string body) {
-            if (this.SendEmailOnError) {
-                string subject = " " + _strProductName + " (" + Environment.MachineName + ")";
-                SmtpUtilities mailError = new SmtpUtilities(this.SmtpFromAddress, new ArrayList(this.ErrorEmailList.Split(';')), subject, Convertion.ToHtmlString(body), true, this.SmtpServer, this.MailPort);
-                mailError.SendWithoutThread(false);
-            }
-        }
-
-        /// <summary>
-        /// Send Mail Error
-        /// </summary>
-        /// <param name="e">Exception</param>
-        protected override void sendEmailError(Exception e) {
-
-            if (this.SendEmailOnError) {
-
-                string subject = " " + _strProductName + " (" + Environment.MachineName + ")";
-                string stackTrace = string.Empty;
-                string message = string.Empty;
-                string body = string.Empty;
-
-                try {
-                    BaseException err = ((BaseException)((Exception)e));
-                    message = err.Message;
-                    stackTrace = err.GetHtmlDetail();
-                }
-                catch {
-                    try {
-                        message = e.Message;
-                        stackTrace = e.StackTrace;
-                    }
-                    catch (System.Exception es) {
-                        throw (es);
-                    }
-                }
-
-                #region Message d'erreur
-                body = "<html>";
-                body += "<hr>";
-                body += "<u>Message d'erreur:</u><br>" + message + "<br>";
-                if (stackTrace != null)
-                    body += "<u>StackTrace:</u><br>" + stackTrace.Replace("at ", "<br>at ") + "<br>";
-                body += "<hr>";
-                body += "</html>";
-                #endregion
-
-                SmtpUtilities mailError = new SmtpUtilities(this.SmtpFromAddress, new ArrayList(this.ErrorEmailList.Split(';')), subject, Convertion.ToHtmlString(body), true, this.SmtpServer, this.MailPort);
-                mailError.SendWithoutThread(false);
-            }
-        }
-
-        /// <summary>
-        /// Send Mail Error
-        /// </summary>
-        /// <param name="e">Exception</param>
-        /// <param name="message">Message</param>
-        protected void sendEmailError(string message, Exception e) {
-
-            if (this.SendEmailOnError) {
-
-                string subject = " " + _strProductName + " (" + Environment.MachineName + ")";
-                string stackTrace = string.Empty;
-                string body = string.Empty;
-
-                try {
-                    BaseException err = ((BaseException)((Exception)e));
-                    if (message.Trim().Length <= 0)
-                        message = err.Message;
-                    stackTrace = err.GetHtmlDetail();
-                }
-                catch {
-                    try {
-                        if (message.Trim().Length <= 0)
-                            message = e.Message;
-                        stackTrace = e.StackTrace;
-                    }
-                    catch (System.Exception es) {
-                        throw (es);
-                    }
-                }
-
-                #region Message d'erreur
-                body = "<html>";
-                body += "<hr>";
-                body += "<u>Message d'erreur:</u><br>" + message + "<br>";
-                if (stackTrace != null)
-                    body += "<u>StackTrace:</u><br>" + stackTrace.Replace("at ", "<br>at ") + "<br>";
-                body += "<hr>";
-                body += "</html>";
-                #endregion
-
-                SmtpUtilities mailError = new SmtpUtilities(this.SmtpFromAddress, new ArrayList(this.ErrorEmailList.Split(';')), subject, Convertion.ToHtmlString(body), true, this.SmtpServer, this.MailPort);
-                mailError.SendWithoutThread(false);
-            }
-        }
-
-
         #endregion
 
         #region Get Email Content

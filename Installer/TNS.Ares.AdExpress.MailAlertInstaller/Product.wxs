@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="a959260c-1d11-4fc5-9b5d-b4a1005b2878" Name="Kantar AdExpress: Mail Alert" Language="1033" Version="1.0.0.0" Manufacturer="Kantar_AdExpress" UpgradeCode="b9277cc9-64ae-4732-af20-509e3766370d">
+		<Package InstallerVersion="200" Compressed="yes" />
+
+		<Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+    <!-- UI Initialisation-->
+    <Property Id="SRVWIXUI_INSTALLDIR" Value="INSTALLDIR" />
+    <UIRef Id="SrvWixUI_InstallDir" />
+    <!-- Add MailAlertFiles.wxs directories -->
+    <DirectoryRef Id="INSTALLDIR" FileSource="MailAlertFiles.wxs"/>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+          <Directory Id="INSTALLDIR" Name="AdExpress Mail Alert">
+            <Component Id="ProductComponent" Guid="f54568ef-2e3c-4f4f-a712-abb1a17fc0b7">
+              <File Id="MailAlertPrgFile" Name="$(var.TNS.Ares.AdExpress.MailAlertSrv.TargetFileName)" Source="$(var.TNS.Ares.AdExpress.MailAlertSrv.TargetPath)" DiskId="1" KeyPath="yes" />
+              <!-- Service Installation -->
+              <ServiceInstall Id="MyServiceInstall" DisplayName="Ares AdExpress Mail Alert Srv" Name="$(var.TNS.Ares.AdExpress.MailAlertSrv.TargetFileName)" ErrorControl="normal" Start="demand" Type="ownProcess" Vital="yes" />
+              <ServiceControl Id="MyServiceControl" Name="$(var.TNS.Ares.AdExpress.MailAlertSrv.TargetFileName)" Start="install" Stop="uninstall" Remove="uninstall" />
+              <!-- FIN Service Installation -->
+            </Component>
+          </Directory>
+			</Directory>
+		</Directory>
+
+		<Feature Id="ProductFeature" Title="TNS.Ares.AdExpress.MailAlertInstaller" Level="1">
+      <ComponentRef Id="ProductComponent" />
+      <!-- link to AlertQuotaFiles.wxs component-->
+      <ComponentGroupRef Id="MailAlertPRG1"/>
+		</Feature>
+	</Product>
+</Wix>

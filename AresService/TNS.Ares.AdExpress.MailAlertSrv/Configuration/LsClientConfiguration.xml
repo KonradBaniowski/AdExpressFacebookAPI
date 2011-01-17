@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configurations>
-  <lsClientConfiguration familyId="123" familyName="AdExpress FR Treratment service" monitorPort="30240" productName="Ares Service treatment - Mail Alert AdExpress" maxAvailableSlots="5">
+  <lsClientConfiguration familyId="123" familyName="AdExpress FR Treatment service" monitorPort="30240" productName="Ares Service treatment - Mail Alert AdExpress" maxAvailableSlots="5">
     <moduleDescription description="Ares Service treatment - Mail Alert AdExpress" moduleId="20"/>
   </lsClientConfiguration>
 </configurations>
