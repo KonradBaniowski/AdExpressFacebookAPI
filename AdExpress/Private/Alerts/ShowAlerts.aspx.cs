@@ -289,7 +289,7 @@ namespace AdExpress.Private.Alerts{
                 // Setting the alert detailed information
                 HtmlContainerControl details = (HtmlContainerControl)e.Item.FindControl("alertDetails");
                 WebSession session = (WebSession)alert.Session;
-                TNS.AdExpress.Domain.Web.Navigation.Module module = session.CustomerLogin.GetModule(session.CurrentModule);
+                TNS.AdExpress.Domain.Web.Navigation.Module module = _webSession.CustomerLogin.GetModule(session.CurrentModule);
                 string dayName = null;
                 if (alert.Periodicity == AlertPeriodicity.Weekly)
                     dayName = WebApplicationParameters.AllowedLanguages[_siteLanguage].CultureInfo.DateTimeFormat.DayNames.GetValue(alert.PeriodicityValue - 1).ToString();
