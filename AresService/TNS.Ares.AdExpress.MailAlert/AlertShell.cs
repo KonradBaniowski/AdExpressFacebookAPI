@@ -78,11 +78,9 @@ namespace TNS.Ares.AdExpress.MailAlert
         /// <param name="familyId">Id used to assemble a group of modules tasks</param>
         /// <param name="source">Data source</param>
         /// <param name="moduleDescriptionList">The list of modules that the client can treat</param>
-        public AlertShell(string productName, int familyId, List<ModuleDescription> moduleDescriptionList, int maxAvailableSlots)
-            : base(productName, familyId, moduleDescriptionList) {
-            this.Initialize();
-            this._oLinkClient.AlwaysReconnect = true;
-            _maxAvailableSlots = maxAvailableSlots;
+        public AlertShell(LsClientConfiguration lsClientConfiguration)
+            : base(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, lsClientConfiguration.FamilyName, lsClientConfiguration.MaxAvailableSlots.ToString(), lsClientConfiguration.ModuleDescriptionList, true, true)
+        {
         }
         #endregion
 
@@ -90,7 +88,7 @@ namespace TNS.Ares.AdExpress.MailAlert
         /// <summary>
         /// Initialize
         /// </summary>
-        protected void Initialize() {
+        protected override void InitializeShell(string pathConfiguration){
             try {
 
                 #region WebApplicationParameters
@@ -260,6 +258,11 @@ namespace TNS.Ares.AdExpress.MailAlert
                 }
                 #endregion
 
+                this._oLinkClient.AlwaysReconnect = true;
+                _maxAvailableSlots = Int32.Parse(pathConfiguration);
+
+                base.InitializeShell(pathConfiguration);
+
             }
             catch (Exception e) {
                 this.sendEmailError("Initialization Error in Shell in Initialize()", e);
@@ -328,7 +331,7 @@ namespace TNS.Ares.AdExpress.MailAlert
 
                             // Updating session dates
                             this.Log(new LogLine(string.Format("Updating session dates for alert '{0}'", alertId.ToString()), eLogCategories.Information, "Alerts"));
-                            session.UpdateDates(FirstDayNotEnable, ((DateTime)this._navDAL.GetRow(getStaticNavSessionId(oTaskExecution))["date_creation"]));
+                            session.UpdateDates(FirstDayNotEnable, ((DateTime)this._navDAL.GetRow(extractParameterId(oTaskExecution))["date_creation"]));
                             // session.PeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDate;
 
                             // Inserting alert occurrence
@@ -356,13 +359,13 @@ namespace TNS.Ares.AdExpress.MailAlert
 
                             // Updating static nav session row
                             this.Log(new LogLine(string.Format("Updating static nav session row with a statut = 3 for alert '{0}'", alertId.ToString()), eLogCategories.Information, "Alerts"));
-                            this._navDAL.UpdateStatus((int)getStaticNavSessionId(oTaskExecution), TNS.Ares.Constantes.Constantes.Result.status.sent.GetHashCode());
+                            this._navDAL.UpdateStatus((int)extractParameterId(oTaskExecution), TNS.Ares.Constantes.Constantes.Result.status.sent.GetHashCode());
 
                             // Delete static nav session row
                             PluginInformation pluginInformation = PluginConfiguration.GetPluginInformation(PluginType.Alertes);
                             if (pluginInformation.DeleteRowSuccess) {
-                                this.Log(new LogLine(string.Format("Delete static nav session row #{1} for alert '{0}'", alertId.ToString(), getStaticNavSessionId(oTaskExecution).ToString()), eLogCategories.Information, "Alerts"));
-                                this._navDAL.DeleteRow(getStaticNavSessionId(oTaskExecution));
+                                this.Log(new LogLine(string.Format("Delete static nav session row #{1} for alert '{0}'", alertId.ToString(), extractParameterId(oTaskExecution).ToString()), eLogCategories.Information, "Alerts"));
+                                this._navDAL.DeleteRow(extractParameterId(oTaskExecution));
                             }
 
                             _duration = DateTime.Now.Subtract(_endExecutionDateTime);
@@ -399,16 +402,6 @@ namespace TNS.Ares.AdExpress.MailAlert
                     this._oLinkClient.ReleaseTaskInError(oTaskExecution, new LogLine("TaskExecution object is null", eLogCategories.Problem, "Alerts"));
             }
         }
-
-        #region KnownModules
-        /// <summary>
-        /// known modules for this client
-        /// </summary>
-        /// <returns>Module description list</returns>
-        public override List<ModuleDescription> KnownModules() {
-            return _moduleDescriptionList;
-        }
-        #endregion
 
         #endregion
 

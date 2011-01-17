@@ -146,6 +146,36 @@
       <levelItem id="26" name="Pays"/>
       <levelItem id="3" name="Support"/>
     </detailLevel>
+    <detailLevel id="28" name="media\catégorie\titre">
+      <levelItem id="1" name="Media"/>
+      <levelItem id="2" name="Category"/>
+      <levelItem id="17" name="titre"/>
+    </detailLevel>
+    <detailLevel id="29" name="support">
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="30" name="region\support">
+      <levelItem id="30" name="Region"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="31" name="publishing house\support">
+      <levelItem id="34" name="Publishing house"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="32" name="syndicate\support">
+      <levelItem id="35" name="Syndicate"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="33" name="edition type\support">
+      <levelItem id="37" name="Edition type"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="34" name="Groupe d'agence">
+      <levelItem id="15" name="Groupe d'agence"/>
+    </detailLevel>
+    <detailLevel id="35" name="Agence">
+      <levelItem id="16" name="Agence"/>
+    </detailLevel>
 	</detailLevels>
 </genericDetailLevel>
 

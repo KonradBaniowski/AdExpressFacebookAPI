@@ -37,7 +37,7 @@ namespace TNS.Ares.AdExpress.MailAlertApp
             }
 
             // Loading Alert Shell and starting monitor server
-            _shell = new AlertShell(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, lsClientConfiguration.ModuleDescriptionList, lsClientConfiguration.MaxAvailableSlots);
+            _shell = new AlertShell(lsClientConfiguration);
             _shell.StartMonitorServer(lsClientConfiguration.MonitorPort);
 
             // Stopping program
