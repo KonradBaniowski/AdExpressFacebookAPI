@@ -364,6 +364,11 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		[System.NonSerialized]
 		protected WebConstantes.Percentage.Alignment _percentageAlignment = WebConstantes.Percentage.Alignment.none;
 
+        /// <summary>
+        /// Comparative Period Type : dateToDate, comparativeWeekDate
+        /// </summary>
+        [System.NonSerialized]
+        protected WebConstantes.globalCalendar.comparativePeriodType _comparativePeriodType = WebConstantes.globalCalendar.comparativePeriodType.dateToDate;
 
 		/// <summary>
 		/// Index décrivant un identifiant ou un numéroe de colonne à trier.
@@ -1503,6 +1508,24 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 				modificationDate = DateTime.Now;
 			}
 		}
+
+        /// <summary>
+        /// Get or Set the Comparative Period Type
+        /// </summary>
+        public WebConstantes.globalCalendar.comparativePeriodType ComparativePeriodType {
+            get {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.msComparativePeriodType)) {
+                    _comparativePeriodType = (WebConstantes.globalCalendar.comparativePeriodType)userParameters[CoreConstantes.SessionParamters.msComparativePeriodType];
+                }
+
+                return (_comparativePeriodType);
+            }
+            set {
+                _comparativePeriodType = value;
+                userParameters[CoreConstantes.SessionParamters.msComparativePeriodType] = value;
+                modificationDate = DateTime.Now;
+            }
+        }
 
 		/// <summary>
 		/// Get/Set le détail préformaté de la nomenclature media dans les tableaux 

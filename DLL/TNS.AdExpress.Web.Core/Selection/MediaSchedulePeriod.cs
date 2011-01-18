@@ -14,6 +14,7 @@ using System.Globalization;
 using System.Text;
 
 using CstPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
+using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstDB = TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.Date;
 
@@ -48,6 +49,14 @@ namespace TNS.AdExpress.Web.Core.Selection
         /// List of period breakdowns
         /// </summary>
         private List<MediaScheduleSubPeriod> _subPeriods = new List<MediaScheduleSubPeriod>();
+        /// <summary>
+        /// Whether is comparative period or not 
+        /// </summary>
+        private bool _isComparativePeriod = false;
+        /// <summary>
+        /// Comparative Period Type
+        /// </summary>
+        private CstWeb.globalCalendar.comparativePeriodType _comparativePeriodType = CstWeb.globalCalendar.comparativePeriodType.dateToDate;
         #endregion
 
         #region Accessors
@@ -116,6 +125,20 @@ namespace TNS.AdExpress.Web.Core.Selection
             _end = end.Date;
             _periodBreakDown = periodBreakDown;
             ComputePeriod();
+        }
+
+        /// <summary>
+        /// Constructor (Comparative period is used with this constructor)
+        /// </summary>
+        /// <param name="begin">Period Beginning</param>
+        /// <param name="end">Period End</param>
+        /// <param name="periodBreakDown">Period breakdown (days, weeks, monthes)</param>
+        /// <param name="comparativePeriodType">Type Compartive Period</param>
+        public MediaSchedulePeriod(DateTime begin, DateTime end, CstPeriod.DisplayLevel periodBreakDown, CstWeb.globalCalendar.comparativePeriodType comparativePeriodType)
+            :this(begin, end, periodBreakDown)
+        {
+            _isComparativePeriod = true;
+            _comparativePeriodType = comparativePeriodType;
         }
         #endregion
 
@@ -282,6 +305,71 @@ namespace TNS.AdExpress.Web.Core.Selection
                 return true;
 
             return false;
+
+        }
+        #endregion
+
+        #region Get Media Schedule comparative period
+        /// <summary>
+        /// Get Media Schedule Period Comparative
+        /// </summary>
+        /// <returns>Media Schedule Period (Null if comparative period is not used (false value)) </returns>
+        public MediaSchedulePeriod GetMediaSchedulePeriodComparative() {
+
+            DateTime beginComparative = DateTime.Now;
+            DateTime endComparative = DateTime.Now;
+
+            if (_isComparativePeriod) {
+                SetComparativePeriod(beginComparative, endComparative);
+                return new MediaSchedulePeriod(beginComparative, endComparative, _periodBreakDown);
+            }
+
+            return null;
+        }
+        #endregion
+
+        #region Set Comparative Period
+        /// <summary>
+        /// Initialise la période comparative
+        /// </summary>
+        private void SetComparativePeriod(DateTime begin, DateTime end) {
+
+            begin = GetPreviousYearDate(_begin.Date, _comparativePeriodType);
+            end = GetPreviousYearDate(_end.Date, _comparativePeriodType);
+        }
+        #endregion
+
+        #region GetPreviousYearDate
+        /// <summary>
+        /// Obtient la date de l'année précédente
+        /// </summary>
+        /// <param name="period">date de l'année en cours</param>
+        /// <param name="comparativePeriodType">Type de la période comparative</param>
+        /// <returns>date de l'année précédente</returns>
+        private DateTime GetPreviousYearDate(DateTime date, Constantes.Web.globalCalendar.comparativePeriodType comparativePeriodType) {
+
+            AtomicPeriodWeek tmpWeek;
+            int currentDay;
+
+            switch (comparativePeriodType) {
+
+                case Constantes.Web.globalCalendar.comparativePeriodType.dateToDate:
+                    date = date.AddYears(-1);
+                    break;        
+                case Constantes.Web.globalCalendar.comparativePeriodType.comparativeWeekDate:
+                    currentDay = date.DayOfWeek.GetHashCode();
+                    tmpWeek = new AtomicPeriodWeek(date);
+                    tmpWeek.SubWeek(52);
+                    if (currentDay == 0)
+                        date = tmpWeek.FirstDay.AddDays(6);
+                    else
+                        date = tmpWeek.FirstDay.AddDays(currentDay - 1);
+                    break;
+                default:
+                    throw new ArgumentException("Comparative Period Type not valid !!!");
+            }
+
+            return date;
 
         }
         #endregion

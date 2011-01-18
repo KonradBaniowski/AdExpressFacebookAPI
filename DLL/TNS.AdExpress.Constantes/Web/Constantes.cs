@@ -225,7 +225,31 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Nb Alerts
             /// </summary>			
-            nbAlerts = 50
+            nbAlerts = 50,
+            /// <summary>
+            /// Domain Name
+            /// </summary>
+            domainName = 51,
+            /// <summary>
+            /// Campaign Type
+            /// </summary>
+            campaignType = 52,
+            /// <summary>
+            /// Advertisement Type Excluded Items selected
+            /// </summary>
+            advertisementTypeExcluded = 53,
+            /// <summary>
+            /// Advertisement Type included Items selected
+            /// </summary>
+            advertisementTypeIncluded = 54,
+            /// <summary>
+            /// Advertisement Type intersection Items selected
+            /// </summary>
+            advertisementTypeIntersection = 55,
+            /// <summary>
+            /// Media Schedule Comparative Period Type
+            /// </summary>
+            msComparativePeriodType = 56
 		}
 	
 	}
