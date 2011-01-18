@@ -110,7 +110,7 @@
       <module name="Present/Absent" privilegecode="278" traductioncode="2167" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2196" descriptionImageName="/Images/Common/Infobulle/Concurrentiels.png">
        <RulesLayer name="Default Present Absent rules layers" assemblyName="TNS.AdExpressI.PresentAbsent.Default.dll" class="TNS.AdExpressI.PresentAbsent.Default.PresentAbsentResult"/>
         <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.Default.dll" class="TNS.AdExpressI.PresentAbsent.DAL.Default.PresentAbsentDAL"/>       
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="337">
+        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="333">
         <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="1,2,3,5,6,7,8,11,15"/>-->
         </ModuleAllowedMediaUniverse>
@@ -372,7 +372,7 @@
       <module name="Lost/won" privilegecode="197" traductioncode="2169" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2198" descriptionImageName="/Images/Common/Infobulle/Dynamique.png">
         <RulesLayer name="Default Lost Won rules layers" assemblyName="TNS.AdExpressI.LostWon.Default.dll" class="TNS.AdExpressI.LostWon.Default.LostWonResult"/>
         <DataAccessLayer name="Default Lost Won data access layers" assemblyName="TNS.AdExpressI.LostWon.DAL.Default.dll" class="TNS.AdExpressI.LostWon.DAL.Default.LostWonResultDAL"/>
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="337">
+        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="336">
           <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="1,2,3,5,6,7,8,11,15"/>-->
         </ModuleAllowedMediaUniverse>
