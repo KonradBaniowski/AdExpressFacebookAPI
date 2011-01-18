@@ -39,19 +39,19 @@
   <ItemGroup>
     <Reference Include="AdExpress.Localization, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\AdExpress.Localization.dll</HintPath>
+      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\AdExpress.Localization.dll</HintPath>
     </Reference>
     <Reference Include="Aspose.Cells, Version=4.5.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\Aspose.Cells.dll</HintPath>
+      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\Aspose.Cells.dll</HintPath>
     </Reference>
     <Reference Include="DundasWinChart, Version=5.5.1.1711, Culture=neutral, PublicKeyToken=a4c03dce5db22406, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\DundasWinChart.dll</HintPath>
+      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\DundasWinChart.dll</HintPath>
     </Reference>
     <Reference Include="Interop.PDFCreatorPilotLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\Interop.PDFCreatorPilotLib.dll</HintPath>
+      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\Interop.PDFCreatorPilotLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -61,23 +61,23 @@
     <Reference Include="System.Xml" />
     <Reference Include="TNS.Baal.Common, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.Baal.Common.dll</HintPath>
+      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.Baal.Common.dll</HintPath>
     </Reference>
     <Reference Include="TNS.Baal.ExtractList, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.Baal.ExtractList.dll</HintPath>
+      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.Baal.ExtractList.dll</HintPath>
     </Reference>
     <Reference Include="TNS.Classification, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.Classification.dll</HintPath>
+      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.Classification.dll</HintPath>
     </Reference>
     <Reference Include="TNS.FrameWork, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.dll</HintPath>
+      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.dll</HintPath>
     </Reference>
     <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\TNS.FrameWork.DB.dll</HintPath>
+      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.DB.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

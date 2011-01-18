@@ -25,8 +25,8 @@ namespace ImhotepConsole.DAL
 {
     public class ImhotepDAL
     {
-        const string MY_SESSION_TEST = "webnav01.my_session_copy";//
-        const string ALERT_TEST = "MAU01.ALERT_COPY";//
+        const string MY_SESSION_TEST = "webnav01.my_session";//
+        const string ALERT_TEST = "MAU01.ALERT";//
         const string DEV_CONNECTION_STRING = "User Id=gfacon; Password=sandie5; Data Source=adexpr03.pige;Pooling=true; Max Pool Size=150; Decr Pool Size=20; Connection Timeout=120";
         const int ID_ALERT_TYPE = 2;
 

@@ -14,6 +14,7 @@
       <module name="Analyse Plan Média" privilegecode="196" traductioncode="2171" moduleCategoryId="2" urlNextPage="/Private/Selection/UniverseProductSelection.aspx" descriptionWebTextId="2200" descriptionImageName="/Images/Common/Infobulle/PlanMedia.png">
         <RulesLayer name="Default Media Schedule rules layers" assemblyName="TNS.AdExpressI.MediaSchedule.Default.dll" class="TNS.AdExpressI.MediaSchedule.Default.MediaScheduleResults"/>
         <DataAccessLayer name="Default Media Schedule data access layers" assemblyName="TNS.AdExpressI.MediaSchedule.DAL.Finland.dll" class="TNS.AdExpressI.MediaSchedule.DAL.Finland.MediaScheduleResultDAL"/>
+        <ProductRights branches="product"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="1,2,3,5,6,7"/> <!--identifiant base de données-->
           <!--<ModuleCategories list="1,2,3,4"/>-->

@@ -130,6 +130,10 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
         /// AllowUnits List
         /// </summary>
         protected DefaultUnitList _overrideDefaultUnits = null;
+        /// <summary>
+        /// Product rights branches
+        /// </summary>
+        protected string _productRightBranches = "";
 		#endregion
 
 		#region Constructeur
@@ -283,6 +287,14 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
         internal DefaultUnitList OverrideDefaultUnits {
             set { _overrideDefaultUnits = value; }
         }
+        /// <summary>
+        /// Get / Set Module product rights branches
+        /// </summary>
+        public string ProductRightBranches {
+            get { return _productRightBranches; }
+            set { _productRightBranches = value; }
+        } 
+
 		#endregion
 
 		#region Méthode Externe

@@ -595,8 +595,8 @@ namespace ImhotepConsole
             catch (Exception) { webSession.SloganColors = null; }
 
             ////Agences media
-            //webSession.PrincipalAdvertisingAgnecyUniverses = new Dictionary<int,AdExpressUniverse>();
-            //webSession.SecondaryAdvertisingAgnecyUniverses = new Dictionary<int, AdExpressUniverse>();
+           webSession.PrincipalAdvertisingAgnecyUniverses = new Dictionary<int, AdExpressUniverse>();
+            webSession.SecondaryAdvertisingAgnecyUniverses = new Dictionary<int, AdExpressUniverse>();
             #endregion
             #endregion
 

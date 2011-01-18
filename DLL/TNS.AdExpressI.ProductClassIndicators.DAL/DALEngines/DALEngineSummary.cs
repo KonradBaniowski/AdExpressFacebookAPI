@@ -94,8 +94,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
 					and = true;
                 }
                 //product rights
-                //sql.Append(FctUtilities.SQLGenerator.getClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, false));
-				sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, and));
+                TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
+                string productRightsBranches = (module != null) ? module.ProductRightBranches : ""; 
+				sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, and,productRightsBranches));
                 and = true;
             }
             if (type == CstComparaisonCriterion.sectorTotal)
@@ -176,8 +177,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                 if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
                     sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(dataTable.Prefix, false));
                 //product rights
-				//sql.Append(FctUtilities.SQLGenerator.getClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true));
-				sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix,dataTable.Prefix, true));
+                TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
+                string productRightsBranches = (module != null) ? module.ProductRightBranches : ""; 
+                sql.Append(FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, dataTable.Prefix, true,productRightsBranches));
                 sql.Append(" and ");
             }
             if (type == CstComparaisonCriterion.sectorTotal)

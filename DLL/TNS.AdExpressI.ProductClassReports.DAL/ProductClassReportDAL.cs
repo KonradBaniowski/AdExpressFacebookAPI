@@ -1079,8 +1079,9 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
         protected virtual void AppendRightClause(StringBuilder sql)
         {
 
-			//sql.Append(" " + FctUtilities.SQLGenerator.getAnalyseCustomerProductRight(_session, _dataTable.Prefix, true));
-			sql.Append(" " + FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, _dataTable.Prefix, _dataTable.Prefix, _dataTable.Prefix, _dataTable.Prefix, _dataTable.Prefix,true));
+            TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
+            string productRightsBranches = (module != null) ? module.ProductRightBranches : ""; 
+            sql.Append(" " + FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, _dataTable.Prefix, _dataTable.Prefix, _dataTable.Prefix, _dataTable.Prefix, _dataTable.Prefix, true, productRightsBranches)); 
             //!!!!!!!!!!!!!!!! Pas de gestion des droits de la nomenclature media dans les recap (src : G Facon le 27/09/2004)
 
 			sql.Append(" " + FctUtilities.SQLGenerator.GetResultMediaUniverse(_session, _dataTable.Prefix));

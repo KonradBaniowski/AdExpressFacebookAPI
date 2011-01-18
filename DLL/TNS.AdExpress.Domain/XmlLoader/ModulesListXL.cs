@@ -332,6 +332,12 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 									((Module)htModule[module]).ExcludedVehicles = new List<Int64>(Array.ConvertAll<string, Int64>(reader.GetAttribute("list").Split(','), (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); })); 
 								}
 								break;
+                            case"ProductRights":
+                                if (reader.GetAttribute("branches") != null && reader.GetAttribute("branches").Length > 0)
+                                {
+                                    ((Module)htModule[module]).ProductRightBranches = reader.GetAttribute("branches").Trim();
+                                }
+                                break;
 						}					
 					}				
 				}

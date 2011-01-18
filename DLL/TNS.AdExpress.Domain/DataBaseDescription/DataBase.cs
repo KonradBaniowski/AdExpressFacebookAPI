@@ -849,6 +849,14 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// </summary>
         dataInStoreAlert = 181,
         /// <summary>
+        /// version
+        /// </summary>
+        slogan = 182,
+        /// <summary>
+        /// Connection by login IP Time slot tracking
+        /// </summary>
+        trackingConnectionByLoginIpTimeslot = 183,
+        /// <summary>
         /// Alert description
         /// </summary>
         alert = 300,

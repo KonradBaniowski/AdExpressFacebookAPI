@@ -41,7 +41,7 @@
     </Reference>
     <Reference Include="Interop.HtmlSnap2, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\hera\Prog_Sources\Versionning\AdExpress Olympe 2009\Interop.HtmlSnap2.dll</HintPath>
+      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\Interop.HtmlSnap2.dll</HintPath>
     </Reference>
     <Reference Include="Interop.PDFCreatorPilotLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
