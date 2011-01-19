@@ -49,6 +49,21 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
         protected static Schema _schAdexpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
         #endregion
 
+        #region Module
+        /// <summary>
+        /// Current module
+        /// </summary>
+        protected TNS.AdExpress.Domain.Web.Navigation.Module _module = ModulesList.GetModule(CstWeb.Module.Name.ANALYSE_PLAN_MEDIA);
+        /// <summary>
+        /// User Session
+        /// </summary>
+        public TNS.AdExpress.Domain.Web.Navigation.Module Module
+        {
+            get { return _module; }
+            set { _module = value; }
+        }
+        #endregion
+
         #region Session
         /// <summary>
         /// User session
@@ -443,9 +458,9 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 
             #region Nomenclature Produit (droits)
             //Access rgithDroits en accès
-            sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
-            // Exclude product if radio selected)
-            //sql.Append(FctWeb.SQLGenerator.GetAdExpressProductUniverseCondition(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false));
+            if (_module == null) throw (new MediaScheduleDALException("_module cannot be NULL"));
+            sql.Append(FctWeb.SQLGenerator.GetClassificationCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches));
+
             GetExcludeProudcts(sql);
             #endregion
 
@@ -664,8 +679,10 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 
 			#region Nomenclature Produit (droits)
 			//Access rgithDroits en accès
-			sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
-			// Exclude product if radio selected)
+            if (_module == null) throw (new MediaScheduleDALException("_module cannot be NULL"));
+            sql.Append(FctWeb.SQLGenerator.GetClassificationCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches));
+
+            // Exclude product if radio selected)
 			GetExcludeProudcts(sql);
 			#endregion
 

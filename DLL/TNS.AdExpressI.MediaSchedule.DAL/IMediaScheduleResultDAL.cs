@@ -29,6 +29,18 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
     public interface IMediaScheduleResultDAL
     {
 
+        #region Properties
+        /// <summary>
+        /// Define Current Module
+        /// </summary>
+        TNS.AdExpress.Domain.Web.Navigation.Module Module
+        {
+            get;
+            set;
+        }
+
+        #endregion
+
         /// <summary>
         /// Get data to build a Media Schedule Report
         /// </summary>
