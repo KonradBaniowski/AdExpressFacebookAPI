@@ -6,6 +6,8 @@ using System.Text;
 using TNS.AdExpressI.MediaSchedule;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Core.Sessions;
+using CstWeb = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Web.Navigation;
 #endregion
 
 namespace TNS.AdExpressI.MediaSchedule.Appm
@@ -22,21 +24,27 @@ namespace TNS.AdExpressI.MediaSchedule.Appm
         /// </summary>
         /// <param name="session">User Session</param>
         /// <param name="period">Report Period</param>
-        public MediaScheduleResults(WebSession session, MediaSchedulePeriod period):base(session, period){}
+        public MediaScheduleResults(WebSession session, MediaSchedulePeriod period):base(session, period){
+            _module = ModulesList.GetModule(CstWeb.Module.Name.BILAN_CAMPAGNE);
+        }
         /// <summary>
         /// Constructor of a Media Schedule on a specifi vehicle
         /// </summary>
         /// <param name="session">User Session</param>
         /// <param name="period">Report Period</param>
         /// <param name="idVehicle">Vehicle Filter</param>
-        public MediaScheduleResults(WebSession session, MediaSchedulePeriod period, Int64 idVehicle):base(session, period, idVehicle){}
+        public MediaScheduleResults(WebSession session, MediaSchedulePeriod period, Int64 idVehicle):base(session, period, idVehicle){
+            _module = ModulesList.GetModule(CstWeb.Module.Name.BILAN_CAMPAGNE);
+        }
         /// <summary>
         /// Constructor of a Media Schedule on a zoomed period
         /// </summary>
         /// <param name="session">User Session</param>
         /// <param name="period">Report Period</param>
         /// <param name="zoom">Report zoom</param>
-        public MediaScheduleResults(WebSession session, MediaSchedulePeriod period, string zoom) : base(session, period, zoom) { }
+        public MediaScheduleResults(WebSession session, MediaSchedulePeriod period, string zoom) : base(session, period, zoom) {
+            _module = ModulesList.GetModule(CstWeb.Module.Name.BILAN_CAMPAGNE);
+        }
         /// <summary>
         /// Constructor of a Media Schedule on a specifi vehicle and a zoomed period
         /// </summary>
@@ -44,7 +52,9 @@ namespace TNS.AdExpressI.MediaSchedule.Appm
         /// <param name="period">Report Period</param>
         /// <param name="idVehicle">Vehicle Id</param>
         /// <param name="zoom">Report zoom</param>
-        public MediaScheduleResults(WebSession session, MediaSchedulePeriod period, Int64 idVehicle, string zoom): base(session, period, idVehicle, zoom){}
+        public MediaScheduleResults(WebSession session, MediaSchedulePeriod period, Int64 idVehicle, string zoom): base(session, period, idVehicle, zoom){
+            _module = ModulesList.GetModule(CstWeb.Module.Name.BILAN_CAMPAGNE);
+        }
         #endregion
 
         #region Design table
