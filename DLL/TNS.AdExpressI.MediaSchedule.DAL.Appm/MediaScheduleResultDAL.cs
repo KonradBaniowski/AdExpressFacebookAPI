@@ -288,11 +288,11 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Appm
 
 
             //Access rgith
-            sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+            if (_module == null) throw (new MediaScheduleDALException("_module parameter  cannot be NULL"));
+            sql.Append(FctWeb.SQLGenerator.GetClassificationCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches));
 
             //Advertiser classification rights
             sql.Append(GetProductSelection(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
-
 
             //Media Rights
             sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));

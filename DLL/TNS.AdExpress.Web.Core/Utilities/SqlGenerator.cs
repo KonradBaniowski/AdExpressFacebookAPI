@@ -311,6 +311,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
             return (getClassificationCustomerProductRight(webSession, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe, beginByAnd));
         }
 
+     
 
         /// <summary>
         /// Génère les droits clients Produit.
@@ -461,7 +462,20 @@ namespace TNS.AdExpress.Web.Core.Utilities
 		}
 
 
-		#region Droits produits Recap
+        /// <summary>
+        /// Génère les droits clients Produit.
+        /// Cette fonction est à utiliser si une même table contient tous les identifiants de la nomenclature produit.
+        /// </summary>
+        /// <param name="webSession">Session du client</param>
+        /// <param name="tablePrefixe">Préfixe de la table qui contient les données</param>
+        /// <param name="beginByAnd">True si le bloc doit commencer par un AND, false sinon</param>
+        /// <returns>Code SQL généré</returns>
+        public static string GetClassificationCustomerProductRight(WebSession webSession, string tablePrefixe, bool beginByAnd, string productRightBranches)
+        {
+            return (GetClassificationCustomerProductRight(webSession, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe,beginByAnd,productRightBranches));
+        }
+
+		
 
 		/// <summary>
 		/// Génère les droits clients Produit dont les droits annonceurs.
@@ -653,7 +667,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
 			if (!premier) sql += " )";
 			return (sql);
 		}
-		#endregion
+		
 
 		#endregion
 
