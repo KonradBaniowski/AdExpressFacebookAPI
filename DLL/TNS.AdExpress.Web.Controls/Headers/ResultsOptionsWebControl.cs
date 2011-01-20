@@ -1730,6 +1730,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                         else if (customerWebSession.ComparativePeriodType == TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate)
                             _dateComparativeSelectionLabel.Text = GestionWeb.GetWebWord(2294, customerWebSession.SiteLanguage);
 
+                    }
+                    if (_comparativeStudyCheckBox.Enabled) {
                         _comparativeStudyCheckBox.Attributes.Add("onClick", "javacript:if(this.checked){this.checked=false; " + _dateComparativeSelection.JavascriptFunctionOnDisplay + "}else{document.getElementById('selectionType_" + _dateComparativeSelection.ID + "').value=document.getElementById('selectionType_" + _dateComparativeSelection.ID + "').value='';document.getElementById('" + _dateComparativeSelectionLabel.ID + "').innerHTML='';}");
                         _dateComparativeSelectionLabel.Attributes.Add("onClick", "javacript:" + _dateComparativeSelection.JavascriptFunctionOnDisplay);
                     }
