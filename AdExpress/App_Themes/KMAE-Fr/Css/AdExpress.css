@@ -666,6 +666,14 @@ table.creationWhiteBorder{
 	color: #FFC06F;
 	font-weight: bold;
 }
+.txtComparativeStudy{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #FFC06F;
+	font-weight: bold;
+	padding-left:25px;
+	cursor:pointer;
+}
 .pinkTextColor{
 	color:#FF7100;
 }

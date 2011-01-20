@@ -104,6 +104,10 @@ namespace TNS.AdExpress.Domain.Web {
 		/// </summary>
 		protected static Dictionary<CustomerSessions.InsertType, long> _insetTypeCollection = null;
         /// <summary>
+        /// 
+        /// </summary>
+        protected static bool _useComparativeMediaSchedule = false;
+        /// <summary>
         /// Dundas Configuration
         /// </summary>
         protected static DundasConfiguration _dundas = null;
@@ -290,6 +294,17 @@ namespace TNS.AdExpress.Domain.Web {
 				_insetTypeCollection = value;
 			}
 		}
+        /// <summary>
+        /// Get / Set Use Comparative Media Schedule
+        /// </summary>
+        public static bool UseComparativeMediaSchedule {
+            get {
+                return _useComparativeMediaSchedule;
+            }
+            set {
+                _useComparativeMediaSchedule = value;
+            }
+        }
         /// <summary>
         /// Get Dundas Virtual Path File Temporary
         /// </summary>

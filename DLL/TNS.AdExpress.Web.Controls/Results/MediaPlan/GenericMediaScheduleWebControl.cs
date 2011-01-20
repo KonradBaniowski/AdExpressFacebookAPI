@@ -621,7 +621,10 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                         WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType));
 
                     webSession.DetailPeriod = ConstantePeriod.DisplayLevel.dayly;
-                    period = new MediaSchedulePeriod(begin, end, ConstantePeriod.DisplayLevel.dayly);
+                    if (webSession.ComparativeStudy && webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                        period = new MediaSchedulePeriod(begin, end, ConstantePeriod.DisplayLevel.dayly, webSession.ComparativePeriodType);
+                    else
+                        period = new MediaSchedulePeriod(begin, end, ConstantePeriod.DisplayLevel.dayly);
 
                 }
                 else
@@ -632,7 +635,11 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                     {
                         webSession.DetailPeriod = ConstantePeriod.DisplayLevel.monthly;
                     }
-                    period = new MediaSchedulePeriod(begin, end, webSession.DetailPeriod);
+
+                    if (webSession.ComparativeStudy && webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                        period = new MediaSchedulePeriod(begin, end, webSession.DetailPeriod, webSession.ComparativePeriodType);
+                    else
+                        period = new MediaSchedulePeriod(begin, end, webSession.DetailPeriod);
 
                 }
                 #endregion

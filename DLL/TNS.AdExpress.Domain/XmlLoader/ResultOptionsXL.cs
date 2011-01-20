@@ -32,6 +32,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 			Dictionary<CustomerSessions.InsertType, long> insetTypeCollection = new Dictionary<CustomerSessions.InsertType, long>();
 			string id;
 			long dataBaseId;
+            bool useComparativeMediaSchedule = false;
             #endregion
 
             try {
@@ -53,10 +54,14 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 								dataBaseId = long.Parse(reader.GetAttribute("dataBaseId"));
 								insetTypeCollection.Add((CustomerSessions.InsertType)Enum.Parse(typeof(CustomerSessions.InsertType), id, true), dataBaseId);
 								break;
+                            case "mediaSchedule":
+                                useComparativeMediaSchedule = bool.Parse(reader.GetAttribute("useComparative"));
+                                break;
                         }
                     }
                 }
 				WebApplicationParameters.InsetTypeCollection = insetTypeCollection;
+                WebApplicationParameters.UseComparativeMediaSchedule = useComparativeMediaSchedule;
             }
 
             #region Error Management

@@ -29,6 +29,10 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.Controls.Selections;
+using TNS.AdExpressI.Date;
+using TNS.AdExpress.Domain.Layers;
+using System.Reflection;
+using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 #endregion
 
 namespace TNS.AdExpress.Web.Controls.Headers {
@@ -189,7 +193,15 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>
         /// CheckBox to indicate a comparative study
         /// </summary>
-        protected System.Web.UI.WebControls.CheckBox ComparativeStudyCheckBox;
+        protected System.Web.UI.WebControls.CheckBox _comparativeStudyCheckBox;
+        /// <summary>
+        /// CheckBox to indicate a comparative study
+        /// </summary>
+        protected DateComparativeSelection _dateComparativeSelection;
+        /// <summary>
+        /// CheckBox to indicate a comparative study
+        /// </summary>
+        protected System.Web.UI.WebControls.Label _dateComparativeSelectionLabel;
         #endregion
 
         #region Accessors
@@ -682,6 +694,18 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             set { comparativeStudyOption = value; }
         }
 
+        /// <summary>
+        /// Comparative Study Date Type Option (use when ComparativeStudyOption is used)
+        /// </summary>
+        [Bindable(true),
+        Description("Comparative Study Date Type Option")]
+        protected bool comparativeStudyDateTypeOption = false;
+        /// <summary></summary>
+        public bool ComparativeStudyDateTypeOption {
+            get { return comparativeStudyDateTypeOption; }
+            set { comparativeStudyDateTypeOption = value; }
+        }
+
         #region Propriétés de TblChoice
         /// <summary>
         /// hauteur de l'image
@@ -962,6 +986,11 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <param name="e">Arguments</param>
         protected override void OnInit(EventArgs e) {
 
+            if (customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) {
+                comparativeStudyOption = comparativeStudyOption && WebApplicationParameters.UseComparativeMediaSchedule;
+                comparativeStudyDateTypeOption = comparativeStudyDateTypeOption && WebApplicationParameters.UseComparativeMediaSchedule;
+            }
+
             #region Options Initialisation des éléments de référence
             _initializeProductWebControl = new TNS.AdExpress.Web.Controls.Headers.InitializeProductWebControl();
             _initializeProductWebControl.CustomerWebSession = customerWebSession;
@@ -1075,13 +1104,17 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 }
                 if (comparativeStudyOption)
                 {
-                    try
-                    {
+                    try {
                         if (Page.Request.Form.GetValues(this.ID + "_comparativeStudy")[0] != null) customerWebSession.ComparativeStudy = true;
+                        if (comparativeStudyDateTypeOption) {
+                            customerWebSession.ComparativePeriodType = (TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType)Enum.Parse(typeof(TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType), Page.Request.Form["selectionType_" + this.ID + "_comparativeStudyDateTypeOption"].ToString());
+                        }
                     }
-                    catch (System.Exception)
-                    {
+                    catch (System.Exception) {
                         customerWebSession.ComparativeStudy = false;
+                    }
+                    if (!customerWebSession.ComparativeStudy) {
+                        customerWebSession.ComparativePeriodType = TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate;
                     }
                 }
                 if(personalizedElementsOption) {
@@ -1676,22 +1709,45 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #region Comparative Study
             if (comparativeStudyOption)
             {
-                ComparativeStudyCheckBox = new System.Web.UI.WebControls.CheckBox();
-                ComparativeStudyCheckBox.ID = this.ID + "_comparativeStudy";
-                ComparativeStudyCheckBox.ToolTip = GestionWeb.GetWebWord(1118, customerWebSession.SiteLanguage);
-                ComparativeStudyCheckBox.CssClass = "txtBlanc11Bold";
-                ComparativeStudyCheckBox.AutoPostBack = autoPostBackOption;
-                ComparativeStudyCheckBox.Text = GestionWeb.GetWebWord(1118, customerWebSession.SiteLanguage);
-                ComparativeStudyCheckBox.Checked = customerWebSession.ComparativeStudy;
+                _comparativeStudyCheckBox = new System.Web.UI.WebControls.CheckBox();
+                _comparativeStudyCheckBox.ID = this.ID + "_comparativeStudy";
+                _comparativeStudyCheckBox.ToolTip = GestionWeb.GetWebWord(1118, customerWebSession.SiteLanguage);
+                _comparativeStudyCheckBox.CssClass = "txtBlanc11Bold";
+                _comparativeStudyCheckBox.AutoPostBack = autoPostBackOption;
+                _comparativeStudyCheckBox.Text = GestionWeb.GetWebWord(1118, customerWebSession.SiteLanguage);
+                _comparativeStudyCheckBox.Checked = customerWebSession.ComparativeStudy && IsValidPeriodComparative();
+                _comparativeStudyCheckBox.Enabled = IsValidPeriodComparative();
+
+                if (comparativeStudyDateTypeOption) {
+                    _dateComparativeSelection = new DateComparativeSelection(customerWebSession, comparativeStudyDateTypeOption, false);
+                    _dateComparativeSelection.ID = this.ID + "_comparativeStudyDateTypeOption";
+                    _dateComparativeSelectionLabel = new System.Web.UI.WebControls.Label();
+                    _dateComparativeSelectionLabel.ID = this.ID + "_comparativeStudyDateTypeOptionSelection";
+                    _dateComparativeSelectionLabel.CssClass = "txtComparativeStudy";
+                    if (_comparativeStudyCheckBox.Checked && _comparativeStudyCheckBox.Enabled) {
+                        if (customerWebSession.ComparativePeriodType == TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.comparativeWeekDate)
+                            _dateComparativeSelectionLabel.Text = GestionWeb.GetWebWord(2295, customerWebSession.SiteLanguage);
+                        else if (customerWebSession.ComparativePeriodType == TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate)
+                            _dateComparativeSelectionLabel.Text = GestionWeb.GetWebWord(2294, customerWebSession.SiteLanguage);
+
+                        _comparativeStudyCheckBox.Attributes.Add("onClick", "javacript:if(this.checked){this.checked=false; " + _dateComparativeSelection.JavascriptFunctionOnDisplay + "}else{document.getElementById('selectionType_" + _dateComparativeSelection.ID + "').value=document.getElementById('selectionType_" + _dateComparativeSelection.ID + "').value='';document.getElementById('" + _dateComparativeSelectionLabel.ID + "').innerHTML='';}");
+                        _dateComparativeSelectionLabel.Attributes.Add("onClick", "javacript:" + _dateComparativeSelection.JavascriptFunctionOnDisplay);
+                    }
+                    if (!_dependentSelection) {
+                        Controls.Add(_dateComparativeSelectionLabel);
+                        Controls.Add(_dateComparativeSelection);
+                    }
+                }
+
                 if (!_dependentSelection)
-                    Controls.Add(ComparativeStudyCheckBox);
+                    Controls.Add(_comparativeStudyCheckBox);
             }
             #endregion
 
             #region CheckBoxs Dependent Selection
             if (_dependentSelection)
             {
-                _checkBoxsDependentSelection = new CheckBoxsDependentSelection(ComparativeStudyCheckBox, _checkBoxListDependentSelection);
+                _checkBoxsDependentSelection = new CheckBoxsDependentSelection(_comparativeStudyCheckBox, _checkBoxListDependentSelection);
                 Controls.Add(_checkBoxsDependentSelection);
             }
             #endregion
@@ -2271,12 +2327,46 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Options PDM, PDV, evolution
-            if(pdmOption || pdvOption || evolutionOption) {
+            if (pdmOption || pdvOption || evolutionOption || comparativeStudyOption) {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td class=\"txtBlanc11Bold\">");
 
                 if (!_dependentSelection)
                 {
+                    if (comparativeStudyOption) {
+                       
+                        if (comparativeStudyDateTypeOption) {
+
+                            #region javascript
+                            output.Write("\n<script language=\"JavaScript\" type=\"text/JavaScript\">\n");
+
+                            output.Write("\nfunction OnValideComparativeSelection_" + this.ID + "(){");
+                            output.Write("\n\tdocument.getElementById('" + _comparativeStudyCheckBox.ID + "').checked = document.getElementById('selectionType_" + _dateComparativeSelection.ID + "').value!=null && document.getElementById('selectionType_" + _dateComparativeSelection.ID + "').value.length>0;");
+                            output.Write("\n\tif(document.getElementById('" + _comparativeStudyCheckBox.ID + "').checked ==true){");
+                            output.Write("\n\t\tif(document.getElementById('selectionType_" + _dateComparativeSelection.ID + "').value== '" + WebConstantes.globalCalendar.comparativePeriodType.comparativeWeekDate+"')");
+                            output.Write("\n\t\t\tdocument.getElementById('" + _dateComparativeSelectionLabel.ID + "').innerHTML='" + GestionWeb.GetWebWord(2295, customerWebSession.SiteLanguage) + "';");
+                            output.Write("\n\t\telse if(document.getElementById('selectionType_" + _dateComparativeSelection.ID + "').value== '" + WebConstantes.globalCalendar.comparativePeriodType.dateToDate + "')");
+                            output.Write("\n\t\t\tdocument.getElementById('" + _dateComparativeSelectionLabel.ID + "').innerHTML='" + GestionWeb.GetWebWord(2294, customerWebSession.SiteLanguage) + "';");
+                            output.Write("\n\t}");
+                            output.Write("\n}\n");
+
+                            output.Write("\n</script>\n");
+                            _dateComparativeSelection.JavascriptFunctionOnValidate = "OnValideComparativeSelection_" + this.ID + "();";
+                            #endregion
+
+                            output.Write("<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\"><tr><td>");
+                            _comparativeStudyCheckBox.RenderControl(output);
+                            output.Write("</td></tr><tr><td>");
+                            _dateComparativeSelectionLabel.RenderControl(output);
+                            output.Write("</td></tr></table>");
+
+                            _dateComparativeSelection.RenderControl(output);
+                        }
+                        else {
+                            _comparativeStudyCheckBox.RenderControl(output);
+                        }
+                    }
+
                     if (evolutionOption)
                     {
                         if (!customerWebSession.ComparativeStudy)
@@ -2553,7 +2643,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             resultsPages.CssClass = cssClass;
             resultsPages.AutoPostBack = autoPostBackOption;
             List<long> resultToShow = new List<long>();
-            List<ResultPageInformation> resultPages = ((Module)customerWebSession.CustomerLogin.GetModule(customerWebSession.CurrentModule)).GetValidResultsPage(_selectedMediaUniverse);
+            List<ResultPageInformation> resultPages = ((TNS.AdExpress.Domain.Web.Navigation.Module)customerWebSession.CustomerLogin.GetModule(customerWebSession.CurrentModule)).GetValidResultsPage(_selectedMediaUniverse);
 
             foreach(ResultPageInformation current in resultPages) {
                 if(!CanShowResult(customerWebSession, current)) continue;
@@ -2585,6 +2675,23 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                     break;
                 default: resultsPages.Items.FindByValue(customerWebSession.CurrentTab.ToString()).Selected = true; break;
             }
+        }
+
+        /// <summary>
+        /// Is Valid Period Comparative
+        /// </summary>
+        /// <returns></returns>
+        protected bool IsValidPeriodComparative() {
+
+            if (customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) {
+                DateTime dtBegin = WebFunctions.Dates.getPeriodBeginningDate(customerWebSession.PeriodBeginningDate, customerWebSession.PeriodType);
+                DateTime dtEnd = WebFunctions.Dates.getPeriodEndDate(customerWebSession.PeriodEndDate, customerWebSession.PeriodType);
+
+                //Check Year
+                return (DateTime.Compare(new DateTime(DateTime.Now.Year - 1, 1, 1, 0, 0, 0), dtBegin) < 0
+                    && dtBegin.Year == dtEnd.Year);
+            }
+            else return customerWebSession.ComparativeStudy;
         }
         #endregion
 

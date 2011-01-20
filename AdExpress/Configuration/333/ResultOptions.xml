@@ -6,4 +6,5 @@
     <insetItem  id="Excart" dataBaseId="999"/>
     <insetItem  id="subScriberEncart" dataBaseId="1983"/>
   </inset>
+  <mediaSchedule useComparative="true"/>
 </resultOptions>
