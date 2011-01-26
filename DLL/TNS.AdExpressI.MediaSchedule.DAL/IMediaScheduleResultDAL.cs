@@ -38,13 +38,26 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
             get;
             set;
         }
-
+        /// <summary>
+        /// Report period
+        /// </summary>
+        MediaSchedulePeriod Period
+        {
+            get;
+            set;
+        }
         #endregion
 
         /// <summary>
         /// Get data to build a Media Schedule Report
         /// </summary>
         DataSet GetMediaScheduleData();
+
+        /// <summary>
+        /// Get data to build a Media Schedule Report
+        /// </summary>
+        /// <param name="isComparative">True if we need data for comparative period</param>
+        DataSet GetMediaScheduleData(bool isComparative);
 
         /// <summary>
         /// Get Data to build an AdNettrack Media Schedule

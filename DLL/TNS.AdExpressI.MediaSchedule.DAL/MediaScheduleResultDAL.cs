@@ -74,7 +74,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
         /// </summary>
         public WebSession Session {
             get { return _session; }
-            set { value = _session; }
+            set { _session = value; }
         }
         #endregion
 
@@ -88,7 +88,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
         /// </summary>
         public MediaSchedulePeriod Period {
             get { return _period; }
-            set { value = _period; }
+            set { _period = value; }
         }
         #endregion
 
@@ -144,6 +144,17 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
         }
         #endregion
 
+        #region GetMediaScheduleData (for comparative study)
+        /// <summary>
+        /// Get Data to build Media Schedule
+        /// </summary>
+        /// <param name="isComparative">True if we need data for comparative period</param>
+        /// <returns>DataSet containing Data</returns>
+        public virtual DataSet GetMediaScheduleData(bool isComparative) {
+            return GetData(string.Empty, _session.GenericMediaDetailLevel, isComparative);
+        }
+        #endregion
+
         #region GetMediaScheduleAdNetTrackData
         /// <summary>
         /// Get Data for AdNetTrack Media Schedule
@@ -180,7 +191,17 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
         /// <param name="additionalWhereClause">Additional conditions if required</param>
         /// <param name="detailLevel">Clasification details</param>
         /// <returns>DataSet containing Data</returns>
-        protected virtual DataSet GetData(string additionalWhereClause, GenericDetailLevel detailLevel) {
+        protected virtual DataSet GetData(string additionalWhereClause, GenericDetailLevel detailLevel) { 
+            return GetData(additionalWhereClause, detailLevel, false);
+        }
+        /// <summary>
+        /// Get Data to build Media Schedule
+        /// </summary>
+        /// <param name="additionalWhereClause">Additional conditions if required</param>
+        /// <param name="detailLevel">Clasification details</param>
+        /// <param name="isComparative">True if we need data for comparative period</param>
+        /// <returns>DataSet containing Data</returns>
+        protected virtual DataSet GetData(string additionalWhereClause, GenericDetailLevel detailLevel, bool isComparative) {
 
             #region Variables
             bool first = true;
@@ -188,6 +209,8 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             string[] listVehicles = null;
             StringBuilder sql = new StringBuilder();
             string groupOptional = string.Empty;
+            string periodicityFields = "max(period_count) as period_count,";
+            string dateField = ", date_num";
             #endregion
 
             #region Query Building
@@ -195,10 +218,14 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                 listVehicles = _session.GetSelection(_session.SelectionUniversMedia, CstRight.type.vehicleAccess).Split(new char[] { ',' });
             else 
                 listVehicles = new string[1] { _vehicleId.ToString() };
-            
+
+            if (isComparative) {
+                periodicityFields = string.Empty;
+                dateField = string.Empty;
+            }
             // Select
             //sql.AppendFormat("select {0},date_num, max(period_count) as period_count,{1} from (", detailLevel.GetSqlFieldsWithoutTablePrefix(), FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session));
-            sql.AppendFormat("select {0},date_num, max(period_count) as period_count,{1} from (", detailLevel.GetSqlFieldsWithoutTablePrefix(), GetUnitFieldNameSumUnionWithAlias(_session));
+            sql.AppendFormat("select {0}{1}, {2}{3} from (", detailLevel.GetSqlFieldsWithoutTablePrefix(), dateField, periodicityFields, GetUnitFieldNameSumUnionWithAlias(_session));
 
             // SubPeriod Management
             List<MediaScheduleSubPeriod> subPeriodsSet = _period.SubPeriods;
@@ -210,7 +237,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                             try {
                                 if(!first) sql.Append(" union all ");
                                 else first = false;
-                                sql.AppendFormat("({0})", GetQuery(detailLevel, _period.PeriodDetailLEvel, subPeriods.SubPeriodType, Int64.Parse(listVehicles[i]), subPeriods.Items, additionalWhereClause));
+                                sql.AppendFormat("({0})", GetQuery(detailLevel, _period.PeriodDetailLEvel, subPeriods.SubPeriodType, Int64.Parse(listVehicles[i]), subPeriods.Items, additionalWhereClause, isComparative));
                             }
                             catch(System.Exception err) {
                                 throw new MediaScheduleDALException("GenericMediaScheduleDataAccess.GetData(WebSession _session, MediaSchedulePeriod _period)", err);
@@ -235,9 +262,9 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                             }
                         }
 						if(vehicleIdListTmp!=null && vehicleIdListTmp.Count>0)
-							sql.AppendFormat("({0})", GetQueryForWebPlanEvaliant(detailLevel, _period.PeriodDetailLEvel, subPeriods.SubPeriodType, subPeriods.Items, string.Empty));
+                            sql.AppendFormat("({0})", GetQueryForWebPlanEvaliant(detailLevel, _period.PeriodDetailLEvel, subPeriods.SubPeriodType, subPeriods.Items, string.Empty, isComparative));
 						else
-						sql.AppendFormat("({0})", GetQuery(detailLevel, _period.PeriodDetailLEvel, subPeriods.SubPeriodType, -1, subPeriods.Items, string.Empty));
+                            sql.AppendFormat("({0})", GetQuery(detailLevel, _period.PeriodDetailLEvel, subPeriods.SubPeriodType, -1, subPeriods.Items, string.Empty, isComparative));
                         break;
                     default:
                         throw new MediaScheduleDALException("Unable to determine type of subPeriod.");
@@ -245,12 +272,12 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             }
 
             sql.Append(") ");
-            sql.AppendFormat(" group by {0},date_num ", detailLevel.GetSqlGroupByFieldsWithoutTablePrefix());
+            sql.AppendFormat(" group by {0}{1} ", detailLevel.GetSqlGroupByFieldsWithoutTablePrefix(), dateField);
             UnitInformation u = _session.GetSelectedUnit();
             if(u.Id == CstWeb.CustomerSessions.Unit.versionNb) {
                 sql.AppendFormat(", {0} ", u.Id.ToString());
             }
-            sql.AppendFormat(" order by {0}, date_num ", detailLevel.GetSqlOrderFieldsWithoutTablePrefix());
+            sql.AppendFormat(" order by {0}{1} ", detailLevel.GetSqlOrderFieldsWithoutTablePrefix(), dateField);
             #endregion
 
             #region Execution de la requête
@@ -276,8 +303,10 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
         /// <param name="beginningDate">Period Beginning</param>
         /// <param name="endDate">Period End</param>
         /// <param name="additionalConditions">Addtional conditions such as AdNetTrack Baners...</param>
+        /// <param name="isComparative">True if we need data for comparative period</param>
         /// <returns>Sql query as a string</returns>
-        protected virtual string GetQuery(GenericDetailLevel detailLevel, CstPeriod.DisplayLevel periodDisplay, CstPeriod.PeriodBreakdownType periodBreakDown, Int64 vehicleId, List<PeriodItem> periodItems, string additionalConditions) {
+        protected virtual string GetQuery(GenericDetailLevel detailLevel, CstPeriod.DisplayLevel periodDisplay, CstPeriod.PeriodBreakdownType periodBreakDown, Int64 vehicleId, List<PeriodItem> periodItems, string additionalConditions, bool isComparative)
+        {
 
             #region Variables
             StringBuilder sql = new StringBuilder();
@@ -318,8 +347,9 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                 // Get unit field
                 dateFieldName = FctWeb.SQLGenerator.GetDateFieldName(periodBreakDown);                
                 unitAlias = FctWeb.SQLGenerator.GetUnitAlias(_session);
-                // Periodicity
-                mediaPeriodicity = GetPeriodicity(periodBreakDown, vehicleId, periodDisplay);
+                // isComparative
+                if (!isComparative)
+                    mediaPeriodicity = GetPeriodicity(periodBreakDown, vehicleId, periodDisplay);
                 
                 // Get classification fields
 				if (_isAdNetTrackMediaSchedule || (VehiclesInformation.Contains(vehicleId) && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack
@@ -364,9 +394,10 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             else {
                 sql.AppendFormat(", {0} as date_num,", dateFieldName);
             }
-            
-            // Periodicity selection
-            sql.AppendFormat("{0}, ", mediaPeriodicity);
+
+            // isComparative
+            if (!isComparative)
+                sql.AppendFormat("{0}, ", mediaPeriodicity);
 
             // Unit selection expect for AdNetTrack
             //if(VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack{
@@ -532,8 +563,10 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 		/// <param name="beginningDate">Period Beginning</param>
 		/// <param name="endDate">Period End</param>
 		/// <param name="additionalConditions">Addtional conditions such as AdNetTrack Baners...</param>
+        /// <param name="isComparative">True if we need data for comparative period</param>
 		/// <returns>Sql query as a string</returns>
-		protected virtual string GetQueryForWebPlanEvaliant(GenericDetailLevel detailLevel, CstPeriod.DisplayLevel periodDisplay, CstPeriod.PeriodBreakdownType periodBreakDown, List<PeriodItem> periodItems, string additionalConditions) {
+        protected virtual string GetQueryForWebPlanEvaliant(GenericDetailLevel detailLevel, CstPeriod.DisplayLevel periodDisplay, CstPeriod.PeriodBreakdownType periodBreakDown, List<PeriodItem> periodItems, string additionalConditions, bool isComparative)
+        {
 
 			#region Variables
 			StringBuilder sql = new StringBuilder();
@@ -577,8 +610,9 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 				// Get unit field
 				dateFieldName = FctWeb.SQLGenerator.GetDateFieldName(periodBreakDown);
 				unitAlias = FctWeb.SQLGenerator.GetUnitAlias(_session);
-				// Periodicity
-				mediaPeriodicity = GetPeriodicity(periodBreakDown, -1, periodDisplay);
+                // isComparative
+                if (!isComparative)
+				    mediaPeriodicity = GetPeriodicity(periodBreakDown, -1, periodDisplay);
 
 				// Get classification fields				
 				mediaFieldName = GetAdnettrackSqlFields(detailLevel);
@@ -612,8 +646,10 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 				sql.AppendFormat(", {0} as date_num,", dateFieldName);
 			}
 
-			// Periodicity selection
-			sql.AppendFormat("{0}, ", mediaPeriodicity);
+            // isComparative
+            if (!isComparative)
+			    sql.AppendFormat("{0}, ", mediaPeriodicity);
+
 			switch (periodBreakDown) {
 				case CstPeriod.PeriodBreakdownType.data:
 				case CstPeriod.PeriodBreakdownType.data_4m:

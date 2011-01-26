@@ -42,7 +42,15 @@ namespace AdExpress.Private.Selection {
     /// <summary>
     /// Page de sélection des dates (global)
     /// </summary>
-    public partial class GlobalDateSelection : TNS.AdExpress.Web.UI.SelectionWebPage {
+    public partial class GlobalDateSelection : TNS.AdExpress.Web.UI.SelectionWebPage
+    {
+
+        #region Constantes
+        /// <summary>
+        /// Day selection value
+        /// </summary>
+        private const string DAY_SELECTION = "2";
+        #endregion
 
         #region Variables
         /// <summary>
@@ -97,6 +105,19 @@ namespace AdExpress.Private.Selection {
                 //validateButton1.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/valider_down.gif";
                 //validateButton2.ImageUrl = "/Images/" + _siteLanguage + "/button/valider_up.gif";
                 //validateButton2.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/valider_down.gif";
+                #endregion
+
+                #region Get period selection type
+                string dateSelectedItemValue = string.Empty;
+                string[] dateSelectedItems; 
+                if (Request.Form.GetValues("dateSelectedItem") != null) dateSelectedItemValue = Request.Form.GetValues("dateSelectedItem")[0];
+                dateSelectedItems = dateSelectedItemValue.Split(',');
+                if (dateSelectedItems[0] != null && dateSelectedItems[0].Length > 0) {
+                    if (dateSelectedItems[0] == DAY_SELECTION)
+                        _webSession.PeriodSelectionType = globalCalendar.periodSelectiontype.day;
+                    else
+                        _webSession.PeriodSelectionType = globalCalendar.periodSelectiontype.other;
+                }
                 #endregion
 
                 string selectionType = "";
@@ -286,6 +307,14 @@ namespace AdExpress.Private.Selection {
                     case 3:
                         selectedValue = int.Parse(dayDateList.SelectedValue);
                         break;
+                    case 4: 
+                    case 5: 
+                    case 6: 
+                    case 7: 
+                    case 8:
+                        break;
+                    default:
+                        throw (new AdExpressException.AnalyseDateSelectionException(GestionWeb.GetWebWord(885, _webSession.SiteLanguage)));
                 }
 
                 date.SetDate(ref _webSession, GlobalCalendarWebControl1.FirstDayNotEnable, periodCalendarDisponibilityType, comparativePeriodCalendarType, selectedIndex, selectedValue);

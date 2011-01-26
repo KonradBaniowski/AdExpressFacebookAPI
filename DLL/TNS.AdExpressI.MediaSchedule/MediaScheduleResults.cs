@@ -519,12 +519,17 @@ namespace TNS.AdExpressI.MediaSchedule {
             }
             else
             {
+                DataSet dsComp;
                 param = new object[2];
                 param[0] = _session;
                 param[1] = _period;
                 IMediaScheduleResultDAL mediaScheduleDAL = (IMediaScheduleResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                 mediaScheduleDAL.Module = _module;
                 ds = mediaScheduleDAL.GetMediaScheduleData();
+                if (_session.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule) {
+                    mediaScheduleDAL.Period = _period.GetMediaSchedulePeriodComparative();
+                    dsComp = mediaScheduleDAL.GetMediaScheduleData(true);
+                }
             }
             detailLevel = GetDetailsLevelSelected();
 

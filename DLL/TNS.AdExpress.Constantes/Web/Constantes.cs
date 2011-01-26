@@ -249,7 +249,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Media Schedule Comparative Period Type
             /// </summary>
-            msComparativePeriodType = 56
+            msComparativePeriodType = 56,
+            /// <summary>
+            /// Period Selection Type
+            /// </summary>
+            periodSelectiontype = 57
 		}
 	
 	}
@@ -3435,6 +3439,19 @@ namespace TNS.AdExpress.Constantes.Web{
             /// Dernière période complète
             /// </summary>
             lastCompletePeriod=1
+        }
+        /// <summary>
+        /// Period selection type : day to day or month to month
+        /// </summary>
+        public enum periodSelectiontype { 
+            /// <summary>
+            /// If the period selected is a day to day selection
+            /// </summary>
+            day = 0,
+            /// <summary>
+            /// If the period selected is a month to month selection (it can be a monthly selection, a quarterly selection ...)
+            /// </summary>
+            other =1
         }
     }
     #endregion

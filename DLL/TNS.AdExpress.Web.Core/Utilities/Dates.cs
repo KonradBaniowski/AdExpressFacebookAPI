@@ -226,6 +226,40 @@ namespace TNS.AdExpress.Web.Core.Utilities
 
         #endregion
 
+        #region Get period dateTime
+        /// <summary>
+        /// Extract period DateTime from string
+        /// </summary>
+        /// <param name="period">Studied period</param>
+        /// <param name="displayLevel">Type of period</param>
+        /// <returns>Begin of the period</returns>
+        /// <remarks>
+        /// Use class:
+        ///		public TNS.FrameWork.Date.AtomicPeriodWeek
+        /// </remarks>
+        public static DateTime getPeriodDate(string period, CstPeriod.DisplayLevel displayLevel) {
+            AtomicPeriodWeek tmpWeek;
+            switch (displayLevel) {
+                case CstPeriod.DisplayLevel.weekly:
+                    if (period.Length == 6) {
+                        tmpWeek = new AtomicPeriodWeek(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(4, 2)));
+                        return tmpWeek.FirstDay;
+                    }
+                    else {
+                        return new DateTime(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(4, 2)), int.Parse(period.Substring(6, 2)));
+                    }
+                case CstPeriod.DisplayLevel.monthly:
+                    if (period.Length == 6)
+                        return new DateTime(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(4, 2)), 1);
+                    else
+                        return new DateTime(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(4, 2)), int.Parse(period.Substring(6, 2)));
+                default:
+                case CstPeriod.DisplayLevel.dayly:
+                    return new DateTime(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(4, 2)), int.Parse(period.Substring(6, 2)));
+            }
+        }
+        #endregion
+
         #region Begin of a period
         /// <summary>
         /// Extract begin of a period from period and type of period
@@ -624,6 +658,78 @@ namespace TNS.AdExpress.Web.Core.Utilities
 			return DateToString(new DateTime(int.Parse(date.Substring(0, 4)), int.Parse(date.Substring(4, 2)), int.Parse(date.Substring(6, 2))), language);
 		}
 		#endregion
+
+        #region GetPreviousYearDate
+        /// <summary>
+        /// Obtient la date de l'année précédente
+        /// </summary>
+        /// <param name="date">date de l'année en cours</param>
+        /// <param name="comparativePeriodType">Type de la période comparative</param>
+        /// <returns>date de l'année précédente</returns>
+        public static DateTime GetPreviousYearDate(DateTime date, Constantes.Web.globalCalendar.comparativePeriodType comparativePeriodType) {
+
+            AtomicPeriodWeek tmpWeek;
+            int currentDay;
+
+            switch (comparativePeriodType) {
+
+                case Constantes.Web.globalCalendar.comparativePeriodType.dateToDate:
+                    date = date.AddYears(-1);
+                    break;
+                case Constantes.Web.globalCalendar.comparativePeriodType.comparativeWeekDate:
+                    currentDay = date.DayOfWeek.GetHashCode();
+                    tmpWeek = new AtomicPeriodWeek(date);
+                    tmpWeek.SubWeek(52);
+                    if (currentDay == 0)
+                        date = tmpWeek.FirstDay.AddDays(6);
+                    else
+                        date = tmpWeek.FirstDay.AddDays(currentDay - 1);
+                    break;
+                default:
+                    throw new ArgumentException("Comparative Period Type not valid !!!");
+            }
+
+            return date;
+
+        }
+        #endregion
+
+        #region GetNextYearDate
+        /// <summary>
+        /// Obtient la date de l'année prochaine
+        /// </summary>
+        /// <param name="date">date de l'année en cours</param>
+        /// <param name="comparativePeriodType">Type de la période comparative</param>
+        /// <returns>date de l'année prochaine</returns>
+        public static DateTime GetNextYearDate(DateTime date, Constantes.Web.globalCalendar.comparativePeriodType comparativePeriodType)
+        {
+
+            AtomicPeriodWeek tmpWeek;
+            int currentDay;
+
+            switch (comparativePeriodType)
+            {
+
+                case Constantes.Web.globalCalendar.comparativePeriodType.dateToDate:
+                    date = date.AddYears(1);
+                    break;
+                case Constantes.Web.globalCalendar.comparativePeriodType.comparativeWeekDate:
+                    currentDay = date.DayOfWeek.GetHashCode();
+                    tmpWeek = new AtomicPeriodWeek(date);
+                    tmpWeek.AddWeek(52);
+                    if (currentDay == 0)
+                        date = tmpWeek.FirstDay.AddDays(6);
+                    else
+                        date = tmpWeek.FirstDay.AddDays(currentDay - 1);
+                    break;
+                default:
+                    throw new ArgumentException("Comparative Period Type not valid !!!");
+            }
+
+            return date;
+
+        }
+        #endregion
 
     }
 }

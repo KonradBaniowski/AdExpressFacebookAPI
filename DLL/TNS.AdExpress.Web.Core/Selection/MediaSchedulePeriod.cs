@@ -88,6 +88,13 @@ namespace TNS.AdExpress.Web.Core.Selection
         {
             get { return _end; }
         }
+        /// <summary>
+        /// Comparative Period Type
+        /// </summary>
+        public CstWeb.globalCalendar.comparativePeriodType ComparativePeriodType
+        {
+            get { return _comparativePeriodType; }
+        }
         #endregion
 
         #region Constructor
@@ -320,7 +327,7 @@ namespace TNS.AdExpress.Web.Core.Selection
             DateTime endComparative = DateTime.Now;
 
             if (_isComparativePeriod) {
-                SetComparativePeriod(beginComparative, endComparative);
+                SetComparativePeriod(out beginComparative, out endComparative);
                 return new MediaSchedulePeriod(beginComparative, endComparative, _periodBreakDown);
             }
 
@@ -332,45 +339,10 @@ namespace TNS.AdExpress.Web.Core.Selection
         /// <summary>
         /// Initialise la période comparative
         /// </summary>
-        private void SetComparativePeriod(DateTime begin, DateTime end) {
+        private void SetComparativePeriod(out DateTime begin, out DateTime end) {
 
-            begin = GetPreviousYearDate(_begin.Date, _comparativePeriodType);
-            end = GetPreviousYearDate(_end.Date, _comparativePeriodType);
-        }
-        #endregion
-
-        #region GetPreviousYearDate
-        /// <summary>
-        /// Obtient la date de l'année précédente
-        /// </summary>
-        /// <param name="period">date de l'année en cours</param>
-        /// <param name="comparativePeriodType">Type de la période comparative</param>
-        /// <returns>date de l'année précédente</returns>
-        private DateTime GetPreviousYearDate(DateTime date, Constantes.Web.globalCalendar.comparativePeriodType comparativePeriodType) {
-
-            AtomicPeriodWeek tmpWeek;
-            int currentDay;
-
-            switch (comparativePeriodType) {
-
-                case Constantes.Web.globalCalendar.comparativePeriodType.dateToDate:
-                    date = date.AddYears(-1);
-                    break;        
-                case Constantes.Web.globalCalendar.comparativePeriodType.comparativeWeekDate:
-                    currentDay = date.DayOfWeek.GetHashCode();
-                    tmpWeek = new AtomicPeriodWeek(date);
-                    tmpWeek.SubWeek(52);
-                    if (currentDay == 0)
-                        date = tmpWeek.FirstDay.AddDays(6);
-                    else
-                        date = tmpWeek.FirstDay.AddDays(currentDay - 1);
-                    break;
-                default:
-                    throw new ArgumentException("Comparative Period Type not valid !!!");
-            }
-
-            return date;
-
+            begin = Utilities.Dates.GetPreviousYearDate(_begin.Date, _comparativePeriodType);
+            end = Utilities.Dates.GetPreviousYearDate(_end.Date, _comparativePeriodType);
         }
         #endregion
 

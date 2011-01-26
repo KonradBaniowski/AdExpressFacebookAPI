@@ -370,6 +370,12 @@ namespace TNS.AdExpress.Web.Core.Sessions {
         [System.NonSerialized]
         protected WebConstantes.globalCalendar.comparativePeriodType _comparativePeriodType = WebConstantes.globalCalendar.comparativePeriodType.dateToDate;
 
+        /// <summary>
+        /// Period Selection Type : Period selection type : day to day or month to month
+        /// </summary>
+        [System.NonSerialized]
+        protected WebConstantes.globalCalendar.periodSelectiontype _periodSelectionType = WebConstantes.globalCalendar.periodSelectiontype.day;
+
 		/// <summary>
 		/// Index décrivant un identifiant ou un numéroe de colonne à trier.
 		/// </summary>
@@ -1523,6 +1529,24 @@ namespace TNS.AdExpress.Web.Core.Sessions {
             set {
                 _comparativePeriodType = value;
                 userParameters[CoreConstantes.SessionParamters.msComparativePeriodType] = value;
+                modificationDate = DateTime.Now;
+            }
+        }
+
+        /// <summary>
+        /// Get or Set the Period Selection Type
+        /// </summary>
+        public WebConstantes.globalCalendar.periodSelectiontype PeriodSelectionType {
+            get {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.periodSelectiontype)) {
+                    _periodSelectionType = (WebConstantes.globalCalendar.periodSelectiontype)userParameters[CoreConstantes.SessionParamters.periodSelectiontype];
+                }
+
+                return (_periodSelectionType);
+            }
+            set {
+                _periodSelectionType = value;
+                userParameters[CoreConstantes.SessionParamters.periodSelectiontype] = value;
                 modificationDate = DateTime.Now;
             }
         }
