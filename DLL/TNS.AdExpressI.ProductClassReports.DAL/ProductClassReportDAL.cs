@@ -1080,8 +1080,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
         {
 
             TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
-            string productRightsBranches = (module != null) ? module.ProductRightBranches : ""; 
-            sql.Append(" " + FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, _dataTable.Prefix, _dataTable.Prefix, _dataTable.Prefix, _dataTable.Prefix, _dataTable.Prefix, true, productRightsBranches)); 
+            sql.Append(" " + FctUtilities.SQLGenerator.GetClassificationCustomerProductRight(_session, _dataTable.Prefix, _dataTable.Prefix, _dataTable.Prefix, _dataTable.Prefix, _dataTable.Prefix, true, module.ProductRightBranches)); 
             //!!!!!!!!!!!!!!!! Pas de gestion des droits de la nomenclature media dans les recap (src : G Facon le 27/09/2004)
 
 			sql.Append(" " + FctUtilities.SQLGenerator.GetResultMediaUniverse(_session, _dataTable.Prefix));

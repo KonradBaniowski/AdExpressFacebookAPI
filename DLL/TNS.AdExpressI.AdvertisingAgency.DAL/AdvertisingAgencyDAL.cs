@@ -407,7 +407,8 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
 
             #region Nomenclature Produit (droits)
             //Access rgithDroits en accès
-            sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+            TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
+            sql.Append(FctWeb.SQLGenerator.GetClassificationCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, module.ProductRightBranches));
             // Exclude product if radio selected)
             GetExcludeProudcts(sql);
             #endregion
@@ -655,7 +656,8 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
 
             #region Nomenclature Produit (droits)
             //Access rgithDroits en accès
-            sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+            TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
+            sql.Append(FctWeb.SQLGenerator.GetClassificationCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, module.ProductRightBranches));
             // Exclude product if radio selected)
             GetExcludeProudcts(sql);
             #endregion

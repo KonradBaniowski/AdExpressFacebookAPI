@@ -106,6 +106,7 @@
       <module name="Present/Absent" privilegecode="278" traductioncode="2167" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2196" descriptionImageName="/Images/Common/Infobulle/Concurrentiels.png">
         <RulesLayer name="Default Present Absent rules layers" assemblyName="TNS.AdExpressI.PresentAbsent.Default.dll" class="TNS.AdExpressI.PresentAbsent.Default.PresentAbsentResult"/>
         <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.Default.dll" class="TNS.AdExpressI.PresentAbsent.DAL.Default.PresentAbsentDAL"/>
+        <ProductRights branches="product"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="1,2,3,5,7,8"/>
         </ModuleAllowedMediaUniverse>
@@ -276,6 +277,7 @@
       <module name="Lost/won" privilegecode="197" traductioncode="2169" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2198" descriptionImageName="/Images/Common/Infobulle/Dynamique.png">
         <RulesLayer name="Default Lost Won rules layers" assemblyName="TNS.AdExpressI.LostWon.Default.dll" class="TNS.AdExpressI.LostWon.Default.LostWonResult"/>
         <DataAccessLayer name="Default Lost Won data access layers" assemblyName="TNS.AdExpressI.LostWon.DAL.Default.dll" class="TNS.AdExpressI.LostWon.DAL.Default.LostWonResultDAL"/>
+        <ProductRights branches="product"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="1,2,3,5,7,8"/>
         </ModuleAllowedMediaUniverse>
@@ -467,6 +469,7 @@
       <module name="Portefeuille d'un support" privilegecode="283" traductioncode="2170" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2199" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
         <RulesLayer name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Poland.dll" class="TNS.AdExpressI.Portofolio.Poland.PortofolioResults"/>
         <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.Default.dll" class="TNS.AdExpressI.Portofolio.DAL.Default.PortofolioDAL"/>
+        <ProductRights branches="product"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="1,2,3,5,7,8"/>
         </ModuleAllowedMediaUniverse>
@@ -612,6 +615,7 @@
       <module name="Tableaux dynamiques" privilegecode="194" traductioncode="2174" moduleCategoryId="2" urlNextPage="/Private/Selection/RecapUniverseProductSelection.aspx" descriptionWebTextId="2203" descriptionImageName="/Images/Common/Infobulle/TableauDynamique.png">
         <RulesLayer name="Default Product Class Rules Layers" assemblyName="TNS.AdExpressI.ProductClassReports.Default.dll" class="TNS.AdExpressI.ProductClassReports.Default.ProductClassReports"/>
         <DataAccessLayer name="Default Product Class Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassReports.DAL.Default.dll" class="TNS.AdExpressI.ProductClassReports.DAL.Default.ProductClassReportDAL"/>
+        <ProductRights branches="product|advertiser"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="1,2,3,5,7,50"/>
         </ModuleAllowedMediaUniverse>
@@ -665,6 +669,7 @@
       <module name="Indicateurs" privilegecode="195" traductioncode="2173" moduleCategoryId="2" urlNextPage="/Private/Selection/RecapUniverseProductSelection.aspx" descriptionWebTextId="2202" descriptionImageName="/Images/Common/Infobulle/Indicateurs.png">
         <RulesLayer name="Default Product Class Indicators Rules Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.Default.ProductClassIndicators"/>
         <DataAccessLayer name="Default Product Class Indicators Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.DAL.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.DAL.Default.ProductClassIndicatorsDAL"/>
+        <ProductRights branches="product|advertiser"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="1,2,3,5,7,50"/>
         </ModuleAllowedMediaUniverse>
@@ -781,6 +786,7 @@
       <module name="Les nouvelles créations" privilegecode="4369" traductioncode="2557" moduleCategoryId="0" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2558" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
         <RulesLayer name="Default New Creatives rules layers" assemblyName="TNS.AdExpressI.NewCreatives.Default.dll" class="TNS.AdExpressI.NewCreatives.Default.NewCreativesResult"/>
         <DataAccessLayer name="Default New Creatives data access layers" assemblyName="TNS.AdExpressI.NewCreatives.DAL.Default.dll" class="TNS.AdExpressI.NewCreatives.DAL.Default.NewCreativesDAL"/>
+        <ProductRights branches="product"/>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
             <defaultProductDetailLevel id="11" name="famille" />

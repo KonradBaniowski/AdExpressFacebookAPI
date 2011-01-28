@@ -130,7 +130,9 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 detailProductFields = _session.GenericProductDetailLevel.GetSqlFields();
                 detailProductJoints = _session.GenericProductDetailLevel.GetSqlJoins(_session.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                 detailProductOrderBy = _session.GenericProductDetailLevel.GetSqlOrderFields();
-                productsRights = WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+                TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
+                productsRights = SQLGenerator.GetClassificationCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, module.ProductRightBranches);
+			
                 table = GetTable(_vehicleInformation);
 
                 if(_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)) {

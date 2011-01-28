@@ -795,7 +795,8 @@ namespace TNS.AdExpressI.LostWon.DAL
             string mediaRights = FctWeb.SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
             sql.AppendFormat(" {0}", mediaRights);
             // Product rights
-            string productsRights = FctWeb.SQLGenerator.getAnalyseCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+            TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
+            string productsRights = FctWeb.SQLGenerator.GetClassificationCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, module.ProductRightBranches);
             sql.AppendFormat(" {0}", productsRights);
 
             // Autopromo Evaliant

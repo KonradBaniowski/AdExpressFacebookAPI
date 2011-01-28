@@ -99,7 +99,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 }
 
                 mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-				productsRights = WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+                productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
 				detailProductOrderBy = _webSession.GenericProductDetailLevel.GetSqlOrderFields();
 				//option encarts (pour la presse)
                 if (DBClassificationConstantes.Vehicles.names.press == _vehicleInformation.Id || DBClassificationConstantes.Vehicles.names.internationalPress == _vehicleInformation.Id || DBClassificationConstantes.Vehicles.names.newspaper == _vehicleInformation.Id || DBClassificationConstantes.Vehicles.names.magazine == _vehicleInformation.Id)
