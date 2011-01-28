@@ -766,24 +766,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="webSession">séssion client</param>	
         /// <returns>Chaîne de caractère correspondant aux familles sélectionnées</returns>
         private static string GetSectorSelectionClause(WebSession webSession) {
-            string sql = "";
-            //string listSector="";
-            #region ancienne version
-            ////liste des familles sélectionnées
-            //if(IsDetailSector(webSession)){
-            //    //Détail d'une famille
-            //     listSector = webSession.GetSelection(webSession.SelectionUniversProduct,CustomerRightConstante.type.sectorAccess);
-            //    if(WebFunctions.CheckedText.IsStringEmpty(listSector)){
-            //        sql+=DBConstantes.Tables.DASH_BOARD_PREFIXE+".id_sector in ("+listSector+")";	
-            //    }	
-            //}else{
-            //    //Toutes les familles sélectionnées
-            //     listSector = webSession.GetSelection(webSession.CurrentUniversProduct,CustomerRightConstante.type.sectorAccess);
-            //    if(WebFunctions.CheckedText.IsStringEmpty(listSector)){
-            //        sql+=DBConstantes.Tables.DASH_BOARD_PREFIXE+".id_sector in ("+listSector+")";	
-            //    }	
-            //}	
-            #endregion
+            string sql = "";     
             if (webSession.SecondaryProductUniverses != null && webSession.SecondaryProductUniverses.Count > 0)
                 sql = webSession.SecondaryProductUniverses[0].GetSqlConditions(DBConstantes.Tables.DASH_BOARD_PREFIXE, false);
             else if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 0)
@@ -804,7 +787,6 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             string VehicleAccessList = "";
             string InterestCenterAccessList = "";
             //identification du Média  sélectionné          
-           // ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 			VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 
 
@@ -1231,6 +1213,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 sql += "  " + WebFunctions.SQLGenerator.getClassificationCustomerMediaRight(webSession, DBConstantes.Tables.DASH_BOARD_PREFIXE, DBConstantes.Tables.DASH_BOARD_PREFIXE, true);
             else
                 sql += "  " + WebFunctions.SQLGenerator.getClassificationCustomerRecapMediaRight(webSession, DBConstantes.Tables.DASH_BOARD_PREFIXE, DBConstantes.Tables.DASH_BOARD_PREFIXE, DBConstantes.Tables.DASH_BOARD_PREFIXE, true);
+           
+            //Get Products rights
+            string temp = GetProductRihts(webSession);
+            if (!string.IsNullOrEmpty(temp)) sql += " and " + DBConstantes.Tables.DASH_BOARD_PREFIXE + ".id_sector in (" + temp + " ) ";
+
             return sql;
         }
         #endregion
@@ -1590,6 +1577,27 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         }
 
         #endregion
+
+        /// <summary>
+        /// Get products rights
+        /// </summary>
+        /// <param name="webSession">Client session</param>
+        /// <returns>list sector ID</returns>
+        private static string GetProductRihts(WebSession webSession)
+        {
+            string list = "";
+            DataSet ds = TNS.AdExpress.Web.DataAccess.Selections.Products.ProductClassificationListDataAccess.SectorList(webSession);
+            if (ds != null && ds.Tables.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                foreach (DataRow dr in dt.Rows)
+                {
+                    list += dr["id_sector"].ToString() + ",";
+                }
+                if (!string.IsNullOrEmpty(list)) list = list.Substring(0, list.Length - 1);
+            }
+            return list;
+        }
 
         #endregion
 

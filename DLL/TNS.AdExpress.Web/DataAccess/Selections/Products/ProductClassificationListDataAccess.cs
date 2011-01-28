@@ -60,7 +60,9 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 			}
 			#region Nomenclature Produit (droits)
 			//Droits en accès
-            sql += SQLGenerator.getClassificationCustomerProductRight(webSession, oView.Prefix, oView.Prefix, oView.Prefix, oView.Prefix, true);
+            TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+            sql += SQLGenerator.GetClassificationCustomerProductRight(webSession, oView.Prefix, true, module.ProductRightBranches);
+
 			#endregion
 			
 			// Tri

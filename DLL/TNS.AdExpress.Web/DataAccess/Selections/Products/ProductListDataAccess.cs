@@ -76,13 +76,9 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 			//media
 			sql.Append(" and "+DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_media_secodip="+DBConstantes.Tables.WEB_PLAN_PREFIXE+".id_media");
 			//target
-			//sql.Append(" and "+ DBConstantes.Tables.TARGET_PREFIXE+".id_target="+DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_target");
 			sql.Append(" and "+ DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_target in("+ idAdditionalTarget.ToString()+")");		
-			//sql.Append(" and "+ DBConstantes.Tables.TARGET_PREFIXE+".id_language="+DBConstantes.Language.FRENCH);
-			//sql.Append(" and "+ DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage);
 			sql.Append(" and " + DBConstantes.Tables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+ ".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
 			
-			//sql.Append(TNS.AdExpress.Web.Functions.SQLGenerator.GetAnalyseCustomerProductSelection(webSession,DBConstantes.Tables.WEB_PLAN_PREFIXE,DBConstantes.Tables.WEB_PLAN_PREFIXE,DBConstantes.Tables.WEB_PLAN_PREFIXE,true));
 
 			// Sélection de Produits
 			if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 0)
@@ -91,8 +87,9 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Products{
 			//all results without inset
 			sql.Append(" and " + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_inset = " + Cst.Classification.DB.insertType.EXCEPT_INSERT.GetHashCode());
 			//Rights
-			sql.Append(TNS.AdExpress.Web.Functions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DBConstantes.Tables.WEB_PLAN_PREFIXE,true));	
-			sql.Append(TNS.AdExpress.Web.Functions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DBConstantes.Tables.WEB_PLAN_PREFIXE,true));											
+			sql.Append(TNS.AdExpress.Web.Functions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DBConstantes.Tables.WEB_PLAN_PREFIXE,true));
+            TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+            sql.Append(WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(webSession, DBConstantes.Tables.WEB_PLAN_PREFIXE, true, module.ProductRightBranches));
 
 			#endregion
 

@@ -133,7 +133,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 		/// <param name="additionalTarget">cible supplémentaire</param>
 		/// <returns>sélections du client</returns>
 		private static string GetCustomerSelection(WebSession webSession,int dateBegin, int dateEnd,Int64 baseTarget,Int64 additionalTarget){
-			return " and " + DBCst.Tables.TARGET_PREFIXE + ".id_target in (" + baseTarget + ","+additionalTarget+")"
+
+            TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+				
+            return " and " + DBCst.Tables.TARGET_PREFIXE + ".id_target in (" + baseTarget + ","+additionalTarget+")"
 				+" and "+ DBTables.TARGET_PREFIXE+".id_language="+webSession.DataLanguage.ToString()
 				+" and "+DBCst.Tables.DATA_PRESS_APPM_PREFIXE+".date_media_num >= "+dateBegin.ToString()+"  and  "+DBCst.Tables.DATA_PRESS_APPM_PREFIXE+".date_media_num <= "+dateEnd.ToString()
 				+" and "+DBCst.Tables.DATA_PRESS_APPM_PREFIXE+".id_inset is null "
@@ -141,7 +144,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 				+"  "+WebFunctions.SQLGenerator.GetAnalyseCustomerProductSelection(webSession, DBCst.Tables.DATA_PRESS_APPM_PREFIXE, DBCst.Tables.DATA_PRESS_APPM_PREFIXE, DBCst.Tables.DATA_PRESS_APPM_PREFIXE, true)
 				//Droits client
 				+"  "+WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DBCst.Tables.DATA_PRESS_APPM_PREFIXE,true)
-				+"  "+WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DBCst.Tables.DATA_PRESS_APPM_PREFIXE,true);
+                + "  " + WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(webSession, DBCst.Tables.DATA_PRESS_APPM_PREFIXE, true, module.ProductRightBranches);
 		}
 		
 		/// <summary>

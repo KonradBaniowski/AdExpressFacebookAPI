@@ -50,7 +50,6 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM {
 			#region construction de la requête
 			StringBuilder sql = new StringBuilder(2000);
 
-			//			select id_vehicle,vehicle,id_periodicity,periodicity,id_target,target,sum(GRP) as GRP,sum(CGRP) as cgrp from (
 			sql.Append("select ");
             sql.AppendFormat("vehicle, id_periodicity, periodicity, id_target , target,  sum(totalgrp) as totalgrp, sum({0}) as {0} "
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString());
@@ -61,7 +60,6 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM {
 			#endregion
 			sql.Append(" from ");
 			sql.Append("(");
-			//	select vehicle,id_periodicity,periodicity,id_target,target,sum(TOTALGRP) as GRP,CGRP
 
 			sql.Append("select ");
             sql.AppendFormat("vehicle, id_periodicity, periodicity, id_target , target, totalgrp , {0} "
@@ -107,20 +105,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM {
 			sql.Append(" group by  vehicle ,id_periodicity, periodicity, id_target, target ");
             sql.Append("   order by  periodicity, id_target ");
 
-			#region GroupeBy par rappot à l'unité choisit
-//			switch (webSession.Unit){
-//				case WebConstantes.CustomerSessions.Unit.euro: 
-//					sql.Append(" ,budget " );
-//					break;
-//				case WebConstantes.CustomerSessions.Unit.insertion: 
-//					sql.Append(" ,insertion " );
-//					break;
-//				case WebConstantes.CustomerSessions.Unit.pages: 
-//					sql.Append(" ,page " );
-//					break;
-//				default : break;			
-//			}
-			#endregion
+			
 			#endregion
 
 			#region execution
@@ -259,11 +244,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM {
 			//Media Universe
 			sql.Append(WebFunctions.SQLGenerator.GetResultMediaUniverse(webSession, DBConstantes.Tables.WEB_PLAN_PREFIXE));
 
-			//sql.Append(" and "+ DBConstantes.Tables.WEB_PLAN_PREFIXE+".ID_ADVERTISER in ("+products+")"); 
 			//Droits clients
-			sql.Append(TNS.AdExpress.Web.Functions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DBConstantes.Tables.WEB_PLAN_PREFIXE,true));	
-			sql.Append(TNS.AdExpress.Web.Functions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DBConstantes.Tables.WEB_PLAN_PREFIXE,true));	
-			//tous les resultats sans inset
+			sql.Append(TNS.AdExpress.Web.Functions.SQLGenerator.getAnalyseCustomerMediaRight(webSession,DBConstantes.Tables.WEB_PLAN_PREFIXE,true));
+            TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+            sql.Append(WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(webSession, DBConstantes.Tables.WEB_PLAN_PREFIXE, true, module.ProductRightBranches));
+            //tous les resultats sans inset
 			sql.Append(" and " + DBConstantes.Tables.WEB_PLAN_PREFIXE+ ".id_inset = " + Cst.Classification.DB.insertType.EXCEPT_INSERT.GetHashCode());
 			#endregion
 			return sql;

@@ -587,17 +587,7 @@ namespace TNS.AdExpressI.Classification.DAL {
 		/// <param name="beginByAnd">True if the sql clause start with "AND"</param>
         /// <returns>SQL code string</returns>
 		public virtual string GetCustomerProductRight( string tablePrefix, bool beginByAnd) {
-            //switch (_module.Id) {
-            //    /* Obtains user rights of the product classification for the modules  
-            //     * " Product class analysis: Graphic key reports " and "Product class analysis: Detailed reports".*/
-            //    case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR:
-            //    case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE:
-            //        return (SQLGenerator.GetClassificationCustomerProductRight(_session, tablePrefix, tablePrefix, tablePrefix, tablePrefix, tablePrefix, beginByAnd));
-            //    default:
-            //         /*Obtains user rights of the product classification for the modules for the others modules*/
-            //        return (SQLGenerator.getClassificationCustomerProductRight(_session, tablePrefix, tablePrefix, tablePrefix, tablePrefix, beginByAnd));
-            //}
-
+          
             TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
             string productRightsBranches = (module != null) ? module.ProductRightBranches : "";
             return (SQLGenerator.GetClassificationCustomerProductRight(_session, tablePrefix, tablePrefix, tablePrefix, tablePrefix, tablePrefix, beginByAnd, productRightsBranches));

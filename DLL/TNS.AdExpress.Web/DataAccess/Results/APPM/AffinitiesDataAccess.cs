@@ -87,9 +87,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			sql.Append(SQLGenerator.GetResultMediaUniverse(webSession, DBConstantes.Tables.WEB_PLAN_PREFIXE));
 
 			//Rights
-			sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(webSession,DBTables.WEB_PLAN_PREFIXE,true));	
-			sql.Append(SQLGenerator.getAnalyseCustomerProductRight(webSession,DBTables.WEB_PLAN_PREFIXE,true));	
-			#endregion
+			sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(webSession,DBTables.WEB_PLAN_PREFIXE,true));
+            TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+            sql.Append(SQLGenerator.GetClassificationCustomerProductRight(webSession, DBConstantes.Tables.WEB_PLAN_PREFIXE, true, module.ProductRightBranches));
+			
+            #endregion
 
 			#region Group By
 			sql.Append(" group by ");

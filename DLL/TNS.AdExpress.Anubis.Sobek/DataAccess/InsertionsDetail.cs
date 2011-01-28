@@ -112,8 +112,8 @@ namespace TNS.AdExpress.Anubis.Sobek.DataAccess
 			//Media Rights
 			sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(webSession, DBCst.Tables.DATA_PRESS_APPM_PREFIXE, true));
 			//Product rights
-			sql.Append(SQLGenerator.getAnalyseCustomerProductRight(webSession, DBCst.Tables.DATA_PRESS_APPM_PREFIXE, true));
-
+            TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+            sql.Append(SQLGenerator.GetClassificationCustomerProductRight(webSession, DBCst.Tables.DATA_PRESS_APPM_PREFIXE, true, module.ProductRightBranches));
 			#endregion
 
 			#region Group By

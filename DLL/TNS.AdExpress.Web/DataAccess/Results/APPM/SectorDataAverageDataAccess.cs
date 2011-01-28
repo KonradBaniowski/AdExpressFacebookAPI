@@ -145,8 +145,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 						//media rights
 						sql.Append(WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession, DBTables.WEB_PLAN_PREFIXE, true));
 						//product rights
-						sql.Append(WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession, DBTables.WEB_PLAN_PREFIXE, true));
-						#endregion
+                        TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+                        sql.Append(WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(webSession, DBConstantes.Tables.WEB_PLAN_PREFIXE, true, module.ProductRightBranches));
+                        #endregion
 
 						#region group by
 						sql.Append(" group by "+ DBTables.TARGET_PREFIXE+".id_target, target, "+DBConstantes.Tables.WEB_PLAN_PREFIXE+"."+productDetail+", id_media, " + UnitsInformation.List[WebConstantes.CustomerSessions.Unit.grp].DatabaseField);
@@ -256,7 +257,6 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 						//target
 						sql.Append(" and "+ DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_target in("+ additionalTarget.ToString()+")");		
 						
-						//sql.Append(" and "+ DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage);
 						sql.Append(" and " + DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+ ".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
 						// Sélection de Produits
 						if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 0)
@@ -270,7 +270,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 						//media rights
 						sql.Append(WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession, DBTables.WEB_PLAN_PREFIXE, true));
 						//product rights
-						sql.Append(WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession, DBTables.WEB_PLAN_PREFIXE, true));
+                        TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+                        sql.Append(WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(webSession, DBConstantes.Tables.WEB_PLAN_PREFIXE, true, module.ProductRightBranches));
+
 						#endregion
 
 						#region group by

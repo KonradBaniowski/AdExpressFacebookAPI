@@ -92,7 +92,6 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			//sql.Append(" and "+ DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+".id_language_data_i="+webSession.DataLanguage);
 			sql.Append(" and " + DBTables.TARGET_MEDIA_ASSIGNEMNT_PREFIXE+ ".activation < " + DBConstantes.ActivationValues.UNACTIVATED);
 			//products
-			//sql.Append(TNS.AdExpress.Web.Functions.SQLGenerator.GetAnalyseCustomerProductSelection(webSession,"","","","",sectorPrefixe,subsectorPrefixe,groupPrefixe,true));
 			
 			// Sélection de Produits
 			if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 0)
@@ -109,7 +108,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			//media rights
 			sql.Append(WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession, DBTables.WEB_PLAN_PREFIXE, true));
 			//product rights
-			sql.Append(WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession, DBTables.WEB_PLAN_PREFIXE, true));
+            TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+            sql.Append(WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(webSession, DBConstantes.Tables.WEB_PLAN_PREFIXE, true, module.ProductRightBranches));
+
 			#endregion
 
 			#region group by

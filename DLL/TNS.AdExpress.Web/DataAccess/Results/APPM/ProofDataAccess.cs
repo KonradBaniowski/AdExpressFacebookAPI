@@ -75,10 +75,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			sql.Append(" and "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".id_product = "+ idProduct);
 
 			sql.Append(" and "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".date_media_num = "+ date);
-			//sql.Append(" and "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".date_parution_num = "+ date);			
 			
 			sql.Append(" and rtrim(ltrim("+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".media_paging)) like '"+ page +"'");
-			//sql.Append(" and "+ DBCst.Tables.DATA_PRESS_APPM_PREFIXE +".id_language_data_i = "+ webSession.DataLanguage);
 			sql.Append(" and "+ DBCst.Tables.MEDIA_PREFIXE +".id_language = "+ webSession.DataLanguage);
 			sql.Append(" and "+ DBCst.Tables.ADVERTISER_PREFIXE +".id_language = "+ webSession.DataLanguage);
 			sql.Append(" and "+ DBCst.Tables.PRODUCT_PREFIXE +".id_language = "+ webSession.DataLanguage);
@@ -98,7 +96,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			//media rights
 			sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(webSession, DBCst.Tables.DATA_PRESS_APPM_PREFIXE, true));
 			//product rights
-			sql.Append(SQLGenerator.getAnalyseCustomerProductRight(webSession, DBCst.Tables.DATA_PRESS_APPM_PREFIXE, true));
+            TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+            sql.Append(SQLGenerator.GetClassificationCustomerProductRight(webSession, DBCst.Tables.DATA_PRESS_APPM_PREFIXE, true, module.ProductRightBranches));
 
 			#endregion
 
@@ -183,7 +182,6 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM{
 			sql.Append("where "+ DBCst.Tables.DATA_LOCATION_PREFIXE +".id_media = "+ idMedia +" ");
 			sql.Append("and "+ DBCst.Tables.DATA_LOCATION_PREFIXE +".id_advertisement = "+ idAdvertisement +" ");
 			sql.Append("and "+ DBCst.Tables.DATA_LOCATION_PREFIXE +".date_media_num = "+ date +" ");
-			//sql.Append("and "+ DBCst.Tables.DATA_LOCATION_PREFIXE +".id_language_data_i = "+ webSession.DataLanguage +" ");
 			sql.Append("and "+ DBCst.Tables.LOCATION_PREFIXE +".id_language = "+ webSession.DataLanguage +" ");
 			sql.Append("and "+ DBCst.Tables.DATA_LOCATION_PREFIXE +".id_location = "+ DBCst.Tables.LOCATION_PREFIXE +".id_location ");
 

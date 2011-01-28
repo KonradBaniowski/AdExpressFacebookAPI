@@ -146,7 +146,6 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM {
             sql.AppendFormat(" sum({0}) as {1} "
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].DatabaseMultimediaField
                 , UnitsInformation.List[WebConstantes.CustomerSessions.Unit.euro].Id.ToString());
-            //sql.Append("round(sum(Totalunite) / (sum(Totalinsert)*grp),3) as CGRP, ");
 
             #region sélection par rappot à l'unité choisit
             if (webSession.Unit != WebConstantes.CustomerSessions.Unit.grp
@@ -243,7 +242,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM {
 
             //Droits clients
             sql.Append(TNS.AdExpress.Web.Functions.SQLGenerator.getAnalyseCustomerMediaRight(webSession, DBConstantes.Tables.WEB_PLAN_PREFIXE, true));
-            sql.Append(TNS.AdExpress.Web.Functions.SQLGenerator.getAnalyseCustomerProductRight(webSession, DBConstantes.Tables.WEB_PLAN_PREFIXE, true));
+            TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+            sql.Append(WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(webSession, DBConstantes.Tables.WEB_PLAN_PREFIXE, true, module.ProductRightBranches));
             //tous les resultats sans inset
             sql.Append(" and " + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_inset = " + Cst.Classification.DB.insertType.EXCEPT_INSERT.GetHashCode());
 

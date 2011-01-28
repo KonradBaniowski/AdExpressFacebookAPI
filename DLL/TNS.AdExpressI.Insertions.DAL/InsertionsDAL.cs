@@ -815,7 +815,9 @@ namespace TNS.AdExpressI.Insertions.DAL {
             #region Rights
             /* Get product classification rights
              * */
-            sql.Append(SQLGenerator.getAnalyseCustomerProductRight(_session, tData.Prefix, true));
+            if (_module == null) throw (new InsertionsDALException("_module parameter cannot be NULL"));
+            sql.Append(FctWeb.SQLGenerator.GetClassificationCustomerProductRight(_session, tData.Prefix, true, _module.ProductRightBranches));
+
 
             /* Get media classification rights
              * */

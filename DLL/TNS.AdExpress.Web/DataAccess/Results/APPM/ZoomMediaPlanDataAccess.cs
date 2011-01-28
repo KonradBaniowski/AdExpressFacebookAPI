@@ -92,7 +92,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results.APPM
 			//Media Right
 			sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(webSession, DBCst.Tables.DATA_PRESS_APPM_PREFIXE, true));
 			//Product rights
-			sql.Append(SQLGenerator.getAnalyseCustomerProductRight(webSession, DBTables.DATA_PRESS_APPM_PREFIXE, true));
+            TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+            sql.Append(WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(webSession, DBTables.DATA_PRESS_APPM_PREFIXE, true, module.ProductRightBranches));
 			#endregion
 
 			#region Group by

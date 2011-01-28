@@ -29,6 +29,7 @@ using TNS.AdExpress.Domain.Units;
 using WebNavigation = TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Web.Core.Utilities;
 
 #endregion
 
@@ -88,8 +89,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 			#region Nomenclature Produit (droits)
 
 			//Droits en accès
-			sql.Append(WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession,DbTables.DATA_PRESS_PREFIXE,true));
-			
+            sql.Append(GetCustomerProductRight(webSession, DbTables.DATA_PRESS_PREFIXE, true));
+
 			#endregion			
 
 			#region Nomenclature Annonceurs (droits(Ne pas faire pour l'instant) et sélection) 
@@ -217,8 +218,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 			//media rights
 			sql.Append(WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(webSession, DATA_PRESS_PREFIXE, true));
 			//product rights
-			sql.Append(WebFunctions.SQLGenerator.getAnalyseCustomerProductRight(webSession, DATA_PRESS_PREFIXE, true));
-
+            sql.Append(GetCustomerProductRight(webSession, DATA_PRESS_PREFIXE,true));
 			#endregion
 
 			try{
@@ -432,5 +432,22 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 			return sql;
 		}
 		#endregion
+
+        #region Product Rights
+        /// <summary>
+        //Obtains user rights of the product classification.
+        /// </summary>
+        /// <param name="tablePrefixe">table prefix</param>
+        /// <param name="beginByAnd">True if the sql clause start with "AND"</param>
+        /// <returns>SQL code string</returns>
+        private static string GetCustomerProductRight(WebSession webSession,string tablePrefix, bool beginByAnd)
+        {
+            TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+            return (SQLGenerator.GetClassificationCustomerProductRight(webSession, tablePrefix, true, module.ProductRightBranches));
+
+        }
+
+        #endregion
+
 	}
 }

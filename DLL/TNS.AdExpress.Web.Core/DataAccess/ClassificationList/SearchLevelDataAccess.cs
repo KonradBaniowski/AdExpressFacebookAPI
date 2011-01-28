@@ -364,16 +364,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 		/// <param name="tablePrefixe">Préfixe de la table qui contient les données</param>
 		/// <param name="beginByAnd">True si le bloc doit commencer par un AND, false sinon</param>
 		/// <returns>Code SQL généré</returns>
-		public static string getCustomerProductRight(WebSession webSession, string tablePrefixe, bool beginByAnd) {
-            //switch (webSession.CurrentModule) {
-            //    case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR:
-            //    case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE:
-            //        //Droits produits dont les droits annonceurs uniquement appliqués pour l'analyse sectorielle
-            //        return (Utilities.SQLGenerator.GetClassificationCustomerProductRight(webSession, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe, beginByAnd));
-            //    default :
-            //        return (Utilities.SQLGenerator.getClassificationCustomerProductRight(webSession, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe, beginByAnd));
-            //}
-
+		public static string getCustomerProductRight(WebSession webSession, string tablePrefixe, bool beginByAnd) {           
 
             TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(webSession.CurrentModule);
             string productRightsBranches = (module != null) ? module.ProductRightBranches : "";

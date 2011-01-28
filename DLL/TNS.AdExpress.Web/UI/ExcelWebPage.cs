@@ -1690,11 +1690,11 @@ namespace TNS.AdExpress.Web.UI{
 
                 #region Ajout CSS
                 t.Append("<Style><!--");
-                t.Append(".TexteTitreRappelScanpub { font-family: Arial, Helvetica, sans-serif; font-size: 11px; color: #FFFFFF; font-weight:bold; background-color : #999999;}");
+                t.Append(".TexteTitreRappelScanpub { font-family: Arial, Helvetica, sans-serif; font-size: 11px; color: #000000; font-weight:bold; background-color : #999999;}");
                 t.Append(".TexteVioletPetitScanpub { font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #5A5A90; font-weight:bold }");
                 t.Append(".TexteVioletGrandScanpub { font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #5A5A90; font-weight:bold }");
                 t.Append(".TexteGris2Scanpub { font-family: Arial, Helvetica, sans-serif; font-size: 10px; color: #454545; }");
-                t.Append(".RappelBGColor {  background-color : #FF00FF }");
+                t.Append(".RappelBGColor {  background-color : #FF7100 }");
                 t.Append(".Arial7rouge {  font-family: Arial, Helvetica, sans-serif; font-size: 8pt; font-weight: normal ; color: #333333 }");
                 t.Append(".Arial7gris {  font-family: Arial, Helvetica, sans-serif; font-size: 8pt; font-weight: normal ; color: #666666 }");
                 t.Append(".Arial10gris {  font-family: Arial, Helvetica, sans-serif; font-size: 10pt; font-weight: normal ; color: #666666 }");

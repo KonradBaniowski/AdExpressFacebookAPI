@@ -210,7 +210,8 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
                 #region Nomenclature Produit (droits)
                 premier = true;
                 //Droits en accès
-                sql += SQLGenerator.getAnalyseCustomerProductRight(webSession, tablePrefixe, true);
+                TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+                sql += SQLGenerator.GetClassificationCustomerProductRight(webSession, tablePrefixe, true, module.ProductRightBranches); 
                 // Produit à exclure 
                 ProductItemsList productItemsList = null;
                 if (Product.Contains(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID) && (productItemsList = Product.GetItemsList(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID)) != null)
@@ -336,8 +337,9 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 				#region Nomenclature Produit (droits)
 				//			premier=true;
 				//Droits en accès
-				sql += SQLGenerator.getAnalyseCustomerProductRight(webSession, tablePrefixe, true);
-				// Produit à exclure 
+                TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(webSession.CurrentModule);
+                sql += SQLGenerator.GetClassificationCustomerProductRight(webSession, tablePrefixe, true, module.ProductRightBranches); 
+                // Produit à exclure 
                 ProductItemsList productItemsList = null;
                 if (Product.Contains(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID) && (productItemsList = Product.GetItemsList(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID)) != null)
                 {
