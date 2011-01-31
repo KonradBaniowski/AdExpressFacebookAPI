@@ -1106,7 +1106,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 {
                     try {
                         if (Page.Request.Form.GetValues(this.ID + "_comparativeStudy")[0] != null) customerWebSession.ComparativeStudy = true;
-                        if (comparativeStudyDateTypeOption) {
+                        if (comparativeStudyDateTypeOption && Page.Request.Form.GetValues("selectionType_" + this.ID + "_comparativeStudyDateTypeOption")[0] != null) {
                             customerWebSession.ComparativePeriodType = (TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType)Enum.Parse(typeof(TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType), Page.Request.Form["selectionType_" + this.ID + "_comparativeStudyDateTypeOption"].ToString());
                         }
                     }
@@ -2690,8 +2690,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 DateTime dtEnd = WebFunctions.Dates.getPeriodEndDate(customerWebSession.PeriodEndDate, customerWebSession.PeriodType);
 
                 //Check Year
-                return (DateTime.Compare(new DateTime(DateTime.Now.Year - 1, 1, 1, 0, 0, 0), dtBegin) < 0
-                    && dtBegin.Year == dtEnd.Year);
+                return (DateTime.Compare(new DateTime(DateTime.Now.Year - 1, 1, 1, 0, 0, 0), dtBegin) <= 0);
             }
             else return customerWebSession.ComparativeStudy;
         }

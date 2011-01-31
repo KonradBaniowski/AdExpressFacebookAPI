@@ -82,10 +82,18 @@ namespace TNS.AdExpress.Web.Controls.Selections
         protected override void OnInit(EventArgs e) {
             _periodComparativeTypeListAvailaible = new List<TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType>();
             switch (_webSession.PeriodType) {
+                case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDate:
+                    if (_webSession.PeriodSelectionType == TNS.AdExpress.Constantes.Web.globalCalendar.periodSelectiontype.day) {
+                        _periodComparativeTypeListAvailaible.Add(TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate);
+                        _periodComparativeTypeListAvailaible.Add(TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.comparativeWeekDate);
+                    }
+                    else {
+                        _periodComparativeTypeListAvailaible.Add(TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate);
+                    }
+                    break;
                 case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.nLastWeek:
                 case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.nLastDays:
                 case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.previousDay:
-                case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDate:
                     _periodComparativeTypeListAvailaible.Add(TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate);
                     _periodComparativeTypeListAvailaible.Add(TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.comparativeWeekDate);
                     break;
@@ -183,8 +191,10 @@ namespace TNS.AdExpress.Web.Controls.Selections
 
             #region HTML
             //'#TB_inline?height=145&width=400&inlineId=myOnPageContent&caption=" + GestionWeb.GetWebWord(2371, _webSession.SiteLanguage) + "&label=" + GestionWeb.GetWebWord(2372, _webSession.SiteLanguage) + "+'
-            html.Append(" <input style=\"visibility:hidden\" type=\"hidden\" id=\"comparativeLink_" + this.ID + "\" alt=\"#TB_inline?height=200&width=400&inlineId=dateComparativeSelection_" + this.ID + "\" title=\"Sélection comparative\" class=\"thickbox\" type=\"button\" value=\"Show\" />");   
-            html.Append("<input id=\"selectionType_"+this.ID+"\" type=\"hidden\" value=\"\" name=\"selectionType_"+this.ID+"\"/>");
+            html.Append(" <input style=\"visibility:hidden\" type=\"hidden\" id=\"comparativeLink_" + this.ID + "\" alt=\"#TB_inline?height=200&width=400&inlineId=dateComparativeSelection_" + this.ID + "\" title=\"Sélection comparative\" class=\"thickbox\" type=\"button\" value=\"Show\" />");
+
+
+            html.Append("<input id=\"selectionType_" + this.ID + "\" type=\"hidden\" value=\"" + ((_webSession.ComparativeStudy) ? _webSession.ComparativePeriodType.ToString() : "") + "\" name=\"selectionType_" + this.ID + "\"/>");
 			html.Append("<input id=\"disponibilityType_"+this.ID+"\" type=\"hidden\" value=\"\" name=\"disponibilityType_"+this.ID+"\"/>");
 
             html.Append("<div style=\"display:none;\"  id=\"dateComparativeSelection_"+this.ID+"\" >");
