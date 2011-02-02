@@ -107,9 +107,17 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// </summary>
         public const int L4_ID_COLUMN_INDEX = 10;
         /// <summary>
-        /// Index of the first column containing periods
+        /// Index of total column de l'annee de comparaison
         /// </summary>
-        public const int FIRST_PERIOD_INDEX = 11;
+        public const int TOTAL_COMPARATIVE_COLUMN_INDEX = 11;
+        /// <summary>
+        /// Index de la colonne des pdms de l'annee de comparaison dans le tableau en mémoire
+        /// </summary>
+        public const int PDM_COMPARATIVE_COLUMN_INDEX = 12;
+        /// <summary>
+        /// Evolution des annees comparés
+        /// </summary>
+        public const int EVOL_COLUMN_INDEX = 13;
         #endregion
 
         /// <summary>
@@ -503,6 +511,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             #region Data
             DataSet ds = null;
             DataTable dt = null;
+            DataTable dtComp = null;
             //ds = GenericMediaScheduleDataAccess.GetAdNetTrackData(_session, _period);
             //ds = GenericMediaScheduleDataAccess.GetData(_session, _period);
             object[] param = null;
@@ -529,6 +538,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 if (_session.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule) {
                     mediaScheduleDAL.Period = _period.GetMediaSchedulePeriodComparative();
                     dsComp = mediaScheduleDAL.GetMediaScheduleData(true);
+                    dtComp = dsComp.Tables[0];
                 }
             }
             detailLevel = GetDetailsLevelSelected();
@@ -624,7 +634,19 @@ namespace TNS.AdExpressI.MediaSchedule {
             Dictionary<int, int> years_index = new Dictionary<int, int>();
             int currentDate = _period.Begin.Year;
             int oldCurrentDate = _period.End.Year;
-            int firstPeriodIndex = FIRST_PERIOD_INDEX;
+
+            int firstPeriodIndex = 0;
+            if (WebApplicationParameters.UseComparativeMediaSchedule) {
+                if (_session.ComparativeStudy) {
+                    firstPeriodIndex = EVOL_COLUMN_INDEX + 1;
+                }
+                else {
+                    firstPeriodIndex = L4_ID_COLUMN_INDEX + 1;
+                }
+            }
+            else {
+                firstPeriodIndex = L4_ID_COLUMN_INDEX + 1;
+            }
 
             switch(_period.PeriodDetailLEvel) {
                 case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:
@@ -670,7 +692,7 @@ namespace TNS.AdExpressI.MediaSchedule {
 
             #region Indexes tables
             // Column number
-            int nbCol = periodItemsList.Count + FIRST_PERIOD_INDEX + years_index.Count;
+            int nbCol = periodItemsList.Count + firstPeriodIndex;
             // Line number
             int nbline = nbL1 + nbL2 + nbL3 + nbL4 + 3 + 1;
             // Result table
@@ -699,10 +721,13 @@ namespace TNS.AdExpressI.MediaSchedule {
             Int64 currentLineIndex = 1;
             oTab[currentTotalIndex, 0] = TOTAL_STRING;
 
-            if(_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
+            if (_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
                 oTab[currentTotalIndex, TOTAL_COLUMN_INDEX] = new CellIdsNumber();
             else
                 oTab[currentTotalIndex, TOTAL_COLUMN_INDEX] = (double)0.0;
+
+            if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
+                    oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX] = null;            }
             
             foreach(int i in years_index.Keys) {
                 if(_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
@@ -730,7 +755,12 @@ namespace TNS.AdExpressI.MediaSchedule {
             Int64 currentL2Index = 0;
             Int64 currentL3Index = 1;
             Int64 currentL4Index = 1;
+            Int64? previousL1Index = null;
+            Int64? previousL2Index = null;
+            Int64? previousL3Index = null;
+            Int64? previousL4Index = null;
             int numberOflineToAdd = 0;
+            object valueComp = null;
             double unit = 0.0;
             CellIdsNumber unitIds = null;
             CstWeb.CustomerSessions.Unit selectedUnit = _session.GetSelectedUnit().Id;
@@ -759,6 +789,21 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     else
                                         oTab[tabL2Index[i], PDM_COLUMN_INDEX] = 0.0;
                                 }
+
+                                if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
+                                    if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
+                                        if (((CellIdsNumber)oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value != 0)
+                                            oTab[tabL2Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = ((CellIdsNumber)oTab[tabL2Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX]).Value / ((CellIdsNumber)oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value * 100.0;
+                                        else
+                                            oTab[tabL2Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
+                                    }
+                                    else {
+                                        if ((double)oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX] != 0)
+                                            oTab[tabL2Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = (double)oTab[tabL2Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] / (double)oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX] * 100.0;
+                                        else
+                                            oTab[tabL2Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
+                                    }
+                                }
                             }
                             tabL2Index = new Int64[nbL2 + 1];
                             currentL2PDMIndex = 0;
@@ -775,8 +820,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                             oTab[currentLineIndex, TOTAL_COLUMN_INDEX] = new CellIdsNumber();
                         else 
                             oTab[currentLineIndex, TOTAL_COLUMN_INDEX] = (double)0.0;
-                        
-
+ 
                         if(nbLevels <= 1) oTab[currentLineIndex, PERIODICITY_COLUMN_INDEX] = currentRow["period_count"].ToString();
                         //Init years totals
                         foreach(int i in years_index.Keys) {
@@ -826,6 +870,20 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     else
                                         oTab[tabL3Index[i], PDM_COLUMN_INDEX] = 0.0;
                                 }
+                                if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
+                                    if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
+                                        if (((CellIdsNumber)oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value != 0)
+                                            oTab[tabL3Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = ((CellIdsNumber)oTab[tabL3Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX]).Value / ((CellIdsNumber)oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value * 100.0;
+                                        else
+                                            oTab[tabL3Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
+                                    }
+                                    else {
+                                        if (oTab[tabL3Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] !=null && oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX]!=null && (double)oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX] != 0)
+                                            oTab[tabL3Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = (double)oTab[tabL3Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] / (double)oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX] * 100.0;
+                                        else
+                                            oTab[tabL3Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
+                                    }
+                                }
                             }
                             tabL3Index = new Int64[nbL3 + 1];
                             currentL3PDMIndex = 0;
@@ -842,7 +900,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                             oTab[currentLineIndex, TOTAL_COLUMN_INDEX] = new CellIdsNumber();
                         else 
                             oTab[currentLineIndex, TOTAL_COLUMN_INDEX] = (double)0.0;
-                        
+
                         oTab[currentLineIndex, L1_ID_COLUMN_INDEX] = oldIdL1;
                         if(nbLevels <= 2) oTab[currentLineIndex, PERIODICITY_COLUMN_INDEX] = currentRow["period_count"].ToString();
                         //Init years totals
@@ -892,6 +950,20 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     else
                                         oTab[i, PDM_COLUMN_INDEX] = 0.0;
                                 }
+                                if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
+                                    if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
+                                        if (((CellIdsNumber)oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value != 0)
+                                            oTab[i, PDM_COMPARATIVE_COLUMN_INDEX] = ((CellIdsNumber)oTab[i, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value / ((CellIdsNumber)oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value * 100.0;
+                                        else
+                                            oTab[i, PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
+                                    }
+                                    else {
+                                        if (oTab[i, TOTAL_COMPARATIVE_COLUMN_INDEX]!=null && oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX]!=null && (double)oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX] != 0)
+                                            oTab[i, PDM_COMPARATIVE_COLUMN_INDEX] = (double)oTab[i, TOTAL_COMPARATIVE_COLUMN_INDEX] / (double)oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX] * 100.0;
+                                        else
+                                            oTab[i, PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
+                                    }
+                                }
                             }
                         }
                         // Préparation des PDM des L3
@@ -905,7 +977,6 @@ namespace TNS.AdExpressI.MediaSchedule {
                             oTab[currentLineIndex, TOTAL_COLUMN_INDEX] = new CellIdsNumber();
                         else 
                             oTab[currentLineIndex, TOTAL_COLUMN_INDEX] = (double)0.0;
-                        
                         oTab[currentLineIndex, L1_ID_COLUMN_INDEX] = oldIdL1;
                         oTab[currentLineIndex, L2_ID_COLUMN_INDEX] = oldIdL2;
                         if(nbLevels <= 3) oTab[currentLineIndex, PERIODICITY_COLUMN_INDEX] = currentRow["period_count"].ToString();
@@ -945,6 +1016,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                             oTab[currentLineIndex, TOTAL_COLUMN_INDEX] = new CellIdsNumber();
                         else 
                             oTab[currentLineIndex, TOTAL_COLUMN_INDEX] = (double)0.0;
+
 
                         oTab[currentLineIndex, L1_ID_COLUMN_INDEX] = oldIdL1;
                         oTab[currentLineIndex, L2_ID_COLUMN_INDEX] = oldIdL2;
@@ -1010,6 +1082,38 @@ namespace TNS.AdExpressI.MediaSchedule {
                             oTab[currentL4Index, TOTAL_COLUMN_INDEX] = (double)oTab[currentL4Index, TOTAL_COLUMN_INDEX] + unit;
                             ((MediaPlanItem)oTab[currentL4Index, firstPeriodIndex + currentDate]).Unit += unit;
                         }
+
+                        if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
+                            if ((previousL1Index == null || previousL1Index.Value != currentL1Index || previousL2Index.Value != currentL2Index || previousL3Index.Value != currentL3Index || previousL4Index.Value != currentL4Index)) {
+                                if (nbLevels == 4)
+                                    valueComp = oTab[currentL4Index, TOTAL_COMPARATIVE_COLUMN_INDEX] = GetComparativeValue(nbLevels, 4, currentRow, dtComp, detailLevel, selectedUnit, unitAlias);
+                                else if (valueComp != null) {
+                                    if (oTab[currentL4Index, TOTAL_COMPARATIVE_COLUMN_INDEX] == null)
+                                        if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb)
+                                            oTab[currentL4Index, TOTAL_COMPARATIVE_COLUMN_INDEX] = new CellIdsNumber();
+                                        else
+                                            oTab[currentL4Index, TOTAL_COMPARATIVE_COLUMN_INDEX] = (double)0.0;
+                                    if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb)
+                                        ((CellIdsNumber)oTab[currentL4Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Add(valueComp as string[]);
+                                    else
+                                        oTab[currentL4Index, TOTAL_COMPARATIVE_COLUMN_INDEX] = ((double)oTab[currentL4Index, TOTAL_COMPARATIVE_COLUMN_INDEX]) + (double)valueComp;
+                                }
+                            }
+                            if (oTab[currentL4Index, TOTAL_COLUMN_INDEX] != null) {
+                                if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
+                                    if (oTab[currentL4Index, TOTAL_COMPARATIVE_COLUMN_INDEX] == null || ((CellIdsNumber)oTab[currentL4Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value == 0.0) oTab[currentL4Index, EVOL_COLUMN_INDEX] = ((CellIdsNumber)oTab[currentL4Index, TOTAL_COLUMN_INDEX]).Value * Double.PositiveInfinity;
+                                    else {
+                                        oTab[currentL4Index, EVOL_COLUMN_INDEX] = ((((CellIdsNumber)oTab[currentL4Index, TOTAL_COLUMN_INDEX]).Value / ((CellIdsNumber)oTab[currentL4Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value) - 1) * 100.0;
+                                    }
+                                }
+                                else {
+                                    if (oTab[currentL4Index, TOTAL_COMPARATIVE_COLUMN_INDEX] == null || (double)oTab[currentL4Index, TOTAL_COMPARATIVE_COLUMN_INDEX] == 0.0) oTab[currentL4Index, EVOL_COLUMN_INDEX] = ((double)oTab[currentL4Index, TOTAL_COLUMN_INDEX]) * Double.PositiveInfinity;
+                                    else {
+                                        oTab[currentL4Index, EVOL_COLUMN_INDEX] = ((((double)oTab[currentL4Index, TOTAL_COLUMN_INDEX]) / ((double)oTab[currentL4Index, TOTAL_COMPARATIVE_COLUMN_INDEX])) - 1) * 100.0;
+                                    }
+                                }
+                            }
+                        }
                     }
                     if(nbLevels >= 3) {
                         if(selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
@@ -1019,6 +1123,38 @@ namespace TNS.AdExpressI.MediaSchedule {
                         else {
                             oTab[currentL3Index, TOTAL_COLUMN_INDEX] = (double)oTab[currentL3Index, TOTAL_COLUMN_INDEX] + unit;
                             ((MediaPlanItem)oTab[currentL3Index, firstPeriodIndex + currentDate]).Unit += unit;
+                        }
+                        if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
+
+                            if ((previousL1Index == null || previousL1Index.Value != currentL1Index || previousL2Index.Value != currentL2Index || previousL3Index.Value != currentL3Index || previousL4Index.Value != currentL4Index)) {
+                                if (nbLevels == 3)
+                                    valueComp = oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX] = GetComparativeValue(nbLevels, 3, currentRow, dtComp, detailLevel, selectedUnit, unitAlias);
+                                else if (valueComp != null) {
+                                    if (oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX] == null)
+                                        if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb)
+                                            oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX] = new CellIdsNumber();
+                                        else
+                                            oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX] = (double)0.0;
+                                    if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb)
+                                        ((CellIdsNumber)oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Add(valueComp as string[]);
+                                    else
+                                        oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX] = ((double)oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX]) + (double)valueComp;
+                                }
+                            }
+                            if (oTab[currentL3Index, TOTAL_COLUMN_INDEX] != null) {
+                                if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
+                                    if (oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX] == null || ((CellIdsNumber)oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value == 0.0) oTab[currentL3Index, EVOL_COLUMN_INDEX] = ((CellIdsNumber)oTab[currentL3Index, TOTAL_COLUMN_INDEX]).Value * Double.PositiveInfinity;
+                                    else {
+                                        oTab[currentL3Index, EVOL_COLUMN_INDEX] = ((((CellIdsNumber)oTab[currentL3Index, TOTAL_COLUMN_INDEX]).Value / ((CellIdsNumber)oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value) - 1) * 100.0;
+                                    }
+                                }
+                                else {
+                                    if (oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX] == null || (double)oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX] == 0.0) oTab[currentL3Index, EVOL_COLUMN_INDEX] = ((double)oTab[currentL3Index, TOTAL_COLUMN_INDEX]) * Double.PositiveInfinity;
+                                    else {
+                                        oTab[currentL3Index, EVOL_COLUMN_INDEX] = ((((double)oTab[currentL3Index, TOTAL_COLUMN_INDEX]) / ((double)oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX])) - 1) * 100.0;
+                                    }
+                                }
+                            }
                         }
                     }
                     if(nbLevels >= 2) {
@@ -1030,6 +1166,38 @@ namespace TNS.AdExpressI.MediaSchedule {
                             oTab[currentL2Index, TOTAL_COLUMN_INDEX] = (double)oTab[currentL2Index, TOTAL_COLUMN_INDEX] + unit;
                             ((MediaPlanItem)oTab[currentL2Index, firstPeriodIndex + currentDate]).Unit += unit;
                         }
+                        if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
+                            if ((previousL1Index == null || previousL1Index.Value != currentL1Index || previousL2Index.Value != currentL2Index || previousL3Index.Value != currentL3Index || previousL4Index.Value != currentL4Index)) {
+
+                                if (nbLevels == 2)
+                                    valueComp = oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX] = GetComparativeValue(nbLevels, 2, currentRow, dtComp, detailLevel, selectedUnit, unitAlias);
+                                else if (valueComp != null) {
+                                    if (oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX] == null)
+                                        if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb)
+                                            oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX] = new CellIdsNumber();
+                                        else
+                                            oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX] = (double)0.0;
+                                    if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb)
+                                        ((CellIdsNumber)oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Add(valueComp as string[]);
+                                    else
+                                        oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX] = ((double)oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX]) + (double)valueComp;
+                                }
+                            }
+                            if (oTab[currentL2Index, TOTAL_COLUMN_INDEX] != null) {
+                                if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
+                                    if (oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX] == null || ((CellIdsNumber)oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value == 0.0) oTab[currentL2Index, EVOL_COLUMN_INDEX] = ((CellIdsNumber)oTab[currentL2Index, TOTAL_COLUMN_INDEX]).Value * Double.PositiveInfinity;
+                                    else {
+                                        oTab[currentL2Index, EVOL_COLUMN_INDEX] = ((((CellIdsNumber)oTab[currentL2Index, TOTAL_COLUMN_INDEX]).Value / ((CellIdsNumber)oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value) - 1) * 100.0;
+                                    }
+                                }
+                                else {
+                                    if (oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX] == null || (double)oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX] == 0.0) oTab[currentL2Index, EVOL_COLUMN_INDEX] = ((double)oTab[currentL2Index, TOTAL_COLUMN_INDEX]) * Double.PositiveInfinity;
+                                    else {
+                                        oTab[currentL2Index, EVOL_COLUMN_INDEX] = ((((double)oTab[currentL2Index, TOTAL_COLUMN_INDEX]) / ((double)oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX])) - 1) * 100.0;
+                                    }
+                                }
+                            }
+                        }
                     }
                     if(nbLevels >= 1) {
                         if(selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
@@ -1040,6 +1208,38 @@ namespace TNS.AdExpressI.MediaSchedule {
                             oTab[currentL1Index, TOTAL_COLUMN_INDEX] = (double)oTab[currentL1Index, TOTAL_COLUMN_INDEX] + unit;
                             ((MediaPlanItem)oTab[currentL1Index, firstPeriodIndex + currentDate]).Unit += unit;
                         }
+                        if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
+                            if ((previousL1Index == null || previousL1Index.Value != currentL1Index || previousL2Index.Value != currentL2Index || previousL3Index.Value != currentL3Index || previousL4Index.Value != currentL4Index)) {
+                                if (nbLevels == 1)
+                                    valueComp = oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX] = GetComparativeValue(nbLevels, 1, currentRow, dtComp, detailLevel, selectedUnit, unitAlias);
+                                else if (valueComp != null) {
+                                    if (oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX] == null)
+                                        if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb)
+                                            oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX] = new CellIdsNumber();
+                                        else
+                                            oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX] = (double)0.0;
+
+                                    if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb)
+                                        ((CellIdsNumber)oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Add(valueComp as string[]);
+                                    else
+                                        oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX] = ((double)oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX]) + (double)valueComp;
+                                }
+                            }
+                            if (oTab[currentL1Index, TOTAL_COLUMN_INDEX] != null) {
+                                if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
+                                    if (oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX] == null || ((CellIdsNumber)oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value == 0.0) oTab[currentL1Index, EVOL_COLUMN_INDEX] = ((CellIdsNumber)oTab[currentL1Index, TOTAL_COLUMN_INDEX]).Value * Double.PositiveInfinity;
+                                    else {
+                                        oTab[currentL1Index, EVOL_COLUMN_INDEX] = ((((CellIdsNumber)oTab[currentL1Index, TOTAL_COLUMN_INDEX]).Value / ((CellIdsNumber)oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value) - 1) * 100.0;
+                                    }
+                                }
+                                else {
+                                    if (oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX] == null || (double)oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX] == 0.0) oTab[currentL1Index, EVOL_COLUMN_INDEX] = ((double)oTab[currentL1Index, TOTAL_COLUMN_INDEX]) * Double.PositiveInfinity;
+                                    else {
+                                        oTab[currentL1Index, EVOL_COLUMN_INDEX] = ((((double)oTab[currentL1Index, TOTAL_COLUMN_INDEX]) / ((double)oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX])) - 1) * 100.0;
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     if(selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
@@ -1049,6 +1249,35 @@ namespace TNS.AdExpressI.MediaSchedule {
                     else {
                         oTab[currentTotalIndex, TOTAL_COLUMN_INDEX] = (double)oTab[currentTotalIndex, TOTAL_COLUMN_INDEX] + unit;
                         ((MediaPlanItem)oTab[currentTotalIndex, firstPeriodIndex + currentDate]).Unit += unit;
+                    }
+                    if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
+                        if (valueComp != null && (previousL1Index == null || previousL1Index.Value != currentL1Index || previousL2Index.Value != currentL2Index || previousL3Index.Value != currentL3Index || previousL4Index.Value != currentL4Index)) {
+                            if (oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX] == null)
+                                if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb)
+                                    oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX] = new CellIdsNumber();
+                                else
+                                    oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX] = (double)0.0;
+
+                            if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb)
+                                ((CellIdsNumber)oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX]).Add(valueComp as string[]);
+                            else
+                                oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX] = ((double)oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX]) + (double)valueComp;
+                        }
+
+                        if (oTab[currentTotalIndex, TOTAL_COLUMN_INDEX] != null) {
+                            if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
+                                if (oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX] == null || ((CellIdsNumber)oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value == 0.0) oTab[currentTotalIndex, EVOL_COLUMN_INDEX] = ((CellIdsNumber)oTab[currentTotalIndex, TOTAL_COLUMN_INDEX]).Value * Double.PositiveInfinity;
+                                else {
+                                    oTab[currentTotalIndex, EVOL_COLUMN_INDEX] = ((((CellIdsNumber)oTab[currentTotalIndex, TOTAL_COLUMN_INDEX]).Value / ((CellIdsNumber)oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value) - 1) * 100.0;
+                                }
+                            }
+                            else {
+                                if (oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX] == null || (double)oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX] == 0.0) oTab[currentTotalIndex, EVOL_COLUMN_INDEX] = ((double)oTab[currentTotalIndex, TOTAL_COLUMN_INDEX]) * Double.PositiveInfinity;
+                                else {
+                                    oTab[currentTotalIndex, EVOL_COLUMN_INDEX] = ((((double)oTab[currentTotalIndex, TOTAL_COLUMN_INDEX]) / ((double)oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX])) - 1) * 100.0;
+                                }
+                            }
+                        }
                     }
 
                     //Years total
@@ -1108,6 +1337,11 @@ namespace TNS.AdExpressI.MediaSchedule {
                     #endregion
 
                     currentDate = 0;
+
+                    previousL1Index = currentL1Index;
+                    previousL2Index = currentL2Index;
+                    previousL3Index = currentL3Index;
+                    previousL4Index = currentL4Index;
                 }
             }
             catch(System.Exception err) {
@@ -1137,6 +1371,21 @@ namespace TNS.AdExpressI.MediaSchedule {
                             else
                                 oTab[i, PDM_COLUMN_INDEX] = 0.0;
                         }
+
+                        if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
+                            if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
+                                if (((CellIdsNumber)oTab[currentL3Index, TOTAL_COLUMN_INDEX]).Value != 0)
+                                    oTab[i, PDM_COMPARATIVE_COLUMN_INDEX] = ((CellIdsNumber)oTab[i, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value / ((CellIdsNumber)oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value * 100.0;
+                                else
+                                    oTab[i, PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
+                            }
+                            else {
+                                if (oTab[i, TOTAL_COMPARATIVE_COLUMN_INDEX]!=null && oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX]!=null && (double)oTab[currentL3Index, TOTAL_COLUMN_INDEX] != 0)
+                                    oTab[i, PDM_COMPARATIVE_COLUMN_INDEX] = (double)oTab[i, TOTAL_COMPARATIVE_COLUMN_INDEX] / (double)oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX] * 100.0;
+                                else
+                                    oTab[i, PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
+                            }
+                        }
                     }
                 }
                 // PDM L3
@@ -1154,6 +1403,20 @@ namespace TNS.AdExpressI.MediaSchedule {
                             else
                                 oTab[tabL3Index[i], PDM_COLUMN_INDEX] = 0.0;
                         }
+                        if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
+                            if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
+                                if (((CellIdsNumber)oTab[currentL2Index, TOTAL_COLUMN_INDEX]).Value != 0)
+                                    oTab[tabL3Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = ((CellIdsNumber)oTab[tabL3Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX]).Value / ((CellIdsNumber)oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value * 100.0;
+                                else
+                                    oTab[tabL3Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
+                            }
+                            else {
+                                if (oTab[tabL3Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX]!=null && oTab[currentL2Index, TOTAL_COLUMN_INDEX]!=null && (double)oTab[currentL2Index, TOTAL_COLUMN_INDEX] != 0)
+                                    oTab[tabL3Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = (double)oTab[tabL3Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] / (double)oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX] * 100.0;
+                                else
+                                    oTab[tabL3Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
+                            }
+                        }
                     }
                 }
                 // PDM L2
@@ -1166,10 +1429,24 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 oTab[tabL2Index[i], PDM_COLUMN_INDEX] = 0.0;
                         }
                         else {
-                            if((double)oTab[currentL1Index, TOTAL_COLUMN_INDEX] != 0)
+                            if ((double)oTab[currentL1Index, TOTAL_COLUMN_INDEX] != 0)
                                 oTab[tabL2Index[i], PDM_COLUMN_INDEX] = (double)oTab[tabL2Index[i], TOTAL_COLUMN_INDEX] / (double)oTab[currentL1Index, TOTAL_COLUMN_INDEX] * 100.0;
                             else
                                 oTab[tabL2Index[i], PDM_COLUMN_INDEX] = 0.0;
+                        }
+                        if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
+                            if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
+                                if (((CellIdsNumber)oTab[currentL1Index, TOTAL_COLUMN_INDEX]).Value != 0)
+                                    oTab[tabL2Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = ((CellIdsNumber)oTab[tabL2Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX]).Value / ((CellIdsNumber)oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value * 100.0;
+                                else
+                                    oTab[tabL2Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
+                            }
+                            else {
+                                if (oTab[tabL2Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX]!=null && oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX]!=null && (double)oTab[currentL1Index, TOTAL_COLUMN_INDEX] != 0)
+                                    oTab[tabL2Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = (double)oTab[tabL2Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] / (double)oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX] * 100.0;
+                                else
+                                    oTab[tabL2Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
+                            }
                         }
                     }
                 }
@@ -1188,10 +1465,27 @@ namespace TNS.AdExpressI.MediaSchedule {
                             else
                                 oTab[tabL1Index[i], PDM_COLUMN_INDEX] = 0.0;
                         }
+                        if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
+                            if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
+                                if (((CellIdsNumber)oTab[currentTotalIndex, TOTAL_COLUMN_INDEX]).Value != 0)
+                                    oTab[tabL1Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = ((CellIdsNumber)oTab[tabL1Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX]).Value / ((CellIdsNumber)oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value * 100.0;
+                                else
+                                    oTab[tabL1Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
+                            }
+                            else {
+                                if (oTab[tabL1Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] != null && oTab[currentTotalIndex, TOTAL_COLUMN_INDEX]!=null && (double)oTab[currentTotalIndex, TOTAL_COLUMN_INDEX] != 0)
+                                    oTab[tabL1Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = (double)oTab[tabL1Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] / (double)oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX] * 100.0;
+                                else
+                                    oTab[tabL1Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
+                            }
+                        }
                     }
                 }
                 // PDM Total
                 oTab[currentTotalIndex, PDM_COLUMN_INDEX] = (double)100.0;
+                if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
+                    oTab[currentTotalIndex, PDM_COMPARATIVE_COLUMN_INDEX] = (double)100.0;
+                }
             }
             #endregion
 
@@ -1342,7 +1636,21 @@ namespace TNS.AdExpressI.MediaSchedule {
             }
             int nbColYear = yearEnd - yearBegin;
             if(nbColYear > 0) nbColYear++;
-            int firstPeriodIndex = FIRST_PERIOD_INDEX + nbColYear;
+            int firstPeriodIndex = 0;
+
+            if (WebApplicationParameters.UseComparativeMediaSchedule) {
+                if (_session.ComparativeStudy) {
+                    firstPeriodIndex = EVOL_COLUMN_INDEX + 1;
+                }
+                else {
+                    firstPeriodIndex = L4_ID_COLUMN_INDEX + 1;
+                }
+            }
+            else {
+                firstPeriodIndex = L4_ID_COLUMN_INDEX + 1;
+            }
+
+            firstPeriodIndex += nbColYear;
 
             int nbColTab = data.GetLength(1);
             int nbPeriod = nbColTab - firstPeriodIndex - 1;
@@ -1407,9 +1715,42 @@ namespace TNS.AdExpressI.MediaSchedule {
                 , (!isExport) ? string.Empty : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
                 , rowSpanNb
                 , labColSpan);
+            if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
+                if (_allowTotal) {
+                    MediaSchedulePeriod compPeriod = _period.GetMediaSchedulePeriodComparative();
+                    t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.Begin, _session.SiteLanguage, Dates.Pattern.shortDatePattern) + " - " + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.End, _session.SiteLanguage, Dates.Pattern.shortDatePattern), rowSpanNb);
+
+                    //int nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX].ToString(), _session.Unit).Length;
+                    int nbtot;
+                    if (_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
+                        nbtot = FctWeb.Units.ConvertUnitValueToString(((CellIdsNumber)data[1, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value, _session.Unit, fp).Length;
+                    else if (_isCreativeDivisionMS || !IsExcelReport || unit.Id != CstWeb.CustomerSessions.Unit.duration) {
+                        nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit, fp).Length;
+                    }
+                    else
+                        nbtot = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[1, TOTAL_COMPARATIVE_COLUMN_INDEX])).Length;
+
+                    int nbSpace = (nbtot - 1) / 3;
+                    int nbCharTotal = nbtot + nbSpace - 5;
+                    if (nbCharTotal < 5) nbCharTotal = 0;
+                    for (int h = 0; h < nbCharTotal; h++) {
+                        t.Append("&nbsp;");
+                    }
+                    t.Append("</td>");
+                }
+                //PDM
+                if (_allowPdm) {
+                    t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, GestionWeb.GetWebWord(806, _session.SiteLanguage), rowSpanNb);
+                }
+            }
+
+
             // Total Column
             if(_allowTotal) {
-                t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, GestionWeb.GetWebWord(805, _session.SiteLanguage), rowSpanNb);
+                if (WebApplicationParameters.UseComparativeMediaSchedule)
+                    t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.Begin, _session.SiteLanguage, Dates.Pattern.shortDatePattern) + " - " + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.End, _session.SiteLanguage, Dates.Pattern.shortDatePattern), rowSpanNb);
+                else
+                    t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, GestionWeb.GetWebWord(805, _session.SiteLanguage), rowSpanNb);
                 
                 //int nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX].ToString(), _session.Unit).Length;
                 int nbtot;
@@ -1434,6 +1775,12 @@ namespace TNS.AdExpressI.MediaSchedule {
             if(_allowPdm) {
                 t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, GestionWeb.GetWebWord(806, _session.SiteLanguage), rowSpanNb);
             }
+            if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal) {
+                //Evol
+                //if (_allowPdm) {
+                t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, GestionWeb.GetWebWord(1212, _session.SiteLanguage), rowSpanNb);
+                //}
+            }
             //Version
             if(_allowVersion) {
                 t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, GestionWeb.GetWebWord(1994, _session.SiteLanguage), rowSpanNb);
@@ -1442,9 +1789,11 @@ namespace TNS.AdExpressI.MediaSchedule {
             if(_allowInsertions) {
                 t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, GestionWeb.GetWebWord(UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].WebTextId, _session.SiteLanguage), rowSpanNb);
             }
-            // Years necessary if the period consists of several years
-            for(int k = FIRST_PERIOD_INDEX; k < firstPeriodIndex && _allowTotal; k++) {
-                t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, data[0, k], rowSpanNb);
+            if (!WebApplicationParameters.UseComparativeMediaSchedule) {
+                // Years necessary if the period consists of several years
+                for (int k = firstPeriodIndex - nbColYear; k < firstPeriodIndex && _allowTotal; k++) {
+                    t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, data[0, k], rowSpanNb);
+                }
             }
             #endregion
 
@@ -1727,10 +2076,12 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         }
                                     }
                                     //Totals
-                                    for(int k = 1; k <= nbColYear; k++) {
-                                        AppendYearsTotal(data, t, i, cssClasseNb, j + 10 + k, fp, unit);
+                                    if (!WebApplicationParameters.UseComparativeMediaSchedule) {
+                                        for (int k = 1; k <= nbColYear; k++) {
+                                            AppendYearsTotal(data, t, i, cssClasseNb, (j + firstPeriodIndex - nbColYear - 1) + k, fp, unit);
+                                        }
                                     }
-                                    j = j + 10 + nbColYear;
+                                    j = j + (firstPeriodIndex - nbColYear - 1) + nbColYear;
                                 }
                                 break;
                             #endregion
@@ -1747,11 +2098,12 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         if (!IsAgencyLevelType(L2_COLUMN_INDEX))AppendInsertionLink(data, t, themeName, i, _style.CellLevelL2, j);
                                         else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL2);
                                     }
-
-                                    for(int k = 1; k <= nbColYear; k++) {
-                                        AppendYearsTotal(data, t, i, _style.CellLevelL2Nb, j + 9 + k, fp, unit);
+                                    if (!WebApplicationParameters.UseComparativeMediaSchedule) {
+                                        for (int k = 1; k <= nbColYear; k++) {
+                                            AppendYearsTotal(data, t, i, _style.CellLevelL2Nb, j + (firstPeriodIndex - nbColYear - 2) + k, fp, unit);
+                                        }
                                     }
-                                    j = j + 9 + nbColYear;
+                                    j = j + (firstPeriodIndex - nbColYear - 2) + nbColYear;
                                 }
                                 break;
                             #endregion
@@ -1768,11 +2120,12 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         if (!IsAgencyLevelType(L3_COLUMN_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL3, j);
                                         else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL3);
                                     }
-
-                                    for(int k = 1; k <= nbColYear; k++) {
-                                        AppendYearsTotal(data, t, i, _style.CellLevelL3Nb, j + 8 + k, fp, unit);
+                                    if (!WebApplicationParameters.UseComparativeMediaSchedule) {
+                                        for (int k = 1; k <= nbColYear; k++) {
+                                            AppendYearsTotal(data, t, i, _style.CellLevelL3Nb, (firstPeriodIndex - nbColYear - 3) + k, fp, unit);
+                                        }
                                     }
-                                    j = j + 8 + nbColYear;
+                                    j = j + (firstPeriodIndex - nbColYear - 3) + nbColYear;
                                 }
                                 break;
                             #endregion
@@ -1788,11 +2141,12 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     if (!IsAgencyLevelType(L4_COLUMN_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL4, j);
                                     else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL4);
                                 }
-
-                                for(int k = 1; k <= nbColYear; k++) {
-                                    AppendYearsTotal(data, t, i, _style.CellLevelL4Nb, j + 7 + k, fp, unit);
+                                if (!WebApplicationParameters.UseComparativeMediaSchedule) {
+                                    for (int k = 1; k <= nbColYear; k++) {
+                                        AppendYearsTotal(data, t, i, _style.CellLevelL4Nb, j + (firstPeriodIndex - nbColYear - 4) + k, fp, unit);
+                                    }
                                 }
-                                j = j + 7 + nbColYear;
+                                j = j + (firstPeriodIndex - nbColYear - 4) + nbColYear;
                                 break;
                             #endregion
 
@@ -1908,6 +2262,18 @@ namespace TNS.AdExpressI.MediaSchedule {
                     , ((_isExcelReport) ? "=\"" : "")
                     , ((_isExcelReport) ? "\"" : ""));
 
+                if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
+                    if (_allowTotal) {
+                        t.AppendFormat("<td class=\"{0}\">{1}</td>"
+                            , cssClasseNb
+                            , FctWeb.Units.ConvertUnitValueToString(((CellIdsNumber)data[line, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value, _session.Unit, fp));
+                    }
+                    if (_allowPdm) {
+                        t.AppendFormat("<td class=\"{0}\">{1}</td>"
+                            , cssClasseNb
+                            , string.Format(fp, "{0:percentWOSign}", data[line, PDM_COMPARATIVE_COLUMN_INDEX]));
+                    }
+                }
                 if(_allowTotal) {
                     t.AppendFormat("<td class=\"{0}\">{1}</td>"
                         , cssClasseNb
@@ -1918,6 +2284,45 @@ namespace TNS.AdExpressI.MediaSchedule {
                         , cssClasseNb
                         , string.Format(fp, "{0:percentWOSign}", data[line, PDM_COLUMN_INDEX]));
                 }
+                if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal) {
+
+                    StringBuilder str = new StringBuilder();
+
+                    double evol = (double)data[line, EVOL_COLUMN_INDEX];
+                    if (evol != 0) {
+                        if (Double.IsInfinity(evol)) {
+                            str.Append((evol < 0) ? "-" : "+");
+                        }
+                        else if (Double.IsNaN(evol)) {
+                            str.Append("&nbsp;");
+                        }
+                        else if (evol == 0) {
+                            str.Append("0");
+                        }
+                        else {
+                            str.Append(string.Format(fp, "{0:percentage}", evol));
+                        }
+                    }
+                    else {
+                        str.Append("&nbsp;");
+                    }
+                    //Evolution
+                    if (evol > 0) //hausse
+                        str.Append("<img src=/I/g.gif>");
+                    else if (evol < 0) //baisse
+                        str.Append("<img src=/I/r.gif>");
+                    else if (!Double.IsNaN(evol)) // 0 exactement
+                        str.Append("<img src=/I/o.gif>");
+                    else
+                        str.Append("&nbsp;");
+
+                    //Evol
+                    t.AppendFormat("<td class=\"{0}\">{1}</td>"
+                           , cssClasseNb
+                           , str.ToString());
+
+
+                }
             }
             else {
                 t.AppendFormat("\r\n\t<tr>\r\n\t\t<td class=\"{0}\" colSPan=\"{1}\">{4}{2}{3}{5}</td>"
@@ -1927,6 +2332,29 @@ namespace TNS.AdExpressI.MediaSchedule {
                     , data[line, col]
                     , ((_isExcelReport) ? "=\"" : "")
                     , ((_isExcelReport) ? "\"" : ""));
+                if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
+                    if (_allowTotal) {
+                        string s = string.Empty;
+                        if (data[line, TOTAL_COMPARATIVE_COLUMN_INDEX] != null) {
+                            if (!_isExcelReport || _isCreativeDivisionMS || unit.Id != CstWeb.CustomerSessions.Unit.duration) {
+                                s = FctWeb.Units.ConvertUnitValueToString(data[line, TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit, fp).Trim();
+                            }
+                            else {
+                                s = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[line, TOTAL_COMPARATIVE_COLUMN_INDEX])).Trim();
+                            }
+                        }
+                        else s = "&nbsp;";
+
+                        t.AppendFormat("<td class=\"{0}\">{1}</td>"
+                            , cssClasseNb
+                            , s);
+                    }
+                    if (_allowPdm) {
+                        t.AppendFormat("<td class=\"{0}\">{1}</td>"
+                            , cssClasseNb
+                            , string.Format(fp, "{0:percentWOSign}", data[line, PDM_COMPARATIVE_COLUMN_INDEX]));
+                    }
+                }
                 if(_allowTotal) {
                     string s = string.Empty;
                     if (!_isExcelReport || _isCreativeDivisionMS || unit.Id != CstWeb.CustomerSessions.Unit.duration)
@@ -1946,6 +2374,43 @@ namespace TNS.AdExpressI.MediaSchedule {
                     t.AppendFormat("<td class=\"{0}\">{1}</td>"
                         , cssClasseNb
                         , string.Format(fp, "{0:percentWOSign}", data[line, PDM_COLUMN_INDEX]));
+                }
+                if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal) {
+                    //Evol
+                    StringBuilder str = new StringBuilder();
+
+                    double evol = (double)data[line, EVOL_COLUMN_INDEX];
+                    if (evol != 0) {
+                        if (Double.IsInfinity(evol)) {
+                            str.Append((evol < 0) ? "-" : "+");
+                        }
+                        else if (Double.IsNaN(evol)) {
+                            str.Append("&nbsp;");
+                        }
+                        else if (evol == 0) {
+                            str.Append("0");
+                        }
+                        else {
+                            str.Append(string.Format(fp, "{0:percentage}", evol));
+                        }
+                    }
+                    else {
+                        str.Append("&nbsp;");
+                    }
+                    //Evolution
+                    if (evol > 0) //hausse
+                        str.Append("<img src=/I/g.gif>");
+                    else if (evol < 0) //baisse
+                        str.Append("<img src=/I/r.gif>");
+                    else if (!Double.IsNaN(evol)) // 0 exactement
+                        str.Append("<img src=/I/o.gif>");
+                    else
+                        str.Append("&nbsp;");
+
+                    //Evol
+                    t.AppendFormat("<td class=\"{0}\">{1}</td>"
+                           , cssClasseNb
+                           , str.ToString());
                 }
             }
         }
@@ -2114,7 +2579,19 @@ namespace TNS.AdExpressI.MediaSchedule {
                 }
                 int nbColYear = yearEnd - yearBegin;
                 if(nbColYear > 0) nbColYear++;
-                int firstPeriodIndex = FIRST_PERIOD_INDEX + nbColYear;
+                int firstPeriodIndex = 0;
+
+                if (WebApplicationParameters.UseComparativeMediaSchedule) {
+                    if (_session.ComparativeStudy) {
+                        firstPeriodIndex = EVOL_COLUMN_INDEX + 1;
+                    }
+                    else {
+                        firstPeriodIndex = L4_ID_COLUMN_INDEX + 1;
+                    }
+                }
+                else {
+                    firstPeriodIndex = L4_ID_COLUMN_INDEX + 1;
+                }
 
                 int nbColTab = data.GetLength(1);
                 int nbPeriod = nbColTab - firstPeriodIndex - 1;
@@ -2220,13 +2697,13 @@ namespace TNS.AdExpressI.MediaSchedule {
                 #endregion
 
                 #region Total Years
-                if(FIRST_PERIOD_INDEX != firstPeriodIndex && _allowTotal) {
+                if (nbColYear>0 && _allowTotal) {
                     int nbAddCol = 1;
                     if(nbColYear != 0)
                         nbAddCol = nbColYear;
                     colFirstMediaPlan += nbAddCol;
                     // Years necessary if the period consists of several years
-                    for(int k = FIRST_PERIOD_INDEX, l = 0; k < firstPeriodIndex; k++, l++) {
+                    for (int k = firstPeriodIndex - nbColYear, l = 0; k < firstPeriodIndex; k++, l++) {
                         cells.Merge(cellRow - 1, colTotalYears + l, rowSpanNb, labColSpan);
                         styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow, colTotalYears + l);
                         if(_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly) {
@@ -2440,11 +2917,11 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                                         #region Totals years
                                         for(int k = 1; k <= nbColYear && _allowTotal; k++) {
-                                            WorkSheet.PutCellValue(excel, cells, ((double)data[i, j + 10 + k]), cellRow, colTotalYears + (k - 1), colFirstMediaPlan, styleNb, formatTotal, styleExcel);
+                                            WorkSheet.PutCellValue(excel, cells, ((double)data[i, j + (firstPeriodIndex - nbColYear-1) + k]), cellRow, colTotalYears + (k - 1), colFirstMediaPlan, styleNb, formatTotal, styleExcel);
                                         }
                                         #endregion
 
-                                        j = j + 10 + nbColYear;
+                                        j = j + (firstPeriodIndex - nbColYear-1) + nbColYear;
                                     }
                                     break;
                                 #endregion
@@ -2482,13 +2959,13 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                                         #region Totals years
                                         for(int k = 1; k <= nbColYear && _allowTotal; k++) {
-                                            WorkSheet.PutCellValue(excel, cells, ((double)data[i, j + 9 + k]), cellRow, colTotalYears + (k - 1), colFirstMediaPlan, styleNb, formatTotal, styleExcel);
+                                            WorkSheet.PutCellValue(excel, cells, ((double)data[i, j + (firstPeriodIndex - nbColYear - 2) + k]), cellRow, colTotalYears + (k - 1), colFirstMediaPlan, styleNb, formatTotal, styleExcel);
                                         }
                                         #endregion
 
                                         premier = !premier;
 
-                                        j = j + 9 + nbColYear;
+                                        j = j + (firstPeriodIndex - nbColYear - 2) + nbColYear;
                                     }
                                     break;
                                 #endregion
@@ -2500,10 +2977,12 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         /*
                                         AppenLabelTotalPDM(data, t, i, _style.CellLevelL3, _style.CellLevelL3Nb, j, "&nbsp;&nbsp;", labColSpan);
                                         */
-                                        for(int k = 1; k <= nbColYear; k++) {
-                                            //AppendYearsTotal(data, t, i, _style.CellLevelL3Nb, j + 8 + k);
+                                        if (!WebApplicationParameters.UseComparativeMediaSchedule) {
+                                            for (int k = 1; k <= nbColYear; k++) {
+                                                //AppendYearsTotal(data, t, i, _style.CellLevelL3Nb, j + (firstPeriodIndex - nbColYear-3) + k);
+                                            }
                                         }
-                                        j = j + 8 + nbColYear;
+                                        j = j + (firstPeriodIndex - nbColYear - 3) + nbColYear;
                                     }
                                     break;
                                 #endregion
@@ -2512,11 +2991,12 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 case L4_COLUMN_INDEX:
                                     WorkSheet.PutCellValue(excel, cells, data[i, j].ToString(), cellRow, colSupport, colFirstMediaPlan, "MediaPlanCellLevelL4", null, styleExcel);
                                     //AppenLabelTotalPDM(data, t, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, "&nbsp;&nbsp;&nbsp;", labColSpan);
-
-                                    for(int k = 1; k <= nbColYear; k++) {
-                                        //AppendYearsTotal(data, t, i, _style.CellLevelL4Nb, j + 7 + k);
+                                    if (!WebApplicationParameters.UseComparativeMediaSchedule) {
+                                        for (int k = 1; k <= nbColYear; k++) {
+                                            //AppendYearsTotal(data, t, i, _style.CellLevelL4Nb, j + (firstPeriodIndex - nbColYear-4) + k);
+                                        }
                                     }
-                                    j = j + 7 + nbColYear;
+                                    j = j + (firstPeriodIndex - nbColYear - 4) + nbColYear;
                                     break;
                                 #endregion
 
@@ -2747,6 +3227,45 @@ namespace TNS.AdExpressI.MediaSchedule {
                 );
         }
         #endregion
+
+        private object GetComparativeValue(int nbLevel, int cLevel, DataRow cRowN, DataTable dtComp, GenericDetailLevel detailLevel, CstWeb.CustomerSessions.Unit selectedUnit, string unitAlias) {
+
+                if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
+                    DataRow[] dtValues = null;
+                    if (cLevel > 0)
+                        dtValues = dtComp.Select(GetFilterExpressionComparative(cLevel, cRowN, detailLevel));
+                    else
+                        dtValues = dtComp.Select();
+
+                    CellIdsNumber cVal = new CellIdsNumber();
+                    foreach (DataRow cRow in dtValues) {
+                        cVal.Add(cRow[unitAlias].ToString().Split(','));
+                    }
+                    return cVal;
+                }
+                else {
+                    object value = null;
+                    if (cLevel > 0)
+                        value = dtComp.Compute("Sum(" + unitAlias + ")", GetFilterExpressionComparative(cLevel, cRowN, detailLevel));
+                    else
+                        value = dtComp.Compute("Sum(" + unitAlias + ")", "");
+                    if (value.ToString().Length > 0)
+                        return double.Parse(value.ToString());
+                    else
+                        return null;
+                }
+
+        }
+
+        private string GetFilterExpressionComparative(int nbLevel, DataRow cRow, GenericDetailLevel detailLevel) {
+            StringBuilder filter = new StringBuilder();
+            for (int i = 0, j=0; j < nbLevel; i += 2, j++) {
+                if (i > 0) filter.Append(" AND ");
+                filter.AppendFormat("{0} = {1}", detailLevel.GetColumnNameLevelId(j+1),  GetLevelId(cRow, j+1, detailLevel));
+            }
+
+            return filter.ToString();
+        }
 
         #endregion
 
