@@ -989,6 +989,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             if (customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) {
                 comparativeStudyOption = comparativeStudyOption && WebApplicationParameters.UseComparativeMediaSchedule;
                 comparativeStudyDateTypeOption = comparativeStudyDateTypeOption && WebApplicationParameters.UseComparativeMediaSchedule;
+                if (comparativeStudyOption && !WebFunctions.Dates.IsValidComparativePeriodType(customerWebSession.PeriodType, customerWebSession.PeriodSelectionType))
+                    customerWebSession.ComparativePeriodType = TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate;
             }
 
             #region Options Initialisation des éléments de référence

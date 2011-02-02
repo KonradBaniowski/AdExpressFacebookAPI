@@ -885,5 +885,48 @@ namespace TNS.AdExpress.Web.Functions{
         }
         #endregion
 
+        #region Is Valid ComparativePeriodType
+        /// <summary>
+        /// Is Valid ComparativePeriodType
+        /// This methode is used to initialize the comparative study option for the MS comparative in case of non compatible selection and comparison type
+        /// </summary>
+        /// <returns>True if we've a valid comparative period for the selection type</returns>
+        /// <example>If we have week comparative type and we select a month in the calendar, we need to set dateToDate in comparative type variable</example>
+        public static bool IsValidComparativePeriodType(CstCustomerSession.Period.Type periodType, CstWeb.globalCalendar.periodSelectiontype periodSelectionType) {
+
+            bool verif = false;
+
+            switch (periodType) {
+                case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDate:
+                    if (periodSelectionType == TNS.AdExpress.Constantes.Web.globalCalendar.periodSelectiontype.day)
+                        verif = true;
+                    else
+                        verif = false;
+                    break;
+                case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.nLastWeek:
+                case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.nLastDays:
+                case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.previousDay:
+                    verif = true;
+                    break;
+                case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.nLastMonth:
+                case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.currentYear:
+                case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.previousYear:
+                case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.previousMonth:
+                case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.previousWeek:
+                case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDateWeek:
+                case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.LastLoadedWeek:
+                case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDateMonth:
+                case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.nextToLastYear:
+                case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.nLastYear:
+                case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.LastLoadedMonth:
+                default:
+                    verif = false;
+                    break;
+            }
+
+            return verif;
+        }
+        #endregion
+
     }
 }

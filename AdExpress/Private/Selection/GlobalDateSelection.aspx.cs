@@ -126,10 +126,6 @@ namespace AdExpress.Private.Selection {
                 CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.dateDAL];
                 IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
 
-                if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA && WebApplicationParameters.UseComparativeMediaSchedule)
-                    _webSession.ComparativeStudy = false;
-
-
                 if (_webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA
                     && _webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_MANDATAIRES){
 
