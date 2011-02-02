@@ -174,14 +174,21 @@ namespace TNS.AdExpress.Web.UI
 		/// Generate html code for study period detail design
 		/// </summary>
         /// <param name="webSession">User Session</param>
+        /// <param name="moduleId">Module Id</param>
 		/// <returns>Html code</returns>
-        public static string GetStudyPeriodDetail(WebSession webSession) {
+        public static string GetStudyPeriodDetail(WebSession webSession, long moduleId) {
             try {
                 string dateBegin;
                 string dateEnd;
 
-				dateBegin = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.StartDate.ToString(), webSession.SiteLanguage);
-				dateEnd = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.EndDate.ToString(), webSession.SiteLanguage);
+                if (moduleId == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) {
+                    dateBegin = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY(webSession.PeriodBeginningDate.ToString(), webSession.SiteLanguage);
+                    dateEnd = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY(webSession.PeriodEndDate.ToString(), webSession.SiteLanguage);
+                }
+                else {
+                    dateBegin = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.StartDate.ToString(), webSession.SiteLanguage);
+                    dateEnd = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.EndDate.ToString(), webSession.SiteLanguage);
+                }
                 
                 if (!dateBegin.Equals(dateEnd))
                     return Convertion.ToHtmlString(GestionWeb.GetWebWord(896, webSession.SiteLanguage) + " " + dateBegin + " " + GestionWeb.GetWebWord(897, webSession.SiteLanguage) + " " + dateEnd);
@@ -196,14 +203,32 @@ namespace TNS.AdExpress.Web.UI
         /// Generate html code for comparative period detail design
         /// </summary>
         /// <param name="webSession">User Session</param>
+        /// <param name="moduleId">Module Id</param>
         /// <returns>Html code</returns>
-        public static string GetComparativePeriodDetail(WebSession webSession) {
+        public static string GetComparativePeriodDetail(WebSession webSession, long moduleId) {
             try {
                 string dateBegin;
                 string dateEnd;
+                DateTime dateBeginDT;
+                DateTime dateEndDT;
 
-				dateBegin = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.ComparativeStartDate.ToString(), webSession.SiteLanguage);
-				dateEnd = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.ComparativeEndDate.ToString(), webSession.SiteLanguage);
+                if (moduleId == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) {
+                    // get date begin and date end according to period type
+                    dateBeginDT = Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+                    dateEndDT = Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType);
+                    
+                    // get comparative date begin and date end
+                    dateBeginDT = TNS.AdExpress.Web.Core.Utilities.Dates.GetPreviousYearDate(dateBeginDT.Date, webSession.ComparativePeriodType);
+                    dateEndDT = TNS.AdExpress.Web.Core.Utilities.Dates.GetPreviousYearDate(dateEndDT.Date, webSession.ComparativePeriodType);
+                    
+                    // Formating date begin and date end
+                    dateBegin = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY(dateBeginDT.ToString("yyyyMMdd"), webSession.SiteLanguage);
+                    dateEnd = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY(dateEndDT.ToString("yyyyMMdd"), webSession.SiteLanguage);
+                }
+                else {
+                    dateBegin = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.ComparativeStartDate.ToString(), webSession.SiteLanguage);
+                    dateEnd = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY(webSession.CustomerPeriodSelected.ComparativeEndDate.ToString(), webSession.SiteLanguage);
+                }
 
                 if (!dateBegin.Equals(dateEnd))
                     return Convertion.ToHtmlString(GestionWeb.GetWebWord(896, webSession.SiteLanguage) + " " + dateBegin + " " + GestionWeb.GetWebWord(897, webSession.SiteLanguage) + " " + dateEnd);
@@ -219,10 +244,18 @@ namespace TNS.AdExpress.Web.UI
         /// Generate html code for comparative period detail design
         /// </summary>
         /// <param name="webSession">User Session</param>
+        /// <param name="moduleId">Module Id</param>
         /// <returns>Html code</returns>
-        public static string GetComparativePeriodTypeDetail(WebSession webSession) {
+        public static string GetComparativePeriodTypeDetail(WebSession webSession, long moduleId) {
             try {
-                switch (webSession.CustomerPeriodSelected.ComparativePeriodType) {
+                globalCalendar.comparativePeriodType comparativePeriodType;
+
+                if (moduleId == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                    comparativePeriodType = webSession.ComparativePeriodType;
+                else
+                    comparativePeriodType = webSession.CustomerPeriodSelected.ComparativePeriodType;
+
+                switch (comparativePeriodType) {
                     case globalCalendar.comparativePeriodType.comparativeWeekDate:
                         return Convertion.ToHtmlString(GestionWeb.GetWebWord(2295, webSession.SiteLanguage));
                     case globalCalendar.comparativePeriodType.dateToDate:

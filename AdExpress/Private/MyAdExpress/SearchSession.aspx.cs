@@ -926,6 +926,8 @@ namespace AdExpress.Private.MyAdExpress{
 					_webSession.PDV = webSessionSave.PDV;
 					_webSession.PersonalizedElementsOnly=webSessionSave.PersonalizedElementsOnly;
 					_webSession.Graphics=webSessionSave.Graphics;
+                    _webSession.ComparativePeriodType = webSessionSave.ComparativePeriodType;
+                    _webSession.PeriodSelectionType = webSessionSave.PeriodSelectionType;
 
 					if (!_webSession.ComparativeStudy || !webSessionSave.Evolution)
 						_webSession.Evolution = false;

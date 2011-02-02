@@ -626,21 +626,40 @@ namespace AdExpress.Private.Selection{
 					infoDateLabel.Text = HtmlFunctions.GetPeriodDetail(_webSession);
 				}
 
-                if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE
+                if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) {
+                    // Période de l'étude
+                    if (_webSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule) {
+                        displayStudyPeriod = true;
+                        StudyPeriod.Text = HtmlFunctions.GetStudyPeriodDetail(_webSession, _webSession.CurrentModule);
+                    }
+
+                    // Période comparative
+                    if (_webSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule) {
+                        displayComparativePeriod = true;
+                        comparativePeriod.Text = HtmlFunctions.GetComparativePeriodDetail(_webSession, _webSession.CurrentModule);
+                    }
+
+                    // Type Sélection comparative
+                    if (_webSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule) {
+                        displayComparativePeriodType = true;
+                        ComparativePeriodType.Text = HtmlFunctions.GetComparativePeriodTypeDetail(_webSession, _webSession.CurrentModule);
+                    }
+                }
+                else if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE
                     || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE
                     || _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE
                     ) {
                     // Période de l'étude
                     if (_webSession.isStudyPeriodSelected()) {
                         displayStudyPeriod = true;
-                        StudyPeriod.Text = HtmlFunctions.GetStudyPeriodDetail(_webSession);
+                        StudyPeriod.Text = HtmlFunctions.GetStudyPeriodDetail(_webSession, _webSession.CurrentModule);
                     }
 
                     // Période comparative
                     if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE) {
                         if (_webSession.isPeriodComparative()) {
                             displayComparativePeriod = true;
-                            comparativePeriod.Text = HtmlFunctions.GetComparativePeriodDetail(_webSession);
+                            comparativePeriod.Text = HtmlFunctions.GetComparativePeriodDetail(_webSession, _webSession.CurrentModule);
                         }
                     }
 
@@ -648,7 +667,7 @@ namespace AdExpress.Private.Selection{
                     if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE) {
                         if (_webSession.isComparativePeriodTypeSelected()) {
                             displayComparativePeriodType = true;
-                            ComparativePeriodType.Text = HtmlFunctions.GetComparativePeriodTypeDetail(_webSession);
+                            ComparativePeriodType.Text = HtmlFunctions.GetComparativePeriodTypeDetail(_webSession, _webSession.CurrentModule);
                         }
                     }
 

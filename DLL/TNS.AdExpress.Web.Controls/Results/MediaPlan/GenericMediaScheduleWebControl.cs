@@ -636,7 +636,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                         webSession.DetailPeriod = ConstantePeriod.DisplayLevel.monthly;
                     }
 
-                    if (webSession.ComparativeStudy && webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                    if (webSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule && webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
                         period = new MediaSchedulePeriod(begin, end, webSession.DetailPeriod, webSession.ComparativePeriodType);
                     else
                         period = new MediaSchedulePeriod(begin, end, webSession.DetailPeriod);

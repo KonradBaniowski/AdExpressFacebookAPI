@@ -2685,14 +2685,15 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <returns></returns>
         protected bool IsValidPeriodComparative() {
 
-            if (customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) {
+            if (customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA ||
+                customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES) {
                 DateTime dtBegin = WebFunctions.Dates.getPeriodBeginningDate(customerWebSession.PeriodBeginningDate, customerWebSession.PeriodType);
                 DateTime dtEnd = WebFunctions.Dates.getPeriodEndDate(customerWebSession.PeriodEndDate, customerWebSession.PeriodType);
 
                 //Check Year
                 return (DateTime.Compare(new DateTime(DateTime.Now.Year - 1, 1, 1, 0, 0, 0), dtBegin) <= 0);
             }
-            else return customerWebSession.ComparativeStudy;
+            else return true;
         }
         #endregion
 
