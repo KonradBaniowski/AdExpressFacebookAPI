@@ -553,7 +553,11 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 
                 begin = Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
                 end = Dates.getPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType);
-                period = new MediaSchedulePeriod(begin, end, _webSession.DetailPeriod);
+
+                if (_webSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule && _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                    period = new MediaSchedulePeriod(begin, end, _webSession.DetailPeriod, _webSession.ComparativePeriodType);
+                else
+                    period = new MediaSchedulePeriod(begin, end, _webSession.DetailPeriod);
                 
                 if (vehicles.Length == 1) {
                     param = new object[3];
