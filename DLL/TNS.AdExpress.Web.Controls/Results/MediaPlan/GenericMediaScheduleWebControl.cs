@@ -621,7 +621,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                         WebFunctions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType));
 
                     webSession.DetailPeriod = ConstantePeriod.DisplayLevel.dayly;
-                    if (webSession.ComparativeStudy && webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                    if (webSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule && webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
                         period = new MediaSchedulePeriod(begin, end, ConstantePeriod.DisplayLevel.dayly, webSession.ComparativePeriodType);
                     else
                         period = new MediaSchedulePeriod(begin, end, ConstantePeriod.DisplayLevel.dayly);

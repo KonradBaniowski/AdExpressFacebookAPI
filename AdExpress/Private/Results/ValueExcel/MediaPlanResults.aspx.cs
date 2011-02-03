@@ -93,7 +93,10 @@ namespace AdExpress.Private.Results.ValueExcel{
                         WebFunctions.Dates.getPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType));
 
                     _webSession.DetailPeriod = ConstantePeriods.DisplayLevel.dayly;
-                    period = new MediaSchedulePeriod(begin, end, ConstantePeriods.DisplayLevel.dayly);
+                    if (_webSession.ComparativeStudy && TNS.AdExpress.Domain.Web.WebApplicationParameters.UseComparativeMediaSchedule && _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                        period = new MediaSchedulePeriod(begin, end, ConstantePeriods.DisplayLevel.dayly, _webSession.ComparativePeriodType);
+                    else
+                        period = new MediaSchedulePeriod(begin, end, ConstantePeriods.DisplayLevel.dayly);
 
                 }
                 else
@@ -104,7 +107,10 @@ namespace AdExpress.Private.Results.ValueExcel{
                     {
                         _webSession.DetailPeriod = ConstantePeriods.DisplayLevel.monthly;
                     }
-                    period = new MediaSchedulePeriod(begin, end, _webSession.DetailPeriod);
+                    if (_webSession.ComparativeStudy && TNS.AdExpress.Domain.Web.WebApplicationParameters.UseComparativeMediaSchedule && _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                        period = new MediaSchedulePeriod(begin, end, _webSession.DetailPeriod, _webSession.ComparativePeriodType);
+                    else
+                        period = new MediaSchedulePeriod(begin, end, _webSession.DetailPeriod);
 
                 }
                 #endregion

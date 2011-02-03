@@ -1718,7 +1718,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
                 if (_allowTotal) {
                     MediaSchedulePeriod compPeriod = _period.GetMediaSchedulePeriodComparative();
-                    t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.Begin, _session.SiteLanguage, Dates.Pattern.shortDatePattern) + " - " + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.End, _session.SiteLanguage, Dates.Pattern.shortDatePattern), rowSpanNb);
+                    t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.Begin, _session.SiteLanguage, Dates.Pattern.shortDatePattern) + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.End, _session.SiteLanguage, Dates.Pattern.shortDatePattern), rowSpanNb);
 
                     //int nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX].ToString(), _session.Unit).Length;
                     int nbtot;
@@ -1748,7 +1748,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             // Total Column
             if(_allowTotal) {
                 if (WebApplicationParameters.UseComparativeMediaSchedule)
-                    t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.Begin, _session.SiteLanguage, Dates.Pattern.shortDatePattern) + " - " + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.End, _session.SiteLanguage, Dates.Pattern.shortDatePattern), rowSpanNb);
+                    t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.Begin, _session.SiteLanguage, Dates.Pattern.shortDatePattern) + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.End, _session.SiteLanguage, Dates.Pattern.shortDatePattern), rowSpanNb);
                 else
                     t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, GestionWeb.GetWebWord(805, _session.SiteLanguage), rowSpanNb);
                 
@@ -2284,45 +2284,6 @@ namespace TNS.AdExpressI.MediaSchedule {
                         , cssClasseNb
                         , string.Format(fp, "{0:percentWOSign}", data[line, PDM_COLUMN_INDEX]));
                 }
-                if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal) {
-
-                    StringBuilder str = new StringBuilder();
-
-                    double evol = (double)data[line, EVOL_COLUMN_INDEX];
-                    if (evol != 0) {
-                        if (Double.IsInfinity(evol)) {
-                            str.Append((evol < 0) ? "-" : "+");
-                        }
-                        else if (Double.IsNaN(evol)) {
-                            str.Append("&nbsp;");
-                        }
-                        else if (evol == 0) {
-                            str.Append("0");
-                        }
-                        else {
-                            str.Append(string.Format(fp, "{0:percentage}", evol));
-                        }
-                    }
-                    else {
-                        str.Append("&nbsp;");
-                    }
-                    //Evolution
-                    if (evol > 0) //hausse
-                        str.Append("<img src=/I/g.gif>");
-                    else if (evol < 0) //baisse
-                        str.Append("<img src=/I/r.gif>");
-                    else if (!Double.IsNaN(evol)) // 0 exactement
-                        str.Append("<img src=/I/o.gif>");
-                    else
-                        str.Append("&nbsp;");
-
-                    //Evol
-                    t.AppendFormat("<td class=\"{0}\">{1}</td>"
-                           , cssClasseNb
-                           , str.ToString());
-
-
-                }
             }
             else {
                 t.AppendFormat("\r\n\t<tr>\r\n\t\t<td class=\"{0}\" colSPan=\"{1}\">{4}{2}{3}{5}</td>"
@@ -2375,28 +2336,30 @@ namespace TNS.AdExpressI.MediaSchedule {
                         , cssClasseNb
                         , string.Format(fp, "{0:percentWOSign}", data[line, PDM_COLUMN_INDEX]));
                 }
-                if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal) {
-                    //Evol
-                    StringBuilder str = new StringBuilder();
+            }
+            if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal) {
+                //Evol
+                StringBuilder str = new StringBuilder();
 
-                    double evol = (double)data[line, EVOL_COLUMN_INDEX];
-                    if (evol != 0) {
-                        if (Double.IsInfinity(evol)) {
-                            str.Append((evol < 0) ? "-" : "+");
-                        }
-                        else if (Double.IsNaN(evol)) {
-                            str.Append("&nbsp;");
-                        }
-                        else if (evol == 0) {
-                            str.Append("0");
-                        }
-                        else {
-                            str.Append(string.Format(fp, "{0:percentage}", evol));
-                        }
+                double evol = (double)data[line, EVOL_COLUMN_INDEX];
+                if (evol != 0) {
+                    if (Double.IsInfinity(evol)) {
+                        str.Append((evol < 0) ? "-" : "+");
                     }
-                    else {
+                    else if (Double.IsNaN(evol)) {
                         str.Append("&nbsp;");
                     }
+                    else if (evol == 0) {
+                        str.Append("0");
+                    }
+                    else {
+                        str.Append(string.Format(fp, "{0:percentage}", evol));
+                    }
+                }
+                else {
+                    str.Append("&nbsp;");
+                }
+                if (!_isExcelReport) {
                     //Evolution
                     if (evol > 0) //hausse
                         str.Append("<img src=/I/g.gif>");
@@ -2406,12 +2369,11 @@ namespace TNS.AdExpressI.MediaSchedule {
                         str.Append("<img src=/I/o.gif>");
                     else
                         str.Append("&nbsp;");
-
-                    //Evol
-                    t.AppendFormat("<td class=\"{0}\">{1}</td>"
-                           , cssClasseNb
-                           , str.ToString());
                 }
+                //Evol
+                t.AppendFormat("<td class=\"{0}\" nowrap=\"nowrap\">{1}</td>"
+                       , cssClasseNb
+                       , str.ToString());
             }
         }
 
@@ -3228,6 +3190,18 @@ namespace TNS.AdExpressI.MediaSchedule {
         }
         #endregion
 
+        #region Get Comparative Value
+        /// <summary>
+        /// Get Comparative Value
+        /// </summary>
+        /// <param name="nbLevel">Total level number</param>
+        /// <param name="cLevel">Current Level Number</param>
+        /// <param name="cRowN">Current Row Period N</param>
+        /// <param name="dtComp">DataTable of comparative</param>
+        /// <param name="detailLevel">Detail Level</param>
+        /// <param name="selectedUnit">Unit Selected</param>
+        /// <param name="unitAlias">Unit Selected Alias database</param>
+        /// <returns>Comparative Value for the current leve</returns>
         private object GetComparativeValue(int nbLevel, int cLevel, DataRow cRowN, DataTable dtComp, GenericDetailLevel detailLevel, CstWeb.CustomerSessions.Unit selectedUnit, string unitAlias) {
 
                 if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
@@ -3256,7 +3230,16 @@ namespace TNS.AdExpressI.MediaSchedule {
                 }
 
         }
+        #endregion
 
+        #region GetFilterExpressionComparative
+        /// <summary>
+        /// Get Filter Expression Comparative
+        /// </summary>
+        /// <param name="nbLevel">Total level number</param>
+        /// <param name="cRow">Current Row Period N</param>
+        /// <param name="detailLevel">Detail Level</param>
+        /// <returns>Filter Expression Comparative</returns>
         private string GetFilterExpressionComparative(int nbLevel, DataRow cRow, GenericDetailLevel detailLevel) {
             StringBuilder filter = new StringBuilder();
             for (int i = 0, j=0; j < nbLevel; i += 2, j++) {
@@ -3266,6 +3249,7 @@ namespace TNS.AdExpressI.MediaSchedule {
 
             return filter.ToString();
         }
+        #endregion
 
         #endregion
 

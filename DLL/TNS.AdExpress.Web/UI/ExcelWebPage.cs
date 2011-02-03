@@ -48,6 +48,7 @@ using ProductClassification=TNS.AdExpress.DataAccess.Classification.ProductBranc
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Web.Functions;
 
 #endregion
 
@@ -198,6 +199,18 @@ namespace TNS.AdExpress.Web.UI{
                                 t.Append(GetZoomDate(webSession, zoomDate, periodDisplayLevel));
                             else
 							    t.Append(GetDateSelected(webSession, currentModule, dateFormatText, periodBeginning, periodEnd));
+
+                            if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) {
+                                // Période comparative
+                                if (webSession.ComparativeStudy && TNS.AdExpress.Domain.Web.WebApplicationParameters.UseComparativeMediaSchedule) {
+                                    t.Append(GetComparativePeriodDetail(webSession, currentModule, dateFormatText));
+                                }
+
+                                // Type Sélection comparative
+                                if (webSession.ComparativeStudy && TNS.AdExpress.Domain.Web.WebApplicationParameters.UseComparativeMediaSchedule) {
+                                    t.Append(GetComparativePeriodTypeDetail(webSession, currentModule));
+                                }
+                            }
 							break;
                         case WebConstantes.DetailSelection.Type.studyDate:
                             t.Append(GetStudyDate(webSession));
@@ -440,6 +453,72 @@ namespace TNS.AdExpress.Web.UI{
 
             return (html.ToString());
 
+        }
+        #endregion
+
+        #region Comparative Period Detail
+        /// <summary>
+        /// Dates sélectionnées
+        /// </summary>
+        /// <param name="webSession">Session du client</param>
+        /// <param name="currentModule">Module en cours</param>
+        /// <param name="dateFormatText">Booléen date en format texte</param>
+        /// <returns>HTML</returns>
+        /// <remarks>Date format to be like for example novembre 2004 - janvier 2005</remarks>
+        private static string GetComparativePeriodDetail(WebSession webSession, Module currentModule, bool dateFormatText) {
+            StringBuilder html = new StringBuilder();
+            string dateBegin;
+            string dateEnd;
+            DateTime dateBeginDT;
+            DateTime dateEndDT;
+
+            if (currentModule.Id == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) {
+                // get date begin and date end according to period type
+                dateBeginDT = Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType);
+                dateEndDT = Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType);
+
+                // get comparative date begin and date end
+                dateBeginDT = TNS.AdExpress.Web.Core.Utilities.Dates.GetPreviousYearDate(dateBeginDT.Date, webSession.ComparativePeriodType);
+                dateEndDT = TNS.AdExpress.Web.Core.Utilities.Dates.GetPreviousYearDate(dateEndDT.Date, webSession.ComparativePeriodType);
+
+                // Formating date begin and date end
+                html.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(2292, webSession.SiteLanguage) + "</font> ");
+                if (dateFormatText) {
+                    dateBegin = WebFunctions.Dates.getPeriodTxt(webSession, dateBeginDT.ToString("yyyyMMdd"));
+                    dateEnd = WebFunctions.Dates.getPeriodTxt(webSession, dateEndDT.ToString("yyyyMMdd"));
+                }
+                else {
+                    dateBegin = WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodBeginningDate(dateBeginDT.ToString("yyyyMMdd"), webSession.PeriodType), webSession.SiteLanguage);
+                    dateEnd = WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodBeginningDate(dateEndDT.ToString("yyyyMMdd"), webSession.PeriodType), webSession.SiteLanguage);
+                }
+                html.Append(dateBegin);
+                if (!dateBegin.Equals(dateEnd))
+                    html.Append(" - " + dateEnd);
+
+                html.Append("</td></tr>");
+            }
+            return (html.ToString());
+        }
+        #endregion
+
+        #region Comparative Period Type Detail
+        /// <summary>
+        /// Dates sélectionnées
+        /// </summary>
+        /// <param name="webSession">Session du client</param>
+        /// <param name="currentModule">Module en cours</param>
+        /// <returns>HTML</returns>
+        /// <remarks>Date format to be like for example novembre 2004 - janvier 2005</remarks>
+        private static string GetComparativePeriodTypeDetail(WebSession webSession, Module currentModule) {
+            StringBuilder html = new StringBuilder();
+
+            if (currentModule.Id == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) {
+                // Formating date begin and date end
+                html.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(2293, webSession.SiteLanguage) + "</font> ");
+                html.Append(HtmlFunctions.GetComparativePeriodTypeDetail(webSession, currentModule.Id));
+                html.Append("</td></tr>");
+            }
+            return (html.ToString());
         }
         #endregion
 
