@@ -798,7 +798,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                             oTab[tabL2Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
                                     }
                                     else {
-                                        if ((double)oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX] != 0)
+                                        if (oTab[tabL2Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] != null && oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX]!=null && (double)oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX] != 0)
                                             oTab[tabL2Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = (double)oTab[tabL2Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] / (double)oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX] * 100.0;
                                         else
                                             oTab[tabL2Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
@@ -1350,7 +1350,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 long nbRowsDebug = dt.Rows.Count;
                 long cli = currentLineIndex;
                 int cd = currentDate;
-                throw new Exception("Erreur dans le Plan Mèdia.", err);
+                throw new MediaScheduleException("Erreur dans le Plan Mèdia.", err);
             }
             #endregion
 
