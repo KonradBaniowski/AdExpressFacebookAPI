@@ -21,6 +21,7 @@ using TNS.FrameWork.Exceptions;
 using System.IO;
 using TNS.Ares.AdExpress.Exceptions;
 using TNS.Ares.Domain.Mail;
+using TNS.AdExpress.Domain.XmlLoader;
 
 namespace TNS.Ares.AdExpress
 {
@@ -163,6 +164,8 @@ namespace TNS.Ares.AdExpress
                     throw new ShellInitializationException("Impossible to load ModulesList", e);
                 }
                 #endregion
+
+                ResultOptionsXL.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.RESULT_OPTIONS_CONFIGURATION_FILENAME));
 
                 #region Get Source
                 try {
