@@ -93,6 +93,8 @@
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
               <detailSelection id="3" name="Date"/>
+              <detailSelection id="25" name="Comparative Date"/>
+              <detailSelection id="26" name="Comparative Perid Type"/>
               <detailSelection id="5" name="Vehicle Selected"/>
               <detailSelection id="6" name="Product Selected"/>
               <detailSelection id="4" name="Unit"/>
