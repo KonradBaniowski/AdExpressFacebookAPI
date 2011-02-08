@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
-namespace TNS.InternetClassification.Web.Domain.MultiPart {
+namespace TNS.AdExpressI.Insertions.MultiPart {
     /// <summary>
     /// Panel Class (defined a part of a multipart)
     /// </summary>

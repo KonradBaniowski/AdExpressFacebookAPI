@@ -30,7 +30,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Constantes.Web;
-using TNS.InternetClassification.Web.Domain.MultiPart;
+using TNS.AdExpressI.Insertions.MultiPart;
 
 namespace TNS.AdExpressI.Insertions.Cells {
     /// <summary>
@@ -455,10 +455,10 @@ namespace TNS.AdExpressI.Insertions.Cells {
         /// Get Html
         /// </summary>
         /// <returns>Html</returns>
-        private string GetHtmlPanels(List<TNS.InternetClassification.Web.Domain.MultiPart.Panel> panelList, string iframeId, string filePath, TNS.InternetClassification.Web.Domain.MultiPart.Panel panelSelected) {
+        private string GetHtmlPanels(List<TNS.AdExpressI.Insertions.MultiPart.Panel> panelList, string iframeId, string filePath, TNS.AdExpressI.Insertions.MultiPart.Panel panelSelected) {
             StringBuilder html = new StringBuilder();
             if (panelList != null) {
-                foreach (TNS.InternetClassification.Web.Domain.MultiPart.Panel currentPanel in panelList) {
+                foreach (TNS.AdExpressI.Insertions.MultiPart.Panel currentPanel in panelList) {
 
                     html.AppendFormat("\n<option value=\"{0}\" ",
                         GetHtmlFlash(currentPanel).Replace("\"","&quot;"));
@@ -477,7 +477,7 @@ namespace TNS.AdExpressI.Insertions.Cells {
         /// Get Html
         /// </summary>
         /// <returns>Html</returns>
-        private string GetHtmlFlash(TNS.InternetClassification.Web.Domain.MultiPart.Panel panel) {
+        private string GetHtmlFlash(TNS.AdExpressI.Insertions.MultiPart.Panel panel) {
             StringBuilder output = new StringBuilder();
             output.AppendFormat("\n <OBJECT id=\"bannerBox_" + _idVersion + "\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0\" width=\"{0}\" height=\"{1}\">",
                             panel.Width.ToString(),

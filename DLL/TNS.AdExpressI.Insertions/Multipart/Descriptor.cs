@@ -9,7 +9,7 @@ using System.Net;
 using System.Xml.Serialization;
 using TNS.AdExpressI.Insertions.Exceptions;
 
-namespace TNS.InternetClassification.Web.Domain.MultiPart {
+namespace TNS.AdExpressI.Insertions.MultiPart {
     /// <summary>
     /// Mutipart Descriptor Class (defined a multipart)
     /// </summary>
