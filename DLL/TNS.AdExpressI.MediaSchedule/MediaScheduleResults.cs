@@ -2312,7 +2312,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal) {
                 //Evol
                 StringBuilder str = new StringBuilder();
-                if (data[line, EVOL_COLUMN_INDEX] == null) data[line, EVOL_COLUMN_INDEX] = (double)0.0;
+                //if (data[line, EVOL_COLUMN_INDEX] == null) data[line, EVOL_COLUMN_INDEX] = (double)0.0;
                 double evol = (double)data[line, EVOL_COLUMN_INDEX];
                 if (evol != 0) {
                     if (Double.IsInfinity(evol)) {
