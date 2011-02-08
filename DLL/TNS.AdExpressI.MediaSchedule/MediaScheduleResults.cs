@@ -569,14 +569,17 @@ namespace TNS.AdExpressI.MediaSchedule {
             #region Merge Period Comparative
             if (_session.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule) {
                 dtLevels.Merge(dtComp.DefaultView.ToTable(true, columnsLevels.ToArray()));
-                dtLevels.DefaultView.Sort = detailLevel.GetSqlOrderFieldsWithoutTablePrefix();
-                dtLevels = dtLevels.DefaultView.ToTable();
 
                 //Sort Data Table for correct sort on alpha numeric probleme
                 dtComp.DefaultView.Sort = detailLevel.GetSqlOrderFieldsWithoutTablePrefix();
                 dtComp = dtComp.DefaultView.ToTable();
+            }
+
+            if (WebApplicationParameters.UseComparativeMediaSchedule) {
                 dt.DefaultView.Sort = detailLevel.GetSqlOrderFieldsWithoutTablePrefix();
                 dt = dt.DefaultView.ToTable();
+                dtLevels.DefaultView.Sort = detailLevel.GetSqlOrderFieldsWithoutTablePrefix();
+                dtLevels = dtLevels.DefaultView.ToTable();
             }
             #endregion
 
