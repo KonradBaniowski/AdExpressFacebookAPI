@@ -735,10 +735,10 @@ namespace TNS.AdExpressI.MediaSchedule {
                 foreach(DataRow currentRowLevels in dtLevels.Rows) {
 
                     isPeriodN = dt.Rows.Count > indexPeriod + 1
-                        && ((nbLevels >= 1 && (Int64)dt.Rows[indexPeriod + 1][detailLevel.GetColumnNameLevelId(1)] == (Int64)currentRowLevels[detailLevel.GetColumnNameLevelId(1)]) || nbLevels < 1)
-                        && ((nbLevels >= 2 && (Int64)dt.Rows[indexPeriod + 1][detailLevel.GetColumnNameLevelId(2)] == (Int64)currentRowLevels[detailLevel.GetColumnNameLevelId(2)]) || nbLevels < 2)
-                        && ((nbLevels >= 3 && (Int64)dt.Rows[indexPeriod + 1][detailLevel.GetColumnNameLevelId(3)] == (Int64)currentRowLevels[detailLevel.GetColumnNameLevelId(3)]) || nbLevels < 3)
-                        && ((nbLevels >= 4 && (Int64)dt.Rows[indexPeriod + 1][detailLevel.GetColumnNameLevelId(4)] == (Int64)currentRowLevels[detailLevel.GetColumnNameLevelId(4)]) || nbLevels < 4);
+                        && ((nbLevels >= 1 && dt.Rows[indexPeriod + 1][detailLevel.GetColumnNameLevelId(1)].Equals(currentRowLevels[detailLevel.GetColumnNameLevelId(1)])) || nbLevels < 1)
+                        && ((nbLevels >= 2 && dt.Rows[indexPeriod + 1][detailLevel.GetColumnNameLevelId(2)].Equals(currentRowLevels[detailLevel.GetColumnNameLevelId(2)])) || nbLevels < 2)
+                        && ((nbLevels >= 3 && dt.Rows[indexPeriod + 1][detailLevel.GetColumnNameLevelId(3)].Equals(currentRowLevels[detailLevel.GetColumnNameLevelId(3)])) || nbLevels < 3)
+                        && ((nbLevels >= 4 && dt.Rows[indexPeriod + 1][detailLevel.GetColumnNameLevelId(4)].Equals(currentRowLevels[detailLevel.GetColumnNameLevelId(4)])) || nbLevels < 4);
 
                     #region New L1
                     if (nbLevels >= 1 && oldIdL1 != GetLevelId(currentRowLevels, 1, detailLevel)) {
@@ -1007,10 +1007,10 @@ namespace TNS.AdExpressI.MediaSchedule {
                     #endregion
 
                     while (dt.Rows.Count > indexPeriod + 1
-                        && ((nbLevels >= 1 && (Int64)dt.Rows[indexPeriod + 1][detailLevel.GetColumnNameLevelId(1)] == (Int64)currentRowLevels[detailLevel.GetColumnNameLevelId(1)]) || nbLevels < 1)
-                        && ((nbLevels >= 2 && (Int64)dt.Rows[indexPeriod + 1][detailLevel.GetColumnNameLevelId(2)] == (Int64)currentRowLevels[detailLevel.GetColumnNameLevelId(2)]) || nbLevels < 2)
-                        && ((nbLevels >= 3 && (Int64)dt.Rows[indexPeriod + 1][detailLevel.GetColumnNameLevelId(3)] == (Int64)currentRowLevels[detailLevel.GetColumnNameLevelId(3)]) || nbLevels < 3)
-                        && ((nbLevels >= 4 && (Int64)dt.Rows[indexPeriod + 1][detailLevel.GetColumnNameLevelId(4)] == (Int64)currentRowLevels[detailLevel.GetColumnNameLevelId(4)]) || nbLevels < 4)
+                        && ((nbLevels >= 1 && dt.Rows[indexPeriod + 1][detailLevel.GetColumnNameLevelId(1)].Equals(currentRowLevels[detailLevel.GetColumnNameLevelId(1)])) || nbLevels < 1)
+                        && ((nbLevels >= 2 && dt.Rows[indexPeriod + 1][detailLevel.GetColumnNameLevelId(2)].Equals(currentRowLevels[detailLevel.GetColumnNameLevelId(2)])) || nbLevels < 2)
+                        && ((nbLevels >= 3 && dt.Rows[indexPeriod + 1][detailLevel.GetColumnNameLevelId(3)].Equals(currentRowLevels[detailLevel.GetColumnNameLevelId(3)])) || nbLevels < 3)
+                        && ((nbLevels >= 4 && dt.Rows[indexPeriod + 1][detailLevel.GetColumnNameLevelId(4)].Equals(currentRowLevels[detailLevel.GetColumnNameLevelId(4)])) || nbLevels < 4)
                         ) {
                         indexPeriod++;
                         currentRow = dt.Rows[indexPeriod];
@@ -1175,10 +1175,10 @@ namespace TNS.AdExpressI.MediaSchedule {
                     }
 
                     while (dtComp!=null && dtComp.Rows.Count > indexPeriodComparative + 1
-                        && ((nbLevels >= 1 && (Int64)dtComp.Rows[indexPeriodComparative + 1][detailLevel.GetColumnNameLevelId(1)] == (Int64)currentRowLevels[detailLevel.GetColumnNameLevelId(1)]) || nbLevels < 1)
-                        && ((nbLevels >= 2 && (Int64)dtComp.Rows[indexPeriodComparative + 1][detailLevel.GetColumnNameLevelId(2)] == (Int64)currentRowLevels[detailLevel.GetColumnNameLevelId(2)]) || nbLevels < 2)
-                        && ((nbLevels >= 3 && (Int64)dtComp.Rows[indexPeriodComparative + 1][detailLevel.GetColumnNameLevelId(3)] == (Int64)currentRowLevels[detailLevel.GetColumnNameLevelId(3)]) || nbLevels < 3)
-                        && ((nbLevels >= 4 && (Int64)dtComp.Rows[indexPeriodComparative + 1][detailLevel.GetColumnNameLevelId(4)] == (Int64)currentRowLevels[detailLevel.GetColumnNameLevelId(4)]) || nbLevels < 4)
+                        && ((nbLevels >= 1 && dtComp.Rows[indexPeriodComparative + 1][detailLevel.GetColumnNameLevelId(1)].Equals(currentRowLevels[detailLevel.GetColumnNameLevelId(1)])) || nbLevels < 1)
+                        && ((nbLevels >= 2 && dtComp.Rows[indexPeriodComparative + 1][detailLevel.GetColumnNameLevelId(2)].Equals(currentRowLevels[detailLevel.GetColumnNameLevelId(2)])) || nbLevels < 2)
+                        && ((nbLevels >= 3 && dtComp.Rows[indexPeriodComparative + 1][detailLevel.GetColumnNameLevelId(3)].Equals(currentRowLevels[detailLevel.GetColumnNameLevelId(3)])) || nbLevels < 3)
+                        && ((nbLevels >= 4 && dtComp.Rows[indexPeriodComparative + 1][detailLevel.GetColumnNameLevelId(4)].Equals(currentRowLevels[detailLevel.GetColumnNameLevelId(4)])) || nbLevels < 4)
                         ) {
                         indexPeriodComparative++;
 
