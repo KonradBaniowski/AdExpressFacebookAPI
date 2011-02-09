@@ -1279,13 +1279,13 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                         if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
                             if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
-                                if (oTab[i, TOTAL_COMPARATIVE_COLUMN_INDEX] != null && oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX] != null && ((CellIdsNumber)oTab[currentL3Index, TOTAL_COLUMN_INDEX]).Value != 0)
+                                if (oTab[i, TOTAL_COMPARATIVE_COLUMN_INDEX] != null && oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX] != null && ((CellIdsNumber)oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value != 0)
                                     oTab[i, PDM_COMPARATIVE_COLUMN_INDEX] = ((CellIdsNumber)oTab[i, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value / ((CellIdsNumber)oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value * 100.0;
                                 else
                                     oTab[i, PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
                             }
                             else {
-                                if (oTab[i, TOTAL_COMPARATIVE_COLUMN_INDEX] != null && oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX] != null && oTab[currentL3Index, TOTAL_COLUMN_INDEX] != null && (double)oTab[currentL3Index, TOTAL_COLUMN_INDEX] != 0)
+                                if (oTab[i, TOTAL_COMPARATIVE_COLUMN_INDEX] != null && oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX] != null && (double)oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX] != 0)
                                     oTab[i, PDM_COMPARATIVE_COLUMN_INDEX] = (double)oTab[i, TOTAL_COMPARATIVE_COLUMN_INDEX] / (double)oTab[currentL3Index, TOTAL_COMPARATIVE_COLUMN_INDEX] * 100.0;
                                 else
                                     oTab[i, PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
@@ -1310,13 +1310,13 @@ namespace TNS.AdExpressI.MediaSchedule {
                         }
                         if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
                             if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
-                                if (oTab[tabL3Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] != null && oTab[currentL2Index, TOTAL_COLUMN_INDEX] != null && ((CellIdsNumber)oTab[currentL2Index, TOTAL_COLUMN_INDEX]).Value != 0)
+                                if (oTab[tabL3Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] != null && oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX] != null && ((CellIdsNumber)oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value != 0)
                                     oTab[tabL3Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = ((CellIdsNumber)oTab[tabL3Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX]).Value / ((CellIdsNumber)oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value * 100.0;
                                 else
                                     oTab[tabL3Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
                             }
                             else {
-                                if (oTab[tabL3Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX]!=null && oTab[currentL2Index, TOTAL_COLUMN_INDEX]!=null && (double)oTab[currentL2Index, TOTAL_COLUMN_INDEX] != 0)
+                                if (oTab[tabL3Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] != null && oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX] != null && (double)oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX] != 0)
                                     oTab[tabL3Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = (double)oTab[tabL3Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] / (double)oTab[currentL2Index, TOTAL_COMPARATIVE_COLUMN_INDEX] * 100.0;
                                 else
                                     oTab[tabL3Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
@@ -1341,13 +1341,13 @@ namespace TNS.AdExpressI.MediaSchedule {
                         }
                         if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
                             if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
-                                if (oTab[tabL2Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] != null && oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX] != null && ((CellIdsNumber)oTab[currentL1Index, TOTAL_COLUMN_INDEX]).Value != 0)
+                                if (oTab[tabL2Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] != null && oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX] != null && ((CellIdsNumber)oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value != 0)
                                     oTab[tabL2Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = ((CellIdsNumber)oTab[tabL2Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX]).Value / ((CellIdsNumber)oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value * 100.0;
                                 else
                                     oTab[tabL2Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
                             }
                             else {
-                                if (oTab[tabL2Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX]!=null && oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX]!=null && (double)oTab[currentL1Index, TOTAL_COLUMN_INDEX] != 0)
+                                if (oTab[tabL2Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] != null && oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX] != null && (double)oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX] != 0)
                                     oTab[tabL2Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = (double)oTab[tabL2Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] / (double)oTab[currentL1Index, TOTAL_COMPARATIVE_COLUMN_INDEX] * 100.0;
                                 else
                                     oTab[tabL2Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
@@ -1372,13 +1372,13 @@ namespace TNS.AdExpressI.MediaSchedule {
                         }
                         if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
                             if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
-                                if (oTab[tabL1Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] != null && oTab[currentTotalIndex, TOTAL_COLUMN_INDEX] != null && ((CellIdsNumber)oTab[currentTotalIndex, TOTAL_COLUMN_INDEX]).Value != 0)
+                                if (oTab[tabL1Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] != null && oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX] != null && ((CellIdsNumber)oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value != 0)
                                     oTab[tabL1Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = ((CellIdsNumber)oTab[tabL1Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX]).Value / ((CellIdsNumber)oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value * 100.0;
                                 else
                                     oTab[tabL1Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
                             }
                             else {
-                                if (oTab[tabL1Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] != null && oTab[currentTotalIndex, TOTAL_COLUMN_INDEX]!=null && (double)oTab[currentTotalIndex, TOTAL_COLUMN_INDEX] != 0)
+                                if (oTab[tabL1Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] != null && oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX] != null && (double)oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX] != 0)
                                     oTab[tabL1Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = (double)oTab[tabL1Index[i], TOTAL_COMPARATIVE_COLUMN_INDEX] / (double)oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX] * 100.0;
                                 else
                                     oTab[tabL1Index[i], PDM_COMPARATIVE_COLUMN_INDEX] = 0.0;
