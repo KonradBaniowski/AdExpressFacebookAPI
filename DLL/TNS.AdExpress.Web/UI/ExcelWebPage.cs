@@ -202,13 +202,13 @@ namespace TNS.AdExpress.Web.UI{
                             break;
                         case WebConstantes.DetailSelection.Type.comparativeDate:
                             // Période comparative
-                            if (webSession.ComparativeStudy && TNS.AdExpress.Domain.Web.WebApplicationParameters.UseComparativeMediaSchedule) {
+                            if (webSession.ComparativeStudy && TNS.AdExpress.Domain.Web.WebApplicationParameters.UseComparativeMediaSchedule && zoomDate.Length == 0) {
                                 t.Append(GetComparativePeriodDetail(webSession, currentModule, dateFormatText));
                             }
                             break;
                         case WebConstantes.DetailSelection.Type.comparativePeriodType:
                             // Type Sélection comparative
-                            if (webSession.ComparativeStudy && TNS.AdExpress.Domain.Web.WebApplicationParameters.UseComparativeMediaSchedule) {
+                            if (webSession.ComparativeStudy && TNS.AdExpress.Domain.Web.WebApplicationParameters.UseComparativeMediaSchedule && zoomDate.Length == 0) {
                                 t.Append(GetComparativePeriodTypeDetail(webSession, currentModule));
                             }
 							break;

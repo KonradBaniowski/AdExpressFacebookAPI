@@ -484,13 +484,26 @@ namespace AdExpress.Private.Selection{
                 if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) {
                     // Période de l'étude
                     if (_webSession.ComparativeStudy && TNS.AdExpress.Domain.Web.WebApplicationParameters.UseComparativeMediaSchedule) {
-                        displayStudyPeriod = true;
-                        StudyPeriod.Text = HtmlFunctions.GetStudyPeriodDetail(_webSession, _webSession.CurrentModule); }
+                        if (_zoomDate.Length > 0) {
+                            displayStudyPeriod = true;
+                            StudyPeriod.Text = HtmlFunctions.GetZoomPeriodDetail(_webSession, _zoomDate);
+                        }
+                        else {
+                            displayStudyPeriod = true;
+                            StudyPeriod.Text = HtmlFunctions.GetStudyPeriodDetail(_webSession, _webSession.CurrentModule);
+                        }
+                    }
 
                     // Période comparative
                     if (_webSession.ComparativeStudy && TNS.AdExpress.Domain.Web.WebApplicationParameters.UseComparativeMediaSchedule) {
-                        displayComparativePeriod = true;
-                        comparativePeriod.Text = HtmlFunctions.GetComparativePeriodDetail(_webSession, _webSession.CurrentModule);
+                        if (_zoomDate.Length > 0) {
+                            displayComparativePeriod = true;
+                            comparativePeriod.Text = HtmlFunctions.GetZoomComparativePeriodDetail(_webSession, _zoomDate);
+                        }
+                        else {
+                            displayComparativePeriod = true;
+                            comparativePeriod.Text = HtmlFunctions.GetComparativePeriodDetail(_webSession, _webSession.CurrentModule);
+                        }
                     }
 
                     // Type Sélection comparative

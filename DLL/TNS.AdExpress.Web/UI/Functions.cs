@@ -171,6 +171,66 @@ namespace TNS.AdExpress.Web.UI
         }
 
         /// <summary>
+        /// Generate html code for zoom comparative period detail design
+        /// </summary>
+        /// <param name="webSession">User Session</param>
+        /// <param name="zoomDate">Date de zoom</param>
+        /// <returns>Html code</returns>
+        public static string GetZoomComparativePeriodDetail(WebSession webSession, string zoomDate) {
+
+            try {
+                string str = "";
+                DateTime firstDayOfMonth;
+                DateTime lastDayOfMonth;
+                DateTime begin;
+                DateTime end;
+
+                switch (webSession.DetailPeriod) {
+                    case CustomerSessions.Period.DisplayLevel.weekly:
+
+                        AtomicPeriodWeek tmp = new AtomicPeriodWeek(int.Parse(zoomDate.Substring(0, 4)), int.Parse(zoomDate.Substring(4, 2)));
+                        begin = tmp.FirstDay.Date;
+                        end = tmp.LastDay.Date;
+                        begin = TNS.AdExpress.Web.Functions.Dates.Max(begin,
+                                    TNS.AdExpress.Web.Functions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType));
+                        end = TNS.AdExpress.Web.Functions.Dates.Min(end,
+                            TNS.AdExpress.Web.Functions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType));
+
+                        begin = TNS.AdExpress.Web.Core.Utilities.Dates.GetPreviousYearDate(begin.Date, webSession.ComparativePeriodType);
+                        end = TNS.AdExpress.Web.Core.Utilities.Dates.GetPreviousYearDate(end.Date, webSession.ComparativePeriodType);
+
+                        str += "" + GestionWeb.GetWebWord(896, webSession.SiteLanguage) + " ";
+                        str += FctUtilities.Dates.DateToString(begin.Date, webSession.SiteLanguage);// begin.Date.ToString("dd/MM/yyyy");
+                        str += " " + GestionWeb.GetWebWord(897, webSession.SiteLanguage) + "";
+                        str += " " + FctUtilities.Dates.DateToString(end.Date, webSession.SiteLanguage) + "";//end.Date.ToString("dd/MM/yyyy")
+                        return str;
+                    case CustomerSessions.Period.DisplayLevel.monthly:
+
+                        firstDayOfMonth = new DateTime(int.Parse(zoomDate.Substring(0, 4)), int.Parse(zoomDate.Substring(4, 2)), 1);
+                        firstDayOfMonth = firstDayOfMonth.AddMonths(1);
+                        lastDayOfMonth = firstDayOfMonth.AddDays(-1);
+
+                        begin = new DateTime(lastDayOfMonth.Year, lastDayOfMonth.Month, 1);
+                        end = lastDayOfMonth;
+                        begin = TNS.AdExpress.Web.Functions.Dates.Max(begin,
+                                    TNS.AdExpress.Web.Functions.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType));
+                        end = TNS.AdExpress.Web.Functions.Dates.Min(end,
+                            TNS.AdExpress.Web.Functions.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType));
+
+                        begin = TNS.AdExpress.Web.Core.Utilities.Dates.GetPreviousYearDate(begin.Date, webSession.ComparativePeriodType);
+                        end = TNS.AdExpress.Web.Core.Utilities.Dates.GetPreviousYearDate(end.Date, webSession.ComparativePeriodType);
+
+                        return Convertion.ToHtmlString(GestionWeb.GetWebWord(896, webSession.SiteLanguage) + " " + FctUtilities.Dates.DateToString(begin, webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(897, webSession.SiteLanguage) + " " + FctUtilities.Dates.DateToString(end, webSession.SiteLanguage));
+                    default:
+                        return "";
+                }
+            }
+            catch (System.Exception e) {
+                throw (new FunctionsUIException("Unable to generate the html code for zoom period detail", e));
+            }
+        }
+
+        /// <summary>
 		/// Generate html code for study period detail design
 		/// </summary>
         /// <param name="webSession">User Session</param>
