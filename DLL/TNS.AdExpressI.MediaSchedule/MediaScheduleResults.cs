@@ -507,13 +507,15 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// <returns>Formatted table ready for UI design</returns>
         protected virtual object[,] ComputeData() {
             object[,] oTab = null;
-            GenericDetailLevel detailLevel;
+            GenericDetailLevel detailLevel = GetDetailsLevelSelected();;
 
             #region Data
             DataSet ds = null;
             DataTable dt = null;
             DataTable dtComp = null;
+            DataTable dtLevels = null;
             object[] param = null;
+            IMediaScheduleResultDAL mediaScheduleDAL = null;
             if(_module.CountryDataAccessLayer == null) throw (new NullReferenceException("Data access layer is null for the Media Schedule result"));
             if (IsPlanMediaAdnettrack())
             {
@@ -521,7 +523,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 param[0] = _session;
                 param[1] = _period;
                 param[2] = _vehicleId;
-                IMediaScheduleResultDAL mediaScheduleDAL = (IMediaScheduleResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                mediaScheduleDAL = (IMediaScheduleResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                 mediaScheduleDAL.Module = _module;
                 ds = mediaScheduleDAL.GetMediaScheduleAdNetTrackData();
             }
@@ -531,17 +533,16 @@ namespace TNS.AdExpressI.MediaSchedule {
                 param = new object[2];
                 param[0] = _session;
                 param[1] = _period;
-                IMediaScheduleResultDAL mediaScheduleDAL = (IMediaScheduleResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                mediaScheduleDAL = (IMediaScheduleResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                 mediaScheduleDAL.Module = _module;
 
                 ds = mediaScheduleDAL.GetMediaScheduleData();
                 if (_session.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule) {
-                    mediaScheduleDAL.Period = _period.GetMediaSchedulePeriodComparative();
+                    mediaScheduleDAL.PeriodComparative = _period.GetMediaSchedulePeriodComparative();
                     dsComp = mediaScheduleDAL.GetMediaScheduleData(true);
                     dtComp = dsComp.Tables[0];
                 }            
             }
-            detailLevel = GetDetailsLevelSelected();
 
             if(ds == null || ds.Tables.Count == 0 || ds.Tables[0] == null) {
                 return (new object[0, 0]);
@@ -549,41 +550,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             dt = ds.Tables[0];
             #endregion
 
-            #region Construct dt Levels
-
-            #region Add Level Period N
-            List<string> columnsLevels = new List<string>();
-            for (int iLevel = 1; iLevel <= detailLevel.GetNbLevels; iLevel++) {
-                columnsLevels.Add(detailLevel.GetColumnNameLevelId(iLevel));
-                columnsLevels.Add(detailLevel.GetColumnNameLevelLabel(iLevel));
-            }
-            DataTable dtLevels = dt.DefaultView.ToTable(true, columnsLevels.ToArray());
-
-            List<DataColumn> dataColumnList = new List<DataColumn>();
-            foreach (DataColumn cColumn in dtLevels.Columns) {
-                dataColumnList.Add(cColumn);
-            }
-            dtLevels.PrimaryKey = dataColumnList.ToArray();
-            #endregion
-
-            #region Merge Period Comparative
-            if (_session.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule) {
-                dtLevels.Merge(dtComp.DefaultView.ToTable(true, columnsLevels.ToArray()));
-
-                //Sort Data Table for correct sort on alpha numeric probleme
-                dtComp.DefaultView.Sort = detailLevel.GetSqlOrderFieldsWithoutTablePrefix();
-                dtComp = dtComp.DefaultView.ToTable();
-            }
-
-            if (WebApplicationParameters.UseComparativeMediaSchedule) {
-                dt.DefaultView.Sort = detailLevel.GetSqlOrderFieldsWithoutTablePrefix();
-                dt = dt.DefaultView.ToTable();
-                dtLevels.DefaultView.Sort = detailLevel.GetSqlOrderFieldsWithoutTablePrefix();
-                dtLevels = dtLevels.DefaultView.ToTable();
-            }
-            #endregion
-
-            #endregion
+            dtLevels = GetDataLevels(mediaScheduleDAL, detailLevel, dt);
 
             #region Count nb of elements for each classification level
             int nbLevels = detailLevel.GetNbLevels;
@@ -1367,7 +1334,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 oTab[tabL2Index[i], PDM_COLUMN_INDEX] = 0.0;
                         }
                         else {
-                            if (oTab[currentL2Index, TOTAL_COLUMN_INDEX] != null && oTab[currentL1Index, TOTAL_COLUMN_INDEX] != null && (double)oTab[currentL1Index, TOTAL_COLUMN_INDEX] != 0)
+                            if (oTab[tabL2Index[i], TOTAL_COLUMN_INDEX] != null && oTab[currentL1Index, TOTAL_COLUMN_INDEX] != null && (double)oTab[currentL1Index, TOTAL_COLUMN_INDEX] != 0)
                                 oTab[tabL2Index[i], PDM_COLUMN_INDEX] = (double)oTab[tabL2Index[i], TOTAL_COLUMN_INDEX] / (double)oTab[currentL1Index, TOTAL_COLUMN_INDEX] * 100.0;
                             else
                                 oTab[tabL2Index[i], PDM_COLUMN_INDEX] = 0.0;
@@ -1398,7 +1365,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                 oTab[tabL1Index[i], PDM_COLUMN_INDEX] = 0.0;
                         }
                         else {
-                            if (oTab[currentL1Index, TOTAL_COLUMN_INDEX] != null && oTab[currentTotalIndex, TOTAL_COLUMN_INDEX] != null && (double)oTab[currentTotalIndex, TOTAL_COLUMN_INDEX] != 0)
+                            if (oTab[tabL1Index[i], TOTAL_COLUMN_INDEX] != null && oTab[currentTotalIndex, TOTAL_COLUMN_INDEX] != null && (double)oTab[currentTotalIndex, TOTAL_COLUMN_INDEX] != 0)
                                 oTab[tabL1Index[i], PDM_COLUMN_INDEX] = (double)oTab[tabL1Index[i], TOTAL_COLUMN_INDEX] / (double)oTab[currentTotalIndex, TOTAL_COLUMN_INDEX] * 100.0;
                             else
                                 oTab[tabL1Index[i], PDM_COLUMN_INDEX] = 0.0;
@@ -3168,6 +3135,39 @@ namespace TNS.AdExpressI.MediaSchedule {
                 && (VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.adnettrack 
                     || VehiclesInformation.Get(_vehicleId).Id == CstDBClassif.Vehicles.names.internet)
                 );
+        }
+        #endregion
+
+        #region GetDataLevels
+        /// <summary>
+        /// Get Data Levels
+        /// </summary>
+        /// <param name="mediaScheduleResultDAL">DAL source</param>
+        /// <returns>Data Levels</returns>
+        protected virtual DataTable GetDataLevels(IMediaScheduleResultDAL mediaScheduleResultDAL, GenericDetailLevel detailLevel, DataTable dt) {
+
+            DataTable dtLevels = null;
+
+            if (_session.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule) {
+                DataSet ds = mediaScheduleResultDAL.GetMediaScheduleDataLevels();
+                if (ds != null && ds.Tables != null && ds.Tables.Count > 0) dtLevels = ds.Tables[0];
+                else dtLevels = null;
+            }
+            else {
+                List<string> columnsLevels = new List<string>();
+                for (int iLevel = 1; iLevel <= detailLevel.GetNbLevels; iLevel++) {
+                    columnsLevels.Add(detailLevel.GetColumnNameLevelId(iLevel));
+                    columnsLevels.Add(detailLevel.GetColumnNameLevelLabel(iLevel));
+                }
+                dtLevels = dt.DefaultView.ToTable(true, columnsLevels.ToArray());
+
+                List<DataColumn> dataColumnList = new List<DataColumn>();
+                foreach (DataColumn cColumn in dtLevels.Columns) {
+                    dataColumnList.Add(cColumn);
+                }
+                dtLevels.PrimaryKey = dataColumnList.ToArray();
+            }
+            return dtLevels;
         }
         #endregion
 

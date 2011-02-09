@@ -46,6 +46,13 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
             get;
             set;
         }
+        /// <summary>
+        /// Report period
+        /// </summary>
+        MediaSchedulePeriod PeriodComparative {
+            get;
+            set;
+        }
         #endregion
 
         /// <summary>
@@ -58,6 +65,11 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
         /// </summary>
         /// <param name="isComparative">True if we need data for comparative period</param>
         DataSet GetMediaScheduleData(bool isComparative);
+
+        /// <summary>
+        /// Get data to build a Media Schedule Report
+        /// </summary>
+        DataSet GetMediaScheduleDataLevels();
 
         /// <summary>
         /// Get Data to build an AdNettrack Media Schedule

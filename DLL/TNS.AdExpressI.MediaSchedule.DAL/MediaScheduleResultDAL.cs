@@ -92,6 +92,20 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
         }
         #endregion
 
+        #region Period
+        /// <summary>
+        /// Report period filter Comparative
+        /// </summary>
+        protected TNS.AdExpress.Web.Core.Selection.MediaSchedulePeriod _periodComparative;
+        /// <summary>
+        /// Report period Comparative
+        /// </summary>
+        public MediaSchedulePeriod PeriodComparative {
+            get { return _periodComparative; }
+            set { _periodComparative = value; }
+        }
+        #endregion
+
         #region Vehicle Id
         /// <summary>
         /// Vehicle Id filter
@@ -155,6 +169,16 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
         }
         #endregion
 
+        #region GetMediaScheduleDataLevels
+        /// <summary>
+        /// Get data to build a Media Schedule Report
+        /// </summary>
+        /// <returns>data to build a Media Schedule Report</returns>
+        public virtual DataSet GetMediaScheduleDataLevels() {
+            return GetDataLevels(string.Empty, _session.GenericMediaDetailLevel);
+        }
+        #endregion
+
         #region GetMediaScheduleAdNetTrackData
         /// <summary>
         /// Get Data for AdNetTrack Media Schedule
@@ -204,80 +228,20 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
         protected virtual DataSet GetData(string additionalWhereClause, GenericDetailLevel detailLevel, bool isComparative) {
 
             #region Variables
-            bool first = true;
             DataSet ds = new DataSet();
-            string[] listVehicles = null;
             StringBuilder sql = new StringBuilder();
             string groupOptional = string.Empty;
-            string periodicityFields = "max(period_count) as period_count,";
-            string dateField = ", date_num";
             #endregion
 
             #region Query Building
-            if(_vehicleId < 0)
-                listVehicles = _session.GetSelection(_session.SelectionUniversMedia, CstRight.type.vehicleAccess).Split(new char[] { ',' });
-            else 
-                listVehicles = new string[1] { _vehicleId.ToString() };
-
             if (isComparative) {
-                periodicityFields = string.Empty;
-                dateField = string.Empty;
+                sql.Append(GetMasterQuery(additionalWhereClause, detailLevel, _periodComparative, isComparative, string.Empty, string.Empty));
+                sql.AppendFormat(" order by {0}{1} ", detailLevel.GetSqlOrderFieldsWithoutTablePrefix(), string.Empty);
             }
-            // Select
-            //sql.AppendFormat("select {0},date_num, max(period_count) as period_count,{1} from (", detailLevel.GetSqlFieldsWithoutTablePrefix(), FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session));
-            sql.AppendFormat("select {0}{1}, {2}{3} from (", detailLevel.GetSqlFieldsWithoutTablePrefix(), dateField, periodicityFields, GetUnitFieldNameSumUnionWithAlias(_session));
-
-            // SubPeriod Management
-            List<MediaScheduleSubPeriod> subPeriodsSet = _period.SubPeriods;
-            foreach(MediaScheduleSubPeriod subPeriods in subPeriodsSet) {
-                switch(subPeriods.SubPeriodType) {
-                    case CstPeriod.PeriodBreakdownType.data:
-                    case CstPeriod.PeriodBreakdownType.data_4m:
-                        for(int i = 0; i < listVehicles.Length; i++) {
-                            try {
-                                if(!first) sql.Append(" union all ");
-                                else first = false;
-                                sql.AppendFormat("({0})", GetQuery(detailLevel, _period.PeriodDetailLEvel, subPeriods.SubPeriodType, Int64.Parse(listVehicles[i]), subPeriods.Items, additionalWhereClause, isComparative));
-                            }
-                            catch(System.Exception err) {
-                                throw new MediaScheduleDALException("GenericMediaScheduleDataAccess.GetData(WebSession _session, MediaSchedulePeriod _period)", err);
-                            }
-                        }
-                        break;
-                    case CstPeriod.PeriodBreakdownType.week:
-                    case CstPeriod.PeriodBreakdownType.month:
-                        if(!first) sql.Append(" union all ");
-                        else first = false;
-                        //sql.AppendFormat("({0})", GetQuery(detailLevel, _period.PeriodDetailLEvel, subPeriods.SubPeriodType, -1, subPeriods.Items, string.Empty));
-
-                        //Int64 vehicleIdTmp = -1;
-						List<Int64> vehicleIdListTmp = new List<long>();
-                        for(int i = 0; i < listVehicles.Length; i++) {
-                            if(VehiclesInformation.Contains(Int64.Parse(listVehicles[i]))
-                                && (VehiclesInformation.DatabaseIdToEnum(Int64.Parse(listVehicles[i])) == CstDBClassif.Vehicles.names.adnettrack
-								||VehiclesInformation.DatabaseIdToEnum(Int64.Parse(listVehicles[i])) == CstDBClassif.Vehicles.names.evaliantMobile)
-                                && _session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb) {
-                                //vehicleIdTmp = Int64.Parse(listVehicles[i]);
-								vehicleIdListTmp.Add(Int64.Parse(listVehicles[i]));
-                            }
-                        }
-						if(vehicleIdListTmp!=null && vehicleIdListTmp.Count>0)
-                            sql.AppendFormat("({0})", GetQueryForWebPlanEvaliant(detailLevel, _period.PeriodDetailLEvel, subPeriods.SubPeriodType, subPeriods.Items, string.Empty, isComparative));
-						else
-                            sql.AppendFormat("({0})", GetQuery(detailLevel, _period.PeriodDetailLEvel, subPeriods.SubPeriodType, -1, subPeriods.Items, string.Empty, isComparative));
-                        break;
-                    default:
-                        throw new MediaScheduleDALException("Unable to determine type of subPeriod.");
-                }
+            else {
+                sql.Append(GetMasterQuery(additionalWhereClause, detailLevel, _period, isComparative, "date_num, max(period_count) as period_count,", ", date_num"));
+                sql.AppendFormat(" order by {0}{1} ", detailLevel.GetSqlOrderFieldsWithoutTablePrefix(), ", date_num");
             }
-
-            sql.Append(") ");
-            sql.AppendFormat(" group by {0}{1} ", detailLevel.GetSqlGroupByFieldsWithoutTablePrefix(), dateField);
-            UnitInformation u = _session.GetSelectedUnit();
-            if(u.Id == CstWeb.CustomerSessions.Unit.versionNb) {
-                sql.AppendFormat(", {0} ", u.Id.ToString());
-            }
-            sql.AppendFormat(" order by {0}{1} ", detailLevel.GetSqlOrderFieldsWithoutTablePrefix(), dateField);
             #endregion
 
             #region Execution de la requête
@@ -289,6 +253,125 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             }
             #endregion
 
+        }
+        /// <summary>
+        /// Get Data to build Media Schedule
+        /// </summary>
+        /// <param name="additionalWhereClause">Additional conditions if required</param>
+        /// <param name="detailLevel">Clasification details</param>
+        /// <param name="isComparative">True if we need data for comparative period</param>
+        /// <returns>DataSet containing Data</returns>
+        protected virtual DataSet GetDataLevels(string additionalWhereClause, GenericDetailLevel detailLevel) {
+
+            #region Variables
+            DataSet ds = new DataSet();
+            StringBuilder sql = new StringBuilder();
+            string groupOptional = string.Empty;
+            #endregion
+
+            #region Query Building
+            sql.AppendFormat("({0}) UNION ALL ({1})"
+                , GetMasterQuery(additionalWhereClause, detailLevel, _period, false, string.Empty, string.Empty)
+                , GetMasterQuery(additionalWhereClause, detailLevel, _periodComparative, false, string.Empty, string.Empty));
+            sql.AppendFormat(" order by {0}{1} ", detailLevel.GetSqlOrderFieldsWithoutTablePrefix(), string.Empty);
+            #endregion
+
+            #region Execution de la requête
+            try {
+                return _session.Source.Fill(sql.ToString());
+            }
+            catch (System.Exception err) {
+                throw (new MediaScheduleDALException("Unable to load Media Schedule Data : " + sql, err));
+            }
+            #endregion
+
+        }
+        #endregion
+
+        #region GetMasterQuery
+        /// <summary>
+        /// Get Master Query
+        /// </summary>
+        /// <param name="additionalWhereClause">Additional conditions if required</param>
+        /// <param name="detailLevel">Clasification details</param>
+        /// <param name="period">Period to build</param>
+        /// <param name="isComparative">True if we need data for comparative period</param>
+        /// <param name="additionalSelect">Additional Select field if required</param>
+        /// <param name="additionalGroup">Additional Group field if required</param>
+        /// <returns>master Query</returns>
+        protected virtual string GetMasterQuery(string additionalWhereClause, GenericDetailLevel detailLevel, TNS.AdExpress.Web.Core.Selection.MediaSchedulePeriod period, bool isComparative, string additionalSelect, string additionalGroup) {
+
+            #region Variables
+            bool first = true;
+            DataSet ds = new DataSet();
+            string[] listVehicles = null;
+            StringBuilder sql = new StringBuilder();
+            string groupOptional = string.Empty;
+            #endregion
+
+            #region Query Building
+            if (_vehicleId < 0)
+                listVehicles = _session.GetSelection(_session.SelectionUniversMedia, CstRight.type.vehicleAccess).Split(new char[] { ',' });
+            else
+                listVehicles = new string[1] { _vehicleId.ToString() };
+
+            // Select
+            //sql.AppendFormat("select {0},date_num, max(period_count) as period_count,{1} from (", detailLevel.GetSqlFieldsWithoutTablePrefix(), FctWeb.SQLGenerator.GetUnitFieldNameSumUnionWithAlias(_session));
+            sql.AppendFormat("select {0}, {1}{2} from (", detailLevel.GetSqlFieldsWithoutTablePrefix(), additionalSelect, GetUnitFieldNameSumUnionWithAlias(_session));
+
+            // SubPeriod Management
+            List<MediaScheduleSubPeriod> subPeriodsSet = period.SubPeriods;
+            foreach (MediaScheduleSubPeriod subPeriods in subPeriodsSet) {
+                switch (subPeriods.SubPeriodType) {
+                    case CstPeriod.PeriodBreakdownType.data:
+                    case CstPeriod.PeriodBreakdownType.data_4m:
+                        for (int i = 0; i < listVehicles.Length; i++) {
+                            try {
+                                if (!first) sql.Append(" union all ");
+                                else first = false;
+                                sql.AppendFormat("({0})", GetQuery(detailLevel, period.PeriodDetailLEvel, subPeriods.SubPeriodType, Int64.Parse(listVehicles[i]), subPeriods.Items, additionalWhereClause, isComparative));
+                            }
+                            catch (System.Exception err) {
+                                throw new MediaScheduleDALException("GenericMediaScheduleDataAccess.GetData(WebSession _session, MediaSchedulePeriod period)", err);
+                            }
+                        }
+                        break;
+                    case CstPeriod.PeriodBreakdownType.week:
+                    case CstPeriod.PeriodBreakdownType.month:
+                        if (!first) sql.Append(" union all ");
+                        else first = false;
+                        //sql.AppendFormat("({0})", GetQuery(detailLevel, period.PeriodDetailLEvel, subPeriods.SubPeriodType, -1, subPeriods.Items, string.Empty));
+
+                        //Int64 vehicleIdTmp = -1;
+                        List<Int64> vehicleIdListTmp = new List<long>();
+                        for (int i = 0; i < listVehicles.Length; i++) {
+                            if (VehiclesInformation.Contains(Int64.Parse(listVehicles[i]))
+                                && (VehiclesInformation.DatabaseIdToEnum(Int64.Parse(listVehicles[i])) == CstDBClassif.Vehicles.names.adnettrack
+                                || VehiclesInformation.DatabaseIdToEnum(Int64.Parse(listVehicles[i])) == CstDBClassif.Vehicles.names.evaliantMobile)
+                                && _session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb) {
+                                //vehicleIdTmp = Int64.Parse(listVehicles[i]);
+                                vehicleIdListTmp.Add(Int64.Parse(listVehicles[i]));
+                            }
+                        }
+                        if (vehicleIdListTmp != null && vehicleIdListTmp.Count > 0)
+                            sql.AppendFormat("({0})", GetQueryForWebPlanEvaliant(detailLevel, period.PeriodDetailLEvel, subPeriods.SubPeriodType, subPeriods.Items, string.Empty, isComparative));
+                        else
+                            sql.AppendFormat("({0})", GetQuery(detailLevel, period.PeriodDetailLEvel, subPeriods.SubPeriodType, -1, subPeriods.Items, string.Empty, isComparative));
+                        break;
+                    default:
+                        throw new MediaScheduleDALException("Unable to determine type of subPeriod.");
+                }
+            }
+
+            sql.Append(") ");
+            sql.AppendFormat(" group by {0}{1} ", detailLevel.GetSqlGroupByFieldsWithoutTablePrefix(), additionalGroup);
+            UnitInformation u = _session.GetSelectedUnit();
+            if (u.Id == CstWeb.CustomerSessions.Unit.versionNb) {
+                sql.AppendFormat(", {0} ", u.Id.ToString());
+            }
+            #endregion
+
+            return sql.ToString();
         }
         #endregion
 
