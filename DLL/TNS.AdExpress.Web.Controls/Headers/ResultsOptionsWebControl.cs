@@ -1575,6 +1575,11 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <param name="e">arguments</param>
         private void Custom_PreRender(object sender, System.EventArgs e) {
 
+            if (comparativeStudyOption && customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) {
+                customerWebSession.ComparativeStudy = customerWebSession.ComparativeStudy && !customerWebSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.slogan);
+                customerWebSession.Save();
+            }
+
             string themeName = WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name;
             List<System.Web.UI.WebControls.CheckBox> _checkBoxListMutualExclusion = new List<System.Web.UI.WebControls.CheckBox>();
             List<System.Web.UI.WebControls.CheckBox> _checkBoxListDependentSelection = new List<System.Web.UI.WebControls.CheckBox>();
@@ -1711,6 +1716,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #region Comparative Study
             if (comparativeStudyOption)
             {
+
                 _comparativeStudyCheckBox = new System.Web.UI.WebControls.CheckBox();
                 _comparativeStudyCheckBox.ID = this.ID + "_comparativeStudy";
                 _comparativeStudyCheckBox.ToolTip = GestionWeb.GetWebWord(1118, customerWebSession.SiteLanguage);
@@ -2693,7 +2699,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 DateTime dtEnd = WebFunctions.Dates.getPeriodEndDate(customerWebSession.PeriodEndDate, customerWebSession.PeriodType);
 
                 //Check Year
-                return (DateTime.Compare(new DateTime(DateTime.Now.Year - 1, 1, 1, 0, 0, 0), dtBegin) <= 0);
+                return (DateTime.Compare(new DateTime(DateTime.Now.Year - 1, 1, 1, 0, 0, 0), dtBegin) <= 0) && !customerWebSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.slogan);
             }
             else return true;
         }
