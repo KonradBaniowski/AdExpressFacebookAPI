@@ -2302,19 +2302,19 @@ namespace TNS.AdExpressI.MediaSchedule {
                     //Evolution
                     if (evol > 0) //hausse
                         if (_isPDFReport)
-                            str.Append("<img src=" + AppDomain.CurrentDomain.BaseDirectory + "/Images/g.jpg>");
+                            str.Append("<img src=\"" + AppDomain.CurrentDomain.BaseDirectory + "/Images/g.gif\">");
                         else
-                            str.Append("<img src=/I/g.gif>");
+                            str.Append("<img src=\"/I/g.gif\">");
                     else if (evol < 0) //baisse
                         if (_isPDFReport)
-                            str.Append("<img src=" + AppDomain.CurrentDomain.BaseDirectory + "/Images/r.jpg>");
+                            str.Append("<img src=\"" + AppDomain.CurrentDomain.BaseDirectory + "/Images/r.gif\">");
                         else
-                            str.Append("<img src=/I/r.gif>");
+                            str.Append("<img src=\"/I/r.gif\">");
                     else if (!Double.IsNaN(evol)) // 0 exactement
                         if (_isPDFReport)
-                            str.Append("<img src=" + AppDomain.CurrentDomain.BaseDirectory + "/Images/o.jpg>");
+                            str.Append("<img src=\"" + AppDomain.CurrentDomain.BaseDirectory + "/Images/o.gif\">");
                         else
-                            str.Append("<img src=/I/o.gif>");
+                            str.Append("<img src=\"/I/o.gif\">");
                     else
                         str.Append("&nbsp;");
                 }

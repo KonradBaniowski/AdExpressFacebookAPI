@@ -286,21 +286,11 @@
     <Content Include="Images\Common\logo_Tns.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\g.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\gsep.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\o.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\p.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\r.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Images\g.gif" />
+    <Content Include="Images\gsep.gif" />
+    <Content Include="Images\o.gif" />
+    <Content Include="Images\p.gif" />
+    <Content Include="Images\r.gif" />
     <None Include="ModelSupport\default.txaPackage" />
   </ItemGroup>
   <ItemGroup>
