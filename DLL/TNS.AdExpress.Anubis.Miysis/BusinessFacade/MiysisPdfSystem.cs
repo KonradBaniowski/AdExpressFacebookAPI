@@ -1141,7 +1141,10 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
                 dateEndDT = TNS.AdExpress.Web.Core.Utilities.Dates.GetPreviousYearDate(dateEndDT.Date, webSession.ComparativePeriodType);
 
                 // Formating date begin and date end
-                html.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(2292, webSession.SiteLanguage) + "</font> ");
+                html.Append("<tr height=\"20\">");
+                html.Append("<td class=\"txtViolet11Bold\">&nbsp;" + GestionWeb.GetWebWord(2292, webSession.SiteLanguage) + "</td></tr>");
+                html.Append("<tr height=\"20\">");
+		        html.Append("<td class=\"txtViolet11\" vAlign=\"top\">&nbsp;");
                 if (dateFormatText) {
                     dateBegin = WebFunctions.Dates.getPeriodTxt(webSession, dateBeginDT.ToString("yyyyMMdd"));
                     dateEnd = WebFunctions.Dates.getPeriodTxt(webSession, dateEndDT.ToString("yyyyMMdd"));
@@ -1150,9 +1153,15 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
                     dateBegin = WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodBeginningDate(dateBeginDT.ToString("yyyyMMdd"), webSession.PeriodType), webSession.SiteLanguage);
                     dateEnd = WebFunctions.Dates.DateToString(WebFunctions.Dates.getPeriodBeginningDate(dateEndDT.ToString("yyyyMMdd"), webSession.PeriodType), webSession.SiteLanguage);
                 }
-                html.Append(dateBegin);
-                if (!dateBegin.Equals(dateEnd))
-                    html.Append(" - " + dateEnd);
+                if (!dateBegin.Equals(dateEnd)) {
+                    html.Append(Convertion.ToHtmlString(GestionWeb.GetWebWord(896, webSession.SiteLanguage)) + " ");
+                    html.Append(dateBegin);
+                    html.Append(" " + GestionWeb.GetWebWord(897, webSession.SiteLanguage) + " ");
+                    html.Append(dateEnd);
+                }
+                else {
+                    html.Append(dateBegin);
+                }
 
                 html.Append("</td></tr>");
             }
@@ -1173,7 +1182,10 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 
             if (currentModuleId == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) {
                 // Formating date begin and date end
-                html.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(2293, webSession.SiteLanguage) + "</font> ");
+                html.Append("<tr height=\"20\">");
+                html.Append("<td class=\"txtViolet11Bold\">&nbsp;" + GestionWeb.GetWebWord(2293, webSession.SiteLanguage) + "</td></tr>");
+                html.Append("<tr height=\"20\">");
+                html.Append("<td class=\"txtViolet11\" vAlign=\"top\">&nbsp;");
                 html.Append(HtmlFunctions.GetComparativePeriodTypeDetail(webSession, currentModuleId));
                 html.Append("</td></tr>");
             }
