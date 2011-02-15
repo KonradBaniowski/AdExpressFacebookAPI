@@ -64,7 +64,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// <summary>
 		/// Liste des clés Css
 		/// </summary>
-		private ArrayList _cssKeys = new ArrayList();
+		protected ArrayList _cssKeys = new ArrayList();
 		#endregion
 
 		#region Constructeur
@@ -159,7 +159,7 @@ namespace TNS.AdExpress.Web.UI{
         /// <param name="zoomDate">Date de zoom</param>
         /// <param name="periodDisplayLevel">MediaSchedulePeriod</param>
 		/// <returns>HTML</returns>
-        private static string GetExcelHeader(WebSession webSession, bool levelDetail, bool units, bool resultType, bool insert, bool media, bool dateFormatText, string periodBeginning, string periodEnd, string title, string zoomDate, int periodDisplayLevel) {
+        protected static string GetExcelHeader(WebSession webSession, bool levelDetail, bool units, bool resultType, bool insert, bool media, bool dateFormatText, string periodBeginning, string periodEnd, string title, string zoomDate, int periodDisplayLevel) {
 			// PARAMETRES A GARDER :
 			// bool dateFormatText, string periodBeginning, string periodEnd
 			
@@ -298,7 +298,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>HTML</returns>
-		private static string GetModuleName(WebSession webSession){
+		protected static string GetModuleName(WebSession webSession){
 			StringBuilder html = new StringBuilder();
 			html.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1859,webSession.SiteLanguage)+" :</font> ");
 			html.Append(GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSession.CurrentModule),webSession.SiteLanguage));
@@ -314,7 +314,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// <param name="webSession">Session du client</param>
 		/// <param name="currentModule">Module</param>
 		/// <returns>HTML</returns>
-		private static string GetResultName(WebSession webSession, Module currentModule){
+		protected static string GetResultName(WebSession webSession, Module currentModule){
 			string currentResult = "";
 			StringBuilder html = new StringBuilder();
 			try{
@@ -342,7 +342,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// <param name="periodEnd">Date de fin</param>
 		/// <returns>HTML</returns>
 		/// <remarks>Date format to be like for example novembre 2004 - janvier 2005</remarks>
-		private static string GetDateSelected(WebSession webSession, Module currentModule, bool dateFormatText, string periodBeginning, string periodEnd){
+		protected static string GetDateSelected(WebSession webSession, Module currentModule, bool dateFormatText, string periodBeginning, string periodEnd){
 			StringBuilder html = new StringBuilder();
 			string startDate="";
 			string endDate="";
@@ -401,7 +401,7 @@ namespace TNS.AdExpress.Web.UI{
         /// <param name="zoomDate">Date de zoom</param>
         /// <param name="periodDisplayLevel">Niveau de détail de l'affichage des périodes</param>
         /// <returns>Html code</returns>
-        private static string GetZoomDate(WebSession webSession, string zoomDate, int periodDisplayLevel) {
+        protected static string GetZoomDate(WebSession webSession, string zoomDate, int periodDisplayLevel) {
             
             StringBuilder html = new StringBuilder();
             DateTime firstDayOfMonth;
@@ -465,7 +465,7 @@ namespace TNS.AdExpress.Web.UI{
         /// <param name="dateFormatText">Booléen date en format texte</param>
         /// <returns>HTML</returns>
         /// <remarks>Date format to be like for example novembre 2004 - janvier 2005</remarks>
-        private static string GetComparativePeriodDetail(WebSession webSession, Module currentModule, bool dateFormatText) {
+        protected static string GetComparativePeriodDetail(WebSession webSession, Module currentModule, bool dateFormatText) {
             StringBuilder html = new StringBuilder();
             string dateBegin;
             string dateEnd;
@@ -509,7 +509,7 @@ namespace TNS.AdExpress.Web.UI{
         /// <param name="currentModule">Module en cours</param>
         /// <returns>HTML</returns>
         /// <remarks>Date format to be like for example novembre 2004 - janvier 2005</remarks>
-        private static string GetComparativePeriodTypeDetail(WebSession webSession, Module currentModule) {
+        protected static string GetComparativePeriodTypeDetail(WebSession webSession, Module currentModule) {
             StringBuilder html = new StringBuilder();
 
             if (currentModule.Id == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) {
@@ -528,7 +528,7 @@ namespace TNS.AdExpress.Web.UI{
         /// </summary>
         /// <param name="webSession">User Session</param>
         /// <returns>Html code</returns>
-        private static string GetStudyDate(WebSession webSession) {
+        protected static string GetStudyDate(WebSession webSession) {
 
             StringBuilder html = new StringBuilder();
             string startDate;
@@ -564,7 +564,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>HTML</returns>
-		private static string GetUnitSelected(WebSession webSession){
+		protected static string GetUnitSelected(WebSession webSession){
 			if(webSession.PreformatedTable.ToString().ToUpper().IndexOf("UNITS")==-1)
 				return("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1313,webSession.SiteLanguage)+"</font> "+Convertion.ToHtmlString(GestionWeb.GetWebWord(webSession.GetSelectedUnit().WebTextId,webSession.SiteLanguage))+"</td></tr>");
 			return("");
@@ -577,7 +577,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>HTML</returns>
-		private static string GetVehicleSelected(WebSession webSession){
+		protected static string GetVehicleSelected(WebSession webSession){
 			StringBuilder html = new StringBuilder();
 			if (webSession.isMediaSelected()){
 				html.Append(GetBlankLine());
@@ -765,7 +765,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>HTML</returns>
-		private static string GetMediaLevelDetail(WebSession webSession){
+		protected static string GetMediaLevelDetail(WebSession webSession){
 			return"<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1150,webSession.SiteLanguage)+"</font> "+WebFunctions.MediaDetailLevel.LevelMediaToExcelString(webSession)+"</td></tr>";
 		}
 		#endregion
@@ -776,7 +776,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>HTML</returns>
-		private static string GetGenericMediaLevelDetail(WebSession webSession){
+		protected static string GetGenericMediaLevelDetail(WebSession webSession){
 			return"<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1150,webSession.SiteLanguage)+"</font> "+ webSession.GenericMediaDetailLevel.GetLabel(webSession.SiteLanguage) +"</td></tr>";
 		}
 		#endregion
@@ -787,7 +787,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>HTML</returns>
-		private static string GetGenericProductLevelDetail(WebSession webSession){
+		protected static string GetGenericProductLevelDetail(WebSession webSession){
 			return"<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1124,webSession.SiteLanguage)+"</font> "+ webSession.GenericProductDetailLevel.GetLabel(webSession.SiteLanguage) +"</td></tr>";
 		}
 		#endregion
@@ -798,7 +798,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>HTML</returns>
-		private static string GetProductLevelDetail(WebSession webSession){
+		protected static string GetProductLevelDetail(WebSession webSession){
 			return"<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1124,webSession.SiteLanguage)+"</font> "+WebFunctions.ProductDetailLevel.LevelProductToExcelString(webSession)+"</td></tr>";
 		}
 		#endregion
@@ -809,7 +809,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>HTML</returns>
-		private static string GetInsetSelected(WebSession webSession){
+		protected static string GetInsetSelected(WebSession webSession){
 			string Vehicle = ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
 			ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(Int64.Parse(Vehicle));
             if (vehicleType == ClassificationCst.DB.Vehicles.names.press || vehicleType == ClassificationCst.DB.Vehicles.names.magazine || vehicleType == ClassificationCst.DB.Vehicles.names.newspaper || vehicleType == ClassificationCst.DB.Vehicles.names.internationalPress)
@@ -842,7 +842,7 @@ namespace TNS.AdExpress.Web.UI{
         /// <param name="webSession">User session</param>
         /// <param name="m">Current module</param>
         /// <returns>HTML</returns>
-        private static string GetAutoPromo(WebSession webSession, Module m)
+        protected static string GetAutoPromo(WebSession webSession, Module m)
         {
             bool isEvaliant = false;
             if (m.Id != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA)
@@ -881,7 +881,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>HTML</returns>
-		private static string GetNewInMedia(WebSession webSession){
+		protected static string GetNewInMedia(WebSession webSession){
 			int code=0;
 			switch(webSession.NewProduct){
 				case WebConstantes.CustomerSessions.NewProduct.pige:
@@ -905,7 +905,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>HTML</returns>
-		private static string GetCompetitorMediaSelected(WebSession webSession){
+		protected static string GetCompetitorMediaSelected(WebSession webSession){
 			StringBuilder t = new StringBuilder();
 			if(webSession.isCompetitorMediaSelected()){
 				int idMedia=1;
@@ -928,7 +928,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session client</param>
 		/// <returns>HTML</returns>
-		private static string GetComparativeStudy(WebSession webSession){
+		protected static string GetComparativeStudy(WebSession webSession){
 			if(webSession.ComparativeStudy)
 				return("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1118,webSession.SiteLanguage)+"</font></td></tr>");
 			return("");
@@ -941,7 +941,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>HTML</returns>
-		private static string GetFormatSelected(WebSession webSession){
+		protected static string GetFormatSelected(WebSession webSession){
 			return("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1420,webSession.SiteLanguage)+" :</font> "+ TNS.AdExpress.Web.Functions.Dates.GetFormat(webSession,webSession.Format) +"</td></tr>");
 		}
 		#endregion
@@ -952,7 +952,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session client</param>
 		/// <returns>HTML</returns>
-		private static string GetDaySelected(WebSession webSession){
+		protected static string GetDaySelected(WebSession webSession){
 			string namedDay=string.Empty;
             CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
             string[] dayNames = cultureInfo.DateTimeFormat.DayNames;
@@ -987,7 +987,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session client</param>
 		/// <returns>HTML</returns>
-		private static string GetTimeSlotSelected(WebSession webSession){
+		protected static string GetTimeSlotSelected(WebSession webSession){
 			return("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1575,webSession.SiteLanguage)+" :</font> "+ TNS.AdExpress.Web.Functions.Dates.GetTimeSlice(webSession,webSession.TimeInterval) +"</td></tr>");
 		}
 		#endregion
@@ -998,7 +998,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session client</param>
 		/// <returns>HTML</returns>
-		private static string GetTargetSelected(WebSession webSession){
+		protected static string GetTargetSelected(WebSession webSession){
 			StringBuilder html = new StringBuilder();
 			if (webSession.IsWaveSelected()){
 				if(((LevelInformation)webSession.SelectionUniversAEPMWave.FirstNode.Tag).Text.Length>0){
@@ -1024,7 +1024,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// Ligne séparatrice
 		/// </summary>
 		/// <returns>HTML</returns>
-		private static string GetBlankLine(){
+		protected static string GetBlankLine(){
 			return("<tr><td>&nbsp;</td></tr>");
 		}
 		#endregion
@@ -1037,7 +1037,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// <param name="idElement">identifiant de l'élément</param>
 		/// <param name="level">Niveau de l'élément sélectionné</param>
 		/// <returns>HTML</returns>
-		private static string GetProductSelectedForCreationsPopUp(WebSession webSession, Int64 idElement,int level){
+		protected static string GetProductSelectedForCreationsPopUp(WebSession webSession, Int64 idElement,int level){
 			StringBuilder t = new StringBuilder();
 			int webTexId = 0;
 			bool elementIsAdvertiser = false;
@@ -1221,7 +1221,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// <param name="webSession">Session du client</param>
 		/// <param name="mediaImpactedList">Liste des medias impactés</param>
 		/// <returns>HTML</returns>
-		private static string GetMediaSelectedForCreationsPopUp(WebSession webSession,ListDictionary mediaImpactedList){
+		protected static string GetMediaSelectedForCreationsPopUp(WebSession webSession,ListDictionary mediaImpactedList){
 			StringBuilder t = new StringBuilder();
 			string mediaSelectLabel="";
 			Int64 mediaSelectId=0;
@@ -1303,7 +1303,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>HTML</returns>
-		private static string GetSloganSelected(WebSession webSession){
+		protected static string GetSloganSelected(WebSession webSession){
 			string tmp="";
 			int nbCol=0;
 			if(webSession.SloganIdZoom>0){
@@ -1439,7 +1439,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>HTML</returns>
-		private static string GetMediaSelectedForMediaPlanPopUp(WebSession webSession){
+		protected static string GetMediaSelectedForMediaPlanPopUp(WebSession webSession){
 			return("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(190,webSession.SiteLanguage)+" :</font> "+((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).Text+"</TD></TR>");
 		}
 
@@ -1448,7 +1448,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>HTML</returns>
-		private static string GetProductSelectedForMediaPlanPopUp(WebSession webSession){
+		protected static string GetProductSelectedForMediaPlanPopUp(WebSession webSession){
 			StringBuilder t = new StringBuilder();
 			int webTexId=0;
 			switch(webSession.ProductDetailLevel.LevelProduct){
@@ -1560,7 +1560,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>HTML</returns>
-		private static string GetAdNetTrackMediaLevelDetail(WebSession webSession){
+		protected static string GetAdNetTrackMediaLevelDetail(WebSession webSession){
 			return"<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1150,webSession.SiteLanguage)+"</font> "+ webSession.GenericAdNetTrackDetailLevel.GetLabel(webSession.SiteLanguage) +"</td></tr>";
 		}
 		#endregion
@@ -2012,7 +2012,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
 		/// <returns>Returns resultType selected string</returns>	
-		private static string StringTypeResult(WebSession webSession){		
+		protected static string StringTypeResult(WebSession webSession){		
 			try{
 				if(webSession.CurrentModule==WebConstantes.Module.Name.ALERTE_CONCURENTIELLE
 					|| webSession.CurrentModule==WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE){
@@ -2077,7 +2077,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session of the client</param>
 		/// <returns>Returns the selected vehicle string</returns>	
-		private static string StringMediaSelected(WebSession webSession){
+		protected static string StringMediaSelected(WebSession webSession){
 			ClassificationConstant.Vehicles.names vehicletype;
 			try{
 				string mediaNames="";
@@ -2146,7 +2146,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">Session of the client</param>
 		/// <returns>Returns the detail media string</returns>	
-		private static string StringLevelMedia(WebSession webSession){
+		protected static string StringLevelMedia(WebSession webSession){
 			try{
 				switch(webSession.PreformatedMediaDetail){
 					case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicle:
@@ -2175,7 +2175,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="webSession">session du client</param>
 		/// <returns>vrai si produis sélectionnés</returns>
-		private static bool IsSelectionProductSelected(WebSession webSession){
+		protected static bool IsSelectionProductSelected(WebSession webSession){
 			switch(webSession.CurrentModule){
 				case CstWeb.Module.Name.TABLEAU_DE_BORD_PRESSE :
 				case CstWeb.Module.Name.TABLEAU_DE_BORD_RADIO :
@@ -2212,7 +2212,7 @@ namespace TNS.AdExpress.Web.UI{
 		/// </summary>
 		/// <param name="sender">Source Object</param>
 		/// <param name="e">Arguments</param>
-		private void ExcelWebPage_Load(object sender, EventArgs e) {
+		protected void ExcelWebPage_Load(object sender, EventArgs e) {
 
             this.Response.ContentEncoding = Encoding.GetEncoding(WebApplicationParameters.AllowedLanguages[_siteLanguage].ExcelContentEncoding);
 
