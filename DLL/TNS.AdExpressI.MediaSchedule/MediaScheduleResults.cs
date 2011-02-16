@@ -2053,7 +2053,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                     }
                                     if (!WebApplicationParameters.UseComparativeMediaSchedule) {
                                         for (int k = 1; k <= nbColYear; k++) {
-                                            AppendYearsTotal(data, t, i, _style.CellLevelL3Nb, (firstPeriodIndex - nbColYear - 3) + k, fp, unit);
+                                            AppendYearsTotal(data, t, i, _style.CellLevelL3Nb, j + (firstPeriodIndex - nbColYear - 3) + k, fp, unit);
                                         }
                                     }
                                     j = j + (firstPeriodIndex - nbColYear - 3) + nbColYear;
