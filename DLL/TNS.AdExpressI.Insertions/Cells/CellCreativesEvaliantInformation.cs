@@ -367,20 +367,27 @@ namespace TNS.AdExpressI.Insertions.Cells {
                     output.Append("\n </OBJECT>");
                 }
                 else if (_format.ToUpper() == FLV_ID) {
-                    output.Append("<object id=\"video_" + _idVersion + "\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0\" width=\"400\" height=\"315\">");
-                    output.Append("<param name=\"movie\" value=\"/Player/playerflv.swf\" />");
-                    output.Append("<param name=\"allowfullscreen\" value=\"true\" />");
-                    output.Append("<param name=\"allowscriptaccess\" value=\"always\" />");
-                    output.Append("<param name=\"flashvars\" value=\"file=" + _visuals[0] + "\" />");
-                    output.Append("<embed type=\"application/x-shockwave-flash\"");
-                    output.Append("src=\"/Player/playerflv.swf\" ");
-                    output.Append("width=\"400\" ");
-                    output.Append("height=\"315\"");
-                    output.Append("allowscriptaccess=\"always\" ");
-                    output.Append("allowfullscreen=\"false\"");
-                    output.Append("flashvars=\"file=" + _visuals[0] + "\" ");
-                    output.Append("/>");
-                    output.Append("</object>");
+
+                    if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_FLV_EVALIANT_CREATION_ACCESS_FLAG)) {
+                        output.Append("<object id=\"video_" + _idVersion + "\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0\" width=\"400\" height=\"315\">");
+                        output.Append("<param name=\"movie\" value=\"/Player/playerflv.swf\" />");
+                        output.Append("<param name=\"allowfullscreen\" value=\"true\" />");
+                        output.Append("<param name=\"allowscriptaccess\" value=\"always\" />");
+                        output.Append("<param name=\"flashvars\" value=\"file=" + _visuals[0] + "\" />");
+                        output.Append("<embed type=\"application/x-shockwave-flash\"");
+                        output.Append("src=\"/Player/playerflv.swf\" ");
+                        output.Append("width=\"400\" ");
+                        output.Append("height=\"315\"");
+                        output.Append("allowscriptaccess=\"always\" ");
+                        output.Append("allowfullscreen=\"false\"");
+                        output.Append("flashvars=\"file=" + _visuals[0] + "\" ");
+                        output.Append("/>");
+                        output.Append("</object>");
+                    }
+                    else {
+                        output.AppendFormat("<img border=0 src=\"/App_Themes/{0}/Images/Common/no_visuel_flv.jpeg\" border=\"0\">",
+                            WebApplicationParameters.Themes[_session.SiteLanguage].Name);
+                    }
                 }
                 else if (_format.ToUpper() == MULTIPART_ID) {
                     Descriptor descriptor = null;
@@ -435,7 +442,8 @@ namespace TNS.AdExpressI.Insertions.Cells {
                 }
 
                 if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DOWNLOAD_ACCESS_FLAG)) {
-                    if (_format.ToUpper() != MULTIPART_ID) {
+                    if ((_format.ToUpper() != MULTIPART_ID && _format.ToUpper() != FLV_ID)
+                        || (_format.ToUpper() == FLV_ID && _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_FLV_EVALIANT_CREATION_ACCESS_FLAG))) {
                         output.AppendFormat("\n<br/><a href={0} class=\"roll06\" title=\"{1}\">{2}</a>",
                             _visuals[0],
                             GestionWeb.GetWebWord(SAVE_LINK_LABEL_HELP_ID, _session.SiteLanguage),
@@ -443,7 +451,7 @@ namespace TNS.AdExpressI.Insertions.Cells {
                     }
                 }
 
-
+                
             }
             else {
                 output.AppendFormat("<p valign=\"top\" width=\"240\">{0}</p>", GestionWeb.GetWebWord(2250, _session.SiteLanguage));
