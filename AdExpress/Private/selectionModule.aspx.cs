@@ -264,9 +264,8 @@ namespace AdExpress{
                     _webSession.Sort = 0;
                     _webSession.SortKey = string.Empty;
 
-                    if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES ||
-                        _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) {
-                        _webSession.ComparativeStudy = false;
+                    _webSession.ComparativeStudy = false;
+                    if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES) {
                         _webSession.Evolution = false;
                     }
 
