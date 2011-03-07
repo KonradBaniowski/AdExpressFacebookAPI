@@ -2343,8 +2343,7 @@ namespace TNS.AdExpress.Constantes.Web{
         /// Répertoire contenant les logos de la presse
         /// </summary>
         public static string LOGO_PRESS = string.Empty;
-
-
+        
     }
     #endregion
 
@@ -2780,6 +2779,10 @@ namespace TNS.AdExpress.Constantes.Web{
 		/// Répertoire des fichiers NOUVEAUTES
 		/// </summary>
         public static string LOCAL_PATH_MEDIA_UPDATE = string.Empty;
+        /// <summary>
+        /// Répertoire contenant la liste des médias dispo
+        /// </summary>
+        public static string MEDIA_UPDATE = string.Empty;
 		
 		/// <summary>
 		/// Nom du répertoire virtuel IIS pour ADEXNEWS

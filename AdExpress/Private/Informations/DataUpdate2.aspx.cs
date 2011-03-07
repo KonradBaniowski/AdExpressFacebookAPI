@@ -15,19 +15,9 @@ using TradCst = TNS.AdExpress.Constantes.DB.Language;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using WebFunctions = TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Constantes.Web;
 
 public partial class Private_Informations_DataUpdate2:TNS.AdExpress.Web.UI.PrivateWebPage {
-
-    #region Constantes
-    /// <summary>
-    /// Répertoire des fichiers
-    /// </summary>
-    public const string LOCAL_PATH_DATE_UPDATE = @"\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\InfoNews\MediaList\";
-    /// <summary>
-    /// Nom du répertoire virtuel IIS
-    /// </summary>
-    public const string LINK_DATE_UPDATE = "/MediaList/";
-    #endregion
 
     #region Variables
     /// <summary>
@@ -59,18 +49,18 @@ public partial class Private_Informations_DataUpdate2:TNS.AdExpress.Web.UI.Priva
             //string pathDirectory = AppDomain.CurrentDomain.BaseDirectory+"MediaList/";
             //string linkFile="/MediaList/";
 
-            string pathDirectory = LOCAL_PATH_DATE_UPDATE;
-            string linkFile = LINK_DATE_UPDATE;
+            string pathDirectory = ModuleInfosNews.LOCAL_PATH_MEDIA_UPDATE;
+            string linkFile = ModuleInfosNews.MEDIA_UPDATE;
 
             if(_webSession.SiteLanguage == TNS.AdExpress.Constantes.DB.Language.FRENCH) {
                 if(File.Exists(pathDirectory + "Liste supports en alerte.xls")) {
-                    _link = "<a href=\"" + linkFile + "Liste supports en alerte.xls\" target=\"_blank\" class=\"roll05\">" + GestionWeb.GetWebWord(1832, _webSession.SiteLanguage) + "</a>";
+                    _link = "<a href=\"" + linkFile + "/Liste supports en alerte.xls\" target=\"_blank\" class=\"roll05\">" + GestionWeb.GetWebWord(1832, _webSession.SiteLanguage) + "</a>";
                 }
                 else _link = GestionWeb.GetWebWord(1833, _webSession.SiteLanguage); // Fichier non disponible
             }
             else if(_webSession.SiteLanguage == TNS.AdExpress.Constantes.DB.Language.ENGLISH) {
                 if(File.Exists(pathDirectory + "List of vehicles on alert.xls")) {
-                    _link = "<a href=\"" + linkFile + "List of vehicles on alert.xls\" target=\"_blank\" class=\"roll05\">" + GestionWeb.GetWebWord(1832, _webSession.SiteLanguage) + "</a>";
+                    _link = "<a href=\"" + linkFile + "/List of vehicles on alert.xls\" target=\"_blank\" class=\"roll05\">" + GestionWeb.GetWebWord(1832, _webSession.SiteLanguage) + "</a>";
                 }
                 else _link = GestionWeb.GetWebWord(1833, _webSession.SiteLanguage); // Fichier non disponible
             }

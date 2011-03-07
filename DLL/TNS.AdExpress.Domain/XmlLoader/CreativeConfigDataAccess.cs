@@ -90,6 +90,9 @@ namespace TNS.AdExpress.Domain.XmlLoader
                                     case "LOGO_PRESS":
                                         CreationServerPathes.LOGO_PRESS = value;
                                         break;
+                                    case "MEDIA_UPDATE":
+                                        ModuleInfosNews.MEDIA_UPDATE = value;
+                                        break;
                                     case "READ_REAL_RADIO_SERVER":
                                         CreationServerPathes.READ_REAL_RADIO_SERVER = value;
                                         break;
