@@ -425,8 +425,8 @@ namespace TNS.AdExpress.Constantes.Web{
 
 		#region Unité
 
-		#region Enumérateur des unité
-		/// <summary>
+        #region Enumérateur des unité
+        /// <summary>
 		/// Type d'unité
 		/// </summary>
 		public enum Unit
