@@ -199,19 +199,18 @@ namespace TNS.AdExpress.Web.UI{
                                 t.Append(GetZoomDate(webSession, zoomDate, periodDisplayLevel));
                             else
 							    t.Append(GetDateSelected(webSession, currentModule, dateFormatText, periodBeginning, periodEnd));
-                            break;
-                        case WebConstantes.DetailSelection.Type.comparativeDate:
-                            // Période comparative
-                            if (webSession.ComparativeStudy && TNS.AdExpress.Domain.Web.WebApplicationParameters.UseComparativeMediaSchedule && zoomDate.Length == 0) {
+
+
+                            if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA 
+                                && webSession.ComparativeStudy && TNS.AdExpress.Domain.Web.WebApplicationParameters.UseComparativeMediaSchedule 
+                                && zoomDate.Length == 0) {
+                                // Période comparative
                                 t.Append(GetComparativePeriodDetail(webSession, currentModule, dateFormatText));
-                            }
-                            break;
-                        case WebConstantes.DetailSelection.Type.comparativePeriodType:
-                            // Type Sélection comparative
-                            if (webSession.ComparativeStudy && TNS.AdExpress.Domain.Web.WebApplicationParameters.UseComparativeMediaSchedule && zoomDate.Length == 0) {
+
+                                // Type Sélection comparative
                                 t.Append(GetComparativePeriodTypeDetail(webSession, currentModule));
                             }
-							break;
+                            break;
                         case WebConstantes.DetailSelection.Type.studyDate:
                             t.Append(GetStudyDate(webSession));
                             break;
