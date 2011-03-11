@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <flags>
-  <flag id="141" description="Doc Marketing (fiche détaillée)"/>
-  <flag id="146" description="Accès Agences Media"/>
+  <flag id="141" description="Doc Marketing (fiche détaillée)"/>  
   <flag id="200" description="Accéder aux créations"/>
   <flag id="201" description="Télécharger les créations"/>
   <flag id="211" description="Accès Marques"/>
@@ -23,4 +22,19 @@
   <flag id="261" description="Accès Parrainage dans analyse sectorielle"/>
   <flag id="266" description="Accéder Spot à Spot TNT"/>
   <flag id="276" description="Accéder aux création Evaliant Mobile"/>
+  <!--Flags agence média par média--> 
+  <flag id="298" description="Accès Agences Media PRESS"/>
+  <flag id="299" description="Accès Agences Media RADIO"/>
+  <flag id="300" description="Accès Agences Media TV"/>
+  <flag id="301" description="Accès Agences Media OUTDOOR"/>
+  <flag id="302" description="Accès Agences Media INTERNET"/>
+  <flag id="303" description="Accès Agences Media PRESSE INTERNATIONALE"/>
+  <flag id="304" description="Accès Agences Media AUTRES"/>
+  <flag id="305" description="Accès Agences Media COURRIER"/>
+  <flag id="306" description="Accès Agences Media EVALIANT MOBILE"/>
+  <flag id="307" description="Accès Agences Media INTERNET EVALIANT"/>
+  <flag id="308" description="Accès Agences Media MEDIA TACTIQUE"/>
+  <flag id="309" description="Accès Agences Media CINEMA"/>
+  <!-- Flags Pre-Roll/Post Roll banners evaliant -->
+  <flag id="318" description="Accès Bannières FLV Media Internet Evaliant"/>
 </flags>
