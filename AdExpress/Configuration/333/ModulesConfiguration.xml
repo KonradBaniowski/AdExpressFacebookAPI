@@ -18,7 +18,7 @@
         <ProductRights branches="product|advertiser"/>
         <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="331">-->
           <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-            <ModuleVehicles list="1,2,3,5,6,7,8,10,11"/>
+            <ModuleVehicles list="1,2,3,5,6,7,8,9,10,11"/>
           </ModuleAllowedMediaUniverse>
           <MediaDetailLevel>
           <defaultMediaDetailLevels>
@@ -117,7 +117,7 @@
         <ProductRights branches="product|advertiser"/>
         <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="333">  -->
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="1,2,3,5,6,7,8,10,11,15"/>
+          <ModuleVehicles list="1,2,3,5,6,7,8,9,10,11,15"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -380,7 +380,7 @@
         <ProductRights branches="product|advertiser"/>
         <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="336">-->
           <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-            <ModuleVehicles list="1,2,3,5,6,7,8,10,11,15"/>
+            <ModuleVehicles list="1,2,3,5,6,7,8,9,10,11,15"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -699,7 +699,7 @@
         <ProductRights branches="product|advertiser"/>
         <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="337">  -->
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="1,2,3,5,6,7,8,10,11"/>
+          <ModuleVehicles list="1,2,3,5,6,7,8,9,10,11"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -825,7 +825,7 @@
           </page>
           <page id="6" resultid="13" name="Calendrier d'Actions" traductioncode="1474" url="/Private/Results/MediaPortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
-              <ResultVehicles list="1,2,3,5,6,8,11,15"/>
+              <ResultVehicles list="1,2,3,5,6,8,9,11,15"/>
             </ResultAllowedMediaUniverse>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -1243,7 +1243,7 @@
         <ProductRights branches="product|advertiser"/>
         <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="445">-->
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="1,2,3,5,6,7,8,10,11"/>          
+          <ModuleVehicles list="1,2,3,5,6,7,8,9,10,11"/>          
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
