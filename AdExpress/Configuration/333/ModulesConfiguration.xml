@@ -16,9 +16,11 @@
         <RulesLayer name="Default Media Schedule rules layers" assemblyName="TNS.AdExpressI.MediaSchedule.Default.dll" class="TNS.AdExpressI.MediaSchedule.Default.MediaScheduleResults"/>
         <DataAccessLayer name="Default Media Schedule data access layers" assemblyName="TNS.AdExpressI.MediaSchedule.DAL.Default.dll" class="TNS.AdExpressI.MediaSchedule.DAL.Default.MediaScheduleResultDAL"/>
         <ProductRights branches="product|advertiser"/>
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="331">       
-        </ModuleAllowedMediaUniverse>
-        <MediaDetailLevel>
+        <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="331">-->
+          <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+            <ModuleVehicles list="1,2,3,5,6,7,8,10,11"/>
+          </ModuleAllowedMediaUniverse>
+          <MediaDetailLevel>
           <defaultMediaDetailLevels>
             <defaultMediaDetailLevel id="1" name="media\catégorie" />
             <defaultMediaDetailLevel id="2" name="media\catégorie\support" />
@@ -113,7 +115,9 @@
        <RulesLayer name="Default Present Absent rules layers" assemblyName="TNS.AdExpressI.PresentAbsent.Default.dll" class="TNS.AdExpressI.PresentAbsent.Default.PresentAbsentResult"/>
         <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.Default.dll" class="TNS.AdExpressI.PresentAbsent.DAL.Default.PresentAbsentDAL"/>
         <ProductRights branches="product|advertiser"/>
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="333">        
+        <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="333">  -->
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="1,2,3,5,6,7,8,10,11,15"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -374,7 +378,9 @@
         <RulesLayer name="Default Lost Won rules layers" assemblyName="TNS.AdExpressI.LostWon.Default.dll" class="TNS.AdExpressI.LostWon.Default.LostWonResult"/>
         <DataAccessLayer name="Default Lost Won data access layers" assemblyName="TNS.AdExpressI.LostWon.DAL.Default.dll" class="TNS.AdExpressI.LostWon.DAL.Default.LostWonResultDAL"/>
         <ProductRights branches="product|advertiser"/>
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="336">       
+        <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="336">-->
+          <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+            <ModuleVehicles list="1,2,3,5,6,7,8,10,11,15"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -691,7 +697,9 @@
         <RulesLayer name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Default.dll" class="TNS.AdExpressI.Portofolio.Default.Results"/>
         <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.Default.dll" class="TNS.AdExpressI.Portofolio.DAL.Default.PortofolioDAL"/>
         <ProductRights branches="product|advertiser"/>
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="337">         
+        <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="337">  -->
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="1,2,3,5,6,7,8,10,11"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -841,7 +849,9 @@
         <DataAccessLayer name="Default Product Class Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassReports.DAL.Default.dll" class="TNS.AdExpressI.ProductClassReports.DAL.Default.ProductClassReportDAL"/>
         <ProductRights branches="product|advertiser"/>
         <ResultLimitation size="50000"/>
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="341">
+        <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="341">-->
+          <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+            <ModuleCategories list="11,12,13,14,17,18,19,20,21,22,23,24,25,26,27,28,31,33,34,35,37,38,39,41,44,46,51,52,54,55,56,57,58,59,60,61,63,64,68,69,70,76,77,78,79,80,81,82,83,84,86,89,90,91,94,95,96,97,98,151,191"/>
         </ModuleAllowedMediaUniverse>
         <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <selections>          
@@ -895,7 +905,9 @@
         <DataAccessLayer name="Default Product Class Indicators Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.DAL.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.DAL.Default.ProductClassIndicatorsDAL"/>
         <ProductRights branches="product|advertiser"/>
         <ExcludedVehicles list="10"/>
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="341">
+        <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="341">-->
+          <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+            <ModuleCategories list="11,12,13,14,17,18,19,20,21,22,23,24,25,26,27,28,31,33,34,35,37,38,39,41,44,46,51,52,54,55,56,57,58,59,60,61,63,64,68,69,70,76,77,78,79,80,81,82,83,84,86,89,90,91,94,95,96,97,98,151,191"/>
         </ModuleAllowedMediaUniverse>
         <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <selections>         
@@ -1000,7 +1012,9 @@
       <module name="Tendances" privilegecode="450" traductioncode="2178" moduleCategoryId="6" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2207" descriptionImageName="/Images/Common/Infobulle/Tendances.png">
         <DataAccessLayer name="Default Trends data access layers" assemblyName="TNS.AdExpressI.Trends.DAL.Default.dll" class="TNS.AdExpressI.Trends.DAL.Default.TrendsDAL"/>
         <RulesLayer name="Default Trends rules layers" assemblyName="TNS.AdExpressI.Trends.Default.dll" class="TNS.AdExpressI.Trends.Default.Trends"/>        
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="345">
+        <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="345">-->
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="1,2,3,5,11"/>
         </ModuleAllowedMediaUniverse>
         <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <selections>
@@ -1146,7 +1160,9 @@
       <!-- *****************************************      Modules Tableaux de bord Pan euro   *****************************************-->
       <module name="Tableaux de bord Pan Euro" privilegecode="1036" traductioncode="2214" moduleCategoryId="6" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2215" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">
         <ProductRights branches="product|advertiser"/>
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="340">
+        <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="340">-->
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleCategories list="15,30"/>
         </ModuleAllowedMediaUniverse>
         <overrideDefaultUnits unit="euro"></overrideDefaultUnits>
         <selections>
@@ -1225,7 +1241,9 @@
         <RulesLayer name="Default Advertising Agency rules layers" assemblyName="TNS.AdExpressI.AdvertisingAgency.Default.dll" class="TNS.AdExpressI.AdvertisingAgency.Default.AdvertisingAgencyResult"/>
         <DataAccessLayer name="Default Advertising Agency data access layers" assemblyName="TNS.AdExpressI.AdvertisingAgency.DAL.Default.dll" class="TNS.AdExpressI.AdvertisingAgency.DAL.Default.AdvertisingAgencyDAL"/>
         <ProductRights branches="product|advertiser"/>
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="445">
+        <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="445">-->
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="1,2,3,5,6,7,8,10,11"/>          
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -1520,7 +1538,9 @@
       <!-- *****************************************      Analyse des dispositifs              *****************************************-->
       <module name="Analyse des dispositifs" privilegecode="1780" traductioncode="2180" moduleCategoryId="0" urlNextPage="/Private/Selection/UniverseProductSelection.aspx" descriptionWebTextId="2208" descriptionImageName="/Images/Common/Infobulle/Dispositifs.png">
         <ProductRights branches="product|advertiser"/>
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="339">
+        <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="339">-->
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleCategories list="44,68"/>
         </ModuleAllowedMediaUniverse>
         <overrideDefaultUnits unit="euro"></overrideDefaultUnits>
         <MediaDetailLevel>
@@ -1592,7 +1612,9 @@
       <!-- *****************************************      Analyse des programmes              *****************************************-->
       <module name="Analyse des programmes" privilegecode="1781" traductioncode="2179" moduleCategoryId="0" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2209" descriptionImageName="/Images/Common/Infobulle/Programmes.png">
         <ProductRights branches="product|advertiser"/>
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="339">
+        <!--<ModuleAllowedMediaUniverse initFromBaal="true" baalId="339">-->
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleCategories list="44,68"/>
         </ModuleAllowedMediaUniverse>
         <overrideDefaultUnits unit="euro"></overrideDefaultUnits>
         <MediaDetailLevel>
