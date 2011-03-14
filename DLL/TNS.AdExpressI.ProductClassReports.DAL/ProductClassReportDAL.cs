@@ -288,43 +288,41 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
         /// <returns>Chaîne de caractère correspondant au nom de la table à attaquer</returns>
         protected virtual Table GetVehicleTableName(bool productRequired)
         {		
+			
 
-			bool hasSelectedAdvertiser = (_session.PrincipalProductUniverses[0].ContainsLevel(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISER, AccessType.includes) 
-				|| _session.PrincipalProductUniverses[0].ContainsLevel(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISER, AccessType.excludes)
-				|| _session.CustomerLogin[CstRight.type.advertiserException].Length > 0
-				|| _session.CustomerLogin[CstRight.type.advertiserAccess].Length > 0) ? true : false;
-            
+            bool useTableWithLowestLevel = UseTableWithLowestLevel();
+
 			#region Détection du type de table vehicle (pluri ou mono?)
             switch (_vehicle)
             {
                 case CstDBClassif.Vehicles.names.cinema:
-					return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapCinema) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapCinemaSegment);
+                    return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapCinema) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapCinemaSegment);
                 case CstDBClassif.Vehicles.names.internet:
-					return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInternet) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInternetSegment);
+                    return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInternet) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInternetSegment);
                 case CstDBClassif.Vehicles.names.outdoor:
-					return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapOutDoor) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapOutDoorSegment);
+                    return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapOutDoor) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapOutDoorSegment);
                 case CstDBClassif.Vehicles.names.instore:
-                    return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInStore) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInStoreSegment);
+                    return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInStore) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInStoreSegment);
                 case CstDBClassif.Vehicles.names.radio:
-					return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapRadio) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapRadioSegment);
+                    return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapRadio) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapRadioSegment);
                 case CstDBClassif.Vehicles.names.tv:
-					return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTv) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTvSegment);
+                    return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTv) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTvSegment);
                 case CstDBClassif.Vehicles.names.press:
-					return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPress) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPressSegment);
+                    return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPress) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPressSegment);
                 case CstDBClassif.Vehicles.names.magazine:
-                    return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMagazine) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMagazineSegment);
+                    return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMagazine) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMagazineSegment);
                 case CstDBClassif.Vehicles.names.newspaper:
-                    return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapNewspaper) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapNewspaperSegment);
+                    return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapNewspaper) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapNewspaperSegment);
                 case CstDBClassif.Vehicles.names.plurimedia:
-					return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPluri) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPluriSegment);
+                    return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPluri) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPluriSegment);
                 case CstDBClassif.Vehicles.names.mediasTactics:
-					return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTactic) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTacticSegment);
+                    return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTactic) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTacticSegment);
                 case CstDBClassif.Vehicles.names.mobileTelephony:
-					return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMobileTel) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMobileTelSegment);
+                    return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMobileTel) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMobileTelSegment);
                 case CstDBClassif.Vehicles.names.emailing:
-					return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapEmailing) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapEmailingSegment);
+                    return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapEmailing) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapEmailingSegment);
 				case CstDBClassif.Vehicles.names.directMarketing:
-					return (productRequired || hasSelectedAdvertiser) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapDirectMarketing) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapDirectMarketingSegment);
+                    return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapDirectMarketing) : WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapDirectMarketingSegment);
                 case CstDBClassif.Vehicles.names.internationalPress:
                 case CstDBClassif.Vehicles.names.others:
                 case CstDBClassif.Vehicles.names.adnettrack:
@@ -335,6 +333,21 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 
             return null;
         }
+
+        /// <summary>
+        /// Use table with lowets level 
+        /// </summary>
+        /// <returns>true if use table with lowets level </returns>
+        protected virtual bool UseTableWithLowestLevel()
+        {
+            return(_session.PrincipalProductUniverses[0].ContainsLevel(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISER, AccessType.includes)
+                 || _session.PrincipalProductUniverses[0].ContainsLevel(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISER, AccessType.excludes)
+                  || _session.PrincipalProductUniverses[0].ContainsLevel(TNS.Classification.Universe.TNSClassificationLevels.BRAND, AccessType.includes)
+                  || _session.PrincipalProductUniverses[0].ContainsLevel(TNS.Classification.Universe.TNSClassificationLevels.BRAND, AccessType.excludes)
+                 || _session.CustomerLogin[CstRight.type.advertiserException].Length > 0
+                 || _session.CustomerLogin[CstRight.type.advertiserAccess].Length > 0);
+        }
+
         /// <summary>
         /// Méthode privée qui détecte la table de recap à utiliser en fonction de la sélection média, produit
         /// et du niveau de détail choisi
@@ -420,7 +433,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             int mediaIndex = _reportFormat.ToString().IndexOf("edia");
             int productIndex = _reportFormat.ToString().IndexOf("roduct");
             int beginningIndex = sql.Length;
-            string annonceurPerso = "";
+            string annonceurPerso = "", brandPerso = "";
 
             #region Champs nomenclature media
             if (mediaIndex > -1)
@@ -463,6 +476,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                         break;
                     case CstFormat.PreformatedProductDetails.groupBrand:
                         annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        brandPerso = string.Format("{0}.id_brand", _dataTable.Prefix);
                         sqlStr = string.Format(" {0}.id_group_ as id_p1, group_ as p1, {0}.id_brand as id_p2, brand as p2", _dataTable.Prefix);
                         break;
                     case CstFormat.PreformatedProductDetails.groupProduct:
@@ -478,6 +492,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                         sqlStr = string.Format(" {0}.id_advertiser as id_p1, advertiser as p1", _dataTable.Prefix);
                         break;
                     case CstFormat.PreformatedProductDetails.advertiserBrand:
+                        brandPerso = string.Format("{0}.id_brand", _dataTable.Prefix);
                         annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
                         sqlStr = string.Format(" {0}.id_advertiser as id_p1, advertiser as p1, {0}.id_brand as id_p2, brand as p2", _dataTable.Prefix);
                         break;
@@ -487,6 +502,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                         break;
                     case CstFormat.PreformatedProductDetails.brand:
                         annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        brandPerso = string.Format("{0}.id_brand", _dataTable.Prefix);
                         sqlStr = string.Format(" {0}.id_brand as id_p1, brand as p1", _dataTable.Prefix);
                         break;
                     case CstFormat.PreformatedProductDetails.product:
@@ -506,6 +522,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                         break;
                     case CstFormat.PreformatedProductDetails.segmentBrand:
                         annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        brandPerso = string.Format("{0}.id_brand", _dataTable.Prefix);
                         sqlStr = string.Format(" {0}.id_segment as id_p1, segment as p1, {0}.id_brand as id_p2, brand as p2 ", _dataTable.Prefix);
                         break;
 
@@ -697,17 +714,21 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             #endregion
 
             #region Notion de personnalisation des annonceurs?
-            if (annonceurPerso != null && annonceurPerso.Length > 0)
+            if (!string.IsNullOrEmpty(annonceurPerso) || !string.IsNullOrEmpty(brandPerso))
             {
                 NomenclatureElementsGroup refElts = null;
-                string refString = "";
+                string refString = "", oldRefString = "";
                 string[] refLst = null;
+                bool hasData = false;
+
+                //items in reference univese
                 if (_session.SecondaryProductUniverses.Count > 0 && _session.SecondaryProductUniverses.ContainsKey(0))
                 {
                     refElts = _session.SecondaryProductUniverses[0].GetGroup(0);
+                    //Advertisers references
                     if (refElts != null && refElts.Count() > 0 && refElts.Contains(TNSClassificationLevels.ADVERTISER))
                     {
-                        refString = refElts.GetAsString(TNSClassificationLevels.ADVERTISER);
+                        refString = oldRefString = refElts.GetAsString(TNSClassificationLevels.ADVERTISER);
                         refLst = refString.Split(new char[1] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                         if (refLst != null && refLst.Length > 0)
                         {
@@ -716,23 +737,48 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                             {
                                 sql.AppendFormat(",{0},1", s);
                             }
-                            sql.Append(", 0)) as inref ");
+                            sql.Append(", 0)) ");
+                            hasData = true;
                         }
                     }
+                    //Brands references
+                    refString = "";
+                    if (!string.IsNullOrEmpty(brandPerso) && refElts != null && refElts.Count() > 0 && refElts.Contains(TNSClassificationLevels.BRAND))
+                    {
+                        refString = refElts.GetAsString(TNSClassificationLevels.BRAND);
+                        refLst = refString.Split(new char[1] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        if (refLst != null && refLst.Length > 0)
+                        {
+                            if(hasData) sql.AppendFormat(" + ");
+                            else sql.AppendFormat(" , ");
+                            sql.AppendFormat(" sum(decode({0}", brandPerso);
+                            foreach (string s in refLst)
+                            {
+                                sql.AppendFormat(",{0},1", s);
+                            }
+                            sql.Append(", 0)) ");
+                            hasData = true;
+                        }
+                    }
+                    if (hasData) sql.Append(" as inref ");
                 }
-                if (refLst == null || refLst.Length == 0)
+                if (!hasData)
                 {
                     sql.Append(", 0 as inref ");
                 }
+                hasData = false;
+
+                //items in competing univese
                 NomenclatureElementsGroup compElts = null;
-                string compString = "";
+                string compString = "", oldCompString="";
                 string[] compLst = null;
                 if (_session.SecondaryProductUniverses.Count > 0 && _session.SecondaryProductUniverses.ContainsKey(1))
                 {
                     compElts = _session.SecondaryProductUniverses[1].GetGroup(0);
+                    //Advertisers competing
                     if (compElts != null && compElts.Count() > 0 && compElts.Contains(TNSClassificationLevels.ADVERTISER))
                     {
-                        compString = compElts.GetAsString(TNSClassificationLevels.ADVERTISER);
+                        compString = oldCompString =  compElts.GetAsString(TNSClassificationLevels.ADVERTISER);
                         compLst = compString.Split(new char[1] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                         if (compLst != null && compLst.Length > 0)
                         {
@@ -741,13 +787,42 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                             {
                                 sql.AppendFormat(",{0},1", s);
                             }
-                            sql.Append(", 0)) as incomp ");
+                            sql.Append(", 0)) ");
+                            hasData = true;
                         }
                     }
+                    //Brands competing
+                    compString = "";
+                    if (!string.IsNullOrEmpty(brandPerso) && compElts != null && compElts.Count() > 0 && compElts.Contains(TNSClassificationLevels.BRAND))
+                    {
+                        compString = compElts.GetAsString(TNSClassificationLevels.BRAND);
+                        compLst = compString.Split(new char[1] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        if (compLst != null && compLst.Length > 0)
+                        {
+                            if (hasData) sql.AppendFormat(" + ");
+                            else sql.AppendFormat(" , ");
+                            sql.AppendFormat(" sum(decode({0}", brandPerso);
+                            foreach (string s in compLst)
+                            {
+                                sql.AppendFormat(",{0},1", s);
+                            }
+                            sql.Append(", 0)) ");
+                            hasData = true;
+                        }
+                    }
+                    if (hasData) sql.Append(" as incomp ");
                 }
-                if (compLst == null || compLst.Length == 0)
+                if (!hasData)
                 {
                     sql.Append(", 0 as incomp ");
+                }
+                if (oldCompString.Length > 0)
+                {
+                    if (oldRefString.Length > 0)
+                    {
+                        oldRefString += ",";
+                    }
+                    oldRefString += oldCompString;
                 }
                 if (compString.Length > 0)
                 {
@@ -757,13 +832,26 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                     }
                     refString += compString;
                 }
-                if (refString.Length > 0)
+                hasData = false;
+                //items neutral
+                if (!string.IsNullOrEmpty(oldRefString))
                 {
-                    sql.AppendFormat(", sum(case when {0} not in ({1}) then 1 else 0 end) as inneutral ", annonceurPerso, refString);
+                    sql.AppendFormat(", sum(case when {0} not in ({1})  ", annonceurPerso, oldRefString);
+                    hasData = true;
                 }
-                else
+                if (!string.IsNullOrEmpty(refString))
                 {
-                    sql.AppendFormat(", count(distinct {0}) as inneutral ", annonceurPerso);
+                    if( hasData) sql.Append(" and  ");
+                    else sql.Append(", sum(case when ");
+                    sql.AppendFormat(" {0} not in ({1})   ", brandPerso, refString);
+                    hasData = true;
+                }
+                if (hasData) sql.Append(" then 1 else 0 end) as inneutral ");
+
+                if(!hasData)
+                {
+                    if (!string.IsNullOrEmpty(annonceurPerso)) sql.AppendFormat(", count(distinct {0}) as inneutral ", annonceurPerso);
+                    else if (!string.IsNullOrEmpty(brandPerso)) sql.AppendFormat(", count(distinct {0}) as inneutral ", brandPerso);
                 }
             }
             #endregion
@@ -1241,6 +1329,9 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 
         }
         #endregion
+
+
+       
 
         #endregion
 

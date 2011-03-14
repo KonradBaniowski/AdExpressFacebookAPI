@@ -295,34 +295,12 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
 
         }
 
-        #region SetPersoAdvertiser
-        protected void SetPersoAdvertiser(ProductClassResultTable tab, Int32 cLine, DataRow row, DetailLevelItemInformation.Levels level)
-        {
-            ProductClassLineStart ls = (ProductClassLineStart)tab[cLine, 0];
-            if (Convert.ToInt32(row["inref"]) > 0)
-            {
-                ls.SetUniversType(UniversType.reference);
-            }
-            if (Convert.ToInt32(row["incomp"]) > 0)
-            {
-                ls.SetUniversType(UniversType.concurrent);
-            }
-            if (Convert.ToInt32(row["inneutral"]) > 0)
-            {
-                ls.SetUniversType(UniversType.neutral);
-            }
-            switch (level)
-            {
-                case DetailLevelItemInformation.Levels.advertiser:
-                case DetailLevelItemInformation.Levels.brand:
-                case DetailLevelItemInformation.Levels.product:
-                    ls.DisplayPerso = true;
-                    break;
-                default:
-                    break;
-            }
-        }
-        #endregion
+     
+
+        	
+
+
+       
 
         #endregion
 

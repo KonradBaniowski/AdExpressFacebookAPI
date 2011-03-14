@@ -27,6 +27,8 @@ using TNS.AdExpress.Web.Core.Utilities;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Domain.Level;
+using CstClassif = TNS.AdExpress.Constantes.Classification;
 
 
 
@@ -237,6 +239,128 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
 
 		}
         #endregion
+
+        #region SetPersoAdvertiser
+        protected virtual void SetPersoAdvertiser(ProductClassResultTable tab, Int32 cLine, DataRow row, DetailLevelItemInformation.Levels level)
+        {
+            ProductClassLineStart ls = (ProductClassLineStart)tab[cLine, 0];
+          
+            switch (level)
+            {
+                case DetailLevelItemInformation.Levels.advertiser:
+                case DetailLevelItemInformation.Levels.product:
+                case DetailLevelItemInformation.Levels.brand:     
+                    DisplayPerso(ls, row, level);
+                    break;
+                default:
+                    SetUniversType(ls, row);        
+                    break;
+            }
+        }
+
+        protected virtual void SetPersoAdvertiser(ProductClassResultTable tab, Int32 cLine, DataRow row, DetailLevelItemInformation.Levels level,CstClassif.Branch.type branchType)
+        {
+            if (branchType == CstClassif.Branch.type.product)
+            {
+                SetPersoAdvertiser(tab, cLine, row, level);
+            }
+            else
+            {
+                ProductClassLineStart ls = (ProductClassLineStart)tab[cLine, 0];
+                SetUniversType(ls, row);
+            }           
+        }
+        #endregion
+
+        #region DisplayPerso
+        protected virtual void DisplayPerso(ProductClassLineStart ls, DataRow row, DetailLevelItemInformation.Levels level)
+        {
+            NomenclatureElementsGroup refElts = null;
+            switch (level)
+            {
+                case DetailLevelItemInformation.Levels.advertiser:
+
+                    if (_session.SecondaryProductUniverses.Count > 0 && _session.SecondaryProductUniverses.ContainsKey(0))
+                    {
+                        refElts = _session.SecondaryProductUniverses[0].GetGroup(0);
+                        //Advertisers references
+                        if (refElts != null && refElts.Count() > 0 && refElts.Contains(TNSClassificationLevels.ADVERTISER))
+                        {
+                            if (refElts.Get(TNSClassificationLevels.ADVERTISER).Contains(long.Parse(row["id_p" + GetClassifIdFieldIndex().ToString()].ToString())))
+                            {
+                                if (Convert.ToInt32(row["inref"]) > 0)
+                                {
+                                    ls.SetUniversType(UniversType.reference);
+                                }
+                                ls.DisplayPerso = true; break;
+                            }
+                        }
+                    }
+                    if (_session.SecondaryProductUniverses.Count > 0 && _session.SecondaryProductUniverses.ContainsKey(1))
+                    {
+                        refElts = _session.SecondaryProductUniverses[1].GetGroup(0);
+                        //Competing Advertisers 
+                        if (refElts != null && refElts.Count() > 0 && refElts.Contains(TNSClassificationLevels.ADVERTISER))
+                        {
+                            if (refElts.Get(TNSClassificationLevels.ADVERTISER).Contains(long.Parse(row["id_p" + GetClassifIdFieldIndex().ToString()].ToString())))
+                            {
+                                if (Convert.ToInt32(row["incomp"]) > 0)
+                                {
+                                    ls.SetUniversType(UniversType.concurrent);
+                                }
+                                ls.DisplayPerso = true; break;
+                            }
+                        }
+
+                    }
+                    if (Convert.ToInt32(row["inneutral"]) > 0)
+                    {
+                        ls.SetUniversType(UniversType.neutral);
+                    }
+                    break;
+                default:
+                    SetUniversType(ls,row);
+                    ls.DisplayPerso = true; 
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region SetUniversType
+        protected virtual void SetUniversType(ProductClassLineStart ls, DataRow row)
+        {
+            if (Convert.ToInt32(row["inref"]) > 0)
+            {
+                ls.SetUniversType(UniversType.reference);
+            }
+            if (Convert.ToInt32(row["incomp"]) > 0)
+            {
+                ls.SetUniversType(UniversType.concurrent);
+            }
+            if (Convert.ToInt32(row["inneutral"]) > 0)
+            {
+                ls.SetUniversType(UniversType.neutral);
+            }
+        }
+
+        #endregion
+
+        #region GetClassifIdFieldIndex
+        protected virtual int GetClassifIdFieldIndex()
+        {
+            int index = -1;
+            List<DetailLevelItemInformation> levels = DetailLevelItemsInformation.Translate(_session.PreformatedProductDetail);
+            for (int i = 0; i < levels.Count; i++)
+            {
+                if (levels[i].Id == DetailLevelItemInformation.Levels.advertiser) return (i + 1);
+
+            }
+            return index;
+        }
+        
+        #endregion
+
 
     }
 }
