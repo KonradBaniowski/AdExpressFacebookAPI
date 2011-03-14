@@ -924,7 +924,10 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				else{
                     if (vehicleType == DBClassificationConstantes.Vehicles.names.adnettrack)
                         tblChoice.List = "&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;";
-					else if (vehicleType!= DBClassificationConstantes.Vehicles.names.press){  
+					else if (vehicleType!= DBClassificationConstantes.Vehicles.names.press
+                        && vehicleType != DBClassificationConstantes.Vehicles.names.magazine
+                        && vehicleType != DBClassificationConstantes.Vehicles.names.newspaper)
+                    {  
 						tblChoice.List = "&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;";	
 					}
                     else tblChoice.List = "&nbsp;|&nbsp;|&nbsp;|&nbsp;";
@@ -942,7 +945,9 @@ namespace TNS.AdExpress.Web.Controls.Headers
                                 "|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype16.gif" +
                                 "|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype17.gif";
                     }
-                    else if (vehicleType!= DBClassificationConstantes.Vehicles.names.press){
+                    else if (vehicleType!= DBClassificationConstantes.Vehicles.names.press
+                        && vehicleType != DBClassificationConstantes.Vehicles.names.magazine
+                        && vehicleType != DBClassificationConstantes.Vehicles.names.newspaper){
                         tblChoice.Images = "/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype1.gif" +
                             "|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype2.gif" +
                             "|/App_Themes/" + themeName + "/Images/Culture/Tables/TBtype3.gif" +
@@ -967,7 +972,10 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				int numberImagesForPress=4;
 				int numberImagesForOthersMedia=13;
                 int numberImagesForAdnettrack = 23;
-                if ((vehicleType == DBClassificationConstantes.Vehicles.names.press || vehicleType == DBClassificationConstantes.Vehicles.names.adnettrack) && customerWebSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector) {
+                if ((vehicleType == DBClassificationConstantes.Vehicles.names.press 
+                    || vehicleType == DBClassificationConstantes.Vehicles.names.newspaper
+                    || vehicleType == DBClassificationConstantes.Vehicles.names.magazine
+                    || vehicleType == DBClassificationConstantes.Vehicles.names.adnettrack) && customerWebSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector) {
                     //index du tableau Media\Famille pour le média presse
                     tblChoice.ListIndex = customerWebSession.PreformatedTable.GetHashCode() - DashBoardEnumIndex - (numberImagesForOthersMedia - numberImagesForPress);
                 }

@@ -582,7 +582,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 			#region if year N-2
             if (DateTime.Now.Year > _session.DownLoadDate)
             {
-                if (periodBegin.Year.Equals(System.DateTime.Now.Year - 3))
+                if (periodBegin.Year.Equals(System.DateTime.Now.Year - WebApplicationParameters.DataNumberOfYear))
                 {
                     t.Append("<table class=\"backGroundWhite\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
                     t.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
@@ -593,7 +593,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             }
             else
             {
-                if (periodBegin.Year.Equals(System.DateTime.Now.Year - 2))
+                if (periodBegin.Year.Equals(System.DateTime.Now.Year - (WebApplicationParameters.DataNumberOfYear-1)))
                 {
                     t.Append("<table class=\"backGroundWhite\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
                     t.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");

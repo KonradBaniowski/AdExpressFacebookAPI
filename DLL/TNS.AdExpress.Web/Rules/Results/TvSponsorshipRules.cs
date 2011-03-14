@@ -241,9 +241,9 @@ namespace TNS.AdExpress.Web.Rules.Results
 					break;
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units :
                     cellKeuro = new CellKEuro(0.0);
-                    cellKeuro.StringFormat = UnitsInformation.Get(CustomerSessions.Unit.kEuro).StringFormat;
+                    cellKeuro.StringFormat = UnitsInformation.Get(UnitsInformation.DefaultKCurrency).StringFormat;
                     cellEuro = new CellEuro(0.0);
-                    cellEuro.StringFormat = UnitsInformation.Get(CustomerSessions.Unit.euro).StringFormat;
+                    cellEuro.StringFormat = UnitsInformation.Get(UnitsInformation.DefaultCurrency).StringFormat;
                     cellDuration = new CellDuration(0.0);
                     cellDuration.StringFormat = UnitsInformation.Get(CustomerSessions.Unit.duration).StringFormat;
                     cellInsertion = new CellInsertion(0.0);
@@ -711,14 +711,14 @@ namespace TNS.AdExpress.Web.Rules.Results
 			int positionUnivers=1;
 
 			//Keuros		
-			dimensionColIndex[Constantes.Web.CustomerSessions.Unit.kEuro.GetHashCode()] = new GroupItemForTableResult(Constantes.Web.CustomerSessions.Unit.kEuro.GetHashCode(),positionUnivers,maxIndex);
-			unitsListForLabelSearch=Constantes.Web.CustomerSessions.Unit.kEuro.GetHashCode().ToString();
+            dimensionColIndex[UnitsInformation.DefaultKCurrency.GetHashCode()] = new GroupItemForTableResult(UnitsInformation.DefaultKCurrency.GetHashCode(), positionUnivers, maxIndex);
+            unitsListForLabelSearch = UnitsInformation.DefaultKCurrency.GetHashCode().ToString();
 			maxIndex++;
 			
 
 			//euro			
-			dimensionColIndex[Constantes.Web.CustomerSessions.Unit.euro.GetHashCode()] = new GroupItemForTableResult(Constantes.Web.CustomerSessions.Unit.euro.GetHashCode(),positionUnivers,maxIndex);			
-			unitsListForLabelSearch +=","+ Constantes.Web.CustomerSessions.Unit.euro.GetHashCode().ToString();
+            dimensionColIndex[UnitsInformation.DefaultCurrency.GetHashCode()] = new GroupItemForTableResult(UnitsInformation.DefaultCurrency.GetHashCode(), positionUnivers, maxIndex);
+            unitsListForLabelSearch += "," + UnitsInformation.DefaultCurrency.GetHashCode().ToString();
 			maxIndex++;
 			
 			
@@ -997,13 +997,13 @@ namespace TNS.AdExpress.Web.Rules.Results
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units :
 														
 					// Ecriture du résultat des keuros en colonnes
-					unit=double.Parse(currentRow[UnitsInformation.List[CustomerSessions.Unit.euro].Id.ToString()].ToString());
-                    tabResult[currentLine, ((GroupItemForTableResult)dimensionColIndex[UnitsInformation.List[CustomerSessions.Unit.kEuro].Id.GetHashCode()]).IndexInResultTable] = unit;
+                    unit = double.Parse(currentRow[UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()].ToString());
+                    tabResult[currentLine, ((GroupItemForTableResult)dimensionColIndex[UnitsInformation.List[UnitsInformation.DefaultKCurrency].Id.GetHashCode()]).IndexInResultTable] = unit;
 					
 					// Ecriture du résultat des euro en colonnes
-                    unit = double.Parse(currentRow[UnitsInformation.List[CustomerSessions.Unit.euro].Id.ToString()].ToString());
+                    unit = double.Parse(currentRow[UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()].ToString());
 					if(dimensionColIndex!=null && dimensionColIndex.Count>0)
-                        tabResult[currentLine, ((GroupItemForTableResult)dimensionColIndex[UnitsInformation.List[CustomerSessions.Unit.euro].Id.GetHashCode()]).IndexInResultTable] = unit;								
+                        tabResult[currentLine, ((GroupItemForTableResult)dimensionColIndex[UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.GetHashCode()]).IndexInResultTable] = unit;								
 					
 					// Ecriture du résultat des durée en colonnes
                 unit = double.Parse(currentRow[UnitsInformation.List[CustomerSessions.Unit.duration].Id.ToString()].ToString());

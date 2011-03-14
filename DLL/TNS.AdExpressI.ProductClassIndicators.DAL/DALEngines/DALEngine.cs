@@ -144,7 +144,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             _periodEnd = FctUtilities.Dates.getPeriodEndDate(absolutEndPeriod, _session.PeriodType);
 
             FctUtilities.Dates.GetYearSelected(_session, ref _strYearId, ref _iYearId, _periodBegin);
-            _iYearN1Id = (_iYearId == 1) ? 2 : 1;
+            //_iYearN1Id = (_iYearId == 1) ? 2 : 1;
+            _iYearN1Id = (_iYearId == (WebApplicationParameters.DataNumberOfYear - 1)) ? _iYearId : _iYearId + 1;
             if (_iYearN1Id > 0)
                 _strYearN1Id = _iYearN1Id.ToString();
             #endregion
@@ -256,7 +257,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                     }
 
                     //Get period N-1 for comparative study
-                    if (_session.ComparativeStudy && (_iYearId == 0 || _iYearId == 1))
+                    if (_session.ComparativeStudy && (_iYearId <=(WebApplicationParameters.DataNumberOfYear-2)))
                     {
                         if (i == EndMonth && StartMonth != EndMonth)
                         {

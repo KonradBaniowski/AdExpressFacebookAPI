@@ -128,6 +128,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// Trends
         /// </summary>
         protected static Trends _trends = null;
+        /// <summary>
+        /// Number of year of data history
+        /// </summary>
+        protected static int _dataNumberOfYear = 0;
 
         /// <summary>
         /// RightMenuLinks configuration
@@ -168,6 +172,7 @@ namespace TNS.AdExpress.Domain.Web {
 			_infoNewsInformations = new InfoNews(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.INFO_NEWS_FILENAME));
 			_coreLayers = CoreLayersXL.Load(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.CORE_LAYERS_CONFIGURATION_FILENAME));
             _trends = new Trends(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.TRENDS_FILENAME));
+            _dataNumberOfYear = DataHistoryXL.LoadDataHistory(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.DATA_HISTORY_CONFIGURATION_FILENAME));
 
             _RightMenuLinks = new RightMenuLinks(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.RIGHT_MENU_LINKS_FILENAME));
         }
@@ -341,6 +346,14 @@ namespace TNS.AdExpress.Domain.Web {
         public static Trends TrendsInformations
         {
             get { return _trends; }
+        }
+
+        /// <summary>
+        /// Get Number of year of data history
+        /// </summary>
+        public static int DataNumberOfYear
+        {
+            get { return _dataNumberOfYear; }
         }
 
         /// <summary>

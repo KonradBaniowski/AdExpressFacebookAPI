@@ -37,5 +37,11 @@ namespace TNS.AdExpressI.Date.DAL {
         /// <param name="idVehicle">Media type identifier</param>
         /// <returns></returns>
         string GetLatestPublication(WebSession webSession, Int64 idVehicle);
+        /// <summary>
+        /// Get the calendar starting date
+        /// </summary>
+        /// <returns>The year corresponding to the starting date : date format yyyy example 2008</returns>
+        int GetCalendarStartDate();
+
     }
 }

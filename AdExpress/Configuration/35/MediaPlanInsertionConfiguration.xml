@@ -17,6 +17,7 @@
         </detailColumn>
       </detailColumns>
       <MediaDetailLevel>
+        
         <defaultMediaDetailLevels>
           <defaultMediaDetailLevel id="9" name="catégorie\support\date" />
         </defaultMediaDetailLevels>

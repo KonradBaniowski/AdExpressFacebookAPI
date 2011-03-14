@@ -67,6 +67,8 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Finland
                     switch(VehiclesInformation.DatabaseIdToEnum(vehicleId)) {
                         case CstDBClassif.Vehicles.names.press:
                         case CstDBClassif.Vehicles.names.internationalPress:
+                        case CstDBClassif.Vehicles.names.newspaper:
+                        case CstDBClassif.Vehicles.names.magazine:
                             switch(displayPeriod) {
                                 case CstPeriod.DisplayLevel.monthly:
                                     return string.Format(" max({0}DURATION_MONTH(date_media_num,duration)) as period_count ",_schAdexpr03.Sql);

@@ -449,8 +449,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				else if(IsStartWithPreviousYear(_blockIncompleteDates))this.selectedYear=DateTime.Now.Year-1; 
               
 			}
-
-			startYear=selectedYear-2;
+            int nbYears = WebApplicationParameters.DataNumberOfYear - 1;
+            startYear = selectedYear - nbYears;
 			if(DateTime.Now.Month==12)stopYear=(DateTime.Now.AddYears(1)).Year;
 			else {
 				stopYear=DateTime.Now.Year;
@@ -462,7 +462,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				}
 			}
             //Patch Finland pour le Tableau de bord PRESSE
-            if (WebApplicationParameters.CountryCode.Trim().Equals("35")
+            if (WebApplicationParameters.CountryCode.Trim().Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND)
                 && ( TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DE_BORD_PRESSE == _currentModule
                 || TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DE_BORD_TELEVISION == _currentModule
                 || TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DE_BORD_RADIO == _currentModule
@@ -472,7 +472,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             {                
                     DateTime dat = TNS.AdExpress.Web.Core.Utilities.LastAvailableDate.LastAvailableDateList[_vehicleInformation.Id];
                     stopYear = selectedYear = dat.Year;
-                    startYear = selectedYear - 2;
+                    startYear = selectedYear - nbYears;
                     _lastCompleteMonth = String.Format("{0:yyyyMM}", dat);                 
                
             }

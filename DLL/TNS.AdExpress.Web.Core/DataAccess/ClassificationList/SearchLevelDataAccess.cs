@@ -459,6 +459,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList {
 					accessItems = Utilities.SQLGenerator.GetInClauseMagicMethod(label, webSession.CustomerLogin[CustomerRightConstante.type.groupAccess], include); break;
 				case TNS.Classification.Universe.TNSClassificationLevels.SEGMENT:
 					accessItems = Utilities.SQLGenerator.GetInClauseMagicMethod(label, webSession.CustomerLogin[CustomerRightConstante.type.segmentAccess], include); break;
+                case TNS.Classification.Universe.TNSClassificationLevels.BRAND: break;
 				default:
 					throw (new CoreExceptions.SearchLevelDataAccessException("Identifiant de niveau de nomenclature inconnu"));
 			}

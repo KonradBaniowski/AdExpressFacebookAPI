@@ -38,6 +38,7 @@ using CstRight = TNS.AdExpress.Constantes.Customer.Right;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain;
 using TNS.AdExpress.Domain.Classification;
+using TNS.Classification.Universe;
 #endregion
 
 namespace AdExpress.Private.Selection{
@@ -503,7 +504,7 @@ namespace AdExpress.Private.Selection{
 						if(_webSession.SecondaryProductUniverses.ContainsKey(0)){
 							//Liste des annonceurs de référence personnalisés
 							referenceAdvertiserText = selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[0], _webSession.DataLanguage, _webSession.Source);
-							referenceProductAdExpressText.Code = 1195;
+							referenceProductAdExpressText.Code = (_webSession.SecondaryProductUniverses[0].ContainsLevel(TNSClassificationLevels.BRAND,AccessType.includes)) ? 1203 : 1195;
 							displayReferenceAdvertiser = true;
 						}
 						if (_webSession.SecondaryProductUniverses.ContainsKey(1)) {

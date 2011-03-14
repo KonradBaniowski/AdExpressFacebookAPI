@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TNS.AdExpress.Web.Core.Sessions;
 
 namespace TNS.AdExpressI.Date.DAL.Default {
     /// <summary>
@@ -22,6 +23,12 @@ namespace TNS.AdExpressI.Date.DAL.Default {
         /// Constructor
         /// </summary>
         public DateDAL() : base() { }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="session">Client session</param>
+        public DateDAL(WebSession session) : base(session) { }
         #endregion
 
     }

@@ -109,11 +109,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines {
             if (withRights) {
                 if (withAdvertisers) {
                     string l = string.Empty;
-                    if (_session.SecondaryProductUniverses.Count > 0 && _session.SecondaryProductUniverses.ContainsKey(0) && _session.SecondaryProductUniverses[0].GetGroup(0).Count() > 0) {
+                    if (_session.SecondaryProductUniverses.Count > 0 && _session.SecondaryProductUniverses.ContainsKey(0) && _session.SecondaryProductUniverses[0].GetGroup(0).Count() > 0 && _session.SecondaryProductUniverses[0].GetGroup(0).Contains(TNSClassificationLevels.ADVERTISER))
+                    {
                         l = _session.SecondaryProductUniverses[0].GetGroup(0).GetAsString(TNSClassificationLevels.ADVERTISER);
                     }
                     string l2 = string.Empty;
-                    if (_session.SecondaryProductUniverses.Count > 0 && _session.SecondaryProductUniverses.ContainsKey(1) && _session.SecondaryProductUniverses[1].GetGroup(0).Count() > 0) {
+                    if (_session.SecondaryProductUniverses.Count > 0 && _session.SecondaryProductUniverses.ContainsKey(1) && _session.SecondaryProductUniverses[1].GetGroup(0).Count() > 0 && _session.SecondaryProductUniverses[1].GetGroup(0).Contains(TNSClassificationLevels.ADVERTISER)) {
                         l2 = _session.SecondaryProductUniverses[1].GetGroup(0).GetAsString(TNSClassificationLevels.ADVERTISER);
                     }
                     if ((l.Length + l2.Length) > 0) {
@@ -270,11 +271,13 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines {
             //Advertiser
             if (withAdvertisers) {
                 string l = string.Empty;
-                if (_session.SecondaryProductUniverses.Count > 0 && _session.SecondaryProductUniverses.ContainsKey(0) && _session.SecondaryProductUniverses[0].GetGroup(0).Count() > 0) {
+                if (_session.SecondaryProductUniverses.Count > 0 && _session.SecondaryProductUniverses.ContainsKey(0) && _session.SecondaryProductUniverses[0].GetGroup(0).Count() > 0 && _session.SecondaryProductUniverses[0].GetGroup(0).Contains(TNSClassificationLevels.ADVERTISER))
+                {
                     l = _session.SecondaryProductUniverses[0].GetGroup(0).GetAsString(TNSClassificationLevels.ADVERTISER);
                 }
                 string l2 = string.Empty;
-                if (_session.SecondaryProductUniverses.Count > 0 && _session.SecondaryProductUniverses.ContainsKey(1) && _session.SecondaryProductUniverses[1].GetGroup(0).Count() > 0) {
+                if (_session.SecondaryProductUniverses.Count > 0 && _session.SecondaryProductUniverses.ContainsKey(1) && _session.SecondaryProductUniverses[1].GetGroup(0).Count() > 0 && _session.SecondaryProductUniverses[1].GetGroup(0).Contains(TNSClassificationLevels.ADVERTISER))
+                {
                     l2 = _session.SecondaryProductUniverses[1].GetGroup(0).GetAsString(TNSClassificationLevels.ADVERTISER);
                 }
                 if ((l.Length + l2.Length) > 0) {
@@ -513,7 +516,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines {
                         sql.AppendFormat(" sum(exp_euro_N{0}_{1}) {2}", _strYearId, i, FctUtilities.Dates.GetMonthAlias(i, _iYearId, 3, _session));
                     }
                     //N-1
-                    if (withN1 && _session.ComparativeStudy && _iYearId < 2) {
+                    if (withN1 && _session.ComparativeStudy && _iYearId < (WebApplicationParameters.DataNumberOfYear-1)) {
                         if (i != iLstMonth) {
                             sqlN1.AppendFormat(" sum(exp_euro_N{0}_{1}) {2},", _strYearN1Id, i, FctUtilities.Dates.GetMonthAlias(i, _iYearN1Id, 3, _session));
                         }

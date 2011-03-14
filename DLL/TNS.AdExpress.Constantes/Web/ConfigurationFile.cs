@@ -152,6 +152,12 @@ namespace TNS.AdExpress.Constantes.Web {
         /// Campaign Types configuration file
         /// </summary>
         public const string CAMPAIGN_TYPES_CONFIGURATION_FILENAME = @"CampaignTypes.xml";
+        /// <summary>
+        /// Data history configuration file
+        /// </summary>
+        public const string DATA_HISTORY_CONFIGURATION_FILENAME = @"DataHistory.xml";
+
+
 
         /// <summary>
         /// Right Menu Links configuration file

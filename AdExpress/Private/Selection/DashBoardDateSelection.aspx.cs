@@ -33,6 +33,7 @@ using WebConstantes=TNS.AdExpress.Constantes.Web;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Classification;
+using System.Text;
 
 #endregion
 
@@ -161,10 +162,12 @@ namespace AdExpress.Private.Selection
 		/// <param name="e">Argument</param>
 		protected void Page_Load(object sender, System.EventArgs e) {
 			try{
+                if (!this.Page.ClientScript.IsClientScriptBlockRegistered("RecapDatesJavaScriptFunctions"))
+                    this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "RecapDatesJavaScriptFunctions", RecapDatesJavaScriptFunctions());
 
                 #region Patch Finland
                 finland = false;
-                if (WebApplicationParameters.CountryCode.Equals("35")) finland = true;
+                if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND)) finland = true;
                 
                 #endregion
 
@@ -186,9 +189,7 @@ namespace AdExpress.Private.Selection
                     }
                     //Patch Finland pour le Tableau de bord PRESSE
                     if (TNS.AdExpress.Web.Core.Utilities.LastAvailableDate.LastAvailableDateList.ContainsKey(_vehicleInformation.Id))
-                    {
-                        DateTime dat = TNS.AdExpress.Web.Core.Utilities.LastAvailableDate.LastAvailableDateList[_vehicleInformation.Id];
-                         currentYear = dat.Year.ToString();
+                    {                        
                          this.monthWeekCalendarEndWebControl.VehicleInformation = _vehicleInformation;
                          this.monthWeekCalendarBeginWebControl.VehicleInformation = _vehicleInformation;
                     }
@@ -199,8 +200,9 @@ namespace AdExpress.Private.Selection
                     this.monthWeekCalendarBeginWebControl.DisplayType = TNS.AdExpress.Web.Controls.Selections.MonthWeekCalendarWebControl.Display.all;
                     this.monthWeekCalendarEndWebControl.DisplayType = TNS.AdExpress.Web.Controls.Selections.MonthWeekCalendarWebControl.Display.all;
                 }
-				this.monthWeekCalendarBeginWebControl.StartYear=DateTime.Now.AddYears(-2).Year;				
-				this.monthWeekCalendarEndWebControl.StartYear=DateTime.Now.AddYears(-2).Year;
+                int nbYears = WebApplicationParameters.DataNumberOfYear - 1;
+                this.monthWeekCalendarBeginWebControl.StartYear = DateTime.Now.AddYears(-nbYears).Year;
+                this.monthWeekCalendarEndWebControl.StartYear = DateTime.Now.AddYears(-nbYears).Year;
 
 			
 				//ATTaquer une table
@@ -411,7 +413,8 @@ namespace AdExpress.Private.Selection
 						break;
 						//Choix année N-2
 					case 4:
-						if(isComparativeStudy(selectedComparativeStudy))throw(new AdExpressException.AnalyseDateSelectionException(GestionWeb.GetWebWord(885,_webSession.SiteLanguage)));
+						if(isComparativeStudy(selectedComparativeStudy) &&  (WebApplicationParameters.DataNumberOfYear <= 3))
+                            throw(new AdExpressException.AnalyseDateSelectionException(GestionWeb.GetWebWord(885,_webSession.SiteLanguage)));
 						_webSession.PeriodType=CstPeriodType.nextToLastYear;
 						_webSession.PeriodLength=1;						
 						// Cas où l'année de chargement est inférieur à l'année en cours
@@ -428,7 +431,8 @@ namespace AdExpress.Private.Selection
                             _webSession.PeriodEndDate = DateTime.Now.AddYears(-2).ToString("yyyy12");
                         }
 						_webSession.DetailPeriod = CstPeriodDetail.monthly;
-						_webSession.ComparativeStudy=false;
+                        if (isComparativeStudy(selectedComparativeStudy)) _webSession.ComparativeStudy = true;
+						else _webSession.ComparativeStudy=false;
 						_webSession.Save();
 						break;
 					default :
@@ -515,8 +519,9 @@ namespace AdExpress.Private.Selection
 					throw(new AdExpressException.SectorDateSelectionException(GestionWeb.GetWebWord(1856,_webSession.SiteLanguage)));
 				//On autorise une étude comparative que pour les années N et N-1
 
-					if(isComparativeStudy(selectedComparativeStudy) && (monthWeekCalendarBeginWebControl.SelectedYear==DateTime.Now.Year-2 || monthWeekCalendarEndWebControl.SelectedYear==DateTime.Now.Year-2) )
-						throw(new AdExpressException.SectorDateSelectionException(GestionWeb.GetWebWord(1857,_webSession.SiteLanguage)));
+                if (isComparativeStudy(selectedComparativeStudy)
+                    && ((monthWeekCalendarBeginWebControl.SelectedYear == DateTime.Now.Year - (WebApplicationParameters.DataNumberOfYear - 1) || monthWeekCalendarEndWebControl.SelectedYear == DateTime.Now.Year - (WebApplicationParameters.DataNumberOfYear - 1))))
+                    throw (new AdExpressException.SectorDateSelectionException(string.Format(GestionWeb.GetWebWord(2807, _siteLanguage), (WebApplicationParameters.DataNumberOfYear - 1))));
 
 
 				_webSession.PeriodType = monthWeekCalendarBeginWebControl.SelectedDateType;
@@ -577,5 +582,79 @@ namespace AdExpress.Private.Selection
 			return(this.MenuWebControl2.NextUrl);
 		}
 		#endregion
-	}
+
+        #region Javascript
+        private string RecapDatesJavaScriptFunctions()
+        {
+            StringBuilder script = new StringBuilder(2000);
+            script.Append("<script language=\"JavaScript\">");
+            //function selectedItem
+            script.Append("\r\n function selectedItem(i,formName)");
+            script.Append("\r\n {");
+            script.Append("\r\n\t formName.selectedItemIndex.value=i;");
+            script.Append("\r\n\t formName.CurrentYearRadioButton.checked=false;");
+            script.Append("\r\n\t formName.PreviousYearRadioButton.checked=false;");
+            script.Append("\r\n\t formName.TwoYearAgoRadioButton.checked=false;");
+            script.Append("\r\n\t formName.CompetitorSudy1Ckbx.checked=false;");
+            script.Append("\r\n\t formName.LastLoadedMonthRadiobutton.checked=false;");
+            script.Append("\r\n\t if(formName.LastLoadedWeekRadioButton!=null)formName.LastLoadedWeekRadioButton.checked=false;");
+            script.Append("\r\n }");
+
+            //function selectedCheck
+            script.Append("\r\n function selectedCheck(i,formName)");
+            script.Append("\r\n {");
+            script.Append("\r\n\t switch(i)");
+            script.Append("\r\n\t {");
+            script.Append("\r\n\t\t case 1 :");
+            script.Append("\r\n\t\t\t formName.CompetitorSudy1Ckbx.checked=false;");
+            script.Append("\r\n\t\t\t formName.selectedItemIndex.value=i;");
+            script.Append("\r\n\t\t\t break;");
+
+            script.Append("\r\n\t\t case 2 :");
+            script.Append("\r\n\t\t\t formName.selectedItemIndex.value=i;");
+            script.Append("\r\n\t\t\t break;");
+
+            script.Append("\r\n\t\t case 3 :");
+            script.Append("\r\n\t\t\t formName.selectedItemIndex.value=i;");
+            script.Append("\r\n\t\t\t break;");
+
+            script.Append("\r\n\t\t case 4 :");
+            if (WebApplicationParameters.DataNumberOfYear <= 3)//If start year is N-2 
+            script.Append("\r\n\t\t\t formName.CompetitorSudy2Ckbx.checked=false;");
+            script.Append("\r\n\t\t\t formName.CompetitorSudy1Ckbx.checked=false;");
+            script.Append("\r\n\t\t\t formName.selectedItemIndex.value=i;");
+            script.Append("\r\n\t\t\t break;");
+
+            script.Append("\r\n\t\t case 5 :");
+            if(WebApplicationParameters.DataNumberOfYear<=3)//If start year is N-2 
+            script.Append("\r\n\t\t\t formName.TwoYearAgoRadioButton.checked=false;");
+            script.Append("\r\n\t\t\t formName.CompetitorSudy1Ckbx.checked=false;");
+            script.Append("\r\n\t\t\t formName.selectedComparativeStudy.value=i;");
+            script.Append("\r\n\t\t\t break;");
+
+            script.Append("\r\n\t\t case 8 :");
+            script.Append("\r\n\t\t\t formName.selectedComparativeStudy.value=i;");
+            script.Append("\r\n\t\t\t formName.CompetitorSudy2Ckbx.checked=false;");
+            script.Append("\r\n\t\t\t formName.CurrentYearRadioButton.checked=false;");
+            script.Append("\r\n\t\t\t formName.PreviousYearRadioButton.checked=false;");
+            script.Append("\r\n\t\t\t formName.TwoYearAgoRadioButton.checked=false;");
+            script.Append("\r\n\t\t\t formName.LastLoadedMonthRadiobutton.checked=false;");
+            script.Append("\r\n\t\t\t if(formName.LastLoadedWeekRadioButton!=null)formName.LastLoadedWeekRadioButton.checked=false;");
+            script.Append("\r\n\t\t\t formName.selectedItemIndex.value=i;");
+            script.Append("\r\n\t\t\t break;");
+
+
+            script.Append("\r\n\t\t case 9 :");
+            script.Append("\r\n\t\t\t formName.CompetitorSudy1Ckbx.checked=false;");
+            script.Append("\r\n\t\t\t formName.selectedItemIndex.value=i;");
+            script.Append("\r\n\t\t\t break;");
+
+            script.Append("\r\n\t }");
+            script.Append("\r\n }");
+            script.Append("\r\n </script>");
+            return (script.ToString());
+        }
+        #endregion
+    
+    }
 }

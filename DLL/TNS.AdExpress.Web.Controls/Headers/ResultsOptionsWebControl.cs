@@ -2451,11 +2451,21 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 string tempString = "";
                 if(customerWebSession.SecondaryProductUniverses.Count > 0 && customerWebSession.SecondaryProductUniverses.ContainsKey(0) && customerWebSession.SecondaryProductUniverses[0].Contains(0)) {
                     tempString = customerWebSession.SecondaryProductUniverses[0].GetGroup(0).GetAsString(TNSClassificationLevels.ADVERTISER);
-                    if(tempString != null && tempString.Length > 0) withAdvertisers = true;
-                }
+                    if(!string.IsNullOrEmpty(tempString)) withAdvertisers = true;
+                    if (!withAdvertisers)
+                    {
+                        tempString = customerWebSession.SecondaryProductUniverses[0].GetGroup(0).GetAsString(TNSClassificationLevels.BRAND);
+                        if (!string.IsNullOrEmpty(tempString)) withAdvertisers = true;
+                    }
+                }               
                 else if(customerWebSession.SecondaryProductUniverses.Count > 0 && customerWebSession.SecondaryProductUniverses.ContainsKey(1) && customerWebSession.SecondaryProductUniverses[1].Contains(0)) {
                     tempString = customerWebSession.SecondaryProductUniverses[1].GetGroup(0).GetAsString(TNSClassificationLevels.ADVERTISER);
-                    if(tempString != null && tempString.Length > 0) withAdvertisers = true;
+                    if (!string.IsNullOrEmpty(tempString)) withAdvertisers = true;
+                    if (!withAdvertisers)
+                    {
+                        tempString = customerWebSession.SecondaryProductUniverses[1].GetGroup(0).GetAsString(TNSClassificationLevels.BRAND);
+                        if (!string.IsNullOrEmpty(tempString)) withAdvertisers = true;
+                    }
                 }
                 PersonalizedElementsCheckBox.Enabled = withAdvertisers;
 

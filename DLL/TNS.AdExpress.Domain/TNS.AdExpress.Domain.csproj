@@ -112,6 +112,7 @@
     <Compile Include="Web\Navigation\RightMenuLinksItem.cs" />
     <Compile Include="Web\Rss.cs" />
     <Compile Include="XmlLoader\CoreLayersXL.cs" />
+    <Compile Include="XmlLoader\DataHistoryXL.cs" />
     <Compile Include="XmlLoader\DundasConfigurationXL.cs" />
     <Compile Include="XmlLoader\InfoNewsXL.cs" />
     <Compile Include="XmlLoader\ResultOptionsXL.cs" />

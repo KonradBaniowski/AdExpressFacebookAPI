@@ -166,6 +166,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         tab[0, TOTAL_N1_COLUMN_INDEX] = FctUtilities.Dates.getPeriodLabel(_session, CstPeriod.Type.previousYear);
                         tab[0, EVOLUTION_COLUMN_INDEX] = GestionWeb.GetWebWord(1207, _session.SiteLanguage);
                         tab[0, ECART_COLUMN_INDEX] = GestionWeb.GetWebWord(1213, _session.SiteLanguage);
+
                     }
                     tab[1, 0] = GestionWeb.GetWebWord(1712, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ") (" + GestionWeb.GetWebWord(2790, _session.SiteLanguage) + ")";
                     tab[2, 0] = GestionWeb.GetWebWord(1712, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ") (" + GestionWeb.GetWebWord(2791, _session.SiteLanguage) + ")";

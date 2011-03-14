@@ -59,24 +59,16 @@ namespace TNS.AdExpress.Web.UI{
                 List<UnitInformation> unitInformationList = null;
                 Dictionary<Constantes.Web.CustomerSessions.Unit, UnitInformation> unitInformationDictionary = null;
                 List<Constantes.Web.CustomerSessions.Unit> unitList = null;
+                System.Windows.Forms.TreeNode firstNode = null;
                 #endregion
 
                 #region Get Vehicle Selected
                 vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
-                if (vehicleSelection == null || vehicleSelection.IndexOf(",") > 0)
+                if (WebFunctions.Modules.IsDashBoardModule(_webSession) && (string.IsNullOrEmpty(vehicleSelection) || vehicleSelection.IndexOf(",") > 0))
                 {
-                    switch (_webSession.CurrentModule)
-                    {
-                        case WebConstantes.Module.Name.TABLEAU_DE_BORD_PRESSE:
-                        case WebConstantes.Module.Name.TABLEAU_DE_BORD_RADIO:
-                        case WebConstantes.Module.Name.TABLEAU_DE_BORD_TELEVISION:
-                        case WebConstantes.Module.Name.TABLEAU_DE_BORD_PAN_EURO:
-                        case WebConstantes.Module.Name.TABLEAU_DE_BORD_EVALIANT:
-                            vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleException);
-                            break;                       
-                        default: throw (new TNSExceptions.VehicleException("Selection of media type is not correct"));
-                    }
-                    
+                    firstNode = _webSession.SelectionUniversMedia.FirstNode;
+                    vehicleSelection = ((LevelInformation)firstNode.Tag).ID.ToString();
+                       
                 }
                 if (Int64.TryParse(vehicleSelection, out vehicleId)) {
                     vehicleInformation = VehiclesInformation.Get(vehicleId);
@@ -87,7 +79,7 @@ namespace TNS.AdExpress.Web.UI{
                     }
                 }
                 else {
-                    System.Windows.Forms.TreeNode firstNode = _webSession.CurrentUniversMedia.FirstNode;
+                     firstNode = _webSession.CurrentUniversMedia.FirstNode;
                     if (firstNode != null
                         && (((LevelInformation)firstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess
                         || ((LevelInformation)firstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.vehicleException

@@ -43,6 +43,20 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// </summary>
         protected TNS.Classification.Universe.Dimension _dimension;
 
+        /// <summary>
+        /// Check if can filtered query with selection
+        /// </summary>
+        protected bool _filterWithProductSelection = false;
+
+        /// <summary>
+        /// Get if can filtered query with selection
+        /// </summary>
+        public bool FilterWithProductSelection
+        {
+            get { return _filterWithProductSelection; }
+            set { _filterWithProductSelection = value; }
+        }
+
 		#region Constructor
 
 		/// <summary>
@@ -318,6 +332,10 @@ namespace TNS.AdExpressI.Classification.DAL {
 					if (_dimension == Dimension.media)
 						sql.AppendFormat(" and wp.id_vehicle in ({0}) ", _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess));
 					break;
+                case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE:
+                case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR:
+                    if (_filterWithProductSelection) sql.Append(GetProductSelection("wp", true));
+                    break;
 			}
             
             /*Query orders fields by items' labels */
@@ -723,6 +741,10 @@ namespace TNS.AdExpressI.Classification.DAL {
                         if (dimension == Dimension.media)
                             sql.AppendFormat(" and wp.id_vehicle in ({0}) ", _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess));
                         break;
+                    case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE:
+                    case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR:
+                        if(_filterWithProductSelection) sql.Append(GetProductSelection("wp",true));
+                        break;
 				}
 			}
 			else {
@@ -747,7 +769,8 @@ namespace TNS.AdExpressI.Classification.DAL {
              * For example for the product classification the View will be like this : id_produt,product, id_sector,sector, di_group_,
              * group_ etc */            
 			if ((classificationRight != null && classificationRight.Length > 0)
-			|| (dimension == Dimension.media && _module.Id == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA))
+			|| (dimension == Dimension.media && _module.Id == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+             || _filterWithProductSelection)
 				return true;
 			return false;
 		}

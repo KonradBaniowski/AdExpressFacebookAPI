@@ -325,8 +325,9 @@ namespace AdExpress.Private.Selection {
                     }
                     //Creation d'un nouveau noeud centre d'intérêts
                     InterestCenter = new System.Windows.Forms.TreeNode(item.Text);
-                    if (item.Selected) InterestCenter.Tag = new LevelInformation(CstWebCustomer.Right.type.interestCenterAccess, Int64.Parse(item.Value.Remove(0, 3)), item.Text);
-                    else InterestCenter.Tag = new LevelInformation(CstWebCustomer.Right.type.interestCenterException, Int64.Parse(item.Value.Remove(0, 3)), item.Text);
+                    string[] ic = item.Value.Split('_');
+                    if (item.Selected) InterestCenter.Tag = new LevelInformation(CstWebCustomer.Right.type.interestCenterAccess, Int64.Parse(ic[1]), item.Text);
+                    else InterestCenter.Tag = new LevelInformation(CstWebCustomer.Right.type.interestCenterException, Int64.Parse(ic[1]), item.Text);
                     InterestCenter.Checked = item.Selected;
                     if (InterestCenter.Checked) icCpt++;
                     OldIdInterestCenter = item.Value.ToString();

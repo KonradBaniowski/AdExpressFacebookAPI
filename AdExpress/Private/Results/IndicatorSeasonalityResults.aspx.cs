@@ -33,6 +33,7 @@ using CstPreformatedDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Prefo
 using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
+using TNS.AdExpress.Domain.Web;
 #endregion
 
 namespace AdExpress.Private.Results {
@@ -187,8 +188,10 @@ namespace AdExpress.Private.Results {
                             if(_webSession.Graphics){
                                 // Cas année N-2
                                 DateTime PeriodBeginningDate = FctUtilities.Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
-                                if((PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year - 2) && DateTime.Now.Year <= _webSession.DownLoadDate)
-                                    || (PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year - 3) && DateTime.Now.Year > _webSession.DownLoadDate)){
+                                if (((PeriodBeginningDate.Year == (System.DateTime.Now.Year - (WebApplicationParameters.DataNumberOfYear - 1))) && DateTime.Now.Year <= _webSession.DownLoadDate)
+                                    || ((PeriodBeginningDate.Year == (System.DateTime.Now.Year - WebApplicationParameters.DataNumberOfYear)) && DateTime.Now.Year > _webSession.DownLoadDate)
+                                    )
+                                {
                                     _webSession.Graphics = false;
                                 }
                             }
@@ -202,7 +205,7 @@ namespace AdExpress.Private.Results {
                                         _webSession.PreformatedMediaDetail = CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory;
                                     }
                                 }
-                            }
+                    }
                             break;
                     }
                 }

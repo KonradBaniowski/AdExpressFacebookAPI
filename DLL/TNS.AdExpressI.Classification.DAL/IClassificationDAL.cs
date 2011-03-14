@@ -366,7 +366,14 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// Get if data items shiould be in lower case
         /// </summary>
         bool ToLowerCase { get; }
-			
-		
+
+        /// <summary>
+        /// Get if can filtered query with selection
+        /// </summary>
+        bool FilterWithProductSelection
+        {
+            get;
+            set;
+        }
 	}
 }

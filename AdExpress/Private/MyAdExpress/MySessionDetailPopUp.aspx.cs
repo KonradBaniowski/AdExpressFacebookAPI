@@ -187,27 +187,30 @@ namespace AdExpress.Private.MyAdExpress{
                 CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
 				#endregion
 
-                // Loading Data Access Layer
-                DataAccessLayer layer = PluginConfiguration.GetDataAccessLayer(PluginDataAccessLayerName.Alert);
-                TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
-                IAlertDAL alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null, null);
 
-                try {
-                    if (Page.Request.QueryString.Get("idAlertSession") != null) {
+                try
+                {
+                    if (TNS.Alert.Domain.AlertConfiguration.IsActivated && Page.Request.QueryString.Get("idAlertSession") != null)
+                    {
+                        DataAccessLayer layer = PluginConfiguration.GetDataAccessLayer(PluginDataAccessLayerName.Alert);
+                        TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
+                        IAlertDAL alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null, null);
                         int idAlert = Int32.Parse(Page.Request.QueryString.Get("idAlertSession"));
                         Alert alert = alertDAL.GetAlert(idAlert);
                         webSessionSave = (WebSession)alert.Session;
                         mySessionLabel.Text = alert.Title;
                     }
-                    else {
+                    else
+                    {
                         idMySession = Int64.Parse(Page.Request.QueryString.Get("idMySession"));
                         webSessionSave = (WebSession)MySessionDataAccess.GetResultMySession(idMySession.ToString(), _webSession);
                         mySessionLabel.Text = TNS.AdExpress.Web.DataAccess.MyAdExpress.MySessionsDataAccess.GetSession(idMySession, _webSession);
                     }
                 }
-                catch (Exception) {
-                }				
+                catch (Exception)
+                {
 
+                }
 				#region Langage
 				//Modification de la langue pour les Textes AdExpress
                 //for (int j = 0; j < this.Controls.Count; j++) {

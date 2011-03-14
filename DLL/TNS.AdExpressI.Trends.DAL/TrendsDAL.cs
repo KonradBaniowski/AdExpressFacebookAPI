@@ -283,6 +283,8 @@ namespace TNS.AdExpressI.Trends.DAL
 
                     case DBClassificationConstantes.Vehicles.names.press:
                     case DBClassificationConstantes.Vehicles.names.internationalPress:
+                    case DBClassificationConstantes.Vehicles.names.magazine:
+                    case DBClassificationConstantes.Vehicles.names.newspaper:
                         levelInformation = DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.media);
                         vehicleField = allMediaView.Prefix + "." + levelInformation.DataBaseField;
 
@@ -344,6 +346,8 @@ namespace TNS.AdExpressI.Trends.DAL
 
                 case DBClassificationConstantes.Vehicles.names.press:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
                     // From SQL instruction
                     sqlRequest.AppendFormat(" from {0}", totalTable.SqlWithPrefix);
                     sqlRequest.AppendFormat(", {0}", trendsTable.SqlWithPrefix);
@@ -389,6 +393,8 @@ namespace TNS.AdExpressI.Trends.DAL
 
                 case DBClassificationConstantes.Vehicles.names.press:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
                     trendPrefix = trendsTable.Prefix;
                     if (!levelsRequested.ContainDetailLevelItem(DetailLevelItemInformation.Levels.media)
                     && levelsRequested.ContainDetailLevelItem(DetailLevelItemInformation.Levels.title))
@@ -450,6 +456,8 @@ namespace TNS.AdExpressI.Trends.DAL
                     break;
                 case DBClassificationConstantes.Vehicles.names.press:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
                     trendPrefix = trendsTable.Prefix;
                     sqlRequest.Append(" and " + trendPrefix + ".ID_PDM = " + totalTable.Prefix + ".ID_PDM ");
                     sqlRequest.Append(" and " + trendPrefix + ".ID_CATEGORY = " + totalTable.Prefix + ".ID_CATEGORY ");
@@ -551,6 +559,8 @@ namespace TNS.AdExpressI.Trends.DAL
 
                     case DBClassificationConstantes.Vehicles.names.press:
                     case DBClassificationConstantes.Vehicles.names.internationalPress:
+                    case DBClassificationConstantes.Vehicles.names.newspaper:
+                    case DBClassificationConstantes.Vehicles.names.magazine:
                         trendPrefix = (levelsRequested.GetNbLevels > 2) ? trendsTable.Prefix : totalTable.Prefix;
                         break;
                     default:

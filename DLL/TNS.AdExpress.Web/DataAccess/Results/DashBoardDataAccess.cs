@@ -1515,7 +1515,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
             //identification du Média  sélectionné			
             ClassificationCst.DB.Vehicles.names vehicleType = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
             bool isRepartition = false;
-            if (ClassificationCst.DB.Vehicles.names.press != vehicleType) {
+            if (ClassificationCst.DB.Vehicles.names.press != vehicleType
+                && ClassificationCst.DB.Vehicles.names.magazine != vehicleType
+                && ClassificationCst.DB.Vehicles.names.newspaper != vehicleType
+                ) {
                 isRepartition = !(webSession.Format == CstWeb.Repartition.Format.Total
                     && webSession.NamedDay == CstWeb.Repartition.namedDay.Total
                     && webSession.TimeInterval == CstWeb.Repartition.timeInterval.Total

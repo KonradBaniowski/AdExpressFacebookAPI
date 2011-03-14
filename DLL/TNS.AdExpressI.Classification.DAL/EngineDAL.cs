@@ -330,5 +330,25 @@ namespace TNS.AdExpressI.Classification.DAL {
 			return sql;
 		}
 		#endregion
+
+        /// <summary>
+        /// Get Product Selection
+        /// </summary>
+        /// <param name="dataTablePrefix"></param>
+        /// <param name="beginByAnd"></param>
+        /// <returns></returns>
+        protected virtual string GetProductSelection(string dataTablePrefix,bool beginByAnd){
+            // Sélection de Produits
+            if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
+            {
+                switch (_session.CurrentModule)
+                {
+                    case TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR:
+                    case TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE:
+                        return _session.PrincipalProductUniverses[0].GetSqlConditions(dataTablePrefix, beginByAnd);
+                }
+            }
+            return "";
+        }
 	}
 }

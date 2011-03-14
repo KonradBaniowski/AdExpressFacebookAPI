@@ -259,7 +259,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             StringBuilder sql = new StringBuilder();
 
 
-            if (_session.ComparativeStudy && (_iYearId == 0 || _iYearId == 1))
+            if (_session.ComparativeStudy && (_iYearId <=(WebApplicationParameters.DataNumberOfYear-2)))
             {
                 for (int j = 1; j <= 12; j++)
                 {
@@ -301,7 +301,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
                 }
             }
             //N-1
-            if (_session.ComparativeStudy && _iYearId < 2)
+            if (_session.ComparativeStudy && _iYearId < (WebApplicationParameters.DataNumberOfYear-1)) 
             {
                 sql.Append(",");
                 for (int j = 1; j <= 12; j++)

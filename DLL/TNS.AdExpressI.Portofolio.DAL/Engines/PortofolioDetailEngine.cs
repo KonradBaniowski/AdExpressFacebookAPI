@@ -98,7 +98,9 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 						if (_webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser))
 							dataFieldsForGadWithoutTablePrefix = ", " + WebFunctions.SQLGenerator.GetFieldsAddressForGad("");
 						sql = "";
-                        sql += " select id_media, " + productFieldNameWithoutTablePrefix + dataFieldsForGadWithoutTablePrefix + ", " + WebFunctions.SQLGenerator.GetUnitFieldsNameUnionForPortofolio(_webSession);
+                        string unitSelect = WebFunctions.SQLGenerator.GetUnitFieldsNameUnionForPortofolio(_webSession);
+                        if(unitSelect!=null && unitSelect.Length>0) unitSelect = ", " + unitSelect;
+                        sql += " select id_media, " + productFieldNameWithoutTablePrefix + dataFieldsForGadWithoutTablePrefix + unitSelect;
                         if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile)
                         {
                             sql += string.Format(", {0}", UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.versionNb).Id.ToString());

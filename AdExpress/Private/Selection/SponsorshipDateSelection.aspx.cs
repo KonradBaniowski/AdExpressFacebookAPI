@@ -28,6 +28,7 @@ using DateDll = TNS.FrameWork.Date;
 using AdExpressException=AdExpress.Exceptions;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Web;
 
 namespace AdExpress.Private.Selection
 {
@@ -228,6 +229,8 @@ namespace AdExpress.Private.Selection
 			weekDateList.WebSession=_webSession;
 			monthDateList.WebSession=_webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
+
+            dayCalendarBeginWebControl.PeriodLength = dayCalendarEndWebControl.PeriodLength = ((WebApplicationParameters.DataNumberOfYear - 1) * 12) - 1;
 			return tmp;
 		}
 		#endregion

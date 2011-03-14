@@ -152,7 +152,7 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                         sql.Append(", to_char( min(wp.date_creation) , 'YYYYMM' ) as date_creation ");
                         break;
                     case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
-                        sql.Append(", to_char( min(wp.date_creation) , 'YYYYIW' ) as date_creation ");
+                        sql.Append(", to_char( min(wp.date_creation) , 'IYYYIW' ) as date_creation ");
                         break;
                     case WebConstantes.CustomerSessions.Period.DisplayLevel.dayly:
                         sql.Append(", to_char( min(wp.date_creation) , 'YYYYMMDD' ) as date_creation ");

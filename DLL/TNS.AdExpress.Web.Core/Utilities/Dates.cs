@@ -482,13 +482,13 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 #endregion
 
                 #region Year
-                if (YearSelected <= 3)
+                if (YearSelected <= WebApplicationParameters.DataNumberOfYear)
                 {
                     year = System.DateTime.Now.AddYears(YearSelected*-1).ToString("yy");
                 }
                 else
                 {
-                    throw (new ArgumentException("Unvalid selected year. Must be between 0 and 3."));
+                    throw (new ArgumentException("Unvalid selected year. Must be between 0 and " + WebApplicationParameters.DataNumberOfYear));
                 }
                 #endregion
 

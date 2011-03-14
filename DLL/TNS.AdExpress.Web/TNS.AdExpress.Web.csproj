@@ -1224,6 +1224,9 @@
     <Compile Include="UI\BaseResultWebPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="UI\SelectionExcelWebPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="UI\Selections\Periods\PortofolioDateUI.cs">
       <SubType>Code</SubType>
     </Compile>

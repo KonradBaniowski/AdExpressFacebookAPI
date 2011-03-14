@@ -1094,7 +1094,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 
 						#region Entêtes de tableaux
 
-							oldDate = "";
+						oldDate = "";
 						first = true;
 							classe="";
                             UnitInformation defaultCurrency = UnitsInformation.List[UnitsInformation.DefaultCurrency];

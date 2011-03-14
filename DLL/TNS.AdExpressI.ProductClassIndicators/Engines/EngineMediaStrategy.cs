@@ -721,20 +721,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             //liste des investissments par média (vehicle)
             Hashtable hPdmVehAdvert = new Hashtable();
             //liste des investissments par catégorie
-            Hashtable hPdmCatAdvert = new Hashtable();
-            //			//PDM d'un media (vehicle)
-            //			double PdmVehicle = (double)0.0;
-            //			//PDM d'un support
-            //			double PdmMedia  = (double)0.0;
-            //			//PDM d'une catégorie
-            //			double	PdmCategory = (double)0.0;
+            Hashtable hPdmCatAdvert = new Hashtable();          
             #endregion
 
             #region variables pour les dimensions du tableau de résultats
             // tableau de resultats
-            object[,] tab = null;
-            //nombre maximal de lignes
-            //int nbMaxLines = 0;
+            object[,] tab = null;           
             //Index d'une ligne du tableau
             int indexTabRow = 0;
             //booléen incrémentation d'une ligne
@@ -747,11 +739,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             //nombre  annonceurs de références ou concurrents
             //int nbAdvertiser=0;
             //Y a t'il des annonceurs de références ou concurrents
-            bool hasAdvertiser = false;
-            //Investissement d'un annonceur sur la période N
-            //string AdvertiserInvest="";
-            //Investissement d'un annonceur sur la période N-1
-            //string AdvertiserInvest_N1="";
+            bool hasAdvertiser = false;           
             //Investissement total des annonceurs sur la période N
             string AdvertiserTotalInvest = "";
             //Investissement total des annonceurs sur la période N-1
@@ -759,19 +747,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             //Investissement d'un annonceur par catégorie sur la période N
             string AdvertiserInvestByCat = "";
             //Investissement d'un annonceur par catégorie sur la période N-1
-            string AdvertiserInvestByCat_N1 = "";
-            //investissement pour une catégorie sur période N
-            //double CatInvest=(double)0.0;
-            //investissement pour une catégorie sur période N-1
-            //double CatInvest_N1=(double)0.0;
+            string AdvertiserInvestByCat_N1 = "";           
             //Investissement d'un annonceur par média (vehicle) sur la période N
             string AdvertiserInvestByVeh = "";
             //Investissement d'un annonceur par média (vehicle) sur la période N-1
-            string AdvertiserInvestByVeh_N1 = "";
-            //Evolution N/N-1 pour total annonceurs
-            //double AdvertiserTotalEvolution = (double)0.0;
-            //Evolution N/N-1 pour un annonceur
-            //double AdvertiserEvolution = (double)0.0;
+            string AdvertiserInvestByVeh_N1 = "";          
             //collection des annonceurs déjà traités
             ArrayList OldIdAdvertiserArr = new ArrayList();
             //collection des annonceurs déjà traités pour le total univers
@@ -781,10 +761,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             //collection des annonceurs déjà traités pour une cxatégorie
             ArrayList inAdvertCategoryAlreadyUsedArr = new ArrayList();
             //collection des annonceurs déjà traités pour un support (media)
-            ArrayList inAdvertMediaAlreadyUsedArr = new ArrayList();
-            //			string OldIdAdvertiser="";				
-            //			string OldIdCatForAdvert="0";
-            //			string containt="";
+            ArrayList inAdvertMediaAlreadyUsedArr = new ArrayList();           
             #endregion
 
             #region Variables des supports
@@ -795,9 +772,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             //identifiant média précédent
             string OldIdVehicle = "-1";
             //libéllé d'un média
-            string Vehicle = "";
-            //nombre de média (vehicle)
-            //int nbVehicle=0;
+            string Vehicle = "";            
             //identifiant d'une catégorie
             string idCategory = "";
             //identifiant précédent d'une catégorie
@@ -815,9 +790,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             //identifiant du précédent support
             string OldIdMedia = "-1";
             //collection identifiant précédents supports
-            ArrayList OldIdMediaArr = new ArrayList();
-            //nombre de supports				
-            //double TotalUnivVehicleEvolution =(double)0.0;						
+            ArrayList OldIdMediaArr = new ArrayList();          				
             #endregion
 
             #region construction des listes de produits, media, annonceurs sélectionnés
@@ -837,11 +810,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             //Collecton des catégories déjà traité
             ArrayList inTotUnivCategoryAlreadyUsedArr = new ArrayList();
             //Collecton des supports déjà traité
-            ArrayList inTotUnivMediaAlreadyUsedArr = new ArrayList();
-            //investissement premier annonceur	
-            //	string  maxFirstAdvertInvest = "";
-            //investissement premiere référence	
-            //	string  maxFirstProdInvest = "";
+            ArrayList inTotUnivMediaAlreadyUsedArr = new ArrayList();           
             //investissment total univers par support période N
             string TotalUnivMediaInvest = "";
             //investissment total univers par support période N-1
@@ -857,27 +826,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             //investissment total univers période N
             string TotalUnivInvest = "";
             //investissment total univers période N-1
-            string TotalUnivInvest_N1 = "";
-            //Evolution N/N-1 total univers
-            //double TotalUnivEvolution = (double)0.0;
-            //Evolution N/N-1 par support
-            //double TotalUnivMediaEvolution = (double)0.0;	
-            //Evolution N/N-1 par catégorie
-            //double TotalUnivCategoryEvolution = (double)0.0;
+            string TotalUnivInvest_N1 = "";          
             //groupe de données pour univers
             DataSet dsTotalUniverse = null;
             //table de données pour univers
             DataTable dtTotalUniverse = null;
-            #region ancienne version
-            //groupe de données pour premiere référence univers
-            //DataSet dsTotalUniverseFirstProduct = null;
-            //table de données pour premiere référence univers
-            //DataTable dtTotalUniverseFirstProduct = null;
-            //groupe de données pour premier annonceur univers
-            //DataSet dsTotalUniverseFirstAvertiser = null;	
-            //table de donnée pour premier annonceur univers
-            //DataTable dtTotalUniverseFirstAvertiser = null;	
-            #endregion
+            
             #region variables 1er élément par média pour univers
             //table de données pour 1ere référence par média (vehicle) pour total univers
             DataTable dtUniverse1stProductByVeh = null;
@@ -3163,7 +3117,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             if (webSession.SecondaryProductUniverses.Count > 0 && webSession.SecondaryProductUniverses.ContainsKey(0))
             {
                 nomenclatureElementsGroup = webSession.SecondaryProductUniverses[0].GetGroup(0);
-                if (nomenclatureElementsGroup != null && nomenclatureElementsGroup.Count() > 0)
+                if (nomenclatureElementsGroup != null && nomenclatureElementsGroup.Count() > 0 && nomenclatureElementsGroup.Contains(TNSClassificationLevels.ADVERTISER))
                 {
                     tempListAsString = nomenclatureElementsGroup.GetAsString(TNSClassificationLevels.ADVERTISER);
                     if (tempListAsString != null && tempListAsString.Length > 0) _advertiserAccessList = tempListAsString;
@@ -3171,19 +3125,16 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 nomenclatureElementsGroup = null;
                 tempListAsString = "";
             }
-            //_advertiserAccessList = _webSession.GetSelection(_webSession.ReferenceUniversAdvertiser,CustomerRightConstante.type.advertiserAccess);
             if (webSession.SecondaryProductUniverses.Count > 0 && webSession.SecondaryProductUniverses.ContainsKey(1))
             {
                 nomenclatureElementsGroup = webSession.SecondaryProductUniverses[1].GetGroup(0);
-                if (nomenclatureElementsGroup != null && nomenclatureElementsGroup.Count() > 0)
+                if (nomenclatureElementsGroup != null && nomenclatureElementsGroup.Count() > 0 && nomenclatureElementsGroup.Contains(TNSClassificationLevels.ADVERTISER))
                 {
                     tempListAsString = nomenclatureElementsGroup.GetAsString(TNSClassificationLevels.ADVERTISER);
                     if (tempListAsString != null && tempListAsString.Length > 0) _competitorAdvertiserAccessList = tempListAsString;
                 }
                 tempListAsString = "";
-            }
-            //if(_webSession.CompetitorUniversAdvertiser[0]!=null)
-            //    _competitorAdvertiserAccessList = _webSession.GetSelection((TreeNode)_webSession.CompetitorUniversAdvertiser[0],CustomerRightConstante.type.advertiserAccess);		
+            }          
             if (FctUtilities.CheckedText.IsNotEmpty(_competitorAdvertiserAccessList))
             {
                 if (FctUtilities.CheckedText.IsNotEmpty(AdvertiserAccessList)) _advertiserAccessList += "," + CompetitorAdvertiserAccessList;

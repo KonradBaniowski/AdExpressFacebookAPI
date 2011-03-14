@@ -10,66 +10,13 @@
 		<meta content="Microsoft Visual Studio .NET 7.1" name="GENERATOR"/>
 		<meta content="C#" name="CODE_LANGUAGE"/>
 		<meta content="JavaScript" name="vs_defaultClientScript"/>
-		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema"/>
-		<script language="JavaScript" type="text/JavaScript">
-			function selectedItem(i){							
-				Form2.selectedItemIndex.value=i;				
-				Form2.CurrentYearRadioButton.checked=false;
-				Form2.PreviousYearRadioButton.checked=false;	
-				Form2.TwoYearAgoRadioButton.checked=false;	
-				Form2.CompetitorSudy1Ckbx.checked=false;
-				Form2.LastLoadedMonthRadiobutton.checked=false;	
-				if(Form2.LastLoadedWeekRadioButton!=null)Form2.LastLoadedWeekRadioButton.checked=false;							
-			}
-			
-			function selectedCheck(i){
-							
-				switch(i){
-					case 1 :
-						Form2.CompetitorSudy1Ckbx.checked=false;	
-						Form2.selectedItemIndex.value=i;
-						break;
-					case 9 :
-						Form2.CompetitorSudy1Ckbx.checked=false;	
-						Form2.selectedItemIndex.value=i;
-						break;	
-					case 2 :					
-						Form2.selectedItemIndex.value=i;	
-						break;
-					case 3 :					
-						Form2.selectedItemIndex.value=i;	
-						break;
-					case 4 :
-						Form2.CompetitorSudy2Ckbx.checked=false;
-						Form2.CompetitorSudy1Ckbx.checked=false;						
-						Form2.selectedItemIndex.value=i;													
-						break;
-					case 8 :
-						Form2.selectedComparativeStudy.value=i;	
-						Form2.CompetitorSudy2Ckbx.checked=false;
-						Form2.CurrentYearRadioButton.checked=false;
-						Form2.PreviousYearRadioButton.checked=false;
-						Form2.TwoYearAgoRadioButton.checked=false;
-						Form2.LastLoadedMonthRadiobutton.checked=false;	
-						if(Form2.LastLoadedWeekRadioButton!=null)Form2.LastLoadedWeekRadioButton.checked=false;						
-						Form2.selectedItemIndex.value=i;													
-						break;
-					case 5 :
-						Form2.TwoYearAgoRadioButton.checked=false;
-						Form2.CompetitorSudy1Ckbx.checked=false;
-						Form2.selectedComparativeStudy.value=i;																
-						break;
-					
-				}
-			}
-
-		</script>
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema"/>		
 		<meta http-equiv="expires" content="Wed, 23 Feb 1999 10:49:02 GMT"/>
 		<meta http-equiv="expires" content="0"/>
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta name="Cache-control" content="no-cache"/>
 	</head>
-	<body style="margin-bottom:0px; margin-left:0px; margin-top:0px;" onload="javascript:selectedItem(7);javascript:activateActiveX();" class="bodyStyle">
+	<body style="margin-bottom:0px; margin-left:0px; margin-top:0px;" onload="javascript:selectedItem(7,Form2);javascript:activateActiveX();" class="bodyStyle">
 		<form id="Form2" method="post" runat="server">
 			<table id="Table1" style="height:600px" cellspacing="0" cellpadding="0" width="800" border="0">
 			    <!-- Gradient -->
@@ -153,11 +100,11 @@
 																<table cellpadding="0" width="100%" border="0">
 																	<tr>
 																		<td>
-																			<p id="dateBegin" onclick="javascript:selectedItem(6)"><cc3:monthweekcalendarwebcontrol language="33" id="monthWeekCalendarBeginWebControl" runat="server" CalendarType="dateBegin" SkinID="MonthWeekCalendarWebControl1" 
+																			<p id="dateBegin" onclick="javascript:selectedItem(6,Form2)"><cc3:monthweekcalendarwebcontrol language="33" id="monthWeekCalendarBeginWebControl" runat="server" CalendarType="dateBegin" SkinID="MonthWeekCalendarWebControl1" 
 																					ShowOnlyCompleteDate="True"></cc3:monthweekcalendarwebcontrol></p>
 																		</td>
 																		<td>
-																			<p id="dateEnd" onclick="javascript:selectedItem(7)"><cc3:monthweekcalendarwebcontrol language="33" id="monthWeekCalendarEndWebControl" runat="server" CalendarType="dateEnd" SkinID="MonthWeekCalendarWebControl1" 
+																			<p id="dateEnd" onclick="javascript:selectedItem(7,Form2)"><cc3:monthweekcalendarwebcontrol language="33" id="monthWeekCalendarEndWebControl" runat="server" CalendarType="dateEnd" SkinID="MonthWeekCalendarWebControl1" 
 																					ShowOnlyCompleteDate="True"></cc3:monthweekcalendarwebcontrol></p>
 																		</td>
 																	</tr>
@@ -166,7 +113,7 @@
 														</tr>
 														<tr>
 															<td width="20">&nbsp;</td>
-															<td class="txtGris11Bold" onclick="javascript:selectedCheck(8)" colspan="3"><cc1:adexpresstext language="33" id="CompetitorStudy1Adexpresstext" runat="server" Code="1118" Width="56px"></cc1:adexpresstext>:
+															<td class="txtGris11Bold" onclick="javascript:selectedCheck(8,Form2)" colspan="3"><cc1:adexpresstext language="33" id="CompetitorStudy1Adexpresstext" runat="server" Code="1118" Width="56px"></cc1:adexpresstext>:
 																<asp:checkbox id="CompetitorSudy1Ckbx" runat="server"></asp:checkbox></td>
 														</tr>
 													</tbody>
@@ -195,7 +142,7 @@
 													<tr>
 														<td width="20">&nbsp;</td>
 														<td >
-															<p class="txtNoir11" onclick="javascript:selectedCheck(9)"><asp:radiobutton id="LastLoadedWeekRadioButton" runat="server" GroupName="SectorYearChoice"></asp:radiobutton>&nbsp;
+															<p class="txtNoir11" onclick="javascript:selectedCheck(9,Form2)"><asp:radiobutton id="LastLoadedWeekRadioButton" runat="server" GroupName="SectorYearChoice"></asp:radiobutton>&nbsp;
 																<cc1:adexpresstext language="33" id="LastLoadedWeekText" runat="server" Code="1618"></cc1:adexpresstext></p>
 														</td>
 													</tr>
@@ -203,34 +150,34 @@
 													<tr>
 														<td width="20">&nbsp;</td>
 														<td>
-															<p class="txtNoir11" onclick="javascript:selectedCheck(1)"><asp:radiobutton id="LastLoadedMonthRadiobutton" runat="server" GroupName="SectorYearChoice"></asp:radiobutton>&nbsp;
+															<p class="txtNoir11" onclick="javascript:selectedCheck(1,Form2)"><asp:radiobutton id="LastLoadedMonthRadiobutton" runat="server" GroupName="SectorYearChoice"></asp:radiobutton>&nbsp;
 																<cc1:adexpresstext language="33" id="LastLoadedMonthText" runat="server" Code="1619"></cc1:adexpresstext></p>
 														</td>
 													</tr>
 													<tr>
 														<td width="20">&nbsp;</td>
 														<td>
-															<p class="txtNoir11" onclick="javascript:selectedCheck(2)"><asp:radiobutton id="CurrentYearRadioButton" runat="server" GroupName="SectorYearChoice"></asp:radiobutton>&nbsp;
+															<p class="txtNoir11" onclick="javascript:selectedCheck(2,Form2)"><asp:radiobutton id="CurrentYearRadioButton" runat="server" GroupName="SectorYearChoice"></asp:radiobutton>&nbsp;
 																<cc1:adexpresstext language="33" id="CurrentYearAdExpressText" runat="server" Code="1119"></cc1:adexpresstext>&nbsp;(<%=currentYear%>)</p>
 														</td>
 													</tr>
 													<tr>
 														<td width="20">&nbsp;</td>
 														<td>
-															<p class="txtNoir11" onclick="javascript:selectedCheck(3)"><asp:radiobutton id="PreviousYearRadioButton" runat="server" GroupName="SectorYearChoice"></asp:radiobutton>&nbsp;
+															<p class="txtNoir11" onclick="javascript:selectedCheck(3,Form2)"><asp:radiobutton id="PreviousYearRadioButton" runat="server" GroupName="SectorYearChoice"></asp:radiobutton>&nbsp;
 																<cc1:adexpresstext language="33" id="PreviousYearAdExpressText" runat="server" Code="1121"></cc1:adexpresstext></p>
 														</td>
 													</tr>
 													<tr>
 														<td width="20">&nbsp;</td>
 														<td>
-															<p class="txtNoir11" onclick="javascript:selectedCheck(4)"><asp:radiobutton id="TwoYearAgoRadioButton" runat="server" GroupName="SectorYearChoice"></asp:radiobutton>&nbsp;
+															<p class="txtNoir11" onclick="javascript:selectedCheck(4,Form2)"><asp:radiobutton id="TwoYearAgoRadioButton" runat="server" GroupName="SectorYearChoice"></asp:radiobutton>&nbsp;
 																<cc1:adexpresstext language="33" id="TwoYearAgoAdexpresstext" runat="server" Code="1120"></cc1:adexpresstext></p>
 														</td>
 													</tr>
 													<tr>
 														<td width="20">&nbsp;</td>
-														<td class="txtGris11Bold" style="HEIGHT: 17px" onclick="javascript:selectedCheck(5)"
+														<td class="txtGris11Bold" style="HEIGHT: 17px" onclick="javascript:selectedCheck(5,Form2)"
 															colspan="2"><cc1:adexpresstext language="33" id="CompetitorStudy2Adexpresstext" runat="server" Code="1118" Width="24px"></cc1:adexpresstext>:
 															<asp:checkbox id="CompetitorSudy2Ckbx" runat="server" CssClass="txtNoir11"></asp:checkbox></td>
 													</tr>

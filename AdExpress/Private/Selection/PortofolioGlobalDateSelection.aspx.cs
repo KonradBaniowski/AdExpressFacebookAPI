@@ -41,6 +41,8 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpressI.Date;
+using TNS.AdExpressI.Date.DAL;
+using TNS.AdExpress.Constantes.Web;
 
 /// <summary>
 /// Page de sélection des dates (global)
@@ -105,6 +107,12 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
 			string selectionType = "";
 			string disponibilityType = "";
 
+
+            CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.dateDAL];
+            object[] param = new object[1];
+            param[0] = _webSession;
+            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+
 			if (_webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA) {
 
 				if (Page.Request.Form.GetValues("selectionType") != null) selectionType = Page.Request.Form.GetValues("selectionType")[0];
@@ -122,34 +130,25 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
 			GlobalCalendarWebControl1.PeriodSelectionTitle = GestionWeb.GetWebWord(2275, _webSession.SiteLanguage);
 			GlobalCalendarWebControl1.Language = _webSession.SiteLanguage;
 
-			if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE) {
-				GlobalCalendarWebControl1.PeriodRestrictedLabel = GestionWeb.GetWebWord(2280, _webSession.SiteLanguage);
-				GlobalCalendarWebControl1.StartYear = DateTime.Now.AddYears(-1).Year;
-				if (DateTime.Now.Month == 12) GlobalCalendarWebControl1.StopYear = (DateTime.Now.AddYears(1)).Year;
-				else {
-					GlobalCalendarWebControl1.StopYear = DateTime.Now.Year;
-				}
-				isDynamicModule = true;
-			}
-			else {
-				GlobalCalendarWebControl1.PeriodRestrictedLabel = GestionWeb.GetWebWord(2284, _webSession.SiteLanguage);
-				GlobalCalendarWebControl1.StartYear = DateTime.Now.AddYears(-2).Year;
-			}
+			
+		    GlobalCalendarWebControl1.PeriodRestrictedLabel = GestionWeb.GetWebWord(2284, _webSession.SiteLanguage);
+            GlobalCalendarWebControl1.StartYear = dateDAL.GetCalendarStartDate();
+			
 
-			if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA)
-				GlobalCalendarWebControl1.IsRestricted = false;
-			else {
+			
 				GlobalCalendarWebControl1.IsRestricted = true;
 				selectedVehicle = ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID;
-                if (IsPostBack) {
+                if (IsPostBack)
+                {
                     if (this.ViewState["FirstDayNotEnabledVS"] != null)
                         GlobalCalendarWebControl1.FirstDayNotEnable = (DateTime)this.ViewState["FirstDayNotEnabledVS"];
                 }
-                else {
+                else
+                {
                     GlobalCalendarWebControl1.FirstDayNotEnable = WebFunctions.Dates.GetFirstDayNotEnabled(_webSession, selectedVehicle, GlobalCalendarWebControl1.StartYear, _webSession.Source);
                     ViewState.Add("FirstDayNotEnabledVS", GlobalCalendarWebControl1.FirstDayNotEnable);
                 }
-			}
+			
 			#region Script
 			//Gestion de la sélection comparative
 			if (!Page.ClientScript.IsClientScriptBlockRegistered("PostBack")) {
@@ -224,6 +223,7 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
 	protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
 		System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
 		yearDateList.WebSession = _webSession;
+        yearDateList.NbYearsToDisplay = WebApplicationParameters.DataNumberOfYear;
 		monthDateList.WebSession = _webSession;
 		weekDateList.WebSession = _webSession;
 		dayDateList.WebSession = _webSession;
@@ -313,61 +313,35 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
 	/// </summary>
 	public void calendarValidation() {
 		// On sauvegarde les données
-		try {
-			DateTime endDate;
-			DateTime beginDate;
-			DateTime lastDayEnable = DateTime.Now;
+        try
+        {
+            DateTime endDate;
+            DateTime beginDate;
+            DateTime lastDayEnable = DateTime.Now;
 
-			_webSession.DetailPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.dayly;
-			_webSession.PeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDate;
-			_webSession.PeriodBeginningDate = GlobalCalendarWebControl1.SelectedStartDate.ToString();
-			_webSession.PeriodEndDate = GlobalCalendarWebControl1.SelectedEndDate.ToString();
+            _webSession.DetailPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.dayly;
+            _webSession.PeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDate;
+            _webSession.PeriodBeginningDate = GlobalCalendarWebControl1.SelectedStartDate.ToString();
+            _webSession.PeriodEndDate = GlobalCalendarWebControl1.SelectedEndDate.ToString();
 
-			endDate = new DateTime(Convert.ToInt32(_webSession.PeriodEndDate.Substring(0, 4)), Convert.ToInt32(_webSession.PeriodEndDate.Substring(4, 2)), Convert.ToInt32(_webSession.PeriodEndDate.Substring(6, 2)));
-			beginDate = new DateTime(Convert.ToInt32(_webSession.PeriodBeginningDate.Substring(0, 4)), Convert.ToInt32(_webSession.PeriodBeginningDate.Substring(4, 2)), Convert.ToInt32(_webSession.PeriodBeginningDate.Substring(6, 2)));
+            endDate = new DateTime(Convert.ToInt32(_webSession.PeriodEndDate.Substring(0, 4)), Convert.ToInt32(_webSession.PeriodEndDate.Substring(4, 2)), Convert.ToInt32(_webSession.PeriodEndDate.Substring(6, 2)));
+            beginDate = new DateTime(Convert.ToInt32(_webSession.PeriodBeginningDate.Substring(0, 4)), Convert.ToInt32(_webSession.PeriodBeginningDate.Substring(4, 2)), Convert.ToInt32(_webSession.PeriodBeginningDate.Substring(6, 2)));
 
-			if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE) {
 
-				switch (periodCalendarDisponibilityType) {
+            if (CompareDateEnd(DateTime.Now, endDate) || CompareDateEnd(beginDate, DateTime.Now))
+                _webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_webSession.PeriodBeginningDate, _webSession.PeriodEndDate);
+            else
+                _webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_webSession.PeriodBeginningDate, DateTime.Now.ToString("yyyyMMdd"));
 
-					case WebConstantes.globalCalendar.periodDisponibilityType.currentDay:
-						lastDayEnable = DateTime.Now;
-						break;
-					case WebConstantes.globalCalendar.periodDisponibilityType.lastCompletePeriod:
-						lastDayEnable = GlobalCalendarWebControl1.FirstDayNotEnable.AddDays(-1);
-						break;
 
-				}
-
-				if (CompareDateEnd(lastDayEnable, endDate) || CompareDateEnd(beginDate, DateTime.Now))
-					_webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_webSession.PeriodBeginningDate, _webSession.PeriodEndDate, true, comparativePeriodCalendarType, periodCalendarDisponibilityType);
-				else {
-
-					switch (periodCalendarDisponibilityType) {
-
-						case WebConstantes.globalCalendar.periodDisponibilityType.currentDay:
-							_webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_webSession.PeriodBeginningDate, lastDayEnable.ToString("yyyyMMdd"), true, comparativePeriodCalendarType, periodCalendarDisponibilityType);
-							break;
-						case WebConstantes.globalCalendar.periodDisponibilityType.lastCompletePeriod:
-							_webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_webSession.PeriodBeginningDate, lastDayEnable.ToString("yyyyMMdd"), true, comparativePeriodCalendarType, periodCalendarDisponibilityType);
-							break;
-					}
-				}
-			}
-			else {
-				if (CompareDateEnd(DateTime.Now, endDate) || CompareDateEnd(beginDate, DateTime.Now))
-					_webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_webSession.PeriodBeginningDate, _webSession.PeriodEndDate);
-				else
-					_webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_webSession.PeriodBeginningDate, DateTime.Now.ToString("yyyyMMdd"));
-			}
-
-			_webSession.Save();
-		}
-		catch (System.Exception e) {
-			_webSession.PeriodBeginningDate = "";
-			_webSession.PeriodEndDate = "";
-			throw (new AdExpressException.AnalyseDateSelectionException(GestionWeb.GetWebWord(885, _webSession.SiteLanguage)));
-		}
+            _webSession.Save();
+        }
+        catch (System.Exception e)
+        {
+            _webSession.PeriodBeginningDate = "";
+            _webSession.PeriodEndDate = "";
+            throw (new AdExpressException.AnalyseDateSelectionException(GestionWeb.GetWebWord(885, _webSession.SiteLanguage)));
+        }
 	}
 	#endregion
 
@@ -408,7 +382,8 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
 		parameters[0] = _webSession;
 		parameters[1] = TNS.AdExpress.Constantes.DB.TableType.Type.dataVehicle;
 		Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
-		return portofolioResult.GetVisualList(DateTime.Now.AddYears(-2).ToString("yyyy0101"), DateTime.Now.ToString("yyyyMMdd"));
+        int nbYears = WebApplicationParameters.DataNumberOfYear-1;
+        return portofolioResult.GetVisualList(DateTime.Now.AddYears(-nbYears).ToString("yyyy0101"), DateTime.Now.ToString("yyyyMMdd"));
 		//return null;
 	}
 	#endregion

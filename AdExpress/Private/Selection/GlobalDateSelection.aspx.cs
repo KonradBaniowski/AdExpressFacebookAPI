@@ -93,18 +93,9 @@ namespace AdExpress.Private.Selection {
                 if (Request.Form.GetValues("selectedItemIndex") != null) selectedIndex = int.Parse(Request.Form.GetValues("selectedItemIndex")[0]);
                 #endregion
                 
-                #region Textes et langage du site
-                //Modification de la langue pour les Textes AdExpress
-                //for (int i = 0; i < this.Controls.Count; i++) {
-                //    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
-                //}
+                #region Textes et langage du site               
                 ModuleTitleWebControl1.CustomerWebSession = _webSession;
                 InformationWebControl1.Language = _webSession.SiteLanguage;
-
-                //validateButton1.ImageUrl = "/Images/" + _siteLanguage + "/button/valider_up.gif";
-                //validateButton1.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/valider_down.gif";
-                //validateButton2.ImageUrl = "/Images/" + _siteLanguage + "/button/valider_up.gif";
-                //validateButton2.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/valider_down.gif";
                 #endregion
 
                 #region Get period selection type
@@ -124,7 +115,10 @@ namespace AdExpress.Private.Selection {
                 string disponibilityType = "";
 
                 CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.dateDAL];
-                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
+                object[] param = new object[1];
+                param[0] = _webSession;
+                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+
 
                 if (_webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA
                     && _webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_MANDATAIRES){
@@ -145,8 +139,8 @@ namespace AdExpress.Private.Selection {
                 GlobalCalendarWebControl1.Language = _webSession.SiteLanguage;
                 
                 if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE) {
-                    GlobalCalendarWebControl1.PeriodRestrictedLabel = GestionWeb.GetWebWord(2280, _webSession.SiteLanguage); 
-                    GlobalCalendarWebControl1.StartYear = DateTime.Now.AddYears(-1).Year;
+                    GlobalCalendarWebControl1.PeriodRestrictedLabel = GestionWeb.GetWebWord(2280, _webSession.SiteLanguage);
+                    GlobalCalendarWebControl1.StartYear = dateDAL.GetCalendarStartDate();
                     if (DateTime.Now.Month == 12) GlobalCalendarWebControl1.StopYear = (DateTime.Now.AddYears(1)).Year;
                     else {
                         GlobalCalendarWebControl1.StopYear = DateTime.Now.Year;
@@ -154,8 +148,8 @@ namespace AdExpress.Private.Selection {
                     isDynamicModule = true;
                 }
                 else {
-                    GlobalCalendarWebControl1.PeriodRestrictedLabel = GestionWeb.GetWebWord(2284, _webSession.SiteLanguage); 
-                    GlobalCalendarWebControl1.StartYear = DateTime.Now.AddYears(-2).Year;
+                    GlobalCalendarWebControl1.PeriodRestrictedLabel = GestionWeb.GetWebWord(2284, _webSession.SiteLanguage);
+                    GlobalCalendarWebControl1.StartYear = dateDAL.GetCalendarStartDate();
                 }
 
                 if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA 
@@ -249,6 +243,7 @@ namespace AdExpress.Private.Selection {
         protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
             System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
             yearDateList.WebSession = _webSession;
+            yearDateList.NbYearsToDisplay = WebApplicationParameters.DataNumberOfYear;
             monthDateList.WebSession = _webSession;
             weekDateList.WebSession = _webSession;
             dayDateList.WebSession = _webSession;

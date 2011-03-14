@@ -495,14 +495,16 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 			de la pérode N-1,nombre de références et le budget moyen 
 			*/
             //Groupe de données pour annonceurs de références ou concurrents
-            DataSet ds = _dalLayer.GetSeasonalityTblData(true, true);
+            DataSet ds = null;
             DataTable dt = null;
             object[] oTotalAdvert = null;
             object[,] tab = null;
-            if (ds != null) dt = ds.Tables[0];
-            if ((_referenceIDS.Count > 0 || _competitorIDS.Count > 0) && dt != null)
+           
+            if ((_referenceIDS.Count > 0 || _competitorIDS.Count > 0) )
             {
-                if (dt.Rows.Count > 0)
+                ds = _dalLayer.GetSeasonalityTblData(true, true);
+                if (ds != null) dt = ds.Tables[0];
+                if (dt != null && dt.Rows.Count > 0)
                 {
                     oTotalAdvert = GetGlobalParams(dt, true,showProduct);
                     //initialisation du tableau de résultats pour annonceurs de références ou concurrents
@@ -1211,14 +1213,16 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             int downLoadDate = _session.DownLoadDate;
             if (DateTime.Now.Year > downLoadDate)
             {
-                if (PeriodEndDate.Year == DateTime.Now.Year - 1) year = 0;
-                else if (PeriodEndDate.Year == DateTime.Now.Year - 2) year = 1;
-                else if (PeriodEndDate.Year == DateTime.Now.Year - 3) year = 2;
+                year = DateTime.Now.Year - (PeriodEndDate.Year+1);
+                //if (PeriodEndDate.Year == DateTime.Now.Year - 1) year = 0;
+                //else if (PeriodEndDate.Year == DateTime.Now.Year - 2) year = 1;
+                //else if (PeriodEndDate.Year == DateTime.Now.Year - 3) year = 2;
             }
             else
             {
-                if (PeriodEndDate.Year == DateTime.Now.Year - 1) year = 1;
-                else if (PeriodEndDate.Year == DateTime.Now.Year - 2) year = 2;
+                year = DateTime.Now.Year - PeriodEndDate.Year;
+                //if (PeriodEndDate.Year == DateTime.Now.Year - 1) year = 1;
+                //else if (PeriodEndDate.Year == DateTime.Now.Year - 2) year = 2;
             }
             for (int l = 1; l < nbTabLines; l++)
             {

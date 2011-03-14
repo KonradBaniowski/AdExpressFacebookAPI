@@ -82,6 +82,12 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// Get if data items shiould be in lower case
         /// </summary>
         protected bool _toLowerCase = false;
+        /// <summary>
+        /// Check if can filtered query with selection
+        /// </summary>
+        protected bool _filterWithProductSelection = false;
+
+     
 		#endregion
 
 		#region Constructors
@@ -139,6 +145,26 @@ namespace TNS.AdExpressI.Classification.DAL {
             get { return _filters; }
             set { _filters = value; }
         }
+        /// <summary>
+        /// Get if can filtered query with selection
+        /// </summary>
+        public bool FilterWithProductSelection
+        {
+            get { return _filterWithProductSelection; }
+            set { _filterWithProductSelection = value; }
+        }
+
+        /// <summary>
+        ///  Get if data items shiould be in lower case
+        /// </summary>
+        public bool ToLowerCase
+        {
+            get
+            {
+                return _toLowerCase;
+            }
+        }
+
         #endregion
 
         #region IClassificationDAL Implementation
@@ -285,6 +311,7 @@ namespace TNS.AdExpressI.Classification.DAL {
             ClassificationItemsDAL engineDal = new ClassificationItemsDAL(_session,_dimension);
             engineDal.DBSchema = _dBSchema;
             engineDal.Filters = _filters;
+            engineDal.FilterWithProductSelection = _filterWithProductSelection;
             return engineDal.GetItems(classificationLevelId, wordToSearch);
 		}
 
@@ -370,6 +397,7 @@ namespace TNS.AdExpressI.Classification.DAL {
             ClassificationItemsDAL engineDal = new ClassificationItemsDAL(_session, _dimension);
             engineDal.DBSchema = _dBSchema;
             engineDal.Filters = _filters;
+            engineDal.FilterWithProductSelection = _filterWithProductSelection;
             return engineDal.GetItems(classificationLevelId, selectedClassificationLevelIds, selectedClassificationLevelLabel);
 		}
 
@@ -435,6 +463,7 @@ namespace TNS.AdExpressI.Classification.DAL {
                 throw (new ArgumentException("Invalid dBSchema parameter"));//Excepted for france data base, can be null for other country         
             ClassificationItemsDAL engineDal = new ClassificationItemsDAL(_session, _dimension);
             engineDal.DBSchema = _dBSchema;
+            engineDal.FilterWithProductSelection = _filterWithProductSelection;
             return engineDal.GetSelectedItems(classificationLevelLabel, idList);
 		}
 
@@ -497,17 +526,6 @@ namespace TNS.AdExpressI.Classification.DAL {
             return engineDal.GetRecapItems(classificationLevelLabel, customerRightType);
 		}
 		#endregion
-
-        /// <summary>
-        ///  Get if data items shiould be in lower case
-        /// </summary>
-        public bool ToLowerCase
-        {
-            get
-            {
-                return _toLowerCase;
-            }
-        }
 
 		#endregion
 	}

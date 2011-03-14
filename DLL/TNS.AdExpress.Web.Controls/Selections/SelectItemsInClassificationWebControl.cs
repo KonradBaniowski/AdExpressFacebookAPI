@@ -83,6 +83,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
         /// </summary>
         protected Dictionary<long, string> _filters = new Dictionary<long, string>();
        
+       
 		#endregion
 
 		#region Accesseurs
@@ -162,7 +163,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             int i = 0;
             foreach(int filterId in _filters.Keys)
                 js.Append("\r\n\t obj.Filters[" + (i++) + "] = '" + filterId + ";" + _filters[filterId] + "';");
-
+            js.Append("\r\n\t obj.ForSelectionPage = '" + _forSelectionPage + "';");
 			js.Append("\r\n }");
 			js.Append("\r\n\t SaveSessionParametersScript(savedParameters);");
 			js.Append("\r\n-->\r\n</SCRIPT>");
@@ -186,6 +187,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                     _filters.Add(int.Parse(s[0]), s[1]);
                 }
             }
+            if (o.Contains("ForSelectionPage")) _forSelectionPage = bool.Parse(o["ForSelectionPage"].Value.Replace("\"", ""));
 		}
 		#endregion
 
@@ -250,7 +252,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				bool first = true;
 
 				universe =  (universeLabel != null && universeLabel.Length>0) ? new TNS.AdExpress.Classification.AdExpressUniverse(universeLabel,dimension) : new TNS.AdExpress.Classification.AdExpressUniverse(dimension);
-
+                universe.Security = security;
 				foreach (string currentKey in page.Request.Form.AllKeys) {
 					if (currentKey.IndexOf("TreeLevelSelectedIds") > -1) {
 						st = page.Request.Form.GetValues(currentKey);
@@ -295,6 +297,100 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				throw new TNS.AdExpress.Web.Controls.Exceptions.SelectItemsInClassificationWebControlException("Impossible de sauvegarder la selection d'univers.", err);
 			}
 		}
+
+        /// <summary>
+        /// Get univese selection 
+        /// </summary>
+        /// <param name="webSession">Session</param>
+        /// <param name="page">curent page</param>
+        /// <param name="dimension">dimension (product or advertiser)</param>
+        /// <param name="security">security level odf univers object</param>
+        /// <returns>AdExpressUniverse</returns>
+        public virtual Dictionary<int, TNS.Classification.Universe.NomenclatureElementsGroup> GetNomenclatureGroupsSelection(WebSession webSession, Page page, TNS.Classification.Universe.Dimension dimension, TNS.Classification.Universe.Security security)
+        {
+            return GetNomenclatureGroupsSelection(webSession, page, dimension, security, null);
+        }
+        /// <summary>
+        /// Get univese selection 
+        /// </summary>
+        /// <param name="webSession">Session</param>
+        /// <param name="page">curent page</param>
+        /// <param name="dimension">dimension (product or advertiser)</param>
+        /// <param name="security">security level odf univers object</param>
+        /// <param name="universeLabel">Universe label</param>
+        /// <returns>AdExpressUniverse</returns>
+        public virtual Dictionary<int, TNS.Classification.Universe.NomenclatureElementsGroup> GetNomenclatureGroupsSelection(WebSession webSession, Page page, TNS.Classification.Universe.Dimension dimension, TNS.Classification.Universe.Security security, string universeLabel)
+        {
+            try
+            {
+                string selectedIds = "";
+                string[] st = null;
+                string[] tempArr = null, tempArr2 = null;
+                long levelId = -1;
+                UniverseAccessType accessType;
+                string oldTreeViewId = "";
+                TNS.Classification.Universe.NomenclatureElementsGroup group = null;
+                Dictionary<int, TNS.Classification.Universe.NomenclatureElementsGroup> nGroups = new Dictionary<int,NomenclatureElementsGroup>();
+                TNS.AdExpress.Classification.AdExpressUniverse universe = null;
+                bool first = true;
+                int index = -1;
+                const string TREE_PREFIX = "TreeLevelSelectedIds";
+
+                universe = (universeLabel != null && universeLabel.Length > 0) ? new TNS.AdExpress.Classification.AdExpressUniverse(universeLabel, dimension) : new TNS.AdExpress.Classification.AdExpressUniverse(dimension);
+                universe.Security = security;
+                foreach (string currentKey in page.Request.Form.AllKeys)
+                {
+                    if (currentKey.IndexOf(TREE_PREFIX) > -1)
+                    {
+                        st = page.Request.Form.GetValues(currentKey);
+                        if (st != null && st.Length > 0 && st[0].Length > 0)
+                        {
+                            selectedIds = st[0].ToString();
+                            tempArr = currentKey.Split('_');
+
+                            accessType = (UniverseAccessType)Int64.Parse(tempArr[1].ToString());
+                            if (!oldTreeViewId.Equals(tempArr[0].ToString()))
+                            {
+                                if (!first) nGroups.Add(index, group);
+                                group = new TNS.Classification.Universe.NomenclatureElementsGroup(Int64.Parse(tempArr[1].ToString()), accessType);
+                            }
+
+                            levelId = Int64.Parse(tempArr[2].ToString());
+                            tempArr2 = selectedIds.Split(',');
+                            if (tempArr2 != null && tempArr2.Length > _nbMaxItemByLevel) throw new TNS.Classification.Universe.CapacityException("Dépassement du nombre d'éléments autorisés pour un niveau");
+
+                            group.AddItems(levelId, selectedIds);
+                            oldTreeViewId = tempArr[0].ToString();
+                            first = false;
+                            index = int.Parse(tempArr[0].Substring(TREE_PREFIX.Length));
+                        }
+                    }
+                }
+                if (group != null && group.Count() > 0)
+                    nGroups.Add(index, group);
+
+                return nGroups;
+
+
+            }
+            catch (Exception err)
+            {
+                if (err.GetType() == typeof(TNS.Classification.Universe.SecurityException) ||
+                    err.GetBaseException().GetType() == typeof(TNS.Classification.Universe.SecurityException))
+                {
+                    throw new TNS.Classification.Universe.SecurityException("Permission refusée pour la sauvegarde des univers", err);
+                }
+                else if (err.GetType() == typeof(TNS.Classification.Universe.CapacityException))
+                {
+                    throw new TNS.Classification.Universe.CapacityException("Dépassement du nombre d'éléments autorisés pour un niveau", err);
+                }
+                else if (err.GetType() == typeof(TNS.AdExpress.Domain.Exceptions.NoDataException))
+                {
+                    throw new TNS.AdExpress.Domain.Exceptions.NoDataException();
+                }
+                throw new TNS.AdExpress.Web.Controls.Exceptions.SelectItemsInClassificationWebControlException("Impossible de sauvegarder la selection d'univers.", err);
+            }
+        }
 		#endregion
 
 		#region ShowUniverse
@@ -353,7 +449,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
 						for (int j = 0; j < levelIdsList.Count; j++) {
 
-                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),dataLanguage,source);
+                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),dataLanguage,source);                           
 							if (universeItems != null) {
 								itemIdList = universeItems.IdListOrderByClassificationItem;
 								if (itemIdList != null && itemIdList.Count > 0) {
@@ -1155,6 +1251,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                 classficationDAL.DBSchema = _dBSchema;
                 _lowerCase = classficationDAL.ToLowerCase;
                 classficationDAL.Filters = _filters;
+                classficationDAL.FilterWithProductSelection = FilterWithProductSelection();
 				return classficationDAL.GetItems(universeLevelId, selectedItemIds, UniverseLevels.Get(universeLevelOfSelectedItem).TableName).Tables[0];
 			}
 			catch (Exception err) {
@@ -1170,8 +1267,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <returns></returns>
 		protected override DataTable GetData(int universeLevelId, string wordToSearch) {
 			try {
-				_webSession = (WebSession)WebSession.Load(_idSession);
-
+				_webSession = (WebSession)WebSession.Load(_idSession);              
 				CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];                
 				if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
 				object[] param = new object[2];
@@ -1179,14 +1275,18 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				param[1] = _dimension;
                 TNS.AdExpressI.Classification.DAL.ClassificationDAL classficationDAL = (TNS.AdExpressI.Classification.DAL.ClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                 classficationDAL.DBSchema = _dBSchema;
-                _lowerCase = classficationDAL.ToLowerCase;
-                classficationDAL.Filters = _filters;
+                _lowerCase = classficationDAL.ToLowerCase;             
+                classficationDAL.FilterWithProductSelection = FilterWithProductSelection();
+                classficationDAL.Filters = _filters;     
+               
                 return classficationDAL.GetItems(universeLevelId, wordToSearch).Tables[0];
 			}
 			catch (Exception err) {
 				throw new TNS.AdExpress.Web.Controls.Exceptions.SelectItemsInClassificationWebControlException("Impossible d'obtenir les données.", err);
 			}
 		}
+
+      
 		#endregion
 
 		#region OnAjaxMethodError
@@ -1218,6 +1318,46 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
 		#endregion
 
+        #region GetHeaderCode
+        /// <summary>
+        /// Get header code
+        /// </summary>
+        /// <param name="accessType">access type</param>
+        /// <param name="j">position of tree</param>
+        /// <returns>header code</returns>
+        protected override int GetHeaderCode(AccessType accessType, int j)
+        {
+            if ((_webSession.CurrentModule == WebConstantes.Module.Name.TABLEAU_DYNAMIQUE
+                 || _webSession.CurrentModule == WebConstantes.Module.Name.INDICATEUR) 
+                 && !_forSelectionPage && accessType == AccessType.includes)
+            {
+                switch (j)
+                {
+                    case 0: return 2562;
+                    case 1: return 2563;
+                    default:
+                        throw new Exceptions.SelectItemsInClassificationWebControlException("Impossible to identify classification Tree");
+                }
+            }
+            return base.GetHeaderCode(accessType, j);
+        }
+
+        #endregion
+
+        #region FilterWithProductSelection
+        protected virtual bool FilterWithProductSelection()
+        {
+            return ((_webSession.CurrentModule == WebConstantes.Module.Name.TABLEAU_DYNAMIQUE
+                 || _webSession.CurrentModule == WebConstantes.Module.Name.INDICATEUR)
+                 && !_forSelectionPage);
+
+
+        }
+        #endregion
+        
+
+        
+     
 
 		
 	}

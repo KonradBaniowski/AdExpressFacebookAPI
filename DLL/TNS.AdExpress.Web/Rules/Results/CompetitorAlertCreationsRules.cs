@@ -121,7 +121,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 					tab[i,CstWeb.PressInsertionsColumnIndex.FORMAT_INDEX]=current["format"].ToString();
                     tab[i, CstWeb.PressInsertionsColumnIndex.AREA_PAGE_INDEX] = float.Parse(current[UnitsInformation.List[CstWeb.CustomerSessions.Unit.pages].Id.ToString()].ToString()) / 1000;
 					tab[i,CstWeb.PressInsertionsColumnIndex.COLOR_INDEX]=current["color"].ToString();
-					tab[i,CstWeb.PressInsertionsColumnIndex.EXPENDITURE_INDEX]=current[UnitsInformation.List[CstWeb.CustomerSessions.Unit.euro].Id.ToString()].ToString();
+                    tab[i, CstWeb.PressInsertionsColumnIndex.EXPENDITURE_INDEX] = current[UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()].ToString();
 					tab[i,CstWeb.PressInsertionsColumnIndex.VEHICLE_INDEX]=current["vehicle"].ToString();
 					tab[i,CstWeb.PressInsertionsColumnIndex.CATEGORY_INDEX]=current["category"].ToString();
 					tab[i,CstWeb.PressInsertionsColumnIndex.MEDIA_INDEX]=current["media"].ToString();
@@ -208,7 +208,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 				tab[i,CstWeb.TVInsertionsColumnIndex.RANK_INDEX]=currentRow["id_rank"].ToString();
 				tab[i,CstWeb.TVInsertionsColumnIndex.BREAK_DURATION_INDEX]=currentRow["duration_commercial_break"].ToString();
 				tab[i,CstWeb.TVInsertionsColumnIndex.BREAK_SPOTS_NB_INDEX]=currentRow["number_message_commercial_brea"].ToString();
-				tab[i,CstWeb.TVInsertionsColumnIndex.EXPENDITURE_INDEX]=currentRow[UnitsInformation.List[CstWeb.CustomerSessions.Unit.euro].Id.ToString()].ToString();
+                tab[i, CstWeb.TVInsertionsColumnIndex.EXPENDITURE_INDEX] = currentRow[UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()].ToString();
 				tab[i,CstWeb.TVInsertionsColumnIndex.FILES_INDEX]=currentRow["associated_file"].ToString();
 				tab[i,CstWeb.TVInsertionsColumnIndex.VEHICLE_INDEX]=currentRow["vehicle"].ToString();
 				tab[i,CstWeb.TVInsertionsColumnIndex.CATEGORY_INDEX]=currentRow["category"].ToString();
@@ -264,7 +264,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 				tab[i,CstWeb.RadioInsertionsColumnIndex.RANK_WAP_INDEX]=currentRow["rank_wap"].ToString();
 				tab[i,CstWeb.RadioInsertionsColumnIndex.DURATION_BREAK_WAP_INDEX]=currentRow["duration_com_break_wap"].ToString();
 				tab[i,CstWeb.RadioInsertionsColumnIndex.BREAK_SPOTS_WAP_NB_INDEX]=currentRow["number_spot_com_break_wap"].ToString();
-				tab[i,CstWeb.RadioInsertionsColumnIndex.EXPENDITURE_INDEX]=currentRow[UnitsInformation.List[CstWeb.CustomerSessions.Unit.euro].Id.ToString()].ToString();
+                tab[i, CstWeb.RadioInsertionsColumnIndex.EXPENDITURE_INDEX] = currentRow[UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()].ToString();
 				tab[i,CstWeb.RadioInsertionsColumnIndex.FILE_INDEX]=currentRow["associated_file"].ToString();
 				tab[i,CstWeb.RadioInsertionsColumnIndex.VEHICLE_INDEX]=currentRow["vehicle"].ToString();
 				tab[i,CstWeb.RadioInsertionsColumnIndex.CATEGORY_INDEX]=currentRow["CATEGORY"].ToString();
@@ -350,7 +350,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 					tab[i, CstWeb.OutDoorInsertionsColumnIndex.TYPE_BOARD_INDEX] = (currentRow["type_board"] != System.DBNull.Value) ? currentRow["type_board"].ToString() : "";
 					tab[i, CstWeb.OutDoorInsertionsColumnIndex.TYPE_SALE_INDEX] = (currentRow["type_sale"] != System.DBNull.Value) ? currentRow["type_sale"].ToString() : "";
 					tab[i, CstWeb.OutDoorInsertionsColumnIndex.POSTER_NETWORK_INDEX] = (currentRow["poster_network"] != System.DBNull.Value) ? currentRow["poster_network"].ToString() : "";
-					tab[i, CstWeb.OutDoorInsertionsColumnIndex.EXPENDITURE_INDEX] = (currentRow[UnitsInformation.List[CstWeb.CustomerSessions.Unit.euro].Id.ToString()] != System.DBNull.Value) ? currentRow[UnitsInformation.List[CstWeb.CustomerSessions.Unit.euro].Id.ToString()].ToString() : "";
+                    tab[i, CstWeb.OutDoorInsertionsColumnIndex.EXPENDITURE_INDEX] = (currentRow[UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()] != System.DBNull.Value) ? currentRow[UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()].ToString() : "";
 					tab[i, CstWeb.OutDoorInsertionsColumnIndex.VEHICLE_INDEX] = (currentRow["vehicle"] != System.DBNull.Value) ? currentRow["vehicle"].ToString() : "";
 					tab[i, CstWeb.OutDoorInsertionsColumnIndex.CATEGORY_INDEX] = (currentRow["category"] != System.DBNull.Value) ? currentRow["category"].ToString() : "";
 					tab[i, CstWeb.OutDoorInsertionsColumnIndex.MEDIA_INDEX] = (currentRow["media"] != System.DBNull.Value) ? currentRow["media"].ToString() : "";					
@@ -431,7 +431,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
                 tab[i, CstWeb.InStoreInsertionsColumnIndex.TYPE_BOARD_INDEX] = (currentRow["type_board"] != System.DBNull.Value) ? currentRow["type_board"].ToString() : "";
                 tab[i, CstWeb.InStoreInsertionsColumnIndex.TYPE_SALE_INDEX] = (currentRow["type_sale"] != System.DBNull.Value) ? currentRow["type_sale"].ToString() : "";
                 tab[i, CstWeb.InStoreInsertionsColumnIndex.POSTER_NETWORK_INDEX] = (currentRow["poster_network"] != System.DBNull.Value) ? currentRow["poster_network"].ToString() : "";
-                tab[i, CstWeb.InStoreInsertionsColumnIndex.EXPENDITURE_INDEX] = (currentRow[UnitsInformation.List[CstWeb.CustomerSessions.Unit.euro].Id.ToString()] != System.DBNull.Value) ? currentRow[UnitsInformation.List[CstWeb.CustomerSessions.Unit.euro].Id.ToString()].ToString() : "";
+                tab[i, CstWeb.InStoreInsertionsColumnIndex.EXPENDITURE_INDEX] = (currentRow[UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()] != System.DBNull.Value) ? currentRow[UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()].ToString() : "";
                 tab[i, CstWeb.InStoreInsertionsColumnIndex.VEHICLE_INDEX] = (currentRow["vehicle"] != System.DBNull.Value) ? currentRow["vehicle"].ToString() : "";
                 tab[i, CstWeb.InStoreInsertionsColumnIndex.CATEGORY_INDEX] = (currentRow["category"] != System.DBNull.Value) ? currentRow["category"].ToString() : "";
                 tab[i, CstWeb.InStoreInsertionsColumnIndex.MEDIA_INDEX] = (currentRow["media"] != System.DBNull.Value) ? currentRow["media"].ToString() : "";

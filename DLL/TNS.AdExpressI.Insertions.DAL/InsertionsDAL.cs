@@ -342,7 +342,9 @@ namespace TNS.AdExpressI.Insertions.DAL {
             for (int i = 0; i < ids.Length && i < detailLevels.Levels.Count; i++) {
                 id = Convert.ToInt64(ids[i]);
                 level = (DetailLevelItemInformation)detailLevels.Levels[i];
-                if (id > 0 || (id != -1 && id != 0 && level.Id == DetailLevelItemInformation.Levels.slogan && (vehicle.Id == CstDBClassif.Vehicles.names.adnettrack || vehicle.Id == CstDBClassif.Vehicles.names.internet || vehicle.Id == CstDBClassif.Vehicles.names.evaliantMobile))) {
+                if (id > 0
+                    || (id == 0 && level.Id != DetailLevelItemInformation.Levels.slogan)
+                    || (id != -1 && id != 0 && level.Id == DetailLevelItemInformation.Levels.slogan && (vehicle.Id == CstDBClassif.Vehicles.names.adnettrack || vehicle.Id == CstDBClassif.Vehicles.names.internet || vehicle.Id == CstDBClassif.Vehicles.names.evaliantMobile))) {
                     /* This test concerns only the French version of the site
                      * */
                     if (level.DataBaseIdField == CstDB.Fields.ID_VEHICLE && VehiclesInformation.Contains(CstDBClassif.Vehicles.names.internet) && id == VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.internet))

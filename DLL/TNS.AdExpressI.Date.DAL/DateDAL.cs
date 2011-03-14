@@ -31,6 +31,30 @@ namespace TNS.AdExpressI.Date.DAL {
     /// </summary>
     public class DateDAL : IDateDAL{
 
+        #region Variables
+        /// <summary>
+        /// Client session
+        /// </summary>
+        protected TNS.AdExpress.Web.Core.Sessions.WebSession _session = null;
+        #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public DateDAL()
+        {
+        }
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="session">Customer session</param>
+        public DateDAL(WebSession session)
+        {
+            _session = session;
+        }
+        #endregion
+
         #region IDateDAL Membres
 
         #region GetFirstDayNotEnabled
@@ -255,6 +279,28 @@ namespace TNS.AdExpressI.Date.DAL {
                 throw (new Exception.DateDALException("Error while trying to get the last publication date", err));
             }
             #endregion
+
+        }
+        #endregion
+
+        #region GetCalendarStartDate
+        /// <summary>
+        /// Get the calendar starting date
+        /// </summary>
+        /// <returns>The year corresponding to the starting date : date format yyyy example 2008</returns>
+        public virtual int GetCalendarStartDate()
+        {
+            int nbYears = WebApplicationParameters.DataNumberOfYear;
+            if (_session.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
+            {
+                nbYears = nbYears - 2;
+                return DateTime.Now.AddYears(-nbYears).Year;
+            }
+            else
+            {
+                nbYears = nbYears - 1;
+                return DateTime.Now.AddYears(-nbYears).Year;
+            }
 
         }
         #endregion

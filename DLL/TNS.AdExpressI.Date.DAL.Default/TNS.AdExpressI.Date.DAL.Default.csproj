@@ -44,6 +44,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TNS.AdExpress.Web.Core\TNS.AdExpress.Web.Core.csproj">
+      <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
+      <Name>TNS.AdExpress.Web.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.Date.DAL\TNS.AdExpressI.Date.DAL.csproj">
       <Project>{8889ED07-01CE-4F3A-A296-3A2C4B21989C}</Project>
       <Name>TNS.AdExpressI.Date.DAL</Name>

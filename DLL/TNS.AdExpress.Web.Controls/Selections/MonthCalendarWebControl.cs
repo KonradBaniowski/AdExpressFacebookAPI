@@ -298,14 +298,15 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			
 			// Attaquer une table
 			downloadDate=webSession.DownLoadDate;
+            int nbYearsHistory = WebApplicationParameters.DataNumberOfYear - 1;
 
 			if(downloadDate==DateTime.Now.Year){
-				startYear=selectedYear-2;
+                startYear = selectedYear - nbYearsHistory;
 				stopYear=DateTime.Now.Year;
 			}
 			else{
 				selectedYear=selectedYear-1;
-				startYear=selectedYear-2;
+                startYear = selectedYear - nbYearsHistory;
 				stopYear=DateTime.Now.Year-1;
 			}
 			selectedDate=-1;

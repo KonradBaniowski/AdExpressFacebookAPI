@@ -17,6 +17,7 @@ using HTML2PDFAddOn;
 using HtmlSnap2;
 using System.IO;
 using System.Text;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.Ares.Pdf{
 	/// <summary>
@@ -207,9 +208,8 @@ namespace TNS.Ares.Pdf{
 						this.PDFPAGE_Watermark = this.GetWaterMark(true, false, title);
 					else if (position == imagePosition.rightImage)
                         this.PDFPAGE_Watermark = this.GetWaterMark(false, true, title);
-					//Page number
-					string str = "";
-					str = GestionWeb.GetWebWord(894,webSession.SiteLanguage)+ " " + (i+1) + " " + GestionWeb.GetWebWord(2042,webSession.SiteLanguage) + " " + this.PageCount;
+					//Page number					
+					string str  = GestionWeb.GetWebWord(894,webSession.SiteLanguage)+ " " + (i+1) + " " + GestionWeb.GetWebWord(2042,webSession.SiteLanguage) + " " + this.PageCount;
                     _style.GetTag("footerFont").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
 
 					this.PDFPAGE_TextOut(
@@ -217,7 +217,9 @@ namespace TNS.Ares.Pdf{
 						, this.WorkZoneBottom + this._footerHeight/2, 0, str);
 
 					if(withCopyright){
-                        string strCopyright = GestionWeb.GetWebWord(2266, webSession.SiteLanguage);
+                        string strCopyright = GestionWeb.GetWebWord(2848, webSession.SiteLanguage) + " "
+                     + WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CompanyNameTexts.GetCompanyShortName(webSession.SiteLanguage) + " "
+                     + GestionWeb.GetWebWord(2849, webSession.SiteLanguage);
                         _style.GetTag("copyright").SetStylePdf(this, TxFontCharset.charsetANSI_CHARSET);
                         this.PDFPAGE_TextOut(
                             

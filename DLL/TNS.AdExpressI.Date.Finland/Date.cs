@@ -33,8 +33,8 @@ namespace TNS.AdExpressI.Date.Finland {
 
             webSession.PeriodType = CustomerSessions.Period.Type.currentYear;
             webSession.PeriodLength = 1;
-            webSession.PeriodBeginningDate = DateTime.Now.AddYears(1 - webSession.PeriodLength).ToString("yyyy0101");
             webSession.PeriodEndDate = LastAvailableDate.GetLastAvailableDate(webSession).ToString("yyyyMMdd");
+            webSession.PeriodBeginningDate = webSession.PeriodEndDate.Substring(0,4) + "0101";
             webSession.DetailPeriod = CustomerSessions.Period.DisplayLevel.monthly;
         }
         #endregion

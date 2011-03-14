@@ -260,7 +260,10 @@ namespace AdExpress.Private.Results{
 			if(Request.Form.Get("__EVENTTARGET")=="okImageButton"){
 				//Tableau demandé
 				indexPreformatedTable = Int64.Parse(Page.Request.Form.GetValues("DDLResultsDashBoardOptionsWebControl1")[0]);
-				if(vehicleType==DBClassificationConstantes.Vehicles.names.press && indexPreformatedTable>2 )
+				if((vehicleType==DBClassificationConstantes.Vehicles.names.press
+                    || vehicleType == DBClassificationConstantes.Vehicles.names.magazine
+                    || vehicleType == DBClassificationConstantes.Vehicles.names.newspaper
+                    )&& indexPreformatedTable>2 )
 					PreformatedTable = (TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedTables) (indexPreformatedTable+DashBoardEnumIndex+(numberImagesForOthersMedia-numberImagesForPress)) ;
                 else if (vehicleType == DBClassificationConstantes.Vehicles.names.adnettrack && indexPreformatedTable == 3)
                     PreformatedTable = (TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedTables)(indexPreformatedTable + DashBoardEnumIndex + (numberImagesForOthersMedia - numberImagesForPress));
@@ -274,12 +277,7 @@ namespace AdExpress.Private.Results{
 			ResultsDashBoardOptionsWebControl1.CustomerWebSession = _webSession;				
 			switch(_webSession.PreformatedTable){
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units :
-                    //if (_webSession.LastReachedResultUrl.Length == 0 || (!fromSearchSession)) {
-                    //    if(_webSession.CurrentModule==WebModule.Name.TABLEAU_DE_BORD_EVALIANT)
-                    //        _webSession.Unit = WebConstantes.CustomerSessions.Unit.insertion;
-                    //    else
-                    //        _webSession.Unit = WebConstantes.CustomerSessions.Unit.euro;
-                    //}
+                   
 					if(!fromSearchSession)
 					_webSession.DetailPeriodBeginningDate = _webSession.DetailPeriodEndDate = "";
 					setRepartitionOption(_webSession);					
@@ -303,12 +301,7 @@ namespace AdExpress.Private.Results{
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.format_X_Units:
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_X_Units:
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Top20_X_Units:
-                    //if (_webSession.LastReachedResultUrl.Length == 0 || (!fromSearchSession)) {
-                    //    if (_webSession.CurrentModule == WebModule.Name.TABLEAU_DE_BORD_EVALIANT)
-                    //        _webSession.Unit = WebConstantes.CustomerSessions.Unit.insertion;
-                    //    else
-                    //        _webSession.Unit = WebConstantes.CustomerSessions.Unit.euro;
-                    //}
+                  
                     if (!fromSearchSession)
                         _webSession.DetailPeriodBeginningDate = _webSession.DetailPeriodEndDate = "";
                     setRepartitionOption(_webSession);
@@ -331,12 +324,7 @@ namespace AdExpress.Private.Results{
                     ResultsDashBoardOptionsWebControl1.SectorListOption = true;										
                     break;
 			  	case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Mensual :
-                    //if (_webSession.LastReachedResultUrl.Length == 0 || (!fromSearchSession)) {
-                    //    if (_webSession.CurrentModule == WebModule.Name.TABLEAU_DE_BORD_EVALIANT)
-                    //        _webSession.Unit = WebConstantes.CustomerSessions.Unit.insertion;
-                    //    else
-                    //        _webSession.Unit = WebConstantes.CustomerSessions.Unit.euro;
-                    //}
+                   
 					ResultsDashBoardOptionsWebControl1.UnitOption=true;				
 					setPeriodOption(false);
 					setRepartitionOption(_webSession);
@@ -358,12 +346,7 @@ namespace AdExpress.Private.Results{
 					_webSession.DetailPeriodBeginningDate = _webSession.DetailPeriodEndDate = "";
 					break;
                 case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.dimension_Format:
-                    //if (_webSession.LastReachedResultUrl.Length == 0 || (!fromSearchSession)) {
-                    //    if (_webSession.CurrentModule == WebModule.Name.TABLEAU_DE_BORD_EVALIANT)
-                    //        _webSession.Unit = WebConstantes.CustomerSessions.Unit.insertion;
-                    //    else
-                    //        _webSession.Unit = WebConstantes.CustomerSessions.Unit.euro;
-                    //}
+                   
                     ResultsDashBoardOptionsWebControl1.UnitOption = true;
                     setPeriodOption(false);
                     setRepartitionOption(_webSession);
@@ -387,12 +370,7 @@ namespace AdExpress.Private.Results{
                     break;
 
 				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.sector_X_Mensual :
-                    //if (_webSession.LastReachedResultUrl.Length == 0 || (!fromSearchSession)) {
-                    //    if (_webSession.CurrentModule == WebModule.Name.TABLEAU_DE_BORD_EVALIANT)
-                    //        _webSession.Unit = WebConstantes.CustomerSessions.Unit.insertion;
-                    //    else
-                    //        _webSession.Unit = WebConstantes.CustomerSessions.Unit.euro;
-                    //}
+                   
 					if(!fromSearchSession)
 					_webSession.DetailPeriodBeginningDate = _webSession.DetailPeriodEndDate = "";
 					setPeriodOption(false);				
@@ -477,13 +455,7 @@ namespace AdExpress.Private.Results{
 					if(!fromSearchSession)
 					_webSession.DetailPeriodBeginningDate = _webSession.DetailPeriodEndDate = "";
 					break;	
-				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector :
-                    if (_webSession.LastReachedResultUrl.Length == 0 || (!fromSearchSession)) {
-                        //if (_webSession.CurrentModule == WebModule.Name.TABLEAU_DE_BORD_EVALIANT)
-                        //    _webSession.Unit = WebConstantes.CustomerSessions.Unit.insertion;
-                        //else
-                        //    _webSession.Unit = WebConstantes.CustomerSessions.Unit.euro;
-                    }
+				case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Sector :                    
 					ResultsDashBoardOptionsWebControl1.UnitOption=true;				
 					setPeriodOption(true);
 					setRepartitionOption(_webSession);
@@ -509,7 +481,10 @@ namespace AdExpress.Private.Results{
 			}	
 
 			//Pas de répartition pour la presse
-			if(DBClassificationConstantes.Vehicles.names.press==vehicleType){
+			if(DBClassificationConstantes.Vehicles.names.press==vehicleType
+                || DBClassificationConstantes.Vehicles.names.magazine == vehicleType
+                || DBClassificationConstantes.Vehicles.names.newspaper == vehicleType)
+            {
 				ResultsDashBoardOptionsWebControl1.FormatOption = false;
 				ResultsDashBoardOptionsWebControl1.TimeIntervalOption = false;
 				ResultsDashBoardOptionsWebControl1.NamedDayOption = false;

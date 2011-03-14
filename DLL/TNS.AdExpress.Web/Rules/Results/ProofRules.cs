@@ -101,7 +101,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 					headers.Root.Add(new HeaderCreative(false, GestionWeb.GetWebWord(1731,webSession.SiteLanguage), PROOF_COL_INDEX));
 								
 					//Colonne euro
-					headers.Root.Add(new Header(false, Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].WebTextId,webSession.SiteLanguage)), EUROS_COL_INDEX));
+                    headers.Root.Add(new Header(false, Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[UnitsInformation.DefaultCurrency].WebTextId, webSession.SiteLanguage)), EUROS_COL_INDEX));
 								
 					//Colonne Pages
                     headers.Root.Add(new Header(false, Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebCste.CustomerSessions.Unit.pages].WebTextId, webSession.SiteLanguage)), PAGE_COL_INDEX));
@@ -189,7 +189,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 
 							// Euro
 							tab[iCurLine, EUROS_COL_INDEX] = new CellEuro(0.0);
-							tab.AffectValueAndAddToHierarchy(FIRST_COL_INDEX,iCurLine,EUROS_COL_INDEX,double.Parse(dr[UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()].ToString()));
+                            tab.AffectValueAndAddToHierarchy(FIRST_COL_INDEX, iCurLine, EUROS_COL_INDEX, double.Parse(dr[UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()].ToString()));
 
 							// Pages
 							tab[iCurLine, PAGE_COL_INDEX] =  new CellPage(0.0);
@@ -297,7 +297,7 @@ namespace TNS.AdExpress.Web.Rules.Results
 						dr["rank_group_"]		= currentRow["rank_group_"].ToString();
 						dr["rank_media"]		= currentRow["rank_media"].ToString();
 						dr["visual"]			= currentRow["visual"].ToString();
-                        dr["expenditure_euro"]  = Decimal.Parse(currentRow[UnitsInformation.List[WebCste.CustomerSessions.Unit.euro].Id.ToString()].ToString());
+                        dr["expenditure_euro"] = Decimal.Parse(currentRow[UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()].ToString());
 
 						#region Date
                         if (currentRow["date_cover_num"].ToString().Length > 0)

@@ -709,7 +709,10 @@ namespace TNS.AdExpress.Web.UI.Results {
 
                 #region TV et RADIO
                 //si les medias sélectionnés sont different de TV ou RADIO
-                else if (vehicleType != ClassificationCst.DB.Vehicles.names.press) {
+                else if (vehicleType != ClassificationCst.DB.Vehicles.names.press
+                    && vehicleType != ClassificationCst.DB.Vehicles.names.newspaper
+                      && vehicleType != ClassificationCst.DB.Vehicles.names.magazine)
+                {
 
                     #region tableau n°1
                     //cas de tableau n°1:media/unite
@@ -779,7 +782,10 @@ namespace TNS.AdExpress.Web.UI.Results {
                 #region Presse
                     // si le media sélectionné est PRESSE
                 }
-                else if (vehicleType == ClassificationCst.DB.Vehicles.names.press) {
+                else if (vehicleType == ClassificationCst.DB.Vehicles.names.press
+                     || vehicleType == ClassificationCst.DB.Vehicles.names.newspaper
+                       || vehicleType == ClassificationCst.DB.Vehicles.names.magazine)
+                {
 
                     #region tableau n°1
                     if (webSession.PreformatedTable == CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units) {
@@ -917,7 +923,10 @@ namespace TNS.AdExpress.Web.UI.Results {
 
                 #region TV et RADIO
                 //si les medias sélectionnés sont different de TV ou RADIO
-				else if(vehicleType!=ClassificationCst.DB.Vehicles.names.press){
+				else if(vehicleType!=ClassificationCst.DB.Vehicles.names.press
+                       && vehicleType != ClassificationCst.DB.Vehicles.names.newspaper
+                      && vehicleType != ClassificationCst.DB.Vehicles.names.magazine)
+                {
 					
 					#region tableau n°1 
 					//cas de tableau n°1:media/unite
@@ -983,7 +992,10 @@ namespace TNS.AdExpress.Web.UI.Results {
 
 				#region Presse
 					// si le media sélectionné est PRESSE
-				}else if(vehicleType==ClassificationCst.DB.Vehicles.names.press){
+				}else if(vehicleType==ClassificationCst.DB.Vehicles.names.press
+                     || vehicleType == ClassificationCst.DB.Vehicles.names.newspaper
+                       || vehicleType == ClassificationCst.DB.Vehicles.names.magazine)
+                {
 
 					#region tableau n°1
 					if(webSession.PreformatedTable==CstWeb.CustomerSessions.PreformatedDetails.PreformatedTables.vehicleInterestCenterMedia_X_Units){

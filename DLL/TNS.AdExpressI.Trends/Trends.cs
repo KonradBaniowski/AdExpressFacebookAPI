@@ -300,6 +300,8 @@ namespace TNS.AdExpressI.Trends
             {
                 case DBClassificationConstantes.Vehicles.names.press:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
                     //Title label
                    code = 1504;
                     break;

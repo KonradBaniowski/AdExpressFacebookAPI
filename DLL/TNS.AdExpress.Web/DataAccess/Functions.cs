@@ -64,10 +64,11 @@ namespace TNS.AdExpress.Web.DataAccess{
 		/// <param name="webSession">Session du client</param>
 		/// <returns>Dernier mois disponible</returns>
 		public static string CheckAvailableDateForMedia(Int64 idVehicle, WebSession webSession){
-
-			string lastAvailableDate = (DateTime.Now.Year-2).ToString();
+            int nbYears = WebApplicationParameters.DataNumberOfYear;
+			string lastAvailableDate = (DateTime.Now.Year-(nbYears-1)).ToString();
 
 			string sql = "";
+       
 
 			DataSet ds;
 
@@ -75,7 +76,8 @@ namespace TNS.AdExpress.Web.DataAccess{
 			sql = "select ";
 			// Cas ou l'année en cours est différente de la dernière année chargée
 			if(DateTime.Now.Year>webSession.DownLoadDate){
-				for(int i = 3; i >0; i--){
+                for (int i = nbYears; i > 0; i--)
+                {
 					for(int j = 1; j <= 12; j++){
 						sql += " max(exp_euro_" + ((i-1!=0)?"N"+(i-1):"N") + "_" + j + ") as N"
 							+ (DateTime.Now.Year-i) + j.ToString("0#") + ",";
@@ -83,7 +85,9 @@ namespace TNS.AdExpress.Web.DataAccess{
 				}			
 			}
 			else{
-				for(int i = 2; i >=0; i--){
+                nbYears = nbYears - 1;
+                for (int i = nbYears; i >= 0; i--)
+                {
 					for(int j = 1; j <= 12; j++){
 						sql += " max(exp_euro_" + ((i!=0)?"N"+i:"N") + "_" + j + ") as N"
 							+ (DateTime.Now.Year-i) + j.ToString("0#") + ",";

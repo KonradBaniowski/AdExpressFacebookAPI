@@ -18,8 +18,8 @@
         <unitformat name="codeEcran"          format="################"         excelFormat="################"/>
       </unitformats>
       <dateFormats>
-        <dateFormat name="shortdatepattern"   format="MM/dd/yyyy"               excelFormat="MM/dd/yyyy"/>
-        <dateFormat name="customdatepattern"  format="ddd, MMM dd, yyyy"        excelFormat="ddd, MMM dd, yyyy"/>
+        <dateFormat name="shortdatepattern"   format="dd/MM/yyyy"               excelFormat="dd/MM/yyyy"/>
+        <dateFormat name="customdatepattern"  format="ddd dd MMM yyyy"        excelFormat="ddd dd MMM yyyy"/>
       </dateFormats>
       <companyNameTexts companyName="2841" companyShortName="2842"/>
     </language>

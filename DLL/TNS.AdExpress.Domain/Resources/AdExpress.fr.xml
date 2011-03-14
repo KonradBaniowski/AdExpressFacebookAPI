@@ -2062,5 +2062,9 @@
     <item mnemonic="w2849" type="System.String">SAS</item>
     <item mnemonic="w2850" type="System.String">Evaliant est l’outil de tracking des bannières publicitaires en temps réel de TNS Media Intelligence.</item>
     <!-- ********************************* -->
+    <!-- Add text for brand personnalisation in France -->
+    <item mnemonic="w2851" type="System.String">L'ensemble de vos marques de références et concurrents ne doit pas contenir plus de 50 éléments.</item>
+    <item mnemonic="w2852" type="System.String">Vos univers de référence et concurrent ne peuvent pas contenir des annonceurs communs.</item>
+    <item mnemonic="w2853" type="System.String">Vos univers de référence et concurrent ne peuvent pas contenir des marques communes.</item>
   </items>
 </localization>
