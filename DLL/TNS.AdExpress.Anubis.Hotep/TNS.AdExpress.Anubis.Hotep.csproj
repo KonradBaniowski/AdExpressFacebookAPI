@@ -231,6 +231,12 @@
     <Compile Include="UI\UISeasonalityGraph.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Content Include="App_Themes\FiKMAE-Uk\Styles.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Themes\FiKMAE-Fi\Styles.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Themes\KMAE-Fr\Styles.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -285,10 +291,16 @@
     <Content Include="Images\35\LogoAdExpress220.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\35\logo_Tns.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\44\LogoAdExpress.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\44\LogoAdExpress220.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\44\logo_Tns.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Common\APPM.bmp">
@@ -333,6 +345,7 @@
     <None Include="ModelSupport\TNS\AdExpress\default.txvpck" />
     <None Include="ModelSupport\TNS\default.txaPackage" />
     <None Include="ModelSupport\TNS\default.txvpck" />
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="UI\UIEvolutionGraph.resx">
       <DependentUpon>UIEvolutionGraph.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -352,9 +365,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
