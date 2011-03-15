@@ -346,11 +346,15 @@ namespace TNS.Ares.StaticNavSession.DAL
 
             #region Ouverture de la base de données
             OracleConnection cnx = null;
+            bool dBToClosed = false;
             try {
                 //TODO : develop IDataSource for blob loading
                 //OracleConnection cnx = new OracleConnection(Connection.SESSION_CONNECTION_STRING_TEST);
                 cnx = (OracleConnection)_source.GetSource();
-                cnx.Open();
+                if (cnx.State == System.Data.ConnectionState.Closed) {
+                    dBToClosed = true;
+                    cnx.Open();
+                }
             }
             catch (System.Exception e) {
                 if(cnx!=null)
@@ -401,7 +405,7 @@ namespace TNS.Ares.StaticNavSession.DAL
                     if (bf != null) bf = null;
                     if (binaryData != null) binaryData = null;
                     if (sqlCommand != null) sqlCommand.Dispose();
-                    cnx.Close();
+                    if (dBToClosed) cnx.Close();
                 }
                 catch (System.Exception et) {
                     throw (new StaticNavDALExceptions("Impossible de libérer les ressources après échec de la méthode", et));
@@ -414,7 +418,7 @@ namespace TNS.Ares.StaticNavSession.DAL
                 if (bf != null) bf = null;
                 if (binaryData != null) binaryData = null;
                 if (sqlCommand != null) sqlCommand.Dispose();
-                cnx.Close();
+                if (dBToClosed) cnx.Close();
             }
             catch (System.Exception et) {
                 throw (new StaticNavDALExceptions("Impossible de fermer la base de données", et));
