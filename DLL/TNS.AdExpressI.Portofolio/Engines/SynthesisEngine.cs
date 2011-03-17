@@ -545,7 +545,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.instore
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) {
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema)
+            {
                 DataSet ds = _portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberNewProductInTracking);
                 DataTable dt = ds.Tables[0];
                 return (dt.Rows[0]["nbLines"].ToString());
@@ -564,7 +566,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.instore
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) {
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema)
+            {
                 DataSet ds = _portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberNewProductInVehicle);
                 DataTable dt = ds.Tables[0];
                 return (dt.Rows[0]["nbLines"].ToString());
@@ -1433,7 +1437,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile)
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema)
                 && isAlertModule) {
 
                 #region Get Data
@@ -1468,7 +1473,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile)
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema)
                 && isAlertModule) {
 
                 #region Get Data

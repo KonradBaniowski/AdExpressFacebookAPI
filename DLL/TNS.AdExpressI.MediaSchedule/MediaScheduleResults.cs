@@ -1035,11 +1035,13 @@ namespace TNS.AdExpressI.MediaSchedule {
                         if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
                             unitIds = new CellIdsNumber();
                             unitIds.Add(currentRow[unitAlias].ToString().Split(','));
-                            oTab[currentLineIndex, firstPeriodIndex + currentDate] = new MediaPlanItemIds(Math.Max(((MediaPlanItemIds)oTab[currentLineIndex, firstPeriodIndex + currentDate]).PeriodicityId, Int64.Parse(currentRow["period_count"].ToString())));
+                           if( oTab[currentLineIndex, firstPeriodIndex + currentDate]==null) oTab[currentLineIndex, firstPeriodIndex + currentDate] = new MediaPlanItemIds(Math.Max(((MediaPlanItemIds)oTab[currentLineIndex, firstPeriodIndex + currentDate]).PeriodicityId, Int64.Parse(currentRow["period_count"].ToString())));
+                           else ((MediaPlanItemIds)oTab[currentLineIndex, firstPeriodIndex + currentDate]).PeriodicityId = Int64.Parse(currentRow["period_count"].ToString());
                         }
                         else {
                             unit = double.Parse(currentRow[unitAlias].ToString());
-                            oTab[currentLineIndex, firstPeriodIndex + currentDate] = new MediaPlanItem(Math.Max(((MediaPlanItem)oTab[currentLineIndex, firstPeriodIndex + currentDate]).PeriodicityId, Int64.Parse(currentRow["period_count"].ToString())));
+                            if (oTab[currentLineIndex, firstPeriodIndex + currentDate]==null) oTab[currentLineIndex, firstPeriodIndex + currentDate] = new MediaPlanItem(Math.Max(((MediaPlanItem)oTab[currentLineIndex, firstPeriodIndex + currentDate]).PeriodicityId, Int64.Parse(currentRow["period_count"].ToString())));
+                            else ((MediaPlanItem)oTab[currentLineIndex, firstPeriodIndex + currentDate]).PeriodicityId = Int64.Parse(currentRow["period_count"].ToString());
                         }
 
                         if (nbLevels >= 4) {
