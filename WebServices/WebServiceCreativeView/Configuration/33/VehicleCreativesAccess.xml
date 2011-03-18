@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<vehicleCreativesAccess>
+  <vehicle dataBaseId="2">
+    <creativeAccess path="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\Press\SCANS\" user="Serv_InvestPubWeb" password="invpubweb0504" domain="seconet"/>
+  </vehicle>
+</vehicleCreativesAccess>
