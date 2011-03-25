@@ -2504,6 +2504,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 else {
                     firstPeriodIndex = L4_ID_COLUMN_INDEX + 1;
                 }
+                firstPeriodIndex += nbColYear;           
 
                 int nbColTab = data.GetLength(1);
                 int nbPeriod = nbColTab - firstPeriodIndex - 1;
