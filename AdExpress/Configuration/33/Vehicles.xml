@@ -543,7 +543,7 @@
     </allowedUniverseLevels>
 </vehicle>
   <!-- CINEMA -->
-  <vehicle id="cinema" databaseId="9" showInsertions="false" showCreations="false">
+  <vehicle id="cinema" databaseId="9" showInsertions="false" showCreations="false" mediaAgencyFlag="309">
     <!-- Units-->
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
