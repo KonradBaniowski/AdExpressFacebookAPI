@@ -60,6 +60,7 @@ namespace AdExpress{
 		/// Constructeur
 		/// </summary>
 		public selectionModule():base(){
+            int t = 0;
 		}
 		#endregion
 
