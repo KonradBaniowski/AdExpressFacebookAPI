@@ -42,7 +42,7 @@ namespace WebServiceCreativeView {
                             BinaryReader br = null;
                             try {
                                 Bitmap bitmap = new Bitmap(pathFile);
-                                Bitmap bitmapBlur = Utilities.Media.Image.Image.GaussianBlur(bitmap, 3);
+                                Bitmap bitmapBlur = Utilities.Media.Image.Image.BoxBlur(bitmap, 5);
 
                                 fs = new MemoryStream();
                                 bitmapBlur.Save(fs, System.Drawing.Imaging.ImageFormat.Jpeg);
