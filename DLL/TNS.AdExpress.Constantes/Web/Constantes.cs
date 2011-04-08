@@ -3598,7 +3598,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Source provider layer
             /// </summary>
-            sourceProvider = 6
+            sourceProvider = 6,
+            /// <summary>
+            /// Visual Layer
+            /// </summary>
+            visual = 7
 		}
 	}
 

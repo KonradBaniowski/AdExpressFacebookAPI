@@ -7,6 +7,7 @@ using TNS.AdExpress.Constantes.Web;
 using System.IO;
 using TNS.AdExpress.WebService.Domain;
 using TNS.AdExpress.WebService.Domain.Configuration;
+using System.Drawing;
 
 namespace WebServiceCreativeView {
     /// <summary>
@@ -30,11 +31,34 @@ namespace WebServiceCreativeView {
         [WebMethod]
         public byte[] GetBinaries(string relativePath, Int64 idVehicle, bool isBlur) {
             VehicleCreativesInformation vehicleCreativesInformation = VehiclesCreativesInformation.GetVehicleCreativesInformation(idVehicle);
-            if(vehicleCreativesInformation!=null){
+            if (vehicleCreativesInformation != null) {
                 vehicleCreativesInformation.Open();
                 try {
-                    if (File.Exists(Path.Combine(vehicleCreativesInformation.CreativeInfo.Path, relativePath)))
-                        return File.ReadAllBytes(Path.Combine(CreationServerPathes.LOCAL_PATH_IMAGE, relativePath));
+                    if (File.Exists(Path.Combine(vehicleCreativesInformation.CreativeInfo.Path, relativePath))) {
+                        byte[] imageBytes = null;
+                        string pathFile = Path.Combine(CreationServerPathes.LOCAL_PATH_IMAGE, relativePath);
+                        if (isBlur) {
+                            MemoryStream fs = null;
+                            BinaryReader br = null;
+                            try {
+                                Bitmap bitmap = new Bitmap(pathFile);
+                                Bitmap bitmapBlur = Utilities.Media.Image.Image.GaussianBlur(bitmap, 3);
+
+                                fs = new MemoryStream();
+                                bitmapBlur.Save(fs, System.Drawing.Imaging.ImageFormat.Jpeg);
+                                imageBytes = fs.ToArray();
+                            }
+                            finally {
+                                if (br != null) br.Close();
+                                if (fs != null) fs.Close();
+                            }
+                        }
+                        else {
+                            imageBytes = File.ReadAllBytes(pathFile);
+                        }
+                        return imageBytes;
+
+                    }
                     else
                         return null;
                 }
@@ -46,6 +70,5 @@ namespace WebServiceCreativeView {
                 return null;
         }
         #endregion
-
     }
 }
