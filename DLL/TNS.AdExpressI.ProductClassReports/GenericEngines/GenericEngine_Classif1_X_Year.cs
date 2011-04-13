@@ -283,7 +283,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                 for (int i = 0; i < tab.LinesNumber; i++)
                 {
                     ProductClassLineStart ls = (ProductClassLineStart)tab[i, 0];
-                    if (ls.LineUnivers == UniversType.neutral)
+                    if (ls.LineUnivers == UniversType.neutral && ChildrenAreNeutral(tab,i))
                     {
                         tab.SetLineStart(new LineHide(ls.LineType), i);
                     }
@@ -295,7 +295,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
 
         }
 
-     
+       
 
         	
 
@@ -303,6 +303,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
        
 
         #endregion
+        
 
     }
 }

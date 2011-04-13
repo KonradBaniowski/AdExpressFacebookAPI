@@ -423,35 +423,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                         cLine = C1_LEVELS[i].LineIndexInResultTable;
                         //Advertisers
                         if (_isPersonalized > 0)
-                        {
-                            #region OLD
-                            //ProductClassLineStart ls = (ProductClassLineStart)tab[cLine, 0];
-                            //if (Convert.ToInt32(row["inref"]) > 0)
-                            //{
-                            //    ls.SetUniversType(UniversType.reference);
-                            //}
-                            //if (Convert.ToInt32(row["incomp"]) > 0)
-                            //{
-                            //    ls.SetUniversType(UniversType.concurrent);
-                            //}
-                            //if (Convert.ToInt32(row["inneutral"]) > 0)
-                            //{
-                            //    ls.SetUniversType(UniversType.neutral);
-                            //}                            
-                            //if (C1_TYPE == CstClassif.Branch.type.product)
-                            //{
-                            //    switch (MAIN_LEVELS[i].Id)
-                            //    {
-                            //        case DetailLevelItemInformation.Levels.advertiser:
-                            //        case DetailLevelItemInformation.Levels.brand:
-                            //        case DetailLevelItemInformation.Levels.product:
-                            //            DisplayPerso(ls, row, MAIN_LEVELS[i].Id);
-                            //            break;
-                            //        default:
-                            //            break;
-                            //    }
-                            //}
-                            #endregion
+                        {                            
                             SetPersoAdvertiser(tab, cLine, row, MAIN_LEVELS[i].Id, C1_TYPE);
 
                         }
@@ -714,7 +686,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                 for (int i = 0; i < tab.LinesNumber; i++)
                 {
                     ProductClassLineStart ls = (ProductClassLineStart)tab[i, 0];
-                    if (ls.LineUnivers == UniversType.neutral)
+                    if (ls.LineUnivers == UniversType.neutral && ChildrenAreNeutral(tab, i))
                     {
                         tab.SetLineStart(new LineHide(ls.LineType), i);
                     }

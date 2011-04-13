@@ -37,7 +37,10 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
         private const Int32 ID_PDV_N1 = -7;
         private const Int32 ID_PDM_N = -8;
         private const Int32 ID_PDM_N1 = -9;
+
         #endregion
+
+        private Int32 LEVEL_OFFSET = 2;
 
         #region Constructor
         /// <summary>
@@ -69,7 +72,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             {
                 if (dtData.Columns[i].ColumnName.IndexOf("ID_M") >= 0)
                 {
-					if (_vehicle == CstDBClassif.Vehicles.names.plurimedia || (!firstMedia))//|| _session.PreformatedMediaDetail == CstFormat.PreformatedMediaDetails.vehicle
+                    if (_vehicle == CstDBClassif.Vehicles.names.plurimedia || (!firstMedia))//|| _session.PreformatedMediaDetail == CstFormat.PreformatedMediaDetails.vehicle
                     //if (!firstMedia)
                     {
                         DATA_MEDIA_INDEXES.Add(i);
@@ -109,17 +112,47 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             Int32 DATA_YEAR_N1 = (yearN1 > 0) ? FIRST_DATA_INDEX + 1 : -1;
             Int32 RES_YEAR_N_OFFSET = 1;
             List<Int64> keyYearN = new List<Int64>(); keyYearN.Add(ID_YEAR_N);
-            Int32 RES_YEAR_N1_OFFSET = (yearN1 > 0) ? 2 : -1;
+            Int32 RES_YEAR_N1_OFFSET = -1;
+            if (yearN1 > 0)
+            {
+                RES_YEAR_N1_OFFSET = 2;
+                LEVEL_OFFSET++;
+            }
             List<Int64> keyYearN1 = new List<Int64>(); keyYearN1.Add(ID_YEAR_N1);
-            Int32 RES_EVOL_OFFSET = (_session.Evolution && RES_YEAR_N1_OFFSET > 0) ? RES_YEAR_N1_OFFSET + 1 : -1;
+            Int32 RES_EVOL_OFFSET = -1;
+            if (_session.Evolution && RES_YEAR_N1_OFFSET > 0)
+            {
+                RES_EVOL_OFFSET = RES_YEAR_N1_OFFSET + 1;
+                LEVEL_OFFSET++;
+            }
             List<Int64> keyEvol = new List<Int64>(); keyEvol.Add(ID_EVOL);
-            Int32 RES_PDV_N_OFFSET = (_session.PDV) ? Math.Max(RES_YEAR_N_OFFSET, Math.Max(RES_YEAR_N1_OFFSET, RES_EVOL_OFFSET)) + 1 : -1;
+            Int32 RES_PDV_N_OFFSET = -1;
+            if (_session.PDV)
+            {
+                RES_PDV_N_OFFSET = Math.Max(RES_YEAR_N_OFFSET, Math.Max(RES_YEAR_N1_OFFSET, RES_EVOL_OFFSET)) + 1;
+                LEVEL_OFFSET++;
+            }
             List<Int64> keyPdvYearN = new List<Int64>(); keyPdvYearN.Add(ID_PDV_N);
-            Int32 RES_PDV_N1_OFFSET = (yearN1 > 0 && _session.PDV) ? RES_PDV_N_OFFSET + 1 : -1;
+            Int32 RES_PDV_N1_OFFSET = -1;
+            if (yearN1 > 0 && _session.PDV)
+            {
+                RES_PDV_N1_OFFSET = RES_PDV_N_OFFSET + 1;
+                LEVEL_OFFSET++;
+            }
             List<Int64> keyPdvYearN1 = new List<Int64>(); keyPdvYearN1.Add(ID_PDV_N1);
-            Int32 RES_PDM_N_OFFSET = (_session.PDM) ? Math.Max(RES_PDV_N1_OFFSET, Math.Max(Math.Max(RES_YEAR_N_OFFSET, RES_PDV_N_OFFSET), Math.Max(RES_YEAR_N1_OFFSET, RES_EVOL_OFFSET))) + 1 : -1;
+            Int32 RES_PDM_N_OFFSET = -1;
+            if (_session.PDM)
+            {
+                RES_PDM_N_OFFSET = Math.Max(RES_PDV_N1_OFFSET, Math.Max(Math.Max(RES_YEAR_N_OFFSET, RES_PDV_N_OFFSET), Math.Max(RES_YEAR_N1_OFFSET, RES_EVOL_OFFSET))) + 1;
+                LEVEL_OFFSET++;
+            }
             List<Int64> keyPdmYearN = new List<Int64>(); keyPdmYearN.Add(ID_PDM_N);
-            Int32 RES_PDM_N1_OFFSET = (yearN1 > 0 && _session.PDM) ? RES_PDM_N_OFFSET + 1 : -1;
+            Int32 RES_PDM_N1_OFFSET = -1;
+            if (yearN1 > 0 && _session.PDM)
+            {
+                RES_PDM_N1_OFFSET = RES_PDM_N_OFFSET + 1;
+                LEVEL_OFFSET++;
+            }
             List<Int64> keyPdmYearN1 = new List<Int64>(); keyPdmYearN1.Add(ID_PDM_N1);
             string labelN = FctUtilities.Dates.getPeriodLabel(_session, CstPeriod.Type.currentYear);
             string labelN1 = FctUtilities.Dates.getPeriodLabel(_session, CstPeriod.Type.previousYear);
@@ -136,15 +169,15 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             #region Build headers
             Headers headers = new Headers();
             headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1164, _session.SiteLanguage), ID_PRODUCT));
-			string vehicleLabel = dtData.Rows[0]["M1"].ToString();
+            string vehicleLabel = dtData.Rows[0]["M1"].ToString();
             switch (_vehicle)
             {
                 case CstDBClassif.Vehicles.names.plurimedia:
                     headers.Root.Add(new Header(true, GestionWeb.GetWebWord(210, _session.SiteLanguage).ToUpper(), ID_TOTAL));
                     break;
                 case CstDBClassif.Vehicles.names.press:
-					//headers.Root.Add(new Header(true, GestionWeb.GetWebWord(204, _session.SiteLanguage).ToUpper(), ID_TOTAL));
-					headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
+                    //headers.Root.Add(new Header(true, GestionWeb.GetWebWord(204, _session.SiteLanguage).ToUpper(), ID_TOTAL));
+                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
                 case CstDBClassif.Vehicles.names.magazine:
                     //headers.Root.Add(new Header(true, GestionWeb.GetWebWord(204, _session.SiteLanguage).ToUpper(), ID_TOTAL));
@@ -155,33 +188,33 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                     headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
                 case CstDBClassif.Vehicles.names.radio:
-					//headers.Root.Add(new Header(true, GestionWeb.GetWebWord(205, _session.SiteLanguage).ToUpper(), ID_TOTAL));
-					headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
+                    //headers.Root.Add(new Header(true, GestionWeb.GetWebWord(205, _session.SiteLanguage).ToUpper(), ID_TOTAL));
+                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
                 case CstDBClassif.Vehicles.names.tv:
                     //headers.Root.Add(new Header(true, GestionWeb.GetWebWord(206, _session.SiteLanguage).ToUpper(), ID_TOTAL));
-					headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
+                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
                 case CstDBClassif.Vehicles.names.mediasTactics:
-					//headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1304, _session.SiteLanguage).ToUpper(), ID_TOTAL));
-					headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
+                    //headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1304, _session.SiteLanguage).ToUpper(), ID_TOTAL));
+                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
                 case CstDBClassif.Vehicles.names.internet:
-					//headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1301, _session.SiteLanguage).ToUpper(), ID_TOTAL));
-					headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
+                    //headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1301, _session.SiteLanguage).ToUpper(), ID_TOTAL));
+                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
                 case CstDBClassif.Vehicles.names.outdoor:
                 case CstDBClassif.Vehicles.names.instore:
-					//headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1302, _session.SiteLanguage).ToUpper(), ID_TOTAL));
-					headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
+                    //headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1302, _session.SiteLanguage).ToUpper(), ID_TOTAL));
+                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
                 case CstDBClassif.Vehicles.names.cinema:
-					//headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1303, _session.SiteLanguage).ToUpper(), ID_TOTAL));
-					headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
+                    //headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1303, _session.SiteLanguage).ToUpper(), ID_TOTAL));
+                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
                 case CstDBClassif.Vehicles.names.emailing:
-					//headers.Root.Add(new Header(true, "E mailing".ToUpper(), ID_TOTAL));
-					headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
+                    //headers.Root.Add(new Header(true, "E mailing".ToUpper(), ID_TOTAL));
+                    headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
             }
             //Go threw data to extract media levels
@@ -386,9 +419,9 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             }
             #endregion
 
-            #region Fill table
-            LineType[] lTypes = new LineType[4] { LineType.level1, LineType.level2, LineType.level3, LineType.level4 };
-            LineType[] lSubTypes = new LineType[4] { LineType.level5, LineType.level6, LineType.level7, LineType.level8 };
+            #region Fill table          
+            List<LineType> lTypes = new List<LineType> { LineType.level1, LineType.level2, LineType.level3, LineType.level4 };
+            List<LineType> lSubTypes = new List<LineType> { LineType.level5, LineType.level6, LineType.level7, LineType.level8 };
             Double valueN = 0;
             Double valueN1 = 0;
             Int32 subTotalIndex = -1;
@@ -536,9 +569,9 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                 }
 
                 #region Add Values
-				cId = -1;
-				if(DATA_MEDIA_INDEXES.Count>0)
-                cId = Convert.ToInt32(row[DATA_MEDIA_INDEXES[DATA_MEDIA_INDEXES.Count - 1]]);				
+                cId = -1;
+                if (DATA_MEDIA_INDEXES.Count > 0)
+                    cId = Convert.ToInt32(row[DATA_MEDIA_INDEXES[DATA_MEDIA_INDEXES.Count - 1]]);
                 subTotalIndex = (RES_MEDIA_SUBTOTAL.ContainsKey(cId)) ? RES_MEDIA_SUBTOTAL[cId].IndexInResultTable : -1;
                 valueN = Convert.ToDouble(row[DATA_YEAR_N]);
                 if (DATA_YEAR_N1 > -1)
@@ -546,8 +579,8 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                     valueN1 = Convert.ToDouble(row[DATA_YEAR_N1]);
                 }
                 //N
-				if(cId>-1)
-                tab.AffectValueAndAddToHierarchy(1, cLine + RES_YEAR_N_OFFSET, RES_MEDIA_HEADERS[cId].IndexInResultTable, valueN);
+                if (cId > -1)
+                    tab.AffectValueAndAddToHierarchy(1, cLine + RES_YEAR_N_OFFSET, RES_MEDIA_HEADERS[cId].IndexInResultTable, valueN);
                 tab.AffectValueAndAddToHierarchy(1, cLine + RES_YEAR_N_OFFSET, 2, valueN);
                 if (subTotalIndex > -1)
                 {
@@ -556,8 +589,8 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                 //N1
                 if (RES_YEAR_N1_OFFSET > -1)
                 {
-					if (cId > -1)
-                    tab.AffectValueAndAddToHierarchy(1, cLine + RES_YEAR_N1_OFFSET, RES_MEDIA_HEADERS[cId].IndexInResultTable, valueN1);
+                    if (cId > -1)
+                        tab.AffectValueAndAddToHierarchy(1, cLine + RES_YEAR_N1_OFFSET, RES_MEDIA_HEADERS[cId].IndexInResultTable, valueN1);
                     tab.AffectValueAndAddToHierarchy(1, cLine + RES_YEAR_N1_OFFSET, 2, valueN1);
                     if (subTotalIndex > -1)
                     {
@@ -567,8 +600,8 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                 //PDV N
                 if (RES_PDV_N_OFFSET > -1)
                 {
-					if (cId > -1)
-                    tab.AffectValueAndAddToHierarchy(1, cLine + RES_PDV_N_OFFSET, RES_MEDIA_HEADERS[cId].IndexInResultTable, valueN);
+                    if (cId > -1)
+                        tab.AffectValueAndAddToHierarchy(1, cLine + RES_PDV_N_OFFSET, RES_MEDIA_HEADERS[cId].IndexInResultTable, valueN);
                     tab.AffectValueAndAddToHierarchy(1, cLine + RES_PDV_N_OFFSET, 2, valueN);
                     if (subTotalIndex > -1)
                     {
@@ -578,8 +611,8 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                 //PDV N1
                 if (RES_PDV_N1_OFFSET > -1)
                 {
-					if (cId > -1)
-                    tab.AffectValueAndAddToHierarchy(1, cLine + RES_PDV_N1_OFFSET, RES_MEDIA_HEADERS[cId].IndexInResultTable, valueN1);
+                    if (cId > -1)
+                        tab.AffectValueAndAddToHierarchy(1, cLine + RES_PDV_N1_OFFSET, RES_MEDIA_HEADERS[cId].IndexInResultTable, valueN1);
                     tab.AffectValueAndAddToHierarchy(1, cLine + RES_PDV_N1_OFFSET, 2, valueN1);
                     if (subTotalIndex > -1)
                     {
@@ -589,8 +622,8 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                 //PDM N
                 if (RES_PDM_N_OFFSET > -1)
                 {
-					if (cId > -1)
-                    tab.AffectValueAndAddToHierarchy(1, cLine + RES_PDM_N_OFFSET, RES_MEDIA_HEADERS[cId].IndexInResultTable, valueN);
+                    if (cId > -1)
+                        tab.AffectValueAndAddToHierarchy(1, cLine + RES_PDM_N_OFFSET, RES_MEDIA_HEADERS[cId].IndexInResultTable, valueN);
                     tab.AffectValueAndAddToHierarchy(1, cLine + RES_PDM_N_OFFSET, 2, valueN);
                     if (subTotalIndex > -1)
                     {
@@ -600,8 +633,8 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                 //PDM N1
                 if (RES_PDM_N1_OFFSET > -1)
                 {
-					if (cId > -1)
-                    tab.AffectValueAndAddToHierarchy(1, cLine + RES_PDM_N1_OFFSET, RES_MEDIA_HEADERS[cId].IndexInResultTable, valueN1);
+                    if (cId > -1)
+                        tab.AffectValueAndAddToHierarchy(1, cLine + RES_PDM_N1_OFFSET, RES_MEDIA_HEADERS[cId].IndexInResultTable, valueN1);
                     tab.AffectValueAndAddToHierarchy(1, cLine + RES_PDM_N1_OFFSET, 2, valueN1);
                     if (subTotalIndex > -1)
                     {
@@ -657,14 +690,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             #region Hide lines if required
             if (_session.PersonalizedElementsOnly && _isPersonalized > 0)
             {
-                for (int i = 0; i < tab.LinesNumber; i++)
-                {
-                    ProductClassLineStart ls = (ProductClassLineStart)tab[i, 0];
-                    if (ls.LineUnivers == UniversType.neutral)
-                    {
-                        tab.SetLineStart(new LineHide(ls.LineType), i);
-                    }
-                }
+                HideNonCustomisedLines(tab, lTypes, lSubTypes);
             }
             #endregion
 
@@ -674,7 +700,12 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
 
         
 
+
+
         #endregion
+
+
+
 
     }
 

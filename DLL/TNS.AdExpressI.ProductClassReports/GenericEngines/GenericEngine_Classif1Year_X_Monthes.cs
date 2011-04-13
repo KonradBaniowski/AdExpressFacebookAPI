@@ -294,9 +294,9 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines {
 			#endregion
 
 			#region Fill table
-			Int64 cId = -1;
-			LineType[] lTypes = new LineType[4] { LineType.level1, LineType.level2, LineType.level3, LineType.level4 };
-			LineType[] lSubTypes = new LineType[4] { LineType.level5, LineType.level6, LineType.level7, LineType.level8 };
+			Int64 cId = -1;          
+            List<LineType> lTypes = new List<LineType> { LineType.level1, LineType.level2, LineType.level3, LineType.level4 };
+            List<LineType> lSubTypes = new List<LineType> { LineType.level5, LineType.level6, LineType.level7, LineType.level8 };
 			Double valueN = 0;
 			Double valueN1 = 0;
 			List<DetailLevelItemInformation> levels = null;
@@ -491,18 +491,14 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines {
 				#endregion
 
 			}		
-			#endregion
+			#endregion          
 
-			#region Hide lines if required
-			if (_session.PersonalizedElementsOnly && _isPersonalized > 0) {
-				for (int i = 0; i < tab.LinesNumber; i++) {
-					ProductClassLineStart ls = (ProductClassLineStart)tab[i, 0];
-					if (ls.LineUnivers == UniversType.neutral) {
-						tab.SetLineStart(new LineHide(ls.LineType), i);
-					}
-				}
-			}
-			#endregion
+            #region Hide lines if required
+            if (_session.PersonalizedElementsOnly && _isPersonalized > 0)
+            {
+                HideNonCustomisedLines(tab, lTypes, lSubTypes);
+            }
+            #endregion
 
 			return tab;
 

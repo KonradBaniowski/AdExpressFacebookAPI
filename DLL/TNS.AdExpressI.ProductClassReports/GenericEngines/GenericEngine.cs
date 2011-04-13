@@ -128,10 +128,12 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                     throw new NoDataException();
                 }
             }
-            catch (DeliveryFrequencyException) { 
+            catch (DeliveryFrequencyException)
+            {
                 return GetUnvalidFrequencyDelivery();
             }
-            catch (NoDataException) { 
+            catch (NoDataException)
+            {
                 return GetNoData();
             }
             catch (Exception e) { throw new ProductClassReportsException("Error while retrieving data for database.", e); }
@@ -142,7 +144,8 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             {
                 return ComputeData(data);
             }
-            catch (DeliveryFrequencyException) { 
+            catch (DeliveryFrequencyException)
+            {
                 return GetUnvalidFrequencyDelivery();
             }
             catch (System.Exception e)
@@ -208,17 +211,19 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
 
         #region Common Methods about rules
         /// <summary>
-		/// Method to clean data from empty lines
-		/// </summary>
-		/// <param name="dsData">Dataset from database access</param>
-		/// <param name="firstData">First column with data</param>
-		/// <returns>DataTable without empty lines</returns>
-		protected void CleanDataTable(DataTable dtData,int firstData){
+        /// Method to clean data from empty lines
+        /// </summary>
+        /// <param name="dsData">Dataset from database access</param>
+        /// <param name="firstData">First column with data</param>
+        /// <returns>DataTable without empty lines</returns>
+        protected void CleanDataTable(DataTable dtData, int firstData)
+        {
 
             int maxColumn = dtData.Columns.Count - _isPersonalized;
             bool hasData = false;
 
-            for(int i = dtData.Rows.Count-1; i >= 0; i--){
+            for (int i = dtData.Rows.Count - 1; i >= 0; i--)
+            {
 
                 hasData = false;
                 for (int j = firstData; j < maxColumn; j++)
@@ -231,34 +236,35 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                     }
 
                 }
-                if (!hasData){
+                if (!hasData)
+                {
                     dtData.Rows.RemoveAt(i);
                 }
 
             }
 
-		}
+        }
         #endregion
 
         #region SetPersoAdvertiser
         protected virtual void SetPersoAdvertiser(ProductClassResultTable tab, Int32 cLine, DataRow row, DetailLevelItemInformation.Levels level)
         {
             ProductClassLineStart ls = (ProductClassLineStart)tab[cLine, 0];
-          
+
             switch (level)
             {
                 case DetailLevelItemInformation.Levels.advertiser:
                 case DetailLevelItemInformation.Levels.product:
-                case DetailLevelItemInformation.Levels.brand:     
+                case DetailLevelItemInformation.Levels.brand:
                     DisplayPerso(ls, row, level);
                     break;
                 default:
-                    SetUniversType(ls, row);        
+                    SetUniversType(ls, row);
                     break;
             }
         }
 
-        protected virtual void SetPersoAdvertiser(ProductClassResultTable tab, Int32 cLine, DataRow row, DetailLevelItemInformation.Levels level,CstClassif.Branch.type branchType)
+        protected virtual void SetPersoAdvertiser(ProductClassResultTable tab, Int32 cLine, DataRow row, DetailLevelItemInformation.Levels level, CstClassif.Branch.type branchType)
         {
             if (branchType == CstClassif.Branch.type.product)
             {
@@ -268,7 +274,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             {
                 ProductClassLineStart ls = (ProductClassLineStart)tab[cLine, 0];
                 SetUniversType(ls, row);
-            }           
+            }
         }
         #endregion
 
@@ -319,8 +325,8 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                     }
                     break;
                 default:
-                    SetUniversType(ls,row);
-                    ls.DisplayPerso = true; 
+                    SetUniversType(ls, row);
+                    ls.DisplayPerso = true;
                     break;
             }
         }
@@ -358,9 +364,124 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             }
             return index;
         }
-        
+
         #endregion
 
+        /// <summary>
+        /// Check if children of current level are all neutral 
+        /// </summary>
+        /// <param name="tab">result table</param>
+        /// <param name="i">index of current line</param>
+        /// <returns>True if all children of current level are neutral </returns>
+        protected virtual bool ChildrenAreNeutral(ProductClassResultTable tab, int i)
+        {
+            if (tab != null && tab[i, 1] != null && tab[i, 1] is CellLevel)
+            {
+                CellLevel cParent = (CellLevel)tab[i, 1];
+                for (int j = i + 1; j < tab.LinesNumber; j++)
+                {
+                    CellLevel cChild = (CellLevel)tab[j, 1];
+                    ProductClassLineStart ls = (ProductClassLineStart)tab[j, 0];
+                    if (cChild != null && ls != null)
+                    {
+                        if (!cParent.Equals(cChild.ParentLevel)) return true;
+                        if (ls.LineUnivers != UniversType.neutral) return false;
+                    }
+                }
 
+            }
+            return true;
+        }
+
+        #region HideNonCustomisedLines
+
+        /// <summary>
+        /// Hide Non CustomisedLines
+        /// </summary>
+        /// <param name="tab">result table</param>
+        /// <param name="lTypes">levels type</param>
+        /// <param name="lSubTypes">sub level types</param>
+        protected virtual void HideNonCustomisedLines(ProductClassResultTable tab, List<LineType> lTypes, List<LineType> lSubTypes)
+        {
+            List<int> lineIndexRange = null;
+            int nextLine = -1;
+            ProductClassLineStart ls = null, ls2 = null;
+            bool hasCustomisedChildren = false;
+            bool showTotalLines = false;
+
+            for (int i = 0; i < tab.LinesNumber; i++)
+            {
+                ls = (ProductClassLineStart)tab[i, 0];
+                if (ls.LineUnivers == UniversType.neutral)
+                {
+                    if (lTypes.Contains(ls.LineType))
+                    {
+                        //Get range of lines for current level
+                        lineIndexRange = new List<int>();
+                        lineIndexRange.Add(i);
+                        nextLine = i + 1;
+                        for (int j = i + 1; j < tab.LinesNumber; j++)
+                        {
+                            ls2 = (ProductClassLineStart)tab[j, 0];
+                            if (lSubTypes.Contains(ls2.LineType))
+                            {
+                                lineIndexRange.Add(j);
+                            }
+                            else
+                            {
+                                nextLine = j;
+                                break;
+                            }
+                        }
+                        //Check if current level has customised children 
+                        for (int k = nextLine; k < tab.LinesNumber; k++)
+                        {
+                            ls2 = (ProductClassLineStart)tab[k, 0];
+                            if (lTypes.Contains(ls2.LineType) && lTypes.IndexOf(ls2.LineType) > lTypes.IndexOf(ls.LineType))
+                            {
+                                if (ls2.LineUnivers != UniversType.neutral)
+                                {
+                                    hasCustomisedChildren = true;
+                                    showTotalLines = true;
+                                    break;
+                                }
+                            }
+                            else if (lTypes.Contains(ls2.LineType) && lTypes.IndexOf(ls2.LineType) <= lTypes.IndexOf(ls.LineType))
+                            {
+                                break;
+                            }
+                        }
+                        //Non hide current level if has customised children then go to next level
+                        if (!hasCustomisedChildren)
+                        {
+                            for (int n = 0; n < lineIndexRange.Count; n++)
+                            {
+                                ls2 = (ProductClassLineStart)tab[lineIndexRange[n], 0];
+                                if (ls2.LineUnivers == UniversType.neutral)
+                                    tab.SetLineStart(new LineHide(ls.LineType), lineIndexRange[n]);
+                            }
+                        }
+                        i = (lineIndexRange != null && lineIndexRange.Count > 0) ? lineIndexRange[lineIndexRange.Count - 1] : nextLine;
+                    }
+                }
+                else
+                {
+                    showTotalLines = true;
+                }
+                hasCustomisedChildren = false;
+            }
+            //Hide total lines if required
+            if (!showTotalLines)
+            {     List<LineType> totalTypes = new List<LineType> { LineType.total, LineType.subTotal1, LineType.subTotal2, LineType.subTotal3, LineType.subTotal4};
+
+                for (int i = 0; i < tab.LinesNumber; i++)
+                {                    
+                    if (tab[i, 0] is ProductClassLineStart && totalTypes.Contains(((ProductClassLineStart)tab[i, 0]).LineType))                    
+                        tab.SetLineStart(new LineHide(ls.LineType), i);                    
+                    else break;
+                }
+            }
+        }
+        #endregion
     }
 }
