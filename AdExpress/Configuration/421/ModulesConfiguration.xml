@@ -47,6 +47,7 @@
             <allowedMediaLevelItem id="14" name="Variété"/>
             <!--<allowedMediaLevelItem id="17" name="Titre"/>-->
             <!--<allowedMediaLevelItem id="26" name="Pays"/>-->
+			<allowedMediaLevelItem id="27" name="Basic Media"/>
           </allowedMediaLevelItems>
         </MediaDetailLevel>
         <selections>
@@ -77,6 +78,7 @@
               <allowedUniverseLevel id="12" name="category"/>
               <allowedUniverseLevel id="14" name="media"/>
               <allowedUniverseLevel id="15" name="interest_center"/>
+              <allowedUniverseLevel id="16" name="Basic Media"/>
             </allowedUniverseLevels>
             <allowedUniverseBranches>
               <allowedUniverseBranch id="7" name="vehicle\category\media"/>
@@ -140,6 +142,7 @@
             <allowedColumnDetailLevelItem id="5" name="Régie"/>
             <!--<allowedColumnDetailLevelItem id="17" name="Titre"/>-->
             <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+			<allowedColumnDetailLevelItem id="27" name="Basic Media"/>
           </allowedColumnDetailLevelItems>
         </ColumnDetailLevel>
         <selections>
@@ -380,6 +383,7 @@
             <allowedProductLevelItem id="14" name="Variete"/>
             <allowedProductLevelItem id="10" name="Produit"/>
             <allowedProductLevelItem id="9" name="Marque"/>
+            <allowedProductLevelItem id="4" name="Centre d'interet"/>
             <!--<allowedProductLevelItem id="7" name="Groupe de société"/>-->
             <allowedProductLevelItem id="8" name="Annonceur"/>
             <!--<allowedProductLevelItem id="15" name="Groupe d'agence"/>-->
@@ -393,6 +397,7 @@
             <allowedColumnDetailLevelItem id="5" name="Régie"/>
             <!--<allowedColumnDetailLevelItem id="17" name="Titre"/>-->
             <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+            <allowedColumnDetailLevelItem id="27" name="Basic Media"/>
           </allowedColumnDetailLevelItems>
         </ColumnDetailLevel>
         <selections>
@@ -699,6 +704,7 @@
               <allowedUnit>numberBoard</allowedUnit>
               <allowedUnit>volume</allowedUnit>
               <allowedUnit>versionNb</allowedUnit>
+              <allowedUnit>occurence</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>

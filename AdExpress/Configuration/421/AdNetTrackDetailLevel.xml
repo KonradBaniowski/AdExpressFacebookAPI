@@ -19,5 +19,6 @@
 		<allowedAdNetTrackLevelItem id="11" name="Famille"/>
 		<allowedAdNetTrackLevelItem id="12" name="Classe"/>	
 		<allowedAdNetTrackLevelItem id="13" name="Groupe"/>
+    <allowedAdNetTrackLevelItem id="27" name="Basic Media"/>
 	</allowedAdNetTrackLevelItems>
 </AdNetTrackDetailLevel> 
