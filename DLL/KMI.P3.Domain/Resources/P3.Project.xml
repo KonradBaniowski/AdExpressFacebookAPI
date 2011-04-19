@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<assembly>
+  <name>P3.Localization</name>
+  <compiler>C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727</compiler>
+  <projects>
+    <project id="Global">
+      <files>
+        <!--<file>D:\Dev\CS2\AdExpress International Demo\Trunk\DLL\KMI.P3.Domain\Resources\P3.en.xml</file>-->
+        <file>D:\Dev\CS2\AdExpress International Demo\Trunk\DLL\KMI.P3.Domain\Resources\P3.fr.xml</file>
+      </files>
+    </project>
+  </projects>
+  <outputs>
+    <dir>\\frmitch-fs04\Programme\Projets\France\P3\Bin</dir>
+  </outputs>
+</assembly>

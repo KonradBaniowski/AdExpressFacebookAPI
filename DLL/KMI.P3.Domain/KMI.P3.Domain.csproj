@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E2408D42-48F0-4520-AA57-2D60D9EEA36B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KMI.P3.Domain</RootNamespace>
+    <AssemblyName>KMI.P3.Domain</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="P3.Localization">
+      <HintPath>\\frmitch-fs04\programme\Projets\France\P3\Bin\P3.Localization.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TNS.FrameWork">
+      <HintPath>\\frmitch-fs04\programme\Projets\France\P3\Bin\TNS.FrameWork.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.DB">
+      <HintPath>\\frmitch-fs04\programme\Projets\France\P3\Bin\TNS.FrameWork.DB.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataBaseDescription\Connection.cs" />
+    <Compile Include="DataBaseDescription\DataBase.cs" />
+    <Compile Include="DataBaseDescription\DefaultConnection.cs" />
+    <Compile Include="DataBaseDescription\Schema.cs" />
+    <Compile Include="DataBaseDescription\Table.cs" />
+    <Compile Include="DataBaseDescription\View.cs" />
+    <Compile Include="Translation\ITranslation.cs" />
+    <Compile Include="Translation\Translate.cs" />
+    <Compile Include="XmlLoader\CustomerTypesXL.cs" />
+    <Compile Include="XmlLoader\DataBaseDescriptionXL.cs" />
+    <Compile Include="Exceptions\DataBaseException.cs" />
+    <Compile Include="Exceptions\DefaultConnectionException.cs" />
+    <Compile Include="Exceptions\HeaderException.cs" />
+    <Compile Include="Exceptions\WebLanguagesXLException.cs" />
+    <Compile Include="Exceptions\WebThemesXLException.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Translation\GestionWeb.cs" />
+    <Compile Include="Translation\P3CultureInfo.cs" />
+    <Compile Include="Web\Navigation\WebHeader.cs" />
+    <Compile Include="Web\Navigation\WebHeaderMenuItem.cs" />
+    <Compile Include="Web\Navigation\WebHeaders.cs" />
+    <Compile Include="Web\WebApplicationParameters.cs" />
+    <Compile Include="Web\WebLanguage.cs" />
+    <Compile Include="Web\WebTheme.cs" />
+    <Compile Include="XmlLoader\HeaderXL.cs" />
+    <Compile Include="XmlLoader\WebLanguagesXL.cs" />
+    <Compile Include="XmlLoader\WebParamtersXL.cs" />
+    <Compile Include="XmlLoader\WebThemesXL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\P3.en.xml" />
+    <Content Include="Resources\P3.fr.xml" />
+    <Content Include="Resources\P3.Project.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KMI.P3.Constantes\KMI.P3.Constantes.csproj">
+      <Project>{FF8A449C-7F30-4380-BB4C-5A30C6C1787D}</Project>
+      <Name>KMI.P3.Constantes</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

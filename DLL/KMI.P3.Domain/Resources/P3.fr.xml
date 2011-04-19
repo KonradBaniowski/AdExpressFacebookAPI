@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<localization>
+  <globalization>
+    <culture>Neutral</culture>
+  </globalization>
+  <items>
+    <item mnemonic="w1" type="System.String">Identification</item>
+    <item mnemonic="w2" type="System.String">Demande d'information</item>
+    <item mnemonic="w3" type="System.String">Kantar Media</item>
+    <item mnemonic="w4" type="System.String">Pour toutes informations, vous pouvez contacter les personnes suivantes :</item>
+    <item mnemonic="w5" type="System.String">Sophie Le Barazer</item>
+    <item mnemonic="w6" type="System.String">Directrice Commerciale</item>
+    <item mnemonic="w7" type="System.String">01 30 74 80 35</item>
+    <item mnemonic="w8" type="System.String">sophie.lebarazer@kantarmedia.com</item>
+    <item mnemonic="w9" type="System.String">Denis Gaucher</item>
+    <item mnemonic="w10" type="System.String">Directeur Pôle Publicitaire France</item>
+    <item mnemonic="w11" type="System.String">01 30 74 81 20</item>
+    <item mnemonic="w12" type="System.String">denis.gaucher@kantarmedia.com</item>
+    <item mnemonic="w13" type="System.String">Fatima El Gabda</item>
+    <item mnemonic="w14" type="System.String">Chargée de clientèle</item>
+    <item mnemonic="w15" type="System.String">01 30 74 84 30</item>
+    <item mnemonic="w16" type="System.String">fatima.elgabda@kantarmedia.com</item>
+    <item mnemonic="w17" type="System.String">Vous ne pouvez pas vous connecter avec cet identifiant / mot de passe</item>
+    <item mnemonic="w18" type="System.String">Vous ne pouvez pas vous connecter à AdExpress</item>
+  </items>
+</localization>

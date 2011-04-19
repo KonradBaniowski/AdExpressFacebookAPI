@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{05D73DC8-0815-490C-9B4D-D6A1A4EEC4E8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KMI.P3.Web.Core</RootNamespace>
+    <AssemblyName>KMI.P3.Web.Core</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Oracle.DataAccess, Version=9.2.0.700, Culture=neutral, PublicKeyToken=89b483f429c47342">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\frmitch-fs04\programme\Projets\France\P3\Bin\Oracle.DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TNS.FrameWork">
+      <HintPath>\\frmitch-fs04\programme\Projets\France\P3\Bin\TNS.FrameWork.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.DB">
+      <HintPath>\\frmitch-fs04\programme\Projets\France\P3\Bin\TNS.FrameWork.DB.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.Isis.Constantes">
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\P3\Bin\TNS.Isis.Constantes.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.Isis.Right">
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\P3\Bin\TNS.Isis.Right.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Exceptions\WebSessionException.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sessions\WebSession.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KMI.P3.Constantes\KMI.P3.Constantes.csproj">
+      <Project>{FF8A449C-7F30-4380-BB4C-5A30C6C1787D}</Project>
+      <Name>KMI.P3.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KMI.P3.Domain\KMI.P3.Domain.csproj">
+      <Project>{E2408D42-48F0-4520-AA57-2D60D9EEA36B}</Project>
+      <Name>KMI.P3.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KMI.P3\KMI.P3.csproj">
+      <Project>{46B709B2-398E-4B6F-A0B7-8937BB133F12}</Project>
+      <Name>KMI.P3</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
