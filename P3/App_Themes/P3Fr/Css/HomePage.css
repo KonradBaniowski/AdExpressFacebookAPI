@@ -1,0 +1,131 @@
+﻿.homePage,table.homePage
+{
+	background-color:black;
+	height:100%;
+	width:100%;
+}
+
+
+.contentmarketing{
+	background-color:#ffffff;
+	width:100%;
+	height:100%;
+}
+
+.leftMenu
+{
+	/*padding-top:20px;*/
+	vertical-align:top;
+	/*width:0%;*/
+	background-color:#000000;/*5c5c5c*/
+	width:240px;
+	height:100%;
+}
+
+ /*================Debut style Menu liste des logins AdScope====================================*/
+.menulogins {
+width: 240px;
+border-right: 1px solid #000000;
+/*padding: 0 0 1em 0;*/
+/*margin-bottom: 1em;-->*/
+font-family: arial;
+font-size: 12px;
+font-weight:bold;
+text-align:left;
+background-color: #000000;
+color: #FF5800; 
+}
+
+.menulogins ul 
+{
+
+list-style: none;
+margin: 0;
+padding: 0;
+border: none;
+}
+
+.menulogins li 
+{
+
+border-bottom: 1px solid #000000;
+margin: 0;
+}
+
+.menulogins li a 
+{
+	
+display: block;
+/*padding: 5px 0px 5px 5px;*/
+border-left: 0px solid  #5C5C5C; /*FF5800*/
+border-right: 0px solid #5C5C5C; 
+background-color: #5C5C5C; 
+color: #fff;
+text-decoration: none;
+width: 240px;
+}
+
+
+.menulogins li a:hover 
+{
+border-left: 0px solid #999999; 
+border-right: 0px solid #999999;
+background-color: #999999;
+color: #ffffff;
+}
+
+/*================Fin style Menu liste des logins====================================*/
+
+
+/*================Debut style Menu liste des logins AdExpress====================================*/
+.menuloginAdExpress {
+width: 240px;
+border-right: 1px solid #000000;
+font-family: arial;
+font-size: 12px;
+font-weight:bold;
+text-align:left;
+background-color: #000000;
+color: #F18E00; 
+}
+
+.menuloginAdExpress ul 
+{
+
+list-style: none;
+margin: 0;
+padding: 0;
+border: none;
+}
+
+.menuloginAdExpress li 
+{
+
+border-bottom: 1px solid #000000;
+margin: 0;
+}
+
+.menuloginAdExpress li a 
+{
+	
+display: block;
+/*padding: 5px 0px 5px 5px;*/
+border-left: 0px solid  #FF7100; 
+border-right: 0px solid #FF7100; 
+background-color: #FF7100; 
+color: #fff;
+text-decoration: none;
+width: 240px;
+}
+
+
+.menuloginAdExpress li a:hover 
+{
+border-left: 0px solid #999999; 
+border-right: 0px solid #999999;
+background-color: #999999;
+color: #ffffff;
+}
+
+
+/*================Fin style Menu liste des logins====================================*/

@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <languages default="33" defaultDataLanguage="33">
+    <language id="33" name="Français" imageSourceText="/Images/Common/france.gif"  localization="fr-FR" charset="utf-8" contentEncoding="utf-8" nlsSort="FRENCH">     
+    </language>    
+  </languages>
+</configuration>

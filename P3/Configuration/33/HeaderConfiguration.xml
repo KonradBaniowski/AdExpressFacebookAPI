@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <header name="disconnect">
+    <menuItem name="info" idWebText="2" href="/Public/Contact.aspx" language="true" idSession="false"/>   
+    <menuItem name="TNS" idWebText="3" href="http://www.kantarmedia.fr" target="blank" language="false" idSession="false"/>
+  </header>
+  <header name ="connect">
+    <menuItem name="identification" idWebText="1" href="/index.aspx" language="true" idSession="true"/>  
+    <menuItem name="TNS" idWebText="3" href="http://www.kantarmedia.fr" target="blank" language="false" idSession="false"/>
+  </header>
+  <header name ="contact">
+    <menuItem name="identification" idWebText="1" href="/index.aspx" language="true" idSession="false"/>
+    <menuItem name="TNS" idWebText="3" href="http://www.kantarmedia.fr" target="blank" language="false" idSession="false"/>
+  </header>
+</configuration>

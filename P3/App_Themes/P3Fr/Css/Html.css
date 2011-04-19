@@ -1,0 +1,56 @@
+﻿/*********************************************************
+   HTML Elements
+ *********************************************************/
+ html, body, form
+{
+	margin:0px;
+	padding:0px;
+	height:100%;
+	vertical-align:top;
+}
+ 
+/* Body */
+body {
+  background : url(/App_Themes/P3Fr/images/background.gif);
+}
+
+/* Links */
+a {
+  text-decoration: none;
+  color: #999999;
+}
+
+a.submitButton img {
+  vertical-align:  top;
+}
+a.calendar{
+	padding-left: 0;
+	padding-right: 0;
+}
+img.nothing{
+	border : 0px;
+}
+
+/* span */
+span {
+  /*width: 25%;*/
+  vertical-align: middle;
+  /*padding: 0 1em;*/
+  font-family : arial;
+  font-size : 0.7em;
+  font-weight : bold;
+  color: #ffffff;
+}
+
+/* input */
+.input{
+	border: 1px solid #999999;
+	font-family : arial;
+	font-size : 0.7em;
+	font-weight : bold;
+	color: #5c5c5c;
+}
+.mediaSelectionInput{
+	width : 15px;
+	height :15px;
+}

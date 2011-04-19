@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CustomerTypes>
+  <CustomerType id="0"    name="Default"              filePath="/Marketing/Pages/RRES_Default/index.html"/>
+  <CustomerType id="137"  name="Client Media"         filePath="/Marketing/Pages/XATB_Media/index.html"/>
+  <CustomerType id="134"  name="Client Annonceurs"    filePath="/Marketing/Pages/TGFD_Annonceur/index.html"/>
+  <CustomerType id="135"  name="Client Agences Media" filePath="/Marketing/Pages/PLJH_Agence/index.html"/>
+  <CustomerType id="253"  name="Client Agences Pub" filePath="/Marketing/Pages/DSLX_AgencePub/index.html"/>
+</CustomerTypes>
