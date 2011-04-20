@@ -15,6 +15,7 @@ namespace KMI.P3.Web.Functions
     public class QueryStringEncryption
     {
 
+        //Crypate AdExpress
         public const string _cryptKey = "8!b?#B$3";
 
         public static string EncryptQueryString(string strQueryString)
@@ -31,6 +32,35 @@ namespace KMI.P3.Web.Functions
             return oES.Decrypt(strQueryString.Replace("-", "+").Replace("_", "/"), _cryptKey);
         }
 
+       
+
+        /// <summary>
+        ///  Crypt AdScope string
+        /// </summary>
+        /// <param name="s">String to encrypt</param>
+        /// <returns></returns>
+        public static string AdScopeCrypt(string s)
+        {
+            int key = 1234;
+            int len = s.Length;
+            int off = 0;
+            byte[] b = System.Text.Encoding.UTF7.GetBytes(s); 
+            byte[] buffer = new byte[len - off];
+
+            for (int i = 0; i < len; i++)
+            {
+                buffer[i] = (byte)(ByteUnsignedValue(b[off + i]) ^ key);
+            }
+            return Encoding.UTF7.GetString(buffer);
+        }
+
+        private static int ByteUnsignedValue(byte b)
+        {
+            int result = b&0x7F;
+            if ((b&0x80000000) != 0)
+                return (result | 0x80);
+            return result;
+        }
 
 
     }
@@ -64,6 +94,7 @@ namespace KMI.P3.Web.Functions
             cs.FlushFinalBlock();
             return Convert.ToBase64String(ms.ToArray());
         }
+
 
     }
 }

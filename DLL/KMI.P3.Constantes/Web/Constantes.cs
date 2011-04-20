@@ -44,7 +44,7 @@ namespace KMI.P3.Constantes.Web
         /// <summary>
         /// Adscope page url
         /// </summary>
-        public const string ADSCOPE_URL = @"http://www.adscope.fr"; 
+        public const string ADSCOPE_URL = @"http://www.adscope.fr/site/identification_FR.jsp"; 
         #endregion
 
     }

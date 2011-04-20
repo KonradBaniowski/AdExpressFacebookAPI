@@ -49,62 +49,8 @@ namespace KMI.P3.Web.Controls.Headers
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            _AdExpressLogin = new AdExpressLogin(_webSession.Source, _webSession.Login, _webSession.Password);
-
-            string eventSender = "", eventArguments = "";
-            string[] arrArgs = null;
-
-            if (Page.Request.Form.GetValues("__loginChoiceEVENTTARGET") != null)
-            {
-                eventSender = Page.Request.Form.GetValues("__loginChoiceEVENTTARGET")[0];
-            }
-            if (Page.Request.Form.GetValues("__loginChoiceEVENTARGUMENT") != null)
-            {
-                eventArguments = Page.Request.Form.GetValues("__loginChoiceEVENTARGUMENT")[0];
-                arrArgs = eventArguments.Split('-');
-            }
-
-            if (Page.IsPostBack)
-            {
-
-                try
-                {
-
-                    //Connect automatically to AdExpress
-                    if (arrArgs != null && arrArgs.Length == NB_ADEX_ARGS && _AdExpressLogin.CanAccessToProject())
-                    {
-                        string encryptedParams = KMI.P3.Web.Functions.QueryStringEncryption.EncryptQueryString(_webSession.Login + SPLITTER + _webSession.Password + SPLITTER + _webSession.SiteLanguage + SPLITTER + DateTime.Now.ToString("yyyyMMdd"));
-                        //Page.Response.Redirect(KMI.P3.Constantes.Web.URL.ADEXPRESS_URL + "?p=" + encryptedParams);
-                        Page.Response.Write("<script language=javascript>");
-                        Page.Response.Write("window.open('" + KMI.P3.Constantes.Web.URL.ADEXPRESS_URL + "?p=" + encryptedParams + "','AdExpress');"); ;
-                        Page.Response.Write("</script>");
-
-                    }
-                    ////Connect automatically to AdScope
-                    //else if (arrArgs != null && arrArgs.Length == NB_ADEX_ARGS && _webSession.CustomerLogin.CanAccessToProject(KMI.P3.Constantes.Project.P3_ID))
-                    //{                     
-                    //    Page.Response.Write("<script language=javascript>");
-                    //    Page.Response.Write("window.open('" + KMI.P3.Constantes.Web.URL.ADSCOPE_URL + "','AdScope');"); ;
-                    //    Page.Response.Write("</script>");
-
-                    //}
-                    //else
-                    //{
-                    //    Page.Response.Write("<script language=javascript>");
-                    //    Page.Response.Write("	alert(\"" + GestionWeb.GetWebWord(18, WebApplicationParameters.DefaultLanguage) + "\");");
-                    //    Page.Response.Write("</script>");
-                    //}
-
-                   
-                }
-                catch (System.Exception)
-                {
-                    // L'accès est impossible
-                    Page.Response.Write("<script language=javascript>");
-                    Page.Response.Write("	alert(\"" + GestionWeb.GetWebWord(17, WebApplicationParameters.DefaultLanguage) + "\");");
-                    Page.Response.Write("</script>");
-                }
-            }
+            _AdExpressLogin = new AdExpressLogin(_webSession.Source, _webSession.Login, _webSession.Password);           
+           
         }
         #endregion
 
@@ -125,7 +71,6 @@ namespace KMI.P3.Web.Controls.Headers
                 output.Write(" <div id=\"listLoginAdexpress\" class=\"menuloginAdExpress\">");
                 output.Write("<ul>");
                 output.Write(" <li><a href=\"#\" onclick=\"javascript:window.open('" + KMI.P3.Constantes.Web.URL.ADEXPRESS_URL + "?p=" + encryptedParams + "','AdExpress');\" >&nbsp;AdExpress [" + _AdExpressLogin.Label + "]</a></li>");
-                //output.Write(" <li><a href=\"javascript:loginChoiceDoPostBack('buttonadexpress','" + KMI.P3.Constantes.Project.ADEXPRESS_ID + "-" + _AdExpressLogin.LoginId + "')\" class=\"adexpresslink\">&nbsp;AdExpress [" + _AdExpressLogin.Label + "]</a></li>");
                 output.Write(" </ul>");
                 output.Write(" </div>");
             }
@@ -139,25 +84,21 @@ namespace KMI.P3.Web.Controls.Headers
                 output.Write("<ul>");
             }
             foreach (AdScopeExternalLogin adScopeLogin in _AdExpressLogin.AdScopeExternalLoginList)
-                output.Write(" <li><a href=\"#\" onclick=\"javascript:window.open('" + KMI.P3.Constantes.Web.URL.ADEXPRESS_URL + "?p=33SS','AdScope');\" >&nbsp;AdScope [" + adScopeLogin.Login + "]</a></li>");
+            {
+                
+                string cryptedLogin = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(adScopeLogin.Login);
+                string cryptedPassword = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(adScopeLogin.Password);
+                string url = Page.ResolveUrl( KMI.P3.Constantes.Web.URL.ADSCOPE_URL + "?cryptedLogin=" + cryptedLogin + "&cryptedPassword=" + cryptedPassword + "&crypteIdent=1");
+                //output.Write(" <li><a href=\"#\" onclick=\"javascript:window.open('" + KMI.P3.Constantes.Web.URL.ADSCOPE_URL + "?cryptedLogin="+cryptedLogin+"&cryptedPassword="+cryptedPassword+"&crypteIdent=1','AdScope');\" >&nbsp;AdScope [" + adScopeLogin.Login + "]</a></li>");
+                output.Write(" <li><a href=\"#\" onclick=\"javascript:window.open('" + url+"','AdScope');\" >&nbsp;AdScope [" + adScopeLogin.Login + "]</a></li>");
+            }
             if (_AdExpressLogin.AdScopeExternalLoginList.Count > 0)
             {
                 output.Write(" </ul>");
                 output.Write(" </div>");
             }
 
-            //DataSet ds = _webSession.CustomerLogin.GetLoginsParams(_webSession.CustomerLogin.Login, _webSession.CustomerLogin.PassWord);
-            //if (ds != null && ds.Tables[0].Rows.Count > 0) {
-
-            //    output.Write(" <div id=\"listLoginAdexpress\" class=\"menulogins\">");
-            //    output.Write("<ul>");
-            //    foreach (DataRow dr in ds.Tables[0].Rows)
-            //    {
-            //        output.Write(" <li><a href=\"javascript:loginChoiceDoPostBack('buttonadscope','" + KMI.P3.Constantes.Project.P3_ID + "-" + _webSession.CustomerLogin.IdLogin + "')\" >&nbsp;AdScope [" + dr["login"].ToString() + "]</a></li>");
-            //    }
-            //    output.Write(" </ul>");
-            //    output.Write(" </div>");
-            //}
+          
             #endregion
 
             output.Write(" </td></tr>");
