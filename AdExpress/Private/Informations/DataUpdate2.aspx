@@ -41,7 +41,7 @@
         <td width="70" class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText8" runat="server" Code="2314" Language="33" /></td>
         <td width="70" class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText9" runat="server" Code="2315" Language="33" /></td>
         <td width="70" class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText10" runat="server" Code="2316" Language="33" /></td>
-        <td width="70" class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText11" runat="server" Code="1302" Language="33" /></td>
+        <td width="70" class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText11" runat="server" Code="1302" Language="33" /><br />- <cc1:AdExpressText ID="AdExpressText111" runat="server" Code="1303" Language="33" /></td>
         <td width="70" class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText12" runat="server" Code="2317" Language="33" /></td>
         <td width="70" class="violetBackGround ColumnHeader"><cc1:AdExpressText ID="AdExpressText13" runat="server" Code="2318" Language="33" /></td>
         <td width="70" class="violetBackGround ColumnHeaderRight"><cc1:AdExpressText ID="AdExpressText14" runat="server" Code="1301" Language="33" /></td>
