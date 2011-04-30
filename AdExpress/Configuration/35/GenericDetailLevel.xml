@@ -146,6 +146,10 @@
       <levelItem id="26" name="Pays"/>
       <levelItem id="3" name="Support"/>
     </detailLevel>
+    <detailLevel id="36" name="media\support">
+      <levelItem id="1" name="Media"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
 	</detailLevels>
 </genericDetailLevel>
 

@@ -498,16 +498,16 @@
     <MediaSelectionDetailLevel>
       <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22" trendsDefaultMediaSelectionDetailLevel="2">
         <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
-        <defaultMediaSelectionDetailLevel id="25" name="catégorie\support" />
+        <defaultMediaSelectionDetailLevel id="36" name="media\support" />
         <defaultMediaSelectionDetailLevel id="26" name="basic media\support" />
       </defaultMediaSelectionDetailLevels>
       <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="1"/>
+        <!-- Media -->
         <allowedMediaSelectionLevelItem id="3"/>
         <!-- Support -->
         <allowedMediaSelectionLevelItem id="4"/>
-        <!-- Centre d 'interet -->
-        <allowedMediaSelectionLevelItem id="2"/>
-        <!-- Catégorie -->
+        <!-- Centre d 'interet -->       
         <allowedMediaSelectionLevelItem id="27"/>
         <!-- Basic Media -->
         <allowedMediaSelectionLevelItem id="17"/>
@@ -599,16 +599,16 @@
     <MediaSelectionDetailLevel>
       <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22" trendsDefaultMediaSelectionDetailLevel="2">
         <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
-        <defaultMediaSelectionDetailLevel id="25" name="catégorie\support" />
+        <defaultMediaSelectionDetailLevel id="36" name="media\support" />
         <defaultMediaSelectionDetailLevel id="26" name="basic media\support" />
       </defaultMediaSelectionDetailLevels>
       <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="1"/>
+        <!-- Media -->
         <allowedMediaSelectionLevelItem id="3"/>
         <!-- Support -->
         <allowedMediaSelectionLevelItem id="4"/>
-        <!-- Centre d 'interet -->
-        <allowedMediaSelectionLevelItem id="2"/>
-        <!-- Catégorie -->
+        <!-- Centre d 'interet -->      
         <allowedMediaSelectionLevelItem id="27"/>
         <!-- Basic Media -->
         <allowedMediaSelectionLevelItem id="17"/>

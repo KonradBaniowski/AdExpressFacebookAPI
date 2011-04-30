@@ -66,6 +66,9 @@ namespace AdExpress.Private.Results.Excel{
             string periodEndSave = _webSession.PeriodEndDate;
             MediaSchedulePeriod period = null;
             string zoomDate = string.Empty;
+            long oldModuleId = _webSession.CurrentModule;
+            long oldCurrentTab = _webSession.CurrentTab;
+            System.Windows.Forms.TreeNode oldReferenceUniversMedia = _webSession.ReferenceUniversMedia;
             try
             {
                 Response.ContentType = "application/vnd.ms-excel";
@@ -123,6 +126,8 @@ namespace AdExpress.Private.Results.Excel{
                 TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(_webSession.CurrentModule);
                 if (module.Id != WebConstantes.Module.Name.BILAN_CAMPAGNE){
                     module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
+                    _webSession.CurrentTab = 0;
+                    _webSession.ReferenceUniversMedia = new System.Windows.Forms.TreeNode("media");
                 }
                 if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Media Schedule result"));
                 if (zoomDate != null && zoomDate.Length > 0)
@@ -134,6 +139,7 @@ namespace AdExpress.Private.Results.Excel{
                 {
                     param = new object[2];
                 }
+                _webSession.CurrentModule = module.Id;
                 param[0] = _webSession;
                 param[1] = period;
                 IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
@@ -156,6 +162,9 @@ namespace AdExpress.Private.Results.Excel{
                 _webSession.PeriodType = periodType;
                 _webSession.PeriodBeginningDate = periodBegSave;
                 _webSession.PeriodEndDate = periodEndSave;
+                _webSession.CurrentModule = oldModuleId;
+                _webSession.CurrentTab = oldCurrentTab;
+                _webSession.ReferenceUniversMedia = oldReferenceUniversMedia;
             }
 
 

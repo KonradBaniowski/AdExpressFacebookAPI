@@ -176,7 +176,11 @@
     <detailLevel id="35" name="Agence">
       <levelItem id="16" name="Agence"/>
     </detailLevel>
-	</detailLevels>
+    <detailLevel id="36" name="media\support">
+      <levelItem id="1" name="Media"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+	</detailLevels>  
 </genericDetailLevel>
 
  

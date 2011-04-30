@@ -138,7 +138,15 @@ namespace TNS.AdExpress.Constantes.Classification{
             /// <summary>
             /// Advertising agency
             /// </summary>
-            advertisingAgency
+            advertisingAgency = 29,
+            /// <summary>
+			/// Type Magazine
+			/// </summary>
+			mediaMagazine=30,
+            /// <summary>
+            /// Type NewsPaper
+            /// </summary>
+            mediaNewsPaper = 31
 		}
 		#endregion
 

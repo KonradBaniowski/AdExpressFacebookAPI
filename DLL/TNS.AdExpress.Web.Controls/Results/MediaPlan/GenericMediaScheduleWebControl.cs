@@ -596,6 +596,9 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
             //object[,] tab = null;
             ConstantePeriod.DisplayLevel periodDisplay = webSession.DetailPeriod;
             object[] param = null;
+            long oldCurrentTab = _customerWebSession.CurrentTab;
+            System.Windows.Forms.TreeNode oldReferenceUniversMedia = _customerWebSession.ReferenceUniversMedia;
+
 			try{
 				
 				//webSession.CurrentModule = WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA;
@@ -655,6 +658,9 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                 {
                     param = new object[2];
                 }
+                _customerWebSession.CurrentModule = _module.Id;
+                if (_customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA) _customerWebSession.CurrentTab = 0;
+                _customerWebSession.ReferenceUniversMedia = new System.Windows.Forms.TreeNode("media");
                 param[0] = _customerWebSession;
                 param[1] = period;
                 IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryRulesLayer.AssemblyName, _module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
@@ -744,6 +750,9 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 			finally{
 				webSession.CurrentModule = moduleId;
                 webSession.DetailPeriod = periodDisplay;
+                webSession.CurrentTab = oldCurrentTab;
+                webSession.CurrentTab = oldCurrentTab;
+                webSession.ReferenceUniversMedia = oldReferenceUniversMedia;
 			}
 			return(html.ToString());
 		}

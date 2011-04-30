@@ -366,6 +366,14 @@ namespace AdExpress.Private.Universe{
 			else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.mediaPress.ToString()) {
 				return TNS.AdExpress.Constantes.Classification.Branch.type.mediaPress;
 			}
+            else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.mediaMagazine.ToString())
+            {
+                return TNS.AdExpress.Constantes.Classification.Branch.type.mediaMagazine;
+            }
+            else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.mediaNewsPaper.ToString())
+            {
+                return TNS.AdExpress.Constantes.Classification.Branch.type.mediaNewsPaper;
+            }
 			else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadio.ToString()) {
 				return TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadio;
 			}
@@ -429,6 +437,8 @@ namespace AdExpress.Private.Universe{
 					break;
 				case TNS.AdExpress.Constantes.Classification.Branch.type.media:
 				case TNS.AdExpress.Constantes.Classification.Branch.type.mediaPress:
+                case TNS.AdExpress.Constantes.Classification.Branch.type.mediaNewsPaper:
+                case TNS.AdExpress.Constantes.Classification.Branch.type.mediaMagazine:
 				case TNS.AdExpress.Constantes.Classification.Branch.type.mediaTv:
 				case TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvSponsorship:
 				case TNS.AdExpress.Constantes.Classification.Branch.type.mediaOthers:

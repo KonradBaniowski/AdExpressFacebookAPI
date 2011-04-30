@@ -1613,14 +1613,14 @@ namespace TNS.AdExpressI.MediaSchedule {
                         }
                         else
                         {
-                            if (_session.CurrentModule == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA)
+                            try
                             {
                                 t.Append(FctExcel.GetExcelHeader(_session, true, false, Zoom, (int)_session.DetailPeriod));
                             }
-                            else
+                            catch (Exception)
                             {
                                 t.Append(FctExcel.GetExcelHeaderForMediaPlanPopUp(_session, false, "", "", Zoom, (int)_session.DetailPeriod));
-                            }
+                            } 
                         }
                     }
                     else

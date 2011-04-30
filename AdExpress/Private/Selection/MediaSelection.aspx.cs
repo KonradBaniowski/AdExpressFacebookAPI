@@ -393,35 +393,49 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
 		/// <returns>?</returns>
 		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
 
+            VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 			//Liste des univers			
-			if(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID==DBClassificationConstantes.Vehicles.names.press.GetHashCode()
-                ||((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == DBClassificationConstantes.Vehicles.names.newspaper.GetHashCode()
-                ||((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == DBClassificationConstantes.Vehicles.names.magazine.GetHashCode()
+            if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press               
                 ){
 				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaPress;
-			}
-			else if(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID==(long)DBClassificationConstantes.Vehicles.names.radio.GetHashCode()){
-				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadio;
-			}
-			else if(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID==(long)DBClassificationConstantes.Vehicles.names.tv.GetHashCode()){
-				if(_webSession.CurrentModule==WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES )
-				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvSponsorship;
-				else
-				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaTv;
-			}
-			else if(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID==(long)DBClassificationConstantes.Vehicles.names.outdoor.GetHashCode()){
-				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaOutdoor;
-			}
-            else if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == (long)DBClassificationConstantes.Vehicles.names.instore.GetHashCode()) {
+                }
+            else if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine)
+            {
+                branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaMagazine;
+            }
+            else if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper)
+            {
+                branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaNewsPaper;
+            }
+            else if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio)
+            {
+                branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadio;
+            }
+            else if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv)
+            {
+                if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
+                    branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvSponsorship;
+                else
+                    branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaTv;
+            }
+            else if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor)
+            {
+                branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaOutdoor;
+            }
+            else if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore)
+            {
                 branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaInstore;
             }
-			else if(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID==(long)DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode()){
-				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaInternationalPress;
-			}
-			else if(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID==(long)DBClassificationConstantes.Vehicles.names.internet.GetHashCode()){
-				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaInternet;
-			}
-            else if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == (long)DBClassificationConstantes.Vehicles.names.cinema.GetHashCode()){
+            else if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress)
+            {
+                branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaInternationalPress;
+            }
+            else if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internet)
+            {
+                branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaInternet;
+            }
+            else if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.cinema)
+            {
                 branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaCinema;
             }
 
