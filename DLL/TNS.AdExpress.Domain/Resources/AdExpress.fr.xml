@@ -1508,8 +1508,8 @@
     <item mnemonic="w2309" type="System.String">Sortir du mode zoom</item>
     <item mnemonic="w2310" type="System.String">Module (Groupe de modules)</item>
     <item mnemonic="w2311" type="System.String">Presse Internationale</item>
-    <item mnemonic="w2312" type="System.String">Radio Nat.</item>
-    <item mnemonic="w2313" type="System.String">Radio IDF</item>
+    <item mnemonic="w2312" type="System.String">Radio Nat. (hors Sud Radio)</item>
+    <item mnemonic="w2313" type="System.String">Radio IDF (+ Sud Radio)</item>
     <item mnemonic="w2314" type="System.String">TV Nat.</item>
     <item mnemonic="w2315" type="System.String">TV Thématiques</item>
     <item mnemonic="w2316" type="System.String">TV TNT Parrainage&lt;br&gt;- TV TNT -&lt;br&gt;TV Nat.Parrainage</item>
