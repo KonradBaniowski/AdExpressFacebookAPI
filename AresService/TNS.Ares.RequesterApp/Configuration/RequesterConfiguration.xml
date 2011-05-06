@@ -2,7 +2,7 @@
 <configurations>
   <!-- Config FR (33)-->
   <aresConfigurations>
-    <lsClientConfiguration name="AdExpress" directoryName="AdExpress\33" familyId="122" familyName="AdExpress FR Requester Treatment service" monitorPort="30227" productName="AdExpress Request treatment service">
+    <!--<lsClientConfiguration name="AdExpress" directoryName="AdExpress\33" familyId="122" familyName="AdExpress FR Requester Treatment service" monitorPort="30227" productName="AdExpress Request treatment service">
       <moduleDescription description="AdExpress Ares Requester" moduleId="0"/>
       <moduleDescription description="Task AdExpress Ares Requester in error" moduleId="2"/>
       <moduleDescription description="AdExpress Alert generation" moduleId="3"/>
@@ -25,6 +25,11 @@
         <moduleDescription description="WCB Requester" moduleId="0"/>
         <moduleDescription description="Task WCB Ares Requester in error" moduleId="2"/>
         <moduleDescription description="WCB Ares Garbage" moduleId="10"/>
+      </lsClientConfiguration>
+    </aresConfigurations>-->
+    <aresConfigurations>
+      <lsClientConfiguration name="CaptureSiteRequest" directoryName="true" familyId="149" familyName="CaptureSite FR Requester Treatment service" monitorPort="30313" productName="CaptureSite Requester">
+        <moduleDescription description="CaptureSite Ares Requester" moduleId="15"/>
       </lsClientConfiguration>
     </aresConfigurations>
   </aresConfigurations>
