@@ -3560,7 +3560,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Group Advertising Agency
             /// </summary>
-            groupAdvertisingAgency = 11
+            groupAdvertisingAgency = 11,
+            /// <summary>
+            /// Group category application mobile
+            /// </summary>
+            applicationMobile = 12
 		}
 	}
 	#endregion

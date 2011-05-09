@@ -120,8 +120,10 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
             string dataTableNameForGad = "";
             string dataFieldsForGad = "";
             string dataJointForGad = "";
-            Table table = null;
+            Table table = null, tableDataMobile = null;
             Schema schAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
+            bool useTableDataMobile = false;
+            const string prefixDataMobile = "dt";
             #endregion
 
             #region Construction de la requête
@@ -132,8 +134,12 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 detailProductOrderBy = _session.GenericProductDetailLevel.GetSqlOrderFields();
                 TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
                 productsRights = SQLGenerator.GetClassificationCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, module.ProductRightBranches);
-			
+               
                 table = GetTable(_vehicleInformation);
+                useTableDataMobile = (_vehicleInformation.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile
+                    && !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_APPLICATION_MOBILE_CREATIVE_FLAG));
+
+                 if(useTableDataMobile) tableDataMobile = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataEvaliantMobile);
 
                 if(_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)) {
                     try {
@@ -145,7 +151,7 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 }
 
                 // select
-                sql.Append("select distinct " + detailProductFields + ", hashcode as versionNb ");
+                sql.Append("select distinct " + detailProductFields + ","+table.Prefix +".hashcode as versionNb ");
 
                 switch(_session.DetailPeriod) {
                     case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
@@ -167,6 +173,8 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 sql.Append("from " + table.SqlWithPrefix + " , ");
                 sql.Append(detailProductTablesNames);
                 sql.Append(dataTableNameForGad + " ");
+                if (useTableDataMobile)
+                    sql.Append("," + tableDataMobile.Sql + " " + prefixDataMobile);
 
                 // where
 				string maxHour ="23:59:59";
@@ -179,9 +187,15 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 // Sector ID
                 if(_idSector != -1)
                     sql.Append(" and " + table.Prefix + ".id_sector in (" + _idSector + ") ");
-
+                //Filtering with category Application mobile
+                if (useTableDataMobile)
+                {
+                    sql.Append(" and " + table.Prefix + ".HASHCODE = " + prefixDataMobile + ".HASHCODE ");
+                    sql.Append(" and " + table.Prefix + ".ID_BANNERS_MOBILE = " + prefixDataMobile + ".ID_BANNERS ");
+                    sql.Append(" and " + prefixDataMobile + ".id_category not in (" + TNS.AdExpress.Domain.Lists.GetIdList(TNS.AdExpress.Constantes.Web.GroupList.Type.applicationMobile) + ") ");
+                }
                 // group by
-                sql.Append(" group by " + detailProductFields + ", hashcode ");
+                sql.Append(" group by " + detailProductFields + ","+ table.Prefix + ".hashcode ");
                 if(dataFieldsForGad.Length>0)
                     sql.Append(dataFieldsForGad);
                 

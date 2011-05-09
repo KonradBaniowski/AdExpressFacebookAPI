@@ -1389,6 +1389,10 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// key category corresponding to excluded Sponsorship TV
 		/// </summary>
 		public const string KEY_EXCLUDE_SPONSORSHIP_TV = "KEY_EXCLUDE_SPONSORSHIP_TV";
+        /// <summary>
+        /// ID Category APPLICATION_MOBILE
+        /// </summary>
+        public const long ID_APPLICATION_MOBILE = 231;
         #endregion
 
     }
@@ -1754,7 +1758,13 @@ namespace TNS.AdExpress.Constantes.DB{
         /// <summary>
         /// Identifier of MEDIA CINEMA's media agency flag
         /// </summary>
-        public const Int64 ID_MEDIA_CINEMA_MEDIA_AGENCY_FLAG = 309;    
+        public const Int64 ID_MEDIA_CINEMA_MEDIA_AGENCY_FLAG = 309;
+        /// <summary>
+        /// Identifier of CAtegory Application mobile creative flag
+        /// </summary>
+        public const Int64 ID_APPLICATION_MOBILE_CREATIVE_FLAG = 323;  
+  
+
     }
 	#endregion
 
