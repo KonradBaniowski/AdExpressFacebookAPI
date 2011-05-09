@@ -1736,22 +1736,24 @@ namespace TNS.AdExpressI.MediaSchedule {
             StringBuilder headers = new StringBuilder();
             string periodClass;
             string link = string.Empty;
-            switch(_session.CurrentModule) {
-                case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_POTENTIELS:
-                case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE:
-                case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE:
-                case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE:
-                case TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PORTEFEUILLE:
-                case TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES:
-                    link = TNS.AdExpress.Constantes.Web.Links.MEDIA_SCHEDULE_POP_UP;
-                    break;
-                case TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE:
-                    link = TNS.AdExpress.Constantes.Web.Links.APPM_ZOOM_PLAN_MEDIA;
-                    break;
-                default:
-                    link = TNS.AdExpress.Constantes.Web.Links.ZOOM_PLAN_MEDIA;
-                    break;
-            }
+            System.Uri uri = new Uri(_session.LastWebPage);
+            link = uri.AbsolutePath;
+            //switch(_session.CurrentModule) {
+            //    case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_POTENTIELS:
+            //    case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE:
+            //    case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE:
+            //    case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE:
+            //    case TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PORTEFEUILLE:
+            //    case TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES:
+            //        link = TNS.AdExpress.Constantes.Web.Links.MEDIA_SCHEDULE_POP_UP;                   
+            //        break;
+            //    case TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE:
+            //        link = TNS.AdExpress.Constantes.Web.Links.APPM_ZOOM_PLAN_MEDIA;
+            //        break;
+            //    default:
+            //        link = TNS.AdExpress.Constantes.Web.Links.ZOOM_PLAN_MEDIA;
+            //        break;
+            //}
 
             switch(_period.PeriodDetailLEvel) {
                 case CstWeb.CustomerSessions.Period.DisplayLevel.monthly:
