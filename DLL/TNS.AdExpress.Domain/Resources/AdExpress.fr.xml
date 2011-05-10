@@ -2066,5 +2066,6 @@
     <item mnemonic="w2851" type="System.String">L'ensemble de vos marques de références et concurrents ne doit pas contenir plus de 50 éléments.</item>
     <item mnemonic="w2852" type="System.String">Vos univers de référence et concurrent ne peuvent pas contenir des annonceurs communs.</item>
     <item mnemonic="w2853" type="System.String">Vos univers de référence et concurrent ne peuvent pas contenir des marques communes.</item>
+    <item mnemonic="w2854" type="System.String">Me Semaine S-2</item>
   </items>
 </localization>
