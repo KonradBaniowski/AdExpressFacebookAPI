@@ -3606,7 +3606,36 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Visual Layer
             /// </summary>
-            visual = 7
+            visual = 7,
+            /// <summary>
+            /// Insertions layer
+            /// </summary>
+            insertions = 8,
+            /// <summary>
+            /// Insertions DAL layer
+            /// </summary>
+            insertionsDAL = 9,
+            /// <summary>
+            /// creatives Utilities
+            /// </summary>
+            creativesUtilities = 10,
+            /// <summary>
+            /// Creative PopUp
+            /// </summary>
+            creativePopUp = 11,
+            /// <summary>
+            /// media Detail Level Utilities
+            /// </summary>
+            mediaDetailLevelUtilities = 12,
+            /// <summary>
+            /// product Detail Level Utilities
+            /// </summary>
+            productDetailLevelUtilities = 13,
+            /// <summary>
+            /// Classification level list layer Id for Russia
+            /// </summary>
+            classificationLevelListRussia = 14
+
 		}
 	}
 
