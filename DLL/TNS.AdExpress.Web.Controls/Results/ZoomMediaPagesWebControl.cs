@@ -13,6 +13,11 @@ using System.Web.UI.WebControls;
 
 
 using WebCst = TNS.AdExpress.Constantes.Web;
+using TNS.AdExpressI.Visual;
+using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Domain.Web;
+using System.Reflection;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Controls.Results {
 	/// <summary>
@@ -20,6 +25,7 @@ namespace TNS.AdExpress.Web.Controls.Results {
 	/// </summary>
 	[ToolboxData("<{0}:ZoomMediaPagesWebControl runat=server></{0}:ZoomMediaPagesWebControl>")]
 	public class ZoomMediaPagesWebControl : WebControl {
+
 		#region Variables
 		/// <summary>
 		/// File name 
@@ -37,6 +43,10 @@ namespace TNS.AdExpress.Web.Controls.Results {
 		/// Media Id
 		/// </summary>
 		protected Int64 _idMedia;
+        /// <summary>
+        /// Is Blur
+        /// </summary>
+        protected bool _isBlur;
 		#endregion
 
 		#region Acccessors
@@ -104,19 +114,57 @@ namespace TNS.AdExpress.Web.Controls.Results {
 				_idMedia = value;
 			}
 		}
+
+        /// <summary>
+        /// Page anchor
+        /// </summary>
+        [Bindable(true)]
+        [Category("Appearance")]
+        [Localizable(true)]
+        public bool IsBlur {
+            get {
+                return _isBlur;
+            }
+
+            set {
+                _isBlur = value;
+            }
+        }
 		#endregion
 
 		protected override void Render(HtmlTextWriter output) {
-			string pathWeb1 = WebCst.CreationServerPathes.IMAGES + "/" + _idMedia + "/" + _dateCover + "/" + _fileName1 + "";
-			string pathWeb2 = WebCst.CreationServerPathes.IMAGES + "/" + _idMedia + "/" + _dateCover + "/" + _fileName2 + "";
+			string pathWeb1 = _idMedia + "/" + _dateCover + "/" + _fileName1 + "";
+			string pathWeb2 = _idMedia + "/" + _dateCover + "/" + _fileName2 + "";
 			StringBuilder t = new StringBuilder(3000);
+            Int64 vehicleId = 0;
+            if (VehiclesInformation.Contains(Vehicles.names.press))
+                vehicleId = VehiclesInformation.Get(Vehicles.names.press).DatabaseId;
+            else if (VehiclesInformation.Contains(Vehicles.names.internationalPress))
+                vehicleId = VehiclesInformation.Get(Vehicles.names.internationalPress).DatabaseId;
+            else if (VehiclesInformation.Contains(Vehicles.names.magazine))
+                vehicleId = VehiclesInformation.Get(Vehicles.names.magazine).DatabaseId;
+            else if (VehiclesInformation.Contains(Vehicles.names.newspaper))
+                vehicleId = VehiclesInformation.Get(Vehicles.names.newspaper).DatabaseId;
 
-			t.Append("<table><tr><td>");
-			t.Append("<img src='" + pathWeb1 + "' border=\"0\" width=470 height=627>");
-			if (_fileName2.Length > 0)
-				t.Append("<img src='" + pathWeb2 + "' border=\"0\" width=470 height=627>");
+            object[] parameters = new object[2];
+            parameters[0] = vehicleId;
+            parameters[1] = pathWeb1;
 
-			t.Append("</td></tr></table>");
+            IVisual visual = (IVisual)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.visual].AssemblyName, WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.visual].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+
+
+
+            t.Append("<table><tr><td>");
+            t.Append("<img src='" + visual.GetVirtualPath(_isBlur) + "' border=\"0\" width=470 height=627>");
+            if (_fileName2.Length > 0) {
+                parameters = new object[2];
+                parameters[0] = vehicleId;
+                parameters[1] = pathWeb2;
+                visual = (IVisual)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.visual].AssemblyName, WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.visual].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+                t.Append("<img src='" + visual.GetVirtualPath(_isBlur) + "' border=\"0\" width=470 height=627>");
+            }
+
+            t.Append("</td></tr></table>");
 
 			output.Write(t.ToString());
 		}

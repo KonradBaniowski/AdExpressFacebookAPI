@@ -4,6 +4,7 @@
     <layer id="classification" name="layer of classification" assemblyName="TNS.AdExpressI.Classification.DAL.SqlServerRussia.dll" class="TNS.AdExpressI.Classification.DAL.SqlServerRussia.ClassificationDAL"/>
     <layer id="date" name="layer of date functions" assemblyName="TNS.AdExpressI.Date.Default.dll" class="TNS.AdExpressI.Date.Default.Date"/>
     <layer id="dateDAL" name="layer of date DataAccess" assemblyName="TNS.AdExpressI.Date.DAL.Russia.dll" class="TNS.AdExpressI.Date.DAL.Russia.DateDAL"/>
-    <layer id="classificationLevelList" name="layer of classification" assemblyName="TNS.AdExpressI.Classification.DAL.SqlServerRussia.dll" class="TNS.AdExpressI.Classification.DAL.SqlServerRussia.ClassificationLevelListDALFactory"/>    
+    <layer id="classificationLevelList" name="layer of classification" assemblyName="TNS.AdExpressI.Classification.DAL.SqlServerRussia.dll" class="TNS.AdExpressI.Classification.DAL.SqlServerRussia.ClassificationLevelListDALFactory"/>
+    <layer id="visual" name="layer of visual" assemblyName="TNS.AdExpressI.Visual.Default.dll" class="TNS.AdExpressI.Visual.Default.Visual"/>
   </layers>
 </configuration>

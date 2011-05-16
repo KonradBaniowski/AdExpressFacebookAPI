@@ -1960,12 +1960,15 @@ namespace TNS.AdExpress.Web.Functions{
 		public static string PortofolioOneCreation(){
 			StringBuilder script = new StringBuilder(1000);
 			script.Append("\n<script language=\"JavaScript\" type=\"text/JavaScript\">");
-			script.Append("\n\tfunction portofolioOneCreation(idMedia, date,fileName1,fileName2){");
+			script.Append("\n\tfunction portofolioOneCreation(idMedia, date,fileName1,fileName2,isBlur){");
+            script.Append("\n\t\tvar isBlurValue = false;");
+            script.Append("\n\t\tif(isBlur)isBlurValue = true ;");
 			script.Append("\n\t\twindow.open("+
 				"\"/Private/Results/PortofolioCreationOneMediaPopUp.aspx?idMedia=\"+idMedia"
 				+"+\"&date=\"+date"
 				+"+\"&fileName1=\"+fileName1"
 				+"+\"&fileName2=\"+fileName2"
+                + "+\"&isBlur=\"+isBlurValue"
 				+",'', \"top=10, left=10,toolbar=0, directories=0, status=0, menubar=0, width=985, height=700, scrollbars=1, location=0, resizable=1\""
 				+");");
 			script.Append("\n\t}");

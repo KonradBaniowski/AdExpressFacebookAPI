@@ -96,7 +96,7 @@ namespace TNS.AdExpress.Web.UI.Results {
                     t.Append("<table cellpadding=0 cellspacing=0 width=100% class=\"violetBorder\"><tr><td align=center>");
                     if(i == 1) t.Append("<a name=\"C1\"></a><a name=\"C2\"></a>");
                     if(i == files.Length) t.Append("<a name=\"C3\"></a><a name=\"C4\"></a>");
-                    t.Append("<a href=\"javascript:portofolioOneCreation('" + idMedia + "','" + dateCover + "','" + endFile[endFile.Length - 1] + "','');\"><img src='" + pathWeb + endFile[endFile.Length - 1] + "' border=\"0\"></a>");
+                    t.Append("<a href=\"javascript:portofolioOneCreation('" + idMedia + "','" + dateCover + "','" + endFile[endFile.Length - 1] + "','', false);\"><img src='" + pathWeb + endFile[endFile.Length - 1] + "' border=\"0\"></a>");
                     t.Append("</td></tr></table>");
                     t.Append("</td></tr>");
                 }
@@ -121,7 +121,7 @@ namespace TNS.AdExpress.Web.UI.Results {
                     }
                     // Tableau niveau 1
                     t.Append("<table border=0 cellpadding=0 cellspacing=0 width=100%><tr><td>");
-                    t.Append("<a name=\"#" + i.ToString() + "\" href=\"javascript:portofolioOneCreation('" + idMedia + "','" + dateCover + "','" + filesName[0] + "','" + filesName[1] + "');\"><img src='" + pathWeb + endFile[endFile.Length - 1] + "' border=\"0\"></a>");
+                    t.Append("<a name=\"#" + i.ToString() + "\" href=\"javascript:portofolioOneCreation('" + idMedia + "','" + dateCover + "','" + filesName[0] + "','" + filesName[1] + "', false);\"><img src='" + pathWeb + endFile[endFile.Length - 1] + "' border=\"0\"></a>");
                     t.Append("</td></tr>");
                     t.Append("</table>");
 

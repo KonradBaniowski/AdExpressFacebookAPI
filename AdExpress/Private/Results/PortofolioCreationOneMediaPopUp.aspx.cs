@@ -47,6 +47,10 @@ namespace AdExpress.Private.Results{
 		/// Nom du fichier
 		/// </summary>
 		protected string fileName2;
+        /// <summary>
+        /// Is Blur
+        /// </summary>
+        protected bool _isBlur;
 		/// <summary>
 		/// Affichage du résultat
 		/// </summary>
@@ -63,6 +67,7 @@ namespace AdExpress.Private.Results{
 			date=HttpContext.Current.Request.QueryString.Get("date");
 			fileName1=HttpContext.Current.Request.QueryString.Get("fileName1");
 			fileName2=HttpContext.Current.Request.QueryString.Get("fileName2");
+            _isBlur = bool.Parse(HttpContext.Current.Request.QueryString.Get("isBlur").ToLower());
 		}
 		#endregion
 
@@ -89,7 +94,7 @@ namespace AdExpress.Private.Results{
 			zoommediapageswebControl1.FileName1 = fileName1;
 			zoommediapageswebControl1.FileName2 = fileName2;
 			zoommediapageswebControl1.DateCover = date;
-
+            zoommediapageswebControl1.IsBlur = _isBlur;
 			return tmp;
 		}
 		#endregion
