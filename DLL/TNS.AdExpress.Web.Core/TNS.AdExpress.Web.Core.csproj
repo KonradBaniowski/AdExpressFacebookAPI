@@ -135,6 +135,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActiveBannersFormatList.cs" />
     <Compile Include="ActiveMediaList.cs" />
     <Compile Include="AdNetTrackDetailLevelsDescription.cs">
       <SubType>Code</SubType>
@@ -144,9 +145,11 @@
     </Compile>
     <Compile Include="CustomerDataFilters.cs" />
     <Compile Include="CustomerPeriod.cs" />
+    <Compile Include="DataAccess\ActiveBannersFormatListDataAccess.cs" />
     <Compile Include="DataAccess\ClassificationList\SearchLevelDataAccess.cs" />
     <Compile Include="DataAccess\DetailMediaDataAccess.cs" />
     <Compile Include="DataAccess\Session\GenericDetailLevelDataAccess.cs" />
+    <Compile Include="Exceptions\ActiveBannersFormatListDataAccessException.cs" />
     <Compile Include="Exceptions\CustomerDataFiltersException.cs" />
     <Compile Include="Exceptions\DetailMediaDataAccessException.cs" />
     <Compile Include="Exceptions\ExtendedHashTableException.cs" />
@@ -256,6 +259,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Selection\AdExpressLevelsRules.cs" />
+    <Compile Include="Selection\FilterItem.cs" />
     <Compile Include="Selection\ILevelsRules.cs" />
     <Compile Include="Selection\MediaSchedulePeriod.cs" />
     <Compile Include="Sessions\AdNetTrackProductSelection.cs">

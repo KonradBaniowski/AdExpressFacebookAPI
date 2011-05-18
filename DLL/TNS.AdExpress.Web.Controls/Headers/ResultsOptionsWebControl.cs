@@ -202,6 +202,10 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// CheckBox to indicate a comparative study
         /// </summary>
         protected System.Web.UI.WebControls.Label _dateComparativeSelectionLabel;
+        /// <summary>
+        /// Banners Format Filter WebControl
+        /// </summary>
+        protected GenericFilterWebControl _bannersFormatWebControl;
         #endregion
 
         #region Accessors
@@ -249,6 +253,17 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         public bool UnitOptionAppm {
             get { return unitOptionAppm; }
             set { unitOptionAppm = value; }
+        }
+
+        /// <summary>
+        /// Banners Format Filter Option
+        /// </summary>
+        [Bindable(true),
+        Description("Banners Format Filter Option")]
+        protected bool bannersFormatOption = false;
+        /// <summary>Option d'unité</summary>
+        public bool BannersFormatOption {
+            get { return bannersFormatOption; }
         }
 
         /// <summary>
@@ -1053,6 +1068,11 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
+            if (WebApplicationParameters.UseBannersFormatFilter
+                && customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES) {
+                    bannersFormatOption = true;
+            }
+
             #region IsPostBack
             if(Page.IsPostBack) {
                 if(unitOption) {
@@ -1061,6 +1081,14 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                         if(customerWebSession.Unit != unitSelected) customerWebSession.Unit = unitSelected;
                     }
                     catch(SystemException) { }
+                }
+
+                if (bannersFormatOption) {
+                    try {
+                        if (Page.Request.Form.GetValues("_genericFilter")[0] != null)
+                            customerWebSession.SelectedBannersForamtList = Page.Request.Form.GetValues("_genericFilter")[0];
+                    }
+                    catch (SystemException) { }
                 }
 
                 if(insertOption && WebApplicationParameters.AllowInsetOption) {
@@ -1629,8 +1657,21 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
+            #region Banners Format Filter
+            if (bannersFormatOption) {
+                VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID);
+                _bannersFormatWebControl = new GenericFilterWebControl();
+                _bannersFormatWebControl.ID = "_bannersFormatWebControl";
+                _bannersFormatWebControl.CustomerWebSession = customerWebSession;
+                _bannersFormatWebControl.FilterItems = ActiveBannersFormatList.GetActiveBannersFormatList(vehicleInformation.DatabaseId);
+                _bannersFormatWebControl.SelectedFilterItems = customerWebSession.SelectedBannersForamtList;
+                _bannersFormatWebControl.Width = 194;
+                Controls.Add(_bannersFormatWebControl);
+            }
+            #endregion
+
             #region Encart
-            if(insertOption && WebApplicationParameters.AllowInsetOption) {
+            if (insertOption && WebApplicationParameters.AllowInsetOption) {
                 //Création de la liste des encarts
                 listInsert = new DropDownList();
                 listInsert.ID = "_inserts";
@@ -2255,6 +2296,17 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 output.Write("\n</TR>");
             }
             #endregion
+
+            if (bannersFormatOption) {
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                output.Write("\n<td><hr class=\"hrSpacer\" />");
+                _bannersFormatWebControl.RenderControl(output);
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<TR>");
+                output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n</TR>");
+            }
 
             #region Option type de pourcentage (horizontal ou vertical)
             if(_percentageTypeOption) {

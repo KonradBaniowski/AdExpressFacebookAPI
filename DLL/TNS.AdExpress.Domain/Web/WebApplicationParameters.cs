@@ -104,9 +104,13 @@ namespace TNS.AdExpress.Domain.Web {
 		/// </summary>
 		protected static Dictionary<CustomerSessions.InsertType, long> _insetTypeCollection = null;
         /// <summary>
-        /// 
+        /// Use Comparative Media Schedule
         /// </summary>
         protected static bool _useComparativeMediaSchedule = false;
+        /// <summary>
+        /// Use Banners Format Filter
+        /// </summary>
+        protected static bool _useBannersFormatFilter = false;
         /// <summary>
         /// Dundas Configuration
         /// </summary>
@@ -308,6 +312,17 @@ namespace TNS.AdExpress.Domain.Web {
             }
             set {
                 _useComparativeMediaSchedule = value;
+            }
+        }
+        /// <summary>
+        /// Get / Set Use Banners Format Filter
+        /// </summary>
+        public static bool UseBannersFormatFilter {
+            get {
+                return _useBannersFormatFilter;
+            }
+            set {
+                _useBannersFormatFilter = value;
             }
         }
         /// <summary>

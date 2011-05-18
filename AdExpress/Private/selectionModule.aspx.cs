@@ -265,6 +265,8 @@ namespace AdExpress{
                     _webSession.Sort = 0;
                     _webSession.SortKey = string.Empty;
 
+                    _webSession.SelectedBannersForamtList = string.Empty;
+
                     _webSession.ComparativeStudy = false;
                     if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES) {
                         _webSession.Evolution = false;

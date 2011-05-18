@@ -26,6 +26,7 @@ using WebFunctions = TNS.AdExpress.Web.Functions;
 using CstWebCustomer = TNS.AdExpress.Constantes.Customer;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Domain.Web;
 
 namespace AdExpress.Private.Selection{
 	/// <summary>
@@ -191,9 +192,23 @@ namespace AdExpress.Private.Selection{
 				}
 				else{
 					vehiclesSelection.Substring(0,vehiclesSelection.Length-1);
+
+                    if (WebApplicationParameters.UseBannersFormatFilter
+                                && _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
+                    {
+                        foreach(ListItem currentItem in OneVehicleSelectionWebControl1.Items)
+                            if (currentItem.Selected)
+                            {
+                                if (_webSession.SelectionUniversMedia.FirstNode != null
+                                    && _webSession.SelectionUniversMedia.FirstNode.Tag != null
+                                    && ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID != long.Parse(currentItem.Value))
+                                    _webSession.SelectedBannersForamtList = string.Empty;
+                            }
+                    }
+
 					// Sauvegarde de la sélection dans la session
-					//Si la sélection comporte des éléments, on la vide
-					_webSession.SelectionUniversMedia.Nodes.Clear();
+                    //Si la sélection comporte des éléments, on la vide
+                    _webSession.SelectionUniversMedia.Nodes.Clear();
 					System.Windows.Forms.TreeNode tmpNode;
 					foreach(ListItem currentItem in OneVehicleSelectionWebControl1.Items){
 						if(currentItem.Selected){
@@ -201,9 +216,12 @@ namespace AdExpress.Private.Selection{
 							tmpNode.Tag=new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess,long.Parse(currentItem.Value),currentItem.Text);
 							tmpNode.Checked=true;
 							//_webSession.CurrentUnivers. .Nodes.Add(tmpNode);
+
 							_webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
+
 							// Tracking
 							_webSession.OnSetVehicle(long.Parse(currentItem.Value));
+
 						}
 					}
 					// On sauvegarde la session

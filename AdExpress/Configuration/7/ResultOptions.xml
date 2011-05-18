@@ -7,4 +7,5 @@
     <insetItem  id="subScriberEncart" dataBaseId="1983"/>
   </inset>
   <mediaSchedule useComparative="false"/>
+  <bannersFormat useBannersFormat="false"/>
 </resultOptions>

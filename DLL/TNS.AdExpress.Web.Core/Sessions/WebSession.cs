@@ -376,6 +376,12 @@ namespace TNS.AdExpress.Web.Core.Sessions {
         [System.NonSerialized]
         protected WebConstantes.globalCalendar.periodSelectiontype _periodSelectionType = WebConstantes.globalCalendar.periodSelectiontype.day;
 
+        /// <summary>
+        /// Selected Banners Format List
+        /// </summary>
+        [System.NonSerialized]
+        protected string _selectedBannersForamtList = string.Empty;
+
 		/// <summary>
 		/// Index décrivant un identifiant ou un numéroe de colonne à trier.
 		/// </summary>
@@ -1547,6 +1553,24 @@ namespace TNS.AdExpress.Web.Core.Sessions {
             set {
                 _periodSelectionType = value;
                 userParameters[CoreConstantes.SessionParamters.periodSelectiontype] = value;
+                modificationDate = DateTime.Now;
+            }
+        }
+
+        /// <summary>
+        /// Get or Set Selected Banners Foramt List
+        /// </summary>
+        public string SelectedBannersForamtList {
+            get {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.selectedBannersForamtList)) {
+                    _selectedBannersForamtList = userParameters[CoreConstantes.SessionParamters.selectedBannersForamtList].ToString();
+                }
+
+                return (_selectedBannersForamtList);
+            }
+            set {
+                _selectedBannersForamtList = value;
+                userParameters[CoreConstantes.SessionParamters.selectedBannersForamtList] = value;
                 modificationDate = DateTime.Now;
             }
         }

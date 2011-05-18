@@ -33,6 +33,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 			string id;
 			long dataBaseId;
             bool useComparativeMediaSchedule = false;
+            bool useBannersFormatFilter = false;
             #endregion
 
             try {
@@ -57,11 +58,15 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                             case "mediaSchedule":
                                 useComparativeMediaSchedule = bool.Parse(reader.GetAttribute("useComparative"));
                                 break;
+                            case "bannersFormat":
+                                useBannersFormatFilter = bool.Parse(reader.GetAttribute("useBannersFormat"));
+                                break;
                         }
                     }
                 }
 				WebApplicationParameters.InsetTypeCollection = insetTypeCollection;
                 WebApplicationParameters.UseComparativeMediaSchedule = useComparativeMediaSchedule;
+                WebApplicationParameters.UseBannersFormatFilter = useBannersFormatFilter;
             }
 
             #region Error Management

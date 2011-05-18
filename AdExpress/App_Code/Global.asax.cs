@@ -110,7 +110,7 @@ namespace AdExpress {
 				//TNS.AdExpress.Web.Core.ClassificationList.Product.Init();
 
 				ActiveMediaList.Init(WebApplicationParameters.DefaultDataLanguage);
-
+                
                 CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.date];
                 IDate date = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
                 LastAvailableDate.Init(date.GetLastAvailableDate());
@@ -149,7 +149,8 @@ namespace AdExpress {
                 AlertConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.ALERTE_CONFIGURATION));
                 DataBaseConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
 
-
+                if (WebApplicationParameters.UseBannersFormatFilter)
+                    ActiveBannersFormatList.Init(WebApplicationParameters.DefaultDataLanguage);
 
 			}
 			catch(System.Exception error){

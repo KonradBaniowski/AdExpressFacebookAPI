@@ -253,7 +253,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Period Selection Type
             /// </summary>
-            periodSelectiontype = 57
+            periodSelectiontype = 57,
+            /// <summary>
+            /// Selected Banners Foramt List
+            /// </summary>
+            selectedBannersForamtList = 58
 		}
 	
 	}

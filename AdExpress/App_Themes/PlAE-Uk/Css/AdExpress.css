@@ -3015,3 +3015,30 @@ td.jus
 .percentageOption span label{
 	white-space : nowrap;
 }
+.backgroundGenericFilterWebControl{
+	background-color:#FFFFFF;
+}
+.genericFilterWebControlBorder{
+	border-color : #A7A6AA;
+	border-top :#A7A6AA 1px solid; 
+	border-left :#A7A6AA 1px solid; 
+	border-right :#A7A6AA 1px solid; 
+	border-bottom :#A7A6AA 1px solid;
+}
+.arrowBackGroundGenericFilterWebControl{
+	background-image:url(/App_Themes/KMAE-Fr/images/Common/button/bt_arrow_down.gif);
+	background-repeat:no-repeat;
+	background-position:right;
+	width:15px;
+	height:15px;
+	background-color:#FFFFFF;
+}
+.GenericFilterWebControlSelectionSection{
+	border-right : #646262 1px solid;
+	border-left : #646262 1px solid; 
+	border-bottom : #646262 1px solid;
+	background-color:#E9E9E9;
+	padding-left:2px;
+	vertical-align:top;
+}
+

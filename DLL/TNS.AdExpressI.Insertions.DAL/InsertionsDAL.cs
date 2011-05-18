@@ -892,6 +892,15 @@ namespace TNS.AdExpressI.Insertions.DAL {
 			}
             #endregion
 
+            #region Banners Format Filter
+            // TODO ADD RIGHT MANAGEMENT FOR BANNERS FORMAT
+            // Add Banners Format Filter
+            if (WebApplicationParameters.UseBannersFormatFilter && _module.Id == CstWeb.Module.Name.NEW_CREATIVES) { 
+                if(_session.SelectedBannersForamtList.Length>0)
+                    sql.Append(" and " + tData.Prefix + ".ID_FORMAT_BANNERS in (" + _session.SelectedBannersForamtList + ") ");
+            }
+            #endregion
+
             #region Filtres
             /* Get filter clause and check zero version
              * According to the module type, we save the classification levels in GenericProductDetailLevel or in GenericMediaDetailLevel

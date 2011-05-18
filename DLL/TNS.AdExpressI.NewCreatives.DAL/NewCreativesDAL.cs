@@ -194,6 +194,14 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                     sql.Append(" and " + table.Prefix + ".ID_BANNERS_MOBILE = " + prefixDataMobile + ".ID_BANNERS ");
                     sql.Append(" and " + prefixDataMobile + ".id_category not in (" + TNS.AdExpress.Domain.Lists.GetIdList(TNS.AdExpress.Constantes.Web.GroupList.Type.applicationMobile) + ") ");
                 }
+
+                // TODO ADD RIGHT MANAGEMENT FOR BANNERS FORMAT
+                // Add Banners Format Filter
+                if (WebApplicationParameters.UseBannersFormatFilter) {
+                    if (_session.SelectedBannersForamtList.Length > 0)
+                        sql.Append(" and " + table.Prefix + ".ID_FORMAT_BANNERS in (" + _session.SelectedBannersForamtList + ") ");
+                }
+
                 // group by
                 sql.Append(" group by " + detailProductFields + ","+ table.Prefix + ".hashcode ");
                 if(dataFieldsForGad.Length>0)

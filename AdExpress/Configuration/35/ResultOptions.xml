@@ -2,4 +2,5 @@
 <resultOptions>
   <inset available="false" description="Specify if the option inset is available overall the website"/>
   <mediaSchedule useComparative="false"/>
+  <bannersFormat useBannersFormat="false"/>
 </resultOptions>
