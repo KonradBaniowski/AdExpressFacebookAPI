@@ -165,8 +165,8 @@
     <table enumId="143" description="Recap Data: Emailing Segment" schemaEnumId="4" label="recap_emailing_segment" prefix="rcp"/>
     <table enumId="144" description="Recap Data: Mobile" schemaEnumId="4" label="recap_message" prefix="rcp"/>
     <table enumId="145" description="Recap Data: Mobile Segment" schemaEnumId="4" label="recap_message_segment" prefix="rcp"/>
-    <table enumId="147" description="Data: Internet Version" schemaEnumId="0" label="data_evaliant" prefix="wp"/>
-    <table enumId="148" description="Data: Internet Version" schemaEnumId="0" label="data_evaliant_4M" prefix="wp"/>
+    <table enumId="147" description="Data: Internet Version" schemaEnumId="0" label="data_adnettrack" prefix="wp"/>
+    <table enumId="148" description="Data: Internet Version" schemaEnumId="0" label="data_adnettrack_4M" prefix="wp"/>
     <table enumId="150" description="Classif: Advertising agency" schemaEnumId="0" label="advertising_agency" prefix="adva"/>
     <table enumId="151" description="Classif: Group Advertising agency" schemaEnumId="0" label="group_advertising_agency" prefix="gadv"/>
     <table enumId="152" description="Recap: Information" schemaEnumId="4" label="recap_info" prefix="rinfo"/>
