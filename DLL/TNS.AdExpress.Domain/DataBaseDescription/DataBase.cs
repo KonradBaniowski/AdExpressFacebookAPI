@@ -127,571 +127,571 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// List saved levels
         /// </summary>
-        list=0,
+        list = 0,
         /// <summary>
         /// List detail
         /// </summary>
-        listDetail=1,
+        listDetail = 1,
         /// <summary>
         /// Tracking
         /// </summary>
-        tracking=2,
+        tracking = 2,
         /// <summary>
         /// Maui01 result table
         /// </summary>
-        rightResult=3,
+        rightResult = 3,
         /// <summary>
         /// Sector
         /// </summary>
-        sector=4,
+        sector = 4,
         /// <summary>
         /// Subsector
         /// </summary>
-        subsector=5,
+        subsector = 5,
         /// <summary>
         /// Group
         /// </summary>
-        group=6,
+        group = 6,
         /// <summary>
         /// Segment
         /// </summary>
-        segment=7,
+        segment = 7,
         /// <summary>
         /// Product
         /// </summary>
-        product=8,
+        product = 8,
         /// <summary>
         /// Holding company
         /// </summary>
-        holdingCompany=9,
+        holdingCompany = 9,
         /// <summary>
         /// Advertiser
         /// </summary>
-        advertiser=10,
+        advertiser = 10,
         /// <summary>
         /// Brand
         /// </summary>
-        brand=11,
+        brand = 11,
         /// <summary>
         /// Right Templates
         /// </summary>
-        rightTemplate=12,
+        rightTemplate = 12,
         /// <summary>
         /// Right templates assignment
         /// </summary>
-        rightTemplateAssignment=13,
+        rightTemplateAssignment = 13,
         /// <summary>
         /// Media type
         /// </summary>
-        rightMediaType=14,
+        rightMediaType = 14,
         /// <summary>
         /// ProductType
         /// </summary>
-        rightProductType=15,
+        rightProductType = 15,
         /// <summary>
         /// Vehicle
         /// </summary>
-        vehicle=16,
+        vehicle = 16,
         /// <summary>
         /// Category
         /// </summary>
-        category=17,
+        category = 17,
         /// <summary>
         /// Media
         /// </summary>
-        media=18,
+        media = 18,
         /// <summary>
         /// Basic Media
         /// </summary>
-        basicMedia=19,
+        basicMedia = 19,
         /// <summary>
         /// Media Agency
         /// </summary>
-        mediaAgency=20,
+        mediaAgency = 20,
         /// <summary>
         /// Media agency data
         /// </summary>
-        dataMediaAgency=21,
+        dataMediaAgency = 21,
         /// <summary>
         /// Interest Center
         /// </summary>
-        interestCenter=22,
+        interestCenter = 22,
         /// <summary>
         /// Media seller
         /// </summary>
-        mediaSeller=23,
+        mediaSeller = 23,
         /// <summary>
         /// Template media right
         /// </summary>
-        rightMediaOrderTemplate=24,
+        rightMediaOrderTemplate = 24,
         /// <summary>
         /// Template product right
         /// </summary>
-        rightProductOrderTemplate=25,
+        rightProductOrderTemplate = 25,
         /// <summary>
         /// Gad
         /// </summary>
-        gad=26,
+        gad = 26,
         /// <summary>
         /// Title
         /// </summary>
-        title=27,
+        title = 27,
         /// <summary>
         /// Anubis session (static_nav-session)
         /// </summary>
-        anubisSession=28,
+        anubisSession = 28,
         /// <summary>
         /// customer Sessions
         /// </summary>
-        customerSession=29,
+        customerSession = 29,
         /// <summary>
         /// Customer saved sessions
         /// </summary>
-        customerSessionSaved=30,
+        customerSessionSaved = 30,
         /// <summary>
         /// Customer saved sessions backup (test)
         /// </summary>
-        customerSessionBackup=31,
+        customerSessionBackup = 31,
         /// <summary>
         /// Customer saved sessions test (test)
         /// </summary>
-        customerSessionTest=32,
+        customerSessionTest = 32,
         /// <summary>
         /// Customer universe
         /// </summary>
-        customerUniverse=33,
+        customerUniverse = 33,
         /// <summary>
         /// Customer universe description
         /// </summary>
-        customerUniverseDescription=34,
+        customerUniverseDescription = 34,
         /// <summary>
         /// Customer universe groups
         /// </summary>
-        customerUniverseGroup=35,
+        customerUniverseGroup = 35,
         /// <summary>
         /// Aggregated data per month
         /// </summary>
-        monthData=36,
+        monthData = 36,
         /// <summary>
         /// Aggregated data per week
         /// </summary>
-        weekData=37,
+        weekData = 37,
         /// <summary>
         /// APPM aggregated data per month
         /// </summary>
-        monthAppmData=38,
+        monthAppmData = 38,
         /// <summary>
         /// APPM aggregated data per week
         /// </summary>
-        weekAppmData=39,
+        weekAppmData = 39,
         /// <summary>
         /// Press Data
         /// </summary>
-        dataPress=40,
+        dataPress = 40,
         /// <summary>
         /// Radio Data
         /// </summary>
-        dataRadio=41,
+        dataRadio = 41,
         /// <summary>
         /// Tv Data
         /// </summary>
-        dataTv=42,
+        dataTv = 42,
         /// <summary>
         /// OutDoor Data
         /// </summary>
-        dataOutDoor=43,
+        dataOutDoor = 43,
         /// <summary>
         /// Internet Data
         /// </summary>
-        dataInternet=44,
+        dataInternet = 44,
         /// <summary>
         /// AdNetTrack Data (Evaliant)
         /// </summary>
-        dataAdNetTrack=45,
+        dataAdNetTrack = 45,
         /// <summary>
         /// APPM Data
         /// </summary>
-        dataPressAPPM=46,
+        dataPressAPPM = 46,
         /// <summary>
         /// Sponsorship Data
         /// </summary>
-        dataSponsorship=47,
+        dataSponsorship = 47,
         /// <summary>
         /// Direct Marketing Data
         /// </summary>
-        dataMarketingDirect=48,
+        dataMarketingDirect = 48,
         /// <summary>
         /// International Press Data
         /// </summary>
-        dataPressInter=49,
+        dataPressInter = 49,
         /// <summary>
         /// 4M press Data
         /// </summary>
-        dataPressAlert=50,
+        dataPressAlert = 50,
         /// <summary>
         /// 4M radio Data
         /// </summary>
-        dataRadioAlert=51,
+        dataRadioAlert = 51,
         /// <summary>
         /// 4M tv Data
         /// </summary>
-        dataTvAlert=52,
+        dataTvAlert = 52,
         /// <summary>
         /// 4M outdoor Data
         /// </summary>
-        dataOutDoorAlert=53,
+        dataOutDoorAlert = 53,
         /// <summary>
         /// 4M Internet Data
         /// </summary>
-        dataInternetAlert=54,
+        dataInternetAlert = 54,
         /// <summary>
         /// 4M APPM Data
         /// </summary>
-        dataPressAPPMAlert=55,
+        dataPressAPPMAlert = 55,
         /// <summary>
         /// 4M direct marketing Data
         /// </summary>
-        dataMarketingDirectAlert=56,
+        dataMarketingDirectAlert = 56,
         /// <summary>
         /// 4M international press Data
         /// </summary>
-        dataPressInterAlert=57,
+        dataPressInterAlert = 57,
         /// <summary>
         /// Ad press color list
         /// </summary>
-        color=58,
-		/// <summary>
-		/// Format
-		/// </summary>
-        format=59,
+        color = 58,
+        /// <summary>
+        /// Format
+        /// </summary>
+        format = 59,
         /// <summary>
         /// Mail format
         /// </summary>
-        mailFormat=60,
+        mailFormat = 60,
         /// <summary>
         /// Mail type
         /// </summary>
-        mailType=61,
+        mailType = 61,
         /// <summary>
         /// Mail content
         /// </summary>
-        mailContent=62,
+        mailContent = 62,
         /// <summary>
         /// Data Mail content
         /// </summary>
-        dataMailContent=63,
+        dataMailContent = 63,
         /// <summary>
         /// Mail rapidity
         /// </summary>
-        mailingRapidity=64,
+        mailingRapidity = 64,
         /// <summary>
         /// Press Location
         /// </summary>
-        location=65,
+        location = 65,
         /// <summary>
         /// Press Inset
         /// </summary>
-        inset=66,
-		/// <summary>
-		/// Insertion
-		/// </summary>
-        insertion=67,
-		/// <summary>
-		/// alarm media
-		/// </summary>
-        alarmMedia=68,
-		/// <summary>
-		/// Application media
-		/// </summary>
-        applicationMedia=69,
+        inset = 66,
+        /// <summary>
+        /// Insertion
+        /// </summary>
+        insertion = 67,
+        /// <summary>
+        /// alarm media
+        /// </summary>
+        alarmMedia = 68,
+        /// <summary>
+        /// Application media
+        /// </summary>
+        applicationMedia = 69,
         /// <summary>
         /// Product class analysis plurimedia data
         /// </summary>
-        recapPluri=70,
+        recapPluri = 70,
         /// <summary>
         /// Product class analysis press data
         /// </summary>
-        recapPress=71,
+        recapPress = 71,
         /// <summary>
         /// Product class analysis tv data
         /// </summary>
-        recapTv=72,
+        recapTv = 72,
         /// <summary>
         /// Product class analysis radio data
         /// </summary>
-        recapRadio=73,
+        recapRadio = 73,
         /// <summary>
         /// Product class analysis outdoor data
         /// </summary>
-        recapOutDoor=74,
+        recapOutDoor = 74,
         /// <summary>
         /// Product class analysis internet data
         /// </summary>
-        recapInternet=75,
+        recapInternet = 75,
         /// <summary>
         /// Product class analysis cinema data
         /// </summary>
-        recapCinema=76,
+        recapCinema = 76,
         /// <summary>
         /// Product class analysis media tactic data
         /// </summary>
-        recapTactic=77,
+        recapTactic = 77,
         /// <summary>
         /// Product class analysis plurimedia data aggregated by segment
         /// </summary>
-        recapPluriSegment=78,
+        recapPluriSegment = 78,
         /// <summary>
         /// Product class analysis press data aggregated by segment
         /// </summary>
-        recapPressSegment=79,
+        recapPressSegment = 79,
         /// <summary>
         /// Product class analysis tv data aggregated by segment
         /// </summary>
-        recapTvSegment=80,
+        recapTvSegment = 80,
         /// <summary>
         /// Product class analysis radio data aggregated by segment
         /// </summary>
-        recapRadioSegment=81,
+        recapRadioSegment = 81,
         /// <summary>
         /// Product class analysis outdoor data aggregated by segment
         /// </summary>
-        recapOutDoorSegment=82,
+        recapOutDoorSegment = 82,
         /// <summary>
         /// Product class analysis internet data aggregated by segment
         /// </summary>
-        recapInternetSegment=83,
+        recapInternetSegment = 83,
         /// <summary>
         /// Product class analysis cinema data aggregated by segment
         /// </summary>
-        recapCinemaSegment=84,
+        recapCinemaSegment = 84,
         /// <summary>
         /// Product class analysis media tactic data aggregated by segment
         /// </summary>
-        recapTacticSegment=85,
+        recapTacticSegment = 85,
         /// <summary>
         /// Media periodicity
         /// </summary>
-        periodicity=86,
+        periodicity = 86,
         /// <summary>
         /// Appm wave list
         /// </summary>
-        appmWave=87,
+        appmWave = 87,
         /// <summary>
         /// Appm target list
         /// </summary>
-        appmTarget=88,
+        appmTarget = 88,
         /// <summary>
         /// Appm target assignment
         /// </summary>
-        appmTargetMediaAssignment=89,
+        appmTargetMediaAssignment = 89,
         /// <summary>
         /// Product per agency
         /// </summary>
-        productAgency=90,
+        productAgency = 90,
         /// <summary>
         /// Customer login
         /// </summary>
-        rightLogin=91,
+        rightLogin = 91,
         /// <summary>
         /// Customer contact
         /// </summary>
-        rightContact=92,
+        rightContact = 92,
         /// <summary>
         /// Customer contact group
         /// </summary>
-        rightContactGroup=93,
+        rightContactGroup = 93,
         /// <summary>
         /// Customer Address
         /// </summary>
-        rightAddress=94,
+        rightAddress = 94,
         /// <summary>
         /// Customer Company
         /// </summary>
-        rightCompany=95,
+        rightCompany = 95,
         /// <summary>
         /// Connection by login tracking
         /// </summary>
-        trackingConnectionByLogin=96,
+        trackingConnectionByLogin = 96,
         /// <summary>
         /// AdExpress Modules
         /// </summary>
-        rightModule=97,
+        rightModule = 97,
         /// <summary>
         /// AdExpress Module groups
         /// </summary>
-        rightModuleGroup=98,
+        rightModuleGroup = 98,
         /// <summary>
         /// Top module tracking
         /// </summary>
-        trackingTopModule=99,
+        trackingTopModule = 99,
         /// <summary>
         /// Top gad tracking
         /// </summary>
-        trackingTopGad=100,
+        trackingTopGad = 100,
         /// <summary>
         /// Top media tracking
         /// </summary>
-        trackingTopMediaAgency=101,
+        trackingTopMediaAgency = 101,
         /// <summary>
         /// Top Excel export tracking
         /// </summary>
-        trackingTopExcelExport=102,
+        trackingTopExcelExport = 102,
         /// <summary>
         /// Top option tracking
         /// </summary>
-        trackingTopOption=103,
+        trackingTopOption = 103,
         /// <summary>
         /// Top unit tracking
         /// </summary>
-        trackingTopUnit=104,
+        trackingTopUnit = 104,
         /// <summary>
         /// Top period tracking
         /// </summary>
-        trackingTopPeriod=105,
+        trackingTopPeriod = 105,
         /// <summary>
         /// Unit list to track
         /// </summary>
-        trackingUnit=106,
+        trackingUnit = 106,
         /// <summary>
         /// Period list to track
         /// </summary>
-        trackingPeriod=107,
+        trackingPeriod = 107,
         /// <summary>
         /// Top vehicle tracking
         /// </summary>
-        trackingTopVehicle=108,
+        trackingTopVehicle = 108,
         /// <summary>
         /// Top my AdExpress tracking
         /// </summary>
-        trackingTopMyAdExpress=109,
+        trackingTopMyAdExpress = 109,
         /// <summary>
         /// Top vehicle by module tracking
         /// </summary>
-        trackingTopVehicleByModule=110,
+        trackingTopVehicleByModule = 110,
         /// <summary>
         /// Login Ip tracking
         /// </summary>
-        trackingLoginIp=111,
+        trackingLoginIp = 111,
         /// <summary>
         /// Connection duration tracking
         /// </summary>
-        trackingConnectionTime=112,
+        trackingConnectionTime = 112,
         /// <summary>
         /// Agglomeration
         /// </summary>
-        agglomeration=113,
+        agglomeration = 113,
         /// <summary>
         /// Push mail alert list
         /// </summary>
-        alertPushMail=114,
+        alertPushMail = 114,
         /// <summary>
         /// Push mail alert flag assignment
         /// </summary>
-        alertFlagAssignment=115,
+        alertFlagAssignment = 115,
         /// <summary>
         /// Push mail alert universe assignment
         /// </summary>
-        alertUniverseAssignment=116,
+        alertUniverseAssignment = 116,
         /// <summary>
         /// Push mail alert universe
         /// </summary>
-        alertUniverse=117,
+        alertUniverse = 117,
         /// <summary>
         /// Push mail alert universe detail
         /// </summary>
-        alertUniverseDetail=118,
+        alertUniverseDetail = 118,
         /// <summary>
         /// Country
         /// </summary>
-        country=119,
+        country = 119,
         /// <summary>
         /// Advertiser in Product class analysis
         /// </summary>
-        recapAdvertiser=120,
+        recapAdvertiser = 120,
         /// <summary>
         /// Brand in Product class analysis
         /// </summary>
-        recapBrand=121,
+        recapBrand = 121,
         /// <summary>
         /// Category in Product class analysis
         /// </summary>
-        recapCategory=122,
+        recapCategory = 122,
         /// <summary>
         /// Group in Product class analysis
         /// </summary>
-        recapGroup=123,
+        recapGroup = 123,
         /// <summary>
         /// Holding company in Product class analysis
         /// </summary>
-        recapHoldingCompany=124,
+        recapHoldingCompany = 124,
         /// <summary>
         /// Media in Product class analysis
         /// </summary>
-        recapMedia=125,
+        recapMedia = 125,
         /// <summary>
         /// Product in Product class analysis
         /// </summary>
-        recapProduct=126,
+        recapProduct = 126,
         /// <summary>
         /// Sector in Product class analysis
         /// </summary>
-        recapSector=127,
+        recapSector = 127,
         /// <summary>
         /// Segment in Product class analysis
         /// </summary>
-        recapSegment=128,
+        recapSegment = 128,
         /// <summary>
         /// SubSector in Product class analysis
         /// </summary>
-        recapSubSector=129,
+        recapSubSector = 129,
         /// <summary>
         /// Vehicle in Product class analysis
         /// </summary>
-        recapVehicle=130,
+        recapVehicle = 130,
         /// <summary>
         /// Module assignment
         /// </summary>
-        rightModuleAssignment=131,
+        rightModuleAssignment = 131,
         /// <summary>
         /// Right assignment
         /// </summary>
-        rightAssignment=132,
+        rightAssignment = 132,
         /// <summary>
         /// My login
         /// </summary>
-        rightMyLogin=133,
+        rightMyLogin = 133,
         /// <summary>
         /// Product customer rights
         /// </summary>
-        rightProductOrder=134,
+        rightProductOrder = 134,
         /// <summary>
         /// Media customer rights
         /// </summary>
-        rightMediaOrder=135,
+        rightMediaOrder = 135,
         /// <summary>
         /// Module right frequency
         /// </summary>
-        rightFrequency=136,
+        rightFrequency = 136,
         /// <summary>
         /// Module Category
         /// </summary>
-        rightModuleCategory=137,
+        rightModuleCategory = 137,
         /// <summary>
         /// Flags 
         /// </summary>
-        rightFlag=138,
+        rightFlag = 138,
         /// <summary>
         /// Flags assignment
         /// </summary>
-        rightProjectFlagAssignment=139,
+        rightProjectFlagAssignment = 139,
         /// <summary>
         /// AdNetTrack Data on last 4M (Evaliant 4M)
         /// </summary>
-        dataAdNetTrackAlert=140,
-		/// <summary>
-		/// Data location
-		/// </summary>
-		dataLocation = 141,
+        dataAdNetTrackAlert = 140,
+        /// <summary>
+        /// Data location
+        /// </summary>
+        dataLocation = 141,
         /// <summary>
         /// Recap emailing
         /// </summary>
@@ -707,7 +707,7 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// Recap Cell phone aggregated bu segment
         /// </summary>
-        recapMobileTelSegment = 145,		
+        recapMobileTelSegment = 145,
         /// <summary>
         /// AdNetTrack (for Internet Version)
         /// </summary>
@@ -719,31 +719,31 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// Product Group Advertising Agency
         /// </summary>
-        productGroupAgency=149,
-		/// <summary>
-		/// Advertising Agency
-		/// </summary>
-		advertisingAgency=150,
-		/// <summary>
-		/// Group Advertising Agency
-		/// </summary>
-		groupAdvertisingAgency=151,
+        productGroupAgency = 149,
+        /// <summary>
+        /// Advertising Agency
+        /// </summary>
+        advertisingAgency = 150,
+        /// <summary>
+        /// Group Advertising Agency
+        /// </summary>
+        groupAdvertisingAgency = 151,
         /// <summary>
         /// Product class analysis years loaded information
         /// </summary>
-        recapInfo=152,
+        recapInfo = 152,
         /// <summary>
         /// Cinema Data
         /// </summary>
-        dataCinema=153,
+        dataCinema = 153,
         /// <summary>
         /// 4M cinema Data
         /// </summary>
-        dataCinemaAlert=154,
-		/// <summary>
-		/// Customer directory
-		/// </summary>
-		customerDirectory = 155,
+        dataCinemaAlert = 154,
+        /// <summary>
+        /// Customer directory
+        /// </summary>
+        customerDirectory = 155,
         /// <summary>
         /// Banners
         /// </summary>
@@ -756,22 +756,22 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Dimension banners
         /// </summary>
         dimensionBanners = 158,
-		/// <summary>
-		/// Product class analysis direct marketing data aggregated by segment
-		/// </summary>
-		recapDirectMarketingSegment = 159,
-		/// <summary>
-		/// Recap Direct Marketing
-		/// </summary>
-		recapDirectMarketing = 160,
-		/// <summary>
-		/// Evaliant mobile Data
-		/// </summary>
-		dataEvaliantMobile = 161,
-		/// <summary>
-		/// 4M Evaliant mobile Data
-		/// </summary>
-		dataEvaliantMobileAlert = 162,
+        /// <summary>
+        /// Product class analysis direct marketing data aggregated by segment
+        /// </summary>
+        recapDirectMarketingSegment = 159,
+        /// <summary>
+        /// Recap Direct Marketing
+        /// </summary>
+        recapDirectMarketing = 160,
+        /// <summary>
+        /// Evaliant mobile Data
+        /// </summary>
+        dataEvaliantMobile = 161,
+        /// <summary>
+        /// 4M Evaliant mobile Data
+        /// </summary>
+        dataEvaliantMobileAlert = 162,
         /// <summary>
         /// Banners
         /// </summary>
@@ -779,23 +779,23 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// Banners
         /// </summary>
-        tendencyMonth=164,
+        tendencyMonth = 164,
         /// <summary>
         /// Banners
         /// </summary>
-        totalTendencyMonth=165,
+        totalTendencyMonth = 165,
         /// <summary>
         /// Banners
         /// </summary>
-        tendencyWeek=166,
+        tendencyWeek = 166,
         /// <summary>
         /// Banners
         /// </summary>
-        totalTendencyWeek=167,
+        totalTendencyWeek = 167,
         /// <summary>
         /// dataNewspaper
         /// </summary>
-        dataNewspaper=168,
+        dataNewspaper = 168,
         /// <summary>
         /// dataNewspaper4M
         /// </summary>
@@ -803,7 +803,7 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// dataMagazine
         /// </summary>
-        dataMagazine=170,
+        dataMagazine = 170,
         /// <summary>
         /// dataMagazine4M
         /// </summary>
@@ -857,6 +857,184 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// </summary>
         trackingConnectionByLoginIpTimeslot = 183,
         /// <summary>
+        /// Cinema Data Retailer
+        /// </summary>
+        dataCinemaRetailer = 184,
+        /// <summary>
+        /// 4M cinema Data Retailer
+        /// </summary>
+        dataCinemaAlertRetailer = 185,
+        /// <summary>
+        /// Internet Data Retailer
+        /// </summary>
+        dataInternetRetailer = 186,
+        /// <summary>
+        /// 4M Internet Data Retailer
+        /// </summary>
+        dataInternetAlertRetailer = 187,
+        /// <summary>
+        /// Data location magazine Retailer
+        /// </summary>
+        dataLocationMagazineRetailer = 188,
+        /// <summary>
+        /// Data location Newspaper Retailer
+        /// </summary>
+        dataLocationNewspaperRetailer = 189,
+        /// <summary>
+        /// dataMagazine Retailer
+        /// </summary>
+        dataMagazineRetailer = 190,
+        /// <summary>
+        /// dataMagazine4M Retailer
+        /// </summary>
+        dataMagazineAlertRetailer = 191,
+        /// <summary>
+        /// dataNewspaper Retailer
+        /// </summary>
+        dataNewspaperRetailer = 192,
+        /// <summary>
+        /// dataNewspaper4M Retailer
+        /// </summary>
+        dataNewspaperAlertRetailer = 193,
+        /// <summary>
+        /// OutDoor Data Retailer
+        /// </summary>
+        dataOutDoorRetailer = 194,
+        /// <summary>
+        /// 4M outdoor Data Retailer
+        /// </summary>
+        dataOutDoorAlertRetailer = 195,
+        /// <summary>
+        /// Radio Data Retailer
+        /// </summary>
+        dataRadioRetailer = 196,
+        /// <summary>
+        /// 4M radio Data Retailer
+        /// </summary>
+        dataRadioAlertRetailer = 197,
+        /// <summary>
+        /// Tv Data Retailer
+        /// </summary>
+        dataTvRetailer = 198,
+        /// <summary>
+        /// 4M tv Data Retailer
+        /// </summary>
+        dataTvAlertRetailer = 199,
+        /// <summary>
+        /// Aggregated data per month Retailer
+        /// </summary>
+        monthDataRetailer = 201,
+        /// <summary>
+        /// Aggregated data per week Retailer
+        /// </summary>
+        weekDataRetailer = 202,
+        /// <summary>
+        /// Product class analysis cinema data Retailer Retailer
+        /// </summary>
+        recapCinemaRetailer = 203,
+        /// <summary>
+        /// Product class analysis cinema data Retailer Retailer
+        /// </summary>
+        recapCinemaSegmentRetailer = 204,
+        /// <summary>
+        /// Product class analysis internet data Retailer
+        /// </summary>
+        recapInternetRetailer = 205,
+        /// <summary>
+        /// Product class analysis internet data aggregated by segment Retailer
+        /// </summary>
+        recapInternetSegmentRetailer = 206,
+        /// <summary>
+        /// Recap Magazine Retailer
+        /// </summary>
+        recapMagazineRetailer = 207,
+        /// <summary>
+        /// Recap Magazine Segment Retailer
+        /// </summary>
+        recapMagazineSegmentRetailer = 208,
+        /// <summary>
+        /// Recap Newspaper Retailer
+        /// </summary>
+        recapNewspaperRetailer = 209,
+        /// <summary>
+        /// Recap Newspaper Segment Retailer
+        /// </summary>
+        recapNewspaperSegmentRetailer = 210,
+        /// <summary>
+        /// Product class analysis outdoor data Retailer
+        /// </summary>
+        recapOutDoorRetailer = 211,
+        /// <summary>
+        /// Product class analysis outdoor data aggregated by segment Retailer
+        /// </summary>
+        recapOutDoorSegmentRetailer = 212,
+        /// <summary>
+        /// Product class analysis plurimedia data Retailer
+        /// </summary>
+        recapPluriRetailer = 213,
+        /// <summary>
+        /// Product class analysis plurimedia data aggregated by segment Retailer
+        /// </summary>
+        recapPluriSegmentRetailer = 214,
+        /// <summary>
+        /// Product class analysis radio data Retailer
+        /// </summary>
+        recapRadioRetailer = 215,
+        /// <summary>
+        /// Product class analysis radio data aggregated by segment Retailer
+        /// </summary>
+        recapRadioSegmentRetailer = 216,
+        /// <summary>
+        /// Product class analysis tv data Retailer
+        /// </summary>
+        recapTvRetailer = 217,
+        /// <summary>
+        /// Product class analysis tv data aggregated by segment Retailer
+        /// </summary>
+        recapTvSegmentRetailer = 218,
+
+        /// <summary>
+        /// Tableau de bord par mois
+        /// </summary>
+        dashboardPluriMonth=219,
+        /// <summary>
+        /// Tableau de bord par semaine
+        /// </summary>
+        dashboardPluriWeek = 220,
+        /// <summary>
+        /// Tableau de bord radio par jour
+        /// </summary>
+        dashboardRadioDay = 221,
+        /// <summary>
+        /// Tableau de bord répartition radio part mois
+        /// </summary>
+        dashboardRadioRepMonth = 222,
+        /// <summary>
+        /// Tableau de bord répartition radio par semaine
+        /// </summary>
+        dashboardRadioRepWeek = 223,
+        /// <summary>
+        /// Tableau de bord télé par jour
+        /// </summary>
+        dashboardTvDay = 224,
+        /// <summary>
+        /// Tableau de bord télé par mois
+        /// </summary>
+        dashboardTvRepMonth = 225,
+        /// <summary>
+        /// Tableau de bord répartition télé par semaine
+        /// </summary>
+        dashboardTvRepWeek = 226,
+        /// <summary>
+        /// Tableau de bord par mois
+        /// </summary>
+        dashboardPluriMonthRetailer = 227,
+        /// <summary>
+        /// Tableau de bord par semaine
+        /// </summary>
+        dashboardPluriWeekRetailer = 228,
+
+        /// <summary>
         /// Alert description
         /// </summary>
         alert = 300,
@@ -868,7 +1046,7 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Static Nav Session
         /// </summary>
         staticNav = 400,
-    } 
+    }
     #endregion
 
     #region View Ids
