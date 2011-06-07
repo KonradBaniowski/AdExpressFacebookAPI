@@ -21,6 +21,8 @@ using TNS.AdExpress.Web.Core.Sessions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using WebExeptions=TNS.AdExpress.Web.Exceptions;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Web;
 
 namespace TNS.AdExpress.Web.UI{
 	/// <summary>
@@ -143,6 +145,26 @@ namespace TNS.AdExpress.Web.UI{
 		#endregion
 
 		#region Evènement
+        /// <summary>
+        /// OnInitComplete
+        /// </summary>
+        /// <param name="e">Event Argument</param>       
+        protected override void OnInitComplete(EventArgs e) {
+
+            try {
+
+                _webSession.IsRetailerDisplay = WebApplicationParameters.UseRetailer && ModulesList.GetModule(_webSession.CurrentModule).GetDisplayRetailerOption(_webSession.CurrentTab);
+                _webSession.Save();
+            }
+            catch (Exception ex) {
+                if (ex.GetType() != typeof(System.Threading.ThreadAbortException)) {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, ex, _webSession));
+                }
+            }
+
+            base.OnInitComplete(e);
+        }
+
 		/// <summary>
 		/// Page Loading
 		/// </summary>
@@ -151,9 +173,7 @@ namespace TNS.AdExpress.Web.UI{
 		private void ResultWebPage_Load(object sender, EventArgs e) {
 			_nextUrl=GetNextUrlFromMenu();			
 		}
-
-
-		#endregion
+        #endregion
 
 		#region Méthodes 
 		/// <summary>

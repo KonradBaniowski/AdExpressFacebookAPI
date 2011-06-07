@@ -20,6 +20,7 @@
           <!--<ModuleCategories list="1,2,3,4"/>-->
           <!--<ModuleMedias list="1,2,3,4"/>-->
         </ModuleAllowedMediaUniverse>
+        <retailerOption  use="true"/>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
             <defaultMediaDetailLevel id="1" name="media\catégorie" />
@@ -109,6 +110,7 @@
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="98,99"/>          <!--identifiant base de données-->
         </ModuleAllowedMediaUniverse>
+        <retailerOption  use="true"/>
         <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -281,6 +283,7 @@
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="98,99"/>          <!--identifiant base de données-->
         </ModuleAllowedMediaUniverse>
+        <retailerOption  use="true"/>
         <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -474,6 +477,7 @@
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="98,99"/>
         </ModuleAllowedMediaUniverse>
+        <retailerOption  use="true"/>
         <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -593,6 +597,7 @@
           <DataAccessLayer name="Default Product Class Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassReports.DAL.Default.dll" class="TNS.AdExpressI.ProductClassReports.DAL.Default.ProductClassReportDAL"/>
           <ProductRights branches="product|advertiser"/>
           <ResultLimitation size="50000"/>
+          <retailerOption  use="true"/>
           <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
           <selections>
           <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ASProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
@@ -643,6 +648,7 @@
         <RulesLayer name="Default Product Class Indicators Rules Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.Default.ProductClassIndicators"/>
         <DataAccessLayer name="Default Product Class Indicators Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.DAL.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.DAL.Default.ProductClassIndicatorsDAL"/>
           <ProductRights branches="product|advertiser"/>
+          <retailerOption  use="true"/>
           <overrideDefaultUnits unit="kEuro"></overrideDefaultUnits>
         <selections>
           <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ASProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">
@@ -778,6 +784,7 @@
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="98,99"/>
         </ModuleAllowedMediaUniverse>
+        <retailerOption  use="true"/>
         <overrideDefaultUnits unit="euro"></overrideDefaultUnits>
         <selections>
           <selection id="3" name="Sector" showLink="true" traductioncode="1535" url="/Private/Selection/MultipleSectorSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/MultipleSectorSelectionHelp.aspx" validationMethod="IsCurrentUniversProductSelected">

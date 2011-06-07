@@ -100,7 +100,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 					sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA + ".product pr, ");
 					sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA + ".category ct, ");
 					sql.Append(DBConstantes.Schema.ADEXPRESS_SCHEMA + ".vehicle ve, ");
-					sql.Append(WebApplicationParameters.DataBaseDescription.GetTable(tableName).Sql + " wp ");
+					sql.Append(WebApplicationParameters.GetDataTable(tableName, webSession.IsSelectRetailerDisplay).Sql + " wp ");
 					if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBClassificationConstantes.Vehicles.names.outdoor
                         || VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBClassificationConstantes.Vehicles.names.instore) {
 						sql.Append("," + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".agglomeration ag ");

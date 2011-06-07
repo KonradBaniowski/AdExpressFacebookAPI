@@ -195,6 +195,10 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// </summary>
         protected System.Web.UI.WebControls.CheckBox _comparativeStudyCheckBox;
         /// <summary>
+        /// CheckBox to indicate a Retailer selection
+        /// </summary>
+        protected System.Web.UI.WebControls.CheckBox _retailerSelectionCheckBox;
+        /// <summary>
         /// CheckBox to indicate a comparative study
         /// </summary>
         protected DateComparativeSelection _dateComparativeSelection;
@@ -721,6 +725,18 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             set { comparativeStudyDateTypeOption = value; }
         }
 
+        /// <summary>
+        /// Retailer Selection Option
+        /// </summary>
+        [Bindable(true),
+        Description("Retailer Selection Option")]
+        protected bool _retailerSelectionOption = false;
+        /// <summary></summary>
+        public bool RetailerSelectionOption {
+            get { return _retailerSelectionOption; }
+            set { _retailerSelectionOption = value; }
+        }
+
         #region Propriétés de TblChoice
         /// <summary>
         /// hauteur de l'image
@@ -1147,6 +1163,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                         customerWebSession.ComparativePeriodType = TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate;
                     }
                 }
+                
                 if(personalizedElementsOption) {
                     try {
                         if(Page.Request.Form.GetValues(this.ID + "_perso")[0] != null && (Page.Request.Form.GetValues("_initializeAdvertiser") == null)
@@ -1197,6 +1214,12 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                         else customerWebSession.PercentageAlignment = (WebConstantes.Percentage.Alignment)percentageTypeID;
                     }
                     catch(SystemException) { }
+                }
+                try {
+                    if (Page.Request.Form.GetValues(this.ID + "_isSelectRetailerDisplay")[0] != null) customerWebSession.IsSelectRetailerDisplay = true;
+                }
+                catch (System.Exception) {
+                    customerWebSession.IsSelectRetailerDisplay = false;
                 }
             }
             #endregion
@@ -1323,6 +1346,12 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// </summary>
         /// <param name="e">arguments</param>
         protected override void OnLoad(EventArgs e) {
+
+            _retailerSelectionOption = customerWebSession.IsRetailerDisplay;
+            if (customerWebSession.IsSelectRetailerDisplay != customerWebSession.IsSelectRetailerDisplay && _retailerSelectionOption) {
+                customerWebSession.IsSelectRetailerDisplay = customerWebSession.IsSelectRetailerDisplay && _retailerSelectionOption;
+                customerWebSession.Save();
+            }
 
             #region Initializing controls
             AdExpressUniverse adExpressUniverse = null;
@@ -1792,6 +1821,19 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 
                 if (!_dependentSelection)
                     Controls.Add(_comparativeStudyCheckBox);
+            }
+            #endregion
+
+            #region Retailer Selection
+            if (_retailerSelectionOption) {
+                _retailerSelectionCheckBox = new System.Web.UI.WebControls.CheckBox();
+                _retailerSelectionCheckBox.ID = this.ID + "_isSelectRetailerDisplay";
+                _retailerSelectionCheckBox.ToolTip = GestionWeb.GetWebWord(2857, customerWebSession.SiteLanguage);
+                _retailerSelectionCheckBox.CssClass = "txtBlanc11Bold";
+                _retailerSelectionCheckBox.AutoPostBack = autoPostBackOption;
+                _retailerSelectionCheckBox.Text = GestionWeb.GetWebWord(2857, customerWebSession.SiteLanguage);
+                _retailerSelectionCheckBox.Checked = customerWebSession.IsSelectRetailerDisplay;
+                Controls.Add(_retailerSelectionCheckBox);
             }
             #endregion
 
@@ -2388,93 +2430,97 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
-            #region Options PDM, PDV, evolution
-            if (pdmOption || pdvOption || evolutionOption || comparativeStudyOption) {
-                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
-                output.Write("\n<td class=\"txtBlanc11Bold\">");
+            #region Options PDM, PDV, evolution, Comparative STudy, Retailer Selection
+            if (pdmOption || pdvOption || evolutionOption || comparativeStudyOption || _retailerSelectionOption) {
 
-                if (!_dependentSelection)
-                {
-                    if (comparativeStudyOption) {
-                       
-                        if (comparativeStudyDateTypeOption) {
-
-                            #region javascript
-                            output.Write("\n<script language=\"JavaScript\" type=\"text/JavaScript\">\n");
-
-                            output.Write("\nfunction OnValideComparativeSelection_" + this.ID + "(){");
-                            output.Write("\n\tdocument.getElementById('" + _comparativeStudyCheckBox.ID + "').checked = document.getElementById('selectionType_" + _dateComparativeSelection.ID + "').value!=null && document.getElementById('selectionType_" + _dateComparativeSelection.ID + "').value.length>0;");
-                            output.Write("\n\tif(document.getElementById('" + _comparativeStudyCheckBox.ID + "').checked ==true){");
-                            output.Write("\n\t\tif(document.getElementById('selectionType_" + _dateComparativeSelection.ID + "').value== '" + WebConstantes.globalCalendar.comparativePeriodType.comparativeWeekDate+"')");
-                            output.Write("\n\t\t\tdocument.getElementById('" + _dateComparativeSelectionLabel.ID + "').innerHTML='" + GestionWeb.GetWebWord(2295, customerWebSession.SiteLanguage) + "';");
-                            output.Write("\n\t\telse if(document.getElementById('selectionType_" + _dateComparativeSelection.ID + "').value== '" + WebConstantes.globalCalendar.comparativePeriodType.dateToDate + "')");
-                            output.Write("\n\t\t\tdocument.getElementById('" + _dateComparativeSelectionLabel.ID + "').innerHTML='" + GestionWeb.GetWebWord(2294, customerWebSession.SiteLanguage) + "';");
-                            output.Write("\n\t}");
-                            output.Write("\n}\n");
-
-                            output.Write("\n</script>\n");
-                            _dateComparativeSelection.JavascriptFunctionOnValidate = "OnValideComparativeSelection_" + this.ID + "();";
-                            #endregion
-
-                            output.Write("<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\"><tr><td>");
-                            _comparativeStudyCheckBox.RenderControl(output);
-                            output.Write("</td></tr><tr><td>");
-                            _dateComparativeSelectionLabel.RenderControl(output);
-                            output.Write("</td></tr></table>");
-
-                            _dateComparativeSelection.RenderControl(output);
-                        }
-                        else {
-                            _comparativeStudyCheckBox.RenderControl(output);
-                        }
-                    }
-
-                    if (evolutionOption)
-                    {
-                        if (!customerWebSession.ComparativeStudy)
-                        {
-                            EvolutionCheckBox.Enabled = false;
-                            EvolutionCheckBox.Checked = false;
-                        }
-                        EvolutionCheckBox.RenderControl(output);
-                        output.Write("&nbsp;&nbsp;");
-                    }
-                }
-                else {
-                    if (!customerWebSession.ComparativeStudy)
-                    {
-                        //EvolutionCheckBox.Enabled = false;
-                        EvolutionCheckBox.InputAttributes.Add("disabled","true");
-                        EvolutionCheckBox.Checked = false;
-                        customerWebSession.Evolution = false;
-                    }
-                    _checkBoxsDependentSelection.RenderControl(output);
-                    output.Write("\n</td>");
-                    output.Write("\n</tr>");
-                    output.Write("\n<TR>");
-                    output.Write("\n<TD height=\"5\"></TD>");
-                    output.Write("\n</TR>");
-                }
-
-                if (!_mutualExclusion){
-                    if (pdmOption)
-                    {
-                        PdmCheckBox.RenderControl(output);
-                        output.Write("&nbsp;&nbsp;");
-                    }
-                    if (pdvOption)
-                    {
-                        PdvCheckBox.RenderControl(output);
-                    }
-                }
-                else
-                {
+                if (pdmOption || pdvOption || evolutionOption || comparativeStudyOption) {
                     output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                     output.Write("\n<td class=\"txtBlanc11Bold\">");
-                    _checkBoxsMutualExclusion.RenderControl(output);
+
+                    if (!_dependentSelection) {
+                        if (comparativeStudyOption) {
+
+                            if (comparativeStudyDateTypeOption) {
+
+                                #region javascript
+                                output.Write("\n<script language=\"JavaScript\" type=\"text/JavaScript\">\n");
+
+                                output.Write("\nfunction OnValideComparativeSelection_" + this.ID + "(){");
+                                output.Write("\n\tdocument.getElementById('" + _comparativeStudyCheckBox.ID + "').checked = document.getElementById('selectionType_" + _dateComparativeSelection.ID + "').value!=null && document.getElementById('selectionType_" + _dateComparativeSelection.ID + "').value.length>0;");
+                                output.Write("\n\tif(document.getElementById('" + _comparativeStudyCheckBox.ID + "').checked ==true){");
+                                output.Write("\n\t\tif(document.getElementById('selectionType_" + _dateComparativeSelection.ID + "').value== '" + WebConstantes.globalCalendar.comparativePeriodType.comparativeWeekDate + "')");
+                                output.Write("\n\t\t\tdocument.getElementById('" + _dateComparativeSelectionLabel.ID + "').innerHTML='" + GestionWeb.GetWebWord(2295, customerWebSession.SiteLanguage) + "';");
+                                output.Write("\n\t\telse if(document.getElementById('selectionType_" + _dateComparativeSelection.ID + "').value== '" + WebConstantes.globalCalendar.comparativePeriodType.dateToDate + "')");
+                                output.Write("\n\t\t\tdocument.getElementById('" + _dateComparativeSelectionLabel.ID + "').innerHTML='" + GestionWeb.GetWebWord(2294, customerWebSession.SiteLanguage) + "';");
+                                output.Write("\n\t}");
+                                output.Write("\n}\n");
+
+                                output.Write("\n</script>\n");
+                                _dateComparativeSelection.JavascriptFunctionOnValidate = "OnValideComparativeSelection_" + this.ID + "();";
+                                #endregion
+
+                                output.Write("<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\"><tr><td>");
+                                _comparativeStudyCheckBox.RenderControl(output);
+                                output.Write("</td></tr><tr><td>");
+                                _dateComparativeSelectionLabel.RenderControl(output);
+                                output.Write("</td></tr></table>");
+
+                                _dateComparativeSelection.RenderControl(output);
+                            }
+                            else {
+                                _comparativeStudyCheckBox.RenderControl(output);
+                            }
+                        }
+
+                        if (evolutionOption) {
+                            if (!customerWebSession.ComparativeStudy) {
+                                EvolutionCheckBox.Enabled = false;
+                                EvolutionCheckBox.Checked = false;
+                            }
+                            EvolutionCheckBox.RenderControl(output);
+                            output.Write("&nbsp;&nbsp;");
+                        }
+                    }
+                    else {
+                        if (!customerWebSession.ComparativeStudy) {
+                            //EvolutionCheckBox.Enabled = false;
+                            EvolutionCheckBox.InputAttributes.Add("disabled", "true");
+                            EvolutionCheckBox.Checked = false;
+                            customerWebSession.Evolution = false;
+                        }
+                        _checkBoxsDependentSelection.RenderControl(output);
+                        output.Write("\n</td>");
+                        output.Write("\n</tr>");
+                        output.Write("\n<TR>");
+                        output.Write("\n<TD height=\"5\"></TD>");
+                        output.Write("\n</TR>");
+                    }
+
+                    if (!_mutualExclusion) {
+                        if (pdmOption) {
+                            PdmCheckBox.RenderControl(output);
+                            output.Write("&nbsp;&nbsp;");
+                        }
+                        if (pdvOption) {
+                            PdvCheckBox.RenderControl(output);
+                        }
+                    }
+                    else {
+                        output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                        output.Write("\n<td class=\"txtBlanc11Bold\">");
+                        _checkBoxsMutualExclusion.RenderControl(output);
+                    }
+                    output.Write("\n</td>");
+                    output.Write("\n</tr>");
                 }
-                output.Write("\n</td>");
-                output.Write("\n</tr>");
+                if (_retailerSelectionOption) {
+                    output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                    output.Write("\n<td class=\"txtBlanc11Bold\">");
+                    _retailerSelectionCheckBox.RenderControl(output);
+                    output.Write("\n</td>");
+                    output.Write("\n</tr>");
+                }
+
                 output.Write("\n<TR>");
                 output.Write("\n<TD height=\"5\"></TD>");
                 output.Write("\n</TR>");

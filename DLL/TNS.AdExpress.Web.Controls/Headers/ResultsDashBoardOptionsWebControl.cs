@@ -157,6 +157,10 @@ namespace TNS.AdExpress.Web.Controls.Headers
         /// Checkbox dédiée à l'auto-promo Evaliant
         /// </summary>
         protected System.Web.UI.WebControls.CheckBox AutopromoEvaliantCheckBox;
+        /// <summary>
+        /// CheckBox to indicate a Retailer selection
+        /// </summary>
+        protected System.Web.UI.WebControls.CheckBox _retailerSelectionCheckBox;
 		#endregion
 
 		#region Propriétés
@@ -561,6 +565,18 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			get{return customerWebSession;}
 			set{customerWebSession=value;}
 		}
+
+        /// <summary>
+        /// Retailer Selection Option
+        /// </summary>
+        [Bindable(true),
+        Description("Retailer Selection Option")]
+        protected bool _retailerSelectionOption = false;
+        /// <summary></summary>
+        public bool RetailerSelectionOption {
+            get { return _retailerSelectionOption; }
+            set { _retailerSelectionOption = value; }
+        }
 		#endregion
 
 		#region Constructeur
@@ -761,6 +777,14 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				//				if(tblChoiceOption){					
 				//					customerWebSession.PreformatedTable = (SessionCst.PreformatedDetails.PreformatedTables) Int64.Parse(Page.Request.Form.GetValues("DDL"+this.ID)[0]);
 				//				}
+
+                try {
+                    if (Page.Request.Form.GetValues(this.ID + "_isSelectRetailerDisplay")[0] != null) customerWebSession.IsSelectRetailerDisplay = true;
+                }
+                catch (System.Exception) {
+                    customerWebSession.IsSelectRetailerDisplay = false;
+                }
+
 				customerWebSession.Save();
 							
 			}	
@@ -768,9 +792,25 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			base.OnInit(e);
 		}
 		#endregion
-				
-		#region Custom_PreRender
-		/// <summary>
+
+        #region Load
+        /// <summary>
+        /// launched when the control is loaded
+        /// </summary>
+        /// <param name="e">arguments</param>
+        protected override void OnLoad(EventArgs e) {
+
+            _retailerSelectionOption = customerWebSession.IsRetailerDisplay;
+            if (customerWebSession.IsSelectRetailerDisplay != customerWebSession.IsSelectRetailerDisplay && _retailerSelectionOption) {
+                customerWebSession.IsSelectRetailerDisplay = customerWebSession.IsSelectRetailerDisplay && _retailerSelectionOption;
+                customerWebSession.Save();
+            }
+            base.OnLoad(e);
+        }
+        #endregion
+
+        #region Custom_PreRender
+        /// <summary>
 		///custom prerender 
 		/// </summary>
 		/// <param name="sender">object qui lance l'évènement</param>
@@ -869,6 +909,19 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			}
 
 			#endregion
+
+            #region Retailer Selection
+            if (_retailerSelectionOption) {
+                _retailerSelectionCheckBox = new System.Web.UI.WebControls.CheckBox();
+                _retailerSelectionCheckBox.ID = this.ID + "_isSelectRetailerDisplay";
+                _retailerSelectionCheckBox.ToolTip = GestionWeb.GetWebWord(2857, customerWebSession.SiteLanguage);
+                _retailerSelectionCheckBox.CssClass = "txtBlanc11Bold";
+                _retailerSelectionCheckBox.AutoPostBack = autoPostBackOption;
+                _retailerSelectionCheckBox.Text = GestionWeb.GetWebWord(2857, customerWebSession.SiteLanguage);
+                _retailerSelectionCheckBox.Checked = customerWebSession.IsSelectRetailerDisplay;
+                Controls.Add(_retailerSelectionCheckBox);
+            }
+            #endregion
 
 			#region cumul période
 			//Option cumul période
@@ -1395,28 +1448,37 @@ namespace TNS.AdExpress.Web.Controls.Headers
             #endregion
 
             #region Options PDM ,PDV, cumul date, pourcentage
-            if (pdmOption || pdvOption || percentage || cumulPeriodOption){
-                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
-                output.Write("\n<td>");
-				if(cumulPeriodOption){					
-					CumulPeriodCheckBox.RenderControl(output);
-					output.Write("&nbsp;&nbsp;");
-				}				
-				if(pdmOption){
-					PdmCheckBox.RenderControl(output);
-					output.Write("&nbsp;&nbsp;");
-				}	
-				if(pdvOption){
-					PdvCheckBox.RenderControl(output);
-					output.Write("&nbsp;&nbsp;");
-				}
-				if(percentage){					
-					percentageCheckBox.RenderControl(output);
-					output.Write("&nbsp;&nbsp;");
-					
-				}
-				output.Write("\n</td>");
-				output.Write("\n</tr>");
+            if (pdmOption || pdvOption || percentage || cumulPeriodOption || _retailerSelectionOption) {
+                if (pdmOption || pdvOption || percentage || cumulPeriodOption) {
+                    output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                    output.Write("\n<td>");
+                    if (cumulPeriodOption) {
+                        CumulPeriodCheckBox.RenderControl(output);
+                        output.Write("&nbsp;&nbsp;");
+                    }
+                    if (pdmOption) {
+                        PdmCheckBox.RenderControl(output);
+                        output.Write("&nbsp;&nbsp;");
+                    }
+                    if (pdvOption) {
+                        PdvCheckBox.RenderControl(output);
+                        output.Write("&nbsp;&nbsp;");
+                    }
+                    if (percentage) {
+                        percentageCheckBox.RenderControl(output);
+                        output.Write("&nbsp;&nbsp;");
+
+                    }
+                    output.Write("\n</td>");
+                    output.Write("\n</tr>");
+                }
+                if (_retailerSelectionOption) {
+                    output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                    output.Write("\n<td class=\"txtBlanc11Bold\">");
+                    _retailerSelectionCheckBox.RenderControl(output);
+                    output.Write("\n</td>");
+                    output.Write("\n</tr>");
+                }
                 output.Write("\n<tr><td height=\"5\"></td></tr>");
             }
             #endregion

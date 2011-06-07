@@ -272,6 +272,8 @@ namespace AdExpress{
                         _webSession.Evolution = false;
                     }
 
+                    _webSession.IsSelectRetailerDisplay = false;
+
 					//Défintion des medias et  périodes par défaut pour les modules d'Analyses Sectorielles
 					if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE
 						|| _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR) {

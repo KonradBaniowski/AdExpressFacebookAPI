@@ -2067,5 +2067,13 @@
     <item mnemonic="w2852" type="System.String">Vos univers de référence et concurrent ne peuvent pas contenir des annonceurs communs.</item>
     <item mnemonic="w2853" type="System.String">Vos univers de référence et concurrent ne peuvent pas contenir des marques communes.</item>
     <item mnemonic="w2854" type="System.String">Me Semaine S-2</item>
+    <!-- ********************************* -->
+    <!--Texts delete universe (for all countries)-->
+    <item mnemonic="w2855" type="System.String">Etes vous sûr de vouloir supprimer ce groupe d\\'univers ?</item>
+    <item mnemonic="w2856" type="System.String">Etes vous sûr de vouloir supprimer cet univers ?</item>
+    <!-- ********************************* -->
+    <!-- Add text for Retailer in Finland -->
+    <item mnemonic="w2857" type="System.String">Détaillant</item>
+    <!-- ********************************* -->
   </items>
 </localization>

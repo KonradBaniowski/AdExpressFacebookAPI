@@ -2536,38 +2536,38 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// </summary>
         /// <param name="vehicleType">Vehicle</param>
         /// <returns>Nom de la table</returns>
-        public static string getVehicleTableNameForSectorAnalysisResult(ClassificationConstantes.DB.Vehicles.names vehicleType)
+        public static string getVehicleTableNameForSectorAnalysisResult(ClassificationConstantes.DB.Vehicles.names vehicleType, bool isRetailerSelected)
         {
             switch (vehicleType)
             {
 				case ClassificationConstantes.DB.Vehicles.names.cinema:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapCinema).Sql;
+                    return WebApplicationParameters.GetDataTable(TableIds.recapCinema, isRetailerSelected).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.radio:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapRadio).Sql;
+                    return WebApplicationParameters.GetDataTable(TableIds.recapRadio, isRetailerSelected).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.tv:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTv).Sql;
+                    return WebApplicationParameters.GetDataTable(TableIds.recapTv, isRetailerSelected).Sql;
                 case ClassificationConstantes.DB.Vehicles.names.newspaper:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapNewspaper).Sql;
+                    return WebApplicationParameters.GetDataTable(TableIds.recapNewspaper, isRetailerSelected).Sql;
                 case ClassificationConstantes.DB.Vehicles.names.magazine:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMagazine).Sql;
+                    return WebApplicationParameters.GetDataTable(TableIds.recapMagazine, isRetailerSelected).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.press:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPress).Sql;
+                    return WebApplicationParameters.GetDataTable(TableIds.recapPress, isRetailerSelected).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.outdoor:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapOutDoor).Sql;
+                    return WebApplicationParameters.GetDataTable(TableIds.recapOutDoor, isRetailerSelected).Sql;
                 case ClassificationConstantes.DB.Vehicles.names.instore:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInStore).Sql;
+                    return WebApplicationParameters.GetDataTable(TableIds.recapInStore, isRetailerSelected).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.internet:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInternet).Sql;
+                    return WebApplicationParameters.GetDataTable(TableIds.recapInternet, isRetailerSelected).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.plurimedia:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPluri).Sql;
+                    return WebApplicationParameters.GetDataTable(TableIds.recapPluri, isRetailerSelected).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.mediasTactics:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTactic).Sql;
+                    return WebApplicationParameters.GetDataTable(TableIds.recapTactic, isRetailerSelected).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.mobileTelephony:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMobileTel).Sql;
+                    return WebApplicationParameters.GetDataTable(TableIds.recapMobileTel, isRetailerSelected).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.emailing:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapEmailing).Sql;
+                    return WebApplicationParameters.GetDataTable(TableIds.recapEmailing, isRetailerSelected).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.directMarketing:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapDirectMarketing).Sql;
+                    return WebApplicationParameters.GetDataTable(TableIds.recapDirectMarketing, isRetailerSelected).Sql;
 				default:
 					throw (new SQLGeneratorException("Impossible de déterminer la table recap à traiter."));
             }
@@ -2578,38 +2578,38 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// </summary>
         /// <param name="vehicleType">Vehicle</param>
         /// <returns>Nom de la table</returns>
-        public static string getVehicleTableNameForSectorAnalysisResultSegmentLevel(ClassificationConstantes.DB.Vehicles.names vehicleType)
+        public static string getVehicleTableNameForSectorAnalysisResultSegmentLevel(ClassificationConstantes.DB.Vehicles.names vehicleType, bool isRetailerSelected)
         {
             switch (vehicleType)
             {
                 case ClassificationConstantes.DB.Vehicles.names.cinema:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapCinemaSegment).Sql;                    
+                    return WebApplicationParameters.GetDataTable(TableIds.recapCinemaSegment, isRetailerSelected).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.radio:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapRadioSegment).Sql;                    
+                    return WebApplicationParameters.GetDataTable(TableIds.recapRadioSegment, isRetailerSelected).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.tv:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTvSegment).Sql;                    
+                    return WebApplicationParameters.GetDataTable(TableIds.recapTvSegment, isRetailerSelected).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.press:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPressSegment).Sql;
+                    return WebApplicationParameters.GetDataTable(TableIds.recapPressSegment, isRetailerSelected).Sql;
                 case ClassificationConstantes.DB.Vehicles.names.newspaper:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapNewspaperSegment).Sql;
+                    return WebApplicationParameters.GetDataTable(TableIds.recapNewspaperSegment, isRetailerSelected).Sql;
                 case ClassificationConstantes.DB.Vehicles.names.magazine:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMagazineSegment).Sql; 
+                    return WebApplicationParameters.GetDataTable(TableIds.recapMagazineSegment, isRetailerSelected).Sql; 
                 case ClassificationConstantes.DB.Vehicles.names.outdoor:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapOutDoorSegment).Sql;
+                    return WebApplicationParameters.GetDataTable(TableIds.recapOutDoorSegment, isRetailerSelected).Sql;
                 case ClassificationConstantes.DB.Vehicles.names.instore:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInStoreSegment).Sql; 
+                    return WebApplicationParameters.GetDataTable(TableIds.recapInStoreSegment, isRetailerSelected).Sql; 
                 case ClassificationConstantes.DB.Vehicles.names.internet:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapInternetSegment).Sql;                    
+                    return WebApplicationParameters.GetDataTable(TableIds.recapInternetSegment, isRetailerSelected).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.plurimedia:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapPluriSegment).Sql;                    
+                    return WebApplicationParameters.GetDataTable(TableIds.recapPluriSegment, isRetailerSelected).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.mediasTactics:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapTacticSegment).Sql;                    
+                    return WebApplicationParameters.GetDataTable(TableIds.recapTacticSegment, isRetailerSelected).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.mobileTelephony:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMobileTelSegment).Sql;                    
+                    return WebApplicationParameters.GetDataTable(TableIds.recapMobileTelSegment, isRetailerSelected).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.emailing:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapEmailingSegment).Sql;
+                    return WebApplicationParameters.GetDataTable(TableIds.recapEmailingSegment, isRetailerSelected).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.directMarketing:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapDirectMarketingSegment).Sql;
+                    return WebApplicationParameters.GetDataTable(TableIds.recapDirectMarketingSegment, isRetailerSelected).Sql;
                 default:
                     throw (new SQLGeneratorException("Impossible de déterminer la table recap à traiter."));
             }
@@ -2775,15 +2775,15 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// </summary>
         /// <param name="periodType"></param>
         /// <returns></returns>
-        public static string GetTableNameForTendency(WebConstantes.CustomerSessions.Period.DisplayLevel periodType)
+        public static string GetTableNameForTendency(WebConstantes.CustomerSessions.Period.DisplayLevel periodType, bool isRetailerSelected)
         {
             switch (periodType)
             {
                 case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
                 case WebConstantes.CustomerSessions.Period.DisplayLevel.yearly:
-                    return (WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.tendencyMonth));
+                    return (WebApplicationParameters.GetSqlDataTableLabelWithPrefix(TableIds.tendencyMonth, isRetailerSelected));
                 case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
-                    return (WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.tendencyWeek));
+                    return (WebApplicationParameters.GetSqlDataTableLabelWithPrefix(TableIds.tendencyWeek, isRetailerSelected));
                 default:
                     throw (new SQLGeneratorException("Le détails période sélectionné est incorrect pour le choix de la table"));
             }
@@ -2794,15 +2794,15 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// </summary>
         /// <param name="periodType"></param>
         /// <returns></returns>
-        public static Table GetTrendTableInformation(WebConstantes.CustomerSessions.Period.DisplayLevel periodType)
+        public static Table GetTrendTableInformation(WebConstantes.CustomerSessions.Period.DisplayLevel periodType, bool isRetailerSelected)
         {
             switch (periodType)
             {
                 case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
                 case WebConstantes.CustomerSessions.Period.DisplayLevel.yearly:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.tendencyMonth));
+                    return (WebApplicationParameters.GetDataTable(TableIds.tendencyMonth, isRetailerSelected));
                 case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.tendencyWeek));
+                    return (WebApplicationParameters.GetDataTable(TableIds.tendencyWeek, isRetailerSelected));
                 default:
                     throw (new SQLGeneratorException("Le détails période sélectionné est incorrect pour le choix de la table"));
             }
@@ -2813,13 +2813,13 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// </summary>
         /// <param name="periodType">Period type selected</param>
         /// <returns>Tablz description</returns>
-        public static Table GetTrendTotalTableInformtation(WebConstantes.CustomerSessions.Period.DisplayLevel periodType) {
+        public static Table GetTrendTotalTableInformtation(WebConstantes.CustomerSessions.Period.DisplayLevel periodType, bool isRetailerSelected) {
             switch(periodType) {
                 case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
                 case WebConstantes.CustomerSessions.Period.DisplayLevel.yearly:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.totalTendencyMonth));
+                    return (WebApplicationParameters.GetDataTable(TableIds.totalTendencyMonth, isRetailerSelected));
                 case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.totalTendencyWeek));
+                    return (WebApplicationParameters.GetDataTable(TableIds.totalTendencyWeek, isRetailerSelected));
                 default:
                     throw (new SQLGeneratorException("Le détails période sélectionné est incorrect pour le choix de la table"));
             }
@@ -2832,15 +2832,15 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <param name="periodType"></param>
         /// <returns></returns>
         [Obsolete("This method is obsolete; use GetTrendTotalTableInformtation")]
-        public static string GetTotalTableNameForTendency(WebConstantes.CustomerSessions.Period.DisplayLevel periodType)
+        public static string GetTotalTableNameForTendency(WebConstantes.CustomerSessions.Period.DisplayLevel periodType, bool isRetailerSelected)
         {
             switch (periodType)
             {
                 case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
                 case WebConstantes.CustomerSessions.Period.DisplayLevel.yearly:
-                    return (WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.totalTendencyMonth));
+                    return (WebApplicationParameters.GetSqlDataTableLabelWithPrefix(TableIds.totalTendencyMonth, isRetailerSelected));
                 case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
-                    return (WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.totalTendencyWeek));
+                    return (WebApplicationParameters.GetSqlDataTableLabelWithPrefix(TableIds.totalTendencyWeek, isRetailerSelected));
                 default:
                     throw (new SQLGeneratorException("Le détails période sélectionné est incorrect pour le choix de la table"));
             }
@@ -3051,18 +3051,18 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <param name="vehicleName">Vehicle</param>
         /// <param name="moduleType">Type de module</param>
         /// <returns>Nom de la table</returns>
-        public static string GetVehicleTableSQLForDetailResult(DBClassificationConstantes.Vehicles.names vehicleName, WebConstantes.Module.Type moduleType)
+        public static string GetVehicleTableSQLForDetailResult(DBClassificationConstantes.Vehicles.names vehicleName, WebConstantes.Module.Type moduleType, bool isRetailerSelected)
         {
             try
             {
                 switch (moduleType)
                 {
                     case WebConstantes.Module.Type.alert:
-                        return (GetVehicleTableSQLForAlertDetailResult(vehicleName));
+                        return (GetVehicleTableSQLForAlertDetailResult(vehicleName, isRetailerSelected));
                     case WebConstantes.Module.Type.analysis:
-                        return (GetVehicleTableSQLForZoomDetailResult(vehicleName));
+                        return (GetVehicleTableSQLForZoomDetailResult(vehicleName, isRetailerSelected));
                     case WebConstantes.Module.Type.tvSponsorship:
-                        return (GetVehicleTableSQLForSponsorshipResult());
+                        return (GetVehicleTableSQLForSponsorshipResult(isRetailerSelected));
 
                     default:
                         throw (new SQLGeneratorException("Impossible de déterminer le type du module"));
@@ -3080,37 +3080,37 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// </summary>
         /// <param name="vehicleName">Vehicle</param>
         /// <returns>Nom de la table</returns>
-        internal static string GetVehicleTableSQLForZoomDetailResult(DBClassificationConstantes.Vehicles.names vehicleName)
+        internal static string GetVehicleTableSQLForZoomDetailResult(DBClassificationConstantes.Vehicles.names vehicleName, bool isRetailerSelected)
         {
             switch (vehicleName)
             {
                 case DBClassificationConstantes.Vehicles.names.press:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataPress, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.newspaper:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaper).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataNewspaper, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.magazine:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazine).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataMagazine, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInter).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataPressInter, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.radio:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadio).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataRadio, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.tv:
                 case DBClassificationConstantes.Vehicles.names.others:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTv).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataTv, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoor).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataOutDoor, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.instore:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInStore).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataInStore, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrack, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.internet:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternet).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataInternet, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirect).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataMarketingDirect, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.cinema:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinema).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataCinema, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataEvaliantMobile).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataEvaliantMobile, isRetailerSelected).SqlWithPrefix);
                 default:
                     throw (new SQLGeneratorException("Impossible de déterminer la table à traiter"));
             }
@@ -3120,9 +3120,9 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// Détermine la table à traiter pour le parrainage TV
         /// </summary>
         /// <returns>Nom de la table</returns>
-        internal static string GetVehicleTableSQLForSponsorshipResult()
+        internal static string GetVehicleTableSQLForSponsorshipResult(bool isRetailerSelected)
         {
-            return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataSponsorship).SqlWithPrefix);
+            return (WebApplicationParameters.GetDataTable(TableIds.dataSponsorship, isRetailerSelected).SqlWithPrefix);
         }
 
 
@@ -3131,37 +3131,37 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// </summary>
         /// <param name="vehicleName">Vehicle</param>
         /// <returns>Nom de la table</returns>
-        internal static string GetVehicleTableSQLForAlertDetailResult(DBClassificationConstantes.Vehicles.names vehicleName)
+        internal static string GetVehicleTableSQLForAlertDetailResult(DBClassificationConstantes.Vehicles.names vehicleName, bool isRetailerSelected)
         {
             switch (vehicleName)
             {
                 case DBClassificationConstantes.Vehicles.names.newspaper:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaperAlert).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataNewspaperAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.magazine:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazineAlert).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataMagazineAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.press:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressAlert).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataPressAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInterAlert).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataPressInterAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.radio:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadioAlert).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataRadioAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.tv:
                 case DBClassificationConstantes.Vehicles.names.others:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTvAlert).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataTvAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoorAlert).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataOutDoorAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.instore:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInStoreAlert).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataInStoreAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrack, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.internet:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetAlert).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataInternetAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirectAlert).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataMarketingDirectAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.cinema:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinema).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataCinema, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataEvaliantMobileAlert).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataEvaliantMobileAlert, isRetailerSelected).SqlWithPrefix);
                 default:
                     throw (new SQLGeneratorException("Impossible de déterminer la table à traiter"));
             }
@@ -3173,18 +3173,18 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <param name="vehicleName">Vehicle</param>
         /// <param name="moduleType">Type de module</param>
         /// <returns>Nom de la table</returns>
-        public static string GetVehicleTableNameForDetailResult(DBClassificationConstantes.Vehicles.names vehicleName, WebConstantes.Module.Type moduleType)
+        public static string GetVehicleTableNameForDetailResult(DBClassificationConstantes.Vehicles.names vehicleName, WebConstantes.Module.Type moduleType, bool isRetailerSelected)
         {
             try
             {
                 switch (moduleType)
                 {
                     case WebConstantes.Module.Type.alert:
-                        return (GetVehicleTableNameForAlertDetailResult(vehicleName));
+                        return (GetVehicleTableNameForAlertDetailResult(vehicleName, isRetailerSelected));
                     case WebConstantes.Module.Type.analysis:
-                        return (GetVehicleTableNameForZoomDetailResult(vehicleName));
+                        return (GetVehicleTableNameForZoomDetailResult(vehicleName, isRetailerSelected));
                     case WebConstantes.Module.Type.tvSponsorship:
-                        return (GetVehicleTableNameForSponsorshipResult());
+                        return (GetVehicleTableNameForSponsorshipResult(isRetailerSelected));
 
                     default:
                         throw (new SQLGeneratorException("Impossible de déterminer le type du module"));
@@ -3203,37 +3203,37 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// </summary>
         /// <param name="vehicleName">Vehicle</param>
         /// <returns>Nom de la table</returns>
-        internal static string GetVehicleTableNameForZoomDetailResult(DBClassificationConstantes.Vehicles.names vehicleName)
+        internal static string GetVehicleTableNameForZoomDetailResult(DBClassificationConstantes.Vehicles.names vehicleName, bool isRetailerSelected)
         {
             switch (vehicleName)
             {
                 case DBClassificationConstantes.Vehicles.names.press:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataPress, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.newspaper:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaper).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataNewspaper, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.magazine:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazine).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataMagazine, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInter).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataPressInter, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.radio:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadio).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataRadio, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.tv:
                 case DBClassificationConstantes.Vehicles.names.others:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTv).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataTv, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoor).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataOutDoor, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.instore:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInStore).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataInStore, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrack, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.internet:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternet).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataInternet, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirect).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataMarketingDirect, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.cinema:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinema).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataCinema, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataEvaliantMobile).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataEvaliantMobile, isRetailerSelected).Label);
                 default:
                     throw (new SQLGeneratorException("Impossible de déterminer la table à traiter"));
             }
@@ -3243,9 +3243,9 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// Détermine la table à traiter pour le parrainage TV
         /// </summary>
         /// <returns>Nom de la table</returns>
-        internal static string GetVehicleTableNameForSponsorshipResult()
+        internal static string GetVehicleTableNameForSponsorshipResult(bool isRetailerSelected)
         {
-            return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataSponsorship).Label);
+            return (WebApplicationParameters.GetDataTable(TableIds.dataSponsorship, isRetailerSelected).Label);
         }
 
 
@@ -3254,37 +3254,37 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// </summary>
         /// <param name="vehicleName">Vehicle</param>
         /// <returns>Nom de la table</returns>
-        public static string GetVehicleTableNameForAlertDetailResult(DBClassificationConstantes.Vehicles.names vehicleName)
+        public static string GetVehicleTableNameForAlertDetailResult(DBClassificationConstantes.Vehicles.names vehicleName, bool isRetailerSelected)
         {
             switch (vehicleName)
             {
                 case DBClassificationConstantes.Vehicles.names.newspaper:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaperAlert).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataNewspaperAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.magazine:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazineAlert).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataMagazineAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.press:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressAlert).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataPressAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInterAlert).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataPressInterAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.radio:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadioAlert).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataRadioAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.tv:
                 case DBClassificationConstantes.Vehicles.names.others:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTvAlert).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataTvAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoorAlert).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataOutDoorAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.instore:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInStoreAlert).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataInStoreAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrack, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.internet:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetAlert).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataInternetAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirectAlert).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataMarketingDirectAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.cinema:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinemaAlert).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataCinemaAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataEvaliantMobileAlert).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataEvaliantMobileAlert, isRetailerSelected).Label);
                 default:
                     throw (new SQLGeneratorException("Impossible de déterminer la table à traiter"));
             }
@@ -3296,73 +3296,73 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <param name="period">Type of period</param>
         /// <param name="vehicleId">Vehicle Id</param>
         /// <returns>Table matching the vehicle and the type of period</returns>
-        public static string GetDataTableName(CstPeriod.PeriodBreakdownType period, Int64 vehicleId) {
+        public static string GetDataTableName(CstPeriod.PeriodBreakdownType period, Int64 vehicleId, bool isRetailerSelected) {
             switch (period) {
                 case CstPeriod.PeriodBreakdownType.month:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.monthData).SqlWithPrefix;
+                    return WebApplicationParameters.GetDataTable(TableIds.monthData, isRetailerSelected).SqlWithPrefix;
                 case CstPeriod.PeriodBreakdownType.week:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.weekData).SqlWithPrefix;
+                    return WebApplicationParameters.GetDataTable(TableIds.weekData, isRetailerSelected).SqlWithPrefix;
                 case CstPeriod.PeriodBreakdownType.data_4m:
                     switch (VehiclesInformation.DatabaseIdToEnum(vehicleId)) {
                         case DBClassificationConstantes.Vehicles.names.newspaper:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaperAlert).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataNewspaperAlert, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.magazine:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazineAlert).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataMagazineAlert, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.press:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressAlert).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataPressAlert, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.internationalPress:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInterAlert).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataPressInterAlert, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.radio:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadioAlert).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataRadioAlert, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.tv:
                         case DBClassificationConstantes.Vehicles.names.others:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTvAlert).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataTvAlert, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.outdoor:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoorAlert).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataOutDoorAlert, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.instore:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInStoreAlert).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataInStoreAlert, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.adnettrack:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrackAlert).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrackAlert, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.internet:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetAlert).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataInternetAlert, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.directMarketing:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirectAlert).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataMarketingDirectAlert, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.cinema:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinemaAlert).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataCinemaAlert, isRetailerSelected).SqlWithPrefix;
 						case DBClassificationConstantes.Vehicles.names.evaliantMobile:
-							return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataEvaliantMobileAlert).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataEvaliantMobileAlert, isRetailerSelected).SqlWithPrefix;
                         default:
                             throw (new SQLGeneratorException("Unable to determine table to use."));
                     }
                 case CstPeriod.PeriodBreakdownType.data:
                     switch(VehiclesInformation.DatabaseIdToEnum(vehicleId)) {
                         case DBClassificationConstantes.Vehicles.names.newspaper:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaper).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataNewspaper, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.magazine:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazine).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataMagazine, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.press:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataPress, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.internationalPress:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInter).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataPressInter, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.radio:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadio).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataRadio, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.tv:
                         case DBClassificationConstantes.Vehicles.names.others:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTv).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataTv, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.outdoor:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoor).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataOutDoor, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.instore:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInStore).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataInStore, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.adnettrack:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrack, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.internet:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternet).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataInternet, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.directMarketing:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirect).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataMarketingDirect, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.cinema:
-                            return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinema).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataCinema, isRetailerSelected).SqlWithPrefix;
 						case DBClassificationConstantes.Vehicles.names.evaliantMobile:
-							return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataEvaliantMobile).SqlWithPrefix;
+                            return WebApplicationParameters.GetDataTable(TableIds.dataEvaliantMobile, isRetailerSelected).SqlWithPrefix;
                         default:
                             throw (new SQLGeneratorException("Unable to determine the table to use"));
                     }
@@ -3944,16 +3944,16 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// <param name="vehicleName">Vehicle</param>
         /// <param name="moduleType">Type de module</param>
         /// <returns>Nom de la table</returns>
-        public static Table GetDataTable(VehicleInformation v, WebConstantes.Module.Type moduleType)
+        public static Table GetDataTable(VehicleInformation v, WebConstantes.Module.Type moduleType, bool isRetailerSelected)
         {
             try
             {
                 switch (moduleType)
                 {
                     case WebConstantes.Module.Type.analysis:
-                        return GetAlertTable(v);
+                        return GetAlertTable(v, isRetailerSelected);
                     case WebConstantes.Module.Type.tvSponsorship:
-                        return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataSponsorship);
+                        return WebApplicationParameters.GetDataTable(TableIds.dataSponsorship, isRetailerSelected);
 
                     default:
                         throw (new SQLGeneratorException("Unvalid module type."));
@@ -3969,37 +3969,37 @@ namespace TNS.AdExpress.Web.Core.Utilities
         /// </summary>
         /// <param name="v">Vehicle</param>
         /// <returns>Object Table</returns>
-        internal static Table GetAlertTable(VehicleInformation v)
+        internal static Table GetAlertTable(VehicleInformation v, bool isRetailerSelected)
         {
             switch (v.Id)
             {
                 case DBClassificationConstantes.Vehicles.names.press:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress);
+                    return WebApplicationParameters.GetDataTable(TableIds.dataPress, isRetailerSelected);
                 case DBClassificationConstantes.Vehicles.names.newspaper:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaper);
+                    return WebApplicationParameters.GetDataTable(TableIds.dataNewspaper, isRetailerSelected);
                 case DBClassificationConstantes.Vehicles.names.magazine:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazine);
+                    return WebApplicationParameters.GetDataTable(TableIds.dataMagazine, isRetailerSelected);
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInter);
+                    return WebApplicationParameters.GetDataTable(TableIds.dataPressInter, isRetailerSelected);
                 case DBClassificationConstantes.Vehicles.names.radio:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadio);
+                    return WebApplicationParameters.GetDataTable(TableIds.dataRadio, isRetailerSelected);
                 case DBClassificationConstantes.Vehicles.names.tv:
                 case DBClassificationConstantes.Vehicles.names.others:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTv);
+                    return WebApplicationParameters.GetDataTable(TableIds.dataTv, isRetailerSelected);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoor);
+                    return WebApplicationParameters.GetDataTable(TableIds.dataOutDoor, isRetailerSelected);
                 case DBClassificationConstantes.Vehicles.names.instore:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInStore);
+                    return WebApplicationParameters.GetDataTable(TableIds.dataInStore, isRetailerSelected);
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack);
+                    return WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrack, isRetailerSelected);
                 case DBClassificationConstantes.Vehicles.names.internet:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternet);
+                    return WebApplicationParameters.GetDataTable(TableIds.dataInternet, isRetailerSelected);
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirect);
+                    return WebApplicationParameters.GetDataTable(TableIds.dataMarketingDirect, isRetailerSelected);
                 case DBClassificationConstantes.Vehicles.names.cinema:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinema);
+                    return WebApplicationParameters.GetDataTable(TableIds.dataCinema, isRetailerSelected);
 				case DBClassificationConstantes.Vehicles.names.evaliantMobile:
-					return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataEvaliantMobile);
+                    return WebApplicationParameters.GetDataTable(TableIds.dataEvaliantMobile, isRetailerSelected);
                 default:
                     throw new SQLGeneratorException("Unknown vehicle.");
             }

@@ -147,8 +147,8 @@ namespace TNS.AdExpressI.Trends.DAL
             StringBuilder sqlRequest = new StringBuilder(1000);
             string trendsTotalTableName = "";
             string unitsConditions = "";
-            Table trendsTable = WebFunctions.SQLGenerator.GetTrendTableInformation(_session.DetailPeriod);
-            Table totalTable = WebFunctions.SQLGenerator.GetTrendTotalTableInformtation(_session.DetailPeriod);
+            Table trendsTable = WebFunctions.SQLGenerator.GetTrendTableInformation(_session.DetailPeriod, _session.IsSelectRetailerDisplay);
+            Table totalTable = WebFunctions.SQLGenerator.GetTrendTotalTableInformtation(_session.DetailPeriod, _session.IsSelectRetailerDisplay);
             string trendPrefix = (levels.GetNbLevels > 2) ? trendsTable.Prefix : totalTable.Prefix;
             #endregion
 
@@ -204,7 +204,7 @@ namespace TNS.AdExpressI.Trends.DAL
             #endregion
 
             #region Building Query
-            Table dataTotalTable = WebFunctions.SQLGenerator.GetTrendTotalTableInformtation(_session.DetailPeriod);
+            Table dataTotalTable = WebFunctions.SQLGenerator.GetTrendTotalTableInformtation(_session.DetailPeriod, _session.IsSelectRetailerDisplay);
 
             sqlRequest.Append(" select * from " + dataTotalTable.Sql);
             sqlRequest.Append(" where id_vehicle=" + _vehicleInformation.DatabaseId.ToString());

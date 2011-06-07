@@ -1884,12 +1884,12 @@ namespace TNS.AdExpress.Constantes.DB{
 	/// <summary>
 	/// Constantes utilisées pour tableaux de bord
 	/// </summary>
-	public class DashBoard{
-		/// <summary>
+	public class DashBoard {
+        #region constantes
+        /// <summary>
 		/// Tables des tableaux de bord
 		/// </summary>
-		public class Tables{
-			#region constantes
+		/*public class Tables{
 			/// <summary>
 			/// Constante tableau de bord par mois
 			/// </summary>
@@ -1930,7 +1930,7 @@ namespace TNS.AdExpress.Constantes.DB{
             /// Week Dashbord Table Constante
             /// </summary>
             public const string TABLEAU_BORD_EVALIANT_WEEK = "TABLEAU_BORD_EVAL_R_WEEK";
-		}
+		}*/
 		/// <summary>
 		/// Champs des tableaux de bord
 		/// </summary>

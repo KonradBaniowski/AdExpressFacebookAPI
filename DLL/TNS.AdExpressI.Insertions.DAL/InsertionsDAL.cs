@@ -296,15 +296,15 @@ namespace TNS.AdExpressI.Insertions.DAL {
             if (vehicle.Id != CstDBClassif.Vehicles.names.internet) {
                 /* Get the data table description object according to the media type (vehicle) and the module type (moduleType)
                  * */
-                return SQLGenerator.GetDataTable(vehicle, _module.ModuleType);
+                return SQLGenerator.GetDataTable(vehicle, _module.ModuleType, _session.IsSelectRetailerDisplay);
             }
             else {
 
                 switch (moduleType) {
                     case CstWeb.Module.Type.alert:
-                        return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetVersionAlert);
+                        return WebApplicationParameters.GetDataTable(TableIds.dataInternetVersionAlert, _session.IsSelectRetailerDisplay);
                     case CstWeb.Module.Type.analysis:
-                        return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetVersion);
+                        return WebApplicationParameters.GetDataTable(TableIds.dataInternetVersion, _session.IsSelectRetailerDisplay);
                     default:
                         throw new ArgumentException("Type of module is not supported");
                 }

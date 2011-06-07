@@ -170,42 +170,42 @@ namespace TNS.AdExpressI.Date.DAL {
 
             switch (VehiclesInformation.DatabaseIdToEnum(idVehicle)) {
                 case DBClassificationConstantes.Vehicles.names.internet:
-                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternet).Sql;
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataInternet, webSession.IsSelectRetailerDisplay).Sql;
                     break;
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
-                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirect).Sql;
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataMarketingDirect, webSession.IsSelectRetailerDisplay).Sql;
                     break;
                 case DBClassificationConstantes.Vehicles.names.press:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
-                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress).Sql;
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataPress, webSession.IsSelectRetailerDisplay).Sql;
                     break;
                 case DBClassificationConstantes.Vehicles.names.newspaper:
-                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaper).Sql;
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataNewspaper, webSession.IsSelectRetailerDisplay).Sql;
                     break;
                 case DBClassificationConstantes.Vehicles.names.magazine:
-                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazine).Sql;
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataMagazine, webSession.IsSelectRetailerDisplay).Sql;
                     break;
                 case DBClassificationConstantes.Vehicles.names.tv:
                 case DBClassificationConstantes.Vehicles.names.others:
-                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTv).Sql;
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataTv, webSession.IsSelectRetailerDisplay).Sql;
                     break;
                 case DBClassificationConstantes.Vehicles.names.radio:
-                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadio).Sql;
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataRadio, webSession.IsSelectRetailerDisplay).Sql;
                     break;
                 case DBClassificationConstantes.Vehicles.names.outdoor:
-                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoor).Sql;
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataOutDoor, webSession.IsSelectRetailerDisplay).Sql;
                     break;
                 case DBClassificationConstantes.Vehicles.names.instore:
-                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInStore).Sql;
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataInStore, webSession.IsSelectRetailerDisplay).Sql;
                     break;
                 case DBClassificationConstantes.Vehicles.names.cinema:
-                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinema).Sql;
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataCinema, webSession.IsSelectRetailerDisplay).Sql;
                     break;
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
-                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrack).Sql;
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrack, webSession.IsSelectRetailerDisplay).Sql;
                     break;
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
-                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataEvaliantMobile).Sql;
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataEvaliantMobile, webSession.IsSelectRetailerDisplay).Sql;
                     break;
             }
 

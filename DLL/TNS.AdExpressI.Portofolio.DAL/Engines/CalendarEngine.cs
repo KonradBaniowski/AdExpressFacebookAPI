@@ -86,7 +86,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             
 			#region Construction de la requête
 			try {
-				dataTableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id,WebConstantes.Module.Type.alert);
+				dataTableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id,WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
 				detailProductTablesNames = _webSession.GenericProductDetailLevel.GetSqlTables(WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label);
 				detailProductFields = _webSession.GenericProductDetailLevel.GetSqlFields();
 				detailProductJoints = _webSession.GenericProductDetailLevel.GetSqlJoins(_webSession.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);

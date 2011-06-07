@@ -1109,7 +1109,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
 			if (WebFunctions.Modules.IsSponsorShipTVModule(webSession))
 				tableName = DBConstantes.Tables.DATA_SPONSORSHIP;
-			else tableName = SQLGenerator.GetVehicleTableNameForDetailResult(idVehicle, currentModuleDescription.ModuleType);
+			else tableName = SQLGenerator.GetVehicleTableNameForDetailResult(idVehicle, currentModuleDescription.ModuleType, webSession.IsSelectRetailerDisplay);
 
 			sql.Append(" from ");
 			sql.Append(" " + DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + tableName + " " + DbTables.WEB_PLAN_PREFIXE);
@@ -1134,7 +1134,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			string sql="";
 			string tableName="";
 			Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
-			tableName = SQLGenerator.GetVehicleTableNameForDetailResult(idVehicle,currentModuleDescription.ModuleType);
+			tableName = SQLGenerator.GetVehicleTableNameForDetailResult(idVehicle,currentModuleDescription.ModuleType, webSession.IsSelectRetailerDisplay);
 			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
 			

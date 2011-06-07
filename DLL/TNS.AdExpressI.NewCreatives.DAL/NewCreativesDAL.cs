@@ -135,11 +135,11 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_session.CurrentModule);
                 productsRights = SQLGenerator.GetClassificationCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, module.ProductRightBranches);
                
-                table = GetTable(_vehicleInformation);
+                table = GetTable(_vehicleInformation, _session.IsSelectRetailerDisplay);
                 useTableDataMobile = (_vehicleInformation.Id == TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile
                     && !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_APPLICATION_MOBILE_CREATIVE_FLAG));
 
-                 if(useTableDataMobile) tableDataMobile = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataEvaliantMobile);
+                 if(useTableDataMobile) tableDataMobile = WebApplicationParameters.GetDataTable(TableIds.dataEvaliantMobile, _session.IsSelectRetailerDisplay);
 
                 if(_session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser)) {
                     try {
@@ -232,13 +232,14 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
         ///Get table
         /// </summary>
         /// <param name="vehicle">Vehicle Information</param>
+        /// <param name="isRetailerSelection">Is Retailer Selectioned</param>
         /// <returns>Table</returns>
-        private Table GetTable(VehicleInformation vehicle) {
+        private Table GetTable(VehicleInformation vehicle, bool isRetailerSelection) {
             switch (vehicle.Id) {
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.banners);
+                    return WebApplicationParameters.GetDataTable(TableIds.banners, isRetailerSelection);
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.banners_mobile);
+                    return WebApplicationParameters.GetDataTable(TableIds.banners_mobile, isRetailerSelection);
                 case DBClassificationConstantes.Vehicles.names.press:
                 case DBClassificationConstantes.Vehicles.names.newspaper:
                 case DBClassificationConstantes.Vehicles.names.magazine:

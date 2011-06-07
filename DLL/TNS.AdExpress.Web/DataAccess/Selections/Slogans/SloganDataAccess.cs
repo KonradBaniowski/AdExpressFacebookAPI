@@ -138,7 +138,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
                 #region Récupération des noms de tables et de champs suivant le média(vehcile)
                 TNS.AdExpress.Domain.Web.Navigation.Module currentModuleDescription = ModulesList.GetModule(webSession.CurrentModule);
                 string tablePrefixe = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
-                tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(vehicleInformation.Id, currentModuleDescription.ModuleType);
+                tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(vehicleInformation.Id, currentModuleDescription.ModuleType, webSession.IsSelectRetailerDisplay);
 
                 #endregion
 
@@ -282,8 +282,8 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
 			
 			#region Récupération des noms de tables et de champs suivant le média(vehcile)
 			TNS.AdExpress.Domain.Web.Navigation.Module currentModuleDescription=ModulesList.GetModule(webSession.CurrentModule);
-			tablePrefixe = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.dataPressAPPM).Prefix; 
-			tableName = " " + WebApplicationParameters .DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.dataPressAPPM).SqlWithPrefix;		
+			tablePrefixe = WebApplicationParameters.GetDataTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.dataPressAPPM, webSession.IsSelectRetailerDisplay).Prefix;
+            tableName = " " + WebApplicationParameters.GetDataTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.dataPressAPPM, webSession.IsSelectRetailerDisplay).SqlWithPrefix;		
 				
 			#endregion
 

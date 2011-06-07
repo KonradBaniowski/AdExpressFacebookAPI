@@ -72,13 +72,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Finland.Engines {
             //Data table			
             switch (type) {
                 case DBConstantes.TableType.Type.dataVehicle4M:
-                    table = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert);
+                    table = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
                     break;
                 case DBConstantes.TableType.Type.dataVehicle:
-                    table = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.analysis);
+                    table = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.analysis, _webSession.IsSelectRetailerDisplay);
                     break;
                 case DBConstantes.TableType.Type.webPlan:
-                    table = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.monthData).SqlWithPrefix; //DBConstantes.Tables.WEB_PLAN_MEDIA_MONTH;
+                    table = WebApplicationParameters.GetDataTable(TableIds.monthData, _webSession.IsSelectRetailerDisplay).SqlWithPrefix; //DBConstantes.Tables.WEB_PLAN_MEDIA_MONTH;
                     break;
                 default:
                     throw (new PortofolioDALException("Table type unknown"));

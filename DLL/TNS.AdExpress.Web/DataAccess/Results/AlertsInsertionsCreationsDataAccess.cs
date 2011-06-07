@@ -390,7 +390,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			string sql="";
 			string tableName="";
 			
-			tableName = SQLGenerator.GetVehicleTableNameForDetailResult(idVehicle,TNS.AdExpress.Constantes.Web.Module.Type.analysis);
+			tableName = SQLGenerator.GetVehicleTableNameForDetailResult(idVehicle,TNS.AdExpress.Constantes.Web.Module.Type.analysis, false);
 
 			sql+=GetMediaTables();		
 			sql+=", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+DBConstantes.Tables.GROUP_+ "  "+DbTables.GROUP_PREFIXE;

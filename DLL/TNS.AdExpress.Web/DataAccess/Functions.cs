@@ -97,7 +97,7 @@ namespace TNS.AdExpress.Web.DataAccess{
 
 			sql = sql.Remove(sql.Length-1, 1);
 
-			sql += " from " + WebFunctions.SQLGenerator.getVehicleTableNameForSectorAnalysisResult(VehiclesInformation.DatabaseIdToEnum(idVehicle));
+			sql += " from " + WebFunctions.SQLGenerator.getVehicleTableNameForSectorAnalysisResult(VehiclesInformation.DatabaseIdToEnum(idVehicle), webSession.IsSelectRetailerDisplay);
 			#endregion
 
 			#region Exécution de la requete

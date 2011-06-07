@@ -43,8 +43,8 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			#endregion
 
 			#region Construction de la requête
-			dataTableName = WebFunctions.SQLGenerator.GetTableNameForTendency(webSession.DetailPeriod);
-			dataTotalTableName = WebFunctions.SQLGenerator.GetTotalTableNameForTendency(webSession.DetailPeriod);
+			dataTableName = WebFunctions.SQLGenerator.GetTableNameForTendency(webSession.DetailPeriod, webSession.IsSelectRetailerDisplay);
+            dataTotalTableName = WebFunctions.SQLGenerator.GetTotalTableNameForTendency(webSession.DetailPeriod, webSession.IsSelectRetailerDisplay);
 			getUnitsFields = WebFunctions.SQLGenerator.GetUnitFieldsForTendency(vehicleName,DBConstantes.Hathor.Tables.TENDENCY_MONTH_PREFIXE, DBConstantes.Hathor.Tables.TOTAL_TENDENCY_MONTH_PREFIXE);
 
 			sql+="select "+DBConstantes.Hathor.Tables.TENDENCY_MONTH_PREFIXE+".DATE_PERIOD, ";
@@ -152,7 +152,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			#endregion
 
 			#region Construction de la requête
-			dataTotalTableName = WebFunctions.SQLGenerator.GetTotalTableNameForTendency(webSession.DetailPeriod);
+			dataTotalTableName = WebFunctions.SQLGenerator.GetTotalTableNameForTendency(webSession.DetailPeriod, webSession.IsSelectRetailerDisplay);
 
 			sql+="select * from "+dataTotalTableName;
 			sql+=" where id_vehicle="+vehicleName.GetHashCode().ToString();

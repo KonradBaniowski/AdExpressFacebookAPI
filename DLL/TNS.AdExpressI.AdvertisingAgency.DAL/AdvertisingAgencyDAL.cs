@@ -232,7 +232,7 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
             try
             {
                 // Get the name of the data table
-                tableName = FctWeb.SQLGenerator.GetDataTableName(periodBreakDown, vehicleId);
+                tableName = FctWeb.SQLGenerator.GetDataTableName(periodBreakDown, vehicleId, _session.IsSelectRetailerDisplay);
                 unitFieldName = FctWeb.SQLGenerator.GetUnitFieldName(_session, vehicleId, periodBreakDown);
                 // Get the classification table
                 productTableName = detailLevel.GetSqlTables(_schAdexpr03.Label);
@@ -508,10 +508,10 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                 switch (periodBreakDown)
                 {
                     case CstPeriod.PeriodBreakdownType.month:
-                        tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.monthData).SqlWithPrefix;
+                        tableName = WebApplicationParameters.GetDataTable(TableIds.monthData, _session.IsSelectRetailerDisplay).SqlWithPrefix;
                         break;
                     case CstPeriod.PeriodBreakdownType.week:
-                        tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.weekData).SqlWithPrefix;
+                        tableName = WebApplicationParameters.GetDataTable(TableIds.weekData, _session.IsSelectRetailerDisplay).SqlWithPrefix;
                         break;
                     default:
                         throw (new AdvertisingAgencyDALException("Unable to determine table to use."));

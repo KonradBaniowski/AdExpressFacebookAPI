@@ -8,4 +8,5 @@
   </inset>
   <mediaSchedule useComparative="true"/>
   <bannersFormat useBannersFormat="true"/>
+  <retailer use ="false"/>
 </resultOptions>

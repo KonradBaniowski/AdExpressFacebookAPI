@@ -204,13 +204,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			//Data table			
 			switch (type) {
 				case DBConstantes.TableType.Type.dataVehicle4M:
-					table = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert);
+					table = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
 					break;
 				case DBConstantes.TableType.Type.dataVehicle:
-					table = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.analysis);
+                    table = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.analysis, _webSession.IsSelectRetailerDisplay);
 					break;
 				case DBConstantes.TableType.Type.webPlan:
-					table = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.monthData).SqlWithPrefix; //DBConstantes.Tables.WEB_PLAN_MEDIA_MONTH;
+					table = WebApplicationParameters.GetDataTable(TableIds.monthData, _webSession.IsSelectRetailerDisplay).SqlWithPrefix; //DBConstantes.Tables.WEB_PLAN_MEDIA_MONTH;
 					break;
 				default:
 					throw (new PortofolioDALException("Table type unknown"));
@@ -315,13 +315,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				// Table de données
 				switch (type) {
 					case DBConstantes.TableType.Type.dataVehicle4M:
-						tableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert);
+                        tableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
 						break;
 					case DBConstantes.TableType.Type.dataVehicle:
-						tableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.analysis);
+                        tableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.analysis, _webSession.IsSelectRetailerDisplay);
 						break;
 					case DBConstantes.TableType.Type.webPlan:
-						tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.monthData).SqlWithPrefix;
+						tableName = WebApplicationParameters.GetDataTable(TableIds.monthData, _webSession.IsSelectRetailerDisplay).SqlWithPrefix;
 						break;
 					default:
 						throw (new PortofolioDALException("Table type unknown"));
@@ -619,32 +619,32 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 		protected virtual string GetTableData() {
 			switch (_vehicleInformation.Id) {
                 case DBClassificationConstantes.Vehicles.names.newspaper:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaperAlert).Label;
+                    return WebApplicationParameters.GetDataTable(TableIds.dataNewspaperAlert, _webSession.IsSelectRetailerDisplay).Label;
                 case DBClassificationConstantes.Vehicles.names.magazine:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazineAlert).Label;
+                    return WebApplicationParameters.GetDataTable(TableIds.dataMagazineAlert, _webSession.IsSelectRetailerDisplay).Label;
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressInterAlert).Label;
+                    return WebApplicationParameters.GetDataTable(TableIds.dataPressInterAlert, _webSession.IsSelectRetailerDisplay).Label;
 				case DBClassificationConstantes.Vehicles.names.press:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressAlert).Label;
+                    return WebApplicationParameters.GetDataTable(TableIds.dataPressAlert, _webSession.IsSelectRetailerDisplay).Label;
 				case DBClassificationConstantes.Vehicles.names.radio:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadioAlert).Label;
+                    return WebApplicationParameters.GetDataTable(TableIds.dataRadioAlert, _webSession.IsSelectRetailerDisplay).Label;
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTvAlert).Label;
+                    return WebApplicationParameters.GetDataTable(TableIds.dataTvAlert, _webSession.IsSelectRetailerDisplay).Label;
 				case DBClassificationConstantes.Vehicles.names.outdoor:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataOutDoorAlert).Label;
+                    return WebApplicationParameters.GetDataTable(TableIds.dataOutDoorAlert, _webSession.IsSelectRetailerDisplay).Label;
                 case DBClassificationConstantes.Vehicles.names.instore:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInStoreAlert).Label;
+                    return WebApplicationParameters.GetDataTable(TableIds.dataInStoreAlert, _webSession.IsSelectRetailerDisplay).Label;
 				case DBClassificationConstantes.Vehicles.names.directMarketing:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMarketingDirectAlert).Label;
+                    return WebApplicationParameters.GetDataTable(TableIds.dataMarketingDirectAlert, _webSession.IsSelectRetailerDisplay).Label;
                 case DBClassificationConstantes.Vehicles.names.internet:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetAlert).Label;
+                    return WebApplicationParameters.GetDataTable(TableIds.dataInternetAlert, _webSession.IsSelectRetailerDisplay).Label;
                 case DBClassificationConstantes.Vehicles.names.cinema:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataCinemaAlert).Label;
+                    return WebApplicationParameters.GetDataTable(TableIds.dataCinemaAlert, _webSession.IsSelectRetailerDisplay).Label;
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataAdNetTrackAlert).Label;
+                    return WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrackAlert, _webSession.IsSelectRetailerDisplay).Label;
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataEvaliantMobileAlert).Label;
+                    return WebApplicationParameters.GetDataTable(TableIds.dataEvaliantMobileAlert, _webSession.IsSelectRetailerDisplay).Label;
                 default:
 					throw new PortofolioDALException("GetTableData()-->Vehicle unknown.");
 			}
@@ -1306,13 +1306,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             //Data table			
             switch(type) {
                 case DBConstantes.TableType.Type.dataVehicle4M:
-                    table = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert);
+                    table = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
                     break;
                 case DBConstantes.TableType.Type.dataVehicle:
-                    table = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.analysis);
+                    table = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.analysis, _webSession.IsSelectRetailerDisplay);
                     break;
                 case DBConstantes.TableType.Type.webPlan:
-                    table = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.monthData).SqlWithPrefix; //DBConstantes.Tables.WEB_PLAN_MEDIA_MONTH;
+                    table = WebApplicationParameters.GetDataTable(TableIds.monthData, _webSession.IsSelectRetailerDisplay).SqlWithPrefix; //DBConstantes.Tables.WEB_PLAN_MEDIA_MONTH;
                     break;
                 default:
                     throw (new PortofolioDALException("Table type unknown"));

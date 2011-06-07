@@ -286,7 +286,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 
 			#region Construction de la requête
             sql += " select " + insertionFieldNameSumWithAlias + "," + euroFieldNameSumWithAlias + ",date_cover_num date1";
-            sql += "  from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPress).Sql + "  " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;//+ DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.ALERT_DATA_PRESS + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+            sql += "  from " + WebApplicationParameters.GetDataTable(TableIds.dataPress, _webSession.IsSelectRetailerDisplay).Sql + "  " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;//+ DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.ALERT_DATA_PRESS + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
 			sql += " where id_media=" + _idMedia + " ";
 			if (_beginingDate.Length > 0)
 				sql += " and date_media_num>=" + _beginingDate + " ";
@@ -337,10 +337,10 @@ namespace TNS.AdExpressI.Portofolio.DAL {
             try {
 				switch (tableType) {
 					case DBConstantes.TableType.Type.dataVehicle4M:
-						tableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert);
+						tableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
 						break;
 					case DBConstantes.TableType.Type.dataVehicle:
-						tableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.analysis);
+                        tableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.analysis, _webSession.IsSelectRetailerDisplay);
 						break;				
 					default:
 						throw (new CompetitorDataAccessException("Table type unknown"));
@@ -560,30 +560,30 @@ namespace TNS.AdExpressI.Portofolio.DAL {
             switch (_vehicleInformation.Id) {
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                 case DBClassificationConstantes.Vehicles.names.press:
-                    sql += WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressAlert).Sql  + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+                    sql += WebApplicationParameters.GetDataTable(TableIds.dataPressAlert, _webSession.IsSelectRetailerDisplay).Sql + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
                     sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).SqlWithPrefix;
                     sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.color).SqlWithPrefix;
                     sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.format).SqlWithPrefix;
                     return sql;
                 case DBClassificationConstantes.Vehicles.names.newspaper:
-                    sql += WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataNewspaperAlert).Sql + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+                    sql += WebApplicationParameters.GetDataTable(TableIds.dataNewspaperAlert, _webSession.IsSelectRetailerDisplay).Sql + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
                     sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).SqlWithPrefix;
                     sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.color).SqlWithPrefix;
                     sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.format).SqlWithPrefix;
                     return sql;
                 case DBClassificationConstantes.Vehicles.names.magazine:
-                    sql += WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataMagazineAlert).Sql + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+                    sql += WebApplicationParameters.GetDataTable(TableIds.dataMagazineAlert, _webSession.IsSelectRetailerDisplay).Sql + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
                     sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).SqlWithPrefix;
                     sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.color).SqlWithPrefix;
                     sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.format).SqlWithPrefix;
                     return sql;
                 case DBClassificationConstantes.Vehicles.names.radio:
-                    sql += WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataRadioAlert).Sql + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+                    sql += WebApplicationParameters.GetDataTable(TableIds.dataRadioAlert, _webSession.IsSelectRetailerDisplay).Sql + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
                     sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).SqlWithPrefix;
                     return sql;
                 case DBClassificationConstantes.Vehicles.names.tv:
                 case DBClassificationConstantes.Vehicles.names.others:
-                    sql += WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataTvAlert).Sql + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+                    sql += WebApplicationParameters.GetDataTable(TableIds.dataTvAlert, _webSession.IsSelectRetailerDisplay).Sql + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
                     sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).SqlWithPrefix;
                     return sql;
                 default:

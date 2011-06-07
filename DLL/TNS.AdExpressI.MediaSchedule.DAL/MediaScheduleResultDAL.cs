@@ -416,12 +416,12 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                 // Get the name of the data table
                 if (_isAdNetTrackMediaSchedule && vehicleId == VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet).DatabaseId)
                 {
-                    tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetVersion).SqlWithPrefix;
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataInternetVersion, _session.IsSelectRetailerDisplay).SqlWithPrefix;
                     unitFieldName = string.Format("OCCURRENCE");
                 }
                 else
                 {
-                    tableName = FctWeb.SQLGenerator.GetDataTableName(periodBreakDown, vehicleId);
+                    tableName = FctWeb.SQLGenerator.GetDataTableName(periodBreakDown, vehicleId, _session.IsSelectRetailerDisplay);
                     unitFieldName = FctWeb.SQLGenerator.GetUnitFieldName(_session, vehicleId, periodBreakDown);
                 }
                 // Get the classification table
@@ -676,10 +676,10 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 				// Get the name of the data table	
 				switch (periodBreakDown) {
 					case CstPeriod.PeriodBreakdownType.month:
-						tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.monthData).SqlWithPrefix;
+                        tableName = WebApplicationParameters.GetDataTable(TableIds.monthData, _session.IsSelectRetailerDisplay).SqlWithPrefix;
 						break;
 					case CstPeriod.PeriodBreakdownType.week:
-						tableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.weekData).SqlWithPrefix;
+                        tableName = WebApplicationParameters.GetDataTable(TableIds.weekData, _session.IsSelectRetailerDisplay).SqlWithPrefix;
 						break;
 					default:
 						throw (new MediaScheduleDALException("Unable to determine table to use."));

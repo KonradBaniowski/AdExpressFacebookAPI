@@ -89,6 +89,7 @@
     <Compile Include="Classification\ProductItemsList.cs" />
     <Compile Include="Classification\VehicleInformation.cs" />
     <Compile Include="Classification\VehiclesInformation.cs" />
+    <Compile Include="DataBaseDescription\MatchingTable.cs" />
     <Compile Include="Exceptions\RightMenuLinksXLException.cs" />
     <Compile Include="Exceptions\ModulesListXLException.cs" />
     <Compile Include="Exceptions\ResultPageInformationException.cs" />

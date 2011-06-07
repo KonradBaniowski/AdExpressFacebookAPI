@@ -1540,6 +1540,48 @@ namespace TNS.AdExpress.Web.Core.Sessions {
         }
 
         /// <summary>
+        /// Get or Set Is Select Retailer Display
+        /// </summary>
+        public bool IsRetailerDisplay {
+            get {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.retailerDisplay)) {
+                    try {
+                        return (bool)userParameters[CoreConstantes.SessionParamters.retailerDisplay];
+                    }
+                    catch {
+                        userParameters[CoreConstantes.SessionParamters.retailerDisplay] = false;
+                    }
+                }
+                return false;
+            }
+            set {
+                userParameters[CoreConstantes.SessionParamters.retailerDisplay] = value;
+                modificationDate = DateTime.Now;
+            }
+        }
+
+        /// <summary>
+        /// Get or Set Is Select Retailer Display
+        /// </summary>
+        public bool IsSelectRetailerDisplay {
+            get {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.selectRetailerDisplay)) {
+                    try {
+                        return (bool)userParameters[CoreConstantes.SessionParamters.selectRetailerDisplay];
+                    }
+                    catch {
+                        userParameters[CoreConstantes.SessionParamters.selectRetailerDisplay] = false;
+                    }
+                }
+                return false;
+            }
+            set {
+                userParameters[CoreConstantes.SessionParamters.selectRetailerDisplay] = value;
+                modificationDate = DateTime.Now;
+            }
+        }
+
+        /// <summary>
         /// Get or Set the Period Selection Type
         /// </summary>
         public WebConstantes.globalCalendar.periodSelectiontype PeriodSelectionType {

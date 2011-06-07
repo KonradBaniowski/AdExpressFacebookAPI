@@ -86,6 +86,10 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
         /// Override Default Units List
         /// </summary>
         protected DefaultUnitList _overrideDefaultUnits = null;
+        /// <summary>
+        /// Use Retailer Option
+        /// </summary>
+        protected bool? _useRetailerOption = null;
 		#endregion
 
 		#region Constructeur
@@ -281,6 +285,14 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
         public DefaultUnitList OverrideDefaultUnits {
             get { return _overrideDefaultUnits; }
             set { _overrideDefaultUnits = value; }
+        }
+
+        /// <summary>
+        /// Get / Set Use Retailer Option
+        /// </summary>
+        public bool? UseRetailerOption {
+            get { return _useRetailerOption; }
+            set { _useRetailerOption = value; }
         }
 		#endregion
 

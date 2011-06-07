@@ -90,7 +90,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				sqlFields = _webSession.GenericInsertionColumns.GetSqlFields(null);
                 sqlGroupBy = _webSession.GenericInsertionColumns.GetSqlGroupByFields(null);
                 sqlConstraintFields = _webSession.GenericInsertionColumns.GetSqlConstraintFields();
-				string tableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert); //WebFunctions.SQLGenerator.GetVehicleTableNameForAlertDetailResult(_vehicleName);
+				string tableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay); //WebFunctions.SQLGenerator.GetVehicleTableNameForAlertDetailResult(_vehicleName);
 				sqlTables = _webSession.GenericInsertionColumns.GetSqlTables(WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label, null);
 				sqlConstraintTables = _webSession.GenericInsertionColumns.GetSqlConstraintTables(DBConstantes.Schema.ADEXPRESS_SCHEMA);
 

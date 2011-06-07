@@ -134,6 +134,10 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
         /// Product rights branches
         /// </summary>
         protected string _productRightBranches = "";
+        /// <summary>
+        /// Use Retailer Option
+        /// </summary>
+        protected bool _useRetailerOption = false;
 		#endregion
 
 		#region Constructeur
@@ -293,8 +297,14 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
         public string ProductRightBranches {
             get { return _productRightBranches; }
             set { _productRightBranches = value; }
-        } 
-
+        }
+        /// <summary>
+        /// Get / Set Use Retailer Option
+        /// </summary>
+        public bool UseRetailerOption {
+            get { return _useRetailerOption; }
+            set { _useRetailerOption = value; }
+        }
 		#endregion
 
 		#region Méthode Externe
@@ -706,6 +716,24 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
         /// <returns>return Default Unit defined for this module. If not defined, return the default unit for the vehicle</returns>
         public CustomerSessions.Unit GetDefaultUnit(Int64 vehicleId) {
             return GetDefaultUnit(VehiclesInformation.Get(vehicleId).Id);
+        }
+        #endregion
+
+        #region GetDisplayRetailerOption
+        /// <summary>
+        /// Is Display Retailer Option
+        /// </summary>
+        /// <param name="tab">Page to search if Display Retailer Option or not</param>
+        /// <returns>Display Retailer Option or not</returns>
+        public bool GetDisplayRetailerOption(long tab) {
+            foreach (ResultPageInformation cResultPageInformation in _resultsPages) {
+                if (cResultPageInformation.Id == tab) {
+                    bool? cPageUseRetailerOption = cResultPageInformation.UseRetailerOption;
+                    if (cPageUseRetailerOption == null) return _useRetailerOption;
+                    else return cPageUseRetailerOption.Value;
+                }
+            }
+            return _useRetailerOption;
         }
         #endregion
 

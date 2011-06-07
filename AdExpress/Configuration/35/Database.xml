@@ -196,6 +196,54 @@
     <table enumId="179" description="Recap Data: Instore Segment" schemaEnumId="4" label="recap_instore_segment" prefix="rcp"/>
     <table enumId="180" description="Data: Instore" schemaEnumId="0" label="data_instore" prefix="wp"/>
     <table enumId="181" description="Data: Instore 4M" schemaEnumId="0" label="data_instore_4M" prefix="wp"/>
+
+    <table enumId="184" description="Data: Cinema Retailer"             schemaEnumId="0" label="data_cinema_retailer" prefix="wp"/>
+    <table enumId="185" description="Data: Cinema Retailer 4M"          schemaEnumId="0" label="data_cinema_retailer_4M" prefix="wp"/>
+    <table enumId="186" description="Data: Internet Retailer"           schemaEnumId="0" label="data_internet_retailer" prefix="wp"/>
+    <table enumId="187" description="Data: Internet Retailer 4M"        schemaEnumId="0" label="data_internet_retailer_4M" prefix="wp"/>
+    <table enumId="188" description="Classif: Data Location Magazine Retailer"  schemaEnumId="0" label="data_location_magazine_ret" prefix="dl"/>
+    <table enumId="189" description="Classif: Data Location Newspaper Retailer" schemaEnumId="0" label="data_location_newspaper_ret" prefix="dl"/>
+    <table enumId="190" description="Data: Magazine Retailer"           schemaEnumId="0" label="data_magazine_retailer" prefix="wp"/>
+    <table enumId="191" description="Data: Magazine Retailer 4M"        schemaEnumId="0" label="data_magazine_retailer_4M" prefix="wp"/>
+    <table enumId="192" description="Data: Newspaper Retailer"          schemaEnumId="0" label="data_newspaper_retailer" prefix="wp"/>
+    <table enumId="193" description="Data: Newspaper Retailer 4M"       schemaEnumId="0" label="data_newspaper_retailer_4M" prefix="wp"/>
+    <table enumId="194" description="Data: Outdoor Retailer"            schemaEnumId="0" label="data_outdoor_retailer" prefix="wp"/>
+    <table enumId="195" description="Data: Outdoor Retailer 4M"         schemaEnumId="0" label="data_outdoor_retailer_4M" prefix="wp"/>
+    <table enumId="196" description="Data: Radio Retailer"              schemaEnumId="0" label="data_radio_retailer" prefix="wp"/>
+    <table enumId="197" description="Data: Radio Retailer 4M"           schemaEnumId="0" label="data_radio_retailer_4M" prefix="wp"/>
+    <table enumId="198" description="Data: TV Retailer"                 schemaEnumId="0" label="data_tv_retailer" prefix="wp"/>
+    <table enumId="199" description="Data: TV Retailer 4M"              schemaEnumId="0" label="data_tv_retailer_4M" prefix="wp"/>
+    <table enumId="201" description="Data: Month Retailer"              schemaEnumId="0" label="web_plan_media_month_ret" prefix="wp"/>
+    <table enumId="202" description="Data: Week Retailer"               schemaEnumId="0" label="web_plan_media_week_ret" prefix="wp"/>
+    
+    <table enumId="203" description="Recap Data: Cinema Retailer"             schemaEnumId="4" label="recap_cinema_ret" prefix="rcp"/>
+    <table enumId="204" description="Recap Data: Cinema Segment Retailer"     schemaEnumId="4" label="recap_cinema_ret_segment" prefix="rcp"/>
+    <table enumId="205" description="Recap Data: Internet Retailer"           schemaEnumId="4" label="recap_internet_ret" prefix="rcp"/>
+    <table enumId="206" description="Recap Data: Internet Segment Retailer"   schemaEnumId="4" label="recap_internet_ret_segment" prefix="rcp"/>
+    <table enumId="207" description="Recap Data: Magazine Retailer"           schemaEnumId="4" label="recap_magazine_ret" prefix="rcp"/>
+    <table enumId="208" description="Recap Data: Magazine Segment Retailer"   schemaEnumId="4" label="recap_magazine_ret_segment" prefix="rcp"/>
+    <table enumId="209" description="Recap Data: Newspaper Retailer"          schemaEnumId="4" label="recap_newspaper_ret" prefix="rcp"/>
+    <table enumId="210" description="Recap Data: Newspaper Segment Retailer"  schemaEnumId="4" label="recap_newspaper_ret_segment" prefix="rcp"/>
+    <table enumId="211" description="Recap Data: Outdoor Retailer"            schemaEnumId="4" label="recap_outdoor_ret" prefix="rcp"/>
+    <table enumId="212" description="Recap Data: Outdoor Segment Retailer"    schemaEnumId="4" label="recap_outdoor_ret_segment" prefix="rcp"/>
+    <table enumId="213" description="Recap Data: Pluri Retailer"              schemaEnumId="4" label="recap_pluri_ret" prefix="rcp"/>
+    <table enumId="214" description="Recap Data: Pluri Segment Retailer"      schemaEnumId="4" label="recap_pluri_ret_segment" prefix="rcp"/>
+    <table enumId="215" description="Recap Data: Radio Retailer"              schemaEnumId="4" label="recap_radio_ret" prefix="rcp"/>
+    <table enumId="216" description="Recap Data: Radio Segment Retailer"      schemaEnumId="4" label="recap_radio_ret_segment" prefix="rcp"/>
+    <table enumId="217" description="Recap Data: TV Retailer"                 schemaEnumId="4" label="recap_tv_ret" prefix="rcp"/>
+    <table enumId="218" description="Recap Data: TV Segment Retailer"         schemaEnumId="4" label="recap_tv_ret_segment" prefix="rcp"/>
+
+    <table enumId="219" description="Dash Board Data: Pluri Month"            schemaEnumId="0" label="TABLEAU_BORD_PLURI_MONTH" prefix="dshb"/>
+    <table enumId="220" description="Dash Board Data: Pluri Week"             schemaEnumId="0" label="TABLEAU_BORD_PLURI_WEEK" prefix="dshb"/>
+    <table enumId="221" description="Dash Board Data: Radio Day"              schemaEnumId="0" label="TABLEAU_BORD_RADIO_DAY" prefix="dshb"/>
+    <table enumId="222" description="Dash Board Data: Radio Repartition Month"  schemaEnumId="0" label="TABLEAU_BORD_RADIO_R_MTH" prefix="dshb"/>
+    <table enumId="223" description="Dash Board Data: Radio Repartition Week" schemaEnumId="0" label="TABLEAU_BORD_RADIO_R_WEEK" prefix="dshb"/>
+    <table enumId="224" description="Dash Board Data: TV Day"                 schemaEnumId="0" label="TABLEAU_BORD_TV_DAY" prefix="dshb"/>
+    <table enumId="225" description="Dash Board Data: TV Repartition Month"   schemaEnumId="0" label="TABLEAU_BORD_TV_REP_MTH" prefix="dshb"/>
+    <table enumId="226" description="Dash Board Data: TV Repartition Week"    schemaEnumId="0" label="TABLEAU_BORD_TV_REP_WEEK" prefix="dshb"/>
+
+    <table enumId="227" description="Dash Board Data: Pluri Month Retailer"   schemaEnumId="0" label="TABLEAU_BORD_PLURI_MONTH_RET" prefix="dshb"/>
+    <table enumId="228" description="Dash Board Data: Pluri Week Retailer"    schemaEnumId="0" label="TABLEAU_BORD_PLURI_WEEK_RET" prefix="dshb"/>
     
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>

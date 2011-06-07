@@ -38,7 +38,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess{
 						
 			TNS.FrameWork.DB.Common.IDataSource dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.webAdministration);
 			Table mediaTable;
-			string tableName = Utilities.SQLGenerator.GetDataTableName(TNS.AdExpress.Constantes.Web.CustomerSessions.Period.PeriodBreakdownType.data, vehicleId);
+			string tableName = Utilities.SQLGenerator.GetDataTableName(TNS.AdExpress.Constantes.Web.CustomerSessions.Period.PeriodBreakdownType.data, vehicleId, false);
 			mediaTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media);
 			sql.Append("Select distinct " + mediaTable.Prefix + ".id_media ");
 			sql.Append("from " + tableName + " , " + mediaTable.SqlWithPrefix);

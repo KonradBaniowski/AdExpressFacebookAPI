@@ -58,7 +58,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Periods{
 				sql.Append(", date_cover_num ");
 			}
 			sql.Append(" from ");
-			sql.Append(WebApplicationParameters.DataBaseDescription.GetTable(tableName).Sql +" wp ");
+			sql.Append(WebApplicationParameters.GetDataTable(tableName, webSession.IsSelectRetailerDisplay).Sql +" wp ");
 
 			if((int)idVehicle==DBClassificationConstantes.Vehicles.names.press.GetHashCode() 
 				|| (int)idVehicle==DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode()
@@ -135,7 +135,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Periods{
 
 			#region Construction de la requête
 			sql+=" select max(DATE_MEDIA_NUM) last_date ";
-			sql+=" from "+WebApplicationParameters.DataBaseDescription.GetTable(table).Sql+" ";
+			sql+=" from "+WebApplicationParameters.GetDataTable(table, webSession.IsSelectRetailerDisplay).Sql+" ";
 			sql+=" where id_media="+idMedia+" ";
 			//sql+=" and "+insertOrNumberboard+"=1 ";
 			#endregion

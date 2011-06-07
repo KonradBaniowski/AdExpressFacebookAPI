@@ -187,7 +187,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Appm
             string unitAlias = null;
             string mediaJoinCondition = null;
             string groupByFieldName = null;
-            Table tblTargetMediaAssignment = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.appmTargetMediaAssignment);
+            Table tblTargetMediaAssignment = WebApplicationParameters.GetDataTable(TableIds.appmTargetMediaAssignment, _session.IsSelectRetailerDisplay);
             #endregion
 
             #region Construction de la requête
@@ -325,12 +325,12 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Appm
             switch (period)
             {
                 case CstPeriod.PeriodBreakdownType.month:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.monthAppmData).SqlWithPrefix;
+                    return WebApplicationParameters.GetDataTable(TableIds.monthAppmData, _session.IsSelectRetailerDisplay).SqlWithPrefix;
                 case CstPeriod.PeriodBreakdownType.week:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.weekData).SqlWithPrefix;
+                    return WebApplicationParameters.GetDataTable(TableIds.weekData, _session.IsSelectRetailerDisplay).SqlWithPrefix;
                 case CstPeriod.PeriodBreakdownType.data_4m:
                 case CstPeriod.PeriodBreakdownType.data:
-                    return WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataPressAPPM).SqlWithPrefix;
+                    return WebApplicationParameters.GetDataTable(TableIds.dataPressAPPM, _session.IsSelectRetailerDisplay).SqlWithPrefix;
                 default:
                     throw (new MediaScheduleDALException("The detail selected is not a correct one to choose of the table"));
             }

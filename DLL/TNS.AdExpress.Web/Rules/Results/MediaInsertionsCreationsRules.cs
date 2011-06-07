@@ -1225,7 +1225,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 									//Remplacer média Internet par Adnettrack
 									idSelectedVehicle[i] =  CstClassification.DB.Vehicles.names.adnettrack.GetHashCode().ToString();
 								}								
-								tableName =  WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(long.Parse(idSelectedVehicle[i].ToString())),currentModuleDescription.ModuleType);
+								tableName =  WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(long.Parse(idSelectedVehicle[i].ToString())),currentModuleDescription.ModuleType, webSession.IsSelectRetailerDisplay);
 							}
 							if(tableName.Length>0) {								
 								ds = MediaCreationDataAccess.GetIdsVehicle(webSession,0,tableName,dateBegin,dateEnd,idSelectedVehicle[i].ToString());
@@ -1251,7 +1251,7 @@ namespace TNS.AdExpress.Web.Rules.Results{
 								//Remplacer média Internet par Adnettrack
 								idSelectedVehicle[i] =  VehiclesInformation.EnumToDatabaseId(CstClassification.DB.Vehicles.names.adnettrack).ToString();
 							}							
-							tableName =  WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(long.Parse(idSelectedVehicle[i].ToString())),currentModuleDescription.ModuleType);
+							tableName =  WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(long.Parse(idSelectedVehicle[i].ToString())),currentModuleDescription.ModuleType, webSession.IsSelectRetailerDisplay);
 						}
 						if(tableName.Length>0) {							 
 							ds = MediaCreationDataAccess.GetIdsVehicle(webSession,mediaImpactedList,tableName,dateBegin,dateEnd,idSelectedVehicle[i].ToString());

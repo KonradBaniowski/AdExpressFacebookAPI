@@ -173,7 +173,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 
             #region Tables
 			//Get SQL tables to use in the query
-            Table tblWebPlan = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.monthData);
+            Table tblWebPlan = WebApplicationParameters.GetDataTable(TableIds.monthData, _session.IsSelectRetailerDisplay);
             Schema schAdExpress = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
 			Table tblAdvertisingAgengy = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.advertisingAgency);
 			Table tblGroupAdvertisingAgengy = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.groupAdvertisingAgency);
@@ -184,10 +184,10 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 				// Get table name according to the table type parameter
                 switch (type) {
                     case CstDB.TableType.Type.dataVehicle4M:
-                        dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id,CstWeb.Module.Type.alert);
+                        dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id,CstWeb.Module.Type.alert, _session.IsSelectRetailerDisplay);
                         break;
                     case CstDB.TableType.Type.dataVehicle:
-                        dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id,CstWeb.Module.Type.analysis);
+                        dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.analysis, _session.IsSelectRetailerDisplay);
                         break;
                     case CstDB.TableType.Type.webPlan:
                         dataTableName = tblWebPlan.SqlWithPrefix;
@@ -734,15 +734,15 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 				// Get table name and date field according to the table type parameter
 				switch (type) {
 					case CstDB.TableType.Type.dataVehicle4M:
-						dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.alert);
+                        dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.alert, _session.IsSelectRetailerDisplay);
 						dateField = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + "." + CstDB.Fields.DATE_MEDIA_NUM;
 						break;
 					case CstDB.TableType.Type.dataVehicle:
-						dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.analysis);
+                        dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.analysis, _session.IsSelectRetailerDisplay);
 						dateField = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + "." + CstDB.Fields.DATE_MEDIA_NUM;
 						break;
 					case CstDB.TableType.Type.webPlan:
-						dataTableName = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.monthData).SqlWithPrefix;
+						dataTableName = WebApplicationParameters.GetDataTable(TableIds.monthData, _session.IsSelectRetailerDisplay).SqlWithPrefix;
 						dateField = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + "." + CstDB.Fields.WEB_PLAN_MEDIA_MONTH_DATE_FIELD;
 						break;
 					default:
@@ -894,7 +894,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 				CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
                
 				//Get data table name
-				dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id,CstWeb.Module.Type.analysis);
+                dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.analysis, _session.IsSelectRetailerDisplay);
 				
 				//Get date field label
 				dateField = CstDB.Fields.DATE_MEDIA_NUM;

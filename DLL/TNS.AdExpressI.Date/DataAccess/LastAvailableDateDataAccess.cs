@@ -29,7 +29,7 @@ namespace TNS.AdExpressI.Date.DataAccess {
 
             IDataSource dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.webAdministration);
             
-            string tableName = TNS.AdExpress.Web.Core.Utilities.SQLGenerator.GetDataTableName(TNS.AdExpress.Constantes.Web.CustomerSessions.Period.PeriodBreakdownType.data, vehicleId);
+            string tableName = TNS.AdExpress.Web.Core.Utilities.SQLGenerator.GetDataTableName(TNS.AdExpress.Constantes.Web.CustomerSessions.Period.PeriodBreakdownType.data, vehicleId, false);
             sql.Append("Select max( date_media_num ) as availableDate ");
             sql.Append(" from " + tableName);
             

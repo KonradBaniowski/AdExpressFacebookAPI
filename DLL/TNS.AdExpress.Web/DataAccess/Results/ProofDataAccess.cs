@@ -153,7 +153,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
 		public static DataSet GetProofFileData( WebSession webSession, string idMedia, string idProduct, string dateParution, string page){ //IDataSource dataSource
 			
 			StringBuilder sql = new StringBuilder(3000);
-			Table pressTable = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.dataPress);
+			Table pressTable = WebApplicationParameters.GetDataTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.dataPress, webSession.IsSelectRetailerDisplay);
 			Table mediaTable = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.media);
 			Table advertiserTable = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.advertiser);
 			Table productTable = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.product);

@@ -590,7 +590,7 @@ namespace TNS.AdExpressI.LostWon.DAL
             CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
             DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
             Schema schAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
-            Table tblWebPlan = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.monthData);
+            Table tblWebPlan = WebApplicationParameters.GetDataTable(TableIds.monthData, _session.IsSelectRetailerDisplay);
             #endregion
 
             #region Construction de la requête
@@ -600,10 +600,10 @@ namespace TNS.AdExpressI.LostWon.DAL
                 switch (type)
                 {
                     case CstDB.TableType.Type.dataVehicle4M:
-                        dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.alert);
+                        dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.alert, _session.IsSelectRetailerDisplay);
                         break;
                     case CstDB.TableType.Type.dataVehicle:
-                        dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.analysis);
+                        dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.analysis, _session.IsSelectRetailerDisplay);
                         break;
                     case CstDB.TableType.Type.webPlan:
                         //dataTableName = string.Format("{0}.{1} {2}", schAdExpr03.Label, CstDB.Tables.WEB_PLAN_MEDIA_MONTH, DATA_TABLE_PREFIXE);
@@ -835,7 +835,7 @@ namespace TNS.AdExpressI.LostWon.DAL
 
             CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
 
-            Table tblWepPlan = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.monthData);
+            Table tblWepPlan = WebApplicationParameters.GetDataTable(TableIds.monthData, _session.IsSelectRetailerDisplay);
             Schema schAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
 
             Table tblAdvertisingAgengy = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.advertisingAgency);
@@ -846,10 +846,10 @@ namespace TNS.AdExpressI.LostWon.DAL
             switch (type)
             {
                 case CstDB.TableType.Type.dataVehicle4M:
-                    dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.alert);
+                    dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.alert, _session.IsSelectRetailerDisplay);
                     break;
                 case CstDB.TableType.Type.dataVehicle:
-                    dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.analysis);
+                    dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.analysis, _session.IsSelectRetailerDisplay);
                     break;
                 case CstDB.TableType.Type.webPlan:
                     dataTableName = tblWepPlan.SqlWithPrefix;
@@ -1079,7 +1079,7 @@ namespace TNS.AdExpressI.LostWon.DAL
             #endregion
             try
             {
-                dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.analysis);
+                dataTableName = FctWeb.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, CstWeb.Module.Type.analysis, _session.IsSelectRetailerDisplay);
                 dateField = DATA_TABLE_PREFIXE + "." + CstDB.Fields.DATE_MEDIA_NUM;
 
                 sql.Append(" select " + DATA_TABLE_PREFIXE + ".id_media, date_media_num as date_num, " + yearParutionIndex + " as yearParution");

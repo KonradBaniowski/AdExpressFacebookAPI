@@ -112,6 +112,14 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         protected static bool _useBannersFormatFilter = false;
         /// <summary>
+        /// Use Retailer
+        /// </summary>
+        protected static bool _useRetailer = false;
+        /// <summary>
+        /// Use Retailer
+        /// </summary>
+        protected static Dictionary<TableIds, MatchingTable> _matchingRetailerTableList = new Dictionary<TableIds, MatchingTable>();
+        /// <summary>
         /// Dundas Configuration
         /// </summary>
         protected static DundasConfiguration _dundas = null;
@@ -326,6 +334,27 @@ namespace TNS.AdExpress.Domain.Web {
             }
         }
         /// <summary>
+        /// Get / Set Use Retailer
+        /// </summary>
+        public static bool UseRetailer {
+            get {
+                return _useRetailer;
+            }
+            set {
+                _useRetailer = value;
+            }
+        }
+
+        /// <summary>
+        /// Set Use Retailer
+        /// </summary>
+        public static Dictionary<TableIds, MatchingTable> MatchingRetailerTableList {
+            set {
+                _matchingRetailerTableList = value;
+            }
+        }
+
+        /// <summary>
         /// Get Dundas Virtual Path File Temporary
         /// </summary>
         public static DundasConfiguration DundasConfiguration {
@@ -377,6 +406,37 @@ namespace TNS.AdExpress.Domain.Web {
         public static RightMenuLinks RightMenuLinksInformations
         {
             get { return _RightMenuLinks; }
+        }
+        #endregion
+
+        #region Get Table
+        /// <summary>
+        /// Get table label with schema label and prefix
+        /// Schema.Table prefix
+        /// </summary>
+        /// <remarks>
+        /// A space is put before the string
+        /// </remarks>
+        /// <example> adexpr03.data_press_4M wp</example>
+        /// <param name="tableId">Table Id</param>
+        /// <returns>SQL Table code</returns>
+        public static string GetSqlDataTableLabelWithPrefix(TableIds tableId, bool isRetailerDisplay) {
+            if(isRetailerDisplay && _matchingRetailerTableList!=null && _matchingRetailerTableList.ContainsKey(tableId))
+                return _dataBase.GetSqlTableLabelWithPrefix(_matchingRetailerTableList[tableId].TableId);
+            else 
+                return _dataBase.GetSqlTableLabelWithPrefix(tableId);
+        }
+
+        /// <summary>
+        /// Get table object
+        /// </summary>
+        /// <param name="tableId">Table Id</param>
+        /// <returns>Table Object</returns>
+        public static TNS.AdExpress.Domain.DataBaseDescription.Table GetDataTable(TableIds tableId, bool isRetailerDisplay) {
+            if (isRetailerDisplay && _matchingRetailerTableList != null && _matchingRetailerTableList.ContainsKey(tableId))
+                return _dataBase.GetTable(_matchingRetailerTableList[tableId].TableId);
+            else
+                return _dataBase.GetTable(tableId);
         }
         #endregion
 

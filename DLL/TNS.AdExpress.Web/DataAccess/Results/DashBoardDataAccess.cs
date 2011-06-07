@@ -264,10 +264,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                     //Obtient la table à attaquer
                     switch (vehicleType) {
                         case ClassificationCst.DB.Vehicles.names.radio:
-                            return DBConstantes.DashBoard.Tables.TABLEAU_BORD_RADIO_DAY + "_" + year + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
+                            return WebApplicationParameters.GetDataTable(TableIds.dashboardRadioDay, webSession.IsSelectRetailerDisplay).LabelWithPrefix;
                         case ClassificationCst.DB.Vehicles.names.tv:
                         case ClassificationCst.DB.Vehicles.names.others:
-                            return DBConstantes.DashBoard.Tables.TABLEAU_BORD_TV_DAY + "_" + year + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
+                            return WebApplicationParameters.GetDataTable(TableIds.dashboardTvDay, webSession.IsSelectRetailerDisplay).LabelWithPrefix;
                         default:
                             throw (new DashBoardDataAccessException("getTBord_1_2_3_TableName(WebSession webSession,string year) : Impossible de déterminer la table média à traiter."));
                     }
@@ -278,9 +278,9 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 //Sans détail de répartition
                 switch (webSession.DetailPeriod) {
                     case CstPeriodDetail.monthly:
-                        return DBConstantes.DashBoard.Tables.TABLEAU_BORD_PLURI_MONTH + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
+                        return WebApplicationParameters.GetDataTable(TableIds.dashboardPluriMonth, webSession.IsSelectRetailerDisplay).LabelWithPrefix;
                     case CstPeriodDetail.weekly:
-                        return DBConstantes.DashBoard.Tables.TABLEAU_BORD_PLURI_WEEK + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
+                        return WebApplicationParameters.GetDataTable(TableIds.dashboardPluriWeek, webSession.IsSelectRetailerDisplay).LabelWithPrefix;
                     default:
                         throw (new DashBoardDataAccessException("getTBord_1_2_3_TableName(WebSession webSession,string year) : Impossible de déterminer la table WEB_PLAN_MEDIA à traiter."));
                 }
@@ -317,18 +317,22 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="year">suffixe représentant année de la table</param>
         /// <returns>Chaîne de caractère correspondant au nom de(s) table(s) à attaquer</returns>
         private static string GetTBord_4_to_12_RadioTableName(WebSession webSession, string year) {
+            Table cTable = null;
             if (IsCrossRepartitionType(webSession))
-                return DBConstantes.DashBoard.Tables.TABLEAU_BORD_RADIO_DAY + "_" + year + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
+                cTable = WebApplicationParameters.GetDataTable(TableIds.dashboardRadioDay, webSession.IsSelectRetailerDisplay);
             else {
                 switch (webSession.DetailPeriod) {
                     case CstPeriodDetail.monthly:
-                        return DBConstantes.DashBoard.Tables.TABLEAU_BORD_RADIO_R_MTH + "_" + year + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
+                        cTable = WebApplicationParameters.GetDataTable(TableIds.dashboardRadioRepMonth, webSession.IsSelectRetailerDisplay);
+                        break;
                     case CstPeriodDetail.weekly:
-                        return DBConstantes.DashBoard.Tables.TABLEAU_BORD_RADIO_R_WEEK + "_" + year + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
+                        cTable = WebApplicationParameters.GetDataTable(TableIds.dashboardRadioRepWeek, webSession.IsSelectRetailerDisplay);
+                        break;
                     default:
                         throw (new DashBoardDataAccessException("getTBord_4_to_12_RadioTableName(WebSession webSession,string year) : Impossible de déterminer la table média à traiter."));
                 }
             }
+            return cTable.Label + "_" + year + "  " + cTable.Prefix;
         }
         /// <summary>
         /// Détermine la table à attaquer pour les tableaux de bord 4 à 12
@@ -337,18 +341,22 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         /// <param name="year">suffixe représentant année de la table</param>
         /// <returns>Chaîne de caractère correspondant au nom de(s) table(s) à attaquer</returns>
         private static string GetTBord_4_to_12_TvTableName(WebSession webSession, string year) {
+            Table cTable = null;
             if (IsCrossRepartitionType(webSession))
-                return DBConstantes.DashBoard.Tables.TABLEAU_BORD_TV_DAY + "_" + year + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
+                cTable = WebApplicationParameters.GetDataTable(TableIds.dashboardTvDay, webSession.IsSelectRetailerDisplay);
             else {
                 switch (webSession.DetailPeriod) {
                     case CstPeriodDetail.monthly:
-                        return DBConstantes.DashBoard.Tables.TABLEAU_BORD_TV_REP_MTH + "_" + year + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
+                        cTable = WebApplicationParameters.GetDataTable(TableIds.dashboardTvRepMonth, webSession.IsSelectRetailerDisplay);
+                        break;
                     case CstPeriodDetail.weekly:
-                        return DBConstantes.DashBoard.Tables.TABLEAU_BORD_TV_REP_WEEK + "_" + year + "  " + DBConstantes.Tables.DASH_BOARD_PREFIXE;
+                        cTable = WebApplicationParameters.GetDataTable(TableIds.dashboardTvRepWeek, webSession.IsSelectRetailerDisplay);
+                        break;
                     default:
                         throw (new DashBoardDataAccessException("getTBord_4_to_12_TvTableName(WebSession webSession,string year) : Impossible de déterminer la table média à traiter."));
                 }
             }
+            return cTable.Label + "_" + year + "  " + cTable.Prefix;
         }
         #endregion
 

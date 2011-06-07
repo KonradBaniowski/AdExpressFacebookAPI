@@ -190,6 +190,10 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                                     if (allowedUnitValue != null && allowedUnitValue.Length > 0 && module != 0 && currentResultPageInformation != null)
                                                         currentResultPageInformation.AllowedUnitEnumList.Add((Constante.CustomerSessions.Unit)Enum.Parse(typeof(Constante.CustomerSessions.Unit), allowedUnitValue, true));
                                                     break;
+                                                case "retailerOption":
+                                                    if (subtree2.GetAttribute("use") != null)
+                                                        currentResultPageInformation.UseRetailerOption = (bool.Parse(subtree2.GetAttribute("use")));
+                                                    break;
                                                 case "ResultAllowedMediaUniverse":
                                                     useBaalForResult = false;
                                                     if (subtree2.GetAttribute("initFromBaal") != null && subtree2.GetAttribute("initFromBaal").Length > 0) {
@@ -244,6 +248,10 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                     defaultUnit = (Constante.CustomerSessions.Unit)Enum.Parse(typeof(Constante.CustomerSessions.Unit), reader.GetAttribute("unit"));
                                 }
                                 ((Module)htModule[module]).OverrideDefaultUnits = new DefaultUnitList(GetDefaultUnit(reader),defaultUnit);
+                                break;
+                            case "retailerOption":
+                                if (reader.GetAttribute("use") != null)
+                                    ((Module)htModule[module]).UseRetailerOption = (bool.Parse(reader.GetAttribute("use")));
                                 break;
                             case "link":
 								if(reader.GetAttribute("privilegecode")!=null && module!=0){

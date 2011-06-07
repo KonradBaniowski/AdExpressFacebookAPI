@@ -88,7 +88,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 			try {
 				selectFields = GetFieldsDetailMedia();
-				tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert);
+				tableName = WebFunctions.SQLGenerator.GetVehicleTableNameForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
 				groupByFields = GetGroupByDetailMedia();
 				//listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
 				listProductHap = GetExcludeProducts(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);

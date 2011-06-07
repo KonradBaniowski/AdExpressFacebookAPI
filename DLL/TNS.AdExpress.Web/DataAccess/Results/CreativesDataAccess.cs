@@ -123,10 +123,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 
                 Module module = ModulesList.GetModule(session.CurrentModule);
                 if(vehicle != DBClassifCst.Vehicles.names.internet) {
-                    dataTable = SQLGenerator.GetVehicleTableNameForDetailResult(vehicle, module.ModuleType);
+                    dataTable = SQLGenerator.GetVehicleTableNameForDetailResult(vehicle, module.ModuleType, session.IsSelectRetailerDisplay);
                 }
                 else {
-                    dataTable = GetInternetTable(module.ModuleType);
+                    dataTable = GetInternetTable(session, module.ModuleType);
                 }
                 sql.Append("select ");
                 GetFields(sql, vehicle,showProduct);
@@ -183,10 +183,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                 string dataTable;
                 foreach (int i in vehicles) {
                     if(DBClassifCst.Vehicles.names.internet != VehiclesInformation.DatabaseIdToEnum(i)) {
-						dataTable = SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(i), module.ModuleType);
+						dataTable = SQLGenerator.GetVehicleTableNameForDetailResult(VehiclesInformation.DatabaseIdToEnum(i), module.ModuleType, session.IsSelectRetailerDisplay);
                     }
                     else {
-                        dataTable = GetInternetTable(module.ModuleType);
+                        dataTable = GetInternetTable(session, module.ModuleType);
                     }
 
                     if (session.CurrentModule == WebCst.Module.Name.ALERTE_PLAN_MEDIA_CONCURENTIELLE
@@ -247,12 +247,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
         #endregion
 
         #region GetInternetTable
-        protected static string GetInternetTable(WebCst.Module.Type moduleType) {
+        protected static string GetInternetTable(WebSession websession, WebCst.Module.Type moduleType) {
             switch(moduleType) {
                 case WebCst.Module.Type.alert:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetVersionAlert).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataInternetVersionAlert, websession.IsSelectRetailerDisplay).Label);
                 case WebCst.Module.Type.analysis:
-                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.dataInternetVersion).Label);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataInternetVersion, websession.IsSelectRetailerDisplay).Label);
                 default:
                     throw new ArgumentException("Type of module is not supported");
             }

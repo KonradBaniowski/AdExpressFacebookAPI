@@ -257,7 +257,15 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Selected Banners Foramt List
             /// </summary>
-            selectedBannersForamtList = 58
+            selectedBannersForamtList = 58,
+            /// <summary>
+            /// Selected Retailer Display
+            /// </summary>
+            selectRetailerDisplay = 59,
+            /// <summary>
+            /// Retailer Display
+            /// </summary>
+            retailerDisplay = 60
 		}
 	
 	}
