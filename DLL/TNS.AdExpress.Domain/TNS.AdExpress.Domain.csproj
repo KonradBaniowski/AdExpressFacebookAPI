@@ -99,6 +99,7 @@
     <Compile Include="Layers\CoreLayer.cs" />
     <Compile Include="ModulesDescritpion\Trends.cs" />
     <Compile Include="ModulesDescritpion\TrendsDateOpeningOption.cs" />
+    <Compile Include="Results\DataPromotionDetail.cs" />
     <Compile Include="Results\ExportInstoreVersionItem.cs" />
     <Compile Include="Results\DundasConfiguration.cs" />
     <Compile Include="Results\InfoNews.cs" />

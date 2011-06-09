@@ -115,7 +115,11 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// 
         /// </summary>
-        alert = 10
+        alert = 10,
+        /// <summary>
+        /// Promotion 
+        /// </summary>
+        promo03=11
     } 
     #endregion
 
@@ -1035,6 +1039,31 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         dashboardPluriWeekRetailer = 228,
 
         /// <summary>
+        /// Table promotion detail  product
+        /// </summary>
+        promoProduct = 229,
+        /// <summary>
+        /// Table promotion product category
+        /// </summary>
+        promoCategory = 230,
+        /// <summary>
+        /// Table promotion Brand
+        /// </summary>
+        promoBrand = 231,
+        /// <summary>
+        /// Table promotion Circuit
+        /// </summary>
+        promoCircuit = 232,
+        /// <summary>
+        /// Table data promotion
+        /// </summary>
+        dataPromotion = 233,
+        /// <summary>
+        /// Table promotion product segment
+        /// </summary>
+        promoSegment = 234,
+
+        /// <summary>
         /// Alert description
         /// </summary>
         alert = 300,
@@ -1073,7 +1102,15 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// All advertising agency
         /// </summary>
-        allAdvAgency=4
+        allAdvAgency=4,
+        /// <summary>
+        /// All promotion brand
+        /// </summary>
+        allPromoBrand = 5,
+        /// <summary>
+        /// All Promo Product
+        /// </summary>
+        allPromoProduct = 6
     }
     #endregion
 
