@@ -27,6 +27,7 @@
     <schema enumId="4" description="Product class analysis" label="recap01"/>
     <schema enumId="5" description="Web" label="webnav01"/>
     <schema enumId="10" description="Alert" label="mau01"/>
+    <schema enumId="11" description="Promotion monitoring tables" label="promo03"/>    
   </schemas>
   <tables defaultResultTablesPrefix="wp">
     <table enumId="0" description="List table" schemaEnumId="5" label="list" prefix="lst"/>
@@ -204,7 +205,10 @@
     <table enumId="179" description="Recap Data: Instore Segment" schemaEnumId="4" label="recap_instore_segment" prefix="rcp"/>
     <table enumId="180" description="Data: Instore" schemaEnumId="0" label="data_instore" prefix="wp"/>
     <table enumId="181" description="Data: Instore 4M" schemaEnumId="0" label="data_instore_4M" prefix="wp"/>
+    <table enumId="182" description="Classif: slogan" schemaEnumId="0" label="slogan" prefix="slo"/>
 
+    <table enumId="183" description="Tracking: Connection number By Login Ip Time slot" schemaEnumId="5" label="connection_by_login_ip" prefix="cli"/>
+    
     <table enumId="184" description="Data: Cinema Retailer"             schemaEnumId="0" label="data_cinema_retailer" prefix="wp"/>
     <table enumId="185" description="Data: Cinema Retailer 4M"          schemaEnumId="0" label="data_cinema_retailer_4M" prefix="wp"/>
     <table enumId="186" description="Data: Internet Retailer"           schemaEnumId="0" label="data_internet_retailer" prefix="wp"/>
@@ -252,14 +256,18 @@
 
     <table enumId="227" description="Dash Board Data: Pluri Month Retailer"   schemaEnumId="0" label="TABLEAU_BORD_PLURI_MONTH_RET" prefix="dshb"/>
     <table enumId="228" description="Dash Board Data: Pluri Week Retailer"    schemaEnumId="0" label="TABLEAU_BORD_PLURI_WEEK_RET" prefix="dshb"/>
+
+    <table enumId="229" description="Promo : detail  Product"   schemaEnumId="11" label="product" prefix="pr"/>
+    <table enumId="230" description="Promo :  Product category"   schemaEnumId="11" label="category" prefix="ct"/>
+    <table enumId="231" description="Promo : Brand "   schemaEnumId="11" label="brand" prefix="br"/>
+    <table enumId="232" description="Promo : Circuit "   schemaEnumId="11" label="circuit" prefix="cr"/>
+    <table enumId="233" description="Promo : Data  "   schemaEnumId="11" label="data_promo" prefix="wp"/>
+    <table enumId="234" description="Promo : Product Segment"   schemaEnumId="11" label="segment" prefix="sg"/>
     
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>
     <table enumId="302" description="Alert Schedule" schemaEnumId="10" label="alert_schedule" prefix="as"/>
     <table enumId="400" description="Static Nav Session" schemaEnumId="5" label="static_nav_session" prefix="snv"/>
-
-    
-
   </tables>
   <views>
     <view enumId="0" description="Classif: all media" schemaEnumId="0" label="all_media_" prefix="allm"/>
@@ -267,6 +275,8 @@
     <view enumId="2" description="Classif: all Recap media" schemaEnumId="4" label="all_media_" prefix="allrm"/>
     <view enumId="3" description="Classif: all Recap product" schemaEnumId="4" label="all_product_" prefix="allrp"/>
     <view enumId="4" description="Classif: all Adv Agency" schemaEnumId="0" label="all_adv_agency_" prefix="allaa"/>
+    <view enumId="5" description="Classif: all Promo brand" schemaEnumId="11" label="all_brand" prefix="allpb"/>
+    <view enumId="6" description="Classif: all Promo product" schemaEnumId="11" label="all_product" prefix="allpp"/>
   </views>  
 </database>
 
