@@ -79,7 +79,12 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// AdEXpress Russia
         /// </summary>
-        adExpressRussia = 11
+        adExpressRussia = 11,
+        /// <summary>
+        /// Promo monitoring
+        /// </summary>
+        vPromo = 12
+
     } 
     #endregion
 

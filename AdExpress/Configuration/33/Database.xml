@@ -18,6 +18,7 @@
     <defaultConnection enumId="9" description="EasyMusic" dataBaseEnumId="2" login="nicotest3000" password="nicotest3000"       dataSource="music01_test.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <!--Test default rights connection-->
     <defaultConnection enumId="10" description="Rights" dataBaseEnumId="2" login="gfacon" password="sandie5"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="12" description="Veille Promo" dataBaseEnumId="11" login="PROMO03" password="waltari2"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>    
   </defaultConnections>
   <schemas>
     <schema enumId="0" description="AdExpress Data (AdExpr03)" label="adexpr03"/>
