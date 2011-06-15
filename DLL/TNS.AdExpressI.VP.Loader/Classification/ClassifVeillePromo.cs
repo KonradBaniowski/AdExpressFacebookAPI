@@ -12,6 +12,7 @@ using TNS.AdExpressI.VP.Loader.Exceptions;
 using TNS.AdExpressI.VP.Loader.DAL.Classification;
 using System.Reflection;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.VP.Loader.Domain.Web;
 
 namespace TNS.AdExpressI.VP.Loader.Classification {
     /// <summary>
@@ -39,7 +40,7 @@ namespace TNS.AdExpressI.VP.Loader.Classification {
             try {
 
                 #region Get Data
-                IClassifVeillePromoDAL veillePromoDAL = (IClassifVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dataAccess].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { _dataBase }, null, null, null);
+                IClassifVeillePromoDAL veillePromoDAL = (IClassifVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.classificationDAL].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.classificationDAL].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { _dataBase }, null, null, null);
                 DataSet ds = veillePromoDAL.GetAllProduct();
                 #endregion
 
@@ -66,8 +67,21 @@ namespace TNS.AdExpressI.VP.Loader.Classification {
                     //NEW Category OR NEW SEGMENT
                     if ((cIdCategoryOld == null || cIdCategory != cIdCategoryOld.Value)
                         || (cIdSegmentOld == null || cIdSegment != cIdSegmentOld.Value)) {
+
+                        //NEW SEGMENT
+                        if (cIdSegmentOld == null || cIdSegment != cIdSegmentOld.Value) {
+                            productListByCategory = new Dictionary<Int64, ProductListByCategory>();
+                            productListByCategoryListBySegment.Add(
+                                cIdSegment,
+                                new ProductListByCategoryListBySegment(
+                                    new Item(cIdSegment, cRow["segment"].ToString()),
+                                    productListByCategory
+                                ) 
+                            );
+                        }
+
                         productList = new Dictionary<Int64, Item>();
-                        productListByCategory = new Dictionary<Int64, ProductListByCategory>();
+
                         productListByCategory.Add(cIdCategory,
                             new ProductListByCategory(
                                 new Item(cIdCategory, cRow["category"].ToString()),
@@ -76,26 +90,15 @@ namespace TNS.AdExpressI.VP.Loader.Classification {
                         );
                     }
 
-                    //NEW SEGMENT
-                    if (cIdSegmentOld == null || cIdSegment != cIdSegmentOld.Value) {
-                        productListByCategoryListBySegment.Add(
-                            cIdSegment,
-                            new ProductListByCategoryListBySegment(
-                                new Item(cIdSegment, cRow["segment"].ToString()),
-                                productListByCategory
-                            )
-                        );
-                    }
+                    
 
                     productListByCategoryListBySegment[cIdSegment].ProductListByCategory[cIdCategory].ProductList.Add(
                         cIdProduct
                         , new Item(cIdProduct, cRow["product"].ToString()));
 
-
                     cIdSegmentOld = cIdSegment;
                     cIdCategoryOld = cIdCategory;
                     cIdProductOld = cIdProduct;
-
                 }
 
                 return productListByCategoryListBySegment;
@@ -117,7 +120,7 @@ namespace TNS.AdExpressI.VP.Loader.Classification {
             try {
 
                 #region Get Data
-                IClassifVeillePromoDAL veillePromoDAL = (IClassifVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dataAccess].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { _dataBase }, null, null, null);
+                IClassifVeillePromoDAL veillePromoDAL = (IClassifVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.classificationDAL].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.classificationDAL].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { _dataBase }, null, null, null);
                 DataSet ds = veillePromoDAL.GetAllBrand();
                 #endregion
 
@@ -140,7 +143,6 @@ namespace TNS.AdExpressI.VP.Loader.Classification {
                     //NEW Circuit
                     if (cIdCircuitOld == null || cIdCircuit != cIdCircuitOld.Value) {
                         brandList = new Dictionary<Int64, Item>();
-                        brandListByCircuit = new Dictionary<Int64, BrandListByCircuit>();
                         brandListByCircuit.Add(cIdCircuit,
                             new BrandListByCircuit(
                                 new Item(cIdCircuit, cRow["circuit"].ToString()),

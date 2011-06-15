@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using TNS.AdExpress.Domain.DataBaseDescription;
-using TNS.AdExpress.Domain.XmlLoader;
 using TNS.AdExpress.Domain.Level;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Web.Core;
@@ -20,8 +19,9 @@ using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.FrameWork.DB.Constantes;
 using System.IO;
+using TNS.AdExpress.VP.Loader.Domain.XmlLoader;
 
-namespace TNS.AdExpress.Domain.Web {
+namespace TNS.AdExpress.VP.Loader.Domain.Web {
 
     /// <summary>
     /// Web Application Parameters
@@ -37,7 +37,7 @@ namespace TNS.AdExpress.Domain.Web {
 		/// Collections of layers which can be called in all web site
 		/// <example></example>
 		/// </summary>
-		protected static Dictionary<WebConstantes.Layers.Id, TNS.AdExpress.Domain.Layers.CoreLayer> _coreLayers = null;
+        protected static Dictionary<TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id, TNS.AdExpress.Domain.Layers.CoreLayer> _coreLayers = null;
         #endregion
         
         #region Contructeur
@@ -58,7 +58,7 @@ namespace TNS.AdExpress.Domain.Web {
 		/// <summary>
 		/// Get Collections of layers which can be called in all web site
 		/// </summary>
-		public static Dictionary<WebConstantes.Layers.Id, Domain.Layers.CoreLayer> CoreLayers {
+        public static Dictionary<TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id, TNS.AdExpress.Domain.Layers.CoreLayer> CoreLayers {
 			get { return _coreLayers; }
 		}
         #endregion
@@ -68,11 +68,8 @@ namespace TNS.AdExpress.Domain.Web {
         /// Initialize
         /// </summary>
         public static void Initialize(string configurationDirectoryRoot) {
-            string countryCode = WebParamtersXL.LoadDirectoryName(new XmlReaderDataSource(configurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME));
-            string countryConfigurationDirectoryRoot = Path.Combine(configurationDirectoryRoot, countryCode);
-
-            _dataBase = new DataBase(new XmlReaderDataSource(Path.Combine(countryConfigurationDirectoryRoot, TNS.AdExpress.Constantes.Web.ConfigurationFile.DATABASE_CONFIGURATION_FILENAME)));
-            _coreLayers = CoreLayersXL.Load(new XmlReaderDataSource(Path.Combine(countryConfigurationDirectoryRoot, TNS.AdExpress.Constantes.Web.ConfigurationFile.CORE_LAYERS_CONFIGURATION_FILENAME)));
+            _dataBase = new DataBase(new XmlReaderDataSource(Path.Combine(configurationDirectoryRoot, TNS.AdExpress.Constantes.Web.ConfigurationFile.DATABASE_CONFIGURATION_FILENAME)));
+            _coreLayers = CoreLayersXL.Load(new XmlReaderDataSource(Path.Combine(configurationDirectoryRoot, TNS.AdExpress.Constantes.Web.ConfigurationFile.CORE_LAYERS_CONFIGURATION_FILENAME)));
         }
         #endregion
 

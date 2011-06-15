@@ -29,7 +29,6 @@ namespace TNS.AdExpress.VP.Loader.Domain.Classification {
         public ProductListByCategoryListBySegment(Item segment, Dictionary<Int64, ProductListByCategory> productListByCategory) {
             if (segment == null) throw new ArgumentNullException("Segment parameter is null");
             if (productListByCategory == null) throw new ArgumentNullException("ProductListByCategory parameter is null");
-            if (productListByCategory.Count <= 0) throw new ArgumentException("ProductListByCategory parameter is invalid");
             _segment = segment;
             _productListByCategory = productListByCategory;
         }

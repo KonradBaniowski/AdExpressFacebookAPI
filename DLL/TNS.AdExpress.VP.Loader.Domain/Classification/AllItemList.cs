@@ -26,7 +26,6 @@ namespace TNS.AdExpress.VP.Loader.Domain.Classification {
         public AllItemList(Item item, Dictionary<Int64, Item> itemList) {
             if(item == null) throw new ArgumentNullException("Item parameter is null");
             if(itemList == null) throw new ArgumentNullException("ItemList parameter is null");
-            if(itemList.Count <= 0) throw new ArgumentException("ItemList parameter is invalid");
             _item = item;
             _itemList = itemList;
         }

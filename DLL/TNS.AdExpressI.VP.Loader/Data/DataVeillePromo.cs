@@ -13,6 +13,7 @@ using TNS.AdExpressI.VP.Loader.Exceptions;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Domain.Web;
 using System.Reflection;
+using TNS.AdExpress.VP.Loader.Domain.Web;
 
 namespace TNS.AdExpressI.VP.Loader.Data {
     /// <summary>
@@ -40,7 +41,7 @@ namespace TNS.AdExpressI.VP.Loader.Data {
         /// <param name="source">data source</param>
         /// <returns>Data Promotion Detail List</returns>
         public DataPromotionDetails GetDataPromotionDetailList(FileDataSource source) {
-            IDataVeillePromoDAL veillePromoDAL = (IDataVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dataAccess].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dataAccess].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { _dataBase }, null, null, null);
+            IDataVeillePromoDAL veillePromoDAL = (IDataVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { _dataBase }, null, null, null);
             return veillePromoDAL.GetDataPromotionDetailList(source);
         }
         #endregion
@@ -52,7 +53,7 @@ namespace TNS.AdExpressI.VP.Loader.Data {
         /// <param name="dateBegin">Date Begin</param>
         /// <param name="dateEnd">Date End</param>
         public void DeleteData(DateTime dateBeginTraitment, DateTime dateEndTraitment) {
-            IDataVeillePromoDAL veillePromoDAL = (IDataVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dataAccess].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dataAccess].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { _dataBase }, null, null, null);
+            IDataVeillePromoDAL veillePromoDAL = (IDataVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { _dataBase }, null, null, null);
             veillePromoDAL.DeleteData(dateBeginTraitment, dateEndTraitment);
         }
         #endregion
@@ -70,7 +71,7 @@ namespace TNS.AdExpressI.VP.Loader.Data {
             #endregion
 
             try {
-                veillePromoDAL = (IDataVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dataAccess].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dataAccess].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { _dataBase }, null, null, null);
+                veillePromoDAL = (IDataVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { _dataBase }, null, null, null);
 
                 #region Open Transaction
                 veillePromoDAL.Source.Open();

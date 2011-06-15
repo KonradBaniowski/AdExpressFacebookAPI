@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<smtp>
+    <server adress="frmitpu-msprod" port="25"/>
+    <message from="Iris@kantarmedia.com">			 
+	 	  <!--<to>guillaume.facon@tnsmi.fr</to> 
+		  <to>benjamin.masson@tnsmi.fr</to>
+      <to>dede.mussuma@tnsmi.fr</to>
+      <to>youssef.rkaina@tnsmi.fr</to>-->
+      <to>alexandre.rousseau@tnsmi.fr</to>
+    </message>
+</smtp>
