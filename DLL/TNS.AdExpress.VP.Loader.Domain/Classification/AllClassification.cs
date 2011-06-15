@@ -35,7 +35,7 @@ namespace TNS.AdExpress.VP.Loader.Domain.Classification {
         /// Get Brand informations
         /// </summary>
         public static Item GetBrand(string brandLabel) {
-            List<Item> itemList = null;
+            List<Item> itemList = new List<Item>();
             if (_brandListByCircuit != null) {
                 foreach (BrandListByCircuit brandListByCircuit in _brandListByCircuit.Values) {
                     List<Item> itemListTemp = null;
@@ -43,7 +43,7 @@ namespace TNS.AdExpress.VP.Loader.Domain.Classification {
                                     where brand.Label.Trim().ToUpper() == brandLabel.Trim().ToUpper()
                                     select brand).ToList<Item>();
 
-                    if (itemListTemp != null)
+                    if (itemListTemp != null && itemListTemp.Count>0)
                         itemList.AddRange(itemListTemp);
                 }
             }
@@ -57,7 +57,7 @@ namespace TNS.AdExpress.VP.Loader.Domain.Classification {
         /// Get Product informations
         /// </summary>
         public static Item GetProduct(string productLabel) {
-            List<Item> itemList = null;
+            List<Item> itemList = new List<Item>();
 
             if (_productListByCategoryListBySegment != null) {
                 foreach (ProductListByCategoryListBySegment productListByCategoryListBySegment in _productListByCategoryListBySegment.Values) {
@@ -67,7 +67,7 @@ namespace TNS.AdExpress.VP.Loader.Domain.Classification {
                                         where product.Label.Trim().ToUpper() == productLabel.Trim().ToUpper()
                                         select product).ToList<Item>();
 
-                        if (itemListTemp != null)
+                        if (itemListTemp != null && itemListTemp.Count>0)
                             itemList.AddRange(itemListTemp);
                     }
                 }
@@ -98,7 +98,7 @@ namespace TNS.AdExpress.VP.Loader.Domain.Classification {
         /// Get Category informations
         /// </summary>
         public static Item GetCategory(Int64 productId) {
-            List<Item> itemList = null;
+            List<Item> itemList = new List<Item>();
             if (_brandListByCircuit != null) {
                 foreach (ProductListByCategoryListBySegment productListByCategoryListBySegment in _productListByCategoryListBySegment.Values) {
                     List<Item> itemListTemp = null;
@@ -107,7 +107,7 @@ namespace TNS.AdExpress.VP.Loader.Domain.Classification {
                                 where productListByCategory.ProductList.ContainsKey(productId)
                                 select productListByCategory.Category).ToList<Item>();
 
-                    if (itemListTemp != null)
+                    if (itemListTemp != null && itemListTemp.Count>0)
                         itemList.AddRange(itemListTemp);
                 }
             }

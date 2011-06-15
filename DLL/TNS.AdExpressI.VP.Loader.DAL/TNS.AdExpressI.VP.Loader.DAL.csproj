@@ -60,8 +60,6 @@
     <Compile Include="Classification\IClassifVeillePromoDAL.cs" />
     <Compile Include="Classification\ClassifVeillePromoDAL.cs" />
     <Compile Include="Exceptions\VeillePromoDALDbException.cs" />
-    <Compile Include="Exceptions\VeillePromoDALIncorrectFileNameException.cs" />
-    <Compile Include="Exceptions\VeillePromoDALIncorrectFileNameNumberException.cs" />
     <Compile Include="Exceptions\VeillePromoDALException.cs" />
     <Compile Include="Exceptions\VeillePromoDALExcelOpenFileException.cs" />
     <Compile Include="Exceptions\VeillePromoDALExcelException.cs" />
@@ -84,7 +82,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Aspose.Cells.lic" />
+    <EmbeddedResource Include="Aspose.Cells.lic" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

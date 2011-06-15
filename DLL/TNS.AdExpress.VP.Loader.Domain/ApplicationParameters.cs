@@ -30,6 +30,10 @@ namespace TNS.AdExpress.VP.Loader.Domain.Web {
 
         #region variables
         /// <summary>
+        /// Configuration Directory Country
+        /// </summary>
+        private static string _countryConfigurationDirectoryRoot; 
+        /// <summary>
         /// Database description
         /// </summary>
         private static DataBase _dataBase;        	
@@ -50,6 +54,12 @@ namespace TNS.AdExpress.VP.Loader.Domain.Web {
 
         #region Accessors
         /// <summary>
+        /// Get Configuration Directory Country
+        /// </summary>
+        public static string CountryConfigurationDirectoryRoot {
+            get { return _countryConfigurationDirectoryRoot; }
+        }
+        /// <summary>
         /// Get Database description
         /// </summary>
         public static DataBase DataBaseDescription{
@@ -67,9 +77,10 @@ namespace TNS.AdExpress.VP.Loader.Domain.Web {
         /// <summary>
         /// Initialize
         /// </summary>
-        public static void Initialize(string configurationDirectoryRoot) {
-            _dataBase = new DataBase(new XmlReaderDataSource(Path.Combine(configurationDirectoryRoot, TNS.AdExpress.Constantes.Web.ConfigurationFile.DATABASE_CONFIGURATION_FILENAME)));
-            _coreLayers = CoreLayersXL.Load(new XmlReaderDataSource(Path.Combine(configurationDirectoryRoot, TNS.AdExpress.Constantes.Web.ConfigurationFile.CORE_LAYERS_CONFIGURATION_FILENAME)));
+        public static void Initialize(string countryConfigurationDirectoryRoot) {
+            _countryConfigurationDirectoryRoot = countryConfigurationDirectoryRoot;
+            _dataBase = new DataBase(new XmlReaderDataSource(Path.Combine(countryConfigurationDirectoryRoot, TNS.AdExpress.Constantes.Web.ConfigurationFile.DATABASE_CONFIGURATION_FILENAME)));
+            _coreLayers = CoreLayersXL.Load(new XmlReaderDataSource(Path.Combine(countryConfigurationDirectoryRoot, TNS.AdExpress.Constantes.Web.ConfigurationFile.CORE_LAYERS_CONFIGURATION_FILENAME)));
         }
         #endregion
 

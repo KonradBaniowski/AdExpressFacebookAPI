@@ -14,6 +14,7 @@ using Oracle.DataAccess.Client;
 using TNS.AdExpress.Domain.Web;
 using System.Reflection;
 using TNS.AdExpress.VP.Loader.Domain.Web;
+using TNS.AdExpressI.VP.Loader.DAL.Exceptions;
 
 namespace TNS.AdExpressI.VP.Loader.Data {
     /// <summary>
@@ -58,6 +59,18 @@ namespace TNS.AdExpressI.VP.Loader.Data {
         }
         #endregion
 
+        #region Has Data
+        /// <summary>
+        /// Has data for the date traiment passed in parameter
+        /// </summary>
+        /// <param name="dateTraitment">Date Traitment</param>
+        /// <returns>Has Data or not for the date traiment passed in parameter</returns>
+        public bool HasData(DateTime dateTraitment) {
+            IDataVeillePromoDAL veillePromoDAL = (IDataVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { _dataBase }, null, null, null);
+            return veillePromoDAL.HasData(dateTraitment);
+        }
+        #endregion
+
         #region Insert Data
         /// <summary>
         /// Insert data Promotion Detail List
@@ -80,7 +93,7 @@ namespace TNS.AdExpressI.VP.Loader.Data {
 
                 #region Traitment
                 if (veillePromoDAL.HasData(dataPromotionDetails.DateTraitment)) {
-                    foreach(DataPromotionDetail cDataPromotionDetail in dataPromotionDetails.DataPromotionDetailList){
+                    foreach (DataPromotionDetail cDataPromotionDetail in dataPromotionDetails.DataPromotionDetailList) {
                         veillePromoDAL.InsertDataPromotionDetail(dataPromotionDetails.DateTraitment, cDataPromotionDetail);
                     }
                 }
@@ -96,6 +109,12 @@ namespace TNS.AdExpressI.VP.Loader.Data {
             }
             catch (Exception e) {
                 if (transaction != null) transaction.Rollback();
+
+                if (e is VeillePromoDALExcelException)
+                    throw new VeillePromoExcelException("Impossible to Insert Data Promotion", e);
+                if (e is VeillePromoDALExcelOpenFileException)
+                    throw new VeillePromoExcelOpenFileException("Impossible to Insert Data Promotion", e);
+
                 throw new VeillePromoInsertDbException("Impossible to Insert Data Promotion", e);
             }
         }

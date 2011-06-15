@@ -17,6 +17,12 @@ namespace TNS.AdExpressI.VP.Loader.Data {
         /// <returns>Data Promotion Detail List</returns>
         DataPromotionDetails GetDataPromotionDetailList(FileDataSource source);
         /// <summary>
+        /// Has data for the date traiment passed in parameter
+        /// </summary>
+        /// <param name="dateTraitment">Date Traitment</param>
+        /// <returns>Has Data or not for the date traiment passed in parameter</returns>
+        bool HasData(DateTime dateTraitment);
+        /// <summary>
         /// Delete data between dateBegin parameter and dateEnd parameter
         /// </summary>
         /// <param name="dateBegin">Date Begin</param>
