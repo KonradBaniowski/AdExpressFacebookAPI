@@ -14,7 +14,6 @@ using System.Reflection;
 using TNS.AdExpressI.VP.Loader.Exceptions;
 using Oracle.DataAccess.Client;
 using TNS.AdExpress.Domain.Web;
-using System.Reflection;
 using TNS.AdExpress.VP.Loader.Domain.Web;
 using TNS.AdExpressI.VP.Loader.DAL.Exceptions;
 using System.IO;
@@ -24,7 +23,19 @@ namespace TNS.AdExpressI.VP.Loader.Data {
     /// <summary>
     /// Promo Veille Class
     /// </summary>
-    public abstract class DataVeillePromo : VeillePromo, IDataVeillePromo {
+    public abstract class DataVeillePromo : VeillePromo, IDataVeillePromo
+    {
+
+        #region Variables
+        /// <summary>
+        /// Transaction
+        /// </summary>
+        protected OracleTransaction _transaction = null;
+        /// <summary>
+        /// Data Access
+        /// </summary>
+        protected IDataVeillePromoDAL _veillePromoDAL = null;
+        #endregion
 
         #region Constructor
         /// <summary>
@@ -34,10 +45,35 @@ namespace TNS.AdExpressI.VP.Loader.Data {
         /// <param name="dataLanguage">Data Language</param>
         public DataVeillePromo(DataBase dataBase)
             : base(dataBase) {
+           _veillePromoDAL = (IDataVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { _dataBase }, null, null, null);
         }
         #endregion
 
         #region IVeillePromo Membres
+        /// <summary>
+        /// Begin Transaction
+        /// </summary>
+        public void BeginTransaction()
+        {
+            _veillePromoDAL.Source.Open();
+            _transaction = ((OracleConnection)_veillePromoDAL.Source.GetSource()).BeginTransaction();
+        }
+        /// <summary>
+        /// Commit Transaction
+        /// </summary>
+        public void CommitTransaction()
+        {
+            if (_transaction != null) _transaction.Commit();
+            if (_veillePromoDAL != null && _veillePromoDAL.Source != null) _veillePromoDAL.Source.Close();
+        }
+        /// <summary>
+        /// Rollback Transaction
+        /// </summary>
+        public void RollbackTransaction()
+        {
+            if (_transaction != null) _transaction.Rollback();
+            if (_veillePromoDAL != null && _veillePromoDAL.Source!=null) _veillePromoDAL.Source.Close();
+        }
 
         #region GetDataPromotionDetailList
         /// <summary>
@@ -47,8 +83,7 @@ namespace TNS.AdExpressI.VP.Loader.Data {
         /// <returns>Data Promotion Detail List</returns>
         public DataPromotionDetails GetDataPromotionDetailList(FileDataSource source) {
             try {
-                IDataVeillePromoDAL veillePromoDAL = (IDataVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { _dataBase }, null, null, null);
-                return veillePromoDAL.GetDataPromotionDetailList(source);
+                return _veillePromoDAL.GetDataPromotionDetailList(source);
             }
             catch (Exception e) {
                 
@@ -70,8 +105,7 @@ namespace TNS.AdExpressI.VP.Loader.Data {
         /// <param name="dateBegin">Date Begin</param>
         /// <param name="dateEnd">Date End</param>
         public void DeleteData(DateTime dateBeginTraitment, DateTime dateEndTraitment) {
-            IDataVeillePromoDAL veillePromoDAL = (IDataVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { _dataBase }, null, null, null);
-            veillePromoDAL.DeleteData(dateBeginTraitment, dateEndTraitment);
+            _veillePromoDAL.DeleteData(dateBeginTraitment, dateEndTraitment);
         }
         #endregion
 
@@ -82,8 +116,7 @@ namespace TNS.AdExpressI.VP.Loader.Data {
         /// <param name="dateTraitment">Date Traitment</param>
         /// <returns>Has Data or not for the date traiment passed in parameter</returns>
         public bool HasData(DateTime dateTraitment) {
-            IDataVeillePromoDAL veillePromoDAL = (IDataVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { _dataBase }, null, null, null);
-            return veillePromoDAL.HasData(dateTraitment);
+            return _veillePromoDAL.HasData(dateTraitment);
         }
         #endregion
 
@@ -94,8 +127,7 @@ namespace TNS.AdExpressI.VP.Loader.Data {
         /// <param name="fileList">File List</param>
         /// <returns>Picture File Name List</returns>
         public Dictionary<string, PictureMatching> GetPictureFileName(List<string> fileList) {
-            IDataVeillePromoDAL veillePromoDAL = (IDataVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { _dataBase }, null, null, null);
-            return veillePromoDAL.GetPictureFileName(fileList);
+            return _veillePromoDAL.GetPictureFileName(fileList);
         }
         #endregion
 
@@ -107,24 +139,16 @@ namespace TNS.AdExpressI.VP.Loader.Data {
         public void InsertDataPromotionDetails(DataPromotionDetails dataPromotionDetails){
 
             #region Variables
-            IDataVeillePromoDAL veillePromoDAL = null;
-            OracleTransaction transaction = null;
             List<PictureMatching> pictureMatchingPromVisuList = new List<PictureMatching>();
             List<PictureMatching> pictureMatchingCondVisuList = new List<PictureMatching>();
             #endregion
 
             try {
-                veillePromoDAL = (IDataVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { _dataBase }, null, null, null);
-
-                #region Open Transaction
-                veillePromoDAL.Source.Open();
-                transaction = ((OracleConnection)veillePromoDAL.Source.GetSource()).BeginTransaction();
-                #endregion
 
                 #region Traitment
 
                 #region Data Db Insertions
-                if (!veillePromoDAL.HasData(dataPromotionDetails.DateTraitment)) {
+                if (!_veillePromoDAL.HasData(dataPromotionDetails.DateTraitment)) {
                     foreach (DataPromotionDetail cDataPromotionDetail in dataPromotionDetails.DataPromotionDetailList) {
 
                         Dictionary<string, PictureMatching> pictureMatchingPromVisuListTemp = GetPictureFileName(cDataPromotionDetail.PromotionVisual);
@@ -146,7 +170,7 @@ namespace TNS.AdExpressI.VP.Loader.Data {
                                                                         );
 
 
-                        veillePromoDAL.InsertDataPromotionDetail(dataPromotionDetails.DateTraitment, dataPromotionDetailTemp);
+                        _veillePromoDAL.InsertDataPromotionDetail(dataPromotionDetails.DateTraitment, dataPromotionDetailTemp);
 
                         pictureMatchingPromVisuList.AddRange(pictureMatchingPromVisuListTemp.Values);
                         pictureMatchingCondVisuList.AddRange(pictureMatchingCondVisuListTemp.Values);
@@ -168,14 +192,8 @@ namespace TNS.AdExpressI.VP.Loader.Data {
 
                 #endregion
 
-                #region Commit Transaction
-                transaction.Commit();
-                #endregion
-
             }
             catch (Exception e) {
-                if (transaction != null) transaction.Rollback();
-
                 throw new VeillePromoInsertDbException("Impossible to Insert Data Promotion", e);
             }
         }

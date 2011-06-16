@@ -12,6 +12,18 @@ namespace TNS.AdExpressI.VP.Loader.Data {
     public interface IDataVeillePromo : IVeillePromo {
 
         /// <summary>
+        /// Begin Transaction
+        /// </summary>
+        void BeginTransaction();
+        /// <summary>
+        /// Commit Transaction
+        /// </summary>
+        void CommitTransaction();
+        /// <summary>
+        /// Rollback Transaction
+        /// </summary>
+        void RollbackTransaction();
+        /// <summary>
         /// Get Data Promotion Detail List from a File data source Excel
         /// </summary>
         /// <param name="source">data source</param>

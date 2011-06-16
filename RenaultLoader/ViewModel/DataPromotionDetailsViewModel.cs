@@ -15,6 +15,7 @@ using System.Windows;
 using TNS.AdExpressI.VP.Loader.Exceptions;
 using TNS.FrameWork.Exceptions;
 using RenaultLoader.Exceptions;
+using Oracle.DataAccess.Client;
 
 namespace RenaultLoader.ViewModel
 {
@@ -37,7 +38,7 @@ namespace RenaultLoader.ViewModel
 
         private bool _isIndeterminateLoading = false;
 
-        private bool _isIndeterminateDeleting = false;
+
 
         #region Commands
         /// <summary>
@@ -62,7 +63,7 @@ namespace RenaultLoader.ViewModel
             get
             {
                 if (this._openCommand == null)
-                    this._openCommand = new RelayCommand(ExecuteOpenFileDialog);
+                    this._openCommand = new RelayCommand(() => ExecuteOpenFileDialog());
 
                 return this._openCommand;
             }
@@ -72,7 +73,7 @@ namespace RenaultLoader.ViewModel
             get
             {
                 if (this._saveCommand == null)
-                    this._saveCommand = new RelayCommand(ExecuteSave);
+                    this._saveCommand = new RelayCommand(()=>ExecuteSave());
 
                 return this._saveCommand;
             }
@@ -82,23 +83,12 @@ namespace RenaultLoader.ViewModel
             get
             {
                 if (this._deleteCommand == null)
-                    this._deleteCommand = new RelayCommand(ExecuteDelete);
+                    this._deleteCommand = new RelayCommand(() => ExecuteDelete());
 
                 return this._deleteCommand;
             }
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool IsIndeterminateDeleting
-        {
-            get { return _isIndeterminateDeleting; }
-            set
-            {
-                _isIndeterminateDeleting = value;
-                RaisePropertyChanged("IsIndeterminateDeleting");
-            }
-        }
+      
         /// <summary>
         /// 
         /// </summary>
@@ -205,24 +195,38 @@ namespace RenaultLoader.ViewModel
         /// Tratment when save command is execute
         /// </summary>
         private void ExecuteSave() {
-            try {
-                IDataVeillePromo veillePromo = (IDataVeillePromo)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.rules].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.rules].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { ApplicationParameters.DataBaseDescription }, null, null, null);
+
+            IDataVeillePromo veillePromo = null;
+            try
+            {
+                IsIndeterminateLoading = true;
+
+                veillePromo = (IDataVeillePromo)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.rules].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.rules].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { ApplicationParameters.DataBaseDescription }, null, null, null);
                 DataPromotionDetails dataPromotionDetails = veillePromo.GetDataPromotionDetailList(new FileDataSource(new FileStream(CurrentFile.FullName, FileMode.Open)));
 
-                if (veillePromo.HasData(dataPromotionDetails.DateTraitment)) {
+                veillePromo.BeginTransaction();
+                if (veillePromo.HasData(dataPromotionDetails.DateTraitment))
+                {
                     MessageBoxResult messageBoxResult = MessageBox.Show("Des données existent en base de données pour cette periode, voulez vous les effacer ?", "", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                     if (messageBoxResult == MessageBoxResult.Cancel)
                         return;
                     if (messageBoxResult == MessageBoxResult.Yes)
                         veillePromo.DeleteData(dataPromotionDetails.DateTraitment, dataPromotionDetails.DateTraitment);
                 }
-                IsIndeterminateLoading = true;
+                
                 veillePromo.InsertDataPromotionDetails(dataPromotionDetails);
-                IsIndeterminateLoading = false;
-                MessageBox.Show("Le fichier a été chargé", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                veillePromo.CommitTransaction();
+                MessageBox.Show("Les données ont été enregistrées ", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
+                if (veillePromo != null) veillePromo.RollbackTransaction();
                 OnError(e);
+            }
+            finally
+            {
+                IsIndeterminateLoading = false;
             }
         }
         #endregion
@@ -234,6 +238,7 @@ namespace RenaultLoader.ViewModel
         {
             try
             {
+                IsIndeterminateLoading = true;
                 IDataVeillePromo veillePromo = (IDataVeillePromo)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.rules].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.rules].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { ApplicationParameters.DataBaseDescription }, null, null, null);
 
                 if (veillePromo.HasData(_periodBeginningToDelete) || veillePromo.HasData(_periodEndToDelete))
@@ -243,18 +248,22 @@ namespace RenaultLoader.ViewModel
                         return;
                     if (messageBoxResult == MessageBoxResult.Yes)
                     {
-                        IsIndeterminateDeleting = true;
+
                         veillePromo.DeleteData(_periodBeginningToDelete, _periodEndToDelete);
-                        IsIndeterminateDeleting = false;
                         MessageBox.Show("Les données ont été supprimés", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
 
-                else  MessageBox.Show("Aucune données en base pour cette période", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                else MessageBox.Show("Aucune données en base pour cette période", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception e)
             {
                 OnError(e);
+            }
+            finally
+            {
+                IsIndeterminateLoading = false;
+
             }
         }
         #endregion

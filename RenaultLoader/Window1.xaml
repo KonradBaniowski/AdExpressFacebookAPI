@@ -4,12 +4,12 @@
       xmlns:ViewModel="clr-namespace:RenaultLoader.ViewModel" 
         xmlns:my="http://schemas.microsoft.com/wpf/2008/toolkit"
      WindowStartupLocation="CenterScreen"
-    Title="MainWindow" Height="700" Width="650" >
+    Title="MainWindow" Height="500" Width="650" >
     <Grid>
         <Grid.RowDefinitions >
-            <RowDefinition Height="AUTO"/>
+            <RowDefinition Height="AUTO"/>    
             <RowDefinition Height="*"/>
-           
+            <RowDefinition Height="AUTO"/>
         </Grid.RowDefinitions>
 
 
@@ -19,6 +19,7 @@
 
             <!--Ouvrir fichier-->
             <StackPanel Margin="3" Orientation="Horizontal">
+                
                 <TextBox Height="25" HorizontalAlignment="Left"  Name="txtFileUpload" VerticalAlignment="Top" Width="405" IsReadOnly="True" Text="{Binding CurrentFile.FullName, Mode=OneWay}"/>
                 <Button Content="Parcourir" Height="26" HorizontalAlignment="Left" Name="btnBrowse" VerticalAlignment="Top" Width="75" Command="{Binding OpenCommand}"/> <!--Click="btnBrowse_Click"-->
                 <Button   Content="Enregistrer" Width="80" Height="26" HorizontalAlignment="Right" Margin="0,0,5,0" Command="{Binding SaveCommand}">
@@ -34,22 +35,22 @@
                         </Style>
                         </Button.Style>
                 </Button>
+                
             </StackPanel>
 
-          
-
-           
         </GroupBox>
        
         <GroupBox Header="Suppression" Margin="2"  FontSize="14"  Grid.Row="1" >
-            <StackPanel Margin="3" Orientation="Vertical">
-                <my:Calendar Height="170" Name="calendarDelete" Width="180" HorizontalAlignment="Left" DisplayMode="Year"   SelectedDate="{Binding MonthToDelete}" />
+            <StackPanel Margin="3" Orientation="Horizontal" VerticalAlignment="Top">
+                <my:DatePicker Height="25" Margin="5" Name="datePicker1" Width="115" ClipToBounds="False" SelectedDateFormat="Short" SelectedDate="{Binding PeriodBeginningToDelete}"/>
+                <my:DatePicker Height="25" Margin="5" Name="datePicker2" Width="115" ClipToBounds="False"   SelectedDateFormat="Short" SelectedDate="{Binding PeriodEndToDelete}" />
                 <Button   Content="Supprimer" Width="80" Height="26" HorizontalAlignment="Left" Margin="0,0,5,0" Command="{Binding DeleteCommand}"/>
             </StackPanel>
         </GroupBox>
 
 
 
+        <ProgressBar Grid.Row="2" Height="20" Name="progressBar2" Width="100" IsIndeterminate="{Binding IsIndeterminateLoading}" />
 
     </Grid>
 </Window>
