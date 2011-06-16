@@ -91,7 +91,7 @@ namespace TNS.AdExpress.VP.Loader.Domain.Web {
             _countryConfigurationDirectoryRoot = countryConfigurationDirectoryRoot;
             _dataBase = new DataBase(new XmlReaderDataSource(Path.Combine(countryConfigurationDirectoryRoot, TNS.AdExpress.Constantes.Web.ConfigurationFile.DATABASE_CONFIGURATION_FILENAME)));
             _coreLayers = CoreLayersXL.Load(new XmlReaderDataSource(Path.Combine(countryConfigurationDirectoryRoot, TNS.AdExpress.Constantes.Web.ConfigurationFile.CORE_LAYERS_CONFIGURATION_FILENAME)));
-            _commonApplicationData = new CommonAppData(Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Path.GetFileNameWithoutExtension(System.AppDomain.CurrentDomain.SetupInformation.ApplicationName)), "parameters.xml"));
+            _commonApplicationData = new CommonAppData(Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "RenaultLoader"), "parameters.xml"));
         }
         #endregion
 
