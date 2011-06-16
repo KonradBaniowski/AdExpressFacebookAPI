@@ -11,6 +11,7 @@ using TNS.AdExpressI.VP.Loader.DAL.Exceptions;
 using TNS.AdExpress.VP.Loader.Domain.Classification;
 using TNS.AdExpress.Constantes.DB;
 using System.Data;
+using TNS.AdExpress.VP.Loader.Domain;
 
 namespace TNS.AdExpressI.VP.Loader.DAL.Data
 {
@@ -69,10 +70,10 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
             long idCategory;
             long idCircuit;
             string promotionContent;
-            List<string> conditionVisual;
+            List<string> conditionVisual = null;
             string conditionText;
             string promotionBrand;
-            List<string> promotionVisual;
+            List<string> promotionVisual = null;
             #endregion
 
             try
@@ -147,7 +148,14 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
                     #endregion
 
                     #region Get Visuals condition
-                    conditionVisual = (cells[line, columnVisualsCondition].Value != null) ? new List<string>(((string)cells[line, columnVisualsCondition].Value).Split(';')) : null;
+                    if(cells[line, columnVisualsCondition].Value != null)
+                        conditionVisual = (new List<string>(((string)cells[line, columnVisualsCondition].Value).Split(';'))).ConvertAll<string>(file => System.IO.Path.GetFullPath(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(fileStream.Name),file.Trim())));
+
+                    if (conditionVisual != null) {
+                        foreach (string cFile in conditionVisual) {
+                            if (!File.Exists(cFile)) throw new VeillePromoDALExcelVisualException("The file '" + cFile + "' dosen't exist");
+                        }
+                    }
                     #endregion
 
                     #region Get Text Condition
@@ -161,7 +169,13 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
                     #endregion
 
                     #region Get Visuals Promotion
-                    promotionVisual = (cells[line, columnVisualsPromo].Value != null) ? new List<string>(((string)cells[line, columnVisualsPromo].Value).Split(';')) : null;
+                    if (cells[line, columnVisualsPromo].Value != null)
+                        promotionVisual = new List<string>(((string)cells[line, columnVisualsPromo].Value).Split(';')).ConvertAll<string>(file => System.IO.Path.GetFullPath(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(fileStream.Name), file.Trim()))); 
+                    if (promotionVisual != null) {
+                        foreach (string cFile in promotionVisual) {
+                            if (!File.Exists(cFile)) throw new VeillePromoDALExcelVisualException("The file '" + cFile + "' dosen't exist");
+                        }
+                    }
                     #endregion
 
                     dataPromotionDetailList.Add(new DataPromotionDetail(
@@ -180,10 +194,6 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
 
                 }
                 return new DataPromotionDetails(dateFile, dataPromotionDetailList);
-            }
-            catch (System.Exception err)
-            {
-                throw (new VeillePromoDALException("Impossible to Get Data Promotion Detail List", err));
             }
             finally
             {
@@ -225,6 +235,46 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
             catch (System.Exception err)
             {
                 throw new VeillePromoDALDbException("DataAccess HasData Error. sql: " + sql.ToString(), err);
+            }
+        }
+        #endregion
+
+        #region Get Picture File Name
+        /// <summary>
+        /// Get Picture File Name
+        /// </summary>
+        /// <param name="fileList">File List</param>
+        /// <returns>Picture File Name List</returns>
+        public Dictionary<string, PictureMatching> GetPictureFileName(List<string> fileList) {
+
+            #region Variables
+            StringBuilder sql = new StringBuilder();
+            DataSet ds = null;
+            #endregion
+
+            try {
+
+                Dictionary<string, PictureMatching> filePictureList = new Dictionary<string, PictureMatching>();
+
+                if (fileList != null) {
+                    foreach (string cFile in fileList) {
+
+                        #region Construct global query
+                        sql = new StringBuilder(200);
+                        sql.AppendFormat("SELECT {0}SEQ_VISUAL.NEXTVAL as fileName FROM dual ", _dataBase.GetSchema(SchemaIds.promo03).Sql);
+                        #endregion
+
+                        #region Execute Query
+                        ds = _source.Fill(sql.ToString());
+                        #endregion
+
+                        filePictureList.Add(cFile, new PictureMatching(cFile, ds.Tables[0].Rows[0]["fileName"].ToString() + Path.GetExtension(cFile)));
+                    }
+                }
+                return filePictureList;
+            }
+            catch (System.Exception err) {
+                throw new VeillePromoDALDbException("DataAccess DeleteData Error. sql: " + sql.ToString(), err);
             }
         }
         #endregion

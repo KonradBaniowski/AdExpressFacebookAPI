@@ -130,6 +130,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Configuration\33\Parameters.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\33\CustomerErrorMail.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

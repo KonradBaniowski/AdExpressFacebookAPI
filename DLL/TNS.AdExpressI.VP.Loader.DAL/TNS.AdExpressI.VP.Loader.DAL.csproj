@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\DataVeillePromoDAL.cs" />
+    <Compile Include="Exceptions\VeillePromoDALExcelVisualException.cs" />
     <Compile Include="IVeillePromoDAL.cs" />
     <Compile Include="Classification\IClassifVeillePromoDAL.cs" />
     <Compile Include="Classification\ClassifVeillePromoDAL.cs" />

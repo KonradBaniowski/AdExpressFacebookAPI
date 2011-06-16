@@ -36,7 +36,11 @@ namespace TNS.AdExpress.VP.Loader.Domain.Web {
         /// <summary>
         /// Common Application Data
         /// </summary>
-        private static CommonAppData _commonApplicationData; 
+        private static CommonAppData _commonApplicationData;
+        /// <summary>
+        /// Parameters
+        /// </summary>
+        private static Parameters _parameters; 
         /// <summary>
         /// Database description
         /// </summary>
@@ -62,6 +66,12 @@ namespace TNS.AdExpress.VP.Loader.Domain.Web {
         /// </summary>
         public static string CountryConfigurationDirectoryRoot {
             get { return _countryConfigurationDirectoryRoot; }
+        }
+        /// <summary>
+        /// Get Parameters
+        /// </summary>
+        public static Parameters Parameters {
+            get { return _parameters; }
         }
         /// <summary>
         /// Get Common Application Data
@@ -92,6 +102,7 @@ namespace TNS.AdExpress.VP.Loader.Domain.Web {
             _dataBase = new DataBase(new XmlReaderDataSource(Path.Combine(countryConfigurationDirectoryRoot, TNS.AdExpress.Constantes.Web.ConfigurationFile.DATABASE_CONFIGURATION_FILENAME)));
             _coreLayers = CoreLayersXL.Load(new XmlReaderDataSource(Path.Combine(countryConfigurationDirectoryRoot, TNS.AdExpress.Constantes.Web.ConfigurationFile.CORE_LAYERS_CONFIGURATION_FILENAME)));
             _commonApplicationData = new CommonAppData(Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "RenaultLoader"), "parameters.xml"));
+            _parameters = ParametersXL.Load(new XmlReaderDataSource(Path.Combine(countryConfigurationDirectoryRoot, "parameters.xml")));
         }
         #endregion
 

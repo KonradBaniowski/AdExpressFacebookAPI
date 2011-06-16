@@ -297,6 +297,9 @@ namespace RenaultLoader.ViewModel
             else if (e is VeillePromoExcelOpenFileException) {
                 MessageBox.Show("Impossible d'ouvrir le fichier", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            else if (e is VeillePromoExcelVisualException) {
+                MessageBox.Show("Une erreur est survenue lors du chargement du fichier Excel: Impossible de retrouver un fichier visuel", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             else if (e is VeillePromoInsertDbException) {
                 MessageBox.Show("Une erreur est survenue lors du chargement du fichier Excel", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }

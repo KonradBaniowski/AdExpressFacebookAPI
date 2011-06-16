@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Results;
+using TNS.AdExpress.VP.Loader.Domain;
 
 namespace TNS.AdExpressI.VP.Loader.Data {
     /// <summary>
@@ -22,6 +23,12 @@ namespace TNS.AdExpressI.VP.Loader.Data {
         /// <param name="dateTraitment">Date Traitment</param>
         /// <returns>Has Data or not for the date traiment passed in parameter</returns>
         bool HasData(DateTime dateTraitment);
+        /// <summary>
+        /// Get Picture File Name
+        /// </summary>
+        /// <param name="fileList">File List</param>
+        /// <returns>Picture File Name List</returns>
+        Dictionary<string, PictureMatching> GetPictureFileName(List<string> fileList);
         /// <summary>
         /// Delete data between dateBegin parameter and dateEnd parameter
         /// </summary>

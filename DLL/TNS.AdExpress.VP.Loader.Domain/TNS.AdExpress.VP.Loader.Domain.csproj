@@ -59,10 +59,13 @@
     <Compile Include="Classification\Item.cs" />
     <Compile Include="Constantes\Constantes.cs" />
     <Compile Include="CommonAppData.cs" />
+    <Compile Include="Parameters.cs" />
+    <Compile Include="PictureMatching.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApplicationParameters.cs" />
     <Compile Include="XmlLoader\AppParamtersXL.cs" />
     <Compile Include="XmlLoader\CommonAppDataXL.cs" />
+    <Compile Include="XmlLoader\ParametersXL.cs" />
     <Compile Include="XmlLoader\CoreLayersXL.cs" />
   </ItemGroup>
   <ItemGroup>
