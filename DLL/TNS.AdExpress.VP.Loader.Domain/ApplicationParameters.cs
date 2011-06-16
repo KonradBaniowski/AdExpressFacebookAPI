@@ -32,7 +32,11 @@ namespace TNS.AdExpress.VP.Loader.Domain.Web {
         /// <summary>
         /// Configuration Directory Country
         /// </summary>
-        private static string _countryConfigurationDirectoryRoot; 
+        private static string _countryConfigurationDirectoryRoot;
+        /// <summary>
+        /// Common Application Data
+        /// </summary>
+        private static CommonAppData _commonApplicationData; 
         /// <summary>
         /// Database description
         /// </summary>
@@ -60,6 +64,12 @@ namespace TNS.AdExpress.VP.Loader.Domain.Web {
             get { return _countryConfigurationDirectoryRoot; }
         }
         /// <summary>
+        /// Get Common Application Data
+        /// </summary>
+        public static CommonAppData CommonApplicationData {
+            get { return _commonApplicationData; }
+        }
+        /// <summary>
         /// Get Database description
         /// </summary>
         public static DataBase DataBaseDescription{
@@ -81,6 +91,7 @@ namespace TNS.AdExpress.VP.Loader.Domain.Web {
             _countryConfigurationDirectoryRoot = countryConfigurationDirectoryRoot;
             _dataBase = new DataBase(new XmlReaderDataSource(Path.Combine(countryConfigurationDirectoryRoot, TNS.AdExpress.Constantes.Web.ConfigurationFile.DATABASE_CONFIGURATION_FILENAME)));
             _coreLayers = CoreLayersXL.Load(new XmlReaderDataSource(Path.Combine(countryConfigurationDirectoryRoot, TNS.AdExpress.Constantes.Web.ConfigurationFile.CORE_LAYERS_CONFIGURATION_FILENAME)));
+            _commonApplicationData = new CommonAppData(Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Path.GetFileNameWithoutExtension(System.AppDomain.CurrentDomain.SetupInformation.ApplicationName)), "parameters.xml"));
         }
         #endregion
 

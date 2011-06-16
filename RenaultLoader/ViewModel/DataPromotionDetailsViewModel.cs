@@ -25,7 +25,9 @@ namespace RenaultLoader.ViewModel
         /// File Info to load
         /// </summary>
         private FileInfo _fInfo;
-
+        /// <summary>
+        /// Month to delete selected
+        /// </summary>
         private DateTime _monthToDelete;
 
         #region Commands
@@ -37,12 +39,13 @@ namespace RenaultLoader.ViewModel
         /// Save command
         /// </summary>
         private RelayCommand _saveCommand;
-
+        /// <summary>
+        /// Delete command
+        /// </summary>
         private RelayCommand _deleteCommand;
         #endregion
 
         #endregion
-
 
         #region  Properties
         public RelayCommand OpenCommand
@@ -120,26 +123,39 @@ namespace RenaultLoader.ViewModel
         /// </summary>
         public DataPromotionDetailsViewModel()
         {
+            if (ApplicationParameters.CommonApplicationData!=null 
+                && ApplicationParameters.CommonApplicationData.PathFile != null
+                && ApplicationParameters.CommonApplicationData.PathFile.Exists) {
+                CurrentFile = ApplicationParameters.CommonApplicationData.PathFile;
+            }
         }
         #endregion
 
         #region Traitment Command
+
+        #region ExecuteOpenFileDialog
         /// <summary>
         /// Tratment when open command is execute
         /// </summary>
         private void ExecuteOpenFileDialog()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog { };
+            OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = false;
             openFileDialog.Filter = "Excel Files (.xls;*xlsx)|*.xls;*xlsx";
             openFileDialog.FilterIndex = 1;
             openFileDialog.CheckFileExists = true;
+            if (CurrentFile != null && CurrentFile.Exists)
+                openFileDialog.InitialDirectory = Path.GetDirectoryName(CurrentFile.FullName);
 
-            if (openFileDialog.ShowDialog().Value)
+            if (openFileDialog.ShowDialog().Value) {
                 CurrentFile = new FileInfo(openFileDialog.FileName);
+                ApplicationParameters.CommonApplicationData.PathFile = CurrentFile;
+            }
 
         }
+        #endregion
 
+        #region ExecuteSave
         /// <summary>
         /// Tratment when save command is execute
         /// </summary>
@@ -163,6 +179,9 @@ namespace RenaultLoader.ViewModel
                 OnError(e);
             }
         }
+        #endregion
+
+        #region ExecuteDelete
         /// Tratment when delete command is execute
         /// </summary>
         private void ExecuteDelete()
@@ -190,6 +209,8 @@ namespace RenaultLoader.ViewModel
                 OnError(e);
             }
         }
+        #endregion
+
         #endregion
 
         #region Gestion des erreurs
