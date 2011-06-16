@@ -262,7 +262,7 @@
     <table enumId="230" description="Promo :  Product category"   schemaEnumId="11" label="category" prefix="ct"/>
     <table enumId="231" description="Promo : Brand "   schemaEnumId="11" label="brand" prefix="br"/>
     <table enumId="232" description="Promo : Circuit "   schemaEnumId="11" label="circuit" prefix="cr"/>
-    <table enumId="233" description="Promo : Data  "   schemaEnumId="11" label="data_promo" prefix="wp"/>
+    <table enumId="233" description="Promo : Data  "   schemaEnumId="11" label="data_promotion" prefix="wp"/>
     <table enumId="234" description="Promo : Product Segment"   schemaEnumId="11" label="segment" prefix="sg"/>
 
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>

@@ -96,9 +96,7 @@ namespace TNS.AdExpress.Domain.Results
             _idProduct = idProduct;
             if (idBrand < 1) throw new ArgumentException(" Paramter idBrand  is invalid");
             _idBrand = idBrand;
-            if (dateBegin.ToString().Length != 8) throw new ArgumentException(" Paramter dateBegin is invalid");
             _dateBegin = dateBegin;
-            if (dateEnd.ToString().Length != 8) throw new ArgumentException(" Paramter dateEnd is invalid");
             _dateEnd = dateEnd;
             if (idSegment < 1) throw new ArgumentException(" Paramter idSegment is invalid");
             _idSegment = idSegment;
@@ -106,7 +104,6 @@ namespace TNS.AdExpress.Domain.Results
             _idCategory = idCategory;
             if (idCircuit < 1) throw new ArgumentException(" Paramter idCircuit is invalid");
             _idCircuit = idCircuit;
-            if (string.IsNullOrEmpty(promotionContent)) throw new ArgumentNullException(" Paramter promotionContent canot be null");
             _promotionContent = promotionContent;
             _conditionVisual = conditionVisual;
             _conditionText = conditionText;

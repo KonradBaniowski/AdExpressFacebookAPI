@@ -12,11 +12,13 @@ using TNS.AdExpress.VP.Loader.Domain.Classification;
 using TNS.AdExpress.Constantes.DB;
 using System.Data;
 
-namespace TNS.AdExpressI.VP.Loader.DAL.Data {
+namespace TNS.AdExpressI.VP.Loader.DAL.Data
+{
     /// <summary>
     /// Promo Veille Class
     /// </summary>
-    public abstract class DataVeillePromoDAL : VeillePromoDAL, IDataVeillePromoDAL {
+    public abstract class DataVeillePromoDAL : VeillePromoDAL, IDataVeillePromoDAL
+    {
 
         #region Constructor
         /// <summary>
@@ -24,7 +26,9 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data {
         /// </summary>
         /// <param name="dataBase">Data Base</param>
         /// <param name="dataLanguage">Data Language</param>
-        public DataVeillePromoDAL(DataBase dataBase):base(dataBase) {
+        public DataVeillePromoDAL(DataBase dataBase)
+            : base(dataBase)
+        {
         }
         #endregion
 
@@ -36,7 +40,8 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data {
         /// </summary>
         /// <param name="source">data source</param>
         /// <returns>Data Promotion Detail List</returns>
-        public DataPromotionDetails GetDataPromotionDetailList(FileDataSource source) {
+        public DataPromotionDetails GetDataPromotionDetailList(FileDataSource source)
+        {
 
             #region Variables
             List<DataPromotionDetail> dataPromotionDetailList = new List<DataPromotionDetail>();
@@ -70,7 +75,8 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data {
             List<string> promotionVisual;
             #endregion
 
-            try {
+            try
+            {
 
                 #region Initialize Excel Object
                 excel = new Workbook();
@@ -80,19 +86,24 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data {
 
                 #region Load File
                 FileStream fileStream = (FileStream)source.GetSource();
-                try {
+                try
+                {
                     dateFile = DateTime.ParseExact(Path.GetFileNameWithoutExtension(fileStream.Name).Replace("Renault_", ""), "yyyyMM", CultureInfo.InvariantCulture);
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     throw new VeillePromoDALExcelException("Incorrect File Name: " + fileStream.Name, e);
                 }
-                try {
+                try
+                {
                     excel.Open((Stream)fileStream);
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     throw new VeillePromoDALExcelOpenFileException("Impossible to open excel file Name: " + fileStream.Name, e);
                 }
-                finally {
+                finally
+                {
                     fileStream.Close();
                 }
                 #endregion
@@ -100,7 +111,8 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data {
                 Worksheet sheet = excel.Worksheets[0];
                 Aspose.Cells.Cells cells = sheet.Cells;
 
-                for (int line = startLineData; cells[line, startColumnData].Value != null; line++) {
+                for (int line = startLineData; cells[line, startColumnData].Value != null; line++)
+                {
 
                     #region Get Product
                     idProduct = AllClassification.GetProduct((string)cells[line, columnProduct].Value).Id;
@@ -135,19 +147,21 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data {
                     #endregion
 
                     #region Get Visuals condition
-                    conditionVisual = new List<string>(((string)cells[line, columnVisualsCondition].Value).Split(';'));
+                    conditionVisual = (cells[line, columnVisualsCondition].Value != null) ? new List<string>(((string)cells[line, columnVisualsCondition].Value).Split(';')) : null;
                     #endregion
 
                     #region Get Text Condition
-                    conditionText = (string)cells[line, columnTextCondition].Value;
+
+                    conditionText = (cells[line, columnTextCondition].Value != null) ? (string)cells[line, columnTextCondition].Value : null;
                     #endregion
 
                     #region Get Brand Promotion
-                    promotionBrand = (string)cells[line, columnBrandPromo].Value;
+
+                    promotionBrand = (cells[line, columnBrandPromo].Value != null) ? (string)cells[line, columnBrandPromo].Value : null;
                     #endregion
 
                     #region Get Visuals Promotion
-                    promotionVisual = new List<string>(((string)cells[line, columnVisualsPromo].Value).Split(';'));
+                    promotionVisual = (cells[line, columnVisualsPromo].Value != null) ? new List<string>(((string)cells[line, columnVisualsPromo].Value).Split(';')) : null;
                     #endregion
 
                     dataPromotionDetailList.Add(new DataPromotionDetail(
@@ -163,14 +177,16 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data {
                                 conditionText,
                                 promotionBrand,
                                 promotionVisual));
-                               
+
                 }
-                return new DataPromotionDetails(dateFile,  dataPromotionDetailList);
+                return new DataPromotionDetails(dateFile, dataPromotionDetailList);
             }
-            catch (System.Exception err) {
+            catch (System.Exception err)
+            {
                 throw (new VeillePromoDALException("Impossible to Get Data Promotion Detail List", err));
             }
-            finally {
+            finally
+            {
                 if (excel != null) excel = null;
             }
         }
@@ -182,7 +198,8 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data {
         /// </summary>
         /// <param name="dateTraitment">Date Traitment</param>
         /// <returns>Has Data or not for the date traiment passed in parameter</returns>
-        public bool HasData(DateTime dateTraitment) {
+        public bool HasData(DateTime dateTraitment)
+        {
 
             #region Variables
             StringBuilder sql = new StringBuilder();
@@ -190,21 +207,23 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data {
             DataSet ds = null;
             #endregion
 
-            try {
+            try
+            {
 
                 #region Construct global query
                 sql = new StringBuilder(200);
-                sql.AppendFormat("select count(*) nb from {0} WHERE DATE_TRAITMENT = {1} ", tblData.Sql, dateTraitment.ToString("yyyyMM"));
+                sql.AppendFormat("select count(*) nb from {0} WHERE LOAD_DATE = {1} ", tblData.Sql, dateTraitment.ToString("yyyyMM"));
                 #endregion
 
                 #region Execute Query
                 ds = _source.Fill(sql.ToString());
                 #endregion
 
-                return (ds != null && ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows != null && ds.Tables[0].Rows.Count == 1 && ((Int64)ds.Tables[0].Rows[0]["nb"])>0);
+                return (ds != null && ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows != null && ds.Tables[0].Rows.Count == 1 && (Convert.ToInt64(ds.Tables[0].Rows[0]["nb"]) > 0));
 
             }
-            catch (System.Exception err) {
+            catch (System.Exception err)
+            {
                 throw new VeillePromoDALDbException("DataAccess HasData Error. sql: " + sql.ToString(), err);
             }
         }
@@ -216,18 +235,20 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data {
         /// </summary>
         /// <param name="dateBegin">Date Begin</param>
         /// <param name="dateEnd">Date End</param>
-        public void DeleteData(DateTime dateBeginTraitment, DateTime dateEndTraitment) {
+        public void DeleteData(DateTime dateBeginTraitment, DateTime dateEndTraitment)
+        {
 
             #region Variables
             StringBuilder sql = new StringBuilder();
             Table tblData = _dataBase.GetTable(TableIds.dataPromotion);
             #endregion
 
-            try {
+            try
+            {
 
                 #region Construct global query
                 sql = new StringBuilder(200);
-                sql.AppendFormat("DELETE FROM {0} WHERE DATE_TRAITMENT>={1} AND DATE_TRAITMENT<={2} "
+                sql.AppendFormat("DELETE FROM {0} WHERE LOAD_DATE>={1} AND LOAD_DATE<={2} "
                     , tblData.Sql
                     , dateBeginTraitment.ToString("yyyyMM")
                     , dateEndTraitment.ToString("yyyyMM"));
@@ -238,7 +259,8 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data {
                 #endregion
 
             }
-            catch (System.Exception err) {
+            catch (System.Exception err)
+            {
                 throw new VeillePromoDALDbException("DataAccess DeleteData Error. sql: " + sql.ToString(), err);
             }
         }
@@ -250,54 +272,67 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data {
         /// </summary>
         /// <param name="dateTraitment">Date Traitment</param>
         /// <param name="dataPromotionDetail">Data Promotion Detail</param>
-        public void InsertDataPromotionDetail(DateTime dateTraitment, DataPromotionDetail dataPromotionDetail){
+        public void InsertDataPromotionDetail(DateTime dateTraitment, DataPromotionDetail dataPromotionDetail)
+        {
 
             #region Variables
             StringBuilder sql = new StringBuilder();
             Table tblData = _dataBase.GetTable(TableIds.dataPromotion);
             #endregion
 
-            try {
+            try
+            {
 
                 #region Construct global query
                 sql = new StringBuilder(200);
+                string promoContent = (!string.IsNullOrEmpty(dataPromotionDetail.PromotionContent) ? dataPromotionDetail.PromotionContent.Replace("'", "''") : "''");
+                string conditionText = (!string.IsNullOrEmpty(dataPromotionDetail.ConditionText) ? dataPromotionDetail.ConditionText.Replace("'", "''") : "''");
+                string promotionBrand = (!string.IsNullOrEmpty(dataPromotionDetail.PromotionBrand) ? dataPromotionDetail.PromotionBrand.Replace("'", "''") : "''");
+                string conditionVisual = (dataPromotionDetail.ConditionVisual != null && dataPromotionDetail.ConditionVisual.Count > 0) ?
+                string.Join(",", dataPromotionDetail.ConditionVisual.ConvertAll<string>(p => p.Replace("'", "''")).ToArray()) : "";
+                string promotionVisual = (dataPromotionDetail.PromotionVisual != null && dataPromotionDetail.PromotionVisual.Count > 0) ?
+                    string.Join(",", dataPromotionDetail.PromotionVisual.ConvertAll<string>(p => p.Replace("'", "''")).ToArray()) : "";
+                
                 sql.AppendFormat("INSERT INTO {0} ", tblData.Sql);
 
-                sql.Append("(ID_DATA_PROMOTION, ID_PRODUCT, ID_BRAND, DATE_BEGIN_NUM, DATE_END_NUM, ID_SEGMENT, ID_CATEGORY, ID_CIRCUIT, PROMOTION_CONTENT, CONDITION_VISUAL, CONDITION_TEXT, PROMOTION_BRAND, PROMOTION_VISUAL, ACTIVATION, DATE_TRAITMENT) ");
+                sql.Append("(ID_DATA_PROMOTION, ID_PRODUCT, ID_BRAND, DATE_BEGIN_NUM, DATE_END_NUM, ID_SEGMENT, ID_CATEGORY, ID_CIRCUIT, PROMOTION_CONTENT, CONDITION_VISUAL, CONDITION_TEXT, PROMOTION_BRAND, PROMOTION_VISUAL, ACTIVATION, LOAD_DATE) ");
 
                 sql.Append("VALUES ");
 
-                sql.AppendFormat("({0}, {1}, {2}, to_date('{3}','YYYYMMDDHH24MISS'), to_date('{4}','YYYYMMDDHH24MISS'), {5}, {6}, {7}, '{8}', '{9}', '{10}', '{11}', '{12}', {13}, {14}) ",
-                "(select PROMO03.SEQ_DATA_PROMOTION.NEXTVAL from dual)",
+                sql.AppendFormat("({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, '{8}', '{9}', '{10}', '{11}', '{12}', {13}, {14}) ",
+                "PROMO03.SEQ_DATA_PROMOTION.NEXTVAL",
                 dataPromotionDetail.IdProduct,
                 dataPromotionDetail.IdBrand,
-                dataPromotionDetail.DateBegin.ToString("yyyyMMddHHmmss"),
-                dataPromotionDetail.DateEnd.ToString("yyyyMMddHHmmss"),
+               Convert.ToInt64( dataPromotionDetail.DateBegin.ToString("yyyyMMdd")),
+                Convert.ToInt64( dataPromotionDetail.DateEnd.ToString("yyyyMMdd")),
                 dataPromotionDetail.IdSegment,
                 dataPromotionDetail.IdCategory,
                 dataPromotionDetail.IdCircuit,
-                dataPromotionDetail.PromotionContent.Replace("'", "''"),
-                string.Join(",", dataPromotionDetail.ConditionVisual.ConvertAll<string>(p => p.Replace("'", "''")).ToArray()),
-                dataPromotionDetail.ConditionText.Replace("'", "''"),
-                dataPromotionDetail.PromotionBrand.Replace("'", "''"),
-                string.Join(",", dataPromotionDetail.PromotionVisual.ConvertAll<string>(p => p.Replace("'", "''")).ToArray()),
+                promoContent,
+                conditionVisual,
+                conditionText,
+                promotionBrand,
+                promotionVisual,
                 ActivationValues.ACTIVATED,
-                dateTraitment.ToString("yyyyMM"));
+                 Convert.ToInt64( dateTraitment.ToString("yyyyMM")));
 
                 #endregion
-                
+
                 #region Execute Query
                 _source.Insert(sql.ToString());
                 #endregion
 
             }
-            catch (System.Exception err) {
+            catch (System.Exception err)
+            {
                 throw new VeillePromoDALDbException("DataAccess InsertDataPromotionDetail Error. sql: " + sql.ToString(), err);
             }
         }
         #endregion
 
         #endregion
+
+        
 
     }
 }

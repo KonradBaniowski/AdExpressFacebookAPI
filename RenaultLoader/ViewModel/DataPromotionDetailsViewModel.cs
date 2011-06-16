@@ -26,7 +26,9 @@ namespace RenaultLoader.ViewModel
         /// </summary>
         private FileInfo _fInfo;
 
-        #region Command
+        private DateTime _monthToDelete;
+
+        #region Commands
         /// <summary>
         /// Open File Command
         /// </summary>
@@ -35,13 +37,12 @@ namespace RenaultLoader.ViewModel
         /// Save command
         /// </summary>
         private RelayCommand _saveCommand;
+
+        private RelayCommand _deleteCommand;
         #endregion
 
         #endregion
 
-        #region Commands
-
-        #endregion
 
         #region  Properties
         public RelayCommand OpenCommand
@@ -62,6 +63,28 @@ namespace RenaultLoader.ViewModel
                     this._saveCommand = new RelayCommand(ExecuteSave);
 
                 return this._saveCommand;
+            }
+        }
+        public RelayCommand DeleteCommand
+        {
+            get
+            {
+                if (this._deleteCommand == null)
+                    this._deleteCommand = new RelayCommand(ExecuteDelete);
+
+                return this._deleteCommand;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime MonthToDelete
+        {
+            get { return _monthToDelete; }
+            set
+            {
+                _monthToDelete = value;
+                RaisePropertyChanged("MonthToDelete");
             }
         }
         /// <summary>
@@ -137,6 +160,33 @@ namespace RenaultLoader.ViewModel
                 MessageBox.Show("Le fichier a été chargé", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception e) {
+                OnError(e);
+            }
+        }
+        /// Tratment when delete command is execute
+        /// </summary>
+        private void ExecuteDelete()
+        {
+            try
+            {
+                IDataVeillePromo veillePromo = (IDataVeillePromo)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.rules].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.rules].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { ApplicationParameters.DataBaseDescription }, null, null, null);
+
+                if (veillePromo.HasData(_monthToDelete))
+                {
+                    MessageBoxResult messageBoxResult = MessageBox.Show("Des données existent en base de données pour cette periode, voulez vous les effacer ?", "", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    if (messageBoxResult == MessageBoxResult.Cancel)
+                        return;
+                    if (messageBoxResult == MessageBoxResult.Yes)
+                    {
+                        veillePromo.DeleteData(_monthToDelete, _monthToDelete);
+                        MessageBox.Show("Les données ont été supprimés", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
+
+                else  MessageBox.Show("Aucune données en base pour cette période", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception e)
+            {
                 OnError(e);
             }
         }

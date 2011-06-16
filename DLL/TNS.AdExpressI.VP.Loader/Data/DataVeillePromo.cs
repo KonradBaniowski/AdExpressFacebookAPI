@@ -92,13 +92,13 @@ namespace TNS.AdExpressI.VP.Loader.Data {
                 #endregion
 
                 #region Traitment
-                if (veillePromoDAL.HasData(dataPromotionDetails.DateTraitment)) {
+                if (!veillePromoDAL.HasData(dataPromotionDetails.DateTraitment)) {
                     foreach (DataPromotionDetail cDataPromotionDetail in dataPromotionDetails.DataPromotionDetailList) {
                         veillePromoDAL.InsertDataPromotionDetail(dataPromotionDetails.DateTraitment, cDataPromotionDetail);
                     }
                 }
                 else {
-                    throw new VeillePromoInsertDbException("Dta Allready Exist for the date");
+                    throw new VeillePromoInsertDbException("Data Allready Exist for the date");
                 }
                 #endregion
 
