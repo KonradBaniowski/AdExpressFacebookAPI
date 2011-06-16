@@ -26,9 +26,18 @@ namespace RenaultLoader.ViewModel
         /// </summary>
         private FileInfo _fInfo;
         /// <summary>
-        /// Month to delete selected
+        /// End period to delete
         /// </summary>
-        private DateTime _monthToDelete;
+        private DateTime _periodEndToDelete = DateTime.Now;
+
+        /// <summary>
+        /// Begining period to delete
+        /// </summary>
+        private DateTime _periodBeginningToDelete = DateTime.Now;
+
+        private bool _isIndeterminateLoading = false;
+
+        private bool _isIndeterminateDeleting = false;
 
         #region Commands
         /// <summary>
@@ -81,13 +90,49 @@ namespace RenaultLoader.ViewModel
         /// <summary>
         /// 
         /// </summary>
-        public DateTime MonthToDelete
+        public bool IsIndeterminateDeleting
         {
-            get { return _monthToDelete; }
+            get { return _isIndeterminateDeleting; }
             set
             {
-                _monthToDelete = value;
-                RaisePropertyChanged("MonthToDelete");
+                _isIndeterminateDeleting = value;
+                RaisePropertyChanged("IsIndeterminateDeleting");
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsIndeterminateLoading
+        {
+            get { return _isIndeterminateLoading; }
+            set
+            {
+                _isIndeterminateLoading = value;
+                RaisePropertyChanged("IsIndeterminateLoading");
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime PeriodBeginningToDelete
+        {
+            get { return _periodBeginningToDelete; }
+            set
+            {
+                _periodBeginningToDelete = value;
+                RaisePropertyChanged("PeriodBeginningToDelete");
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime PeriodEndToDelete
+        {
+            get { return _periodEndToDelete; }
+            set
+            {
+                _periodEndToDelete = value;
+                RaisePropertyChanged("PeriodEndToDelete");
             }
         }
         /// <summary>
@@ -171,8 +216,9 @@ namespace RenaultLoader.ViewModel
                     if (messageBoxResult == MessageBoxResult.Yes)
                         veillePromo.DeleteData(dataPromotionDetails.DateTraitment, dataPromotionDetails.DateTraitment);
                 }
-
+                IsIndeterminateLoading = true;
                 veillePromo.InsertDataPromotionDetails(dataPromotionDetails);
+                IsIndeterminateLoading = false;
                 MessageBox.Show("Le fichier a été chargé", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception e) {
@@ -190,14 +236,16 @@ namespace RenaultLoader.ViewModel
             {
                 IDataVeillePromo veillePromo = (IDataVeillePromo)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.rules].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.rules].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { ApplicationParameters.DataBaseDescription }, null, null, null);
 
-                if (veillePromo.HasData(_monthToDelete))
+                if (veillePromo.HasData(_periodBeginningToDelete) || veillePromo.HasData(_periodEndToDelete))
                 {
                     MessageBoxResult messageBoxResult = MessageBox.Show("Des données existent en base de données pour cette periode, voulez vous les effacer ?", "", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                     if (messageBoxResult == MessageBoxResult.Cancel)
                         return;
                     if (messageBoxResult == MessageBoxResult.Yes)
                     {
-                        veillePromo.DeleteData(_monthToDelete, _monthToDelete);
+                        IsIndeterminateDeleting = true;
+                        veillePromo.DeleteData(_periodBeginningToDelete, _periodEndToDelete);
+                        IsIndeterminateDeleting = false;
                         MessageBox.Show("Les données ont été supprimés", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
