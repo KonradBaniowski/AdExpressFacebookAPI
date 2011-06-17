@@ -4,6 +4,8 @@
   <vehicle id="adnettrack" databaseId="9" showInsertions="false" showCreations="true" autopromo="false">
     <!-- Units-->
     <allowedUnits defaultUnit="versionNb">
+      <allowedUnit>euro</allowedUnit>
+      <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>occurence</allowedUnit>
       <allowedUnit>versionNb</allowedUnit>
     </allowedUnits>

@@ -150,6 +150,18 @@ namespace AdExpress.Private.Results{
         }
         #endregion
 
+
+        #endregion
+
+        #region Abstract Methods
+        /// <summary>
+        /// Get next Url from contextual menu
+        /// </summary>
+        /// <returns></returns>
+        protected override string GetNextUrlFromMenu()
+        {
+            return string.Empty;//this.MenuWebControl2.NextUrl;
+        }
         #endregion
 
     }

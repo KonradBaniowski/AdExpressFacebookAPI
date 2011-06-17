@@ -161,6 +161,7 @@ td.L0nb{
 	padding-left:4px;
 	padding-right:4px;
 	text-align:right;
+	white-space: nowrap;
 }
 /* Level 1 */
 td.L1{
