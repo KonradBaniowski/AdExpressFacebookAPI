@@ -2075,5 +2075,12 @@
     <!-- Add text for Retailer in Finland -->
     <item mnemonic="w2857" type="System.String">Détaillant</item>
     <!-- ********************************* -->
+    <!-- Add text for Module VP -->
+    <item mnemonic="w2858" type="System.String">Veille promotionnelle</item>
+    <item mnemonic="w2859" type="System.String"></item>
+    <item mnemonic="w2860" type="System.String">Plan d'actions</item>
+    <item mnemonic="w2861" type="System.String"></item>
+    <item mnemonic="w2862" type="System.String">Calendrier d'actions</item>
+    <!-- ********************************* -->
   </items>
 </localization>

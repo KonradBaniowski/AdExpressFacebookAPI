@@ -1751,6 +1751,24 @@
       </module>
     </moduleGroup>
 
+    <!-- ***************************************************************************************************************************-->
+    <!-- ***************************************************************************************************************************-->
+    <!-- **													                    Veille Promotionnele Renault				                                      **-->
+    <!-- ***************************************************************************************************************************-->
+    <!-- ***************************************************************************************************************************-->
+
+    <moduleGroup name="Veille promotionnelle renault" type="1" privilegecode="158" traductioncode="2858" flashUrl="/Flash/Common/GroupedeModuleAlerte.swf" missingFlashUrl="/Images/Common/FlashReplacement/GroupedeModuleAlerte.gif" descriptionWebTextId="2859">
+      <!-- *****************************************         Plan d'actions                *****************************************-->
+      <module name="Plan d'actions" privilegecode="7854" traductioncode="2860" moduleCategoryId="0" urlNextPage="/Private/Results/VpScheduleResults.aspx" descriptionWebTextId="2861" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
+        <RulesLayer name="Default VP rules layers" assemblyName="TNS.AdExpressI.VP.Default.dll" class="TNS.AdExpressI.VP.Default.Result"/>
+        <DataAccessLayer name="Default VP data access layers" assemblyName="TNS.AdExpressI.VP.DAL.Default.dll" class="TNS.AdExpressI.VP.DAL.Default.ResultDAL"/>
+        <results>
+          <page id="0" resultid="65" name="Calendrier d'actions" traductioncode="2862" url="/Private/Results/VpScheduleResults.aspx" rawExcelUrl="" printExcelUrl="" menuTextId="1983" helpUrl="/Private/Helps/Default.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          </page>
+        </results>
+      </module>
+    </moduleGroup>
+
 
   </moduleGroups>
 </configuration>
