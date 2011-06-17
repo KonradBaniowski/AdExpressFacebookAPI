@@ -150,19 +150,20 @@ namespace TNS.AdExpressI.Classification.DAL {
                 sql.AppendFormat(" from {0}" , WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia).Sql + _session.DataLanguage );
 				
                 /*SQL conditions */
-                sql.Append(" where");
+                sql.Append(" where 0=0");
 
                 /*Get the identifier of the selected current media type. 
                  * Example if the user as selected the media PRESS,
                 the joins could be like this : id_vehicle = 3" */
-                sql.AppendFormat(" id_vehicle={0}", _session.CustomerDataFilters.SelectedMediaType);
+                if (_session.CustomerDataFilters.SelectedMediaType!=null && _session.CustomerDataFilters.SelectedMediaType.Length > 0)
+                    sql.AppendFormat(" and id_vehicle={0}", _session.CustomerDataFilters.SelectedMediaType);
 
                 /*Filter data with the identifier of the sub media selected.
                  Remark : Use in Russia
                  */
                 string idSubMedia = _session.CustomerDataFilters.SelectedMediaCategory;
                 if (idSubMedia != null && idSubMedia.Length > 0)
-                    sql.AppendFormat(" id_category ={0}", idSubMedia);
+                    sql.AppendFormat(" and id_category ={0}", idSubMedia);
 
                 //This section is specifical to the media Internet. obtains the list of active vehicle for Internet. (Only for France)
 				if (VehiclesInformation.Contains(VehicleClassificationCst.internet) && ((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(VehicleClassificationCst.internet)) {

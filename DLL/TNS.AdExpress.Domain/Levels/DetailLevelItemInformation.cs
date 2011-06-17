@@ -21,116 +21,276 @@ namespace TNS.AdExpress.Domain.Level{
 		/// <summary>
 		/// Eléments compsant les Niveaux de détailles
 		/// </summary>
-		public enum Levels{
-			/// <summary>
-			/// Media
-			/// </summary>
-			vehicle=1,
-			/// <summary>
-			/// Catégorie
-			/// </summary>
-			category=2,
-			/// <summary>
-			/// Support
-			/// </summary>
-			media=3,
-			/// <summary>
-			/// Centre d'interet
-			/// </summary>
-			interestCenter=4,
-			/// <summary>
-			/// Régie
-			/// </summary>
-			mediaSeller=5,
-			/// <summary>
-			/// Version
-			/// </summary>
-			slogan=6,
-			/// <summary>
-			/// Groupe de société
-			/// </summary>
-			holdingCompany=7,
-			/// <summary>
-			/// Annonceur
-			/// </summary>
-			advertiser=8,
-			/// <summary>
-			/// Marque
-			/// </summary>
-			brand=9,
-			/// <summary>
-			/// Produit
-			/// </summary>
-			product=10,
-			/// <summary>
-			/// Famille
-			/// </summary>
-			sector=11,
-			/// <summary>
-			/// Classe
-			/// </summary>
-			subSector=12,
-			/// <summary>
-			/// Groupe
-			/// </summary>
-			group=13,
-			/// <summary>
-			/// Variété
-			/// </summary>
-			segment=14,
-			/// <summary>
-			/// Groupe d'agences
-			/// </summary>
-			groupMediaAgency=15,
-			/// <summary>
-			/// Agence
-			/// </summary>
-			agency=16,
-			/// <summary>
-			/// Titre
-			/// </summary>
-			title=17,
-			/// <summary>
-			/// Date
-			/// </summary>
-			date=18,
-			/// <summary>
-			/// Durée
-			/// </summary>
-			duration=19,
-			/// <summary>
-			/// Format
-			/// </summary>
-			format=20,
-			/// <summary>
-			/// Code écran
-			/// </summary>
-			commecialBreak=21,
-			/// <summary>
-			/// Format affiche
-			/// </summary>
-			typeBoard=22,
-			/// <summary>
-			/// Genre d'émission
-			/// </summary>
-			programType=23,
-			/// <summary>
-			/// Emission
-			/// </summary>
-			program=24,
-			/// <summary>
-			/// Forme de parrainage
-			/// </summary>
-			sponsorshipForm=25,
+        public enum Levels {
+            /// <summary>
+            /// Media
+            /// </summary>
+            vehicle = 1,
+            /// <summary>
+            /// Catégorie
+            /// </summary>
+            category = 2,
+            /// <summary>
+            /// Support
+            /// </summary>
+            media = 3,
+            /// <summary>
+            /// Centre d'interet
+            /// </summary>
+            interestCenter = 4,
+            /// <summary>
+            /// Régie
+            /// </summary>
+            mediaSeller = 5,
+            /// <summary>
+            /// Version
+            /// </summary>
+            slogan = 6,
+            /// <summary>
+            /// Groupe de société
+            /// </summary>
+            holdingCompany = 7,
+            /// <summary>
+            /// Annonceur
+            /// </summary>
+            advertiser = 8,
+            /// <summary>
+            /// Marque
+            /// </summary>
+            brand = 9,
+            /// <summary>
+            /// Produit
+            /// </summary>
+            product = 10,
+            /// <summary>
+            /// Famille
+            /// </summary>
+            sector = 11,
+            /// <summary>
+            /// Classe
+            /// </summary>
+            subSector = 12,
+            /// <summary>
+            /// Groupe
+            /// </summary>
+            group = 13,
+            /// <summary>
+            /// Variété
+            /// </summary>
+            segment = 14,
+            /// <summary>
+            /// Groupe d'agences
+            /// </summary>
+            groupMediaAgency = 15,
+            /// <summary>
+            /// Agence
+            /// </summary>
+            agency = 16,
+            /// <summary>
+            /// Titre
+            /// </summary>
+            title = 17,
+            /// <summary>
+            /// Date
+            /// </summary>
+            date = 18,
+            /// <summary>
+            /// Durée
+            /// </summary>
+            duration = 19,
+            /// <summary>
+            /// Format
+            /// </summary>
+            format = 20,
+            /// <summary>
+            /// Code écran
+            /// </summary>
+            commecialBreak = 21,
+            /// <summary>
+            /// Format affiche
+            /// </summary>
+            typeBoard = 22,
+            /// <summary>
+            /// Genre d'émission
+            /// </summary>
+            programType = 23,
+            /// <summary>
+            /// Emission
+            /// </summary>
+            program = 24,
+            /// <summary>
+            /// Forme de parrainage
+            /// </summary>
+            sponsorshipForm = 25,
             /// <summary>
             /// Pays
             /// </summary>
-            country=26,
+            country = 26,
             /// <summary>
             /// Basic media
             /// </summary>
-            basicMedia=27
-		}
+            basicMedia = 27,
+            /// <summary>
+            /// Sub brand
+            /// </summary>
+            subBrand = 28,
+            /// <summary>
+            /// Network
+            /// </summary>
+            network = 29,
+            /// <summary>
+            /// Region
+            /// </summary>
+            region = 30,
+            /// <summary>
+            /// TV Company
+            /// </summary>
+            tvCompany = 31,
+            /// <summary>
+            /// Holding
+            /// </summary>
+            holding = 32,
+            /// <summary>
+            /// Station
+            /// </summary>
+            station = 33,
+            /// <summary>
+            /// Publishing House
+            /// </summary>
+            publishingHouse = 34,
+            /// <summary>
+            /// Syndicate
+            /// </summary>
+            syndicate = 35,
+            /// <summary>
+            /// Periodic
+            /// </summary>
+            periodic = 36,
+            /// <summary>
+            /// Edition Type
+            /// </summary>
+            editionType = 37,
+            /// <summary>
+            ///Advertisement Type
+            /// </summary>
+            advertisementType = 38,
+            /// <summary>
+            /// National Channel
+            /// </summary>
+            nationalChannel = 39,
+            /// <summary>
+            /// TV Channel
+            /// </summary>
+            tvChannel = 40,
+            /// <summary>
+            /// Advertisment
+            /// </summary>
+            advertisment = 41,
+            /// <summary>
+            /// Break distribution
+            /// </summary>
+            breakDistribution = 42,
+            /// <summary>
+            /// Radio holding
+            /// </summary>
+            radioHolding = 43,
+            /// <summary>
+            /// Edition
+            /// </summary>
+            edition = 44,
+            /// <summary>
+            /// Position
+            /// </summary>
+            position = 45,
+            /// <summary>
+            /// St Format
+            /// </summary>
+            stFormat = 46,
+            /// <summary>
+            ///St Design
+            /// </summary>
+            stDesign = 47,
+            /// <summary>
+            /// Carrier type
+            /// </summary>
+            carrierType = 48,
+            /// <summary>
+            ///Outdoor agency
+            /// </summary>
+            outdoorAgency = 49,
+            /// <summary>
+            /// Outdoor Network
+            /// </summary>
+            outdoorNetwork = 50,
+            /// <summary>
+            /// District
+            /// </summary>
+            district = 51,
+            /// <summary>
+            /// Address
+            /// </summary>
+            address = 52,
+            /// <summary>
+            /// Site
+            /// </summary>
+            site = 53,
+            /// <summary>
+            /// Site section
+            /// </summary>
+            siteSection = 54,
+            /// <summary>
+            /// Site subsection
+            /// </summary>
+            siteSubsection = 55,
+            /// <summary>
+            /// Advertisment file type
+            /// </summary>
+            advertismentFileType = 56,
+            /// <summary>
+            /// Advertisment display type
+            /// </summary>
+            advertismentDisplayType = 57,
+            /// <summary>
+            /// Age
+            /// </summary>
+            age = 58,
+            /// <summary>
+            /// Gender
+            /// </summary>
+            gender = 59,
+            /// <summary>
+            /// Distribution type 
+            /// </summary>
+            distributionType = 60,
+            /// <summary>
+            /// Advertisment St format
+            /// </summary>
+            advertismentStFormat = 61,
+            /// <summary>
+            /// Type of publication 
+            /// </summary>
+            publicationType = 62,
+            /// <summary>
+            /// Circuit VP
+            /// </summary>
+            vpCircuit = 63,
+            /// <summary>
+            /// Segmennt VP
+            /// </summary>
+            vpSegment = 64,
+            /// <summary>
+            /// Sub Segment VP
+            /// </summary>
+            vpSubSegment = 65,
+            /// <summary>
+            /// Brand VP
+            /// </summary>
+            vpBrand = 66,
+            /// <summary>
+            /// Product VP
+            /// </summary>
+            vpProduct = 67
+        }
 		#endregion
 
 		#region Variables

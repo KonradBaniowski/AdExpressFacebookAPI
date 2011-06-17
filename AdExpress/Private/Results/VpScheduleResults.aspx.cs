@@ -150,7 +150,6 @@ namespace AdExpress.Private.Results{
         }
         #endregion
 
-
         #endregion
 
         #region Abstract Methods
@@ -160,6 +159,7 @@ namespace AdExpress.Private.Results{
         /// <returns></returns>
         protected override string GetNextUrlFromMenu()
         {
+            //ModulesList.GetModule(_webSession.CurrentModule).AllowedMediaDetailLevelItems
             return string.Empty;//this.MenuWebControl2.NextUrl;
         }
         #endregion

@@ -1762,6 +1762,18 @@
       <module name="Plan d'actions" privilegecode="7854" traductioncode="2860" moduleCategoryId="0" urlNextPage="/Private/Results/VpScheduleResults.aspx" descriptionWebTextId="2861" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
         <RulesLayer name="Default VP rules layers" assemblyName="TNS.AdExpressI.VP.Default.dll" class="TNS.AdExpressI.VP.Default.Result"/>
         <DataAccessLayer name="Default VP data access layers" assemblyName="TNS.AdExpressI.VP.DAL.Default.dll" class="TNS.AdExpressI.VP.DAL.Default.ResultDAL"/>
+        <MediaDetailLevel>
+          <defaultMediaDetailLevels>
+            <defaultMediaDetailLevel id="37" name="Sub Segment VP\Segment VP\Brand VP"/>
+          </defaultMediaDetailLevels>
+          <allowedMediaLevelItems>
+            <allowedMediaLevelItem id="63" name="Circuit VP"/>
+            <allowedMediaLevelItem id="64" name="Segment VP"/>
+            <allowedMediaLevelItem id="65" name="Sub Segment VP"/>
+            <allowedMediaLevelItem id="66" name="Brand VP"/>
+            <allowedMediaLevelItem id="67" name="Product VP"/>            
+          </allowedMediaLevelItems>
+        </MediaDetailLevel>
         <results>
           <page id="0" resultid="65" name="Calendrier d'actions" traductioncode="2862" url="/Private/Results/VpScheduleResults.aspx" rawExcelUrl="" printExcelUrl="" menuTextId="1983" helpUrl="/Private/Helps/Default.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
           </page>

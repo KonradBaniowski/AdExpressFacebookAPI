@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TNS.AdExpressI.Classification.DAL.ClassificationDAL" BaseTypeListCollapsed="true">
+    <Position X="32.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QAIAAAAACAkICAgAAIgAAgAAAAAACggkAABAAAAAAAA=</HashCode>
+      <FileName>ClassificationDAL.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.ClassificationItemsDAL">
+    <Position X="0.5" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>QAJAAAAAAAgAAIAAAAAAAwAAAIAACgAAAAARAAAAAIA=</HashCode>
+      <FileName>ClassificationItemsDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL" Collapsed="true">
+    <Position X="16.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAQIAAAAQIAAAADAAAAAAAAAAAEAAAQAAACAAIAAA=</HashCode>
+      <FileName>ClassificationLevelListDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory" Collapsed="true">
+    <Position X="32.5" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAIAQAEACEAIAgAAAAAAAAAAAAAAEAAMQAAAAAAAAAA=</HashCode>
+      <FileName>ClassificationLevelListDALFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.DetailMediaDAL">
+    <Position X="5" Y="4.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEEAAAAgABAAAAAAAAAAAAAAAAABAAAAAQAA=</HashCode>
+      <FileName>DetailMediaDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.EngineDAL" Collapsed="true">
+    <Position X="2.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABIQAAgAEAEACAAQAIAAAAAAAAAAiAAgAAACAAAACAA=</HashCode>
+      <FileName>EngineDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.VehiclesDAL">
+    <Position X="2.75" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VehiclesDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationDALException">
+    <Position X="35" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\ClassificationDALException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">
+    <Position X="38.25" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\ClassificationItemsDALException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.Exceptions.DetailMediaDALException">
+    <Position X="35" Y="2" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\DetailMediaDALException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.MediaBrand.CategoryLevelListDAL">
+    <Position X="1.5" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MediaBrand\CategoryLevelListDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.MediaBrand.InterestCenterLevelListDAL" Collapsed="true">
+    <Position X="8.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MediaBrand\InterestCenterLevelListDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.MediaBrand.MediaLevelListDAL" Collapsed="true">
+    <Position X="15" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MediaBrand\MediaLevelListDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.MediaBrand.MediaSellerLevelListDAL" Collapsed="true">
+    <Position X="19.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MediaBrand\MediaSellerLevelListDALs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.MediaBrand.TitleLevelListDAL" Collapsed="true">
+    <Position X="24" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MediaBrand\TitleLevelListDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.MediaBrand.VehicleLevelListDAL" Collapsed="true">
+    <Position X="28.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MediaBrand\VehicleLevelListDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.ProductBrand.AdvertiserLevelListDAL" Collapsed="true">
+    <Position X="3.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ProductBrand\AdvertiserLevelListDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.ProductBrand.BrandLevelListDAL" Collapsed="true">
+    <Position X="10.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ProductBrand\BrandLevelListDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.ProductBrand.GroupLevelListDAL" Collapsed="true">
+    <Position X="17.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ProductBrand\GroupLevelListDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.ProductBrand.HoldingCompanyLevelListDAL" Collapsed="true">
+    <Position X="21.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ProductBrand\HoldingCompanyLevelListDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.ProductBrand.ProductLevelListDAL" Collapsed="true">
+    <Position X="26.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ProductBrand\ProductLevelListDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.ProductBrand.SectorLevelListDAL" Collapsed="true">
+    <Position X="30.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ProductBrand\SectorLevelListDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.ProductBrand.SegmentLevelListDAL" Collapsed="true">
+    <Position X="6" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ProductBrand\SegmentLevelListDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.AdExpressI.Classification.DAL.ProductBrand.SubSectorLevelListDAL" Collapsed="true">
+    <Position X="12.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ProductBrand\SubSectorLevelListDAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="TNS.AdExpressI.Classification.DAL.IClassificationDAL" Collapsed="true">
+    <Position X="33.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAgIAAgAAAgAAgAAAAAAAgAEAAAAAAAAAAA=</HashCode>
+      <FileName>IClassificationDAL.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TNS.AdExpressI.Classification.DAL.IClassificationLevelListDALFactory" Collapsed="true">
+    <Position X="36.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAA=</HashCode>
+      <FileName>IClassificationLevelListDALFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

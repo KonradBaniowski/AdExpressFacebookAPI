@@ -339,6 +339,7 @@
     <Compile Include="Results\VehicleView\CoverLinkItemWebControl.cs" />
     <Compile Include="Results\VehicleView\VehicleItemsNavigatorWebControl.cs" />
     <Compile Include="Results\VehicleView\VehicleItemWebControl.cs" />
+    <Compile Include="Results\VP\VpScheduleWebControl.cs" />
     <Compile Include="Results\_BannerInformationWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -497,6 +498,7 @@
     <Compile Include="Selections\VisualSelectionWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Selections\VP\OptionsWebControl.cs" />
     <Compile Include="Selections\WaveSelectionWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
