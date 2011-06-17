@@ -4,53 +4,61 @@
       xmlns:ViewModel="clr-namespace:RenaultLoader.ViewModel" 
         xmlns:my="http://schemas.microsoft.com/wpf/2008/toolkit"
      WindowStartupLocation="CenterScreen"
-    Title="MainWindow" Height="500" Width="650" >
+    Title="Renault data  Loader" Height="450" Width="650" Style="{StaticResource {x:Type Window}}">
+
+
     <Grid>
+
         <Grid.RowDefinitions >
-            <RowDefinition Height="AUTO"/>    
-            <RowDefinition Height="*"/>
             <RowDefinition Height="AUTO"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-
-      
-        <GroupBox Header="Chargement" Margin="2"  FontSize="14" Grid.Row="0" >
+        <GroupBox Header="Chargement" Margin="2"  FontSize="12" Grid.Row="0" >
 
 
-            <!--Ouvrir fichier-->
-            <StackPanel Margin="3" Orientation="Horizontal">
-                
-                <TextBox Height="25" HorizontalAlignment="Left"  Name="txtFileUpload" VerticalAlignment="Top" Width="405" IsReadOnly="True" Text="{Binding CurrentFile.FullName, Mode=OneWay}"/>
-                <Button Content="Parcourir" Height="26" HorizontalAlignment="Left" Name="btnBrowse" VerticalAlignment="Top" Width="75" Command="{Binding OpenCommand}"/> <!--Click="btnBrowse_Click"-->
-                <Button   Content="Enregistrer" Width="80" Height="26" HorizontalAlignment="Right" Margin="0,0,5,0" Command="{Binding SaveCommand}">
-                    <Button.Style>
-                        <Style>
-                            <Setter Property="Button.IsEnabled" Value="False"/>
+            <StackPanel Margin="3" Orientation="Horizontal" >
 
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=CurrentFile.Exists, Mode=OneWay}" Value="True">
-                                    <Setter Property="Button.IsEnabled" Value="True"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                        </Button.Style>
+                <TextBox Height="24" Margin="5" HorizontalAlignment="Left"  Name="txtFileUpload" VerticalAlignment="Center" Width="405" IsReadOnly="True" Text="{Binding CurrentFile.FullName, Mode=OneWay}"/>
+                <Button  Height="22" HorizontalAlignment="Left" Name="btnBrowse" VerticalAlignment="Center" Width="90" Command="{Binding OpenCommand}" Style="{DynamicResource ButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Images/search.png" Width="16" Height="16"  Margin="0,0,0,0" />
+                        <Label  Padding="0" HorizontalAlignment="Left"  Content="Parcourir" />
+                    </StackPanel>
                 </Button>
-                
+                <Button    Height="22" Width="90" HorizontalAlignment="Right"  VerticalAlignment="Center" Margin="0,0,5,0" Command="{Binding SaveCommand}" Style="{DynamicResource SaveButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+
+                        <Image Source="Images/save.png" Width="16" Height="16"  Margin="0,0,0,0" />
+                        <Label  Padding="0" HorizontalAlignment="Left"  Content="Enregistrer" />
+                    </StackPanel>                   
+                </Button>
+
             </StackPanel>
 
         </GroupBox>
-       
-        <GroupBox Header="Suppression" Margin="2"  FontSize="14"  Grid.Row="1" >
-            <StackPanel Margin="3" Orientation="Horizontal" VerticalAlignment="Top">
-                <my:DatePicker Height="25" Margin="5" Name="datePicker1" Width="115" ClipToBounds="False" SelectedDateFormat="Short" SelectedDate="{Binding PeriodBeginningToDelete}"/>
-                <my:DatePicker Height="25" Margin="5" Name="datePicker2" Width="115" ClipToBounds="False"   SelectedDateFormat="Short" SelectedDate="{Binding PeriodEndToDelete}" />
-                <Button   Content="Supprimer" Width="80" Height="26" HorizontalAlignment="Left" Margin="0,0,5,0" Command="{Binding DeleteCommand}"/>
+        <GroupBox Header="Suppression" Margin="2"  FontSize="12"  Grid.Row="1" >
+            <StackPanel Margin="3" Orientation="Horizontal" VerticalAlignment="Center">
+                <Label HorizontalAlignment="Left"  Content="Date début" />
+                <my:DatePicker Height="25" Margin="5" Name="datePicker1" Width="125" ClipToBounds="False" SelectedDateFormat="Short" SelectedDate="{Binding PeriodBeginningToDelete}"/>
+                <Label HorizontalAlignment="Left"  Content=""/>
+                <Label HorizontalAlignment="Left"  Content="Date de fin"/>
+                <my:DatePicker Height="25" Margin="5" Name="datePicker2" Width="125" ClipToBounds="False"   SelectedDateFormat="Short" SelectedDate="{Binding PeriodEndToDelete}" />
+                <Button    Height="22" Width="90" HorizontalAlignment="Left" Margin="0,0,5,0" Command="{Binding DeleteCommand}" Style="{DynamicResource ButtonStyle}" Foreground="White">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="Images/delete.png" Width="16" Height="16"  Margin="0,0,0,0" />
+                    <Label  Padding="0" HorizontalAlignment="Left"  Content="Supprimer" />
+                </StackPanel>
+
+                </Button>
             </StackPanel>
         </GroupBox>
 
+        <GroupBox Header="..." Margin="2"  FontSize="12"  Grid.Row="2" >
+            <ProgressBar Grid.Row="2" Height="40" Name="progressBar2" Width="300" IsIndeterminate="{Binding IsIndeterminateLoading}"/>
+        </GroupBox>
 
-
-        <ProgressBar Grid.Row="2" Height="20" Name="progressBar2" Width="100" IsIndeterminate="{Binding IsIndeterminateLoading}" />
 
     </Grid>
 </Window>
