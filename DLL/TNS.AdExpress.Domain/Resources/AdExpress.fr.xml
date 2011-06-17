@@ -2081,6 +2081,9 @@
     <item mnemonic="w2860" type="System.String">Plan d'actions</item>
     <item mnemonic="w2861" type="System.String"></item>
     <item mnemonic="w2862" type="System.String">Calendrier d'actions</item>
+    <item mnemonic="w2863" type="System.String">Options</item>
+    <item mnemonic="w2864" type="System.String">Export Excel</item>
+    <item mnemonic="w2865" type="System.String">Export PDF</item>
     <!-- ********************************* -->
   </items>
 </localization>

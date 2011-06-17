@@ -1,5 +1,8 @@
 <%@ Page language="c#" Inherits="AdExpress.Private.Results.VpScheduleResults" CodeFile="VpScheduleResults.aspx.cs" %>
 <%@ Register TagPrefix="cc2" Namespace="TNS.AdExpress.Web.Controls.Headers" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="cc3" Namespace="TNS.AdExpress.Web.Controls.Translation" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="cc4" Namespace="TNS.AdExpress.Web.Controls.Selections.VP" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="cc5" Namespace="TNS.AdExpress.Web.Controls.Results.VP" Assembly="TNS.AdExpress.Web.Controls" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <html>
 	<head runat="server">
@@ -22,7 +25,7 @@
 				</tr>
 				<!-- Header -->
 				<tr>
-				    <td valign="top">
+				    <td valign="top" height="3">
 				        <table cellspacing="0" cellpadding="0" width="100%" border="0">
 				            <tr>
 					            <!-- marge de gauche-->
@@ -41,20 +44,29 @@
 				</tr>
 				<!-- Resultat -->
 				<tr>
-					<td>
+					<td valign="top">
 						<table cellspacing="0" cellpadding="0" width="100%" border="0">
 						    <tr>
                                 <!-- Title -->
-                                <td></td>
+                                <td><cc3:AdExpressText language="33" id="_adExpressText1" runat="server"></cc3:AdExpressText></td>
                             </tr>
                             <tr>
-                                <!-- Selection -->
-                                <td></td>
+                                <td style="border-bottom: 1px dotted #000000;font-size:1px;">&nbsp;</td>
                             </tr>
                             <tr>
-								<!-- Tableau de Résultat -->
-								<td></td>
-							</tr>
+                                <td valign="top" align="center">
+                                    <table cellspacing="0" cellpadding="0" border="0">
+                                        <tr>
+                                            <!-- Selection -->
+                                            <td><cc4:OptionsWebControl ID="OptionsWebControl1" runat="server"/></td>
+                                        </tr>
+                                        <tr>
+								            <!-- Tableau de Résultat -->
+								            <td><cc5:VpScheduleWebControl ID="VpScheduleWebControl1" runat="server"/></td>
+							            </tr>
+						            </table>
+                                </td>
+                            </tr>
 						</table>
 					</td>
 				</tr>

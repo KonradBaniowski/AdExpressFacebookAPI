@@ -97,6 +97,7 @@ namespace AdExpress.Private.Results{
         /// <param name="e"></param>
         override protected void OnInit(EventArgs e)
         {
+            _adExpressText1.Code = (int)_currentModule.GetResultPageInformation(_webSession.CurrentTab).IdWebText;
             //
             // CODEGEN : Cet appel est requis par le Concepteur Web Form ASP.NET.
             //
@@ -159,7 +160,6 @@ namespace AdExpress.Private.Results{
         /// <returns></returns>
         protected override string GetNextUrlFromMenu()
         {
-            //ModulesList.GetModule(_webSession.CurrentModule).AllowedMediaDetailLevelItems
             return string.Empty;//this.MenuWebControl2.NextUrl;
         }
         #endregion
