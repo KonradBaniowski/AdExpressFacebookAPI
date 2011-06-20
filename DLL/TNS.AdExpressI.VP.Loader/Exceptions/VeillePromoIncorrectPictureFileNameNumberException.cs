@@ -8,13 +8,13 @@ namespace TNS.AdExpressI.VP.Loader.Exceptions {
     /// <summary>
     /// ResultDALException Exception Class
     /// </summary>
-    public class VeillePromoDbException:BaseException {
+    public class VeillePromoIncorrectPictureFileNameNumberException:BaseException {
 
         #region Constructeur
         /// <summary>
         /// Constructeur de base
         /// </summary>
-        public VeillePromoDbException()
+        public VeillePromoIncorrectPictureFileNameNumberException()
             : base() {
         }
 
@@ -22,7 +22,7 @@ namespace TNS.AdExpressI.VP.Loader.Exceptions {
         /// Constructeur
         /// </summary>
         /// <param name="message">Message d'erreur</param>
-        public VeillePromoDbException(string message)
+        public VeillePromoIncorrectPictureFileNameNumberException(string message)
             : base(message) {
         }
 
@@ -31,7 +31,7 @@ namespace TNS.AdExpressI.VP.Loader.Exceptions {
         /// </summary>
         /// <param name="message">Message d'erreur</param>
         /// <param name="innerException">Exception source</param>
-        public VeillePromoDbException(string message, System.Exception innerException)
+        public VeillePromoIncorrectPictureFileNameNumberException(string message, System.Exception innerException)
             : base(message, innerException) {
         }
         #endregion

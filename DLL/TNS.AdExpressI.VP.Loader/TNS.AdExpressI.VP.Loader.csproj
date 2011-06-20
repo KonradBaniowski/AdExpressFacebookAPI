@@ -60,6 +60,8 @@
     <Compile Include="Data\DataVeillePromo.cs" />
     <Compile Include="Data\IDataVeillePromo.cs" />
     <Compile Include="Exceptions\VeillePromoClassifException.cs" />
+    <Compile Include="Exceptions\VeillePromoIncorrectPictureFileNameException.cs" />
+    <Compile Include="Exceptions\VeillePromoIncorrectPictureFileNameNumberException.cs" />
     <Compile Include="Exceptions\VeillePromoExcelVisualException.cs" />
     <Compile Include="Exceptions\VeillePromoDbException.cs" />
     <Compile Include="Exceptions\VeillePromoExcelException.cs" />

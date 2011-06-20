@@ -91,6 +91,10 @@ namespace TNS.AdExpressI.VP.Loader.Data {
                     throw new VeillePromoExcelOpenFileException("Impossible Load Data Promotion", e);
                 if (e is VeillePromoDALExcelVisualException)
                     throw new VeillePromoExcelVisualException("Impossible Load Data Promotion", e);
+                if (e is VeillePromoDALIncorrectPictureFileNameException)
+                    throw new VeillePromoIncorrectPictureFileNameException("Impossible Load Data Promotion", e);
+                if (e is VeillePromoDALIncorrectPictureFileNameNumberException)
+                    throw new VeillePromoIncorrectPictureFileNameNumberException("Impossible Load Data Promotion", e);
                 if (e is VeillePromoDALExcelException)
                     throw new VeillePromoExcelException("Impossible to Load Data Promotion", e);
                 throw new VeillePromoDALExcelException("Impossible to Load Data Promotion", e);

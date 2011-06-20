@@ -309,6 +309,12 @@ namespace RenaultLoader.ViewModel
             else if (e is VeillePromoExcelVisualException) {
                 MessageBox.Show("Une erreur est survenue lors du chargement du fichier Excel: Impossible de retrouver un fichier visuel", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            else if (e is VeillePromoIncorrectPictureFileNameNumberException) {
+                MessageBox.Show("Impossible de retrouver le fichier image. Il existe plusieurs fichiers avec le meme nom, mais avec des extentions différentes", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (e is VeillePromoIncorrectPictureFileNameException) {
+                MessageBox.Show("Impossible de retrouver le fichier image", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             else if (e is VeillePromoInsertDbException) {
                 MessageBox.Show("Une erreur est survenue lors du chargement du fichier Excel", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }

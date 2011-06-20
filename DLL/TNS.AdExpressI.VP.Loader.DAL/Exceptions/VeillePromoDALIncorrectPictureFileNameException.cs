@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using TNS.FrameWork.Exceptions;
 
-namespace TNS.AdExpressI.VP.Loader.Exceptions {
+namespace TNS.AdExpressI.VP.Loader.DAL.Exceptions {
     /// <summary>
     /// ResultDALException Exception Class
     /// </summary>
-    public class VeillePromoDbException:BaseException {
+    public class VeillePromoDALIncorrectPictureFileNameException:BaseException {
 
         #region Constructeur
         /// <summary>
         /// Constructeur de base
         /// </summary>
-        public VeillePromoDbException()
+        public VeillePromoDALIncorrectPictureFileNameException()
             : base() {
         }
 
@@ -22,7 +22,7 @@ namespace TNS.AdExpressI.VP.Loader.Exceptions {
         /// Constructeur
         /// </summary>
         /// <param name="message">Message d'erreur</param>
-        public VeillePromoDbException(string message)
+        public VeillePromoDALIncorrectPictureFileNameException(string message)
             : base(message) {
         }
 
@@ -31,7 +31,7 @@ namespace TNS.AdExpressI.VP.Loader.Exceptions {
         /// </summary>
         /// <param name="message">Message d'erreur</param>
         /// <param name="innerException">Exception source</param>
-        public VeillePromoDbException(string message, System.Exception innerException)
+        public VeillePromoDALIncorrectPictureFileNameException(string message, System.Exception innerException)
             : base(message, innerException) {
         }
         #endregion

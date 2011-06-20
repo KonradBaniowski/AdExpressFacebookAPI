@@ -152,8 +152,14 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
                         conditionVisual = (new List<string>(((string)cells[line, columnVisualsCondition].Value).Split(';'))).ConvertAll<string>(file => System.IO.Path.GetFullPath(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(fileStream.Name),file.Trim())));
 
                     if (conditionVisual != null) {
-                        foreach (string cFile in conditionVisual) {
-                            if (!File.Exists(cFile)) throw new VeillePromoDALExcelVisualException("The file '" + cFile + "' dosen't exist");
+                        for(int i=0; i<conditionVisual.Count; i++){
+                            if (!File.Exists(conditionVisual[i])) {
+                                string[] files = Directory.GetFiles(Path.GetDirectoryName(conditionVisual[i]), Path.GetFileName(conditionVisual[i]) + ".*", SearchOption.TopDirectoryOnly);
+                                if (files.Length > 1) throw new VeillePromoDALIncorrectPictureFileNameNumberException("Impossible to retrieve the file. " + files.Length + " files are found");
+                                if (files.Length <= 0) throw new VeillePromoDALIncorrectPictureFileNameException("Impossible to retrieve the file '" + conditionVisual[i] + "'");
+                                conditionVisual[i] = files[0];
+                            }
+
                         }
                     }
                     #endregion
@@ -172,8 +178,13 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
                     if (cells[line, columnVisualsPromo].Value != null)
                         promotionVisual = new List<string>(((string)cells[line, columnVisualsPromo].Value).Split(';')).ConvertAll<string>(file => System.IO.Path.GetFullPath(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(fileStream.Name), file.Trim()))); 
                     if (promotionVisual != null) {
-                        foreach (string cFile in promotionVisual) {
-                            if (!File.Exists(cFile)) throw new VeillePromoDALExcelVisualException("The file '" + cFile + "' dosen't exist");
+                        for (int i = 0; i < promotionVisual.Count; i++) {
+                            if (!File.Exists(promotionVisual[i])) {
+                                string[] files = Directory.GetFiles(Path.GetDirectoryName(promotionVisual[i]), Path.GetFileName(promotionVisual[i]) + ".*", SearchOption.TopDirectoryOnly);
+                                if (files.Length > 1) throw new VeillePromoDALIncorrectPictureFileNameNumberException("Impossible to retrieve the file. " + files.Length + " files are found");
+                                if (files.Length <= 0) throw new VeillePromoDALIncorrectPictureFileNameException("Impossible to retrieve the file '" + promotionVisual[i] + "'");
+                                promotionVisual[i] = files[0];
+                            }
                         }
                     }
                     #endregion
