@@ -17,7 +17,7 @@ namespace KMI.P3.Web.Functions
 
         //Crypate AdExpress
         public const string _cryptKey = "8!b?#B$3";
-
+       
         public static string EncryptQueryString(string strQueryString)
         {
             Encryption64 oES =
@@ -43,25 +43,26 @@ namespace KMI.P3.Web.Functions
         {
             int key = 1234;
             int len = s.Length;
-            int off = 0;
-            byte[] b = System.Text.Encoding.UTF7.GetBytes(s); 
-            byte[] buffer = new byte[len - off];
+            byte[] b = System.Text.ASCIIEncoding.Default.GetBytes(s);
+            byte[] buffer = new byte[len];
 
             for (int i = 0; i < len; i++)
             {
-                buffer[i] = (byte)(ByteUnsignedValue(b[off + i]) ^ key);
-            }
-            return Encoding.UTF7.GetString(buffer);
+                buffer[i] = (byte)(ByteUnsignedValue(b[i]) ^ key);
+            }          
+            return ASCIIEncoding.Default.GetString(buffer);
         }
 
-        private static int ByteUnsignedValue(byte b)
-        {
-            int result = b&0x7F;
-            if ((b&0x80000000) != 0)
-                return (result | 0x80);
+
+        private static uint ByteUnsignedValue(byte b)
+        {           
+            uint result = (uint)(b & 0x7FFFFFFF);          
+                if ((b & 0x80000000) != 0)
+                    return (result | 0x80000000);            
             return result;
         }
 
+       
 
     }
 
