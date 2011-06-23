@@ -2748,5 +2748,42 @@ namespace TNS.AdExpress.Constantes.FrameWork.Results{
 
 	#endregion
 
+    #region Veille Promo
+    /// <summary>
+    /// Constantes of veille Promotion module
+    /// </summary>
+    public class VeillePromo{
+
+        #region Enumérateur
+        /// <summary>
+        /// Type of promo presence
+        /// </summary>
+        public enum itemType
+        {
+            /// <summary>
+            /// Absent
+            /// </summary>
+            absent,
+            /// <summary>
+            /// Present start
+            /// </summary>
+            presentStart,
+            /// <summary>
+            /// Present start incomplete
+            /// </summary>
+            presentStartIncomplete,
+            /// <summary>
+            /// extended
+            /// </summary>
+            extended,
+            /// <summary>
+            /// end incomplete
+            /// </summary>
+            endIncomplete
+        }
+        #endregion
+    }
+    #endregion
+
 }
 

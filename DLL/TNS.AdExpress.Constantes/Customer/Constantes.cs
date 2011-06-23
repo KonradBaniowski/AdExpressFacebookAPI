@@ -198,7 +198,15 @@ namespace TNS.AdExpress.Constantes.Customer{
             /// <summary>
             /// Type d'annonce en exception
             /// </summary>
-            advertisementTypeException
+            advertisementTypeException,
+            /// Circuit in Access
+            /// </summary>
+            circuitAccess,
+            /// <summary>
+            /// Circuit in exception
+            /// </summary>
+            circuitException
+
 
 		}
 		#endregion

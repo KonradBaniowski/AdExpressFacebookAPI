@@ -102,7 +102,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%@ Register TagPrefix="ctrAppm" Namespace="TNS.AdExpress.Web.Controls.Results.Appm" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="indicatorCharts" Namespace="TNS.AdExpressI.ProductClassIndicators.Charts" Assembly="TNS.AdExpressI.ProductClassIndicators" %>
 <%@ Register TagPrefix="ctrProductClassResults" Namespace="TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis" Assembly="TNS.AdExpress.Web.Controls" %>
-
+<%@ Register TagPrefix="ctrVp" Namespace="TNS.AdExpress.Web.Controls.Results.VP" Assembly="TNS.AdExpress.Web.Controls" %>
 
 <%-- Header web control : used to show the commun header for all the aspx pages in the site--%>
 <ctrHeader:HeaderWebControl  
@@ -1656,3 +1656,5 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 				           CssDetailSelectionBordelLevel="dsBorderLevel"
 				           SkinID="mediaAgencyExcelResultTable" 
 />
+<%--Veille Promo result control --%>
+<ctrVp:VpScheduleWebControl  runat="server" ThemeName = "KMAE-Fr" />
