@@ -1627,6 +1627,10 @@ namespace TNS.AdExpress.Constantes.Web{
             /// Analyse des mandataires
             /// </summary>
             public const int ANALYSE_MANDATAIRES = 7216;
+            /// <summary>
+            /// Veille Promotionnelle
+            /// </summary>
+            public const int VP = 7854;
 		}
 		#endregion
 
