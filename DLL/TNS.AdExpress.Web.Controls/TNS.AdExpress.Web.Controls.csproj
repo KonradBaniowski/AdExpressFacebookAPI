@@ -613,6 +613,10 @@
       <Project>{79A0173F-A728-4739-A110-D4FD9166A8CC}</Project>
       <Name>TNS.AdExpressI.Visual</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.VP\TNS.AdExpressI.VP.csproj">
+      <Project>{34E6D72A-AA47-4B86-969E-D1BFBCC3D70C}</Project>
+      <Name>TNS.AdExpressI.VP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpress\TNS.AdExpress.csproj">
       <Project>{6E75699B-838C-4534-99F7-D4C3E768CD57}</Project>
       <Name>TNS.AdExpress</Name>
