@@ -149,6 +149,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// RightMenuLinks configuration
         /// </summary>
         protected static RightMenuLinks _RightMenuLinks = null;
+        /// <summary>
+        /// Vp Configuration Detail
+        /// </summary>
+        protected static VpConfigurationDetail _vpConfigurationDetail = null;
         #endregion
         
         #region Contructeur
@@ -406,6 +410,14 @@ namespace TNS.AdExpress.Domain.Web {
         public static RightMenuLinks RightMenuLinksInformations
         {
             get { return _RightMenuLinks; }
+        }
+
+        /// <summary>
+        /// Get / Set Vp Configuration Detail
+        /// </summary>
+        public static VpConfigurationDetail VpConfigurationDetail {
+            get { return _vpConfigurationDetail; }
+            set { _vpConfigurationDetail = value; }
         }
         #endregion
 

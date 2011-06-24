@@ -1658,4 +1658,4 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 				           SkinID="mediaAgencyExcelResultTable" 
 />
 <%--Veille Promo result control --%>
-<ctrVp:VpScheduleWebControl   runat="server" ThemeName = "KMAE-Uk" />
+<%--<ctrVp:VpScheduleWebControl   runat="server" ThemeName = "KMAE-Uk" />--%>

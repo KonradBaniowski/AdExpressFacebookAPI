@@ -9,4 +9,13 @@
   <mediaSchedule useComparative="true"/>
   <bannersFormat useBannersFormat="true"/>
   <retailer use="false"/>
+  <vpConfiguration>
+    <selections>
+      <selection name="Date Selection"          assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.EasyMusic.Web.Controls.Results.DateSelectionWebControl"          skinId="DateSelectionWebControl"    validationMethod="RefreshVpScheduleWebControl();"/>
+      <selection name="Filtre Selection"        assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.FiltreSelectionWebControl"  skinId="FiltreSelectionWebControl"  validationMethod="RefreshVpScheduleWebControl();"/>
+      <selection name="Export Excel Selection"  assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.ExportSelectionWebControl"  skinId="ExcelSelectionWebControl" />
+      <selection name="Export PDF Selection"    assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.ExportSelectionWebControl"  skinId="PdfSelectionWebControl" />
+    </selections>
+    <result      name="layer of result control" assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Results.VP.VpScheduleResultBaseWebControl"          skinId="VpScheduleWebControl"/>
+  </vpConfiguration>
 </resultOptions>

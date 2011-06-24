@@ -15,6 +15,9 @@ using TNS.AdExpress.Domain.Web.Core;
 using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpress.Domain.Results;
+using TNS.AdExpress.Domain.Web.Navigation;
 
 namespace TNS.AdExpress.Domain.XmlLoader {
     /// <summary>
@@ -31,6 +34,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             #region Variables
             XmlTextReader reader=null;
             XmlReader subReader = null;
+            XmlReader subSubReader = null;
 			Dictionary<CustomerSessions.InsertType, long> insetTypeCollection = new Dictionary<CustomerSessions.InsertType, long>();
 			string id;
 			long dataBaseId;
@@ -38,6 +42,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             bool useBannersFormatFilter = false;
             bool useRetailer = false;
             Dictionary<TableIds, MatchingTable> matchingTableList = new Dictionary<TableIds, MatchingTable>();
+            VpConfigurationDetail vpConfigurationDetail = null;
             #endregion
 
             try {
@@ -77,11 +82,45 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                                             (TableIds)Enum.Parse(typeof(TableIds), subReader.GetAttribute("defaultEnumId")),
                                                             (TableIds)Enum.Parse(typeof(TableIds), subReader.GetAttribute("retailerEnumId"))
                                                         )
-                                                    );                                                   
+                                                    );
                                                     break;
                                             }
                                         }
                                     }
+                                }
+                                break;
+                            case "vpConfiguration":
+
+                                if (ModulesList.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.VP) != null) {
+
+                                    #region Variables
+                                    ControlLayer resultControlLayer = null;
+                                    List<ControlLayer> selectionControlLayerList = new List<ControlLayer>();
+                                    #endregion
+
+                                    subReader = reader.ReadSubtree();
+                                    while (subReader.Read()) {
+                                        if (subReader.NodeType == XmlNodeType.Element) {
+                                            switch (subReader.LocalName) {
+                                                case "result":
+                                                    resultControlLayer = new ControlLayer(subReader.GetAttribute("name"), subReader.GetAttribute("assemblyName"), subReader.GetAttribute("class"), (!string.IsNullOrEmpty(subReader.GetAttribute("skinId"))) ? subReader.GetAttribute("skinId") : string.Empty, (!string.IsNullOrEmpty(subReader.GetAttribute("validationMethod"))) ? subReader.GetAttribute("validationMethod") : string.Empty);
+                                                    break;
+                                                case "selections":
+                                                    subSubReader = subReader.ReadSubtree();
+                                                    while (subSubReader.Read()) {
+                                                        if (subSubReader.NodeType == XmlNodeType.Element) {
+                                                            switch (subSubReader.LocalName) {
+                                                                case "selection":
+                                                                    selectionControlLayerList.Add(new ControlLayer(subSubReader.GetAttribute("name"), subSubReader.GetAttribute("assemblyName"), subSubReader.GetAttribute("class"), (!string.IsNullOrEmpty(subSubReader.GetAttribute("skinId"))) ? subSubReader.GetAttribute("skinId") : string.Empty, (!string.IsNullOrEmpty(subSubReader.GetAttribute("validationMethod"))) ? subSubReader.GetAttribute("validationMethod") : string.Empty));
+                                                                    break;
+                                                            }
+                                                        }
+                                                    }
+                                                    break;
+                                            }
+                                        }
+                                    }
+                                    vpConfigurationDetail = new VpConfigurationDetail(resultControlLayer, selectionControlLayerList);
                                 }
                                 break;
                         }
@@ -92,6 +131,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                 WebApplicationParameters.UseBannersFormatFilter = useBannersFormatFilter;
                 WebApplicationParameters.UseRetailer = useRetailer;
                 WebApplicationParameters.MatchingRetailerTableList = matchingTableList;
+                WebApplicationParameters.VpConfigurationDetail = vpConfigurationDetail;
             }
 
             #region Error Management

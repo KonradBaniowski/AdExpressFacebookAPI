@@ -48,7 +48,11 @@ namespace AdExpress.Private.Results{
     /// <summary>
     /// Page de calendrier d'action d'un plan media
     /// </summary>
-    public partial class VpScheduleResults : TNS.AdExpress.Web.UI.BaseResultWebPage{
+    public partial class VpScheduleResults : TNS.AdExpress.Web.UI.BaseResultWebPage {
+
+        #region Variables
+        
+        #endregion
 
         #region Constructeur
         /// <summary>
@@ -101,6 +105,7 @@ namespace AdExpress.Private.Results{
             //
             // CODEGEN : Cet appel est requis par le Concepteur Web Form ASP.NET.
             //
+            VpScheduleContainerWebControl1.WebSession = _webSession;
             InitializeComponent();
             base.OnInit(e);
         }

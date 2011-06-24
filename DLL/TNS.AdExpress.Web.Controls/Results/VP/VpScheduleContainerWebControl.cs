@@ -1,0 +1,142 @@
+#region Informations
+// Auteur: G. Facon 
+// Date de création: 13/07/2006
+// Date de modification:
+//		G Ragneau - 08/08/2006 - Set GetHtml as public so as to access it 
+//		G Ragneau - 08/08/2006 - GetHTML : Force media plan alert module and restaure it after process (<== because of version zoom);
+//		G Ragneau - 05/05/2008 - GetHTML : implement layers
+#endregion
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.ComponentModel;
+using System.Reflection;
+using AjaxPro;
+using TNS.AdExpress.Web.Controls.Headers;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Web.Core.Selection;
+using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Web.Common.Results;
+using TNS.AdExpress.Web.UI.Results.MediaPlanVersions;
+using WebFunctions = TNS.AdExpress.Web.Functions;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
+using FrmFct = TNS.FrameWork.WebResultUI.Functions;
+using TNS.FrameWork.Date;
+using TNS.FrameWork.Exceptions;
+using TNS.FrameWork.WebResultUI;
+using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
+using CustomCst = TNS.AdExpress.Constantes.Customer;
+using TNS.AdExpress.Domain.Classification;
+
+using TNS.AdExpressI.MediaSchedule;
+using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpressI.Insertions;
+using TNS.AdExpressI.VP;
+namespace TNS.AdExpress.Web.Controls.Results.VP
+{
+    /// <summary>
+    /// Affiche le résultat d'une alerte plan media
+    /// </summary>
+    [DefaultProperty("Text"),
+      ToolboxData("<{0}:VpScheduleContainerWebControl runat=server></{0}:VpScheduleContainerWebControl>")]
+    public class VpScheduleContainerWebControl : System.Web.UI.WebControls.WebControl {
+
+        #region Variables
+        /// <summary>
+        /// Session client
+        /// </summary>
+        protected WebSession _webSession = null;
+        /// <summary>
+        /// Result Control
+        /// </summary>
+        VpScheduleResultBaseWebControl _vpScheduleResultBaseWebControl = null;
+        #endregion
+
+        #region Accesors
+
+        #region WebSession
+        /// <summary>
+        /// Obtient ou définit la Sesion du client
+        /// </summary>
+        [Bindable(false)]
+        public WebSession WebSession {
+            get { return (_webSession); }
+            set {
+                _webSession = value;
+            }
+        }
+        #endregion
+
+        #endregion
+
+        #region Evènements
+
+        #region Initialisation
+        /// <summary>
+        /// Initialisation
+        /// </summary>
+        /// <param name="e">Arguments</param>
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+            _vpScheduleResultBaseWebControl = (VpScheduleResultBaseWebControl)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + WebApplicationParameters.VpConfigurationDetail.ResultControlLayer.AssemblyName, WebApplicationParameters.VpConfigurationDetail.ResultControlLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
+            //_vpScheduleResultBaseWebControl.SkinID = WebApplicationParameters.VpConfigurationDetail.ResultControlLayer.SkinId;
+            _vpScheduleResultBaseWebControl.ID = this.ID + "_vpScheduleResultBaseWebControl";
+            this.Controls.Add(_vpScheduleResultBaseWebControl);
+        }
+        #endregion
+
+        #region Load
+        /// <summary>
+        /// Chargement du composant
+        /// </summary>
+        /// <param name="e">Arguments</param>
+        protected override void OnLoad(EventArgs e)
+        {
+            _vpScheduleResultBaseWebControl.WebSession = this._webSession;
+            base.OnLoad(e);
+        }
+        #endregion
+
+        #region PréRender
+        /// <summary>
+        /// Prérendu
+        /// </summary>
+        /// <param name="e">Arguments</param>
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+        }
+        #endregion
+
+        #region Render
+        /// <summary> 
+        /// Génère ce contrôle dans le paramètre de sortie spécifié.
+        /// </summary>
+        /// <param name="output"> Le writer HTML vers lequel écrire </param>
+        protected override void Render(HtmlTextWriter output) {
+            output.Write("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">");
+            output.Write("<tr>");
+            output.Write("<td>");
+
+            output.Write("</td>");
+            output.Write("</tr>");
+            output.Write("<tr>");
+            output.Write("<td>");
+            _vpScheduleResultBaseWebControl.RenderControl(output);
+            output.Write("</td>");
+            output.Write("</tr>");
+            output.Write("</table>");
+        }
+        #endregion
+
+        #endregion
+
+    }
+}
+

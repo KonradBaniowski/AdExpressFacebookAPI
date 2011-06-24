@@ -46,13 +46,21 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP{
 		ToolboxData("<{0}:DetailSelectionWebControl runat=server></{0}:DetailSelectionWebControl>")]
     public class OptionsWebControl : System.Web.UI.WebControls.WebControl {
 
-		#region Render
-		/// <summary> 
+        #region Render
+        /// <summary> 
 		/// Génère ce contrôle dans le paramètre de sortie spécifié.
 		/// </summary>
 		/// <param name="output"> Le writer HTML vers lequel écrire </param>
 		protected override void Render(HtmlTextWriter output){
-            output.Write("<div id=\""+this.ID+"\" style=\"display:none;\"></div>");
+
+            output.Write("<table cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" border=\"0\">");
+            output.Write("<tr>");
+            output.Write("<td>");
+
+            output.Write("</td>");
+            output.Write("</tr>");
+            output.Write("</table>");
+
 		}
 		#endregion
 

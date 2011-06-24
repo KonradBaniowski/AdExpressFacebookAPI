@@ -96,9 +96,11 @@
     <Compile Include="Exceptions\TrendsXLException.cs" />
     <Compile Include="Exceptions\VehiclesInformationXLException.cs" />
     <Compile Include="Exceptions\InfoNewsXLException.cs" />
+    <Compile Include="Layers\ControlLayer.cs" />
     <Compile Include="Layers\CoreLayer.cs" />
     <Compile Include="ModulesDescritpion\Trends.cs" />
     <Compile Include="ModulesDescritpion\TrendsDateOpeningOption.cs" />
+    <Compile Include="Results\VpConfigurationDetail.cs" />
     <Compile Include="Results\DataPromotionDetails.cs" />
     <Compile Include="Results\DataPromotionDetail.cs" />
     <Compile Include="Results\ExportInstoreVersionItem.cs" />

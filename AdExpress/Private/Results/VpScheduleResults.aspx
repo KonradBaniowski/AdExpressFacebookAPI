@@ -1,7 +1,7 @@
+<%@ Import Namespace="System.Data" %>
 <%@ Page language="c#" Inherits="AdExpress.Private.Results.VpScheduleResults" CodeFile="VpScheduleResults.aspx.cs" %>
 <%@ Register TagPrefix="cc2" Namespace="TNS.AdExpress.Web.Controls.Headers" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc3" Namespace="TNS.AdExpress.Web.Controls.Translation" Assembly="TNS.AdExpress.Web.Controls" %>
-<%@ Register TagPrefix="cc4" Namespace="TNS.AdExpress.Web.Controls.Selections.VP" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="cc5" Namespace="TNS.AdExpress.Web.Controls.Results.VP" Assembly="TNS.AdExpress.Web.Controls" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <html>
@@ -55,16 +55,7 @@
                             </tr>
                             <tr>
                                 <td valign="top" align="center">
-                                    <table cellspacing="0" cellpadding="0" border="0">
-                                        <tr>
-                                            <!-- Selection -->
-                                            <td><cc4:OptionsWebControl ID="OptionsWebControl1" runat="server"/></td>
-                                        </tr>
-                                        <tr>
-								            <!-- Tableau de Résultat -->
-								            <td><cc5:VpScheduleWebControl ID="VpScheduleWebControl1" runat="server"/></td>
-							            </tr>
-						            </table>
+								    <cc5:VpScheduleContainerWebControl ID="VpScheduleContainerWebControl1" runat="server"/>
                                 </td>
                             </tr>
 						</table>
