@@ -16,6 +16,6 @@
       <selection name="Export Excel Selection"  assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.ExportSelectionWebControl"  skinId="ExcelSelectionWebControl" />
       <selection name="Export PDF Selection"    assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.ExportSelectionWebControl"  skinId="PdfSelectionWebControl" />
     </selections>
-    <result      name="layer of result control" assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Results.VP.VpScheduleResultBaseWebControl"          skinId="VpScheduleWebControl"/>
+    <result      name="layer of result control" assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Results.VP.VpScheduleWebControl"          skinId="VpScheduleWebControl"/>
   </vpConfiguration>
 </resultOptions>

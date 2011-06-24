@@ -13,7 +13,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
     /// </summary>
     [DefaultProperty("Text"),
       ToolboxData("<{0}:VpScheduleResultBaseWebControl runat=server></{0}:VpScheduleResultBaseWebControl>")]
-    public /*abstract*/ class VpScheduleResultBaseWebControl : System.Web.UI.WebControls.WebControl {
+    public abstract class VpScheduleResultBaseWebControl : System.Web.UI.WebControls.WebControl {
 
         #region Variables
         /// <summary>
@@ -125,7 +125,12 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// </summary>
         /// <param name="e">Arguments</param>
         protected override void OnLoad(EventArgs e) {
-            AjaxPro.Utility.RegisterTypeForAjax(this.GetType(), this.Page);
+            /*AjaxPro.Utility.RegisterTypeForAjax(this.GetType(), this.Page);*/
+            this.Page.ClientScript.RegisterClientScriptInclude("AjaxScript1", "/ajaxpro/prototype.ashx");
+            this.Page.ClientScript.RegisterClientScriptInclude("AjaxScript2", "/ajaxpro/core.ashx");
+            this.Page.ClientScript.RegisterClientScriptInclude("AjaxScript3", "/ajaxpro/converter.ashx");
+            this.Page.ClientScript.RegisterClientScriptInclude("AjaxScript4", "/ajaxpro/" + this.GetType().Namespace + "." + this.GetType().Name + ",TNS.AdExpress.Web.Controls.ashx");
+
             base.OnLoad(e);
         }
         #endregion
@@ -246,7 +251,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// Charge les paramètres des résultats navigant entre le client et le serveur
         /// </summary>
         /// <param name="o">Tableau de paramètres javascript</param>
-        protected void LoadResultParameters(AjaxPro.JavaScriptObject o) {
+        private void LoadResultParameters(AjaxPro.JavaScriptObject o) {
             if (o != null) {
                 LoadCurrentResultParameters(o);
             }
@@ -266,7 +271,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                 LoadCurrentStyleParameters(o);
             }
         }
-        protected virtual void LoadCurrentStyleParameters(AjaxPro.JavaScriptObject o) {
+        private virtual void LoadCurrentStyleParameters(AjaxPro.JavaScriptObject o) {
         }
         #endregion
 
@@ -278,7 +283,19 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// <returns>Code HTML</returns>
         [AjaxPro.AjaxMethod]
         public virtual string GetData(string idSession, AjaxPro.JavaScriptObject resultParameters, AjaxPro.JavaScriptObject styleParameters) {
-            return string.Empty;
+            string html;
+            try {
+                this.LoadResultParameters(resultParameters);
+                this.LoadStyleParameters(styleParameters);
+                _webSession = (WebSession)WebSession.Load(idSession);
+
+                html = GetHTML();
+
+            }
+            catch (System.Exception err) {
+                return (OnAjaxMethodError(err, _webSession));
+            }
+            return (html);
         }
         #endregion
 
@@ -292,7 +309,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// </summary>
         /// <param name="webSession">Client Session</param>
         /// <returns>Code HTMl</returns>
-        //protected abstract string GetHTML();
+        protected abstract string GetHTML();
         #endregion
 
         #region GetLoadingHTML
