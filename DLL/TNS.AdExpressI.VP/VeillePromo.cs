@@ -72,13 +72,40 @@ namespace TNS.AdExpressI.VP
         /// <returns>HTML Code</returns>
         public virtual string GetHtml()
         {
-            StringBuilder sql = new StringBuilder(5000);
+            StringBuilder html = new StringBuilder(5000);
+            int rowSpan =1,  colSpan=1; 
+            VeillePromoScheduleData veillePromoScheduleData = GetData();
 
-            VeillePromoScheduleData data = GetData();
 
-            //Render HTML table
+            if (veillePromoScheduleData != null && veillePromoScheduleData.Data != null && veillePromoScheduleData.Data.Count > 0)
+            {
+                //Generic Media Detail Level
+                GenericDetailLevel detailLevel = _session.GenericMediaDetailLevel;
 
-            return sql.ToString();
+                //Number of levels
+                int nbLevels = _session.GenericMediaDetailLevel.GetNbLevels;
+
+                html.Append("<table cellspacing=\"0\" cellpadding=\"0\" >");
+
+                //Start list of monthes
+                TNS.FrameWork.Date.YearMonthWeekCalendar ymc = new YearMonthWeekCalendar(2010);
+
+
+                
+                html.Append("<tr>");
+                html.AppendFormat("<td rowspan=\"{0}\" class=\"pt\"> &nbsp;Niveaux </td>", rowSpan);//TODO : Mettre libellé dans fichier ressources
+                html.Append("</tr>");
+                //End list of months
+
+                //Start list of weeks
+
+                //End list of weeks
+
+                html.Append("</table>");
+            }
+            else return string.Empty;
+
+            return html.ToString();
         }
 
         #endregion
@@ -198,7 +225,7 @@ namespace TNS.AdExpressI.VP
                         withPromoOverlap = true;
                     }
                 }
-
+               
                 promoEndWeek.Increment();
                 int incr = 0;
                 while (!(promoStartWeek.Week == promoEndWeek.Week && promoStartWeek.Year == promoEndWeek.Year))
@@ -292,6 +319,7 @@ namespace TNS.AdExpressI.VP
         }
 
         #endregion
+
 
         #region GetLineWithAvailableRange
         /// <summary>

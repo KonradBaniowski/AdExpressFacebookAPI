@@ -1672,3 +1672,86 @@ td.mi{
 	color: #646262; 
 	font-weight: bold;
 }
+/***********Début Style Calendriers Veille Promotionnelle***************************************/
+
+ td.ptm
+        {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11px;
+            color: #FFFFFF;
+            font-weight: bold;
+            text-decoration: none;
+            background-color: #646262;
+            padding-left: 5px;
+            padding-right: 5px;
+            border-left-width: 0px;
+            border-top-width: 0px;
+            border-bottom-color: #FFFFFF;
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            border-right-color: #FFFFFF;
+            border-right-width: 1px;
+            border-right-style: solid;
+            white-space: nowrap;
+            text-align: center;
+        }
+        td.vpw
+        {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11px;
+            color: #000000;
+            font-weight: bold;
+            text-decoration: none;
+            background-color: #C3C7D0;
+            border-left-width: 0px;
+            border-top-width: 0px;
+            border-bottom-color: #FFFFFF;
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            border-right-color: #FFFFFF;
+            border-right-width: 1px;
+            border-right-style: solid;
+            width: 30px;
+            text-align: center; /*OVERFLOW: visible;*/
+        }
+        table.vp
+        {
+            background-color: #FFFFFF;
+            border: 1px;
+            border-color: #FFFFFF;
+            border-style: solid;
+            padding: 0px;
+            width: 100%;
+            border-spacing: 0px;
+            border-collapse: collapse;
+            
+        }
+        td.vph
+        {
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            border-color: Yellow;
+            height: 15px;
+        }
+        td.vpb
+        {
+            height: 30px; /* vertical-align:middle;*/
+            text-align: center;
+            font-size: 11px;
+            padding: 1px;
+            vertical-align: top;          
+            /*word-wrap: break-word; */
+           
+        }
+       
+        td.vp2
+        {
+            border: 0px;
+            padding-top: 0px;
+            padding-left: 1px;
+            padding-bottom: 10px;
+            padding-right: 1px;
+            background-color: #A0A1A7;
+        }
+/***********Fin Style Calendriers Veille Promotionnelle***************************************/

@@ -262,7 +262,8 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// Charge les paramètres des sytles navigant entre le client et le serveur
         /// </summary>
         /// <param name="o">Tableau de paramètres javascript</param>
-        protected void LoadStyleParameters(AjaxPro.JavaScriptObject o) {
+        private void LoadStyleParameters(AjaxPro.JavaScriptObject o)
+        {
             if (o != null) {
                 if (o.Contains("Theme")) {
                     _themeName = o["Theme"].Value;
@@ -271,7 +272,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                 LoadCurrentStyleParameters(o);
             }
         }
-        private virtual void LoadCurrentStyleParameters(AjaxPro.JavaScriptObject o) {
+        protected virtual void LoadCurrentStyleParameters(AjaxPro.JavaScriptObject o) {
         }
         #endregion
 
