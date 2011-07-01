@@ -102,7 +102,8 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%@ Register TagPrefix="ctrAppm" Namespace="TNS.AdExpress.Web.Controls.Results.Appm" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="indicatorCharts" Namespace="TNS.AdExpressI.ProductClassIndicators.Charts" Assembly="TNS.AdExpressI.ProductClassIndicators" %>
 <%@ Register TagPrefix="ctrProductClassResults" Namespace="TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis" Assembly="TNS.AdExpress.Web.Controls" %>
-<%@ Register TagPrefix="ctrVp" Namespace="TNS.AdExpress.Web.Controls.Results.VP" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrVpResult" Namespace="TNS.AdExpress.Web.Controls.Results.VP" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrVpSelection" Namespace="TNS.AdExpress.Web.Controls.Selections.VP" Assembly="TNS.AdExpress.Web.Controls" %>
 
 <%-- Header web control : used to show the commun header for all the aspx pages in the site--%>
 <ctrHeader:HeaderWebControl  
@@ -1656,5 +1657,55 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 				           CssDetailSelectionBordelLevel="dsBorderLevel"
 				           SkinID="mediaAgencyExcelResultTable" 
 />
+
+<%--Veille Promo result Coàntainer control --%>
+<ctrVpResult:VpScheduleContainerWebControl   
+                            runat="server" 
+                            SkinID="VpScheduleContainerWebControl"
+                            CssClass="" 
+/>
+
 <%--Veille Promo result control --%>
-<%--<ctrVp:VpScheduleWebControl  runat="server" ThemeName = "KMAE-Fr" />--%>
+<ctrVpResult:VpScheduleResultWebControl   
+                            runat="server" 
+                            SkinID="VpScheduleResultWebControl"
+                            CssClass="" 
+/>
+
+<ctrVpResult:VpScheduleResultFilterWebControl   
+                            runat="server" 
+                            SkinID="VpScheduleResultFilterWebControl"
+                            CssClass="" 
+/>
+
+<%--Veille Promo Selection control --%>
+<ctrVpSelection:VpScheduleSelectionDropDownDateListWebControl   
+                            runat="server" 
+                            SkinID="DateSelectionWebControl" 
+                            CssClass=""
+/>
+
+<ctrVpSelection:VpScheduleSelectionImageWebControl   
+                            runat="server" 
+                            SkinID="FiltreSelectionWebControl" 
+                            PictureSrcPath="/App_Themes/KMAE-Fr/Images/Common/options.gif"
+                            PictureSrcPathOver="/App_Themes/KMAE-Fr/Images/Common/options_over.gif"
+                            CssClass=""
+/>
+
+<ctrVpSelection:VpScheduleSelectionImageWebControl   
+                            runat="server" 
+                            SkinID="ExcelSelectionWebControl" 
+                            PictureSrcPath="/App_Themes/KMAE-Fr/Images/Common/export_excel.gif"
+                            PictureSrcPathOver="/App_Themes/KMAE-Fr/Images/Common/export_excel_over.gif"
+                            CssClass=""
+/>
+
+<ctrVpSelection:VpScheduleSelectionImageWebControl   
+                            runat="server" 
+                            SkinID="PdfSelectionWebControl" 
+                            PictureSrcPath="/App_Themes/KMAE-Fr/Images/Common/export_pdf.gif"
+                            PictureSrcPathOver="/App_Themes/KMAE-Fr/Images/Common/export_pdf_over.gif"
+                            CssClass=""
+/>
+

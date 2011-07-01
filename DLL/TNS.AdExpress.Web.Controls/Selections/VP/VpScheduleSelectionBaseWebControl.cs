@@ -7,14 +7,14 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.Exceptions;
 using System;
 using TNS.AdExpress.Domain.Layers;
-namespace TNS.AdExpress.Web.Controls.Results.VP
+namespace TNS.AdExpress.Web.Controls.Selections.VP
 {
     /// <summary>
     /// Affiche le résultat d'une alerte plan media
     /// </summary>
     [DefaultProperty("Text"),
       ToolboxData("<{0}:VpScheduleResultBaseWebControl runat=server></{0}:VpScheduleResultBaseWebControl>")]
-    public abstract class VpScheduleResultBaseWebControl : System.Web.UI.WebControls.WebControl {
+    public abstract class VpScheduleSelectionBaseWebControl : System.Web.UI.WebControls.WebControl {
 
         #region Variables
         /// <summary>
@@ -22,13 +22,17 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// </summary>
         protected bool _display = true;
         /// <summary>
-        /// Session client
+        /// Web Session
         /// </summary>
         protected WebSession _webSession = null;
         /// <summary>
         /// Theme name
         /// </summary>
         protected string _themeName = string.Empty;
+        /// <summary>
+        /// Validation Method
+        /// </summary>
+        protected string _validationMethod = string.Empty;
         /// <summary>
         /// Current control Detail
         /// </summary>
@@ -76,13 +80,25 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         }
         #endregion
 
+        #region Validation Method Name
+        /// <summary>
+        ///// Get Validation Method Name
+        /// </summary>
+        [Bindable(false)]
+        public string ValidationMethodName {
+            get { return ("validation_" + this.ID); }
+            
+        }
+        #endregion
+
         #region Validation Method
         /// <summary>
-        ///// Get Validation Method
+        ///// Get / Set Validation Method
         /// </summary>
         [Bindable(false)]
         public string ValidationMethod {
-            get { return ("validation_" + this.ID); }
+            get { return (_validationMethod); }
+            set { _validationMethod = value; }
         }
         #endregion
 
@@ -106,7 +122,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         private string GetJavascript() {
             StringBuilder js = new StringBuilder(1000);
             js.Append("\r\n<script language=\"javascript\">\r\n<!--");
-            js.Append("\r\nfunction " + ValidationMethod + "(){");
+            js.Append("\r\nfunction " + ValidationMethodName + "(){");
             js.Append("\r\n" + GetValidationJavascriptContent());
             js.Append("\r\n}");
             js.Append("\r\nfunction " + DisplayMethod + "(display){");
@@ -175,12 +191,11 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             output.Write(GetJavascript());
             output.AddAttribute("id", this.ID);
             output.AddAttribute("style", ((Display) ? "" : " display:none; "));
-            if(!string.IsNullOrEmpty(CssClass))
+            if (!string.IsNullOrEmpty(CssClass))
                 output.AddAttribute("class", CssClass);
             output.RenderBeginTag(HtmlTextWriterTag.Div);
             output.Write(GetHTML());
             output.RenderEndTag();
-
         }
         #endregion
 

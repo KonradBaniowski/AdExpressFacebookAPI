@@ -16,6 +16,14 @@ namespace TNS.AdExpress.Domain.Layers {
 
         #region Variables
         /// <summary>
+        /// Display
+        /// </summary>
+        protected bool _display = true;
+        /// <summary>
+        /// Control ID
+        /// </summary>
+        protected string _controlId = string.Empty;
+        /// <summary>
         /// Skin ID
         /// </summary>
         protected string _skinId = string.Empty;
@@ -33,15 +41,32 @@ namespace TNS.AdExpress.Domain.Layers {
         /// <param name="assemblyName">Assembly name</param>
         /// <param name="className">Class name</param>
         /// <param name="skinId">Skin ID</pparam>
+        /// <param param name="controlId">Control Id</param>
         /// <param name="validationMethod">Validation Methods</param>
-        public ControlLayer(string name, string assemblyName, string className, string skinId, string validationMethod)
+        /// <param name="display">Display</param>
+        public ControlLayer(string name, string controlId, string assemblyName, string className, string skinId, string validationMethod, bool display)
             : base(name, assemblyName, className) {
             _skinId = skinId;
             _validationMethod = validationMethod;
+            _controlId = controlId;
+            _display = display;
         }
         #endregion
 
         #region Assessor
+        /// <summary>
+        /// Display
+        /// </summary>
+        public bool Display {
+            get { return _display; }
+        }
+
+        /// <summary>
+        /// Control ID
+        /// </summary>
+        public string ControlId {
+            get { return _controlId; }
+        }
         /// <summary>
         /// Skin ID
         /// </summary>

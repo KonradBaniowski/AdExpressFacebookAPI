@@ -10,12 +10,20 @@
   <bannersFormat useBannersFormat="true"/>
   <retailer use="false"/>
   <vpConfiguration>
+    <dateSelections defaultType="cumulWithNextMonth">
+      <dateSelection type="currentMonth"        textId="2866"/>
+      <dateSelection type="cumulWithNextMonth"  textId="2867"/>
+      <dateSelection type="allHistoric"         textId="2868"/>
+    </dateSelections>
     <selections>
-      <selection name="Date Selection"          assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.EasyMusic.Web.Controls.Results.DateSelectionWebControl"          skinId="DateSelectionWebControl"    validationMethod="RefreshVpScheduleWebControl();"/>
-      <selection name="Filtre Selection"        assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.FiltreSelectionWebControl"  skinId="FiltreSelectionWebControl"  validationMethod="RefreshVpScheduleWebControl();"/>
-      <selection name="Export Excel Selection"  assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.ExportSelectionWebControl"  skinId="ExcelSelectionWebControl" />
-      <selection name="Export PDF Selection"    assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.ExportSelectionWebControl"  skinId="PdfSelectionWebControl" />
+      <selection name="Date Selection"              id="DateSelection"        assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.VpScheduleSelectionDropDownDateListWebControl"  skinId="DateSelectionWebControl"    validationMethod="RefreshVpScheduleResultWebControl('Result');"/>
+      <selection name="Filtre Selection"            id="FilterSelection"      assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.VpScheduleSelectionImageWebControl"         skinId="FiltreSelectionWebControl"  validationMethod="DisplayVpScheduleResultWebControl('ResultFilter');"/>
+      <selection name="Export Excel Selection"      id="ExportExcelSelection" assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.VpScheduleSelectionImageWebControl"         skinId="ExcelSelectionWebControl" />
+      <selection name="Export PDF Selection"        id="ExportPdfSelection"   assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.VpScheduleSelectionImageWebControl"         skinId="PdfSelectionWebControl" />
     </selections>
-    <result      name="layer of result control" assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Results.VP.VpScheduleWebControl"          skinId="VpScheduleWebControl"/>
+    <results>
+      <result name="layer of result control"        id="Result"       assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Results.VP.VpScheduleResultWebControl"                            skinId="VpScheduleResultWebControl"       />
+      <result name="layer of result filter control" id="ResultFilter" assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Results.VP.VpScheduleResultFilterWebControl"                      skinId="VpScheduleResultFilterWebControl" validationMethod="RefreshVpScheduleResultWebControl('Result');" display="false"/>
+    </results>
   </vpConfiguration>
 </resultOptions>

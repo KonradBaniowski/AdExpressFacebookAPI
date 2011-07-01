@@ -44,69 +44,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
     /// </summary>
     [DefaultProperty("Text"),
       ToolboxData("<{0}:GenericMediaScheduleWebControl runat=server></{0}:GenericMediaScheduleWebControl>")]
-    public class VpScheduleWebControl : VpScheduleResultBaseWebControl {
-
-        #region Evènements
-
-        #region Initialisation
-        /// <summary>
-        /// Initialisation
-        /// </summary>
-        /// <param name="e">Arguments</param>
-        protected override void OnInit(EventArgs e) {
-            base.OnInit(e);
-        }
-        #endregion
-
-        #region Load
-        /// <summary>
-        /// Chargement du composant
-        /// </summary>
-        /// <param name="e">Arguments</param>
-        protected override void OnLoad(EventArgs e) {
-            base.OnLoad(e);
-        }
-        #endregion
-
-        #region PréRender
-        /// <summary>
-        /// Prérendu
-        /// </summary>
-        /// <param name="e">Arguments</param>
-        protected override void OnPreRender(EventArgs e) {
-            base.OnPreRender(e);
-        }
-        #endregion
-
-        #region Render
-        /// <summary> 
-        /// Génère ce contrôle dans le paramètre de sortie spécifié.
-        /// </summary>
-        /// <param name="output"> Le writer HTML vers lequel écrire </param>
-        protected override void Render(HtmlTextWriter output) {
-            base.Render(output);
-        }
-        #endregion
-
-        #endregion
-
-        #region Ajax Methods
-
-        #region GetData
-        /// <summary>
-        /// Get VP schedule HTML  code
-        /// </summary>
-        /// <param name="o">Result parameters (session Id, theme...)</param>
-        /// <returns>Code HTML</returns>
-        [AjaxPro.AjaxMethod]
-        public override string GetData(string idSession, AjaxPro.JavaScriptObject resultParameters, AjaxPro.JavaScriptObject styleParameters) {
-            return base.GetData(idSession, resultParameters, styleParameters);
-        }
-        #endregion
-
-        #endregion
-
-        #region Methods
+    public class VpScheduleResultWebControl : VpScheduleAjaxResultBaseWebControl {
 
         #region GetHTML
         /// <summary>
@@ -114,14 +52,12 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// </summary>
         /// <param name="webSession">Client Session</param>
         /// <returns>Code HTMl</returns>
-        protected override string GetHTML() {
+        protected override string GetAjaxHTML() {
             TNS.AdExpress.Domain.Web.Navigation.Module _module = ModulesList.GetModule(WebConstantes.Module.Name.VP);
             object[] param = param = new object[1] { _webSession };
             IVeillePromo vpScheduleResult = (IVeillePromo)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryRulesLayer.AssemblyName, _module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
             return (vpScheduleResult.GetHtml());
         }
-        #endregion
-
         #endregion
 
     }

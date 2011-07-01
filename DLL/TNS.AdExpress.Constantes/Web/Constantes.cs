@@ -355,7 +355,24 @@ namespace TNS.AdExpress.Constantes.Web{
                 /// <summary>
                 /// Période sélectionnée à partir du composant globalDate
                 /// </summary>
-                globalDate=16
+                globalDate=16,
+                /// <summary>
+                /// User has personalize the date (Use in VP module)
+                /// </summary>
+                personalize=17,
+                /// <summary>
+                /// Cumul to date + Next month (Use in VP module)
+                /// </summary>
+                cumulWithNextMonth=18,
+                /// <summary>
+                /// All historic (Use in VP module)
+                /// </summary>
+                allHistoric =19,
+                /// <summary>
+                /// Current Month (Use in VP module)
+                /// </summary>
+                currentMonth=20
+
 			}
 			#endregion
 

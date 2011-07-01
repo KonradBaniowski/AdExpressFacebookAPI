@@ -3601,6 +3601,8 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		#endregion 
 
         #region Dates
+
+        #region UpdateDates
         public CustomerPeriod UpdateDates(DateTime FirstDayNotEnable, DateTime dateRef) 
         {
             bool isLastCompletePeriod = false;
@@ -3736,8 +3738,47 @@ namespace TNS.AdExpress.Web.Core.Sessions {
             }
 
             return (null);
-        
+
         }
+        #endregion
+
+        #region SetVpDates
+        /// <summary>
+        /// Set Vp renault Date
+        /// </summary>
+        /// <param name="periodType">Period Type</param>
+        public void SetVpDates(TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType) {
+            DateTime cDateTime = (new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1));
+            PeriodType = periodType;
+            switch (PeriodType) {
+                case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.allHistoric:
+                    PeriodBeginningDate = cDateTime.ToString("yyyyMMdd");
+                    PeriodEndDate = (new DateTime(cDateTime.Year, cDateTime.Month, cDateTime.AddMonths(1).AddDays(-1).Day)).ToString("yyyyMMdd");
+                    break;
+                case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.cumulWithNextMonth:
+                    PeriodBeginningDate = (new DateTime(DateTime.Now.Year, 1, 1)).ToString("yyyyMMdd");
+                    PeriodEndDate = (new DateTime(cDateTime.Year, cDateTime.Month, cDateTime.AddMonths(2).AddDays(-1).Day)).ToString("yyyyMMdd"); 
+                    break;
+                case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.currentMonth:
+                    PeriodBeginningDate = cDateTime.ToString("yyyyMMdd");
+                    PeriodEndDate = (new DateTime(cDateTime.Year, cDateTime.Month, cDateTime.AddMonths(1).AddDays(-1).Day)).ToString("yyyyMMdd");
+                    break;
+                default:
+                    throw new NotImplementedException("The period type '"+periodType.ToString()+"' is not implemented");
+            }
+            
+        }
+        /// <summary>
+        /// Set Vp renault Date
+        /// </summary>
+        /// <param name="dateBegin">Period Type</param>
+        /// <param name="periodEnd">periodEnd</param>
+        public void SetVpDates(DateTime dateBegin, DateTime periodEnd) {
+            PeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.personalize;
+            PeriodBeginningDate = dateBegin.ToString("yyyyMMdd");
+            PeriodEndDate = periodEnd.ToString("yyyyMMdd");
+        }
+        #endregion
 
         #endregion
 

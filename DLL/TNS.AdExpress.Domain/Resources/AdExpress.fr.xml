@@ -2084,6 +2084,9 @@
     <item mnemonic="w2863" type="System.String">Options</item>
     <item mnemonic="w2864" type="System.String">Export Excel</item>
     <item mnemonic="w2865" type="System.String">Export PDF</item>
+    <item mnemonic="w2866" type="System.String">Mois Courant</item>
+    <item mnemonic="w2867" type="System.String">Le cumul à date + le mois suivant</item>
+    <item mnemonic="w2868" type="System.String">Tout l’historique</item>
     <!-- ********************************* -->
   </items>
 </localization>

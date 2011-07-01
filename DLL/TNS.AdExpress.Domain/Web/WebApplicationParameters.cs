@@ -153,6 +153,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// Vp Configuration Detail
         /// </summary>
         protected static VpConfigurationDetail _vpConfigurationDetail = null;
+        /// <summary>
+        /// Vp Date Configuration List
+        /// </summary>
+        protected static VpDateConfigurations _vpDateConfigurations = null;
         #endregion
         
         #region Contructeur
@@ -418,6 +422,14 @@ namespace TNS.AdExpress.Domain.Web {
         public static VpConfigurationDetail VpConfigurationDetail {
             get { return _vpConfigurationDetail; }
             set { _vpConfigurationDetail = value; }
+        }
+        
+        /// <summary>
+        /// Get / Set Vp Date Configurations
+        /// </summary>
+        public static VpDateConfigurations VpDateConfigurations {
+            get { return _vpDateConfigurations; }
+            set { _vpDateConfigurations = value; }
         }
         #endregion
 

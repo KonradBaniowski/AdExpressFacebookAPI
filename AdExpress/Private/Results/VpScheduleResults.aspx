@@ -55,7 +55,7 @@
                             </tr>
                             <tr>
                                 <td valign="top" align="center">
-								    <cc5:VpScheduleContainerWebControl ID="VpScheduleContainerWebControl1" runat="server"/>
+								    <cc5:VpScheduleContainerWebControl ID="VpScheduleContainerWebControl1" runat="server" SkinID="VpScheduleContainerWebControl"/>
                                 </td>
                             </tr>
 						</table>

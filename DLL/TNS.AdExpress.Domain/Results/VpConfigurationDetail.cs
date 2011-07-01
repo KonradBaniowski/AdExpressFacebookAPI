@@ -9,9 +9,9 @@ namespace TNS.AdExpress.Domain.Results
 
         #region Variables
         /// <summary>
-        /// Result Control Layer
+        /// Result Control Layer List
         /// </summary>
-        protected ControlLayer _resultControlLayer;
+        protected List<ControlLayer> _resultControlLayerList;
         /// <summary>
         /// Selection Control Layer List
         /// </summary>
@@ -22,24 +22,25 @@ namespace TNS.AdExpress.Domain.Results
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="resultControlLayer">Result Control Layer</param>
+        /// <param name="resultControlLayerList">Result Control Layer List</param>
         /// <param name="selectionControlLayerList">Selection Control Layer List</param>
-        public VpConfigurationDetail(ControlLayer resultControlLayer, List<ControlLayer> selectionControlLayerList) {
-            if (resultControlLayer == null) throw new ArgumentNullException("ResultControlLayer Parameter is null");
+        public VpConfigurationDetail(List<ControlLayer> resultControlLayerList, List<ControlLayer> selectionControlLayerList) {
+            if (resultControlLayerList == null) throw new ArgumentNullException("resultControlLayerList Parameter is null");
+            if (selectionControlLayerList.Count <= 0) throw new ArgumentException("resultControlLayerList Parameter is invalid");
             if (selectionControlLayerList == null) throw new ArgumentNullException("SelectionControlLayerList Parameter is null");
             if (selectionControlLayerList.Count<=0) throw new ArgumentException("SelectionControlLayerList Parameter is invalid");
 
-            _resultControlLayer = resultControlLayer;
+            _resultControlLayerList = resultControlLayerList;
             _selectionControlLayerList = selectionControlLayerList;
         }
         #endregion
 
         #region Accessors
         /// <summary>
-        /// Get Result Control Layer
+        /// Get Result Control LayerList
         /// </summary>
-        public ControlLayer ResultControlLayer {
-            get { return _resultControlLayer; }
+        public List<ControlLayer> ResultControlLayerList {
+            get { return _resultControlLayerList; }
         }
         /// <summary>
         /// Get Selection Control Layer List

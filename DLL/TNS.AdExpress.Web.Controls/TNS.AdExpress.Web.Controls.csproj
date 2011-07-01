@@ -339,9 +339,11 @@
     <Compile Include="Results\VehicleView\CoverLinkItemWebControl.cs" />
     <Compile Include="Results\VehicleView\VehicleItemsNavigatorWebControl.cs" />
     <Compile Include="Results\VehicleView\VehicleItemWebControl.cs" />
+    <Compile Include="Results\VP\VpScheduleResultFilterWebControl.cs" />
     <Compile Include="Results\VP\VpScheduleResultBaseWebControl.cs" />
+    <Compile Include="Results\VP\VpScheduleAjaxResultBaseWebControl.cs" />
     <Compile Include="Results\VP\VpScheduleContainerWebControl.cs" />
-    <Compile Include="Results\VP\VpScheduleWebControl.cs" />
+    <Compile Include="Results\VP\VpScheduleResultWebControl.cs" />
     <Compile Include="Results\_BannerInformationWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -500,7 +502,10 @@
     <Compile Include="Selections\VisualSelectionWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Selections\VP\OptionsWebControl.cs" />
+    <Compile Include="Selections\VP\VpScheduleAjaxSelectionBaseWebControl.cs" />
+    <Compile Include="Selections\VP\VpScheduleSelectionDropDownDateListWebControl.cs" />
+    <Compile Include="Selections\VP\VpScheduleSelectionImageWebControl.cs" />
+    <Compile Include="Selections\VP\VpScheduleSelectionBaseWebControl.cs" />
     <Compile Include="Selections\WaveSelectionWebControl.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -37,6 +37,8 @@ using TNS.AdExpressI.MediaSchedule;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpressI.Insertions;
 using TNS.AdExpressI.VP;
+using TNS.AdExpress.Web.Controls.Selections.VP;
+using TNS.AdExpress.Domain.Layers;
 namespace TNS.AdExpress.Web.Controls.Results.VP
 {
     /// <summary>
@@ -52,9 +54,13 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// </summary>
         protected WebSession _webSession = null;
         /// <summary>
-        /// Result Control
+        /// Result Control List
         /// </summary>
-        VpScheduleResultBaseWebControl _vpScheduleResultBaseWebControl = null;
+        List<VpScheduleResultBaseWebControl> _vpScheduleResultWebControlList = null;
+        /// <summary>
+        /// Selection Web Control List
+        /// </summary>
+        List<VpScheduleSelectionBaseWebControl> _vpScheduleSelectionBaseWebControlList = null;
         #endregion
 
         #region Accesors
@@ -74,6 +80,48 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
 
         #endregion
 
+        #region JavaScript
+        /// <summary>
+        /// Evenement Javascript
+        /// </summary>
+        /// <returns></returns>
+        protected string GetJavaScript() {
+            StringBuilder js = new StringBuilder(1000);
+            js.Append("\r\n<script language=\"javascript\">\r\n<!--");
+
+            #region RefreshVpScheduleResultWebControl
+            js.Append("\r\nfunction RefreshVpScheduleResultWebControl(controlId){");
+            if (_vpScheduleResultWebControlList.Count > 0) {
+                for (int i=0; i< _vpScheduleResultWebControlList.Count; i++) {
+                    js.Append("\r\n\t");
+                    if (i > 0) js.Append("else ");
+                    js.Append("if(controlId == '" + _vpScheduleResultWebControlList[i].CurrentControlDetail.ControlId + "'){");
+                    js.Append("\r\n\t\t"+ _vpScheduleResultWebControlList[i].ValidationMethod+"();");
+                    js.Append("\r\n\t}");
+                }
+            }
+            js.Append("\r\n}");
+            #endregion
+
+            #region DisplayVpScheduleResultWebControl
+            js.Append("\r\nfunction DisplayVpScheduleResultWebControl(controlId){");
+            if (_vpScheduleResultWebControlList.Count > 0) {
+                for (int i = 0; i < _vpScheduleResultWebControlList.Count; i++) {
+                    js.Append("\r\n\t");
+                    if (i > 0) js.Append("else ");
+                    js.Append("if(controlId == '" + _vpScheduleResultWebControlList[i].CurrentControlDetail.ControlId + "'){");
+                    js.Append("\r\n\t\t" + _vpScheduleResultWebControlList[i].DisplayMethod + "(true);");
+                    js.Append("\r\n\t}");
+                }
+            }
+            js.Append("\r\n}");
+            #endregion
+
+            js.Append("\r\n-->\r\n</script>");
+            return (js.ToString());
+        }
+        #endregion
+
         #region Evènements
 
         #region Initialisation
@@ -84,10 +132,26 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
-            _vpScheduleResultBaseWebControl = (VpScheduleResultBaseWebControl)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + WebApplicationParameters.VpConfigurationDetail.ResultControlLayer.AssemblyName, WebApplicationParameters.VpConfigurationDetail.ResultControlLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
-            //_vpScheduleResultBaseWebControl.SkinID = WebApplicationParameters.VpConfigurationDetail.ResultControlLayer.SkinId;
-            _vpScheduleResultBaseWebControl.ID = this.ID + "_vpScheduleResultBaseWebControl";
-            this.Controls.Add(_vpScheduleResultBaseWebControl);
+
+            _vpScheduleResultWebControlList = new List<VpScheduleResultBaseWebControl>();
+            foreach (ControlLayer cControlLayer in WebApplicationParameters.VpConfigurationDetail.ResultControlLayerList) {
+                _vpScheduleResultWebControlList.Add((VpScheduleResultBaseWebControl)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cControlLayer.AssemblyName, cControlLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null));
+                _vpScheduleResultWebControlList[_vpScheduleResultWebControlList.Count - 1].SkinID = cControlLayer.SkinId;
+                _vpScheduleResultWebControlList[_vpScheduleResultWebControlList.Count - 1].Display = cControlLayer.Display;
+                _vpScheduleResultWebControlList[_vpScheduleResultWebControlList.Count - 1].ID = this.ID + cControlLayer.ControlId;
+                _vpScheduleResultWebControlList[_vpScheduleResultWebControlList.Count - 1].CurrentControlDetail = cControlLayer;
+                this.Controls.Add(_vpScheduleResultWebControlList[_vpScheduleResultWebControlList.Count - 1]);
+            }
+
+            _vpScheduleSelectionBaseWebControlList = new List<VpScheduleSelectionBaseWebControl>();
+            foreach (ControlLayer cControlLayer in WebApplicationParameters.VpConfigurationDetail.SelectionControlLayerList) {
+                _vpScheduleSelectionBaseWebControlList.Add((VpScheduleSelectionBaseWebControl)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cControlLayer.AssemblyName, cControlLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null));
+                _vpScheduleSelectionBaseWebControlList[_vpScheduleSelectionBaseWebControlList.Count - 1].SkinID = cControlLayer.SkinId;
+                _vpScheduleSelectionBaseWebControlList[_vpScheduleSelectionBaseWebControlList.Count - 1].ID = this.ID + cControlLayer.ControlId;
+                _vpScheduleSelectionBaseWebControlList[_vpScheduleSelectionBaseWebControlList.Count - 1].CurrentControlDetail = cControlLayer;
+                _vpScheduleSelectionBaseWebControlList[_vpScheduleSelectionBaseWebControlList.Count - 1].ValidationMethod = cControlLayer.ValidationMethod;
+                this.Controls.Add(_vpScheduleSelectionBaseWebControlList[_vpScheduleSelectionBaseWebControlList.Count - 1]);
+            }
         }
         #endregion
 
@@ -98,7 +162,14 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// <param name="e">Arguments</param>
         protected override void OnLoad(EventArgs e)
         {
-            _vpScheduleResultBaseWebControl.WebSession = this._webSession;
+
+            foreach (VpScheduleResultBaseWebControl cVpScheduleResultBaseWebControl in _vpScheduleResultWebControlList) {
+                cVpScheduleResultBaseWebControl.WebSession = this._webSession;
+            }
+
+            foreach (VpScheduleSelectionBaseWebControl cVpScheduleSelectionBaseWebControl in _vpScheduleSelectionBaseWebControlList) {
+                cVpScheduleSelectionBaseWebControl.WebSession = this._webSession;
+            }
             base.OnLoad(e);
         }
         #endregion
@@ -120,17 +191,33 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// </summary>
         /// <param name="output"> Le writer HTML vers lequel écrire </param>
         protected override void Render(HtmlTextWriter output) {
-            output.Write("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">");
-            output.Write("<tr>");
-            output.Write("<td>");
+            output.Write(GetJavaScript());
 
-            output.Write("</td>");
-            output.Write("</tr>");
-            output.Write("<tr>");
-            output.Write("<td>");
-            _vpScheduleResultBaseWebControl.RenderControl(output);
-            output.Write("</td>");
-            output.Write("</tr>");
+            output.Write("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" "+(string.IsNullOrEmpty(CssClass)?string.Empty:"class=\""+CssClass+"\"")+" >");
+            if (_vpScheduleSelectionBaseWebControlList.Count > 0) {
+                output.Write("<tr>");
+                output.Write("<td>");
+                output.Write("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">");
+                output.Write("<tr>");
+                foreach (VpScheduleSelectionBaseWebControl cVpScheduleSelectionBaseWebControl in _vpScheduleSelectionBaseWebControlList) {
+                    output.Write("<td>");
+                    cVpScheduleSelectionBaseWebControl.RenderControl(output);
+                    output.Write("</td>");
+                }
+                output.Write("</tr>");
+                output.Write("</table>");
+                output.Write("</td>");
+                output.Write("</tr>");
+            }
+            if (_vpScheduleResultWebControlList.Count > 0) {
+                foreach (VpScheduleResultBaseWebControl cVpScheduleResultBaseWebControl in _vpScheduleResultWebControlList) {
+                    output.Write("<tr>");
+                    output.Write("<td>");
+                    cVpScheduleResultBaseWebControl.RenderControl(output);
+                    output.Write("</td>");
+                    output.Write("</tr>");
+                }
+            }
             output.Write("</table>");
         }
         #endregion

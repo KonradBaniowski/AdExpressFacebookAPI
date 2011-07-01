@@ -43,6 +43,8 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             bool useRetailer = false;
             Dictionary<TableIds, MatchingTable> matchingTableList = new Dictionary<TableIds, MatchingTable>();
             VpConfigurationDetail vpConfigurationDetail = null;
+            List<VpDateConfiguration> vpDateConfigurationList = null;
+            TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type defaultVpDateType = CustomerSessions.Period.Type.currentMonth;
             #endregion
 
             try {
@@ -94,16 +96,40 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 if (ModulesList.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.VP) != null) {
 
                                     #region Variables
-                                    ControlLayer resultControlLayer = null;
+                                    List<ControlLayer> resultControlLayerList = new List<ControlLayer>();
                                     List<ControlLayer> selectionControlLayerList = new List<ControlLayer>();
+                                    vpDateConfigurationList = new List<VpDateConfiguration>();
                                     #endregion
 
                                     subReader = reader.ReadSubtree();
                                     while (subReader.Read()) {
                                         if (subReader.NodeType == XmlNodeType.Element) {
                                             switch (subReader.LocalName) {
-                                                case "result":
-                                                    resultControlLayer = new ControlLayer(subReader.GetAttribute("name"), subReader.GetAttribute("assemblyName"), subReader.GetAttribute("class"), (!string.IsNullOrEmpty(subReader.GetAttribute("skinId"))) ? subReader.GetAttribute("skinId") : string.Empty, (!string.IsNullOrEmpty(subReader.GetAttribute("validationMethod"))) ? subReader.GetAttribute("validationMethod") : string.Empty);
+                                                case "dateSelections":
+                                                    defaultVpDateType = (TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type)Enum.Parse(typeof(TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type), subReader.GetAttribute("defaultType"));
+
+                                                    subSubReader = subReader.ReadSubtree();
+                                                    while (subSubReader.Read()) {
+                                                        if (subSubReader.NodeType == XmlNodeType.Element) {
+                                                            switch (subSubReader.LocalName) {
+                                                                case "dateSelection":
+                                                                    vpDateConfigurationList.Add(new VpDateConfiguration((TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type)Enum.Parse(typeof(TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type), subSubReader.GetAttribute("type")), Int64.Parse(subSubReader.GetAttribute("textId"))));
+                                                                    break;
+                                                            }
+                                                        }
+                                                    }
+                                                    break;
+                                                case "results":
+                                                    subSubReader = subReader.ReadSubtree();
+                                                    while (subSubReader.Read()) {
+                                                        if (subSubReader.NodeType == XmlNodeType.Element) {
+                                                            switch (subSubReader.LocalName) {
+                                                                case "result":
+                                                                    resultControlLayerList.Add(new ControlLayer(subSubReader.GetAttribute("name"), subSubReader.GetAttribute("id"), subSubReader.GetAttribute("assemblyName"), subSubReader.GetAttribute("class"), (!string.IsNullOrEmpty(subSubReader.GetAttribute("skinId"))) ? subSubReader.GetAttribute("skinId") : string.Empty, (!string.IsNullOrEmpty(subSubReader.GetAttribute("validationMethod"))) ? subSubReader.GetAttribute("validationMethod") : string.Empty, (!string.IsNullOrEmpty(subSubReader.GetAttribute("display"))) ? bool.Parse(subSubReader.GetAttribute("display")) : true));
+                                                                    break;
+                                                            }
+                                                        }
+                                                    }
                                                     break;
                                                 case "selections":
                                                     subSubReader = subReader.ReadSubtree();
@@ -111,7 +137,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                                         if (subSubReader.NodeType == XmlNodeType.Element) {
                                                             switch (subSubReader.LocalName) {
                                                                 case "selection":
-                                                                    selectionControlLayerList.Add(new ControlLayer(subSubReader.GetAttribute("name"), subSubReader.GetAttribute("assemblyName"), subSubReader.GetAttribute("class"), (!string.IsNullOrEmpty(subSubReader.GetAttribute("skinId"))) ? subSubReader.GetAttribute("skinId") : string.Empty, (!string.IsNullOrEmpty(subSubReader.GetAttribute("validationMethod"))) ? subSubReader.GetAttribute("validationMethod") : string.Empty));
+                                                                    selectionControlLayerList.Add(new ControlLayer(subSubReader.GetAttribute("name"), subSubReader.GetAttribute("id"), subSubReader.GetAttribute("assemblyName"), subSubReader.GetAttribute("class"), (!string.IsNullOrEmpty(subSubReader.GetAttribute("skinId"))) ? subSubReader.GetAttribute("skinId") : string.Empty, (!string.IsNullOrEmpty(subSubReader.GetAttribute("validationMethod"))) ? subSubReader.GetAttribute("validationMethod") : string.Empty, (!string.IsNullOrEmpty(subSubReader.GetAttribute("display"))) ? bool.Parse(subSubReader.GetAttribute("display")) : true));
                                                                     break;
                                                             }
                                                         }
@@ -120,7 +146,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                             }
                                         }
                                     }
-                                    vpConfigurationDetail = new VpConfigurationDetail(resultControlLayer, selectionControlLayerList);
+                                    vpConfigurationDetail = new VpConfigurationDetail(resultControlLayerList, selectionControlLayerList);
                                 }
                                 break;
                         }
@@ -132,6 +158,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                 WebApplicationParameters.UseRetailer = useRetailer;
                 WebApplicationParameters.MatchingRetailerTableList = matchingTableList;
                 WebApplicationParameters.VpConfigurationDetail = vpConfigurationDetail;
+                WebApplicationParameters.VpDateConfigurations = new VpDateConfigurations(defaultVpDateType, vpDateConfigurationList);
             }
 
             #region Error Management
