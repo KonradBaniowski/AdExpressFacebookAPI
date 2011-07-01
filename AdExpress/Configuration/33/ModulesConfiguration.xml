@@ -1760,8 +1760,8 @@
     <moduleGroup name="Veille promotionnelle renault" type="1" privilegecode="158" traductioncode="2858" flashUrl="/Flash/Common/GroupedeModuleAlerte.swf" missingFlashUrl="/Images/Common/FlashReplacement/GroupedeModuleAlerte.gif" descriptionWebTextId="2859">
       <!-- *****************************************         Plan d'actions                *****************************************-->
       <module name="Plan d'actions" privilegecode="7854" traductioncode="2860" moduleCategoryId="0" urlNextPage="/Private/Results/VpScheduleResults.aspx" descriptionWebTextId="2861" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
-        <RulesLayer name="Default VP rules layers" assemblyName="TNS.AdExpressI.VP.Default.dll" class="TNS.AdExpressI.VP.Default.Result"/>
-        <DataAccessLayer name="Default VP data access layers" assemblyName="TNS.AdExpressI.VP.DAL.Default.dll" class="TNS.AdExpressI.VP.DAL.Default.ResultDAL"/>
+        <RulesLayer name="Default VP rules layers" assemblyName="TNS.AdExpressI.VP.Default.dll" class="TNS.AdExpressI.VP.Default.VeillePromo"/>
+        <DataAccessLayer name="Default VP data access layers" assemblyName="TNS.AdExpressI.VP.DAL.Default.dll" class="TNS.AdExpressI.VP.DAL.Default.VeillePromoDAL"/>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
             <defaultMediaDetailLevel id="37" name="Sub Segment VP\Segment VP\Brand VP"/>

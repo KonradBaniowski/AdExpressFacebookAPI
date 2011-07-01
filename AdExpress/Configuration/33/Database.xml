@@ -18,7 +18,7 @@
     <defaultConnection enumId="9" description="EasyMusic" dataBaseEnumId="2" login="nicotest3000" password="nicotest3000"       dataSource="music01_test.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <!--Test default rights connection-->
     <defaultConnection enumId="10" description="Rights" dataBaseEnumId="2" login="gfacon" password="sandie5"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <defaultConnection enumId="12" description="Veille Promo" dataBaseEnumId="11" login="PROMO03" password="waltari2"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>    
+    <defaultConnection enumId="12" description="Veille Promo" dataBaseEnumId="2" login="PROMO03" password="waltari2"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>    
   </defaultConnections>
   <schemas>
     <schema enumId="0" description="AdExpress Data (AdExpr03)" label="adexpr03"/>
@@ -262,7 +262,7 @@
     <table enumId="230" description="Promo :  Product category"   schemaEnumId="11" label="category" prefix="ct"/>
     <table enumId="231" description="Promo : Brand "   schemaEnumId="11" label="brand" prefix="br"/>
     <table enumId="232" description="Promo : Circuit "   schemaEnumId="11" label="circuit" prefix="cr"/>
-    <table enumId="233" description="Promo : Data  "   schemaEnumId="11" label="data_promo" prefix="wp"/>
+    <table enumId="233" description="Promo : Data  "   schemaEnumId="11" label="data_promotion" prefix="wp"/>
     <table enumId="234" description="Promo : Product Segment"   schemaEnumId="11" label="segment" prefix="sg"/>
     
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
@@ -277,7 +277,7 @@
     <view enumId="3" description="Classif: all Recap product" schemaEnumId="4" label="all_product_" prefix="allrp"/>
     <view enumId="4" description="Classif: all Adv Agency" schemaEnumId="0" label="all_adv_agency_" prefix="allaa"/>
     <view enumId="5" description="Classif: all Promo brand" schemaEnumId="11" label="all_brand" prefix="allpb"/>
-    <view enumId="6" description="Classif: all Promo product" schemaEnumId="11" label="all_product" prefix="allpp"/>
+    <view enumId="6" description="Classif: all Promo product" schemaEnumId="11" label="all_product" prefix="allpp"/>    
   </views>  
 </database>
 

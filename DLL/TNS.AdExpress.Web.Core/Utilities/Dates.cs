@@ -731,5 +731,31 @@ namespace TNS.AdExpress.Web.Core.Utilities
         }
         #endregion
 
+        #region GetMonthFromWeek
+        /// <summary>
+        /// Détermine à quel mois appartient la semaine
+        /// </summary>
+        /// <param name="week">Numéro de semaine</param>
+        /// <returns>Mois de la semaine</returns>
+        public static int GetMonthFromWeek(int year, int week)
+        {
+            DateTime firstDay = (new AtomicPeriodWeek(year, week)).FirstDay;
+            int firstDayMonthNumber = 0;
+            int otherMonthNumber = 0;
+            int firstDayMonth = firstDay.Month;
+            int i;
+            for (i = 1; i < 8; i++)
+            {
+                if (firstDay.Month == firstDayMonth) firstDayMonthNumber++;
+                else otherMonthNumber++;
+                firstDay = firstDay.AddDays(1.0);
+            }
+            if (firstDayMonthNumber > 3) return (firstDayMonth);
+            else return (firstDay.Month);
+
+        }
+        #endregion
+      
+
     }
 }

@@ -2,7 +2,7 @@
 // Auteur: D.V. Mussuma et K.Shehzad
 // Date de création: 05/07/2005
 #endregion
-
+#define DEBUG
 using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -15,6 +15,7 @@ using CustomerWebConstantes=TNS.AdExpress.Constantes.Web.CustomerSessions;
 using WebFunctions=TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Web;
+using System.Collections.Generic;
 
 
 namespace TNS.AdExpress.Web.Controls.Selections
@@ -377,6 +378,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 		/// <param name="output"> Le writer HTML vers lequel écrire </param>
 		protected override void Render(HtmlTextWriter output){
 			try{
+
 				StringBuilder htmlBuilder=new StringBuilder(10500);
                 string themeName = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[language].Name;
                 CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[language].Localization);

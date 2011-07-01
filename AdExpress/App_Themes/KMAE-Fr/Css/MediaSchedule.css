@@ -1726,14 +1726,7 @@ td.mi{
             border-collapse: collapse;
             
         }
-        td.vph
-        {
-            width: 100%;
-            font-size: 11px;
-            text-align: center;
-            border-color: Yellow;
-            height: 15px;
-        }
+       
         td.vpb
         {
             height: 30px; /* vertical-align:middle;*/
@@ -1753,5 +1746,285 @@ td.mi{
             padding-bottom: 10px;
             padding-right: 1px;
             background-color: #A0A1A7;
+        }
+         /*=======VP Present=======*/
+        td.vph1
+        {
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+            background-color: #CC99FF;
+            color: #000000;
+        }
+        td.vph2
+        {
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+            background-color: #993300;
+            color: #000000;
+        }
+        td.vph3
+        {
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+            background-color: #99CCFF;
+            color: #000000;
+        }
+        td.vph4
+        {
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+            background-color: #003300;
+            color: #000000;
+        }
+        td.vph5
+        {
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+            background-color: #003366;
+            color: #000000;
+        }
+        td.vph6
+        {
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+            background-color: #000080;
+            color: #000000;
+        }
+        td.vph7
+        {
+            background-color: #333399;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph8
+        {
+            background-color: #800000;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph9
+        {
+            background-color: #FF6600;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph10
+        {
+            background-color: #808000;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph11
+        {
+            background-color: #008000;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph12
+        {
+            background-color: #008080;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph13
+        {
+            background-color: #0000FF;
+            color: #FFFFFF;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph14
+        {
+            background-color: #FF0000;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph15
+        {
+            background-color: #FF9900;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph16
+        {
+            background-color: #99CC00;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph17
+        {
+            background-color: #339966;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph18
+        {
+            background-color: #33CCCC;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph19
+        {
+            background-color: #3366FF;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph20
+        {
+            background-color: #800080;
+            color: #FFFFFF;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph21
+        {
+            background-color: #FF00FF;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph22
+        {
+            background-color: #FFCC00;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph23
+        {
+            background-color: #FFFF00;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph24
+        {
+            background-color: #00FF00;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph25
+        {
+            background-color: #00FFFF;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph26
+        {
+            background-color: #00CCFF;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph27
+        {
+            background-color: #993366;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph28
+        {
+            background-color: #FF99CC;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph29
+        {
+            background-color: #FFCC99;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph30
+        {
+            background-color: #FFFF99;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
+        }
+        td.vph31
+        {
+            background-color: #CCFFCC;
+            color: #000000;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+            height: 15px;
         }
 /***********Fin Style Calendriers Veille Promotionnelle***************************************/

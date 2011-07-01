@@ -78,10 +78,15 @@ namespace TNS.AdExpressI.VP.DAL
                 //Get  classification levels selected
                 GenericDetailLevel detailLevel = _session.GenericMediaDetailLevel;
 
+                //get universe filters
+                universFilter = GetUniversFilter(prefix);
+
 
                 //SELECT
-                sql.AppendFormat(" select {0}, date_begin_num, date_end_num  ", classifFieldName);
-                sql.Append(" ,promotion_content, condition_visual, condition_text, promotion_brand, promotion_visual, activation ");
+                //sql.AppendFormat(" select ID_DATA_PROMOTION,{0}, date_begin_num, date_end_num  ", classifFieldName);
+                //sql.Append(" ,promotion_content, condition_visual, condition_text, promotion_brand, promotion_visual ");
+                sql.AppendFormat(" select * ");
+             
 
                 //FROM
                 sql.AppendFormat(" from  {0} , {1}  ", classifTableName, dataPromo.SqlWithPrefix);
@@ -94,7 +99,7 @@ namespace TNS.AdExpressI.VP.DAL
 
                 //Adding claasification joins
                 sql.AppendFormat(" {0}", classifJoinCondition);
-
+                
                 //ORDER BY
                 sql.AppendFormat(" order by {0}, date_begin_num, date_end_num ", classifOrderFieldName);
 
@@ -149,11 +154,17 @@ namespace TNS.AdExpressI.VP.DAL
             StringBuilder sql = new StringBuilder();          
 
             //Customer period selected
-            CustomerPeriod customerPeriod = _session.CustomerPeriodSelected;
+            string periodBeginningDate = _session.PeriodBeginningDate;
+            string periodEndDate = _session.PeriodEndDate;
 
-            //Filtering period
-            sql.AppendFormat(" and DATE_BEGIN_NUM >= {0}", customerPeriod.StartDate);
-            sql.AppendFormat(" and DATE_END_NUM <= {0}", customerPeriod.EndDate);
+              //Filtering period
+            sql.Append("  and (");
+            sql.AppendFormat(" (( DATE_BEGIN_NUM >= {0} and DATE_BEGIN_NUM <= {1}) ", periodBeginningDate, periodEndDate);
+            sql.AppendFormat(" or (DATE_END_NUM >= {0} and DATE_END_NUM <= {1})) ", periodBeginningDate, periodEndDate);
+            sql.Append("  or ");
+            sql.AppendFormat("  (( DATE_BEGIN_NUM >= {0} and  {0} <= DATE_END_NUM ) ", periodBeginningDate);
+            sql.AppendFormat(" or (DATE_BEGIN_NUM >= {0} and {0} <= DATE_END_NUM )) ", periodEndDate);
+            sql.Append("  ) ");
 
             // Product classification Selection
             sql.Append(GetProductClassifFilters(dataTablePrefix, true));

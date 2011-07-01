@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using TNS.FrameWork.Date;
-
+using TNS.AdExpress.Web.Core;
+using TNS.AdExpress.Web.Core.Utilities;
 namespace TNS.AdExpressI.VP
 {
     public class VeillePromoScheduleData
@@ -18,7 +19,7 @@ namespace TNS.AdExpressI.VP
 
         protected List<object[]> data = null;
 
-        List<object[]> _data = null;
+        List<object[]> _data = new List<object[]>();
 
         public VeillePromoScheduleData(string startDate, string endDate, int nbLevels)
         {
@@ -40,8 +41,9 @@ namespace TNS.AdExpressI.VP
                 int colPosition = nbLevels * 2;
                 while (!(currentWeek.Week == endWeek.Week && currentWeek.Year == endWeek.Year))
                 {
-                    _weekList.Add(currentWeek.Year *100 + currentWeek.Week, colPosition);
-                    currentWeek.Increment();
+                    int month = Dates.GetMonthFromWeek(currentWeek.Year, currentWeek.Week);
+                    _weekList.Add((currentWeek.Year * 100 + month ) *100 + currentWeek.Week, colPosition);
+                    currentWeek.Increment();                    
                     colPosition++;
                 }
             }

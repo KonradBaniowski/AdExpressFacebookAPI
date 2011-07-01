@@ -160,6 +160,14 @@ namespace AdExpress{
                                 // Famille
                                 levels.Add(11);
                                 break;
+                            case TNS.AdExpress.Constantes.Web.Module.Name.VP:                               
+                                //VP Product category
+                                levels.Add(65);
+                                //VP product
+                                levels.Add(67);
+                                //VP Brand
+                                levels.Add(66);                               
+                                break;
                             default:
                                 // Media/catégorie
                                 levels.Add(1);
