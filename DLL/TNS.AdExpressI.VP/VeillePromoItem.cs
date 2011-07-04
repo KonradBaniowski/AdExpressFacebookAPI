@@ -37,7 +37,10 @@ namespace TNS.AdExpressI.VP
 
         ///<summary>Css Class</summary>        
         protected string _cssClass;
-
+        /// <summary>
+        /// Brand
+        /// </summary>
+        protected string _brand;
         #endregion
 
         #region Accessors
@@ -81,7 +84,13 @@ namespace TNS.AdExpressI.VP
         }
 
 
-
+        /// <summary>
+        /// Get brand
+        /// </summary>
+        public string Brand
+        {
+            get { return _brand; }
+        }
         ///<summary>Get CssClass</summary>     
         public string CssClass
         {
@@ -111,12 +120,13 @@ namespace TNS.AdExpressI.VP
         /// <param name="dateBegin">Date Beginning </param>
         /// <param name="dateEnd">Date End</param>       
         /// <param name="promotionContent">Promotion Content</param>
-        public VeillePromoItem(VpCst.VeillePromo.itemType itemType, long idDataPromotion, DateTime dateBegin, DateTime dateEnd, string promotionContent,string cssClass) :this(itemType){
+        public VeillePromoItem(VpCst.VeillePromo.itemType itemType, long idDataPromotion, DateTime dateBegin, DateTime dateEnd, string promotionContent,string cssClass,string brand) :this(itemType){
                 _idDataPromotion = idDataPromotion;                  
             _dateBegin = dateBegin;
             _dateEnd = dateEnd;           
             _promotionContent = promotionContent;
             _cssClass = cssClass;
+            _brand = brand;
         }
         #endregion
     }

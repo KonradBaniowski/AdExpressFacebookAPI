@@ -91,7 +91,11 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
             js.Append("\r\n\toN.innerHTML=res.value;");
             // js.Append("\r\n\tUpdateParameters(oN);");
             js.Append("\r\n}\r\n");
-            js.Append("\r\naddEvent(window, \"load\", get_" + this.ID + ");");
+
+            js.Append("\r\nif(window.addEventListener)");
+            js.Append("\r\n\twindow.addEventListener(\"load\", get_" + this.ID + ", false);");
+            js.Append("\r\nelse if(window.attachEvent)");
+            js.Append("\r\n\twindow.attachEvent(\"onload\",get_" + this.ID + "); ");
 
             js.Append(GetAjaxEventScript());
 

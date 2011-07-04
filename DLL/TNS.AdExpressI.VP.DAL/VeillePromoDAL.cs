@@ -10,7 +10,7 @@ using TNS.AdExpress.Web.Core;
 using System.Collections;
 using CustomerRightConstante = TNS.AdExpress.Constantes.Customer.Right;
 using TNS.FrameWork.DB.Common;
-
+using CstWeb = TNS.AdExpress.Constantes.Web;
 namespace TNS.AdExpressI.VP.DAL
 {
 
@@ -22,28 +22,73 @@ namespace TNS.AdExpressI.VP.DAL
         /// </summary>
         protected WebSession _session = null;
 
+        /// <summary>
+        /// Period beginning date
+        /// </summary>
+        protected string _periodBeginningDate = "";
+        /// <summary>
+        /// Period end date
+        /// </summary>
+        protected string _periodEndDate = "";
         #endregion
 
         #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
+        ///  <param name="session">session</param>
         public VeillePromoDAL(WebSession session)
         {
             if (session == null) throw new NullReferenceException(" parameter session cannot be null ");
+            _session = session;         
+        }
+       
+        
+        /// <summary>
+        ///  Constructor
+        /// </summary>
+        /// <param name="session">session</param>
+        /// <param name="periodBeginningDate">period Beginning Date</param>
+        /// <param name="periodEndDate">period End Date</param>
+        public VeillePromoDAL(WebSession session, string periodBeginningDate, string periodEndDate)
+        {
+            if (session == null) throw new NullReferenceException(" parameter session cannot be null ");
             _session = session;
+            _periodBeginningDate = periodBeginningDate;
+            _periodEndDate = periodEndDate;
         }
         #endregion
 
 
         #region IVeillePromoDAL Membres
+        /// <summary>
+        /// Get Min Period
+        /// </summary>
+        /// <returns></returns>
+        public virtual DataSet GetMinMaxPeriod()
+        {
+            DataSet ds = null;
+            StringBuilder sql = new StringBuilder(5000);
+            try
+            {
+                sql.Append(" select min(DATE_BEGIN_NUM) DATE_BEGIN_NUM,max(DATE_END_NUM) DATE_END_NUM from DATA_PROMOTION ");
+                IDataSource dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.vPromo);
+                ds = dataSource.Fill(sql.ToString());               
+            }
+            catch (Exception ex)
+            {
 
+                throw new Exceptions.VeillePromoDALException(" Impossible to get min Promo period ", ex);
+            }
+            return ds;
+
+        }
         /// <summary>
         /// Retreive the data for Veille promo schedule result
         /// </summary>
         /// <returns>
         /// DataSet      
-        public DataSet GetData()
+        public virtual DataSet GetData()
         {
             DataSet ds = null;
             string classifTableName = string.Empty, classifFieldName = string.Empty, classifOrderFieldName = string.Empty
@@ -66,7 +111,7 @@ namespace TNS.AdExpressI.VP.DAL
 
                 // Get the SQL  fields corresponding to the classification's items                 
                 classifFieldName = _session.GenericMediaDetailLevel.GetSqlFields();
-             
+
 
                 // Get the SQL fields corresponding to the classification's items  
                 classifOrderFieldName = _session.GenericMediaDetailLevel.GetSqlOrderFields();
@@ -86,11 +131,11 @@ namespace TNS.AdExpressI.VP.DAL
                 //sql.AppendFormat(" select ID_DATA_PROMOTION,{0}, date_begin_num, date_end_num  ", classifFieldName);
                 //sql.Append(" ,promotion_content, condition_visual, condition_text, promotion_brand, promotion_visual ");
                 sql.AppendFormat(" select * ");
-             
+
 
                 //FROM
                 sql.AppendFormat(" from  {0} , {1}  ", classifTableName, dataPromo.SqlWithPrefix);
-                
+
                 //WHERE
                 sql.Append(" where  0=0 ");
 
@@ -99,24 +144,40 @@ namespace TNS.AdExpressI.VP.DAL
 
                 //Adding claasification joins
                 sql.AppendFormat(" {0}", classifJoinCondition);
-                
+
                 //ORDER BY
                 sql.AppendFormat(" order by {0}, date_begin_num, date_end_num ", classifOrderFieldName);
 
                 IDataSource dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.vPromo);
-                
-                ds = dataSource.Fill(sql.ToString()); 
+
+                ds = dataSource.Fill(sql.ToString());
             }
             catch (Exception ex)
             {
 
-                throw new Exceptions.VeillePromoDALException(" Impossible to get Veille Promo Data ", ex);
+                throw new Exceptions.VeillePromoDALException(" Impossible to get Promotion Data ", ex);
             }
 
 
             return ds;
         }
 
+        public virtual DataSet GetData(long idDataPromotion)
+        {
+            DataSet ds = null;
+            try
+            {
+                StringBuilder sql = new StringBuilder(5000);
+                sql.AppendFormat(" select * ");
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exceptions.VeillePromoDALException(" Impossible to get one  Promoyion Data ", ex);
+            }
+            return ds;
+        }
         #endregion
 
 
@@ -151,21 +212,20 @@ namespace TNS.AdExpressI.VP.DAL
         /// <returns>SQl string for universes filter</returns>
         protected virtual string GetUniversFilter(string dataTablePrefix)
         {
-            StringBuilder sql = new StringBuilder();          
+            StringBuilder sql = new StringBuilder();
 
-            //Customer period selected
-            string periodBeginningDate = _session.PeriodBeginningDate;
-            string periodEndDate = _session.PeriodEndDate;
 
-              //Filtering period
-            sql.Append("  and (");
-            sql.AppendFormat(" (( DATE_BEGIN_NUM >= {0} and DATE_BEGIN_NUM <= {1}) ", periodBeginningDate, periodEndDate);
-            sql.AppendFormat(" or (DATE_END_NUM >= {0} and DATE_END_NUM <= {1})) ", periodBeginningDate, periodEndDate);
-            sql.Append("  or ");
-            sql.AppendFormat("  (( DATE_BEGIN_NUM >= {0} and  {0} <= DATE_END_NUM ) ", periodBeginningDate);
-            sql.AppendFormat(" or (DATE_BEGIN_NUM >= {0} and {0} <= DATE_END_NUM )) ", periodEndDate);
-            sql.Append("  ) ");
-
+            //Filtering period
+             if (_session.PeriodType != CstWeb.CustomerSessions.Period.Type.allHistoric)
+            {
+                sql.Append("  and (");
+                sql.AppendFormat(" (( DATE_BEGIN_NUM >= {0} and DATE_BEGIN_NUM <= {1}) ", _periodBeginningDate, _periodEndDate);
+                sql.AppendFormat(" or (DATE_END_NUM >= {0} and DATE_END_NUM <= {1})) ", _periodBeginningDate, _periodEndDate);
+                sql.Append("  or ");
+                sql.AppendFormat("  (( DATE_BEGIN_NUM >= {0} and  {0} <= DATE_END_NUM ) ", _periodBeginningDate);
+                sql.AppendFormat(" or (DATE_BEGIN_NUM >= {0} and {0} <= DATE_END_NUM )) ", _periodEndDate);
+                sql.Append("  ) ");
+            }
             // Product classification Selection
             sql.Append(GetProductClassifFilters(dataTablePrefix, true));
 
@@ -182,10 +242,10 @@ namespace TNS.AdExpressI.VP.DAL
         /// <param name="prefix">prefix</param>
         /// <param name="beginByAnd">begin By And</param>
         /// <returns>SQL string Product Classificaton  Filters</returns>
-        protected virtual string GetProductClassifFilters( string prefix,bool beginByAnd)
+        protected virtual string GetProductClassifFilters(string prefix, bool beginByAnd)
         {
             StringBuilder sql = new StringBuilder();
-            bool first = true;          
+            bool first = true;
             string segmentActivityAccess = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.groupAccess);
             string segmentActivityException = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.groupException);
             string categoryAccess = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.segmentAccess);
@@ -237,7 +297,7 @@ namespace TNS.AdExpressI.VP.DAL
                     if (beginByAnd) sql.Append(" and ");
                     sql.Append(" ( ");
                 }
-                sql.AppendFormat(" {0}.id_sector not in ({1}) ",prefix,segmentActivityException);
+                sql.AppendFormat(" {0}.id_sector not in ({1}) ", prefix, segmentActivityException);
                 first = false;
             }
             // Product Category
@@ -278,7 +338,7 @@ namespace TNS.AdExpressI.VP.DAL
         protected virtual string GetBrandClassifFilters(string prefix, bool beginByAnd)
         {
             StringBuilder sql = new StringBuilder();
-            bool first = true;          
+            bool first = true;
             string circuitAccess = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.circuitAccess);
             string circuitException = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.circuitException);
             string brandAccess = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.brandAccess);
@@ -304,7 +364,7 @@ namespace TNS.AdExpressI.VP.DAL
                 }
                 sql.AppendFormat("  {0}.id_brand in ({1}) ", prefix, brandAccess);
                 first = false;
-            }          
+            }
             if (!first) sql.Append(" ) ");
 
             //Add Classification items in exception
@@ -332,7 +392,7 @@ namespace TNS.AdExpressI.VP.DAL
                 }
                 sql.AppendFormat(" {0}.id_brand not in ({1}) ", prefix, brandException);
                 first = false;
-            }           
+            }
             if (!first) sql.Append(" ) ");
 
             return sql.ToString();

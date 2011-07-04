@@ -46,6 +46,22 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
       ToolboxData("<{0}:GenericMediaScheduleWebControl runat=server></{0}:GenericMediaScheduleWebControl>")]
     public class VpScheduleResultWebControl : VpScheduleAjaxResultBaseWebControl {
 
+        #region Evènements
+
+        #region PréRender
+        /// <summary>
+        /// Prérendu
+        /// </summary>
+        /// <param name="e">Arguments</param>
+        protected override void OnPreRender(EventArgs e)
+        {
+           
+            base.OnPreRender(e);
+        }
+        #endregion
+
+        #endregion
+
         #region GetHTML
         /// <summary>
         /// Compute VP schedule

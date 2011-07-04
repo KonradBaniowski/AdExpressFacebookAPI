@@ -55,6 +55,10 @@ namespace TNS.Ares.Domain.LS {
         /// </summary>
         Alertes = 20,
         /// <summary>
+        /// Tefnout Plugin
+        /// </summary>
+        Tefnout = 21,
+        /// <summary>
         /// easyMusicExcel Plugin
         /// </summary>
         easyMusicExcel = 30,

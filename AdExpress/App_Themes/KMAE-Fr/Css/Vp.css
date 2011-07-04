@@ -41,4 +41,43 @@
 	background-color:White;
 }
 
+/* Result table css class */
+a.tooltip:link, a.tooltip:visited, a.tooltip:active {
 
+	font-size: 11px; 
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	text-decoration: none;
+}
+a.tooltip em {
+    display:none;
+}
+a.tooltip:hover {
+    border: 0; 
+    position: relative; 
+    z-index: 500; 
+    text-decoration:none;
+}
+a.tooltip:hover em {
+    font-style: normal; 
+    display: block; 
+    position: absolute; 
+    top: 20px; 
+    left: -10px; 
+    padding: 5px; 
+    color: #000000; 
+    border: 1px solid #bbb; 
+    background: #FFA500; 
+    width:200px;
+}
+a.tooltip:hover em span {
+    position: absolute; 
+    top: -7px; 
+    left: 15px;
+    height: 7px; 
+    width: 11px; 
+    /* background: transparent url(image-infobulle.gif); */
+    margin:0; 
+    padding: 0; 
+    border: 0;
+}

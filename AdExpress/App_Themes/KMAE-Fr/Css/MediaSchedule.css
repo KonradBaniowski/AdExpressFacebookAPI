@@ -1711,7 +1711,7 @@ td.mi{
             border-right-color: #FFFFFF;
             border-right-width: 1px;
             border-right-style: solid;
-            width: 30px;
+            padding:0px 6px 0px 7px;
             text-align: center; /*OVERFLOW: visible;*/
         }
         table.vp
@@ -1746,6 +1746,18 @@ td.mi{
             padding-bottom: 10px;
             padding-right: 1px;
             background-color: #A0A1A7;
+        }
+         span.flg
+        {
+        	 text-align: left ; 
+        	 font-weight:bold; 
+        	 font-size:1.2em;
+        }
+         span.fld
+        {
+        	 text-align: right; 
+        	 font-weight:bold; 
+        	 font-size:1.2em;
         }
          /*=======VP Present=======*/
         td.vph1
@@ -2027,4 +2039,5 @@ td.mi{
             text-align: center;
             height: 15px;
         }
+        
 /***********Fin Style Calendriers Veille Promotionnelle***************************************/

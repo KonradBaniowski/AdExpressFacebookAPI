@@ -10,7 +10,18 @@ namespace TNS.AdExpressI.VP.DAL.Default {
         /// <summary>
         /// Constructor
         /// </summary>
+        ///  <param name="session">session</param>
         public VeillePromoDAL(WebSession session):base(session)
+        {
+          
+        }
+        /// <summary>
+        ///  Constructor
+        /// </summary>
+        /// <param name="session">session</param>
+        /// <param name="periodBeginningDate">period Beginning Date</param>
+        /// <param name="periodEndDate">period End Date</param>
+        public VeillePromoDAL(WebSession session, string periodBeginningDate, string periodEndDate):base(session,periodBeginningDate,periodEndDate)
         {
           
         }

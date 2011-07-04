@@ -8,6 +8,11 @@ namespace TNS.AdExpressI.VP.DAL
     public  interface IVeillePromoDAL
     {
 
+         /// <summary>
+        /// Get Min Max Period
+        /// </summary>
+        /// <returns></returns>
+        DataSet GetMinMaxPeriod();
 
         /// <summary>
         /// Retreive the data for Veille promo schedule result

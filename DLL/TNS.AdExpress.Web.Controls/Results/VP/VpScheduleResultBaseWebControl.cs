@@ -125,7 +125,12 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\nfunction " + InitializeMethod + "(){");
             js.Append("\r\n" + GetInitializeJavascriptContent());
             js.Append("\r\n}");
-            js.Append("\r\naddEvent(window, \"load\", " + InitializeMethod + ");");
+
+            js.Append("\r\nif(window.addEventListener)");
+            js.Append("\r\n\twindow.addEventListener(\"load\", " + InitializeMethod + ", false);");
+            js.Append("\r\nelse if(window.attachEvent)");
+            js.Append("\r\n\twindow.attachEvent(\"onload\"," + InitializeMethod + "); ");
+
             js.Append("\r\n-->\r\n</script>");
             return (js.ToString());
         }
