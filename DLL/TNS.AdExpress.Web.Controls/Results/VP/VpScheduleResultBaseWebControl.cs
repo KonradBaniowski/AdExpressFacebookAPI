@@ -96,6 +96,16 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         }
         #endregion
 
+        #region Initialize Method
+        /// <summary>
+        ///// Get Initialize Method
+        /// </summary>
+        [Bindable(false)]
+        public string InitializeMethod {
+            get { return ("initialize_" + this.ID); }
+        }
+        #endregion
+
         #endregion
 
         #region GetJavascript
@@ -112,6 +122,10 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\nfunction " + DisplayMethod + "(display){");
             js.Append("\r\n" + GetDisplayJavascriptContent());
             js.Append("\r\n}");
+            js.Append("\r\nfunction " + InitializeMethod + "(){");
+            js.Append("\r\n" + GetInitializeJavascriptContent());
+            js.Append("\r\n}");
+            js.Append("\r\naddEvent(window, \"load\", " + InitializeMethod + ");");
             js.Append("\r\n-->\r\n</script>");
             return (js.ToString());
         }
@@ -131,6 +145,13 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n\tif(display) document.getElementById('" + this.ID + "').style.display = '';");
             js.Append("\r\n\telse document.getElementById('" + this.ID + "').style.display = 'none';");
             return (js.ToString());
+        }
+        /// <summary>
+        /// Get Initialize Javascript Method
+        /// </summary>
+        /// <returns>Initialize Javascript Method</returns>
+        protected virtual string GetInitializeJavascriptContent() {
+            return string.Empty;
         }
         #endregion
 

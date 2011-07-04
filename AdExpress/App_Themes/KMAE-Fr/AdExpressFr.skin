@@ -1675,7 +1675,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <ctrVpResult:VpScheduleResultFilterWebControl   
                             runat="server" 
                             SkinID="VpScheduleResultFilterWebControl"
-                            CssClass="" 
+                            CssClass="vpScheduleResultFilterWebControl" 
 />
 
 <%--Veille Promo Selection control --%>

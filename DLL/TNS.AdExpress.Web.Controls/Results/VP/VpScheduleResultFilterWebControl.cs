@@ -37,14 +37,58 @@ using TNS.AdExpressI.MediaSchedule;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpressI.Insertions;
 using TNS.AdExpressI.VP;
+using System.Web.UI.HtmlControls;
 namespace TNS.AdExpress.Web.Controls.Results.VP
 {
     /// <summary>
     /// Affiche le résultat d'une alerte plan media
     /// </summary>
     [DefaultProperty("Text"),
-      ToolboxData("<{0}:GenericMediaScheduleWebControl runat=server></{0}:GenericMediaScheduleWebControl>")]
+      ToolboxData("<{0}:VpScheduleResultFilterWebControl runat=server></{0}:VpScheduleResultFilterWebControl>")]
     public class VpScheduleResultFilterWebControl : VpScheduleResultBaseWebControl {
+
+        #region Variables
+        /// <summary>
+        /// Filter Result Web Control List
+        /// </summary>
+        Dictionary<Int64, WebControl> _filterResultWebControlList = new Dictionary<long, WebControl>();
+        #endregion
+
+        #region GetJavascript
+        /// <summary>
+        /// Get Validation Javascript Method
+        /// </summary>
+        /// <returns>Validation Javascript Method</returns>
+        protected override string GetValidationJavascriptContent() {
+            return base.GetValidationJavascriptContent();
+        }
+        /// <summary>
+        /// Get Display Javascript Method
+        /// </summary>
+        /// <returns>Display Javascript Method</returns>
+        protected override string GetDisplayJavascriptContent() {
+            StringBuilder js = new StringBuilder(1000);
+            js.Append("\r\n\tif(display) {");
+            js.Append("\r\n\t\tdocument.getElementById('res_backgroud_" + this.ID + "').style.height=document.body.clientHeight + \"px\";");
+            js.Append("\r\n\t\tdocument.getElementById('res_backgroud_" + this.ID + "').style.display = '';");
+            //js.Append("\r\n\tdocument.getElementById('" + this.ID + "').style.top = (document.documentElement.scrollTop + ((document.documentElement.clientHeight - 550) / 2)) + \"px\";");
+            //js.Append("\r\n\tdocument.getElementById('" + this.ID + "').style.left = (document.documentElement.scrollLeft + ((document.documentElement.clientWidth - 750) / 2)) + \"px\";");
+            js.Append("\r\n\tdocument.getElementById('" + this.ID + "').style.top = \"0px\";");
+            js.Append("\r\n\tdocument.getElementById('" + this.ID + "').style.left = \"0px\";");
+
+            js.Append("\r\n\t} else {");
+            js.Append("\r\n\t\tdocument.getElementById('res_backgroud_" + this.ID + "').style.display = 'none';");
+            js.Append("\r\n\t}");
+            return (base.GetDisplayJavascriptContent() + js.ToString());
+        }
+        /// <summary>
+        /// Get Initialize Javascript Method
+        /// </summary>
+        /// <returns>Initialize Javascript Method</returns>
+        protected override string GetInitializeJavascriptContent() {
+            return base.GetInitializeJavascriptContent();
+        }
+        #endregion
 
         #region Evènements
 
@@ -55,6 +99,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// <param name="e">Arguments</param>
         protected override void OnInit(EventArgs e) {
             base.OnInit(e);
+          
         }
         #endregion
 
@@ -74,6 +119,8 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// </summary>
         /// <param name="e">Arguments</param>
         protected override void OnPreRender(EventArgs e) {
+            Page.Response.Write("<div id=\"res_backgroud_" + this.ID + "\" class=\"vpScheduleResultFilterWebControlBackgroud\" style=\"display:none;\"></div>");
+
             base.OnPreRender(e);
         }
         #endregion
@@ -97,7 +144,36 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// <param name="webSession">Client Session</param>
         /// <returns>Code HTMl</returns>
         protected override string GetHTML() {
-            return "Filter";
+            StringBuilder html = new StringBuilder(1000);
+            
+            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"1\" align=\"center\" width=\"100%\" height=\"100%\">");
+            html.Append("<tr>");
+            html.Append("<td width=\"100px;\">");
+
+            #region Menu
+            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"1\" align=\"center\" width=\"100%\" height=\"100%\">");
+            html.Append("<tr><td>");
+            html.Append(GestionWeb.GetWebWord(2863, _webSession.SiteLanguage));
+            html.Append("</td></tr>");
+            html.Append("<tr><td>");
+            html.Append("<ul>");
+            //foreach(
+            html.Append("</ul>");
+            html.Append("</td></tr>");
+            html.Append("</table>");
+            #endregion
+
+            html.Append("</td>");
+            html.Append("<td>");
+
+            #region Result
+
+            #endregion
+
+            html.Append("</td>");
+            html.Append("</tr>");
+            html.Append("</table>");
+            return html.ToString();
         }
         #endregion
 
