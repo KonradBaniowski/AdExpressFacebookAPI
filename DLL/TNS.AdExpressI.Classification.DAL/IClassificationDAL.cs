@@ -84,6 +84,16 @@ namespace TNS.AdExpressI.Classification.DAL {
 		DataSet GetDetailMedia();
 
         /// <summary>
+        /// Get the list of vehicles organised by product
+        /// According to the vehicle classification levels choosen by the customer.
+        /// See Vehicles.xml configuration file (ProductSelectionDetailLevel tag)
+        /// </summary>	
+        /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.DetailMediaDALException">
+        /// Exception throwed when an error occurs in the building or execution of the SQL query.
+        /// </exception>
+        DataSet GetDetailProduct();
+
+        /// <summary>
         /// Get the list of vehicles organised by Media genre or Sub media or Media Owner or Title.
         /// According to the vehicle classification levels choosen by the customer.
         /// <example>

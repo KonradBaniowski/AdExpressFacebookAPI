@@ -38,6 +38,9 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpressI.Insertions;
 using TNS.AdExpressI.VP;
 using System.Web.UI.HtmlControls;
+using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Web.Controls.Selections.VP;
+using System.IO;
 namespace TNS.AdExpress.Web.Controls.Results.VP
 {
     /// <summary>
@@ -51,7 +54,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// <summary>
         /// Filter Result Web Control List
         /// </summary>
-        Dictionary<Int64, WebControl> _filterResultWebControlList = new Dictionary<long, WebControl>();
+        Dictionary<Int64, VpScheduleAjaxSelectionBaseWebControl> _filterResultWebControlList = new Dictionary<long, VpScheduleAjaxSelectionBaseWebControl>();
         #endregion
 
         #region GetJavascript
@@ -99,7 +102,6 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// <param name="e">Arguments</param>
         protected override void OnInit(EventArgs e) {
             base.OnInit(e);
-          
         }
         #endregion
 
@@ -110,6 +112,27 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// <param name="e">Arguments</param>
         protected override void OnLoad(EventArgs e) {
             base.OnLoad(e);
+            TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(_webSession.CurrentModule);
+            if (module.DefaultMediaDetailLevels != null && module.DefaultMediaDetailLevels.Count > 0) {
+
+                VpScheduleSelectionNodeWebControl vpScheduleSelectionNodeWebControl = new VpScheduleSelectionNodeWebControl();
+                vpScheduleSelectionNodeWebControl.ID = this.ID + "_Media";
+                vpScheduleSelectionNodeWebControl.LevelIds = ((GenericDetailLevel)(module.DefaultMediaDetailLevels[0])).LevelIds;
+                vpScheduleSelectionNodeWebControl.WebSession = _webSession;
+                vpScheduleSelectionNodeWebControl.Display = true;
+                vpScheduleSelectionNodeWebControl.GenericDetailLevelComponentProfile = TNS.AdExpress.Constantes.Web.GenericDetailLevel.ComponentProfile.media;
+                _filterResultWebControlList.Add(2869, vpScheduleSelectionNodeWebControl);
+                Controls.Add(vpScheduleSelectionNodeWebControl);
+
+                vpScheduleSelectionNodeWebControl = new VpScheduleSelectionNodeWebControl();
+                vpScheduleSelectionNodeWebControl.ID = this.ID + "_Product";
+                vpScheduleSelectionNodeWebControl.LevelIds = ((GenericDetailLevel)(module.DefaultMediaDetailLevels[0])).LevelIds;
+                vpScheduleSelectionNodeWebControl.WebSession = _webSession;
+                vpScheduleSelectionNodeWebControl.Display = false;
+                vpScheduleSelectionNodeWebControl.GenericDetailLevelComponentProfile = TNS.AdExpress.Constantes.Web.GenericDetailLevel.ComponentProfile.product;
+                _filterResultWebControlList.Add(2870, vpScheduleSelectionNodeWebControl);
+                Controls.Add(vpScheduleSelectionNodeWebControl);
+            }
         }
         #endregion
 
@@ -157,7 +180,11 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             html.Append("</td></tr>");
             html.Append("<tr><td>");
             html.Append("<ul>");
-            //foreach(
+            foreach (Int64 ckey in _filterResultWebControlList.Keys) {
+                html.Append("<li>");
+                html.Append(GestionWeb.GetWebWord(ckey, _webSession.SiteLanguage));
+                html.Append("</li>");
+            }
             html.Append("</ul>");
             html.Append("</td></tr>");
             html.Append("</table>");
@@ -167,7 +194,20 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             html.Append("<td>");
 
             #region Result
-
+            foreach (VpScheduleSelectionNodeWebControl cVpScheduleSelectionNodeWebControl in _filterResultWebControlList.Values) {
+                using (MemoryStream memoryStream = new MemoryStream()) {
+                    using (StreamWriter streamWriter = new StreamWriter(memoryStream)) {
+                        using (HtmlTextWriter memoryWriter = new HtmlTextWriter(streamWriter)) {
+                            cVpScheduleSelectionNodeWebControl.RenderControl(memoryWriter);
+                            memoryWriter.Flush();
+                            memoryStream.Position = 0;
+                            using (StreamReader reader = new StreamReader(memoryStream)) {
+                                html.Append(reader.ReadToEnd());
+                            }
+                        }
+                    }
+                }
+            }  
             #endregion
 
             html.Append("</td>");
@@ -176,7 +216,6 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             return html.ToString();
         }
         #endregion
-
     }
 }
 

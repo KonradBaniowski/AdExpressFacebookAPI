@@ -187,7 +187,23 @@ namespace TNS.AdExpressI.Classification.DAL {
 		}
 		#endregion
 
-		#region Get Detail Media
+        #region Get Detail Product
+        /// <summary>
+        /// Get the list of vehicles organised by product
+        /// According to the vehicle classification levels choosen by the customer.
+        /// See Vehicles.xml configuration file (ProductSelectionDetailLevel tag)
+        /// </summary>	
+        /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.DetailMediaDALException">
+        /// Exception throwed when an error occurs in the building or execution of the SQL query.
+        /// </exception>
+        public virtual DataSet GetDetailProduct() {
+            //Calling the engine which compute data
+            DetailProductDAL engineDal = new DetailProductDAL(_session, _genericDetailLevel, _vehicleList);
+            return engineDal.GetData();
+        }
+        #endregion
+
+        #region Get Detail Media
         /// <summary>
         /// Get the list of vehicles organised by Media genre or Sub media or Media Owner or Title.
         /// According to the vehicle classification levels choosen by the customer.

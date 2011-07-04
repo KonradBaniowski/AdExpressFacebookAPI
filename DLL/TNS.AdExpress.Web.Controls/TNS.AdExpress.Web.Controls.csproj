@@ -54,6 +54,7 @@
     <WarningLevel>4</WarningLevel>
     <DebugType>full</DebugType>
     <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRules>-Microsoft.Maintainability#CA1506;-Microsoft.Maintainability#CA1502;-Microsoft.Maintainability#CA1501;-Microsoft.Maintainability#CA1505;-Microsoft.Maintainability#CA1504;-Microsoft.Maintainability#CA1500</CodeAnalysisRules>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -502,6 +503,7 @@
     <Compile Include="Selections\VisualSelectionWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Selections\VP\VpScheduleSelectionNodeWebControl.cs" />
     <Compile Include="Selections\VP\VpScheduleAjaxSelectionBaseWebControl.cs" />
     <Compile Include="Selections\VP\VpScheduleSelectionDropDownDateListWebControl.cs" />
     <Compile Include="Selections\VP\VpScheduleSelectionImageWebControl.cs" />

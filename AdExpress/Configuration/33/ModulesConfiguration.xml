@@ -1764,8 +1764,11 @@
         <DataAccessLayer name="Default VP data access layers" assemblyName="TNS.AdExpressI.VP.DAL.Default.dll" class="TNS.AdExpressI.VP.DAL.Default.VeillePromoDAL"/>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
-            <defaultMediaDetailLevel id="37" name="Sub Segment VP\Segment VP\Brand VP"/>
+            <defaultMediaDetailLevel id="38" name="Circuit VP\Brand VP"/>
           </defaultMediaDetailLevels>
+          <defaultProductDetailLevels>
+            <defaultProductDetailLevel id="37" name="Segment VP\Sub Segment VP\Product VP"/>
+          </defaultProductDetailLevels>
           <allowedMediaLevelItems>
             <allowedMediaLevelItem id="63" name="Circuit VP"/>
             <allowedMediaLevelItem id="64" name="Segment VP"/>

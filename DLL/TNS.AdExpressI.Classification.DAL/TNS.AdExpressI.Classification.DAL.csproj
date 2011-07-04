@@ -57,6 +57,8 @@
     <Compile Include="ClassificationItemsDAL.cs" />
     <Compile Include="ClassificationLevelListDAL.cs" />
     <Compile Include="ClassificationLevelListDALFactory.cs" />
+    <Compile Include="DetailProductDAL.cs" />
+    <Compile Include="DetailDAL.cs" />
     <Compile Include="DetailMediaDAL.cs" />
     <Compile Include="Exceptions\ClassificationDALException.cs" />
     <Compile Include="IClassificationLevelListDALFactory.cs" />

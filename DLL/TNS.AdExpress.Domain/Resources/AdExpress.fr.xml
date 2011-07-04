@@ -2087,6 +2087,9 @@
     <item mnemonic="w2866" type="System.String">Mois Courant</item>
     <item mnemonic="w2867" type="System.String">Le cumul à date + le mois suivant</item>
     <item mnemonic="w2868" type="System.String">Tout l’historique</item>
+    <item mnemonic="w2869" type="System.String">Concurrents</item>
+    <item mnemonic="w2870" type="System.String">Famille de produits</item>
+    <item mnemonic="w2871" type="System.String">Niveaux de détails</item>
     <!-- ********************************* -->
   </items>
 </localization>

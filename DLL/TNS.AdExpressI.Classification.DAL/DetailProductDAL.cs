@@ -38,7 +38,7 @@ namespace TNS.AdExpressI.Classification.DAL {
     /// </summary>	   
     /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.DetailMediaDALException">
     /// Exception throwed when an error occurs in the building or execution of the SQL query.</exception>
-    public class DetailMediaDAL : DetailDAL
+    public class DetailProductDAL : DetailDAL
     {
 
         #region Constructor(s)
@@ -48,7 +48,7 @@ namespace TNS.AdExpressI.Classification.DAL {
 		/// <param name="session">User session</param>
 		/// <param name="genericDetailLevel">generic detail level selected by the user</param>
 		/// <param name="listMedia">List of media selected by the user</param>
-		public DetailMediaDAL(WebSession session, GenericDetailLevel genericDetailLevel)
+		public DetailProductDAL(WebSession session, GenericDetailLevel genericDetailLevel)
             : base(session, genericDetailLevel) {
 		}
 		/// <summary>
@@ -57,11 +57,12 @@ namespace TNS.AdExpressI.Classification.DAL {
 		/// <param name="session">User session</param>
 		/// <param name="genericDetailLevel">generic detail level selected by the user</param>
 		/// <param name="listMedia">List of media selected by the user</param>
-		public DetailMediaDAL(WebSession session, GenericDetailLevel genericDetailLevel, string listMedia)
+        public DetailProductDAL(WebSession session, GenericDetailLevel genericDetailLevel, string listMedia)
 			: base(session, genericDetailLevel, listMedia) {		
 		}
 		
 		#endregion
+
 
         /// <summary>
         /// Get vehicle classification brand rights.
@@ -80,15 +81,16 @@ namespace TNS.AdExpressI.Classification.DAL {
                 return base.GetMediaRights(vehicleTable, categoryTable, mediaTable, beginByAnd);
         }
 
+
         /// <summary>
         /// Get View
         /// </summary>
         /// <returns>View</returns>
         protected override string GetView() {
             if (_session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.VP)
-                return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allPromoBrand).Sql;
+                return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allPromoProduct).Sql;
             else
-                return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allMedia).Sql + _session.DataLanguage;
+                return WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct).Sql;
         }
 
 	}

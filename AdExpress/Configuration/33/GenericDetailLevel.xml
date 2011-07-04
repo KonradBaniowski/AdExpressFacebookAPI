@@ -186,12 +186,15 @@
       <levelItem id="1" name="Media"/>
       <levelItem id="3" name="Support"/>
     </detailLevel>
-    <detailLevel id="37" name="Sub Segment VP\Segment VP\Brand VP">
-      <levelItem id="65" name="Sub Segment VP"/>
+    <detailLevel id="37" name="Segment VP\Sub Segment VP\Product VP">
       <levelItem id="64" name="Segment VP"/>
+      <levelItem id="65" name="Sub Segment VP"/>
+      <levelItem id="67" name="Product"/>
+    </detailLevel>
+    <detailLevel id="38" name="Circuit VP\Brand VP">
+      <levelItem id="63" name="Circuit VP"/>
       <levelItem id="66" name="Brand VP"/>
     </detailLevel>
-
 	</detailLevels>  
 </genericDetailLevel>
 

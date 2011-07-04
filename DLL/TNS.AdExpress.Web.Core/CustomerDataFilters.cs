@@ -294,7 +294,9 @@ namespace TNS.AdExpress.Web.Core
                     case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
                         return _customerSession.GetSelection(_customerSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
                     default:
-                        return ((LevelInformation)_customerSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
+                        if (_customerSession.SelectionUniversMedia != null && _customerSession.SelectionUniversMedia.FirstNode != null)
+                            return ((LevelInformation)_customerSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
+                        else return null;
                 }
             }
         }
