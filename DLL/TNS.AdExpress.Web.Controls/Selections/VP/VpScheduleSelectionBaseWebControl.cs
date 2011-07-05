@@ -87,7 +87,6 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
         [Bindable(false)]
         public string ValidationMethodName {
             get { return ("validation_" + this.ID); }
-            
         }
         #endregion
 
@@ -144,7 +143,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
         /// <returns>Display Javascript Method</returns>
         protected virtual string GetDisplayJavascriptContent() {
             StringBuilder js = new StringBuilder(1000);
-            js.Append("\r\n\tif(display) document.getElementById('" + this.ID + "').style.display = '';");
+            js.Append("\r\n\tif(display) document.getElementById('" + this.ID + "').style.display = 'block';");
             js.Append("\r\n\telse document.getElementById('" + this.ID + "').style.display = 'none';");
             return (js.ToString());
         }

@@ -74,10 +74,25 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n\tif(display) {");
             js.Append("\r\n\t\tdocument.getElementById('res_backgroud_" + this.ID + "').style.height=document.body.clientHeight + \"px\";");
             js.Append("\r\n\t\tdocument.getElementById('res_backgroud_" + this.ID + "').style.display = '';");
-            //js.Append("\r\n\tdocument.getElementById('" + this.ID + "').style.top = (document.documentElement.scrollTop + ((document.documentElement.clientHeight - 550) / 2)) + \"px\";");
-            //js.Append("\r\n\tdocument.getElementById('" + this.ID + "').style.left = (document.documentElement.scrollLeft + ((document.documentElement.clientWidth - 750) / 2)) + \"px\";");
-            js.Append("\r\n\tdocument.getElementById('" + this.ID + "').style.top = \"0px\";");
-            js.Append("\r\n\tdocument.getElementById('" + this.ID + "').style.left = \"0px\";");
+
+            js.Append("\r\n\t\tvar myWidth = 0, myHeight = 0;");
+            js.Append("\r\n\t\tif( typeof( window.innerWidth ) == 'number' ) {");
+            //Non-IE
+            js.Append("\r\n\t\tmyWidth = window.innerWidth;");
+            js.Append("\r\n\t\tmyHeight = window.innerHeight;");
+            js.Append("\r\n\t\t} else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {");
+            //IE 6+ in 'standards compliant mode'
+            js.Append("\r\n\t\tmyWidth = document.documentElement.clientWidth;");
+            js.Append("\r\n\t\tmyHeight = document.documentElement.clientHeight;");
+            js.Append("\r\n\t\t} else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {");
+            //IE 4 compatible
+            js.Append("\r\n\t\tmyWidth = document.body.clientWidth;");
+            js.Append("\r\n\t\tmyHeight = document.body.clientHeight;");
+            js.Append("\r\n\t\t}");
+
+
+            js.Append("\r\n\tdocument.getElementById('" + this.ID + "').style.top = (document.documentElement.scrollTop + ((myHeight - 550) / 2)) + \"px\";");
+            js.Append("\r\n\tdocument.getElementById('" + this.ID + "').style.left = (document.documentElement.scrollLeft + ((myWidth - 750) / 2)) + \"px\";");
 
             js.Append("\r\n\t} else {");
             js.Append("\r\n\t\tdocument.getElementById('res_backgroud_" + this.ID + "').style.display = 'none';");
@@ -91,6 +106,41 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         protected override string GetInitializeJavascriptContent() {
             return base.GetInitializeJavascriptContent();
         }
+        #endregion
+
+        #region Property (Style)
+        /// <summary>
+        /// Get / Set VpScheduleSelectionNodeMediaWebControlSkinId
+        /// </summary>
+        public string VpScheduleSelectionNodeMediaWebControlSkinId { get; set; }
+        /// <summary>
+        /// Get / Set VpScheduleSelectionNodeProductWebControlSkinId
+        /// </summary>
+        public string VpScheduleSelectionNodeProductWebControlSkinId { get; set; }
+        /// <summary>
+        /// Get / Set CssClassOption
+        /// </summary>
+        public string CssClassOption { get; set; }
+        /// <summary>
+        /// Get / Set CssClassOptionHeader
+        /// </summary>
+        public string CssClassOptionHeader { get; set; }  
+        /// <summary>
+        /// Get / Set CssClassOptionMenu
+        /// </summary>
+        public string CssClassOptionMenu { get; set; }    
+        /// <summary>
+        /// Get / Set CssClassOptionMenuSelected
+        /// </summary>
+        public string CssClassOptionMenuSelected { get; set; }
+        /// <summary>
+        /// Get / Set CssClassResult
+        /// </summary>
+        public string CssClassResult { get; set; }
+        /// <summary>
+        /// Get / Set CssClassResultContent
+        /// </summary>
+        public string CssClassResultContent { get; set; }  
         #endregion
 
         #region Evènements
@@ -120,15 +170,17 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                 vpScheduleSelectionNodeWebControl.LevelIds = ((GenericDetailLevel)(module.DefaultMediaDetailLevels[0])).LevelIds;
                 vpScheduleSelectionNodeWebControl.WebSession = _webSession;
                 vpScheduleSelectionNodeWebControl.Display = true;
+                vpScheduleSelectionNodeWebControl.SkinID = VpScheduleSelectionNodeMediaWebControlSkinId;
                 vpScheduleSelectionNodeWebControl.GenericDetailLevelComponentProfile = TNS.AdExpress.Constantes.Web.GenericDetailLevel.ComponentProfile.media;
                 _filterResultWebControlList.Add(2869, vpScheduleSelectionNodeWebControl);
                 Controls.Add(vpScheduleSelectionNodeWebControl);
 
                 vpScheduleSelectionNodeWebControl = new VpScheduleSelectionNodeWebControl();
                 vpScheduleSelectionNodeWebControl.ID = this.ID + "_Product";
-                vpScheduleSelectionNodeWebControl.LevelIds = ((GenericDetailLevel)(module.DefaultMediaDetailLevels[0])).LevelIds;
+                vpScheduleSelectionNodeWebControl.LevelIds = ((GenericDetailLevel)(module.DefaultProductDetailLevels[0])).LevelIds;
                 vpScheduleSelectionNodeWebControl.WebSession = _webSession;
                 vpScheduleSelectionNodeWebControl.Display = false;
+                vpScheduleSelectionNodeWebControl.SkinID = VpScheduleSelectionNodeProductWebControlSkinId;
                 vpScheduleSelectionNodeWebControl.GenericDetailLevelComponentProfile = TNS.AdExpress.Constantes.Web.GenericDetailLevel.ComponentProfile.product;
                 _filterResultWebControlList.Add(2870, vpScheduleSelectionNodeWebControl);
                 Controls.Add(vpScheduleSelectionNodeWebControl);
@@ -168,22 +220,40 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// <returns>Code HTMl</returns>
         protected override string GetHTML() {
             StringBuilder html = new StringBuilder(1000);
-            
-            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"1\" align=\"center\" width=\"100%\" height=\"100%\">");
+            html.Append("\r\n<script language=\"javascript\">\r\n<!--");
+            html.Append("\r\nfunction valid_menu_" + this.ID + "(controlId){");
+            foreach (VpScheduleAjaxSelectionBaseWebControl cVpScheduleAjaxSelectionBaseWebControl in _filterResultWebControlList.Values) {
+                html.Append("\r\n\tif(controlId == '" + cVpScheduleAjaxSelectionBaseWebControl.ID + "'){");
+                html.Append("\r\n\t" + cVpScheduleAjaxSelectionBaseWebControl.DisplayMethod + "(true);");
+                html.Append("\r\n\t" + cVpScheduleAjaxSelectionBaseWebControl.ValidationMethodName + "();");
+                html.Append("\r\n\tdocument.getElementById('menu_" + cVpScheduleAjaxSelectionBaseWebControl.ID + "').className = '" + CssClassOptionMenuSelected + "';");
+                html.Append("\r\n\t} else {");
+                html.Append("\r\n\t" + cVpScheduleAjaxSelectionBaseWebControl.DisplayMethod + "(false);");
+                html.Append("\r\n\tdocument.getElementById('menu_" + cVpScheduleAjaxSelectionBaseWebControl.ID+"').className = '';");
+                html.Append("\r\n\t}");
+                
+            }
+            html.Append("\r\n}");
+            html.Append("\r\n-->\r\n</script>");
+
+            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"center\" width=\"100%\" height=\"100%\">");
             html.Append("<tr>");
-            html.Append("<td width=\"100px;\">");
+            html.Append("<td class=\"" + CssClassOption + "\">");
 
             #region Menu
-            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"1\" align=\"center\" width=\"100%\" height=\"100%\">");
-            html.Append("<tr><td>");
+            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"center\" width=\"100%\" height=\"100%\" class=\"" + CssClassOption + "\">");
+            html.Append("<tr><td class=\"" + CssClassOptionHeader + "\">");
             html.Append(GestionWeb.GetWebWord(2863, _webSession.SiteLanguage));
             html.Append("</td></tr>");
-            html.Append("<tr><td>");
+            html.Append("<tr><td class=\"" + CssClassOptionMenu + "\">");
             html.Append("<ul>");
-            foreach (Int64 ckey in _filterResultWebControlList.Keys) {
-                html.Append("<li>");
-                html.Append(GestionWeb.GetWebWord(ckey, _webSession.SiteLanguage));
-                html.Append("</li>");
+            foreach (KeyValuePair<Int64, VpScheduleAjaxSelectionBaseWebControl> kvp in _filterResultWebControlList) {
+                html.Append("<li><a");
+                if (kvp.Value.Display)
+                    html.Append(" class=\"" + CssClassOptionMenuSelected + "\"");
+                html.Append(" id=\"menu_" + kvp.Value.ID + "\" href=\"#\" onclick=\"javascript:valid_menu_" + this.ID + "('" + kvp.Value.ID + "');\">");
+                html.Append(GestionWeb.GetWebWord(kvp.Key, _webSession.SiteLanguage));
+                html.Append("</a></li>");
             }
             html.Append("</ul>");
             html.Append("</td></tr>");
@@ -191,8 +261,10 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             #endregion
 
             html.Append("</td>");
-            html.Append("<td>");
+            html.Append("<td class=\"" + CssClassResult + "\">");
 
+            html.Append("<div class=\"" + CssClassResult + "\">");
+            html.Append("<div class=\""+CssClassResultContent+"\">");
             #region Result
             foreach (VpScheduleSelectionNodeWebControl cVpScheduleSelectionNodeWebControl in _filterResultWebControlList.Values) {
                 using (MemoryStream memoryStream = new MemoryStream()) {
@@ -209,6 +281,8 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                 }
             }  
             #endregion
+            html.Append("</div>");
+            html.Append("</div>");
 
             html.Append("</td>");
             html.Append("</tr>");

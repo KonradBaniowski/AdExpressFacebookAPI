@@ -1676,9 +1676,36 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                             runat="server" 
                             SkinID="VpScheduleResultFilterWebControl"
                             CssClass="vpScheduleResultFilterWebControl" 
+                            CssClassResult="vpScheduleResultFilterWebControlResult"
+                            CssClassResultContent="vpScheduleResultFilterWebControlResultContent"
+                            CssClassOption="vpScheduleResultFilterWebControlOption"
+                            CssClassOptionHeader="vpScheduleResultFilterWebControlOptionHeader"
+                            CssClassOptionMenu="vpScheduleResultFilterWebControlMenu"
+                            CssClassOptionMenuSelected="vpScheduleResultFilterWebControlMenuSelected"
+                            VpScheduleSelectionNodeMediaWebControlSkinId="VpScheduleSelectionNodeMediaWebControlSkinId"
+                            VpScheduleSelectionNodeProductWebControlSkinId="VpScheduleSelectionNodeProductWebControlSkinId"
 />
 
 <%--Veille Promo Selection control --%>
+<ctrVpSelection:VpScheduleSelectionNodeWebControl   
+                            runat="server" 
+                            SkinID="VpScheduleSelectionNodeMediaWebControlSkinId" 
+                            CssClass="vpScheduleResultFilterNodeWebControlResult"
+                            CssClassLvl1="vpScheduleResultFilterNodeWebControlResultLvl1"
+                            CssClassLvl2="vpScheduleResultFilterNodeWebControlResultLvl2"
+                            CssClassLvl3="vpScheduleResultFilterNodeWebControlResultLvl3"
+/>
+
+<ctrVpSelection:VpScheduleSelectionNodeWebControl   
+                            runat="server" 
+                            SkinID="VpScheduleSelectionNodeProductWebControlSkinId" 
+                            CssClass="vpScheduleResultFilterNodeWebControlResult"
+                            CssClassLvl1="vpScheduleResultFilterNodeWebControlResultLvl1"
+                            CssClassLvl2="vpScheduleResultFilterNodeWebControlResultLvl2"
+                            CssClassLvl3="vpScheduleResultFilterNodeWebControlResultLvl3"
+/>
+
+
 <ctrVpSelection:VpScheduleSelectionDropDownDateListWebControl   
                             runat="server" 
                             SkinID="DateSelectionWebControl" 
