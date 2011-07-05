@@ -29,6 +29,7 @@ using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Web;
 
 namespace AdExpress{
 	/// <summary>
@@ -289,6 +290,10 @@ namespace AdExpress{
 						SetRecapDefaultMediaSelection();
 						SetRecapDefaultPeriodSelection();
 					}
+                    if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.VP)
+                    {
+                        _webSession.SetVpDates(WebApplicationParameters.VpDateConfigurations.DateTypeDefault);
+                    }
 					//Nouveaux univers produit
 					_webSession.PrincipalProductUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 					_webSession.SecondaryProductUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
