@@ -161,20 +161,39 @@ namespace TNS.AdExpressI.VP.DAL
 
             return ds;
         }
-
+        /// <summary>
+        /// Retreive the data for Veille promo file result
+        /// </summary>
+        ///<param name="idDataPromotion">id Data Promotion</param>
         public virtual DataSet GetData(long idDataPromotion)
         {
             DataSet ds = null;
             try
             {
                 StringBuilder sql = new StringBuilder(5000);
+
+                //Get data promo table
+                Table dataPromo = WebApplicationParameters.GetDataTable(TableIds.dataPromotion, false);
                 sql.AppendFormat(" select * ");
+
+                //FROM
+                sql.AppendFormat(" from  {0}  ",  dataPromo.SqlWithPrefix);
+
+                //WHERE
+                sql.Append(" where  ");
+
+                //Adding universe filters
+                sql.AppendFormat(" ID_DATA_PROMOTION={0} ", idDataPromotion);
+
+                IDataSource dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.vPromo);
+
+                ds = dataSource.Fill(sql.ToString());
 
             }
             catch (Exception ex)
             {
 
-                throw new Exceptions.VeillePromoDALException(" Impossible to get one  Promoyion Data ", ex);
+                throw new Exceptions.VeillePromoDALException(" Impossible to get one  Promotion File Data ", ex);
             }
             return ds;
         }
