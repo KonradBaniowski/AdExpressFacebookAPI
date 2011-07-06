@@ -2096,12 +2096,11 @@
     <item mnemonic="w2873" type="System.String">Tableau détaillé par</item>
     <item mnemonic="w2874" type="System.String">Personnalisation des promotions</item>
     <item mnemonic="w2875" type="System.String">Affectation des couleurs par</item>
-    <item mnemonic="w2876" type="System.String">Personnalisation des promotions</item>
+    <item mnemonic="w2876" type="System.String">Enseigne</item>
     <item mnemonic="w2877" type="System.String">Segment</item>
     <item mnemonic="w2878" type="System.String">Sous Segment</item>
     <item mnemonic="w2879" type="System.String">Circuit</item>
     <item mnemonic="w2880" type="System.String">Type de pièce</item>
-    <item mnemonic="w2881" type="System.String">Enseigne</item>
     <!-- ********************************* -->
   </items>
 </localization>
