@@ -96,7 +96,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                     js.Append("\r\n\t");
                     if (i > 0) js.Append("else ");
                     js.Append("if(controlId == '" + _vpScheduleResultWebControlList[i].CurrentControlDetail.ControlId + "'){");
-                    js.Append("\r\n\t\t"+ _vpScheduleResultWebControlList[i].ValidationMethod+"();");
+                    js.Append("\r\n\t\t"+ _vpScheduleResultWebControlList[i].ValidationMethodName+"();");
                     js.Append("\r\n\t}");
                 }
             }
@@ -140,6 +140,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                 _vpScheduleResultWebControlList[_vpScheduleResultWebControlList.Count - 1].Display = cControlLayer.Display;
                 _vpScheduleResultWebControlList[_vpScheduleResultWebControlList.Count - 1].ID = this.ID + cControlLayer.ControlId;
                 _vpScheduleResultWebControlList[_vpScheduleResultWebControlList.Count - 1].CurrentControlDetail = cControlLayer;
+                _vpScheduleResultWebControlList[_vpScheduleResultWebControlList.Count - 1].ValidationMethod = cControlLayer.ValidationMethod;
                 this.Controls.Add(_vpScheduleResultWebControlList[_vpScheduleResultWebControlList.Count - 1]);
             }
 

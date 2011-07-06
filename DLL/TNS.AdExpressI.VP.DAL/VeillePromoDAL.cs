@@ -301,10 +301,10 @@ namespace TNS.AdExpressI.VP.DAL
         {
             StringBuilder sql = new StringBuilder();
             bool first = true;
-            string circuitAccess = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.circuitAccess);
-            string circuitException = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.circuitException);
-            string brandAccess = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.brandAccess);
-            string brandException = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.brandException);
+            string circuitAccess = _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.circuitAccess);
+            string circuitException = _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.circuitException);
+            string brandAccess = _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.brandAccess);
+            string brandException = _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.brandException);
 
             //Add Classification items in Access
 

@@ -96,7 +96,10 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         #endregion
 
         #region Valid Data
-
+        /// <summary>
+        /// Get Javascript Valid Data
+        /// </summary>
+        /// <returns>Javascript Valid Data</returns>
         protected string GetJavascriptValidData() {
             StringBuilder js = new StringBuilder();
             js.Append("\r\n<script language=\"javascript\">\r\n<!--");
@@ -139,6 +142,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n\t\t\t alert(res.value);");
             js.Append("\r\n\t}");
             js.Append(DisplayMethod + "(false);");
+            js.Append(ValidationMethod);
             js.Append("\r\n}\r\n");
             js.Append("\r\n-->\r\n</script>");
             return js.ToString();
@@ -456,7 +460,15 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                 _webSession = (WebSession)WebSession.Load(sessionId);
                 #endregion
 
+                TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(_webSession.CurrentModule);
 
+                if(mediaParameters != null){
+                    _webSession.CurrentUniversMedia = _webSession.SelectionUniversMedia = GetTreeNode(mediaParameters, (GenericDetailLevel)(module.DefaultMediaDetailLevels[0]));
+                }
+                if (productParameters != null) {
+                    _webSession.CurrentUniversProduct = _webSession.SelectionUniversProduct = GetTreeNode(productParameters, (GenericDetailLevel)(module.DefaultProductDetailLevels[0]));
+                }
+                _webSession.Save();
 
             }
             catch (System.Exception err) {
@@ -474,6 +486,122 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         protected override string GetAjaxHTML() {
             throw new NotImplementedException();
         }
+        #endregion
+
+        #region Private Methods
+
+        #region GetTreeNode
+        /// <summary>
+        /// Get Tree Node
+        /// </summary>
+        /// <returns>TreeNode</returns>
+        System.Windows.Forms.TreeNode GetTreeNode(object[] parameters, GenericDetailLevel genericDetailLevel) {
+            System.Windows.Forms.TreeNode treeNode = new System.Windows.Forms.TreeNode();
+            System.Windows.Forms.TreeNode cNodeL1 = new System.Windows.Forms.TreeNode();
+            System.Windows.Forms.TreeNode cNodeL2 = new System.Windows.Forms.TreeNode();
+            System.Windows.Forms.TreeNode cNodeL3 = new System.Windows.Forms.TreeNode();
+            System.Windows.Forms.TreeNode cNodeL4 = new System.Windows.Forms.TreeNode();
+
+
+            TNS.AdExpress.Constantes.Customer.Right.type accessType;
+            List<Int64> lvlListOld = new List<Int64>();
+            Dictionary<Int64, IDictionary> nodesList = new Dictionary<long,IDictionary>();
+            foreach (string item in parameters) {
+                List<Int64> lvlList = (new List<string>(item.Split('_'))).ConvertAll<Int64>(p => Int64.Parse(p));
+
+                if (lvlList.Count > 0 && genericDetailLevel.Levels.Count > 0 && !treeNode.Nodes.ContainsKey(genericDetailLevel[1].Id.ToString())) {
+                    accessType = GetAccessType(1, lvlList.Count, genericDetailLevel);
+                    if (!treeNode.Nodes.ContainsKey(lvlList[0].ToString())) {
+                        cNodeL1 = new System.Windows.Forms.TreeNode(lvlList[0].ToString());
+                        cNodeL1.Name = lvlList[0].ToString();
+                        cNodeL1.Tag = new LevelInformation(accessType, lvlList[0], string.Empty);
+                        treeNode.Nodes.Add(cNodeL1);
+                    }
+                    
+                }
+                if (lvlList.Count > 1 && genericDetailLevel.Levels.Count > 1 && !treeNode.Nodes.ContainsKey(genericDetailLevel[2].Id.ToString())) {
+                    accessType = GetAccessType(2, lvlList.Count, genericDetailLevel);
+                    if (!cNodeL1.Nodes.ContainsKey(lvlList[1].ToString())) {
+                        cNodeL2 = new System.Windows.Forms.TreeNode(lvlList[1].ToString());
+                        cNodeL2.Name = lvlList[1].ToString();
+                        cNodeL2.Tag = new LevelInformation(accessType, lvlList[1], string.Empty);
+                        cNodeL1.Nodes.Add(cNodeL2);
+                    }
+                    
+                }
+                if (lvlList.Count > 2 && genericDetailLevel.Levels.Count > 2 && !treeNode.Nodes.ContainsKey(genericDetailLevel[3].Id.ToString())) {
+                    accessType = GetAccessType(3, lvlList.Count, genericDetailLevel);
+                    if (!cNodeL2.Nodes.ContainsKey(lvlList[2].ToString())) {
+                        cNodeL3 = new System.Windows.Forms.TreeNode(lvlList[2].ToString());
+                        cNodeL3.Name = lvlList[2].ToString();
+                        cNodeL3.Tag = new LevelInformation(accessType, lvlList[2], string.Empty);
+                        cNodeL2.Nodes.Add(cNodeL3);
+                    }
+                    
+                }
+                if (lvlList.Count > 3 && genericDetailLevel.Levels.Count > 3 && !treeNode.Nodes.ContainsKey(genericDetailLevel[4].Id.ToString())) {
+                    accessType = GetAccessType(4, lvlList.Count, genericDetailLevel);
+                    if (!cNodeL3.Nodes.ContainsKey(lvlList[3].ToString())) {
+                        cNodeL4 = new System.Windows.Forms.TreeNode(lvlList[3].ToString());
+                        cNodeL4.Name = lvlList[3].ToString();
+                        cNodeL4.Tag = new LevelInformation(accessType, lvlList[3], string.Empty);
+                        cNodeL3.Nodes.Add(cNodeL4);
+                    }
+                    
+                }
+            }
+            return treeNode;
+        }
+        #endregion
+
+        #region GetAccessType
+        /// <summary>
+        /// Get Access Type
+        /// </summary>
+        /// <returns>Access Type</returns>
+        TNS.AdExpress.Constantes.Customer.Right.type GetAccessType(int lvl, int nbLvl, GenericDetailLevel genericDetailLevel) {
+            TNS.AdExpress.Constantes.Customer.Right.type accesType;
+            switch (genericDetailLevel[lvl].Id) {
+                        case DetailLevelItemInformation.Levels.vpBrand:
+                            if (lvl == nbLvl)
+                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.brandAccess;
+                            else
+                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.brandException;
+                            break;
+                        case DetailLevelItemInformation.Levels.vpCircuit:
+                            if (lvl == nbLvl)
+                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.circuitAccess;
+                            else
+                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.circuitException;
+                            break;
+                        case DetailLevelItemInformation.Levels.vpProduct:
+                            if (lvl == nbLvl)
+                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.productAccess;
+                            else
+                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.productException;
+                            break;
+                        case DetailLevelItemInformation.Levels.vpSegment:
+                            if (lvl == nbLvl)
+                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess;
+                            else
+                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.segmentException;
+                            break;
+                        case DetailLevelItemInformation.Levels.vpSubSegment:
+                            if (lvl == nbLvl)
+                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.groupAccess;
+                            else
+                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.groupException;
+                            break;
+                        default:
+                            throw new BaseException("Impossible to retrieve the current level");
+                    }
+
+
+
+            return accesType;
+        }
+        #endregion
+
         #endregion
     }
 }

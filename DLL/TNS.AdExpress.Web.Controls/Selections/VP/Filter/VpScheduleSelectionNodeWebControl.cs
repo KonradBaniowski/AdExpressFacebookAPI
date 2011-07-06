@@ -129,7 +129,8 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             js.Append("\r\n\tvar tab = new Array();");
             js.Append("\r\n\tvar elems = document.getElementById('" + this.ID + "').getElementsByTagName('input');");
             js.Append("\r\n\tfor(var i=0; i<elems.length; i++){ ");
-            js.Append("\r\n\tif(elems[i].checked && elems[i].id.substr(" + (this.ID + "_").Length + " ).split('_').length==" + _levelIds.Count + "){");
+            //js.Append("\r\n\tif(elems[i].checked && elems[i].id.substr(" + (this.ID + "_").Length + " ).split('_').length==" + _levelIds.Count + "){");
+            js.Append("\r\n\tif(elems[i].checked){");
             js.Append("\r\n\ttab.push(elems[i].id.substr(" + (this.ID + "_").Length + " ));");
             js.Append("\r\n\t}");
             js.Append("\r\n\t}");

@@ -26,6 +26,10 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// </summary>
         protected WebSession _webSession = null;
         /// <summary>
+        /// Validation Method
+        /// </summary>
+        protected string _validationMethod = string.Empty;
+        /// <summary>
         /// Theme name
         /// </summary>
         protected string _themeName = string.Empty;
@@ -76,13 +80,24 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         }
         #endregion
 
-        #region Validation Method
+        #region Validation Method Name
         /// <summary>
         ///// Get Validation Method
         /// </summary>
         [Bindable(false)]
-        public string ValidationMethod {
+        public string ValidationMethodName {
             get { return ("validation_" + this.ID); }
+        }
+        #endregion
+
+        #region Validation Method
+        /// <summary>
+        ///// Get / Set Validation Method
+        /// </summary>
+        [Bindable(false)]
+        public string ValidationMethod {
+            get { return (_validationMethod); }
+            set { _validationMethod = value; }
         }
         #endregion
 
@@ -116,7 +131,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         private string GetJavascript() {
             StringBuilder js = new StringBuilder(1000);
             js.Append("\r\n<script language=\"javascript\">\r\n<!--");
-            js.Append("\r\nfunction " + ValidationMethod + "(){");
+            js.Append("\r\nfunction " + ValidationMethodName + "(){");
             js.Append("\r\n" + GetValidationJavascriptContent());
             js.Append("\r\n}");
             js.Append("\r\nfunction " + DisplayMethod + "(display){");
