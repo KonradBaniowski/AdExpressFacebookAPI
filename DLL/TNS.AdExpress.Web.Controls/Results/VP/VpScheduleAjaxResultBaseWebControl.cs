@@ -43,6 +43,13 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         }
         #endregion
 
+        #region InitializeResultToLoad
+        /// <summary>
+        /// Obtient ou définit le Timeout des scripts utilisés par AjaxPro
+        /// </summary>
+        public bool InitializeResultToLoad { get; set; }
+        #endregion
+
         #endregion
 
         #region Javascript
@@ -82,7 +89,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n<script language=\"javascript\">\r\n");
             js.Append("\r\nfunction get_" + this.ID + "(){");
             js.Append("\r\n\tvar oN=document.getElementById('" + this.ID + "');");
-            js.Append("\r\n\toN.innerHTML='" + GetHTML() + "';");
+            if(InitializeResultToLoad) js.Append("\r\n\toN.innerHTML='" + GetHTML().Replace("'","\\'") + "';");
             js.Append("\r\n\t" + this.GetType().Namespace + "." + this.GetType().Name + ".GetData('"+this._webSession.IdSession+"', resultParameters_" + this.ID + ",styleParameters_" + this.ID + ",get_" + this.ID + "_callback);");
             js.Append("\r\n}");
 
@@ -92,11 +99,12 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             // js.Append("\r\n\tUpdateParameters(oN);");
             js.Append("\r\n}\r\n");
 
-            js.Append("\r\nif(window.addEventListener)");
-            js.Append("\r\n\twindow.addEventListener(\"load\", get_" + this.ID + ", false);");
-            js.Append("\r\nelse if(window.attachEvent)");
-            js.Append("\r\n\twindow.attachEvent(\"onload\",get_" + this.ID + "); ");
-
+            if (InitializeResultToLoad) {
+                js.Append("\r\nif(window.addEventListener)");
+                js.Append("\r\n\twindow.addEventListener(\"load\", get_" + this.ID + ", false);");
+                js.Append("\r\nelse if(window.attachEvent)");
+                js.Append("\r\n\twindow.attachEvent(\"onload\",get_" + this.ID + "); ");
+            }
             js.Append("\r\n\r\n</script>");
             return (js.ToString());
         }
@@ -112,6 +120,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// </summary>
         /// <param name="e">Arguments</param>
         protected override void OnInit(EventArgs e) {
+            InitializeResultToLoad = true;
             base.OnInit(e);
         }
         #endregion

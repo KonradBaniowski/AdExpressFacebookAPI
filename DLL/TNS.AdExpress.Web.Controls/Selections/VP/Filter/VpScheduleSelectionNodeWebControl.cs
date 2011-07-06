@@ -15,14 +15,14 @@ using System.Data;
 using TNS.AdExpress.Domain.Web.Navigation;
 using System.Collections;
 using TNS.AdExpress.Domain.Level;
-namespace TNS.AdExpress.Web.Controls.Selections.VP
+namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
 {
     /// <summary>
     /// Affiche le résultat d'une alerte plan media
     /// </summary>
     [DefaultProperty("Text"),
       ToolboxData("<{0}:VpScheduleSelectionNodeWebControl runat=server></{0}:VpScheduleSelectionNodeWebControl>")]
-    public class VpScheduleSelectionNodeWebControl : VpScheduleAjaxSelectionBaseWebControl {
+    public class VpScheduleSelectionNodeWebControl : VpScheduleSelectionFilterBaseWebControl {
 
         #region Variables
         /// <summary>
@@ -79,51 +79,64 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
         protected override string GetAjaxEventScript() {
             StringBuilder js = new StringBuilder(1000);
 
-            js.Append("\r\nfunction setNode_" + this.ID + "(){");
-            js.Append("\r\n\t" + this.GetType().Namespace + "." + this.GetType().Name + ".SetNode('" + this._webSession.IdSession + "', getValues_" + this.ID + "(), resultParameters_" + this.ID + ",styleParameters_" + this.ID + ",setNode_" + this.ID + "_callback);");
-            js.Append("\r\n}");
-
-            js.Append("\r\nfunction setNode_" + this.ID + "_callback(res){");
-            js.Append("if (res.error != null && res.error.Message) { alert(res.error.Message); }");
-            js.Append("else {");
-            js.Append(ValidationMethod);
-            js.Append("}");
+            js.Append("\r\nfunction onCheck_" + this.ID + "(checkBoxElem, parentList){");
+            js.Append("\r\n\tvar tab = parentList.split('_');");
+            js.Append("\r\n\tvar parentId = ''");
+            js.Append("\r\n\tif(parentList && parentList.length > 0){");
+            js.Append("\r\n\tif(parentList.length == " + _levelIds.Count + "){");
+            js.Append("\r\n\t} else {");
+            js.Append("\r\n\t\tif(!checkBoxElem.checked){");
+            js.Append("\r\n\t\t\tfor(var i=0; i<tab.length; i++){ ");
+            js.Append("\r\n\t\t\t\tif(i>0) parentId += '_';");
+            js.Append("\r\n\t\t\t\tparentId += tab[i];");
+            js.Append("\r\n\t\t\t\tdocument.getElementById('" + this.ID + "_' + parentId).checked = false;");
+            js.Append("\r\n\t\t\t}");
+            js.Append("\r\n\t\t}");
+            js.Append("\r\n\t}");
+            js.Append("\r\n\t}");
             js.Append("\r\n}\r\n");
 
             js.Append("\r\nfunction checkChild_" + this.ID + "(checkBoxElem){");
-            js.Append("var elems = document.getElementById('" + this.ID + "').getElementsByTagName('input');");
-            js.Append("for(var i=0; i<elems.length; i++){ ");
-            js.Append("if(checkBoxElem.id.match(\"^\"+elems[i].id.substr(0," + this.ID.Length + " ))==elems[i].id.substr(0," + this.ID.Length + " )){");
-            js.Append("elems[i].checked = checkBoxElem.checked;");
-            js.Append("}");
-            js.Append("}");
-            js.Append("}");
+            js.Append("\r\n\tvar elems = document.getElementById('" + this.ID + "').getElementsByTagName('input');");
+            js.Append("\r\n\tfor(var i=0; i<elems.length; i++){ ");
+            js.Append("\r\n\tif(elems[i].id.substr(" + (this.ID + "_").Length + " ).match(\"^\"+checkBoxElem.id.substr(" + (this.ID + "_").Length + " )+\"_\")==checkBoxElem.id.substr(" + (this.ID + "_").Length + " )+\"_\"){");
+            js.Append("\r\n\telems[i].checked = checkBoxElem.checked;");
+            js.Append("\r\n\t}");
+            js.Append("\r\n\t}");
+            js.Append("\r\n}\r\n");
 
-            js.Append("\r\nfunction getValues_" + this.ID + "(){");
-            js.Append("var tab = new Array();");
-            js.Append("var elems = document.getElementById('"+this.ID+"').getElementsByTagName('input');");
-            js.Append("for(var i=0; i<elems.length; i++){ ");
-            js.Append("if(elems[i].checked && elems[i].id.substr(0," + this.ID.Length + " ).split('_').length==" + _levelIds.Count + "){");
-            js.Append("tab.push(elems[i].id.substr(0," + this.ID.Length + " ));");
-            js.Append("}");
-            js.Append("}");
-            js.Append("return tab;");
-            js.Append("}");
-
-            
-
-
+            js.Append("\r\nfunction getAllChild_" + this.ID + "(){");
+            js.Append("\r\n\tvar tab = new Array();");
+            js.Append("\r\n\tvar elems = document.getElementById('" + this.ID + "').getElementsByTagName('input');");
+            js.Append("\r\n\tfor(var i=0; i<elems.length; i++){ ");
+            js.Append("\r\n\tif(elems[i].id.substr(" + (this.ID + "_").Length + " ).split('_').length==" + _levelIds.Count + "){");
+            js.Append("\r\n\ttab.push(elems[i].id.substr(" + (this.ID + "_").Length + " ));");
+            js.Append("\r\n\t}");
+            js.Append("\r\n\t}");
+            js.Append("\r\n\treturn tab;");
+            js.Append("\r\n}");
             return js.ToString();
         }
-
-        /// <summary>
-        /// Get Validation Javascript Method
-        /// </summary>
-        /// <returns>Validation Javascript Method</returns>
-        protected override string GetValidationJavascriptContent() {
-            return base.GetValidationJavascriptContent() + " setNode_" + this.ID + "(); ";
-        }
         #endregion   
+
+        #region GetValuesSelectedMethodScriptContent
+        /// <summary>
+        /// Get Evenement Ajax
+        /// </summary>
+        /// <returns>Evenement Ajax</returns>
+        protected override string GetValuesSelectedMethodScriptContent() {
+            StringBuilder js = new StringBuilder(1000);
+            js.Append("\r\n\tvar tab = new Array();");
+            js.Append("\r\n\tvar elems = document.getElementById('" + this.ID + "').getElementsByTagName('input');");
+            js.Append("\r\n\tfor(var i=0; i<elems.length; i++){ ");
+            js.Append("\r\n\tif(elems[i].checked && elems[i].id.substr(" + (this.ID + "_").Length + " ).split('_').length==" + _levelIds.Count + "){");
+            js.Append("\r\n\ttab.push(elems[i].id.substr(" + (this.ID + "_").Length + " ));");
+            js.Append("\r\n\t}");
+            js.Append("\r\n\t}");
+            js.Append("\r\n\treturn tab;");
+            return js.ToString();
+        }
+        #endregion
 
         #region Enregistrement des paramètres de construction du résultat
         protected override string SetCurrentResultParametersScript() {
@@ -176,31 +189,6 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
         }
         #endregion
 
-        #region SetNode
-        /// <summary>
-        /// Set Date in WebSession
-        /// </summary>
-        /// <param name="o">Result parameters (session Id, theme...)</param>
-        /// <returns>Code HTML</returns>
-        [AjaxPro.AjaxMethod]
-        public void SetNode(string idSession, string[] childSelected, AjaxPro.JavaScriptObject resultParameters, AjaxPro.JavaScriptObject styleParameters) {
-            try {
-                _webSession = (WebSession)WebSession.Load(idSession);
-
-                //if (_genericDetailLevelComponentProfile == TNS.AdExpress.Constantes.Web.GenericDetailLevel.ComponentProfile.product)
-                    //_webSession.CurrentUniversProduct.;
-                //else
-                    //_webSession.CurrentUniversMedia;
-
-                _webSession.Save();                
-            }
-            catch (System.Exception err) {
-                throw new Exception (OnAjaxMethodError(err, _webSession), err);
-            }
-
-        }
-        #endregion
-
         #region GetAjaxHTML
         /// <summary>
         /// Get  loading HTML  
@@ -213,9 +201,11 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
             DataSet ds = GetData(genericDetailLevel);
             if (ds != null && ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows != null && ds.Tables[0].Rows.Count > 0) {
                 List<Int64> levelList = new List<Int64>();
+                List<Int64> levelParentList = new List<Int64>();
                 List<Int64> levelOldList = new List<Int64>();
                 foreach (DataRow cRow in ds.Tables[0].Rows) {
                     levelList = new List<Int64>();
+                    levelParentList = new List<Int64>();
                     for (int i = 0; i < genericDetailLevel.Levels.Count; i++) {
                         levelList.Add(Int64.Parse(cRow[genericDetailLevel[i+1].DataBaseIdField].ToString()));
 
@@ -228,15 +218,17 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
                                 case 3: cClass = CssClassLvl4; break;
                             }
 
+
                             string cId = string.Format("{0}", string.Join("_", levelList.ConvertAll<string>(p => p.ToString()).ToArray()));
 
                             html.AppendFormat("<div id=\"div_{1}_{0}\" width=\"100%\" class=\"{2}\">", cId, this.ID, cClass);
                             html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" height=\"100%\">");
                             html.Append("<tr><td>");
-                            html.AppendFormat("<input type=\"checkbox\" value=\"{1}_{0}\" id=\"{1}_{0}\" onclick=\"{2}\"/>"
+                            html.AppendFormat("<input type=\"checkbox\" value=\"{1}_{0}\" id=\"{1}_{0}\" onclick=\"javascript:{2} onCheck_" + this.ID + "(this, '{3}');\"/>"
                                 , cId
                                 , this.ID
-                                , ((i < genericDetailLevel.Levels.Count - 1) ? "javascript:checkChild_{1}(this);" : string.Empty));
+                                , ((i < genericDetailLevel.Levels.Count - 1) ? "checkChild_" + this.ID + "(this);" : string.Empty)
+                                , ((i >0) ? string.Join("_", levelParentList.ConvertAll<string>(p => p.ToString()).ToArray()) : string.Empty));                            
                             html.AppendFormat("<label for=\"{2}_{1}\">{0}</label>"
                                 , cRow[genericDetailLevel[i+1].DataBaseField].ToString()
                                 , cId
@@ -245,6 +237,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
                             html.Append("</table>");
                             html.Append("</div>");
                         }
+                        levelParentList.Add(Int64.Parse(cRow[genericDetailLevel[i + 1].DataBaseIdField].ToString()));
                     }
                     levelOldList = levelList;
                 }
@@ -278,15 +271,6 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
         }
         #endregion
 
-        #region WriteHtmlLevelLine
-        private string WriteHtmlLevelLine(DetailLevelItemInformation detailLevelItemInformation, DataRow cRow, List<Int64>  cLevelParentValue) {
-            StringBuilder html = new StringBuilder(1000);
-
-            
-
-            return (html.ToString());
-        }
-        #endregion
     }
 }
 

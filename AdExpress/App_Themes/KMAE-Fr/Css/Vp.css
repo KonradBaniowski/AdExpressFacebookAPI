@@ -47,6 +47,7 @@ table.vpScheduleResultFilterWebControlOption
 	height:80px;
 	text-align:center;
 	padding:10px 0px 0px 0px;
+	font-weight:bold;
 }
 
 .vpScheduleResultFilterWebControlMenu{
@@ -98,6 +99,29 @@ div.vpScheduleResultFilterWebControlResult
 	position:absolute;
 	width:100%;
 	z-index:10000;
+}
+
+td.vpScheduleResultFilterWebControlButtons
+{
+	padding-top:10px;
+	text-align:right;
+}
+
+table.vpScheduleResultFilterWebControlButtons
+{
+	width:60px;
+}
+
+.vpScheduleResultFilterWebControlButtonCancel
+{
+	text-align:right;
+	cursor:pointer;
+}
+
+.vpScheduleResultFilterWebControlButtonValidation
+{
+	text-align:right;
+	cursor:pointer;
 }
 
 /* Filter Node Class */
