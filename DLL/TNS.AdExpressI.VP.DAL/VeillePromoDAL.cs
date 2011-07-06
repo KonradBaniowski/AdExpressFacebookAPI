@@ -247,18 +247,15 @@ namespace TNS.AdExpressI.VP.DAL
             StringBuilder sql = new StringBuilder();
             bool first = true;
             string segmentActivityAccess = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.groupAccess);
-            string segmentActivityException = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.groupException);
             string categoryAccess = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.segmentAccess);
-            string categoryException = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.segmentException);
             string productAccess = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.productAccess);
-            string productException = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.productException);
 
             //Add Classification items in Access
             //Segment Activity
             if (!string.IsNullOrEmpty(segmentActivityAccess))
             {
                 if (beginByAnd) sql.Append(" and");
-                sql.AppendFormat(" (({0}.id_segment in ({1}) ", prefix, segmentActivityAccess);
+                sql.AppendFormat(" ({0}.id_segment in ({1}) ", prefix, segmentActivityAccess);
                 first = false;
             }
             // Product Category
@@ -268,7 +265,7 @@ namespace TNS.AdExpressI.VP.DAL
                 else
                 {
                     if (beginByAnd) sql.Append(" and ");
-                    sql.Append(" (( ");
+                    sql.Append(" ( ");
                 }
                 sql.AppendFormat("  {0}.id_category in ({1}) ", prefix, categoryAccess);
                 first = false;
@@ -280,7 +277,7 @@ namespace TNS.AdExpressI.VP.DAL
                 else
                 {
                     if (beginByAnd) sql.Append(" and ");
-                    sql.Append(" (( ");
+                    sql.Append(" ( ");
                 }
                 sql.AppendFormat("  {0}.id_product in ({1}) ", prefix, productAccess);
                 first = false;
@@ -302,9 +299,7 @@ namespace TNS.AdExpressI.VP.DAL
             StringBuilder sql = new StringBuilder();
             bool first = true;
             string circuitAccess = _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.circuitAccess);
-            string circuitException = _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.circuitException);
             string brandAccess = _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.brandAccess);
-            string brandException = _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.brandException);
 
             //Add Classification items in Access
 
@@ -312,7 +307,7 @@ namespace TNS.AdExpressI.VP.DAL
             if (!string.IsNullOrEmpty(circuitAccess))
             {
                 if (beginByAnd) sql.Append(" and");
-                sql.AppendFormat(" (({0}.id_circuit in ({1}) ", prefix, circuitAccess);
+                sql.AppendFormat(" ( {0}.id_circuit in ({1}) ", prefix, circuitAccess);
                 first = false;
             }
             // Brand
@@ -322,7 +317,7 @@ namespace TNS.AdExpressI.VP.DAL
                 else
                 {
                     if (beginByAnd) sql.Append(" and ");
-                    sql.Append(" (( ");
+                    sql.Append(" ( ");
                 }
                 sql.AppendFormat("  {0}.id_brand in ({1}) ", prefix, brandAccess);
                 first = false;
