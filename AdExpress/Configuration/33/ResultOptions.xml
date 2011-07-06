@@ -25,5 +25,6 @@
       <result name="layer of result control"        id="Result"       assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Results.VP.VpScheduleResultWebControl"                            skinId="VpScheduleResultWebControl"       />
       <result name="layer of result filter control" id="ResultFilter" assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Results.VP.VpScheduleResultFilterWebControl"                      skinId="VpScheduleResultFilterWebControl" validationMethod="RefreshVpScheduleResultWebControl('Result');" display="false"/>
     </results>
+    <defaulPersonnalizedLevel level="vpBrand"/>
   </vpConfiguration>
 </resultOptions>

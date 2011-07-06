@@ -44,7 +44,69 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
     /// </summary>
     [DefaultProperty("Text"),
       ToolboxData("<{0}:GenericMediaScheduleWebControl runat=server></{0}:GenericMediaScheduleWebControl>")]
-    public class VpScheduleResultWebControl : VpScheduleAjaxResultBaseWebControl {
+    public class VpScheduleResultWebControl : VpScheduleAjaxResultBaseWebControl
+    {
+
+        #region GetJavascript
+        /// <summary>
+        /// Get Validation Javascript Method
+        /// </summary>
+        /// <returns>Validation Javascript Method</returns>
+        protected string GetPromoFileJavascript()
+        {
+            StringBuilder js = new StringBuilder();
+            js.Append("\r\n<script language=\"javascript\">\r\n");
+
+            js.Append("\r\nfunction displayPromoFile_" + this.ID + "(idPromo, display){");
+            js.Append("\r\n\tif(display) {");
+            js.Append("\r\n\t\tdocument.getElementById('res_backgroud_" + this.ID + "').style.height=document.body.clientHeight + \"px\";");
+            js.Append("\r\n\t\tdocument.getElementById('res_backgroud_" + this.ID + "').style.display = '';");
+
+            js.Append("\r\n\t\tvar myWidth = 0, myHeight = 0;");
+            js.Append("\r\n\t\tif( typeof( window.innerWidth ) == 'number' ) {");
+            //Non-IE
+            js.Append("\r\n\t\tmyWidth = window.innerWidth;");
+            js.Append("\r\n\t\tmyHeight = window.innerHeight;");
+            js.Append("\r\n\t\t} else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {");
+            //IE 6+ in 'standards compliant mode'
+            js.Append("\r\n\t\tmyWidth = document.documentElement.clientWidth;");
+            js.Append("\r\n\t\tmyHeight = document.documentElement.clientHeight;");
+            js.Append("\r\n\t\t} else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {");
+            //IE 4 compatible
+            js.Append("\r\n\t\tmyWidth = document.body.clientWidth;");
+            js.Append("\r\n\t\tmyHeight = document.body.clientHeight;");
+            js.Append("\r\n\t\t}");
+
+
+            js.Append("\r\n\tdocument.getElementById('res_promofile_" + this.ID + "').style.top = (document.documentElement.scrollTop + ((myHeight - 550) / 2)) + \"px\";");
+            js.Append("\r\n\tdocument.getElementById('res_promofile_" + this.ID + "').style.left = (document.documentElement.scrollLeft + ((myWidth - 750) / 2)) + \"px\";");
+
+            js.Append("\r\n\t\tdocument.getElementById('res_promofile_" + this.ID + "').style.display = '';");
+
+            js.Append("\r\n\tgetPromoFile_" + this.ID + "(idPromo);");
+
+            js.Append("\r\n\t} else {");
+            js.Append("\r\n\t\tdocument.getElementById('res_backgroud_" + this.ID + "').style.display = 'none';");
+            js.Append("\r\n\t\tdocument.getElementById('res_promofile_" + this.ID + "').style.display = 'none';");
+            js.Append("\r\n\t}");
+
+            js.Append("\r\n}\r\n");
+
+            js.Append("\r\nfunction getPromoFile_" + this.ID + "(idPromo){");
+            js.Append("\r\n\tvar oN=document.getElementById('res_promofile_" + this.ID + "');");
+            js.Append("\r\n\toN.innerHTML='" + GetHTML().Replace("'", "\\'") + "';");
+            js.Append("\r\n\t" + this.GetType().Namespace + "." + this.GetType().Name + ".GetPromoFileData('" + this._webSession.IdSession + "', idPromo, resultParameters_" + this.ID + ",styleParameters_" + this.ID + ",getPromoFile_" + this.ID + "_callback);");
+            js.Append("\r\n}");
+
+            js.Append("\r\nfunction getPromoFile_" + this.ID + "_callback(res){");
+            js.Append("\r\n\tvar oN=document.getElementById('res_promofile_" + this.ID + "');");
+            js.Append("\r\n\toN.innerHTML=res.value;");
+            js.Append("\r\n}\r\n");
+
+            js.Append("\r\n\r\n</script>");
+            return js.ToString();
+        }
+        #endregion
 
         #region Evènements
 
@@ -55,12 +117,29 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// <param name="e">Arguments</param>
         protected override void OnPreRender(EventArgs e)
         {
-           
+            Page.Response.Write("<div id=\"res_promofile_" + this.ID + "\" class=\"vpPrf\" style=\"display:none;\"></div>");
+            Page.Response.Write("<div id=\"res_backgroud_" + this.ID + "\" class=\"vpScheduleResultFilterWebControlBackgroud\" style=\"display:none;\"></div>");
             base.OnPreRender(e);
         }
         #endregion
 
+        #region Render
+        /// <summary> 
+        /// Génère ce contrôle dans le paramètre de sortie spécifié.
+        /// </summary>
+        /// <param name="output"> Le writer HTML vers lequel écrire </param>
+        protected override void Render(HtmlTextWriter output)
+        {
+            StringBuilder html = new StringBuilder(1000);
+            html.Append(GetPromoFileJavascript());
+            output.Write(html.ToString());
+            base.Render(output);
+        }
         #endregion
+
+        #endregion
+
+       
 
         #region GetHTML
         /// <summary>
@@ -68,13 +147,75 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// </summary>
         /// <param name="webSession">Client Session</param>
         /// <returns>Code HTMl</returns>
-        protected override string GetAjaxHTML() {
+        protected override string GetAjaxHTML()
+        {
             TNS.AdExpress.Domain.Web.Navigation.Module _module = ModulesList.GetModule(WebConstantes.Module.Name.VP);
-            object[] param = param = new object[1] { _webSession };
+            object[] param = new object[1] { _webSession };
             IVeillePromo vpScheduleResult = (IVeillePromo)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryRulesLayer.AssemblyName, _module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            vpScheduleResult.ResultControlId = this.ID;
             return (vpScheduleResult.GetHtml());
         }
+
         #endregion
+
+
+        #region  Enregistrement des paramètres de construction du résultat
+        /// <summary>
+        /// Set Current Result Parameters Script
+        /// </summary>
+        /// <returns></returns>
+        protected override string SetCurrentResultParametersScript()
+        {
+            StringBuilder js = new StringBuilder(1000);
+            js.Append("\r\n\t obj.ResultControlId = '" + this.ID + "';");
+            return (js.ToString());
+        }
+        #endregion
+
+        #region Chargement des paramètres AjaxPro.JavaScriptObject et WebSession
+        /// <summary>
+        /// Load Current Result Parameters
+        /// </summary>
+        /// <param name="o"></param>
+        protected override void LoadCurrentResultParameters(AjaxPro.JavaScriptObject o)
+        {
+            if (o != null)
+            {
+                if (o.Contains("ResultControlId"))
+                {
+                    string resultControlId = o["ResultControlId"].Value;
+                    this.ID = resultControlId.Replace("\"", "");
+                }               
+            }           
+        }
+        #endregion
+
+        /// <summary>
+        /// Get VP Promotion file HTML  code
+        /// </summary>
+        /// <param name="o">Result parameters (session Id, theme...)</param>
+        /// <returns>Code HTML</returns>
+        [AjaxPro.AjaxMethod]
+        public virtual string GetPromoFileData(string idSession, long idDataPromotion, AjaxPro.JavaScriptObject resultParameters, AjaxPro.JavaScriptObject styleParameters)
+        {
+            string html;
+
+            try
+            {
+                _webSession = (WebSession)WebSession.Load(idSession);
+
+                TNS.AdExpress.Domain.Web.Navigation.Module _module = ModulesList.GetModule(WebConstantes.Module.Name.VP);
+                object[] param = new object[1] { _webSession };
+                IVeillePromo vpScheduleResult = (IVeillePromo)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryRulesLayer.AssemblyName, _module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                html = vpScheduleResult.GetPromoFileHtml();
+
+            }
+            catch (System.Exception err)
+            {
+                return (OnAjaxMethodError(err, _webSession));
+            }
+            return (html);
+        }
 
     }
 }

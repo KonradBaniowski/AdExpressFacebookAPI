@@ -18,6 +18,7 @@ using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Results;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Domain.XmlLoader {
     /// <summary>
@@ -45,6 +46,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             VpConfigurationDetail vpConfigurationDetail = null;
             List<VpDateConfiguration> vpDateConfigurationList = null;
             TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type defaultVpDateType = CustomerSessions.Period.Type.currentMonth;
+            DetailLevelItemInformation.Levels defaultPersoLevel = DetailLevelItemInformation.Levels.vpBrand;
             #endregion
 
             try {
@@ -143,10 +145,14 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                                         }
                                                     }
                                                     break;
+                                                case "defaulPersonnalizedLevel":
+                                                    defaultPersoLevel = (DetailLevelItemInformation.Levels)Enum.Parse(typeof(DetailLevelItemInformation.Levels), subReader.GetAttribute("level"));
+                                                    break;
+
                                             }
                                         }
                                     }
-                                    vpConfigurationDetail = new VpConfigurationDetail(resultControlLayerList, selectionControlLayerList);
+                                    vpConfigurationDetail = new VpConfigurationDetail(resultControlLayerList, selectionControlLayerList, defaultPersoLevel);
                                 }
                                 break;
                         }

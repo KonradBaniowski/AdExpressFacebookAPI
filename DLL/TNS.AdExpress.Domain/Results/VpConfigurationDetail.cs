@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpress.Domain.Results
 {
@@ -16,6 +17,8 @@ namespace TNS.AdExpress.Domain.Results
         /// Selection Control Layer List
         /// </summary>
         protected List<ControlLayer> _selectionControlLayerList;
+
+        protected DetailLevelItemInformation.Levels _defaultPersoLevel;
         #endregion
 
         #region Constructor
@@ -24,7 +27,7 @@ namespace TNS.AdExpress.Domain.Results
         /// </summary>
         /// <param name="resultControlLayerList">Result Control Layer List</param>
         /// <param name="selectionControlLayerList">Selection Control Layer List</param>
-        public VpConfigurationDetail(List<ControlLayer> resultControlLayerList, List<ControlLayer> selectionControlLayerList) {
+        public VpConfigurationDetail(List<ControlLayer> resultControlLayerList, List<ControlLayer> selectionControlLayerList,DetailLevelItemInformation.Levels defaultPersoLevel) {
             if (resultControlLayerList == null) throw new ArgumentNullException("resultControlLayerList Parameter is null");
             if (selectionControlLayerList.Count <= 0) throw new ArgumentException("resultControlLayerList Parameter is invalid");
             if (selectionControlLayerList == null) throw new ArgumentNullException("SelectionControlLayerList Parameter is null");
@@ -32,6 +35,7 @@ namespace TNS.AdExpress.Domain.Results
 
             _resultControlLayerList = resultControlLayerList;
             _selectionControlLayerList = selectionControlLayerList;
+            _defaultPersoLevel = defaultPersoLevel;
         }
         #endregion
 
@@ -47,6 +51,13 @@ namespace TNS.AdExpress.Domain.Results
         /// </summary>
         public List<ControlLayer> SelectionControlLayerList {
             get { return _selectionControlLayerList; }
+        }
+        /// <summary>
+        /// Get default Perso Level
+        /// </summary>
+        public DetailLevelItemInformation.Levels DefaultPersoLevel
+        {
+            get { return _defaultPersoLevel; }
         }
         #endregion
 
