@@ -287,44 +287,6 @@ namespace TNS.AdExpressI.VP.DAL
             }
             if (!first) sql.Append(" )");
 
-            //Add Classification items in exception
-            // Segment Activity
-            if (!string.IsNullOrEmpty(segmentActivityException))
-            {
-                if (!first) sql.Append(" and ");
-                else
-                {
-                    if (beginByAnd) sql.Append(" and ");
-                    sql.Append(" ( ");
-                }
-                sql.AppendFormat(" {0}.id_sector not in ({1}) ", prefix, segmentActivityException);
-                first = false;
-            }
-            // Product Category
-            if (!string.IsNullOrEmpty(categoryException))
-            {
-                if (!first) sql.Append(" and ");
-                else
-                {
-                    if (beginByAnd) sql.Append(" and ");
-                    sql.Append(" ( ");
-                }
-                sql.AppendFormat(" {0}.id_category not in ({1}) ", prefix, categoryException);
-                first = false;
-            }
-            // Product
-            if (!string.IsNullOrEmpty(productException))
-            {
-                if (!first) sql.Append(" and ");
-                else
-                {
-                    if (beginByAnd) sql.Append(" and ");
-                    sql.Append(" ( ");
-                }
-                sql.AppendFormat(" {0}.id_product not in ({1}) ", prefix, productException);
-                first = false;
-            }
-            if (!first) sql.Append(" )");
 
             return sql.ToString();
         }
@@ -365,35 +327,7 @@ namespace TNS.AdExpressI.VP.DAL
                 sql.AppendFormat("  {0}.id_brand in ({1}) ", prefix, brandAccess);
                 first = false;
             }
-            if (!first) sql.Append(" ) ");
-
-            //Add Classification items in exception
-
-            // Circuit
-            if (!string.IsNullOrEmpty(circuitException))
-            {
-                if (!first) sql.Append(" and ");
-                else
-                {
-                    if (beginByAnd) sql.Append(" and ");
-                    sql.Append(" ( ");
-                }
-                sql.AppendFormat(" {0}.id_circuit not in ({1}) ", prefix, circuitException);
-                first = false;
-            }
-            // Brand
-            if (!string.IsNullOrEmpty(brandException))
-            {
-                if (!first) sql.Append(" and ");
-                else
-                {
-                    if (beginByAnd) sql.Append(" and ");
-                    sql.Append(" ( ");
-                }
-                sql.AppendFormat(" {0}.id_brand not in ({1}) ", prefix, brandException);
-                first = false;
-            }
-            if (!first) sql.Append(" ) ");
+            if (!first) sql.Append(" ) ");           
 
             return sql.ToString();
         }
