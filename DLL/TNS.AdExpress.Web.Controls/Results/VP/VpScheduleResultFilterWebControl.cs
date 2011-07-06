@@ -335,6 +335,22 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                 vpScheduleSelectionNodeWebControl.GenericDetailLevelComponentProfile = TNS.AdExpress.Constantes.Web.GenericDetailLevel.ComponentProfile.product;
                 _filterResultWebControlList.Add(2870, vpScheduleSelectionNodeWebControl);
                 Controls.Add(vpScheduleSelectionNodeWebControl);
+
+                VpScheduleSelectionDetailLevelWebControl vpScheduleSelectionDetailLevelWebControl = new VpScheduleSelectionDetailLevelWebControl();
+                vpScheduleSelectionDetailLevelWebControl.ID = this.ID + "_DetailLevel";
+                vpScheduleSelectionDetailLevelWebControl.WebSession = _webSession;
+                vpScheduleSelectionDetailLevelWebControl.Display = false;
+                //vpScheduleSelectionDetailLevelWebControl.SkinID = VpScheduleSelectionNodeProductWebControlSkinId;
+                _filterResultWebControlList.Add(2871, vpScheduleSelectionDetailLevelWebControl);
+                Controls.Add(vpScheduleSelectionDetailLevelWebControl);
+
+                VpScheduleSelectionDatesWebControl vpScheduleSelectionDatesWebControl = new VpScheduleSelectionDatesWebControl();
+                vpScheduleSelectionDatesWebControl.ID = this.ID + "_Dates";
+                vpScheduleSelectionDatesWebControl.WebSession = _webSession;
+                vpScheduleSelectionDatesWebControl.Display = false;
+                //vpScheduleSelectionDatesWebControl.SkinID = VpScheduleSelectionNodeProductWebControlSkinId;
+                _filterResultWebControlList.Add(2882, vpScheduleSelectionDatesWebControl);
+                Controls.Add(vpScheduleSelectionDatesWebControl);
             }
         }
         #endregion
@@ -403,11 +419,11 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             html.Append("<div class=\"" + CssClassResult + "\">");
             html.Append("<div class=\""+CssClassResultContent+"\">");
             #region Result
-            foreach (VpScheduleSelectionNodeWebControl cVpScheduleSelectionNodeWebControl in _filterResultWebControlList.Values) {
+            foreach (VpScheduleSelectionFilterBaseWebControl cVpScheduleSelectionFilterBaseWebControl in _filterResultWebControlList.Values) {
                 using (MemoryStream memoryStream = new MemoryStream()) {
                     using (StreamWriter streamWriter = new StreamWriter(memoryStream)) {
                         using (HtmlTextWriter memoryWriter = new HtmlTextWriter(streamWriter)) {
-                            cVpScheduleSelectionNodeWebControl.RenderControl(memoryWriter);
+                            cVpScheduleSelectionFilterBaseWebControl.RenderControl(memoryWriter);
                             memoryWriter.Flush();
                             memoryStream.Position = 0;
                             using (StreamReader reader = new StreamReader(memoryStream)) {
@@ -479,6 +495,20 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                 }
                 if (productParameters != null) {
                     _webSession.CurrentUniversProduct = _webSession.SelectionUniversProduct = GetTreeNode(productParameters, (GenericDetailLevel)(module.DefaultProductDetailLevels[0]));
+                }
+                if (detailLevelParameters != null) {
+                    List<DetailLevelItemInformation.Levels> detailTabList =  new List<DetailLevelItemInformation.Levels>();
+                    foreach (string detailTab in ((string)detailLevelParameters[0]).Split(',')) {
+                        if (!string.IsNullOrEmpty(detailTab) && detailTab!="none")
+                            detailTabList.Add((DetailLevelItemInformation.Levels)Enum.Parse(typeof(DetailLevelItemInformation.Levels), detailTab));
+                    }
+                    _webSession.GenericMediaDetailLevel = new GenericDetailLevel(new ArrayList(detailTabList));
+                    _webSession.PersonnalizedLevel = (DetailLevelItemInformation.Levels)Enum.Parse(typeof(DetailLevelItemInformation.Levels), ((string)detailLevelParameters[1]));
+                }
+                if (dateParameters != null) {
+                    _webSession.SetVpDates(new DateTime(Int32.Parse(((string)dateParameters[0]).Split('_')[0]), Int32.Parse(((string)dateParameters[0]).Split('_')[1]), 1)
+                        , new DateTime(Int32.Parse(((string)dateParameters[1]).Split('_')[1]), Int32.Parse(((string)dateParameters[1]).Split('_')[1]), 1));
+
                 }
                 _webSession.Save();
 

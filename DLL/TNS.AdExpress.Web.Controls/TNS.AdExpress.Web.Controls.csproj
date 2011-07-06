@@ -503,6 +503,8 @@
     <Compile Include="Selections\VisualSelectionWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Selections\VP\Filter\VpScheduleSelectionDatesWebControl.cs" />
+    <Compile Include="Selections\VP\Filter\VpScheduleSelectionDetailLevelWebControl.cs" />
     <Compile Include="Selections\VP\Filter\VpScheduleSelectionFilterBaseWebControl.cs" />
     <Compile Include="Selections\VP\Filter\VpScheduleSelectionNodeWebControl.cs" />
     <Compile Include="Selections\VP\VpScheduleAjaxSelectionBaseWebControl.cs" />
