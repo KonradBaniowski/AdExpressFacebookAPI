@@ -80,6 +80,13 @@ namespace TNS.AdExpressI.VP
         /// Period end date
         /// </summary>
         protected string _periodEndDate = "";
+
+        /// <summary>
+        /// ID data promotion
+        /// </summary>
+        protected long _idDataPromotion;
+
+        protected string _resultControlId = "";
         #endregion
 
         #region Constructor
@@ -122,6 +129,29 @@ namespace TNS.AdExpressI.VP
             }
 
         }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="session">Session</param>
+        /// <param name="idDataPromotion">Id data promotion</param>
+        public VeillePromo(WebSession session, long idDataPromotion)
+        {
+            if (session == null) throw new NullReferenceException(" parameter session cannot be null ");
+            _session = session;
+            _idDataPromotion = idDataPromotion;
+        }
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// Define Current Module
+        /// </summary>
+        public string ResultControlId
+        {
+            set { _resultControlId = value; }
+        }
+
         #endregion
 
         #region GetHtml
@@ -161,7 +191,7 @@ namespace TNS.AdExpressI.VP
                 int curMonth = -1, curYear = -1, oldYear = -1, curWeek = -1, oldMonth = -1, start = -1;
                 Int64 oldIdL1 = -1, idL1 = -1, oldIdL2 = -1, idL2 = -1, oldIdL3 = -1, idL3 = -1;
                 int levelColSpan = 1, width = 31;
-                string linkToPromoFile = "#", promoContent = "";
+                string promoContent = "";
                 foreach (KeyValuePair<long, long> kpv in weekList)
                 {
                     long key = kpv.Key;
@@ -290,11 +320,10 @@ namespace TNS.AdExpressI.VP
                                 promoPeriod += "/" + ((vpi.DateBegin.Month.ToString().Length == 1) ? "0" + vpi.DateBegin.Month.ToString() : vpi.DateBegin.Month.ToString());
                                 promoPeriod += " - " + ((vpi.DateEnd.Day.ToString().Length == 1) ? "0" + vpi.DateEnd.Day.ToString() : vpi.DateEnd.Day.ToString());
                                 promoPeriod += "/" + ((vpi.DateEnd.Month.ToString().Length == 1) ? "0" + vpi.DateEnd.Month.ToString() : vpi.DateEnd.Month.ToString());
-                               
+
                                 html.Append("<table class=\"vp\">");
                                 html.AppendFormat("<tr><td class=\"{0}\">", vpi.CssClass);
-                                //string promoAnchor = "<a class=\"Tipspr\" href=\"" + linkToPromoFile + "\" title=\"::<table border=0 cellpadding=0 cellspacing=1 width=100% class=promoTableInfoBulle><tr><td class=titlepr>" + (Convertion.ToHtmlString(brand)) + "</td></tr><tr><td><div align=justify>" + (Convertion.ToHtmlString(vpi.PromotionContent)).Replace("'", "\'") + "</div></td></tr><tr><td height=5></td></tr></table>\">";
-                                string promoAnchor = "<a class=\"tooltip\" href=\"" + linkToPromoFile + "\">";
+                                string promoAnchor = "<a class=\"tooltip\"  href=\"javascript:displayPromoFile_" + _resultControlId + "(" + vpi.IdDataPromotion + ", true);\">";
                                 promoAnchor += "<em><span></span><b>" + (Convertion.ToHtmlString(brand)) + " : " + promoPeriod + "</b><br/>" + (Convertion.ToHtmlString(vpi.PromotionContent)).Replace("'", "\'") + "</em>";
 
 
@@ -350,6 +379,63 @@ namespace TNS.AdExpressI.VP
         }
 
         #endregion
+
+        #region GetPromoFileHtml
+        /// <summary>
+        /// Get HTML code for the promotion file
+        /// </summary>
+        /// <param name="idDataPromotion">Promotion Id</param>
+        /// <returns>HTML Code</returns>
+        public virtual string GetPromoFileHtml()
+        {
+            object[] param = null;
+            IVeillePromoDAL vpScheduleDAL = null;
+            param = new object[3];
+            param[0] = _session;
+            param[1] = _periodBeginningDate;
+            param[2] = _periodEndDate;
+            vpScheduleDAL = (IVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            DataSet ds = vpScheduleDAL.GetData(_idDataPromotion);
+
+            StringBuilder html = new StringBuilder(1000);
+
+            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"center\" width=\"100%\" height=\"100%\">");
+            html.Append("<tr>");
+            html.Append("<td class=\"vpfContent\">");
+
+           
+            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"center\" width=\"100%\" height=\"100%\">");
+            //Header
+            html.Append("<tr><td class=\"VpFilePopUpHeader\">");
+            html.Append("&nbsp;&nbsp;FICHE ");//TODO A mettre texte dans Ressources
+            html.Append("</td></tr>");
+
+            //Content
+            html.Append("<tr><td class=\"vpfDescr\">");
+            html.Append("<ul class=\"prf\">");
+            html.Append(" <li><span><b>Enseigne:</b> MIDAS</span></li>");
+            html.Append(" <li><span><b>Date:</b> Du 24/01 au 15/02</span></li>");
+            html.Append("  <li><span><b>Nomenclature produit:</b> Pneumatique /Pneu / Montage, équilibrage</span></li>");
+            html.Append("  <li><span><b>Promotion:</b> Remboursements sur 30% des pneus</span></li>");
+            html.Append(" <li><span><b>Marques:</b> Michelin, Goddyear, Dunlop</span></li>");
+            html.Append(" </ul>");
+            html.Append("<hr class=\"hrSpacer\"/>");
+            html.Append("</td></tr>");
+
+            //Promotion's Conditions
+            html.Append("<tr><td>");
+
+            html.Append("</td></tr>");
+            html.Append("</table>");
+
+            html.Append("</td>");
+            html.Append("</tr>");
+            html.Append("</table>");
+
+            return html.ToString();
+        }
+        #endregion
+
 
         #region GetData
         /// <summary>
