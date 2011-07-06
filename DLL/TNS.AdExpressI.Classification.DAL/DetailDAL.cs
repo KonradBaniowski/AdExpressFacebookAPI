@@ -157,20 +157,21 @@ namespace TNS.AdExpressI.Classification.DAL {
                 /*Get the identifier of the selected current media type. 
                  * Example if the user as selected the media PRESS,
                 the joins could be like this : id_vehicle = 3" */
-                if (_session.CustomerDataFilters!=null && _session.CustomerDataFilters.SelectedMediaType != null && _session.CustomerDataFilters.SelectedMediaType.Length > 0)
+                if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP
+                    && _session.CustomerDataFilters != null && _session.CustomerDataFilters.SelectedMediaType != null && _session.CustomerDataFilters.SelectedMediaType.Length > 0)
                     sql.AppendFormat(" and id_vehicle={0}", _session.CustomerDataFilters.SelectedMediaType);
 
                 /*Filter data with the identifier of the sub media selected.
                  Remark : Use in Russia
                  */
                 string idSubMedia = null;
-                if(_session.CustomerDataFilters!=null)
+                if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP && _session.CustomerDataFilters != null)
                     idSubMedia = _session.CustomerDataFilters.SelectedMediaCategory;
-                if (idSubMedia != null && idSubMedia.Length > 0)
+                if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP && idSubMedia != null && idSubMedia.Length > 0)
                     sql.AppendFormat(" and id_category ={0}", idSubMedia);
 
                 //This section is specifical to the media Internet. obtains the list of active vehicle for Internet. (Only for France)
-                if (VehiclesInformation.Contains(VehicleClassificationCst.internet) && _session.SelectionUniversMedia != null && _session.SelectionUniversMedia.FirstNode!=null && ((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(VehicleClassificationCst.internet)) {
+                if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP && VehiclesInformation.Contains(VehicleClassificationCst.internet) && _session.SelectionUniversMedia != null && _session.SelectionUniversMedia.FirstNode != null && ((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(VehicleClassificationCst.internet)) {
                     activeMediaList = TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID);
                     string inClauseSQLCode = TNS.AdExpress.Web.Core.Utilities.SQLGenerator.GetInClauseMagicMethod("id_media",activeMediaList);
                     if(inClauseSQLCode.Length > 0) {
@@ -178,12 +179,12 @@ namespace TNS.AdExpressI.Classification.DAL {
                     }
                 }
 				//Restriction on the vehicles selected by the customer
-				if (_listMedia!=null && _listMedia.Length > 0) {
+                if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP && _listMedia != null && _listMedia.Length > 0) {
                     sql.AppendFormat(" and id_media in ({0}) ", _listMedia);
 				}
 
                 //Restriction on the media universe allowed for the customer and module of TV sponsorship
-				if (_module != null && _module.ModuleType == WebConstantes.Module.Type.tvSponsorship)
+                if (_session.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP && _module != null && _module.ModuleType == WebConstantes.Module.Type.tvSponsorship)
 					sql.Append(_module.GetAllowedMediaUniverseSqlWithOutPrefix(true));
 
                 //Obtains the media rights of the customer

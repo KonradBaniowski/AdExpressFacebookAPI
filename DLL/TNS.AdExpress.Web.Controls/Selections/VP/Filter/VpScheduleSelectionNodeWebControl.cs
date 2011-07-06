@@ -198,17 +198,22 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
         protected override string GetAjaxHTML() {
             StringBuilder html = new StringBuilder(1000);
             GenericDetailLevel genericDetailLevel = new GenericDetailLevel(_levelIds);
+            List<Int64> selectionIdList = new List<long>();
+            string checkboxChecked = string.Empty;
+            string selection = string.Empty;
 
             DataSet ds = GetData(genericDetailLevel);
             if (ds != null && ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows != null && ds.Tables[0].Rows.Count > 0) {
                 List<Int64> levelList = new List<Int64>();
+                Int64 cValue;
                 List<Int64> levelParentList = new List<Int64>();
                 List<Int64> levelOldList = new List<Int64>();
                 foreach (DataRow cRow in ds.Tables[0].Rows) {
                     levelList = new List<Int64>();
                     levelParentList = new List<Int64>();
                     for (int i = 0; i < genericDetailLevel.Levels.Count; i++) {
-                        levelList.Add(Int64.Parse(cRow[genericDetailLevel[i+1].DataBaseIdField].ToString()));
+                        cValue = Int64.Parse(cRow[genericDetailLevel[i + 1].DataBaseIdField].ToString());
+                        levelList.Add(cValue);
 
                         if (levelOldList == null || levelOldList.Count <= 0 || levelOldList[i] != levelList[i]) {
                             string cClass = string.Empty;
@@ -218,27 +223,37 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
                                 case 2: cClass = CssClassLvl3; break;
                                 case 3: cClass = CssClassLvl4; break;
                             }
-
-
+                            if (_genericDetailLevelComponentProfile == TNS.AdExpress.Constantes.Web.GenericDetailLevel.ComponentProfile.media)
+                                selection = _webSession.GetSelection(_webSession.SelectionUniversMedia, GetAccessType(i + 1, genericDetailLevel));
+                            else
+                                selection = _webSession.GetSelection(_webSession.SelectionUniversProduct, GetAccessType(i + 1, genericDetailLevel));
+                            if (!string.IsNullOrEmpty(selection))
+                                selectionIdList = new List<Int64>(new List<string>(selection.Split(',')).ConvertAll<Int64>(p => Int64.Parse(p)));
+                            else
+                                selectionIdList = new List<Int64>();
+                            if (selectionIdList.Contains(cValue))
+                                checkboxChecked = " checked ";
+                            else
+                                checkboxChecked = string.Empty;
                             string cId = string.Format("{0}", string.Join("_", levelList.ConvertAll<string>(p => p.ToString()).ToArray()));
 
                             html.AppendFormat("<div id=\"div_{1}_{0}\" width=\"100%\" class=\"{2}\">", cId, this.ID, cClass);
                             html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" height=\"100%\">");
                             html.Append("<tr><td>");
-                            html.AppendFormat("<input type=\"checkbox\" value=\"{1}_{0}\" id=\"{1}_{0}\" onclick=\"javascript:{2} onCheck_" + this.ID + "(this, '{3}');\"/>"
+                            html.AppendFormat("<input type=\"checkbox\" value=\"{1}_{0}\" id=\"{1}_{0}\" onclick=\"javascript:{2} onCheck_" + this.ID + "(this, '{3}');\" " + checkboxChecked + "/>"
                                 , cId
                                 , this.ID
                                 , ((i < genericDetailLevel.Levels.Count - 1) ? "checkChild_" + this.ID + "(this);" : string.Empty)
-                                , ((i >0) ? string.Join("_", levelParentList.ConvertAll<string>(p => p.ToString()).ToArray()) : string.Empty));                            
+                                , ((i > 0) ? string.Join("_", levelParentList.ConvertAll<string>(p => p.ToString()).ToArray()) : string.Empty));
                             html.AppendFormat("<label for=\"{2}_{1}\">{0}</label>"
-                                , cRow[genericDetailLevel[i+1].DataBaseField].ToString()
+                                , cRow[genericDetailLevel[i + 1].DataBaseField].ToString()
                                 , cId
                                 , this.ID);
                             html.Append("</td></tr>");
                             html.Append("</table>");
                             html.Append("</div>");
                         }
-                        levelParentList.Add(Int64.Parse(cRow[genericDetailLevel[i + 1].DataBaseIdField].ToString()));
+                        levelParentList.Add(cValue);
                     }
                     levelOldList = levelList;
                 }
@@ -269,6 +284,39 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
                 ds = classificationDAL.GetDetailMedia();
 
             return ds;
+        }
+        #endregion
+
+        #region GetAccessType
+        /// <summary>
+        /// Get Access Type
+        /// </summary>
+        /// <returns>Access Type</returns>
+        TNS.AdExpress.Constantes.Customer.Right.type GetAccessType(int lvl, GenericDetailLevel genericDetailLevel) {
+            TNS.AdExpress.Constantes.Customer.Right.type accesType;
+            switch (genericDetailLevel[lvl].Id) {
+                case DetailLevelItemInformation.Levels.vpBrand:
+                        accesType = TNS.AdExpress.Constantes.Customer.Right.type.brandAccess;
+                    break;
+                case DetailLevelItemInformation.Levels.vpCircuit:
+                        accesType = TNS.AdExpress.Constantes.Customer.Right.type.circuitAccess;
+                    break;
+                case DetailLevelItemInformation.Levels.vpProduct:
+                        accesType = TNS.AdExpress.Constantes.Customer.Right.type.productAccess;
+                    break;
+                case DetailLevelItemInformation.Levels.vpSegment:
+                        accesType = TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess;
+                    break;
+                case DetailLevelItemInformation.Levels.vpSubSegment:
+                        accesType = TNS.AdExpress.Constantes.Customer.Right.type.groupAccess;
+                    break;
+                default:
+                    throw new BaseException("Impossible to retrieve the current level");
+            }
+
+
+
+            return accesType;
         }
         #endregion
 

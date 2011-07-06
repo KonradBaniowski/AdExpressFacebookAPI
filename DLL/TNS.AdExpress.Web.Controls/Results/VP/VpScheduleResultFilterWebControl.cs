@@ -114,16 +114,28 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             foreach (VpScheduleSelectionFilterBaseWebControl cVpScheduleSelectionFilterBaseWebControl in _filterResultWebControlList.Values) {
                 switch (i) {
                     case 0:
-                        js.Append("\r\n\tmediaParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
+                        js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true)");
+                        js.Append("\r\n\t\tmediaParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
+                        js.Append("\r\n\telse");
+                        js.Append("\r\n\t\tmediaParameters = null;");
                         break;
                     case 1:
-                        js.Append("\r\n\tproductParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
+                        js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true)");
+                        js.Append("\r\n\t\tproductParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
+                        js.Append("\r\n\telse");
+                        js.Append("\r\n\t\tproductParameters = null;");
                         break;
                     case 2:
-                        js.Append("\r\n\tdetailLevelParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
+                        js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true)");
+                        js.Append("\r\n\t\tdetailLevelParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
+                        js.Append("\r\n\telse");
+                        js.Append("\r\n\t\tdetailLevelParameters = null;");
                         break;
                     case 3:
-                        js.Append("\r\n\tdateParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
+                        js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true)");
+                        js.Append("\r\n\t\tdateParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
+                        js.Append("\r\n\telse");
+                        js.Append("\r\n\t\tdateParameters = null;");
                         break;
                 }
                 i++;
@@ -514,6 +526,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                     if (!treeNode.Nodes.ContainsKey(lvlList[0].ToString())) {
                         cNodeL1 = new System.Windows.Forms.TreeNode(lvlList[0].ToString());
                         cNodeL1.Name = lvlList[0].ToString();
+                        cNodeL1.Checked = (1 == lvlList.Count);
                         cNodeL1.Tag = new LevelInformation(accessType, lvlList[0], string.Empty);
                         treeNode.Nodes.Add(cNodeL1);
                     }
@@ -524,6 +537,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                     if (!cNodeL1.Nodes.ContainsKey(lvlList[1].ToString())) {
                         cNodeL2 = new System.Windows.Forms.TreeNode(lvlList[1].ToString());
                         cNodeL2.Name = lvlList[1].ToString();
+                        cNodeL2.Checked = (2 == lvlList.Count);
                         cNodeL2.Tag = new LevelInformation(accessType, lvlList[1], string.Empty);
                         cNodeL1.Nodes.Add(cNodeL2);
                     }
@@ -534,6 +548,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                     if (!cNodeL2.Nodes.ContainsKey(lvlList[2].ToString())) {
                         cNodeL3 = new System.Windows.Forms.TreeNode(lvlList[2].ToString());
                         cNodeL3.Name = lvlList[2].ToString();
+                        cNodeL3.Checked = (3 == lvlList.Count);
                         cNodeL3.Tag = new LevelInformation(accessType, lvlList[2], string.Empty);
                         cNodeL2.Nodes.Add(cNodeL3);
                     }
@@ -544,6 +559,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                     if (!cNodeL3.Nodes.ContainsKey(lvlList[3].ToString())) {
                         cNodeL4 = new System.Windows.Forms.TreeNode(lvlList[3].ToString());
                         cNodeL4.Name = lvlList[3].ToString();
+                        cNodeL4.Checked = (4 == lvlList.Count);
                         cNodeL4.Tag = new LevelInformation(accessType, lvlList[3], string.Empty);
                         cNodeL3.Nodes.Add(cNodeL4);
                     }
