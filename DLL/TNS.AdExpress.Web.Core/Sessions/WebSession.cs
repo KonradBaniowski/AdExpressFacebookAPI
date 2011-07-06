@@ -630,6 +630,15 @@ namespace TNS.AdExpress.Web.Core.Sessions {
         /// </summary>
         [System.NonSerialized]
         TNS.AdExpress.Web.Core.CustomerDataFilters _customerDataFilters = null;
+
+        #region Default promotion Personnalized level
+        /// <summary>
+        /// Default promotion Personnalized level
+        /// </summary>
+        [System.NonSerialized]
+        protected DetailLevelItemInformation.Levels _personnalizedLevel;
+        #endregion
+
 		#endregion
 
 		#region Constructeur
@@ -2460,6 +2469,33 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 			}
 		}
 		#endregion
+
+        #region Personnalized level
+        /// <summary>
+        /// GET / SET promotion Personnalized level
+        /// </summary>
+        public DetailLevelItemInformation.Levels PersonnalizedLevel
+        {
+            get
+            {
+                if (_personnalizedLevel.ToString() == "0")
+                {
+                    if (userParameters.ContainsKey(CoreConstantes.SessionParamters.personnalizedLevel))
+                    {
+                        _personnalizedLevel = (DetailLevelItemInformation.Levels)userParameters[CoreConstantes.SessionParamters.personnalizedLevel];
+                    }
+                }
+                return _personnalizedLevel;
+
+            }
+            set
+            {
+                _personnalizedLevel = value;
+                userParameters[CoreConstantes.SessionParamters.personnalizedLevel] = value;
+                modificationDate = DateTime.Now;
+            }
+        }
+        #endregion
 
 		#region Ne pas utiliser sauf dans monAdExpress
 		/// <summary>

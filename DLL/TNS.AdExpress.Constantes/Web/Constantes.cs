@@ -265,7 +265,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Retailer Display
             /// </summary>
-            retailerDisplay = 60
+            retailerDisplay = 60,
+            /// <summary>
+            /// personnalizedLevel
+            /// </summary>
+            personnalizedLevel = 61
 		}
 	
 	}
