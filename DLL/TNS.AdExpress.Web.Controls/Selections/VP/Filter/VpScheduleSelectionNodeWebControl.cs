@@ -199,8 +199,8 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             List<Int64> selectionIdList = new List<long>();
             string checkboxChecked = string.Empty;
             string selection = string.Empty;
-
             DataSet ds = GetData(genericDetailLevel);
+            int i = 0;
             if (ds != null && ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows != null && ds.Tables[0].Rows.Count > 0) {
                 List<Int64> levelList = new List<Int64>();
                 Int64 cValue;
@@ -209,11 +209,14 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
                 foreach (DataRow cRow in ds.Tables[0].Rows) {
                     levelList = new List<Int64>();
                     levelParentList = new List<Int64>();
-                    for (int i = 0; i < genericDetailLevel.Levels.Count; i++) {
+                    for (i = 0; i < genericDetailLevel.Levels.Count; i++) {
                         cValue = Int64.Parse(cRow[genericDetailLevel[i + 1].DataBaseIdField].ToString());
                         levelList.Add(cValue);
 
                         if (levelOldList == null || levelOldList.Count <= 0 || levelOldList[i] != levelList[i]) {
+
+
+
                             string cClass = string.Empty;
                             switch (i) {
                                 case 0: cClass = CssClassLvl1; break;
@@ -235,8 +238,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
                                 checkboxChecked = string.Empty;
                             string cId = string.Format("{0}", string.Join("_", levelList.ConvertAll<string>(p => p.ToString()).ToArray()));
 
-                            html.AppendFormat("<div id=\"div_{1}_{0}\" width=\"100%\" class=\"{2}\">", cId, this.ID, cClass);
-                            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" height=\"100%\">");
+                            html.AppendFormat("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" height=\"100%\" class=\"{0}\">", cClass);
                             html.Append("<tr><td>");
                             html.AppendFormat("<input type=\"checkbox\" value=\"{1}_{0}\" id=\"{1}_{0}\" onclick=\"javascript:{2} onCheck_" + this.ID + "(this, '{3}');\" " + checkboxChecked + "/>"
                                 , cId
@@ -249,14 +251,12 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
                                 , this.ID);
                             html.Append("</td></tr>");
                             html.Append("</table>");
-                            html.Append("</div>");
                         }
                         levelParentList.Add(cValue);
                     }
                     levelOldList = levelList;
                 }
             }
-        
 
             return (html.ToString());
         }

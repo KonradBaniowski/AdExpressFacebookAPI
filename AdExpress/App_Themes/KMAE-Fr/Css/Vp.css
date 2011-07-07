@@ -129,7 +129,10 @@ table.vpScheduleResultFilterWebControlButtons
 {
 }
 
-.vpScheduleResultFilterNodeWebControlResultLvl1, .vpScheduleResultFilterNodeWebControlResultLvl2, .vpScheduleResultFilterNodeWebControlResultLvl3, .vpScheduleResultFilterNodeWebControlResultLvl4
+table.vpScheduleResultFilterNodeWebControlResultLvl1, 
+table.vpScheduleResultFilterNodeWebControlResultLvl2, 
+table.vpScheduleResultFilterNodeWebControlResultLvl3, 
+table.vpScheduleResultFilterNodeWebControlResultLvl4
 {
 	height: 20px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -138,46 +141,56 @@ table.vpScheduleResultFilterWebControlButtons
 }
 
 
-.vpScheduleResultFilterNodeWebControlResultLvl1 label, .vpScheduleResultFilterNodeWebControlResultLvl2 label, .vpScheduleResultFilterNodeWebControlResultLvl3 label, .vpScheduleResultFilterNodeWebControlResultLvl4 label, .vpScheduleResultFilterNodeWebControlResultLvl1 input, .vpScheduleResultFilterNodeWebControlResultLvl2 input, .vpScheduleResultFilterNodeWebControlResultLvl3 input, .vpScheduleResultFilterNodeWebControlResultLvl4 input
+table.vpScheduleResultFilterNodeWebControlResultLvl1 label, 
+table.vpScheduleResultFilterNodeWebControlResultLvl2 label, 
+table.vpScheduleResultFilterNodeWebControlResultLvl3 label, 
+table.vpScheduleResultFilterNodeWebControlResultLvl4 label, 
+table.vpScheduleResultFilterNodeWebControlResultLvl1 input, 
+table.vpScheduleResultFilterNodeWebControlResultLvl2 input, 
+table.vpScheduleResultFilterNodeWebControlResultLvl3 input, 
+table.vpScheduleResultFilterNodeWebControlResultLvl4 input
 {
 	cursor: pointer;
 }
 
-.vpScheduleResultFilterNodeWebControlResultLvl1 label, .vpScheduleResultFilterNodeWebControlResultLvl2 label, .vpScheduleResultFilterNodeWebControlResultLvl3 label, .vpScheduleResultFilterNodeWebControlResultLvl4 label
+table.vpScheduleResultFilterNodeWebControlResultLvl1 label, 
+table.vpScheduleResultFilterNodeWebControlResultLvl2 label, 
+table.vpScheduleResultFilterNodeWebControlResultLvl3 label, 
+table.vpScheduleResultFilterNodeWebControlResultLvl4 label
 {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: black;
 }
 
-.vpScheduleResultFilterNodeWebControlResultLvl1
+table.vpScheduleResultFilterNodeWebControlResultLvl1
 {
 	padding-left: 0px;
 	background-color: #FCAF4A;
 }
 
-.vpScheduleResultFilterNodeWebControlResultLvl1 label
+table.vpScheduleResultFilterNodeWebControlResultLvl1 label
 {
 	font-weight: bold;
 }
 
-.vpScheduleResultFilterNodeWebControlResultLvl2
+table.vpScheduleResultFilterNodeWebControlResultLvl2
 {
 	padding-left: 10px;
 }
 
 
-.vpScheduleResultFilterNodeWebControlResultLvl2 label
+table.vpScheduleResultFilterNodeWebControlResultLvl2 label
 {
 	font-weight: bold;
 }
 
-.vpScheduleResultFilterNodeWebControlResultLvl3
+table.vpScheduleResultFilterNodeWebControlResultLvl3
 {
 	padding-left: 20px;
 }
 
-.vpScheduleResultFilterNodeWebControlResultLvl3 label
+table.vpScheduleResultFilterNodeWebControlResultLvl3 label
 {
 	font-weight: normal;
 }
