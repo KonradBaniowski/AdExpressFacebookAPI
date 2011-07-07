@@ -69,6 +69,34 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
         /// Get / Set CssClassLvl4
         /// </summary>
         public string CssClassLvl4 { get; set; }
+        /// <summary>
+        /// Get / Set CssClassContainerLvl1
+        /// </summary>
+        public string CssClassContainerLvl1 { get; set; }
+        /// <summary>
+        /// Get / Set CssClassContainerLvl2
+        /// </summary>
+        public string CssClassContainerLvl2 { get; set; }
+        /// <summary>
+        /// Get / Set CssClassContainerLvl3
+        /// </summary>
+        public string CssClassContainerLvl3 { get; set; }
+        /// <summary>
+        /// Get / Set CssClassContainerLvl4
+        /// </summary>
+        public string CssClassContainerLvl4 { get; set; }
+        /// <summary>
+        /// Get / Set CssClassDisplay
+        /// </summary>
+        public string CssClassDisplay { get; set; }
+        /// <summary>
+        /// Get / Set PathPictureDisplay
+        /// </summary>
+        public string PathPictureDisplay { get; set; }
+        /// <summary>
+        /// Get / Set PathPictureDisplayOver
+        /// </summary>
+        public string PathPictureDisplayOver { get; set; }
         #endregion
 
         #region AjaxEventScript
@@ -92,6 +120,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             js.Append("\r\n\t\t\t}");
             js.Append("\r\n\t\t}");
             js.Append("\r\n\t}");
+            js.Append("\r\n\treturn false;");
             js.Append("\r\n}\r\n");
 
             js.Append("\r\nfunction checkChild_" + this.ID + "(checkBoxElem){");
@@ -101,6 +130,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             js.Append("\r\n\telems[i].checked = checkBoxElem.checked;");
             js.Append("\r\n\t}");
             js.Append("\r\n\t}");
+            js.Append("\r\n\treturn false;");
             js.Append("\r\n}\r\n");
 
             js.Append("\r\nfunction getAllChild_" + this.ID + "(){");
@@ -167,7 +197,13 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             js.Append("\r\n\t obj.CssClassLvl2 = '" + CssClassLvl2 + "';");
             js.Append("\r\n\t obj.CssClassLvl3 = '" + CssClassLvl3 + "';");
             js.Append("\r\n\t obj.CssClassLvl4 = '" + CssClassLvl4 + "';");
-
+            js.Append("\r\n\t obj.CssClassContainerLvl1 = '" + CssClassContainerLvl1 + "';");
+            js.Append("\r\n\t obj.CssClassContainerLvl2 = '" + CssClassContainerLvl2 + "';");
+            js.Append("\r\n\t obj.CssClassContainerLvl3 = '" + CssClassContainerLvl3 + "';");
+            js.Append("\r\n\t obj.CssClassContainerLvl4 = '" + CssClassContainerLvl4 + "';");
+            js.Append("\r\n\t obj.CssClassDisplay = '" + CssClassDisplay + "';");
+            js.Append("\r\n\t obj.PathPictureDisplay = '" + PathPictureDisplay + "';");
+            js.Append("\r\n\t obj.PathPictureDisplayOver = '" + PathPictureDisplayOver + "';");
             return (base.SetCurrentStyleParametersScript() + js.ToString());
         }
 
@@ -184,7 +220,27 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             if (o.Contains("CssClassLvl4")) {
                 CssClassLvl4 = o["CssClassLvl4"].Value.Replace("\"", "");
             }
-
+            if (o.Contains("CssClassContainerLvl1")) {
+                CssClassContainerLvl1 = o["CssClassContainerLvl1"].Value.Replace("\"", "");
+            }
+            if (o.Contains("CssClassContainerLvl2")) {
+                CssClassContainerLvl2 = o["CssClassContainerLvl2"].Value.Replace("\"", "");
+            }
+            if (o.Contains("CssClassContainerLvl3")) {
+                CssClassContainerLvl3 = o["CssClassContainerLvl3"].Value.Replace("\"", "");
+            }
+            if (o.Contains("CssClassContainerLvl4")) {
+                CssClassContainerLvl4 = o["CssClassContainerLvl4"].Value.Replace("\"", "");
+            }
+            if (o.Contains("CssClassDisplay")) {
+                CssClassDisplay = o["CssClassDisplay"].Value.Replace("\"", "");
+            }
+            if (o.Contains("PathPictureDisplay")) {
+                PathPictureDisplay = o["PathPictureDisplay"].Value.Replace("\"", "");
+            }
+            if (o.Contains("PathPictureDisplayOver")) {
+                PathPictureDisplayOver = o["PathPictureDisplayOver"].Value.Replace("\"", "");
+            }
         }
         #endregion
 
@@ -201,6 +257,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             string selection = string.Empty;
             DataSet ds = GetData(genericDetailLevel);
             int i = 0;
+            int previousLvl = 0;
             if (ds != null && ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows != null && ds.Tables[0].Rows.Count > 0) {
                 List<Int64> levelList = new List<Int64>();
                 Int64 cValue;
@@ -214,15 +271,13 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
                         levelList.Add(cValue);
 
                         if (levelOldList == null || levelOldList.Count <= 0 || levelOldList[i] != levelList[i]) {
-
-
-
                             string cClass = string.Empty;
+                            string cClassContainer = string.Empty;
                             switch (i) {
-                                case 0: cClass = CssClassLvl1; break;
-                                case 1: cClass = CssClassLvl2; break;
-                                case 2: cClass = CssClassLvl3; break;
-                                case 3: cClass = CssClassLvl4; break;
+                                case 0: cClass = CssClassLvl1; cClassContainer = CssClassContainerLvl1; break;
+                                case 1: cClass = CssClassLvl2; cClassContainer = CssClassContainerLvl2; break;
+                                case 2: cClass = CssClassLvl3; cClassContainer = CssClassContainerLvl3; break;
+                                case 3: cClass = CssClassLvl4; cClassContainer = CssClassContainerLvl4; break;
                             }
                             if (_genericDetailLevelComponentProfile == TNS.AdExpress.Constantes.Web.GenericDetailLevel.ComponentProfile.media)
                                 selection = _webSession.GetSelection(_webSession.SelectionUniversMedia, GetAccessType(i + 1, genericDetailLevel));
@@ -238,9 +293,18 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
                                 checkboxChecked = string.Empty;
                             string cId = string.Format("{0}", string.Join("_", levelList.ConvertAll<string>(p => p.ToString()).ToArray()));
 
+                            if (previousLvl >= 0 && previousLvl >= i)
+                                for(int j=i; j<previousLvl; j++)
+                                    html.Append("</td></tr></table></div></div>");
+
+                            if (previousLvl >= 0 && i != genericDetailLevel.Levels.Count - 1)
+                                html.AppendFormat("<div id=\"div_{1}_{0}\" width=\"100%\" class=\"{2}\">", cId, this.ID, cClass);
+
+                            
+                            html.AppendFormat("<div id=\"div_header_{1}_{0}\" width=\"100%\" >", cId, this.ID);
                             html.AppendFormat("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" height=\"100%\" class=\"{0}\">", cClass);
                             html.Append("<tr><td>");
-                            html.AppendFormat("<input type=\"checkbox\" value=\"{1}_{0}\" id=\"{1}_{0}\" onclick=\"javascript:{2} onCheck_" + this.ID + "(this, '{3}');\" " + checkboxChecked + "/>"
+                            html.AppendFormat("<input type=\"checkbox\" value=\"{1}_{0}\" id=\"{1}_{0}\" onclick=\"javascript:{2} onCheck_" + this.ID + "(this, '{3}'); \" " + checkboxChecked + "/>"
                                 , cId
                                 , this.ID
                                 , ((i < genericDetailLevel.Levels.Count - 1) ? "checkChild_" + this.ID + "(this);" : string.Empty)
@@ -248,14 +312,32 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
                             html.AppendFormat("<label for=\"{2}_{1}\">{0}</label>"
                                 , cRow[genericDetailLevel[i + 1].DataBaseField].ToString()
                                 , cId
-                                , this.ID);
+                                , this.ID
+                                );
+                            if (previousLvl >= 0 && i != genericDetailLevel.Levels.Count - 1) {
+                                string onclickFunction = string.Empty;
+                                onclickFunction = string.Format("displayContainer_{1}_{0}(); function displayContainer_{1}_{0}() {2}if(document.getElementById('div_container_{1}_{0}').style.display=='none'){2}document.getElementById('div_container_{1}_{0}').style.display='';{3} else {2}document.getElementById('div_container_{1}_{0}').style.display='none';{3}{3}"
+                                    , cId, this.ID, "{", "}");
+
+                                html.Append("&nbsp;<img src=\"" + PathPictureDisplay + "\" class=\"" + CssClassDisplay + "\" onmouseout=\"this.src='" + PathPictureDisplay + "'\" onmouseover=\"this.src='" + PathPictureDisplayOver + "'\" onclick=\"javascript:return " + onclickFunction + "\"/>");
+                            }
                             html.Append("</td></tr>");
                             html.Append("</table>");
+                            html.Append("</div>");
+                            if (previousLvl >= 0 && i != genericDetailLevel.Levels.Count - 1) {
+                                html.AppendFormat("<div id=\"div_container_{1}_{0}\" width=\"100%\">", cId, this.ID);
+                                html.AppendFormat("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" class=\"{0}\"><tr><td>", cClassContainer);
+                            }
+
+                            previousLvl = i;
                         }
                         levelParentList.Add(cValue);
                     }
                     levelOldList = levelList;
                 }
+                if (previousLvl >= 0 && previousLvl >= i)
+                    for (int j = i; j < previousLvl; j++)
+                        html.Append("</td></tr></table></div></div>");
             }
 
             return (html.ToString());

@@ -1702,15 +1702,24 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                             CssClassLvl1="vpScheduleResultFilterNodeWebControlResultLvl1"
                             CssClassLvl2="vpScheduleResultFilterNodeWebControlResultLvl2"
                             CssClassLvl3="vpScheduleResultFilterNodeWebControlResultLvl3"
+                            CssClassDisplay="vpScheduleResultFilterNodeWebControlResultDisplay"
+                            PathPictureDisplayOver="/App_Themes/KMAE-Fr/Images/Common/fl_tri_decroi3.gif"
+                            PathPictureDisplay="/App_Themes/KMAE-Fr/Images/Common/fl_tri_decroi3_in.gif"
 />
 
 <ctrVpSelectionFilter:VpScheduleSelectionNodeWebControl   
                             runat="server" 
                             SkinID="VpScheduleSelectionNodeProductWebControlSkinId" 
                             CssClass="vpScheduleResultFilterNodeWebControlResult"
-                            CssClassLvl1="vpScheduleResultFilterNodeWebControlResultLvl1"
-                            CssClassLvl2="vpScheduleResultFilterNodeWebControlResultLvl2"
-                            CssClassLvl3="vpScheduleResultFilterNodeWebControlResultLvl3"
+                            CssClassLvl1="vpScheduleResultFilterNodeProductWebControlResultLvl1"
+                            CssClassLvl2="vpScheduleResultFilterNodeProductWebControlResultLvl2"
+                            CssClassLvl3="vpScheduleResultFilterNodeProductWebControlResultLvl3"
+                            CssClassContainerLvl1="vpScheduleResultFilterNodeProductContainerWebControlResultLvl1"
+                            CssClassContainerLvl2="vpScheduleResultFilterNodeProductContainerWebControlResultLvl2"
+                            CssClassContainerLvl3="vpScheduleResultFilterNodeProductContainerWebControlResultLvl3"
+                            CssClassDisplay="vpScheduleResultFilterNodeWebControlResultDisplay"
+                            PathPictureDisplayOver="/App_Themes/KMAE-Fr/Images/Common/fl_tri_decroi3.gif"
+                            PathPictureDisplay="/App_Themes/KMAE-Fr/Images/Common/fl_tri_decroi3_in.gif"
 />
 
 

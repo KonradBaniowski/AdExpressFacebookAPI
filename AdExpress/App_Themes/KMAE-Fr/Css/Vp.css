@@ -140,11 +140,16 @@ table.vpScheduleResultFilterNodeWebControlResultLvl4
 	color: black;
 }
 
-
+table.vpScheduleResultFilterNodeProductWebControlResultLvl1 label,
+table.vpScheduleResultFilterNodeProductWebControlResultLvl2 label,
+table.vpScheduleResultFilterNodeProductWebControlResultLvl3 label,
 table.vpScheduleResultFilterNodeWebControlResultLvl1 label, 
 table.vpScheduleResultFilterNodeWebControlResultLvl2 label, 
 table.vpScheduleResultFilterNodeWebControlResultLvl3 label, 
 table.vpScheduleResultFilterNodeWebControlResultLvl4 label, 
+table.vpScheduleResultFilterNodeProductWebControlResultLvl1 input,
+table.vpScheduleResultFilterNodeProductWebControlResultLvl2 input,
+table.vpScheduleResultFilterNodeProductWebControlResultLvl3 input,
 table.vpScheduleResultFilterNodeWebControlResultLvl1 input, 
 table.vpScheduleResultFilterNodeWebControlResultLvl2 input, 
 table.vpScheduleResultFilterNodeWebControlResultLvl3 input, 
@@ -152,7 +157,9 @@ table.vpScheduleResultFilterNodeWebControlResultLvl4 input
 {
 	cursor: pointer;
 }
-
+table.vpScheduleResultFilterNodeProductWebControlResultLvl1 label,
+table.vpScheduleResultFilterNodeProductWebControlResultLvl2 label,
+table.vpScheduleResultFilterNodeProductWebControlResultLvl3 label,
 table.vpScheduleResultFilterNodeWebControlResultLvl1 label, 
 table.vpScheduleResultFilterNodeWebControlResultLvl2 label, 
 table.vpScheduleResultFilterNodeWebControlResultLvl3 label, 
@@ -162,27 +169,41 @@ table.vpScheduleResultFilterNodeWebControlResultLvl4 label
 	font-size: 11px;
 	color: black;
 }
-
+table.vpScheduleResultFilterNodeProductWebControlResultLvl1,
 table.vpScheduleResultFilterNodeWebControlResultLvl1
 {
 	padding-left: 0px;
 	background-color: #FCAF4A;
 }
-
+table.vpScheduleResultFilterNodeProductWebControlResultLvl1 label,
 table.vpScheduleResultFilterNodeWebControlResultLvl1 label
 {
 	font-weight: bold;
 }
+
 
 table.vpScheduleResultFilterNodeWebControlResultLvl2
 {
 	padding-left: 10px;
 }
 
-
-table.vpScheduleResultFilterNodeWebControlResultLvl2 label
+table.vpScheduleResultFilterNodeProductWebControlResultLvl2
+, table.vpScheduleResultFilterNodeWebControlResultLvl2 label
 {
 	font-weight: bold;
+}
+
+table.vpScheduleResultFilterNodeProductContainerWebControlResultLvl1
+{
+	width:100%;
+	padding:10px 20px;
+}
+
+div.vpScheduleResultFilterNodeProductWebControlResultLvl2
+{
+	border:solid 1px #DBDBDB;
+	margin:0px 0px 10px 0px;
+	padding:0px 5px;
 }
 
 table.vpScheduleResultFilterNodeWebControlResultLvl3
@@ -190,9 +211,25 @@ table.vpScheduleResultFilterNodeWebControlResultLvl3
 	padding-left: 20px;
 }
 
+table.vpScheduleResultFilterNodeProductContainerWebControlResultLvl3
+{
+	padding: 5px 0px;
+}
+
+table.vpScheduleResultFilterNodeProductWebControlResultLvl3
+{
+	padding-left: 30px;
+}
+
+table.vpScheduleResultFilterNodeProductWebControlResultLvl3 label,
 table.vpScheduleResultFilterNodeWebControlResultLvl3 label
 {
 	font-weight: normal;
+}
+
+.vpScheduleResultFilterNodeWebControlResultDisplay
+{
+	cursor:pointer;
 }
 
 /* Result table css class */
