@@ -83,8 +83,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             js.Append("\r\n\tvar tab = parentList.split('_');");
             js.Append("\r\n\tvar parentId = ''");
             js.Append("\r\n\tif(parentList && parentList.length > 0){");
-            js.Append("\r\n\tif(parentList.length == " + _levelIds.Count + "){");
-            js.Append("\r\n\t} else {");
+
             js.Append("\r\n\t\tif(!checkBoxElem.checked){");
             js.Append("\r\n\t\t\tfor(var i=0; i<tab.length; i++){ ");
             js.Append("\r\n\t\t\t\tif(i>0) parentId += '_';");
@@ -92,7 +91,6 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             js.Append("\r\n\t\t\t\tdocument.getElementById('" + this.ID + "_' + parentId).checked = false;");
             js.Append("\r\n\t\t\t}");
             js.Append("\r\n\t\t}");
-            js.Append("\r\n\t}");
             js.Append("\r\n\t}");
             js.Append("\r\n}\r\n");
 

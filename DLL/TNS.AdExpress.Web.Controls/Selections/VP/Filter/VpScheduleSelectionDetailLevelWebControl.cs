@@ -52,7 +52,26 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
         protected override string GetAjaxEventScript() {
             StringBuilder js = new StringBuilder(1000);
 
-            
+            js.Append("\r\nfunction onClickDetailTab_"+this.ID+"(lvl){");
+            js.Append("\r\n\tif(lvl==0 && document.getElementById('lvl0_" + this.ID + "').options[document.getElementById('lvl0_" + this.ID + "').selectedIndex].value!='none'){");
+            js.Append("\r\n\t\tif(document.getElementById('lvl1_" + this.ID + "').options[document.getElementById('lvl1_" + this.ID + "').selectedIndex].value == document.getElementById('lvl0_" + this.ID + "').options[document.getElementById('lvl0_" + this.ID + "').selectedIndex].value)");
+            js.Append("\r\n\t\t\tdocument.getElementById('lvl1_" + this.ID + "').selectedIndex = 0;");
+            js.Append("\r\n\t\tif(document.getElementById('lvl2_" + this.ID + "').options[document.getElementById('lvl2_" + this.ID + "').selectedIndex].value == document.getElementById('lvl0_" + this.ID + "').options[document.getElementById('lvl0_" + this.ID + "').selectedIndex].value)");
+            js.Append("\r\n\t\t\tdocument.getElementById('lvl2_" + this.ID + "').selectedIndex = 0;");
+            js.Append("\r\n\t}");
+            js.Append("\r\n\telse if(lvl==1 && document.getElementById('lvl1_" + this.ID + "').options[document.getElementById('lvl1_" + this.ID + "').selectedIndex].value!='none'){");
+            js.Append("\r\n\t\tif(document.getElementById('lvl0_" + this.ID + "').options[document.getElementById('lvl0_" + this.ID + "').selectedIndex].value == document.getElementById('lvl1_" + this.ID + "').options[document.getElementById('lvl1_" + this.ID + "').selectedIndex].value)");
+            js.Append("\r\n\t\t\tdocument.getElementById('lvl0_" + this.ID + "').selectedIndex = 0;");
+            js.Append("\r\n\t\tif(document.getElementById('lvl2_" + this.ID + "').options[document.getElementById('lvl2_" + this.ID + "').selectedIndex].value == document.getElementById('lvl1_" + this.ID + "').options[document.getElementById('lvl1_" + this.ID + "').selectedIndex].value)");
+            js.Append("\r\n\t\t\tdocument.getElementById('lvl2_" + this.ID + "').selectedIndex = 0;");
+            js.Append("\r\n\t}");
+            js.Append("\r\n\telse if(lvl==2 && document.getElementById('lvl2_" + this.ID + "').options[document.getElementById('lvl2_" + this.ID + "').selectedIndex].value!='none'){");
+            js.Append("\r\n\t\tif(document.getElementById('lvl1_" + this.ID + "').options[document.getElementById('lvl1_" + this.ID + "').selectedIndex].value == document.getElementById('lvl2_" + this.ID + "').options[document.getElementById('lvl2_" + this.ID + "').selectedIndex].value)");
+            js.Append("\r\n\t\t\tdocument.getElementById('lvl1_" + this.ID + "').selectedIndex = 0;");
+            js.Append("\r\n\t\tif(document.getElementById('lvl0_" + this.ID + "').options[document.getElementById('lvl0_" + this.ID + "').selectedIndex].value == document.getElementById('lvl2_" + this.ID + "').options[document.getElementById('lvl2_" + this.ID + "').selectedIndex].value)");
+            js.Append("\r\n\t\t\tdocument.getElementById('lvl0_" + this.ID + "').selectedIndex = 0;");
+            js.Append("\r\n\t}");
+            js.Append("\r\n}\r\n");
             return js.ToString();
         }
         #endregion   
@@ -166,7 +185,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             htmlDropDownOptionsLvL1 = new StringBuilder("<option value=\"none\">-------</option " + ((!hasSelected) ? "selected = \"selected\"" : string.Empty) + ">" + htmlDropDownOptionsLvL1.ToString());
             html.Append("<tr>");
             html.Append("<td class=\"L0\">" + space);
-            html.Append("<select id=\"lvl0_" + this.ID + "\">");
+            html.Append("<select id=\"lvl0_" + this.ID + "\" onchange=\"javascript:onClickDetailTab_" + this.ID + "(0);\">");
             html.Append(htmlDropDownOptionsLvL1.ToString());
             html.Append("</select>");
             html.Append("</td>");
@@ -191,7 +210,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
 
             html.Append("<tr>");
             html.Append("<td class=\"L1\">" + space);
-            html.Append("<select id=\"lvl1_" + this.ID + "\">");
+            html.Append("<select id=\"lvl1_" + this.ID + "\" onchange=\"javascript:onClickDetailTab_" + this.ID + "(1);\">");
             html.Append(htmlDropDownOptionsLvL2.ToString());
             html.Append("</select>");
             html.Append("</td>");
@@ -215,7 +234,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             htmlDropDownOptionsLvL3 = new StringBuilder("<option value=\"none\" "+((!hasSelected)?"selected = \"selected\"":string.Empty)+">-------</option>" + htmlDropDownOptionsLvL3.ToString());
             html.Append("<tr>");
             html.Append("<td class=\"L2\">" + space);
-            html.Append("<select id=\"lvl2_" + this.ID + "\">");
+            html.Append("<select id=\"lvl2_" + this.ID + "\" onchange=\"javascript:onClickDetailTab_" + this.ID + "(2);\">");
             html.Append(htmlDropDownOptionsLvL3.ToString());
             html.Append("</select>");
             html.Append("</td>");
