@@ -75,8 +75,14 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
         /// <returns>Evenement Ajax</returns>
         protected override string GetAjaxEventScript() {
             StringBuilder js = new StringBuilder(1000);
+            js.Append("\r\nvar isChanged_" + this.ID + " = false;");
+
+            js.Append("\r\nfunction onclickPernalize_" + this.ID + "(){");
+            js.Append("\r\n\tisChanged_" + this.ID + " = true;");
+            js.Append("\r\n}\r\n");
 
             js.Append("\r\nfunction onClickDetailTab_"+this.ID+"(lvl){");
+            js.Append("\r\n\tisChanged_" + this.ID + " = true;");
             js.Append("\r\n\tif(lvl==0 && document.getElementById('lvl0_" + this.ID + "').options[document.getElementById('lvl0_" + this.ID + "').selectedIndex].value!='none'){");
             js.Append("\r\n\t\tif(document.getElementById('lvl1_" + this.ID + "').options[document.getElementById('lvl1_" + this.ID + "').selectedIndex].value == document.getElementById('lvl0_" + this.ID + "').options[document.getElementById('lvl0_" + this.ID + "').selectedIndex].value)");
             js.Append("\r\n\t\t\tdocument.getElementById('lvl1_" + this.ID + "').selectedIndex = 0;");
@@ -107,6 +113,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
         /// <returns>Evenement Ajax</returns>
         protected override string GetValuesSelectedMethodScriptContent() {
             StringBuilder js = new StringBuilder(1000);
+            js.Append("\r\n\tif(isChanged_" + this.ID + " == false) return null;");
             js.Append("\r\n\tvar tab = new Array();");
             js.Append("\r\n\ttab.push(document.getElementById('lvl0_" + this.ID + "').options[document.getElementById('lvl0_" + this.ID + "').selectedIndex].value + ',' + document.getElementById('lvl1_" + this.ID + "').options[document.getElementById('lvl1_" + this.ID + "').selectedIndex].value + ',' + document.getElementById('lvl2_" + this.ID + "').options[document.getElementById('lvl2_" + this.ID + "').selectedIndex].value);");
 
@@ -119,6 +126,16 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
 
             js.Append("\r\n\treturn tab;");
             return js.ToString();
+        }
+        #endregion
+
+        #region GetValuesSelectedMethodScriptContent
+        /// <summary>
+        /// Get Evenement Ajax
+        /// </summary>
+        /// <returns>Evenement Ajax</returns>
+        protected override string GetInitializeResultMethodContent() {
+            return base.GetInitializeResultMethodContent() + "isChanged_" + this.ID + " = false;";
         }
         #endregion
 
@@ -336,7 +353,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
                 html.Append("<td>");
                 if (i < module.AllowedMediaDetailLevelItems.Count) {
                     DetailLevelItemInformation cDetailLevelItemInformation = ((DetailLevelItemInformation)module.AllowedMediaDetailLevelItems[i]);
-                    html.Append("<input type=\"radio\" name=\"personalize_" + this.ID + "\" value=\"" + cDetailLevelItemInformation.Id + "\" " + ((_webSession.PersonnalizedLevel == cDetailLevelItemInformation.Id) ? "checked" : string.Empty) + ">" + GestionWeb.GetWebWord(((DetailLevelItemInformation)module.AllowedMediaDetailLevelItems[i]).WebTextId, _webSession.SiteLanguage) + "</input>");
+                    html.Append("<input type=\"radio\" name=\"personalize_" + this.ID + "\" onclick=\"javascript:onclickPernalize_"+this.ID+"();\" value=\"" + cDetailLevelItemInformation.Id + "\" " + ((_webSession.PersonnalizedLevel == cDetailLevelItemInformation.Id) ? "checked" : string.Empty) + ">" + GestionWeb.GetWebWord(((DetailLevelItemInformation)module.AllowedMediaDetailLevelItems[i]).WebTextId, _webSession.SiteLanguage) + "</input>");
                 }
                 html.Append("</td>");
             }

@@ -104,50 +104,58 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             StringBuilder js = new StringBuilder();
             js.Append("\r\n<script language=\"javascript\">\r\n<!--");
 
-            js.Append("\r\n\tvar mediaParameters_"+this.ID+" = null;");
-            js.Append("\r\n\tvar productParameters_"+this.ID+" = null;");
-            js.Append("\r\n\tvar detailLevelParameters_"+this.ID+" = null;");
-            js.Append("\r\n\tvar dateParameters_"+this.ID+" = null;");
+            VpScheduleSelectionFilterBaseWebControl cVpScheduleSelectionFilterBaseWebControlDate = null;
+            int i = 0;
 
+            #region Valid Data
             js.Append("\r\nfunction validData_" + this.ID + "(){");
 
-            int i = 0;
-            VpScheduleSelectionFilterBaseWebControl cVpScheduleSelectionFilterBaseWebControlDate = null;
+            js.Append("\r\n\tvar dateParameters = null;");
+            js.Append("\r\n\tvar productParameters = null;");
+            js.Append("\r\n\tvar detailLevelParameters = null;");
+            js.Append("\r\n\tvar dateParameters = null;");
+
+            i = 0;
+            cVpScheduleSelectionFilterBaseWebControlDate = null;
             foreach (VpScheduleSelectionFilterBaseWebControl cVpScheduleSelectionFilterBaseWebControl in _filterResultWebControlList.Values) {
                 switch (i) {
                     case 0:
-                        js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true)");
-                        js.Append("\r\n\t\tmediaParameters_"+this.ID+" = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
-                        js.Append("\r\n\telse");
-                        js.Append("\r\n\t\tmediaParameters_"+this.ID+" = null;");
+                        js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true){");
+                        js.Append("\r\n\t\tmediaParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
+                        //js.Append("\r\n\t\tif(mediaParameters != null) isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " =false;");
+                        js.Append("\r\n\t} else");
+                        js.Append("\r\n\t\tmediaParameters = null;");
                         break;
                     case 1:
-                        js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true)");
-                        js.Append("\r\n\t\tproductParameters_"+this.ID+" = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
-                        js.Append("\r\n\telse");
-                        js.Append("\r\n\t\tproductParameters_"+this.ID+" = null;");
+                        js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true){");
+                        js.Append("\r\n\t\tproductParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
+                        //js.Append("\r\n\t\tif(productParameters != null) isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " =false;");
+                        js.Append("\r\n\t} else");
+                        js.Append("\r\n\t\tproductParameters = null;");
                         break;
                     case 2:
-                        js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true)");
-                        js.Append("\r\n\t\tdetailLevelParameters_"+this.ID+" = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
-                        js.Append("\r\n\telse");
-                        js.Append("\r\n\t\tdetailLevelParameters_"+this.ID+" = null;");
+                        js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true){");
+                        js.Append("\r\n\t\tdetailLevelParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
+                        //js.Append("\r\n\t\tif(detailLevelParameters != null) isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " =false;");
+                        js.Append("\r\n\t} else");
+                        js.Append("\r\n\t\tdetailLevelParameters = null;");
                         break;
                     case 3:
                         cVpScheduleSelectionFilterBaseWebControlDate = cVpScheduleSelectionFilterBaseWebControl;
-                        js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true)");
-                        js.Append("\r\n\t\tdateParameters_"+this.ID+" = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
-                        js.Append("\r\n\telse");
-                        js.Append("\r\n\t\tdateParameters_"+this.ID+" = null;");
+                        js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true){");
+                        js.Append("\r\n\t\tdateParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
+                        //js.Append("\r\n\t\tif(dateParameters != null) isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " =false;");
+                        js.Append("\r\n\t} else");
+                        js.Append("\r\n\t\tdateParameters = null;");
                         break;
                 }
                 i++;
             }
             js.Append("\r\n\t" + this.GetType().Namespace + "." + this.GetType().Name + ".ValidData('" + _webSession.IdSession + "'");
-            js.Append(", mediaParameters_"+this.ID+"");
-            js.Append(", productParameters_"+this.ID+"");
-            js.Append(", detailLevelParameters_"+this.ID+"");
-            js.Append(", dateParameters_"+this.ID+"");
+            js.Append(", dateParameters");
+            js.Append(", productParameters");
+            js.Append(", detailLevelParameters");
+            js.Append(", dateParameters");
             js.Append(", validData_" + this.ID + "_callback);");
             js.Append("\r\nreturn false;");
             js.Append("\r\n}");
@@ -158,9 +166,59 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n\t}");
             js.Append(DisplayMethod + "(false);");
             js.Append(ValidationMethod);
-            js.Append("\r\n\tif(dateParameters_" + this.ID + "!=null && isLoaded_" + cVpScheduleSelectionFilterBaseWebControlDate.ID + " == true) RefreshVpScheduleSelectionWebControl('DateSelection');");
+            js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControlDate.ID + ") RefreshVpScheduleSelectionWebControl('DateSelection');");
             
             js.Append("\r\n}\r\n");
+
+            #endregion
+
+            #region Cancel Data
+            js.Append("\r\nfunction cancelData_" + this.ID + "(){");
+
+            js.Append("\r\n\tvar dateParameters = null;");
+            js.Append("\r\n\tvar productParameters = null;");
+            js.Append("\r\n\tvar detailLevelParameters = null;");
+            js.Append("\r\n\tvar dateParameters = null;");
+
+            i = 0;
+            foreach (VpScheduleSelectionFilterBaseWebControl cVpScheduleSelectionFilterBaseWebControl in _filterResultWebControlList.Values) {
+                switch (i) {
+                    case 0:
+                        js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true){");
+                        js.Append("\r\n\t\tmediaParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
+                        js.Append("\r\n\t\tif(mediaParameters != null) isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " =false;");
+                        js.Append("\r\n\t} else");
+                        js.Append("\r\n\t\tmediaParameters = null;");
+                        break;
+                    case 1:
+                        js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true){");
+                        js.Append("\r\n\t\tproductParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
+                        js.Append("\r\n\t\tif(productParameters != null) isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " =false;");
+                        js.Append("\r\n\t} else");
+                        js.Append("\r\n\t\tproductParameters = null;");
+                        break;
+                    case 2:
+                        js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true){");
+                        js.Append("\r\n\t\tdetailLevelParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
+                        js.Append("\r\n\t\tif(detailLevelParameters != null) isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " =false;");
+                        js.Append("\r\n\t} else");
+                        js.Append("\r\n\t\tdetailLevelParameters = null;");
+                        break;
+                    case 3:
+                        js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true){");
+                        js.Append("\r\n\t\tdateParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
+                        js.Append("\r\n\t\tif(dateParameters != null) isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " =false;");
+                        js.Append("\r\n\t} else");
+                        js.Append("\r\n\t\tdateParameters = null;");
+                        break;
+                }
+                i++;
+            }
+            js.Append(DisplayMethod + "(false);");
+            js.Append("\r\n}\r\n");
+
+            #endregion
+
             js.Append("\r\n-->\r\n</script>");
             return js.ToString();
         }
@@ -209,21 +267,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             int i = 0;
             foreach (VpScheduleSelectionFilterBaseWebControl cVpScheduleSelectionFilterBaseWebControl in _filterResultWebControlList.Values) {
 
-                switch (i) {
-                    case 0:
-                        js.Append("\r\n\tif(mediaParameters_" + this.ID + " != null || !isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID+"){");
-                        break;
-                    case 1:
-                        js.Append("\r\n\tif(productParameters_" + this.ID + " != null || !isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + "){");
-                        break;
-                    case 2:
-                        js.Append("\r\n\tif(detailLevelParameters_" + this.ID + " != null || !isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + "){");
-                        break;
-                    case 3:
-                        js.Append("\r\n\tif(dateParameters_" + this.ID + " != null || !isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + "){;");
-                        break;
-                }
-                js.Append("\r\n\t\tisLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " = false;");
+                js.Append("\r\n\tif(!isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID+"){");
                 js.Append("\r\n\t\tif(document.getElementById('menu_" + cVpScheduleSelectionFilterBaseWebControl.ID + "').className == '" + CssClassOptionMenuSelected + "'){");
                 js.Append("\r\n\t\tvalid_menu_" + this.ID + "('" + cVpScheduleSelectionFilterBaseWebControl.ID + "');");
                 js.Append("\r\n\t\t} else {");
@@ -474,7 +518,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" class=\"" + CssClassOptionButtons + "\">");
             html.Append("<tr>");
             html.Append("<td class=\"" + CssClassOptionButtonCancel + "\">");
-            html.Append("<img src=\"" + PicturePathButtonCancel + "\" onmouseover=\"javascript:this.src='" + PicturePathButtonCancelOver + "';\" onmouseout=\"javascript:this.src='" + PicturePathButtonCancel + "';\" onclick=\"javascript:" + DisplayMethod + "(false);\"/>");
+            html.Append("<img src=\"" + PicturePathButtonCancel + "\" onmouseover=\"javascript:this.src='" + PicturePathButtonCancelOver + "';\" onmouseout=\"javascript:this.src='" + PicturePathButtonCancel + "';\" onclick=\"javascript:cancelData_" + this.ID + "();\"/>");
             html.Append("</td>");
             html.Append("<td class=\"" + CssClassOptionButtonValidation + "\">");
             html.Append("<img src=\"" + PicturePathButtonValidation + "\" onmouseover=\"javascript:this.src='" + PicturePathButtonValidationOver + "';\" onmouseout=\"javascript:this.src='" + PicturePathButtonValidation + "';\" onclick=\"javascript:validData_" + this.ID + "();\"/>");

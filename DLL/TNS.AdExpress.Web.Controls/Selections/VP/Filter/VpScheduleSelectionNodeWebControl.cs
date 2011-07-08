@@ -107,7 +107,10 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
         protected override string GetAjaxEventScript() {
             StringBuilder js = new StringBuilder(1000);
 
+            js.Append("\r\nvar isChanged_" + this.ID + " = false;");
+
             js.Append("\r\nfunction onCheck_" + this.ID + "(checkBoxElem, parentList){");
+            js.Append("\r\n\tisChanged_" + this.ID + " = true;");
             js.Append("\r\n\tvar tab = parentList.split('_');");
             js.Append("\r\n\tvar parentId = ''");
             js.Append("\r\n\tif(parentList && parentList.length > 0){");
@@ -154,6 +157,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
         /// <returns>Evenement Ajax</returns>
         protected override string GetValuesSelectedMethodScriptContent() {
             StringBuilder js = new StringBuilder(1000);
+            js.Append("\r\n\tif(isChanged_" + this.ID + " == false) return null;");
             js.Append("\r\n\tvar tab = new Array();");
             js.Append("\r\n\tvar elems = document.getElementById('" + this.ID + "').getElementsByTagName('input');");
             js.Append("\r\n\tfor(var i=0; i<elems.length; i++){ ");
@@ -163,7 +167,18 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             js.Append("\r\n\t}");
             js.Append("\r\n\t}");
             js.Append("\r\n\treturn tab;");
+ 
             return js.ToString();
+        }
+        #endregion
+
+        #region GetValuesSelectedMethodScriptContent
+        /// <summary>
+        /// Get Evenement Ajax
+        /// </summary>
+        /// <returns>Evenement Ajax</returns>
+        protected override string GetInitializeResultMethodContent() {
+            return base.GetInitializeResultMethodContent() + "isChanged_" + this.ID + " = false;";
         }
         #endregion
 
