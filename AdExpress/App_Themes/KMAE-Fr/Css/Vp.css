@@ -1,4 +1,54 @@
-﻿/* Filter Class */
+﻿.vpScheduleResults
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight:bold;
+	color: Black;
+}
+
+
+
+.vpScheduleContainerWebControl
+{
+	padding:10px 0px 10px 0px;
+	
+}
+
+
+/* Selection Class */
+div.dateSelectionWebControlSelection,
+div.filtreSelectionWebControlSelection,
+div.excelSelectionWebControlSelection,
+div.pdfSelectionWebControlSelection
+{
+	margin-right:30px;
+}
+
+
+.dateSelectionWebControlSelection,
+.filtreSelectionWebControlSelection,
+.excelSelectionWebControlSelection,
+.pdfSelectionWebControlSelection,
+.dateSelectionWebControlSelection select
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: Black;
+}
+
+.filtreSelectionWebControlSelection img,
+.excelSelectionWebControlSelection img,
+.pdfSelectionWebControlSelection img,
+.filtreSelectionWebControlSelection label,
+.excelSelectionWebControlSelection label,
+.pdfSelectionWebControlSelection label
+{
+	cursor:pointer;
+	margin-right:10px;
+}
+
+
+/* Filter Class */
 .vpScheduleResultFilterWebControlBackgroud
 {
 	filter: alpha(opacity=40);
@@ -206,6 +256,7 @@ div.vpScheduleResultFilterNodeProductWebControlResultLvl2
 	border:solid 1px #DBDBDB;
 	margin:0px 0px 10px 0px;
 	padding:0px 5px;
+	background-color:#eeeeee;
 }
 
 table.vpScheduleResultFilterNodeWebControlResultLvl3

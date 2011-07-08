@@ -37,6 +37,10 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
         /// Current control Detail
         /// </summary>
         protected ControlLayer _currentControlDetail = null;
+        /// <summary>
+        /// Text Id
+        /// </summary>
+        protected Int64 _textId = 0;
         #endregion
 
         #region Accesors
@@ -98,6 +102,17 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
         public string ValidationMethod {
             get { return (_validationMethod); }
             set { _validationMethod = value; }
+        }
+        #endregion
+
+        #region Validation Method
+        /// <summary>
+        ///// Get / Set Text Id
+        /// </summary>
+        [Bindable(false)]
+        public Int64 TextId {
+            get { return (_textId); }
+            set { _textId = value; }
         }
         #endregion
 

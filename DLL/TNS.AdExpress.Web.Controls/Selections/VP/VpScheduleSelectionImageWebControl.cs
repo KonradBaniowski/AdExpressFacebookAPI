@@ -16,13 +16,6 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
       ToolboxData("<{0}:VpScheduleResultBaseWebControl runat=server></{0}:VpScheduleResultBaseWebControl>")]
     public class VpScheduleSelectionImageWebControl : VpScheduleSelectionBaseWebControl {
 
-        #region Variables
-        /// <summary>
-        /// Image
-        /// </summary>
-        Image _image = null;
-        #endregion
-
         #region Property (Style)
         /// <summary>
         /// Picture Src Path
@@ -54,57 +47,32 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
         }
         #endregion
 
-        #region Evènements
-
-        #region Initialisation
+        #region GetHTML
         /// <summary>
-        /// Initialisation
+        /// Compute VP schedule
         /// </summary>
-        /// <param name="e">Arguments</param>
-        protected override void OnInit(EventArgs e) {
-            base.OnInit(e);
-            _image = new Image();
-            _image.ID = this.ID;
-            this.Controls.Add(_image);
-        }
-        #endregion
+        /// <param name="webSession">Client Session</param>
+        /// <returns>Code HTMl</returns>
+        protected override string GetHTML() {
+            StringBuilder html = new StringBuilder();
+            html.Append("<img ");
+            html.Append("id=\"" + this.ID + "\" ");
+            html.Append("src=\""+_pictureSrcPath+"\" ");
+            html.Append("onmouseover=\"javascript:this.src='"+ _pictureSrcPathOver+"';\" ");
+            html.Append("onmouseout=\"javascript:this.src='" + _pictureSrcPath + "';\" ");
+            html.Append("onclick=\""+_validationMethod+"\" ");
+            html.Append("class=\""+CssClass+"\" ");
+            html.Append(" />");
 
-        #region Load
-        /// <summary>
-        /// Chargement du composant
-        /// </summary>
-        /// <param name="e">Arguments</param>
-        protected override void OnLoad(EventArgs e) {
-            base.OnLoad(e);
-            _image.ImageUrl = _pictureSrcPath;
-            _image.Attributes.Add("onmouseover", "javascript:this.src='"+ _pictureSrcPathOver+"'");
-            _image.Attributes.Add("onmouseout", "javascript:this.src='" + _pictureSrcPath + "'");
-            _image.Attributes.Add("onclick", _validationMethod);
-            _image.CssClass = CssClass;
+            html.Append("<label ");
+            html.Append("onclick=\"" + _validationMethod + "\" ");
+            html.Append("onmouseover=\"javascript:document.getElementById('" + this.ID + "').src='" + _pictureSrcPathOver + "';\" ");
+            html.Append("onmouseout=\"javascript:document.getElementById('" + this.ID + "').src='" + _pictureSrcPath + "';\" ");
+            html.Append(">");
+            html.Append(GestionWeb.GetWebWord(_textId, _webSession.SiteLanguage));
+            html.Append("</label>");
+            return html.ToString();
         }
-        #endregion
-
-        #region PréRender
-        /// <summary>
-        /// Prérendu
-        /// </summary>
-        /// <param name="e">Arguments</param>
-        protected override void OnPreRender(EventArgs e) {
-            base.OnPreRender(e);
-        }
-        #endregion
-
-        #region Render
-        /// <summary> 
-        /// Génère ce contrôle dans le paramètre de sortie spécifié.
-        /// </summary>
-        /// <param name="output"> Le writer HTML vers lequel écrire </param>
-        protected override void Render(HtmlTextWriter output) {
-            base.Render(output);
-            _image.RenderControl(output);
-        }
-        #endregion
-
         #endregion
 
     }

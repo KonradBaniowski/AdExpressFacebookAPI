@@ -45,7 +45,7 @@
 				<!-- Resultat -->
 				<tr>
 					<td valign="top">
-						<table cellspacing="0" cellpadding="0" width="100%" border="0">
+						<table cellspacing="0" cellpadding="0" width="100%" border="0" class="vpScheduleResults">
 						    <tr>
                                 <!-- Title -->
                                 <td><cc3:AdExpressText language="33" id="_adExpressText1" runat="server"></cc3:AdExpressText></td>

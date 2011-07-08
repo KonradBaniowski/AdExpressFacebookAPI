@@ -1660,10 +1660,11 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 <%--Veille Promo result Coàntainer control --%>
+
 <ctrVpResult:VpScheduleContainerWebControl   
                             runat="server" 
                             SkinID="VpScheduleContainerWebControl"
-                            CssClass="" 
+                            CssClass="vpScheduleContainerWebControl" 
 />
 
 <%--Veille Promo result control --%>
@@ -1695,7 +1696,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                             PicturePathButtonValidationOver="/App_Themes/KMAE-Fr/Images/Common/Button/appliquer_down.gif"
 />
 
-<%--Veille Promo Selection control --%>
+<%--Veille Promo Selection Filter control --%>
 <ctrVpSelectionFilter:VpScheduleSelectionNodeWebControl   
                             runat="server" 
                             SkinID="VpScheduleSelectionNodeMediaWebControlSkinId" 
@@ -1738,10 +1739,11 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                             CssClassPersonnalisation="vpScheduleSelectionDetailLevelWebControlPersonnalisation"
 />
 
+<%--Veille Promo Selection control --%>
 <ctrVpSelection:VpScheduleSelectionDropDownDateListWebControl   
                             runat="server" 
                             SkinID="DateSelectionWebControl" 
-                            CssClass=""
+                            CssClass="dateSelectionWebControlSelection"
 />
 
 <ctrVpSelection:VpScheduleSelectionImageWebControl   
@@ -1749,7 +1751,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                             SkinID="FiltreSelectionWebControl" 
                             PictureSrcPath="/App_Themes/KMAE-Fr/Images/Common/options.gif"
                             PictureSrcPathOver="/App_Themes/KMAE-Fr/Images/Common/options_over.gif"
-                            CssClass=""
+                            CssClass="filtreSelectionWebControlSelection"
 />
 
 <ctrVpSelection:VpScheduleSelectionImageWebControl   
@@ -1757,7 +1759,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                             SkinID="ExcelSelectionWebControl" 
                             PictureSrcPath="/App_Themes/KMAE-Fr/Images/Common/export_excel.gif"
                             PictureSrcPathOver="/App_Themes/KMAE-Fr/Images/Common/export_excel_over.gif"
-                            CssClass=""
+                            CssClass="excelSelectionWebControlSelection"
 />
 
 <ctrVpSelection:VpScheduleSelectionImageWebControl   
@@ -1765,6 +1767,6 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                             SkinID="PdfSelectionWebControl" 
                             PictureSrcPath="/App_Themes/KMAE-Fr/Images/Common/export_pdf.gif"
                             PictureSrcPathOver="/App_Themes/KMAE-Fr/Images/Common/export_pdf_over.gif"
-                            CssClass=""
+                            CssClass="pdfSelectionWebControlSelection"
 />
 

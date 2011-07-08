@@ -165,6 +165,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                 _vpScheduleSelectionBaseWebControlList.Add((VpScheduleSelectionBaseWebControl)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cControlLayer.AssemblyName, cControlLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null));
                 _vpScheduleSelectionBaseWebControlList[_vpScheduleSelectionBaseWebControlList.Count - 1].SkinID = cControlLayer.SkinId;
                 _vpScheduleSelectionBaseWebControlList[_vpScheduleSelectionBaseWebControlList.Count - 1].ID = this.ID + cControlLayer.ControlId;
+                _vpScheduleSelectionBaseWebControlList[_vpScheduleSelectionBaseWebControlList.Count - 1].TextId = cControlLayer.TextId;
                 _vpScheduleSelectionBaseWebControlList[_vpScheduleSelectionBaseWebControlList.Count - 1].CurrentControlDetail = cControlLayer;
                 _vpScheduleSelectionBaseWebControlList[_vpScheduleSelectionBaseWebControlList.Count - 1].ValidationMethod = cControlLayer.ValidationMethod;
                 this.Controls.Add(_vpScheduleSelectionBaseWebControlList[_vpScheduleSelectionBaseWebControlList.Count - 1]);

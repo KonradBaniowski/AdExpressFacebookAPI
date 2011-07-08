@@ -31,6 +31,10 @@ namespace TNS.AdExpress.Domain.Layers {
         /// Validation Method
         /// </summary>
         protected string _validationMethod = string.Empty;
+        /// <summary>
+        /// Text Id
+        /// </summary>
+        protected Int64 _textId = 0;
         #endregion
 
         #region Constructor
@@ -44,40 +48,48 @@ namespace TNS.AdExpress.Domain.Layers {
         /// <param param name="controlId">Control Id</param>
         /// <param name="validationMethod">Validation Methods</param>
         /// <param name="display">Display</param>
-        public ControlLayer(string name, string controlId, string assemblyName, string className, string skinId, string validationMethod, bool display)
+        /// <param name="textId">Text Id</param>
+        public ControlLayer(string name, string controlId, string assemblyName, string className, string skinId, string validationMethod, bool display, Int64 textId)
             : base(name, assemblyName, className) {
             _skinId = skinId;
             _validationMethod = validationMethod;
             _controlId = controlId;
             _display = display;
+            _textId = textId;
         }
         #endregion
 
         #region Assessor
         /// <summary>
-        /// Display
+        /// Get Display
         /// </summary>
         public bool Display {
             get { return _display; }
         }
 
         /// <summary>
-        /// Control ID
+        /// Get Control ID
         /// </summary>
         public string ControlId {
             get { return _controlId; }
         }
         /// <summary>
-        /// Skin ID
+        /// Get Skin ID
         /// </summary>
         public string SkinId {
             get { return _skinId; }
         }
         /// <summary>
-        /// Validation Method
+        /// Get Validation Method
         /// </summary>
         public string ValidationMethod {
             get { return _validationMethod; }
+        }
+        /// <summary>
+        /// Get Text Id
+        /// </summary>
+        public Int64 TextId {
+            get { return _textId; }
         }
         #endregion
     }
