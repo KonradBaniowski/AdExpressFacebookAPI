@@ -24,27 +24,22 @@
 					<td height="3" class="gradientBar"></td>
 				</tr>
 				<!-- Header -->
-				<tr>
-				    <td valign="top" height="3">
-				        <table cellspacing="0" cellpadding="0" width="100%" border="0">
-				            <tr>
-					            <!-- marge de gauche-->
-					            <td valign="top">
-						            <asp:Image ID="Image1" runat="server" border="0" SkinID="logo_cote_gauche_bis" />
-					            </td>
-					            <td valign="top">
-					                <asp:Image ID="Image2" runat="server" border="0" SkinID="LogoAdexpress" />
-					            </td>
+				<tr height="3">
 
-					            <!-- Right column -->
-					            <td valign="top"><cc2:headerwebcontrol language="33" id="HeaderWebControl1" runat="server" Type_de_page="generic"></cc2:headerwebcontrol></td>
-					        </tr>
-					    </table>
-					</td>
+		            <!-- marge de gauche-->
+		            <td valign="top">
+			            <asp:Image ID="Image1" runat="server" border="0" SkinID="logo_cote_gauche_bis" />
+		            </td>
+		            <td valign="top">
+		                <asp:Image ID="Image2" runat="server" border="0" SkinID="LogoAdexpress" />
+		            </td>
+
+		            <!-- Right column -->
+		            <td valign="top"><cc2:headerwebcontrol language="33" id="HeaderWebControl1" runat="server" Type_de_page="generic"></cc2:headerwebcontrol></td>
 				</tr>
 				<!-- Resultat -->
 				<tr>
-					<td valign="top">
+					<td valign="top" colspan="3">
 						<table cellspacing="0" cellpadding="0" width="100%" border="0" class="vpScheduleResults">
 						    <tr>
                                 <!-- Title -->
