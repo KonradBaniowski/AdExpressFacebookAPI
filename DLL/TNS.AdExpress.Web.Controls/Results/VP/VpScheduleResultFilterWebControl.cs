@@ -103,12 +103,13 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         protected string GetJavascriptValidData() {
             StringBuilder js = new StringBuilder();
             js.Append("\r\n<script language=\"javascript\">\r\n<!--");
-            js.Append("\r\nfunction validData_" + this.ID + "(){");
 
-            js.Append("\r\n\tvar mediaParameters = null;");
-            js.Append("\r\n\tvar productParameters = null;");
-            js.Append("\r\n\tvar detailLevelParameters = null;");
-            js.Append("\r\n\tvar dateParameters = null;");
+            js.Append("\r\n\tvar mediaParameters_"+this.ID+" = null;");
+            js.Append("\r\n\tvar productParameters_"+this.ID+" = null;");
+            js.Append("\r\n\tvar detailLevelParameters_"+this.ID+" = null;");
+            js.Append("\r\n\tvar dateParameters_"+this.ID+" = null;");
+
+            js.Append("\r\nfunction validData_" + this.ID + "(){");
 
             int i = 0;
             VpScheduleSelectionFilterBaseWebControl cVpScheduleSelectionFilterBaseWebControlDate = null;
@@ -116,37 +117,37 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                 switch (i) {
                     case 0:
                         js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true)");
-                        js.Append("\r\n\t\tmediaParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
+                        js.Append("\r\n\t\tmediaParameters_"+this.ID+" = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
                         js.Append("\r\n\telse");
-                        js.Append("\r\n\t\tmediaParameters = null;");
+                        js.Append("\r\n\t\tmediaParameters_"+this.ID+" = null;");
                         break;
                     case 1:
                         js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true)");
-                        js.Append("\r\n\t\tproductParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
+                        js.Append("\r\n\t\tproductParameters_"+this.ID+" = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
                         js.Append("\r\n\telse");
-                        js.Append("\r\n\t\tproductParameters = null;");
+                        js.Append("\r\n\t\tproductParameters_"+this.ID+" = null;");
                         break;
                     case 2:
                         js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true)");
-                        js.Append("\r\n\t\tdetailLevelParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
+                        js.Append("\r\n\t\tdetailLevelParameters_"+this.ID+" = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
                         js.Append("\r\n\telse");
-                        js.Append("\r\n\t\tdetailLevelParameters = null;");
+                        js.Append("\r\n\t\tdetailLevelParameters_"+this.ID+" = null;");
                         break;
                     case 3:
                         cVpScheduleSelectionFilterBaseWebControlDate = cVpScheduleSelectionFilterBaseWebControl;
                         js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true)");
-                        js.Append("\r\n\t\tdateParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
+                        js.Append("\r\n\t\tdateParameters_"+this.ID+" = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
                         js.Append("\r\n\telse");
-                        js.Append("\r\n\t\tdateParameters = null;");
+                        js.Append("\r\n\t\tdateParameters_"+this.ID+" = null;");
                         break;
                 }
                 i++;
             }
             js.Append("\r\n\t" + this.GetType().Namespace + "." + this.GetType().Name + ".ValidData('" + _webSession.IdSession + "'");
-            js.Append(", mediaParameters");
-            js.Append(", productParameters");
-            js.Append(", detailLevelParameters");
-            js.Append(", dateParameters");
+            js.Append(", mediaParameters_"+this.ID+"");
+            js.Append(", productParameters_"+this.ID+"");
+            js.Append(", detailLevelParameters_"+this.ID+"");
+            js.Append(", dateParameters_"+this.ID+"");
             js.Append(", validData_" + this.ID + "_callback);");
             js.Append("\r\nreturn false;");
             js.Append("\r\n}");
@@ -157,7 +158,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n\t}");
             js.Append(DisplayMethod + "(false);");
             js.Append(ValidationMethod);
-            js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControlDate.ID + " == true) RefreshVpScheduleSelectionWebControl('DateSelection');");
+            js.Append("\r\n\tif(dateParameters_" + this.ID + "!=null && isLoaded_" + cVpScheduleSelectionFilterBaseWebControlDate.ID + " == true) RefreshVpScheduleSelectionWebControl('DateSelection');");
             
             js.Append("\r\n}\r\n");
             js.Append("\r\n-->\r\n</script>");
@@ -205,14 +206,32 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n\tdocument.getElementById('" + this.ID + "').style.top = (document.documentElement.scrollTop + ((myHeight - 550) / 2)) + \"px\";");
             js.Append("\r\n\tdocument.getElementById('" + this.ID + "').style.left = (document.documentElement.scrollLeft + ((myWidth - 750) / 2)) + \"px\";");
 
-
+            int i = 0;
             foreach (VpScheduleSelectionFilterBaseWebControl cVpScheduleSelectionFilterBaseWebControl in _filterResultWebControlList.Values) {
-                js.Append("\r\n\tisLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " = false;");
-                js.Append("\r\n\tif(document.getElementById('menu_" + cVpScheduleSelectionFilterBaseWebControl.ID + "').className == '" + CssClassOptionMenuSelected + "'){");
-                js.Append("\r\n\tvalid_menu_" + this.ID + "('" + cVpScheduleSelectionFilterBaseWebControl.ID + "');");
-                js.Append("\r\n\t} else {");
-                js.Append("\r\n\t\t" + cVpScheduleSelectionFilterBaseWebControl.InitializeResultMethod+";");
+
+                switch (i) {
+                    case 0:
+                        js.Append("\r\n\tif(mediaParameters_" + this.ID + " != null || !isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID+"){");
+                        break;
+                    case 1:
+                        js.Append("\r\n\tif(productParameters_" + this.ID + " != null || !isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + "){");
+                        break;
+                    case 2:
+                        js.Append("\r\n\tif(detailLevelParameters_" + this.ID + " != null || !isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + "){");
+                        break;
+                    case 3:
+                        js.Append("\r\n\tif(dateParameters_" + this.ID + " != null || !isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + "){;");
+                        break;
+                }
+                js.Append("\r\n\t\tisLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " = false;");
+                js.Append("\r\n\t\tif(document.getElementById('menu_" + cVpScheduleSelectionFilterBaseWebControl.ID + "').className == '" + CssClassOptionMenuSelected + "'){");
+                js.Append("\r\n\t\tvalid_menu_" + this.ID + "('" + cVpScheduleSelectionFilterBaseWebControl.ID + "');");
+                js.Append("\r\n\t\t} else {");
+                js.Append("\r\n\t\t\t" + cVpScheduleSelectionFilterBaseWebControl.InitializeResultMethod+";");
+                js.Append("\r\n\t\t}");
                 js.Append("\r\n\t}");
+
+                i++;
             }
 
             js.Append("\r\n\t} else {");
