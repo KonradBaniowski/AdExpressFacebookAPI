@@ -244,6 +244,10 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// </summary>
         public string VpScheduleSelectionNodeProductWebControlSkinId { get; set; }
         /// <summary>
+        /// Get / Set VpScheduleSelectionDetailLevelWebControlSkinId
+        /// </summary>
+        public string VpScheduleSelectionDetailLevelWebControlSkinId { get; set; }
+        /// <summary>
         /// Get / Set CssClassOption
         /// </summary>
         public string CssClassOption { get; set; }
@@ -344,7 +348,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                 vpScheduleSelectionDetailLevelWebControl.ID = this.ID + "_DetailLevel";
                 vpScheduleSelectionDetailLevelWebControl.WebSession = _webSession;
                 vpScheduleSelectionDetailLevelWebControl.Display = false;
-                //vpScheduleSelectionDetailLevelWebControl.SkinID = VpScheduleSelectionNodeProductWebControlSkinId;
+                vpScheduleSelectionDetailLevelWebControl.SkinID = VpScheduleSelectionDetailLevelWebControlSkinId;
                 _filterResultWebControlList.Add(2871, vpScheduleSelectionDetailLevelWebControl);
                 Controls.Add(vpScheduleSelectionDetailLevelWebControl);
 

@@ -42,6 +42,30 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
         /// Get / Set CssClassLvl4
         /// </summary>
         public string CssClassLvl4 { get; set; }
+        /// <summary>
+        /// Get / Set CssClassDetailTab
+        /// </summary>
+        public string CssClassDetailTab { get; set; }
+        /// <summary>
+        /// Get / Set CssClassDetailTabHeader
+        /// </summary>
+        public string CssClassDetailTabHeader { get; set; }
+        /// <summary>
+        /// Get / Set CssClassSeparator
+        /// </summary>
+        public string CssClassSeparator { get; set; }
+        /// <summary>
+        /// Get / Set CssClassPersonnalisationHeader
+        /// </summary>
+        public string CssClassPersonnalisationHeader { get; set; }
+        /// <summary>
+        /// Get / Set CssClassPersonnalisationHeaderBis
+        /// </summary>
+        public string CssClassPersonnalisationHeaderBis { get; set; }
+        /// <summary>
+        /// Get / Set CssClassPersonnalisation
+        /// </summary>
+        public string CssClassPersonnalisation { get; set; }
         #endregion
 
         #region AjaxEventScript
@@ -116,12 +140,51 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             js.Append("\r\n\t obj.CssClassLvl2 = '" + CssClassLvl2 + "';");
             js.Append("\r\n\t obj.CssClassLvl3 = '" + CssClassLvl3 + "';");
             js.Append("\r\n\t obj.CssClassLvl4 = '" + CssClassLvl4 + "';");
+            js.Append("\r\n\t obj.CssClassDetailTab = '" + CssClassDetailTab + "';");
+            js.Append("\r\n\t obj.CssClassDetailTabHeader = '" + CssClassDetailTabHeader + "';");
+            js.Append("\r\n\t obj.CssClassSeparator = '" + CssClassSeparator + "';");
+            js.Append("\r\n\t obj.CssClassPersonnalisationHeader = '" + CssClassPersonnalisationHeader + "';");
+            js.Append("\r\n\t obj.CssClassPersonnalisationHeaderBis = '" + CssClassPersonnalisationHeaderBis + "';");
+            js.Append("\r\n\t obj.CssClassPersonnalisation = '" + CssClassPersonnalisation + "';");
 
             return (base.SetCurrentStyleParametersScript() + js.ToString());
         }
 
         protected override void LoadCurrentStyleParameters(AjaxPro.JavaScriptObject o) {
             base.LoadCurrentStyleParameters(o);
+
+            if (o.Contains("CssClassLvl1")) {
+                CssClassLvl1 = o["CssClassLvl1"].Value.Replace("\"", "");
+            }
+            if (o.Contains("CssClassLvl2")) {
+                CssClassLvl2 = o["CssClassLvl2"].Value.Replace("\"", "");
+            }
+            if (o.Contains("CssClassLvl3")) {
+                CssClassLvl3 = o["CssClassLvl3"].Value.Replace("\"", "");
+            }
+            if (o.Contains("CssClassLvl4")) {
+                CssClassLvl4 = o["CssClassLvl4"].Value.Replace("\"", "");
+            }
+
+
+            if (o.Contains("CssClassDetailTab")) {
+                CssClassDetailTab = o["CssClassDetailTab"].Value.Replace("\"", "");
+            }
+            if (o.Contains("CssClassDetailTabHeader")) {
+                CssClassDetailTabHeader = o["CssClassDetailTabHeader"].Value.Replace("\"", "");
+            }
+            if (o.Contains("CssClassPersonnalisationHeader")) {
+                CssClassPersonnalisationHeader = o["CssClassPersonnalisationHeader"].Value.Replace("\"", "");
+            }
+            if (o.Contains("CssClassPersonnalisationHeaderBis")) {
+                CssClassPersonnalisationHeaderBis = o["CssClassPersonnalisationHeaderBis"].Value.Replace("\"", "");
+            }
+            if (o.Contains("CssClassSeparator")) {
+                CssClassSeparator = o["CssClassSeparator"].Value.Replace("\"", "");
+            }
+            if (o.Contains("CssClassPersonnalisation")) {
+                CssClassPersonnalisation = o["CssClassPersonnalisation"].Value.Replace("\"", "");
+            }
         }
         #endregion
 
@@ -143,12 +206,12 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
 
 
             html.AppendFormat("<div id=\"div_{0}\" width=\"100%\" class=\"{1}\">", this.ID, CssClass);
-            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" height=\"100%\">");
-            html.Append("<tr><td>");
+            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" height=\"100%\" class=\"" + CssClass + "\">");
+            html.Append("<tr><td class=\"" + CssClassDetailTab + "\">");
 
             #region Detail Tab
-            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" height=\"100%\">");
-            html.Append("<tr><td>" + GestionWeb.GetWebWord(2873, _webSession.SiteLanguage) + " :</td></tr>");
+            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" height=\"100%\" class=\"" + CssClassDetailTab + "\">");
+            html.Append("<tr><td class=\"" + CssClassDetailTabHeader + "\">" + GestionWeb.GetWebWord(2873, _webSession.SiteLanguage) + " :</td></tr>");
             html.Append("<tr><td align=\"center\">");
 
             html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">");
@@ -250,13 +313,22 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             #endregion
 
             html.Append("</td></tr>");
-            html.Append("<tr><td></td></tr>");
+            html.Append("<tr><td class=\"" + CssClassSeparator + "\">&nbsp;</td></tr>");
             html.Append("<tr><td>");
 
             #region Promo personnalisation
-            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" height=\"100%\">");
-            html.Append("<tr><td>" + GestionWeb.GetWebWord(2874, _webSession.SiteLanguage) + " :</td></tr>");
-            html.Append("<tr><td>" + GestionWeb.GetWebWord(2875, _webSession.SiteLanguage) + " :</td></tr>");
+            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" height=\"100%\"  class=\"" + CssClassPersonnalisation + "\">");
+            html.Append("<tr><td class=\"" + CssClassPersonnalisationHeader + "\">" + GestionWeb.GetWebWord(2874, _webSession.SiteLanguage) + " :</td></tr>");
+
+            html.Append("<tr><td>");
+
+            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" class=\"" + CssClassPersonnalisationHeaderBis + "\">");
+
+            html.Append("<tr><td class=\"" + CssClassPersonnalisationHeaderBis + "\">" + GestionWeb.GetWebWord(2875, _webSession.SiteLanguage) + " :</td></tr>");
+
+            html.Append("<tr><td>");
+
+            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">");
 
             html.Append("<tr>");
             for (int i = 0; i < ((module.AllowedMediaDetailLevelItems.Count % 2 == 0) ? module.AllowedMediaDetailLevelItems.Count : module.AllowedMediaDetailLevelItems.Count + 1); i++) {
@@ -270,6 +342,9 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             }
             html.Append("</tr>");
 
+            html.Append("</table>");
+
+            html.Append("</td></tr>");
             html.Append("</table>");
 
             html.Append("</td></tr>");

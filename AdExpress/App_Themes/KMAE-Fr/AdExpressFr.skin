@@ -1685,6 +1685,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                             CssClassOptionMenuSelected="vpScheduleResultFilterWebControlMenuSelected"
                             VpScheduleSelectionNodeMediaWebControlSkinId="VpScheduleSelectionNodeMediaWebControlSkinId"
                             VpScheduleSelectionNodeProductWebControlSkinId="VpScheduleSelectionNodeProductWebControlSkinId"
+                            VpScheduleSelectionDetailLevelWebControlSkinId="VpScheduleSelectionDetailLevelWebControlSkinId"
                             CssClassOptionButtons="vpScheduleResultFilterWebControlButtons"
                             CssClassOptionButtonCancel="vpScheduleResultFilterWebControlButtonCancel"
                             PicturePathButtonCancel="/App_Themes/KMAE-Fr/Images/Common/Button/initialize_all_up.gif"
@@ -1722,6 +1723,20 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                             PathPictureDisplay="/App_Themes/KMAE-Fr/Images/Common/fl_tri_decroi3_in.gif"
 />
 
+<ctrVpSelectionFilter:VpScheduleSelectionDetailLevelWebControl   
+                            runat="server" 
+                            SkinID="VpScheduleSelectionDetailLevelWebControlSkinId" 
+                            CssClass="vpScheduleSelectionDetailLevelWebControl"
+                            CssClassLvl1=""
+                            CssClassLvl2=""
+                            CssClassLvl3=""
+                            CssClassDetailTab="vpScheduleSelectionDetailLevelWebControlDetailTab"
+                            CssClassDetailTabHeader="vpScheduleSelectionDetailLevelWebControlDetailTabHeader"
+                            CssClassSeparator="vpScheduleSelectionDetailLevelWebControlSeparator"
+                            CssClassPersonnalisationHeader="vpScheduleSelectionDetailLevelWebControlPersonnalisationHeader"
+                            CssClassPersonnalisationHeaderBis="vpScheduleSelectionDetailLevelWebControlPersonnalisationHeaderBis"
+                            CssClassPersonnalisation="vpScheduleSelectionDetailLevelWebControlPersonnalisation"
+/>
 
 <ctrVpSelection:VpScheduleSelectionDropDownDateListWebControl   
                             runat="server" 

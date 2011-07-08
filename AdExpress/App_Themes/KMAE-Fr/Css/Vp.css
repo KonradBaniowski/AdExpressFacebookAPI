@@ -232,6 +232,83 @@ table.vpScheduleResultFilterNodeWebControlResultLvl3 label
 	cursor:pointer;
 }
 
+/* VpScheduleSelectionDetailLevelWebControl */
+table.vpScheduleSelectionDetailLevelWebControlPersonnalisation,
+table.vpScheduleSelectionDetailLevelWebControlDetailTab
+{
+	border:solid 1px #DBDBDB;
+	height:230px;
+}
+
+table.vpScheduleSelectionDetailLevelWebControlPersonnalisation
+{
+	padding:10px 5px 0px 5px;
+}
+
+table.vpScheduleSelectionDetailLevelWebControlDetailTab
+{
+	padding:10px 5px 10px 5px;
+}
+
+table.vpScheduleSelectionDetailLevelWebControlDetailTab,
+table.vpScheduleSelectionDetailLevelWebControlDetailTab td,
+table.vpScheduleSelectionDetailLevelWebControlPersonnalisation,
+table.vpScheduleSelectionDetailLevelWebControlPersonnalisation td
+{
+	vertical-align:top;
+}
+
+.vpScheduleSelectionDetailLevelWebControlDetailTab select
+{
+	margin:3px 0px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: Black;
+}
+
+.vpScheduleSelectionDetailLevelWebControlPersonnalisationHeader,
+.vpScheduleSelectionDetailLevelWebControlDetailTabHeader
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight:bold;
+	color: Black;
+}
+
+.vpScheduleSelectionDetailLevelWebControlSeparator
+{
+}
+
+table.vpScheduleSelectionDetailLevelWebControlPersonnalisationHeaderBis table
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
+table.vpScheduleSelectionDetailLevelWebControlPersonnalisationHeaderBis table td
+{
+	width:150px;
+	padding-left:20px;
+}
+
+table.vpScheduleSelectionDetailLevelWebControlPersonnalisationHeaderBis input
+{
+	cursor:pointer;
+}
+
+.vpScheduleSelectionDetailLevelWebControlPersonnalisationHeaderBis
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight:normal;
+	color: Black;
+}
+
+td.vpScheduleSelectionDetailLevelWebControlPersonnalisationHeaderBis
+{
+	padding-bottom:10px;
+}
+
 /* Result table css class */
 a.tooltip:link, a.tooltip:visited, a.tooltip:active
 {
