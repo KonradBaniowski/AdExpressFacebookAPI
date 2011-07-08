@@ -1704,8 +1704,8 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                             CssClassLvl2="vpScheduleResultFilterNodeWebControlResultLvl2"
                             CssClassLvl3="vpScheduleResultFilterNodeWebControlResultLvl3"
                             CssClassDisplay="vpScheduleResultFilterNodeWebControlResultDisplay"
-                            PathPictureDisplayOver="/App_Themes/KMAE-Fr/Images/Common/fl_tri_decroi3.gif"
-                            PathPictureDisplay="/App_Themes/KMAE-Fr/Images/Common/fl_tri_decroi3_in.gif"
+                            PathPictureDisplayOver="/App_Themes/KMAE-Fr/Images/Common/arrow_down.gif"
+                            PathPictureDisplay="/App_Themes/KMAE-Fr/Images/Common/arrow_up.gif"
 />
 
 <ctrVpSelectionFilter:VpScheduleSelectionNodeWebControl   
@@ -1719,8 +1719,8 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                             CssClassContainerLvl2="vpScheduleResultFilterNodeProductContainerWebControlResultLvl2"
                             CssClassContainerLvl3="vpScheduleResultFilterNodeProductContainerWebControlResultLvl3"
                             CssClassDisplay="vpScheduleResultFilterNodeWebControlResultDisplay"
-                            PathPictureDisplayOver="/App_Themes/KMAE-Fr/Images/Common/fl_tri_decroi3.gif"
-                            PathPictureDisplay="/App_Themes/KMAE-Fr/Images/Common/fl_tri_decroi3_in.gif"
+                            PathPictureDisplayOver="/App_Themes/KMAE-Fr/Images/Common/arrow_down.gif"
+                            PathPictureDisplay="/App_Themes/KMAE-Fr/Images/Common/arrow_up.gif"
 />
 
 <ctrVpSelectionFilter:VpScheduleSelectionDetailLevelWebControl   

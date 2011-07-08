@@ -76,7 +76,8 @@ table.vpScheduleResultFilterWebControlOption
 
 .vpScheduleResultFilterWebControlMenuSelected, .vpScheduleResultFilterWebControlMenu ul li a:hover
 {
-	background-color: #FCAF4A;
+	background-image: url(/App_Themes/KMAE-Fr/Images/Common/background_menu_vp.gif);
+	background-repeat: repeat-x;
 }
 
 td.vpScheduleResultFilterWebControlResult
@@ -173,7 +174,8 @@ table.vpScheduleResultFilterNodeProductWebControlResultLvl1,
 table.vpScheduleResultFilterNodeWebControlResultLvl1
 {
 	padding-left: 0px;
-	background-color: #FCAF4A;
+	background-image: url(/App_Themes/KMAE-Fr/Images/Common/background_header_vp.gif);
+	background-repeat: repeat-x;
 }
 table.vpScheduleResultFilterNodeProductWebControlResultLvl1 label,
 table.vpScheduleResultFilterNodeWebControlResultLvl1 label
