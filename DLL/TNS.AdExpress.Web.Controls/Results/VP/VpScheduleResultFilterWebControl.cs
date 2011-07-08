@@ -514,6 +514,9 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                     _webSession.PersonnalizedLevel = (DetailLevelItemInformation.Levels)Enum.Parse(typeof(DetailLevelItemInformation.Levels), ((string)detailLevelParameters[1]));
                 }
                 if (dateParameters != null) {
+                    string checkRes = CheckDates(dateParameters);
+                    if (!string.IsNullOrEmpty(checkRes)) return checkRes;
+
                     _webSession.SetVpDates(new DateTime(Int32.Parse(((string)dateParameters[0]).Split('_')[0]), Int32.Parse(((string)dateParameters[0]).Split('_')[1]), 1)
                         , new DateTime(Int32.Parse(((string)dateParameters[1]).Split('_')[0]), Int32.Parse(((string)dateParameters[1]).Split('_')[1]), 1).AddMonths(1).AddDays(-1));
 
@@ -655,6 +658,16 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             return accesType;
         }
         #endregion
+
+        protected string CheckDates(object[] dateParameters)
+        {
+            if (dateParameters.Length < 2 || ((string)dateParameters[0]).Split('_').Length < 2 || ((string)dateParameters[1]).Split('_').Length < 2) 
+                return (GestionWeb.GetWebWord(886, _webSession.SiteLanguage));
+            DateTime dateBegin = new DateTime(Int32.Parse(((string)dateParameters[0]).Split('_')[0]), Int32.Parse(((string)dateParameters[0]).Split('_')[1]), 1);
+            DateTime dateEnd = new DateTime(Int32.Parse(((string)dateParameters[1]).Split('_')[0]), Int32.Parse(((string)dateParameters[1]).Split('_')[1]), 1);
+            if (DateTime.Compare(dateBegin,dateEnd) > 0) return (GestionWeb.GetWebWord(1855, _webSession.SiteLanguage));
+            return string.Empty;
+        }
 
         #endregion
     }
