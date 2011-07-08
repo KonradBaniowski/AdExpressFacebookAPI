@@ -28,18 +28,14 @@
 
 		            <!-- marge de gauche-->
 		            <td valign="top">
-			            <asp:Image ID="Image1" runat="server" border="0" SkinID="logo_cote_gauche_bis" />
+		                <table cellspacing="0" cellpadding="0" width="100%" border="0">
+		                <tr><td width="1px" valign="top"><asp:Image ID="Image2" runat="server" border="0" SkinID="LogoAdexpress" /></td><td valign="top"><cc2:headerwebcontrol language="33" id="HeaderWebControl1" runat="server" Type_de_page="generic"></cc2:headerwebcontrol></td></tr>
+	                    </table>
 		            </td>
-		            <td valign="top">
-		                <asp:Image ID="Image2" runat="server" border="0" SkinID="LogoAdexpress" />
-		            </td>
-
-		            <!-- Right column -->
-		            <td valign="top"><cc2:headerwebcontrol language="33" id="HeaderWebControl1" runat="server" Type_de_page="generic"></cc2:headerwebcontrol></td>
 				</tr>
 				<!-- Resultat -->
 				<tr>
-					<td valign="top" colspan="3">
+					<td valign="top">
 						<table cellspacing="0" cellpadding="0" width="100%" border="0" class="vpScheduleResults">
 						    <tr>
                                 <!-- Title -->
