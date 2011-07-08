@@ -111,6 +111,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n\tvar dateParameters = null;");
 
             int i = 0;
+            VpScheduleSelectionFilterBaseWebControl cVpScheduleSelectionFilterBaseWebControlDate = null;
             foreach (VpScheduleSelectionFilterBaseWebControl cVpScheduleSelectionFilterBaseWebControl in _filterResultWebControlList.Values) {
                 switch (i) {
                     case 0:
@@ -132,6 +133,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                         js.Append("\r\n\t\tdetailLevelParameters = null;");
                         break;
                     case 3:
+                        cVpScheduleSelectionFilterBaseWebControlDate = cVpScheduleSelectionFilterBaseWebControl;
                         js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true)");
                         js.Append("\r\n\t\tdateParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
                         js.Append("\r\n\telse");
@@ -155,6 +157,8 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n\t}");
             js.Append(DisplayMethod + "(false);");
             js.Append(ValidationMethod);
+            js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControlDate.ID + " == true) RefreshVpScheduleSelectionWebControl('DateSelection');");
+            
             js.Append("\r\n}\r\n");
             js.Append("\r\n-->\r\n</script>");
             return js.ToString();
@@ -507,7 +511,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                 }
                 if (dateParameters != null) {
                     _webSession.SetVpDates(new DateTime(Int32.Parse(((string)dateParameters[0]).Split('_')[0]), Int32.Parse(((string)dateParameters[0]).Split('_')[1]), 1)
-                        , new DateTime(Int32.Parse(((string)dateParameters[1]).Split('_')[1]), Int32.Parse(((string)dateParameters[1]).Split('_')[1]), 1));
+                        , new DateTime(Int32.Parse(((string)dateParameters[1]).Split('_')[0]), Int32.Parse(((string)dateParameters[1]).Split('_')[1]), 1).AddMonths(1).AddDays(-1));
 
                 }
                 _webSession.Save();
