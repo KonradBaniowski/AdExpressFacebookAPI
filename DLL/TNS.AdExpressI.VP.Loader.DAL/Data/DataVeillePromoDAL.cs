@@ -219,7 +219,7 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
         /// </summary>
         /// <param name="dateTraitment">Date Traitment</param>
         /// <returns>Has Data or not for the date traiment passed in parameter</returns>
-        public bool HasData(DateTime dateTraitment)
+        public bool HasData(DateTime dateTraitmentBegin, DateTime dateTraitmentEnd)
         {
 
             #region Variables
@@ -233,7 +233,7 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
 
                 #region Construct global query
                 sql = new StringBuilder(200);
-                sql.AppendFormat("select count(*) nb from {0} WHERE LOAD_DATE = {1} ", tblData.Sql, dateTraitment.ToString("yyyyMM"));
+                sql.AppendFormat("select count(*) nb from {0} WHERE LOAD_DATE>={1} AND LOAD_DATE<={2} ", tblData.Sql, dateTraitmentBegin.ToString("yyyyMM"), dateTraitmentEnd.ToString("yyyyMM"));
                 #endregion
 
                 #region Execute Query
@@ -346,9 +346,9 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
 
                 #region Construct global query
                 sql = new StringBuilder(200);
-                string promoContent = (!string.IsNullOrEmpty(dataPromotionDetail.PromotionContent) ? dataPromotionDetail.PromotionContent.Replace("'", "''") : "''");
-                string conditionText = (!string.IsNullOrEmpty(dataPromotionDetail.ConditionText) ? dataPromotionDetail.ConditionText.Replace("'", "''") : "''");
-                string promotionBrand = (!string.IsNullOrEmpty(dataPromotionDetail.PromotionBrand) ? dataPromotionDetail.PromotionBrand.Replace("'", "''") : "''");
+                string promoContent = (!string.IsNullOrEmpty(dataPromotionDetail.PromotionContent) ? dataPromotionDetail.PromotionContent.Replace("'", "''") : "");
+                string conditionText = (!string.IsNullOrEmpty(dataPromotionDetail.ConditionText) ? dataPromotionDetail.ConditionText.Replace("'", "''") : "");
+                string promotionBrand = (!string.IsNullOrEmpty(dataPromotionDetail.PromotionBrand) ? dataPromotionDetail.PromotionBrand.Replace("'", "''") : "");
                 string conditionVisual = (dataPromotionDetail.ConditionVisual != null && dataPromotionDetail.ConditionVisual.Count > 0) ?
                 string.Join(",", dataPromotionDetail.ConditionVisual.ConvertAll<string>(p => p.Replace("'", "''")).ToArray()) : "";
                 string promotionVisual = (dataPromotionDetail.PromotionVisual != null && dataPromotionDetail.PromotionVisual.Count > 0) ?

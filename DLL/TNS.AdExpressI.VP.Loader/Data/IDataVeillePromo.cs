@@ -34,7 +34,7 @@ namespace TNS.AdExpressI.VP.Loader.Data {
         /// </summary>
         /// <param name="dateTraitment">Date Traitment</param>
         /// <returns>Has Data or not for the date traiment passed in parameter</returns>
-        bool HasData(DateTime dateTraitment);
+        bool HasData(DateTime dateTraitmentBegin, DateTime dateTraitmentEnd);
         /// <summary>
         /// Get Picture File Name
         /// </summary>

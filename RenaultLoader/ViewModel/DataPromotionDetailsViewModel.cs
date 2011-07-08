@@ -205,7 +205,7 @@ namespace RenaultLoader.ViewModel
                 DataPromotionDetails dataPromotionDetails = veillePromo.GetDataPromotionDetailList(new FileDataSource(new FileStream(CurrentFile.FullName, FileMode.Open)));
 
                 veillePromo.BeginTransaction();
-                if (veillePromo.HasData(dataPromotionDetails.DateTraitment))
+                if (veillePromo.HasData(dataPromotionDetails.DateTraitment, dataPromotionDetails.DateTraitment))
                 {
                     MessageBoxResult messageBoxResult = MessageBox.Show("Des données existent en base de données pour cette periode, voulez vous les effacer ?", "", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                     if (messageBoxResult == MessageBoxResult.Cancel)
@@ -241,7 +241,7 @@ namespace RenaultLoader.ViewModel
                 IsIndeterminateLoading = true;
                 IDataVeillePromo veillePromo = (IDataVeillePromo)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.rules].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.rules].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { ApplicationParameters.DataBaseDescription }, null, null, null);
 
-                if (veillePromo.HasData(_periodBeginningToDelete) || veillePromo.HasData(_periodEndToDelete))
+                if (veillePromo.HasData(_periodBeginningToDelete, _periodEndToDelete))
                 {
                     MessageBoxResult messageBoxResult = MessageBox.Show("Des données existent en base de données pour cette periode, voulez vous les effacer ?", "", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                     if (messageBoxResult == MessageBoxResult.Cancel)

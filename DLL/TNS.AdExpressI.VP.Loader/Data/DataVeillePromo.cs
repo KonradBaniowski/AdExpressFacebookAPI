@@ -119,8 +119,8 @@ namespace TNS.AdExpressI.VP.Loader.Data {
         /// </summary>
         /// <param name="dateTraitment">Date Traitment</param>
         /// <returns>Has Data or not for the date traiment passed in parameter</returns>
-        public bool HasData(DateTime dateTraitment) {
-            return _veillePromoDAL.HasData(dateTraitment);
+        public bool HasData(DateTime dateTraitmentBegin, DateTime dateTraitmentEnd) {
+            return _veillePromoDAL.HasData(dateTraitmentBegin, dateTraitmentEnd);
         }
         #endregion
 
@@ -152,7 +152,7 @@ namespace TNS.AdExpressI.VP.Loader.Data {
                 #region Traitment
 
                 #region Data Db Insertions
-                if (!_veillePromoDAL.HasData(dataPromotionDetails.DateTraitment)) {
+                if (!_veillePromoDAL.HasData(dataPromotionDetails.DateTraitment, dataPromotionDetails.DateTraitment)) {
                     foreach (DataPromotionDetail cDataPromotionDetail in dataPromotionDetails.DataPromotionDetailList) {
 
                         Dictionary<string, PictureMatching> pictureMatchingPromVisuListTemp = GetPictureFileName(cDataPromotionDetail.PromotionVisual);
