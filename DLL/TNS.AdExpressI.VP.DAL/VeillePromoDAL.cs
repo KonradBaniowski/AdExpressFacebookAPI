@@ -40,10 +40,10 @@ namespace TNS.AdExpressI.VP.DAL
         public VeillePromoDAL(WebSession session)
         {
             if (session == null) throw new NullReferenceException(" parameter session cannot be null ");
-            _session = session;         
+            _session = session;
         }
-       
-        
+
+
         /// <summary>
         ///  Constructor
         /// </summary>
@@ -73,12 +73,12 @@ namespace TNS.AdExpressI.VP.DAL
             {
                 sql.Append(" select min(DATE_BEGIN_NUM) DATE_BEGIN_NUM,max(DATE_END_NUM) DATE_END_NUM from DATA_PROMOTION ");
                 IDataSource dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.vPromo);
-                ds = dataSource.Fill(sql.ToString());               
+                ds = dataSource.Fill(sql.ToString());
             }
             catch (Exception ex)
             {
 
-                throw new Exceptions.VeillePromoDALException(" Impossible to get min Promo period ", ex);
+                throw new Exceptions.VeillePromoDALException(" Impossible to get min max Promo period ", ex);
             }
             return ds;
 
@@ -148,9 +148,8 @@ namespace TNS.AdExpressI.VP.DAL
                 //ORDER BY
                 sql.AppendFormat(" order by {0}, date_begin_num, date_end_num ", classifOrderFieldName);
 
-                IDataSource dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.vPromo);
 
-                ds = dataSource.Fill(sql.ToString());
+                ds = _session.Source.Fill(sql.ToString());
             }
             catch (Exception ex)
             {
@@ -174,20 +173,33 @@ namespace TNS.AdExpressI.VP.DAL
 
                 //Get data promo table
                 Table dataPromo = WebApplicationParameters.GetDataTable(TableIds.dataPromotion, false);
-                sql.AppendFormat(" select * ");
+                Table promoProduct = WebApplicationParameters.GetDataTable(TableIds.promoProduct, false);
+                Table promoCategory = WebApplicationParameters.GetDataTable(TableIds.promoCategory, false);
+                Table promoSegment = WebApplicationParameters.GetDataTable(TableIds.promoSegment, false);
+                Table promoCircuit = WebApplicationParameters.GetDataTable(TableIds.promoCircuit, false);
+                Table promoBrand = WebApplicationParameters.GetDataTable(TableIds.promoBrand, false);
+
+
+                sql.AppendFormat("select ID_DATA_PROMOTION, {0}.ID_PRODUCT , PRODUCT, {0}.ID_BRAND,BRAND, {0}.ID_SEGMENT, SEGMENT ", dataPromo.Prefix);
+                sql.AppendFormat(", {0}.ID_CATEGORY, CATEGORY,{0}.ID_CIRCUIT ,CIRCUIT ,{0}.ID_PRODUCT,PRODUCT ", dataPromo.Prefix);
+                sql.AppendFormat(", CONDITION_VISUAL, CONDITION_TEXT, PROMOTION_BRAND, PROMOTION_VISUAL, PROMOTION_CONTENT, DATE_BEGIN_NUM, DATE_END_NUM", dataPromo.Prefix);
 
                 //FROM
-                sql.AppendFormat(" from  {0}  ",  dataPromo.SqlWithPrefix);
+                sql.AppendFormat(" from  {0} ,{1} ,{2} ", dataPromo.SqlWithPrefix, promoCircuit.SqlWithPrefix, promoBrand.SqlWithPrefix);
+                sql.AppendFormat(" ,{0} ,{1} ,{2} ", promoSegment.SqlWithPrefix, promoCategory.SqlWithPrefix, promoProduct.SqlWithPrefix);
 
                 //WHERE
                 sql.Append(" where  ");
 
                 //Adding universe filters
                 sql.AppendFormat(" ID_DATA_PROMOTION={0} ", idDataPromotion);
+                sql.AppendFormat(" and {0}.ID_PRODUCT = {1}.ID_PRODUCT and  {1}.activation<{2}", dataPromo.Prefix, promoProduct.Prefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+                sql.AppendFormat(" and {0}.ID_CATEGORY =  {1}.ID_CATEGORY and  {1}.activation<{2}", dataPromo.Prefix, promoCategory.Prefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+                sql.AppendFormat(" and {0}.ID_SEGMENT =  {1}.ID_SEGMENT and  {1}.activation<{2}", dataPromo.Prefix, promoSegment.Prefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+                sql.AppendFormat(" and {0}.ID_BRAND =  {1}.ID_BRAND and  {1}.activation<{2}", dataPromo.Prefix, promoBrand.Prefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+                sql.AppendFormat(" and {0}.ID_CIRCUIT =  {1}.ID_CIRCUIT and  {1}.activation<{2}", dataPromo.Prefix, promoCircuit.Prefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
 
-                IDataSource dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.vPromo);
-
-                ds = dataSource.Fill(sql.ToString());
+                ds = _session.Source.Fill(sql.ToString());
 
             }
             catch (Exception ex)
@@ -235,14 +247,14 @@ namespace TNS.AdExpressI.VP.DAL
 
 
             //Filtering period
-             if (_session.PeriodType != CstWeb.CustomerSessions.Period.Type.allHistoric)
+            if (_session.PeriodType != CstWeb.CustomerSessions.Period.Type.allHistoric)
             {
                 sql.Append("  and (");
                 sql.AppendFormat(" (( DATE_BEGIN_NUM >= {0} and DATE_BEGIN_NUM <= {1}) ", _periodBeginningDate, _periodEndDate);
                 sql.AppendFormat(" or (DATE_END_NUM >= {0} and DATE_END_NUM <= {1})) ", _periodBeginningDate, _periodEndDate);
                 sql.Append("  or ");
                 sql.AppendFormat("  (( DATE_BEGIN_NUM >= {0} and  {0} <= DATE_END_NUM ) ", _periodBeginningDate);
-                sql.AppendFormat(" or (DATE_BEGIN_NUM >= {0} and {0} <= DATE_END_NUM )) ", _periodEndDate);
+                sql.AppendFormat(" or (DATE_BEGIN_NUM >= {0} and {0} <= DATE_END_NUM ))     ", _periodEndDate);
                 sql.Append("  ) ");
             }
             // Product classification Selection
@@ -341,7 +353,7 @@ namespace TNS.AdExpressI.VP.DAL
                 sql.AppendFormat("  {0}.id_brand in ({1}) ", prefix, brandAccess);
                 first = false;
             }
-            if (!first) sql.Append(" ) ");           
+            if (!first) sql.Append(" ) ");
 
             return sql.ToString();
         }

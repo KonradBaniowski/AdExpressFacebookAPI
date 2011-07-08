@@ -2380,6 +2380,10 @@ namespace TNS.AdExpress.Constantes.Web{
         /// Répertoire contenant les logos de la presse
         /// </summary>
         public static string LOGO_PRESS = string.Empty;
+        /// <summary>
+        /// Répertoire virtuel des créations e la Veille promotionnelle Renault
+        /// </summary>
+        public static string IMAGES_VP= string.Empty;
         
     }
     #endregion

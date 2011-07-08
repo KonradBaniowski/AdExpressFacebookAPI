@@ -238,7 +238,8 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// </code>
         /// </remarks>
         /// <returns>Script</returns>
-        private string SetStyleParametersScript() {
+        protected string SetStyleParametersScript()
+        {
             StringBuilder js = new StringBuilder(3000);
             js.Append("\r\n\nfunction SetCssStyles_"+this.ID+"(obj){");
             js.Append("\r\n\t obj.Theme = '" + _themeName + "';");
@@ -256,7 +257,8 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// Charge les paramètres des résultats navigant entre le client et le serveur
         /// </summary>
         /// <param name="o">Tableau de paramètres javascript</param>
-        private void LoadResultParameters(AjaxPro.JavaScriptObject o) {
+        protected void LoadResultParameters(AjaxPro.JavaScriptObject o)
+        {
             if (o != null) {
                 LoadCurrentResultParameters(o);
             }
@@ -267,7 +269,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// Charge les paramètres des sytles navigant entre le client et le serveur
         /// </summary>
         /// <param name="o">Tableau de paramètres javascript</param>
-        private void LoadStyleParameters(AjaxPro.JavaScriptObject o)
+        protected void LoadStyleParameters(AjaxPro.JavaScriptObject o)
         {
             if (o != null) {
                 if (o.Contains("Theme")) {

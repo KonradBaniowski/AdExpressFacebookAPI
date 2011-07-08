@@ -625,6 +625,10 @@
       <Project>{79A0173F-A728-4739-A110-D4FD9166A8CC}</Project>
       <Name>TNS.AdExpressI.Visual</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.VP.DAL\TNS.AdExpressI.VP.DAL.csproj">
+      <Project>{F9421544-2B9E-4F1E-9F89-6441BDA08991}</Project>
+      <Name>TNS.AdExpressI.VP.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.VP\TNS.AdExpressI.VP.csproj">
       <Project>{34E6D72A-AA47-4B86-969E-D1BFBCC3D70C}</Project>
       <Name>TNS.AdExpressI.VP</Name>

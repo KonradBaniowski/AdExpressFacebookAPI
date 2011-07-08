@@ -49,13 +49,17 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
 
         #region GetJavascript
         /// <summary>
-        /// Get Validation Javascript Method
+        /// Get Promo File Javascript Method
         /// </summary>
         /// <returns>Validation Javascript Method</returns>
         protected string GetPromoFileJavascript()
         {
             StringBuilder js = new StringBuilder();
             js.Append("\r\n<script language=\"javascript\">\r\n");
+            js.Append(" var imagesName_ItemsCollectionNavigator_" + this.ID + "= new Array();");
+            js.Append(" var imagesName_ItemsCollectionNavigator2_" + this.ID + "= new Array();");
+            js.Append(" var  currentPanelIndex_ItemsCollectionNavigator_" + this.ID + "=0;");
+            js.Append(" var currentPanelIndex_ItemsCollectionNavigator2_" + this.ID + "=0;");
 
             js.Append("\r\nfunction displayPromoFile_" + this.ID + "(idPromo, display){");
             js.Append("\r\n\tif(display) {");
@@ -82,12 +86,17 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n\tdocument.getElementById('res_promofile_" + this.ID + "').style.left = (document.documentElement.scrollLeft + ((myWidth - 750) / 2)) + \"px\";");
 
             js.Append("\r\n\t\tdocument.getElementById('res_promofile_" + this.ID + "').style.display = '';");
+         
 
             js.Append("\r\n\tgetPromoFile_" + this.ID + "(idPromo);");
 
             js.Append("\r\n\t} else {");
             js.Append("\r\n\t\tdocument.getElementById('res_backgroud_" + this.ID + "').style.display = 'none';");
             js.Append("\r\n\t\tdocument.getElementById('res_promofile_" + this.ID + "').style.display = 'none';");
+            js.Append("  imagesName_ItemsCollectionNavigator_" + this.ID + "= new Array();");
+            js.Append("  imagesName_ItemsCollectionNavigator2_" + this.ID + "= new Array();");
+            js.Append("  currentPanelIndex_ItemsCollectionNavigator_" + this.ID + "=0;");
+            js.Append("  currentPanelIndex_ItemsCollectionNavigator2_" + this.ID + "=0;");
             js.Append("\r\n\t}");
 
             js.Append("\r\n}\r\n");
@@ -100,9 +109,39 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
 
             js.Append("\r\nfunction getPromoFile_" + this.ID + "_callback(res){");
             js.Append("\r\n\tvar oN=document.getElementById('res_promofile_" + this.ID + "');");
-            js.Append("\r\n\toN.innerHTML=res.value;");
+            js.Append("\r\n\tif(res.value.length>1){");
+            js.Append("\r\n\t\timagesName_ItemsCollectionNavigator_" + this.ID + "= new Array();");
+            js.Append("\r\n\t\tif(res!=null && res.value!=null)imagesName_ItemsCollectionNavigator_" + this.ID + " = res.value[1].split(',');");            
+            js.Append("\r\n\t\timagesName_ItemsCollectionNavigator2_" + this.ID + "= new Array();");
+            js.Append("\r\n\t\tif(res!=null && res.value!=null)imagesName_ItemsCollectionNavigator2_" + this.ID + " = res.value[2].split(',');");
+            js.Append("\r\n\t}");
+            js.Append("\r\n\tif(res.value.length>0)");
+            js.Append("\r\n\t\toN.innerHTML=res.value[0];");
             js.Append("\r\n}\r\n");
 
+            js.Append("\r\nfunction DisplayPics_" + this.ID + "(indexIncr, promoCondition, img_prev, img_next, img_pr){");
+            js.Append("\r\n\t var currentIndexNavigator = (promoCondition) ? currentPanelIndex_ItemsCollectionNavigator2_" + this.ID + " : currentPanelIndex_ItemsCollectionNavigator_" + this.ID + ";");
+            js.Append("\r\n\tcurrentIndexNavigator = currentIndexNavigator + indexIncr;");
+            js.Append("\r\n\t if (promoCondition) {");
+            js.Append("\r\n\t currentPanelIndex_ItemsCollectionNavigator2_" + this.ID + " = currentIndexNavigator;");
+            js.Append("\r\n\timg_pr.src = imagesName_ItemsCollectionNavigator2_" + this.ID + "[currentIndexNavigator];");
+            js.Append("\r\n\t } else {");
+            js.Append("\r\n\tcurrentPanelIndex_ItemsCollectionNavigator_" + this.ID + "  = currentIndexNavigator;");
+            js.Append("\r\n\timg_pr.src = imagesName_ItemsCollectionNavigator_" + this.ID + "[currentIndexNavigator];");
+            js.Append("\r\n\t}");
+            js.Append("\r\n\t if (currentIndexNavigator > 0) {");
+            js.Append("\r\n\timg_prev.style.visibility = 'visible';");
+            js.Append("\r\n\t } else img_prev.style.visibility = 'hidden';");
+            js.Append("\r\n\tif (currentIndexNavigator != imagesName_ItemsCollectionNavigator_" + this.ID + ".length-1) {");
+            js.Append("\r\n\timg_next.style.visibility = 'visible';");
+            js.Append("\r\n\t} else img_next.style.visibility = 'hidden';");                    
+            js.Append("\r\n}\r\n");
+
+            js.Append("\r\nfunction ZoomPromotionImage_" + this.ID + "(imgPromo){");
+            js.Append("\r\n\t window.open(imgPromo);");
+            js.Append("\r\n}\r\n");
+           
+         
             js.Append("\r\n\r\n</script>");
             return js.ToString();
         }
@@ -118,7 +157,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         protected override void OnPreRender(EventArgs e)
         {
             Page.Response.Write("<div id=\"res_promofile_" + this.ID + "\" class=\"vpPrf\" style=\"display:none;\"></div>");
-            Page.Response.Write("<div id=\"res_backgroud_" + this.ID + "\" class=\"vpScheduleResultFilterWebControlBackgroud\" style=\"display:none;\"></div>");
+            Page.Response.Write("<div id=\"res_backgroud_" + this.ID + "\" class=\"vpScheduleResultFilterWebControlBackgroud\" style=\"display:none;\"></div>");         
             base.OnPreRender(e);
         }
         #endregion
@@ -196,27 +235,42 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// <param name="o">Result parameters (session Id, theme...)</param>
         /// <returns>Code HTML</returns>
         [AjaxPro.AjaxMethod]
-        public virtual string GetPromoFileData(string idSession, long idDataPromotion, AjaxPro.JavaScriptObject resultParameters, AjaxPro.JavaScriptObject styleParameters)
+        public virtual object[] GetPromoFileData(string idSession, long idDataPromotion, AjaxPro.JavaScriptObject resultParameters, AjaxPro.JavaScriptObject styleParameters)
         {
-            string html;
+            object[] tab = new object[3];
 
             try
             {
+                
+
+                string html;
+                LoadResultParameters(resultParameters);
+                LoadStyleParameters(styleParameters);
                 _webSession = (WebSession)WebSession.Load(idSession);
 
                 TNS.AdExpress.Domain.Web.Navigation.Module _module = ModulesList.GetModule(WebConstantes.Module.Name.VP);
-                object[] param = new object[1] { _webSession };
+                object[] param = new object[2] { _webSession, idDataPromotion };
                 IVeillePromo vpScheduleResult = (IVeillePromo)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryRulesLayer.AssemblyName, _module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
-                html = vpScheduleResult.GetPromoFileHtml();
+                vpScheduleResult.Theme = _themeName;
+                vpScheduleResult.ResultControlId = this.ID;
 
+                Dictionary<string, List<string>> visualList = vpScheduleResult.GetPromoFileList();
+                if (visualList != null && visualList.ContainsKey("p"))
+                    tab[1] = (visualList != null && visualList.ContainsKey("p")) ? string.Join(",", visualList["p"].ToArray()) : "";
+                if (visualList != null && visualList.ContainsKey("pc"))
+                    tab[2] = (visualList != null && visualList.ContainsKey("pc")) ? string.Join(",", visualList["pc"].ToArray()) : "";
+
+                html = vpScheduleResult.GetPromoFileHtml();
+                tab[0] = html;
+               
+               
             }
             catch (System.Exception err)
             {
-                return (OnAjaxMethodError(err, _webSession));
+                throw new Exception (OnAjaxMethodError(err, _webSession), err);
             }
-            return (html);
+            return (tab);
         }
-
     }
 }
 

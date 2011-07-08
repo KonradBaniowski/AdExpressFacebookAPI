@@ -2101,6 +2101,12 @@
     <item mnemonic="w2878" type="System.String">Sous Segment</item>
     <item mnemonic="w2879" type="System.String">Circuit</item>
     <item mnemonic="w2880" type="System.String">Type de pièce</item>
+    <item mnemonic="w2881" type="System.String">Sélection de périodes</item>
+    <item mnemonic="w2882" type="System.String">Dates</item>
+    <item mnemonic="w2883" type="System.String">FICHE</item>
+    <item mnemonic="w2884" type="System.String">Nomenclature produit</item>
+    <item mnemonic="w2885" type="System.String">Promotion</item>
+    <item mnemonic="w2886" type="System.String">Conditions</item>
     <!-- ********************************* -->
   </items>
 </localization>

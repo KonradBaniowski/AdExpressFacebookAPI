@@ -14,6 +14,13 @@ namespace TNS.AdExpressI.VP
         {
             set;
         }
+        /// <summary>
+        /// Define Theme
+        /// </summary>
+        string Theme
+        {
+            set;
+        }
 
         #endregion
 
@@ -30,5 +37,11 @@ namespace TNS.AdExpressI.VP
         /// <param name="idDataPromotion">Promotion Id</param>
         /// <returns>HTML Code</returns>
         string GetPromoFileHtml();
+        /// <summary>
+        /// Get HTML code for the promotion file
+        /// </summary>
+        /// <param name="idDataPromotion">Promotion Id</param>
+        /// <returns>HTML Code</returns>
+        Dictionary<string, List<string>> GetPromoFileList();
     }
 }

@@ -117,6 +117,22 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n}");
             #endregion
 
+            #region RefreshVpScheduleSelectionWebControl
+            js.Append("\r\nfunction RefreshVpScheduleSelectionWebControl(controlId){");
+            if (_vpScheduleSelectionBaseWebControlList.Count > 0)
+            {
+                for (int i = 0; i < _vpScheduleSelectionBaseWebControlList.Count; i++)
+                {
+                    js.Append("\r\n\t");
+                    if (i > 0) js.Append("else ");
+                    js.Append("if(controlId == '" + _vpScheduleSelectionBaseWebControlList[i].CurrentControlDetail.ControlId + "'){");
+                    js.Append("\r\n\t\t" + _vpScheduleSelectionBaseWebControlList[i].ValidationMethodName + "();");
+                    js.Append("\r\n\t}");
+                }
+            }
+            js.Append("\r\n}");
+            #endregion
+
             js.Append("\r\n-->\r\n</script>");
             return (js.ToString());
         }

@@ -156,6 +156,9 @@ namespace TNS.AdExpress.Domain.XmlLoader
                                     case "LOCAL_PATH_MEDIA_UPDATE":
                                         ModuleInfosNews.LOCAL_PATH_MEDIA_UPDATE = value;
                                         break;
+                                    case "IMAGES_VP":
+                                        CreationServerPathes.IMAGES_VP = value;
+                                        break;
                                 }
                                 break;
                         }

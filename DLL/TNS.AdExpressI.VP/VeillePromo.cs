@@ -13,6 +13,7 @@ using System.Reflection;
 using TNS.AdExpress.Domain.Level;
 using CoreUtils = TNS.AdExpress.Web.Core.Utilities;
 using TNS.FrameWork;
+using TNS.AdExpress.Domain.Translation;
 
 namespace TNS.AdExpressI.VP
 {
@@ -64,6 +65,14 @@ namespace TNS.AdExpressI.VP
 
         #region Variables
         /// <summary>
+        /// Is Initialize Visual List
+        /// </summary>
+        private bool _isInitializeVisualList = false;
+        /// <summary>
+        /// Client's session
+        /// </summary>
+        protected Dictionary<string, List<string>> _visualList = null;
+        /// <summary>
         /// Client's session
         /// </summary>
         protected WebSession _session = null;
@@ -87,6 +96,10 @@ namespace TNS.AdExpressI.VP
         protected long _idDataPromotion;
 
         protected string _resultControlId = "";
+        /// <summary>
+        /// Theme
+        /// </summary>
+        protected string _theme = "";
         #endregion
 
         #region Constructor
@@ -145,13 +158,19 @@ namespace TNS.AdExpressI.VP
 
         #region Properties
         /// <summary>
-        /// Define Current Module
+        /// Define Result Control Id
         /// </summary>
         public string ResultControlId
         {
             set { _resultControlId = value; }
         }
-
+        /// <summary>
+        /// Define Theme
+        /// </summary>
+        public string Theme
+        {
+            set { _theme = value; }
+        }
         #endregion
 
         #region GetHtml
@@ -396,46 +415,235 @@ namespace TNS.AdExpressI.VP
             param[2] = _periodEndDate;
             vpScheduleDAL = (IVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
             DataSet ds = vpScheduleDAL.GetData(_idDataPromotion);
-
+            DataRow dr = null;
             StringBuilder html = new StringBuilder(1000);
 
-            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"center\" width=\"100%\" height=\"100%\">");
-            html.Append("<tr>");
-            html.Append("<td class=\"vpfContent\">");
 
-           
-            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"center\" width=\"100%\" height=\"100%\">");
-            //Header
-            html.Append("<tr><td class=\"VpFilePopUpHeader\">");
-            html.Append("&nbsp;&nbsp;FICHE ");//TODO A mettre texte dans Ressources
-            html.Append("</td></tr>");
+            //  _visualList = new Dictionary<string, List<string>>();
+            //_isInitializeVisualList = true;
+            if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+            {
+                dr = ds.Tables[0].Rows[0];
+                string visibility = "hidden";
+                html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"center\" width=\"100%\" height=\"100%\">");
+                html.Append("<tr>");
+                html.Append("<td class=\"vpfContent\">");
+                html.Append("<div style=\"overflow-y: auto;overflow-x: none;z-index: 10000;height: 100%;width: 100%;padding: 0px 0px 0px 0px;\">");
+                html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"center\" width=\"100%\" height=\"100%\">");
+                //Header
 
-            //Content
-            html.Append("<tr><td class=\"vpfDescr\">");
-            html.Append("<ul class=\"prf\">");
-            html.Append(" <li><span><b>Enseigne:</b> MIDAS</span></li>");
-            html.Append(" <li><span><b>Date:</b> Du 24/01 au 15/02</span></li>");
-            html.Append("  <li><span><b>Nomenclature produit:</b> Pneumatique /Pneu / Montage, équilibrage</span></li>");
-            html.Append("  <li><span><b>Promotion:</b> Remboursements sur 30% des pneus</span></li>");
-            html.Append(" <li><span><b>Marques:</b> Michelin, Goddyear, Dunlop</span></li>");
-            html.Append(" </ul>");
-            html.Append("<hr class=\"hrSpacer\"/>");
-            html.Append("</td></tr>");
+                //Header Title
+                html.Append("<tr><td class=\"VpFilePopUpHeader\">");
+                html.AppendFormat("&nbsp;&nbsp;{0} ", GestionWeb.GetWebWord(2883, _session.SiteLanguage));
+                html.Append("</td></tr>");
 
-            //Promotion's Conditions
-            html.Append("<tr><td>");
+                //Content
+                html.Append("<tr><td class=\"vpfDescr\">");
+                html.Append("<ul class=\"prf\">");
+                //VP Brand
+                html.AppendFormat(" <li><span><b>{0}:</b> {1}</span></li>", GestionWeb.GetWebWord(2876, _session.SiteLanguage), dr["BRAND"].ToString());
 
-            html.Append("</td></tr>");
-            html.Append("</table>");
+                string dateBegin = TNS.FrameWork.Date.DateString.YYYYMMDDToDD_MM_YYYY(Convert.ToInt32(dr["DATE_BEGIN_NUM"].ToString()), _session.SiteLanguage);
+                string dateEnd = TNS.FrameWork.Date.DateString.YYYYMMDDToDD_MM_YYYY(Convert.ToInt32(dr["DATE_END_NUM"].ToString()), _session.SiteLanguage);
+                //Date
+                html.AppendFormat(" <li><span><b>{0}:</b> {1} {2} {3} {4}</span></li>", GestionWeb.GetWebWord(895, _session.SiteLanguage), GestionWeb.GetWebWord(896, _session.SiteLanguage), dateBegin, GestionWeb.GetWebWord(897, _session.SiteLanguage), dateEnd);
 
-            html.Append("</td>");
-            html.Append("</tr>");
-            html.Append("</table>");
+                //Product classification
+                html.AppendFormat("  <li><span><b>{0}:</b> {1} /{2} / {3}</span></li>", GestionWeb.GetWebWord(2884, _session.SiteLanguage), dr["SEGMENT"].ToString(), dr["CATEGORY"].ToString(), dr["PRODUCT"].ToString());
+
+                //Promotion Content
+                string promoContent = (dr["PROMOTION_CONTENT"] != System.DBNull.Value) ? dr["PROMOTION_CONTENT"].ToString() : "";
+                html.AppendFormat("  <li><span><b>{0}:</b> {1}</span></li>", GestionWeb.GetWebWord(2885, _session.SiteLanguage), promoContent);
+
+                //Brands
+                string brands = (dr["PROMOTION_BRAND"] != System.DBNull.Value) ? dr["PROMOTION_CONTENT"].ToString() : "";
+                html.AppendFormat(" <li><span><b>{0}:</b> {1}</span></li>", GestionWeb.GetWebWord(1149, _session.SiteLanguage), brands);
+                html.Append(" </ul>");
+                html.Append("<hr class=\"hrSpacer\"/>");
+                html.Append("</td></tr>");
+
+                #region Image(s) promotion
+                if (dr["PROMOTION_VISUAL"] != System.DBNull.Value && dr["PROMOTION_VISUAL"].ToString().Length > 0)
+                {
+                    //Button arrow left
+                    html.Append("<tr><td>");
+                    html.Append("  <table cellpadding=\"0\" border=\"0\" align=\"center\">");
+                    html.Append(" <tr><td id=\"previous\">");
+                    html.AppendFormat(" <img id=\"imgPrevious_" + _resultControlId + "\" style=\"visibility: hidden; margin-left: 5px; cursor: pointer; margin-right: 5px; vertical-align: middle;\" onmouseover=\"this.src='/App_Themes/{0}/Images/Common/Button/arrow_left_down.gif'\" onmouseout=\"this.src='/App_Themes/{0}/Images/Common/Button/arrow_left.gif'\" onclick=\"javascript:DisplayPics_" + _resultControlId + "(-1,false,this,document.getElementById('imgNext_" + _resultControlId + "'),document.getElementById('img_pr_" + _resultControlId + "'));\" src=\"/App_Themes/{0}/Images/Common/Button/arrow_left.gif\" />", _theme);
+                    html.Append("</td>");
+
+                    //Promoption visual
+                    string currentPromovisual = "";
+                    visibility = "hidden";
+                    if (_visualList != null && _visualList.ContainsKey("p"))
+                    {
+                        currentPromovisual = _visualList["p"][0];
+                        if (_visualList["p"].Count > 1) visibility = "visible"; 
+                    }
+                    html.AppendFormat(" <td id=\"img_pr_div\" class=\"pr_visu\"><a onclick=\"javascript:ZoomPromotionImage_" + _resultControlId + "(img_pr_" + _resultControlId + ".src);\"><img id=\"img_pr_" + _resultControlId + "\" src=\"{0}\" /> </a> </td>", currentPromovisual);
+
+                    //Button arrow right
+                    html.Append(" <td id=\"next\">");
+                    html.AppendFormat(" <img id=\"imgNext_" + _resultControlId + "\" style=\"visibility: {1}; margin-left: 5px; cursor: pointer; margin-right: 5px; vertical-align: middle;\" onmouseover=\"this.src='/App_Themes/{0}/Images/Common/Button/arrow_right_down.gif'\" onmouseout=\"this.src='/App_Themes/{0}/Images/Common/Button/arrow_right.gif'\" onclick=\"javascript:DisplayPics_" + _resultControlId + "(1,false,document.getElementById('imgPrevious_" + _resultControlId + "'),this,document.getElementById('img_pr_" + _resultControlId + "'));\" src=\"/App_Themes/{0}/Images/Common/Button/arrow_right.gif\" />", _theme, visibility);
+                    html.Append("</td>");
+
+                    html.Append("</table>");
+                    html.Append("</td></tr>");
+                }
+                #endregion
+
+                #region Promotion's Conditions Text
+                //Promotion's Conditions
+                if (dr["CONDITION_TEXT"] != System.DBNull.Value && dr["CONDITION_TEXT"].ToString().Length > 0)
+                {
+                    string conditionText = dr["CONDITION_TEXT"].ToString();
+                    html.Append("<tr><td  class=\"vpfDescrCond\">");
+                    html.Append("<hr class=\"hrSpacer\"/>");
+                    html.Append("<ul class=\"prf\">");
+                    html.AppendFormat(" <li><span><b>{0}:</b>", GestionWeb.GetWebWord(2886, _session.SiteLanguage));
+                    html.Append("  <br />");
+                    html.Append(conditionText);
+                    html.Append("</li>");
+                    html.Append(" </ul>");
+                    html.Append("</td></tr>");
+                }
+                #endregion
+
+                #region Promotion's Conditions Images
+                if (dr["CONDITION_VISUAL"] != System.DBNull.Value && dr["CONDITION_VISUAL"].ToString().Length > 0)
+                {
+                    //Button arrow left
+                    html.Append("<tr><td>");
+                    html.Append("  <table cellpadding=\"0\" border=\"0\" align=\"center\">");
+                    html.Append(" <tr><td id=\"previous\">");
+                    html.AppendFormat(" <img id=\"imgPreviousCd_" + _resultControlId + "\" style=\"visibility: hidden; margin-left: 5px; cursor: pointer; margin-right: 5px; vertical-align: middle;\" onmouseover=\"this.src='/App_Themes/{0}/Images/Common/Button/arrow_left_down.gif'\" onmouseout=\"this.src='/App_Themes/{0}/Images/Common/Button/arrow_left.gif'\" onclick=\"javascript:DisplayPics_" + _resultControlId + "(-1,true,this,document.getElementById('imgNextCd_" + _resultControlId + "'),document.getElementById('img_prCd_" + _resultControlId + "'));\" src=\"/App_Themes/{0}/Images/Common/Button/arrow_left.gif\" />", _theme);
+                    html.Append("</td>");
+
+                    //Promoption visual
+                    visibility = "hidden";
+                    string currentPromoCondivisual = "";
+                    if (_visualList != null && _visualList.ContainsKey("pc"))
+                    {
+                        currentPromoCondivisual = _visualList["pc"][0];
+                        if (_visualList["pc"].Count > 1) visibility = "visible";
+                    }
+                    html.AppendFormat(" <td id=\"img_pr_Cd_div\" class=\"pr_visu\"><a onclick=\"javascript:ZoomPromotionImage_" + _resultControlId + "(img_prCd_" + _resultControlId + ".src);\"><img id=\"img_prCd_" + _resultControlId + "\" src=\"{0}\" /> </a> </td>", currentPromoCondivisual);
+
+                    //Button arrow right
+                    html.Append(" <td id=\"next\">");
+                    html.AppendFormat(" <img id=\"imgNextCd_" + _resultControlId + "\" style=\"visibility: {1}; margin-left: 5px; cursor: pointer; margin-right: 5px; vertical-align: middle;\" onmouseover=\"this.src='/App_Themes/{0}/Images/Common/Button/arrow_right_down.gif'\" onmouseout=\"this.src='/App_Themes/{0}/Images/Common/Button/arrow_right.gif'\" onclick=\"javascript:DisplayPics_" + _resultControlId + "(1,true,document.getElementById('imgPreviousCd_" + _resultControlId + "'),this,document.getElementById('img_prCd_" + _resultControlId + "'));\" src=\"/App_Themes/{0}/Images/Common/Button/arrow_right.gif\" />", _theme,visibility);
+                    html.Append("</td>");
+
+                    html.Append("</table>");
+                    html.Append("</td></tr>");
+                }
+                #endregion
+
+                html.Append("<tr>");
+                html.Append("<td class=\"vpScheduleResultFilterWebControlButtons\">");
+
+                #region Button close
+                html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" class=\"vpScheduleResultFilterWebControlButtons\">");
+                html.Append("<tr>");
+                html.Append("<td class=\"vpScheduleResultFilterWebControlButtonCancel\">");
+                html.AppendFormat("<img src=\"/App_Themes/{0}/Images/Common/Button/initialize_all_up.gif\" onmouseover=\"javascript:this.src='/App_Themes/{0}/Images/Common/Button/initialize_all_down.gif';\" onmouseout=\"javascript:this.src='/App_Themes/{0}/Images/Common/Button/initialize_all_up.gif';\" onclick=\"javascript:displayPromoFile_" + _resultControlId + "(" + _idDataPromotion + ",false);\"/>", _theme);
+                html.Append("</td>");
+                html.Append("</tr>");
+                html.Append("</table>");
+
+                #endregion
+                html.Append("</div>");
+                html.Append("</td>");
+                html.Append("</tr>");
+
+                html.Append("</table>");
+
+                html.Append("</td>");
+                html.Append("</tr>");
+                html.Append("</table>");
+            }
+            else return GestionWeb.GetWebWord(177, _session.SiteLanguage);
 
             return html.ToString();
         }
         #endregion
 
+        #region GetPromoFileList
+        /// <summary>
+        /// Get HTML code for the promotion file
+        /// </summary>
+        /// <param name="idDataPromotion">Promotion Id</param>
+        /// <returns>HTML Code</returns>
+        public virtual Dictionary<string, List<string>> GetPromoFileList()
+        {
+            if (!_isInitializeVisualList)
+            {
+                _isInitializeVisualList = true;
+                _visualList = new Dictionary<string, List<string>>();
+                object[] param = new object[3];
+                param[0] = _session;
+                param[1] = _periodBeginningDate;
+                param[2] = _periodEndDate;
+                IVeillePromoDAL vpScheduleDAL = (IVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                DataSet ds = vpScheduleDAL.GetData(_idDataPromotion);
+                string[] promoVisuals = null;
+                #region Test path
+                //Test
+                CstWeb.CreationServerPathes.IMAGES_VP = "http://www.tnsadexpress.com/ImagesPresse";
+                #endregion
+
+                if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+                {
+                    DataRow dr = ds.Tables[0].Rows[0];
+                    if (dr["PROMOTION_VISUAL"] != System.DBNull.Value && dr["PROMOTION_VISUAL"].ToString().Length > 0)
+                    {
+                        //Add promotions visuals
+                        promoVisuals = dr["PROMOTION_VISUAL"].ToString().Split(',');
+                        List<string> promoList = new List<string>();
+                        for (int i = 0; i < promoVisuals.Length; i++)
+                        {
+                            promoList.Add(string.Format("{0}/{1}", CstWeb.CreationServerPathes.IMAGES_VP, promoVisuals[i].Trim()));
+
+                        }
+                        if (promoList.Count > 0) _visualList.Add("p", promoList);
+                        #region Test visuels
+                        //promoList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110425/Imagette/COE001.JPG");
+                        //promoList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110418/Imagette/COE001.JPG");
+                        //promoList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110411/Imagette/COE001.JPG");
+                        //promoList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110404/Imagette/COE001.JPG");
+                        //promoList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110328/Imagette/COE001.JPG");
+                        //promoList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110321/Imagette/COE001.JPG");
+                        //promoList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110314/Imagette/COE001.JPG");
+                        //promoList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110307/Imagette/COE001.JPG");
+                        #endregion
+
+                    }
+                    if (dr["CONDITION_VISUAL"] != System.DBNull.Value && dr["CONDITION_VISUAL"].ToString().Length > 0)
+                    {
+                        //Add promotions visuals
+                        promoVisuals = dr["CONDITION_VISUAL"].ToString().Split(',');
+                        List<string> promoCdList = new List<string>();
+                        for (int i = 0; i < promoVisuals.Length; i++)
+                        {
+                            promoCdList.Add(string.Format("{0}/{1}", CstWeb.CreationServerPathes.IMAGES_VP, promoVisuals[i].Trim()));
+
+                        }
+                        if (promoCdList.Count > 0) _visualList.Add("pc", promoCdList);
+                        #region Test visuels
+                        //promoCdList = new List<string>();
+                        //promoCdList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110404/Imagette/COE001.JPG");
+                        //promoCdList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110328/Imagette/COE001.JPG");
+                        //promoCdList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110321/Imagette/COE001.JPG");
+                        //promoCdList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110314/Imagette/COE001.JPG");
+                        //promoCdList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110307/Imagette/COE001.JPG");
+                        #endregion
+
+                    }
+                }
+            }
+            return _visualList;
+        }
+        #endregion
 
         #region GetData
         /// <summary>
