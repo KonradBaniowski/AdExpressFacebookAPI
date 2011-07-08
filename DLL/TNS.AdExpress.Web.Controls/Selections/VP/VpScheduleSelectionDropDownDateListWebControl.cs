@@ -40,6 +40,21 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
         }
         #endregion   
 
+        #region Evènements
+
+        #region Initialisation
+        /// <summary>
+        /// Initialisation
+        /// </summary>
+        /// <param name="e">Arguments</param>
+        protected override void OnInit(EventArgs e) {
+            base.OnInit(e);
+            InitializeResultToLoad = false;
+        }
+        #endregion
+
+        #endregion
+
         #region SetDate
         /// <summary>
         /// Set Date in WebSession
@@ -102,8 +117,18 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
         /// Get  loading HTML  
         /// </summary>
         /// <returns></returns>
-        protected override string GetHTML() {
+        protected override string GetAjaxInitialisationHTML() {
             return ("<select id=\"dateSelection_"+this.ID+"\" onchange=\"javascript:setDate_" + this.ID + "();\" ></select>");
+        }
+        #endregion
+
+        #region GetHTML
+        /// <summary>
+        /// Get  loading HTML  
+        /// </summary>
+        /// <returns></returns>
+        protected override string GetHTML() {
+            return GetAjaxHTML();
         }
         #endregion
 

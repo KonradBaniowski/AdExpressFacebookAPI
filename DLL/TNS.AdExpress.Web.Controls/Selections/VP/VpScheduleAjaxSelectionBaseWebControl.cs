@@ -89,7 +89,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
             js.Append("\r\n<script language=\"javascript\">\r\n");
             js.Append("\r\nfunction get_" + this.ID + "(){");
             js.Append("\r\n\tvar oN=document.getElementById('" + this.ID + "');");
-            js.Append("\r\n\toN.innerHTML='" + GetHTML().Replace("'", "\\'") + "';");
+            js.Append("\r\n\toN.innerHTML='" + GetAjaxInitialisationHTML().Replace("'", "\\'") + "';");
             js.Append("\r\n\t" + this.GetType().Namespace + "." + this.GetType().Name + ".GetData('" + this._webSession.IdSession + "', resultParameters_" + this.ID + ",styleParameters_" + this.ID + ",get_" + this.ID + "_callback);");
             js.Append("\r\n}");
 
@@ -338,6 +338,16 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
         /// </summary>
         /// <returns></returns>
         protected override string GetHTML() {
+            return GetAjaxInitialisationHTML();
+        }
+        #endregion
+
+        #region GetAjaxInitialisationHTML
+        /// <summary>
+        /// Get  loading HTML  
+        /// </summary>
+        /// <returns></returns>
+        protected virtual string GetAjaxInitialisationHTML() {
             return ("<div align=\"center\" width = \"100%\"><img src=\"/App_Themes/" + _themeName + "/Images/Common/waitAjax.gif\"></div>");
         }
         #endregion
