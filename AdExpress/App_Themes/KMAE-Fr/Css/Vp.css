@@ -315,6 +315,12 @@ div.pr_div
 {
 	text-align: center;
 }
+td.pr_visu
+{
+	text-align: center;
+	width: 222px;
+	height: 307px;
+}
 ul.prf
 {
 	list-style-type: square;
