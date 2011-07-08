@@ -14,6 +14,7 @@ using TNS.AdExpress.Domain.Level;
 using CoreUtils = TNS.AdExpress.Web.Core.Utilities;
 using TNS.FrameWork;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpressI.VP
 {
@@ -587,10 +588,7 @@ namespace TNS.AdExpressI.VP
                 IVeillePromoDAL vpScheduleDAL = (IVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                 DataSet ds = vpScheduleDAL.GetData(_idDataPromotion);
                 string[] promoVisuals = null;
-                #region Test path
-                //Test
-                CstWeb.CreationServerPathes.IMAGES_VP = "http://www.tnsadexpress.com/ImagesPresse";
-                #endregion
+              
 
                 if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                 {
@@ -606,16 +604,7 @@ namespace TNS.AdExpressI.VP
 
                         }
                         if (promoList.Count > 0) _visualList.Add("p", promoList);
-                        #region Test visuels
-                        //promoList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110425/Imagette/COE001.JPG");
-                        //promoList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110418/Imagette/COE001.JPG");
-                        //promoList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110411/Imagette/COE001.JPG");
-                        //promoList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110404/Imagette/COE001.JPG");
-                        //promoList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110328/Imagette/COE001.JPG");
-                        //promoList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110321/Imagette/COE001.JPG");
-                        //promoList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110314/Imagette/COE001.JPG");
-                        //promoList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110307/Imagette/COE001.JPG");
-                        #endregion
+                        
 
                     }
                     if (dr["CONDITION_VISUAL"] != System.DBNull.Value && dr["CONDITION_VISUAL"].ToString().Length > 0)
@@ -629,14 +618,7 @@ namespace TNS.AdExpressI.VP
 
                         }
                         if (promoCdList.Count > 0) _visualList.Add("pc", promoCdList);
-                        #region Test visuels
-                        //promoCdList = new List<string>();
-                        //promoCdList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110404/Imagette/COE001.JPG");
-                        //promoCdList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110328/Imagette/COE001.JPG");
-                        //promoCdList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110321/Imagette/COE001.JPG");
-                        //promoCdList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110314/Imagette/COE001.JPG");
-                        //promoCdList.Add("http://www.tnsadexpress.com/ImagesPresse/9439/20110307/Imagette/COE001.JPG");
-                        #endregion
+                        
 
                     }
                 }
@@ -665,8 +647,8 @@ namespace TNS.AdExpressI.VP
             List<int> currentLevelPromoLineIndex = null;
             VeillePromoItem veillePromoItem = null;
             CstResults.VeillePromo.itemType promoItemType = CstResults.VeillePromo.itemType.absent;
-            int currentRowIndex = 0, oldRowIndex = -1;
-            DetailLevelItemInformation persoLevel = DetailLevelItemsInformation.Get(64);//TODO : Get personnalized level via client session
+            int currentRowIndex = -1, oldRowIndex = -1;
+            DetailLevelItemInformation persoLevel = DetailLevelItemsInformation.Get(_session.PersonnalizedLevel);//TODO : Get personnalized level via client session
             int cssIndex = 1; long tempId = -1;
 
             param = new object[3];
@@ -889,8 +871,10 @@ namespace TNS.AdExpressI.VP
                     while (!(promoStartWeek.Week == promoEndWeek.Week && promoStartWeek.Year == promoEndWeek.Year))
                     {
                         res = currentLevelPromoLineIndex[i];
-                        long weekKey = promoStartWeek.Year * 100 + promoStartWeek.Week;
-                        if (promoRow[weekList[weekKey]] != null)
+                        int month = Dates.GetMonthFromWeek(promoStartWeek.Year, promoStartWeek.Week);
+                        long weekKey = (promoStartWeek.Year * 100 + month) * 100 + promoStartWeek.Week;
+                        VeillePromoItem vItem = (VeillePromoItem)promoRow[weekList[weekKey]];
+                        if (vItem.ItemType != CstResults.VeillePromo.itemType.absent)
                         {
                             res = -1; break;
                         }
