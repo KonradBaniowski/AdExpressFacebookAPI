@@ -26,10 +26,13 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
         /// <returns>Evenement Ajax</returns>
         protected override string GetAjaxEventScript() {
             StringBuilder js = new StringBuilder(1000);
-            js.Append("\r\nfunction setDate_" + this.ID + "(){");
-            js.Append("\r\n\tif( document.getElementById('dateSelection_" + this.ID + "').options[document.getElementById('dateSelection_" + this.ID + "').selectedIndex].value!='" +CustomerSessions.Period.Type.personalize+"')");
-            js.Append("\r\n\t isLoaded_VpScheduleContainerWebControl1ResultFilter_Dates = false;");
 
+            js.Append("\r\nvar oldDateSelection_" + this.ID + " = '" + _webSession.PeriodType.ToString() + "';");
+
+            js.Append("\r\nfunction setDate_" + this.ID + "(){");
+            js.Append("\r\n\tif((document.getElementById('dateSelection_" + this.ID + "').options[document.getElementById('dateSelection_" + this.ID + "').selectedIndex].value!='" + CustomerSessions.Period.Type.personalize + "' && oldDateSelection_" + this.ID + " == '" + CustomerSessions.Period.Type.personalize + "') || (document.getElementById('dateSelection_" + this.ID + "').options[document.getElementById('dateSelection_" + this.ID + "').selectedIndex].value=='" + CustomerSessions.Period.Type.personalize + "' && oldDateSelection_" + this.ID + " != '" + CustomerSessions.Period.Type.personalize + "'))");
+            js.Append("\r\n\t isLoaded_VpScheduleContainerWebControl1ResultFilter_Dates = false;");
+            js.Append("\r\noldDateSelection_" + this.ID + " = document.getElementById('dateSelection_" + this.ID + "').options[document.getElementById('dateSelection_" + this.ID + "').selectedIndex].value;");
             js.Append("\r\n\t" + this.GetType().Namespace + "." + this.GetType().Name + ".SetDate('" + this._webSession.IdSession + "', document.getElementById('dateSelection_" + this.ID + "').options[document.getElementById('dateSelection_" + this.ID + "').selectedIndex].value, document.getElementById('datePersonnalize" + this.ID + "').value, resultParameters_" + this.ID + ",styleParameters_" + this.ID + ",setDate_" + this.ID + "_callback);");
            
             js.Append("\r\n}");
@@ -117,7 +120,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
         }
         #endregion
 
-        #region GetHTML
+        #region GetAjaxInitialisationHTML
         /// <summary>
         /// Get  loading HTML  
         /// </summary>
