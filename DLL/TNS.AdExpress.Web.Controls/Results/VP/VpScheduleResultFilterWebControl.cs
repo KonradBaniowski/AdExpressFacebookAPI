@@ -122,21 +122,24 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                     case 0:
                         js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true){");
                         js.Append("\r\n\t\tmediaParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
-                        //js.Append("\r\n\t\tif(mediaParameters != null) isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " =false;");
                         js.Append("\r\n\t} else");
                         js.Append("\r\n\t\tmediaParameters = null;");
                         break;
                     case 1:
                         js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true){");
                         js.Append("\r\n\t\tproductParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
-                        //js.Append("\r\n\t\tif(productParameters != null) isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " =false;");
                         js.Append("\r\n\t} else");
                         js.Append("\r\n\t\tproductParameters = null;");
                         break;
                     case 2:
                         js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true){");
+
                         js.Append("\r\n\t\tdetailLevelParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
-                        //js.Append("\r\n\t\tif(detailLevelParameters != null) isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " =false;");
+                        js.Append("\r\n\tif(detailLevelParameters!=null && detailLevelParameters.length==2 && detailLevelParameters[0].split(',').length==3 && detailLevelParameters[0].split(',')[0]=='none' ");
+                        js.Append("\r\n\t && detailLevelParameters[0].split(',')[1] == 'none' ");
+                        js.Append("\r\n\t && detailLevelParameters[0].split(',')[2]=='none'){");
+                        js.Append("\r\n\t\tisLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " =false;");
+                        js.Append("\r\n\t} ");
                         js.Append("\r\n\t} else");
                         js.Append("\r\n\t\tdetailLevelParameters = null;");
                         break;
@@ -144,7 +147,6 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                         cVpScheduleSelectionFilterBaseWebControlDate = cVpScheduleSelectionFilterBaseWebControl;
                         js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true){");
                         js.Append("\r\n\t\tdateParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
-                        //js.Append("\r\n\t\tif(dateParameters != null) isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " =false;");                       
                         js.Append("\r\n\t\tif(dateParameters != null){ ");
                         js.Append(CheckDates());
                         js.Append("\r\n\t} else");
@@ -571,12 +573,14 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                     _webSession.CurrentUniversProduct = _webSession.SelectionUniversProduct = GetTreeNode(productParameters, (GenericDetailLevel)(module.DefaultProductDetailLevels[0]));
                 }
                 if (detailLevelParameters != null) {
-                    List<DetailLevelItemInformation.Levels> detailTabList =  new List<DetailLevelItemInformation.Levels>();
-                    foreach (string detailTab in ((string)detailLevelParameters[0]).Split(',')) {
-                        if (!string.IsNullOrEmpty(detailTab) && detailTab!="none")
-                            detailTabList.Add((DetailLevelItemInformation.Levels)Enum.Parse(typeof(DetailLevelItemInformation.Levels), detailTab));
+                    if (((string)detailLevelParameters[0]).Split(',')[0] != "none" || ((string)detailLevelParameters[0]).Split(',')[1] != "none" || ((string)detailLevelParameters[0]).Split(',')[2] != "none") {
+                        List<DetailLevelItemInformation.Levels> detailTabList = new List<DetailLevelItemInformation.Levels>();
+                        foreach (string detailTab in ((string)detailLevelParameters[0]).Split(',')) {
+                            if (!string.IsNullOrEmpty(detailTab) && detailTab != "none")
+                                detailTabList.Add((DetailLevelItemInformation.Levels)Enum.Parse(typeof(DetailLevelItemInformation.Levels), detailTab));
+                        }
+                        _webSession.GenericMediaDetailLevel = new GenericDetailLevel(new ArrayList(detailTabList));
                     }
-                    _webSession.GenericMediaDetailLevel = new GenericDetailLevel(new ArrayList(detailTabList));
                     _webSession.PersonnalizedLevel = (DetailLevelItemInformation.Levels)Enum.Parse(typeof(DetailLevelItemInformation.Levels), ((string)detailLevelParameters[1]));
                 }
                 if (dateParameters != null) {
