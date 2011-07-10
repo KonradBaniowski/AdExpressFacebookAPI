@@ -283,7 +283,7 @@ namespace TNS.AdExpressI.VP
                     //Start row level 1
                     if (nbLevels >= 1 && idL1 != oldIdL1)
                     {
-                        html.Append("<tr><td class=\"L1Vp\">");
+                        html.AppendFormat("<tr><td class=\"{0}\">", ((i == 0) ? "L1Vp" : "L1VpbBis"));
                         html.Append(Convert.ToString(dr[L1_COLUMN_INDEX]));
                         html.AppendFormat("</td><td colspan=\"{0}\" class=\"p3\">&nbsp;</td></tr>", levelColSpan);
                         newL1 = true;
@@ -294,7 +294,7 @@ namespace TNS.AdExpressI.VP
                     //Start row level 2
                     if (nbLevels >= 2 && (idL2 != oldIdL2 || newL2))
                     {
-                        html.Append("<tr><td class=\"L2Vp\">");
+                        html.AppendFormat("<tr><td class=\"{0}\">", ((newL1) ? "L2Vp" : "L2VpBis"));
                         html.AppendFormat("&nbsp; {0}", Convert.ToString(dr[L2_COLUMN_INDEX]));
                         html.AppendFormat("</td><td colspan=\"{0}\" class=\"p3\">&nbsp;</td></tr>", levelColSpan);
                         newL2 = true;
@@ -305,7 +305,7 @@ namespace TNS.AdExpressI.VP
                     //Start row level 3
                     if (nbLevels >= 3 && (idL3 != oldIdL3 || newL3))
                     {
-                        html.Append("<tr><td class=\"L3Vp\">");
+                        html.AppendFormat("<tr><td class=\"{0}\">", ((newL2) ? "L3Vp" : "L3VpBis"));
                         html.AppendFormat("&nbsp;&nbsp; {0}", Convert.ToString(dr[L3_COLUMN_INDEX]));
                         html.AppendFormat("</td><td colspan=\"{0}\" class=\"p3\">&nbsp;</td></tr>", levelColSpan);
                         newL3 = true;

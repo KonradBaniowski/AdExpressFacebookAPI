@@ -519,6 +519,28 @@ td.L1Vp{
 	white-space: nowrap;
 	text-align:left;
 }
+td.L1VpbBis{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #FFFFFF;
+	font-weight: bold;
+	text-decoration : none;
+	background-color: #777777;
+	border-left-width:0px;
+	border-top-color:#FFFFFF;
+	border-top-width:1px;
+	border-top-style:solid;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+	white-space: nowrap;
+	text-align:left;
+}
 td.L2Vp{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -529,6 +551,29 @@ td.L2Vp{
 	padding:0px,0px,0px,2px;
 	border-left-width:0px;
 	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+	white-space: nowrap;
+	text-align:left;
+}
+td.L2VpBis{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight: bold;
+	text-decoration : none;
+	background-color: #A0A1A7;
+	padding:0px,0px,0px,2px;
+	border-left-width:0px;
+	border-top-color:#FFFFFF;
+	border-top-width:1px;
+	border-top-style:solid;
 	border-bottom-color:#FFFFFF;
 	border-bottom-width:1px;
 	border-bottom-style:solid;
@@ -561,6 +606,29 @@ td.L3Vp{
 	white-space: nowrap;
 	text-align:left;
 }
+td.L3VpBis{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight:normal;
+	text-decoration : none;
+	background-color: #C3C7D0;	
+	padding:0px,0px,0px,2px;
+	border-left-width:0px;
+	border-top-color:#FFFFFF;
+	border-top-width:1px;
+	border-top-style:solid;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+	white-space: nowrap;
+	text-align:left;
+}
 td.L4Vp
 {
 	font-family: Arial, Helvetica, sans-serif;
@@ -572,8 +640,8 @@ td.L4Vp
 	padding: 0px,0px,0px,2px;
 	border-left-width: 0px;
 	border-top-width: 0px;
-	border-bottom-color: #D9E0CE;
-	border-bottom-width: 1px;
+	border-bottom-color: #FFFFFF;
+	border-bottom-width: 0px;
 	border-bottom-style: solid;
 	border-right-color: #FFFFFF;
 	border-right-width: 1px;
