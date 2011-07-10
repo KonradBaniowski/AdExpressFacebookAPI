@@ -101,6 +101,13 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             js.Append("\r\n\t\tif(document.getElementById('lvl0_" + this.ID + "').options[document.getElementById('lvl0_" + this.ID + "').selectedIndex].value == document.getElementById('lvl2_" + this.ID + "').options[document.getElementById('lvl2_" + this.ID + "').selectedIndex].value)");
             js.Append("\r\n\t\t\tdocument.getElementById('lvl0_" + this.ID + "').selectedIndex = 0;");
             js.Append("\r\n\t}");
+
+            js.Append("\r\n\tif(document.getElementById('lvl0_" + this.ID + "').options[document.getElementById('lvl0_" + this.ID + "').selectedIndex].value=='none' ");
+            js.Append("\r\n\t && document.getElementById('lvl1_" + this.ID + "').options[document.getElementById('lvl1_" + this.ID + "').selectedIndex].value=='none' ");
+            js.Append("\r\n\t && document.getElementById('lvl2_" + this.ID + "').options[document.getElementById('lvl2_" + this.ID + "').selectedIndex].value=='none'){");
+            js.Append("\r\n\t isChanged_" + this.ID + " = false;");
+            js.Append("\r\n\t}");
+
             js.Append("\r\n}\r\n");
             return js.ToString();
         }
