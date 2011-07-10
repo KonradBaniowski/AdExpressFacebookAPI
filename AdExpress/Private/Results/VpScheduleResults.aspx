@@ -28,7 +28,7 @@
 
 		            <!-- marge de gauche-->
 		            <td valign="top">
-		                <table cellspacing="0" cellpadding="0" width="100%" border="0">
+		                <table cellspacing="0" cellpadding="0" width="100%" border="0" style="font-size:0px;">
 		                <tr><td width="1px" valign="top"><asp:Image ID="Image2" runat="server" border="0" SkinID="LogoAdexpress" /></td><td valign="top"><cc2:headerwebcontrol language="33" id="HeaderWebControl1" runat="server" Type_de_page="generic"></cc2:headerwebcontrol></td></tr>
 	                    </table>
 		            </td>

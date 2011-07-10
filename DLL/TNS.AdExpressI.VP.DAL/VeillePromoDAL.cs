@@ -92,11 +92,13 @@ namespace TNS.AdExpressI.VP.DAL
         {
             DataSet ds = null;
             string classifTableName = string.Empty, classifFieldName = string.Empty, classifOrderFieldName = string.Empty
-                , classifJoinCondition = string.Empty, universFilter = string.Empty;
+                , classifJoinCondition = string.Empty, universFilter = string.Empty, persoTableName = string.Empty
+                , persoJoins = string.Empty, persoFields = string.Empty;
 
             try
             {
                 StringBuilder sql = new StringBuilder(5000);
+
 
                 string prefix = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
 
@@ -123,14 +125,41 @@ namespace TNS.AdExpressI.VP.DAL
                 //Get  classification levels selected
                 GenericDetailLevel detailLevel = _session.GenericMediaDetailLevel;
 
+                //perso fields                
+                if (!detailLevel.ContainDetailLevelItem(_session.PersonnalizedLevel))
+                {
+                    DetailLevelItemInformation persoLevelInformation = DetailLevelItemsInformation.Get(_session.PersonnalizedLevel);
+                    persoFields = persoLevelInformation.GetSqlFieldId() + "," + persoLevelInformation.GetSqlField();
+                    classifFieldName += "," + persoFields;
+
+                    persoTableName = persoLevelInformation.GetTableNameWithPrefix();
+                    classifTableName += "," + schPromo.Label + "." + persoTableName;
+
+                    persoJoins = " and " + persoLevelInformation.GetSqlFieldId() + "=" + prefix + "." + persoLevelInformation.GetSqlFieldIdWithoutTablePrefix()
+                    + " and " + persoLevelInformation.DataBaseTableNamePrefix + ".activation< " + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
+                    classifJoinCondition += persoJoins;
+                }
+                //Force brand field
+                if (!detailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.vpBrand) && _session.PersonnalizedLevel!= DetailLevelItemInformation.Levels.vpBrand)
+                {
+                    DetailLevelItemInformation brandLevelInformation = DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vpBrand);
+                    classifFieldName += "," + brandLevelInformation.GetSqlField();
+
+                    classifTableName += "," + schPromo.Label + "." + brandLevelInformation.GetTableNameWithPrefix();
+
+                    classifJoinCondition += " and " + brandLevelInformation.GetSqlFieldId() + "=" + prefix + "." + brandLevelInformation.GetSqlFieldIdWithoutTablePrefix()
+                     + " and " + brandLevelInformation.DataBaseTableNamePrefix + ".activation< " + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
+                  
+                }
+
                 //get universe filters
                 universFilter = GetUniversFilter(prefix);
 
 
                 //SELECT
-                //sql.AppendFormat(" select ID_DATA_PROMOTION,{0}, date_begin_num, date_end_num  ", classifFieldName);
-                //sql.Append(" ,promotion_content, condition_visual, condition_text, promotion_brand, promotion_visual ");
-                sql.AppendFormat(" select * ");
+
+                sql.AppendFormat(" select ID_DATA_PROMOTION,{0}, date_begin_num, date_end_num  ", classifFieldName);
+                sql.Append(" ,promotion_content, condition_visual, condition_text, promotion_brand, promotion_visual ");
 
 
                 //FROM
@@ -253,8 +282,8 @@ namespace TNS.AdExpressI.VP.DAL
                 sql.AppendFormat(" (( DATE_BEGIN_NUM >= {0} and DATE_BEGIN_NUM <= {1}) ", _periodBeginningDate, _periodEndDate);
                 sql.AppendFormat(" or (DATE_END_NUM >= {0} and DATE_END_NUM <= {1})) ", _periodBeginningDate, _periodEndDate);
                 sql.Append("  or ");
-                sql.AppendFormat("  (( DATE_BEGIN_NUM >= {0} and  {0} <= DATE_END_NUM ) ", _periodBeginningDate);
-                sql.AppendFormat(" or (DATE_BEGIN_NUM >= {0} and {0} <= DATE_END_NUM ))     ", _periodEndDate);
+                sql.AppendFormat("  (( DATE_BEGIN_NUM <= {0} and  {0} <= DATE_END_NUM ) ", _periodBeginningDate);
+                sql.AppendFormat(" or (DATE_BEGIN_NUM <= {0} and {0} <= DATE_END_NUM ))     ", _periodEndDate);
                 sql.Append("  ) ");
             }
             // Product classification Selection

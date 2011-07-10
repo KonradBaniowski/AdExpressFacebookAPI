@@ -9,6 +9,7 @@ using System;
 using System.Web.UI.WebControls;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Results;
+using TNS.AdExpress.Constantes.Web;
 namespace TNS.AdExpress.Web.Controls.Selections.VP
 {
     /// <summary>
@@ -26,7 +27,11 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP
         protected override string GetAjaxEventScript() {
             StringBuilder js = new StringBuilder(1000);
             js.Append("\r\nfunction setDate_" + this.ID + "(){");
+            js.Append("\r\n\tif( document.getElementById('dateSelection_" + this.ID + "').options[document.getElementById('dateSelection_" + this.ID + "').selectedIndex].value!='" +CustomerSessions.Period.Type.personalize+"')");
+            js.Append("\r\n\t isLoaded_VpScheduleContainerWebControl1ResultFilter_Dates = false;");
+
             js.Append("\r\n\t" + this.GetType().Namespace + "." + this.GetType().Name + ".SetDate('" + this._webSession.IdSession + "', document.getElementById('dateSelection_" + this.ID + "').options[document.getElementById('dateSelection_" + this.ID + "').selectedIndex].value, document.getElementById('datePersonnalize" + this.ID + "').value, resultParameters_" + this.ID + ",styleParameters_" + this.ID + ",setDate_" + this.ID + "_callback);");
+           
             js.Append("\r\n}");
 
             js.Append("\r\nfunction setDate_" + this.ID + "_callback(res){");

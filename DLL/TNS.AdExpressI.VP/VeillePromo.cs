@@ -183,7 +183,7 @@ namespace TNS.AdExpressI.VP
         {
             StringBuilder html = new StringBuilder(5000), tempHtml = new StringBuilder(1000);
             int rowSpan = 1, colSpan = 0;
-
+            bool newL1 = false, newL2 = false, newL3 = false;
 
             VeillePromoScheduleData veillePromoScheduleData = GetData();
 
@@ -207,7 +207,7 @@ namespace TNS.AdExpressI.VP
                 //Start list of monthes
                 rowSpan = 2;
                 html.Append("<tr>");
-                html.AppendFormat("<td rowspan=\"{0}\" class=\"pt\"> &nbsp;Niveaux </td>", rowSpan);//TODO : Mettre libellé dans fichier ressources                 
+                html.AppendFormat("<td rowspan=\"{0}\" class=\"ptVp\"> &nbsp;{1}</td>", rowSpan, GestionWeb.GetWebWord(2872, _session.SiteLanguage));
                 int curMonth = -1, curYear = -1, oldYear = -1, curWeek = -1, oldMonth = -1, start = -1;
                 Int64 oldIdL1 = -1, idL1 = -1, oldIdL2 = -1, idL2 = -1, oldIdL3 = -1, idL3 = -1;
                 int levelColSpan = 1, width = 31;
@@ -220,8 +220,13 @@ namespace TNS.AdExpressI.VP
                     curWeek = int.Parse(key.ToString().Substring(6, 2));
                     if (oldMonth != curMonth && start > -1)
                     {
-                        string monthString = MonthString.GetHTMLCharacters(oldMonth, _session.SiteLanguage, 3);
-                        html.AppendFormat(" <td colspan=\"{0}\" class=\"ptm\">{1} {2}</td>", colSpan, monthString, oldYear);
+                        string monthString = "&nbsp;", yearString = "";
+                        if (colSpan > 1)
+                        {
+                            monthString = MonthString.GetHTMLCharacters(oldMonth, _session.SiteLanguage, 3);
+                            yearString = (oldYear.ToString().Length == 1) ? "0" + oldYear.ToString() : oldYear.ToString();
+                        }
+                        html.AppendFormat(" <td colspan=\"{0}\" class=\"ptm\">{1} {2}</td>", colSpan, monthString, yearString);
                         colSpan = 0;
                     }
 
@@ -233,8 +238,13 @@ namespace TNS.AdExpressI.VP
                 }
                 if (start > -1)
                 {
-                    string monthString = MonthString.GetHTMLCharacters(oldMonth, _session.SiteLanguage, 3);
-                    html.AppendFormat(" <td colspan=\"{0}\" class=\"ptm\">{1} {2}</td>", colSpan, monthString, oldYear);
+                    string monthString = "&nbsp;", yearString = "";
+                    if (colSpan > 1)
+                    {
+                        monthString = MonthString.GetHTMLCharacters(oldMonth, _session.SiteLanguage, 3);
+                        yearString = (oldYear.ToString().Length == 1) ? "0" + oldYear.ToString() : oldYear.ToString();
+                    }
+                    html.AppendFormat(" <td colspan=\"{0}\" class=\"ptm\">{1} {2}</td>", colSpan, monthString, yearString);
                     colSpan = 0;
                 }
                 html.Append("</tr>");
@@ -252,8 +262,13 @@ namespace TNS.AdExpressI.VP
                 //End list of weeks
                 #endregion
 
-                bool newLevel = false;
+                //bool newLevel = false;
                 string brand = "";
+                rowSpan = 0;
+                int firstVpItemColIndex = -1;
+                if (nbLevels == 1) firstVpItemColIndex = L1_COLUMN_INDEX + 1;
+                if (nbLevels == 2) firstVpItemColIndex = L2_COLUMN_INDEX + 1;
+                if (nbLevels == 3) firstVpItemColIndex = L3_COLUMN_INDEX + 1;
 
                 #region Table content
 
@@ -268,45 +283,47 @@ namespace TNS.AdExpressI.VP
                     //Start row level 1
                     if (nbLevels >= 1 && idL1 != oldIdL1)
                     {
-                        html.Append("<tr><td class=\"L1\">");
+                        html.Append("<tr><td class=\"L1Vp\">");
                         html.Append(Convert.ToString(dr[L1_COLUMN_INDEX]));
                         html.AppendFormat("</td><td colspan=\"{0}\" class=\"p3\">&nbsp;</td></tr>", levelColSpan);
-                        newLevel = true;
+                        newL1 = true;
+                        if (nbLevels > 1) newL2 = true;
                     }
                     //End row level 1
 
                     //Start row level 2
-                    if (nbLevels >= 2 && idL2 != oldIdL2)
+                    if (nbLevels >= 2 && (idL2 != oldIdL2 || newL2))
                     {
-                        html.Append("<tr><td class=\"L2\">");
+                        html.Append("<tr><td class=\"L2Vp\">");
                         html.AppendFormat("&nbsp; {0}", Convert.ToString(dr[L2_COLUMN_INDEX]));
                         html.AppendFormat("</td><td colspan=\"{0}\" class=\"p3\">&nbsp;</td></tr>", levelColSpan);
-                        newLevel = true;
-
+                        newL2 = true;
+                        if (nbLevels > 2) newL3 = true;
                     }
                     //End row level 2
 
                     //Start row level 3
-                    if (nbLevels >= 3 && idL3 != oldIdL3)
+                    if (nbLevels >= 3 && (idL3 != oldIdL3 || newL3))
                     {
-                        html.Append("<tr><td class=\"L3\">");
+                        html.Append("<tr><td class=\"L3Vp\">");
                         html.AppendFormat("&nbsp;&nbsp; {0}", Convert.ToString(dr[L3_COLUMN_INDEX]));
                         html.AppendFormat("</td><td colspan=\"{0}\" class=\"p3\">&nbsp;</td></tr>", levelColSpan);
-                        newLevel = true;
+                        newL3 = true;
                     }
                     //End row level 3
 
                     //***********************Start promotions rows*********************************************************************
-                    if (newLevel)
-                    {
-                        rowSpan = 0;
+                    //if (newLevel)
+                    //{
+                    //    rowSpan = 0;
 
-                    }
-                    rowSpan++;
+                    //}
+                    //rowSpan++;
                     colSpan = 0;
-                    html.AppendFormat("<tr><td rowspan=\"{0}\" class=\"L4\"></td>", rowSpan);
+                    rowSpan = 1;//DEBUG
+                    html.AppendFormat("<tr><td  rowspan=\"{0}\" class=\"L4Vp\"></td>", rowSpan);
 
-                    for (int j = L3_COLUMN_INDEX + 1; j < dr.Length; j++)
+                    for (int j = firstVpItemColIndex; j < dr.Length; j++)
                     {
                         bool endIncomplete = false, startIncomplete = false;
                         if (dr[j] != null)
@@ -325,6 +342,7 @@ namespace TNS.AdExpressI.VP
                                     {
                                         if (vpi2.ItemType == CstResults.VeillePromo.itemType.endIncomplete) endIncomplete = true;
                                         colSpan++;
+                                        j = k;
                                     }
                                     else
                                     {
@@ -387,13 +405,13 @@ namespace TNS.AdExpressI.VP
                     oldIdL1 = idL1;
                     oldIdL2 = idL2;
                     oldIdL3 = idL3;
-                    newLevel = false;
+                    newL1 = newL2 = newL3 = false;
                 }
                 #endregion
 
                 html.Append("</table>");
             }
-            else return string.Empty;
+            else return "<div align=\"center\" class=\"txtViolet11Bold\">" + GestionWeb.GetWebWord(177, _session.SiteLanguage) + "</div>"; 
 
             return html.ToString();
         }
@@ -419,53 +437,77 @@ namespace TNS.AdExpressI.VP
             DataRow dr = null;
             StringBuilder html = new StringBuilder(1000);
 
-
-            //  _visualList = new Dictionary<string, List<string>>();
-            //_isInitializeVisualList = true;
             if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
             {
                 dr = ds.Tables[0].Rows[0];
                 string visibility = "hidden";
                 html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"center\" width=\"100%\" height=\"100%\">");
-                html.Append("<tr>");
-                html.Append("<td class=\"vpfContent\">");
-                html.Append("<div style=\"overflow-y: auto;overflow-x: none;z-index: 10000;height: 100%;width: 100%;padding: 0px 0px 0px 0px;\">");
-                html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"center\" width=\"100%\" height=\"100%\">");
-                //Header
 
-                //Header Title
+                #region Header
+                //Header
                 html.Append("<tr><td class=\"VpFilePopUpHeader\">");
                 html.AppendFormat("&nbsp;&nbsp;{0} ", GestionWeb.GetWebWord(2883, _session.SiteLanguage));
                 html.Append("</td></tr>");
+                #endregion
+
+                #region Content
+                html.Append("<tr>");
+                html.Append("<td class=\"vpfContent\">");
+                html.Append("<div class=\"vpfContent\">");
+                html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"center\" width=\"100%\" height=\"100%\">");
 
                 //Content
                 html.Append("<tr><td class=\"vpfDescr\">");
                 html.Append("<ul class=\"prf\">");
                 //VP Brand
-                html.AppendFormat(" <li><span><b>{0}:</b> {1}</span></li>", GestionWeb.GetWebWord(2876, _session.SiteLanguage), dr["BRAND"].ToString());
+                html.AppendFormat(" <li><span><b>{0}:</b></span><span class=\"prfSp\"> {1}</span></li>", GestionWeb.GetWebWord(2876, _session.SiteLanguage), dr["BRAND"].ToString());
 
                 string dateBegin = TNS.FrameWork.Date.DateString.YYYYMMDDToDD_MM_YYYY(Convert.ToInt32(dr["DATE_BEGIN_NUM"].ToString()), _session.SiteLanguage);
                 string dateEnd = TNS.FrameWork.Date.DateString.YYYYMMDDToDD_MM_YYYY(Convert.ToInt32(dr["DATE_END_NUM"].ToString()), _session.SiteLanguage);
                 //Date
-                html.AppendFormat(" <li><span><b>{0}:</b> {1} {2} {3} {4}</span></li>", GestionWeb.GetWebWord(895, _session.SiteLanguage), GestionWeb.GetWebWord(896, _session.SiteLanguage), dateBegin, GestionWeb.GetWebWord(897, _session.SiteLanguage), dateEnd);
+                html.AppendFormat(" <li><span><b>{0}:</b></span><span class=\"prfSp\"> {1} {2} {3} {4}</span></li>", GestionWeb.GetWebWord(895, _session.SiteLanguage), GestionWeb.GetWebWord(896, _session.SiteLanguage), dateBegin, GestionWeb.GetWebWord(897, _session.SiteLanguage), dateEnd);
 
                 //Product classification
-                html.AppendFormat("  <li><span><b>{0}:</b> {1} /{2} / {3}</span></li>", GestionWeb.GetWebWord(2884, _session.SiteLanguage), dr["SEGMENT"].ToString(), dr["CATEGORY"].ToString(), dr["PRODUCT"].ToString());
+                html.AppendFormat("  <li><span><b>{0}:</b></span><span class=\"prfSp\"> {1} /{2} / {3}</span></li>", GestionWeb.GetWebWord(2884, _session.SiteLanguage), dr["SEGMENT"].ToString(), dr["CATEGORY"].ToString(), dr["PRODUCT"].ToString());
 
                 //Promotion Content
-                string promoContent = (dr["PROMOTION_CONTENT"] != System.DBNull.Value) ? dr["PROMOTION_CONTENT"].ToString() : "";
-                html.AppendFormat("  <li><span><b>{0}:</b> {1}</span></li>", GestionWeb.GetWebWord(2885, _session.SiteLanguage), promoContent);
+                if (dr["PROMOTION_CONTENT"] != System.DBNull.Value && dr["PROMOTION_CONTENT"].ToString().Length > 0)
+                {
+                    string promoContent = dr["PROMOTION_CONTENT"].ToString();
+                    html.AppendFormat("  <li><span><b>{0}:</b></span><span class=\"prfSp\"> {1}</span></li>", GestionWeb.GetWebWord(2885, _session.SiteLanguage), promoContent);
+                }
 
                 //Brands
-                string brands = (dr["PROMOTION_BRAND"] != System.DBNull.Value) ? dr["PROMOTION_CONTENT"].ToString() : "";
-                html.AppendFormat(" <li><span><b>{0}:</b> {1}</span></li>", GestionWeb.GetWebWord(1149, _session.SiteLanguage), brands);
-                html.Append(" </ul>");
-                html.Append("<hr class=\"hrSpacer\"/>");
-                html.Append("</td></tr>");
+                if (dr["PROMOTION_BRAND"] != System.DBNull.Value && dr["PROMOTION_BRAND"].ToString().Length > 0)
+                {
+                    string[] brands = dr["PROMOTION_BRAND"].ToString().Split(',');
+                    html.AppendFormat(" <li><span><b>{0}:</b></span>", GestionWeb.GetWebWord(1149, _session.SiteLanguage));
+
+                    if (brands.Length == 1)
+                    {
+                        html.AppendFormat("<span class=\"prfSp\"> {0}</span>", brands[0]);
+                    }
+                    else
+                    {
+                        html.Append(" <ul class=\"prfbd\">");
+                        for (int i = 0; i < brands.Length; i++)
+                        {
+                            html.AppendFormat("<li><span class=\"prfSp\">{0}</span> </li>", brands[i]);
+                        }
+                        html.Append(" </ul>");
+                    }
+                    html.Append(" </li>");
+
+                }
+                html.Append("</ul></td></tr>");
 
                 #region Image(s) promotion
                 if (dr["PROMOTION_VISUAL"] != System.DBNull.Value && dr["PROMOTION_VISUAL"].ToString().Length > 0)
                 {
+                    html.Append("<tr><td>");
+                    html.Append("<hr class=\"hrSpacer\"/>");
+                    html.Append("</td></tr>");
+
                     //Button arrow left
                     html.Append("<tr><td>");
                     html.Append("  <table cellpadding=\"0\" border=\"0\" align=\"center\">");
@@ -479,9 +521,9 @@ namespace TNS.AdExpressI.VP
                     if (_visualList != null && _visualList.ContainsKey("p"))
                     {
                         currentPromovisual = _visualList["p"][0];
-                        if (_visualList["p"].Count > 1) visibility = "visible"; 
+                        if (_visualList["p"].Count > 1) visibility = "visible";
                     }
-                    html.AppendFormat(" <td id=\"img_pr_div\" class=\"pr_visu\"><a onclick=\"javascript:ZoomPromotionImage_" + _resultControlId + "(img_pr_" + _resultControlId + ".src);\"><img id=\"img_pr_" + _resultControlId + "\" src=\"{0}\" /> </a> </td>", currentPromovisual);
+                    html.AppendFormat(" <td id=\"img_pr_div\" class=\"pr_visu\"><a onclick=\"javascript:ZoomPromotionImage_" + _resultControlId + "(img_pr_" + _resultControlId + ".src);\"><img class=\"pr_visu\" id=\"img_pr_" + _resultControlId + "\" src=\"{0}\" /> </a> </td>", currentPromovisual);
 
                     //Button arrow right
                     html.Append(" <td id=\"next\">");
@@ -497,14 +539,17 @@ namespace TNS.AdExpressI.VP
                 //Promotion's Conditions
                 if (dr["CONDITION_TEXT"] != System.DBNull.Value && dr["CONDITION_TEXT"].ToString().Length > 0)
                 {
+                    html.Append("<tr><td>");
+                    html.Append("<hr class=\"hrSpacer\"/>");
+                    html.Append("</td></tr>");
+
                     string conditionText = dr["CONDITION_TEXT"].ToString();
                     html.Append("<tr><td  class=\"vpfDescrCond\">");
-                    html.Append("<hr class=\"hrSpacer\"/>");
                     html.Append("<ul class=\"prf\">");
-                    html.AppendFormat(" <li><span><b>{0}:</b>", GestionWeb.GetWebWord(2886, _session.SiteLanguage));
+                    html.AppendFormat(" <li><span><b>{0}:</b></span><span class=\"prfSp\">", GestionWeb.GetWebWord(2886, _session.SiteLanguage));
                     html.Append("  <br />");
                     html.Append(conditionText);
-                    html.Append("</li>");
+                    html.Append("</span></li>");
                     html.Append(" </ul>");
                     html.Append("</td></tr>");
                 }
@@ -513,6 +558,10 @@ namespace TNS.AdExpressI.VP
                 #region Promotion's Conditions Images
                 if (dr["CONDITION_VISUAL"] != System.DBNull.Value && dr["CONDITION_VISUAL"].ToString().Length > 0)
                 {
+                    html.Append("<tr><td>");
+                    html.Append("<hr class=\"hrSpacer\"/>");
+                    html.Append("</td></tr>");
+
                     //Button arrow left
                     html.Append("<tr><td>");
                     html.Append("  <table cellpadding=\"0\" border=\"0\" align=\"center\">");
@@ -528,11 +577,11 @@ namespace TNS.AdExpressI.VP
                         currentPromoCondivisual = _visualList["pc"][0];
                         if (_visualList["pc"].Count > 1) visibility = "visible";
                     }
-                    html.AppendFormat(" <td id=\"img_pr_Cd_div\" class=\"pr_visu\"><a onclick=\"javascript:ZoomPromotionImage_" + _resultControlId + "(img_prCd_" + _resultControlId + ".src);\"><img id=\"img_prCd_" + _resultControlId + "\" src=\"{0}\" /> </a> </td>", currentPromoCondivisual);
+                    html.AppendFormat(" <td id=\"img_pr_Cd_div\" class=\"pr_visu\"><a onclick=\"javascript:ZoomPromotionImage_" + _resultControlId + "(img_prCd_" + _resultControlId + ".src);\"><img class=\"pr_visu\" id=\"img_prCd_" + _resultControlId + "\" src=\"{0}\" /> </a> </td>", currentPromoCondivisual);
 
                     //Button arrow right
                     html.Append(" <td id=\"next\">");
-                    html.AppendFormat(" <img id=\"imgNextCd_" + _resultControlId + "\" style=\"visibility: {1}; margin-left: 5px; cursor: pointer; margin-right: 5px; vertical-align: middle;\" onmouseover=\"this.src='/App_Themes/{0}/Images/Common/Button/arrow_right_down.gif'\" onmouseout=\"this.src='/App_Themes/{0}/Images/Common/Button/arrow_right.gif'\" onclick=\"javascript:DisplayPics_" + _resultControlId + "(1,true,document.getElementById('imgPreviousCd_" + _resultControlId + "'),this,document.getElementById('img_prCd_" + _resultControlId + "'));\" src=\"/App_Themes/{0}/Images/Common/Button/arrow_right.gif\" />", _theme,visibility);
+                    html.AppendFormat(" <img id=\"imgNextCd_" + _resultControlId + "\" style=\"visibility: {1}; margin-left: 5px; cursor: pointer; margin-right: 5px; vertical-align: middle;\" onmouseover=\"this.src='/App_Themes/{0}/Images/Common/Button/arrow_right_down.gif'\" onmouseout=\"this.src='/App_Themes/{0}/Images/Common/Button/arrow_right.gif'\" onclick=\"javascript:DisplayPics_" + _resultControlId + "(1,true,document.getElementById('imgPreviousCd_" + _resultControlId + "'),this,document.getElementById('img_prCd_" + _resultControlId + "'));\" src=\"/App_Themes/{0}/Images/Common/Button/arrow_right.gif\" />", _theme, visibility);
                     html.Append("</td>");
 
                     html.Append("</table>");
@@ -540,30 +589,32 @@ namespace TNS.AdExpressI.VP
                 }
                 #endregion
 
-                html.Append("<tr>");
-                html.Append("<td class=\"vpScheduleResultFilterWebControlButtons\">");
+
+                html.Append("</table>");
+                html.Append("</div>");
+                html.Append("</td>");
+                html.Append("</tr>");
+                #endregion
 
                 #region Button close
-                html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" class=\"vpScheduleResultFilterWebControlButtons\">");
+                html.Append("<tr>");//
+                html.Append("<td class=\"vpScheduleResultWebControlButtons\">");
+                html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" class=\"vpScheduleResultWebControlButtons\">");
                 html.Append("<tr>");
-                html.Append("<td class=\"vpScheduleResultFilterWebControlButtonCancel\">");
+                html.Append("<td class=\"vpScheduleResultWebControlButtonCancel\">");
                 html.AppendFormat("<img src=\"/App_Themes/{0}/Images/Common/Button/initialize_all_up.gif\" onmouseover=\"javascript:this.src='/App_Themes/{0}/Images/Common/Button/initialize_all_down.gif';\" onmouseout=\"javascript:this.src='/App_Themes/{0}/Images/Common/Button/initialize_all_up.gif';\" onclick=\"javascript:displayPromoFile_" + _resultControlId + "(" + _idDataPromotion + ",false);\"/>", _theme);
                 html.Append("</td>");
                 html.Append("</tr>");
                 html.Append("</table>");
+                html.Append("</td>");
+                html.Append("</tr>");
 
                 #endregion
-                html.Append("</div>");
-                html.Append("</td>");
-                html.Append("</tr>");
 
                 html.Append("</table>");
 
-                html.Append("</td>");
-                html.Append("</tr>");
-                html.Append("</table>");
             }
-            else return GestionWeb.GetWebWord(177, _session.SiteLanguage);
+            else return "<div align=\"center\" class=\"txtViolet11Bold\">" + GestionWeb.GetWebWord(177, _session.SiteLanguage) + "</div>"; 
 
             return html.ToString();
         }
@@ -588,7 +639,7 @@ namespace TNS.AdExpressI.VP
                 IVeillePromoDAL vpScheduleDAL = (IVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                 DataSet ds = vpScheduleDAL.GetData(_idDataPromotion);
                 string[] promoVisuals = null;
-              
+
 
                 if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                 {
@@ -604,7 +655,7 @@ namespace TNS.AdExpressI.VP
 
                         }
                         if (promoList.Count > 0) _visualList.Add("p", promoList);
-                        
+
 
                     }
                     if (dr["CONDITION_VISUAL"] != System.DBNull.Value && dr["CONDITION_VISUAL"].ToString().Length > 0)
@@ -618,7 +669,7 @@ namespace TNS.AdExpressI.VP
 
                         }
                         if (promoCdList.Count > 0) _visualList.Add("pc", promoCdList);
-                        
+
 
                     }
                 }
@@ -693,14 +744,14 @@ namespace TNS.AdExpressI.VP
                 if (nbLevels >= 1 && oldIdL1 != GetLevelId(currentRow, 1, detailLevel))
                 {
                     newL1 = true;
-                    newL2 = true;
+                    if (nbLevels > 1) newL2 = true;
                     oldIdL1 = GetLevelId(currentRow, 1, detailLevel);
 
                 }
                 if (nbLevels >= 2 && (oldIdL2 != GetLevelId(currentRow, 2, detailLevel) || newL2))
                 {
                     newL2 = true;
-                    newL3 = true;
+                    if (nbLevels > 2) newL3 = true;
                     oldIdL2 = GetLevelId(currentRow, 2, detailLevel);
                 }
                 if (nbLevels >= 3 && (oldIdL3 != GetLevelId(currentRow, 3, detailLevel) || newL3))
@@ -862,24 +913,25 @@ namespace TNS.AdExpressI.VP
 
             if (currentLevelPromoLineIndex != null && currentLevelPromoLineIndex.Count > 0 && data != null && weekList != null)
             {
-
+                AtomicPeriodWeek pStartWeek = (AtomicPeriodWeek)promoStartWeek.Clone();
+                AtomicPeriodWeek pEndWeek = (AtomicPeriodWeek)promoEndWeek.Clone();
                 for (int i = 0; i < currentLevelPromoLineIndex.Count; i++)
                 {
                     object[] promoRow = data[currentLevelPromoLineIndex[i]];
 
-                    promoEndWeek.Increment();
-                    while (!(promoStartWeek.Week == promoEndWeek.Week && promoStartWeek.Year == promoEndWeek.Year))
+                    pEndWeek.Increment();
+                    while (!(pStartWeek.Week == pEndWeek.Week && pStartWeek.Year == pEndWeek.Year))
                     {
                         res = currentLevelPromoLineIndex[i];
-                        int month = Dates.GetMonthFromWeek(promoStartWeek.Year, promoStartWeek.Week);
-                        long weekKey = (promoStartWeek.Year * 100 + month) * 100 + promoStartWeek.Week;
+                        int month = Dates.GetMonthFromWeek(pStartWeek.Year, pStartWeek.Week);
+                        long weekKey = (pStartWeek.Year * 100 + month) * 100 + pStartWeek.Week;
                         VeillePromoItem vItem = (VeillePromoItem)promoRow[weekList[weekKey]];
                         if (vItem.ItemType != CstResults.VeillePromo.itemType.absent)
                         {
                             res = -1; break;
                         }
 
-                        promoStartWeek.Increment();
+                        pStartWeek.Increment();
                     }
                     if (res > 0) break;
                 }

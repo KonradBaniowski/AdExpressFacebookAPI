@@ -82,8 +82,8 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n\t\t}");
 
 
-            js.Append("\r\n\tdocument.getElementById('res_promofile_" + this.ID + "').style.top = (document.documentElement.scrollTop + ((myHeight - 550) / 2)) + \"px\";");
-            js.Append("\r\n\tdocument.getElementById('res_promofile_" + this.ID + "').style.left = (document.documentElement.scrollLeft + ((myWidth - 750) / 2)) + \"px\";");
+            js.Append("\r\n\tdocument.getElementById('res_promofile_" + this.ID + "').style.top = (document.documentElement.scrollTop + ((myHeight - 650) / 2)) + \"px\";");
+            js.Append("\r\n\tdocument.getElementById('res_promofile_" + this.ID + "').style.left = (document.documentElement.scrollLeft + ((myWidth - 650) / 2)) + \"px\";");
 
             js.Append("\r\n\t\tdocument.getElementById('res_promofile_" + this.ID + "').style.display = '';");
          
@@ -111,9 +111,9 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n\tvar oN=document.getElementById('res_promofile_" + this.ID + "');");
             js.Append("\r\n\tif(res.value.length>1){");
             js.Append("\r\n\t\timagesName_ItemsCollectionNavigator_" + this.ID + "= new Array();");
-            js.Append("\r\n\t\tif(res!=null && res.value!=null)imagesName_ItemsCollectionNavigator_" + this.ID + " = res.value[1].split(',');");            
+            js.Append("\r\n\t\tif(res!=null && res.value!=null &&  res.value[1]!=null)imagesName_ItemsCollectionNavigator_" + this.ID + " = res.value[1].split(',');");            
             js.Append("\r\n\t\timagesName_ItemsCollectionNavigator2_" + this.ID + "= new Array();");
-            js.Append("\r\n\t\tif(res!=null && res.value!=null)imagesName_ItemsCollectionNavigator2_" + this.ID + " = res.value[2].split(',');");
+            js.Append("\r\n\t\tif(res!=null && res.value!=null &&  res.value[2]!=null)imagesName_ItemsCollectionNavigator2_" + this.ID + " = res.value[2].split(',');");
             js.Append("\r\n\t}");
             js.Append("\r\n\tif(res.value.length>0)");
             js.Append("\r\n\t\toN.innerHTML=res.value[0];");
@@ -124,21 +124,25 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n\tcurrentIndexNavigator = currentIndexNavigator + indexIncr;");
             js.Append("\r\n\t if (promoCondition) {");
             js.Append("\r\n\t currentPanelIndex_ItemsCollectionNavigator2_" + this.ID + " = currentIndexNavigator;");
+            js.Append("\r\n\t if(imagesName_ItemsCollectionNavigator2_" + this.ID +" != null && imagesName_ItemsCollectionNavigator2_" + this.ID+".length>0)");
             js.Append("\r\n\timg_pr.src = imagesName_ItemsCollectionNavigator2_" + this.ID + "[currentIndexNavigator];");
             js.Append("\r\n\t } else {");
             js.Append("\r\n\tcurrentPanelIndex_ItemsCollectionNavigator_" + this.ID + "  = currentIndexNavigator;");
+            js.Append("\r\n\t if(imagesName_ItemsCollectionNavigator_" + this.ID + " != null && imagesName_ItemsCollectionNavigator_" + this.ID + ".length>0)");
             js.Append("\r\n\timg_pr.src = imagesName_ItemsCollectionNavigator_" + this.ID + "[currentIndexNavigator];");
             js.Append("\r\n\t}");
             js.Append("\r\n\t if (currentIndexNavigator > 0) {");
             js.Append("\r\n\timg_prev.style.visibility = 'visible';");
             js.Append("\r\n\t } else img_prev.style.visibility = 'hidden';");
-            js.Append("\r\n\tif (currentIndexNavigator != imagesName_ItemsCollectionNavigator_" + this.ID + ".length-1) {");
+            js.Append("\r\n\tif (promoCondition && imagesName_ItemsCollectionNavigator2_" + this.ID + "!=null && currentIndexNavigator != imagesName_ItemsCollectionNavigator2_" + this.ID + ".length-1) {");
+            js.Append("\r\n\timg_next.style.visibility = 'visible';");
+            js.Append("\r\n\t}else if (!promoCondition && imagesName_ItemsCollectionNavigator_" + this.ID + "!=null && currentIndexNavigator != imagesName_ItemsCollectionNavigator_" + this.ID + ".length-1) {");
             js.Append("\r\n\timg_next.style.visibility = 'visible';");
             js.Append("\r\n\t} else img_next.style.visibility = 'hidden';");                    
             js.Append("\r\n}\r\n");
 
             js.Append("\r\nfunction ZoomPromotionImage_" + this.ID + "(imgPromo){");
-            js.Append("\r\n\t window.open(imgPromo);");
+            js.Append("\r\n\t window.open(imgPromo, '', \"top=\"+(screen.height-600)/2+\", left=\"+(screen.width-1024)/2+\", toolbar=1, directories=0, status=0, menubar=1, width=1024, height=600, scrollbars=1, location=0, resizable=1\");");
             js.Append("\r\n}\r\n");
            
          

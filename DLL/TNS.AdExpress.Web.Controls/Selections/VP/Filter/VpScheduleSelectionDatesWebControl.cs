@@ -55,7 +55,10 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
         protected override string GetAjaxEventScript()
         {
             StringBuilder js = new StringBuilder(1000);
+            js.Append("\r\nvar isChanged_" + this.ID + " = false;");
+
             js.Append("\r\nfunction onClickDate_" + this.ID + "(date){");
+            js.Append("\r\n isChanged_" + this.ID + " = true;");
             js.Append("\r\n}\r\n");
 
             return js.ToString();
@@ -70,19 +73,35 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
         protected override string GetValuesSelectedMethodScriptContent()
         {
             StringBuilder js = new StringBuilder(1000);
+            js.Append("\r\n\tif(isChanged_" + this.ID + " == false) return null;");
             js.Append("\r\n\tvar tab = new Array();");
-            //Date Begin in push format : yyyy_MM
-            //js.Append("\r\n\ttab.push('2011_01');");
-            js.Append("\r\n\ttab.push(document.getElementById('yearBegin_" + this.ID + "').options[document.getElementById('yearBegin_" + this.ID + "').selectedIndex].value + '_' +document.getElementById('monthBegin_" + this.ID + "').options[document.getElementById('monthBegin_" + this.ID + "').selectedIndex].value  );");
 
+            js.Append("\r\n\t var oYearBegin = document.getElementById('yearBegin_" + this.ID + "');  ");
+            js.Append("\r\n\t var oYearEnd = document.getElementById('yearEnd_" + this.ID + "');  ");
+            js.Append("\r\n\t var oMonthBegin = document.getElementById('monthBegin_" + this.ID + "');  ");
+            js.Append("\r\n\t var oMonthEnd = document.getElementById('monthEnd_" + this.ID + "');  ");
 
-            //Date End in push format : yyyy_MM
-            //js.Append("\r\n\ttab.push('2011_02');");
-            js.Append("\r\n\ttab.push(document.getElementById('yearEnd_" + this.ID + "').options[document.getElementById('yearEnd_" + this.ID + "').selectedIndex].value + '_' + document.getElementById('monthEnd_" + this.ID + "').options[document.getElementById('monthEnd_" + this.ID + "').selectedIndex].value );");
+            js.Append("\r\n\t if(oYearBegin.options[oYearBegin.selectedIndex].value=='none' && oMonthBegin.options[oMonthBegin.selectedIndex].value =='none' ");
+            js.Append("\r\n\t && oYearEnd.options[oYearEnd.selectedIndex].value=='none' && oMonthEnd.options[oMonthEnd.selectedIndex].value =='none')");
+            js.Append("\r\n\t return null;");
+         
+           //Date Begin in push format : yyyy_MM ex. 2011_01
+            js.Append("\r\n\t tab.push(oYearBegin.options[oYearBegin.selectedIndex].value + '_' + oMonthBegin.options[oMonthBegin.selectedIndex].value);");
 
+           //Date End in push format : yyyy_MM ex. 2011_02
+           js.Append("\r\n\t tab.push(oYearEnd.options[oYearEnd.selectedIndex].value + '_' + oMonthEnd.options[oMonthEnd.selectedIndex].value);");
 
             js.Append("\r\n\treturn tab;");
             return js.ToString();
+        }
+      
+        /// <summary>
+        /// Get Evenement Ajax
+        /// </summary>
+        /// <returns>Evenement Ajax</returns>
+        protected override string GetInitializeResultMethodContent()
+        {
+            return base.GetInitializeResultMethodContent() + "isChanged_" + this.ID + " = false;";
         }
         #endregion
 
@@ -132,10 +151,10 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" height=\"100%\">");
             html.Append("<tr><td>");
 
-            #region Detail Tab
-            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" height=\"100%\">");
-            html.Append("<tr><td>" + GestionWeb.GetWebWord(2881, _webSession.SiteLanguage) + " :</td></tr>");
-            html.Append("<tr><td align=\"center\">");
+            #region Dates Tab
+            html.Append("<table cellspacing=\"0\" class=\"vpScheduleSelectionDateWebControlPersonnalisationTab\" cellpadding=\"0\" border=\"0\" width=\"100%\" height=\"100%\">");
+            html.Append("<tr><td  class=\"vpScheduleSelectionDateWebControlPersonnalisationHeader\"> &nbsp;&nbsp;" + GestionWeb.GetWebWord(2881, _webSession.SiteLanguage) + " :</td></tr>");
+            html.Append("<tr><td align=\"center\" >");
 
 
             DateTime dateBegin = new DateTime(DateTime.Now.Year - WebApplicationParameters.DataNumberOfYear + 1, 1, 1);
@@ -143,9 +162,9 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
 
 
             StringBuilder monthsBegin = new StringBuilder(1000);
-            monthsBegin.Append("<option value=\"none\">-------</option>");
+            monthsBegin.Append("<option value=\"none\">-------------</option>");
             StringBuilder monthsEnd = new StringBuilder(1000);
-            monthsEnd.Append("<option value=\"none\">-------</option>");
+            monthsEnd.Append("<option value=\"none\">-------------</option>");
 
 
             StringBuilder yearsBegin = new StringBuilder(1000);
@@ -178,33 +197,33 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
 
             for (int i = 1; i <= 12; i++)
             {
-                string m = (i < 10) ? "0" + i.ToString() : i.ToString();
-                monthsBegin.AppendFormat("<option value=\"{0}\" " + ((isContainPeriod && i == periodMonthBegin) ? "selected = \"selected\"" : string.Empty) + ">{0}</option>", m);
-                monthsEnd.AppendFormat("<option value=\"{0}\" " + ((isContainPeriod && i == periodMonthEnd) ? "selected = \"selected\"" : string.Empty) + ">{0}</option>", m);
+
+                string mv = (i < 10) ? "0" + i.ToString() : i.ToString();
+                string  ms = MonthString.GetCharacters(i, WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo,11);
+                monthsBegin.AppendFormat("<option value=\"{0}\" " + ((isContainPeriod && i == periodMonthBegin) ? "selected = \"selected\"" : string.Empty) + ">{1}</option>", mv,ms);
+                monthsEnd.AppendFormat("<option value=\"{0}\" " + ((isContainPeriod && i == periodMonthEnd) ? "selected = \"selected\"" : string.Empty) + ">{1}</option>", mv,ms);
             }
 
-            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">");
+            html.Append("<table cellspacing=\"3\" cellpadding=\"0\" border=\"0\" class=\"vpScheduleSelectionDateWebControlPersonnalisationHeaderBis\">");
 
             //Dates beginning
-            html.Append("<tr><td>" + GestionWeb.GetWebWord(1793, _webSession.SiteLanguage) + " :</td>");
-            html.Append("<td><select id=\"monthBegin_" + this.ID + "\" onchange=\"javascript:onClickDate_" + this.ID + "(0);\">");
+            html.Append("<tr class=\"vpScheduleSelectionDateWebControlPersonnalisationHeaderBis\" ><td class=\"vpScheduleSelectionDateText\">" + GestionWeb.GetWebWord(1793, _webSession.SiteLanguage) + ": </td>");
+            html.Append("<td><select id=\"monthBegin_" + this.ID + "\" onchange=\"javascript:onClickDate_" + this.ID + "();\">");
             html.Append(monthsBegin.ToString());
             html.Append("</select></td>");
-            html.Append("<td><select id=\"yearBegin_" + this.ID + "\" onchange=\"javascript:onClickDate_" + this.ID + "(0);\">");
+            html.Append("<td><select id=\"yearBegin_" + this.ID + "\" onchange=\"javascript:onClickDate_" + this.ID + "();\">");
             html.Append(yearsBegin.ToString());
             html.Append("</select></td><tr>");
-            html.Append("<tr><td colspan=\"3\"></td></tr>");
-            html.Append("<tr><td colspan=\"3\"></td></tr>");
+            html.Append("<tr><td colspan=\"3\">&nbsp;</td></tr>");
 
             //Dates end       
-            html.Append("<tr><td>" + GestionWeb.GetWebWord(1794, _webSession.SiteLanguage) + " :</td>");
-            html.Append("<td><select id=\"monthEnd_" + this.ID + "\" onchange=\"javascript:onClickDate_" + this.ID + "(0);\">");
+            html.Append("<tr class=\"vpScheduleSelectionDateWebControlPersonnalisationHeaderBis\"><td class=\"vpScheduleSelectionDateText\" >" + GestionWeb.GetWebWord(1794, _webSession.SiteLanguage) + ": </td>");
+            html.Append("<td><select id=\"monthEnd_" + this.ID + "\" onchange=\"javascript:onClickDate_" + this.ID + "();\">");
             html.Append(monthsEnd.ToString());
             html.Append("</select></td>");
-            html.Append("<td><select id=\"yearEnd_" + this.ID + "\" onchange=\"javascript:onClickDate_" + this.ID + "(0);\">");
+            html.Append("<td><select id=\"yearEnd_" + this.ID + "\" onchange=\"javascript:onClickDate_" + this.ID + "();\">");
             html.Append(yearsEnd.ToString());
             html.Append("</select></td><tr>");
-            html.Append("<tr><td colspan=\"3\"></td></tr>");
             html.Append("<tr><td colspan=\"3\"></td></tr>");
             html.Append("</table>");
 

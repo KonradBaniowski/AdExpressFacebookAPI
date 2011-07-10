@@ -114,7 +114,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n\tvar productParameters = null;");
             js.Append("\r\n\tvar detailLevelParameters = null;");
             js.Append("\r\n\tvar dateParameters = null;");
-
+            
             i = 0;
             cVpScheduleSelectionFilterBaseWebControlDate = null;
             foreach (VpScheduleSelectionFilterBaseWebControl cVpScheduleSelectionFilterBaseWebControl in _filterResultWebControlList.Values) {
@@ -144,15 +144,18 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                         cVpScheduleSelectionFilterBaseWebControlDate = cVpScheduleSelectionFilterBaseWebControl;
                         js.Append("\r\n\tif(isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " == true){");
                         js.Append("\r\n\t\tdateParameters = " + cVpScheduleSelectionFilterBaseWebControl.GetValuesSelectedMethod + ";");
-                        //js.Append("\r\n\t\tif(dateParameters != null) isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " =false;");
+                        //js.Append("\r\n\t\tif(dateParameters != null) isLoaded_" + cVpScheduleSelectionFilterBaseWebControl.ID + " =false;");                       
+                        js.Append("\r\n\t\tif(dateParameters != null){ ");
+                        js.Append(CheckDates());
                         js.Append("\r\n\t} else");
                         js.Append("\r\n\t\tdateParameters = null;");
+                        
                         break;
                 }
                 i++;
             }
             js.Append("\r\n\t" + this.GetType().Namespace + "." + this.GetType().Name + ".ValidData('" + _webSession.IdSession + "'");
-            js.Append(", dateParameters");
+            js.Append(", mediaParameters");
             js.Append(", productParameters");
             js.Append(", detailLevelParameters");
             js.Append(", dateParameters");
@@ -512,7 +515,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             html.Append("</tr>");
 
             html.Append("<tr>");
-            html.Append("<td colspan=\"2\" class=\"" + CssClassOptionButtons + "\">");
+            html.Append("<td colspan=\"2\" class=\"" + CssClassOptionButtons + "\" align=\"right\">");
 
             #region Buttons
             html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" class=\"" + CssClassOptionButtons + "\">");
@@ -577,12 +580,13 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                     _webSession.PersonnalizedLevel = (DetailLevelItemInformation.Levels)Enum.Parse(typeof(DetailLevelItemInformation.Levels), ((string)detailLevelParameters[1]));
                 }
                 if (dateParameters != null) {
-                    string checkRes = CheckDates(dateParameters);
-                    if (!string.IsNullOrEmpty(checkRes)) return checkRes;
+                   
+                       //string checkRes = CheckDates(dateParameters);
+                        //if (!string.IsNullOrEmpty(checkRes)) return checkRes;
 
-                    _webSession.SetVpDates(new DateTime(Int32.Parse(((string)dateParameters[0]).Split('_')[0]), Int32.Parse(((string)dateParameters[0]).Split('_')[1]), 1)
-                        , new DateTime(Int32.Parse(((string)dateParameters[1]).Split('_')[0]), Int32.Parse(((string)dateParameters[1]).Split('_')[1]), 1).AddMonths(1).AddDays(-1));
-
+                        _webSession.SetVpDates(new DateTime(Int32.Parse(((string)dateParameters[0]).Split('_')[0]), Int32.Parse(((string)dateParameters[0]).Split('_')[1]), 1)
+                            , new DateTime(Int32.Parse(((string)dateParameters[1]).Split('_')[0]), Int32.Parse(((string)dateParameters[1]).Split('_')[1]), 1).AddMonths(1).AddDays(-1));
+                    
                 }
                 _webSession.Save();
 
@@ -722,14 +726,26 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         }
         #endregion
 
-        protected string CheckDates(object[] dateParameters)
+        protected string CheckDates()
         {
-            if (dateParameters.Length < 2 || ((string)dateParameters[0]).Split('_').Length < 2 || ((string)dateParameters[1]).Split('_').Length < 2) 
-                return (GestionWeb.GetWebWord(886, _webSession.SiteLanguage));
-            DateTime dateBegin = new DateTime(Int32.Parse(((string)dateParameters[0]).Split('_')[0]), Int32.Parse(((string)dateParameters[0]).Split('_')[1]), 1);
-            DateTime dateEnd = new DateTime(Int32.Parse(((string)dateParameters[1]).Split('_')[0]), Int32.Parse(((string)dateParameters[1]).Split('_')[1]), 1);
-            if (DateTime.Compare(dateBegin,dateEnd) > 0) return (GestionWeb.GetWebWord(1855, _webSession.SiteLanguage));
-            return string.Empty;
+            StringBuilder js = new StringBuilder(2000);
+            js.Append("\r\n\t\t\t var monthBegin = dateParameters[0].split('_')[1];");
+            js.Append("\r\n\t\t\t var yearBegin = dateParameters[0].split('_')[0];");
+            js.Append("\r\n\t\t\t var monthEnd = dateParameters[1].split('_')[1];");
+            js.Append("\r\n\t\t\t var yearEnd = dateParameters[1].split('_')[0];");
+            js.Append("\r\n\t\t\t if(monthBegin=='none'||yearBegin=='none'||monthEnd=='none'||yearEnd=='none'){");
+            js.Append("\r\n\t\t\t\t alert('" + GestionWeb.GetWebWord(886, _webSession.SiteLanguage) + "');");
+            js.Append("\r\n\t\t\t\t return false;");
+            js.Append("\r\n\t\t\t }");
+
+            js.Append("\r\n\t\t\t var dateBegin = yearBegin+monthBegin;");
+            js.Append("\r\n\t\t\t var dateEnd = yearEnd+monthEnd;");
+            js.Append("\r\n\t\t\t if(parseInt(dateBegin)>parseInt(dateEnd)){");
+            js.Append("\r\n\t\t\t\t alert('" + GestionWeb.GetWebWord(1855, _webSession.SiteLanguage) + "'); ");
+            js.Append("\r\n\t\t\t\t return false;");
+            js.Append("\r\n\t\t\t }");
+            js.Append("\r\n\t\t} ");
+            return js.ToString();
         }
 
         #endregion
