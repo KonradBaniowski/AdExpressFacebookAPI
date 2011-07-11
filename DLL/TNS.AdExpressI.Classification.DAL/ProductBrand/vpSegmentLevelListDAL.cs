@@ -9,12 +9,14 @@ using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Level;
 
-namespace TNS.AdExpressI.Classification.DAL.MediaBrand {
+
+namespace TNS.AdExpressI.Classification.DAL.ProductBrand {
 	/// <summary>
-	/// Load a list of title items
+	/// Load a list of advertisers items
 	/// </summary>
-	public class TitleLevelListDAL:ClassificationLevelListDAL{
+	public class vpSegmentLevelListDAL:ClassificationLevelListDAL{
 		
+
 		#region Constructors
 	
 		/// <summary>
@@ -22,8 +24,8 @@ namespace TNS.AdExpressI.Classification.DAL.MediaBrand {
 		/// </summary>
 		/// <param name="language">Data language</param>
 		/// <param name="source">Data source</param>
-		public TitleLevelListDAL(int language, IDataSource source)
-			: base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.title), language, source) {
+		public vpSegmentLevelListDAL(int language, IDataSource source)
+			: base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vpSegment), language, source) {
 		}
 
         /// <summary>
@@ -31,28 +33,28 @@ namespace TNS.AdExpressI.Classification.DAL.MediaBrand {
         /// </summary>
         /// <param name="language">Data language</param>
         /// <param name="source">Data source</param>
-        public TitleLevelListDAL(int language, IDataSource source, string dbSchema)
-            : base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.title), language, source, dbSchema)
+        public vpSegmentLevelListDAL(int language, IDataSource source, string dbSchema)
+            : base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vpSegment), language, source, dbSchema)
         {
         }
-
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		///<param name="idList">classification items' identifier list</param>
 		/// <param name="language">Data language</param>
 		/// <param name="source">Data source</param>
-		public TitleLevelListDAL(string idList, int language, IDataSource source)
-			: base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.title), idList, language, source) {
+        public vpSegmentLevelListDAL(string idList, int language, IDataSource source)
+            : base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vpSegment), idList, language, source)
+        {
 		}
-         /// <summary>
+        /// <summary>
         /// Constructor
         /// </summary>
         ///<param name="idList">classification items' identifier list</param>
         /// <param name="language">Data language</param>
         /// <param name="source">Data source</param>
-        public TitleLevelListDAL(string idList, int language, IDataSource source, string dbSchema)
-            : base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.title), idList, language, source, dbSchema)
+        public vpSegmentLevelListDAL(string idList, int language, IDataSource source, string dbSchema)
+            : base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vpSegment), idList, language, source, dbSchema)
         {
         }
 		#endregion

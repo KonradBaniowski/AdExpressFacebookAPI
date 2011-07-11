@@ -22,7 +22,7 @@ namespace TNS.AdExpressI.Classification.DAL {
 	/// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationDALException">
 	/// Unknow Detail level information Identifier 
 	/// </exception>
-	public abstract class ClassificationLevelListDALFactory {
+    public abstract class ClassificationLevelListDALFactory : IClassificationLevelListDALFactory{
 
 		#region Variables
 		/// <summary>
@@ -123,13 +123,96 @@ namespace TNS.AdExpressI.Classification.DAL {
 				//Create a list of Media Type level 's  items		
 				case DetailLevelItemInformation.Levels.vehicle :
 					return new MediaBrand.VehicleLevelListDAL(idList, _language, _source);
-				//Create a list of Product level's items		
-				case DetailLevelItemInformation.Levels.product:
-					return new ProductBrand.ProductLevelListDAL(idList, _language, _source);
+                //Create a list of Product level's items		
+                case DetailLevelItemInformation.Levels.product:
+                    return new ProductBrand.ProductLevelListDAL(idList, _language, _source);
+				
+				case DetailLevelItemInformation.Levels.vpProduct:
+                    return new ProductBrand.VpProductLevelListDAL(idList, _language, _source);
+                case DetailLevelItemInformation.Levels.vpSubSegment:
+                    return new ProductBrand.vpSubSegmentLevelListDAL(idList, _language, _source);
+                case DetailLevelItemInformation.Levels.vpSegment:
+                    return new ProductBrand.vpSegmentLevelListDAL(idList, _language, _source);
+                case DetailLevelItemInformation.Levels.vpCircuit:
+                    return new MediaBrand.VpCircuitLevelListDAL(idList, _language, _source);
+                case DetailLevelItemInformation.Levels.vpBrand:
+                    return new MediaBrand.VpBrandLevelListDAL(idList, _language, _source);
+                
 				default :
 					throw new Exceptions.ClassificationDALException(" Unknow Detail level information Identifier ");
 			}
 		}
+
+        public virtual ClassificationLevelListDAL CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type levelType, string idList)
+        {
+            return CreateClassificationLevelListDAL(levelType,  idList, string.Empty);
+        }
+        public virtual ClassificationLevelListDAL CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type levelType, string idList, string dbSchema)
+        {
+
+            switch (levelType)
+            {
+
+                //Create a list of advertiser items				
+                case TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.advertiserException:
+                    return new ProductBrand.AdvertiserLevelListDAL(idList, _language, _source, dbSchema);
+
+                //Create a list of brand level's items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.brandAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.brandException:
+                    return new ProductBrand.BrandLevelListDAL(idList, _language, _source, dbSchema);
+                //Create a list of sub media level's items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.categoryAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.categoryException:
+                    return new MediaBrand.CategoryLevelListDAL(idList, _language, _source, dbSchema);
+                //Create a list of group level's items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.groupAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.groupException:
+                    return new ProductBrand.GroupLevelListDAL(idList, _language, _source, dbSchema);
+                //Create a list of Parent level's items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException:
+                    return new ProductBrand.HoldingCompanyLevelListDAL(idList, _language, _source, dbSchema);
+                //Create a list of Media genre level's items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.interestCenterAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.interestCenterException:
+                    return new MediaBrand.InterestCenterLevelListDAL(idList, _language, _source, dbSchema);
+                //Create a list of Vehicle level's items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.mediaAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.mediaException:
+                    return new MediaBrand.MediaLevelListDAL(idList, _language, _source, dbSchema);
+                //Create a list of Category level's items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.sectorException:
+                    return new ProductBrand.SectorLevelListDAL(idList, _language, _source, dbSchema);
+                //Create a list of Sub group's level items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.segmentException:
+                    return new ProductBrand.SegmentLevelListDAL(idList, _language, _source, dbSchema);
+                //Create a list of Sub Category level's items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.subSectorException:
+                    return new ProductBrand.SubSectorLevelListDAL(idList, _language, _source, dbSchema);
+                //Create a list of Media Type level 's  items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.vehicleException:
+                case TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccessForRecap:
+                    return new MediaBrand.VehicleLevelListDAL(idList, _language, _source, dbSchema);
+                //Create a list of Product level's items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.productAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.productException:
+                    return new ProductBrand.ProductLevelListDAL(idList, _language, _source, dbSchema);
+
+                case TNS.AdExpress.Constantes.Customer.Right.type.circuitAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.circuitException:
+                    return new MediaBrand.VpCircuitLevelListDAL(_language, _source, dbSchema);
+                default:
+                    throw new Exceptions.ClassificationDALException(" Unknow level type Identifier ");
+            }
+        }
+
+
 		/// <summary>	
 		/// Get all items list of a classification's level
 		/// </summary>
@@ -179,6 +262,17 @@ namespace TNS.AdExpressI.Classification.DAL {
 				//Create a list of Product level's items		
 				case DetailLevelItemInformation.Levels.product:
 					return new ProductBrand.ProductLevelListDAL( _language, _source);
+
+                case DetailLevelItemInformation.Levels.vpProduct:
+                    return new ProductBrand.VpProductLevelListDAL(_language, _source);
+                case DetailLevelItemInformation.Levels.vpSubSegment:
+                    return new ProductBrand.vpSubSegmentLevelListDAL(_language, _source);
+                case DetailLevelItemInformation.Levels.vpSegment:
+                    return new ProductBrand.vpSegmentLevelListDAL(_language, _source);
+                case DetailLevelItemInformation.Levels.vpCircuit:
+                    return new MediaBrand.VpCircuitLevelListDAL(_language, _source);
+                case DetailLevelItemInformation.Levels.vpBrand:
+                    return new MediaBrand.VpBrandLevelListDAL(_language, _source);
 				default:
 					throw new Exceptions.ClassificationDALException(" Unknow Detail level information Identifier ");
 			}

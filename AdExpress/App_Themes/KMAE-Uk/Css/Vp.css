@@ -1,0 +1,718 @@
+﻿.vpScheduleResults
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: Black;
+}
+
+
+
+.vpScheduleContainerWebControl
+{
+	padding: 10px 0px 10px 0px;
+}
+
+
+/* Selection Class */
+div.dateSelectionWebControlSelection, div.filtreSelectionWebControlSelection, div.excelSelectionWebControlSelection, div.pdfSelectionWebControlSelection
+{
+	margin-right: 30px;
+	vertical-align: middle;
+}
+
+
+.dateSelectionWebControlSelection, .filtreSelectionWebControlSelection, .excelSelectionWebControlSelection, .pdfSelectionWebControlSelection, .dateSelectionWebControlSelection select
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: Black;
+}
+
+.filtreSelectionWebControlSelection img, .excelSelectionWebControlSelection img, .pdfSelectionWebControlSelection img, .filtreSelectionWebControlSelection label, .excelSelectionWebControlSelection label, .pdfSelectionWebControlSelection label
+{
+	cursor: pointer;
+	vertical-align: middle;
+	margin-right: 10px;
+}
+
+
+/* Filter Class */
+.vpScheduleResultFilterWebControlBackgroud
+{
+	filter: alpha(opacity=40);
+	background-color: rgb(92,92,92);
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 100;
+}
+
+.vpScheduleResultFilterWebControl
+{
+	padding: 10px 10px 20px 10px;
+	width: 750px;
+	height: 550px;
+	border: solid 1px #DFDFDF;
+	position: absolute;
+	z-index: 10000;
+	overflow: none;
+	background-color: White;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #525252;
+	text-align: center;
+	font-weight: bold;
+	border-radius: 10px;
+}
+
+td.vpScheduleResultFilterWebControlOption
+{
+	width: 80px;
+	height: 100%;
+	vertical-align: top;
+}
+
+table.vpScheduleResultFilterWebControlOption
+{
+	background-color: #eeeeee;
+	border: solid 1px #DBDBDB;
+	text-align: left;
+}
+
+.vpScheduleResultFilterWebControlOptionHeader
+{
+	vertical-align: top;
+	color: #A6A6A6;
+	text-align: center;
+	padding: 10px 0px 0px 0px;
+	font-weight: bold;
+}
+
+.vpScheduleResultFilterWebControlMenu
+{
+	vertical-align: top;
+	font-size: 12px;
+}
+
+.vpScheduleResultFilterWebControlMenu ul
+{
+	margin: 0 0 5px 0;
+	padding: 0 0 2px 0;
+	list-style-type: none;
+	width: 185px;
+}
+
+.vpScheduleResultFilterWebControlMenu ul li a
+{
+	color: #333;
+	display: block;
+	height: 16px;
+	padding: 4px 0 4px 35px;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.vpScheduleResultFilterWebControlMenuSelected, .vpScheduleResultFilterWebControlMenu ul li a:hover
+{
+	background-image: url(/App_Themes/KMAE-Fr/Images/Common/background_menu_vp.gif);
+	background-repeat: repeat-x;
+}
+
+td.vpScheduleResultFilterWebControlResult
+{
+	width: 100%;
+	height: 100%;
+}
+
+div.vpScheduleResultFilterWebControlResult
+{
+	padding: 0px 0px 0px 0px;
+	width: 100%;
+	height: 530px;
+	z-index: 10000;
+	overflow-y: auto;
+}
+
+.vpScheduleResultFilterWebControlResultContent
+{
+	width: 100%;
+	z-index: 10000;
+}
+
+td.vpScheduleResultFilterWebControlButtons
+{
+}
+
+table.vpScheduleResultFilterWebControlButtons
+{
+	width: 60px;
+}
+
+.vpScheduleResultFilterWebControlButtonCancel
+{
+	cursor: pointer;
+}
+
+.vpScheduleResultFilterWebControlButtonValidation
+{
+	cursor: pointer;
+}
+
+/* Filter Node Class */
+.vpScheduleResultFilterNodeWebControlResult
+{
+	text-align: left;
+}
+
+table.vpScheduleResultFilterNodeWebControlResultLvl1, table.vpScheduleResultFilterNodeWebControlResultLvl2, table.vpScheduleResultFilterNodeWebControlResultLvl3, table.vpScheduleResultFilterNodeWebControlResultLvl4
+{
+	height: 20px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: black;
+}
+
+table.vpScheduleResultFilterNodeProductWebControlResultLvl1 label, table.vpScheduleResultFilterNodeProductWebControlResultLvl2 label, table.vpScheduleResultFilterNodeProductWebControlResultLvl3 label, table.vpScheduleResultFilterNodeWebControlResultLvl1 label, table.vpScheduleResultFilterNodeWebControlResultLvl2 label, table.vpScheduleResultFilterNodeWebControlResultLvl3 label, table.vpScheduleResultFilterNodeWebControlResultLvl4 label, table.vpScheduleResultFilterNodeProductWebControlResultLvl1 input, table.vpScheduleResultFilterNodeProductWebControlResultLvl2 input, table.vpScheduleResultFilterNodeProductWebControlResultLvl3 input, table.vpScheduleResultFilterNodeWebControlResultLvl1 input, table.vpScheduleResultFilterNodeWebControlResultLvl2 input, table.vpScheduleResultFilterNodeWebControlResultLvl3 input, table.vpScheduleResultFilterNodeWebControlResultLvl4 input
+{
+	cursor: pointer;
+}
+table.vpScheduleResultFilterNodeProductWebControlResultLvl1 label, table.vpScheduleResultFilterNodeProductWebControlResultLvl2 label, table.vpScheduleResultFilterNodeProductWebControlResultLvl3 label, table.vpScheduleResultFilterNodeWebControlResultLvl1 label, table.vpScheduleResultFilterNodeWebControlResultLvl2 label, table.vpScheduleResultFilterNodeWebControlResultLvl3 label, table.vpScheduleResultFilterNodeWebControlResultLvl4 label
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: black;
+}
+table.vpScheduleResultFilterNodeProductWebControlResultLvl1, table.vpScheduleResultFilterNodeWebControlResultLvl1
+{
+	padding-left: 0px;
+	background-image: url(/App_Themes/KMAE-Fr/Images/Common/background_header_vp.gif);
+	background-repeat: repeat-x;
+	height: 20px;
+}
+table.vpScheduleResultFilterNodeProductWebControlResultLvl1 label, table.vpScheduleResultFilterNodeWebControlResultLvl1 label
+{
+	font-weight: bold;
+}
+
+
+table.vpScheduleResultFilterNodeWebControlResultLvl2
+{
+	padding-left: 10px;
+}
+
+table.vpScheduleResultFilterNodeProductWebControlResultLvl2, table.vpScheduleResultFilterNodeWebControlResultLvl2 label
+{
+	font-weight: bold;
+}
+
+table.vpScheduleResultFilterNodeProductContainerWebControlResultLvl1
+{
+	width: 100%;
+	padding: 10px 20px;
+}
+
+div.vpScheduleResultFilterNodeProductWebControlResultLvl2
+{
+	border: solid 1px #DBDBDB;
+	margin: 0px 0px 10px 0px;
+	padding: 0px 5px;
+	background-color: #eeeeee;
+}
+
+table.vpScheduleResultFilterNodeWebControlResultLvl3
+{
+	padding-left: 20px;
+}
+
+table.vpScheduleResultFilterNodeProductContainerWebControlResultLvl3
+{
+	padding: 5px 0px;
+}
+
+table.vpScheduleResultFilterNodeProductWebControlResultLvl3
+{
+	padding-left: 30px;
+}
+
+table.vpScheduleResultFilterNodeProductWebControlResultLvl3 label, table.vpScheduleResultFilterNodeWebControlResultLvl3 label
+{
+	font-weight: normal;
+}
+
+.vpScheduleResultFilterNodeWebControlResultDisplay
+{
+	cursor: pointer;
+}
+
+/* VpScheduleSelectionDetailLevelWebControl */
+table.vpScheduleSelectionDetailLevelWebControlPersonnalisation, table.vpScheduleSelectionDetailLevelWebControlDetailTab
+{
+	border: solid 1px #DBDBDB;
+	height: 230px;
+}
+
+table.vpScheduleSelectionDetailLevelWebControlPersonnalisation
+{
+	padding: 10px 5px 0px 5px;
+}
+
+table.vpScheduleSelectionDetailLevelWebControlDetailTab
+{
+	padding: 10px 5px 10px 5px;
+}
+
+table.vpScheduleSelectionDetailLevelWebControlDetailTab, table.vpScheduleSelectionDetailLevelWebControlDetailTab td, table.vpScheduleSelectionDetailLevelWebControlPersonnalisation, table.vpScheduleSelectionDetailLevelWebControlPersonnalisation td
+{
+	vertical-align: top;
+}
+
+.vpScheduleSelectionDetailLevelWebControlDetailTab select
+{
+	margin: 3px 0px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: Black;
+}
+
+.vpScheduleSelectionDetailLevelWebControlPersonnalisationHeader, .vpScheduleSelectionDetailLevelWebControlDetailTabHeader
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: Black;
+	text-align: left;
+}
+
+.vpScheduleSelectionDetailLevelWebControlSeparator
+{
+}
+
+table.vpScheduleSelectionDetailLevelWebControlPersonnalisationHeaderBis table
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	text-align: left;
+}
+
+table.vpScheduleSelectionDetailLevelWebControlPersonnalisationHeaderBis table td
+{
+	width: 150px;
+	padding-left: 20px;
+	text-align: left;
+}
+
+table.vpScheduleSelectionDetailLevelWebControlPersonnalisationHeaderBis input
+{
+	cursor: pointer;
+}
+
+.vpScheduleSelectionDetailLevelWebControlPersonnalisationHeaderBis
+{
+	text-align: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	color: Black;
+}
+
+td.vpScheduleSelectionDetailLevelWebControlPersonnalisationHeaderBis
+{
+	padding-bottom: 10px;
+}
+
+/* Result table css class */
+a.tooltip:link, a.tooltip:visited, a.tooltip:active
+{
+	font-size: 11px;
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	font-weight:normal;
+}
+a.tooltip em
+{
+	display: none;
+	font-weight:normal;
+}
+a.tooltip:hover
+{
+	border: 0;
+	position: relative;
+	z-index: 500;
+	text-decoration: none;
+	font-weight:normal;
+}
+a.tooltip:hover em
+{
+	font-style: normal;
+	display: block;
+	position: absolute;
+	top: 20px;
+	left: -10px;
+	padding: 5px;
+	color: #000000;
+	border: 1px solid #bbb;
+	background: #FFA500;
+	width: 200px;
+	font-weight:normal;
+}
+a.tooltip:hover em span
+{
+	position: absolute;
+	top: -7px;
+	left: 15px;
+	height: 7px;
+	width: 11px; /* background: transparent url(image-infobulle.gif); */
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-weight:normal;
+}
+
+/* Promofile Class */
+div.vpfContent
+{
+	overflow-y: auto;
+	overflow-x: none;
+	z-index: 10000;
+	height: 590px;
+	width: 100%;
+	padding: 0px 0px 0px 0px;
+}
+td.vpfContent
+{
+	width: 650px;
+	height: 590px;
+}
+td.vpfDescr
+{
+	width: 150px;
+	vertical-align: top;
+}
+td.vpfDescrCond
+{
+	width: 150px;
+	vertical-align: top;
+}
+div.vpPrf
+{
+	width: 650px;
+	height: 650px;
+	border: solid 1px #DFDFDF;
+	position: absolute;
+	z-index: 10000;
+	overflow: none;
+	background-color: White;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #525252;
+	text-align: center;
+	font-weight: bold;
+}
+div.pr_ctr
+{
+	text-align: center;
+}
+div.pr_div
+{
+	text-align: center;
+}
+td.pr_visu
+{
+	text-align: center;
+	width: 222px;
+	height: 307px;
+}
+img.pr_visu
+{
+	width: 222px;
+	height: 307px;
+}
+ul.prf
+{
+	list-style-type: square;
+	color: #FD6200;
+	text-align: left;
+}
+ul.prf li span
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	text-align: left;
+}
+ul.prfbd
+{
+	list-style-type: disc;
+	color: #000000;
+}
+ul.prfbd li span
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+}
+span.prfSp
+{
+	font-weight: normal;
+}
+hf.hrSp
+{
+	height: 1px;
+	color: #D2D2D2;
+}
+.VpFilePopUpHeader
+{
+	background-image: url(/App_Themes/KMAE-Fr/images/Common/PopUp_Header.gif);
+	background-repeat: repeat-x;
+	height: 21px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	font-weight: bold;
+	vertical-align: top;
+	padding-top: 5px;
+	text-align: left;
+}
+/*Title****/
+td.ptVp{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #FFFFFF;
+	font-weight: bold;
+	text-decoration : none;
+	background-color: #646262;
+	padding-left:5px;
+	padding-right:5px;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	white-space:nowrap;
+	text-align:left;
+}
+/* Level 1 , 2, 3, 4 */
+td.L1Vp{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #FFFFFF;
+	font-weight: bold;
+	text-decoration : none;
+	background-color: #777777;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+	white-space: nowrap;
+	text-align:left;
+}
+td.L1VpbBis{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #FFFFFF;
+	font-weight: bold;
+	text-decoration : none;
+	background-color: #777777;
+	border-left-width:0px;
+	border-top-color:#FFFFFF;
+	border-top-width:1px;
+	border-top-style:solid;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+	white-space: nowrap;
+	text-align:left;
+}
+td.L2Vp{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight: bold;
+	text-decoration : none;
+	background-color: #A0A1A7;
+	padding:0px,0px,0px,2px;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+	white-space: nowrap;
+	text-align:left;
+}
+td.L2VpBis{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight: bold;
+	text-decoration : none;
+	background-color: #A0A1A7;
+	padding:0px,0px,0px,2px;
+	border-left-width:0px;
+	border-top-color:#FFFFFF;
+	border-top-width:1px;
+	border-top-style:solid;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+	white-space: nowrap;
+	text-align:left;
+}
+td.L3Vp{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight:normal;
+	text-decoration : none;
+	background-color: #C3C7D0;	
+	padding:0px,0px,0px,2px;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+	white-space: nowrap;
+	text-align:left;
+}
+td.L3VpBis{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;
+	font-weight:normal;
+	text-decoration : none;
+	background-color: #C3C7D0;	
+	padding:0px,0px,0px,2px;
+	border-left-width:0px;
+	border-top-color:#FFFFFF;
+	border-top-width:1px;
+	border-top-style:solid;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;
+	white-space: nowrap;
+	text-align:left;
+}
+td.L4Vp
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	font-weight: normal;
+	text-decoration: none;
+	background-color: #D9E0CE;
+	padding: 0px,0px,0px,2px;
+	border-left-width: 0px;
+	border-top-width: 0px;
+	border-bottom-color: #FFFFFF;
+	border-bottom-width: 0px;
+	border-bottom-style: solid;
+	border-right-color: #FFFFFF;
+	border-right-width: 1px;
+	border-right-style: solid;
+	padding-left: 4px;
+	padding-right: 4px;
+	white-space: nowrap;
+	text-align:left;
+}
+
+table.vpScheduleSelectionDateWebControlPersonnalisationHeaderBis table
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	width:150px; /*padding-left:20px;*/
+	text-align:left;
+}
+
+table.vpScheduleSelectionDateWebControlPersonnalisationHeaderBis table td
+{
+	/*width:150px;*//* padding-left:20px;*/
+	padding-right:5px;
+	font-size: 11px;
+}
+tr.vpScheduleSelectionDateWebControlPersonnalisationHeaderBis
+{
+	width:150px;
+	padding-right:5px;
+	font-size: 11px;
+	
+	
+}
+
+
+.vpScheduleSelectionDateWebControlPersonnalisationHeaderBis
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	color: Black;
+}
+
+td.vpScheduleSelectionDateWebControlPersonnalisationHeaderBis
+{
+	padding-bottom: 10px;
+}
+.vpScheduleResultWebControlButtonCancel
+{
+	cursor: pointer;
+	text-align: right;
+	padding-right: 20px;
+	height:20px;
+}
+
+td.vpScheduleResultWebControlButtons
+{
+}
+table.vpScheduleSelectionDateWebControlPersonnalisationTab
+{
+	border: solid 1px #DBDBDB;
+	height: 180px;
+}
+.vpScheduleSelectionDateWebControlPersonnalisationHeader
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: Black;	
+	text-align: left;
+}
+.vpScheduleSelectionDateText
+{
+	text-align:left;
+}

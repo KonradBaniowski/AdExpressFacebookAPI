@@ -11,10 +11,10 @@ using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpressI.Classification.DAL.MediaBrand {
 	/// <summary>
-	/// Load a list of title items
+	/// Load a list of vehicle items
 	/// </summary>
-	public class TitleLevelListDAL:ClassificationLevelListDAL{
-		
+	public class VpBrandLevelListDAL:ClassificationLevelListDAL{
+
 		#region Constructors
 	
 		/// <summary>
@@ -22,17 +22,17 @@ namespace TNS.AdExpressI.Classification.DAL.MediaBrand {
 		/// </summary>
 		/// <param name="language">Data language</param>
 		/// <param name="source">Data source</param>
-		public TitleLevelListDAL(int language, IDataSource source)
-			: base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.title), language, source) {
+		public VpBrandLevelListDAL(int language, IDataSource source)
+			: base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vpBrand), language, source) {
 		}
 
-        /// <summary>
+         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="language">Data language</param>
         /// <param name="source">Data source</param>
-        public TitleLevelListDAL(int language, IDataSource source, string dbSchema)
-            : base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.title), language, source, dbSchema)
+        public VpBrandLevelListDAL(int language, IDataSource source, string dbSchema)
+            : base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vpBrand), language, source, dbSchema)
         {
         }
 
@@ -42,17 +42,18 @@ namespace TNS.AdExpressI.Classification.DAL.MediaBrand {
 		///<param name="idList">classification items' identifier list</param>
 		/// <param name="language">Data language</param>
 		/// <param name="source">Data source</param>
-		public TitleLevelListDAL(string idList, int language, IDataSource source)
-			: base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.title), idList, language, source) {
+        public VpBrandLevelListDAL(string idList, int language, IDataSource source)
+            : base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vpBrand), idList, language, source)
+        {
 		}
-         /// <summary>
+        /// <summary>
         /// Constructor
         /// </summary>
         ///<param name="idList">classification items' identifier list</param>
         /// <param name="language">Data language</param>
         /// <param name="source">Data source</param>
-        public TitleLevelListDAL(string idList, int language, IDataSource source, string dbSchema)
-            : base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.title), idList, language, source, dbSchema)
+        public VpBrandLevelListDAL(string idList, int language, IDataSource source, string dbSchema)
+            : base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vpBrand), idList, language, source, dbSchema)
         {
         }
 		#endregion

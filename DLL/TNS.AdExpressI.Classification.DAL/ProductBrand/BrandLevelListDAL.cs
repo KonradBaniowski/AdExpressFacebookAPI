@@ -28,6 +28,17 @@ namespace TNS.AdExpressI.Classification.DAL.ProductBrand {
 		public BrandLevelListDAL(int language, IDataSource source)
 			: base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.brand), language, source) {
 		}
+
+         /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="language">Data language</param>
+        /// <param name="source">Data source</param>
+        public BrandLevelListDAL(int language, IDataSource source, string dbSchema)
+            : base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.brand), language, source, dbSchema)
+        {
+        }
+
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -37,6 +48,16 @@ namespace TNS.AdExpressI.Classification.DAL.ProductBrand {
 		public BrandLevelListDAL(string idList, int language, IDataSource source)
 			: base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.brand),idList, language, source) {
 		}
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        ///<param name="idList">classification items' identifier list</param>
+        /// <param name="language">Data language</param>
+        /// <param name="source">Data source</param>
+        public BrandLevelListDAL(string idList, int language, IDataSource source, string dbSchema)
+            : base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.brand), idList, language, source, dbSchema)
+        {
+        }
 		#endregion
 	}
 }

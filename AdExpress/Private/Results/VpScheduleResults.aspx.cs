@@ -91,6 +91,10 @@ namespace AdExpress.Private.Results{
         /// <param name="e">Arguments</param>
         protected void Page_UnLoad(object sender, System.EventArgs e)
         {
+            if (!Page.ClientScript.IsClientScriptBlockRegistered("popupOpenBis"))
+            {
+                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "popupOpenBis", TNS.AdExpress.Web.Functions.Script.ReSizablePopUp());
+            }	
         }
         #endregion
 

@@ -35,6 +35,8 @@ namespace TNS.AdExpressI.Classification.DAL {
 		/// <param name="idList">classification items' identifier list</param>
 		ClassificationLevelListDAL CreateDefaultClassificationLevelListDAL(string table, string idList);
 
+        ClassificationLevelListDAL CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type levelType, string idList);
+        ClassificationLevelListDAL CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type levelType, string idList, string dbSchema);
         /// <summary>
         /// Get if data items shiould be in lower case
         /// </summary>

@@ -88,6 +88,114 @@ namespace TNS.AdExpressI.VP.DAL
         /// </summary>
         /// <returns>
         /// DataSet      
+        public virtual DataSet GetBenchMarkData()
+        {
+            DataSet ds = null;
+            string classifTableName = string.Empty, classifFieldName = string.Empty, classifOrderFieldName = string.Empty
+                , classifJoinCondition = string.Empty, universFilter = string.Empty, persoTableName = string.Empty
+                , persoJoins = string.Empty, segmtFields = string.Empty;
+
+            try
+            {
+                StringBuilder sql = new StringBuilder(5000);
+
+
+                string prefix = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+
+                //Get Data base schema descritpion
+                Schema schPromo = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.promo03);
+
+                //Get data promo table
+                Table dataPromo = WebApplicationParameters.GetDataTable(TableIds.dataPromotion, false);
+
+
+                // Get the SQL fields corresponding to the classification's items  
+                classifOrderFieldName ="";
+
+
+                /* Get the classif SQL joins  code*/
+                classifJoinCondition = "";//GetSqlJoins(prefix);
+
+
+
+                //Segement fields                
+                DetailLevelItemInformation segemntLevelInformation = DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vpSegment);
+                segmtFields = segemntLevelInformation.GetSqlFieldId() + "," + segemntLevelInformation.GetSqlField();
+                classifOrderFieldName = segemntLevelInformation.GetSqlField() + "," + segemntLevelInformation.GetSqlFieldId();
+                classifFieldName = segmtFields;
+
+                persoTableName = segemntLevelInformation.GetTableNameWithPrefix();
+                classifTableName +=  schPromo.Label + "." + persoTableName;
+
+                persoJoins = " and " + segemntLevelInformation.GetSqlFieldId() + "=" + prefix + "." + segemntLevelInformation.GetSqlFieldIdWithoutTablePrefix()
+                + " and " + segemntLevelInformation.DataBaseTableNamePrefix + ".activation< " + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
+                classifJoinCondition += persoJoins;
+
+                //product fileds
+                DetailLevelItemInformation productLevelInformation = DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vpProduct);
+                classifFieldName += ","+productLevelInformation.GetSqlFieldId() + "," + productLevelInformation.GetSqlField();
+                classifOrderFieldName += ","+ productLevelInformation.GetSqlField() + "," + productLevelInformation.GetSqlFieldId();
+
+                classifTableName += "," + schPromo.Label + "." + productLevelInformation.GetTableNameWithPrefix();
+
+                classifJoinCondition += " and " + productLevelInformation.GetSqlFieldId() + "=" + prefix + "." + productLevelInformation.GetSqlFieldIdWithoutTablePrefix()
+                 + " and " + productLevelInformation.DataBaseTableNamePrefix + ".activation< " + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
+
+
+                //Force brand field
+
+                DetailLevelItemInformation brandLevelInformation = DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vpBrand);
+                classifFieldName += "," + brandLevelInformation.GetSqlFieldId() + "," + brandLevelInformation.GetSqlField();
+                classifOrderFieldName += "," + brandLevelInformation.GetSqlField() + "," + brandLevelInformation.GetSqlFieldId();
+
+                classifTableName += "," + schPromo.Label + "." + brandLevelInformation.GetTableNameWithPrefix();
+
+                classifJoinCondition += " and " + brandLevelInformation.GetSqlFieldId() + "=" + prefix + "." + brandLevelInformation.GetSqlFieldIdWithoutTablePrefix()
+                 + " and " + brandLevelInformation.DataBaseTableNamePrefix + ".activation< " + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
+
+
+                //get universe filters
+                universFilter = GetUniversFilter(prefix);
+
+
+                //SELECT
+
+                sql.AppendFormat(" select ID_DATA_PROMOTION,{0}, date_begin_num, date_end_num  ", classifFieldName);
+                sql.Append(" ,promotion_content, condition_visual, condition_text, promotion_brand, promotion_visual ");
+
+
+                //FROM
+                sql.AppendFormat(" from  {0} , {1}  ", classifTableName, dataPromo.SqlWithPrefix);
+
+                //WHERE
+                sql.Append(" where  0=0 ");
+
+                //Adding universe filters
+                sql.AppendFormat(" {0} ", universFilter);
+
+                //Adding claasification joins
+                sql.AppendFormat(" {0}", classifJoinCondition);
+
+                //ORDER BY
+                sql.AppendFormat(" order by {0}, date_begin_num, date_end_num ", classifOrderFieldName);
+
+
+                ds = _session.Source.Fill(sql.ToString());
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exceptions.VeillePromoDALException(" Impossible to get Promotion Data ", ex);
+            }
+
+
+            return ds;
+        }
+        /// <summary>
+        /// Retreive the data for Veille promo schedule result
+        /// </summary>
+        /// <returns>
+        /// DataSet      
         public virtual DataSet GetData()
         {
             DataSet ds = null;
@@ -140,7 +248,7 @@ namespace TNS.AdExpressI.VP.DAL
                     classifJoinCondition += persoJoins;
                 }
                 //Force brand field
-                if (!detailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.vpBrand) && _session.PersonnalizedLevel!= DetailLevelItemInformation.Levels.vpBrand)
+                if (!detailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.vpBrand) && _session.PersonnalizedLevel != DetailLevelItemInformation.Levels.vpBrand)
                 {
                     DetailLevelItemInformation brandLevelInformation = DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vpBrand);
                     classifFieldName += "," + brandLevelInformation.GetSqlField();
@@ -149,7 +257,7 @@ namespace TNS.AdExpressI.VP.DAL
 
                     classifJoinCondition += " and " + brandLevelInformation.GetSqlFieldId() + "=" + prefix + "." + brandLevelInformation.GetSqlFieldIdWithoutTablePrefix()
                      + " and " + brandLevelInformation.DataBaseTableNamePrefix + ".activation< " + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED;
-                  
+
                 }
 
                 //get universe filters

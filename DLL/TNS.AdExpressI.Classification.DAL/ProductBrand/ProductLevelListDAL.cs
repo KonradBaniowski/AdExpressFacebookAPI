@@ -24,6 +24,25 @@ namespace TNS.AdExpressI.Classification.DAL.ProductBrand {
 		public ProductLevelListDAL(int language, IDataSource source)
 			: base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.product), language, source) {
 		}
+
+         /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="language">Data language</param>
+        /// <param name="source">Data source</param>
+        public ProductLevelListDAL(int language, IDataSource source, string dbSchema)
+            : base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.product), language, source, dbSchema)
+        {
+        }
+         /// Constructor of items list of classification's level
+        /// </summary>
+        /// <remarks>Use only in TNS AdExpress website</remarks>
+        /// <param name="detailLevelItemInformation">Detail level information to build the list</param>
+        /// <param name="language">Data language identifier</param>
+        /// <param name="source">Data source</param>
+        public ProductLevelListDAL(DetailLevelItemInformation detailLevelItemInformation, int language, IDataSource source, string dbSchema) :
+        base(detailLevelItemInformation,language,source,dbSchema){
+    }
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -33,6 +52,16 @@ namespace TNS.AdExpressI.Classification.DAL.ProductBrand {
 		public ProductLevelListDAL(string idList, int language, IDataSource source)
 			: base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.product), idList, language, source) {
 		}
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        ///<param name="idList">classification items' identifier list</param>
+        /// <param name="language">Data language</param>
+        /// <param name="source">Data source</param>
+        public ProductLevelListDAL(string idList, int language, IDataSource source, string dbSchema)
+            : base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.product), idList, language, source, dbSchema)
+        {
+        }
 		#endregion
 	}
 }

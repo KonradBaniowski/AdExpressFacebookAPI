@@ -18,6 +18,7 @@ using TNS.AdExpress.Domain.Web;
 using TNS.FrameWork;
 using TNS.FrameWork.Date;
 using FctUtilities=TNS.AdExpress.Web.Core.Utilities;
+using TNS.AdExpress.Domain.Results;
 
 namespace TNS.AdExpress.Web.UI
 {
@@ -411,6 +412,7 @@ namespace TNS.AdExpress.Web.UI
 					case CustomerSessions.Period.Type.previousWeek:
 						return GestionWeb.GetWebWord(789,webSession.SiteLanguage);
 					case CustomerSessions.Period.Type.dateToDate:
+                    case CustomerSessions.Period.Type.personalize:
 						string dateBegin;
 						string dateEnd;
 						dateBegin = DateString.YYYYMMDDToDD_MM_YYYY(webSession.PeriodBeginningDate.ToString(),webSession.SiteLanguage);
@@ -424,6 +426,15 @@ namespace TNS.AdExpress.Web.UI
 						return webSession.PeriodLength.ToString()+" "+GestionWeb.GetWebWord(1974,webSession.SiteLanguage);
 					case CustomerSessions.Period.Type.previousDay:
 						return GestionWeb.GetWebWord(1975,webSession.SiteLanguage);
+                    case CustomerSessions.Period.Type.cumulWithNextMonth:
+                    case CustomerSessions.Period.Type.allHistoric:
+                    case CustomerSessions.Period.Type.currentMonth:
+                        foreach (VpDateConfiguration cVpDateConfiguration in WebApplicationParameters.VpDateConfigurations.VpDateConfigurationList)
+                        {
+                            if(cVpDateConfiguration.DateType==webSession.PeriodType)
+                                return GestionWeb.GetWebWord(cVpDateConfiguration.TextId, webSession.SiteLanguage);
+                        }
+                        return "";
 					default:
 						return "";
 				}

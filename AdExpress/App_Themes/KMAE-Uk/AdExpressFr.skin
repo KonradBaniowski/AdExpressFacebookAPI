@@ -1660,13 +1660,12 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 />
 
 
-
-
 <%--Veille Promo result Coàntainer control --%>
+
 <ctrVpResult:VpScheduleContainerWebControl   
                             runat="server" 
                             SkinID="VpScheduleContainerWebControl"
-                            CssClass="" 
+                            CssClass="vpScheduleContainerWebControl" 
 />
 
 <%--Veille Promo result control --%>
@@ -1679,23 +1678,81 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <ctrVpResult:VpScheduleResultFilterWebControl   
                             runat="server" 
                             SkinID="VpScheduleResultFilterWebControl"
-                            CssClass="" 
+                            CssClass="vpScheduleResultFilterWebControl" 
+                            CssClassResult="vpScheduleResultFilterWebControlResult"
+                            CssClassResultContent="vpScheduleResultFilterWebControlResultContent"
+                            CssClassOption="vpScheduleResultFilterWebControlOption"
+                            CssClassOptionHeader="vpScheduleResultFilterWebControlOptionHeader"
+                            CssClassOptionMenu="vpScheduleResultFilterWebControlMenu"
+                            CssClassOptionMenuSelected="vpScheduleResultFilterWebControlMenuSelected"
+                            VpScheduleSelectionNodeMediaWebControlSkinId="VpScheduleSelectionNodeMediaWebControlSkinId"
+                            VpScheduleSelectionNodeProductWebControlSkinId="VpScheduleSelectionNodeProductWebControlSkinId"
+                            VpScheduleSelectionDetailLevelWebControlSkinId="VpScheduleSelectionDetailLevelWebControlSkinId"
+                            CssClassOptionButtons="vpScheduleResultFilterWebControlButtons"
+                            CssClassOptionButtonCancel="vpScheduleResultFilterWebControlButtonCancel"
+                            PicturePathButtonCancel="/App_Themes/KMAE-Uk/Images/Common/Button/initialize_all_up.gif"
+                            PicturePathButtonCancelOver="/App_Themes/KMAE-Uk/Images/Common/Button/initialize_all_down.gif"
+                            CssClassOptionButtonValidation="vpScheduleResultFilterWebControlButtonValidation"
+                            PicturePathButtonValidation="/App_Themes/KMAE-Uk/Images/Common/Button/appliquer_up.gif"
+                            PicturePathButtonValidationOver="/App_Themes/KMAE-Uk/Images/Common/Button/appliquer_down.gif"
+/>
+
+<%--Veille Promo Selection Filter control --%>
+<ctrVpSelectionFilter:VpScheduleSelectionNodeWebControl   
+                            runat="server" 
+                            SkinID="VpScheduleSelectionNodeMediaWebControlSkinId" 
+                            CssClass="vpScheduleResultFilterNodeWebControlResult"
+                            CssClassLvl1="vpScheduleResultFilterNodeWebControlResultLvl1"
+                            CssClassLvl2="vpScheduleResultFilterNodeWebControlResultLvl2"
+                            CssClassLvl3="vpScheduleResultFilterNodeWebControlResultLvl3"
+                            CssClassDisplay="vpScheduleResultFilterNodeWebControlResultDisplay"
+                            PathPictureDisplayOver="/App_Themes/KMAE-Uk/Images/Common/arrow_down.gif"
+                            PathPictureDisplay="/App_Themes/KMAE-Uk/Images/Common/arrow_up.gif"
+/>
+
+<ctrVpSelectionFilter:VpScheduleSelectionNodeWebControl   
+                            runat="server" 
+                            SkinID="VpScheduleSelectionNodeProductWebControlSkinId" 
+                            CssClass="vpScheduleResultFilterNodeWebControlResult"
+                            CssClassLvl1="vpScheduleResultFilterNodeProductWebControlResultLvl1"
+                            CssClassLvl2="vpScheduleResultFilterNodeProductWebControlResultLvl2"
+                            CssClassLvl3="vpScheduleResultFilterNodeProductWebControlResultLvl3"
+                            CssClassContainerLvl1="vpScheduleResultFilterNodeProductContainerWebControlResultLvl1"
+                            CssClassContainerLvl2="vpScheduleResultFilterNodeProductContainerWebControlResultLvl2"
+                            CssClassContainerLvl3="vpScheduleResultFilterNodeProductContainerWebControlResultLvl3"
+                            CssClassDisplay="vpScheduleResultFilterNodeWebControlResultDisplay"
+                            PathPictureDisplayOver="/App_Themes/KMAE-Uk/Images/Common/arrow_down.gif"
+                            PathPictureDisplay="/App_Themes/KMAE-Uk/Images/Common/arrow_up.gif"
+/>
+
+<ctrVpSelectionFilter:VpScheduleSelectionDetailLevelWebControl   
+                            runat="server" 
+                            SkinID="VpScheduleSelectionDetailLevelWebControlSkinId" 
+                            CssClass="vpScheduleSelectionDetailLevelWebControl"
+                            CssClassLvl1=""
+                            CssClassLvl2=""
+                            CssClassLvl3=""
+                            CssClassDetailTab="vpScheduleSelectionDetailLevelWebControlDetailTab"
+                            CssClassDetailTabHeader="vpScheduleSelectionDetailLevelWebControlDetailTabHeader"
+                            CssClassSeparator="vpScheduleSelectionDetailLevelWebControlSeparator"
+                            CssClassPersonnalisationHeader="vpScheduleSelectionDetailLevelWebControlPersonnalisationHeader"
+                            CssClassPersonnalisationHeaderBis="vpScheduleSelectionDetailLevelWebControlPersonnalisationHeaderBis"
+                            CssClassPersonnalisation="vpScheduleSelectionDetailLevelWebControlPersonnalisation"
 />
 
 <%--Veille Promo Selection control --%>
 <ctrVpSelection:VpScheduleSelectionDropDownDateListWebControl   
                             runat="server" 
                             SkinID="DateSelectionWebControl" 
-                            CssClass=""
+                            CssClass="dateSelectionWebControlSelection"
 />
-
 
 <ctrVpSelection:VpScheduleSelectionImageWebControl   
                             runat="server" 
                             SkinID="FiltreSelectionWebControl" 
                             PictureSrcPath="/App_Themes/KMAE-Uk/Images/Common/options.gif"
                             PictureSrcPathOver="/App_Themes/KMAE-Uk/Images/Common/options_over.gif"
-                            CssClass=""
+                            CssClass="filtreSelectionWebControlSelection"
 />
 
 <ctrVpSelection:VpScheduleSelectionImageWebControl   
@@ -1703,7 +1760,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                             SkinID="ExcelSelectionWebControl" 
                             PictureSrcPath="/App_Themes/KMAE-Uk/Images/Common/export_excel.gif"
                             PictureSrcPathOver="/App_Themes/KMAE-Uk/Images/Common/export_excel_over.gif"
-                            CssClass=""
+                            CssClass="excelSelectionWebControlSelection"
 />
 
 <ctrVpSelection:VpScheduleSelectionImageWebControl   
@@ -1711,5 +1768,6 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                             SkinID="PdfSelectionWebControl" 
                             PictureSrcPath="/App_Themes/KMAE-Uk/Images/Common/export_pdf.gif"
                             PictureSrcPathOver="/App_Themes/KMAE-Uk/Images/Common/export_pdf_over.gif"
-                            CssClass=""
+                            CssClass="pdfSelectionWebControlSelection"
 />
+

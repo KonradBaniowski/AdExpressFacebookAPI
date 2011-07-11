@@ -81,6 +81,10 @@ namespace TNS.AdExpress.Anubis.Constantes{
             /// Alerte AdExpress
             /// </summary>
             alertAdExpress = 20,
+            /// <summary>
+            /// Export Excel veille promo
+            /// </summary>
+            tefnout = 21
 		}
 
 		/// <summary>

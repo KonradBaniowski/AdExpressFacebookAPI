@@ -123,6 +123,9 @@ namespace AdExpress.Private.MyAdExpress{
 					case Module.Name.DONNEES_DE_CADRAGE :
 						idStaticNavSession=TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession,TNS.AdExpress.Anubis.Constantes.Result.type.amset);
 						break;
+                    case Module.Name.VP:
+                        idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.tefnout);
+                        break;
 					//default :
                         //throw new AdExpress.Exceptions.PdfSavePopUpException(" Impossssile d'identifier le module.");
 				}

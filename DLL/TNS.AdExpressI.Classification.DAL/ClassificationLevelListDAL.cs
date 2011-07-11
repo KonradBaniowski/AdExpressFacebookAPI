@@ -97,6 +97,56 @@ namespace TNS.AdExpressI.Classification.DAL {
 			
 		}
 
+        /// <summary>	
+        /// Constructor of items list of classification's level
+        /// </summary>
+        /// <remarks>Use only in TNS AdExpress website</remarks>
+        /// <param name="detailLevelItemInformation">Detail level information to build the list</param>
+        /// <param name="language">Data language identifier</param>
+        /// <param name="source">Data source</param>
+        public ClassificationLevelListDAL(DetailLevelItemInformation detailLevelItemInformation, int language, IDataSource source, string dbSchema)
+        {
+            this._language = language;
+            if (detailLevelItemInformation == null) throw (new NullReferenceException("detailLevelItemInformation parameter is null"));
+            this._detailLevelItemInformation = detailLevelItemInformation;
+            DataTable dt;
+            _dbSchema = dbSchema;
+
+            _list = new Dictionary<long, string>();
+            if (_dbSchema == null || _dbSchema.Length == 0) _dbSchema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label;
+
+            // Building query
+            string sql = BuildSQLQuery(detailLevelItemInformation.DataBaseIdField, detailLevelItemInformation.DataBaseField, detailLevelItemInformation.DataBaseTableName, language);
+
+            //Execute query
+            try
+            {
+                dt = source.Fill(sql).Tables[0];
+                dt.TableName = detailLevelItemInformation.DataBaseTableName;
+                _dataTable = dt;
+            }
+            catch (System.Exception ex)
+            {
+                throw (new ClassificationDALException("Impossible to load classification's items", ex));
+            }
+
+            #region Transformation of DataTable to dictionary
+            try
+            {
+                foreach (DataRow currentRow in dt.Rows)
+                {
+                    _list.Add(long.Parse(currentRow[0].ToString()), currentRow[1].ToString());
+                    _idListOrderByClassificationItem.Add(long.Parse(currentRow[0].ToString()));
+                }
+            }
+            catch (System.Exception ext)
+            {
+                throw (new ClassificationDALException("Impossible to transfer data in the list", ext));
+            }
+            #endregion
+
+        }
+
 			
 		/// Constructor of items list of classification's level
 		/// </summary>
@@ -105,12 +155,13 @@ namespace TNS.AdExpressI.Classification.DAL {
 		/// <param name="idList">classification items' identifier list</param>
 		/// <param name="language">Data language identifier</param>
 		/// <param name="source">Data source</param>
-        public ClassificationLevelListDAL(DetailLevelItemInformation detailLevelItemInformation,string idList,int language,IDataSource source) {
+        public ClassificationLevelListDAL(DetailLevelItemInformation detailLevelItemInformation,string idList,int language,IDataSource source, string dbSchema) {
 			this._language = language;
 			if (detailLevelItemInformation == null) throw (new NullReferenceException("detailLevelItemInformation parameter is null"));
 			this._detailLevelItemInformation = detailLevelItemInformation;
 			DataTable dt;
 			_list = new Dictionary<long, string>();
+            _dbSchema = dbSchema;
 
             if(_dbSchema==null || _dbSchema.Length==0) if(_dbSchema==null || _dbSchema.Length==0) _dbSchema=WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label;
 		
@@ -140,6 +191,55 @@ namespace TNS.AdExpressI.Classification.DAL {
 			#endregion
 			
 		}
+
+        /// Constructor of items list of classification's level
+        /// </summary>
+        /// <remarks>Use only in TNS AdExpress website</remarks>
+        /// <param name="detailLevelItemInformation">Detail level information to build the list</param>
+        /// <param name="idList">classification items' identifier list</param>
+        /// <param name="language">Data language identifier</param>
+        /// <param name="source">Data source</param>
+        public ClassificationLevelListDAL(DetailLevelItemInformation detailLevelItemInformation, string idList, int language, IDataSource source)
+        {
+            this._language = language;
+            if (detailLevelItemInformation == null) throw (new NullReferenceException("detailLevelItemInformation parameter is null"));
+            this._detailLevelItemInformation = detailLevelItemInformation;
+            DataTable dt;
+            _list = new Dictionary<long, string>();
+
+            if (_dbSchema == null || _dbSchema.Length == 0) if (_dbSchema == null || _dbSchema.Length == 0) _dbSchema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label;
+
+            // Building query
+            string sql = BuildSQLQuery(detailLevelItemInformation.DataBaseIdField, detailLevelItemInformation.DataBaseField, detailLevelItemInformation.DataBaseTableName, idList, language);
+
+            //Execute query
+            try
+            {
+                dt = source.Fill(sql).Tables[0];
+                dt.TableName = detailLevelItemInformation.DataBaseTableName;
+                _dataTable = dt;
+            }
+            catch (System.Exception ex)
+            {
+                throw (new ClassificationDALException("Impossible to load classification's items", ex));
+            }
+
+            #region Transformation of DataTable to dictionary
+            try
+            {
+                foreach (DataRow currentRow in dt.Rows)
+                {
+                    _list.Add(long.Parse(currentRow[0].ToString()), currentRow[1].ToString());
+                    _idListOrderByClassificationItem.Add(long.Parse(currentRow[0].ToString()));
+                }
+            }
+            catch (System.Exception ext)
+            {
+                throw (new ClassificationDALException("Impossible to transfer data in the list", ext));
+            }
+            #endregion
+
+        }
 
 		/// Constructor of items list of classification's level
 		/// </summary>

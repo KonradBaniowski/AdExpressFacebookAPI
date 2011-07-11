@@ -25,6 +25,17 @@ namespace TNS.AdExpressI.Classification.DAL.MediaBrand {
 		public VehicleLevelListDAL(int language, IDataSource source)
 			: base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vehicle), language, source) {
 		}
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="language">Data language</param>
+        /// <param name="source">Data source</param>
+        public VehicleLevelListDAL(int language, IDataSource source, string dbSchema)
+            : base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vehicle), language, source, dbSchema)
+        {
+        }
+
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -34,6 +45,16 @@ namespace TNS.AdExpressI.Classification.DAL.MediaBrand {
 		public VehicleLevelListDAL(string idList, int language, IDataSource source)
 			: base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vehicle), idList, language, source) {
 		}
+         /// <summary>
+        /// Constructor
+        /// </summary>
+        ///<param name="idList">classification items' identifier list</param>
+        /// <param name="language">Data language</param>
+        /// <param name="source">Data source</param>
+        public VehicleLevelListDAL(string idList, int language, IDataSource source, string dbSchema)
+            : base(DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.vehicle), idList, language, source, dbSchema)
+        {
+        }
 		#endregion
 	}
 }

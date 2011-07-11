@@ -2107,6 +2107,9 @@
     <item mnemonic="w2884" type="System.String">Nomenclature produit</item>
     <item mnemonic="w2885" type="System.String">Promotion</item>
     <item mnemonic="w2886" type="System.String">Conditions</item>
+    <item mnemonic="w2887" type="System.String">Période de validité</item>
+    <item mnemonic="w2888" type="System.String">Mois de départ</item>
+    <item mnemonic="w2889" type="System.String">Contenu promotionnel</item>
     <!-- ********************************* -->
   </items>
 </localization>

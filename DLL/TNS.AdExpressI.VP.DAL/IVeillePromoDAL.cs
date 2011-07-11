@@ -26,5 +26,11 @@ namespace TNS.AdExpressI.VP.DAL
         /// </summary>
         ///<param name="idDataPromotion">id Data Promotion</param>
         DataSet GetData(long idDataPromotion);
+           /// <summary>
+        /// Retreive the data for Veille promo schedule result
+        /// </summary>
+        /// <returns>
+        /// DataSet      
+        DataSet GetBenchMarkData();
     }
 }

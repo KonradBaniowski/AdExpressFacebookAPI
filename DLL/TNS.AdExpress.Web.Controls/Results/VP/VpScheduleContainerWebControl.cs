@@ -133,6 +133,12 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n}");
             #endregion
 
+            #region AskResultExportExcel
+            js.Append("\r\nfunction AskResultExportExcel(){");
+            js.AppendFormat("\r\n\t popupOpenBis('/Private/MyAdExpress/APPMExcelSavePopUp.aspx?idSession={0}','470','210','yes');",_webSession.IdSession);
+              js.Append("\r\n}");
+            #endregion
+
             js.Append("\r\n-->\r\n</script>");
             return (js.ToString());
         }
