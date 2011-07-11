@@ -356,11 +356,11 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
                 
                 sql.AppendFormat("INSERT INTO {0} ", tblData.Sql);
 
-                sql.Append("(ID_DATA_PROMOTION, ID_PRODUCT, ID_BRAND, DATE_BEGIN_NUM, DATE_END_NUM, ID_SEGMENT, ID_CATEGORY, ID_CIRCUIT, PROMOTION_CONTENT, CONDITION_VISUAL, CONDITION_TEXT, PROMOTION_BRAND, PROMOTION_VISUAL, ACTIVATION, LOAD_DATE) ");
+                sql.Append("(ID_DATA_PROMOTION, ID_LANGUAGE_DATA_I, ID_PRODUCT, ID_BRAND, DATE_BEGIN_NUM, DATE_END_NUM, ID_SEGMENT, ID_CATEGORY, ID_CIRCUIT, PROMOTION_CONTENT, CONDITION_VISUAL, CONDITION_TEXT, PROMOTION_BRAND, PROMOTION_VISUAL, ACTIVATION, LOAD_DATE) ");
 
                 sql.Append("VALUES ");
 
-                sql.AppendFormat("({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, '{8}', '{9}', '{10}', '{11}', '{12}', {13}, {14}) ",
+                sql.AppendFormat("({0} 33, {1}, {2}, {3}, {4}, {5}, {6}, {7}, '{8}', '{9}', '{10}', '{11}', '{12}', {13}, {14}) ",
                 "PROMO03.SEQ_DATA_PROMOTION.NEXTVAL",
                 dataPromotionDetail.IdProduct,
                 dataPromotionDetail.IdBrand,
