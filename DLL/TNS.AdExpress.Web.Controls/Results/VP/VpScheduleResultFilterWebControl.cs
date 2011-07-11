@@ -692,9 +692,9 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             switch (genericDetailLevel[lvl].Id) {
                         case DetailLevelItemInformation.Levels.vpBrand:
                             if (lvl == nbLvl)
-                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.brandAccess;
+                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.vpBrandAccess;
                             else
-                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.brandException;
+                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.vpBrandException;
                             break;
                         case DetailLevelItemInformation.Levels.vpCircuit:
                             if (lvl == nbLvl)
@@ -704,21 +704,21 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                             break;
                         case DetailLevelItemInformation.Levels.vpProduct:
                             if (lvl == nbLvl)
-                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.productAccess;
+                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.vpProductAccess;
                             else
-                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.productException;
+                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.vpProductException;
                             break;
                         case DetailLevelItemInformation.Levels.vpSegment:
                             if (lvl == nbLvl)
-                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess;
+                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.vpSegmentAccess;
                             else
-                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.segmentException;
+                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.vpSegmentException;
                             break;
                         case DetailLevelItemInformation.Levels.vpSubSegment:
                             if (lvl == nbLvl)
-                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.groupAccess;
+                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.vpSubSegmentAccess;
                             else
-                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.groupException;
+                                accesType = TNS.AdExpress.Constantes.Customer.Right.type.vpSubSegmentException;
                             break;
                         default:
                             throw new BaseException("Impossible to retrieve the current level");

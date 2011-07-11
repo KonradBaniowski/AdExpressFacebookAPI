@@ -391,19 +391,19 @@ namespace TNS.AdExpress.Web.Controls.Selections.VP.Filter
             TNS.AdExpress.Constantes.Customer.Right.type accesType;
             switch (genericDetailLevel[lvl].Id) {
                 case DetailLevelItemInformation.Levels.vpBrand:
-                        accesType = TNS.AdExpress.Constantes.Customer.Right.type.brandAccess;
+                        accesType = TNS.AdExpress.Constantes.Customer.Right.type.vpBrandAccess;
                     break;
                 case DetailLevelItemInformation.Levels.vpCircuit:
                         accesType = TNS.AdExpress.Constantes.Customer.Right.type.circuitAccess;
                     break;
                 case DetailLevelItemInformation.Levels.vpProduct:
-                        accesType = TNS.AdExpress.Constantes.Customer.Right.type.productAccess;
+                    accesType = TNS.AdExpress.Constantes.Customer.Right.type.vpProductAccess;
                     break;
                 case DetailLevelItemInformation.Levels.vpSegment:
-                        accesType = TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess;
+                    accesType = TNS.AdExpress.Constantes.Customer.Right.type.vpSegmentAccess;
                     break;
                 case DetailLevelItemInformation.Levels.vpSubSegment:
-                        accesType = TNS.AdExpress.Constantes.Customer.Right.type.groupAccess;
+                    accesType = TNS.AdExpress.Constantes.Customer.Right.type.vpSubSegmentAccess;
                     break;
                 default:
                     throw new BaseException("Impossible to retrieve the current level");
