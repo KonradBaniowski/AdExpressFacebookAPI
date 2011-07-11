@@ -360,7 +360,7 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
 
                 sql.Append("VALUES ");
 
-                sql.AppendFormat("({0} 33, {1}, {2}, {3}, {4}, {5}, {6}, {7}, '{8}', '{9}', '{10}', '{11}', '{12}', {13}, {14}) ",
+                sql.AppendFormat("({0}, 33, {1}, {2}, {3}, {4}, {5}, {6}, {7}, '{8}', '{9}', '{10}', '{11}', '{12}', {13}, {14}) ",
                 "PROMO03.SEQ_DATA_PROMOTION.NEXTVAL",
                 dataPromotionDetail.IdProduct,
                 dataPromotionDetail.IdBrand,
