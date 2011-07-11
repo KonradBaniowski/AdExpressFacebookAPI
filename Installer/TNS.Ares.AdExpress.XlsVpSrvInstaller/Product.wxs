@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="80cab330-05e9-43fa-8742-7de6bf7823a7" Name="Kantar AdExpress - XlsVpSrv Tefnout" Language="1033" Version="1.0.0.0" Manufacturer="Kantar_AdExpress_XlsVpSrv" UpgradeCode="889a38d2-8642-4f99-9453-1f7158d177d1">
+		<Package InstallerVersion="200" Compressed="yes" />
+
+    <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+    <!-- UI Initialisation-->
+    <Property Id="SRVWIXUI_INSTALLDIR" Value="INSTALLDIR" />
+    <UIRef Id="SrvWixUI_InstallDir" />
+    <!-- Add PdfPMFiles.wxs directories -->
+    <DirectoryRef Id="INSTALLDIR" FileSource="XlsVpFiles.wxs"/>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLDIR" Name="Xls Vp Srv Tefnout">
+          <Component Id="ProductComponent" Guid="58b8470d-7767-49c2-b1a3-500be302605f">
+            <File Id="TefnoutPrgFile" Name="$(var.TNS.Ares.AdExpress.XlsVpSrv.TargetFileName)" Source="$(var.TNS.Ares.AdExpress.XlsVpSrv.TargetPath)" DiskId="1" KeyPath="yes" />
+            <!-- Service Installation -->
+            <ServiceInstall Id="MyServiceInstall" DisplayName="Ares Xls Vp Srv Tefnout" Name="$(var.TNS.Ares.AdExpress.XlsVpSrv.TargetFileName)" ErrorControl="normal" Start="demand" Type="ownProcess" Vital="yes" />
+            <ServiceControl Id="MyServiceControl" Name="$(var.TNS.Ares.AdExpress.XlsVpSrv.TargetFileName)" Start="install" Stop="uninstall" Remove="uninstall" />
+            <!-- FIN Service Installation -->
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+    
+    <Feature Id="ProductFeature" Title="Xls Vp Srv Tefnout" Level="1">
+      <ComponentRef Id="ProductComponent" />
+      <!-- link to AlertQuotaFiles.wxs component-->
+      <ComponentGroupRef Id="TefnoutPRG1"/>
+    </Feature>
+	</Product>
+</Wix>
+
