@@ -20,7 +20,7 @@ using TNS.FrameWork.Exceptions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Anubis.Tefnout;
 
-namespace TNS.Ares.AdExpress.XlsChrono
+namespace TNS.Ares.AdExpress.XlsVp
 {
     public class TefnoutShell : AdExpressShell
     {

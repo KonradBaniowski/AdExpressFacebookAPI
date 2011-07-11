@@ -160,6 +160,14 @@
       <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
       <Name>TNS.AdExpress.Web</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.Classification.DAL\TNS.AdExpressI.Classification.DAL.csproj">
+      <Project>{B731E9A2-0DBF-43A6-A89E-6DC27D96FFD4}</Project>
+      <Name>TNS.AdExpressI.Classification.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.VP.DAL\TNS.AdExpressI.VP.DAL.csproj">
+      <Project>{F9421544-2B9E-4F1E-9F89-6441BDA08991}</Project>
+      <Name>TNS.AdExpressI.VP.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpress\TNS.AdExpress.csproj">
       <Project>{6E75699B-838C-4534-99F7-D4C3E768CD57}</Project>
       <Name>TNS.AdExpress</Name>

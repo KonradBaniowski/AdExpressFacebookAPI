@@ -79,6 +79,14 @@
       <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
       <Name>TNS.AdExpress.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.VP.DAL.Default\TNS.AdExpressI.VP.DAL.Default.csproj">
+      <Project>{C577EDFC-48E0-4C74-B714-50B36A10C61D}</Project>
+      <Name>TNS.AdExpressI.VP.DAL.Default</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.VP.DAL\TNS.AdExpressI.VP.DAL.csproj">
+      <Project>{F9421544-2B9E-4F1E-9F89-6441BDA08991}</Project>
+      <Name>TNS.AdExpressI.VP.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.Ares.Constantes\TNS.Ares.Constantes.csproj">
       <Project>{303C6B21-CA16-4D7B-8EDB-E8869B2B3EC9}</Project>
       <Name>TNS.Ares.Constantes</Name>

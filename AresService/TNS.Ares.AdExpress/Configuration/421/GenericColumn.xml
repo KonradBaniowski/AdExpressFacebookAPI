@@ -288,6 +288,7 @@
       <columnItem id="32" name="Agglomeration"/>
       <columnItem id="14" name="Prix"/>
     </detailColumn>
+
     <!--Cinema-->
     <detailColumn id="30" name="Support\Date du Support\Annonceur\Produit\Centre d'interet\Régie\Groupe\Durée\Prix">
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
@@ -304,6 +305,7 @@
       <!-- <columnItem id="22" name="Nombre Spots écran"/>-->
       <columnItem id="14" name="Prix"/>
     </detailColumn>
+
     <!--TV Parrainage-->
     <detailColumn id="5" name="Spot\Jour semaine\Annonceur\Produit\Version\Centre d'interet\Régie\Groupe\Top de diffusion\Code écran\Durée\Position\Forme de parrainage\Genre d'émission\Emission\Prix">
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
@@ -730,6 +732,7 @@
       <columnItem id="47" name="Rang groupe"/>
       <columnItem id="48" name="Rang support"/>
     </detailColumn>
+
     <!--Cinema-->
     <detailColumn id="31" name="Support\Date du Support\Annonceur\Produit\Groupe\Durée\Prix">
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
@@ -746,5 +749,6 @@
       <!-- <columnItem id="22" name="Nombre Spots écran"/>-->
       <columnItem id="14" name="Prix"/>
     </detailColumn>
+
   </detailColumns>
 </genericColumn>

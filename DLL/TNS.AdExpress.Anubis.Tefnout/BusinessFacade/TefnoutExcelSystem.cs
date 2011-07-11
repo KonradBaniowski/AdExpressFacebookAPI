@@ -127,7 +127,7 @@ namespace TNS.AdExpress.Anubis.Tefnout.BusinessFacade
                 }
                 //			to.Add("dede.mussuma@tnsmi.fr");//test
                 SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
-                    Text.SuppressAccent(GestionWeb.GetWebWord(1920, _webSession.SiteLanguage)),
+                    Text.SuppressAccent(GestionWeb.GetWebWord(2890, _webSession.SiteLanguage)),
                     Text.SuppressAccent(GestionWeb.GetWebWord(1921, _webSession.SiteLanguage) + "\" " + _webSession.ExportedPDFFileName
                     + "\"" + String.Format(GestionWeb.GetWebWord(1751, _webSession.SiteLanguage), _config.WebServer)
                     + "<br><br>"

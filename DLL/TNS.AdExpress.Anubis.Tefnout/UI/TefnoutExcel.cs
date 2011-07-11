@@ -90,10 +90,10 @@ namespace TNS.AdExpress.Anubis.Tefnout.UI
 			Cells cells = sheet.Cells;	
 
             //Mise en page
-            TefnoutFunctions.WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(1587, webSession.SiteLanguage), 15, style);
+            TefnoutFunctions.WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(2858, webSession.SiteLanguage), 15, style);
 
 			//intitulé du fichier excel			
-            TefnoutFunctions.WorkSheet.CellsStyle(_excel, cells, style.GetTag("bigTitle"), GestionWeb.GetWebWord(1587, webSession.SiteLanguage), cellRow - 1, 5, 5, false);
+            TefnoutFunctions.WorkSheet.CellsStyle(_excel, cells, style.GetTag("bigTitle"), GestionWeb.GetWebWord(2858, webSession.SiteLanguage), cellRow - 1, 5, 5, false);
 
             //Police par default
             TefnoutFunctions.WorkSheet.CellsStyle(_excel, cells, style.GetTag("defaultTitle"), null, 4, 4, 8, false);

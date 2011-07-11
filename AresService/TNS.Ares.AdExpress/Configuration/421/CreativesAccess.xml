@@ -12,6 +12,7 @@
     <VirtualPath id="DOWNLOAD_TV_SERVER" name="Répertoire des spots tv" value="/SpotTv"/>
     <VirtualPath id="DOWNLOAD_PAN_EURO" name="Répertoire des PanEuro" value="/PanEuro"/>
     <VirtualPath id="LOGO_PRESS" name="Répertoire contenant les logos de la presse" value="/LogosPresse"/>
+    <VirtualPath id="MEDIA_UPDATE" name="Répertoire contenant la liste des médias dispo" value="/MediaList"/>
   </VirtualPaths>
   <Streamings>
     <Streaming id="READ_REAL_RADIO_SERVER" name="Serveur Real en streaming en radio" value="rtsp://streamrl.secodip.com/radiostream"/>

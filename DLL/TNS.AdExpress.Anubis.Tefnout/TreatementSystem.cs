@@ -231,8 +231,8 @@ namespace TNS.AdExpress.Anubis.Tefnout {
                 _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.sent.GetHashCode());
 
                 PluginInformation pluginInformation = PluginConfiguration.GetPluginInformation(PluginType.Tefnout);
-                if (pluginInformation != null && pluginInformation.DeleteRowSuccess)
-                    _dataAccess.DeleteRow(_navSessionId);
+                //if (pluginInformation != null && pluginInformation.DeleteRowSuccess)
+                //    _dataAccess.DeleteRow(_navSessionId);
 				#endregion
 
 				OnStopWorkerJob(_navSessionId,"","",this.GetPluginName()+" finished for "+_navSessionId);

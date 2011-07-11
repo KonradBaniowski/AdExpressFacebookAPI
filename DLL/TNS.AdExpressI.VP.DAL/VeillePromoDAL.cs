@@ -414,9 +414,9 @@ namespace TNS.AdExpressI.VP.DAL
         {
             StringBuilder sql = new StringBuilder();
             bool first = true;
-            string segmentActivityAccess = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.groupAccess);
-            string categoryAccess = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.segmentAccess);
-            string productAccess = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.productAccess);
+            string segmentActivityAccess = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.vpSegmentAccess);
+            string categoryAccess = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.vpSubSegmentAccess);
+            string productAccess = _session.GetSelection(_session.SelectionUniversProduct, CustomerRightConstante.type.vpProductAccess);
 
             //Add Classification items in Access
             //Segment Activity
@@ -467,7 +467,7 @@ namespace TNS.AdExpressI.VP.DAL
             StringBuilder sql = new StringBuilder();
             bool first = true;
             string circuitAccess = _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.circuitAccess);
-            string brandAccess = _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.brandAccess);
+            string brandAccess = _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.vpBrandAccess);
 
             //Add Classification items in Access
 

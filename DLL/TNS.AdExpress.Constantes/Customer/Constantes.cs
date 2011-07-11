@@ -205,7 +205,36 @@ namespace TNS.AdExpress.Constantes.Customer{
             /// <summary>
             /// Circuit in exception
             /// </summary>
-            circuitException
+            circuitException,
+            /// VP Brand in Access
+            /// </summary>
+            vpBrandAccess,
+            /// <summary>
+            /// VP Brand in exception
+            /// </summary>
+            vpBrandException,
+            /// VP Segment in Access
+            /// </summary>
+            vpSegmentAccess,
+            /// <summary>
+            /// VP Segment in exception
+            /// </summary>
+            vpSegmentException,
+            /// VP Sub segment in Access
+            /// </summary>
+            vpSubSegmentAccess,
+            /// <summary>
+            /// VP Sub segment in exception
+            /// </summary>
+            vpSubSegmentException,
+            /// VP product in Access
+            /// </summary>
+            vpProductAccess,
+            /// <summary>
+            /// VP product in exception
+            /// </summary>
+            vpProductException
+
 
 
 		}

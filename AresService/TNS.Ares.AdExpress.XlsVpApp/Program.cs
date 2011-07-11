@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TNS.Ares.Domain.LS;
-using TNS.Ares.AdExpress.XlsChrono;
+using TNS.Ares.AdExpress.XlsVp;
 using TNS.FrameWork.DB.Common;
 
 namespace TNS.Ares.AdExpress.XlsVpApp {
@@ -22,7 +22,7 @@ namespace TNS.Ares.AdExpress.XlsVpApp {
 
             TefnoutShell shell = new TefnoutShell(lsClientConfiguration, lsClientConfiguration.DirectoryName);
             shell.StartMonitorServer(lsClientConfiguration.MonitorPort);
-            Console.WriteLine("Ares XlsStats treatment service");
+            Console.WriteLine("Ares Xls VP treatment service");
             Console.ReadLine();
             shell.Dispose();
         }

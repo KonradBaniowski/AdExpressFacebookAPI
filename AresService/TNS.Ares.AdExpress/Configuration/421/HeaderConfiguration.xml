@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
-	<header name="homepage" imgUrl="/Images/Common/dupli_2.gif" flashUrl="/Flash/Common/HeaderStrip.swf" missingFlashUrl="/Images/Common/FlashReplacement/HeaderStrip.gif">
-		<!--<menuItem name="info" headerType="homepage" idWebText="756" href="/Public/Contact.aspx" language="true" idSession="false"/>
-		<menuItem name="presentation" headerType="homepage" idWebText="757" href="http://www.TnsMediaIntelligence.fr" target="blank" language="false" idSession="false"/>-->
-		<menuItem name="configuration" headerType="homepage" idWebText="990" href="/Public/Configuration.aspx" language="true" idSession="false"/>
-		<menuItem name="TNS" headerType="homepage" idWebText="758" href="http://www.TnsMediaIntelligence.fr" target="blank" language="false" idSession="false"/>
-	</header>
-	<header name ="generic" imgUrl="/Images/Common/dupli_2.gif" flashUrl="/Flash/Common/HeaderStrip.swf" missingFlashUrl="/Images/Common/FlashReplacement/HeaderStrip.gif">
-		<menuItem name="identification" idWebText="759" href="/index.aspx" language="true" idSession="false"/>
-		<menuItem name="modules" idWebText="760" href="/Private/selectionModule.aspx" language="false" idSession="true"/>
-		<menuItem name="myAdExpress" idWebText="761" href="/Private/MyAdExpress/SearchSession.aspx" language="false" idSession="true"/>
-		<!--<menuItem name="news" idWebText="762" href="/Private/Results/InfoNews.aspx" language="false" idSession="true"/>-->
-		<!--<menuItem name="news" idWebText="762" href="#" language="false" idSession="false"/>-->
-		<!--<menuItem name="MAJ des données" idWebText="1253" href="/Private/Informations/DataUpdate2.aspx" language="false" idSession="true" displayInPopUp="true"/>-->
-		<!--<menuItem name="contact" idWebText="763" href="/Public/Contact.aspx" language="true" idSession="false"/>-->
-		<menuItem name="TNS" idWebText="758" href="http://www.TnsMediaIntelligence.fr" target="blank" language="false" idSession="false"/>
-	</header>
+  <header name="index" imgUrl="/Images/Common/dupli_2.gif" flashUrl="/Flash/Common/HeaderStrip.swf" missingFlashUrl="/Images/Common/FlashReplacement/HeaderStrip.gif">
+    <!--<menuItem name="info" headerType="homepage" idWebText="756" href="/Public/Contact.aspx" language="true" idSession="false"/>-->
+    <!--<menuItem name="presentation" headerType="homepage" idWebText="757" href="http://www.TnsMediaIntelligence.fr" target="blank" language="false" idSession="false"/>-->
+    <menuItem name="configuration" headerType="homepage" idWebText="990" href="/Public/Configuration.aspx" language="true" idSession="false"/>
+    <menuItem name="TNS" headerType="homepage" idWebText="2841" href="http://www.kantarmedia.com" target="blank" language="false" idSession="false"/>
+  </header>
+  <header name="homepage" imgUrl="/Images/Common/dupli_2.gif" flashUrl="/Flash/Common/HeaderStrip.swf" missingFlashUrl="/Images/Common/FlashReplacement/HeaderStrip.gif">
+    <!--<menuItem name="info" headerType="homepage" idWebText="756" href="/Public/Contact.aspx" language="true" idSession="false"/>-->
+    <!--<menuItem name="presentation" headerType="homepage" idWebText="757" href="http://www.TnsMediaIntelligence.fr" target="blank" language="false" idSession="false"/>-->
+    <menuItem name="configuration" headerType="homepage" idWebText="990" href="/Public/Configuration.aspx" language="true" idSession="false"/>
+    <menuItem name="TNS" headerType="homepage" idWebText="2841" href="http://www.kantarmedia.com" target="blank" language="false" idSession="false"/>
+  </header>
+  <header name ="generic" imgUrl="/Images/Common/dupli_2.gif" flashUrl="/Flash/Common/HeaderStrip.swf" missingFlashUrl="/Images/Common/FlashReplacement/HeaderStrip.gif">
+    <menuItem name="identification" idWebText="759" href="/index.aspx" language="true" idSession="false"/>
+    <menuItem name="modules" idWebText="760" href="/Private/selectionModule.aspx" language="false" idSession="true"/>
+    <menuItem name="myAdExpress" idWebText="761" href="/Private/MyAdExpress/SearchSession.aspx" language="false" idSession="true"/>
+    <!--<menuItem name="news" idWebText="762" href="/Private/Results/InfoNews.aspx" language="false" idSession="true"/>-->
+    <!--<menuItem name="news" idWebText="762" href="#" language="false" idSession="false"/>-->
+    <!--<menuItem name="MAJ des données" idWebText="1253" href="/Private/Informations/DataUpdate2.aspx" language="false" idSession="true" displayInPopUp="true"/>-->
+    <!--<menuItem name="contact" idWebText="763" href="/Public/Contact.aspx" language="true" idSession="false"/>-->
+    <!--<menuItem name="TNS" idWebText="758" href="http://www.kantarmedia.com" target="blank" language="false" idSession="false"/>-->
+  </header>
 </configuration>

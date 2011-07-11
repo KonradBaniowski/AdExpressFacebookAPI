@@ -48,7 +48,7 @@ namespace TNS.AdExpress.Anubis.Tefnout.Functions
 			
 			//Ajout des logos TNS et Appm
             style.GetTag("LogoTNSMedia").SetStyleExcel(sheet,0,0);
-            style.GetTag("LogoAPPM").SetStyleExcel(sheet, 0, upperLeftColumn);
+           // style.GetTag("LogoAPPM").SetStyleExcel(sheet, 0, upperLeftColumn);
 		
 			//Set current date and current time at the center section of header and change the font of the header
 			pageSetup.SetFooter(2, "&\"Times New Roman,Bold\"&D-&T");		
@@ -119,7 +119,7 @@ namespace TNS.AdExpress.Anubis.Tefnout.Functions
 
 			//Ajout des logos TNS et Appm
             style.GetTag("LogoTNSMedia").SetStyleExcel(sheet, 0, 0);
-            style.GetTag("LogoAPPM").SetStyleExcel(sheet, 0, upperLeftColumn);
+            //style.GetTag("LogoAPPM").SetStyleExcel(sheet, 0, upperLeftColumn);
 
 			//Set current date and current time at the center section of header and change the font of the header
 			pageSetup.SetFooter(2, "&\"Times New Roman,Bold\"&D-&T");		
@@ -158,7 +158,7 @@ namespace TNS.AdExpress.Anubis.Tefnout.Functions
 
             //Ajout des logos TNS et Appm
             style.GetTag("LogoTNSMedia").SetStyleExcel(sheet, 0, 0);
-            style.GetTag("LogoAPPM").SetStyleExcel(sheet, 0, upperLeftColumn);
+           // style.GetTag("LogoAPPM").SetStyleExcel(sheet, 0, upperLeftColumn);
 
             //Set current date and current time at the center section of header and change the font of the header
             pageSetup.SetFooter(2, "&\"Times New Roman,Bold\"&D-&T");

@@ -199,7 +199,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 				
 			}
 			catch(System.Exception e){
-                throw new MiysisPdfException("Error to Fill Pdf in Fill()", e);
+                throw new MiysisPdfException("Error to Fill Pdf in Fill()"+ e.StackTrace + e.Source, e);
 			}
 		}
 		#endregion

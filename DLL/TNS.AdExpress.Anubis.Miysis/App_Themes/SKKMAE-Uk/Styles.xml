@@ -299,26 +299,6 @@
         <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
       </borders>
     </cell>
-
-    <cell name="TitleCellPurple8BorderLeftBottomPurpleV3ForegroundColorLightPurple" fontName="TitleFontPurple8" foregroundColor="204,204,204">
-      <borders>
-        <border type="LeftBorder" color="100,98,98" lineStyle="Thin"/>
-        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
-      </borders>
-    </cell>
-    <cell name="TitleCellPurple8BorderBottomPurpleV3ForegroundColorLightPurple" fontName="TitleFontPurple8" foregroundColor="204,204,204">
-      <borders>
-        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
-      </borders>
-    </cell>
-
-    <cell name="TitleCellPurple8BorderRightBottomPurpleV3ForegroundColorLightPurple" fontName="TitleFontPurple8" foregroundColor="204,204,204">
-      <borders>
-        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
-        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
-      </borders>
-    </cell>
-
     <cell name="CellDarkPurple8BorderRightBottomPurpleV3ForegroundColorPurpleV4" fontName="FontDarkPurple8" foregroundColor="204,204,204">
       <borders>
         <border type="RightBorder" color="160,161,167" lineStyle="Thin"/>
@@ -327,13 +307,13 @@
     </cell>
   </cells>
   <pictures>
-    <picture name="PictureLogoAdExpress" path="Images\33\LogoAdExpress.jpg" height="80" width="70"/>
-    <picture name="PictureLogoAdExpress220" path="Images\33\LogoAdExpress220.jpg" height="80" width="70"/>
+    <picture name="PictureLogoAdExpress" path="Images\44\LogoAdExpress.jpg" height="80" width="70"/>
+    <picture name="PictureLogoAdExpress220" path="Images\44\LogoAdExpress220.jpg" height="80" width="70"/>
     <picture name="PictureLogoTNSMedia" path="Images\logoTNSMedia.gif" height="75" width="75"/>
     <picture name="PictureLogoAPPM" path="Images\Common\APPM.bmp" height="45" width="55"/>
     <picture name="PictureCheckBox" path="Images\checkbox.GIF" height="100" width="100"/>
     <picture name="PictureCheckBoxNotChecked" path="Images\checkbox_not_checked.GIF" height="100" width="100"/>
-    <picture name="PictureLogoTNS" path="Images\Common\logo_Tns.bmp"/>
+    <picture name="PictureLogoTNS" path="Images\44\logo_Tns.bmp"/>
   </pictures>
   <boxes>
     <box name="BoxMargin15" marginTop="15" marginRight="15" marginBottom="15" marginLeft="15" />
@@ -964,48 +944,6 @@
     <tag name="AffinitiesBaseTargetSelectedFirstCol">TitleCellBlack8WithoutBorderTopWhiteForegroundColorWhite</tag>
     <tag name="AffinitiesRowDefault">TitleCellBlack8BorderRightBottomWhiteForegroundColorMediumPurple</tag>
     <tag name="AffinitiesRowDefaultFirstCol">TitleCellBlack8WithoutBorderTopWhiteForegroundColorMediumPurple</tag>
-  </style>
-  <!-- Style Plugin Tefnout -->
-  <style name="Tefnout">
-    <tag name="layout">BoxMargin0_3</tag>
-    <tag name="header">BoxMargin0_3</tag>
-    <tag name="footer">BoxMargin0_3</tag>
-    <tag name="LogoAdExpress">PictureLogoAdExpress</tag>
-    <tag name="LogoTNSMedia">PictureLogoTNSMedia</tag>
-    <tag name="LogoAPPM">PictureLogoAPPM</tag>
-    <tag name="bigTitle">TitleCellPurple40</tag>
-    <tag name="createdTitle">TitleCellPurple12</tag>
-    <tag name="defaultTitle">TitleCellPurple8</tag>
-
-    <tag name="SessionParameterTitle">TitleCellPurple11</tag>
-    <tag name="SessionParameterPeriodTitle">TitleCellPurple10BorderTopLightPurple</tag>
-    <tag name="SessionParameterPeriodValue">TitleCellPurple8</tag>
-    <tag name="SessionParameterWaveTitle">TitleCellPurple10BorderTopLightPurple</tag>
-    <tag name="SessionParameterWaveValue">TitleCellPurple8</tag>
-    <tag name="SessionParameterTargetTitle">TitleCellPurple10BorderTopLightPurple</tag>
-    <tag name="SessionParameterTargetValue">TitleCellPurple8</tag>
-    <tag name="SessionParameterProductTitle">TitleCellPurple10BorderTopLightPurple</tag>
-    <tag name="SessionParameterProductValue">TitleCellPurple8</tag>
-    <tag name="SessionParameterProductCompetitor">TitleCellPurple8</tag>
-    <tag name="SessionParameterProductPrincipal">TitleCellPurple10BorderPurple</tag>
-    <tag name="SessionParameterGroupTitle">TitleCellPurple8</tag>
-    <tag name="SessionParameterGroupValue">FontWhite8</tag>
-    <tag name="SessionParameterLvl1Col1">TitleCellPurple8WithoutBorderRightPurple</tag>
-    <tag name="SessionParameterLvl1Col2">TitleCellPurple8BorderTopBottomPurple</tag>
-    <tag name="SessionParameterLvl1Col3">TitleCellPurple8WithoutBorderLeftPurple</tag>
-    <tag name="SessionParameterLvl2Col1">TitleCellPurple8BorderLeftBottomPurpleForegroundColorLightPurple</tag>
-    <tag name="SessionParameterLvl2Col2">TitleCellPurple8BorderBottomForegroundColorLightPurple</tag>
-    <tag name="SessionParameterLvl2Col3">TitleCellPurple8BorderRightBottomPurpleForegroundColorLightPurple</tag>
-    <tag name="SessionParameterLvl3Col1">TitleCellPurple8BorderLeftBottomPurpleV3ForegroundColorLightPurple</tag>
-    <tag name="SessionParameterLvl3Col2">TitleCellPurple8BorderBottomPurpleV3ForegroundColorLightPurple</tag>
-    <tag name="SessionParameterLvl3Col3">TitleCellPurple8BorderRightBottomPurpleV3ForegroundColorLightPurple</tag>
-    <tag name="SessionParameterCheckBox">PictureCheckBox</tag>
-    <tag name="SessionParameterCheckBoxNotChecked">PictureCheckBoxNotChecked</tag>
-
-    <tag name="PlanRowTitleFirstRow">TitleCellWhite8WithoutBorderLeftWhiteForegroundColorPurple</tag>
-    <tag name="PlanRowTitleFirstRowFirstCol">TitleCellWhite8BorderAllWhiteForegroundColorPurple</tag>
-    <tag name="PlanRowDefault">TitleCellBlack8BorderRightBottomWhiteForegroundColorPurpleV3</tag>
-    <tag name="PlanRowDefaultFirstCol">TitleCellBlack8WithoutBorderTopWhiteForegroundColorPurpleV3</tag>
   </style>
 
 </Theme>

@@ -8,7 +8,7 @@ using System.Text;
 using TNS.Ares.Domain.LS;
 using System.Threading;
 using TNS.FrameWork.DB.Common;
-using TNS.Ares.AdExpress.XlsChrono;
+using TNS.Ares.AdExpress.XlsVp;
 
 namespace TNS.Ares.AdExpress.XlsVpSrv {
     public partial class ExcelVpService : ServiceBase {

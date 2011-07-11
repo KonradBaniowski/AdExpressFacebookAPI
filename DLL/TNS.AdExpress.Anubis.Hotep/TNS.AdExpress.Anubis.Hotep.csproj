@@ -231,6 +231,12 @@
     <Compile Include="UI\UISeasonalityGraph.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Content Include="App_Themes\SKKMAE-Sk\Styles.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Themes\SKKMAE-Uk\Styles.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Themes\FiKMAE-Uk\Styles.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -310,6 +316,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Configuration\33\Plugins\Hotep.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\421\LogoAdExpress.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\421\LogoAdExpress220.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\421\logo_Tns.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\g.jpg">

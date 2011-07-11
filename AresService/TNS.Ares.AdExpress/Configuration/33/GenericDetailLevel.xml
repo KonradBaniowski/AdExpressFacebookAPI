@@ -28,6 +28,12 @@
     <level id="25" name="Formes de Parrainage" webTextId="2121" dbId="id_form_sponsorship" dbLabel="form_sponsorship" dbTable="form_sponsorship" dbTablePrefixe="fs"/>
     <level id="26" name="Pays" webTextId="2091" dbId="id_country" dbLabel="country" dbTable="country" dbTablePrefixe="co"/>
     <level id="27" name="Basic Media" webTextId="2544" dbId="id_basic_media" dbLabel="basic_media" dbTable="basic_media" dbTablePrefixe="bm"/>
+
+    <level id="63" name="Circuit VP"      webTextId="2879" dbId="id_circuit"  dbLabel="circuit"   dbTable="circuit"   dbTablePrefixe="cr"/>
+    <level id="64" name="Segment VP"      webTextId="2877" dbId="id_segment"  dbLabel="segment"   dbTable="segment"   dbTablePrefixe="se"/>
+    <level id="65" name="Sub Segment VP"  webTextId="2878" dbId="id_category" dbLabel="category"  dbTable="category"  dbTablePrefixe="ca"/>
+    <level id="66" name="Brand VP"        webTextId="2876" dbId="id_brand"    dbLabel="brand"     dbTable="brand"     dbTablePrefixe="br"/>
+    <level id="67" name="Product VP"      webTextId="2880" dbId="id_product"  dbLabel="product"   dbTable="product"   dbTablePrefixe="pr"/>
   </detaillevelItems>
 
   <detailLevels>
@@ -176,5 +182,19 @@
     <detailLevel id="35" name="Agence">
       <levelItem id="16" name="Agence"/>
     </detailLevel>
+    <detailLevel id="36" name="media\support">
+      <levelItem id="1" name="Media"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="37" name="Segment VP\Sub Segment VP\Product VP">
+      <levelItem id="64" name="Segment VP"/>
+      <levelItem id="65" name="Sub Segment VP"/>
+      <levelItem id="67" name="Product"/>
+    </detailLevel>
+    <detailLevel id="38" name="Circuit VP\Brand VP">
+      <levelItem id="63" name="Circuit VP"/>
+      <levelItem id="66" name="Brand VP"/>
+    </detailLevel>
   </detailLevels>
 </genericDetailLevel>
+

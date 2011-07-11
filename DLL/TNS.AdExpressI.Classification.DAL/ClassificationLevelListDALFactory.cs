@@ -207,6 +207,22 @@ namespace TNS.AdExpressI.Classification.DAL {
                 case TNS.AdExpress.Constantes.Customer.Right.type.circuitAccess:
                 case TNS.AdExpress.Constantes.Customer.Right.type.circuitException:
                     return new MediaBrand.VpCircuitLevelListDAL(_language, _source, dbSchema);
+
+                case TNS.AdExpress.Constantes.Customer.Right.type.vpBrandAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.vpBrandException:
+                    return new MediaBrand.VpBrandLevelListDAL(_language, _source, dbSchema);
+
+                case TNS.AdExpress.Constantes.Customer.Right.type.vpSegmentAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.vpSegmentException:
+                    return new ProductBrand.vpSegmentLevelListDAL(_language, _source, dbSchema);
+
+                case TNS.AdExpress.Constantes.Customer.Right.type.vpSubSegmentAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.vpSubSegmentException:
+                    return new ProductBrand.vpSubSegmentLevelListDAL(_language, _source, dbSchema);
+
+                case TNS.AdExpress.Constantes.Customer.Right.type.vpProductAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.vpProductException:
+                    return new ProductBrand.VpProductLevelListDAL(_language, _source, dbSchema);
                 default:
                     throw new Exceptions.ClassificationDALException(" Unknow level type Identifier ");
             }
