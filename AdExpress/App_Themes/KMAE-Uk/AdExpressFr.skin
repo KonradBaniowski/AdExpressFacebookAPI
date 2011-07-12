@@ -1772,3 +1772,10 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                             CssClass="pdfSelectionWebControlSelection"
 />
 
+<ctrVpSelection:VpScheduleSelectionImageWebControl   
+                            runat="server" 
+                            SkinID="SaveVpResultWebControl" 
+                            PictureSrcPath="/App_Themes/KMAE-Fr/Images/Common/Button/save_up2.gif"
+                            PictureSrcPathOver="/App_Themes/KMAE-Fr/Images/Common/Button/save_down2.gif"
+                            CssClass="excelSelectionWebControlSelection"
+/>

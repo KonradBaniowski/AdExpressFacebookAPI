@@ -73,7 +73,14 @@ namespace AdExpress.Private.Results{
         /// <param name="sender">Objet qui lance l'évènement</param>
         /// <param name="e">Arguments</param>
         protected void Page_Load(object sender, System.EventArgs e){
-            try {
+            try
+            {
+                if (!Page.IsPostBack)
+                {
+                    _webSession.LastReachedResultUrl = Page.Request.Url.AbsolutePath;
+                    _webSession.ReachedModule = true;
+                    _webSession.Save();
+                }
             }
             catch (System.Exception exc) {
                 if (exc.GetType() != typeof(System.Threading.ThreadAbortException)) {

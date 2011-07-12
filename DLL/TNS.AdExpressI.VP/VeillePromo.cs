@@ -411,7 +411,12 @@ namespace TNS.AdExpressI.VP
 
                 html.Append("</table>");
             }
-            else return "<div align=\"center\" class=\"txtViolet11Bold\">" + GestionWeb.GetWebWord(177, _session.SiteLanguage) + "</div>"; 
+            else
+            {
+
+                html.Append("<div align=\"center\" class=\"vpResNoData\">" + GestionWeb.GetWebWord(177, _session.SiteLanguage) + "</div>");
+               
+            }
 
             return html.ToString();
         }
@@ -614,7 +619,12 @@ namespace TNS.AdExpressI.VP
                 html.Append("</table>");
 
             }
-            else return "<div align=\"center\" class=\"txtViolet11Bold\">" + GestionWeb.GetWebWord(177, _session.SiteLanguage) + "</div>"; 
+            else
+            {
+
+                html.Append("<div align=\"center\" class=\"vpResNoData\">" + GestionWeb.GetWebWord(177, _session.SiteLanguage) + "</div>");
+               
+            }
 
             return html.ToString();
         }

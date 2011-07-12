@@ -139,6 +139,12 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
               js.Append("\r\n}");
             #endregion
 
+              #region SaveResult
+              js.Append("\r\nfunction SaveResult(){");
+              js.AppendFormat("\r\n\t popupOpenBis('/Private/MyAdExpress/MySessionSavePopUp.aspx?idSession={0}&param={0}{1}','470','270','no');", _webSession.IdSession, DateTime.Now.Hour.ToString() + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString());
+              js.Append("\r\n}");
+              #endregion
+
             js.Append("\r\n-->\r\n</script>");
             return (js.ToString());
         }
