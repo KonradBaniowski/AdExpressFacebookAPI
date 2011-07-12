@@ -2112,6 +2112,7 @@
     <item mnemonic="w2889" type="System.String">Contenu promotionnel</item>
     <item mnemonic="w2890" type="System.String">AdExpress -- Fichier Excel Veille Promotionnelle généré</item>
     <item mnemonic="w2891" type="System.String">Pièces et Services</item>
+    <item mnemonic="w2892" type="System.String">Excel Veille promotionnelle</item>
     <!-- ********************************* -->
   </items>
 </localization>

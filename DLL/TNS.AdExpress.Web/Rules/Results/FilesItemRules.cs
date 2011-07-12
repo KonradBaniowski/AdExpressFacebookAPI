@@ -78,6 +78,7 @@ namespace TNS.AdExpress.Web.Rules.Results {
 										linkTemp =linkFile+current["ID_LOGIN"].ToString()+"/"+current["pdf_name"].ToString()+".txt";break;
 									case TNS.AdExpress.Anubis.Constantes.Result.type.amset :
 									case TNS.AdExpress.Anubis.Constantes.Result.type.appmExcel :
+                                    case TNS.AdExpress.Anubis.Constantes.Result.type.tefnout:
 										linkTemp =linkFile+current["ID_LOGIN"].ToString()+"/"+current["pdf_name"].ToString()+".xls";break;																									
 									case TNS.AdExpress.Anubis.Constantes.Result.type.appm :	
 									case TNS.AdExpress.Anubis.Constantes.Result.type.hotep :
@@ -135,6 +136,7 @@ namespace TNS.AdExpress.Web.Rules.Results {
 					case(TNS.AdExpress.Anubis.Constantes.Result.type.mnevis):return(GestionWeb.GetWebWord(2009,webSession.SiteLanguage).Replace("'"," "));
 					case(TNS.AdExpress.Anubis.Constantes.Result.type.amset):return(GestionWeb.GetWebWord(2119,webSession.SiteLanguage));
 					case(TNS.AdExpress.Anubis.Constantes.Result.type.aton):return(GestionWeb.GetWebWord(2120,webSession.SiteLanguage));
+                    case (TNS.AdExpress.Anubis.Constantes.Result.type.tefnout): return (GestionWeb.GetWebWord(2892, webSession.SiteLanguage));
 					default:return("");	
 				}	
 			}
