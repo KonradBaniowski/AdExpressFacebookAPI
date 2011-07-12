@@ -108,6 +108,7 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <returns>SQl conditions string</returns>
         protected virtual string GetAllowedMediaUniverse()
         {
+
 			string sql = "";
 			//obtains customer vehicle universe conditions.
 			if (_module != null)
@@ -234,7 +235,15 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <returns>sql rights string</returns>
         protected virtual string GetMediaRights(Table vehicleTable, Table categoryTable, Table mediaTable, bool beginByAnd)
         {
-            return GetMediaRights(vehicleTable.Prefix, categoryTable.Prefix, mediaTable.Prefix, beginByAnd);
+            if (_session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.VP)
+            {
+                if (beginByAnd) return string.Empty;
+                else return " 1 = 1 ";
+            }
+            else
+            {
+                return GetMediaRights(vehicleTable.Prefix, categoryTable.Prefix, mediaTable.Prefix, beginByAnd);
+            }
         }
 
 		/// <summary>

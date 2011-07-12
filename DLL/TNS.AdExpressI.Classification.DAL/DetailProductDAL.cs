@@ -65,24 +65,6 @@ namespace TNS.AdExpressI.Classification.DAL {
 
 
         /// <summary>
-        /// Get vehicle classification brand rights.
-        /// </summary>
-        /// <param name="categoryTable">sub media Table Prefix</param>
-        /// <param name="mediaTable">vehicle Table Prefix</param>
-        /// <param name="vehicleTable">media Table Prefix</param>
-        /// <param name="beginByAnd">True if sql clause start with "AND"</param>
-        /// <returns>string sql</returns>
-        protected override string GetMediaRights(string vehicleTablePrefix, string categoryTablePrefix, string mediaTablePrefix, bool beginByAnd) {
-            if (_session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.VP) {
-                if (beginByAnd) return string.Empty;
-                else return " 1 = 1 ";
-            }
-            else
-                return base.GetMediaRights(vehicleTable, categoryTable, mediaTable, beginByAnd);
-        }
-
-
-        /// <summary>
         /// Get View
         /// </summary>
         /// <returns>View</returns>
