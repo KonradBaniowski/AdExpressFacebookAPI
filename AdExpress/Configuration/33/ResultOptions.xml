@@ -7,7 +7,7 @@
     <insetItem  id="subScriberEncart" dataBaseId="1983"/>
   </inset>
   <mediaSchedule useComparative="true"/>
-  <bannersFormat useBannersFormat="true"/>
+  <bannersFormat useBannersFormat="false"/>
   <retailer use="false"/>
   <vpConfiguration>
     <dateSelections defaultType="cumulWithNextMonth">
