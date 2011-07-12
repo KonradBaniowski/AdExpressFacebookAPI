@@ -222,7 +222,15 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <returns>string sql</returns>
 		protected virtual string GetMediaRights(string prefix, bool beginByAnd)
         {
-            return GetMediaRights(prefix, prefix, prefix,beginByAnd);
+            if (_session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.VP)
+            {
+                if (beginByAnd) return string.Empty;
+                else return " 1 = 1 ";
+            }
+            else
+            {
+                return GetMediaRights(prefix, prefix, prefix, beginByAnd);
+            }
         }
 
         /// <summary>
