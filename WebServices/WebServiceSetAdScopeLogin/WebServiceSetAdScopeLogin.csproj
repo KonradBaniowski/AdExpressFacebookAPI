@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8911D89E-6487-472D-B750-DD3C747BA295}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WebServiceSetAdScopeLogin</RootNamespace>
+    <AssemblyName>WebServiceSetAdScopeLogin</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Oracle.DataAccess, Version=9.2.0.700, Culture=neutral, PublicKeyToken=89b483f429c47342">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\P3\Bin\Oracle.DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="TNS.FrameWork">
+      <HintPath>\\frmitch-fs04\programme\Projets\France\P3\Bin\TNS.FrameWork.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.DB, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\P3\Bin\TNS.FrameWork.DB.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.Net">
+      <HintPath>\\frmitch-fs04\programme\Projets\France\P3\Bin\TNS.FrameWork.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.Isis.Right, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\P3\Bin\TNS.Isis.Right.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AdScopeLoginService.asmx" />
+    <Content Include="Configuration\DataBase.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configuration\ErrorMail.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global.asax" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdScopeLoginService.asmx.cs">
+      <DependentUpon>AdScopeLoginService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Constantes\Constantes.cs" />
+    <Compile Include="Exceptions\AdScopeLoginServiceException.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Parameters\ServiceParams.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XmlLoader\ServiceParamsXL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Isis\DLL\KMI.Isis.AdScopeLogins.DAL\KMI.Isis.AdScopeLogins.DAL.csproj">
+      <Project>{04E2D57F-3508-44BC-8A3E-9F660BF42A7F}</Project>
+      <Name>KMI.Isis.AdScopeLogins.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Isis\DLL\KMI.Isis.AdScopeLogins.Domain\KMI.Isis.AdScopeLogins.Domain.csproj">
+      <Project>{08C67B3F-7C4E-4DEB-AE14-2F045D4BCDA6}</Project>
+      <Name>KMI.Isis.AdScopeLogins.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\KMI.P3.Constantes\KMI.P3.Constantes.csproj">
+      <Project>{FF8A449C-7F30-4380-BB4C-5A30C6C1787D}</Project>
+      <Name>KMI.P3.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\KMI.P3.Domain\KMI.P3.Domain.csproj">
+      <Project>{E2408D42-48F0-4520-AA57-2D60D9EEA36B}</Project>
+      <Name>KMI.P3.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\KMI.P3.Web.Core\KMI.P3.Web.Core.csproj">
+      <Project>{05D73DC8-0815-490C-9B4D-D6A1A4EEC4E8}</Project>
+      <Name>KMI.P3.Web.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\KMI.P3.Web\KMI.P3.Web.csproj">
+      <Project>{3FB86B00-F697-48EB-9899-36E76C18437E}</Project>
+      <Name>KMI.P3.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\KMI.P3\KMI.P3.csproj">
+      <Project>{46B709B2-398E-4B6F-A0B7-8937BB133F12}</Project>
+      <Name>KMI.P3</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>21241</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
