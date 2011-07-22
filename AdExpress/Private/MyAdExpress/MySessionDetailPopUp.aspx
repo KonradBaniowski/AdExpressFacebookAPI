@@ -122,11 +122,37 @@
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
 				            <%}%>
-				            
+				              <!--display Generic Media Detail Level-->
+				            <%if(displayGenericMediaDetailLevel){%>
+				            <TR>
+					            <TD class="txtViolet11Bold backGroundWhite">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText7" runat="server" Code="2871"></cc1:adexpresstext></TD>
+				            </TR>
+				            <TR height="20">
+					            <TD class="txtViolet11 backGroundWhite" vAlign="top">&nbsp;<asp:label id="genericMediaDetailLevelLabel1" runat="server"></asp:label></TD>
+				            </TR>
+				            <TR height="10"><TD></TD></TR>
+				            <%}%>
+				             <!--display perso level-->
+				            <%if (displayPersonnalizedLevel){%>
+				            <TR>
+					            <TD class="txtViolet11Bold backGroundWhite">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText8" runat="server" Code="1896"></cc1:adexpresstext></TD>
+				            </TR>
+				            <TR height="20">
+					            <TD class="txtViolet11 backGroundWhite" vAlign="top">&nbsp;<asp:label id="personnalizedLevelLevelLabel1" runat="server"></asp:label></TD>
+				            </TR>
+				            <TR height="10"><TD></TD></TR>
+				            <%}%>
 				            <!-- Détail Média -->
 				            <%if(displayDetailMedia){%>
 				            <TR height="5">
 					            <TD align="center" vAlign="top" class="txtViolet11 backGroundWhite"><%=mediaDetailText%></TD>
+				            </TR>
+				            <TR height="10"><TD></TD></TR>
+				            <% }%>
+				             <!-- Détail product -->
+				            <%if(displayDetailProduct){%>
+				            <TR height="5">
+					            <TD align="center" vAlign="top" class="txtViolet11 backGroundWhite"><%=productDetailText%></TD>
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
 				            <% }%>
@@ -140,6 +166,7 @@
 				            <%}%>
 				            
 				            <!--Unité-->
+				             <%if(displayUnit){%>
 				            <TR>
 					            <TD class="txtViolet11Bold backGroundWhite">&nbsp;<cc1:adexpresstext language="33" id="Adexpresstext5" runat="server" Code="849"></cc1:adexpresstext></TD>
 				            </TR>
@@ -147,7 +174,7 @@
 					            <TD class="txtViolet11 backGroundWhite" vAlign="top">&nbsp;<asp:Label id="unitLabel" runat="server"></asp:Label></TD>
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
-				            
+				               <%}%>
 				            <!--Produits-->
 				            <%if(displayProduct){%>
 				            <TR>

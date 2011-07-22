@@ -10,7 +10,7 @@
   <bannersFormat useBannersFormat="false"/>
   <retailer use="false"/>
   <vpConfiguration>
-    <dateSelections defaultType="cumulWithNextMonth">
+    <dateSelections defaultType="currentMonth">
       <dateSelection type="currentMonth"        textId="2866"/>
       <dateSelection type="cumulWithNextMonth"  textId="2867"/>
       <dateSelection type="allHistoric"         textId="2868"/>
@@ -20,7 +20,8 @@
       <selection name="Filtre Selection"            id="FilterSelection"      assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.VpScheduleSelectionImageWebControl"         skinId="FiltreSelectionWebControl"        textId="2863"   validationMethod="DisplayVpScheduleResultWebControl('ResultFilter');"/>
       <selection name="Export Excel Selection"      id="ExportExcelSelection" assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.VpScheduleSelectionImageWebControl"         skinId="ExcelSelectionWebControl"         textId="2864" validationMethod="AskResultExportExcel();"/>
       <selection name="Save Result"      id="SaveResultOption" assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.VpScheduleSelectionImageWebControl"         skinId="SaveVpResultWebControl"         textId="1990" validationMethod="SaveResult();"/>
-      <!--<selection name="Export PDF Selection"        id="ExportPdfSelection"   assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.VpScheduleSelectionImageWebControl"         skinId="PdfSelectionWebControl"           textId="2865" />-->
+      <selection name="Export PDF Schedule"        id="ExportPdfSchedule"   assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.VpScheduleSelectionImageWebControl"         skinId="PdfSelectionWebControl"        textId="2865"    validationMethod="AskResultExportPDF('schedule');"/>
+      <selection name="Export PDF All Promotion file "        id="ExportPdfAllPromoFile"   assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.VP.VpScheduleSelectionImageWebControl"         skinId="PdfSelectionWebControl"        textId="2894"    validationMethod="AskResultExportPDF('promofiles');"/>
     </selections>
     <results>
       <result name="layer of result control"        id="Result"       assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Results.VP.VpScheduleResultWebControl"                            skinId="VpScheduleResultWebControl"       />

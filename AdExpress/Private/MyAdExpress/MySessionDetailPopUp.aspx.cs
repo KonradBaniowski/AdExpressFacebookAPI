@@ -38,6 +38,7 @@ using TNS.FrameWork.Date;
 using CstCustomerSession = TNS.AdExpress.Constantes.Web.CustomerSessions;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using WebFunctions = TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Domain.Level;
 #endregion
 
 namespace AdExpress.Private.MyAdExpress{
@@ -103,6 +104,7 @@ namespace AdExpress.Private.MyAdExpress{
 		/// Affiche les produits
 		/// </summary>
 		public bool displayProduct=false;
+        public bool displayDetailProduct = false;
 		/// <summary>
 		/// Affiche les produits
 		/// </summary>
@@ -151,6 +153,20 @@ namespace AdExpress.Private.MyAdExpress{
         /// Adevrtising Agency Text
         /// </summary>
         public string advertisingAgencyText = string.Empty;
+
+        /// <summary>
+        /// Affiche l'unité
+        /// </summary>
+        public bool displayUnit = false;
+        /// <summary>
+        /// détail produit
+        /// </summary>
+        public string productDetailText = "";
+
+         public bool displayGenericMediaDetailLevel = false;
+
+         public bool displayPersonnalizedLevel = false;
+
 		#endregion
 		
 		#region Constructeur
@@ -478,9 +494,31 @@ namespace AdExpress.Private.MyAdExpress{
 				}
 				#endregion
 
+                #region Generic MediaDetail Level
+                if (webSessionSave.GenericMediaDetailLevel != null && webSessionSave.GenericMediaDetailLevel.Levels.Count > 0)
+                {
+                    displayGenericMediaDetailLevel = true;
+                    genericMediaDetailLevelLabel1.Text = webSessionSave.GenericMediaDetailLevel.GetLabel(_webSession.SiteLanguage);
+                
+                }
+                #endregion
+
+                #region Personnalized level
+                if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.VP && webSessionSave.GenericMediaDetailLevel != null && webSessionSave.GenericMediaDetailLevel.Levels.Count > 0)
+                {
+                    displayPersonnalizedLevel = true;
+                    DetailLevelItemInformation persoLevel = DetailLevelItemsInformation.Get(webSessionSave.PersonnalizedLevel);
+                    personnalizedLevelLevelLabel1.Text = GestionWeb.GetWebWord(persoLevel.WebTextId, _webSession.SiteLanguage);
+
+                }
+                #endregion
+
+
+                displayUnit = (webSessionSave.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP);
 				unitLabel.Text=GestionWeb.GetWebWord(webSessionSave.GetSelectedUnit().WebTextId,_webSession.SiteLanguage);
 
-                if (displayMedia = webSessionSave.isMediaSelected()) {
+                if (displayMedia = webSessionSave.isMediaSelected() && (_webSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP))
+                {
                     mediaText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSessionSave.SelectionUniversMedia, false, false, false, 600, false, false, _webSession.SiteLanguage, 2, 1, true);
                 }
 				
@@ -733,11 +771,12 @@ namespace AdExpress.Private.MyAdExpress{
 				
 					detailMedia.Append("<TR>");
                     detailMedia.Append("<TD class=\"txtViolet11Bold backGroundWhite\" >&nbsp;");
-					detailMedia.Append("<label>"+GestionWeb.GetWebWord(1194,_webSession.SiteLanguage)+"</label></TD>");
+                    int webTextId = (_webSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP) ? 1194 : 2869;
+                    detailMedia.Append("<label>" + GestionWeb.GetWebWord(webTextId, _webSession.SiteLanguage) + "</label></TD>");
 					detailMedia.Append("</TR>");				
 
 					detailMedia.Append("<TR height=\"20\">");
-                    detailMedia.Append("<TD align=\"center\" vAlign=\"top\" class=\"backGroundWhite\">" + TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)webSessionSave.SelectionUniversMedia.FirstNode, false, true, true, 600, true, false, _webSession.SiteLanguage, 2, i, true) + "</TD>");
+                    detailMedia.Append("<TD align=\"center\" vAlign=\"top\" class=\"backGroundWhite\">" + TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)webSessionSave.SelectionUniversMedia.FirstNode, false, true, true, 600, true, false, _webSession.SiteLanguage, 2, i, true,_webSession.DataLanguage,_webSession.Source) + "</TD>");
 					detailMedia.Append("</TR>");
 					detailMedia.Append("<TR height=\"5\">");
                     detailMedia.Append("<TD class=\"backGroundWhite\"></TD>");
@@ -750,6 +789,35 @@ namespace AdExpress.Private.MyAdExpress{
 					mediaDetailText=detailMedia.ToString();			
 				}
 				#endregion
+
+                #region Sélection Produit
+                // Partie détail média
+                if (webSessionSave.SelectionUniversProduct.FirstNode != null && webSessionSave.SelectionUniversProduct.FirstNode.Nodes.Count > 0)
+                {
+
+                    displayDetailProduct= true;
+                    System.Text.StringBuilder detailProduct= new System.Text.StringBuilder(1000);
+
+                    detailProduct.Append("<TR>");
+                    detailProduct.Append("<TD class=\"txtViolet11Bold backGroundWhite\" >&nbsp;");
+                    detailProduct.Append("<label>" + GestionWeb.GetWebWord(1759, _webSession.SiteLanguage) + "</label></TD>");
+                    detailProduct.Append("</TR>");
+
+                    detailProduct.Append("<TR height=\"20\">");
+                    detailProduct.Append("<TD align=\"center\" vAlign=\"top\" class=\"backGroundWhite\">" + TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)webSessionSave.SelectionUniversProduct.FirstNode, false, true, true, 600, true, false, _webSession.SiteLanguage, 2, i, true, _webSession.DataLanguage, _webSession.Source) + "</TD>");
+                    detailProduct.Append("</TR>");
+                    detailProduct.Append("<TR height=\"5\">");
+                    detailProduct.Append("<TD class=\"backGroundWhite\"></TD>");
+                    detailProduct.Append("</TR>");
+                    detailProduct.Append("<TR height=\"10\"><TD></TD></TR>");
+                    if (!Page.ClientScript.IsClientScriptBlockRegistered("showHideContent" + i + ""))
+                    {
+                        Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "showHideContent" + i + "", TNS.AdExpress.Web.Functions.Script.ShowHideContent1(i));
+                    }
+                    i++;
+                    productDetailText = detailProduct.ToString();
+                }
+                #endregion
 
 				#region Références Médias
 				// Détail référence média			

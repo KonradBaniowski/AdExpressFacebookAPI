@@ -37,5 +37,6 @@
     <Network id="LOCAL_PATH_ADEXREVIEW" name="Fichiers AdExReview" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\InfoNews\adexreview\"/>
     <Network id="LOCAL_PATH_NOUVEAUTES" name="" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\InfoNews\nouveautes\"/>
     <Network id="LOCAL_PATH_MEDIA_UPDATE" name="Fichiers contenant la liste des médias dispo" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\InfoNews\MediaList\"/>
+    <Network id="LOCAL_PATH_VP" name="Visuels de la Veille promotionnelle Renault" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\VP\"/>
   </Networks>
 </CreativesAccess>

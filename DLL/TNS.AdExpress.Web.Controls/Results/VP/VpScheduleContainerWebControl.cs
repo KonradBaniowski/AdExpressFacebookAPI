@@ -139,6 +139,15 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
               js.Append("\r\n}");
             #endregion
 
+              #region AskResultExportPDF
+              js.Append("\r\nfunction AskResultExportPDF(exportType){");
+              js.Append("\r\n if(exportType=='schedule') ");
+              js.AppendFormat("\r\n\t popupOpenBis('/Private/MyAdExpress/PdfSavePopUp.aspx?idSession={0}&resultType={1}','470','210','yes');", _webSession.IdSession, TNS.AdExpress.Anubis.Constantes.Result.type.thoueris.GetHashCode());
+              js.Append("\r\n else if(exportType=='promofiles')");
+              js.AppendFormat("\r\n\t popupOpenBis('/Private/MyAdExpress/PdfSavePopUp.aspx?idSession={0}&resultType={1}','470','210','yes');", _webSession.IdSession, TNS.AdExpress.Anubis.Constantes.Result.type.selket.GetHashCode());
+              js.Append("\r\n}");
+              #endregion
+
               #region SaveResult
               js.Append("\r\nfunction SaveResult(){");
               js.AppendFormat("\r\n\t popupOpenBis('/Private/MyAdExpress/MySessionSavePopUp.aspx?idSession={0}&param={0}{1}','470','270','no');", _webSession.IdSession, DateTime.Now.Hour.ToString() + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString());

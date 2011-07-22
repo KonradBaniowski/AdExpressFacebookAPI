@@ -247,8 +247,15 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         protected override string GetDisplayJavascriptContent() {
             StringBuilder js = new StringBuilder(1000);
             js.Append("\r\n\tif(display) {");
+            js.Append("\r\n\t\tif(document.body && document.body.scrollHeight){");
+            js.Append("\r\n\t\t document.getElementById('res_backgroud_" + this.ID + "').style.height=document.body.scrollHeight;");
+            js.Append("\r\n\t\t document.getElementById('res_backgroud_" + this.ID + "').style.width=document.body.scrollWidth;");
+            js.Append("\r\n\t\t} else {");
             js.Append("\r\n\t\tdocument.getElementById('res_backgroud_" + this.ID + "').style.height=document.body.clientHeight + \"px\";");
+            js.Append("\r\n\t\tdocument.getElementById('res_backgroud_" + this.ID + "').style.width=document.body.clientWidth + \"px\";");
+            js.Append("\r\n\t\t}");
             js.Append("\r\n\t\tdocument.getElementById('res_backgroud_" + this.ID + "').style.display = '';");
+
 
             js.Append("\r\n\t\tvar myWidth = 0, myHeight = 0;");
             js.Append("\r\n\t\tif( typeof( window.innerWidth ) == 'number' ) {");
@@ -266,8 +273,17 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n\t\t}");
 
 
+            js.Append("\r\n\tif( document.documentElement && ( document.documentElement.scrollTop || document.documentElement.scrollLeft ) ) {");
             js.Append("\r\n\tdocument.getElementById('" + this.ID + "').style.top = (document.documentElement.scrollTop + ((myHeight - 550) / 2)) + \"px\";");
             js.Append("\r\n\tdocument.getElementById('" + this.ID + "').style.left = (document.documentElement.scrollLeft + ((myWidth - 750) / 2)) + \"px\";");
+            js.Append("\r\n\t } else ");
+            js.Append("\r\n\t {");
+            js.Append("\r\n\t\t document.getElementById('" + this.ID + "').style.top = (document.body.scrollTop + ((myHeight - 550) / 2)) + \"px\";");
+            js.Append("\r\n\t\t document.getElementById('" + this.ID + "').style.left = (document.body.scrollLeft + ((myWidth - 750) / 2)) + \"px\";");
+            js.Append("\r\n\t }");
+
+            //js.Append("\r\n\tdocument.getElementById('" + this.ID + "').style.top = (document.documentElement.scrollTop + ((myHeight - 550) / 2)) + \"px\";");
+            //js.Append("\r\n\tdocument.getElementById('" + this.ID + "').style.left = (document.documentElement.scrollLeft + ((myWidth - 750) / 2)) + \"px\";");
 
             int i = 0;
             foreach (VpScheduleSelectionFilterBaseWebControl cVpScheduleSelectionFilterBaseWebControl in _filterResultWebControlList.Values) {
@@ -287,6 +303,54 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n\t\tdocument.getElementById('res_backgroud_" + this.ID + "').style.display = 'none';");
             js.Append("\r\n\t}");
             return (base.GetDisplayJavascriptContent() + js.ToString());
+        }
+
+         /// <summary>
+        /// Get Display Javascript Method
+        /// </summary>
+        /// <returns>Display Javascript Method</returns>
+        protected string GetJavascriptScrollContent()
+        {
+            StringBuilder js = new StringBuilder();
+            js.Append("\r\n<script language=\"javascript\">\r\n<!--");
+            js.Append("\r\n function ScrollContent_" + this.ID + "(){");
+
+
+            js.Append("\r\n\t   var myWidth = 0, myHeight = 0;");
+            js.Append("\r\n\t\tif( typeof( window.innerWidth ) == 'number' ) {");
+            //Non-IE
+            js.Append("\r\n\t\tmyWidth = window.innerWidth;");
+            js.Append("\r\n\t\tmyHeight = window.innerHeight;");
+            js.Append("\r\n\t\t} else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {");
+            //IE 6+ in 'standards compliant mode'
+            js.Append("\r\n\t\tmyWidth = document.documentElement.clientWidth;");
+            js.Append("\r\n\t\tmyHeight = document.documentElement.clientHeight;");
+            js.Append("\r\n\t\t} else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {");
+            //IE 4 compatible
+            js.Append("\r\n\t\tmyWidth = document.body.clientWidth;");
+            js.Append("\r\n\t\tmyHeight = document.body.clientHeight;");
+            js.Append("\r\n\t\t}");
+
+            js.Append("\r\n\t   var oContent = document.getElementById('" + this.ID + "');");
+            js.Append("\r\n\t if(oContent != null && ( oContent.style.display  != 'none')){");
+            js.Append("\r\n\t\t     if( document.documentElement && ( document.documentElement.scrollTop || document.documentElement.scrollLeft ) ) {");
+            js.Append("\r\n\t\t\t       oContent.style.top = (document.documentElement.scrollTop + ((myHeight - 550) / 2)) + \"px\";");
+            js.Append("\r\n\t\t        oContent.style.left = (document.documentElement.scrollLeft + ((myWidth - 750) / 2)) + \"px\";");
+            js.Append("\r\n\t\t     } else ");
+            js.Append("\r\n\t\t     {");
+            js.Append("\r\n\t\t\t       oContent.style.top = (document.body.scrollTop + ((myHeight - 550) / 2)) + \"px\";");
+            js.Append("\r\n\t\t\t       oContent.style.left = (document.body.scrollLeft + ((myWidth - 750) / 2)) + \"px\";");
+            js.Append("\r\n\t       }");
+            js.Append("\r\n\t }");
+            js.Append("\r\n}\r\n");
+
+            js.Append("\r\nif (window.addEventListener)");
+            js.Append("\r\n\twindow.addEventListener(\"scroll\", ScrollContent_" + this.ID + ", false);");
+            js.Append("\r\nelse if (window.attachEvent)");
+            js.Append("\r\n\twindow.attachEvent(\"onscroll\", ScrollContent_" + this.ID + "); ");
+            js.Append("\r\n-->\r\n</script>");
+            return js.ToString();
+
         }
         #endregion
 
@@ -450,6 +514,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         protected override void Render(HtmlTextWriter output) {
             output.Write(GetJavascriptMenu());
             output.Write(GetJavascriptValidData());
+            output.Write(GetJavascriptScrollContent());
             base.Render(output);
         }
         #endregion

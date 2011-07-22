@@ -63,7 +63,14 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
 
             js.Append("\r\nfunction displayPromoFile_" + this.ID + "(idPromo, display){");
             js.Append("\r\n\tif(display) {");
+
+            js.Append("\r\n\t\tif(document.body && document.body.scrollHeight){");
+            js.Append("\r\n\t\t document.getElementById('res_backgroud_" + this.ID + "').style.height=document.body.scrollHeight;");
+            js.Append("\r\n\t\t document.getElementById('res_backgroud_" + this.ID + "').style.width=document.body.scrollWidth;");
+            js.Append("\r\n\t\t} else {");
             js.Append("\r\n\t\tdocument.getElementById('res_backgroud_" + this.ID + "').style.height=document.body.clientHeight + \"px\";");
+            js.Append("\r\n\t\tdocument.getElementById('res_backgroud_" + this.ID + "').style.width=document.body.clientWidth + \"px\";");
+            js.Append("\r\n\t\t}");
             js.Append("\r\n\t\tdocument.getElementById('res_backgroud_" + this.ID + "').style.display = '';");
 
             js.Append("\r\n\t\tvar myWidth = 0, myHeight = 0;");
@@ -81,9 +88,15 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n\t\tmyHeight = document.body.clientHeight;");
             js.Append("\r\n\t\t}");
 
-
+            js.Append("\r\n\t if( document.documentElement && ( document.documentElement.scrollTop || document.documentElement.scrollLeft ) ) {");
             js.Append("\r\n\tdocument.getElementById('res_promofile_" + this.ID + "').style.top = (document.documentElement.scrollTop + ((myHeight - 650) / 2)) + \"px\";");
-            js.Append("\r\n\tdocument.getElementById('res_promofile_" + this.ID + "').style.left = (document.documentElement.scrollLeft + ((myWidth - 650) / 2)) + \"px\";");
+            js.Append("\r\n\tdocument.getElementById('res_promofile_" + this.ID + "').style.left = (document.documentElement.scrollLeft + ((myWidth - 650) / 2)) + \"px\";");         
+            js.Append("\r\n\t } else ");
+            js.Append("\r\n\t {");
+            js.Append("\r\n\t\t document.getElementById('res_promofile_" + this.ID + "').style.top = (document.body.scrollTop + ((myHeight - 650) / 2)) + \"px\";");
+            js.Append("\r\n\t\t document.getElementById('res_promofile_" + this.ID + "').style.left = (document.body.scrollLeft + ((myWidth - 650) / 2)) + \"px\";");
+            js.Append("\r\n\t }");
+
 
             js.Append("\r\n\t\tdocument.getElementById('res_promofile_" + this.ID + "').style.display = '';");
          
@@ -144,8 +157,44 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\nfunction ZoomPromotionImage_" + this.ID + "(imgPromo){");
             js.Append("\r\n\t window.open(imgPromo, '', \"top=\"+(screen.height-600)/2+\", left=\"+(screen.width-1024)/2+\", toolbar=1, directories=0, status=0, menubar=1, width=1024, height=600, scrollbars=1, location=0, resizable=1\");");
             js.Append("\r\n}\r\n");
+
+            js.Append("\r\n function ScrollContent_" + this.ID + "(){");
            
-         
+
+            js.Append("\r\n\t   var myWidth = 0, myHeight = 0;");
+            js.Append("\r\n\t\tif( typeof( window.innerWidth ) == 'number' ) {");
+            //Non-IE
+            js.Append("\r\n\t\tmyWidth = window.innerWidth;");
+            js.Append("\r\n\t\tmyHeight = window.innerHeight;");
+            js.Append("\r\n\t\t} else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {");
+            //IE 6+ in 'standards compliant mode'
+            js.Append("\r\n\t\tmyWidth = document.documentElement.clientWidth;");
+            js.Append("\r\n\t\tmyHeight = document.documentElement.clientHeight;");
+            js.Append("\r\n\t\t} else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {");
+            //IE 4 compatible
+            js.Append("\r\n\t\tmyWidth = document.body.clientWidth;");
+            js.Append("\r\n\t\tmyHeight = document.body.clientHeight;");
+            js.Append("\r\n\t\t}");
+          
+            js.Append("\r\n\t   var oContent = document.getElementById('res_promofile_" + this.ID + "');");
+            js.Append("\r\n\t if(oContent != null && ( oContent.style.display  != 'none')){");
+            js.Append("\r\n\t\t     if( document.documentElement && ( document.documentElement.scrollTop || document.documentElement.scrollLeft ) ) {");
+            js.Append("\r\n\t\t\t       oContent.style.top = (document.documentElement.scrollTop + ((myHeight - 650) / 2)) + \"px\";");
+            js.Append("\r\n\t\t        oContent.style.left = (document.documentElement.scrollLeft + ((myWidth - 650) / 2)) + \"px\";");
+            js.Append("\r\n\t\t     } else ");
+            js.Append("\r\n\t\t     {");
+            js.Append("\r\n\t\t\t       oContent.style.top = (document.body.scrollTop + ((myHeight - 650) / 2)) + \"px\";");
+            js.Append("\r\n\t\t\t       oContent.style.left = (document.body.scrollLeft + ((myWidth - 650) / 2)) + \"px\";");
+            js.Append("\r\n\t       }");
+            js.Append("\r\n\t }");
+            js.Append("\r\n}\r\n");
+
+            js.Append("\r\nif (window.addEventListener)");
+            js.Append("\r\n\twindow.addEventListener(\"scroll\", ScrollContent_" + this.ID + ", false);");
+            js.Append("\r\nelse if (window.attachEvent)");
+            js.Append("\r\n\twindow.attachEvent(\"onscroll\", ScrollContent_" + this.ID + "); ");
+ 
+
             js.Append("\r\n\r\n</script>");
             return js.ToString();
         }

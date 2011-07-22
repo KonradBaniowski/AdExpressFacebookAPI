@@ -541,6 +541,10 @@
     <Content Include="Headers\HelpWebControl.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TNS.AdExpress.Anubis.Constantes\TNS.AdExpress.Anubis.Constantes.csproj">
+      <Project>{87716AC8-B9D2-432C-84F7-885A73B77141}</Project>
+      <Name>TNS.AdExpress.Anubis.Constantes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
       <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
       <Name>TNS.AdExpress.Constantes</Name>

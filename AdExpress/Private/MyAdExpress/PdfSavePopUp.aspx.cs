@@ -66,6 +66,8 @@ namespace AdExpress.Private.MyAdExpress
         string zoomDate = string.Empty;
         #endregion
 
+        private string _idDataPromotion = null;
+        private string _resultType = null;
         #endregion
 
         #region Varaibles MMI
@@ -132,6 +134,8 @@ namespace AdExpress.Private.MyAdExpress
                 #region Paramètres Plans média
                 zoomDate = Page.Request.QueryString.Get("zoomDate");
                 #endregion
+                _idDataPromotion = Page.Request.QueryString.Get("idDataPromotion");
+                _resultType = Page.Request.QueryString.Get("resultType");
 
 				#region Gestion des cookies
 
@@ -300,6 +304,20 @@ namespace AdExpress.Private.MyAdExpress
 						case Module.Name.DONNEES_DE_CADRAGE:
 							idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession,TNS.AdExpress.Anubis.Constantes.Result.type.aton);
 							break;
+                        case Module.Name.VP:
+                            if (!string.IsNullOrEmpty(_resultType))
+                            {
+                                if (Convert.ToInt32(_resultType) == TNS.AdExpress.Anubis.Constantes.Result.type.selket.GetHashCode())
+                                {
+                                    if (!string.IsNullOrEmpty( _idDataPromotion)) _webSession.IdPromotion = long.Parse(_idDataPromotion);
+                                    idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.selket);
+                                }
+                                else if (Convert.ToInt32(_resultType) == TNS.AdExpress.Anubis.Constantes.Result.type.thoueris.GetHashCode())
+                                {
+                                    idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.thoueris);
+                                }
+                            }
+                            break;
 						//default :
 							//throw new AdExpress. Exceptions.PdfSavePopUpException(" Impossssile d'identifier le module.");
 							
