@@ -68,6 +68,9 @@ namespace TNS.Ares.AdExpress
                 }
                 #endregion
 
+                //Initialisation des chemins d'accès aux créations
+                CreativeConfigDataAccess.LoadPathes(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.CREATIVES_PATH_CONFIGURATION));
+
                 #region Product Baal List
                 try {
                     Product.LoadBaalLists(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.BAAL_CONFIGURATION_FILENAME));

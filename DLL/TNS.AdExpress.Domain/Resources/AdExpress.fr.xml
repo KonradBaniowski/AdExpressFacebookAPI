@@ -2110,9 +2110,16 @@
     <item mnemonic="w2887" type="System.String">Période de validité</item>
     <item mnemonic="w2888" type="System.String">Mois de départ</item>
     <item mnemonic="w2889" type="System.String">Contenu promotionnel</item>
-    <item mnemonic="w2890" type="System.String">AdExpress -- Fichier Excel Veille Promotionnelle généré</item>
+    <item mnemonic="w2890" type="System.String">AdExpress - Fichier Excel Veille Promotionnelle généré</item>
     <item mnemonic="w2891" type="System.String">Pièces et Services</item>
     <item mnemonic="w2892" type="System.String">Excel Veille promotionnelle</item>
+    <item mnemonic="w2893" type="System.String">Fiche</item>
+    <item mnemonic="w2894" type="System.String">Export PDF Fiches</item>
+    <item mnemonic="w2895" type="System.String">PDF Fiches Veille promotionnelle</item>
+    <item mnemonic="w2896" type="System.String">PDF Veille promotionnelle</item>
+    <item mnemonic="w2897" type="System.String">AdExpress - Fichier PDF Fiches Veille promotionnelle généré</item>
+    <item mnemonic="w2898" type="System.String">AdExpress - Fichier PDF Veille Promotionnelle généré</item>
+    <item mnemonic="w2899" type="System.String">Fiches</item>
     <!-- ********************************* -->
   </items>
 </localization>

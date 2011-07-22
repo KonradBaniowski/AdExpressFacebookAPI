@@ -246,22 +246,22 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 					}
 				
 					if(currentRow[2]!=System.DBNull.Value){
-						if(compteur==0){	
-							t.Append("<tr><td class=\"txtViolet10\" width=50%>");
+						if(compteur==0){
+                            t.Append("<tr><td class=\"txtViolet10\" width=50% style=\"text-align:left;\">");
 							//	t.Append("<input type=\"radio\" ID=\""+currentRow[2]+currentRow[3]+"\"  value=\""+currentRow[2]+"_"+currentRow[3].ToString()+"\" name=\"CKB_"+currentRow[0]+"_"+currentRow[2]+"\">"+currentRow[3].ToString()+"<br>");
 							t.Append("<input type=\"radio\" ID=\""+currentRow[2]+currentRow[3]+valueTable+"\" onClick=\"insertIdMySession"+valueTable+"('"+currentRow[2]+"','"+currentRow[0]+"');\" value=\""+currentRow[2]+"\" name=\"Session\">"+currentRow[3].ToString()+"<br>");
 							t.Append("</td>");
 							compteur=1;
 						}
 						else{
-							t.Append("<td class=\"txtViolet10\" width=50%>");
+                            t.Append("<td class=\"txtViolet10\" width=50% style=\"text-align:left;\">");
 							t.Append("<input type=\"radio\" ID=\""+currentRow[2]+currentRow[3]+valueTable+"\" onClick=\"insertIdMySession"+valueTable+"('"+currentRow[2]+"','"+currentRow[0]+"');\" value=\""+currentRow[2]+"\" name=\"Session\">"+currentRow[3].ToString()+"<br>");
 							t.Append("</td></tr>");
 							compteur=0;
 						}
 					}
-					else{					
-						t.Append("<tr><td class=\"txtViolet10\" width=50%>");
+					else{
+                        t.Append("<tr><td class=\"txtViolet10\" width=50% style=\"text-align:left;\">");
 						t.Append(GestionWeb.GetWebWord(285,_webSession.SiteLanguage));
 						t.Append("</td></tr>");
 						
@@ -357,21 +357,20 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 
 					if (currentRow[2] != System.DBNull.Value) {
 						if (compteur == 0) {
-							t.Append("<tr><td class=\"txtViolet10\" width=50%>");
-							//	t.Append("<input type=\"radio\" ID=\""+currentRow[2]+currentRow[3]+"\"  value=\""+currentRow[2]+"_"+currentRow[3].ToString()+"\" name=\"CKB_"+currentRow[0]+"_"+currentRow[2]+"\">"+currentRow[3].ToString()+"<br>");
+                            t.Append("<tr><td class=\"txtViolet10\" width=50% style=\"text-align:left;\">");
 							t.Append("<input type=\"radio\" ID=\"" + currentRow[2] + currentRow[3] + valueTable + "\" onClick=\"insertIdMySession" + valueTable + "('" + currentRow[2] + "','" + currentRow[0] + "');\" value=\"" + currentRow[2] + "\" name=\"Session\">" + currentRow[3].ToString() + "<br>");
 							t.Append("</td>");
 							compteur = 1;
 						}
 						else {
-							t.Append("<td class=\"txtViolet10\" width=50%>");
+                            t.Append("<td class=\"txtViolet10\" width=50% style=\"text-align:left;\">");
 							t.Append("<input type=\"radio\" ID=\"" + currentRow[2] + currentRow[3] + valueTable + "\" onClick=\"insertIdMySession" + valueTable + "('" + currentRow[2] + "','" + currentRow[0] + "');\" value=\"" + currentRow[2] + "\" name=\"Session\">" + currentRow[3].ToString() + "<br>");
 							t.Append("</td></tr>");
 							compteur = 0;
 						}
 					}
 					else {
-						t.Append("<tr><td class=\"txtViolet10\" width=50%>");
+                        t.Append("<tr><td class=\"txtViolet10\" width=50% style=\"text-align:left;\">");
 						t.Append(GestionWeb.GetWebWord(285, _webSession.SiteLanguage));
 						t.Append("</td></tr>");
 

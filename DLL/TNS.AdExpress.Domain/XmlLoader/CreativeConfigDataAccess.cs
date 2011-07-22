@@ -159,6 +159,10 @@ namespace TNS.AdExpress.Domain.XmlLoader
                                     case "IMAGES_VP":
                                         CreationServerPathes.IMAGES_VP = value;
                                         break;
+                                    case "LOCAL_PATH_VP":
+                                        CreationServerPathes.LOCAL_PATH_VP = value;
+                                        break;
+                                    
                                 }
                                 break;
                         }

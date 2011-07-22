@@ -10,7 +10,7 @@
   <bannersFormat useBannersFormat="true"/>
   <retailer use="false"/>
   <vpConfiguration>
-    <dateSelections defaultType="cumulWithNextMonth">
+    <dateSelections defaultType="currentMonth">
       <dateSelection type="currentMonth"        textId="2866"/>
       <dateSelection type="cumulWithNextMonth"  textId="2867"/>
       <dateSelection type="allHistoric"         textId="2868"/>

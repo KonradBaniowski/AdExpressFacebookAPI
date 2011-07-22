@@ -316,9 +316,11 @@ namespace TNS.AdExpressI.VP.DAL
                 Table promoCircuit = WebApplicationParameters.GetDataTable(TableIds.promoCircuit, false);
                 Table promoBrand = WebApplicationParameters.GetDataTable(TableIds.promoBrand, false);
 
+                //get universe filters
+                string universFilter = (idDataPromotion<0) ? GetUniversFilter(dataPromo.Prefix) :"";
 
                 sql.AppendFormat("select ID_DATA_PROMOTION, {0}.ID_PRODUCT , PRODUCT, {0}.ID_BRAND,BRAND, {0}.ID_SEGMENT, SEGMENT ", dataPromo.Prefix);
-                sql.AppendFormat(", {0}.ID_CATEGORY, CATEGORY,{0}.ID_CIRCUIT ,CIRCUIT ,{0}.ID_PRODUCT,PRODUCT ", dataPromo.Prefix);
+                sql.AppendFormat(", {0}.ID_CATEGORY, CATEGORY,{0}.ID_CIRCUIT ,CIRCUIT  ", dataPromo.Prefix);
                 sql.AppendFormat(", CONDITION_VISUAL, CONDITION_TEXT, PROMOTION_BRAND, PROMOTION_VISUAL, PROMOTION_CONTENT, DATE_BEGIN_NUM, DATE_END_NUM", dataPromo.Prefix);
 
                 //FROM
@@ -326,15 +328,22 @@ namespace TNS.AdExpressI.VP.DAL
                 sql.AppendFormat(" ,{0} ,{1} ,{2} ", promoSegment.SqlWithPrefix, promoCategory.SqlWithPrefix, promoProduct.SqlWithPrefix);
 
                 //WHERE
-                sql.Append(" where  ");
+                sql.Append(" where 0=0 ");
 
                 //Adding universe filters
-                sql.AppendFormat(" ID_DATA_PROMOTION={0} ", idDataPromotion);
+                if (idDataPromotion>-1) sql.AppendFormat(" and ID_DATA_PROMOTION={0} ", idDataPromotion);
                 sql.AppendFormat(" and {0}.ID_PRODUCT = {1}.ID_PRODUCT and  {1}.activation<{2}", dataPromo.Prefix, promoProduct.Prefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
                 sql.AppendFormat(" and {0}.ID_CATEGORY =  {1}.ID_CATEGORY and  {1}.activation<{2}", dataPromo.Prefix, promoCategory.Prefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
                 sql.AppendFormat(" and {0}.ID_SEGMENT =  {1}.ID_SEGMENT and  {1}.activation<{2}", dataPromo.Prefix, promoSegment.Prefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
                 sql.AppendFormat(" and {0}.ID_BRAND =  {1}.ID_BRAND and  {1}.activation<{2}", dataPromo.Prefix, promoBrand.Prefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
                 sql.AppendFormat(" and {0}.ID_CIRCUIT =  {1}.ID_CIRCUIT and  {1}.activation<{2}", dataPromo.Prefix, promoCircuit.Prefix, TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+
+                //universe filter to get all files for current selection
+                sql.Append(universFilter);
+
+                //ORDER BY
+                sql.AppendFormat(" order by CIRCUIT,BRAND,SEGMENT,CATEGORY,PRODUCT, date_begin_num, date_end_num ");
+
 
                 ds = _session.Source.Fill(sql.ToString());
 

@@ -20,7 +20,7 @@ using TNS.AdExpress.Domain.DataBaseDescription;
 using DBClassification = TNS.AdExpress.Constantes.Classification.DB;
 using VehicleClassificationCst = TNS.AdExpress.Constantes.Classification.DB.Vehicles.names;
 using CustomerRightConstante = TNS.AdExpress.Constantes.Customer.Right;
-using WebFunctions = TNS.AdExpress.Web.Functions;
+//using WebFunctions = TNS.AdExpress.Web.Functions;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Classification;
@@ -192,7 +192,7 @@ namespace TNS.AdExpressI.Classification.DAL {
 			string sql = "";
 
 		    //Obtains identifiers of media allowed : id_vehicle in ( 1,2,3)
-            sql += WebFunctions.SQLGenerator.getAccessVehicleList(_session, vehicleTable.Prefix, beginByAnd);
+            sql += TNS.AdExpress.Web.Core.Utilities.SQLGenerator.getAccessVehicleList(_session, vehicleTable.Prefix, beginByAnd);
 			
             /*Exclude Sponsorship sub media if not allowed for current customer 
            * for Module modules  " Product class analysis: Graphic key reports "

@@ -84,7 +84,15 @@ namespace TNS.AdExpress.Anubis.Constantes{
             /// <summary>
             /// Export Excel veille promo
             /// </summary>
-            tefnout = 21
+            tefnout = 21,
+            /// <summary>
+            /// Export pdf veille promo file
+            /// </summary>
+            selket = 22,
+            /// <summary>
+            /// Export pdf veille promo calendar schedule
+            /// </summary>
+            thoueris = 23
 		}
 
 		/// <summary>

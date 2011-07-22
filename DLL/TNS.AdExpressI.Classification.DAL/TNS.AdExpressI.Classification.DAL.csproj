@@ -101,10 +101,6 @@
       <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TNS.AdExpress.Web\TNS.AdExpress.Web.csproj">
-      <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
-      <Name>TNS.AdExpress.Web</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpress\TNS.AdExpress.csproj">
       <Project>{6E75699B-838C-4534-99F7-D4C3E768CD57}</Project>
       <Name>TNS.AdExpress</Name>

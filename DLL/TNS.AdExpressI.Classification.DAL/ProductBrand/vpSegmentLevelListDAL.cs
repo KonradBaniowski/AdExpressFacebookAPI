@@ -8,6 +8,8 @@ using System;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 
 namespace TNS.AdExpressI.Classification.DAL.ProductBrand {
@@ -58,5 +60,15 @@ namespace TNS.AdExpressI.Classification.DAL.ProductBrand {
         {
         }
 		#endregion
+
+        /// <summary>
+        /// Set Schema
+        /// </summary>
+        protected override void SetSchema()
+        {
+            string promoSchema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.promo03).Label;
+            if (string.IsNullOrEmpty(_dbSchema) || _dbSchema != promoSchema) _dbSchema = promoSchema;
+
+        }
 	}
 }

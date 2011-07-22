@@ -86,6 +86,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 									case TNS.AdExpress.Anubis.Constantes.Result.type.mnevis:
 									case TNS.AdExpress.Anubis.Constantes.Result.type.shou:
 									case TNS.AdExpress.Anubis.Constantes.Result.type.aton:
+                                    case TNS.AdExpress.Anubis.Constantes.Result.type.selket:
+                                    case TNS.AdExpress.Anubis.Constantes.Result.type.thoueris:
                                         t.Append("\n<tr><td width=50%><a href=\"" + currentName.List[1, i].ToString() + "\" target=\"_blank\"><img src=\"/App_Themes/" + themeName + "/Images/Common/logoPDF.gif\" border=\"0\" alt=\"" + currentName.List[0, i].ToString() + "\"></a>&nbsp;<a href=\"" + currentName.List[1, i].ToString() + "\" class=\"roll02\" target=\"_blank\">" + currentName.List[0, i].ToString() + "</a></td>");
 										break;
 								}	
@@ -108,6 +110,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 									case TNS.AdExpress.Anubis.Constantes.Result.type.mnevis:
 									case TNS.AdExpress.Anubis.Constantes.Result.type.shou:
 									case TNS.AdExpress.Anubis.Constantes.Result.type.aton:
+                                    case TNS.AdExpress.Anubis.Constantes.Result.type.selket:
+                                    case TNS.AdExpress.Anubis.Constantes.Result.type.thoueris:
                                         t.Append("\n<td width=50%><a href=\"" + currentName.List[1, i].ToString() + "\" target=\"_blank\"><img src=\"/App_Themes/" + themeName + "/Images/Common/logoPDF.gif\" border=0 alt=\"" + currentName.List[0, i].ToString() + "\"></a>&nbsp;<a href=\"" + currentName.List[1, i].ToString() + "\" class=\"roll02\" target=\"_blank\">" + currentName.List[0, i].ToString() + "</a></td></tr>");
 										break;
 								}

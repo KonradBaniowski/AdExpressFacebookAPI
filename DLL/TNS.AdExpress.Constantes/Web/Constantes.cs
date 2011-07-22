@@ -269,7 +269,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// personnalizedLevel
             /// </summary>
-            personnalizedLevel = 61
+            personnalizedLevel = 61,
+            /// <summary>
+            /// personnalizedLevel
+            /// </summary>
+            idPromotion = 62
 		}
 	
 	}
@@ -2384,6 +2388,11 @@ namespace TNS.AdExpress.Constantes.Web{
         /// Répertoire virtuel des créations e la Veille promotionnelle Renault
         /// </summary>
         public static string IMAGES_VP= string.Empty;
+
+         /// <summary>
+        /// Répertoire contenant les visuels de la veille promotionnelle de Renault
+        /// </summary>
+        public static string LOCAL_PATH_VP = string.Empty;
         
     }
     #endregion

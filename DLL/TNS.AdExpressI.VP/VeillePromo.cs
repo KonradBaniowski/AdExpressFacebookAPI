@@ -19,50 +19,7 @@ using TNS.AdExpress.Web.Core.Utilities;
 namespace TNS.AdExpressI.VP
 {
     public class VeillePromo : IVeillePromo
-    {
-        #region Constantes
-        /// <summary>
-        /// Index de la colonne du niveau 1
-        /// </summary>
-        public const int L1_ID_COLUMN_INDEX = 0;
-        /// <summary>
-        /// Index of N1 label
-        /// </summary>
-        public const int L1_COLUMN_INDEX = 1;
-        /// <summary>
-        /// Index de la colonne du niveau 2
-        /// </summary>
-        public const int L2_ID_COLUMN_INDEX = 2;
-        /// <summary>
-        /// Index of N2 label
-        /// </summary>
-        public const int L2_COLUMN_INDEX = 3;
-        /// <summary>
-        /// Index de la colonne du niveau 3
-        /// </summary>
-        public const int L3_ID_COLUMN_INDEX = 4;
-        /// <summary>
-        /// Index of N3 label
-        /// </summary>
-        public const int L3_COLUMN_INDEX = 5;
-        /// <summary>
-        /// Css promo
-        /// </summary>
-        protected const string CSS_PROMO = "vph";
-        /// <summary>
-        /// Css promo
-        /// </summary>
-        protected const string ETC = "...";
-
-        /// <summary>
-        /// Nb minimum weeks to show period label
-        /// </summary>
-        public const int NB_MIN_WEEKS_TO_SHOW_PERIOD = 3;
-
-        /// Nb max char by column
-        /// </summary>
-        public const int NB_CHAR_BY_COL = 4;
-        #endregion
+    {        
 
         #region Variables
         /// <summary>
@@ -86,11 +43,14 @@ namespace TNS.AdExpressI.VP
         /// Period beginning date
         /// </summary>
         protected string _periodBeginningDate = "";
+
+       
         /// <summary>
         /// Period end date
         /// </summary>
-        protected string _periodEndDate = "";
+        private string _periodEndDate = "";
 
+   
         /// <summary>
         /// ID data promotion
         /// </summary>
@@ -172,6 +132,22 @@ namespace TNS.AdExpressI.VP
         {
             set { _theme = value; }
         }
+        /// <summary>
+        /// Get Period Beginning Date 
+        /// </summary>
+        public string PeriodBeginningDate
+        {
+            get { return _periodBeginningDate; }
+        }
+
+        /// <summary>
+        /// Get Period EndDate
+        /// </summary>
+        public string PeriodEndDate
+        {
+            get { return _periodEndDate; }
+        }
+
         #endregion
 
         #region GetHtml
@@ -266,25 +242,25 @@ namespace TNS.AdExpressI.VP
                 string brand = "";
                 rowSpan = 0;
                 int firstVpItemColIndex = -1;
-                if (nbLevels == 1) firstVpItemColIndex = L1_COLUMN_INDEX + 1;
-                if (nbLevels == 2) firstVpItemColIndex = L2_COLUMN_INDEX + 1;
-                if (nbLevels == 3) firstVpItemColIndex = L3_COLUMN_INDEX + 1;
+                if (nbLevels == 1) firstVpItemColIndex = CstResults.VeillePromo.L1_COLUMN_INDEX + 1;
+                if (nbLevels == 2) firstVpItemColIndex = CstResults.VeillePromo.L2_COLUMN_INDEX + 1;
+                if (nbLevels == 3) firstVpItemColIndex = CstResults.VeillePromo.L3_COLUMN_INDEX + 1;
 
                 #region Table content
 
                 for (int i = 0; i < data.Count; i++)
                 {
                     object[] dr = data[i];
-                    if (nbLevels >= 1) idL1 = Convert.ToInt64(dr[L1_ID_COLUMN_INDEX]);
-                    if (nbLevels >= 2) idL2 = Convert.ToInt64(dr[L2_ID_COLUMN_INDEX]);
-                    if (nbLevels >= 3) idL3 = Convert.ToInt64(dr[L3_ID_COLUMN_INDEX]);
+                    if (nbLevels >= 1) idL1 = Convert.ToInt64(dr[CstResults.VeillePromo.L1_ID_COLUMN_INDEX]);
+                    if (nbLevels >= 2) idL2 = Convert.ToInt64(dr[CstResults.VeillePromo.L2_ID_COLUMN_INDEX]);
+                    if (nbLevels >= 3) idL3 = Convert.ToInt64(dr[CstResults.VeillePromo.L3_ID_COLUMN_INDEX]);
                     levelColSpan = weekList.Count;
 
                     //Start row level 1
                     if (nbLevels >= 1 && idL1 != oldIdL1)
                     {
                         html.AppendFormat("<tr><td class=\"{0}\">", ((i == 0) ? "L1Vp" : "L1VpbBis"));
-                        html.Append(Convert.ToString(dr[L1_COLUMN_INDEX]));
+                        html.Append(Convert.ToString(dr[CstResults.VeillePromo.L1_COLUMN_INDEX]));
                         html.AppendFormat("</td><td colspan=\"{0}\" class=\"p3\">&nbsp;</td></tr>", levelColSpan);
                         newL1 = true;
                         if (nbLevels > 1) newL2 = true;
@@ -295,7 +271,7 @@ namespace TNS.AdExpressI.VP
                     if (nbLevels >= 2 && (idL2 != oldIdL2 || newL2))
                     {
                         html.AppendFormat("<tr><td class=\"{0}\">", ((newL1) ? "L2Vp" : "L2VpBis"));
-                        html.AppendFormat("&nbsp; {0}", Convert.ToString(dr[L2_COLUMN_INDEX]));
+                        html.AppendFormat("&nbsp; {0}", Convert.ToString(dr[CstResults.VeillePromo.L2_COLUMN_INDEX]));
                         html.AppendFormat("</td><td colspan=\"{0}\" class=\"p3\">&nbsp;</td></tr>", levelColSpan);
                         newL2 = true;
                         if (nbLevels > 2) newL3 = true;
@@ -306,7 +282,7 @@ namespace TNS.AdExpressI.VP
                     if (nbLevels >= 3 && (idL3 != oldIdL3 || newL3))
                     {
                         html.AppendFormat("<tr><td class=\"{0}\">", ((newL2) ? "L3Vp" : "L3VpBis"));
-                        html.AppendFormat("&nbsp;&nbsp; {0}", Convert.ToString(dr[L3_COLUMN_INDEX]));
+                        html.AppendFormat("&nbsp;&nbsp; {0}", Convert.ToString(dr[CstResults.VeillePromo.L3_COLUMN_INDEX]));
                         html.AppendFormat("</td><td colspan=\"{0}\" class=\"p3\">&nbsp;</td></tr>", levelColSpan);
                         newL3 = true;
                     }
@@ -368,7 +344,7 @@ namespace TNS.AdExpressI.VP
                                 html.Append(promoAnchor);
                                 if (startIncomplete) html.Append("<span class=\"flg\">&lsaquo;&nbsp;</span>");
                                 //Add promotion period
-                                if (colSpan >= NB_MIN_WEEKS_TO_SHOW_PERIOD)
+                                if (colSpan >= CstResults.VeillePromo.NB_MIN_WEEKS_TO_SHOW_PERIOD)
                                 {
                                     html.Append(promoPeriod);
                                 }
@@ -415,7 +391,7 @@ namespace TNS.AdExpressI.VP
             {
 
                 html.Append("<div align=\"center\" class=\"vpResNoData\">" + GestionWeb.GetWebWord(177, _session.SiteLanguage) + "</div>");
-               
+
             }
 
             return html.ToString();
@@ -452,6 +428,7 @@ namespace TNS.AdExpressI.VP
                 //Header
                 html.Append("<tr><td class=\"VpFilePopUpHeader\">");
                 html.AppendFormat("&nbsp;&nbsp;{0} ", GestionWeb.GetWebWord(2883, _session.SiteLanguage));
+
                 html.Append("</td></tr>");
                 #endregion
 
@@ -464,8 +441,20 @@ namespace TNS.AdExpressI.VP
                 //Content
                 html.Append("<tr><td class=\"vpfDescr\">");
                 html.Append("<ul class=\"prf\">");
+              
+
                 //VP Brand
-                html.AppendFormat(" <li><span><b>{0}:</b></span><span class=\"prfSp\"> {1}</span></li>", GestionWeb.GetWebWord(2876, _session.SiteLanguage), dr["BRAND"].ToString());
+                html.AppendFormat(" <li><span><b>{0}:</b></span><span class=\"prfSp\"\"> {1}</span>", GestionWeb.GetWebWord(2876, _session.SiteLanguage), dr["BRAND"].ToString());
+
+                ////Image export pdf
+                html.Append("<img align=\"right\" alt=\""+ GestionWeb.GetWebWord(2865, _session.SiteLanguage)+"\" ");
+                html.Append("id=\"promofile" + _resultControlId + "\" ");
+                html.AppendFormat("src=\"/App_Themes/{0}/Images/Common/export_pdf.gif\" ", _theme);
+                html.AppendFormat("onmouseover=\"javascript:this.src='/App_Themes/{0}/Images/Common/export_pdf_over.gif';\" ", _theme);
+                html.AppendFormat("onmouseout=\"javascript:this.src='/App_Themes/{0}/Images/Common/export_pdf.gif';\" ", _theme);
+                html.AppendFormat("onclick=\"javascript:popupOpenBis('/Private/MyAdExpress/PdfSavePopUp.aspx?idSession={0}&idDataPromotion={1}&resultType={2}','470','210','yes');\" ", _session.IdSession, _idDataPromotion, TNS.AdExpress.Anubis.Constantes.Result.type.selket.GetHashCode());
+                html.Append(" />");
+                html.Append("</li>");
 
                 string dateBegin = TNS.FrameWork.Date.DateString.YYYYMMDDToDD_MM_YYYY(Convert.ToInt32(dr["DATE_BEGIN_NUM"].ToString()), _session.SiteLanguage);
                 string dateEnd = TNS.FrameWork.Date.DateString.YYYYMMDDToDD_MM_YYYY(Convert.ToInt32(dr["DATE_END_NUM"].ToString()), _session.SiteLanguage);
@@ -623,7 +612,7 @@ namespace TNS.AdExpressI.VP
             {
 
                 html.Append("<div align=\"center\" class=\"vpResNoData\">" + GestionWeb.GetWebWord(177, _session.SiteLanguage) + "</div>");
-               
+
             }
 
             return html.ToString();
@@ -693,7 +682,7 @@ namespace TNS.AdExpressI.VP
         /// Get Data
         /// </summary>
         /// <returns>data promo</returns>
-        protected virtual VeillePromoScheduleData GetData()
+        public virtual VeillePromoScheduleData GetData()
         {
             object[] param = null, promoRow = null;
             IVeillePromoDAL vpScheduleDAL = null;
@@ -824,7 +813,7 @@ namespace TNS.AdExpressI.VP
                             tempId = Convert.ToInt64(currentRow[persoLevel.DataBaseIdField].ToString());
                             if (!cssPromoList.ContainsKey(tempId))
                             {
-                                cssPromoList.Add(tempId, CSS_PROMO + cssIndex.ToString());
+                                cssPromoList.Add(tempId, CstResults.VeillePromo.CSS_PROMO + cssIndex.ToString());
                                 cssIndex++;
                             }
                             promoItemType = (promoStartWeekYYYYWW < beginWeekYYYYWW) ? CstResults.VeillePromo.itemType.presentStartIncomplete : CstResults.VeillePromo.itemType.presentStart;
@@ -850,18 +839,18 @@ namespace TNS.AdExpressI.VP
 
                 if (nbLevels >= 1)
                 {
-                    promoRow[L1_ID_COLUMN_INDEX] = oldIdL1;
-                    promoRow[L1_COLUMN_INDEX] = GetLevelLabel(currentRow, 1, detailLevel);
+                    promoRow[CstResults.VeillePromo.L1_ID_COLUMN_INDEX] = oldIdL1;
+                    promoRow[CstResults.VeillePromo.L1_COLUMN_INDEX] = GetLevelLabel(currentRow, 1, detailLevel);
                 }
                 if (nbLevels >= 2)
                 {
-                    promoRow[L2_ID_COLUMN_INDEX] = oldIdL2;
-                    promoRow[L2_COLUMN_INDEX] = GetLevelLabel(currentRow, 2, detailLevel);
+                    promoRow[CstResults.VeillePromo.L2_ID_COLUMN_INDEX] = oldIdL2;
+                    promoRow[CstResults.VeillePromo.L2_COLUMN_INDEX] = GetLevelLabel(currentRow, 2, detailLevel);
                 }
                 if (nbLevels >= 3)
                 {
-                    promoRow[L3_ID_COLUMN_INDEX] = oldIdL3;
-                    promoRow[L3_COLUMN_INDEX] = GetLevelLabel(currentRow, 3, detailLevel);
+                    promoRow[CstResults.VeillePromo.L3_ID_COLUMN_INDEX] = oldIdL3;
+                    promoRow[CstResults.VeillePromo.L3_COLUMN_INDEX] = GetLevelLabel(currentRow, 3, detailLevel);
                 }
 
                 if (newL3 || newL2 || newL1 || withPromoOverlap)
@@ -935,12 +924,14 @@ namespace TNS.AdExpressI.VP
                         res = currentLevelPromoLineIndex[i];
                         int month = Dates.GetMonthFromWeek(pStartWeek.Year, pStartWeek.Week);
                         long weekKey = (pStartWeek.Year * 100 + month) * 100 + pStartWeek.Week;
-                        VeillePromoItem vItem = (VeillePromoItem)promoRow[weekList[weekKey]];
-                        if (vItem.ItemType != CstResults.VeillePromo.itemType.absent)
+                        if (weekList.ContainsKey(weekKey))
                         {
-                            res = -1; break;
+                            VeillePromoItem vItem = (VeillePromoItem)promoRow[weekList[weekKey]];
+                            if (vItem.ItemType != CstResults.VeillePromo.itemType.absent)
+                            {
+                                res = -1; break;
+                            }
                         }
-
                         pStartWeek.Increment();
                     }
                     if (res > 0) break;
@@ -954,20 +945,20 @@ namespace TNS.AdExpressI.VP
         /// <summary>
         /// Split text Content
         /// </summary>
-        /// <param name="promoContent"></param>
-        /// <param name="nbCol"></param>
-        /// <returns></returns>
-        protected virtual string SplitContent(string promoContent, int nbCol)
+        /// <param name="promoContent">promo Content</param>
+        /// <param name="nbCol">nb Col </param>
+        /// <returns>Split text </returns>
+        public virtual string SplitContent(string promoContent, int nbCol)
         {
             string res = "";
             int length = promoContent.Length;
-            int nbCharByCol = NB_CHAR_BY_COL;
+            int nbCharByCol = CstResults.VeillePromo.NB_CHAR_BY_COL;
             int nbLine = 2;
 
             if (!string.IsNullOrEmpty(promoContent) && (length > (nbCol * nbCharByCol * nbLine)))
             {
-                int lenghtMax = (nbCol * nbCharByCol * nbLine) - ETC.Length;
-                res = promoContent.Substring(0, lenghtMax) + ETC;
+                int lenghtMax = (nbCol * nbCharByCol * nbLine) - CstResults.VeillePromo.ETC.Length;
+                res = promoContent.Substring(0, lenghtMax) + CstResults.VeillePromo.ETC;
             }
             else return promoContent;
 

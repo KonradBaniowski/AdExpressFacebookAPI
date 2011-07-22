@@ -1883,6 +1883,28 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 				modificationDate = DateTime.Now;
 			}
 		}
+        /// <summary>
+        /// Obtient ou définit l'identifiant de la Promotion
+        /// </summary>
+        public Int64 IdPromotion
+        {
+            get
+            {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.idPromotion))
+                {
+                    return ((Int64)userParameters[CoreConstantes.SessionParamters.idPromotion]);
+                }
+                else
+                {
+                    return (-1);
+                }
+            }
+            set
+            {
+                userParameters[CoreConstantes.SessionParamters.idPromotion] = value;
+                modificationDate = DateTime.Now;
+            }
+        }
 		#endregion
 
 		#region Gestion des accroches

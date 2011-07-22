@@ -107,6 +107,15 @@ namespace TNS.AdExpress.Web.UI
 						return Convertion.ToHtmlString(GestionWeb.GetWebWord(1619,webSession.SiteLanguage));
 					case CustomerSessions.Period.Type.LastLoadedWeek:
 						return Convertion.ToHtmlString(GestionWeb.GetWebWord(1618,webSession.SiteLanguage));
+                    case CustomerSessions.Period.Type.cumulWithNextMonth:
+                    case CustomerSessions.Period.Type.allHistoric:
+                    case CustomerSessions.Period.Type.currentMonth:
+                        foreach (VpDateConfiguration cVpDateConfiguration in WebApplicationParameters.VpDateConfigurations.VpDateConfigurationList)
+                        {
+                            if (cVpDateConfiguration.DateType == webSession.PeriodType)
+                                return Convertion.ToHtmlString(GestionWeb.GetWebWord(cVpDateConfiguration.TextId, webSession.SiteLanguage));
+                        }
+                        return "";                  
 					default:
 						return "";
 				}

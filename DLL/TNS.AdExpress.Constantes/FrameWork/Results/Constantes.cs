@@ -2753,6 +2753,47 @@ namespace TNS.AdExpress.Constantes.FrameWork.Results{
     /// Constantes of veille Promotion module
     /// </summary>
     public class VeillePromo{
+        /// <summary>
+        /// Index de la colonne du niveau 1
+        /// </summary>
+        public  const int L1_ID_COLUMN_INDEX = 0;
+        /// <summary>
+        /// Index of N1 label
+        /// </summary>
+        public  const int L1_COLUMN_INDEX = 1;
+        /// <summary>
+        /// Index de la colonne du niveau 2
+        /// </summary>
+        public  const int L2_ID_COLUMN_INDEX = 2;
+        /// <summary>
+        /// Index of N2 label
+        /// </summary>
+        public  const int L2_COLUMN_INDEX = 3;
+        /// <summary>
+        /// Index de la colonne du niveau 3
+        /// </summary>
+        public  const int L3_ID_COLUMN_INDEX = 4;
+        /// <summary>
+        /// Index of N3 label
+        /// </summary>
+        public  const int L3_COLUMN_INDEX = 5;
+        /// <summary>
+        /// Css promo
+        /// </summary>
+        public const string CSS_PROMO = "vph";
+        /// <summary>
+        /// Css promo
+        /// </summary>
+        public const string ETC = "...";
+
+        /// <summary>
+        /// Nb minimum weeks to show period label
+        /// </summary>
+        public  const int NB_MIN_WEEKS_TO_SHOW_PERIOD = 3;
+
+        /// Nb max char by column
+        /// </summary>
+        public  const int NB_CHAR_BY_COL = 4;
 
         #region Enumérateur
         /// <summary>

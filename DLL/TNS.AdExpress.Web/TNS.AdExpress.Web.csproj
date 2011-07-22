@@ -1262,6 +1262,10 @@
       <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.Classification.DAL\TNS.AdExpressI.Classification.DAL.csproj">
+      <Project>{B731E9A2-0DBF-43A6-A89E-6DC27D96FFD4}</Project>
+      <Name>TNS.AdExpressI.Classification.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.Insertions\TNS.AdExpressI.Insertions.csproj">
       <Project>{E1A418FC-6512-46D5-99CF-374682F0C792}</Project>
       <Name>TNS.AdExpressI.Insertions</Name>

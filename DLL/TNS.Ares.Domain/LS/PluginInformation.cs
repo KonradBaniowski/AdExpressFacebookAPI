@@ -59,6 +59,14 @@ namespace TNS.Ares.Domain.LS {
         /// </summary>
         Tefnout = 21,
         /// <summary>
+        /// Selket Plugin
+        /// </summary>
+        Selket = 22,
+        /// <summary>
+        /// Thoueris Plugin
+        /// </summary>
+        Thoueris = 23,
+        /// <summary>
         /// easyMusicExcel Plugin
         /// </summary>
         easyMusicExcel = 30,
