@@ -849,7 +849,30 @@ namespace TNS.AdExpress.Constantes.Web{
                 segmentSubbrand,
                 ///  Table detailed by Sector / Subbrand
                 /// </summary>
-                subbrand
+                subbrand,
+                /// <summary>
+                /// Table detailed by Advertiser / Class
+                /// </summary>
+                advertiserClass,
+                /// <summary>
+                ///  Table detailed by Brand / Group
+                /// </summary>
+                brandGroup,
+                /// <summary>
+                ///  Table detailed by SubSector / Group
+                /// </summary>
+                subSectorGroup,
+                /// <summary>
+                ///  Table detailed by SubSector /Brand 
+                /// </summary>
+                subSectorBrand,
+                ///  Table detailed by SubSector / Subbrand
+                /// </summary>
+                subSectorSubbrand,
+                /// <summary>
+                /// Table detailed by Advertiser / SubSector
+                /// </summary>
+                advertiserSubSector
 			}
 
 	
