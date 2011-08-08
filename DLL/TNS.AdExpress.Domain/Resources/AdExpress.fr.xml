@@ -1844,7 +1844,7 @@
     <item mnemonic="w2656" type="System.String">!</item>
     <item mnemonic="w2657" type="System.String">!</item>
     <item mnemonic="w2658" type="System.String">!</item>
-    <item mnemonic="w2659" type="System.String">!</item>    
+    <item mnemonic="w2659" type="System.String">!</item>
     <item mnemonic="w2660" type="System.String">Votre alerte a bien été prise en compte. Elle sera validée par Kantar Media dans les plus brefs délais.</item>
     <item mnemonic="w2661" type="System.String">Variétés</item>
     <item mnemonic="w2662" type="System.String">Sous marques</item>
@@ -1973,21 +1973,21 @@
     <item mnemonic="w2780" type="System.String">!</item>
     <item mnemonic="w2781" type="System.String">!</item>
     <!-- Currency text managment (Add to manage PLN currency for POLAND and need modifications for all countries)-->
-    <item mnemonic="w2782" type="System.String">année n</item>                              
-    <item mnemonic="w2783" type="System.String">-</item>                                
-    <item mnemonic="w2784" type="System.String">-</item>                              
-    <item mnemonic="w2785" type="System.String">-</item>                                
-    <item mnemonic="w2786" type="System.String">Mois en cours</item>                        
-    <item mnemonic="w2787" type="System.String">Total investissements</item>                
-    <item mnemonic="w2788" type="System.String">Budget brut</item>                          
-    <item mnemonic="w2789" type="System.String">-</item>                               
-    <item mnemonic="w2790" type="System.String">Total sélection</item>                      
-    <item mnemonic="w2791" type="System.String">Total familles</item>                       
-    <item mnemonic="w2792" type="System.String">Total marché pub</item>                     
-    <item mnemonic="w2793" type="System.String">par annonceurs (Total sélection)</item>     
-    <item mnemonic="w2794" type="System.String">par produit (Total sélection)</item>        
-    <item mnemonic="w2795" type="System.String">-</item>                                
-    <item mnemonic="w2796" type="System.String">Budgets bruts</item>                        
+    <item mnemonic="w2782" type="System.String">année n</item>
+    <item mnemonic="w2783" type="System.String">-</item>
+    <item mnemonic="w2784" type="System.String">-</item>
+    <item mnemonic="w2785" type="System.String">-</item>
+    <item mnemonic="w2786" type="System.String">Mois en cours</item>
+    <item mnemonic="w2787" type="System.String">Total investissements</item>
+    <item mnemonic="w2788" type="System.String">Budget brut</item>
+    <item mnemonic="w2789" type="System.String">-</item>
+    <item mnemonic="w2790" type="System.String">Total sélection</item>
+    <item mnemonic="w2791" type="System.String">Total familles</item>
+    <item mnemonic="w2792" type="System.String">Total marché pub</item>
+    <item mnemonic="w2793" type="System.String">par annonceurs (Total sélection)</item>
+    <item mnemonic="w2794" type="System.String">par produit (Total sélection)</item>
+    <item mnemonic="w2795" type="System.String">-</item>
+    <item mnemonic="w2796" type="System.String">Budgets bruts</item>
     <item mnemonic="w2797" type="System.String">€</item>
     <item mnemonic="w2798" type="System.String">K€</item>
     <!-- ****************************************************************************************************** -->
@@ -2110,7 +2110,7 @@
     <item mnemonic="w2887" type="System.String">Période de validité</item>
     <item mnemonic="w2888" type="System.String">Mois de départ</item>
     <item mnemonic="w2889" type="System.String">Contenu promotionnel</item>
-    <item mnemonic="w2890" type="System.String">AdExpress - Fichier Excel Veille Promotionnelle généré</item>
+    <item mnemonic="w2890" type="System.String">AdExpress -- Fichier Excel Veille Promotionnelle généré</item>
     <item mnemonic="w2891" type="System.String">Pièces et Services</item>
     <item mnemonic="w2892" type="System.String">Excel Veille promotionnelle</item>
     <item mnemonic="w2893" type="System.String">Fiche</item>
@@ -2120,6 +2120,21 @@
     <item mnemonic="w2897" type="System.String">AdExpress - Fichier PDF Fiches Veille promotionnelle généré</item>
     <item mnemonic="w2898" type="System.String">AdExpress - Fichier PDF Veille Promotionnelle généré</item>
     <item mnemonic="w2899" type="System.String">Fiches</item>
+   
+    <!-- ********************************* -->
+    <!-- Add text for RU region selection -->
+    <item mnemonic="w2900" type="System.String">!</item>
+    <item mnemonic="w2901" type="System.String">!</item>
+    <item mnemonic="w2902" type="System.String">!</item>
+    <item mnemonic="w2903" type="System.String">!</item>
+    <item mnemonic="w2904" type="System.String">!</item>
+    <item mnemonic="w2905" type="System.String">!</item>
+    <item mnemonic="w2906" type="System.String">!</item>
+    <item mnemonic="w2907" type="System.String">!</item>
+    <item mnemonic="w2908" type="System.String">!</item>
+    <item mnemonic="w2909" type="System.String">!</item>
+    <item mnemonic="w2910" type="System.String">!</item>
+    <item mnemonic="w2911" type="System.String">!</item>
     <!-- ********************************* -->
   </items>
 </localization>
