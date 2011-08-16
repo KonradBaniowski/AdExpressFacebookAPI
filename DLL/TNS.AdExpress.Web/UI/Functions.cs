@@ -92,6 +92,7 @@ namespace TNS.AdExpress.Web.UI
 						return Convertion.ToHtmlString(GestionWeb.GetWebWord(789,webSession.SiteLanguage));
 					case CustomerSessions.Period.Type.dateToDate:
                     case CustomerSessions.Period.Type.cumlDate:
+                    case CustomerSessions.Period.Type.personalize:
 						string dateBegin;
 						string dateEnd;
 						dateBegin = FctUtilities.Dates.YYYYMMDDToDD_MM_YYYY(webSession.PeriodBeginningDate.ToString(), webSession.SiteLanguage);

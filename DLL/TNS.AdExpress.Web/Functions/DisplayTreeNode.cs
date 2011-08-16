@@ -62,9 +62,9 @@ namespace TNS.AdExpress.Web.Functions{
         /// <param name="typetree">Type d'arbre ?</param>
         /// <param name="div">Afficher les div true si c'est le cas</param>
         /// <returns>tableau correspondant à l'arbre</returns>
-        public static string ToHtml(TreeNode root, bool write, bool displayArrow, bool displayCheckbox, int witdhTable, bool displayBorderTable, bool allSelection, int SiteLanguage, int typetree, int showHideContent, bool div, int dataLanguage, TNS.FrameWork.DB.Common.IDataSource source)
+        public static string ToHtml(TreeNode root, bool write, bool displayArrow, bool displayCheckbox, int witdhTable, bool displayBorderTable, bool allSelection, int SiteLanguage, int typetree, int showHideContent, bool div, int dataLanguage, TNS.FrameWork.DB.Common.IDataSource source,bool isExport)
         {
-            return (ToHtml(root, write, displayArrow, displayCheckbox, witdhTable, displayBorderTable, allSelection, SiteLanguage, typetree, showHideContent, div, false, dataLanguage, source));
+            return (ToHtml(root, write, displayArrow, displayCheckbox, witdhTable, displayBorderTable, allSelection, SiteLanguage, typetree, showHideContent, div, false, dataLanguage, source, isExport));
         }
 		#endregion
 
@@ -763,7 +763,7 @@ namespace TNS.AdExpress.Web.Functions{
         /// <param name="div">Afficher les div true si c'est le cas</param>
         /// <param name="percentage">Pour indiquer si la valeur de witdhTable est en pourcentage ou pas</param>
         /// <returns>tableau correspondant à l'arbre</returns>
-        private static string ToHtml(TreeNode root, bool write, bool displayArrow, bool displayCheckbox, int witdhTable, bool displayBorderTable, bool allSelection, int SiteLanguage, int typetree, int showHideContent, bool div, bool percentage, int dataLanguage, TNS.FrameWork.DB.Common.IDataSource source)
+        private static string ToHtml(TreeNode root, bool write, bool displayArrow, bool displayCheckbox, int witdhTable, bool displayBorderTable, bool allSelection, int SiteLanguage, int typetree, int showHideContent, bool div, bool percentage, int dataLanguage, TNS.FrameWork.DB.Common.IDataSource source,bool isExport)
         {
 
             System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
@@ -884,7 +884,7 @@ namespace TNS.AdExpress.Web.Functions{
                         {
                             if(!string.IsNullOrEmpty(((LevelInformation)currentNode.Tag).Text))
                             t.Append("<input type=\"checkbox\"  " + disabled + " " + buttonAutomaticChecked + "  ID=\"" + ((LevelInformation)currentNode.Tag).ID + "\" value=\"AUTOMATIC_" + ((LevelInformation)currentNode.Tag).ID + "_" + ((LevelInformation)currentNode.Tag).Text + "\" name=\"AUTOMATIC_" + ((LevelInformation)currentNode.Tag).ID + "_" + ((LevelInformation)currentNode.Tag).Text + "\">");
-                            else t.Append("<input type=\"checkbox\"  " + disabled + " " + buttonAutomaticChecked + "  ID=\"" + ((LevelInformation)currentNode.Tag).ID + "\" value=\"AUTOMATIC_" + ((LevelInformation)currentNode.Tag).ID + "_" + ((LevelInformation)currentNode.Tag).Text + "\" name=\"AUTOMATIC_" + ((LevelInformation)currentNode.Tag).ID + "_\">");
+                            else t.Append("<input type=\"checkbox\"  " + disabled + " " + buttonAutomaticChecked + "  ID=\"" + ((LevelInformation)currentNode.Tag).ID + "\" value=\"AUTOMATIC_" + ((LevelInformation)currentNode.Tag).ID + "_\" name=\"AUTOMATIC_" + ((LevelInformation)currentNode.Tag).ID + "_\">");
                         }
                         else if (typetree == 3)
                         {
@@ -907,7 +907,7 @@ namespace TNS.AdExpress.Web.Functions{
                         {
                             if (!string.IsNullOrEmpty(((LevelInformation)currentNode.Tag).Text))
                             t.Append("<input type=\"checkbox\"  " + disabled + " " + buttonAutomaticChecked + "  ID=\"" + ((LevelInformation)currentNode.Tag).ID + "\" value=\"AUTOMATIC_" + ((LevelInformation)currentNode.Tag).ID + "_" + ((LevelInformation)currentNode.Tag).Text + "\" name=\"AUTOMATIC_" + ((LevelInformation)currentNode.Tag).ID + "_" + ((LevelInformation)currentNode.Tag).Text + "\">");
-                            else t.Append("<input type=\"checkbox\"  " + disabled + " " + buttonAutomaticChecked + "  ID=\"" + ((LevelInformation)currentNode.Tag).ID + "\" value=\"AUTOMATIC_" + ((LevelInformation)currentNode.Tag).ID + "_" + ((LevelInformation)currentNode.Tag).Text + "\" name=\"AUTOMATIC_" + ((LevelInformation)currentNode.Tag).ID + "_\">");
+                            else t.Append("<input type=\"checkbox\"  " + disabled + " " + buttonAutomaticChecked + "  ID=\"" + ((LevelInformation)currentNode.Tag).ID + "\" value=\"AUTOMATIC_" + ((LevelInformation)currentNode.Tag).ID + "_\" name=\"AUTOMATIC_" + ((LevelInformation)currentNode.Tag).ID + "_\">");
                         }
                         else if (typetree == 3)
                         {
@@ -976,7 +976,7 @@ namespace TNS.AdExpress.Web.Functions{
                     t.Append("" + dicClassif[((LevelInformation)currentNode.Tag).Type][((LevelInformation)currentNode.Tag).ID] + "");
                 }
                 t.Append("</td>");
-                if (displayArrow && currentNode.Nodes.Count > 0)
+                if (displayArrow && currentNode.Nodes.Count > 0 && !isExport)
                 {
                     if (showHideContent == 1)
                     {
@@ -1011,7 +1011,8 @@ namespace TNS.AdExpress.Web.Functions{
                     {
                         if (div)
                         {
-                            t.Append("<div id=\"" + ((LevelInformation)currentNode.Tag).ID + "Content" + showHideContent + "\" class=\"BlancBorderColorWithoutTop\"  style=\"DISPLAY: none; WIDTH: 100%\">");
+                            if(!isExport)t.Append("<div id=\"" + ((LevelInformation)currentNode.Tag).ID + "Content" + showHideContent + "\" class=\"BlancBorderColorWithoutTop\"  style=\"DISPLAY: none; WIDTH: 100%\">");
+                            else t.Append("<div id=\"" + ((LevelInformation)currentNode.Tag).ID + "Content" + showHideContent + "\" class=\"BlancBorderColorWithoutTop\"  style=\"DISPLAY: ''; WIDTH: 100%\">");
                         }
                         t.Append("<table class=\"TreeTableVioletBorder\" width=" + witdhTable + percentageSymbol + ">");
                     }
@@ -1019,7 +1020,8 @@ namespace TNS.AdExpress.Web.Functions{
                     {
                         if (div)
                         {
-                            t.Append("<div class=\"BlancBorderColorWithoutTop\" style=\"DISPLAY: none; WIDTH: 100%\">");
+                            if (!isExport) t.Append("<div class=\"BlancBorderColorWithoutTop\" style=\"DISPLAY: none; WIDTH: 100%\">");
+                            else t.Append("<div class=\"BlancBorderColorWithoutTop\" style=\"DISPLAY: ''; WIDTH: 100%\">");
                         }
                         t.Append("<table class=\"TreeTableBlancBorder\" width=" + witdhTable + percentageSymbol + ">");
                     }
@@ -1084,7 +1086,7 @@ namespace TNS.AdExpress.Web.Functions{
                 while (i < currentNode.Nodes.Count)
                 {
 
-                    if (displayArrow)
+                    if (displayArrow ||isExport)
                     {
                         //En lecture et Non cocher
                         if (!write && !currentNode.Nodes[i].Checked)
