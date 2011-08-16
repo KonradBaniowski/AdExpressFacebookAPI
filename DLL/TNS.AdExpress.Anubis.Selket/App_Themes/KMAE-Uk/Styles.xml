@@ -1,0 +1,964 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Theme>
+  <fonts>
+    <font name="TitleFontPurple40" policeName="Arial" size="40" color="100,98,98" isBold="true"/>
+    <font name="FontPurple14" policeName="Arial" size="14" color="100,98,98"/>
+    <font name="FontPurple13" policeName="Arial" size="13" color="100,98,98"/>
+    <font name="TitleFontWhite12" policeName="Arial" size="12" color="255,255,255"  isBold="true"/>
+    <font name="TitleFontPurple12" policeName="Arial" size="12" color="100,98,98" isBold="true"/>
+    <font name="FontPurple12" policeName="Arial" size="12" color="100,98,98"/>
+    <font name="TitleFontPurple11" policeName="Arial" size="11" color="100,98,98" isBold="true"/>
+    <font name="TitleFontPurple10" policeName="Arial" size="10" color="100,98,98" isBold="true"/>
+    <font name="TitleFontHighPurple10" policeName="Arial" size="10" color="100,98,98" isBold="true"/>
+    <font name="FontHighPurple10" policeName="Arial" size="10" color="100,98,98"/>
+    <font name="FontPurple10" policeName="Arial" size="10" color="100,98,98"/>
+    <font name="TitleFontWhite9" policeName="Arial" size="9" color="255,255,255" isBold="true"/>
+    <font name="TitleFontBlack9" policeName="Arial" size="9" color="0,0,0" isBold="true"/>
+    <font name="FontBlackV6_9" policeName="Arial" size="9" color="0,0,0"/>
+    <font name="FontPurple8" policeName="Arial" size="8" color="100,98,98"/>
+    <font name="TitleFontPurple8" policeName="Arial" size="8" color="100,98,98" isBold="true"/>
+    <font name="TitleFontWhite8" policeName="Arial" size="8" color="255,255,255"  isBold="true"/>
+    <font name="FontWhite8" policeName="Arial" size="8" color="255,255,255"/>
+    <font name="TitleFontBlack8" policeName="Arial" size="8" color="0,0,0" isBold="true"/>
+    <font name="FontBlack8" policeName="Arial" size="8" color="0,0,0"/>
+    <font name="FontDarkPurple8" policeName="Arial" size="8" color="204,204,204"/>
+    <font name="FontBlackV6_8" policeName="Arial" size="8" color="0,0,0"/>
+  </fonts>
+  <cells>
+    <cell name="TitleCellPurple40" fontName="TitleFontPurple40" foregroundColor="255,255,255"/>
+
+    <cell name="TitleCellPurple12" fontName="TitleFontPurple12" foregroundColor="255,255,255"/>
+    <cell name="TitleCellWhite12ForegroundColorPurple" fontName="TitleFontWhite12" foregroundColor="100,98,98"/>
+
+    <cell name="TitleCellPurple11" fontName="TitleFontPurple11" foregroundColor="255,255,255"/>
+
+    <cell name="TitleCellPurple10BorderPurple" fontName="TitleFontPurple10" foregroundColor="255,255,255">
+      <borders>
+        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="LeftBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="TopBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellPurple10BorderTopLightPurple" fontName="TitleFontPurple10" foregroundColor="255,255,255">
+      <borders>
+        <border type="TopBorder" color="222, 216, 229" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellHighPurple10BorderRightLeftPurpleForegroundColorPaleVioletV2" fontName="TitleFontHighPurple10" foregroundColor="223,223,223">
+      <borders>
+        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="LeftBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellHighPurple10BorderRightLeftPurpleForegroundColorPaleVioletV2" fontName="FontHighPurple10" foregroundColor="223,223,223">
+      <borders>
+        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="LeftBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2" fontName="TitleFontHighPurple10" foregroundColor="223,223,223">
+      <borders>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="LeftBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2" fontName="FontHighPurple10" foregroundColor="223,223,223">
+      <borders>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="LeftBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite" fontName="TitleFontHighPurple10" foregroundColor="255,255,255">
+      <borders>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="LeftBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellHighPurple10WithoutBorderTopPurpleForegroundColorWhite" fontName="FontHighPurple10" foregroundColor="255,255,255">
+      <borders>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="LeftBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+
+    <cell name="TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple" fontName="TitleFontWhite9" foregroundColor="100,98,98">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellWhite9ForegroundColorPurple" fontName="TitleFontWhite9" foregroundColor="100,98,98"/>
+    <cell name="TitleCellWhite9BorderRightWhiteForegroundColorPurple" fontName="TitleFontWhite9" foregroundColor="100,98,98">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+
+    <cell name="TitleCellWhite8BorderRightWhiteForegroundColorPurple" fontName="TitleFontWhite8" foregroundColor="100,98,98">
+      <borders>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellWhite8BorderRightTopWhiteForegroundColorPurple" fontName="TitleFontWhite8" foregroundColor="100,98,98">
+      <borders>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="TopBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellWhite8BorderRightTopWhiteForegroundColorMediumPurple" fontName="TitleFontWhite8" foregroundColor="195,199,208">
+      <borders>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="TopBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellWhite8BorderRightBottomWhiteForegroundColorMediumPurple" fontName="TitleFontWhite8" foregroundColor="195,199,208">
+      <borders>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellWhite8BorderRightBottomPurpleV3ForegroundColorPurple" fontName="FontWhite8" foregroundColor="100,98,98">
+      <borders>
+        <border type="RightBorder" color="160,161,167" lineStyle="Thin"/>
+        <border type="BottomBorder" color="160,161,167" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellWhite8BorderRightBottomPurpleV3ForegroundColorPurpleV3" fontName="FontWhite8" foregroundColor="160,161,167">
+      <borders>
+        <border type="RightBorder" color="160,161,167" lineStyle="Thin"/>
+        <border type="BottomBorder" color="160,161,167" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellWhite8BorderBottomPurple" fontName="FontWhite8" foregroundColor="255,255,255">
+      <borders>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellWhite8BorderAllWhiteForegroundColorPurple" fontName="TitleFontWhite8" foregroundColor="100,98,98">
+      <borders>
+        <border type="TopBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="LeftBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellWhite8WithoutBorderLeftWhiteForegroundColorPurple" fontName="TitleFontWhite8" foregroundColor="100,98,98">
+      <borders>
+        <border type="TopBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellWhite8WithoutBorderTopWhiteForegroundColorPurple" fontName="TitleFontWhite8" foregroundColor="100,98,98">
+      <borders>
+        <border type="LeftBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellWhite8BorderRightBottomWhiteForegroundColorPurple" fontName="TitleFontWhite8" foregroundColor="100,98,98">
+      <borders>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellBlack8BorderRightTopWhiteForegroundColorMediumPurple" fontName="TitleFontBlack8" foregroundColor="195,199,208">
+      <borders>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="TopBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellBlack8BorderRightBottomWhiteForegroundColorMediumPurple" fontName="TitleFontBlack8" foregroundColor="195,199,208">
+      <borders>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellBlack8WithoutBorderTopWhiteForegroundColorMediumPurple" fontName="TitleFontBlack8" foregroundColor="195,199,208">
+      <borders>
+        <border type="LeftBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+
+    <cell name="TitleCellBlack8BorderRightBottomWhiteForegroundColorWhite" fontName="TitleFontBlack8" foregroundColor="255, 255, 255">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellBlack8WithoutBorderTopWhiteForegroundColorWhite" fontName="TitleFontBlack8" foregroundColor="255, 255, 255">
+      <borders>
+        <border type="LeftBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellBlack8BorderRightBottomWhiteForegroundColorPurpleV3" fontName="TitleFontBlack8" foregroundColor="160,161,167">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellBlack8WithoutBorderTopWhiteForegroundColorPurpleV3" fontName="TitleFontBlack8" foregroundColor="160,161,167">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="LeftBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellBlack8BorderRightPurpleBottomWhiteForegroundColorPurpleV3" fontName="FontBlack8" foregroundColor="160,161,167">
+      <borders>
+        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellBlack8BorderRightBottomWhiteForegroundColorPurpleV3" fontName="FontBlack8" foregroundColor="160,161,167">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellBlack8BorderRightBottomWhiteForegroundColorGrey" fontName="FontBlack8" foregroundColor="225, 224, 218">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellBlack8BorderRightBottomWhiteForegroundColorPurple" fontName="FontBlack8" foregroundColor="100,98,98">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellBlack8BorderRightBottomWhiteForegroundColorMediumPurple" fontName="FontBlack8" foregroundColor="208, 200, 218">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellBlack8BorderRightBottomWhiteForegroundColorHighPurple" fontName="FontBlack8" foregroundColor="217,224,206">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellBlack8BorderRightBottomWhiteForegroundColorHighPurple" fontName="TitleFontBlack8" foregroundColor="217,224,206">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellBlack8" fontName="TitleFontBlack8" foregroundColor="255, 255, 255"/>
+    <cell name="TitleCellBlack8BorderRightWhiteForegroundColorPurpleV3" fontName="TitleFontBlack8" foregroundColor="160,161,167">
+      <borders>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellPurple8" fontName="TitleFontPurple8" foregroundColor="255,255,255"/>
+    <cell name="TitleCellPurple8WithoutBorderRightPurple" fontName="TitleFontPurple8" foregroundColor="255,255,255">
+      <borders>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="LeftBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="TopBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellPurple8BorderTopBottomPurple" fontName="TitleFontPurple8" foregroundColor="255,255,255">
+      <borders>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="TopBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellPurple8WithoutBorderLeftPurple" fontName="TitleFontPurple8" foregroundColor="255,255,255">
+      <borders>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="TopBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellPurple8BorderLeftBottomPurpleForegroundColorLightPurple" fontName="TitleFontPurple8" foregroundColor="223,223,223">
+      <borders>
+        <border type="LeftBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellPurple8BorderBottomForegroundColorLightPurple" fontName="TitleFontPurple8" foregroundColor="223,223,223">
+      <borders>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellPurple8BorderRightBottomPurpleForegroundColorLightPurple" fontName="TitleFontPurple8" foregroundColor="223,223,223">
+      <borders>
+        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellDarkPurple8BorderRightBottomPurpleV3ForegroundColorPurpleV4" fontName="FontDarkPurple8" foregroundColor="204,204,204">
+      <borders>
+        <border type="RightBorder" color="160,161,167" lineStyle="Thin"/>
+        <border type="BottomBorder" color="160,161,167" lineStyle="Thin"/>
+      </borders>
+    </cell>
+  </cells>
+  <pictures>
+    <picture name="PictureLogoAdExpress" path="Images\44\LogoAdExpress.jpg" height="80" width="70"/>
+    <picture name="PictureLogoAdExpress220" path="Images\44\LogoAdExpress220.jpg" height="80" width="70"/>
+    <picture name="PictureLogoTNSMedia" path="Images\logoTNSMedia.gif" height="75" width="75"/>
+    <picture name="PictureLogoAPPM" path="Images\Common\APPM.bmp" height="45" width="55"/>
+    <picture name="PictureCheckBox" path="Images\checkbox.GIF" height="100" width="100"/>
+    <picture name="PictureCheckBoxNotChecked" path="Images\checkbox_not_checked.GIF" height="100" width="100"/>
+    <picture name="PictureLogoTNS" path="Images\Common\logo_Tns.bmp"/>
+  </pictures>
+  <boxes>
+    <box name="BoxMargin15" marginTop="15" marginRight="15" marginBottom="15" marginLeft="15" />
+    <box name="BoxHeigth30"  height="30"/>
+    <box name="BoxHeigth20"  height="20"/>
+    <box name="BoxMargin0_3" marginTop="0,3" marginRight="0,3" marginBottom="0,3" marginLeft="0,3" />
+    <box name="BoxHeigth700Width1100"  height="700" width="1100"/>
+    <box name="BoxHeigth700Width1000"  height="700" width="1000"/>
+    <box name="BoxHeigth500Width1000"  height="500" width="1000"/>
+    <box name="BoxHeigth350Width900"  height="350" width="900"/>
+    <box name="BoxHeigth400Width900"  height="400" width="900"/>
+    <box name="BoxHeigth550Width900"  height="550" width="900"/>
+    <box name="BoxHeigth400Width800"  height="400" width="800"/>
+    <box name="BoxHeigth500Width800"  height="500" width="800"/>
+    <box name="BoxHeigth700Width700"  height="700" width="700"/>
+    <box name="BoxHeigth400Width700"  height="400" width="700"/>
+    <box name="BoxHeigth20Width250"  height="400" width="700"/>
+  </boxes>
+  <colorsList>
+    <colorList name="pieColors32">
+      <color>100,98,98</color>
+      <color>160,161,167</color>
+      <color>195,199,208</color>
+      <color>217,224,206</color>
+      <color>204,255,255</color>
+      <color>204,204,255</color>
+      <color>255,204,255</color>
+      <color>255,255,204</color>
+      <color>204,255,204</color>
+      <color>255,204,204</color>
+      <color>204,102,153</color>
+      <color>153,255,255</color>
+      <color>153,153,255</color>
+      <color>255,153,255</color>
+      <color>255,255,153</color>
+      <color>153,255,153</color>
+      <color>255,153,153</color>
+      <color>153,51,102</color>
+      <color>102,255,255</color>
+      <color>102,102,255</color>
+      <color>255,102,255</color>
+      <color>255,255,102</color>
+      <color>102,255,102</color>
+      <color>255,102,102</color>
+      <color>102,0,51</color>
+      <color>51,255,255</color>
+      <color>51,51,255</color>
+      <color>255,51,255</color>
+      <color>255,255,51</color>
+      <color>51,255,51</color>
+      <color>255,51,51</color>
+    </colorList>
+    <colorList name="pieColors12">
+      <color>100,98,98</color>
+      <color>160,161,167</color>
+      <color>195,199,208</color>
+      <color>217,224,206</color>
+      <color>255,215,215</color>
+      <color>255,240,240</color>
+      <color>202,255,202</color>
+      <color>255,5,182</color>
+      <color>157,152,133</color>
+      <color>241,241,241</color>
+      <color>77,150,75</color>
+      <color>0,0,0</color>
+    </colorList>
+    <colorList name="pieColors7">
+      <color>100,98,98</color>
+      <color>160,161,167</color>
+      <color>195,199,208</color>
+      <color>217,224,206</color>
+      <color>255,215,215</color>
+      <color>255,240,240</color>
+      <color>202,255,202</color>
+    </colorList>
+    <colorList name="newPieColors">
+      <color>100,98,98</color>
+      <color>160,161,167</color>
+      <color>195,199,208</color>
+      <color>245,236,255</color>
+      <color>57,85,115</color>
+      <color>107,129,153</color>
+      <color>195,211,230</color>
+      <color>237,246,255</color>
+      <color>82,90,62</color>
+      <color>176,191,134</color>
+      <color>220,230,195</color>
+      <color>250,255,236</color>
+      <color>62,90,81</color>
+      <color>125,179,162</color>
+      <color>195,230,219</color>
+      <color>236,255,249</color>
+      <color>66,90,62</color>
+      <color>142,191,134</color>
+      <color>200,230,195</color>
+      <color>238,255,236</color>
+      <color>125,50,0</color>
+      <color>217,87,0</color>
+      <color>230,161,115</color>
+      <color>255,217,191</color>
+      <color>67,65,90</color>
+      <color>144,141,191</color>
+      <color>201,199,230</color>
+      <color>239,238,255</color>
+      <color>125,75,0</color>
+      <color>179,107,0</color>
+      <color>255,204,128</color>
+      <color>255,230,191</color>
+    </colorList>
+    <colorList name="barColors2">
+      <color>255,113,0</color>
+      <color>151,151,151</color>
+    </colorList>
+    <colorList name="barColor">
+      <color>255,223,222</color>
+    </colorList>
+    <colorList name="barColorPurpleV7">
+      <color>255,113,0</color>
+    </colorList>
+    <colorList name="lightPurpleColor">
+      <color>223,223,223</color>
+    </colorList>
+    <colorList name="ColorEmpty">
+    </colorList>
+    <colorList name="lightGreenColor">
+      <color>222,255,222</color>
+    </colorList>
+    <colorList name="purpleV8Color">
+      <color>255,113,0</color>
+    </colorList>
+    <colorList name="lightPinkColor">
+      <color>255, 223, 222</color>
+    </colorList>
+    <colorList name="lightYellowColor">
+      <color>255,255,51</color>
+    </colorList>
+    <colorList name="msCreativesColor">
+      <color>100,98,98</color>
+      <color>204,153,255</color>
+      <color>153,51,0</color>
+      <color>153,204,255</color>
+      <color>0,51,0</color>
+      <color>0,51,102</color>
+      <color>0,0,128</color>
+      <color>51,51,153</color>
+      <color>128,0,0</color>
+      <color>255,102,0</color>
+      <color>128,128,0</color>
+      <color>0,128,0</color>
+      <color>0,128,128</color>
+      <color>0,0,255</color>
+      <color>255,0,0</color>
+      <color>255,153,0</color>
+      <color>153,204,0</color>
+      <color>51,153,102</color>
+      <color>51,204,204</color>
+      <color>51,102,255</color>
+      <color>128,0,128</color>
+      <color>255,0,255</color>
+      <color>255,204,0</color>
+      <color>255,255,0</color>
+      <color>0,255,0</color>
+      <color>0,255,255</color>
+      <color>0,204,255</color>
+      <color>153,51,102</color>
+      <color>255,153,204</color>
+      <color>255,204,153</color>
+      <color>255,255,153</color>
+      <color>204,255,204</color>
+    </colorList>
+  </colorsList>
+  <lines>
+    <line name="LineSolid1PurpleV5"  size="1" color="100,98,98" borderStyle="Solid"/>
+    <line name="LineSolid2PurpleV5"  size="2" color="100,98,98" borderStyle="Solid"/>
+  </lines>
+  <!-- Style Plugin Amset -->
+  <style name="Amset">
+    <tag name="layout">BoxMargin0_3</tag>
+    <tag name="header">BoxMargin0_3</tag>
+    <tag name="footer">BoxMargin0_3</tag>
+    <tag name="LogoAdExpress">PictureLogoAdExpress</tag>
+    <tag name="LogoTNSMedia">PictureLogoTNSMedia</tag>
+    <tag name="LogoAPPM">PictureLogoAPPM</tag>
+    <tag name="bigTitle">TitleCellPurple40</tag>
+    <tag name="createdTitle">TitleCellPurple12</tag>
+    <tag name="defaultTitle">TitleCellPurple8</tag>
+    <tag name="Render">TitleCellWhite8BorderRightBottomWhiteForegroundColorPurple</tag>
+
+    <tag name="SessionParameterTitle">TitleCellPurple11</tag>
+    <tag name="SessionParameterPeriodTitle">TitleCellPurple10BorderTopLightPurple</tag>
+    <tag name="SessionParameterPeriodValue">TitleCellPurple8</tag>
+    <tag name="SessionParameterWaveTitle">TitleCellPurple10BorderTopLightPurple</tag>
+    <tag name="SessionParameterWaveValue">TitleCellPurple8</tag>
+    <tag name="SessionParameterTargetTitle">TitleCellPurple10BorderTopLightPurple</tag>
+    <tag name="SessionParameterTargetValue">TitleCellPurple8</tag>
+    <tag name="SessionParameterProductTitle">TitleCellPurple10BorderTopLightPurple</tag>
+    <tag name="SessionParameterProductValue">TitleCellPurple8</tag>
+    <tag name="SessionParameterProductCompetitor">TitleCellPurple8</tag>
+    <tag name="SessionParameterProductPrincipal">TitleCellPurple10BorderPurple</tag>
+    <tag name="SessionParameterGroupTitle">TitleCellPurple8</tag>
+    <tag name="SessionParameterGroupValue">FontWhite8</tag>
+    <tag name="SessionParameterLvl1Col1">TitleCellPurple8WithoutBorderRightPurple</tag>
+    <tag name="SessionParameterLvl1Col2">TitleCellPurple8BorderTopBottomPurple</tag>
+    <tag name="SessionParameterLvl1Col3">TitleCellPurple8WithoutBorderLeftPurple</tag>
+    <tag name="SessionParameterLvl2Col1">TitleCellPurple8BorderLeftBottomPurpleForegroundColorLightPurple</tag>
+    <tag name="SessionParameterLvl2Col2">TitleCellPurple8BorderBottomForegroundColorLightPurple</tag>
+    <tag name="SessionParameterLvl2Col3">TitleCellPurple8BorderRightBottomPurpleForegroundColorLightPurple</tag>
+    <tag name="SessionParameterCheckBox">PictureCheckBox</tag>
+    <tag name="SessionParameterCheckBoxNotChecked">PictureCheckBoxNotChecked</tag>
+
+    <tag name="SynthesisTitle">TitleCellWhite12ForegroundColorPurple</tag>
+    <tag name="SynthesisLabelLine1">TitleCellBlack8BorderRightBottomWhiteForegroundColorHighPurple</tag>
+    <tag name="SynthesisLabelLine2">TitleCellBlack8BorderRightBottomWhiteForegroundColorMediumPurple</tag>
+    <tag name="SynthesisValueLine1">TitleCellBlack8BorderRightBottomWhiteForegroundColorHighPurple</tag>
+    <tag name="SynthesisValueLine2">TitleCellBlack8BorderRightBottomWhiteForegroundColorMediumPurple</tag>
+
+    <tag name="AverageLine1">TitleCellBlack8BorderRightBottomWhiteForegroundColorHighPurple</tag>
+    <tag name="AverageLine2">TitleCellBlack8BorderRightBottomWhiteForegroundColorMediumPurple</tag>
+
+    <tag name="SeasonalityRowDefault">TitleCellBlack8BorderRightBottomWhiteForegroundColorPurpleV3</tag>
+    <tag name="SeasonalityRowTotal">TitleCellBlack8BorderRightBottomWhiteForegroundColorWhite</tag>
+
+    <tag name="InterestFamilyRowDefault">TitleCellBlack8BorderRightBottomWhiteForegroundColorPurpleV3</tag>
+    <tag name="InterestFamilyRowTotal">TitleCellBlack8BorderRightBottomWhiteForegroundColorWhite</tag>
+
+    <tag name="PeriodicityRowDefault">TitleCellBlack8BorderRightBottomWhiteForegroundColorPurpleV3</tag>
+    <tag name="PeriodicityRowTotal">TitleCellBlack8BorderRightBottomWhiteForegroundColorWhite</tag>
+
+    <tag name="AffinitiesRowDefault">TitleCellBlack8BorderRightBottomWhiteForegroundColorPurpleV3</tag>
+    <tag name="AffinitiesRowTotal">TitleCellBlack8BorderRightBottomWhiteForegroundColorWhite</tag>
+  </style>
+
+  <!-- Style Plugin APPM -->
+  <style name="Appm">
+    <tag name="layout">BoxMargin15</tag>
+    <tag name="header">BoxHeigth30</tag>
+    <tag name="footer">BoxHeigth20</tag>
+    <tag name="footerFont">FontPurple10</tag>
+    <tag name="headerFont">FontPurple10</tag>
+    <tag name="copyright">FontPurple10</tag>
+    <tag name="pictureLeft">PictureLogoTNS</tag>
+    <tag name="pictureRight">PictureLogoAPPM</tag>
+    <tag name="pictureTitle">PictureLogoAdExpress</tag>
+    <tag name="bigTitle">TitleFontPurple40</tag>
+    <tag name="createdTitle">TitleFontPurple12</tag>
+
+    <tag name="PeriodicityGraphPieColors">pieColors32</tag>
+    <tag name="PeriodicityGraphBarColors">barColors2</tag>
+    <tag name="PeriodicityGraphLineEnCircle">LineSolid1PurpleV5</tag>
+    <tag name="PeriodicityGraphDefaultTitleFont">TitleFontPurple10</tag>
+    <tag name="PeriodicityGraphDefaultFont">FontPurple8</tag>
+    <tag name="PeriodicityGraphSize">BoxHeigth500Width1000</tag>
+
+    <tag name="PdvPlanGraphPieColors">pieColors32</tag>
+    <tag name="PdvPlanGraphLineEnCircle">LineSolid1PurpleV5</tag>
+    <tag name="PdvPlanGraphDefaultTitleFont">TitleFontPurple10</tag>
+    <tag name="PdvPlanGraphDefaultFont">FontPurple8</tag>
+    <tag name="PdvPlanGraphSize">BoxHeigth400Width800</tag>
+
+    <tag name="FamilyGraphPieColors">pieColors32</tag>
+    <tag name="FamilyGraphBarColors">barColors2</tag>
+    <tag name="FamilyGraphLineEnCircle">LineSolid1PurpleV5</tag>
+    <tag name="FamilyGraphDefaultTitleFont">TitleFontPurple10</tag>
+    <tag name="FamilyGraphDefaultFont">FontPurple8</tag>
+    <tag name="FamilyGraphSize">BoxHeigth500Width800</tag>
+
+    <tag name="GrpGraphBgColor">lightPurpleColor</tag>
+    <tag name="GrpGraphPieColors">pieColors32</tag>
+    <tag name="GrpGraphBarColors">barColors2</tag>
+    <tag name="GrpGraphLineEnCircle">LineSolid1PurpleV5</tag>
+    <tag name="GrpGraphDefaultTitleFont">TitleFontPurple10</tag>
+    <tag name="GrpGraphDefaultFont">FontPurple8</tag>
+    <tag name="GrpGraphDefaultBigTitleFont">TitleFontPurple12</tag>
+    <tag name="GrpGraphSize">BoxHeigth700Width1100</tag>
+
+    <tag name="CgrpGraphPieColors">pieColors32</tag>
+    <tag name="CgrpGraphBarColors">barColors2</tag>
+    <tag name="CgrpGraphLineEnCircle">LineSolid1PurpleV5</tag>
+    <tag name="CgrpGraphDefaultTitleFont">TitleFontPurple10</tag>
+    <tag name="CgrpGraphDefaultFont">FontPurple8</tag>
+    <tag name="CgrpGraphDefaultBigTitleFont">TitleFontPurple12</tag>
+    <tag name="CgrpGraphSize">BoxHeigth700Width1000</tag>
+  </style>
+
+  <!-- Style Plugin Aton -->
+  <style name="Aton">
+    <tag name="layout">BoxMargin15</tag>
+    <tag name="header">BoxHeigth30</tag>
+    <tag name="footer">BoxHeigth20</tag>
+    <tag name="footerFont">FontPurple10</tag>
+    <tag name="headerFont">FontPurple10</tag>
+    <tag name="copyright">FontPurple10</tag>
+    <tag name="pictureLeft">PictureLogoTNS</tag>
+    <tag name="pictureRight">PictureLogoAPPM</tag>
+    <tag name="pictureTitle">PictureLogoAdExpress</tag>
+    <tag name="bigTitle">TitleFontPurple40</tag>
+    <tag name="createdTitle">TitleFontPurple12</tag>
+    <tag name="defaultFont">FontPurple8</tag>
+
+    <tag name="PeriodicityGraphNewPieColors32">pieColors32</tag>
+    <tag name="PeriodicityGraphPieColors12">pieColors12</tag>
+    <tag name="PeriodicityGraphBarColors">barColors2</tag>
+    <tag name="PeriodicityGraphBigTitleFont">TitleFontPurple12</tag>
+    <tag name="PeriodicityGraphBigTitleGrpFont">TitleFontPurple12</tag>
+    <tag name="PeriodicityGraphLineEnCircle">LineSolid2PurpleV5</tag>
+    <tag name="PeriodicityGraphSize">BoxHeigth400Width700</tag>
+    <tag name="PeriodicityGraphSizeGrp">BoxHeigth700Width700</tag>
+    <tag name="PeriodicityGraphTitleFontBaseUnit">TitleFontPurple12</tag>
+    <tag name="PeriodicityGraphTitleFontTargetSelected">TitleFontPurple12</tag>
+
+    <tag name="FamilyGraphNewPieColors32">pieColors32</tag>
+    <tag name="FamilyGraphLineEnCircle">LineSolid2PurpleV5</tag>
+    <tag name="FamilyGraphDefaultFont">TitleFontPurple8</tag>
+    <tag name="FamilyGraphSizeLittle">BoxHeigth350Width900</tag>
+    <tag name="FamilyGraphSizeMedium">BoxHeigth400Width900</tag>
+    <tag name="FamilyGraphSizeBig">BoxHeigth550Width900</tag>
+    <tag name="FamilyGraphTitleFont">FontPurple10</tag>
+
+    <tag name="SeasonalityGraphBigTitleFont">TitleFontPurple12</tag>
+    <tag name="SeasonalityGraphPieColors">ColorEmpty</tag>
+    <tag name="SeasonalityGraphBarColors">barColorPurpleV7</tag>
+    <tag name="SeasonalityGraphLineEnCircle">LineSolid2PurpleV5</tag>
+    <tag name="SeasonalityGraphTitleFont10">FontPurple10</tag>
+    <tag name="SeasonalityGraphTitleFontSerie8">FontBlackV6_8</tag>
+    <tag name="SeasonalityGraphTitleFontSerie9">FontBlackV6_9</tag>
+    <tag name="SeasonalityGraphBackColor">lightPurpleColor</tag>
+    <tag name="SeasonalityGraphNoResultFont">TitleFontPurple10</tag>
+    <tag name="SeasonalityGraphNoResultSize">BoxHeigth20Width250</tag>
+
+  </style>
+
+  <!-- Style Plugin Hotep -->
+  <style name="Hotep">
+    <tag name="layout">BoxMargin15</tag>
+    <tag name="header">BoxHeigth30</tag>
+    <tag name="footer">BoxHeigth20</tag>
+    <tag name="footerFont">FontPurple10</tag>
+    <tag name="headerFont">FontPurple10</tag>
+    <tag name="copyright">FontPurple10</tag>
+    <tag name="pictureLeft">PictureLogoTNS</tag>
+    <tag name="pictureRight">PictureLogoAPPM</tag>
+    <tag name="pictureTitle">PictureLogoAdExpress220</tag>
+
+    <tag name="SeasonalityGraphTitleFontPage">TitleFontPurple12</tag>
+    <tag name="SeasonalityGraphSize">BoxHeigth500Width800</tag>
+    <tag name="SeasonalityGraphBackColor">lightPurpleColor</tag>
+    <tag name="SeasonalityGraphLineEnCircle">LineSolid2PurpleV5</tag>
+    <tag name="SeasonalityGraphTitleFont">FontPurple14</tag>
+    <tag name="SeasonalityGraphTitleFontSerieUnivers">FontPurple8</tag>
+    <tag name="SeasonalityGraphTitleFontSerieSectorMarket">FontPurple8</tag>
+    <tag name="SeasonalityGraphTitleFontSerieMediumMonth">FontPurple8</tag>
+    <tag name="SeasonalityGraphTitleFontSerieAdvertiser">FontPurple8</tag>
+    <tag name="SeasonalityGraphTitleFontSerieAdvertiser">FontPurple8</tag>
+    <tag name="SeasonalityGraphColorLegendItemReference">lightGreenColor</tag>
+    <tag name="SeasonalityGraphColorLegendItemCompetitor">barColor</tag>
+    <tag name="SeasonalityGraphLabelFontAxisX">FontPurple8</tag>
+    <tag name="SeasonalityGraphLabelFontAxisY">FontPurple10</tag>
+    <tag name="SeasonalityGraphTitleFontAxisY">FontPurple10</tag>
+    <tag name="SeasonalityGraphLabelFontAxisY2">FontPurple10</tag>
+    <tag name="SeasonalityGraphTitleFontAxisY2">FontPurple10</tag>
+
+
+    <tag name="PalmaresGraphTitleFontPage">TitleFontPurple12</tag>
+    <tag name="PalmaresGraphSize">BoxHeigth500Width800</tag>
+    <tag name="PalmaresGraphBackColor">lightPurpleColor</tag>
+    <tag name="PalmaresGraphLineEnCircle">LineSolid2PurpleV5</tag>
+    <tag name="PalmaresGraphTitleFont">FontPurple14</tag>
+    <tag name="PalmaresGraphTitleFontSerie">FontPurple10</tag>
+    <tag name="PalmaresGraphColorSerie">purpleV8Color</tag>
+    <tag name="PalmaresGraphColorLegendItemReference">lightGreenColor</tag>
+    <tag name="PalmaresGraphColorLegendItemCompetitor">lightPinkColor</tag>
+    <tag name="PalmaresGraphColorLegendItemMixed">lightYellowColor</tag>
+    <tag name="PalmaresGraphLabelFontAxisX">FontPurple8</tag>
+    <tag name="PalmaresGraphLabelFontAxisY">FontPurple10</tag>
+    <tag name="PalmaresGraphTitleFontAxisY">FontPurple10</tag>
+    <tag name="PalmaresGraphLabelFontAxisY2">FontPurple10</tag>
+    <tag name="PalmaresGraphTitleFontAxisY2">FontPurple10</tag>
+
+
+
+    <tag name="EvolutionGraphTitleFontPage">TitleFontPurple12</tag>
+    <tag name="EvolutionGraphSize">BoxHeigth500Width800</tag>
+    <tag name="EvolutionGraphBackColor">lightPurpleColor</tag>
+    <tag name="EvolutionGraphLineEnCircle">LineSolid2PurpleV5</tag>
+    <tag name="EvolutionGraphTitleFont">FontPurple14</tag>
+    <tag name="EvolutionGraphTitleFontSerie">FontPurple10</tag>
+    <tag name="EvolutionGraphColorSerie">purpleV8Color</tag>
+    <tag name="EvolutionGraphColorLegendItemReference">lightGreenColor</tag>
+    <tag name="EvolutionGraphColorLegendItemCompetitor">lightPinkColor</tag>
+    <tag name="EvolutionGraphColorLegendItemMixed">lightYellowColor</tag>
+    <tag name="EvolutionGraphLabelFontAxisX">FontPurple8</tag>
+    <tag name="EvolutionGraphLabelFontAxisY">FontPurple10</tag>
+    <tag name="EvolutionGraphTitleFontAxisY">FontPurple10</tag>
+    <tag name="EvolutionGraphLabelFontAxisY2">FontPurple10</tag>
+    <tag name="EvolutionGraphTitleFontAxisY2">FontPurple10</tag>
+
+    <tag name="MediaStrategyGraphTitleFontPage">TitleFontPurple12</tag>
+    <tag name="MediaStrategyGraphPieColors">pieColors7</tag>
+    <tag name="MediaStrategyGraphSize">BoxHeigth500Width800</tag>
+    <tag name="MediaStrategyGraphLineEnCircle">LineSolid2PurpleV5</tag>
+    <tag name="MediaStrategyGraphTitleFont">FontPurple13</tag>
+
+    <tag name="NoveltyPictureTitleFontPage">TitleFontPurple12</tag>
+
+
+  </style>
+
+  <!-- Style Plugin Miysis -->
+  <style name="Miysis">
+    <tag name="layout">BoxMargin15</tag>
+    <tag name="header">BoxHeigth30</tag>
+    <tag name="footer">BoxHeigth20</tag>
+    <tag name="footerFont">FontPurple10</tag>
+    <tag name="headerFont">FontPurple10</tag>
+    <tag name="copyright">FontPurple10</tag>
+    <tag name="pictureLeft">PictureLogoTNS</tag>
+    <tag name="pictureRight">PictureLogoAPPM</tag>
+    <tag name="pictureTitle">PictureLogoAdExpress</tag>
+    <tag name="bigTitle">TitleFontPurple40</tag>
+    <tag name="createdTitle">TitleFontPurple12</tag>
+    <tag name="defaultFont">FontPurple8</tag>
+    <tag name="msCreativesColor">msCreativesColor</tag>
+  </style>
+
+  <!-- Style Plugin Shou -->
+  <style name="Shou">
+    <tag name="layout">BoxMargin15</tag>
+    <tag name="header">BoxHeigth30</tag>
+    <tag name="footer">BoxHeigth20</tag>
+    <tag name="footerFont">FontPurple10</tag>
+    <tag name="headerFont">FontPurple10</tag>
+    <tag name="copyright">FontPurple10</tag>
+    <tag name="pictureLeft">PictureLogoTNS</tag>
+    <tag name="pictureRight">PictureLogoAPPM</tag>
+    <tag name="pictureTitle">PictureLogoAdExpress220</tag>
+    <tag name="bigTitle">TitleFontPurple40</tag>
+    <tag name="createdTitle">TitleFontPurple12</tag>
+    <tag name="defaultFont">FontPurple8</tag>
+
+    <tag name="ShouTitleFont">FontPurple12</tag>
+  </style>
+
+  <!-- Style Plugin Mnevis -->
+  <style name="Mnevis">
+    <tag name="layout">BoxMargin15</tag>
+    <tag name="header">BoxHeigth30</tag>
+    <tag name="footer">BoxHeigth20</tag>
+    <tag name="footerFont">FontPurple10</tag>
+    <tag name="headerFont">FontPurple10</tag>
+    <tag name="copyright">FontPurple10</tag>
+    <tag name="pictureLeft">PictureLogoTNS</tag>
+    <tag name="pictureRight">PictureLogoAPPM</tag>
+    <tag name="pictureTitle">PictureLogoAdExpress220</tag>
+    <tag name="bigTitle">TitleFontPurple40</tag>
+    <tag name="createdTitle">TitleFontPurple12</tag>
+    <tag name="defaultFont">FontPurple8</tag>
+  </style>
+
+  <!-- Style Plugin Satet -->
+  <style name="Satet">
+    <tag name="layout">BoxMargin0_3</tag>
+    <tag name="header">BoxMargin0_3</tag>
+    <tag name="footer">BoxMargin0_3</tag>
+    <tag name="LogoAdExpress">PictureLogoAdExpress</tag>
+    <tag name="LogoTNSMedia">PictureLogoTNSMedia</tag>
+    <tag name="LogoAPPM">PictureLogoAPPM</tag>
+    <tag name="bigTitle">TitleCellPurple40</tag>
+    <tag name="createdTitle">TitleCellPurple12</tag>
+    <tag name="defaultTitle">TitleCellPurple8</tag>
+
+    <tag name="SessionParameterTitle">TitleCellPurple11</tag>
+    <tag name="SessionParameterPeriodTitle">TitleCellPurple10BorderTopLightPurple</tag>
+    <tag name="SessionParameterPeriodValue">TitleCellPurple8</tag>
+    <tag name="SessionParameterWaveTitle">TitleCellPurple10BorderTopLightPurple</tag>
+    <tag name="SessionParameterWaveValue">TitleCellPurple8</tag>
+    <tag name="SessionParameterTargetTitle">TitleCellPurple10BorderTopLightPurple</tag>
+    <tag name="SessionParameterTargetValue">TitleCellPurple8</tag>
+    <tag name="SessionParameterProductTitle">TitleCellPurple10BorderTopLightPurple</tag>
+    <tag name="SessionParameterProductValue">TitleCellPurple8</tag>
+    <tag name="SessionParameterProductCompetitor">TitleCellPurple8</tag>
+    <tag name="SessionParameterProductPrincipal">TitleCellPurple10BorderPurple</tag>
+    <tag name="SessionParameterGroupTitle">TitleCellPurple8</tag>
+    <tag name="SessionParameterGroupValue">FontWhite8</tag>
+    <tag name="SessionParameterLvl1Col1">TitleCellPurple8WithoutBorderRightPurple</tag>
+    <tag name="SessionParameterLvl1Col2">TitleCellPurple8BorderTopBottomPurple</tag>
+    <tag name="SessionParameterLvl1Col3">TitleCellPurple8WithoutBorderLeftPurple</tag>
+    <tag name="SessionParameterLvl2Col1">TitleCellPurple8BorderLeftBottomPurpleForegroundColorLightPurple</tag>
+    <tag name="SessionParameterLvl2Col2">TitleCellPurple8BorderBottomForegroundColorLightPurple</tag>
+    <tag name="SessionParameterLvl2Col3">TitleCellPurple8BorderRightBottomPurpleForegroundColorLightPurple</tag>
+    <tag name="SessionParameterCheckBox">PictureCheckBox</tag>
+    <tag name="SessionParameterCheckBoxNotChecked">PictureCheckBoxNotChecked</tag>
+
+    <tag name="SynthesisTitle">TitleCellWhite12ForegroundColorPurple</tag>
+    <tag name="SynthesisProductTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisProductValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisAnnonceurTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisAnnonceurValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisAgenceMediaTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisAgenceMediaValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisPeriodeTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisPeriodeValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisBudgetTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisBudgetValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisInsertionTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisInsertionValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisPageTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisPageValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisSupportTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisSupportValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisReferenceTitle">TitleCellHighPurple10BorderRightLeftPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisReferenceValue">CellHighPurple10BorderRightLeftPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisReferenceValueEnd">CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisPdvTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisPdvValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesistargetSelectedTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesistargetSelectedValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisGrpTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisGrpValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisGrp15PlusTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisGrp15PlusValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisGrpVsTargetTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisGrpVsTargetValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisCoutGrpTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisCoutGrpValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisCoutGrp15PlusTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisCoutGrp15PlusValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorWhite</tag>
+    <tag name="SynthesisCoutGrpVsTargetTitle">TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+    <tag name="SynthesisCoutGrpVsTargetValue">CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2</tag>
+
+    <tag name="MediaPlanVersionCell0">CellWhite8BorderRightBottomPurpleV3ForegroundColorPurple</tag>
+    <tag name="MediaPlanCellNotPresent">CellWhite8BorderRightBottomPurpleV3ForegroundColorPurpleV3</tag>
+    <tag name="MediaPlanCellPresent">CellWhite8BorderRightBottomPurpleV3ForegroundColorPurple</tag>
+    <tag name="MediaPlanCellExtended">CellDarkPurple8BorderRightBottomPurpleV3ForegroundColorPurpleV4</tag>
+    <tag name="MediaPlanCellTitle">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellYear">TitleCellWhite9ForegroundColorPurple</tag>
+    <tag name="MediaPlanCellYear1">TitleCellWhite9BorderRightWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellPeriod">CellBlack8BorderRightPurpleBottomWhiteForegroundColorPurpleV3</tag>
+    <tag name="MediaPlanCellPeriodIncomplete">CellBlack8BorderRightPurpleBottomWhiteForegroundColorPurpleV3</tag>
+    <tag name="MediaPlanCellDay">CellBlack8BorderRightPurpleBottomWhiteForegroundColorPurpleV3</tag>
+    <tag name="MediaPlanCellDayWE">CellBlack8BorderRightPurpleBottomWhiteForegroundColorPurpleV3</tag>
+    <tag name="MediaPlanCellLevelTotal">TitleCellBlack8BorderRightBottomWhiteForegroundColorWhite</tag>
+    <tag name="MediaPlanCellLevelL1">TitleCellBlack8BorderRightBottomWhiteForegroundColorPurpleV3</tag>
+    <tag name="MediaPlanCellLevelL2_1">CellBlack8BorderRightBottomWhiteForegroundColorGrey</tag>
+    <tag name="MediaPlanCellLevelL2_2">CellBlack8BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellLevelL3">CellBlack8BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellLevelL4">CellBlack8BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellLevelTotalNb">TitleCellBlack8BorderRightBottomWhiteForegroundColorWhite</tag>
+    <tag name="MediaPlanCellLevelTotalPdmNb">TitleCellBlack8BorderRightBottomWhiteForegroundColorWhite</tag>
+    <tag name="MediaPlanCellLevelL1Nb">TitleCellBlack8BorderRightBottomWhiteForegroundColorPurpleV3</tag>
+    <tag name="MediaPlanCellLevelL1PdmNb">TitleCellBlack8BorderRightBottomWhiteForegroundColorPurpleV3</tag>
+    <tag name="MediaPlanCellLevelL2_1Nb">CellBlack8BorderRightBottomWhiteForegroundColorGrey</tag>
+    <tag name="MediaPlanCellLevelL2_1PdmNb">CellBlack8BorderRightBottomWhiteForegroundColorGrey</tag>
+    <tag name="MediaPlanCellLevelL2_2Nb">CellBlack8BorderRightBottomWhiteForegroundColorMediumPurple</tag>
+    <tag name="MediaPlanCellLevelL2_2PdmNb">CellBlack8BorderRightBottomWhiteForegroundColorMediumPurple</tag>
+    <tag name="MediaPlanCellLevelL3Nb">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellLevelL4Nb">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions2">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions3">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions4">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions5">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions6">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions7">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions8">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions9">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions10">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions11">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions12">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions13">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions14">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions15">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions16">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions17">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions18">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions19">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions20">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions21">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions22">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions23">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions24">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions25">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions26">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions27">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions28">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions29">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions30">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions31">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions32">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="MediaPlanCellVersions33">TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple</tag>
+
+    <tag name="SupportPlanHeaderTableCellFirstLine">TitleCellWhite8BorderRightWhiteForegroundColorPurple</tag>
+    <tag name="SupportPlanHeaderTableCellSecondLine">TitleCellWhite8BorderRightTopWhiteForegroundColorPurple</tag>
+    <tag name="SupportPlanContentTableCellMediaTotal">TitleCellBlack8</tag>
+    <tag name="SupportPlanContentTableCellMediaCategory">TitleCellBlack8BorderRightWhiteForegroundColorPurpleV3</tag>
+    <tag name="SupportPlanContentTableCellMediaDefault">TitleCellBlack8BorderRightTopWhiteForegroundColorMediumPurple</tag>
+
+    <tag name="PDVPlanRowTitle">TitleCellWhite8WithoutBorderLeftWhiteForegroundColorPurple</tag>
+    <tag name="PDVPlanRowTitleFirstCol">TitleCellWhite8BorderAllWhiteForegroundColorPurple</tag>
+    <tag name="PDVPlanRowTotal">TitleCellBlack8BorderRightBottomWhiteForegroundColorWhite</tag>
+    <tag name="PDVPlanRowTotalFirstCol">TitleCellBlack8WithoutBorderTopWhiteForegroundColorWhite</tag>
+    <tag name="PDVPlanRowReferent">TitleCellBlack8BorderRightBottomWhiteForegroundColorWhite</tag>
+    <tag name="PDVPlanRowReferentFirstCol">TitleCellBlack8WithoutBorderTopWhiteForegroundColorWhite</tag>
+    <tag name="PDVPlanRowPDV">TitleCellBlack8BorderRightBottomWhiteForegroundColorMediumPurple</tag>
+    <tag name="PDVPlanRowPDVFirstCol">TitleCellBlack8WithoutBorderTopWhiteForegroundColorMediumPurple</tag>
+    <tag name="PDVPlanRowDefault">TitleCellBlack8BorderRightBottomWhiteForegroundColorWhite</tag>
+    <tag name="PDVPlanRowDefaultFirstCol">TitleCellBlack8WithoutBorderTopWhiteForegroundColorWhite</tag>
+
+    <tag name="PeriodicityPlanRowTitleFirstRow">TitleCellWhite8WithoutBorderLeftWhiteForegroundColorPurple</tag>
+    <tag name="PeriodicityPlanRowTitleFirstRowFirstCol">TitleCellWhite8BorderAllWhiteForegroundColorPurple</tag>
+    <tag name="PeriodicityPlanRowTitleSecondRow">TitleCellWhite8BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="PeriodicityPlanRowTitleSecondRowFirstCol">TitleCellWhite8WithoutBorderTopWhiteForegroundColorPurple</tag>
+    <tag name="PeriodicityPlanRowTotal">TitleCellBlack8BorderRightBottomWhiteForegroundColorWhite</tag>
+    <tag name="PeriodicityPlanRowTotalFirstCol">TitleCellBlack8WithoutBorderTopWhiteForegroundColorWhite</tag>
+    <tag name="PeriodicityPlanRowDefault">TitleCellBlack8BorderRightBottomWhiteForegroundColorPurpleV3</tag>
+    <tag name="PeriodicityPlanRowDefaultFirstCol">TitleCellBlack8WithoutBorderTopWhiteForegroundColorPurpleV3</tag>
+
+    <tag name="AnalyseFamilyInterestPlanRowTitleFirstRow">TitleCellWhite8WithoutBorderLeftWhiteForegroundColorPurple</tag>
+    <tag name="AnalyseFamilyInterestPlanRowTitleFirstRowFirstCol">TitleCellWhite8BorderAllWhiteForegroundColorPurple</tag>
+    <tag name="AnalyseFamilyInterestPlanRowTitleSecondRow">TitleCellWhite8BorderRightBottomWhiteForegroundColorPurple</tag>
+    <tag name="AnalyseFamilyInterestPlanRowTitleSecondRowFirstCol">TitleCellWhite8WithoutBorderTopWhiteForegroundColorPurple</tag>
+    <tag name="AnalyseFamilyInterestPlanRowTotal">TitleCellBlack8BorderRightBottomWhiteForegroundColorWhite</tag>
+    <tag name="AnalyseFamilyInterestPlanRowTotalFirstCol">TitleCellBlack8WithoutBorderTopWhiteForegroundColorWhite</tag>
+    <tag name="AnalyseFamilyInterestPlanRowDefault">TitleCellBlack8BorderRightBottomWhiteForegroundColorPurpleV3</tag>
+    <tag name="AnalyseFamilyInterestPlanRowDefaultFirstCol">TitleCellBlack8WithoutBorderTopWhiteForegroundColorPurpleV3</tag>
+
+    <tag name="AffinitiesRowTitle">TitleCellWhite8WithoutBorderLeftWhiteForegroundColorPurple</tag>
+    <tag name="AffinitiesRowTitleFirstCol">TitleCellWhite8BorderAllWhiteForegroundColorPurple</tag>
+    <tag name="AffinitiesBaseTargetSelected">TitleCellBlack8BorderRightBottomWhiteForegroundColorWhite</tag>
+    <tag name="AffinitiesBaseTargetSelectedFirstCol">TitleCellBlack8WithoutBorderTopWhiteForegroundColorWhite</tag>
+    <tag name="AffinitiesRowDefault">TitleCellBlack8BorderRightBottomWhiteForegroundColorMediumPurple</tag>
+    <tag name="AffinitiesRowDefaultFirstCol">TitleCellBlack8WithoutBorderTopWhiteForegroundColorMediumPurple</tag>
+  </style>
+  <!-- Style Plugin Selket -->
+  <style name="Selket">
+    <tag name="layout">BoxMargin15</tag>
+    <tag name="header">BoxHeigth30</tag>
+    <tag name="footer">BoxHeigth20</tag>
+    <tag name="footerFont">FontPurple10</tag>
+    <tag name="headerFont">FontPurple10</tag>
+    <tag name="copyright">FontPurple10</tag>
+    <tag name="pictureLeft">PictureLogoTNS</tag>
+    <tag name="pictureRight">PictureLogoAPPM</tag>
+    <tag name="pictureTitle">PictureLogoAdExpress</tag>
+    <tag name="bigTitle">TitleFontPurple40</tag>
+    <tag name="createdTitle">TitleFontPurple12</tag>
+    <tag name="defaultFont">FontPurple8</tag>
+    <tag name="msCreativesColor">msCreativesColor</tag>
+  </style>
+</Theme>

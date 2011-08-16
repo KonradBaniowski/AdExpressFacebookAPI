@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="015fd577-f30b-486d-8e1b-d872ecf1d2ca" Name="Kantar AdExpress - PdfVpFile Selket" Language="1033" Version="1.0.0.0" Manufacturer="Kantar_AdExpress_PdfVpFile" UpgradeCode="27a71472-3dbe-4056-9627-e9723a87e751">
+    <Package InstallerVersion="200" Compressed="yes" />
+
+    <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+    <!-- UI Initialisation-->
+    <Property Id="SRVWIXUI_INSTALLDIR" Value="INSTALLDIR" />
+    <UIRef Id="SrvWixUI_InstallDir" />
+    <!-- Add PdfPMFiles.wxs directories -->
+    <DirectoryRef Id="INSTALLDIR" FileSource="PdfVpFiles.wxs"/>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLDIR" Name="Pdf Vp File Srv Selket">
+          <Component Id="ProductComponent" Guid="0814f0c1-aba0-4b28-be49-8bd6bf81331b">
+            <File Id="SelketPrgFile" Name="$(var.TNS.Ares.AdExpress.PdfVpFileSrv.TargetFileName)" Source="$(var.TNS.Ares.AdExpress.PdfVpFileSrv.TargetPath)" DiskId="1" KeyPath="yes" />
+            <!-- Service Installation -->
+            <ServiceInstall Id="MyServiceInstall" DisplayName="Ares Pdf Vp Srv Selket" Name="$(var.TNS.Ares.AdExpress.PdfVpFileSrv.TargetFileName)" ErrorControl="normal" Start="demand" Type="ownProcess" Vital="yes" />
+            <ServiceControl Id="MyServiceControl" Name="$(var.TNS.Ares.AdExpress.PdfVpFileSrv.TargetFileName)" Start="install" Stop="uninstall" Remove="uninstall" />
+            <!-- FIN Service Installation -->
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="ProductFeature" Title="Pdf Vp File Srv Selket" Level="1">
+      <ComponentRef Id="ProductComponent" />
+      <!-- link to AlertQuotaFiles.wxs component-->
+      <ComponentGroupRef Id="SelketPRG1"/>
+    </Feature>
+
+  </Product>
+</Wix>
+

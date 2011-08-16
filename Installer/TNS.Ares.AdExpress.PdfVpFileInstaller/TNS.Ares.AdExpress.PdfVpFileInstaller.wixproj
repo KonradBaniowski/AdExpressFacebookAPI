@@ -1,0 +1,76 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>3.5</ProductVersion>
+    <ProjectGuid>{e2112dcf-766f-420e-8610-82df00c3240d}</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>TNS.Ares.AdExpress.PdfVpFileInstaller</OutputName>
+    <OutputType>Package</OutputType>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.5\Wix.targets</WixTargetsPath>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.5\Wix.targets</WixTargetsPath>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>Debug</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Product.wxs" />
+    <Compile Include="SrvInstallDirDlg.wxs" />
+    <Compile Include="SrvWixUI_InstallDir.wxs" />
+    <Compile Include="PdfVpFiles.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\AresService\TNS.Ares.AdExpress.PdfVpFileSrv\TNS.Ares.AdExpress.PdfVpFileSrv.csproj">
+      <Name>TNS.Ares.AdExpress.PdfVpFileSrv</Name>
+      <Project>{a3874dd2-1b3d-4c9a-acfb-69d5a99ff541}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" />
+  <!--
+	To modify your build process, add your task inside one of the targets below and uncomment it.
+	Other similar extension points exist, see Wix.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+  <PropertyGroup>
+    <PreBuildEvent>echo ----------------------------------------------
+echo -                      Pre buid
+echo ----------------------------------------------
+
+echo -- Déplacement vers fichier où doit être créer le wxs contenant les librairies --
+set lecteurProjet=$(ProjectDir)
+set lecteurProjet=%lecteurProjet:~0,2%
+echo -- Le lecteur est %lecteurProjet%
+%lecteurProjet%
+
+cd  "$(ProjectDir)"
+echo --On Supprime le fichier wxs qui doit être généré par Paraffin --
+attrib -R PdfVpFiles.wxs
+del PdfVpFiles.wxs
+
+echo -- Déplacement dans le lecteur où se trouve les executables --
+i:
+cd \
+echo -- Lancement de Paraffin --
+C:\Paraffin.exe -dir  .\ -groupname SelketPRG1 -alias  i:  -nrd -m -ext .pdb -ext .wxs -ext wxi -ext .exe -ext .bak -ext .html "$(ProjectDir)PdfVpFiles.wxs"</PreBuildEvent>
+  </PropertyGroup>
+</Project>
