@@ -343,11 +343,11 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n\t       }");
             js.Append("\r\n\t }");
             js.Append("\r\n}\r\n");
-
-            js.Append("\r\nif (window.addEventListener)");
-            js.Append("\r\n\twindow.addEventListener(\"scroll\", ScrollContent_" + this.ID + ", false);");
-            js.Append("\r\nelse if (window.attachEvent)");
-            js.Append("\r\n\twindow.attachEvent(\"onscroll\", ScrollContent_" + this.ID + "); ");
+          
+            //js.Append("\r\nif (window.addEventListener)");
+            //js.Append("\r\n\twindow.addEventListener(\"scroll\", ScrollContent_" + this.ID + ", false);");
+            //js.Append("\r\nelse if (window.attachEvent)");
+            //js.Append("\r\n\twindow.attachEvent(\"onscroll\", ScrollContent_" + this.ID + "); ");
             js.Append("\r\n-->\r\n</script>");
             return js.ToString();
 
@@ -501,7 +501,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// </summary>
         /// <param name="e">Arguments</param>
         protected override void OnPreRender(EventArgs e) {
-            Page.Response.Write("<div id=\"res_backgroud_" + this.ID + "\" class=\"vpScheduleResultFilterWebControlBackgroud\" style=\"display:none;\"></div>");
+            Page.Response.Write("<div id=\"res_backgroud_" + this.ID + "\" class=\"vpScheduleResultFilterWebControlBackgroud\" onclick=\"cancelData_" + this.ID + "();\" style=\"display:none;\"></div>");
             base.OnPreRender(e);
         }
         #endregion

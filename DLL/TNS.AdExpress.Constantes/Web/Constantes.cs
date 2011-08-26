@@ -559,7 +559,16 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Quantity
             /// </summary>
-            quantity = 21
+            quantity = 21,
+            /// <summary>
+            /// Impressions
+            /// </summary>
+            impressions = 22,
+            /// <summary>
+            /// screens
+            /// </summary>
+            screens = 23
+
 		}
 		#endregion
 

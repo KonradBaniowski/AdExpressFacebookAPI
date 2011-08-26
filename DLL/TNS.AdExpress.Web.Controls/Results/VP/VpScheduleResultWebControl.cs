@@ -60,6 +60,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append(" var imagesName_ItemsCollectionNavigator2_" + this.ID + "= new Array();");
             js.Append(" var  currentPanelIndex_ItemsCollectionNavigator_" + this.ID + "=0;");
             js.Append(" var currentPanelIndex_ItemsCollectionNavigator2_" + this.ID + "=0;");
+            js.Append(" var topPos_" + this.ID + " = 0; ");
 
             js.Append("\r\nfunction displayPromoFile_" + this.ID + "(idPromo, display){");
             js.Append("\r\n\tif(display) {");
@@ -88,12 +89,17 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n\t\tmyHeight = document.body.clientHeight;");
             js.Append("\r\n\t\t}");
 
+          
             js.Append("\r\n\t if( document.documentElement && ( document.documentElement.scrollTop || document.documentElement.scrollLeft ) ) {");
-            js.Append("\r\n\tdocument.getElementById('res_promofile_" + this.ID + "').style.top = (document.documentElement.scrollTop + ((myHeight - 650) / 2)) + \"px\";");
+            js.Append("\r\n\t  topPos_" + this.ID + " = (document.documentElement.scrollTop + ((myHeight - 650) / 2)) ; ");
+            js.Append("\r\n\t  if(topPos_" + this.ID + " <=0) topPos_" + this.ID + " = 10;");
+            js.Append("\r\n\t document.getElementById('res_promofile_" + this.ID + "').style.top = topPos_" + this.ID + " + \"px\";");
             js.Append("\r\n\tdocument.getElementById('res_promofile_" + this.ID + "').style.left = (document.documentElement.scrollLeft + ((myWidth - 650) / 2)) + \"px\";");         
             js.Append("\r\n\t } else ");
             js.Append("\r\n\t {");
-            js.Append("\r\n\t\t document.getElementById('res_promofile_" + this.ID + "').style.top = (document.body.scrollTop + ((myHeight - 650) / 2)) + \"px\";");
+            js.Append("\r\n\t\t  topPos_" + this.ID + " = (document.body.scrollTop + ((myHeight - 650) / 2)); ");
+            js.Append("\r\n\t\t  if(topPos_" + this.ID + " <=0) topPos_" + this.ID + " = 10;");
+            js.Append("\r\n\t\t document.getElementById('res_promofile_" + this.ID + "').style.top = topPos_" + this.ID + " + \"px\";");
             js.Append("\r\n\t\t document.getElementById('res_promofile_" + this.ID + "').style.left = (document.body.scrollLeft + ((myWidth - 650) / 2)) + \"px\";");
             js.Append("\r\n\t }");
 
@@ -178,7 +184,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
           
             js.Append("\r\n\t   var oContent = document.getElementById('res_promofile_" + this.ID + "');");
             js.Append("\r\n\t if(oContent != null && ( oContent.style.display  != 'none')){");
-            js.Append("\r\n\t\t     if( document.documentElement && ( document.documentElement.scrollTop || document.documentElement.scrollLeft ) ) {");
+            js.Append("\r\n\t\t     if( document.documentElement && ( document.documentElement.scrollTop || document.documentElement.scrollLeft ) ) {");          
             js.Append("\r\n\t\t\t       oContent.style.top = (document.documentElement.scrollTop + ((myHeight - 650) / 2)) + \"px\";");
             js.Append("\r\n\t\t        oContent.style.left = (document.documentElement.scrollLeft + ((myWidth - 650) / 2)) + \"px\";");
             js.Append("\r\n\t\t     } else ");
@@ -189,10 +195,15 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
             js.Append("\r\n\t }");
             js.Append("\r\n}\r\n");
 
-            js.Append("\r\nif (window.addEventListener)");
-            js.Append("\r\n\twindow.addEventListener(\"scroll\", ScrollContent_" + this.ID + ", false);");
-            js.Append("\r\nelse if (window.attachEvent)");
-            js.Append("\r\n\twindow.attachEvent(\"onscroll\", ScrollContent_" + this.ID + "); ");
+            js.Append("\r\n function CloseDivs_" + this.ID + "(){");
+            js.Append("\r\n\t document.getElementById('res_backgroud_" + this.ID + "').style.display = 'none';");
+            js.Append("\r\n\t document.getElementById('res_promofile_" + this.ID + "').style.display = 'none';");
+            js.Append("\r\n}\r\n");
+
+            //js.Append("\r\nif (window.addEventListener)");
+            //js.Append("\r\n\twindow.addEventListener(\"scroll\", ScrollContent_" + this.ID + ", false);");
+            //js.Append("\r\nelse if (window.attachEvent)");
+            //js.Append("\r\n\twindow.attachEvent(\"onscroll\", ScrollContent_" + this.ID + "); ");
  
 
             js.Append("\r\n\r\n</script>");
@@ -210,7 +221,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         protected override void OnPreRender(EventArgs e)
         {
             Page.Response.Write("<div id=\"res_promofile_" + this.ID + "\" class=\"vpPrf\" style=\"display:none;\"></div>");
-            Page.Response.Write("<div id=\"res_backgroud_" + this.ID + "\" class=\"vpScheduleResultFilterWebControlBackgroud\" style=\"display:none;\"></div>");         
+            Page.Response.Write("<div id=\"res_backgroud_" + this.ID + "\" class=\"vpScheduleResultFilterWebControlBackgroud\" onclick=\"CloseDivs_" + this.ID + "();\" style=\"display:none;\"></div>");         
             base.OnPreRender(e);
         }
         #endregion

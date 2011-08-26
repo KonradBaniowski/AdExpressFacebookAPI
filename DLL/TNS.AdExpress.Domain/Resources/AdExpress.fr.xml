@@ -2136,5 +2136,9 @@
     <item mnemonic="w2910" type="System.String">!</item>
     <item mnemonic="w2911" type="System.String">!</item>
     <!-- ********************************* -->
+    <!-- Add text for RU new units -->
+    <item mnemonic="w2912" type="System.String">!</item>
+    <item mnemonic="w2913" type="System.String">!</item>
+    <!-- ********************************* -->
   </items>
 </localization>
