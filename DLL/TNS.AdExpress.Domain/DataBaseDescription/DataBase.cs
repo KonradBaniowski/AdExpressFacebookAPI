@@ -1067,7 +1067,14 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Table promotion product segment
         /// </summary>
         promoSegment = 234,
-
+        /// <summary>
+        /// Customer Insertions Levels groups
+        /// </summary>
+        customerInsertionLevelsGroup = 235,
+        /// <summary>
+        /// Customer insertions levels saved
+        /// </summary>
+        insertionLevelsSave = 236,
         /// <summary>
         /// Alert description
         /// </summary>
