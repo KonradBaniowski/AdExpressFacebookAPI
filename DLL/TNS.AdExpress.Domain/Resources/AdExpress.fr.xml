@@ -2140,5 +2140,21 @@
     <item mnemonic="w2912" type="System.String">!</item>
     <item mnemonic="w2913" type="System.String">!</item>
     <!-- ********************************* -->
+    <!-- Add text for RU Save insertion reports customised levels -->
+    <item mnemonic="w2914" type="System.String">Enregistrer niveaux personnalisés</item>
+    <item mnemonic="w2915" type="System.String">Mes insertions</item>
+    <item mnemonic="w2916" type="System.String">Mes Insertions liste tous niveaux personnalisés d'insertions, que vous avez préalablement enregistrés.&lt;br&gt;Vous pouvez créer, modifier ou supprimer des répertoires.</item>
+    <item mnemonic="w2917" type="System.String">« Mes Insertions » vous permet de sauvegarder l'ensemble des niveaux personnalisés pour calculer rapidement le détail des insertions d'un média.</item>
+    <item mnemonic="w2918" type="System.String">Renommer les niveaux enregistrés</item>
+    <item mnemonic="w2919" type="System.String">Sélectionner les niveaux enregistrés à renommer dans la liste suivante : </item>
+    <item mnemonic="w2920" type="System.String">Renommer les niveaux enregistrés sélectionné :</item>
+    <item mnemonic="w2921" type="System.String">Déplacer les niveaux enregistrés :</item>
+    <item mnemonic="w2922" type="System.String">Sélectionner  les niveaux enregistrés à déplacer dans la liste suivante : </item>
+    <item mnemonic="w2923" type="System.String">Supprimer les niveaux enregistrés</item>
+    <item mnemonic="w2924" type="System.String">Sélectionner les niveaux enregistrés à supprimer dans la liste suivante : </item>
+    <item mnemonic="w2925" type="System.String">Etes vous sûr de vouloir supprimer ce répertoire</item>
+    <item mnemonic="w2926" type="System.String">Etes vous sûr de vouloir supprimer ces niveaux enregistrés?</item>
+    <item mnemonic="w2927" type="System.String">Déplacer les niveaux enregistrés sélectionnés vers:</item>
+    <!-- ********************************* -->
   </items>
 </localization>
