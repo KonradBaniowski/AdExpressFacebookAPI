@@ -41,7 +41,7 @@
         <GroupBox Header="Suppression" Margin="2"  FontSize="12"  Grid.Row="1" >
             <StackPanel Margin="3" Orientation="Horizontal" VerticalAlignment="Center">
                 <Label HorizontalAlignment="Left"  Content="Date début" />
-                <my:DatePicker Height="25" Margin="5" Name="datePicker1" Width="125" ClipToBounds="False" SelectedDateFormat="Short" SelectedDate="{Binding PeriodBeginningToDelete}"/>
+                <my:DatePicker Height="25" Margin="5" Name="datePicker1" Width="125" ClipToBounds="False" SelectedDateFormat="Short" SelectedDate="{Binding PeriodBeginningToDelete}"  Style="{DynamicResource DatePicker}"/>
                 <Label HorizontalAlignment="Left"  Content=""/>
                 <Label HorizontalAlignment="Left"  Content="Date de fin"/>
                 <my:DatePicker Height="25" Margin="5" Name="datePicker2" Width="125" ClipToBounds="False"   SelectedDateFormat="Short" SelectedDate="{Binding PeriodEndToDelete}" />
