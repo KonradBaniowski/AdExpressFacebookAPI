@@ -304,7 +304,11 @@ namespace AdExpress{
                     _webSession.PrincipalAdvertisingAgnecyUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
                     _webSession.SecondaryAdvertisingAgnecyUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 
-                    _webSession.PersonnalizedLevel = WebApplicationParameters.VpConfigurationDetail.DefaultPersoLevel;
+                    if(WebApplicationParameters.VpConfigurationDetail != null)
+                        _webSession.PersonnalizedLevel = WebApplicationParameters.VpConfigurationDetail.DefaultPersoLevel;
+                    else
+                        _webSession.PersonnalizedLevel = DetailLevelItemInformation.Levels.vpBrand;
+
                     //Initialisation de customerPeriod
                     try {
                         if (_webSession.CustomerPeriodSelected != null)
