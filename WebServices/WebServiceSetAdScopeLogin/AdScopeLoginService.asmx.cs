@@ -26,11 +26,11 @@ namespace WebServiceSetAdScopeLogin
         [WebMethod]
         public bool SetAdScopeLogin(long loginId, string login, string password, string name, string firstName, string account, string creationDate, string action, int crypteIdent)
         {
-            string body = "";
+            string body = "", bodyTemp = "";
             bool res = false;
             AdScopeLogin adScopeLogin = null;
             List<long> allAdScopeLogin = new List<long>();
-
+            string decryptedLogin = "", decryptedpassword = "", decryptedName = "", decryptedFirstName = "", decryptedAccount = "", decryptedCreationDate = "", decryptedAction="";
           
                try
             {
@@ -48,12 +48,17 @@ namespace WebServiceSetAdScopeLogin
                 if (string.IsNullOrEmpty(creationDate)) throw new ArgumentNullException("Parameter creationDate cannot be null");
                 if (string.IsNullOrEmpty(action)) throw new ArgumentNullException("Parameter action cannot be null");
 
-              
+                bodyTemp += "<b><u>login:</u></b><br>" + (!string.IsNullOrEmpty(login) ? login : "") + "<br>";
+                bodyTemp += "<b><u>password:</u></b><br>" + (!string.IsNullOrEmpty(password) ? password : "") + "<br>";
+                bodyTemp += "<b><u>name:</u></b><br>" + (!string.IsNullOrEmpty(name) ? name : "") + "<br>";
+                bodyTemp += "<b><u>firstName:</u></b><br>" + (!string.IsNullOrEmpty(firstName) ? firstName : "") + "<br>";
+                bodyTemp += "<b><u>account:</u></b><br>" + (!string.IsNullOrEmpty(account) ? account : "") + "<br>";
+                bodyTemp += "<b><u>creationDate:</u></b><br>" + (!string.IsNullOrEmpty(creationDate) ? creationDate : "") + "<br>";
+                bodyTemp += "<b><u>action:</u></b><br>" + (!string.IsNullOrEmpty(action) ? action : "") + "<br>";              
                 #endregion
 
                 #region Decrypt parameters  
-
-              
+                
                 //Convert HEXA to CHAR
                 login = KMI.P3.Web.Functions.QueryStringEncryption.HexAsciiConvert(login);
                 password = KMI.P3.Web.Functions.QueryStringEncryption.HexAsciiConvert(password);
@@ -65,14 +70,15 @@ namespace WebServiceSetAdScopeLogin
 
 
                  //Decrypt parameters               
-                 string decryptedLogin = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(login);
-                 string decryptedpassword = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(password);
-                 string decryptedName = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(name);
-                 string decryptedFirstName = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(firstName);
-                 string decryptedAccount = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(account);
-                 string decryptedCreationDate = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(creationDate);
-                 string decryptedAction = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(action);
+                  decryptedLogin = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(login);
+                  decryptedpassword = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(password);
+                  decryptedName = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(name);
+                  decryptedFirstName = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(firstName);
+                  decryptedAccount = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(account);
+                  decryptedCreationDate = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(creationDate);
+                  decryptedAction = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(action);
 
+                 
                 
                 #endregion
 
@@ -136,13 +142,19 @@ namespace WebServiceSetAdScopeLogin
                 try
                 {
                     TNS.FrameWork.Exceptions.BaseException err = (TNS.FrameWork.Exceptions.BaseException)error;
-                    body = "<html><b><u>" + Server.MachineName + ":</u></b><br>" + "<font color=#FF0000>Une erreur est survenue dans le service web de modification de login Adscope;.</font><br>Erreur" + err.GetHtmlDetail() + "</font></html>";
+                    body = "<html><b><u>" + Server.MachineName + ":</u></b><br>" + "<font color=#FF0000>Une erreur est survenue dans le service web de modification de login Adscope;.</font>";                  
+                    body += bodyTemp;
+                    body += "<br>Erreur" + err.GetHtmlDetail() + "</font>";
+                    body += "</html>";
                 }
                 catch (System.Exception)
                 {
                     try
                     {
-                        body = "<html><b><u>" + Server.MachineName + ":</u></b><br>" + "<font color=#FF0000>Une erreur est survenue dansle service web de changement de login Adscope;.</font><br>Erreur(" + error.GetType().FullName + "):" + error.Message + "<br><br><b><u>Source:</u></b><font color=#008000>" + error.StackTrace.Replace("at ", "<br>at ") + "</font></html>";
+                        body = "<html><b><u>" + Server.MachineName + ":</u></b><br>" + "<font color=#FF0000>Une erreur est survenue dansle service web de changement de login Adscope;.</font><br>";                       
+                        body += bodyTemp;
+                        body += "<br>Erreur(" + error.GetType().FullName + "):" + error.Message + "<br><br><b><u>Source:</u></b><font color=#008000>" + error.StackTrace.Replace("at ", "<br>at ") + "</font></html>";                       
+                    
                     }
                     catch (System.Exception es)
                     {
@@ -150,7 +162,7 @@ namespace WebServiceSetAdScopeLogin
                     }
                 }
                 TNS.FrameWork.Net.Mail.SmtpUtilities errorMail = new TNS.FrameWork.Net.Mail.SmtpUtilities(ServiceParams.ConfigurationDirectoryRoot + WebServiceSetAdScopeLogin.Constantes.ErrorManager.WEBSERVER_ERROR_MAIL_FILE);
-                errorMail.SendWithoutThread("Erreur Web service Changeùment login AdScope " + (Server.MachineName), body, true, false);
+                errorMail.SendWithoutThread("Erreur Web service Changement login AdScope " + (Server.MachineName), body, true, false);
                 res = false;
             }
 
