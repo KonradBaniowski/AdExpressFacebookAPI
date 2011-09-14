@@ -13,14 +13,14 @@
 		<form id="Form1" method="post" runat="server">
 			<table class="txtViolet11" cellSpacing="0" cellPadding="0" width="100%" border="0" height="50%">
 				<tr height="90" bgcolor="#644883">
-					<td width="185"><a href="/Index.aspx"><asp:Image ID="Image4" runat="server" SkinID="logoTNShome" /></a></td>
-					<td width="100%">
-						<table class="txtViolet11" cellSpacing="0" cellPadding="0" width="100%" border="0">
+					<td width="185"  style="font-size: 0px;"><a href="/Index.aspx"  style="font-size: 0px;"><asp:Image ID="Image4" runat="server" SkinID="logoTNShome" /></a></td>
+					<td width="100%"  style="font-size: 0px;">
+						<table class="txtViolet11" cellSpacing="0" cellPadding="0" width="100%" border="0"  style="font-size: 0px;" height="90px">
 							<tr>
-								<td><asp:Image ID="Image1" runat="server" height="31" width="1" SkinID="pixel" /></td>
+								<td style="font-size: 0px;height:31px;"></td>
 							</tr>
 							<tr>
-								<td class="dupli1BackGround"><asp:Image ID="Image2" runat="server" height="1" width="1" SkinID="pixel" /></td>
+								<td class="dupli1BackGround"></td>
 							</tr>
 							<tr class="headerBackGround">
 								<td><asp:Image ID="Image3" runat="server" height="58" width="1" SkinID="pixel" /></td>

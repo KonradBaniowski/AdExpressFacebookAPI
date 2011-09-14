@@ -12,7 +12,7 @@ using TNS.FrameWork.Exceptions;
 using TNSMail = TNS.FrameWork.Net.Mail;
 using Localization = Bastet.Localization;
 using TNS.AdExpress.Bastet.Translation;
-using TNS.AdExpress.Bastet;
+using TNS.AdExpress.Bastet.Constantes.Web;
 using System.Web;
 using TNS.AdExpress.Bastet.Web;
 using TNS.AdExpress.Bastet.Constantes.Web;

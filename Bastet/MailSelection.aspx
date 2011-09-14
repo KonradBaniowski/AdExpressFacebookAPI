@@ -17,10 +17,10 @@
 	<body>
 		<form id="Form1" method="post" runat="server">
 			<table class="txtViolet11" height="50%" cellSpacing="0" cellPadding="0" width="100%" border="0">
-				<tr bgColor="#644883" height="90">
-					<td width="185"><a href="/Index.aspx"><asp:Image ID="Image4" runat="server" SkinID="logoTNShome" /></a></td>
-					<td width="100%">
-						<cc1:HeaderWebControl id="HeaderWebControl1" runat="server" ActiveMenu="1" SkinID="HeaderWebControl"></cc1:HeaderWebControl>
+				<tr height="90" bgcolor="#644883"  style="font-size: 0px;">
+					<td width="185"  style="font-size: 0px;"><a href="/Index.aspx"  style="font-size: 0px;"><asp:Image ID="Image4" runat="server" SkinID="logoTNShome" /></a></td>
+					<td width="100%"  style="font-size: 0px;">
+						<cc1:HeaderWebControl id="HeaderWebControl1" runat="server" SkinID="HeaderWebControl"></cc1:HeaderWebControl>
 					</td>
 				</tr>
 				<tr>
@@ -28,10 +28,10 @@
 						<!--<p class="navigation">&nbsp;<font color="#ff0099"><%=_email_manage%></font>&gt;<%=_period_manage%>&gt;<%=_login_manage%>&amp;<%=_validation%></p>-->
 						<p class="txtViolet12BoldTitle">&nbsp;<%=_email_manage%></p>
 						<P>&nbsp;</P>
-						<p align="center">
+						<div align="center">
 							<table class="txtViolet11" cellSpacing="0" cellPadding="0" border="0">
 								<tr>
-									<td class="txtViolet12Bold" colSpan="2"><%=_label_addEmail%></td>
+									<td class="txtViolet12Bold" colSpan="2" align="left"><%=_label_addEmail%></td>
 								</tr>
 								<tr>
 									<td><asp:textbox id="mailTextBox" runat="server" Width="200px" CssClass="input"></asp:textbox></td>
@@ -41,7 +41,7 @@
 									<td colSpan="2">&nbsp;</td>
 								</tr>
 								<tr>
-									<td class="txtViolet12Bold" colSpan="2"><%=_label_emailList%></td>
+									<td class="txtViolet12Bold" colSpan="2" align="left"><%=_label_emailList%></td>
 								</tr>
 								<tr vAlign="top">
 									<td><asp:listbox id="mailListBox" runat="server" Width="200px" CssClass="input" Height="200px"></asp:listbox></td>
@@ -50,7 +50,7 @@
 							</table>
 						<P>&nbsp;</P>
 						<P align="center"><asp:button id="validateButton" runat="server" Width="110px" CssClass="input" Text="" onclick="validateButton_Click"></asp:button></P>
-						<P></P>
+						<P></div>
 					</td>
 				</tr>
 			</table>

@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configurations>
   <!-- config FR -->
-  <lsClientConfiguration familyId="123" familyName="AdExpress FR Treatment service" monitorPort="30239" productName="Ares Service treatment - Excel Statistic (Bastet)" maxAvailableSlots="1" directoryName="33\Plugins\Bastet.xml">
+  <!--<lsClientConfiguration familyId="123" familyName="AdExpress FR Treatment service" monitorPort="30239" productName="Ares Service treatment - Excel Statistic (Bastet)" maxAvailableSlots="1" directoryName="33\Plugins\Bastet.xml">
     <moduleDescription description="Ares Service treatment - Excel Statistic (Bastet)" moduleId="2"/>
-  </lsClientConfiguration>
+  </lsClientConfiguration>-->
 
   <!-- config FI 
   <lsClientConfiguration familyId="132" familyName="AdExpress FI Treatment service" monitorPort="30265" productName="Ares Service treatment - Excel Statistic (Bastet)" maxAvailableSlots="1" directoryName="35\Plugins\Bastet.xml">
     <moduleDescription description="Ares Service treatment - Excel Statistic (Bastet)" moduleId="2"/>
   </lsClientConfiguration>-->
 
-  <!-- config SK 
-  <lsClientConfiguration familyId="130" familyName="AdExpress SK Treatment service" monitorPort="30270" productName="Ares Service treatment - Excel Statistic (Bastet)" maxAvailableSlots="1" directoryName="421\Plugins\Bastet.xml">
+  <!-- config SK -->
+  <lsClientConfiguration familyId="130" familyName="AdExpress SK Treatment service" monitorPort="30263" productName="Ares Service treatment - Excel Statistic (Bastet)" maxAvailableSlots="1" directoryName="421\Plugins\Bastet.xml">
     <moduleDescription description="Ares Service treatment - Excel Statistic (Bastet)" moduleId="2"/>
-  </lsClientConfiguration>-->
+  </lsClientConfiguration>
 
   <!-- config SK EVALIANT 
   <lsClientConfiguration familyId="137" familyName="AdExpress SK Evaliant Treatment service" monitorPort="30277 " productName="Ares Service treatment - Excel Statistic (Bastet)" maxAvailableSlots="1" directoryName="4211\Plugins\Bastet.xml">

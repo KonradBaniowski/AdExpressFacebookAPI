@@ -43,14 +43,16 @@ namespace KMI.P3.Web.Functions
         {
             int key = 1234;
             int len = s.Length;
-            byte[] b = System.Text.ASCIIEncoding.Default.GetBytes(s);
+           Encoding encoding =  Encoding.GetEncoding("iso-8859-1");
+
+           byte[] b = encoding.GetBytes(s); //System.Text.ASCIIEncoding.UTF32.GetBytes(s);
             byte[] buffer = new byte[len];
 
             for (int i = 0; i < len; i++)
             {
                 buffer[i] = (byte)(ByteUnsignedValue(b[i]) ^ key);
-            }          
-            return ASCIIEncoding.Default.GetString(buffer);
+            }
+            return encoding.GetString(buffer); //ASCIIEncoding.UTF32.GetString(buffer);
         }
 
 
@@ -62,8 +64,23 @@ namespace KMI.P3.Web.Functions
             return result;
         }
 
-       
 
+      
+        public static string HexAsciiConvert(string HexValue)
+        {
+            string[] hexValuesSplit = HexValue.Split(';');
+            string StrValue = "";
+            foreach (String hex in hexValuesSplit)
+            {
+                if (!string.IsNullOrEmpty(hex))// && "&amp" != hex
+                {
+                    
+                    StrValue += System.Convert.ToChar(System.Convert.ToUInt32(hex.Substring(3, 2), 16)).ToString();                   
+                    
+                }
+            }
+            return StrValue;
+        }
     }
 
     public class Encryption64

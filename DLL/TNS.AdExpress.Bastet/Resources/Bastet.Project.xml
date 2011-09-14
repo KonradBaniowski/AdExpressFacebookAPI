@@ -5,9 +5,9 @@
   <projects>
     <project id="Global">
       <files>
-        <file>C:\Dev\CSharp2\AdExpress International Demo\Prod\DLL\TNS.AdExpress.Bastet\Resources\Bastet.fr.xml</file>
-        <file>C:\Dev\CSharp2\AdExpress International Demo\Prod\DLL\TNS.AdExpress.Bastet\Resources\Bastet.en.xml</file>
-        <file>C:\Dev\CSharp2\AdExpress International Demo\Prod\DLL\TNS.AdExpress.Bastet\Resources\Bastet.fi.xml</file>
+        <file>D:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Bastet\Resources\Bastet.fr.xml</file>
+        <file>D:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Bastet\Resources\Bastet.en.xml</file>
+        <file>D:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Bastet\Resources\Bastet.fi.xml</file>
       </files>
     </project>
   </projects>

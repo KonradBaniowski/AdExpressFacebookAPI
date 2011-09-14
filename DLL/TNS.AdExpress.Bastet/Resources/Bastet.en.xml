@@ -83,6 +83,12 @@
     <item mnemonic="w71" type="System.String">Last uploaded month</item>
     <item mnemonic="w72" type="System.String">Previous day</item>
 
+    <item mnemonic="w73" type="System.String">Global Date</item>
+    <item mnemonic="w74" type="System.String">Personnalize Date</item>
+    <item mnemonic="w75" type="System.String">Cumul date to date plus next month</item>
+    <item mnemonic="w76" type="System.String">All historic</item>
+    <item mnemonic="w77" type="System.String">Current Month</item>
+    
     <!-- AdExpress Text -->
     <item mnemonic="w124" type="System.String">From</item>
 

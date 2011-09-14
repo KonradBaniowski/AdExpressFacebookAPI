@@ -1,26 +1,45 @@
-BODY { BACKGROUND-IMAGE: none; MARGIN: 0px; BACKGROUND-COLOR: #ffffff }
+BODY { BACKGROUND-IMAGE: none; MARGIN: 0px; BACKGROUND-COLOR: #ffffff;  }
+img
+{
+	border:0px;
+}
+
+img,
+a
+{
+	font-size: 0px;
+}
 
 .headerBackGround{
 background:url(/App_Themes/DefaultBastetFr/Images/Common/dupli_2.gif);
+font-size: 0px;
 }
 
 .dupli1BackGround{
 background:url(/App_Themes/DefaultBastetFr/Images/Common/dupli_1.gif);
+font-size: 0px;
+height:1px;
 }
 
 .imageBackGround{
 	background:url(/App_Themes/DefaultBastetFr/Images/Common/dupli_fond.gif);
+	font-size: 0px;
 }
 
 /* Login Control */
 .loginWebControlTable
 {
-	width:240px;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 11px;
+	color: #644883;
 	font-weight: normal;
-	color: #000000;
 }
+
+.loginWebControlTable tr td input
+{
+	margin-bottom:2px;
+}
+
 
 /*image drop down list*/
 .ddlOut{
@@ -162,6 +181,26 @@ table.header
 	font-weight:bold;
 	border:0;
 	margin:0;
+	font-size:0px;
+}
+
+table.header tbody tr.txtBlanc11 td p
+{
+	
+}
+.headerBis
+{
+	background:url(/App_Themes/DefaultBastetFr/Images/Common/dupli_2.gif);
+}
+
+.headerBis p
+{
+	PADDING-LEFT: 10px; PADDING-BOTTOM: 40px; PADDING-TOP: 0px;height:18px;
+}
+
+.headerBis p a
+{
+	padding-right:5px;
 }
 
 table.menu

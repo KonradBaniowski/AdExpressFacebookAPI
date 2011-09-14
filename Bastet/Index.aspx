@@ -17,9 +17,9 @@
 	<body>
 		<form id="Form1" method="post" runat="server">
 			<table class="txtViolet11" cellSpacing="0" cellPadding="0" width="100%" border="0" height="50%">
-				<tr height="90" bgcolor="#644883">
-					<td width="185"><a href="/Index.aspx"><asp:Image ID="Image4" runat="server" SkinID="logoTNShome" /></a></td>
-					<td width="100%">
+				<tr height="90" bgcolor="#644883"  style="font-size: 0px;">
+					<td width="185"  style="font-size: 0px;"><a href="/Index.aspx"  style="font-size: 0px;"><asp:Image ID="Image4" runat="server" SkinID="logoTNShome" /></a></td>
+					<td width="100%"  style="font-size: 0px;">
 						<cc2:HeaderWebControl id="HeaderWebControl1" runat="server" SkinID="HeaderWebControl"></cc2:HeaderWebControl>
 					</td>
 				</tr>
@@ -28,11 +28,11 @@
 						<p>&nbsp;</p>
 						<p>&nbsp;</p>
 						<p>&nbsp;</p>
-						<p align="center">
+						<div align="center">
 						    <cc1:LoginWebControl id="loginWebControl" runat="server" 
 						        WebServiceMethod="canAccessToBastet"
-						        CssTable="LoginWebControlTable" >
-						    </cc1:LoginWebControl></p>
+						        CssTable="loginWebControlTable" >
+						    </cc1:LoginWebControl></div>
 					</td>
 				</tr>
 			</table>

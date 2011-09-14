@@ -87,10 +87,11 @@
 	<body>
 		<form id="Form1" method="post" runat="server">
 			<table class="txtViolet11" height="50%" cellSpacing="0" cellPadding="0" width="100%" border="0">
-				<tr bgColor="#644883" height="90">
-					<td width="185"><a href="/Index.aspx"><asp:Image ID="Image4" runat="server" SkinID="logoTNShome" /></a></td>
-					<td width="100%">
-						<cc1:HeaderWebControl id="HeaderWebControl1" runat="server" ActiveMenu="1" SkinID="HeaderWebControl"></cc1:HeaderWebControl></td>
+				<tr height="90" bgcolor="#644883"  style="font-size: 0px;">
+					<td width="185"  style="font-size: 0px;"><a href="/Index.aspx"  style="font-size: 0px;"><asp:Image ID="Image4" runat="server" SkinID="logoTNShome" /></a></td>
+					<td width="100%"  style="font-size: 0px;">
+						<cc1:HeaderWebControl id="HeaderWebControl1" runat="server" SkinID="HeaderWebControl"></cc1:HeaderWebControl>
+					</td>
 				</tr>
 				<tr>
 					<td vAlign="top" colSpan="2">

@@ -12,9 +12,7 @@ Modèle d'apparence par défaut. Les apparences sont fournies uniquement à titr
 de contrôle par défaut par type de contrôle est autorisée dans le même thème.
 
 <asp:Image runat="server" ImageUrl="~/images/image1.jpg" />
-
 --%>
-
 <%@ Register TagPrefix="ctrHeader" Namespace="TNS.AdExpress.Bastet.WebControls" Assembly="TNS.AdExpress.Bastet" %>
 
 <asp:image runat="server" ImageUrl="Images/Common/pixel.gif" SkinID="pixel" />
@@ -22,10 +20,13 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <asp:image runat="server" ImageUrl="Images/Common/iconCalendar.gif" SkinID="iconCalendar" />
 <asp:image runat="server" ImageUrl="Images/Common/iconExcel.gif" SkinID="iconExcel" />
 
+
+
 <ctrHeader:HeaderWebControl
                                 runat="server"
-                                ImgUrl="/App_Themes/DefaultBastetUk/Images/Common/dupli_2.gif" 
                                 FlashUrl="/App_Themes/DefaultBastetUk/Flash/Common/HeaderStrip.swf" 
                                 MissingFlashUrl="/App_Themes/DefaultBastetUk/Images/Common/FlashReplacement/HeaderStrip.gif"
+                                CssClass="header"
+                                CssClassBis="headerBis"
                                 SkinID="HeaderWebControl"
 />

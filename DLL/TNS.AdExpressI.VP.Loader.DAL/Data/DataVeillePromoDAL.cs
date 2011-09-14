@@ -148,9 +148,9 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
                     #endregion
 
                     #region Get Visuals condition
-                    if(cells[line, columnVisualsCondition].Value != null)
-                        conditionVisual = (new List<string>(((string)cells[line, columnVisualsCondition].Value).Split(';'))).ConvertAll<string>(file => System.IO.Path.GetFullPath(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(fileStream.Name),file.Trim())));
-
+                    if (cells[line, columnVisualsCondition].Value != null)
+                        conditionVisual = (new List<string>(((string)cells[line, columnVisualsCondition].Value).Split(';'))).ConvertAll<string>(file => System.IO.Path.GetFullPath(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(fileStream.Name), file.Trim())));
+                    else conditionVisual = null;
                     if (conditionVisual != null) {
                         for(int i=0; i<conditionVisual.Count; i++){
                             if (!File.Exists(conditionVisual[i])) {
@@ -176,7 +176,8 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
 
                     #region Get Visuals Promotion
                     if (cells[line, columnVisualsPromo].Value != null)
-                        promotionVisual = new List<string>(((string)cells[line, columnVisualsPromo].Value).Split(';')).ConvertAll<string>(file => System.IO.Path.GetFullPath(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(fileStream.Name), file.Trim()))); 
+                        promotionVisual = new List<string>(((string)cells[line, columnVisualsPromo].Value).Split(';')).ConvertAll<string>(file => System.IO.Path.GetFullPath(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(fileStream.Name), file.Trim())));
+                    else promotionVisual = null;
                     if (promotionVisual != null) {
                         for (int i = 0; i < promotionVisual.Count; i++) {
                             if (!File.Exists(promotionVisual[i])) {

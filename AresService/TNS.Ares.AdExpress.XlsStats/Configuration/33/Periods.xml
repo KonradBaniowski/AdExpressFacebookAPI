@@ -16,4 +16,9 @@
   <period webTextId="70"   dataBaseId ="13"/>
   <period webTextId="71"   dataBaseId ="14"/>
   <period webTextId="72"   dataBaseId ="15"/>
+  <period webTextId="73"		dataBaseId="16"		/>
+  <period webTextId="74"  	dataBaseId="17"  	/>
+  <period webTextId="75"  	dataBaseId="18"  	/>
+  <period webTextId="76"  	dataBaseId="19"  	/>
+  <period webTextId="77"  	dataBaseId="20"  	/>
 </periods>

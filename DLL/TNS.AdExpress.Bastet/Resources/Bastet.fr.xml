@@ -82,7 +82,11 @@
     <item mnemonic="w70" type="System.String">Derniere semaine chargée</item>
     <item mnemonic="w71" type="System.String">Dernier mois chargé</item>
     <item mnemonic="w72" type="System.String">Jour précédent</item>
-
+    <item mnemonic="w73" type="System.String">Date Globale</item>
+    <item mnemonic="w74" type="System.String">Date personnalisée</item>
+    <item mnemonic="w75" type="System.String">Cumul date à date plus mois suivant</item>
+    <item mnemonic="w76" type="System.String">Tout l'historique</item>
+    <item mnemonic="w77" type="System.String">Mois courant</item>
 
 
     <!-- Texte AdExpress -->
