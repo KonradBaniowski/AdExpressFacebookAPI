@@ -247,6 +247,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     sql.Append(" and auto_promotion = 0 ");
             }
 
+            sql.Append(GetFormatClause(null));
+
 			// Period
 			switch (type) {
 				case DBConstantes.TableType.Type.dataVehicle4M:
@@ -359,6 +361,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 if(_webSession.AutopromoEvaliant) // Hors autopromo (checkbox = checked)
                     sql += " and auto_promotion = 0 ";
             }
+
+            sql += GetFormatClause(null);
 
 			// Period
 			switch (type) {
@@ -1349,11 +1353,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             }
             sql.AppendFormat(" from {0} where id_media={1}", table, _idMedia);
 
+
             // Autopromo Evaliant
             if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile) {
                 if(_webSession.AutopromoEvaliant) // Hors autopromo (checkbox = checked)
                     sql.Append(" and auto_promotion = 0 ");
             }
+            sql.Append(GetFormatClause(null));
 
             // Period
             switch(type) {

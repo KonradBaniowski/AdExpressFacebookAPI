@@ -154,5 +154,24 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			return sql;
 		}
 		#endregion
+
+        #region GetFormatClause
+        /// <summary>
+        /// Get Format Clause
+        /// </summary>
+        /// <param name="prefix">Prefix</param>
+        /// <returns>Sql Format selected Clause</returns>
+        protected virtual string GetFormatClause(string prefix) {
+            var sql = new StringBuilder();
+            //var formatIdList = _webSession.GetValidFormatSelectedList(new List<VehicleInformation>(new[]{_vehicleInformation}));
+            //if (formatIdList.Count > 0)
+            //    sql.AppendFormat(" and {0}ID_{1} in ({2}) "
+            //        , ((!string.IsNullOrEmpty(prefix)) ? prefix + "." : string.Empty)
+            //               , WebApplicationParameters.DataBaseDescription.GetTable(WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList[_vehicleInformation.DatabaseId].FormatTableName).Label
+            //               , string.Join(",", formatIdList.ConvertAll(p => p.ToString()).ToArray()));
+            return sql.ToString();
+        }
+        #endregion
+
 	}
 }

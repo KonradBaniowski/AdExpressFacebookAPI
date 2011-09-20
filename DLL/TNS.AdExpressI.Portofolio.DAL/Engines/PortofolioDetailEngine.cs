@@ -288,6 +288,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                         sql += " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".auto_promotion = 0 ";
                 }
 
+                sql += GetFormatClause(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+
 				// Joints Products
 				sql += " " + detailProductJoints;
 				sql += " " + dataJointForGad;
