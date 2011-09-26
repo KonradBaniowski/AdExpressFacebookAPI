@@ -159,7 +159,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Finland.Engines {
         protected override DataSet GetPeriod() {
 
             #region Construction de la requête
-            string table = GetTableData();
+            string table = GetTableData(true);
             string product = GetProductData();
             string productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
             string mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);

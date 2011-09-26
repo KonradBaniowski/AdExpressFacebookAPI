@@ -123,6 +123,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     return GetEcranData(); 
                 case PortofolioSynthesis.dataType.numberBanners:
                     return GetNumberBanner();
+                case PortofolioSynthesis.dataType.spotData:
+                    return GetSpotData();
 				default: throw new PortofolioDALException("The synthesis result type is not defined.");
 			}
 		}
@@ -430,7 +432,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             #region Construction de la requête
             try {
                 select = GetSelectDataEcran();
-                table = GetTableData();
+                table = GetTableData(true);
                 product = GetProductData();
                 productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
                 mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
@@ -513,6 +515,118 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
         }
         #endregion
 
+        #region Get Spot Data
+        /// <summary>
+        /// Get information about spots
+        /// </summary>
+        /// <returns>Spot data</returns>
+        public virtual DataSet GetSpotData() {
+
+            #region Variables
+            string select = "";
+            string table = "";
+            string product = "";
+            string productsRights = "";
+            string mediaRights = "";
+            string listProductHap = "";
+            StringBuilder sql = new StringBuilder();
+            UnitInformation unitInformation = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.insertion);
+            bool isAlertModule = _webSession.CustomerPeriodSelected.IsSliding4M;
+            if (isAlertModule == false) {
+                DateTime DateBegin = WebFunctions.Dates.getPeriodBeginningDate(_beginingDate, _webSession.PeriodType);
+                if (DateBegin > DateTime.Now)
+                    isAlertModule = true;
+            }
+            #endregion
+
+            #region Construction de la requête
+            try {
+                select = GetSelectSpotData();
+                table = GetTableData(isAlertModule);
+                product = GetProductData();
+                productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
+                mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+                listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
+            }
+            catch (System.Exception err) {
+                throw (new PortofolioDALException("Impossible to build the request for GetSpotData()", err));
+            }
+
+            sql.AppendFormat("select round(AVG(NUMBER_SPOT_COM_BREAK),3) as avg_spot_nb, SUM(NUMBER_SPOT_COM_BREAK_WAP) as sum_spot_nb_wap, round(Avg(DURATION_COMMERCIAL_BREAK),3) as avg_dur_com_break, Sum(DURATION_COMMERCIAL_BREAK) as sum_dur_com_break, count(*) as com_break_nb ");
+
+            sql.Append(" from ( ");
+
+            sql.Append(select);
+            sql.AppendFormat(" from {0}.{1} wp ", WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label, table);
+            sql.AppendFormat(" where id_media={0} ", _idMedia);
+            if (_beginingDate.Length > 0)
+                sql.AppendFormat(" and date_media_num>={0} ", _beginingDate);
+            if (_endDate.Length > 0)
+                sql.AppendFormat(" and date_media_num<={0} ", _endDate);
+
+            sql.AppendFormat(" and {0}={1}"
+                            , unitInformation.DatabaseField
+                            , this._cobrandindConditionValue);
+
+
+            sql.Append(product);
+            sql.Append(productsRights);
+            sql.Append(mediaRights);
+            sql.Append(" " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+            sql.Append(listProductHap);
+            sql.Append(" )");
+
+            #endregion
+
+            #region Execution de la requête
+            try {
+                return _webSession.Source.Fill(sql.ToString());
+            }
+            catch (System.Exception err) {
+                throw (new PortofolioDALException("Impossible to get data for GetSpotData() : " + sql.ToString(), err));
+            }
+            #endregion
+
+        }
+        #endregion
+
+        #region Get Select Spot Data
+        /// <summary>
+        /// Get Select Spot Data
+        /// </summary>
+        /// <returns>SQL</returns>
+        protected virtual string GetSelectSpotData() {
+
+            UnitInformation unitInformation = UnitsInformation.Get(WebConstantes.CustomerSessions.Unit.insertion);
+            string sql = "";
+            switch (_vehicleInformation.Id) {
+                case DBClassificationConstantes.Vehicles.names.internationalPress:
+                case DBClassificationConstantes.Vehicles.names.press:
+                case DBClassificationConstantes.Vehicles.names.newspaper:
+                case DBClassificationConstantes.Vehicles.names.magazine:
+                case DBClassificationConstantes.Vehicles.names.internet:
+                    return "";
+                case DBClassificationConstantes.Vehicles.names.radio:
+                    sql += " select  distinct date_media_num";
+                    sql += " ,COMMERCIAL_BREAK";
+                    sql += " , DURATION_COMMERCIAL_BREAK";
+                    sql += " , DURATION_COM_BREAK_WAP";
+                    sql += " , NUMBER_SPOT_COM_BREAK";
+                    sql += " , NUMBER_SPOT_COM_BREAK_WAP ";
+                    return sql;
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.others:
+                    sql += "select  distinct id_commercial_break ";
+                    sql += " ,duration_commercial_break as ecran_duration";
+                    sql += " ,NUMBER_MESSAGE_COMMERCIAL_BREA nbre_spot ";
+                    sql += " ," + unitInformation.DatabaseField + " as " + unitInformation.Id.ToString() + " ";
+                    return sql;
+                default:
+                    throw new PortofolioDALException("getTable(DBClassificationConstantes.Vehicles.value idMedia)-->Vehicle unknown.");
+            }
+        }
+        #endregion
+
 		#region GetPage
 		/// <summary>
 		/// Get pages number
@@ -552,7 +666,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
 			#region Construction de la requête
 
-			string table = GetTableData();
+			string table = GetTableData(true);
 
 			string sql = "select distinct type_sale";
 			sql += " from  " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql + table;
@@ -620,35 +734,35 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 		/// Throw when the vehicle is unknown
 		/// </exception>
 		/// <returns>Table name</returns>
-		protected virtual string GetTableData() {
+        protected virtual string GetTableData(bool isAlertModule) {
 			switch (_vehicleInformation.Id) {
                 case DBClassificationConstantes.Vehicles.names.newspaper:
-                    return WebApplicationParameters.GetDataTable(TableIds.dataNewspaperAlert, _webSession.IsSelectRetailerDisplay).Label;
+                    return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataNewspaperAlert : TableIds.dataNewspaper, _webSession.IsSelectRetailerDisplay).Label;
                 case DBClassificationConstantes.Vehicles.names.magazine:
-                    return WebApplicationParameters.GetDataTable(TableIds.dataMagazineAlert, _webSession.IsSelectRetailerDisplay).Label;
+                    return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataMagazineAlert : TableIds.dataMagazine, _webSession.IsSelectRetailerDisplay).Label;
 				case DBClassificationConstantes.Vehicles.names.internationalPress:
-                    return WebApplicationParameters.GetDataTable(TableIds.dataPressInterAlert, _webSession.IsSelectRetailerDisplay).Label;
+                    return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataPressInterAlert : TableIds.dataPressInter, _webSession.IsSelectRetailerDisplay).Label;
 				case DBClassificationConstantes.Vehicles.names.press:
-                    return WebApplicationParameters.GetDataTable(TableIds.dataPressAlert, _webSession.IsSelectRetailerDisplay).Label;
+                    return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataPressAlert : TableIds.dataPress, _webSession.IsSelectRetailerDisplay).Label;
 				case DBClassificationConstantes.Vehicles.names.radio:
-                    return WebApplicationParameters.GetDataTable(TableIds.dataRadioAlert, _webSession.IsSelectRetailerDisplay).Label;
+                    return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataRadioAlert : TableIds.dataRadio, _webSession.IsSelectRetailerDisplay).Label;
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
-                    return WebApplicationParameters.GetDataTable(TableIds.dataTvAlert, _webSession.IsSelectRetailerDisplay).Label;
+                    return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataTvAlert : TableIds.dataTv, _webSession.IsSelectRetailerDisplay).Label;
 				case DBClassificationConstantes.Vehicles.names.outdoor:
-                    return WebApplicationParameters.GetDataTable(TableIds.dataOutDoorAlert, _webSession.IsSelectRetailerDisplay).Label;
+                    return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataOutDoorAlert : TableIds.dataOutDoor, _webSession.IsSelectRetailerDisplay).Label;
                 case DBClassificationConstantes.Vehicles.names.instore:
-                    return WebApplicationParameters.GetDataTable(TableIds.dataInStoreAlert, _webSession.IsSelectRetailerDisplay).Label;
+                    return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataInStoreAlert : TableIds.dataInStore, _webSession.IsSelectRetailerDisplay).Label;
 				case DBClassificationConstantes.Vehicles.names.directMarketing:
-                    return WebApplicationParameters.GetDataTable(TableIds.dataMarketingDirectAlert, _webSession.IsSelectRetailerDisplay).Label;
+                    return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataMarketingDirectAlert : TableIds.dataMarketingDirect, _webSession.IsSelectRetailerDisplay).Label;
                 case DBClassificationConstantes.Vehicles.names.internet:
-                    return WebApplicationParameters.GetDataTable(TableIds.dataInternetAlert, _webSession.IsSelectRetailerDisplay).Label;
+                    return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataInternetAlert : TableIds.dataInternet, _webSession.IsSelectRetailerDisplay).Label;
                 case DBClassificationConstantes.Vehicles.names.cinema:
-                    return WebApplicationParameters.GetDataTable(TableIds.dataCinemaAlert, _webSession.IsSelectRetailerDisplay).Label;
+                    return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataCinemaAlert : TableIds.dataCinema, _webSession.IsSelectRetailerDisplay).Label;
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
-                    return WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrackAlert, _webSession.IsSelectRetailerDisplay).Label;
+                    return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataAdNetTrackAlert : TableIds.dataAdNetTrack, _webSession.IsSelectRetailerDisplay).Label;
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
-                    return WebApplicationParameters.GetDataTable(TableIds.dataEvaliantMobileAlert, _webSession.IsSelectRetailerDisplay).Label;
+                    return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataEvaliantMobileAlert : TableIds.dataEvaliantMobile, _webSession.IsSelectRetailerDisplay).Label;
                 default:
 					throw new PortofolioDALException("GetTableData()-->Vehicle unknown.");
 			}
@@ -872,7 +986,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
         protected virtual DataSet GetInvestment() {
 
             #region Construction de la requête
-            string table = GetTableData();
+            string table = GetTableData(true);
             string product = GetProductData();
             string productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
             string mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
@@ -917,7 +1031,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
         protected virtual DataSet GetPeriod() {
 
             #region Construction de la requête
-            string table = GetTableData();
+            string table = GetTableData(true);
             string product = GetProductData();
             string productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
             string mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
@@ -977,7 +1091,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
             #region Construction de la requête
             try {
-                tableName = GetTableData();
+                tableName = GetTableData(true);
                 productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
                 product = GetProductData();
                 mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
@@ -1043,7 +1157,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
             #region Construction de la requête
             try {
-                tableName = GetTableData();
+                tableName = GetTableData(true);
                 productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
                 product = GetProductData();
                 mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
@@ -1182,7 +1296,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 
             #region Build query
             try {
-                tableName = GetTableData();
+                tableName = GetTableData(true);
                 productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
                 mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
                 product = GetProductData();

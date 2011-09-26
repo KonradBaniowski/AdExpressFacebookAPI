@@ -2326,7 +2326,11 @@ namespace TNS.AdExpress.Constantes.FrameWork.Results{
             /// <summary>
             /// Network (Russia)
             /// </summary>
-            network
+            network,
+            /// <summary>
+            /// Spot Data
+            /// </summary>
+            spotData
         }
 	}
 
