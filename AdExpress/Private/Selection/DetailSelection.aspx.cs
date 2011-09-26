@@ -39,6 +39,9 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain;
 using TNS.AdExpress.Domain.Classification;
 using TNS.Classification.Universe;
+using System.Text;
+using System.Collections.Generic;
+using TNS.AdExpress.Web.Core.Selection;
 #endregion
 
 namespace AdExpress.Private.Selection{
@@ -229,6 +232,14 @@ namespace AdExpress.Private.Selection{
         /// Advertising Agency Text
         /// </summary>
         public string advertisingAgencyText = string.Empty;
+        /// <summary>
+        /// Banners Format Text
+        /// </summary>
+        protected string _bannersFormatText = string.Empty;
+        /// <summary>
+        /// Display Banners Format
+        /// </summary>
+	    protected bool _displayBannersFormat = false;
 		#endregion
 
 		#region Constructeur
@@ -791,7 +802,7 @@ namespace AdExpress.Private.Selection{
                 #endregion
 
                 #region Auto promo
-                if (detailSelections.Contains(CstWeb.DetailSelection.Type.isAutoPromo))
+                if (detailSelections.Contains(CstWeb.DetailSelection.Type.isAutoPromo.GetHashCode()))
                 {
                     if (_webSession.CurrentModule != CstWeb.Module.Name.ANALYSE_PLAN_MEDIA && _webSession.SelectionUniversMedia.FirstNode != null)
                     {
@@ -823,6 +834,33 @@ namespace AdExpress.Private.Selection{
                     }
                 }
                 #endregion
+
+                #region Banners Format Selected
+                if (detailSelections.Contains(CstWeb.DetailSelection.Type.bannersFormatSelected.GetHashCode()))
+                {
+                    if (WebApplicationParameters.VehiclesFormatInformation.Use)
+                    {
+                        List<Int64> formatIdList = _webSession.GetValidFormatSelectedList(_webSession.GetVehiclesSelected(), true);
+                        if (formatIdList.Count > 0)
+                        {
+                            List<string> strFormatList = new List<string>();
+                            Dictionary<Int64, FilterItem> vehiclesFormatList = VehiclesFormatList.GetList(new List<VehicleInformation>(_webSession.GetVehiclesSelected().Values).ConvertAll<Int64>(GetIdFromVehicleInfo));
+                            foreach (FilterItem cFilterItem in vehiclesFormatList.Values)
+                            {
+                                if (formatIdList.Contains(cFilterItem.Id))
+                                {
+                                    strFormatList.Add(cFilterItem.Label);
+                                }
+                            }
+                            _bannersFormatText = string.Join(", ", strFormatList.ToArray());
+                            if (!string.IsNullOrEmpty(_bannersFormatText)) _displayBannersFormat = true;
+                        }
+
+
+                    }
+                }
+
+			    #endregion
 
                 #endregion
 
@@ -939,6 +977,18 @@ namespace AdExpress.Private.Selection{
 			}
 		}
 		#endregion
+
+        #region Get Id From Vehicle Info
+        /// <summary>
+        /// Get Id From Vehicle Info
+        /// </summary>
+        /// <param name="vInfo">Vehicle Information</param>
+        /// <returns>Id From Vehicle Info</returns>
+        private Int64 GetIdFromVehicleInfo(VehicleInformation vInfo)
+        {
+            return vInfo.DatabaseId;
+        }
+        #endregion
 
 		#endregion
 

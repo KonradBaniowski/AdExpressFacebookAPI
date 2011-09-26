@@ -4,10 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Windows.Forms;
 using TNS.AdExpress.Classification;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
@@ -29,10 +27,8 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.Controls.Selections;
-using TNS.AdExpressI.Date;
-using TNS.AdExpress.Domain.Layers;
-using System.Reflection;
 using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
+using TNS.AdExpress.Web.Core.Selection;
 #endregion
 
 namespace TNS.AdExpress.Web.Controls.Headers {
@@ -1084,8 +1080,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
-            if (WebApplicationParameters.UseBannersFormatFilter
-                && customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES) {
+            if (WebApplicationParameters.VehiclesFormatInformation != null 
+                && WebApplicationParameters.VehiclesFormatInformation.Use) {
                     bannersFormatOption = true;
             }
 
@@ -1100,9 +1096,46 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 }
 
                 if (bannersFormatOption) {
-                    try {
-                        if (Page.Request.Form.GetValues("_genericFilter")[0] != null)
-                            customerWebSession.SelectedBannersForamtList = Page.Request.Form.GetValues("_genericFilter")[0];
+                    try
+                    {
+                        var strGenericFilter = Page.Request.Form.GetValues("_genericFilter");
+                        if (strGenericFilter != null && strGenericFilter[0] != null && !string.IsNullOrEmpty(strGenericFilter[0]))
+                        {
+                            List<Int64> filtreBannerIds = (new List<string>(strGenericFilter[0].Split(','))).ConvertAll<Int64>(Int64.Parse);
+                            if (filtreBannerIds.Count > 0)
+                            {
+                                var activeBannersFormatList = new List<FilterItem>(customerWebSession.GetValidFormatList(customerWebSession.GetVehiclesSelected()).Values);
+                                if (activeBannersFormatList.Count > 0)
+                                {
+                                    List<FilterItem> enableFormatList = activeBannersFormatList.FindAll(p => p.IsEnable);
+                                    bool isEqual = true;
+                                    foreach (var cFiltarItem in enableFormatList)
+                                    {
+                                        if (!filtreBannerIds.Contains(cFiltarItem.Id))
+                                        {
+                                            isEqual = false;
+                                        }
+                                    }
+                                    if(isEqual)
+                                        customerWebSession.SelectedBannersFormatList = string.Empty;
+                                    else
+                                        customerWebSession.SelectedBannersFormatList = strGenericFilter[0];
+                                }
+                                else
+                                {
+                                    customerWebSession.SelectedBannersFormatList = string.Empty;
+                                }
+
+                            }
+                            else
+                            {
+                                customerWebSession.SelectedBannersFormatList = string.Empty;
+                            }
+
+                        }
+                        else {
+                            customerWebSession.SelectedBannersFormatList = string.Empty;
+                        }
                     }
                     catch (SystemException) { }
                 }
@@ -1348,7 +1381,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         protected override void OnLoad(EventArgs e) {
 
             _retailerSelectionOption = customerWebSession.IsRetailerDisplay;
-            if (customerWebSession.IsSelectRetailerDisplay != customerWebSession.IsSelectRetailerDisplay && _retailerSelectionOption) {
+            if (customerWebSession.IsSelectRetailerDisplay && _retailerSelectionOption) {
                 customerWebSession.IsSelectRetailerDisplay = customerWebSession.IsSelectRetailerDisplay && _retailerSelectionOption;
                 customerWebSession.Save();
             }
@@ -1687,15 +1720,27 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Banners Format Filter
-            if (bannersFormatOption) {
-                VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID);
-                _bannersFormatWebControl = new GenericFilterWebControl();
-                _bannersFormatWebControl.ID = "_bannersFormatWebControl";
-                _bannersFormatWebControl.CustomerWebSession = customerWebSession;
-                _bannersFormatWebControl.FilterItems = ActiveBannersFormatList.GetActiveBannersFormatList(vehicleInformation.DatabaseId);
-                _bannersFormatWebControl.SelectedFilterItems = customerWebSession.SelectedBannersForamtList;
-                _bannersFormatWebControl.Width = 194;
-                Controls.Add(_bannersFormatWebControl);
+            if (bannersFormatOption)
+            {
+
+                var activeBannersFormatList = new List<FilterItem>(customerWebSession.GetValidFormatList(customerWebSession.GetVehiclesSelected()).Values);
+                if (activeBannersFormatList.Count > 0)
+                {
+                    _bannersFormatWebControl = new GenericFilterWebControl();
+                    _bannersFormatWebControl.ID = "_bannersFormatWebControl";
+                    _bannersFormatWebControl.CustomerWebSession = customerWebSession;
+                    _bannersFormatWebControl.FilterItems = activeBannersFormatList;
+                    if(string.IsNullOrEmpty(customerWebSession.SelectedBannersFormatList))
+                        _bannersFormatWebControl.SelectedFilterItems = string.Join(",", activeBannersFormatList.FindAll(p=>p.IsEnable).ConvertAll(p=>p.Id.ToString()).ToArray());
+                    else _bannersFormatWebControl.SelectedFilterItems = customerWebSession.SelectedBannersFormatList;
+                    _bannersFormatWebControl.Width = 194;
+                    _bannersFormatWebControl.NbElemByColumn = 1;
+                    Controls.Add(_bannersFormatWebControl);
+                }
+                else
+                {
+                    bannersFormatOption = false;
+                }
             }
             #endregion
 

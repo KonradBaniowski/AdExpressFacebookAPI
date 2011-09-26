@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using TNS.AdExpress.Domain.Classification;
 using TNS.FrameWork.Exceptions;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Web;
@@ -71,7 +72,29 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 useComparativeMediaSchedule = bool.Parse(reader.GetAttribute("useComparative"));
                                 break;
                             case "bannersFormat":
-                                useBannersFormatFilter = bool.Parse(reader.GetAttribute("useBannersFormat"));
+                                useBannersFormatFilter = bool.Parse(reader.GetAttribute("use"));
+                                if (useBannersFormatFilter)
+                                {
+                                    Dictionary<Int64, VehicleFormatInformation> vehicleFormatInformationList = new Dictionary<Int64, VehicleFormatInformation>(); 
+                                    subReader = reader.ReadSubtree();
+                                    while (subReader.Read()) {
+                                        if (subReader.NodeType == XmlNodeType.Element) {
+                                            switch (subReader.LocalName) {
+                                                case "allowVehicle":
+                                                    vehicleFormatInformationList.Add(VehiclesInformation.Get(Int64.Parse(subReader.GetAttribute("id"))).DatabaseId
+                                                    , new VehicleFormatInformation(
+                                                        VehiclesInformation.Get(Int64.Parse(subReader.GetAttribute("id"))).DatabaseId,
+                                                            (Constantes.Customer.RightBanners.Type)Enum.Parse(typeof(Constantes.Customer.RightBanners.Type), subReader.GetAttribute("rightBannersType")),
+                                                            (TableIds)Enum.Parse(typeof(TableIds), subReader.GetAttribute("dataTableName")),
+                                                            (TableIds)Enum.Parse(typeof(TableIds), subReader.GetAttribute("formatTableName"))
+                                                        )
+                                                    );
+                                                    break;
+                                            }
+                                        }
+                                    }
+                                    WebApplicationParameters.VehiclesFormatInformation = new VehiclesFormatInformation(useBannersFormatFilter, vehicleFormatInformationList);
+                                }
                                 break;
                             case "retailer":
                                 useRetailer = bool.Parse(reader.GetAttribute("use"));
@@ -160,7 +183,6 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                 }
                 WebApplicationParameters.InsetTypeCollection = insetTypeCollection;
                 WebApplicationParameters.UseComparativeMediaSchedule = useComparativeMediaSchedule;
-                WebApplicationParameters.UseBannersFormatFilter = useBannersFormatFilter;
                 WebApplicationParameters.UseRetailer = useRetailer;
                 WebApplicationParameters.MatchingRetailerTableList = matchingTableList;
                 WebApplicationParameters.VpConfigurationDetail = vpConfigurationDetail;

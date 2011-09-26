@@ -363,4 +363,24 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
 	}
 
 	#endregion
+
+    #region Formats
+    /// <summary>
+    /// Formats
+    /// </summary>
+    public class Formats {
+        /// <summary>
+        /// None
+        /// </summary>
+        public const Int64 None = 0;
+        /// <summary>
+        /// Banners
+        /// </summary>
+        public const Int64 Banners = 1;
+        /// <summary>
+        /// In-Stream Video
+        /// </summary>
+        public const Int64 InStream = 2;
+    }
+    #endregion
 }

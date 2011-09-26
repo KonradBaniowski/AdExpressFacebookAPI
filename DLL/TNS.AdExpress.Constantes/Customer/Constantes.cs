@@ -241,4 +241,23 @@ namespace TNS.AdExpress.Constantes.Customer{
 		#endregion
 	}
 
+    /// <summary>
+    /// Right Banners
+    /// </summary>
+    public class RightBanners {
+
+        #region Enumérateur
+        /// <summary>
+        /// Format
+        /// </summary>
+        public enum Type {
+            /// <summary>
+            /// Evaliant Internet
+            /// </summary>
+            FormatEvaliantInternet,
+
+        }
+        #endregion
+    }
+
 }

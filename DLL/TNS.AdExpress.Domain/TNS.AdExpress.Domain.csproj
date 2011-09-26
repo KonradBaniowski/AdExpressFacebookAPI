@@ -81,6 +81,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classification\VehiclesFormatInformation.cs" />
+    <Compile Include="Classification\VehicleFormatInformation.cs" />
     <Compile Include="Classification\IBaalItemsList.cs" />
     <Compile Include="Classification\ListContener.cs" />
     <Compile Include="Classification\Media.cs" />

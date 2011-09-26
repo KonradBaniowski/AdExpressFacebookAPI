@@ -368,7 +368,10 @@ namespace TNS.AdExpressI.Insertions.Cells {
                 }
                 else if (_format.ToUpper() == FLV_ID) {
 
-                    if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_FLV_EVALIANT_CREATION_ACCESS_FLAG)) {
+                    if ((!WebApplicationParameters.VehiclesFormatInformation.Use 
+                            && _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_FLV_EVALIANT_CREATION_ACCESS_FLAG))
+                        || (WebApplicationParameters.VehiclesFormatInformation.Use 
+                            && _session.GetValidFormatSelectedList(new List<VehicleInformation>(new[]{VehiclesInformation.Get(AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack)})).Contains(TNS.AdExpress.Constantes.Classification.DB.Formats.InStream))) {
                         output.Append("<object id=\"video_" + _idVersion + "\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0\" width=\"400\" height=\"315\">");
                         output.Append("<param name=\"movie\" value=\"/Player/playerflv.swf\" />");
                         output.Append("<param name=\"allowfullscreen\" value=\"true\" />");
@@ -443,7 +446,10 @@ namespace TNS.AdExpressI.Insertions.Cells {
 
                 if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DOWNLOAD_ACCESS_FLAG)) {
                     if ((_format.ToUpper() != MULTIPART_ID && _format.ToUpper() != FLV_ID)
-                        || (_format.ToUpper() == FLV_ID && _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_FLV_EVALIANT_CREATION_ACCESS_FLAG))) {
+                        || (_format.ToUpper() == FLV_ID
+                            && ((!WebApplicationParameters.VehiclesFormatInformation.Use &&  _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_FLV_EVALIANT_CREATION_ACCESS_FLAG))
+                                || (WebApplicationParameters.VehiclesFormatInformation.Use
+                                    && _session.GetValidFormatSelectedList(new List<VehicleInformation>(new[]{VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack)})).Contains(TNS.AdExpress.Constantes.Classification.DB.Formats.InStream))))) {
                         output.AppendFormat("\n<br/><a href={0} class=\"roll06\" title=\"{1}\">{2}</a>",
                             _visuals[0],
                             GestionWeb.GetWebWord(SAVE_LINK_LABEL_HELP_ID, _session.SiteLanguage),

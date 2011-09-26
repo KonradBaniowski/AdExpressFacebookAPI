@@ -9,24 +9,18 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Web;
-using System.Windows.Forms;
-using System.Web.SessionState;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using Oracle.DataAccess.Client;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Domain.Web.Navigation;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using CstWebCustomer = TNS.AdExpress.Constantes.Customer;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Web;
+using System.Collections.Generic;
+using TNS.AdExpress.Domain.Classification;
 
 namespace AdExpress.Private.Selection{
 	/// <summary>
@@ -191,38 +185,42 @@ namespace AdExpress.Private.Selection{
 					Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(1052,_webSession.SiteLanguage)));
 				}
 				else{
-					vehiclesSelection.Substring(0,vehiclesSelection.Length-1);
 
-                    if (WebApplicationParameters.UseBannersFormatFilter
-                                && _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
-                    {
-                        foreach(ListItem currentItem in OneVehicleSelectionWebControl1.Items)
-                            if (currentItem.Selected)
-                            {
-                                if (_webSession.SelectionUniversMedia.FirstNode != null
-                                    && _webSession.SelectionUniversMedia.FirstNode.Tag != null
-                                    && ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID != long.Parse(currentItem.Value))
-                                    _webSession.SelectedBannersForamtList = string.Empty;
+                    //Reinitialize banners selection if change vehicle
+                    Dictionary<Int64, VehicleInformation> vehicleInformationList = _webSession.GetVehiclesSelected();
+                    if (OneVehicleSelectionWebControl1.Items.Count != vehicleInformationList.Count) {
+                        foreach (ListItem currentItem in OneVehicleSelectionWebControl1.Items) {
+                            if (!vehicleInformationList.ContainsKey(long.Parse(currentItem.Value))) {
+                                _webSession.SelectedBannersFormatList = string.Empty;
+                                break;
                             }
+                        }
+                    }
+                    else {
+                        _webSession.SelectedBannersFormatList = string.Empty;
                     }
 
-					// Sauvegarde de la sélection dans la session
+                    // Sauvegarde de la sélection dans la session
                     //Si la sélection comporte des éléments, on la vide
                     _webSession.SelectionUniversMedia.Nodes.Clear();
-					System.Windows.Forms.TreeNode tmpNode;
+                    System.Windows.Forms.TreeNode tmpNode;
 					foreach(ListItem currentItem in OneVehicleSelectionWebControl1.Items){
-						if(currentItem.Selected){
-							tmpNode=new System.Windows.Forms.TreeNode(currentItem.Text);
-							tmpNode.Tag=new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess,long.Parse(currentItem.Value),currentItem.Text);
-							tmpNode.Checked=true;
-							//_webSession.CurrentUnivers. .Nodes.Add(tmpNode);
+                        if (currentItem.Selected)
+                        {
+                            tmpNode = new System.Windows.Forms.TreeNode(currentItem.Text);
+                            tmpNode.Tag =
+                                new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess,
+                                                     long.Parse(currentItem.Value), currentItem.Text);
+                            tmpNode.Checked = true;
 
-							_webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
+                            //_webSession.CurrentUnivers. .Nodes.Add(tmpNode);
 
-							// Tracking
-							_webSession.OnSetVehicle(long.Parse(currentItem.Value));
+                            _webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
 
-						}
+                            // Tracking
+                            _webSession.OnSetVehicle(long.Parse(currentItem.Value));
+
+                        }
 					}
 					// On sauvegarde la session
 					_webSession.Save();

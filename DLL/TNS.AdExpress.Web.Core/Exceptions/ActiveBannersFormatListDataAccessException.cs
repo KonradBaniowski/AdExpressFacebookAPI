@@ -3,22 +3,22 @@ using TNS.FrameWork.Exceptions;
 
 namespace TNS.AdExpress.Web.Core.Exceptions {
     /// <summary>
-    /// Active Banners Format management
+    /// Vehicle Format List DataAccess Exception
     /// </summary>
-    class ActiveBannersFormatListDataAccessException : BaseException{
+    class VehicleFormatListDataAccessException : BaseException{
         
         #region Constructors
 		/// <summary>
 		/// Base constructor
 		/// </summary>
-		public ActiveBannersFormatListDataAccessException():base(){	
+		public VehicleFormatListDataAccessException():base(){	
         }
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="message">Error message</param>
-		public ActiveBannersFormatListDataAccessException(string message):base(message){
+		public VehicleFormatListDataAccessException(string message):base(message){
 		}
 
 		/// <summary>
@@ -26,7 +26,7 @@ namespace TNS.AdExpress.Web.Core.Exceptions {
 		/// </summary>
 		/// <param name="message">Error message</param>
 		/// <param name="innerException">Inner Exception</param>
-        public ActiveBannersFormatListDataAccessException(string message, System.Exception innerException) : base(message, innerException)
+        public VehicleFormatListDataAccessException(string message, System.Exception innerException) : base(message, innerException)
         {
 		}
 		#endregion

@@ -34,6 +34,7 @@ using TNS.AdExpress.Classification;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress;
+using TNS.AdExpress.Domain.Web;
 
 namespace AdExpress.Private{
 	/// <summary>
@@ -112,7 +113,9 @@ namespace AdExpress.Private{
 					// (template ou droits propres au login)
                     loginRight.SetModuleRights();
                     loginRight.SetFlagsRights();
-                    loginRight.SetRights();			
+                    loginRight.SetRights();
+                    if (WebApplicationParameters.VehiclesFormatInformation.Use)
+                        loginRight.SetBannersAssignement();
 					if(true){
 						//Creer une session
 						if(webSession==null) webSession = new WebSession(loginRight);

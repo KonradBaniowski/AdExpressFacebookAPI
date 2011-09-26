@@ -135,7 +135,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActiveBannersFormatList.cs" />
+    <Compile Include="Exceptions\BannersFormatException.cs" />
+    <Compile Include="Exceptions\VehicleException.cs" />
+    <Compile Include="VehicleFormatList.cs" />
+    <Compile Include="VehiclesFormatList.cs" />
     <Compile Include="ActiveMediaList.cs" />
     <Compile Include="AdNetTrackDetailLevelsDescription.cs">
       <SubType>Code</SubType>
@@ -145,7 +148,7 @@
     </Compile>
     <Compile Include="CustomerDataFilters.cs" />
     <Compile Include="CustomerPeriod.cs" />
-    <Compile Include="DataAccess\ActiveBannersFormatListDataAccess.cs" />
+    <Compile Include="DataAccess\VehicleFormatListDataAccess.cs" />
     <Compile Include="DataAccess\ClassificationList\SearchLevelDataAccess.cs" />
     <Compile Include="DataAccess\DetailMediaDataAccess.cs" />
     <Compile Include="DataAccess\Session\GenericDetailLevelDataAccess.cs" />

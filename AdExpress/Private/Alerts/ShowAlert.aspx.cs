@@ -78,6 +78,8 @@ public partial class Private_Alerts_ShowAlert : TNS.AdExpress.Web.UI.PrivateWebP
                                 newRight.SetModuleRights();
                                 newRight.SetFlagsRights();
                                 newRight.SetRights();
+                                if (WebApplicationParameters.VehiclesFormatInformation.Use)
+                                    newRight.SetBannersAssignement();
                             }
                             _webSession = new WebSession(newRight);
                         }

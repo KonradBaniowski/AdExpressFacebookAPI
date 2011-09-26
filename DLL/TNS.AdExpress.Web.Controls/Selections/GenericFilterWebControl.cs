@@ -40,6 +40,10 @@ namespace TNS.AdExpress.Web.Controls.Selections {
         /// Classe Css pour le titre de la section personnalisée
         /// </summary>
         protected string _cssCustomSectionTitle = "txtViolet11Bold";
+        /// <summary>
+        /// Nb Element by Column
+        /// </summary>
+        protected int _nbElemByColumn = 2;
         #endregion
 
         #region Accessors
@@ -97,14 +101,32 @@ namespace TNS.AdExpress.Web.Controls.Selections {
             get { return (_cssCustomSectionTitle); }
             set { _cssCustomSectionTitle = value; }
         }
+        /// <summary>
+        /// Set Nb Elem By Column
+        /// </summary>
+        [Bindable(false)]
+        public int NbElemByColumn {
+            set { _nbElemByColumn = value; }
+        }
         #endregion
 
         #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="filterItems">List of filter items</param>
         public GenericFilterWebControl() {
+        }
+        #endregion
+
+        #region OnPreRender
+        /// <summary>
+        /// Pre Render
+        /// </summary>
+        /// <param name="e">Event Argument</param>
+        protected override void OnPreRender(EventArgs e) {
+            base.OnPreRender(e);
+            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("DivDisplayer")) 
+                this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "DivDisplayer", TNS.AdExpress.Web.Functions.Script.DivDisplayer());
         }
         #endregion
 
@@ -116,12 +138,12 @@ namespace TNS.AdExpress.Web.Controls.Selections {
         public string Render() {
 
             StringBuilder sb = new StringBuilder(5000);
-            const int ELEMENT_NB = 2;
             int count = 0;
             string checkedText = "";
+            string disabledText = string.Empty;
             string[] selectedFilterItems = null;
 
-            if (_selectedFilterItems != null && _selectedFilterItems.Length > 0) selectedFilterItems = _selectedFilterItems.Split(',');
+            if (!string.IsNullOrEmpty(_selectedFilterItems)) selectedFilterItems = _selectedFilterItems.Split(',');
                  
             // table de personnalisation
             sb.Append("<table class=\"backgroundGenericFilterWebControl genericFilterWebControlBorder\" cellSpacing=\"0\" cellPadding=\"0\" width=\"" + this.Width + "\" border=\"0\">");
@@ -140,13 +162,15 @@ namespace TNS.AdExpress.Web.Controls.Selections {
             // Filter items list
             foreach (FilterItem filterItem in _filterItems) {
                 if (count == 0) sb.Append("<tr>");
-                sb.Append("<td width="+(this.Width.Value/2)+">");
+                sb.Append("<td width=" + (this.Width.Value / _nbElemByColumn) + ">");
                 if (ContainValue(selectedFilterItems, filterItem.Id.ToString())) checkedText = "checked";
                 else checkedText = "";
-                sb.AppendFormat("<input id=\"checkbox_{0}_{1}\" type=\"checkbox\" " + checkedText + " onclick=\"if(this.checked){{AddFilter_{0}({1});}}else {{RemoveFilter_{0}({1});}};\" ><label for=\"label_{0}_{1}\" class=\"txtViolet11Bold\">{2}</label>", this.ID, filterItem.Id, filterItem.Label);
+                if (!filterItem.IsEnable) disabledText = "disabled=\"disabled\"";
+                else disabledText = string.Empty;
+                sb.AppendFormat("<input id=\"checkbox_{0}_{1}\" type=\"checkbox\" " + checkedText + " " + disabledText + " onclick=\"if(this.checked){{AddFilter_{0}({1});}}else {{RemoveFilter_{0}({1});}};\" ><label for=\"checkbox_{0}_{1}\" class=\"txtViolet11Bold\" style=\"display:inline-block;white-space:nowrap;\">{2}</label>", this.ID, filterItem.Id, filterItem.Label);
                 sb.Append("</td>");
                 count++;
-                if (count == ELEMENT_NB){
+                if (count == _nbElemByColumn) {
                     sb.Append("</tr>");
                     count = 0;
                 }

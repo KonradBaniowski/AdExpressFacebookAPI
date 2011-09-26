@@ -353,7 +353,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                                 vehicleIdListTmp.Add(Int64.Parse(listVehicles[i]));
                             }
                         }
-                        if (vehicleIdListTmp != null && vehicleIdListTmp.Count > 0)
+                        if (vehicleIdListTmp.Count > 0)
                             sql.AppendFormat("({0})", GetQueryForWebPlanEvaliant(detailLevel, period.PeriodDetailLEvel, subPeriods.SubPeriodType, subPeriods.Items, string.Empty, isComparative));
                         else
                             sql.AppendFormat("({0})", GetQuery(detailLevel, period.PeriodDetailLEvel, subPeriods.SubPeriodType, -1, subPeriods.Items, string.Empty, isComparative));
@@ -625,6 +625,68 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 
             #endregion
 
+            #region Banners Format Filter
+            if (vehicleInfo != null)
+            {
+                VehicleInformation cVehicleInfo;
+                if (_isAdNetTrackMediaSchedule && vehicleId == VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet).DatabaseId)
+                    cVehicleInfo = VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack);
+                else
+                    cVehicleInfo = vehicleInfo;
+                List<Int64> formatIdList = _session.GetValidFormatSelectedList(new List<VehicleInformation>(new[] { cVehicleInfo }));
+                if (formatIdList.Count > 0)
+                    sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".ID_" +
+                               WebApplicationParameters.DataBaseDescription.GetTable(
+                                   WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList[
+                                       cVehicleInfo.DatabaseId].FormatTableName).Label + " in (" +
+                               string.Join(",", formatIdList.ConvertAll(p => p.ToString()).ToArray()) + ") ");
+            }
+            else
+            {
+                if (list.Length > 0)
+                {
+                    var sqlFormatSelectedClause = new StringBuilder();
+                    sqlFormatSelectedClause.Append(" and (");
+                    var vehicleInfoList = _session.GetVehiclesSelected();
+                    bool firstVehicle = true;
+                    bool hasValidFormat = false;
+                    foreach (var cVehicleInformation in vehicleInfoList.Values)
+                    {
+                        VehicleInformation cVehicleInfo;
+                        if (_isAdNetTrackMediaSchedule && cVehicleInformation.DatabaseId == VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet).DatabaseId)
+                            cVehicleInfo = VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack);
+                        else
+                            cVehicleInfo = cVehicleInformation;
+
+                        if (firstVehicle) firstVehicle = false;
+                        else sqlFormatSelectedClause.Append(" OR ");
+                        sqlFormatSelectedClause.Append(" (");
+                        var formatIdList = _session.GetValidFormatSelectedList(new List<VehicleInformation>(new[] { cVehicleInfo }));
+                        if (formatIdList.Count > 0)
+                        {
+                            sqlFormatSelectedClause.AppendFormat(" {0}.id_vehicle = {1} ",
+                                             WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
+                                             cVehicleInfo.DatabaseId);
+                            sqlFormatSelectedClause.Append("and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".ID_" + WebApplicationParameters.DataBaseDescription.GetTable(WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList[cVehicleInfo.DatabaseId].FormatTableName).Label + " in (" + string.Join(",", formatIdList.ConvertAll(p => p.ToString()).ToArray()) + ") ");
+                            hasValidFormat = true;
+                        }
+                        else
+                        {
+                            sqlFormatSelectedClause.AppendFormat(" {0}.id_vehicle = {1} ",
+                                             WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
+                                             cVehicleInfo.DatabaseId);
+                        }
+                        sqlFormatSelectedClause.Append(") ");
+                    }
+                    sqlFormatSelectedClause.Append(" ) ");
+                    if (hasValidFormat)
+                        sql.Append(sqlFormatSelectedClause.ToString());
+                }
+            }
+
+            #endregion
+
+
             // Order
             sql.AppendFormat("Group by {0} {1}", groupByFieldName, groupByOptional);
             // And date
@@ -838,7 +900,44 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 
 			#endregion
 
-			// Order
+            #region Banners Format Filter
+            if (list.Length > 0)
+            {
+                var sqlFormatSelectedClause = new StringBuilder();
+                sqlFormatSelectedClause.Append(" and (");
+                var vehicleInfoList = _session.GetVehiclesSelected();
+                bool firstVehicle = true;
+                bool hasValidFormat = false;
+                foreach (var cVehicleInformation in vehicleInfoList.Values)
+                {
+                    VehicleInformation cVehicleInfo;
+                    if (_isAdNetTrackMediaSchedule && cVehicleInformation.DatabaseId == VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet).DatabaseId)
+                        cVehicleInfo = VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack);
+                    else
+                        cVehicleInfo = cVehicleInformation;
+                    if(firstVehicle) firstVehicle = false;
+                    else sqlFormatSelectedClause.Append(" OR ");
+                    sqlFormatSelectedClause.Append(" (");
+                    var formatIdList = _session.GetValidFormatSelectedList(new List<VehicleInformation>(new[]{cVehicleInfo}));
+                    if (formatIdList.Count > 0)
+                    {
+                        sqlFormatSelectedClause.AppendFormat(" {0}.id_vehicle = {1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, cVehicleInfo.DatabaseId);
+                        sqlFormatSelectedClause.Append("and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".ID_" +WebApplicationParameters.DataBaseDescription.GetTable(WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList[cVehicleInfo.DatabaseId].FormatTableName).Label + " in (" +string.Join(",", formatIdList.ConvertAll(p => p.ToString()).ToArray()) + ") ");
+                        hasValidFormat = true;
+                    }
+                    else
+                    {
+                        sqlFormatSelectedClause.AppendFormat(" {0}.id_vehicle = {1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, cVehicleInfo.DatabaseId);
+                    }
+                    sqlFormatSelectedClause.Append(") ");
+                }
+                sqlFormatSelectedClause.Append(" ) ");
+                if (hasValidFormat)
+                    sql.Append(sqlFormatSelectedClause.ToString());
+            }
+            #endregion
+
+            // Order
 			sql.AppendFormat("Group by {0} {1}", groupByFieldName, groupByOptional);
 			// And date
 			sql.AppendFormat(", {0} ", dateFieldName);

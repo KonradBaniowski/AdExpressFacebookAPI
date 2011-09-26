@@ -1687,6 +1687,29 @@ namespace TNS.AdExpress.Web.UI
                 }
                 t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(2552, webSession.SiteLanguage) + " :</font> " + GestionWeb.GetWebWord(code, webSession.SiteLanguage) + "</TD></TR>");
 
+                if (WebApplicationParameters.VehiclesFormatInformation.Use) {
+                    Dictionary<Int64, VehicleInformation> VehicleInformationList = new Dictionary<Int64, VehicleInformation>();
+                    VehicleInformationList.Add(VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack).DatabaseId, VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack));
+                    List<Int64> formatIdList = webSession.GetValidFormatSelectedList(VehicleInformationList, true);
+                    if (formatIdList.Count > 0) {
+
+                        List<string> strFormatList = new List<string>();
+                        Dictionary<Int64, FilterItem> vehiclesFormatList = VehiclesFormatList.GetList(new List<VehicleInformation>(VehicleInformationList.Values).ConvertAll<Int64>(GetIdFromVehicleInfo));
+                        foreach (FilterItem cFilterItem in vehiclesFormatList.Values) {
+                            if (formatIdList.Contains(cFilterItem.Id)) {
+                                strFormatList.Add(cFilterItem.Label);
+                            }
+                        }
+                        string bannersFormatText = string.Join(", ", strFormatList.ToArray());
+                        if (!string.IsNullOrEmpty(bannersFormatText))
+                        {
+                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(2928, webSession.SiteLanguage) + " :</font> " + bannersFormatText + "</TD></TR>");
+                        }
+                    }
+
+
+                }
+
                 t.Append(GetBlankLine());
                 t.Append("</table><br>");
 
@@ -2391,6 +2414,18 @@ namespace TNS.AdExpress.Web.UI
         {
             _cssKeys = cssKeys;
         }
+
+        #region Get Id From Vehicle Info
+        /// <summary>
+        /// Get Id From Vehicle Info
+        /// </summary>
+        /// <param name="vInfo">Vehicle Information</param>
+        /// <returns>Id From Vehicle Info</returns>
+        private static Int64 GetIdFromVehicleInfo(VehicleInformation vInfo) {
+            return vInfo.DatabaseId;
+        }
+        #endregion
+
         #endregion
 
         #region Abstract Methods

@@ -264,6 +264,9 @@
     <table enumId="232" description="Promo : Circuit "   schemaEnumId="11" label="circuit" prefix="cr"/>
     <table enumId="233" description="Promo : Data  "   schemaEnumId="11" label="data_promotion" prefix="wp"/>
     <table enumId="234" description="Promo : Product Segment"   schemaEnumId="11" label="segment" prefix="sg"/>
+
+    <table enumId="237" description="Classif: Group Format Banners" schemaEnumId="0" label="group_format_banners" prefix="gfb"/>
+    <table enumId="238" description="Right: Group Format Banners" schemaEnumId="2" label="ORDER_CLIENT_GROUP_FORMAT" prefix="ocgf"/>
     
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>

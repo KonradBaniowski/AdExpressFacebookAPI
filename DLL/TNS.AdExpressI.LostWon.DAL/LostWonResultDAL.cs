@@ -90,7 +90,6 @@ namespace TNS.AdExpressI.LostWon.DAL
         }
         #endregion
 
-
         #region ILostWonResultDAL Membres
 
         #region GetData
@@ -615,7 +614,7 @@ namespace TNS.AdExpressI.LostWon.DAL
 
                 // Obtient les tables de la nomenclature
                 productTableName = _session.GenericProductDetailLevel.GetSqlTables(schAdExpr03.Label);
-                if (productTableName != null && productTableName.Length > 0) productTableName = "," + productTableName;
+                if (!string.IsNullOrEmpty(productTableName)) productTableName = "," + productTableName;
                 // Obtient les champs de la nomenclature
                 productFieldName = _session.GenericProductDetailLevel.GetSqlFields();
                 // Obtient l'ordre des champs
@@ -651,6 +650,8 @@ namespace TNS.AdExpressI.LostWon.DAL
                         groupOptional = string.Format(", {0}.{1} ", DATA_TABLE_PREFIXE, u.DatabaseMultimediaField);
                     }
                 }
+
+
 
 
                 //option encarts (pour la presse)
@@ -698,6 +699,7 @@ namespace TNS.AdExpressI.LostWon.DAL
             sql.AppendFormat(" {0}", dataJointForGad);
             sql.AppendFormat(" {0}", mediaAgencyJoins);
             sql.AppendFormat(" {0}", joinOptional);
+            sql.Append(GetFormatClause(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
 
             //Jointures encart
             if (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id 
@@ -936,6 +938,10 @@ namespace TNS.AdExpressI.LostWon.DAL
                 sql.AppendFormat(" and {0}.id_language(+)={1}", tblGroupAdvertisingAgengy.Prefix, _session.DataLanguage);
             }
             sql.Append(joinOptional);
+
+            sql.Append(GetFormatClause(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+            
+
             // Group by			
             sql.AppendFormat("  group by {0}.id_sector,{0}.id_subsector, {0}.id_group_", DATA_TABLE_PREFIXE);
             sql.AppendFormat(", {0}.id_advertiser,{0}.id_brand, {0}.id_product", DATA_TABLE_PREFIXE);
@@ -1121,6 +1127,21 @@ namespace TNS.AdExpressI.LostWon.DAL
 			if (Product.Contains(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID) && (prList = Product.GetItemsList(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID)) != null)
                 sql = prList.GetExcludeItemsSql(true, prefix);
             return sql;
+        }
+        /// <summary>
+        /// Get Format Clause
+        /// </summary>
+        /// <param name="prefix">Prefix</param>
+        /// <returns>Sql Format selected Clause</returns>
+        protected virtual string GetFormatClause(string prefix) {
+            var sql = new StringBuilder();
+            var formatIdList = _session.GetValidFormatSelectedList(new List<VehicleInformation>(new[]{_vehicleInformation}));
+            if (formatIdList.Count > 0)
+                sql.AppendFormat(" and {0}ID_{1} in ({2}) "
+                    , ((!string.IsNullOrEmpty(prefix)) ? prefix + "." : string.Empty)
+                           , WebApplicationParameters.DataBaseDescription.GetTable(WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList[_vehicleInformation.DatabaseId].FormatTableName).Label
+                           , string.Join(",", formatIdList.ConvertAll(p => p.ToString()).ToArray()));
+            return sql.ToString();
         }
         #endregion
 

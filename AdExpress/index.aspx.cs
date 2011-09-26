@@ -147,6 +147,8 @@ namespace AdExpress{
                     newRight.SetModuleRights();
                     newRight.SetFlagsRights();
                     newRight.SetRights();
+                    if(WebApplicationParameters.VehiclesFormatInformation.Use)
+                        newRight.SetBannersAssignement();
                     //newRight.HasModuleAssignmentAlertsAdExpress();
                     if(_webSession==null) _webSession = new WebSession(newRight);
                     _webSession.SiteLanguage=this._siteLanguage;

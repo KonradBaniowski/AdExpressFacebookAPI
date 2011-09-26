@@ -52,6 +52,11 @@ namespace TNS.AdExpress {
         [System.NonSerialized]
         protected ModuleAssignment _moduleAssignmentAlertsAdExpress;
         /// <summary>
+        /// Key : Right Banners Type
+        /// valeur : Value List assignment
+        /// </summary>
+        protected Dictionary<CustomerCst.RightBanners.Type, Int64[]> _rightsBannersAssignementList;
+        /// <summary>
         /// identifiant login
         /// </summary>		
         protected Int64 _loginId;
@@ -763,6 +768,54 @@ namespace TNS.AdExpress {
         }
             catch (System.Exception err) {
                 throw (new RightException("Impossible to Get Nb Alerts AdExpress", err));
+            }
+        }
+        #endregion
+
+        #region Banners Format Assignement
+        /// <summary>
+        /// Set Banners Format Assignement
+        /// </summary>
+        public void SetBannersAssignement() {
+            try {
+                _rightsBannersAssignementList = new Dictionary<CustomerCst.RightBanners.Type, Int64[]>();
+                var ds = RightDAL.GetBannersFormatAssignement(Source, _loginId);
+                if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows != null) {
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                        _rightsBannersAssignementList.Add(CustomerCst.RightBanners.Type.FormatEvaliantInternet, new List<string>(row[0].ToString().Split(',')).ConvertAll<Int64>(Int64.Parse).ToArray());
+                }
+            }
+            catch (Exception err) {
+                throw (new RightException("Impossible to build SetBannersFormatAssignement", err));
+            }
+        }
+        /// <summary>
+        /// Get Banners Format Assignement 
+        /// </summary>
+        /// <returns>Format identifier list</returns>
+        public List<Int64> GetBannersFormatAssignement(List<Constantes.Customer.RightBanners.Type> typeRightBannersList) {
+            try
+            {
+                var rightFormatList = new List<Int64>();
+                if (_rightsBannersAssignementList == null) SetBannersAssignement();
+                if (_rightsBannersAssignementList != null)
+                {
+                    foreach (var type in typeRightBannersList)
+                    {
+                        if(_rightsBannersAssignementList.ContainsKey(type))
+                        {
+                            foreach (var cFormatIdList in _rightsBannersAssignementList[type])
+                            {
+                                if(!rightFormatList.Contains(cFormatIdList))
+                                    rightFormatList.Add(cFormatIdList);
+                            }
+                        }
+                    }
+                }
+                return rightFormatList;
+            }
+            catch (Exception err) {
+                throw (new RightException("Impossible to Get Banners Format Assignement", err));
             }
         }
         #endregion

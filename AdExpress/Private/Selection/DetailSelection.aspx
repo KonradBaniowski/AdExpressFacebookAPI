@@ -229,6 +229,16 @@
                             </tr>
                             <TR height="10"><TD></TD></TR>
                             <%} %>
+                            <!--Banners Format-->
+                            <%if (_displayBannersFormat){ %>
+                            <tr>
+                                <td class="txtViolet11Bold">&nbsp;<cc1:AdExpressText ID="AdExpressText22" runat="server" Code="2928" Language="33" /> :</td>
+                            </tr>
+                            <tr height="20">
+                                <td class="txtViolet11" valign="top"><%=_bannersFormatText%></td>
+                            </tr>
+                            <TR height="10"><TD></TD></TR>
+                            <%} %>
                             <!--Advertising Agnecy-->
 				            <%if(displayAdvertisingAgency){%>
 				            <TR>

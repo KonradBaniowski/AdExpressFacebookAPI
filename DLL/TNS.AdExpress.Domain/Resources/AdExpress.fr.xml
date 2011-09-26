@@ -2156,5 +2156,7 @@
     <item mnemonic="w2926" type="System.String">Etes vous sûr de vouloir supprimer ces niveaux enregistrés?</item>
     <item mnemonic="w2927" type="System.String">Déplacer les niveaux enregistrés sélectionnés vers:</item>
     <!-- ********************************* -->
+    <!-- Add text for FR: Banners format in detail selection -->
+    <item mnemonic="w2928" type="System.String">Formats</item>
   </items>
 </localization>

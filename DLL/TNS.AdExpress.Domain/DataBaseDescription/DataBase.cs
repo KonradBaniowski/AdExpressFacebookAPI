@@ -956,6 +956,7 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// Recap Magazine Retailer
         /// </summary>
+        /// 
         recapMagazineRetailer = 207,
         /// <summary>
         /// Recap Magazine Segment Retailer
@@ -1075,6 +1076,14 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Customer insertions levels saved
         /// </summary>
         insertionLevelsSave = 236,
+        /// <summary>
+        /// Group Format Banners
+        /// </summary>
+        groupFormatBanners = 237,
+        /// <summary>
+        /// Right Group Format
+        /// </summary>
+        rightGroupFormat = 238,
         /// <summary>
         /// Alert description
         /// </summary>

@@ -26,6 +26,8 @@ using WebFunctions = TNS.AdExpress.Web.Functions;
 using CstWebCustomer = TNS.AdExpress.Constantes.Customer;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Classification;
+using System.Collections.Generic;
 
 namespace AdExpress.Private.Selection{
 	/// <summary>
@@ -200,7 +202,25 @@ namespace AdExpress.Private.Selection{
                     Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(1052, _webSession.SiteLanguage)));
                 }
                 else {
-                    vehiclesSelection.Substring(0, vehiclesSelection.Length - 1);
+
+                    //Reinitialize banners selection if change vehicle
+                    Dictionary<Int64, VehicleInformation> vehicleInformationList = _webSession.GetVehiclesSelected();
+                    if (VehicleSelectionWebControl2.Items.Count != vehicleInformationList.Count)
+                    {
+                        foreach (ListItem currentItem in VehicleSelectionWebControl2.Items)
+                        {
+                            if(!vehicleInformationList.ContainsKey(long.Parse(currentItem.Value)))
+                            {
+                                _webSession.SelectedBannersFormatList = string.Empty;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        _webSession.SelectedBannersFormatList = string.Empty;
+                    }
+
                     // Sauvegarde de la sélection dans la session
                     //Si la sélection comporte des éléments, on la vide
                     _webSession.SelectionUniversMedia.Nodes.Clear();
@@ -210,6 +230,7 @@ namespace AdExpress.Private.Selection{
                             tmpNode = new System.Windows.Forms.TreeNode(currentItem.Text);
                             tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, long.Parse(currentItem.Value), currentItem.Text);
                             tmpNode.Checked = true;
+
                             //_webSession.CurrentUnivers. .Nodes.Add(tmpNode);
                             _webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
                             // Tracking

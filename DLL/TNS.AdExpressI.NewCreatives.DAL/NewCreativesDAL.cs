@@ -13,18 +13,14 @@
 using System;
 using System.Data;
 using System.Text;
-using System.Windows.Forms;
 
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
-using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Exceptions;
 
 using TNS.AdExpressI.NewCreatives.DAL.Exceptions;
 
-using TNS.FrameWork.DB;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 
 using CstDBDesc = TNS.AdExpress.Domain.DataBaseDescription;
@@ -35,8 +31,8 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Domain.Classification;
-using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Web.Core.Utilities;
+using System.Collections.Generic;
 #endregion
 
 namespace TNS.AdExpressI.NewCreatives.DAL {
@@ -195,12 +191,11 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                     sql.Append(" and " + prefixDataMobile + ".id_category not in (" + TNS.AdExpress.Domain.Lists.GetIdList(TNS.AdExpress.Constantes.Web.GroupList.Type.applicationMobile) + ") ");
                 }
 
-                // TODO ADD RIGHT MANAGEMENT FOR BANNERS FORMAT
-                // Add Banners Format Filter
-                if (WebApplicationParameters.UseBannersFormatFilter) {
-                    if (_session.SelectedBannersForamtList.Length > 0)
-                        sql.Append(" and " + table.Prefix + ".ID_FORMAT_BANNERS in (" + _session.SelectedBannersForamtList + ") ");
-                }
+                #region Banners Format Filter
+                List<Int64> formatIdList = _session.GetValidFormatSelectedList(new List<VehicleInformation>(new[]{_vehicleInformation}));
+                if (formatIdList.Count > 0)
+                    sql.Append(" and " + table.Prefix + ".ID_" + WebApplicationParameters.DataBaseDescription.GetTable(WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList[_vehicleInformation.DatabaseId].FormatTableName).Label + " in (" + string.Join(",", formatIdList.ConvertAll(p => p.ToString()).ToArray()) + ") ");
+                #endregion
 
                 // group by
                 sql.Append(" group by " + detailProductFields + ","+ table.Prefix + ".hashcode ");

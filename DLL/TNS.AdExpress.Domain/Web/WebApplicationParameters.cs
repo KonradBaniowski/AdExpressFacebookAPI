@@ -18,6 +18,7 @@ using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.ModulesDescritpion;
 using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Web.Navigation;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Domain.Web {
 
@@ -108,9 +109,9 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         protected static bool _useComparativeMediaSchedule = false;
         /// <summary>
-        /// Use Banners Format Filter
+        /// Vehicles Format Information
         /// </summary>
-        protected static bool _useBannersFormatFilter = false;
+        protected static VehiclesFormatInformation _vehiclesFormatInformation = new VehiclesFormatInformation(false, null);
         /// <summary>
         /// Use Retailer
         /// </summary>
@@ -331,14 +332,14 @@ namespace TNS.AdExpress.Domain.Web {
             }
         }
         /// <summary>
-        /// Get / Set Use Banners Format Filter
+        /// Get / Set Vehicles Format Information
         /// </summary>
-        public static bool UseBannersFormatFilter {
+        public static VehiclesFormatInformation VehiclesFormatInformation {
             get {
-                return _useBannersFormatFilter;
+                return _vehiclesFormatInformation;
             }
             set {
-                _useBannersFormatFilter = value;
+                _vehiclesFormatInformation = value;
             }
         }
         /// <summary>

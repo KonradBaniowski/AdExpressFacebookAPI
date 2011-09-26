@@ -42,6 +42,7 @@ using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Classification;
 
 using CustPeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type;
+using TNS.AdExpress.Web.Core.Selection;
 
 namespace TNS.AdExpress.Web.Core.Sessions {
 	/// <summary>
@@ -1611,17 +1612,17 @@ namespace TNS.AdExpress.Web.Core.Sessions {
         /// <summary>
         /// Get or Set Selected Banners Foramt List
         /// </summary>
-        public string SelectedBannersForamtList {
+        public string SelectedBannersFormatList {
             get {
-                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.selectedBannersForamtList)) {
-                    _selectedBannersForamtList = userParameters[CoreConstantes.SessionParamters.selectedBannersForamtList].ToString();
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.selectedBannersFormatList)) {
+                    _selectedBannersForamtList = userParameters[CoreConstantes.SessionParamters.selectedBannersFormatList].ToString();
                 }
 
                 return (_selectedBannersForamtList);
             }
             set {
                 _selectedBannersForamtList = value;
-                userParameters[CoreConstantes.SessionParamters.selectedBannersForamtList] = value;
+                userParameters[CoreConstantes.SessionParamters.selectedBannersFormatList] = value;
                 modificationDate = DateTime.Now;
             }
         }
@@ -3588,17 +3589,13 @@ namespace TNS.AdExpress.Web.Core.Sessions {
                 Module moduleDescription = ModulesList.GetModule(currentModule);
                 ResultPageInformation resultPageInformation = (ResultPageInformation)moduleDescription.GetResultPageInformation((int)currentTab);
                 string listStr = GetSelection(SelectionUniversMedia,  TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+                Dictionary<Int64, VehicleInformation> vehcileInformationList = GetVehiclesSelected();
                 List<Vehicles.names> vehicleList = new List<Vehicles.names>();
-                if (listStr != null && listStr.Length > 0) {
-                    string[] list = listStr.Split(',');
-                    for(int i = 0;i < list.Length;i++)
-                        vehicleList.Add(VehiclesInformation.DatabaseIdToEnum(Convert.ToInt64(list[i])));
+                foreach (var cVehicleInformation in vehcileInformationList.Values)
+                {
+                    vehicleList.Add(cVehicleInformation.Id);
                 }
-                else {
-                    //When a vehicle is not checked but one or more category, this get the vehicle correspondly
-                    Int64 Vehicle = ((LevelInformation)SelectionUniversMedia.FirstNode.Tag).ID;
-                    vehicleList.Add(VehiclesInformation.DatabaseIdToEnum(Vehicle));
-                }
+                
                 List<UnitInformation> units = resultPageInformation.GetValidUnits(vehicleList);
                 for (int i = units.Count-1; i >= 0; i--)
                 {
@@ -3636,8 +3633,137 @@ namespace TNS.AdExpress.Web.Core.Sessions {
         }
 		#endregion
 
-		#region Universes
-		/// <summary>
+        #region Get Vehicles Selected
+        /// <summary>
+        /// Get Vehicles Selected
+        /// </summary>
+        /// <returns>Vehicles Selected</returns>
+        public Dictionary<Int64, VehicleInformation> GetVehiclesSelected() {
+            try {
+                string listStr = GetSelection(SelectionUniversMedia, Constantes.Customer.Right.type.vehicleAccess);
+                var vehicleList = new Dictionary<Int64, VehicleInformation>();
+                if (!string.IsNullOrEmpty(listStr)) {
+                    string[] list = listStr.Split(',');
+                    for (int i = 0; i < list.Length; i++)
+                        vehicleList.Add(Convert.ToInt64(list[i]), VehiclesInformation.Get(Convert.ToInt64(list[i])));
+                }
+                else if (SelectionUniversMedia.FirstNode != null && SelectionUniversMedia.FirstNode.Tag != null) {
+
+                    //When a vehicle is not checked but one or more category, this get the vehicle correspondly
+                    vehicleList.Add(((LevelInformation)SelectionUniversMedia.FirstNode.Tag).ID, VehiclesInformation.Get(((LevelInformation)SelectionUniversMedia.FirstNode.Tag).ID));
+                }
+
+
+                return vehicleList;
+            }
+            catch {
+                throw (new VehicleException("Vehicle selection is not managed"));
+            }
+        }
+        #endregion
+
+        #region Get Format 
+        /// <summary>
+        /// Get Common Valid Format List
+        /// </summary>
+        /// <param name="vehicleInformationList">Vehicle Information List</param>
+        /// <returns>Common Valid Format List</returns>
+        public Dictionary<Int64, FilterItem> GetValidFormatList(Dictionary<Int64, VehicleInformation> vehicleInformationList) {
+            try {
+                var activeBannersFormatList = new Dictionary<Int64, FilterItem>();
+                if (WebApplicationParameters.VehiclesFormatInformation.Use) {
+
+                    var formatIdList = CustomerLogin.GetBannersFormatAssignement(WebApplicationParameters.VehiclesFormatInformation.GetRightBannersTypeList(vehicleInformationList));
+                    List<Int64> vehicleIdList = new List<VehicleInformation>(vehicleInformationList.Values).ConvertAll(p => p.DatabaseId);
+                    if (formatIdList == null || formatIdList.Count == 0)
+                    {
+                        activeBannersFormatList = VehiclesFormatList.GetList(vehicleIdList);
+                    }
+                    else {
+                        foreach (var cFilterItem in VehiclesFormatList.GetList(vehicleIdList).Values) {
+                            activeBannersFormatList.Add(
+                                cFilterItem.Id
+                                , new FilterItem(
+                                    cFilterItem.Id
+                                    , cFilterItem.Label
+                                    , formatIdList.Contains(cFilterItem.Id)
+                                    )
+                                );
+                        }
+                    }
+                }
+                return activeBannersFormatList;
+            }
+            catch (Exception e) {
+                throw (new BannersFormatException("Valid Format List is not managed", e));
+            }
+        }
+        /// <summary>
+        /// Get Valid Format List
+        /// </summary>
+        /// <param name="vehicleInformationList">Vehicle Information List</param>
+        /// <returns>Valid Format List</returns>
+        public List<Int64> GetValidFormatSelectedList(List<VehicleInformation> vehicleInformationList)
+        {
+            var vehicleInfoList = new Dictionary<Int64, VehicleInformation>();
+            foreach (var cVehicleInformation in vehicleInformationList)
+            {
+                if(!vehicleInfoList.ContainsKey(cVehicleInformation.DatabaseId))
+                    vehicleInfoList.Add(cVehicleInformation.DatabaseId, cVehicleInformation);
+            }
+            return GetValidFormatSelectedList(vehicleInfoList);
+        }
+
+        /// <summary>
+        /// Get Valid Format List
+        /// </summary>
+        /// <param name="vehicleInformationList">Vehicle Information List</param>
+        /// <returns>Valid Format List</returns>
+        public List<Int64> GetValidFormatSelectedList(Dictionary<Int64, VehicleInformation> vehicleInformationList)
+        {
+            return GetValidFormatSelectedList(vehicleInformationList, false);
+        }
+
+	    /// <summary>
+        /// Get Valid Format List
+        /// </summary>
+        /// <param name="vehicleInformationList">Vehicle Information List</param>
+        /// <param name="returnAlwaysValues">
+        /// If value is true : return empty list only if no vehicle is defined in selection 
+        /// If value is false : return empty list when if no vehicle is defined in selection OR if the table banners contains all format selected
+        /// </param>
+        /// <returns>Valid Format List</returns>
+        public List<Int64> GetValidFormatSelectedList(Dictionary<Int64, VehicleInformation> vehicleInformationList, bool returnAlwaysValues) {
+            try {
+                var activeBannersFormatList = new List<Int64>();
+                if (WebApplicationParameters.VehiclesFormatInformation.Use && vehicleInformationList != null && vehicleInformationList.Count > 0) {
+                    var validFormatItemList = new List<FilterItem>(GetValidFormatList(vehicleInformationList).Values);
+                    var validFormatList = validFormatItemList.FindAll(p => p.IsEnable).ConvertAll(p => p.Id);
+
+                    if (!string.IsNullOrEmpty(SelectedBannersFormatList)) 
+                    {
+                        var selectedBannersFormatList = new List<string>(SelectedBannersFormatList.Split(',')).ConvertAll<Int64>(Int64.Parse);
+                        activeBannersFormatList = selectedBannersFormatList.FindAll(validFormatList.Contains);
+                    }
+                    else if (returnAlwaysValues || validFormatItemList.Count != validFormatList.Count) 
+                    {
+                        activeBannersFormatList = validFormatList;
+                    }
+                    else
+                    {
+                        activeBannersFormatList = new List<Int64>();
+                    }
+                }
+                return activeBannersFormatList;
+            }
+            catch {
+                throw (new BannersFormatException("Valid Format Selected List is not managed"));
+            }
+        }
+        #endregion
+
+        #region Universes
+        /// <summary>
 		/// Get universe level list Id
 		/// </summary>
 		/// <param name="universes">Universes</param>

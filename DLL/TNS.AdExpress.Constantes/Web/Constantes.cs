@@ -257,7 +257,7 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Selected Banners Foramt List
             /// </summary>
-            selectedBannersForamtList = 58,
+            selectedBannersFormatList = 58,
             /// <summary>
             /// Selected Retailer Display
             /// </summary>
@@ -1921,7 +1921,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Selected region
             /// </summary>
-            regionSelected = 35
+            regionSelected = 35,
+            /// <summary>
+            /// Selected Banenrs format
+            /// </summary>
+            bannersFormatSelected = 36
 
 		}
 	}

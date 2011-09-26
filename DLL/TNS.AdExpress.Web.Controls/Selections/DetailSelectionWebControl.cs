@@ -594,6 +594,9 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 						case WebConstantes.DetailSelection.Type.percentageAlignmentSelected :
 							t.Append(GetPercentageAlignment(_webSession));
 							break;
+                        case WebConstantes.DetailSelection.Type.bannersFormatSelected :
+							t.Append(GetBannersFormatSelected(_webSession));
+					        break;
 						default:
 							break;
 					}
@@ -1503,6 +1506,50 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			return("");
 		}
 		#endregion
+
+        #region Banners Format sélectionné
+        /// <summary>
+        /// Banners Format sélectionné
+        /// </summary>
+        /// <param name="webSession">Session du client</param>
+        /// <returns>HTML</returns>
+        private string GetBannersFormatSelected(WebSession webSession)
+        {
+            var html = new StringBuilder();
+            if (WebApplicationParameters.VehiclesFormatInformation.Use)
+            {
+                if (VehiclesInformation.Contains(Constantes.Classification.DB.Vehicles.names.adnettrack))
+                {
+
+                    var formatIdList = webSession.GetValidFormatSelectedList(_webSession.GetVehiclesSelected(), true);
+                    if (formatIdList.Count > 0)
+                    {
+                        var strFormatList = new List<string>();
+                        var vehiclesFormatList =
+                            VehiclesFormatList.GetList(
+                                new List<VehicleInformation>(_webSession.GetVehiclesSelected().Values).ConvertAll
+                                    (p => p.DatabaseId));
+                        foreach (var cFilterItem in vehiclesFormatList.Values)
+                        {
+                            if (formatIdList.Contains(cFilterItem.Id))
+                            {
+                                strFormatList.Add(cFilterItem.Label);
+                            }
+                        }
+
+                        html.Append("<tr><td colspan=4 " + cssTitleData + "><font " + cssTitle +
+                                    ">" +
+                                    GestionWeb.GetWebWord(2928, webSession.SiteLanguage) +
+                                    " :</font> " + string.Join(", ", strFormatList.ToArray()) +
+                                    "</td></tr>");
+                    }
+                }
+
+            }
+            return html.ToString();
+        }
+
+	    #endregion
 
 		#endregion
 

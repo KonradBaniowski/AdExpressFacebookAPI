@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
-
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstCustomer = TNS.AdExpress.Constantes.Customer;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
@@ -19,6 +19,7 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web.Navigation;
 using System.Windows.Forms;
 using System.Collections;
+using Table = TNS.AdExpress.Domain.DataBaseDescription.Table;
 
 namespace TNS.AdExpressI.Insertions.DAL {
     /// <summary>
@@ -893,12 +894,15 @@ namespace TNS.AdExpressI.Insertions.DAL {
             #endregion
 
             #region Banners Format Filter
-            // TODO ADD RIGHT MANAGEMENT FOR BANNERS FORMAT
-            // Add Banners Format Filter
-            if (WebApplicationParameters.UseBannersFormatFilter && _module.Id == CstWeb.Module.Name.NEW_CREATIVES) { 
-                if(_session.SelectedBannersForamtList.Length>0)
-                    sql.Append(" and " + tData.Prefix + ".ID_FORMAT_BANNERS in (" + _session.SelectedBannersForamtList + ") ");
-            }
+            List<Int64> formatIdList =null;
+            VehicleInformation cVehicleInfo = null;
+            if (vehicle.Id == CstDBClassif.Vehicles.names.internet)
+                cVehicleInfo = VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack);
+            else
+                cVehicleInfo = vehicle;
+            formatIdList = _session.GetValidFormatSelectedList(new List<VehicleInformation>(new[] { cVehicleInfo }));
+            if (formatIdList.Count>0)
+                sql.Append(" and " + tData.Prefix + ".ID_" + WebApplicationParameters.DataBaseDescription.GetTable(WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList[cVehicleInfo.DatabaseId].FormatTableName).Label + " in (" + string.Join(",", formatIdList.ConvertAll(p => p.ToString()).ToArray()) + ") ");
             #endregion
 
             #region Filtres
@@ -907,7 +911,7 @@ namespace TNS.AdExpressI.Insertions.DAL {
              * GenericProductDetailLevel : product classification levels
              * GenericMediaDetailLevel : media classification levels
              * */
-            if (filters != null && filters.Length > 0) {
+            if (!string.IsNullOrEmpty(filters)) {
                 GenericDetailLevel detailLevels = null;
                 switch (_module.Id) {
                     case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:

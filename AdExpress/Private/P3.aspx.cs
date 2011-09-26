@@ -9,6 +9,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using AdExpress.Exceptions;
 using TNS.AdExpressI.Date.DAL;
 using System.Reflection;
+using TNS.AdExpress.Domain.Web;
 
 public partial class Private_P3 : System.Web.UI.Page
 {
@@ -78,6 +79,8 @@ public partial class Private_P3 : System.Web.UI.Page
                 loginRight.SetModuleRights();
                 loginRight.SetFlagsRights();
                 loginRight.SetRights();
+                if (WebApplicationParameters.VehiclesFormatInformation.Use)
+                    loginRight.SetBannersAssignement();
                 webSession.SiteLanguage = _siteLanguage;
 
                 // Année courante pour les recaps                    

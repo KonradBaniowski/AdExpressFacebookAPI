@@ -658,6 +658,47 @@ namespace TNS.AdExpress.DataAccess {
         }
         #endregion
 
+        #region Get Banners Format Assignement
+        /// <summary>
+        /// Get Module frequencies
+        /// </summary>
+        /// <param name="source">Data Source</param>
+        /// <param name="loginId">Login Id</param>
+        /// <returns></returns>
+        public static DataSet GetBannersFormatAssignement(IDataSource source, Int64 loginId) {
+
+            #region Tables initilization
+            Table rightGroupFormat;
+            Schema mau;
+            try {
+                rightGroupFormat = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightGroupFormat);
+                mau = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mau01);
+            }
+            catch (System.Exception err) {
+                throw (new RightDALException("Impossible to get table names or schema label", err));
+            }
+            #endregion
+
+            #region Request
+            string sql = "select " + mau.Label + ".listnum_to_char(list_group_format)list,exception";
+            sql += " from " + rightGroupFormat.SqlWithPrefix + " ";
+            sql += " where id_login=" + loginId + "";
+            sql += " and id_project=" + Constantes.Project.ADEXPRESS_ID + "";
+            sql += " and " + rightGroupFormat.Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + "";
+            #endregion
+
+            #region Execute request
+            try {
+                return (source.Fill(sql));
+            }
+            catch (System.Exception err) {
+                throw (new RightDALException("Impossible to retreive Banners Format Assignement rights : " + sql, err));
+            }
+            #endregion
+
+        }
+        #endregion
+
         #region Right Cohesion
 
         #region Media Right cohesion

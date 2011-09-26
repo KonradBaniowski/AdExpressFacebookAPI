@@ -1,30 +1,16 @@
 using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Web;
-
-using System.Web.SessionState;
-using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Domain.Web.Navigation;
-//using TNS.AdExpress.Rules.Customer;
-using TNS.AdExpress.Web;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using TNSMail=TNS.FrameWork.Net.Mail;
 using AnubisConstantes=TNS.AdExpress.Anubis.Constantes;
 using TNS.FrameWork.Exceptions;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Web.BusinessFacade.Selections.Medias;
 using TNS.AdExpress.Web.Core;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Web.Core.Utilities;
-
-using TNS.Classification;
-using TNS.AdExpress.Domain;
 using TNS.AdExpress.Domain.Web;
-using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.XmlLoader;
 using TNS.Ares.Domain.DataBase;
 using TNS.Ares.Domain.LS;
@@ -149,8 +135,8 @@ namespace AdExpress {
                 AlertConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.ALERTE_CONFIGURATION));
                 DataBaseConfiguration.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
 
-                if (WebApplicationParameters.UseBannersFormatFilter)
-                    ActiveBannersFormatList.Init(WebApplicationParameters.DefaultDataLanguage);
+                if (WebApplicationParameters.VehiclesFormatInformation!=null && WebApplicationParameters.VehiclesFormatInformation.Use)
+                    VehiclesFormatList.Init(WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList, WebApplicationParameters.DefaultDataLanguage);
 
 			}
 			catch(System.Exception error){
