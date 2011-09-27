@@ -121,6 +121,78 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
 
         }
         #endregion
+
+        #region SpotNumberGetData
+        /// <summary>
+        /// Spot Number Get Data
+        /// </summary>
+        /// <returns>Spot Number</returns>
+        protected override string SpotNumberGetData(){
+            return GetSpotNumber(GetDataInvestment());
+        }
+        #endregion
+
+        #region EcranNumberGetData
+        /// <summary>
+        /// Ecran Number Get Data
+        /// </summary>
+        /// <param name="isAlertModule">Is Alert Module</param>
+        /// <returns>Ecran Number</returns>
+        protected override string EcranNumberGetData(bool isAlertModule) {
+            return GetEcranNumber(GetDataEncartData(isAlertModule));
+        }
+        #endregion
+
+        #region TotalDurationGetData
+        /// <summary>
+        /// Total Duration Get Data
+        /// </summary>
+        /// <returns>Total Duration</returns>
+        protected override string TotalDurationGetData() {
+            return GetTotalDuration(GetDataInvestment());
+        }
+        #endregion
+
+        #region GetSpotNumber
+        /// <summary>
+        /// GetSpotNumber
+        /// </summary>
+        protected override string GetSpotNumber(DataTable dt) {
+            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.insertion) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString())
+                && dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString().Length > 0)
+                return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
+            else if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.spot) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString()))
+                return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString()].ToString());
+            else if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.occurence) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.occurence].Id.ToString()))
+                return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.occurence].Id.ToString()].ToString());
+            else
+                return string.Empty;
+        }
+        #endregion
+
+        #region GetEcranNumber
+        /// <summary>
+        /// GetEcranNumber
+        /// </summary>
+        protected override string GetEcranNumber(DataTable dt) {
+            if (dt != null) {
+                return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
+            }
+            else return string.Empty;
+        }
+        #endregion
+
+        #region GetTotalDuration
+        /// <summary>
+        /// GetTotalDuration
+        /// </summary>
+        protected override string GetTotalDuration(DataTable dt) {
+            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.duration) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()))
+                return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()].ToString());
+            return string.Empty;
+        }
+        #endregion
+
         #endregion
 
     }

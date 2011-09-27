@@ -42,7 +42,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 	public class SynthesisEngine : Engine {
 
         #region Const
-        private const string UNIT_FORMAT = "{0:max0}";
+        protected const string UNIT_FORMAT = "{0:max0}";
         #endregion
 
         #region Variables
@@ -1292,12 +1292,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others) {
 
-                #region Get Data
-                if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio)
-                    nbrSpot = GetSpotNumber(GetSpotData());
-                else
-                    nbrSpot = GetSpotNumber(GetDataInvestment());
-                #endregion
+                nbrSpot = SpotNumberGetData();
 
                 //Nombre de spot
                 if (nbrSpot.Length == 0) {
@@ -1313,6 +1308,16 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
             return data;
 
+        }
+        /// <summary>
+        /// Spot Number Get Data
+        /// </summary>
+        /// <returns>Spot Number</returns>
+        protected virtual string SpotNumberGetData() {
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio)
+                return GetSpotNumber(GetSpotData());
+            else
+                return GetSpotNumber(GetDataInvestment());
         }
         #endregion
 
@@ -1330,12 +1335,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others) {             
                 if (isAlertModule) {
 
-                    #region Get Data
-                    if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio)
-                        nbrEcran = GetEcranNumber(GetSpotData());
-                    else
-                        nbrEcran = GetEcranNumber(GetDataEncartData(isAlertModule));
-                    #endregion
+                    nbrEcran = EcranNumberGetData(isAlertModule);
 
                     // Nombre d'ecran
                     if (nbrEcran.Length == 0) {
@@ -1353,6 +1353,17 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             return data;
 
         }
+        /// <summary>
+        /// Ecran Number Get Data
+        /// </summary>
+        /// <param name="isAlertModule">Is Alert Module</param>
+        /// <returns>Ecran Number</returns>
+        protected virtual string EcranNumberGetData(bool isAlertModule) {
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio)
+                return GetEcranNumber(GetSpotData());
+            else
+                return GetEcranNumber(GetDataEncartData(isAlertModule));
+        }
         #endregion
 
         #region ComputeDataTotalDuration
@@ -1368,12 +1379,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others) {
 
-                #region Get Data
-                 if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio)
-                     totalDuration = GetTotalDuration(GetSpotData());
-                else
-                    totalDuration = GetTotalDuration(GetDataInvestment());
-                #endregion
+                totalDuration = TotalDurationGetData();
 
                 if (totalDuration.Length == 0) {
                     totalDuration = "0";
@@ -1389,6 +1395,16 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
             return data;
 
+        }
+        /// <summary>
+        /// Total Duration Get Data
+        /// </summary>
+        /// <returns>Total Duration</returns>
+        protected virtual string TotalDurationGetData() {
+            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio)
+                return GetTotalDuration(GetSpotData());
+            else
+                return GetTotalDuration(GetDataInvestment());
         }
         #endregion
 
