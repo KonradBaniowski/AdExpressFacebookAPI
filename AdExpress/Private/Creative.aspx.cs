@@ -177,12 +177,14 @@ namespace AdExpress.Private{
                                 webSession.IdSlogans = new ArrayList();
                                 if (vehicleListId.Length > 1)
                                     throw (new AdExpressException.AdExpressCustomerException("On ne peut pas avoir un plan media pluri media si on passe un numéro de version en paramètre"));
+
+                                
                                 foreach (string idVersion in versionListId) {
                                     if (!idVersion.Equals("0")) {
-                                        vehicleId = idVersion.Substring(0, 1);
+                                        vehicleId = idVersion.Substring(0, vehicleListIdString.Length);
                                         if (!vehicleId.Equals(vehicleListIdString))
                                             throw (new AdExpressException.AdExpressCustomerException("La version " + idVersion + " n'appartient pas au media : " + vehicleListIdString));
-                                        webSession.IdSlogans.Add(Int64.Parse(idVersion.Substring(1)));
+                                        webSession.IdSlogans.Add(Int64.Parse(idVersion.Substring(vehicleListIdString.Length)));
                                     }
                                 }
                             }
