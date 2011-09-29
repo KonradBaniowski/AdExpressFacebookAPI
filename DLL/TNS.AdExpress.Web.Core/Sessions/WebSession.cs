@@ -3941,7 +3941,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
                     break;
                 case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.cumulWithNextMonth:
                     PeriodBeginningDate = (new DateTime(DateTime.Now.Year, 1, 1)).ToString("yyyyMMdd");
-                    PeriodEndDate = (new DateTime(cDateTime.Year, cDateTime.Month, cDateTime.AddMonths(2).AddDays(-1).Day)).ToString("yyyyMMdd"); 
+                    PeriodEndDate = (new DateTime(cDateTime.Year, cDateTime.AddMonths(1).Month, cDateTime.AddMonths(2).AddDays(-1).Day)).ToString("yyyyMMdd"); 
                     break;
                 case TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.currentMonth:
                     PeriodBeginningDate = cDateTime.ToString("yyyyMMdd");
