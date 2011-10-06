@@ -6,7 +6,7 @@
 ///////////////////////////////////////////////////////////
 
 
-
+using System.Collections.Generic;
 using TNS.FrameWork.DB.Common;
 
 namespace TNS.AdExpress.Anubis.Bastet.Common {
@@ -43,6 +43,10 @@ namespace TNS.AdExpress.Anubis.Bastet.Common {
 		/// Language code
 		/// </summary>
 		protected int _language = 33;
+        /// <summary>
+        /// List of tab in excel document
+        /// </summary>
+        protected List<Constantes.excelTabs> _excelTabs = new List<Constantes.excelTabs>();
 		#endregion
 
 		#region Propriétés
@@ -96,13 +100,21 @@ namespace TNS.AdExpress.Anubis.Bastet.Common {
 			get { return _language; }
 			set { _language = value; }
 		}
+        /// <summary>
+        /// Get/Set list of excel tab
+        /// </summary>
+        public List<Constantes.excelTabs> ExcelTabs
+        {
+            get { return _excelTabs; }
+            set { _excelTabs = value; }
+        }    
 		#endregion
 
 		#region Constructeur
 		/// <summary>
 		/// Constructeur
 		/// </summary>
-		/// <param name="dataSource">Source de données</param>
+        /// <param name="source">Source de données</param>
 		public BastetConfig(IDataSource source){
 			try{
 				DataAccess.BastetConfigDataAccess.Load(source,this);

@@ -5,4 +5,8 @@
 	<ExcelPath path="C:\Program Files\TNS\Ares XlsStats Service\tempStatsCustomerFiles"/>
 	<!--If path empty then path = current directory of executable-->
   	<ThemePath path=""/>
+  <excelTabs>
+    <excelTab name="Rappel des paramètres" id="customerSelelection"/>    
+    <excelTab name="Top connections Clients, IP, time slot" id="topConnectedByIpTimeSlot"/>
+  </excelTabs>
 </Configuration>

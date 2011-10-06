@@ -85,72 +85,104 @@ namespace TNS.AdExpress.Anubis.Bastet.BusinessFacade {
 		/// Génère les statistiques AdExpress dans un fichier excel
 		/// </summary>
 		public void Fill(){
-
-
-			//Rappel des paramètres
-			this.CustomerSelelection(_parameters,this._rqDetails["id_login"].ToString());
 			
-			//IP Adresse par client
-			this.IPAdresseByClient(_excelFilePath,this._parameters);
-			
-			//Top type clients qui se connectent le plus
-			this.TopTypeConnectedCustomer(_excelFilePath,this._parameters);
 
-			//Top connections par type de clients et par jour nommé
-			this.TopTypeConnectedCustomerByDay(_excelFilePath,this._parameters);
-			
-			//Top connections par type de clients et par mois
-			this.TopTypeConnectedCustomerByMonth(_excelFilePath,this._parameters);
+            for (int i = 0; i < _config.ExcelTabs.Count; i++)
+            {
+                Constantes.excelTabs val = _config.ExcelTabs[i];
+                switch (val)
+                {
+                    case Constantes.excelTabs.customerSelelection:
+                        //Rappel des paramètres
+                        CustomerSelelection(_parameters, _rqDetails["id_login"].ToString());
+                        break;
+                    case Constantes.excelTabs.iPAdresseByClient:
+                        //IP Adresse par client
+                        IPAdresseByClient(_excelFilePath, _parameters);
+                        break;
+                    case Constantes.excelTabs.topTypeConnectedCustomer:
+                        //Top type clients qui se connectent le plus
+                        TopTypeConnectedCustomer(_excelFilePath, _parameters);
+                        break;
+                    case Constantes.excelTabs.topTypeConnectedCustomerByDay:
+                        //Top connections par type de clients et par jour nommé
+                        TopTypeConnectedCustomerByDay(_excelFilePath, _parameters);
+                        break;
+                    case Constantes.excelTabs.topTypeConnectedCustomerByMonth:
+                        //Top connections par type de clients et par mois
+                        TopTypeConnectedCustomerByMonth(_excelFilePath, _parameters);
+                        break;
+                    case Constantes.excelTabs.topConnectedCustomer:
+                        //Top clients qui se connectent le plus
+                        TopConnectedCustomer(_excelFilePath, _parameters);
+                        break;
+                    case Constantes.excelTabs.topConnectedCustomerByMonth:
+                        //Top connections clients par mois
+                        TopConnectedCustomerByMonth(_excelFilePath, _parameters);
+                        break;
+                    case Constantes.excelTabs.topConnectedCustomerByDay:
+                        //Top connections clients par jour nommé
+                        TopConnectedCustomerByDay(_excelFilePath, _parameters);
+                        break;
+                    case Constantes.excelTabs.topConnectedCompany:
+                        //Top sociétés qui se connectent le plus
+                        TopConnectedCompany(_excelFilePath, _parameters);
+                        break;
+                    case Constantes.excelTabs.topConnectedCompanyByMonth:
+                        //Top sociétés qui se connectent le plus par mois
+                        TopConnectedCompanyByMonth(_excelFilePath, _parameters);
+                        break;
+                    case Constantes.excelTabs.topConnectedCompanyByDay:
+                        //Top sociétés qui se connectent le plus par jour nommé
+                        TopConnectedCompanyByDay(_excelFilePath, _parameters);
+                        break;
+                    case Constantes.excelTabs.connexionDurationAverage:
+                        //Durée moyenne des connections par clients
+                        ConnexionDurationAverage(_parameters);
+                        break;
+                    case Constantes.excelTabs.topUsedModules:
+                        //Top des modules et des groupes de modules 
+                        TopUsedModules(_parameters);
+                        break;
+                    case Constantes.excelTabs.topVehicle:
+                        //Top médias utilisés
+                        TopVehicle(_parameters);
+                        break;
+                    case Constantes.excelTabs.topVehicleByModule:
+                        //Top médias utilisés par module
+                        TopVehicleByModule(_parameters);
+                        break;
+                    case Constantes.excelTabs.topFileUsing:
+                        //Top utilisation du fichier GAD etAGM
+                        TopFileUsing(_parameters);
+                        break;
+                    case Constantes.excelTabs.topExport:
+                        //Top export de fichier
+                        TopExport(_parameters);
+                        break;
+                    case Constantes.excelTabs.topUsedTab:
+                        //Top des options utilisées
+                        TopUsedTab(_parameters);
+                        break;
+                    case Constantes.excelTabs.topUsedUnits:
+                        //Top des unités utilisées
+                        TopUsedUnits(_parameters);
+                        break;
+                    case Constantes.excelTabs.topUsedPeriod:
+                        //Top des période utilisées
+                        TopUsedPeriod(_parameters);
+                        break;
+                    case Constantes.excelTabs.topUsingSavedSession:
+                        //Top clients utilisant le plus les requêtes sauvegardées
+                        TopUsingSavedSession(_parameters);
+                        break;                   
+                    default: throw (new Exception("Impossible to identify the excel tab to compute : " + val.ToString()));
 
-			//Top clients qui se connectent le plus
-			this.TopConnectedCustomer(_excelFilePath,this._parameters);				
+                }
+            }
 
-			//Top connections clients par mois
-			this.TopConnectedCustomerByMonth(_excelFilePath,this._parameters);	
-
-			//Top connections clients par jour nommé
-			this.TopConnectedCustomerByDay(_excelFilePath,this._parameters);
-
-			//Top sociétés qui se connectent le plus
-			this.TopConnectedCompany(_excelFilePath,this._parameters);
-
-			//Top sociétés qui se connectent le plus par mois
-			this.TopConnectedCompanyByMonth(_excelFilePath,this._parameters);
-
-			//Top sociétés qui se connectent le plus par jour nommé
-			this.TopConnectedCompanyByDay(_excelFilePath,this._parameters);	
-	
-			//Durée moyenne des connections par clients
-			this.ConnexionDurationAverage(this._parameters);
-
-			//Top des modules et des groupes de modules 
-			this.TopUsedModules(this._parameters);	
-		
-			//Top médias utilisés
-			this.TopVehicle(this._parameters);
-
-			//Top médias utilisés par module
-			this.TopVehicleByModule(this._parameters);
-
-			//Top utilisation du fichier GAD etAGM
-			this.TopFileUsing(_parameters);
-
-			//Top export de fichier
-			this.TopExport(_parameters);
-
-			//Top des options utilisées
-			this.TopUsedTab(_parameters);
-
-			//Top des unités utilisées
-			this.TopUsedUnits(_parameters);
-
-			//Top des période utilisées
-			this.TopUsedPeriod(_parameters);
-
-			//Top clients utilisant le plus les requêtes sauvegardées
-			this.TopUsingSavedSession(_parameters);
-
-			if(this._excel!=null){
+            if (_excel != null && !string.IsNullOrEmpty(_excelFilePath))
+            {
 				//Sauvegarde du fichier excel
                 if (!Directory.Exists(_excelFilePath)) {
                     try { Directory.CreateDirectory(Path.GetDirectoryName(_excelFilePath)); }

@@ -9,14 +9,11 @@
 #endregion
 
 using System;
-using System.Collections;
-using System.Data;
-using System.IO;
 using System.Xml;
 
 using TNS.AdExpress.Anubis.Bastet.Common;
-using TNS.AdExpress.Anubis.Bastet;
 using TNS.FrameWork.DB.Common;
+using System.Collections.Generic;
 
 namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 	/// <summary>
@@ -27,10 +24,12 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 		/// <summary>
 		/// Load Bastet configuration
 		/// </summary>
-		/// <param name="dataSource">Data Source</param>
+        /// <param name="dataSrc">Data Source</param>
+        /// <param name="cfg">configuration object</param>
 		internal static void Load(IDataSource dataSrc, BastetConfig cfg){
 			XmlTextReader Reader;
 			string Value="60";
+            var excelTabs = new List<Constantes.excelTabs>();
 			try{
 				Reader=(XmlTextReader)dataSrc.GetSource();
 				// Parse XML file
@@ -56,10 +55,15 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 							case "ExcelPath":
 								Value=Reader.GetAttribute("path");
 								if (Value!=null) cfg.ExcelPath = Value;
-								break;								
+								break;
+                            case "excelTab":
+                                Value = Reader.GetAttribute("id");
+                                if (Value != null) excelTabs.Add((Constantes.excelTabs)Enum.Parse(typeof(Constantes.excelTabs), Value, true));
+                                break;	
 						}
 					}
 				}
+                cfg.ExcelTabs = excelTabs;
 				Reader.Close();
 			}
 			catch(System.Exception err){
