@@ -18,6 +18,7 @@ using BastetFunctions=TNS.AdExpress.Anubis.Bastet.Functions;
 using System.IO;
 using TNS.AdExpress.Bastet.Translation;
 using TNS.AdExpress.Bastet.Web;
+using Aspose.Cells.Drawing;
 namespace TNS.AdExpress.Anubis.Bastet.Functions
 {
 	/// <summary>
@@ -437,8 +438,11 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 		internal static void PageSettings(Aspose.Cells.Worksheet sheet, string name, DataTable dt, int nbMaxRowByPage, ref int s, int upperLeftColumn, string vPageBreaks, int language) {
 			
 			int nbPages=0;
-			nbPages=(int)Math.Ceiling(dt.Rows.Count*1.0/nbMaxRowByPage);	
-			sheet.Name=name; // A mettre dans web word		
+			nbPages=(int)Math.Ceiling(dt.Rows.Count*1.0/nbMaxRowByPage);
+            if (name.Length>31)
+                sheet.Name = name.Substring(0, 31);
+            else
+			    sheet.Name=name; // A mettre dans web word		
 			for(s=1;s<=nbPages+1;s++){
 				sheet.HPageBreaks.Add(nbMaxRowByPage*s,0,8);
 			}									
@@ -460,16 +464,16 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 			pageSetup.CenterHorizontally=true;
 
 			//Ajout des logos TNS et Bastet
-			Pictures pics = sheet.Pictures;
+            var pics = sheet.Pictures;
 			string tnsLogoPath = TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_TNS;
 			string logoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, tnsLogoPath);
 			int picIndex = pics.Add(0, 0,logoPath);
-			pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
+			pics[picIndex].Placement = PlacementType.Move;
 
 			string bastetLogoPath = TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_BASTET;
             string bastetImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, bastetLogoPath);
 			picIndex = pics.Add(0,upperLeftColumn,bastetImagePath);
-			pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
+			pics[picIndex].Placement = PlacementType.Move;
 
 			//Set current date and current time at the center section of header and change the font of the header
 			pageSetup.SetFooter(2, "&\"Times New Roman,Bold\"&D-&T");		

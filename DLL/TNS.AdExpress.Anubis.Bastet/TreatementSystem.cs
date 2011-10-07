@@ -11,6 +11,7 @@
 
 
 using System;
+using System.Collections;
 using System.IO;
 using System.Data;
 using System.Threading;
@@ -43,50 +44,85 @@ namespace TNS.AdExpress.Anubis.Bastet {
 		/// <summary>
 		/// Lancement du module
 		/// </summary>
-		public event StartWork OnStartWork;
+		public event StartWork EvtStartWork;
+        /// <summary>
+        /// Lancement du module
+        /// </summary>
+        public void OnStartWork(Int64 navSessionId, string message)
+        {
+            if(EvtStartWork!=null) EvtStartWork(navSessionId, message);
+        }
 		/// <summary>
 		/// Arrêt du module
 		/// </summary>
-		public event StopWorkerJob OnStopWorkerJob;
+        public event StopWorkerJob EvtStopWorkerJob;
+        /// <summary>
+        /// Arrêt du module
+        /// </summary>
+        public void OnStopWorkerJob(Int64 navSessionId, string resultFilePath, string mail, string evtMessage) {
+            if (EvtStopWorkerJob != null) EvtStopWorkerJob(navSessionId, resultFilePath, mail, evtMessage);
+        }
 		/// <summary>
 		/// Message d'une alerte
 		/// </summary>
-		public event MessageAlert OnMessageAlert;
+        public event MessageAlert EvtMessageAlert;
+        /// <summary>
+        /// Message d'une alerte
+        /// </summary>
+        public void OnMessageAlert(Int64 navSessionId, string message)
+            {
+            if (EvtMessageAlert != null) EvtMessageAlert(navSessionId, message);
+        }
 		/// <summary>
 		/// Message d'une alerte
 		/// </summary>
-		public event Error OnError;
+        public event Error EvtError;
+        /// <summary>
+        /// Message d'une alerte
+        /// </summary>
+        public void OnError(Int64 navSessionId, string message, System.Exception e)
+            {
+            if (EvtError != null) EvtError(navSessionId, message, e);
+        }
 		/// <summary>
 		/// Envoie des rapports
 		/// </summary>
-		public event SendReport OnSendReport;
-		#endregion
+        public event SendReport EvtSendReport;
+        /// <summary>
+        /// Envoie des rapports
+        /// </summary>
+        public void OnSendReport(string reportTitle, TimeSpan duration, DateTime endExecutionDateTime, string reportCore, ArrayList mailList, ArrayList errorList, string from, string mailServer, int mailPort, Int64 navSessionId)
+        {
+            if (EvtSendReport != null) EvtSendReport(reportTitle, duration, endExecutionDateTime, reportCore, mailList, errorList, from, mailServer, mailPort, navSessionId);
+        }
+
+	    #endregion
 		
 		#region Variables
 		/// <summary>
 		/// Thread qui traite l'alerte
 		/// </summary>
-		private System.Threading.Thread _myThread;
+		protected System.Threading.Thread _myThread;
 		/// <summary>
 		/// Identifiant du résultat à traiter
 		/// </summary>
-		private Int64 _navSessionId;
+        protected Int64 _navSessionId;
 		/// <summary>
 		/// Source de données pour charger la session du résultat
 		/// </summary>
-		private IDataSource _dataSource;
+        protected IDataSource _dataSource;
 		/// <summary>
 		/// Configuration du plug-in
 		/// </summary>
-		private BastetConfig _bastetConfig;
+        protected BastetConfig _bastetConfig;
 		/// <summary>
 		/// Composant excel
 		/// </summary>
-		private BastetExcelSystem _excel;
+        protected BastetExcelSystem _excel;
         /// <summary>
         /// Data Access Layer
         /// </summary>
-        private IStaticNavSessionDAL _dataAccess;
+        protected IStaticNavSessionDAL _dataAccess;
 		#endregion
 				
 		#region Constructeur
@@ -134,7 +170,7 @@ namespace TNS.AdExpress.Anubis.Bastet {
 		/// <param name="navSessionId"></param>
 		/// <param name="confifurationFilePath"></param>
 		/// <param name="dataSource">source de données</param>
-        public void Treatement(string configurationFilePath, IDataSource dataSource, Int64 navSessionId) {
+        public virtual void Treatement(string configurationFilePath, IDataSource dataSource, Int64 navSessionId) {
 
             try {
                 _navSessionId = navSessionId;
@@ -201,7 +237,7 @@ namespace TNS.AdExpress.Anubis.Bastet {
 		/// <summary>
 		/// Genere  et envoie par mail le fichier excel pour le plug-in Bastet
 		/// </summary>
-		private void ComputeTreatement(){
+        protected virtual void ComputeTreatement() {
 			
 			try{
 				OnStartWork(_navSessionId,this.GetPluginName()+" started for "+_navSessionId);

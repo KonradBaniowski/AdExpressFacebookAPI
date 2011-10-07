@@ -37,19 +37,19 @@ namespace TNS.AdExpress.Anubis.Bastet.BusinessFacade {
 		/// <summary>
 		///Bastet Configuration 
 		/// </summary>
-		private BastetConfig _config = null;
+		protected BastetConfig _config = null;
 		/// <summary>
 		/// Requêtes clients
 		/// </summary>
-		private DataRow _rqDetails = null;
+        protected DataRow _rqDetails = null;
 		/// <summary>
 		/// Paramètres statistiques à traiter
 		/// </summary>
-		private Parameters _parameters = null;
+        protected Parameters _parameters = null;
 		/// <summary>
 		/// Chemin du fichier excel généré
 		/// </summary>
-		private string _excelFilePath;
+        protected string _excelFilePath;
 		#endregion
 
 		#region Accesseurs
@@ -247,7 +247,7 @@ namespace TNS.AdExpress.Anubis.Bastet.BusinessFacade {
 		/// <summary>
 		/// Initialisation des paramètres du fichier
 		/// </summary>
-		internal string Init(){
+		public string Init(){
 			try{
 				string shortFName = "";
                 string fName = GetFileName(_rqDetails, ref shortFName);
@@ -267,7 +267,7 @@ namespace TNS.AdExpress.Anubis.Bastet.BusinessFacade {
 		/// Envoie le mail à l'utilisateur avec le fichier excel attaché
 		/// </summary>
 		/// <param name="fileName"></param>
-		internal void Send(){
+        public virtual void Send() {
 			ArrayList to = new ArrayList();
 			string messageBody=GestionWeb.GetWebWord(1834,_language);
 			if(_excel==null){
@@ -295,7 +295,7 @@ namespace TNS.AdExpress.Anubis.Bastet.BusinessFacade {
 		/// </summary>
 		/// <param name="source">Error source></param>
 		/// <param name="message">Error message</param>
-		private void mail_mailKoHandler(object source, string message) {
+		protected void mail_mailKoHandler(object source, string message) {
 			throw new Exceptions.BastetExcelException("Echec lors de l'envoi mail client pour le fichier excelde statistiques  : " + message);
 		}
 		#endregion

@@ -20,6 +20,7 @@ using BastetRules=TNS.AdExpress.Anubis.Bastet.Rules;
 using TNS.FrameWork.Date;
 using ConstantesTracking=TNS.AdExpress.Constantes.Tracking;
 using TNS.AdExpress.Bastet.Translation;
+using Aspose.Cells.Charts;
 
 
 namespace TNS.AdExpress.Anubis.Bastet.UI
@@ -35,11 +36,11 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 		/// </summary>		
 		///<param name="parameters">paramètres des statistiques</param>
 		///<param name="excel">fichier excel</param>
-		internal static Workbook TopConnected(Workbook excel, BastetCommon.Parameters parameters, int language) {
+		internal static Workbook TopConnected(Workbook excel, BastetCommon.Parameters parameters, int language, DataAccess.Client dataAccessClient) {
 			try{
 								
 				//Chargement des données
-				DataTable dt = DataAccess.Client.TopConnected(parameters);
+                DataTable dt = dataAccessClient.TopConnected();
 													
 				#region Intégration  données client
 						
@@ -213,12 +214,12 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 		/// </summary>		
 		///<param name="parameters">paramètres des statistiques</param>
 		///<param name="excel">fichier excel</param>
-		internal static Workbook TopTypeConnected(Workbook excel, BastetCommon.Parameters parameters, int language) {
+        internal static Workbook TopTypeConnected(Workbook excel, BastetCommon.Parameters parameters, int language, DataAccess.Client dataAccessClient) {
 			try{
 								
 				//Chargement des données
-				DataTable dt=null;				
-				dt = DataAccess.Client.TopTypeConnected(parameters);
+				DataTable dt=null;
+                dt = dataAccessClient.TopTypeConnected();
 													
 				#region Intégration  données client
 						
@@ -322,12 +323,12 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 		/// </summary>		
 		///<param name="parameters">paramètres des statistiques</param>
 		///<param name="excel">fichier excel</param>
-		internal static Workbook TopConnectedByMonth(Workbook excel, BastetCommon.Parameters parameters, int language) {
+		internal static Workbook TopConnectedByMonth(Workbook excel, BastetCommon.Parameters parameters, int language, DataAccess.Client clientDataAccess) {
 			try{
 								
 				//Chargement des données
-				DataTable dt=null;				
-				dt = BastetRules.Client.TopConnectedByMonth(parameters);
+				DataTable dt=null;
+                dt = BastetRules.Client.TopConnectedByMonth(parameters, clientDataAccess);
 													
 				#region Intégration  données client
 						
@@ -386,13 +387,13 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 		/// </summary>		
 		///<param name="parameters">paramètres des statistiques</param>
 		///<param name="excel">fichier excel</param>
-		internal static Workbook TopTypeConnectedByMonth(Workbook excel, BastetCommon.Parameters parameters, int language) {
+		internal static Workbook TopTypeConnectedByMonth(Workbook excel, BastetCommon.Parameters parameters, int language, DataAccess.Client clientDataAccess) {
 			try{
 								
 				//Chargement des données
 				DataTable dt=null;	
 				if(parameters==null || parameters.Logins.Length==0)
-				dt = BastetRules.Client.TopTypeConnectedByMonth(parameters);
+                    dt = BastetRules.Client.TopTypeConnectedByMonth(parameters, clientDataAccess);
 													
 				#region Intégration  données client
 						
@@ -451,12 +452,12 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 		/// </summary>		
 		///<param name="parameters">paramètres des statistiques</param>
 		///<param name="excel">fichier excel</param>
-		internal static Workbook TopConnectedByDay(Workbook excel, BastetCommon.Parameters parameters, int language) {
+        internal static Workbook TopConnectedByDay(Workbook excel, BastetCommon.Parameters parameters, int language, DataAccess.Client clientDataAccess) {
 			try{
 								
 				//Chargement des données
-				DataTable dt=null;				
-				dt = BastetRules.Client.TopConnectedByDay(parameters);
+				DataTable dt=null;
+                dt = BastetRules.Client.TopConnectedByDay(parameters, clientDataAccess);
 													
 				#region Intégration  données client
 						
@@ -516,13 +517,13 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 		/// </summary>		
 		///<param name="parameters">paramètres des statistiques</param>
 		///<param name="excel">fichier excel</param>
-		internal static Workbook TopTypeConnectedByDay(Workbook excel, BastetCommon.Parameters parameters, int language) {
+        internal static Workbook TopTypeConnectedByDay(Workbook excel, BastetCommon.Parameters parameters, int language, DataAccess.Client clientDataAccess) {
 			try{
 								
 				//Chargement des données
 				DataTable dt=null;	
 				if(parameters==null || parameters.Logins.Length==0)
-					dt = BastetRules.Client.TopTypeConnectedByDay(parameters);
+                    dt = BastetRules.Client.TopTypeConnectedByDay(parameters, clientDataAccess);
 													
 				#region Intégration  données client
 						
@@ -583,13 +584,13 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 		/// </summary>		
 		///<param name="parameters">paramètres des statistiques</param>
 		///<param name="excel">fichier excel</param>
-		internal static Workbook IPAddress(Workbook excel, BastetCommon.Parameters parameters, int language) {
+        internal static Workbook IPAddress(Workbook excel, BastetCommon.Parameters parameters, int language, DataAccess.Client dataAccessClient) {
 			try{
 								
 				//Chargement des données
 				DataTable dt=null;
 				if(parameters!=null && parameters.Logins.Length>0)
-				 dt = DataAccess.Client.IPAddress(parameters);
+                    dt = dataAccessClient.IPAddress();
 													
 				#region Intégration  données client
 						

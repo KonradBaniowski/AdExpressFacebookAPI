@@ -19,6 +19,7 @@ using TNS.AdExpress.Constantes.DB;
 using BastetExceptions=TNS.AdExpress.Anubis.Bastet.Exceptions;
 using TNS.AdExpress.Bastet.Translation;
 using TNS.AdExpress.Bastet.Web;
+using Aspose.Cells.Drawing;
 
 
 namespace TNS.AdExpress.Anubis.Bastet.UI {
@@ -281,7 +282,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 				sheet.Name = GestionWeb.GetWebWord(1989, _language); //" Rappel des sélections";
 				string[] loginsArray =null;
 				Cells cells = sheet.Cells;
-				if(parameters.Logins!=null && parameters.Logins.Length>0)
+				if(!string.IsNullOrEmpty(parameters.Logins))
 					loginsArray = parameters.Logins.Split(',');
 				//Saut de page horizontal
 				int nbPages=0;
@@ -298,20 +299,20 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 				int cellRow =5;
 
 				//Chargement des données
-				DataTable dt = DataAccess.Client.Name(parameters,idLogins);
+                DataTable dt = GetClientInstance(parameters).Name(idLogins);
 			
 				//Ajout du logo TNS
-				Pictures pics = sheet.Pictures;
+                var pics = sheet.Pictures;
 				string tnsLogoPath= TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_TNS;	
 				string logoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, tnsLogoPath);
                 debug = logoPath;
 				int picIndex = pics.Add(0, 0,logoPath);
-				pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
+				pics[picIndex].Placement = PlacementType.Move;
 				string bastetLogoPath = TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_BASTET;
                 string bastetImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, bastetLogoPath);
                 debug = logoPath;
 				picIndex = pics.Add(0, 5, bastetImagePath);
-				pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
+				pics[picIndex].Placement = PlacementType.Move;
 				sheet.IsGridlinesVisible = false;
 				sheet.PageSetup.Orientation = PageOrientationType.Landscape;
 				Aspose.Cells.PageSetup pageSetup =sheet.PageSetup;
@@ -329,7 +330,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 				pageSetup.SetFooter(1, "&A" + " - " + GestionWeb.GetWebWord(894, _language) + " " + "&P" + " " + GestionWeb.GetWebWord(2042, _language) + " " + "&N");
 
 				//intitulé du fichier excel			
-				cells["D"+cellRow].PutValue(GestionWeb.GetWebWord(2481, _language) +" ");
+                cells["D" + cellRow].PutValue(GetCustumerSelectionTitle() + " ");
 				cells["D"+cellRow].Style.Font.Size =15;
 				cells["D"+cellRow].Style.Font.Color = Color.DarkViolet;
 				cells["D"+cellRow].Style.Font.IsBold = true;
@@ -419,9 +420,9 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 				cells["E"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
 			
 			
-				if(parameters.Logins!=null && parameters.Logins.Length>0){				
+				if(!string.IsNullOrEmpty(parameters.Logins)){				
 					for(int i=0; i<loginsArray.Length;i++){
-						dt = DataAccess.Client.Name(parameters,loginsArray[i].ToString());
+                        dt = GetClientInstance(parameters).Name(loginsArray[i]);
 						if(dt!=null && dt.Rows.Count>0){
 							cells["E"+cellRow].PutValue(dt.Rows[0]["login"].ToString());
 							cells["E"+cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
@@ -460,7 +461,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		///<param name="parameters">paramètres des statistiques</param>
 		protected void TopConnectedCustomer(string excelpath,BastetCommon.Parameters parameters){
 
-			_excel=UI.Client.TopConnected(_excel,parameters,_language);
+			_excel=Client.TopConnected(_excel,parameters,_language, GetClientInstance(parameters));
 
 		}
 		#endregion
@@ -473,7 +474,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		///<param name="parameters">paramètres des statistiques</param>
 		protected void TopTypeConnectedCustomer(string excelpath,BastetCommon.Parameters parameters){
 
-			_excel=UI.Client.TopTypeConnected(_excel,parameters,_language);
+            _excel = UI.Client.TopTypeConnected(_excel, parameters, _language, GetClientInstance(parameters));
 
 		}
 		#endregion
@@ -486,7 +487,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		///<param name="parameters">paramètres des statistiques</param>
 		protected void TopConnectedCustomerByMonth(string excelpath,BastetCommon.Parameters parameters){
 
-			_excel=UI.Client.TopConnectedByMonth(_excel,parameters,_language);
+			_excel=UI.Client.TopConnectedByMonth(_excel,parameters,_language, GetClientInstance(parameters));
 
 		}
 		#endregion
@@ -499,7 +500,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		///<param name="parameters">paramètres des statistiques</param>
 		protected void TopTypeConnectedCustomerByMonth(string excelpath,BastetCommon.Parameters parameters){
 
-			_excel=UI.Client.TopTypeConnectedByMonth(_excel,parameters,_language);
+            _excel = UI.Client.TopTypeConnectedByMonth(_excel, parameters, _language, GetClientInstance(parameters));
 
 		}
 		#endregion
@@ -512,7 +513,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		///<param name="parameters">paramètres des statistiques</param>
 		protected void TopConnectedCustomerByDay(string excelpath,BastetCommon.Parameters parameters){
 
-			_excel=UI.Client.TopConnectedByDay(_excel,parameters,_language);
+            _excel = UI.Client.TopConnectedByDay(_excel, parameters, _language, GetClientInstance(parameters));
 
 		}
 		#endregion
@@ -525,7 +526,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		///<param name="parameters">paramètres des statistiques</param>
 		protected void TopTypeConnectedCustomerByDay(string excelpath,BastetCommon.Parameters parameters){
 
-			_excel=UI.Client.TopTypeConnectedByDay(_excel,parameters,_language);
+            _excel = UI.Client.TopTypeConnectedByDay(_excel, parameters, _language, GetClientInstance(parameters));
 
 		}
 		#endregion
@@ -538,7 +539,7 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 			///<param name="parameters">paramètres des statistiques</param>
 			protected void IPAdresseByClient(string excelpath,BastetCommon.Parameters parameters){
 
-				_excel=UI.Client.IPAddress(_excel,parameters,_language);
+            _excel = UI.Client.IPAddress(_excel, parameters, _language, GetClientInstance(parameters));
 
 			}
 		#endregion
@@ -699,8 +700,26 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 			}
 		}
 
+        /// <summary>
+        /// Get Client Instance
+        /// </summary>
+        /// <param name="parameters">Parameters</param>
+        /// <returns>Client Instance</returns>
+        protected virtual DataAccess.Client GetClientInstance(BastetCommon.Parameters parameters)
+        {
+            return new DataAccess.Client(parameters);
+        }
 
-		#endregion
+        /// <summary>
+        /// Get Custumer Selection Title
+        /// </summary>
+        /// <returns>Custumer Selection Title</returns>
+        protected virtual string GetCustumerSelectionTitle()
+        {
+            return GestionWeb.GetWebWord(2481, _language);
+        }
+
+	    #endregion
 
 	}//end Excel
 

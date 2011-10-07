@@ -7,6 +7,7 @@
 using System;
 using Aspose.Cells;
 using System.Drawing;
+using Aspose.Cells.Charts;
 
 namespace TNS.AdExpress.Anubis.Bastet.Functions
 {
@@ -46,8 +47,8 @@ namespace TNS.AdExpress.Anubis.Bastet.Functions
 			chart.ValueAxis.Title.Text = valueAxisTitleText;
 
 			//Hiding the major gridlines
-			chart.MajorGridLines.IsVisible = false;
-
+            chart.ValueAxis.MajorGridLines.IsVisible = false;
+            chart.CategoryAxis.MajorGridLines.IsVisible = false;
 			
 		}
 	}

@@ -29,13 +29,13 @@ namespace TNS.AdExpress.Anubis.Bastet.Rules
 		/// </summary>
 		/// <param name="parameters">paramètres client.</param>
 		/// <returns>données top connections clients par mois.</returns>
-		public static DataTable  TopConnectedByMonth(BastetCommon.Parameters parameters){
+        public static DataTable TopConnectedByMonth(BastetCommon.Parameters parameters, DataAccess.Client dataAccessClient) {
 			
 			DataTable dt=null, dtResult=null;
 			Int64 oldDateConnection=0;
 			ArrayList idLoginsArr = null;
 			DataRow resultRow=null;
-			dt = BastetDataAccess.Client.TopConnectedByMonth(parameters);
+            dt = dataAccessClient.TopConnectedByMonth();
 			object tempValue=null;
 			string columnName="";
 			if(dt!=null && dt.Rows.Count>0){				
@@ -94,13 +94,13 @@ namespace TNS.AdExpress.Anubis.Bastet.Rules
 		/// </summary>
 		/// <param name="parameters">paramètres client.</param>
 		/// <returns>données top connections types de clients par mois.</returns>
-		public static DataTable  TopTypeConnectedByMonth(BastetCommon.Parameters parameters){
+        public static DataTable TopTypeConnectedByMonth(BastetCommon.Parameters parameters, DataAccess.Client dataAccessClient) {
 			
 			DataTable dt=null, dtResult=null;
 			Int64 oldDateConnection=0;
 			ArrayList idGroupContactsArr = null;
 			DataRow resultRow=null;
-			dt = BastetDataAccess.Client.TopTypeConnectedByMonth(parameters);
+            dt = dataAccessClient.TopTypeConnectedByMonth();
 			object tempValue=null;
 			string columnName="";
 			if(dt!=null && dt.Rows.Count>0){				
@@ -160,13 +160,13 @@ namespace TNS.AdExpress.Anubis.Bastet.Rules
 		/// </summary>
 		/// <param name="parameters">paramètres client.</param>
 		/// <returns>données top connections clients par jour nommé.</returns>
-		public static DataTable  TopConnectedByDay(BastetCommon.Parameters parameters){
+        public static DataTable TopConnectedByDay(BastetCommon.Parameters parameters, DataAccess.Client dataAccessClient) {
 			
 			DataTable dt=null, dtResult=null;
 			Int64 oldDateConnection=0;
 			ArrayList idLoginsArr = null;
 			DataRow resultRow=null;
-			dt = BastetDataAccess.Client.TopConnectedByDay(parameters);
+            dt = dataAccessClient.TopConnectedByDay();
 			object tempValue=null;
 			string columnName="";
 			if(dt!=null && dt.Rows.Count>0){				
@@ -226,13 +226,13 @@ namespace TNS.AdExpress.Anubis.Bastet.Rules
 		/// </summary>
 		/// <param name="parameters">paramètres client.</param>
 		/// <returns>données top connections types de clients et par jour nommé.</returns>
-		public static DataTable  TopTypeConnectedByDay(BastetCommon.Parameters parameters){
+        public static DataTable TopTypeConnectedByDay(BastetCommon.Parameters parameters, DataAccess.Client dataAccessClient) {
 			
 			DataTable dt=null, dtResult=null;
 			Int64 oldDateConnection=0;
 			ArrayList idGroupContactsArr = null;
 			DataRow resultRow=null;
-			dt = BastetDataAccess.Client.TopTypeConnectedByDay(parameters);
+            dt = dataAccessClient.TopTypeConnectedByDay();
 			object tempValue=null;
 			string columnName="";
 			if(dt!=null && dt.Rows.Count>0){				

@@ -18,6 +18,7 @@ using BastetRules=TNS.AdExpress.Anubis.Bastet.Rules;
 using TNS.FrameWork.Date;
 using ConstantesTracking=TNS.AdExpress.Constantes.Tracking;
 using TNS.AdExpress.Bastet.Translation;
+using Aspose.Cells.Charts;
 
 
 namespace TNS.AdExpress.Anubis.Bastet.UI

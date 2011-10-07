@@ -27,19 +27,36 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 	/// Obtient les données pour la génération du fichier excel
 	/// </summary>
 	public class Client {
-				
-				
-		#region Top des clients qui se connectent		
 
-		/// <summary>
+        #region Variables
+        /// <summary>
+        /// Parameters
+        /// </summary>
+	    protected BastetCommon.Parameters _parameters;
+        #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="parameters">Parameters</param>
+        public Client(BastetCommon.Parameters parameters)
+        {
+            _parameters = parameters;
+        }
+	    #endregion
+
+
+        #region Top des clients qui se connectent
+
+        /// <summary>
 		/// Top  des clients qui se connectent le plus
 		/// </summary>
-		/// <param name="parameters">parametres</param>
 		/// <returns>Données Top  des clients qui se connectent le plus</returns>
-		public static DataTable  TopConnected(BastetCommon.Parameters parameters){
+		public virtual DataTable  TopConnected(){
+            var sql = new StringBuilder(3000);
 			try{
 				#region Requête
-				StringBuilder sql = new StringBuilder(3000);
 				Table companyTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightCompany);
 				Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
 				Table addressTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightAddress);
@@ -56,9 +73,9 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				sql.Append(" ," + companyTable.SqlWithPrefix + "," + contactTable.SqlWithPrefix
 					+","+addressTable.SqlWithPrefix+","+loginTable.SqlWithPrefix);
 				//Where
-                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
-				if(parameters!=null && parameters.Logins.Length>0)
-					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
+                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + _parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + _parameters.PeriodEndDate.ToString("yyyyMMdd"));
+                if (_parameters.Logins.Length > 0)
+                    sql.Append(" and " + connectionByLoginTable.Prefix + ".id_login in (" + _parameters.Logins + ") ");
 				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
 				sql.Append(" and "+loginTable.Prefix+".id_contact="+contactTable.Prefix+".id_contact ");
 				sql.Append(" and "+contactTable.Prefix+".id_address = "+addressTable.Prefix+".id_address ");
@@ -70,12 +87,12 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				#endregion
 				
 				#region Execution
-		
-				return(parameters.Source.Fill(sql.ToString()).Tables[0]);
+
+                return (_parameters.Source.Fill(sql.ToString()).Tables[0]);
 				#endregion
 			}
-			catch(System.Exception err){
-				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" TopConnected : Impossible to get the list of most connected clients ", err));
+			catch(Exception err){
+                throw (new Exceptions.BastetDataAccessException(" TopConnected : Impossible to get the list of most connected clients. sql:" + sql, err));
 			}
 			
 	
@@ -87,12 +104,11 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 		/// <summary>
 		/// Top  des connections par type de client 
 		/// </summary>
-		/// <param name="parameters">parametres</param>
 		/// <returns>Données Top  connections par type de client </returns>
-		public static DataTable  TopTypeConnected(BastetCommon.Parameters parameters){
+        public virtual DataTable TopTypeConnected() {
+            var sql = new StringBuilder(3000);
 			try{
 				#region Requête
-				StringBuilder sql = new StringBuilder(3000);
 				Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
 				Table loginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
 				Table connectionByLoginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingConnectionByLogin);
@@ -109,9 +125,9 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 					+ "," + groupContactTable.SqlWithPrefix);
 					
 				//Where
-                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyyMMdd"));
-				if(parameters!=null && parameters.Logins.Length>0)
-					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
+                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + _parameters.PeriodBeginningDate.ToString("yyyyyMMdd") + " and " + _parameters.PeriodEndDate.ToString("yyyyyMMdd"));
+                if (_parameters.Logins.Length > 0)
+                    sql.Append(" and " + connectionByLoginTable.Prefix + ".id_login in (" + _parameters.Logins + ") ");
 				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
 				sql.Append(" and "+loginTable.Prefix+".id_contact="+contactTable.Prefix+".id_contact ");
 				sql.Append(" and "+contactTable.Prefix+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
@@ -124,12 +140,12 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				#endregion
 				
 				#region Execution
-		
-				return(parameters.Source.Fill(sql.ToString()).Tables[0]);
+
+                return (_parameters.Source.Fill(sql.ToString()).Tables[0]);
 				#endregion
 			}
-			catch(System.Exception err){
-				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" TopConnected : Impossible to get most connected clients list ", err));
+			catch(Exception err){
+                throw (new Exceptions.BastetDataAccessException(" TopConnected : Impossible to get most connected clients list. sql:" + sql, err));
 			}
 			
 	
@@ -141,13 +157,12 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 		/// <summary>
 		/// Top connections clients par mois
 		/// </summary>
-		/// <param name="parameters">parametres</param>
 		/// <returns>Top connections clients par mois </returns>
-		public static DataTable  TopConnectedByMonth(BastetCommon.Parameters parameters){
+        public virtual DataTable TopConnectedByMonth() {
+            var sql = new StringBuilder(3000);
 			try{
 				#region Requête
 
-				StringBuilder sql = new StringBuilder(3000);
 				Table companyTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightCompany);
 				Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
 				Table addressTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightAddress);
@@ -165,9 +180,9 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				sql.Append(" ,"+loginTable.SqlWithPrefix+","+contactTable.SqlWithPrefix
 				+","+addressTable.SqlWithPrefix+","+companyTable.SqlWithPrefix);
 				//Where
-                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
-				if(parameters!=null && parameters.Logins.Length>0)
-					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
+                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + _parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + _parameters.PeriodEndDate.ToString("yyyyMMdd"));
+                if (_parameters.Logins.Length > 0)
+                    sql.Append(" and " + connectionByLoginTable.Prefix + ".id_login in (" + _parameters.Logins + ") ");
 				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
 				sql.Append(" and "+loginTable.Prefix+".id_contact="+contactTable.Prefix+".id_contact ");
 				sql.Append(" and "+contactTable.Prefix+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
@@ -183,12 +198,12 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				#endregion
 				
 				#region Execution
-		
-				return(parameters.Source.Fill(sql.ToString()).Tables[0]);
+
+                return (_parameters.Source.Fill(sql.ToString()).Tables[0]);
 				#endregion
 			}
-			catch(System.Exception err){
-				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" TopConnectedByMonth : Impossible to get top connected client by month list ", err));
+			catch(Exception err){
+                throw (new Exceptions.BastetDataAccessException(" TopConnectedByMonth : Impossible to get top connected client by month list. sql:" + sql, err));
 			}
 			
 	
@@ -200,16 +215,13 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 		/// <summary>
 		/// Top connections par type de clients et par mois 
 		/// </summary>
-		/// <param name="parameters">parametres</param>
 		/// <returns>Top connections clients par mois </returns>
-		public static DataTable  TopTypeConnectedByMonth(BastetCommon.Parameters parameters){
+        public virtual DataTable TopTypeConnectedByMonth() {
+            var sql = new StringBuilder(3000);
 			try{
 				#region Requête
 
-				StringBuilder sql = new StringBuilder(3000);
-				Table companyTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightCompany);
 				Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
-				Table addressTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightAddress);
 				Table loginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
 				Table connectionByLoginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingConnectionByLogin);
 				Table groupContactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContactGroup);
@@ -226,9 +238,9 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 					+","+groupContactTable.SqlWithPrefix);
 					
 				//Where
-                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
-				if(parameters!=null && parameters.Logins.Length>0)
-					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
+                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + _parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + _parameters.PeriodEndDate.ToString("yyyyMMdd"));
+                if (_parameters.Logins.Length > 0)
+                    sql.Append(" and " + connectionByLoginTable.Prefix + ".id_login in (" + _parameters.Logins + ") ");
 				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
 				sql.Append(" and "+loginTable.Prefix+".id_contact="+contactTable.Prefix+".id_contact ");
 				sql.Append(" and "+contactTable.Prefix+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
@@ -244,12 +256,12 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				#endregion
 				
 				#region Execution
-		
-				return(parameters.Source.Fill(sql.ToString()).Tables[0]);
+
+                return (_parameters.Source.Fill(sql.ToString()).Tables[0]);
 				#endregion
 			}
-			catch(System.Exception err){
-				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" TopTypeConnectedByMonth : Impossible d'obtenir la liste des Top connections type clients par mois ", err));
+			catch(Exception err){
+                throw (new Exceptions.BastetDataAccessException(" TopTypeConnectedByMonth : Impossible d'obtenir la liste des Top connections type clients par mois. sql:" + sql, err));
 			}
 			
 	
@@ -261,13 +273,12 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 		/// <summary>
 		/// Top connections clients par jour nommé	
 		/// </summary>
-		/// <param name="parameters">parametres</param>
 		/// <returns>Top connections clients par jour nommé	 </returns>
-		public static DataTable  TopConnectedByDay(BastetCommon.Parameters parameters){
+        public virtual DataTable TopConnectedByDay() {
+            var sql = new StringBuilder(3000);
 			try{
 				#region Requête
 
-				StringBuilder sql = new StringBuilder(3000);
 				Table companyTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightCompany);
 				Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
 				Table addressTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightAddress);
@@ -286,9 +297,9 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				sql.Append(" ," + loginTable.SqlWithPrefix + "," + contactTable.SqlWithPrefix
 				+ "," + addressTable.SqlWithPrefix + "," + companyTable.SqlWithPrefix);
 				//Where
-                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
-				if(parameters!=null && parameters.Logins.Length>0)
-					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
+                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + _parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + _parameters.PeriodEndDate.ToString("yyyyMMdd"));
+                if (_parameters.Logins.Length > 0)
+                    sql.Append(" and " + connectionByLoginTable.Prefix + ".id_login in (" + _parameters.Logins + ") ");
 				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
 				sql.Append(" and "+loginTable.Prefix+".id_contact="+contactTable.Prefix+".id_contact ");
 				sql.Append(" and "+contactTable.Prefix+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
@@ -304,12 +315,12 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				#endregion
 				
 				#region Execution
-		
-				return(parameters.Source.Fill(sql.ToString()).Tables[0]);
+
+                return (_parameters.Source.Fill(sql.ToString()).Tables[0]);
 				#endregion
 			}
-			catch(System.Exception err){
-				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" TopConnectedByMonth : Impossible d'obtenir la liste des Top connections clients par mois ", err));
+			catch(Exception err){
+                throw (new Exceptions.BastetDataAccessException(" TopConnectedByMonth : Impossible d'obtenir la liste des Top connections clients par mois. sql:" + sql, err));
 			}
 			
 	
@@ -321,13 +332,12 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 		/// <summary>
 		/// Top connections par type de clients et par jour nommé 
 		/// </summary>
-		/// <param name="parameters">parametres</param>
 		/// <returns>Top connections type de clients et par jour nommé </returns>
-		public static DataTable  TopTypeConnectedByDay(BastetCommon.Parameters parameters){
+        public virtual DataTable TopTypeConnectedByDay() {
+            var sql = new StringBuilder(3000);
 			try{
 				#region Requête
 
-				StringBuilder sql = new StringBuilder(3000);
 				Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
 				Table loginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
 				Table connectionByLoginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingConnectionByLogin);
@@ -346,9 +356,9 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				+ "," + groupContactTable.SqlWithPrefix );
 				
 				//Where
-                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
-				if(parameters!=null && parameters.Logins.Length>0)
-					sql.Append(" and "+connectionByLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
+                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + _parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + _parameters.PeriodEndDate.ToString("yyyyMMdd"));
+                if (_parameters.Logins.Length > 0)
+                    sql.Append(" and " + connectionByLoginTable.Prefix + ".id_login in (" + _parameters.Logins + ") ");
 				sql.Append(" and "+loginTable.Prefix+".id_login="+connectionByLoginTable.Prefix+".id_login ");
 				sql.Append(" and "+loginTable.Prefix+".id_contact="+contactTable.Prefix+".id_contact ");
 				sql.Append(" and "+contactTable.Prefix+".activation<"+DBConstantes.ActivationValues.UNACTIVATED);
@@ -364,12 +374,12 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				#endregion
 				
 				#region Execution
-		
-				return(parameters.Source.Fill(sql.ToString()).Tables[0]);
+
+                return (_parameters.Source.Fill(sql.ToString()).Tables[0]);
 				#endregion
 			}
-			catch(System.Exception err){
-				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" TopTypeConnectedByDay : Impossible to get the list of Top connected clients type  named day. ", err));
+			catch(Exception err){
+                throw (new Exceptions.BastetDataAccessException(" TopTypeConnectedByDay : Impossible to get the list of Top connected clients type  named day. sql:" + sql, err));
 			}
 			
 	
@@ -381,12 +391,12 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 		/// <summary>
 		/// IP par client
 		/// </summary>
-		/// <param name="parameters">parametres</param>
 		/// <returns>Données IP par client</returns>
-		public static DataTable  IPAddress(BastetCommon.Parameters parameters){
+        public virtual DataTable IPAddress() {
+            var sql = new StringBuilder(3000);
 			try{
 				#region Requête
-				StringBuilder sql = new StringBuilder(3000);
+				
 				Table companyTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightCompany);
 				Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
 				Table addressTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightAddress);
@@ -401,9 +411,9 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				sql.Append(" ,"+loginTable.SqlWithPrefix+","+contactTable.SqlWithPrefix
 					+","+addressTable.SqlWithPrefix+","+companyTable.SqlWithPrefix);
 				//Where
-                sql.Append(" where " + ipLoginTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
-				if(parameters!=null && parameters.Logins.Length>0)
-					sql.Append(" and "+ipLoginTable.Prefix+".id_login in ("+parameters.Logins+") ");
+                sql.Append(" where " + ipLoginTable.Prefix + ".date_connection  between " + _parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + _parameters.PeriodEndDate.ToString("yyyyMMdd"));
+                if (_parameters.Logins.Length > 0)
+                    sql.Append(" and " + ipLoginTable.Prefix + ".id_login in (" + _parameters.Logins + ") ");
 				sql.Append(" and "+loginTable.Prefix+".id_login="+ipLoginTable.Prefix+".id_login ");
 				sql.Append(" and "+loginTable.Prefix+".id_contact="+contactTable.Prefix+".id_contact ");
 				sql.Append(" and "+contactTable.Prefix+".id_address = "+addressTable.Prefix+".id_address ");
@@ -415,12 +425,12 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				#endregion
 				
 				#region Execution
-		
-				return(parameters.Source.Fill(sql.ToString()).Tables[0]);
+
+                return (_parameters.Source.Fill(sql.ToString()).Tables[0]);
 				#endregion
 			}
-			catch(System.Exception err){
-				throw (new AnubisBastet.Exceptions.BastetDataAccessException(" IPAddress : Impossible to get clients IP list. ", err));
+			catch(Exception err){
+                throw (new Exceptions.BastetDataAccessException(" IPAddress : Impossible to get clients IP list. sql:" + sql, err));
 			}
 			
 	
@@ -432,12 +442,11 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 		/// <summary>
 		/// Noms clients
 		/// </summary>
-		/// <param name="parameters">parametres</param>
 		/// <returns>nom clients</returns>
-		public static DataTable  Name(BastetCommon.Parameters parameters,string idlogins){
+        public virtual DataTable Name(string idlogins) {
 
 			#region Requête
-			StringBuilder sql = new StringBuilder(3000);
+			var sql = new StringBuilder(3000);
 			Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
 			Table loginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
 				
@@ -461,10 +470,10 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 				
 			#region Execution
 			try{
-				return(parameters.Source.Fill(sql.ToString()).Tables[0]);
+                return (_parameters.Source.Fill(sql.ToString()).Tables[0]);
 			}
-			catch(System.Exception err){
-				throw (new Exception(" TopConnected : Impossible to get names of most connected clients "+ err));
+			catch(Exception err){
+                throw (new Exception(" TopConnected : Impossible to get names of most connected clients. sql:" + sql, err));
 			}
 			#endregion
 	

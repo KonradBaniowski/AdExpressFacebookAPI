@@ -37,23 +37,23 @@ namespace TNS.Ares{
         /// <summary>
         /// Lancement du module
         /// </summary>
-        event StartWork OnStartWork;
+        event StartWork EvtStartWork;
         /// <summary>
         /// Arrêt du module
         /// </summary>
-        event StopWorkerJob OnStopWorkerJob;
+        event StopWorkerJob EvtStopWorkerJob;
         /// <summary>
         /// Message d'une alerte
         /// </summary>
-        event MessageAlert OnMessageAlert;
+        event MessageAlert EvtMessageAlert;
         /// <summary>
         /// Erreur
         /// </summary>
-        event Error OnError;
+        event Error EvtError;
         /// <summary>
         /// Envoie des rapports
         /// </summary>
-        event SendReport OnSendReport;
+        event SendReport EvtSendReport;
         #endregion
 
         /// <summary>

@@ -17,6 +17,7 @@ using BastetExceptions=TNS.AdExpress.Anubis.Bastet.Exceptions;
 
 using System.IO;
 using TNS.AdExpress.Bastet.Translation;
+using Aspose.Cells.Drawing;
 
 namespace TNS.AdExpress.Anubis.Bastet.UI
 {
@@ -64,15 +65,15 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 					pageSetup.FooterMarginInch = 0.3; 
 
 					//Ajout du logo TNS
-					Pictures pics = sheet.Pictures;
+                    var pics = sheet.Pictures;
 					string tnsLogoPath = TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_TNS;	
 					string logoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, tnsLogoPath);
 					int picIndex = pics.Add(0, 0,logoPath);
-					pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
+					pics[picIndex].Placement = PlacementType.Move;
 					string bastetLogoPath = TNS.AdExpress.Anubis.Bastet.Constantes.Images.LOGO_BASTET;
 					string bastetImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, bastetLogoPath);
 					picIndex = pics.Add(0, 6, bastetImagePath);
-					pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
+					pics[picIndex].Placement = PlacementType.Move;
 
 					//Set current date and current time at the center section of header and change the font of the header
 					pageSetup.SetFooter(2, "&\"Times New Roman,Bold\"&D-&T");		

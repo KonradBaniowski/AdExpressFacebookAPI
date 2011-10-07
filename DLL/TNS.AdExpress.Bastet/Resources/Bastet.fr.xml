@@ -52,7 +52,7 @@
     <item mnemonic="w44" type="System.String">Message d'erreur :</item>
     <item mnemonic="w45" type="System.String">StackTrace :</item>
 
-    <item mnemonic="w46" type="System.String">Statistiques</item>
+    <item mnemonic="w46" type="System.String">Statistiques AdExpress</item>
     <item mnemonic="w47" type="System.String">Indicateurs</item>
     <item mnemonic="w48" type="System.String">Sélection du module</item>
     <item mnemonic="w49" type="System.String">Pour être redirigé, cliquez</item>
@@ -87,7 +87,13 @@
     <item mnemonic="w75" type="System.String">Cumul date à date plus mois suivant</item>
     <item mnemonic="w76" type="System.String">Tout l'historique</item>
     <item mnemonic="w77" type="System.String">Mois courant</item>
-
+    
+    <!--Version Kantarmusic-->
+    <item mnemonic="w78" type="System.String">Statistiques KantarMusic</item>
+    <item mnemonic="w79" type="System.String">Le fichier excel ci-joint presente les statistiques d'utilisation de KantarMusic.</item>
+    <item mnemonic="w80" type="System.String">Aucune statistique du portail KantarMusic pour les paramètres fournis.</item>
+    <item mnemonic="w81" type="System.String">KantarMusic -- Excel Statistiques générées</item>
+    <!---->
 
     <!-- Texte AdExpress -->
     <item mnemonic="w124" type="System.String">Du</item>
