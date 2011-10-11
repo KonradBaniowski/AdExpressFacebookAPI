@@ -478,7 +478,10 @@ namespace TNS.AdExpressI.AdvertisingAgency
             Double valueN = 0;
             Double valueN1 = 0;
             Int32 subTotalIndex = -1;
-            GenericDetailLevel detailLevel = _session.GenericProductDetailLevel; 
+            GenericDetailLevel detailLevel = _session.GenericProductDetailLevel;
+            int valueColumnIndex = 0;
+            int totalColumnIndex = 0;
+            int subTotalColumnIndex = 0;
 
             foreach (DataRow row in dtData.Rows)
             {
@@ -613,125 +616,154 @@ namespace TNS.AdExpressI.AdvertisingAgency
                     if (i == (DATA_PRODUCT_INDEXES.Count - 1))
                     {
                         #region Add Values
+                        valueColumnIndex = 0;
+                        totalColumnIndex = 0;
+                        subTotalColumnIndex = 0;
+
                         columnId = -1;
-                        if (DATA_MEDIA_INDEXES.Count > 0)
-                        {
+                        if (DATA_MEDIA_INDEXES.Count > 0) {
                             columnId = Convert.ToInt32(row[DATA_MEDIA_INDEXES[DATA_MEDIA_INDEXES.Count - 1]]);
                             columnKey = Convert.ToInt32(row[DATA_MEDIA_INDEXES[0]]) + "_" + columnId;
                         }
+                        
                         subTotalIndex = (RES_MEDIA_SUBTOTAL.ContainsKey(columnKey)) ? RES_MEDIA_SUBTOTAL[columnKey].IndexInResultTable : -1;
+
                         valueN = Convert.ToDouble(row[DATA_YEAR_N]);
-                        if (DATA_YEAR_N1 > -1)
-                        {
+                        if (DATA_YEAR_N1 > -1) {
                             valueN1 = Convert.ToDouble(row[DATA_YEAR_N1]);
                         }
-                        //N
+                        //N Column Value
+                        valueColumnIndex = RES_MEDIA_HEADERS[columnKey + "_Period1"].IndexInResultTable;
                         if (columnId > -1)
-                            tab.AffectValueAndAddToHierarchy(1, cLine, RES_MEDIA_HEADERS[columnKey + "_Period1"].IndexInResultTable, valueN);
-                        if(RES_MEDIA_HEADERS[columnKey + "_Period1"].IndexInResultTable != RES_YEAR_N_OFFSET + 1)
-                            tab.AffectValueAndAddToHierarchy(1, cLine, RES_YEAR_N_OFFSET + 1, valueN);
-                        if (subTotalIndex > -1)
-                        {
-                            tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex, valueN);
+                            tab.AffectValueAndAddToHierarchy(1, cLine, valueColumnIndex, valueN);
+                        // Total Column Value
+                        totalColumnIndex = RES_YEAR_N_OFFSET + 1;
+                        if (valueColumnIndex != totalColumnIndex)
+                            tab.AffectValueAndAddToHierarchy(1, cLine, totalColumnIndex, valueN);
+                        // Sub Total Column Value
+                        if (subTotalIndex > -1) {
+                            subTotalColumnIndex = subTotalIndex;
+                            if (totalColumnIndex != subTotalColumnIndex)
+                                tab.AffectValueAndAddToHierarchy(1, cLine, subTotalColumnIndex, valueN);
                         }
-                        //N1
-                        if (RES_YEAR_N1_OFFSET > -1)
-                        {
+                        //N1 Column Value
+                        if (RES_YEAR_N1_OFFSET > -1) {
+                            valueColumnIndex = RES_MEDIA_HEADERS[columnKey + "_Period2"].IndexInResultTable;
                             if (columnId > -1)
-                                tab.AffectValueAndAddToHierarchy(1, cLine, RES_MEDIA_HEADERS[columnKey + "_Period2"].IndexInResultTable, valueN1);
-                            if(RES_MEDIA_HEADERS[columnKey + "_Period2"].IndexInResultTable != RES_YEAR_N1_OFFSET + 1)
-                                tab.AffectValueAndAddToHierarchy(1, cLine, RES_YEAR_N1_OFFSET + 1, valueN1);
-                            if (subTotalIndex > -1)
-                            {
-                                tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex + RES_YEAR_N1_OFFSET - 1, valueN1);
+                                tab.AffectValueAndAddToHierarchy(1, cLine, valueColumnIndex, valueN1);
+                            // Total Column Value
+                            totalColumnIndex = RES_YEAR_N1_OFFSET + 1;
+                            if (valueColumnIndex != totalColumnIndex)
+                                tab.AffectValueAndAddToHierarchy(1, cLine, totalColumnIndex, valueN1);
+                            // Sub Total Column Value
+                            if (subTotalIndex > -1) {
+                                subTotalColumnIndex = subTotalIndex + RES_YEAR_N1_OFFSET - 1;
+                                if (totalColumnIndex != subTotalColumnIndex)
+                                    tab.AffectValueAndAddToHierarchy(1, cLine, subTotalColumnIndex, valueN1);
                             }
                         }
                         //PDV N
-                        if (RES_PDV_N_OFFSET > -1)
-                        {
-                            if (columnId > -1)
-                            {
-                                tab.AffectValueAndAddToHierarchy(1, cLine, RES_MEDIA_HEADERS[columnKey + "_PDV"].IndexInResultTable, valueN);
+                        if (RES_PDV_N_OFFSET > -1) {
+                            //Column Value
+                            valueColumnIndex = RES_MEDIA_HEADERS[columnKey + "_PDV"].IndexInResultTable;
+                            if (columnId > -1) {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, valueColumnIndex, valueN);
                                 if (valueN > 0)
-                                    reInitPDVPDMVoidColumns[RES_MEDIA_HEADERS[columnKey + "_PDV"].IndexInResultTable] = true;
+                                    reInitPDVPDMVoidColumns[valueColumnIndex] = true;
                             }
-                            if (RES_MEDIA_HEADERS[columnKey + "_PDV"].IndexInResultTable != RES_PDV_N_OFFSET + 1)
-                            {
-                                tab.AffectValueAndAddToHierarchy(1, cLine, RES_PDV_N_OFFSET + 1, valueN);
+                            // Total Column Value
+                            totalColumnIndex = RES_PDV_N_OFFSET + 1;
+                            if (valueColumnIndex != totalColumnIndex) {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, totalColumnIndex, valueN);
                                 if (valueN > 0)
-                                    reInitPDVPDMVoidColumns[RES_PDV_N_OFFSET + 1] = true;
+                                    reInitPDVPDMVoidColumns[totalColumnIndex] = true;
                             }
-                            if (subTotalIndex > -1)
-                            {
-                                tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex + RES_PDV_N_OFFSET - 1, valueN);
-                                if (valueN > 0)
-                                    reInitPDVPDMVoidColumns[subTotalIndex + RES_PDV_N_OFFSET - 1] = true;
+                            // Sub Total Column Value
+                            if (subTotalIndex > -1) {
+                                subTotalColumnIndex = subTotalIndex + RES_PDV_N_OFFSET - 1;
+                                if (totalColumnIndex != subTotalColumnIndex) {
+                                    tab.AffectValueAndAddToHierarchy(1, cLine, subTotalColumnIndex, valueN);
+                                    if (valueN > 0)
+                                        reInitPDVPDMVoidColumns[subTotalColumnIndex] = true;
+                                }
                             }
                         }
                         //PDV N1
-                        if (RES_PDV_N1_OFFSET > -1)
-                        {
-                            if (columnId > -1)
-                            {
-                                tab.AffectValueAndAddToHierarchy(1, cLine, RES_MEDIA_HEADERS[columnKey + "_PDV1"].IndexInResultTable, valueN1);
+                        if (RES_PDV_N1_OFFSET > -1) {
+                            //Column Value
+                            valueColumnIndex = RES_MEDIA_HEADERS[columnKey + "_PDV1"].IndexInResultTable;
+                            if (columnId > -1) {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, valueColumnIndex, valueN1);
                                 if (valueN1 > 0)
-                                    reInitPDVPDMVoidColumns[RES_MEDIA_HEADERS[columnKey + "_PDV1"].IndexInResultTable] = true;
+                                    reInitPDVPDMVoidColumns[valueColumnIndex] = true;
                             }
-                            if (RES_MEDIA_HEADERS[columnKey + "_PDV1"].IndexInResultTable != RES_PDV_N1_OFFSET + 1)
-                            {
-                                tab.AffectValueAndAddToHierarchy(1, cLine, RES_PDV_N1_OFFSET + 1, valueN1);
+                            // Total Column Value
+                            totalColumnIndex = RES_PDV_N1_OFFSET + 1;
+                            if (valueColumnIndex != totalColumnIndex) {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, totalColumnIndex, valueN1);
                                 if (valueN1 > 0)
-                                    reInitPDVPDMVoidColumns[RES_PDV_N1_OFFSET + 1] = true;
+                                    reInitPDVPDMVoidColumns[totalColumnIndex] = true;
                             }
-                            if (subTotalIndex > -1)
-                            {
-                                tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex + RES_PDV_N1_OFFSET - 1, valueN1);
-                                if (valueN1 > 0)
-                                    reInitPDVPDMVoidColumns[subTotalIndex + RES_PDV_N1_OFFSET - 1] = true;
+                            // Sub Total Column Value
+                            if (subTotalIndex > -1) {
+                                subTotalColumnIndex = subTotalIndex + RES_PDV_N1_OFFSET - 1;
+                                if (totalColumnIndex != subTotalColumnIndex) {
+                                    tab.AffectValueAndAddToHierarchy(1, cLine, subTotalColumnIndex, valueN1);
+                                    if (valueN1 > 0)
+                                        reInitPDVPDMVoidColumns[subTotalColumnIndex] = true;
+                                }
                             }
                         }
                         //PDM N
-                        if (RES_PDM_N_OFFSET > -1)
-                        {
-                            if (columnId > -1)
-                            {
-                                tab.AffectValueAndAddToHierarchy(1, cLine, RES_MEDIA_HEADERS[columnKey + "_PDM"].IndexInResultTable, valueN);
+                        if (RES_PDM_N_OFFSET > -1) {
+                            //Column Value
+                            valueColumnIndex = RES_MEDIA_HEADERS[columnKey + "_PDM"].IndexInResultTable;
+                            if (columnId > -1) {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, valueColumnIndex, valueN);
                                 if (valueN > 0)
-                                    reInitPDVPDMVoidColumns[RES_MEDIA_HEADERS[columnKey + "_PDM"].IndexInResultTable] = true;
+                                    reInitPDVPDMVoidColumns[valueColumnIndex] = true;
                             }
-                            if (RES_MEDIA_HEADERS[columnKey + "_PDM"].IndexInResultTable != RES_PDM_N_OFFSET + 1)
-                            {
-                                tab.AffectValueAndAddToHierarchy(1, cLine, RES_PDM_N_OFFSET + 1, valueN);
+                            // Total Column Value
+                            totalColumnIndex = RES_PDM_N_OFFSET + 1;
+                            if (valueColumnIndex != totalColumnIndex) {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, totalColumnIndex, valueN);
                                 if (valueN > 0)
-                                    reInitPDVPDMVoidColumns[RES_PDM_N_OFFSET + 1] = true;
+                                    reInitPDVPDMVoidColumns[totalColumnIndex] = true;
                             }
-                            if (subTotalIndex > -1)
-                            {
-                                tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex + RES_PDM_N_OFFSET - 1, valueN);
-                                if (valueN > 0)
-                                    reInitPDVPDMVoidColumns[subTotalIndex + RES_PDM_N_OFFSET - 1] = true;
+                            // Sub Total Column Value
+                            if (subTotalIndex > -1) {
+                                subTotalColumnIndex = subTotalIndex + RES_PDM_N_OFFSET - 1;
+                                if (totalColumnIndex != subTotalColumnIndex) {
+                                    tab.AffectValueAndAddToHierarchy(1, cLine, subTotalColumnIndex, valueN);
+                                    if (valueN > 0)
+                                        reInitPDVPDMVoidColumns[subTotalColumnIndex] = true;
+                                }
                             }
                         }
                         //PDM N1
-                        if (RES_PDM_N1_OFFSET > -1)
-                        {
-                            if (columnId > -1)
-                            {
-                                tab.AffectValueAndAddToHierarchy(1, cLine, RES_MEDIA_HEADERS[columnKey + "_PDM1"].IndexInResultTable, valueN1);
+                        if (RES_PDM_N1_OFFSET > -1) {
+                            //Column Value
+                            valueColumnIndex = RES_MEDIA_HEADERS[columnKey + "_PDM1"].IndexInResultTable;
+                            if (columnId > -1) {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, valueColumnIndex, valueN1);
                                 if (valueN1 > 0)
-                                    reInitPDVPDMVoidColumns[RES_MEDIA_HEADERS[columnKey + "_PDM1"].IndexInResultTable] = true;
+                                    reInitPDVPDMVoidColumns[valueColumnIndex] = true;
                             }
-                            if (RES_MEDIA_HEADERS[columnKey + "_PDM1"].IndexInResultTable != RES_PDM_N1_OFFSET + 1)
-                            {
-                                tab.AffectValueAndAddToHierarchy(1, cLine, RES_PDM_N1_OFFSET + 1, valueN1);
+                            // Total Column Value
+                            totalColumnIndex = RES_PDM_N1_OFFSET + 1;
+                            if (valueColumnIndex != totalColumnIndex) {
+                                tab.AffectValueAndAddToHierarchy(1, cLine, totalColumnIndex, valueN1);
                                 if (valueN1 > 0)
-                                    reInitPDVPDMVoidColumns[RES_PDM_N1_OFFSET + 1] = true;
+                                    reInitPDVPDMVoidColumns[totalColumnIndex] = true;
                             }
-                            if (subTotalIndex > -1)
-                            {
-                                tab.AffectValueAndAddToHierarchy(1, cLine, subTotalIndex + RES_PDM_N1_OFFSET - 1, valueN1);
-                                if (valueN1 > 0)
-                                    reInitPDVPDMVoidColumns[subTotalIndex + RES_PDM_N1_OFFSET - 1] = true;
+                            // Sub Total Column Value
+                            if (subTotalIndex > -1) {
+                                subTotalColumnIndex = subTotalIndex + RES_PDM_N1_OFFSET - 1;
+                                if (totalColumnIndex != subTotalColumnIndex) {
+                                    tab.AffectValueAndAddToHierarchy(1, cLine, subTotalColumnIndex, valueN1);
+                                    if (valueN1 > 0)
+                                        reInitPDVPDMVoidColumns[subTotalColumnIndex] = true;
+                                }
                             }
                         }
                         #endregion
