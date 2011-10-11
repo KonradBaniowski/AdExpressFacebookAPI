@@ -40,9 +40,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aspose.Cells, Version=4.5.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56">
+    <Reference Include="Aspose.Cells, Version=5.1.3.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\Aspose.Cells.dll</HintPath>
+      <HintPath>\\frmitch-fs04\programme\Projets\France\AdExpress Olympe 2009\Bin\Aspose.Cells.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -62,9 +62,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Trunk\Bin\TNS.FrameWork.WebResultUI.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.WebTheme, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork.WebTheme_, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.WebTheme.dll</HintPath>
+      <HintPath>\\frmitch-fs04\programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.WebTheme_.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
