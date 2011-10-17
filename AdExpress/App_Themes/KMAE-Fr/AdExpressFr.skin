@@ -105,6 +105,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%@ Register TagPrefix="ctrVpResult" Namespace="TNS.AdExpress.Web.Controls.Results.VP" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="ctrVpSelection" Namespace="TNS.AdExpress.Web.Controls.Selections.VP" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="ctrVpSelectionFilter" Namespace="TNS.AdExpress.Web.Controls.Selections.VP.Filter" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrHeader" Namespace="TNS.AdExpress.Web.Controls.Selections" Assembly="TNS.AdExpress.Web.Controls" %>
 
 <%-- Header web control : used to show the commun header for all the aspx pages in the site--%>
 <ctrHeader:HeaderWebControl  
@@ -1220,6 +1221,15 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            LabelCssClass="txtBlanc11Bold"  
                            ListCssClass="txtNoir11Bold"
                            SkinID="SectorWebControl"
+/>
+<%-- Sector multiple  Selection WebControl : designed for new creatives --%>
+<ctrHeader:DropDownCheckBoxListWebControl 
+                           runat="server"
+                            BackgroundColor=""
+                           LabelCssClass="txtBlanc11Bold"    
+                           ContainerHeight="400px"    
+                           MaxItemsNotScrollable="18"                 
+                           SkinID="SectorsDropDownCheckBoxListWebControl"
 />
 
 <%-- Generic detail selection web control : used to display columns detail --%>

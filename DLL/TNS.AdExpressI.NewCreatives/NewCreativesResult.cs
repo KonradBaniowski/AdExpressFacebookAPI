@@ -78,9 +78,9 @@ namespace TNS.AdExpressI.NewCreatives {
         /// </summary>
         protected Navigation.Module _module;
         /// <summary>
-        /// Sector ID
+        /// Sector IDs
         /// </summary>
-        protected Int64 _idSector = -1;
+        protected string _idSectors = "";
         /// <summary>
         /// Begining Date
         /// </summary>
@@ -127,7 +127,7 @@ namespace TNS.AdExpressI.NewCreatives {
         /// <param name="session">user session</param>
         public NewCreativesResult(WebSession session) {
             _webSession = session;
-            _idSector = GetSectorId();
+            _idSectors = GetSectorIds();
             _beginingDate = session.PeriodBeginningDate;
             _endDate = session.PeriodEndDate;
             _module = Navigation.ModulesList.GetModule(session.CurrentModule);
@@ -138,7 +138,7 @@ namespace TNS.AdExpressI.NewCreatives {
             _vehicleInformation = VehiclesInformation.Get(Int64.Parse(vehicleSelection));
             #endregion
 
-            _showMediaSchedule = session.CustomerLogin.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) != null ? true : false;
+            _showMediaSchedule = session.CustomerLogin.GetModule(AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) != null;
         }
         #endregion
 
@@ -170,7 +170,7 @@ namespace TNS.AdExpressI.NewCreatives {
             if(_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
             object[] parameters = new object[4];
             parameters[0] = _webSession;
-            parameters[1] = _idSector;
+            parameters[1] = _idSectors;
             parameters[2] = _beginingDate;
             parameters[3] = _endDate;
             INewCreativeResultDAL newCreativesDAL = (INewCreativeResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
@@ -307,21 +307,16 @@ namespace TNS.AdExpressI.NewCreatives {
         /// Get sector ID
         /// </summary>
         /// <returns>Sector ID value</returns>
-        protected virtual Int64 GetSectorId() {
-            Int64 sectorId = -1;
-            List<long> savedAdvertisers = null;
-            string saveAdvertisersString="";
-            NomenclatureElementsGroup nomenclatureElementsGroup = null;
-            if(_webSession.PrincipalProductUniverses != null && _webSession.PrincipalProductUniverses.Count > 0) {
-                nomenclatureElementsGroup = _webSession.PrincipalProductUniverses[0].GetGroup(0);
+        protected virtual string GetSectorIds() {
+        
+            if(_webSession.PrincipalProductUniverses != null && _webSession.PrincipalProductUniverses.Count > 0)
+            {
+                NomenclatureElementsGroup nomenclatureElementsGroup = _webSession.PrincipalProductUniverses[0].GetGroup(0);
                 if(nomenclatureElementsGroup != null) {
-                    savedAdvertisers = nomenclatureElementsGroup.Get(TNSClassificationLevels.SECTOR);
-                    saveAdvertisersString = nomenclatureElementsGroup.GetAsString(TNSClassificationLevels.SECTOR);
-                    if(saveAdvertisersString != null && saveAdvertisersString.Length > 0)
-                        sectorId = Int64.Parse(saveAdvertisersString);
+                    return nomenclatureElementsGroup.GetAsString(TNSClassificationLevels.SECTOR);                   
                 }
             }
-            return (sectorId);
+            return ("");
         }
         #endregion
 

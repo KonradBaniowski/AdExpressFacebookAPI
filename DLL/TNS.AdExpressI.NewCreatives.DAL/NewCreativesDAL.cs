@@ -54,7 +54,7 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
         /// <summary>
         /// Sector ID
         /// </summary>
-        protected Int64 _idSector;
+        protected string _idSectors;
         /// <summary>
         /// Begining Date
         /// </summary>
@@ -81,15 +81,19 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
         #endregion
 
         #region Constructor
+
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="session">Websession</param>
-        public NewCreativesDAL(WebSession session, Int64 idSector, string beginingDate, string endDate) {
-            this._session = session;
-            this._idSector = idSector;
-            this._beginingDate = beginingDate;
-            this._endDate = endDate;
+        /// <param name="idSectors">id Sectors</param>
+        /// <param name="beginingDate">begining Date</param>
+        /// <param name="endDate">end Date</param>
+        public NewCreativesDAL(WebSession session, string idSectors, string beginingDate, string endDate) {
+            _session = session;
+            _idSectors = idSectors;
+            _beginingDate = beginingDate;
+            _endDate = endDate;
 
             #region Sélection du vehicle
             string vehicleSelection = _session.GetSelection(_session.SelectionUniversMedia, CstCustomer.Right.type.vehicleAccess);
@@ -159,8 +163,7 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                     case WebConstantes.CustomerSessions.Period.DisplayLevel.dayly:
                         sql.Append(", to_char( min(wp.date_creation) , 'YYYYMMDD' ) as date_creation ");
                         break;
-                    default:
-                        break;
+                 
                 }
                 sql.Append(dataFieldsForGad+" ");
                 
@@ -181,8 +184,8 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 sql.Append(" " + dataJointForGad + " ");
 
                 // Sector ID
-                if(_idSector != -1)
-                    sql.Append(" and " + table.Prefix + ".id_sector in (" + _idSector + ") ");
+                if(!string.IsNullOrEmpty(_idSectors))
+                    sql.Append(" and " + table.Prefix + ".id_sector in (" + _idSectors + ") ");
                 //Filtering with category Application mobile
                 if (useTableDataMobile)
                 {
@@ -205,7 +208,7 @@ namespace TNS.AdExpressI.NewCreatives.DAL {
                 // order by
                 sql.Append(" order by " + detailProductOrderBy + ", date_creation ");
             }
-            catch(System.Exception err) {
+            catch(Exception err) {
                 throw (new NewCreativesDALException("Unable to build request for new creatives : " + sql, err));
             }
             #endregion

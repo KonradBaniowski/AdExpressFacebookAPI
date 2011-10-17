@@ -18,6 +18,7 @@
 		<meta http-equiv="expires" content="0"/>
 		<meta http-equiv="pragma" content="no-cache"/>
 		<meta content="no-cache" name="Cache-control"/>
+		<script type="text/javascript" src="/scripts/jquery.min.js"></script> 
 	</HEAD>
 	<body class="bodyStyle" onload="javascript:activateActiveX();">
 		<form id="Form2" method="post" runat="server">
@@ -69,7 +70,7 @@
                                                     RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx" 
                                                     ResultOption="False" 
                                                     SaveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelSave.aspx" 
-                                                    UnitOption="False" SectorSelectionOptions="True" />
+                                                    UnitOption="False" SectorSelectionOptions="False" SectorMultipleSelectionOptions="True"/>
 											
 											</td>
 										</tr>

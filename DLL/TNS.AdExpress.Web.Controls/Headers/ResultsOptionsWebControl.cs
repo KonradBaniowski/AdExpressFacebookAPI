@@ -206,6 +206,11 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// Banners Format Filter WebControl
         /// </summary>
         protected GenericFilterWebControl _bannersFormatWebControl;
+        
+        /// <summary>
+        /// Multipe sector selection webcontrol
+        /// </summary>
+        protected DropDownCheckBoxListWebControl _sectorsDropDownCheckBoxListWebControl;
         #endregion
 
         #region Accessors
@@ -991,6 +996,28 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         }
         #endregion
 
+        protected bool _sectorMultipleSelectionOptions = false;
+        /// <summary>
+        /// Get/Set Sector Selection Options
+        /// </summary>
+        public bool SectorMultipleSelectionOptions
+        {
+            get
+            {
+
+                return _sectorMultipleSelectionOptions;
+            }
+            set { _sectorMultipleSelectionOptions = value; }
+        }
+        /// <summary>
+        /// Get \ Sector multiple selection webcontrol
+        /// </summary>
+        public DropDownCheckBoxListWebControl SectorsDropDownCheckBoxListWebControl
+        {
+            get { return _sectorsDropDownCheckBoxListWebControl; }
+            set { _sectorsDropDownCheckBoxListWebControl = value; }
+        }
+
         #endregion
 
         #region Constructeur
@@ -1353,6 +1380,20 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 _sectorWebControl.ID = this.ID + "_sectorWebControl";
                 _sectorWebControl.SkinID = "SectorWebControl";
                 Controls.Add(_sectorWebControl);
+            }
+            #endregion
+
+            #region Options Sector Multiple Selection
+            if (_sectorMultipleSelectionOptions)
+            {
+                _sectorsDropDownCheckBoxListWebControl = new DropDownCheckBoxListWebControl
+                                                             {
+                                                                 Session = customerWebSession,
+                                                                 ID = ID + "_sectorsDropDownCheckBoxListWebControl",
+                                                                 SkinID = "SectorsDropDownCheckBoxListWebControl"
+                                                             };
+
+                Controls.Add(_sectorsDropDownCheckBoxListWebControl);
             }
             #endregion
 
@@ -2363,6 +2404,20 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td>");
                 _sectorWebControl.RenderControl(output);
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<TR>");
+                output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n</TR>");
+            }
+            #endregion
+
+            #region Option Multiple  Sector Selection
+            if (SectorMultipleSelectionOptions)
+            {
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                output.Write("\n<td>");
+                _sectorsDropDownCheckBoxListWebControl.RenderControl(output);
                 output.Write("\n</td>");
                 output.Write("\n</tr>");
                 output.Write("\n<TR>");
