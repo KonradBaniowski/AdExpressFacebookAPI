@@ -167,12 +167,18 @@ namespace TNS.AdExpressI.Classification.DAL {
             GetFromClause(sql, oView, classificationLevelLabel, useView);
 
             //Key word allows to search for classication items via labels 			
-			wordToSearch = wordToSearch.ToUpper().Replace("'", " ");
-			wordToSearch = wordToSearch.ToUpper().Replace("*", "%");
-			wordToSearch = wordToSearch.Trim() + "%";
+            string wordToSearch1 = TNS.AdExpress.Web.Core.Utilities.CheckedText.NewText(wordToSearch.ToUpper()); //.Replace("'", " ");
+            wordToSearch1 = wordToSearch1.ToUpper().Replace("*", "%");
+            wordToSearch1 = wordToSearch1.Trim() + "%";
+            string wordToSearch2 = wordToSearch.ToUpper().Replace("'", "''");
+            wordToSearch2 = wordToSearch2.ToUpper().Replace("*", "%");
+            wordToSearch2 = wordToSearch2.Trim() + "%";
+
 
             /*Query conditions */
-            sql.AppendFormat(" where upper(wp.{0}) like upper('{1}')", classificationLevelLabel, wordToSearch);
+            sql.AppendFormat(" where ( upper(wp.{0}) like upper('{1}')  or upper(wp.{0}) like upper('{2}') ) ", classificationLevelLabel, wordToSearch1, wordToSearch2);
+
+
 
             /*Query tables joins */
             GetJointClause(sql, oView, classificationLevelLabel, _dimension, classificationRight, useView);

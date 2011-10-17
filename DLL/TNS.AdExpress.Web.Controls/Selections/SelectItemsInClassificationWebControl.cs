@@ -1354,6 +1354,11 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
         }
         #endregion
+
+        protected override string NewText(string text)
+        {
+            return text;
+        }
         
 
         
