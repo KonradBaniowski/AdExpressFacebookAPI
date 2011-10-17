@@ -226,6 +226,13 @@
     <item mnemonic="w2648" type="System.String">USD</item>
     <item mnemonic="w2649" type="System.String">KUSD</item>
     <item mnemonic="w2681" type="System.String">pages A2</item>
+
+    <item mnemonic="w2718" type="System.String">Square</item>
+    <item mnemonic="w2805" type="System.String">Mentions</item>
+    <item mnemonic="w2806" type="System.String">Date</item>
+    <item mnemonic="w2807" type="System.String">Quantity</item>
+    <item mnemonic="w2808" type="System.String">PLN</item>
+    <item mnemonic="w2809" type="System.String">kPLN</item>
   </items>
 </localization>
   

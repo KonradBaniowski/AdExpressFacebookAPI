@@ -225,5 +225,12 @@
     <item mnemonic="w2648" type="System.String">!</item>
     <item mnemonic="w2649" type="System.String">!</item>
     <item mnemonic="w2681" type="System.String">!</item>
+
+    <item mnemonic="w2718" type="System.String">!</item>
+    <item mnemonic="w2805" type="System.String">!</item>
+    <item mnemonic="w2806" type="System.String">Date</item>
+    <item mnemonic="w2807" type="System.String">!</item>
+    <item mnemonic="w2808" type="System.String">PLN</item>
+    <item mnemonic="w2809" type="System.String">kPLN</item>
   </items>
 </localization>
