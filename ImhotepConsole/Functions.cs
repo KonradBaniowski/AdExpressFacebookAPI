@@ -535,6 +535,24 @@ namespace ImhotepConsole
             {
                 webSession.SecondaryMediaUniverses = new Dictionary<int, AdExpressUniverse>();
             }
+            // Principal dictionary of  universe advertising agency
+            try
+            {
+                webSession.PrincipalAdvertisingAgnecyUniverses = newWebSession.PrincipalAdvertisingAgnecyUniverses;
+            }
+            catch (Exception)
+            {
+                webSession.PrincipalAdvertisingAgnecyUniverses = new Dictionary<int, AdExpressUniverse>();
+            }
+            // Principal dictionary of  universe advertising agency
+            try
+            {
+                webSession.SecondaryAdvertisingAgnecyUniverses = newWebSession.SecondaryAdvertisingAgnecyUniverses;
+            }
+            catch (Exception)
+            {
+                webSession.SecondaryAdvertisingAgnecyUniverses = new Dictionary<int, AdExpressUniverse>();
+            }
             #endregion
 
             #region variables de Répartition

@@ -20,14 +20,23 @@ using TNS.AdExpress.Constantes.Web;
 using DateFrameWork = TNS.FrameWork.Date;
 using TNS.FrameWork.Exceptions;
 using System.IO;
+using System.Collections;
 
 namespace ImhotepConsole.DAL
 {
     public class ImhotepDAL
     {
         const string MY_SESSION_TEST = "webnav01.my_session";//
+        //const string MY_SESSION_TEST = "webnav01.my_session";//
         const string ALERT_TEST = "MAU01.ALERT";//
-        const string DEV_CONNECTION_STRING = "User Id=gfacon; Password=sandie5; Data Source=adexpr03.pige;Pooling=true; Max Pool Size=150; Decr Pool Size=20; Connection Timeout=120";
+        ////FINLANDE
+       // const string DEV_CONNECTION_STRING = "User Id=gfacon; Password=sandie5; Data Source=adexprfi01.pige;Pooling=true; Max Pool Size=150; Decr Pool Size=20; Connection Timeout=120";
+
+        //SLOVAKIA
+        const string DEV_CONNECTION_STRING = "User Id=gfacon; Password=sandie5; Data Source=adexwebsk01.prod;Pooling=true; Max Pool Size=150; Decr Pool Size=20; Connection Timeout=120";
+
+        const string UNIVERSE_CLIENT_TEST = "universe_client_test";
+
         const int ID_ALERT_TYPE = 2;
 
         #region Chargement des identifiants session
@@ -230,7 +239,7 @@ namespace ImhotepConsole.DAL
                 binaryData = new byte[0];
                 //create anonymous PL/SQL command
                 string block = " BEGIN " +
-                    " SELECT Blob_content INTO :1 FROM "  + MY_SESSION_TEST + " WHERE id_my_session = " + idWebSession + "; " +
+                    " SELECT Blob_content INTO :1 FROM " + MY_SESSION_TEST + " WHERE id_my_session = " + idWebSession + "; " +
                     " END; ";
                 sqlCommand = new OracleCommand(block);
                 sqlCommand.Connection = cnx;
@@ -438,7 +447,7 @@ namespace ImhotepConsole.DAL
 
                 //mise à jour de la session
                 sql = " BEGIN " +
-                    " UPDATE " +  MY_SESSION_TEST +
+                    " UPDATE " + MY_SESSION_TEST +
                     " SET BLOB_CONTENT = :1,DATE_MODIFICATION=sysdate" +
                     " WHERE ID_MY_SESSION=" + idWebSession + " ;" +
                     " END; ";
@@ -532,7 +541,7 @@ namespace ImhotepConsole.DAL
 
                 //mise à jour de la session
                 sql = " BEGIN " +
-                    " UPDATE " +ALERT_TEST +
+                    " UPDATE " + ALERT_TEST +
                     " SET session_ = :1,DATE_MODIFICATION=sysdate" +
                     " WHERE ID_ALERT=" + idWebSession + " ;" +
                     " END; ";
@@ -576,6 +585,625 @@ namespace ImhotepConsole.DAL
             }
             #endregion
         }
+        #endregion
+
+
+        public static DataSet GetVehicles(string categoryList, string vehicleList, int idLanguage)
+        {
+            OracleCommand sqlCommand = null;
+            OracleDataAdapter sqlAdapter = null;
+
+            DataSet ds = null;
+            #region Ouverture de la base de données
+            bool DBToClosed = false;
+
+            OracleConnection cnx = new OracleConnection(DEV_CONNECTION_STRING);
+            try
+            {
+                cnx.Open();
+            }
+            catch (System.Exception e)
+            {
+                throw (new MySessionDataAccessException("ERROR : GetVehicles : Impossible d'ouvrir la base de données : " + e.Message));
+            }
+
+            if (cnx.State == System.Data.ConnectionState.Closed)
+            {
+                DBToClosed = true;
+                try
+                {
+                    cnx.Open();
+                }
+                catch (System.Exception e)
+                {
+                    throw (new MySessionDataAccessException("ERROR : GetVehicles: Impossible d'ouvrir la base de données : " + e.Message));
+                }
+            }
+            #endregion
+
+            try
+            {
+                string sql = "select vh.id_vehicle, vehicle ";
+                if (!string.IsNullOrEmpty(categoryList)) sql += ", ct.id_category, category ";
+
+                sql += " from ";
+                sql += " RECAPFI01B.VEHICLE vh ";
+                if (!string.IsNullOrEmpty(categoryList)) sql += " ,RECAPFI01B.CATEGORY ct ";
+                sql += " where 0 = 0 ";
+                if (!string.IsNullOrEmpty(categoryList))
+                {
+                    sql += " and   ct.id_category in (" + categoryList + ") ";
+                    sql += " and ct.id_language=" + idLanguage;
+                }
+                if (!string.IsNullOrEmpty(vehicleList))
+                {
+                    sql += " and   vh.id_vehicle in (" + vehicleList + ") ";
+                    sql += " and vh.id_language=" + idLanguage;
+                }
+                ds = new DataSet();
+                sqlCommand = new OracleCommand(sql);
+                sqlCommand.Connection = cnx;
+                sqlAdapter = new OracleDataAdapter(sqlCommand);
+                sqlAdapter.Fill(ds);
+            }
+            catch (System.Exception et)
+            {
+                try
+                {
+                    // Fermeture des structures
+                    if (sqlAdapter != null) sqlAdapter.Dispose();
+                    if (sqlCommand != null) sqlCommand.Dispose();
+                    if (DBToClosed) cnx.Close();
+                }
+                catch (System.Exception e)
+                {
+                    throw (new MySessionDataAccessException("ERROR : GetVehicles : Impossible de libérer les ressources après échec de la méthode : " + e.Message));
+                }
+                throw (new MySessionDataAccessException("ERROR : GetVehicles : Impossible de charger les identifiants de session : " + et.Message));
+            }
+            try
+            {
+                // Fermeture des structures
+                if (sqlAdapter != null) sqlAdapter.Dispose();
+                if (sqlCommand != null) sqlCommand.Dispose();
+                if (DBToClosed) cnx.Close();
+            }
+            catch (System.Exception ex)
+            {
+                throw (new MySessionDataAccessException("ERROR : ImhotepDAL.LoadSessionIds() :  Impossible de fermer la base de données : " + ex.Message));
+            }
+            return ds;
+        }
+
+        public static DataSet GetVehicleInterectcenterMedia( string vehicleList, int idLanguage)
+        {
+
+            OracleCommand sqlCommand = null;
+            OracleDataAdapter sqlAdapter = null;
+
+            DataSet ds = null;
+            #region Ouverture de la base de données
+            bool DBToClosed = false;
+
+            OracleConnection cnx = new OracleConnection(DEV_CONNECTION_STRING);
+            try
+            {
+                cnx.Open();
+            }
+            catch (System.Exception e)
+            {
+                throw (new MySessionDataAccessException("ERROR : GetVehicles : Impossible d'ouvrir la base de données : " + e.Message));
+            }
+
+            if (cnx.State == System.Data.ConnectionState.Closed)
+            {
+                DBToClosed = true;
+                try
+                {
+                    cnx.Open();
+                }
+                catch (System.Exception e)
+                {
+                    throw (new MySessionDataAccessException("ERROR : GetVehicles: Impossible d'ouvrir la base de données : " + e.Message));
+                }
+            }
+            #endregion
+
+            try
+            {
+                string sql = "";
+                sql += " Select distinct vh.id_vehicle,vh.vehicle,ic.id_interest_center,ic.interest_center , md.id_media , md.media ";
+                sql += " from  adexprfi01.vehicle vh, adexprfi01.interest_center ic, adexprfi01.media md ";
+                sql += " , adexprfi01.category ct,  adexprfi01.basic_media bm  where vh.id_language=" + idLanguage;
+                sql += " and ic.id_language=" + idLanguage + " and md.id_language=" + idLanguage + " and bm.id_language=" + idLanguage;
+                sql += " and ct.id_language=" + idLanguage + " and vh.activation<50 and ic.activation<50 and md.activation<50 ";
+                sql += " and ct.activation<50 and bm.activation<50 and vh.id_vehicle=ct.id_vehicle ";
+                sql += " and ic.id_interest_center=md.id_interest_center and ct.id_category=bm.id_category ";
+                sql += " and bm.id_basic_media=md.id_basic_media and  ( vh.id_vehicle in ( "+vehicleList+" )  ) ";
+                sql += " order by  vh.vehicle , ic.interest_center , md.media";
+                ds = new DataSet();
+                sqlCommand = new OracleCommand(sql);
+                sqlCommand.Connection = cnx;
+                sqlAdapter = new OracleDataAdapter(sqlCommand);
+                sqlAdapter.Fill(ds);
+            }
+            catch (System.Exception et)
+            {
+                try
+                {
+                    // Fermeture des structures
+                    if (sqlAdapter != null) sqlAdapter.Dispose();
+                    if (sqlCommand != null) sqlCommand.Dispose();
+                    if (DBToClosed) cnx.Close();
+                }
+                catch (System.Exception e)
+                {
+                    throw (new MySessionDataAccessException("ERROR : GetVehicles : Impossible de libérer les ressources après échec de la méthode : " + e.Message));
+                }
+                throw (new MySessionDataAccessException("ERROR : GetVehicles : Impossible de charger les identifiants de session : " + et.Message));
+            }
+            try
+            {
+                // Fermeture des structures
+                if (sqlAdapter != null) sqlAdapter.Dispose();
+                if (sqlCommand != null) sqlCommand.Dispose();
+                if (DBToClosed) cnx.Close();
+            }
+            catch (System.Exception ex)
+            {
+                throw (new MySessionDataAccessException("ERROR : ImhotepDAL.LoadSessionIds() :  Impossible de fermer la base de données : " + ex.Message));
+            }
+            return ds;
+        }
+        public static DataSet GetVehiclerMedia(string vehicleList, int idLanguage)
+        {
+
+            OracleCommand sqlCommand = null;
+            OracleDataAdapter sqlAdapter = null;
+
+            DataSet ds = null;
+            #region Ouverture de la base de données
+            bool DBToClosed = false;
+
+            OracleConnection cnx = new OracleConnection(DEV_CONNECTION_STRING);
+            try
+            {
+                cnx.Open();
+            }
+            catch (System.Exception e)
+            {
+                throw (new MySessionDataAccessException("ERROR : GetVehicles : Impossible d'ouvrir la base de données : " + e.Message));
+            }
+
+            if (cnx.State == System.Data.ConnectionState.Closed)
+            {
+                DBToClosed = true;
+                try
+                {
+                    cnx.Open();
+                }
+                catch (System.Exception e)
+                {
+                    throw (new MySessionDataAccessException("ERROR : GetVehicles: Impossible d'ouvrir la base de données : " + e.Message));
+                }
+            }
+            #endregion
+
+            try
+            {
+                string sql = "";
+                sql += " Select distinct vh.id_vehicle,vh.vehicle, md.id_media , md.media ";
+                sql += " from  adexprfi01.vehicle vh,  adexprfi01.media md ";
+                sql += " , adexprfi01.category ct,  adexprfi01.basic_media bm  where vh.id_language=" + idLanguage;
+                sql += "  and md.id_language=" + idLanguage + " and bm.id_language=" + idLanguage;
+                sql += " and ct.id_language=" + idLanguage + " and vh.activation<50 and md.activation<50 ";
+                sql += " and ct.activation<50 and bm.activation<50 and vh.id_vehicle=ct.id_vehicle ";
+                sql += " and ct.id_category=bm.id_category ";
+                sql += " and bm.id_basic_media=md.id_basic_media and  ( vh.id_vehicle in ( " + vehicleList + " )  ) ";
+                sql += " order by  vh.vehicle  , md.media";
+                ds = new DataSet();
+                sqlCommand = new OracleCommand(sql);
+                sqlCommand.Connection = cnx;
+                sqlAdapter = new OracleDataAdapter(sqlCommand);
+                sqlAdapter.Fill(ds);
+            }
+            catch (System.Exception et)
+            {
+                try
+                {
+                    // Fermeture des structures
+                    if (sqlAdapter != null) sqlAdapter.Dispose();
+                    if (sqlCommand != null) sqlCommand.Dispose();
+                    if (DBToClosed) cnx.Close();
+                }
+                catch (System.Exception e)
+                {
+                    throw (new MySessionDataAccessException("ERROR : GetVehicles : Impossible de libérer les ressources après échec de la méthode : " + e.Message));
+                }
+                throw (new MySessionDataAccessException("ERROR : GetVehicles : Impossible de charger les identifiants de session : " + et.Message));
+            }
+            try
+            {
+                // Fermeture des structures
+                if (sqlAdapter != null) sqlAdapter.Dispose();
+                if (sqlCommand != null) sqlCommand.Dispose();
+                if (DBToClosed) cnx.Close();
+            }
+            catch (System.Exception ex)
+            {
+                throw (new MySessionDataAccessException("ERROR : ImhotepDAL.LoadSessionIds() :  Impossible de fermer la base de données : " + ex.Message));
+            }
+            return ds;
+        }
+        public static DataSet GetCategoriVehicles(string categoryList, int idLanguage)
+        {
+            OracleCommand sqlCommand = null;
+            OracleDataAdapter sqlAdapter = null;
+
+            DataSet ds = null;
+            #region Ouverture de la base de données
+            bool DBToClosed = false;
+
+            OracleConnection cnx = new OracleConnection(DEV_CONNECTION_STRING);
+            try
+            {
+                cnx.Open();
+            }
+            catch (System.Exception e)
+            {
+                throw (new MySessionDataAccessException("ERROR : GetVehicles : Impossible d'ouvrir la base de données : " + e.Message));
+            }
+
+            if (cnx.State == System.Data.ConnectionState.Closed)
+            {
+                DBToClosed = true;
+                try
+                {
+                    cnx.Open();
+                }
+                catch (System.Exception e)
+                {
+                    throw (new MySessionDataAccessException("ERROR : GetVehicles: Impossible d'ouvrir la base de données : " + e.Message));
+                }
+            }
+            #endregion
+
+            try
+            {
+                string sql = "select * from RECAPFI01B.CATEGORY";
+                sql += " where id_vehicle in (" + categoryList + ") ";
+                sql += " and id_language=" + idLanguage;
+                ds = new DataSet();
+                sqlCommand = new OracleCommand(sql);
+                sqlCommand.Connection = cnx;
+                sqlAdapter = new OracleDataAdapter(sqlCommand);
+                sqlAdapter.Fill(ds);
+            }
+            catch (System.Exception et)
+            {
+                try
+                {
+                    // Fermeture des structures
+                    if (sqlAdapter != null) sqlAdapter.Dispose();
+                    if (sqlCommand != null) sqlCommand.Dispose();
+                    if (DBToClosed) cnx.Close();
+                }
+                catch (System.Exception e)
+                {
+                    throw (new MySessionDataAccessException("ERROR : GetVehicles : Impossible de libérer les ressources après échec de la méthode : " + e.Message));
+                }
+                throw (new MySessionDataAccessException("ERROR : GetVehicles : Impossible de charger les identifiants de session : " + et.Message));
+            }
+            try
+            {
+                // Fermeture des structures
+                if (sqlAdapter != null) sqlAdapter.Dispose();
+                if (sqlCommand != null) sqlCommand.Dispose();
+                if (DBToClosed) cnx.Close();
+            }
+            catch (System.Exception ex)
+            {
+                throw (new MySessionDataAccessException("ERROR : ImhotepDAL.LoadSessionIds() :  Impossible de fermer la base de données : " + ex.Message));
+            }
+            return ds;
+        }
+
+
+        #region Univers
+
+        /// <summary>
+        /// Obtenir la liste des identifiants d'univers clients
+        /// </summary>
+        /// <returns>List d'identifiants séparés par une virgule</returns>
+        public static string GetUniversList(string IdUniverseClientDescription, string IdTyeUniverseClient)
+        {
+            string sql = "";
+            DataSet ds = null;
+
+            #region Ouverture de la base de données
+            bool DBToClosed = false;
+
+            OracleConnection cnx = new OracleConnection(DEV_CONNECTION_STRING);
+            try
+            {
+                cnx.Open();
+            }
+            catch (System.Exception e)
+            {
+                throw (new BaseException("ImhotepDataAccess.GetUniversList(...) : Impossible d'ouvrir la base de données : " + e.Message));
+            }
+
+            if (cnx.State == System.Data.ConnectionState.Closed)
+            {
+                DBToClosed = true;
+                try
+                {
+                    cnx.Open();
+                }
+                catch (System.Exception e)
+                {
+                    throw (new BaseException("ImhotepDataAccess.GetUniversList(...) : Impossible d'ouvrir la base de données : " + e.Message));
+                }
+            }
+            #endregion
+
+            #region chargement des identifiants session
+            OracleCommand sqlCommand = null;
+            OracleDataAdapter sqlAdapter = null;
+            try
+            {
+                sql += " SELECT id_universe_client FROM " + DBConstantes.Schema.UNIVERS_SCHEMA + "." + UNIVERSE_CLIENT_TEST;
+                 sql += " WHERE ID_UNIVERSE_CLIENT_DESCRIPTION in (" + IdUniverseClientDescription+") ";
+                 sql += " AND ID_TYPE_UNIVERSE_CLIENT in ("+IdTyeUniverseClient+") ";
+                sql+=" ORDER BY date_creation";
+                ds = new DataSet();
+                sqlCommand = new OracleCommand(sql);
+                sqlCommand.Connection = cnx;
+                sqlAdapter = new OracleDataAdapter(sqlCommand);
+                sqlAdapter.Fill(ds);
+            }
+            catch (System.Exception et)
+            {
+                try
+                {
+                    // Fermeture des structures
+                    if (sqlAdapter != null) sqlAdapter.Dispose();
+                    if (sqlCommand != null) sqlCommand.Dispose();
+                    if (DBToClosed) cnx.Close();
+                }
+                catch (System.Exception e)
+                {
+                    throw (new BaseException("ImhotepDataAccess.GetUniversList(...) : Impossible de libérer les ressources après échec de la méthode : " + e.Message));
+                }
+                throw (new BaseException("GetUniverseList() : Impossible de charger les identifiants de session : " + et.Message));
+            }
+            try
+            {
+                // Fermeture des structures
+                if (sqlAdapter != null) sqlAdapter.Dispose();
+                if (sqlCommand != null) sqlCommand.Dispose();
+                if (DBToClosed) cnx.Close();
+            }
+            catch (System.Exception ex)
+            {
+                throw (new BaseException("GetUniverseList() : Impossible de fermer la base de données : " + ex.Message));
+            }
+            #endregion
+
+            string lst = "";
+            foreach (DataRow r in ds.Tables[0].Rows)
+            {
+                lst += r[0].ToString() + ",";
+            }
+            if (lst.Length > 0)
+            {
+                lst = lst.Substring(0, lst.Length - 1);
+            }
+            return lst;
+        }
+
+
+        /// <summary>
+        /// Méthode pour la récupération et la "deserialization" d'un univers à partir de la table Universe Client
+        /// </summary>
+        /// <param name="idUniverse">Identifiant de l'univers</param>
+        /// <param name="webSession">Session du client</param>
+        /// <returns>Retourne l'objet récupéré ou null si il y a eu un problème non géré</returns>
+        public static Object GetTreeNodeUniverse(Int64 idUniverse)
+        {
+
+            #region Ouverture de la base de données
+            bool DBToClosed = false;
+            OracleConnection cnx = new OracleConnection(DEV_CONNECTION_STRING);
+
+            if (cnx.State == System.Data.ConnectionState.Closed)
+            {
+                DBToClosed = true;
+                try
+                {
+                    cnx.Open();
+                }
+                catch (System.Exception e)
+                {
+                    throw (new BaseException("Impossible d'ouvrir la base de données", e));
+                }
+            }
+            #endregion
+
+            #region Chargement et deserialization de l'objet
+            OracleCommand sqlCommand = null;
+            MemoryStream ms = null;
+            BinaryFormatter bf = null;
+            byte[] binaryData = null;
+            Object o = null;
+            try
+            {
+                binaryData = new byte[0];
+                //create anonymous PL/SQL command
+                string block = " BEGIN " +
+                    " SELECT blob_universe_client INTO :1 FROM "
+                    + DBConstantes.Schema.UNIVERS_SCHEMA + "." + UNIVERSE_CLIENT_TEST
+                    + " WHERE id_universe_client = " + idUniverse + "; " +
+                    " END; ";
+                sqlCommand = new OracleCommand(block);
+                sqlCommand.Connection = cnx;
+                sqlCommand.CommandType = CommandType.Text;
+                //Initialize parametres
+                OracleParameter param = sqlCommand.Parameters.Add("blobfromdb1", OracleDbType.Blob);
+                param.Direction = ParameterDirection.Output;
+
+                //Execute PL/SQL block
+                sqlCommand.ExecuteNonQuery();
+                //Récupération des octets du blob
+                binaryData = (byte[])((OracleBlob)(sqlCommand.Parameters[0].Value)).Value;
+
+                //Deserialization oft the object
+                ms = new MemoryStream();
+                ms.Write(binaryData, 0, binaryData.Length);
+                bf = new BinaryFormatter();
+                ms.Position = 0;
+                o = bf.Deserialize(ms);
+            }
+            #endregion
+
+            #region Gestion des erreurs de chargement et de deserialization de l'objet
+            catch (System.Exception e)
+            {
+                try
+                {
+                    // Fermeture des structures
+                    if (ms != null) ms.Close();
+                    if (bf != null) bf = null;
+                    if (binaryData != null) binaryData = null;
+                    if (sqlCommand != null) sqlCommand.Dispose();
+                    if (DBToClosed) cnx.Close();
+                }
+                catch (System.Exception et)
+                {
+                    throw (new BaseException("Impossible de libérer les ressources après échec de la méthode", et));
+                }
+                throw (new BaseException("Problème au chargement de la session à partir de la base de données", e));
+            }
+            try
+            {
+                // Fermeture des structures
+                if (ms != null) ms.Close();
+                if (bf != null) bf = null;
+                if (binaryData != null) binaryData = null;
+                if (sqlCommand != null) sqlCommand.Dispose();
+                if (DBToClosed) cnx.Close();
+            }
+            catch (System.Exception et)
+            {
+                throw (new Exception("Impossible de fermer la base de données : ", et));
+            }
+            #endregion
+
+            //retourne l'objet deserialized ou null si il y a eu un probleme
+            return (o);
+        }
+
+
+        /// <summary>
+        /// Sauvegarde d'un univers
+        /// </summary>
+        /// <remarks>A Tester</remarks>
+        /// <param name="alUniverseTreeNode"> Liste contenant les 2 arbres utilisés pour la sauvegarde des univers</param>
+        /// <returns>Retourne true si l'univers a été crée</returns>
+        public static bool UpDateUniverse(Int64 idUniverse, Int64 idTypeUniverseclient,ArrayList alUniverseTreeNode)
+        {
+
+            #region Ouverture de la base de données
+            OracleConnection cnx = new OracleConnection(DEV_CONNECTION_STRING);
+            bool DBToClosed = false;
+            bool success = false;
+            if (cnx.State == System.Data.ConnectionState.Closed)
+            {
+                DBToClosed = true;
+                try
+                {
+                    cnx.Open();
+                }
+                catch (System.Exception e)
+                {
+                    throw (new BaseException("Impossible d'ouvrir la base de données", e));
+                }
+            }
+            #endregion
+
+            #region Sérialisation et sauvegarde de la session
+            OracleCommand sqlCommand = null;
+            MemoryStream ms = null;
+            BinaryFormatter bf = null;
+            byte[] binaryData = null;
+
+
+            try
+            {
+                //"Serialization"
+                ms = new MemoryStream();
+                bf = new BinaryFormatter();
+                bf.Serialize(ms, alUniverseTreeNode);
+                binaryData = new byte[ms.GetBuffer().Length];
+                binaryData = ms.GetBuffer();
+
+                //create anonymous PL/SQL command
+                string block = " BEGIN " +
+                    " UPDATE " + DBConstantes.Schema.UNIVERS_SCHEMA + "." + UNIVERSE_CLIENT_TEST +
+                    " SET BLOB_UNIVERSE_CLIENT = :1,DATE_MODIFICATION=sysdate,ID_TYPE_UNIVERSE_CLIENT ="+  idTypeUniverseclient + 
+                    " WHERE ID_UNIVERSE_CLIENT=" + idUniverse + " ;" +                 
+                    " END; ";
+
+                sqlCommand = new OracleCommand(block);
+                sqlCommand.Connection = cnx;
+                sqlCommand.CommandType = CommandType.Text;
+                //Fill parametres
+                OracleParameter param = sqlCommand.Parameters.Add("blobtodb", OracleDbType.Blob);
+                param.Direction = ParameterDirection.Input;
+                param.Value = binaryData;
+
+                //Execute PL/SQL block
+                sqlCommand.ExecuteNonQuery();
+
+            }
+            #endregion
+
+            #region Gestion des erreurs dues à la sérialisation et à la sauvegarde de l'objet
+            catch (System.Exception e)
+            {
+                // Fermeture des structures
+                try
+                {
+                    if (ms != null) ms.Close();
+                    if (bf != null) bf = null;
+                    if (sqlCommand != null) sqlCommand.Dispose();
+                    if (DBToClosed) cnx.Close();
+                }
+                catch (System.Exception et)
+                {
+                    throw (new BaseException("Impossible de libérer les ressources après échec de la méthode" + et));
+                }
+                throw (new BaseException("Echec de la sauvegarde de l'objet dans la base de donnée" + e));
+            }
+            //pas d'erreur
+            try
+            {
+                // Fermeture des structures
+                ms.Close();
+                bf = null;
+                if (sqlCommand != null) sqlCommand.Dispose();
+                if (DBToClosed) cnx.Close();
+                success = true;
+            }
+            catch (System.Exception et)
+            {
+                throw (new BaseException("Impossible de fermer la base de données", et));
+            }
+            #endregion
+
+            return (success);
+        }
+
         #endregion
 
     }

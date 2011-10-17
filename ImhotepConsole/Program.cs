@@ -70,7 +70,37 @@ namespace ImhotepConsole
                         Console.ReadLine();
                     }
                     break;
+                case "5":
+                    Console.WriteLine("Voulez vous splitter le média PRESS ?");
+                    line = Console.ReadLine();
+                    //Alert NewWebsession => Websession
+                    if (line == "y")
+                    {
+                        convetWN = ImhotepConsole.Rules.ImhotepRules.SplittAllWebSessionMediatype();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Veuillez quitter l'application en appuyant sur la touche Entrée ");
+                        Console.ReadLine();
+                    }
+                    break;
+                case "6":
+                    Console.WriteLine("Voulez vous Convertir les Univers pour splitter le média PRESS ?");
+                    line = Console.ReadLine();
+                    //Alert NewWebsession => Websession
+                    if (line == "y")
+                    {
+                        convetWN = ImhotepConsole.Rules.ImhotepRules.ConvertAllUniverses();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Veuillez quitter l'application en appuyant sur la touche Entrée ");
+                        Console.ReadLine();
+                    }
+                    break;
+               
                 default:
+
                     Console.WriteLine(" Votre saisie ne correspond à aucune étape de migration ");
                     Console.ReadLine();
                     break;
