@@ -19,5 +19,6 @@
       <exec dayOfWeekFrom="Saturday"  dayOfWeekTo="Monday"  dayOfWeekHourTo="08:00:00"/>
       <exec dayOfWeekFrom="Sunday"    dayOfWeekTo="Monday"  dayOfWeekHourTo="08:00:00"/>
     </plugin>
+    <plugin enumId="Tefnout" name="Tefnout" resultType="21" longevity="10" deleteExpired="true" extension=".xls"  />
   </plugins>
 </pluginConfiguration>
