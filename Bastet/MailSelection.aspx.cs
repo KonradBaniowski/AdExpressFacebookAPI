@@ -66,6 +66,10 @@ namespace BastetWeb{
 		/// La liste est vide, vous devez préciser au moins 1 email
 		/// </summary>
 		public string _msg_err_list_empty_enter_one_email = string.Empty;
+        /// <summary>
+        /// Identifiant du module
+        /// </summary>
+        public int _moduleId = 1;
 		#endregion
 
 		#region Variables MMI
@@ -86,6 +90,14 @@ namespace BastetWeb{
 				if(!IsPostBack){
                     mailListBox.Items.Add(((IsisCommon.Login)Session["Login"]).LoginContact.Email);
 				}
+
+                #region QueryString
+                if (Page.Request.QueryString.Get("moduleId") != null) {
+                    _moduleId = int.Parse(Page.Request.QueryString.Get("moduleId").ToString());
+                }
+                #endregion
+
+                HeaderWebControl1.ActiveMenu = _moduleId;
                 HeaderWebControl1.LanguageId = _siteLanguage;
                 HeaderWebControl1.Type_de_page = TNS.AdExpress.Bastet.WebControls.PageType.generic;
 			}
@@ -216,7 +228,10 @@ namespace BastetWeb{
 						mailList.Add(mailListBox.Items[i].Text);
 					}
 					Session.Add("Mails",mailList);
-					Response.Redirect("DateSelection.aspx");
+                    if (!string.IsNullOrEmpty(Page.Request.Url.Query))
+                        Response.Redirect("DateSelection.aspx" + Page.Request.Url.Query);
+                    else
+                        Response.Redirect("DateSelection.aspx");
 				}
 				else{
 					// Javascript Erreur : La liste est vide, vous devez préciser au moins 1 email

@@ -22,6 +22,8 @@ using IsisCommon=TNS.Isis.Right.Common;
 using obout = obout_ASPTreeView_2_NET;
 using Localization = Bastet.Localization;
 using TNS.AdExpress.Bastet.Translation;
+using TNS.AdExpress.Bastet.Web;
+using TNS.AdExpress.Domain.DataBaseDescription;
 
 namespace BastetWeb{
 	/// <summary>
@@ -107,6 +109,10 @@ namespace BastetWeb{
 		/// Vous ne pouvez pas sauvegarder plus de 1000 éléments
 		/// </summary>
 		public string _msg_err_dont_save_more_1000_element = string.Empty;
+        /// <summary>
+        /// Identifiant du module
+        /// </summary>
+        public int _moduleId = 1;
 		#endregion
 		
 		#region Variables MMI
@@ -126,11 +132,19 @@ namespace BastetWeb{
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
 			try{
+
+                #region QueryString
+                if (Page.Request.QueryString.Get("moduleId") != null) {
+                    _moduleId = int.Parse(Page.Request.QueryString.Get("moduleId").ToString());
+                }
+                #endregion
+
                 if (Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.LOGIN] == null) throw (new SystemException("Aucun login en session"));
                 if (Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.MAILS] == null) throw (new SystemException("Aucun email en session"));
                 if (Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.DATE_BEGIN] == null) throw (new SystemException("Aucune date de début en session"));
                 if (Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.DATE_END] == null) throw (new SystemException("Aucune date de fin en session"));
 
+                HeaderWebControl1.ActiveMenu = _moduleId;
                 HeaderWebControl1.LanguageId = _siteLanguage;
                 HeaderWebControl1.Type_de_page = TNS.AdExpress.Bastet.WebControls.PageType.generic;
 			
@@ -345,13 +359,39 @@ namespace BastetWeb{
 				string loginsIdList = GetLoginIdList(_logingsHidden);
 				Int64 countLogins = loginsIdList.Split(',').GetLength(0);
 				
-				if(countLogins < 1000){
+				if(countLogins < 1000)
+				{
+                    TNS.FrameWork.DB.Common.IDataSource source = null;
+
 					// Sauvegarde de la demande
-                    Parameters param = new Parameters(((IsisCommon.Login)Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.LOGIN]).Source, ((IsisCommon.Login)Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.LOGIN]).LoginId, (DateTime)Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.DATE_BEGIN], (DateTime)Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.DATE_END], loginsIdList, (ArrayList)Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.MAILS], _siteLanguage);
-					param.Save();
-				
-					// Redirection pour effectuer une nouvelle demande
-					Response.Redirect("MailSelection.aspx");
+                    switch (_moduleId) {
+                        case 1:
+                            source = ((IsisCommon.Login) Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.LOGIN]).Source;
+                            break;
+                        case 3:
+                            source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.music);
+                            break;
+                        default:
+                            Response.Redirect("LoginSelection.aspx");
+                            Response.Write("<script _siteLanguage=Javascript>alert('Project invalide');</script>");
+                            break;
+                    }
+                    if (source != null)
+                    {
+                        Parameters param = new Parameters(source,
+                                                   ((IsisCommon.Login)Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.LOGIN]).LoginId,
+                                                   (DateTime) Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.DATE_BEGIN], 
+                                                   (DateTime) Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.DATE_END], 
+                                                   loginsIdList,
+                                                   (ArrayList)Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.MAILS],
+                                                   _siteLanguage);
+                        param.Save();
+                    }
+
+				    if (!string.IsNullOrEmpty(Page.Request.Url.Query))
+                        Response.Redirect("MailSelection.aspx" + Page.Request.Url.Query);
+                    else
+                        Response.Redirect("MailSelection.aspx");
 				}
 				else{
 					// Javascript Erreur : Vous ne pouvez pas sauvegarder plus de 1000 éléments

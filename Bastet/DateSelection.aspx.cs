@@ -123,6 +123,7 @@ namespace BastetWeb{
                 if (Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.LOGIN] == null) throw (new SystemException("Aucun login en session"));
 				switch(_moduleId){
 					case 1: // Stats
+                    case 3:
                         if (Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.MAILS] == null) throw (new SystemException("Aucun email en session"));
 						break;
 				}
@@ -147,6 +148,7 @@ namespace BastetWeb{
 				int nbWeeks = 53;
 				switch(_moduleId){
 					case 1: // STATS > Mois et semaines coulants
+                    case 3:
 						nbMonths = 15;
 						nbWeeks = 53;
 						break;
@@ -282,12 +284,20 @@ namespace BastetWeb{
                     // Redirection
                     switch (_moduleId) {
                         case 1: // Stats
-                            Response.Redirect("LoginSelection.aspx");
+                        case 3:
+                            if (!string.IsNullOrEmpty(Page.Request.Url.Query))
+                                Response.Redirect("LoginSelection.aspx" + Page.Request.Url.Query);
+                            else
+                                Response.Redirect("LoginSelection.aspx");
                             break;
                         case 2: // Indicateurs
-                            Response.Redirect("/Indicators/IndicatorsResult.aspx");
+                            if (!string.IsNullOrEmpty(Page.Request.Url.Query))
+                                Response.Redirect("/Indicators/IndicatorsResult.aspx" + Page.Request.Url.Query);
+                            else
+                                Response.Redirect("/Indicators/IndicatorsResult.aspx");
                             break;
                         default:
+                                Response.Redirect("LoginSelection.aspx");
                             Response.Write("<script _siteLanguage=Javascript>alert('Module invalide');</script>");
                             break;
                     }
@@ -371,12 +381,19 @@ namespace BastetWeb{
 
 				#region Redirection
 				switch(_moduleId){
-					case 1: // Stats
-						Response.Redirect("LoginSelection.aspx");
-						break;
-					case 2: // Indicateurs
-						Response.Redirect("/Indicators/IndicatorsResult.aspx");
-						break;
+                    case 1: // Stats
+                    case 3:
+                        if (!string.IsNullOrEmpty(Page.Request.Url.Query))
+                            Response.Redirect("LoginSelection.aspx" + Page.Request.Url.Query);
+                        else
+                            Response.Redirect("LoginSelection.aspx");
+                        break;
+                    case 2: // Indicateurs
+                        if (!string.IsNullOrEmpty(Page.Request.Url.Query))
+                            Response.Redirect("/Indicators/IndicatorsResult.aspx" + Page.Request.Url.Query);
+                        else
+                            Response.Redirect("/Indicators/IndicatorsResult.aspx");
+                        break;
 					default:
 						Response.Write("<script _siteLanguage=Javascript>alert('Module invalide');</script>");
 						break;
