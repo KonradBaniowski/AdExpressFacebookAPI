@@ -15,11 +15,11 @@
 		<meta http-equiv="expires" content="0">
 		<meta http-equiv="pragma" content="no-cache">
 		<meta content="no-cache" name="Cache-control">
-		<LINK href="/Css/AdExpress.css" type="text/css" rel="stylesheet">	
+		<LINK href="../../App_Themes/KMAE-Fr/Css/AdExpress.css" type="text/css" rel="stylesheet">	
 		<script language="javascript" src="/scripts/CookiesJScript.js" type="text/javascript"></script>
 		<script language="javascript" src="/scripts/Plugins.js" type="text/javascript"></script>	
 	</HEAD>
-	<body bottomMargin="0" bgColor="#ffffff" background="../../Images/Common/backgroundPopUp.gif"
+	<body bottomMargin="0" bgColor="#ffffff" background="../../App_Themes/KMAE-Fr/Images/Common/backgroundPopUp.gif"
 		topMargin="0">
 		<form id="Form1" method="post" runat="server">
 			<cc1:alertsdownloadcreationswebControl id="alertsdownloadcreationswebControl1" runat="server"></cc1:alertsdownloadcreationswebControl>

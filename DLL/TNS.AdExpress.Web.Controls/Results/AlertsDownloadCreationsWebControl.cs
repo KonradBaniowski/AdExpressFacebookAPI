@@ -540,8 +540,8 @@ namespace TNS.AdExpress.Web.Controls.Results
 						result.Append("<tr vAlign=\"middle\"><td align=\"left\" ><span  id=txt_"+code+" class=\"txtViolet11Bold\">"+
 							GestionWeb.GetWebWord(code,_siteLanguage)+
 							"</span></td></tr>");
-						result.Append("<TR><TD align=\"left\">");	
-						result.Append("<img src=/Images/Common/icoWindowsMediaPlayer.gif align=absmiddle>&nbsp;<a href=\""+path2+"\"  class=txtViolet11>"+GestionWeb.GetWebWord(2086,_siteLanguage)+"</a>");
+						result.Append("<TR><TD align=\"left\">");
+                        result.Append("<img src=/App_Themes/KMAE-Fr/Images/Common/icoWindowsMediaPlayer.gif align=absmiddle>&nbsp;<a href=\"" + path2 + "\"  class=txtViolet11>" + GestionWeb.GetWebWord(2086, _siteLanguage) + "</a>");
 						result.Append("</td></tr>");
 				
 					}
@@ -552,7 +552,7 @@ namespace TNS.AdExpress.Web.Controls.Results
 								GestionWeb.GetWebWord(code,_siteLanguage)+
 								"</span></td></tr>");
 						}
-						result.Append("<tr><td align=\"left\"><img src=/Images/Common/icoRealPlayer.gif align=absmiddle>&nbsp;<a href=\""+path1+"\"   class=txtViolet11>"+GestionWeb.GetWebWord(2085,_siteLanguage)+"</a>");				
+                        result.Append("<tr><td align=\"left\"><img src=/App_Themes/KMAE-Fr/Images/Common/icoRealPlayer.gif align=absmiddle>&nbsp;<a href=\"" + path1 + "\"   class=txtViolet11>" + GestionWeb.GetWebWord(2085, _siteLanguage) + "</a>");				
 						result.Append("</td></tr>");
 				
 				

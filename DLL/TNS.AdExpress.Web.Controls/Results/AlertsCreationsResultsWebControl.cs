@@ -356,8 +356,8 @@ namespace TNS.AdExpress.Web.Controls.Results
                 currentCategory = data[i, CstWeb.RadioInsertionsColumnIndex.CATEGORY_INDEX].ToString();
                 #region Infos Catégorie
                 HtmlTxt.Append("<tr><td colSpan=\"" + ColSpan + "\"><table width=\"100%\" cellSpacing=\"0\" cellPadding=\"0\"><tr>");
-                HtmlTxt.Append("<TD style=\"WIDTH: 16px\" ><IMG height=\"16\" src=\"/Images/Common/fleche_1.gif\" border=\"0\"></TD>");
-                HtmlTxt.Append("<TD class=\"insertionCategory\" style=\"BACKGROUND-POSITION-X: right; BACKGROUND-IMAGE: url(/Images/Common/bandeau_titre.gif);BACKGROUND-REPEAT: repeat-y\">");
+                HtmlTxt.Append("<TD style=\"WIDTH: 16px\" ><IMG height=\"16\" src=\"/App_Themes/KMAE-Fr/Images/Common/fleche_1.gif\" border=\"0\"></TD>");
+                HtmlTxt.Append("<TD class=\"insertionCategory\" style=\"BACKGROUND-POSITION-X: right; BACKGROUND-IMAGE: url(/App_Themes/KMAE-Fr/Images/Common/bandeau_titre.gif);BACKGROUND-REPEAT: repeat-y\">");
                 HtmlTxt.Append(currentCategory);
                 HtmlTxt.Append("</TD></tr>");
                 HtmlTxt.Append("</table></td></TR>");
@@ -434,7 +434,7 @@ namespace TNS.AdExpress.Web.Controls.Results
 
                         if (file.Length > 0 || idSlogan.Length > 0)
                         {
-                            HtmlTxt.Append("<tr><td class=\"" + classe + "\" nowrap><a href=\"javascript:openAlertsDownload('" + file + "','" + idMedia + "," + idProduct + "," + dateBegin + "," + dateEnd + "," + key + "," + siteLanguage + "','" + idVehicle + "','" + idSlogan + "');\"><img border=\"0\" src=\"/Images/Common/Picto_Radio.gif\"></a></td>");
+                            HtmlTxt.Append("<tr><td class=\"" + classe + "\" nowrap><a href=\"javascript:openAlertsDownload('" + file + "','" + idMedia + "," + idProduct + "," + dateBegin + "," + dateEnd + "," + key + "," + siteLanguage + "','" + idVehicle + "','" + idSlogan + "');\"><img border=\"0\" src=\"/App_Themes/KMAE-Fr/Images/Common/Picto_Radio.gif\"></a></td>");
                         }
                         else
                         {
@@ -576,8 +576,8 @@ namespace TNS.AdExpress.Web.Controls.Results
                 #region Infos Catégorie
                 //HtmlTxt.Append("<TR><td>&nbsp;</td></tr>");
                 HtmlTxt.Append("<tr><td colSpan=\"" + paramColSpan + "\"><table width=\"100%\" cellSpacing=\"0\" cellPadding=\"0\"><tr>");//Si affiche accroche
-                HtmlTxt.Append("<TD style=\"WIDTH: 16px\" ><IMG height=\"16\" src=\"/Images/Common/fleche_1.gif\" border=\"0\"></TD>");
-                HtmlTxt.Append("<TD class=\"insertionCategory\" style=\"BACKGROUND-POSITION-X: right; BACKGROUND-IMAGE: url(/Images/Common/bandeau_titre.gif);BACKGROUND-REPEAT: repeat-y\">");
+                HtmlTxt.Append("<TD style=\"WIDTH: 16px\" ><IMG height=\"16\" src=\"/App_Themes/KMAE-Fr/Images/Common/fleche_1.gif\" border=\"0\"></TD>");
+                HtmlTxt.Append("<TD class=\"insertionCategory\" style=\"BACKGROUND-POSITION-X: right; BACKGROUND-IMAGE: url(/App_Themes/KMAE-Fr/Images/Common/bandeau_titre.gif);BACKGROUND-REPEAT: repeat-y\">");
                 HtmlTxt.Append(currentCategory);
                 HtmlTxt.Append("</TD></tr>");
                 HtmlTxt.Append("</table></td></TR>");
@@ -651,7 +651,7 @@ namespace TNS.AdExpress.Web.Controls.Results
                         if (data[i, CstWeb.TVInsertionsColumnIndex.FILES_INDEX].ToString().CompareTo("") != 0
                             )
                         {
-                            HtmlTxt.Append("<tr><td class=\"" + classe + "\" nowrap><a href=\"javascript:openAlertsDownload('" + data[i, CstWeb.TVInsertionsColumnIndex.FILES_INDEX].ToString() + "','" + idMedia + "," + idProduct + "," + dateBegin + "," + dateEnd + "," + key + "," + siteLanguage + "','" + idVehicle + "');\"><img border=\"0\" src=\"/Images/Common/Picto_pellicule.gif\"></a></td>");
+                            HtmlTxt.Append("<tr><td class=\"" + classe + "\" nowrap><a href=\"javascript:openAlertsDownload('" + data[i, CstWeb.TVInsertionsColumnIndex.FILES_INDEX].ToString() + "','" + idMedia + "," + idProduct + "," + dateBegin + "," + dateEnd + "," + key + "," + siteLanguage + "','" + idVehicle + "');\"><img border=\"0\" src=\"/App_Themes/KMAE-Fr/Images/Common/Picto_pellicule.gif\"></a></td>");
                         }
                         else
                         {

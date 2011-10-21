@@ -13,7 +13,7 @@
 		<meta http-equiv="expires" content="0">
 		<meta http-equiv="pragma" content="no-cache">
 		<meta content="no-cache" name="Cache-control">
-		<LINK href="/Css/AdExpress.css" type="text/css" rel="stylesheet">		
+		<LINK href="../../App_Themes/KMAE-Fr/Css/AdExpress.css" type="text/css" rel="stylesheet">		
 	</HEAD>
 	<body style="BACKGROUND-ATTACHMENT: fixed; BACKGROUND-IMAGE: url(/Images/Common/dark_back.bmp); BACKGROUND-REPEAT: repeat-x"
 		bgColor="#ffffff">
