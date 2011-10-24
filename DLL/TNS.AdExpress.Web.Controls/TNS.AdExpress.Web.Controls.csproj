@@ -180,6 +180,7 @@
     <Compile Include="Exceptions\AlertsCreationsResultsWebControlException.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Exceptions\DropDownCheckBoxListWebControlException.cs" />
     <Compile Include="Exceptions\SectorWebControlException.cs" />
     <Compile Include="Exceptions\ResultTableCapacityException.cs" />
     <Compile Include="Exceptions\SelectRecapItemsInClassificationWebControlException.cs" />
@@ -437,6 +438,7 @@
     <Compile Include="Selections\DetailVehicleSelectionWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Selections\DropDownCheckBoxListWebControl.cs" />
     <Compile Include="Selections\GenericDetailVehicleSelectionWebControl.cs" />
     <Compile Include="Selections\GenericFilterWebControl.cs" />
     <Compile Include="Selections\GlobalCalendarWebControl.cs" />
