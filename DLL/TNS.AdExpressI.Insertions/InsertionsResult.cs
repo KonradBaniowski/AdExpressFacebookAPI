@@ -140,19 +140,19 @@ namespace TNS.AdExpressI.Insertions
 
             if (vehicles.Count <= 0)
             {
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.others));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.directMarketing));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.evaliantMobile));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.press));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.newspaper));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.magazine));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.outdoor));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.instore));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.radio));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.tv));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.cinema));
+                if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.others)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.others));
+                if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.directMarketing)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.directMarketing));
+                if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.internet)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet));
+                if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.adnettrack)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack));
+                if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.evaliantMobile)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.evaliantMobile));
+                if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.press)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.press));
+                if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.newspaper)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.newspaper));
+                if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.magazine)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.magazine));
+                if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.outdoor)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.outdoor));
+                if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.instore)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.instore));
+                if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.radio)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.radio));
+                if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.tv)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.tv));
+                if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.cinema));
 
             }
             for (int i = vehicles.Count-1; i >= 0; i-- )
