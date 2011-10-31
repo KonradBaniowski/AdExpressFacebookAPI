@@ -177,7 +177,23 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 _dropDownList.DataValueField = "id_sector";
                 _dropDownList.DataBind();
 
-                _dropDownList.Items.FindByValue("-1").Selected = true;	
+                if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
+                {
+                    NomenclatureElementsGroup nomenclatureElementsGroup = _session.PrincipalProductUniverses[0].GetGroup(0);
+                    if (nomenclatureElementsGroup != null)
+                    {
+                        string idSec = nomenclatureElementsGroup.GetAsString(TNSClassificationLevels.SECTOR);
+                        try
+                        {
+                            _dropDownList.Items.FindByValue(idSec).Selected = true;
+                        }
+                        catch (Exception)
+                        {
+                            _dropDownList.Items.FindByValue("-1").Selected = true;	
+                        }
+                    }
+                }
+                else _dropDownList.Items.FindByValue("-1").Selected = true;	
             }
             if(Page.IsPostBack) {
                 Int64 idSector = -1;

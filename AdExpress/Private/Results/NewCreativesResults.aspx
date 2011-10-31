@@ -70,7 +70,7 @@
                                                     RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx" 
                                                     ResultOption="False" 
                                                     SaveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelSave.aspx" 
-                                                    UnitOption="False" SectorSelectionOptions="False" SectorMultipleSelectionOptions="True"/>
+                                                    UnitOption="False"  SkinID="SectorsDropDownCheckBoxListWebControl"/>
 											
 											</td>
 										</tr>

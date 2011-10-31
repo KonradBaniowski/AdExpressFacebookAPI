@@ -938,7 +938,15 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            OutCssClass="ddlOut" 
                            OverCssClass="ddlOver" 
 />
-
+<ctrHeader:resultsoptionswebcontrol  
+                           runat="server" 
+                           CommonCssClass="txtNoir11Bold" 
+                           OutCssClass="ddlOut" 
+                           OverCssClass="ddlOver" 
+                           SectorSelectionOptions="True" 
+                           SectorMultipleSelectionOptions="False"
+                           SkinID="SectorsDropDownCheckBoxListWebControl"
+/>
 <%-- Result options web control : used to display result options specific to Dynamic Tables module --%>
 <ctrHeader:resultsoptionswebcontrol 
                            runat="server" 
