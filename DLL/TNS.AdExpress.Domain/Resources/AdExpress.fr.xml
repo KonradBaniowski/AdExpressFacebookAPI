@@ -2158,5 +2158,7 @@
     <!-- ********************************* -->
     <!-- Add text for FR: Banners format in detail selection -->
     <item mnemonic="w2928" type="System.String">Formats</item>
+    <!-- Add text for RU: Link go back to login page -->
+    <item mnemonic="w2929" type="System.String">Cliquez ici pour retourner à la page d'identification</item>
   </items>
 </localization>
