@@ -12,6 +12,7 @@ using TNS.AdExpress.VP.Loader.Domain.Classification;
 using TNS.AdExpress.Constantes.DB;
 using System.Data;
 using TNS.AdExpress.VP.Loader.Domain;
+using TNS.AdExpress.VP.Loader.Domain.Exceptions;
 
 namespace TNS.AdExpressI.VP.Loader.DAL.Data
 {
@@ -74,6 +75,7 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
             string conditionText;
             string promotionBrand;
             List<string> promotionVisual = null;
+            int line = startLineData;
             #endregion
 
             try
@@ -111,99 +113,161 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
 
                 Worksheet sheet = excel.Worksheets[0];
                 Aspose.Cells.Cells cells = sheet.Cells;
-
-                for (int line = startLineData; cells[line, startColumnData].Value != null; line++)
+                try
                 {
+                    for (line = startLineData; cells[line, startColumnData].Value != null; line++)
+                    {
 
-                    #region Get Product
-                    idProduct = AllClassification.GetProduct((string)cells[line, columnProduct].Value).Id;
-                    #endregion
+                        #region Get Product
 
-                    #region Get Brand
-                    idBrand = AllClassification.GetBrand((string)cells[line, columnBrand].Value).Id;
-                    #endregion
+                        idProduct = AllClassification.GetProduct((string) cells[line, columnProduct].Value).Id;
 
-                    #region Get Segment
-                    idSegment = AllClassification.GetSegmentByProductId(idProduct).Id;
-                    #endregion
+                        #endregion
 
-                    #region Get Category
-                    idCategory = AllClassification.GetCategory(idProduct).Id;
-                    #endregion
+                        #region Get Brand
 
-                    #region Get Circuit
-                    idCircuit = AllClassification.GetCircuit(idBrand).Id;
-                    #endregion
+                        idBrand = AllClassification.GetBrand((string) cells[line, columnBrand].Value).Id;
 
-                    #region Get Date Begin
-                    dateBegin = (DateTime)cells[line, columnDateBegin].Value;
-                    #endregion
+                        #endregion
 
-                    #region Get Date End
-                    dateEnd = (DateTime)cells[line, columnDateEnd].Value;
-                    #endregion
+                        #region Get Segment
 
-                    #region Get Promo Content
-                    promotionContent = (string)cells[line, columnPromoDetail].Value;
-                    #endregion
+                        idSegment = AllClassification.GetSegmentByProductId(idProduct).Id;
 
-                    #region Get Visuals condition
-                    if (cells[line, columnVisualsCondition].Value != null)
-                        conditionVisual = (new List<string>(((string)cells[line, columnVisualsCondition].Value).Split(';'))).ConvertAll<string>(file => System.IO.Path.GetFullPath(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(fileStream.Name), file.Trim())));
-                    else conditionVisual = null;
-                    if (conditionVisual != null) {
-                        for(int i=0; i<conditionVisual.Count; i++){
-                            if (!File.Exists(conditionVisual[i])) {
-                                string[] files = Directory.GetFiles(Path.GetDirectoryName(conditionVisual[i]), Path.GetFileName(conditionVisual[i]) + ".*", SearchOption.TopDirectoryOnly);
-                                if (files.Length > 1) throw new VeillePromoDALIncorrectPictureFileNameNumberException("Impossible to retrieve the file. " + files.Length + " files are found");
-                                if (files.Length <= 0) throw new VeillePromoDALIncorrectPictureFileNameException("Impossible to retrieve the file '" + conditionVisual[i] + "'");
-                                conditionVisual[i] = files[0];
+                        #endregion
+
+                        #region Get Category
+
+                        idCategory = AllClassification.GetCategory(idProduct).Id;
+
+                        #endregion
+
+                        #region Get Circuit
+
+                        idCircuit = AllClassification.GetCircuit(idBrand).Id;
+
+                        #endregion
+
+                        #region Get Date Begin
+
+                        dateBegin = (DateTime) cells[line, columnDateBegin].Value;
+
+                        #endregion
+
+                        #region Get Date End
+
+                        dateEnd = (DateTime) cells[line, columnDateEnd].Value;
+
+                        #endregion
+
+                        #region Get Promo Content
+
+                        promotionContent = (string) cells[line, columnPromoDetail].Value;
+
+                        #endregion
+
+                        #region Get Visuals condition
+
+                        if (cells[line, columnVisualsCondition].Value != null)
+                            conditionVisual =
+                                (new List<string>(((string) cells[line, columnVisualsCondition].Value).Split(';'))).
+                                    ConvertAll<string>(
+                                        file =>
+                                        System.IO.Path.GetFullPath(
+                                            System.IO.Path.Combine(System.IO.Path.GetDirectoryName(fileStream.Name),
+                                                                   file.Trim())));
+                        else conditionVisual = null;
+                        if (conditionVisual != null)
+                        {
+                            for (int i = 0; i < conditionVisual.Count; i++)
+                            {
+                                if (!File.Exists(conditionVisual[i]))
+                                {
+                                    string[] files = Directory.GetFiles(Path.GetDirectoryName(conditionVisual[i]),
+                                                                        Path.GetFileName(conditionVisual[i]) + ".*",
+                                                                        SearchOption.TopDirectoryOnly);
+                                    if (files.Length > 1)
+                                        throw new VeillePromoDALIncorrectPictureFileNameNumberException(
+                                            "Impossible to retrieve the file. " + files.Length + " files are found");
+                                    if (files.Length <= 0)
+                                        throw new VeillePromoDALIncorrectPictureFileNameException(
+                                            "Impossible to retrieve the file '" + conditionVisual[i] + "'");
+                                    conditionVisual[i] = files[0];
+                                }
+
                             }
-
                         }
-                    }
-                    #endregion
 
-                    #region Get Text Condition
+                        #endregion
 
-                    conditionText = (cells[line, columnTextCondition].Value != null) ? (string)cells[line, columnTextCondition].Value : null;
-                    #endregion
+                        #region Get Text Condition
 
-                    #region Get Brand Promotion
+                        conditionText = (cells[line, columnTextCondition].Value != null)
+                                            ? (string) cells[line, columnTextCondition].Value
+                                            : null;
 
-                    promotionBrand = (cells[line, columnBrandPromo].Value != null) ? (string)cells[line, columnBrandPromo].Value : null;
-                    #endregion
+                        #endregion
 
-                    #region Get Visuals Promotion
-                    if (cells[line, columnVisualsPromo].Value != null)
-                        promotionVisual = new List<string>(((string)cells[line, columnVisualsPromo].Value).Split(';')).ConvertAll<string>(file => System.IO.Path.GetFullPath(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(fileStream.Name), file.Trim())));
-                    else promotionVisual = null;
-                    if (promotionVisual != null) {
-                        for (int i = 0; i < promotionVisual.Count; i++) {
-                            if (!File.Exists(promotionVisual[i])) {
-                                string[] files = Directory.GetFiles(Path.GetDirectoryName(promotionVisual[i]), Path.GetFileName(promotionVisual[i]) + ".*", SearchOption.TopDirectoryOnly);
-                                if (files.Length > 1) throw new VeillePromoDALIncorrectPictureFileNameNumberException("Impossible to retrieve the file. " + files.Length + " files are found");
-                                if (files.Length <= 0) throw new VeillePromoDALIncorrectPictureFileNameException("Impossible to retrieve the file '" + promotionVisual[i] + "'");
-                                promotionVisual[i] = files[0];
+                        #region Get Brand Promotion
+
+                        promotionBrand = (cells[line, columnBrandPromo].Value != null)
+                                             ? (string) cells[line, columnBrandPromo].Value
+                                             : null;
+
+                        #endregion
+
+                        #region Get Visuals Promotion
+
+                        if (cells[line, columnVisualsPromo].Value != null)
+                            promotionVisual =
+                                new List<string>(((string) cells[line, columnVisualsPromo].Value).Split(';')).ConvertAll
+                                    <string>(
+                                        file =>
+                                        System.IO.Path.GetFullPath(
+                                            System.IO.Path.Combine(System.IO.Path.GetDirectoryName(fileStream.Name),
+                                                                   file.Trim())));
+                        else promotionVisual = null;
+                        if (promotionVisual != null)
+                        {
+                            for (int i = 0; i < promotionVisual.Count; i++)
+                            {
+                                if (!File.Exists(promotionVisual[i]))
+                                {
+                                    string[] files = Directory.GetFiles(Path.GetDirectoryName(promotionVisual[i]),
+                                                                        Path.GetFileName(promotionVisual[i]) + ".*",
+                                                                        SearchOption.TopDirectoryOnly);
+                                    if (files.Length > 1)
+                                        throw new VeillePromoDALIncorrectPictureFileNameNumberException(
+                                            "Impossible to retrieve the file. " + files.Length + " files are found");
+                                    if (files.Length <= 0)
+                                        throw new VeillePromoDALIncorrectPictureFileNameException(
+                                            "Impossible to retrieve the file '" + promotionVisual[i] + "'");
+                                    promotionVisual[i] = files[0];
+                                }
                             }
                         }
+
+                        #endregion
+
+                        dataPromotionDetailList.Add(new DataPromotionDetail(
+                                                        idProduct,
+                                                        idBrand,
+                                                        dateBegin,
+                                                        dateEnd,
+                                                        idSegment,
+                                                        idCategory,
+                                                        idCircuit,
+                                                        promotionContent,
+                                                        conditionVisual,
+                                                        conditionText,
+                                                        promotionBrand,
+                                                        promotionVisual));
+
                     }
-                    #endregion
-
-                    dataPromotionDetailList.Add(new DataPromotionDetail(
-                                idProduct,
-                                idBrand,
-                                dateBegin,
-                                dateEnd,
-                                idSegment,
-                                idCategory,
-                                idCircuit,
-                                promotionContent,
-                                conditionVisual,
-                                conditionText,
-                                promotionBrand,
-                                promotionVisual));
-
+                }
+                catch (AllClassificationException e)
+                {
+                    throw new VeillePromoDALExcelCellException(new CellExcel(line, columnProduct), "Erreur in Cell [" + line + "," + columnProduct + "]", e);
                 }
                 return new DataPromotionDetails(dateFile, dataPromotionDetailList);
             }

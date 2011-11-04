@@ -85,8 +85,11 @@ namespace TNS.AdExpressI.VP.Loader.Data {
             try {
                 return _veillePromoDAL.GetDataPromotionDetailList(source);
             }
-            catch (Exception e) {
-                
+            catch (Exception e)
+            {
+
+                if (e is VeillePromoDALExcelCellException)
+                    throw new VeillePromoExcelCellException(((VeillePromoDALExcelCellException)e).CellExcel, "Impossible Load Data Promotion", e);
                 if (e is VeillePromoDALExcelOpenFileException)
                     throw new VeillePromoExcelOpenFileException("Impossible Load Data Promotion", e);
                 if (e is VeillePromoDALExcelVisualException)

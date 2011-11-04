@@ -25,22 +25,29 @@ namespace TNS.AdExpress.VP.Loader.Domain.XmlLoader {
         /// </summary>
         /// <param name="pathFileSave">source</param>
         /// <returns>layers list</returns>
-        public static FileInfo Load(string pathFileSave) {
-            
-            try {
-                XPathDocument xPathDoc = new XPathDocument(new FileStream(pathFileSave, FileMode.Open));
-                XPathNavigator xPathNav = xPathDoc.CreateNavigator();
-                string xPathExp = "//Parameters/loadFile[@path]";
+        public static FileInfo Load(string pathFileSave)
+        {
+            bool fileExist = false;
+            try
+            {
+                fileExist = File.Exists(pathFileSave);
+                if (File.Exists(pathFileSave)) {
+                    XPathDocument xPathDoc = new XPathDocument(new FileStream(pathFileSave, FileMode.Open));
+                    XPathNavigator xPathNav = xPathDoc.CreateNavigator();
+                    string xPathExp = "//Parameters/loadFile[@path]";
 
-                XPathNodeIterator node = xPathNav.Select(xPathNav.Compile(xPathExp));
+                    XPathNodeIterator node = xPathNav.Select(xPathNav.Compile(xPathExp));
 
-                if (node.MoveNext() && !string.IsNullOrEmpty(node.Current.GetAttribute("path", "")))
-                    return new FileInfo(node.Current.GetAttribute("path", ""));
-                else
+                    if (node.MoveNext() && !string.IsNullOrEmpty(node.Current.GetAttribute("path", "")))
+                        return new FileInfo(node.Current.GetAttribute("path", ""));
                     return null;
+                }
+                return null;
             }
-            catch (System.Exception err) {
-                throw (new Exception(" Error : ", err));
+            catch (System.Exception err)
+            {
+                if (fileExist) File.Delete(pathFileSave);
+                return null;
             }
             
         }

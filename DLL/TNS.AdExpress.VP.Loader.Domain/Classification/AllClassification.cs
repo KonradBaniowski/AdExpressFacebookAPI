@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Xml.Serialization;
 using System.Runtime.Serialization;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpress.VP.Loader.Domain.Exceptions;
 
 namespace TNS.AdExpress.VP.Loader.Domain.Classification {
     public class AllClassification {
@@ -48,7 +49,7 @@ namespace TNS.AdExpress.VP.Loader.Domain.Classification {
                 }
             }
             if (itemList != null && itemList.Count == 1) return itemList[0];
-            else throw (new ArgumentException("impossible to reteive the requested Brand"));
+            else throw (new AllClassificationException("impossible to reteive the requested Brand " + brandLabel));
         }
         #endregion
 
@@ -73,7 +74,7 @@ namespace TNS.AdExpress.VP.Loader.Domain.Classification {
                 }
             }
             if (itemList != null && itemList.Count == 1) return itemList[0];
-            else throw (new ArgumentException("impossible to reteive the requested Product"));
+            else throw (new AllClassificationException("impossible to reteive the requested Product " + productLabel));
         }
         #endregion
 
@@ -89,7 +90,7 @@ namespace TNS.AdExpress.VP.Loader.Domain.Classification {
                             select brandListByCircuit.Circuit).ToList<Item>();
             }
             if (itemList != null && itemList.Count == 1) return itemList[0];
-            else throw (new ArgumentException("impossible to reteive the requested Circuit"));
+            else throw (new AllClassificationException("impossible to reteive the requested Circuit " + brandId));
         }
         #endregion
 
@@ -112,7 +113,7 @@ namespace TNS.AdExpress.VP.Loader.Domain.Classification {
                 }
             }
             if (itemList != null && itemList.Count == 1) return itemList[0];
-            else throw (new ArgumentException("impossible to reteive the requested Category"));
+            else throw (new AllClassificationException("impossible to reteive the requested Category " + productId));
         }
         #endregion
 
@@ -132,7 +133,7 @@ namespace TNS.AdExpress.VP.Loader.Domain.Classification {
                             select productListByCategoryListBySegment.Segment).ToList<Item>();
             }
             if (itemList != null && itemList.Count == 1) return itemList[0];
-            else throw (new ArgumentException("impossible to reteive the requested Category"));
+            else throw (new AllClassificationException("impossible to reteive the requested Category " + productId));
         }
 
         /// <summary>
@@ -146,7 +147,7 @@ namespace TNS.AdExpress.VP.Loader.Domain.Classification {
                             select item.Segment).ToList<Item>();
             }
             if (itemList != null && itemList.Count == 1) return itemList[0];
-            else throw (new ArgumentException("impossible to reteive the requested Category"));
+            else throw (new AllClassificationException("impossible to reteive the requested Category " + categoryId));
         }
         #endregion
 

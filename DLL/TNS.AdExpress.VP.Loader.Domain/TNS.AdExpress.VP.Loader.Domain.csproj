@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CellExcel.cs" />
     <Compile Include="Classification\BrandListByCircuit.cs" />
     <Compile Include="Classification\AllClassification.cs" />
     <Compile Include="Classification\ProductListByCategoryListBySegment..cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Classification\Item.cs" />
     <Compile Include="Constantes\Constantes.cs" />
     <Compile Include="CommonAppData.cs" />
+    <Compile Include="Exceptions\AllClassificationException.cs" />
     <Compile Include="Parameters.cs" />
     <Compile Include="PictureMatching.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
