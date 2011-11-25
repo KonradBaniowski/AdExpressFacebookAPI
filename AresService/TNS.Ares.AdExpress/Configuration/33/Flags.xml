@@ -35,6 +35,5 @@
   <flag id="307" description="Accès Agences Media INTERNET EVALIANT"/>
   <flag id="308" description="Accès Agences Media MEDIA TACTIQUE"/>
   <flag id="309" description="Accès Agences Media CINEMA"/>
-  <!-- Flags Pre-Roll/Post Roll banners evaliant -->
-  <flag id="318" description="Accès Bannières FLV Media Internet Evaliant"/>
+  <flag id="323" description="Accès nouvelles création application mobile"/>
 </flags>

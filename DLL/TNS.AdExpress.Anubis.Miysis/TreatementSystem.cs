@@ -4,6 +4,7 @@
 #endregion
 
 using System;
+using System.Collections;
 using System.Data;
 using System.Threading;
 
@@ -11,11 +12,7 @@ using TNS.AdExpress.Anubis.Miysis.Common;
 using TNS.AdExpress.Anubis.Miysis.BusinessFacade;
 
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.Core;
-
 using TNS.FrameWork.DB.Common;
-
-using PDFCreatorPilotLib;
 using TNS.AdExpress.Domain.Web;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 
@@ -35,34 +32,75 @@ namespace TNS.AdExpress.Anubis.Miysis
 	/// </summary>
 	public class TreatementSystem:IPlugin{
 
+        #region IPlugin Membres
+        /// <summary>
+        /// Lancement du module
+        /// </summary>
+        public event StartWork EvtStartWork;
+        /// <summary>
+        /// Arrêt du module
+        /// </summary>
+        public event StopWorkerJob EvtStopWorkerJob;
+        /// <summary>
+        /// Arrêt du module
+        /// </summary>
+        public event MessageAlert EvtMessageAlert;
+        /// <summary>
+        /// Message d'une alerte
+        /// </summary>
+        public event Error EvtError;
+        /// <summary>
+        /// Envoie des rapports
+        /// </summary>
+        public event SendReport EvtSendReport;
+
+        #endregion
+
 		#region Evènements
 		/// <summary>
 		/// Lancement du module
 		/// </summary>
-		public event StartWork OnStartWork;
+        public void OnStartWork(Int64 navSessionId, string message) {
+            if (EvtStartWork != null) EvtStartWork(navSessionId, message);
+        }
 		/// <summary>
 		/// Arrêt du module
 		/// </summary>
-		public event StopWorkerJob OnStopWorkerJob;
-		/// <summary>
+        public void OnStopWorkerJob(Int64 navSessionId, string resultFilePath, string mail, string evtMessage)
+	    {
+            if (EvtStopWorkerJob != null) EvtStopWorkerJob(navSessionId, resultFilePath, mail, evtMessage);
+	    }
+	    /// <summary>
 		/// Message d'une alerte
 		/// </summary>
-		public event MessageAlert OnMessageAlert;
-		/// <summary>
+        public void OnMessageAlert(Int64 navSessionId, string message)
+	    {
+            if (EvtMessageAlert != null) EvtMessageAlert(navSessionId, message);
+	    }
+
+	    /// <summary>
 		/// Message d'une alerte
 		/// </summary>
-		public event Error OnError;
-		/// <summary>
+        public void OnError(Int64 navSessionId, string message, Exception e)
+	    {
+            if (EvtError != null) EvtError(navSessionId, message, e);
+	    }
+
+	    /// <summary>
 		/// Envoie des rapports
 		/// </summary>
-		public event SendReport OnSendReport;
-		#endregion
+        public void OnSendReport(string reportTitle, TimeSpan duration, DateTime endExecutionDateTime, string reportCore, ArrayList mailList, ArrayList errorList, string from, string mailServer, int mailPort, Int64 navSessionId)
+	    {
+            if (EvtSendReport != null) EvtSendReport(reportTitle, duration, endExecutionDateTime, reportCore, mailList, errorList, from, mailServer, mailPort, navSessionId);
+	    }
+
+	    #endregion
 
 		#region Variables
 		/// <summary>
 		/// Thread qui traite l'alerte
 		/// </summary>
-		private System.Threading.Thread _myThread;
+		private Thread _myThread;
 		/// <summary>
 		/// Identifiant du résultat à traiter
 		/// </summary>
@@ -86,15 +124,7 @@ namespace TNS.AdExpress.Anubis.Miysis
         /// <summary>
         /// WebSession
         /// </summary>
-        private WebSession _webSession = null;
-		#endregion
-
-		#region Constructeur
-		/// <summary>
-		/// Constructeur
-		/// </summary>
-		public TreatementSystem(){
-		}
+        private WebSession _webSession;
 		#endregion
 
 		#region Nom du Plug-in
@@ -112,7 +142,7 @@ namespace TNS.AdExpress.Anubis.Miysis
 		/// <summary>
 		/// Lance le traitement du résultat
 		/// </summary>
-		/// <param name="confifurationFilePath">Chemin de configuration du plug-in</param>
+        /// <param name="configurationFilePath">Chemin de configuration du plug-in</param>
 		/// <param name="dataSource">Source de données pour charger la session</param>
 		/// <param name="navSessionId">Identifiant de la session à traiter</param>
 		/// <remarks>
@@ -140,7 +170,7 @@ namespace TNS.AdExpress.Anubis.Miysis
 
                 #region Check Path File
                 if (configurationFilePath == null) {
-                    throw new MiysisPdfException("Impossible de lancer le traitement d'un job", new ArgumentNullException("Le nom du fichier de configuration est null."));
+                    throw new MiysisPdfException("Impossible de lancer le traitement d'un job", new ArgumentNullException("configurationFilePath"));
                 }
                 if (configurationFilePath.Length == 0) {
                     throw new MiysisPdfException("Impossible de lancer le traitement d'un job", new ArgumentException("Le nom du fichier de configuration est vide."));
@@ -151,7 +181,7 @@ namespace TNS.AdExpress.Anubis.Miysis
                 try {
                     _miysisConfig = new MiysisConfig(new XmlReaderDataSource(configurationFilePath));
                 }
-                catch (System.Exception err) {
+                catch (Exception err) {
                     throw new MiysisPdfException("Impossible de lancer le traitement d'un job <== impossible de charger le fichier de configuration", err);
                 }
                 #endregion
@@ -160,7 +190,7 @@ namespace TNS.AdExpress.Anubis.Miysis
                 try {
                     _webSession = ((WebSession)_dataAccess.LoadData(_navSessionId));
                 }
-                catch (System.Exception err) {
+                catch (Exception err) {
                     throw new MiysisPdfException("Error for load session", err);
                 }
                 #endregion
@@ -178,9 +208,9 @@ namespace TNS.AdExpress.Anubis.Miysis
                     else {
                         pathFileTheme = _miysisConfig.ThemePath + @"\" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + @"\" + "Styles.xml";
                     }
-                    _theme = new TNS.FrameWork.WebTheme.Theme(new XmlReaderDataSource(pathFileTheme));
+                    _theme = new Theme(new XmlReaderDataSource(pathFileTheme));
                 }
-                catch (System.Exception err) {
+                catch (Exception err) {
                     throw new MiysisPdfException(string.Format("File of theme not found ! (in Plugin Hotep in TreatmentSystem class) - Path : '{0}'", pathFileTheme), err);
                 }
                 #endregion
@@ -191,7 +221,7 @@ namespace TNS.AdExpress.Anubis.Miysis
             catch (Exception e) {
                 if (_dataAccess != null) {
                     try {
-                        _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.error.GetHashCode());
+                        _dataAccess.UpdateStatus(_navSessionId, Ares.Constantes.Constantes.Result.status.error.GetHashCode());
                     }
                     catch { }
                 }
@@ -201,7 +231,7 @@ namespace TNS.AdExpress.Anubis.Miysis
 
             _dataSource = dataSource;
 			
-			ThreadStart myThreadStart = new ThreadStart(ComputeTreatement);
+			ThreadStart myThreadStart = ComputeTreatement;
 			_myThread=new Thread(myThreadStart);
 			_myThread.Name="Miysis PDF Generator";
 			_myThread.Start();
@@ -221,9 +251,9 @@ namespace TNS.AdExpress.Anubis.Miysis
 		/// Generate the PDF for Miysis plug-in
 		/// </summary>
 		private void ComputeTreatement(){
-			MiysisPdfSystem pdf = null;
+			MiysisPdfSystem pdf;
 			try{
-				OnStartWork(_navSessionId,this.GetPluginName()+" started for "+_navSessionId);
+				OnStartWork(_navSessionId,GetPluginName()+" started for "+_navSessionId);
 
 				#region Request Details
                 DataRow rqDetails = _dataAccess.GetRow(_navSessionId);
@@ -239,24 +269,24 @@ namespace TNS.AdExpress.Anubis.Miysis
 				pdf.EndDoc();
                 _dataAccess.RegisterFile(_navSessionId, fileName);
 				pdf.Send(fileName);
-                _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.sent.GetHashCode());
+                _dataAccess.UpdateStatus(_navSessionId, Ares.Constantes.Constantes.Result.status.sent.GetHashCode());
 
                 PluginInformation pluginInformation = PluginConfiguration.GetPluginInformation(PluginType.Miysis);
                 if (pluginInformation != null && pluginInformation.DeleteRowSuccess)
                     _dataAccess.DeleteRow(_navSessionId);
 				#endregion
 
-                OnStopWorkerJob(_navSessionId,"","",this.GetPluginName()+" finished for '"+_navSessionId+"'");
+                OnStopWorkerJob(_navSessionId,"","",GetPluginName()+" finished for '"+_navSessionId+"'");
 			}
-			catch(System.Exception err){
+			catch(Exception err){
                 if(_dataAccess != null)
-                     _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.error.GetHashCode()); 
+                     _dataAccess.UpdateStatus(_navSessionId, Ares.Constantes.Constantes.Result.status.error.GetHashCode()); 
 				OnError(_navSessionId,"Erreur lors du traitement du résultat for '"+_navSessionId+"'.", err);
 				return;
 			}
 		}
 		#endregion
 
-	}
+    }
 }
 
