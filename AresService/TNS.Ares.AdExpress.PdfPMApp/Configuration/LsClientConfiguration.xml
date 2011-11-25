@@ -20,10 +20,10 @@
     <moduleDescription description="Ares Service treatment - PDF Plan Media (Myisis)" moduleId="7"/>
   </lsClientConfiguration>-->
 
-  <!-- Config PL (48) -->
+  <!-- Config PL (48) 
   <lsClientConfiguration familyId="135" familyName="AdExpress PL Treatment service" monitorPort="30280" productName="Ares Service treatment - PDF Plan Media (Myisis)" maxAvailableSlots="1" directoryName="48\Plugins\Miysis.xml">
     <moduleDescription description="Ares Service treatment - PDF Plan Media (Myisis)" moduleId="7"/>
-  </lsClientConfiguration>
+  </lsClientConfiguration>-->
 
   <!-- Config RU (48) 
   <lsClientConfiguration familyId="139" familyName="AdExpress RU Treatment service" monitorPort="30280" productName="Ares Service treatment - PDF Plan Media (Myisis)" maxAvailableSlots="1" directoryName="421\Plugins\Miysis.xml">
