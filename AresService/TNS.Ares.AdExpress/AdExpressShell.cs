@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TNS.AdExpress.Web.Core;
 using TNS.LinkSystem.LinkKernel;
 using System.Collections;
 using TNS.FrameWork.DB.Common;
@@ -169,6 +170,10 @@ namespace TNS.Ares.AdExpress
                 #endregion
 
                 ResultOptionsXL.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.RESULT_OPTIONS_CONFIGURATION_FILENAME));
+
+                if (WebApplicationParameters.VehiclesFormatInformation != null && WebApplicationParameters.VehiclesFormatInformation.Use)
+                    VehiclesFormatList.Init(WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList, WebApplicationParameters.DefaultDataLanguage);
+
 
                 #region Get Source
                 try {
