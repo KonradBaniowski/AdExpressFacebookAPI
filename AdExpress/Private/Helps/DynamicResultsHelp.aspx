@@ -244,6 +244,29 @@
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image11" runat="server" SkinID="pixel" height="15" width="100%" /></td>
 				</tr>
+				<!-- Titre 3 format banners-->
+				<TR>
+					<td class="txtViolet12Bold paleVioletBackGround" colSpan="2">&nbsp;
+						<cc1:adexpresstext language="33" id="Adexpresstext72" runat="server" Code="2930"></cc1:adexpresstext></td>
+				</TR>
+				<tr>
+					<td colSpan="2"><asp:Image ID="Image180" runat="server" SkinID="pixel" height="15" width="100%" /></td>
+				</tr>
+				<!-- Texte -->
+				<tr>
+					<td width="10"><asp:Image ID="Image181" runat="server" SkinID="pixel" width="10" /></td>
+					<td class="txtViolet11"><cc1:adexpresstext language="33" id="Adexpresstext73" runat="server" Code="2931"></cc1:adexpresstext></td>
+				</tr>
+				<!-- Exemple Image -->
+				<tr>
+					<td colSpan="2"><asp:Image ID="Image182" runat="server" SkinID="pixel" height="15" width="100%" /></td>
+				</tr>
+				<tr>
+					<td colSpan="2" align="center"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/format_banners.gif"></td>
+				</tr>
+				<tr>
+					<td colSpan="2"><asp:Image ID="Image183" runat="server" SkinID="pixel" height="15" width="100%" /></td>
+				</tr>
 				<!-- Titre 5 : Sélection du lien Doc Marketing -->
 				<TR>
 					<td class="txtViolet12Bold paleVioletBackGround" colSpan="2">&nbsp;

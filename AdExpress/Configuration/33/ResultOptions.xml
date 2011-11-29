@@ -7,7 +7,7 @@
     <insetItem  id="subScriberEncart" dataBaseId="1983"/>
   </inset>
   <mediaSchedule useComparative="true"/>
-  <bannersFormat use="false">
+  <bannersFormat use="true">
     <allowVehicle id="6" description="Evaliant" rightBannersType="FormatEvaliantInternet" dataTableName="banners" formatTableName="groupFormatBanners"/>
   </bannersFormat>
   <retailer use="false"/>
