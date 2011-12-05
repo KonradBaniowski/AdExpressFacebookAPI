@@ -34,6 +34,8 @@ using TNS.AdExpress.Domain.Web;
 using System.IO;
 using Navigation = TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpressI.ProductClassIndicators.DAL;
+using System.Globalization;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpressI.ProductClassIndicators.Charts
 {
@@ -294,7 +296,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
         /// <param name="writer">Writer</param>
         protected override void Render(HtmlTextWriter writer)
         {
-
+            CultureInfo cInfoSave = System.Threading.Thread.CurrentThread.CurrentCulture;
+            
+            System.Threading.Thread.CurrentThread.CurrentCulture = WebApplicationParameters.AllowedLanguages[_session.DataLanguage].CultureInfo;
             HtmlTextWriter txt = new HtmlTextWriter(new StringWriter());
             base.Render(txt);
             int i = -1;
@@ -307,7 +311,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                 writer.Write(txt.InnerWriter.ToString());
             }
             writer.Write("<br/><br/>");
-
+            System.Threading.Thread.CurrentThread.CurrentCulture = cInfoSave;
         }
         #endregion
 
@@ -336,6 +340,15 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
         }
         #endregion
 
+        /// <summary>
+        /// Get unit
+        /// </summary>
+        /// <returns>unit</returns>
+        protected virtual UnitInformation GetUnit()
+        {
+            return UnitsInformation.List[UnitsInformation.DefaultKCurrency];
+
+        }
 
     }
 
