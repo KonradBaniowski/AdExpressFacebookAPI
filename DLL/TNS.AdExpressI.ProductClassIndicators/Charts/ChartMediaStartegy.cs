@@ -10,6 +10,7 @@ using System.Drawing;
 using CstComparisonCriterion = TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion;
 using CstPreformatedDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
 using CstDbClassif = TNS.AdExpress.Constantes.Classification.DB;
+using CstWeb = TNS.AdExpress.Constantes.Web;
 
 using TNS.AdExpress.Domain.Translation;
 using Dundas.Charting.WebControl;
@@ -111,7 +112,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
 
             #region Chart Design
             this.Width = new Unit("850px");
-            this.Height = new Unit("850px");
+            this.Height = new Unit("900px");
             this.Legend.Enabled = false;
             #endregion
 
@@ -667,8 +668,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
 
             for (int j = 0; j < listSeriesMedia.Count; j++)
             {
-                if (listSeriesMedia[listSeriesName[j]].Points.Count > 0)
+              if (listSeriesMedia[listSeriesName[j]].Points.Count > 0)
                 {
+                    
 
                     #region Type of chart
                     listSeriesMedia[listSeriesName[j]].Type = SeriesChartType.Pie;
@@ -697,6 +699,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                     listSeriesMedia[listSeriesName[j]].ChartArea = chartArea2.Name;
                     #endregion
 
+                  
                     #region Title
                     this.Titles.Add(chartArea2.Name);
                     this.Titles[index].DockInsideChartArea = true;
@@ -714,9 +717,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                     else listSeriesMedia[listSeriesName[j]]["MinimumRelativePieSize"] = "45";//45	
                     if (j == 0 && _chartType!= ChartImageType.Flash)
                     {
-                        chartArea2.BackImage = "/App_Themes/" + WebApplicationParameters.Themes[_session.SiteLanguage].Name + "/Images/common/logo_Tns_2.gif";
-                        chartArea2.BackImageAlign = ChartImageAlign.TopLeft;
-                        chartArea2.BackImageMode = ChartImageWrapMode.Unscaled;
+                        this.BackImage = string.Format("/App_themes/{0}{1}", WebApplicationParameters.Themes[_session.SiteLanguage].Name, CstWeb.Images.LOGO_TNS_2);
+                        this.BackImageAlign = ChartImageAlign.BottomRight;
+                        this.BackImageMode = ChartImageWrapMode.Unscaled;            
+                      
                     }
                     #endregion
 

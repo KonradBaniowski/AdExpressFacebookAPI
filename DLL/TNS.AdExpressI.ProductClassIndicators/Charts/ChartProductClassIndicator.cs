@@ -92,7 +92,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
         /// Legend item competitor color
         /// </summary>
         protected string _legendItemCompetitorColor = string.Empty;
-        /// <summary>
+        /// <summary
         /// Legend item reference color
         /// </summary>
         protected string _legendItemReferenceColor = string.Empty;
@@ -276,6 +276,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                 this.AnimationTheme = AnimationTheme.GrowingTogether;
                 this.AnimationDuration = 5;
                 this.RepeatAnimation = false;
+               
             }
             #endregion
 
@@ -332,11 +333,20 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                 title.Docking = Docking.Bottom;
                 this.Titles.Add(title);
 
-                this.BackImage = string.Format("/App_themes/{0}{1}", WebApplicationParameters.Themes[_session.SiteLanguage].Name, CstWeb.Images.LOGO_TNS_2);
-                this.BackImageAlign = ChartImageAlign.TopLeft;
-                this.BackImageMode = ChartImageWrapMode.Unscaled;
+                //this.BackImage = string.Format("/App_themes/{0}{1}", WebApplicationParameters.Themes[_session.SiteLanguage].Name, CstWeb.Images.LOGO_TNS_2);
+                //this.BackImageAlign = ChartImageAlign.TopRight;
+                //this.BackImageMode = ChartImageWrapMode.Unscaled;
+
+                Title title2 = new Title();
+                title2.BackImage = string.Format("/App_themes/{0}{1}", WebApplicationParameters.Themes[_session.SiteLanguage].Name, CstWeb.Images.LOGO_TNS_2);
+                title2.BackImageAlign = ChartImageAlign.TopRight;
+                title2.BackImageMode = ChartImageWrapMode.Unscaled;
+                title2.Position.Height = 9;
+                title2.Position.Width = 100; 
+                this.Titles.Add(title2);
 
             }
+            
         }
         #endregion
 
