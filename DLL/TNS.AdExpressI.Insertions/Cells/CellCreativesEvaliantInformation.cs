@@ -366,12 +366,25 @@ namespace TNS.AdExpressI.Insertions.Cells {
                         height);
                     output.Append("\n </OBJECT>");
                 }
-                else if (_format.ToUpper() == FLV_ID) {
+                else if (_format.ToUpper() == FLV_ID)
+                {
 
-                    if ((!WebApplicationParameters.VehiclesFormatInformation.Use 
-                            && _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_FLV_EVALIANT_CREATION_ACCESS_FLAG))
-                        || (WebApplicationParameters.VehiclesFormatInformation.Use 
-                            && _session.GetValidFormatSelectedList(new List<VehicleInformation>(new[]{VehiclesInformation.Get(AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack)})).Contains(TNS.AdExpress.Constantes.Classification.DB.Formats.InStream))) {
+                    bool displayFlv;
+
+                    if (!WebApplicationParameters.VehiclesFormatInformation.Use)
+                    {
+                        displayFlv = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_FLV_EVALIANT_CREATION_ACCESS_FLAG);
+                    }
+                    else
+                    {
+                        Dictionary<Int64, VehicleInformation> vehicleInformationList = new Dictionary<Int64, VehicleInformation>();
+                        vehicleInformationList.Add(VehiclesInformation.Get(AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack).DatabaseId, VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack));
+                        List<Int64> formatIdList = _session.GetValidFormatSelectedList(vehicleInformationList, true);
+
+                        displayFlv = (formatIdList!=null && formatIdList.Contains(AdExpress.Constantes.Classification.DB.Formats.InStream));
+                    }
+
+                    if (displayFlv) {
                         output.Append("<object id=\"video_" + _idVersion + "\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://active.macromedia.com/flash5/cabs/swflash.cab#version=5,0,0,0\" width=\"400\" height=\"315\">");
                         output.Append("<param name=\"movie\" value=\"/Player/playerflv.swf\" />");
                         output.Append("<param name=\"allowfullscreen\" value=\"true\" />");
