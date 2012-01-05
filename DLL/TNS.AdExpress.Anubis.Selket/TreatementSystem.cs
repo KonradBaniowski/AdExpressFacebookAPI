@@ -18,6 +18,7 @@ using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Anubis.Selket.Exceptions;
 using System.IO;
 using System.Reflection;
+using System.Collections;
 
 namespace TNS.AdExpress.Anubis.Selket
 {
@@ -29,23 +30,59 @@ namespace TNS.AdExpress.Anubis.Selket
         /// <summary>
         /// Lancement du module
         /// </summary>
-        public event StartWork OnStartWork;
+        public event StartWork EvtStartWork;
+        /// <summary>
+        /// Lancement du module
+        /// </summary>
+        public void OnStartWork(Int64 navSessionId, string message)
+        {
+            if (EvtStartWork != null) EvtStartWork(navSessionId, message);
+        }
         /// <summary>
         /// Arrêt du module
         /// </summary>
-        public event StopWorkerJob OnStopWorkerJob;
+        public event StopWorkerJob EvtStopWorkerJob;
+        /// <summary>
+        /// Arrêt du module
+        /// </summary>
+        public void OnStopWorkerJob(Int64 navSessionId, string resultFilePath, string mail, string evtMessage)
+        {
+            if (EvtStopWorkerJob != null) EvtStopWorkerJob(navSessionId, resultFilePath, mail, evtMessage);
+        }
         /// <summary>
         /// Message d'une alerte
         /// </summary>
-        public event MessageAlert OnMessageAlert;
+        public event MessageAlert EvtMessageAlert;
         /// <summary>
         /// Message d'une alerte
         /// </summary>
-        public event Error OnError;
+        public void OnMessageAlert(Int64 navSessionId, string message)
+        {
+            if (EvtMessageAlert != null) EvtMessageAlert(navSessionId, message);
+        }
+        /// <summary>
+        /// Message d'une alerte
+        /// </summary>
+        public event Error EvtError;
+        /// <summary>
+        /// Message d'une alerte
+        /// </summary>
+        public void OnError(Int64 navSessionId, string message, System.Exception e)
+        {
+            if (EvtError != null) EvtError(navSessionId, message, e);
+        }
         /// <summary>
         /// Envoie des rapports
         /// </summary>
-        public event SendReport OnSendReport;
+        public event SendReport EvtSendReport;
+        /// <summary>
+        /// Envoie des rapports
+        /// </summary>
+        public void OnSendReport(string reportTitle, TimeSpan duration, DateTime endExecutionDateTime, string reportCore, ArrayList mailList, ArrayList errorList, string from, string mailServer, int mailPort, Int64 navSessionId)
+        {
+            if (EvtSendReport != null) EvtSendReport(reportTitle, duration, endExecutionDateTime, reportCore, mailList, errorList, from, mailServer, mailPort, navSessionId);
+        }
+
         #endregion
 
         #region Variables
