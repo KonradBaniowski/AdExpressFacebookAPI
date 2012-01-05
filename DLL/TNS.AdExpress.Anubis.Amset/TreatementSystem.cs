@@ -25,35 +25,71 @@ using System.Reflection;
 using TNS.AdExpress.Anubis.Amset.Exceptions;
 using System.IO;
 using TNS.Ares.Domain.LS;
+using System.Collections;
 
 namespace TNS.AdExpress.Anubis.Amset{
 	/// <summary>
 	/// Implementation of TNS.AdExpress.Anubis.BusinessFacade.IPlugin for Amset plug-in
 	/// </summary>
 	public class TreatementSystem:IPlugin{
-	
-		#region Evènements
-		/// <summary>
-		/// Lancement du module
-		/// </summary>
-		public event StartWork OnStartWork;
-		/// <summary>
-		/// Arrêt du module
-		/// </summary>
-		public event StopWorkerJob OnStopWorkerJob;
-		/// <summary>
-		/// Message d'une alerte
-		/// </summary>
-		public event MessageAlert OnMessageAlert;
-		/// <summary>
-		/// Message d'une alerte
-		/// </summary>
-		public event Error OnError;
-		/// <summary>
-		/// Envoie des rapports
-		/// </summary>
-		public event SendReport OnSendReport;
-		#endregion
+
+        #region Evènements
+        /// <summary>
+        /// Lancement du module
+        /// </summary>
+        public event StartWork EvtStartWork;
+        /// <summary>
+        /// Lancement du module
+        /// </summary>
+        public void OnStartWork(long navSessionId, string message)
+        {
+            if (EvtStartWork != null) EvtStartWork(navSessionId, message);
+        }
+        /// <summary>
+        /// Arrêt du module
+        /// </summary>
+        public event StopWorkerJob EvtStopWorkerJob;
+        /// <summary>
+        /// Arrêt du module
+        /// </summary>
+        public void OnStopWorkerJob(long navSessionId, string resultFilePath, string mail, string evtMessage)
+        {
+            if (EvtStopWorkerJob != null) EvtStopWorkerJob(navSessionId, resultFilePath, mail, evtMessage);
+        }
+        /// <summary>
+        /// Message d'une alerte
+        /// </summary>
+        public event MessageAlert EvtMessageAlert;
+        /// <summary>
+        /// Message d'une alerte
+        /// </summary>
+        public void OnMessageAlert(long navSessionId, string message)
+        {
+            if (EvtMessageAlert != null) EvtMessageAlert(navSessionId, message);
+        }
+        /// <summary>
+        /// Message d'une alerte
+        /// </summary>
+        public event Error EvtError;
+        /// <summary>
+        ///  Message d'une alerte
+        /// </summary>
+        public void OnError(long navSessionId, string message, Exception e)
+        {
+            if (EvtError != null) EvtError(navSessionId, message, e);
+        }
+        /// <summary>
+        /// Envoie des rapports
+        /// </summary>
+        public event SendReport EvtSendReport;
+        /// <summary>
+        /// Envoie des rapports
+        /// </summary>
+        public void OnSendReport(string reportTitle, TimeSpan duration, DateTime endExecutionDateTime, string reportCore, ArrayList mailList, ArrayList errorList, string from, string mailServer, int mailPort, long navSessionId)
+        {
+            if (EvtSendReport != null) EvtSendReport(reportTitle, duration, endExecutionDateTime, reportCore, mailList, errorList, from, mailServer, mailPort, navSessionId);
+        }
+        #endregion
 	
 		#region Variables
 		/// <summary>
