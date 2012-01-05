@@ -65,6 +65,7 @@ using TNS.AdExpressI.Insertions.Cells;
 using TNS.Ares;
 using TNS.Ares.Pdf;
 using TNS.FrameWork.WebTheme;
+using TNS.AdExpress.Web.Core;
 #endregion
 
 namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
@@ -431,6 +432,45 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade{
 			+ "</TD>");
 		html.Append("</TR>");
 		#endregion
+
+        #region Group format
+        if (WebApplicationParameters.VehiclesFormatInformation.Use) {
+            if (VehiclesInformation.Contains(Constantes.Classification.DB.Vehicles.names.adnettrack)) {
+
+                var formatIdList = _webSession.GetValidFormatSelectedList(_webSession.GetVehiclesSelected(), true);
+                if (formatIdList.Count > 0) {
+                    var strFormatList = new List<string>();
+                    var vehiclesFormatList =
+                        VehiclesFormatList.GetList(
+                            new List<VehicleInformation>(_webSession.GetVehiclesSelected().Values).ConvertAll
+                                (p => p.DatabaseId));
+                    foreach (var cFilterItem in vehiclesFormatList.Values) {
+                        if (formatIdList.Contains(cFilterItem.Id)) {
+                            strFormatList.Add(cFilterItem.Label);
+                        }
+                    }
+
+                    html.Append("<TR height=\"7\">");
+                    html.Append("<TD></TD>");
+                    html.Append("</TR>");
+                    html.Append("<TR height=\"1\" class=\"lightPurple\">");//bgColor=\"#DED8E5\"
+                    html.Append("<TD></TD>");
+                    html.Append("</TR>");
+                    html.Append("<TR>");
+                    html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(2928, _webSession.SiteLanguage)) + " :</TD>");
+                    html.Append("</TR>");
+                    html.Append("<TR height=\"20\">");
+                    html.Append("<TD class=\"txtViolet11\" vAlign=\"top\">&nbsp;"
+                        + string.Join(", ", strFormatList.ToArray())
+                        + "</TD>");
+                    html.Append("</TR>");
+
+
+                }
+            }
+
+        }       
+        #endregion
 
         #region produit
         bool first = true;
