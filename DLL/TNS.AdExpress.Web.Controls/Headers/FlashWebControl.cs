@@ -75,6 +75,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         protected override void Render(HtmlTextWriter output) {
                 
             output.Write("<script  type=\"text/javascript\" language=\"javascript\">");
+            //output.Write("(new Image()).src = (\"https\" == document.location.href.slice(0,5) ? \"https://\" : \"http://\") + \"admon1.count.brat-online.ro/j0=,,,;+,id=\" + escape(\"9fe6428063874356b8e5c0823aa576ac.swf\") + \"+url=\" + escape(document.location.href) + \";;;\";");
             output.Write("if(hasRightFlashVersion){");
 			output.Write("document.writeln('<OBJECT id=\"Object1\" codeBase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\"');");
             output.Write("document.writeln('height=\""+this.Height+"\" width=\""+this.Width+"\" classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" VIEWASTEXT>');");
@@ -106,6 +107,9 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             output.Write("document.writeln('<img src=\""+missingFlashUrl+"\" width=\""+this.Width+"\" height=\""+this.Height+"\">');");
 			output.Write("}");
             output.Write("</script>");
+            //output.Write("<noscript> ");
+            //output.Write("<div style=\"display: inline;\"><img src=\"http://_SITE_.count.brat-online.ro/j0=,,,;+,id=_ID_;;;\" width=\"1\" height=\"1\" alt=\"\" /></div> ");
+            //output.Write("</noscript> ");
 
         }
         #endregion
