@@ -179,7 +179,7 @@ namespace AdExpress.Private.Results{
                 if (_nextUrl.Length != 0)
                 {
                     _webSession.Source.Close();
-					Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession + ((withZoomDateEventArguments && _zoom != null && _zoom.Length > 0) ? "&zoomDate=" + _zoom + "&detailPeriod=" + _savePeriod.GetHashCode() : ""));
+                    Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession + ((withZoomDateEventArguments && !string.IsNullOrEmpty(_zoom)) ? "&zoomDate=" + _zoom + "&detailPeriod=" + _webSession.DetailPeriod.GetHashCode() : ""));
                 }
                 #endregion
 
@@ -196,20 +196,7 @@ namespace AdExpress.Private.Results{
                 #endregion
 
                 #region Period Detail
-                //if(_zoom == null || _zoom == string.Empty) {
-                //    //if(!IsPostBack) {
-                //    //    PeriodDetailWebControl1.Select(_webSession.DetailPeriod);
-                //    //}
-                //    //else {
-                //    //    _webSession.DetailPeriod = PeriodDetailWebControl1.SelectedValue;
-                //    //}
-                //}
-                //else {
-                //    zoomButton = string.Format("<tr><td align=\"left\"><object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"30\" height=\"8\" VIEWASTEXT><param name=movie value=\"/App_Themes/" + this.Theme + "/Flash/Common/Arrow_Back.swf\"><param name=quality value=\"high\"><param name=menu value=\"false\"><embed src=\"/App_Themes/" + this.Theme + "/Flash/Common/Arrow_Back.swf\" width=\"30\" height=\"8\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" menu=\"false\"></embed></object><a class=\"roll06\" href=\"/Private/Results/MediaPlanResults.aspx?idSession={0}\">{2}</a></td></tr><tr><td height=\"5\"></td></tr>",
-                //        _webSession.IdSession,
-                //        _webSession.SiteLanguage,
-                //        GestionWeb.GetWebWord(2309, _webSession.SiteLanguage));
-                //}
+               
                 if(_zoom != null && _zoom != string.Empty && _zoom.Length > 0) {
                     zoomButton = string.Format("<tr><td align=\"left\"><object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"30\" height=\"8\" VIEWASTEXT><param name=movie value=\"/App_Themes/" + this.Theme + "/Flash/Common/Arrow_Back.swf\"><param name=quality value=\"high\"><param name=menu value=\"false\"><embed src=\"/App_Themes/" + this.Theme + "/Flash/Common/Arrow_Back.swf\" width=\"30\" height=\"8\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" menu=\"false\"></embed></object><a class=\"roll06\" href=\"/Private/Results/MediaPlanResults.aspx?idSession={0}\">{2}</a></td></tr><tr><td height=\"5\"></td></tr>",
                         _webSession.IdSession,
@@ -285,6 +272,7 @@ namespace AdExpress.Private.Results{
 
             #region Period Detail
             _zoom = Page.Request.QueryString.Get("zoomDate");
+
             if(_zoom != null && _zoom != string.Empty) {
                 if(Page.Request.Form.GetValues("zoomParam") != null && Page.Request.Form.GetValues("zoomParam")[0].Length > 0) {
                     _zoom = Page.Request.Form.GetValues("zoomParam")[0];
@@ -292,9 +280,7 @@ namespace AdExpress.Private.Results{
                 MenuWebControl2.UrlPameters = string.Format("zoomDate={0}", _zoom);
                 MenuWebControl2.ForbidSave = true;
                 SubPeriodSelectionWebControl1.Visible = true;
-                SubPeriodSelectionWebControl1.AllPeriodAllowed = false;
-                _savePeriod = _webSession.DetailPeriod;
-                _webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.dayly;
+                SubPeriodSelectionWebControl1.AllPeriodAllowed = false;               
                 GenericMediaScheduleWebControl1.ZoomDate = _zoom;
                 SubPeriodSelectionWebControl1.ZoomDate = _zoom;
                 SubPeriodSelectionWebControl1.JavascriptRefresh = "SetZoom";
@@ -377,10 +363,7 @@ namespace AdExpress.Private.Results{
                 SetSloganUniverseOptions();
 
                 #region MAJ _webSession
-                if (_zoom != null && _zoom != string.Empty)
-                {
-                    _webSession.DetailPeriod = _savePeriod;
-                }
+              
                 _webSession.LastReachedResultUrl = Page.Request.Url.AbsolutePath;
                 _webSession.Save();
                 #endregion
@@ -415,7 +398,7 @@ namespace AdExpress.Private.Results{
 		/// </summary>		
 		private void SetSloganUniverseOptions() {
 			if ((!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(_webSession) || !_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG)) //droits affiner univers Versions
-                || _webSession.DetailPeriod != ConstantesPeriod.DisplayLevel.dayly) {
+                || (_webSession.DetailPeriod != ConstantesPeriod.DisplayLevel.dayly && string.IsNullOrEmpty(_zoom)) ) {
                 ArrayList forbiddenOptions = new ArrayList();
                 forbiddenOptions.Add(7);
                 MenuWebControl2.ForbidOptionPagesList = forbiddenOptions;
