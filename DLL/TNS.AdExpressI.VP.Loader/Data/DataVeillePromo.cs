@@ -87,7 +87,8 @@ namespace TNS.AdExpressI.VP.Loader.Data {
             }
             catch (Exception e)
             {
-
+                if (e is VeillePromoDALExcelInvalidDateException)
+                    throw new VeillePromoExcelInvalidDateException(((VeillePromoDALExcelInvalidDateException)e).CellExcel, "Impossible Load Data Promotion", e);
                 if (e is VeillePromoDALExcelCellException)
                     throw new VeillePromoExcelCellException(((VeillePromoDALExcelCellException)e).CellExcel, "Impossible Load Data Promotion", e);
                 if (e is VeillePromoDALExcelOpenFileException)

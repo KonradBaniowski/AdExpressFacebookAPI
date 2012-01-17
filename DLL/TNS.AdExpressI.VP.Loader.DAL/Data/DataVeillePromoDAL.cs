@@ -157,7 +157,7 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
                         #region Get Date End
 
                         dateEnd = (DateTime) cells[line, columnDateEnd].Value;
-
+                        if (dateEnd < dateBegin) throw new VeillePromoDALExcelInvalidDateException(new CellExcel(line, columnProduct), "Invalid Date");
                         #endregion
 
                         #region Get Promo Content

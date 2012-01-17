@@ -299,9 +299,13 @@ namespace RenaultLoader.ViewModel
 #endif
                 }
             }
-            if (e is VeillePromoExcelCellException)
+            if (e is VeillePromoExcelInvalidDateException)
             {
-                MessageBox.Show("Une erreur est survenue sur la cellule  [" + ((VeillePromoExcelCellException)err).CellExcel.LineId + "," + ((VeillePromoExcelCellException)err).CellExcel.ColumnId + "]", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Les dates sont invalides sur la cellule  [" + ((VeillePromoExcelInvalidDateException)e).CellExcel.LineId + "," + ((VeillePromoExcelInvalidDateException)e).CellExcel.ColumnId + "]", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (e is VeillePromoExcelCellException)
+            {
+                MessageBox.Show("Une erreur est survenue sur la cellule  [" + ((VeillePromoExcelCellException)e).CellExcel.LineId + "," + ((VeillePromoExcelCellException)e).CellExcel.ColumnId + "]", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (e is VeillePromoExcelException) {
                 MessageBox.Show("Le format du fichier est incorrect. Le format doit être du type 'Renault_yyyyMM'", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);

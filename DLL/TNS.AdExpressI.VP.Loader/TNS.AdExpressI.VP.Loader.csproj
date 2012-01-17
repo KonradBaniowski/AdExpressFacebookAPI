@@ -59,6 +59,7 @@
     <Compile Include="Classification\IClassifVeillePromo.cs" />
     <Compile Include="Data\DataVeillePromo.cs" />
     <Compile Include="Data\IDataVeillePromo.cs" />
+    <Compile Include="Exceptions\VeillePromoExcelInvalidDateException.cs" />
     <Compile Include="Exceptions\VeillePromoClassifException.cs" />
     <Compile Include="Exceptions\VeillePromoExcelCellException.cs" />
     <Compile Include="Exceptions\VeillePromoIncorrectPictureFileNameException.cs" />
