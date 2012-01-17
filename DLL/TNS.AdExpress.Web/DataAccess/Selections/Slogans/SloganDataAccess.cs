@@ -132,7 +132,8 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Slogans
             #endregion
 
             if (vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.slogan)
-                && vehicleInformation != null && vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet)
+                && vehicleInformation != null && vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
+                &&   vehicleInformation != null && vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema)//PATCH BUG CINEMA FRANCE  A adapter lors de la fusin dev trunk
             {
 
                 #region Récupération des noms de tables et de champs suivant le média(vehcile)
