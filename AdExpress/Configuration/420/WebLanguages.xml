@@ -23,7 +23,7 @@
         <dateFormat name="shortdatepattern"   format="MM/dd/yyyy"               excelFormat="MM/dd/yyyy"/>
         <dateFormat name="customdatepattern"  format="ddd, MMM dd, yyyy"        excelFormat="ddd, MMM dd, yyyy"/>
       </dateFormats>
-      <companyNameTexts companyName="2842" companyShortName="2842"/>
+      <companyNameTexts companyName="758" companyShortName="2843"/>
     </language>
     <language id="44" name="English"  imageSourceText="/Images/Common/angleterre.gif"  localization="en-GB" classificationLanguageId="44" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="windows-1250" pdfContentEncoding="windows-1250" nlsSort="BINARY" NumberDecimalSeparator="." NumberGroupSeparator="," PercentDecimalSeparator=".">
       <rss display="false" filePath="http://poland.tnsadexpress.com/Rss/44/AdExpressFeed.xml" link="http://poland.tnsadexpress.com/Rss/44/AdExpressFeed.xml"/>
@@ -47,7 +47,7 @@
         <dateFormat name="shortdatepattern"   format="MM/dd/yyyy"               excelFormat="MM/dd/yyyy"/>
         <dateFormat name="customdatepattern"  format="ddd, MMM dd, yyyy"        excelFormat="ddd, MMM dd, yyyy"/>
       </dateFormats>
-      <companyNameTexts companyName="2842" companyShortName="2842"/>
+      <companyNameTexts companyName="758" companyShortName="2843"/>
     </language>
   </languages>
 </configuration>
