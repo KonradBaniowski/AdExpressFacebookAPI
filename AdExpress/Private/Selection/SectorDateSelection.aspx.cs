@@ -34,7 +34,12 @@ using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
 using WebConstantes=TNS.AdExpress.Constantes.Web;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using System.Text;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpressI.Date.DAL;
 using TNS.AdExpress.Domain.Web;
+using System.Reflection;
+using System.Collections.Generic;
+using TNS.AdExpress.Domain.Exceptions;
 #endregion
 
 namespace AdExpress.Private.Selection{
@@ -170,7 +175,32 @@ namespace AdExpress.Private.Selection{
                 if (!this.Page.ClientScript.IsClientScriptBlockRegistered("RecapDatesJavaScriptFunctions"))
                     this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "RecapDatesJavaScriptFunctions", RecapDatesJavaScriptFunctions());
 
-			}
+                #region Initialize Calendar
+                CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+                object[] param = new object[1];
+                param[0] = _webSession;
+                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                
+                monthCalendarEndWebControl.IsRestricted = monthCalendarBeginWebControl.IsRestricted = ModulesList.GetModule(_webSession.CurrentModule).DisplayIncompleteDateInCalendar;
+                List<Int64> selectedVehicleList = new List<Int64>();
+                if (monthCalendarBeginWebControl.IsRestricted) {
+                    monthCalendarEndWebControl.IsRestricted = monthCalendarBeginWebControl.IsRestricted;
+                    string vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+                    if (vehicleSelection == null) throw (new VehicleException("Selection of media type is not correct"));
+                    selectedVehicleList = new List<Int64>((new List<string>(vehicleSelection.Split(','))).ConvertAll<Int64>(ConvertStringToInt64));
+
+                    if (IsPostBack) {
+                        if (this.ViewState["FirstDayNotEnabledVS"] != null)
+                            monthCalendarEndWebControl.FirstDayNotEnable =  monthCalendarBeginWebControl.FirstDayNotEnable = (DateTime)this.ViewState["FirstDayNotEnabledVS"];
+                    }
+                    else {
+                        monthCalendarEndWebControl.FirstDayNotEnable = monthCalendarBeginWebControl.FirstDayNotEnable = dateDAL.GetFirstDayNotEnabled(selectedVehicleList, dateDAL.GetCalendarStartDate());
+                        ViewState.Add("FirstDayNotEnabledVS", monthCalendarBeginWebControl.FirstDayNotEnable);
+                    }
+                }
+                #endregion
+
+            }
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
 					this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this,exc,_webSession));
@@ -252,8 +282,14 @@ namespace AdExpress.Private.Selection{
 		{
 			if(Request.Form.GetValues("selectedItemIndex")!=null)selectedIndex = int.Parse(Request.Form.GetValues("selectedItemIndex")[0]);
 			if(Request.Form.GetValues("selectedComparativeStudy")!=null)selectedComparativeStudy = int.Parse(Request.Form.GetValues("selectedComparativeStudy")[0]);	
+
 			try
 			{
+                CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+                object[] param = new object[1];
+                param[0] = _webSession;
+                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+
 				DateTime downloadDate=new DateTime(_webSession.DownLoadDate,12,31);				
 				string absolutEndPeriod ="";
 				switch(selectedIndex)
@@ -275,8 +311,8 @@ namespace AdExpress.Private.Selection{
 								_webSession.PeriodBeginningDate = DateTime.Now.AddMonths(1 - _webSession.PeriodLength).ToString("yyyyMM");
 								_webSession.PeriodEndDate = DateTime.Now.ToString("yyyyMM");
 							}
-							
-							 absolutEndPeriod = Dates.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
+
+							absolutEndPeriod = dateDAL.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
 							if ((int.Parse(absolutEndPeriod) < int.Parse(_webSession.PeriodBeginningDate)) || (absolutEndPeriod.Substring(4,2).Equals("00")))
 								throw(new AdExpressException.SectorDateSelectionException(GestionWeb.GetWebWord(1787,_webSession.SiteLanguage)));
 
@@ -311,7 +347,7 @@ namespace AdExpress.Private.Selection{
 						//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 						//du dernier mois dispo en BDD
 						//traitement de la notion de fréquence
-						absolutEndPeriod = Dates.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
+                        absolutEndPeriod = dateDAL.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
 						if ((int.Parse(absolutEndPeriod) < int.Parse(_webSession.PeriodBeginningDate)) || (absolutEndPeriod.Substring(4,2).Equals("00")) )
 							throw(new AdExpressException.SectorDateSelectionException(GestionWeb.GetWebWord(1787,_webSession.SiteLanguage)));
 												
@@ -419,12 +455,20 @@ namespace AdExpress.Private.Selection{
 		/// <returns>?</returns>
 		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode ();
-			//recallWebControl.CustomerWebSession=_webSession;
+			try
+			{
 			monthDateList.WebSession=_webSession;
 			monthCalendarBeginWebControl.WebSession=_webSession;
 			monthCalendarEndWebControl.WebSession=_webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
-			
+            }
+            catch (System.Exception exc)
+            {
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                }
+            }
 			return tmp;
 		}
 		#endregion
@@ -476,7 +520,13 @@ namespace AdExpress.Private.Selection{
 				//du dernier mois dispo en BDD
 				//traitement de la notion de fréquence	
 				if(int.Parse(monthCalendarEndWebControl.SelectedDate.ToString().Substring(0,4))==DateTime.Now.Year && int.Parse(monthCalendarBeginWebControl.SelectedDate.ToString().Substring(0,4))==DateTime.Now.Year){
-					string absolutEndPeriod = Dates.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
+                    
+                    CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+                    object[] param = new object[1];
+                    param[0] = _webSession;
+                    IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+
+                    string absolutEndPeriod = dateDAL.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
 					if (int.Parse(absolutEndPeriod) < int.Parse(_webSession.PeriodBeginningDate))
 						throw(new AdExpressException.SectorDateSelectionException(GestionWeb.GetWebWord(1787,_webSession.SiteLanguage)));
 
@@ -529,6 +579,18 @@ namespace AdExpress.Private.Selection{
 			return(this.MenuWebControl2.NextUrl);
 		}
 		#endregion
+
+        #region ConvertStringToInt64
+        /// <summary>
+        /// Convert String To Int64
+        /// </summary>
+        /// <param name="p">String parameter</param>
+        /// <returns>Int64 Result</returns>
+        private Int64 ConvertStringToInt64(string p) {
+            return Int64.Parse(p);
+        }
+        #endregion
+
 
 
         #region Javascript

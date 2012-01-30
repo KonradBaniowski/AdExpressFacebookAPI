@@ -131,31 +131,35 @@ namespace AdExpress.Private.Results{
 			base.OnPreInit(e);
 			Int64 tabSelected;
 
-			//Set default tab if necessary
-			ChangeCurrentTab();
-
-
 			try {
+                //Set default tab if necessary
+                ChangeCurrentTab();
+
 				tabSelected = Int64.Parse(Page.Request.Form.GetValues("_resultsPages")[0]);
-			}
-			catch (System.Exception err) {
-				tabSelected = _webSession.CurrentTab;
-			}
-			switch (tabSelected) {
-				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
-					_ResultWebControl.SkinID = "portofolioSynthesisResultTable";
-					_ResultWebControl.ShowContainer = false;
-                    _ResultWebControl.UseLimitation = false;
-					break;
-				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
-				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
-					_ResultWebControl.SkinID = "portofolioResultTable";
-                    _ResultWebControl.UseLimitation = true;
+
+                switch (tabSelected)
+                {
+                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
+                        _ResultWebControl.SkinID = "portofolioSynthesisResultTable";
+                        _ResultWebControl.ShowContainer = false;
+                        //TODO : A vérifier pour fusion Dev Trunk
+                       _ResultWebControl.UseLimitation = false;
+                        break;
+                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
+                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
+                        _ResultWebControl.SkinID = "portofolioResultTable"; 
+                          //TODO : A vérifier pour fusion Dev Trunk                    
+                        _ResultWebControl.UseLimitation = true;
 					break;
                 default:
                     _ResultWebControl.UseLimitation = true;
                     break;
+                }
 			}
+			catch (System.Exception err) {
+				tabSelected = _webSession.CurrentTab;
+			}
+			
 		}
 		#endregion
 
@@ -307,7 +311,8 @@ namespace AdExpress.Private.Results{
                 //}
 				InformationWebControl1.Language = _webSession.SiteLanguage;
 				#endregion
-			
+
+               
 				#region Scripts
 				// Ouverture de la popup chemin de fer
 				if (!Page.ClientScript.IsClientScriptBlockRegistered("portofolioCreation")) {
@@ -335,7 +340,9 @@ namespace AdExpress.Private.Results{
 		/// </summary>
 		/// <returns></returns>
 		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
-			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();			
+			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
+            try
+            {
 			Moduletitlewebcontrol2.CustomerWebSession=_webSession;
 			ResultsOptionsWebControl1.CustomerWebSession=_webSession;
 			ResultsOptionsWebControl1.SelectedMediaUniverse = GetSelectedUniverseMedia();
@@ -355,32 +362,49 @@ namespace AdExpress.Private.Results{
             else
                 ResultsOptionsWebControl1.AutopromoEvaliantOption = false;
 
+            #region Campaign type option
+            ResultsOptionsWebControl1.CampaignTypeOption = WebApplicationParameters.AllowCampaignTypeOption;
+            #endregion
+
+            //Set Advertisement Type Options
+//TODO: A Vérifier pour fusion dev trunk
+            //SetAdvertisementTypeOptions();
+			
+			}			
+			catch(System.Exception exc){
+				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
+					this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this,exc,_webSession));
+				}
+			}
 			return tmp;
 		}
 		#endregion
 
 		#region PreRender
 		protected override void OnPreRender(EventArgs e) {
-			Domain.Module module = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
-			if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
-			object[] parameters = new object[1];
-			parameters[0] = _webSession;
-		
-			Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
-
-			switch (_webSession.CurrentTab) {
-
-				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
-					result = portofolioResult.GetDetailMediaHtml(false);
-					break;
-				case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
-					if (!_webSession.Graphics)
-						result = portofolioResult.GetStructureHtml(false);
-					break;
-
-			}
-			base.OnPreRender (e);
+			
 			try{
+
+                Domain.Module module = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
+                if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
+                object[] parameters = new object[1];
+                parameters[0] = _webSession;
+
+                Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+
+                switch (_webSession.CurrentTab)
+                {
+                   
+                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA:
+                        result = portofolioResult.GetDetailMediaHtml(false);
+                        break;
+                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE:
+                        if (!_webSession.Graphics)
+                            result = portofolioResult.GetStructureHtml(false);
+                        break;
+
+                }
+                base.OnPreRender(e);
 
 				#region MAJ _webSession
 				_webSession.LastReachedResultUrl=Page.Request.Url.AbsolutePath;
@@ -456,6 +480,7 @@ namespace AdExpress.Private.Results{
 			switch (vehicleInformation.Id) {
 				case ClassificationCst.DB.Vehicles.names.outdoor :
                 case ClassificationCst.DB.Vehicles.names.instore:
+                case ClassificationCst.DB.Vehicles.names.indoor:
 				case ClassificationCst.DB.Vehicles.names.cinema :
 					if (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE || (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR && !_webSession.CustomerPeriodSelected.IsSliding4M)) {
 						_webSession.CurrentTab = FrameWorkConstantes.Portofolio.SYNTHESIS;
@@ -473,7 +498,14 @@ namespace AdExpress.Private.Results{
 					break;
 				case ClassificationCst.DB.Vehicles.names.others:
 				case ClassificationCst.DB.Vehicles.names.tv:
+                case ClassificationCst.DB.Vehicles.names.tvGeneral:
+                case ClassificationCst.DB.Vehicles.names.tvSponsorship:
+                case ClassificationCst.DB.Vehicles.names.tvAnnounces:
+                case ClassificationCst.DB.Vehicles.names.tvNonTerrestrials:
 				case ClassificationCst.DB.Vehicles.names.radio:
+                case ClassificationCst.DB.Vehicles.names.radioGeneral:
+                case ClassificationCst.DB.Vehicles.names.radioSponsorship:
+                case ClassificationCst.DB.Vehicles.names.radioMusic:
 				case ClassificationCst.DB.Vehicles.names.press:
                 case ClassificationCst.DB.Vehicles.names.newspaper:
                 case ClassificationCst.DB.Vehicles.names.magazine:
@@ -500,5 +532,21 @@ namespace AdExpress.Private.Results{
 		}
 		#endregion
 
-	}
+        #region SetAdvertisementTypeOptions
+        ///// <summary>
+        ///// Indicate if customer can refine ad type
+        ///// </summary>	
+        //private void SetAdvertisementTypeOptions()
+        //{   //TODO:A vérifier pour fusion Dev Trunk : déplacer dans resultoptionswebcontrol
+        //    TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_webSession.CurrentModule);
+        //    ArrayList detailSelections = ((ResultPageInformation)module.GetResultPageInformation((int)_webSession.CurrentTab)).DetailSelectionItemsType;
+        //    if (detailSelections.Contains(WebConstantes.DetailSelection.Type.advertisementType.GetHashCode()))
+        //    {
+        //        InitializeProductWebControl1.Visible = true;
+        //        InitializeProductWebControl1.InitializeAdvertisementType = true;
+        //    }
+        //}
+        #endregion
+
+    }
 }

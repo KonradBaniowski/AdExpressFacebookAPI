@@ -20,7 +20,7 @@ using System.Windows.Forms;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
-
+using DBFunctions = TNS.AdExpress.Web.DataAccess.Functions;
 namespace AdExpress.Private.Universe{
 
 	/// <summary>
@@ -82,32 +82,7 @@ namespace AdExpress.Private.Universe{
 				//Type d'arbre
 				#region Type d'arbre
 				if (treeNodeUniverse != null) {
-					//// Holding Company
-					//if (((LevelInformation)treeNodeUniverse.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess || ((LevelInformation)treeNodeUniverse.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException) {
-					//    advertiserAdexpressText.Code = 814;
-					//}
-					//// Advertiser
-					//else if (((LevelInformation)treeNodeUniverse.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess || ((LevelInformation)treeNodeUniverse.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.advertiserException) {
-					//    advertiserAdexpressText.Code = 813;
-
-					//}
-					//// Product
-					//else if (((LevelInformation)treeNodeUniverse.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.productAccess || ((LevelInformation)treeNodeUniverse.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.productException) {
-					//    advertiserAdexpressText.Code = 815;
-					//}
-					//// Sector
-					//else if (((LevelInformation)treeNodeUniverse.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess || ((LevelInformation)treeNodeUniverse.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.sectorException) {
-					//    advertiserAdexpressText.Code = 965;
-
-					//}
-					//// SubSector
-					//else if (((LevelInformation)treeNodeUniverse.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess || ((LevelInformation)treeNodeUniverse.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.subSectorException) {
-					//    advertiserAdexpressText.Code = 966;
-					//}
-					//// Group
-					//else if (((LevelInformation)treeNodeUniverse.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.groupAccess || ((LevelInformation)treeNodeUniverse.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.groupException) {
-					//    advertiserAdexpressText.Code = 967;
-					//}
+					
 					// Vehicle
 				   if (((LevelInformation)treeNodeUniverse.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess || ((LevelInformation)treeNodeUniverse.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.vehicleException) {
 						advertiserAdexpressText.Code = 1089;
@@ -116,6 +91,11 @@ namespace AdExpress.Private.Universe{
 					else if (((LevelInformation)treeNodeUniverse.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.categoryAccess || ((LevelInformation)treeNodeUniverse.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.categoryException) {
 						advertiserAdexpressText.Code = 1090;
 					}
+                   // Region
+                   else if (((LevelInformation)treeNodeUniverse.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.regionAccess || ((LevelInformation)treeNodeUniverse.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.regionException)
+                   {
+                       advertiserAdexpressText.Code = 2816;
+                   }
 					// Media
 					else if (((LevelInformation)treeNodeUniverse.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.mediaAccess || ((LevelInformation)treeNodeUniverse.FirstNode.Tag).Type == TNS.AdExpress.Constantes.Customer.Right.type.mediaException) {
 						advertiserAdexpressText.Code = 1087;
@@ -154,19 +134,16 @@ namespace AdExpress.Private.Universe{
 					selectItemsInClassificationWebControl.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label;
 					for (int k = 0; k < adExpressUniverse.Count; k++) {
 						if (adExpressUniverse.ContainsKey(k)) {
-							advertiserText += selectItemsInClassificationWebControl.ShowUniverse(adExpressUniverse[k], _webSession.DataLanguage, _webSession.Source);
+                            advertiserText += selectItemsInClassificationWebControl.ShowUniverse(adExpressUniverse[k], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession));
 						}
 					}
 				}
 
 				//Liste des Univers
 				if (treeNodeUniverse != null) 
-				advertiserText=TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(treeNodeUniverse,false,true,true,600,true,false,_webSession.SiteLanguage,2,1,true);
+				advertiserText=TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(treeNodeUniverse,false,true,true,600,true,false,_webSession.SiteLanguage,2,1,true,_webSession.DataLanguage,_webSession.CustomerDataFilters.DataSource);
 
-				//Bouton Fermer
-				//closeImageButtonRollOverWebControl.ImageUrl="/Images/"+_webSession.SiteLanguage+"/button/fermer_up.gif";
-				//closeImageButtonRollOverWebControl.RollOverImageUrl="/Images/"+_webSession.SiteLanguage+"/button/fermer_down.gif";
-			
+				
 				//Script pour l'ouverture/fermeture du tableau
 				if (!Page.ClientScript.IsClientScriptBlockRegistered("showHideContent")) {
 					Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"showHideContent",TNS.AdExpress.Web.Functions.Script.ShowHideContent());

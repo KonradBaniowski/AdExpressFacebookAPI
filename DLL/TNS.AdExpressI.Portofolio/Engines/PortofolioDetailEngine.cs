@@ -203,7 +203,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			}
 		}
         protected delegate void AffectLine(ResultTable oTab, int cLine, int cCol, CellUnitFactory cellFactory, object value, bool isLeaf);
-        protected void AffectDoubleLine(ResultTable oTab, int cLine, int cCol, CellUnitFactory cellFactory, object value, bool isLeaf) {
+        protected virtual void AffectDoubleLine(ResultTable oTab, int cLine, int cCol, CellUnitFactory cellFactory, object value, bool isLeaf) {
             if(oTab[cLine, cCol] == null) {
                 oTab[cLine, cCol] = cellFactory.Get(0.0);
             }
@@ -214,7 +214,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 }
             }
         }
-        protected void AffectListLine(ResultTable oTab, int cLine, int cCol, CellUnitFactory cellFactory, object value, bool isLeaf) {
+        protected virtual void AffectListLine(ResultTable oTab, int cLine, int cCol, CellUnitFactory cellFactory, object value, bool isLeaf) {
             if(oTab[cLine, cCol] == null) {
                 oTab[cLine, cCol] = cellFactory.Get(0);
             }
@@ -282,8 +282,15 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radioGeneral:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radioSponsorship:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radioMusic:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvGeneral:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvSponsorship:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvNonTerrestrials:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvAnnounces:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.instore:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.cinema:

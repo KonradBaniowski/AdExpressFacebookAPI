@@ -7,7 +7,7 @@ using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstFormat = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstPersonalized = TNS.AdExpress.Constantes.Web.AdvertiserPersonalisation.Type;
-using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
+using FctUtilities = TNS.AdExpress.Web.Functions;
 
 using TNS.Classification.Universe;
 using TNS.AdExpress.Web.Core.Sessions;

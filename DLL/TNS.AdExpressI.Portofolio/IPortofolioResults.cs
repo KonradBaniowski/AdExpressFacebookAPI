@@ -43,15 +43,16 @@ namespace TNS.AdExpressI.Portofolio {
 		/// <summary>
 		/// Get portofolio media detail insertion result
 		/// </summary>
+        /// <param name="excel">Result type</param>
 		/// <returns>Result Table</returns>
-		ResultTable GetInsertionDetailResultTable();
+		ResultTable GetInsertionDetailResultTable(bool excel);
         /// <summary>
         /// Get data for vehicle view
         /// </summary>
         /// <param name="dtVisuel">Visuel information</param>
         /// <param name="htValue">investment values</param>
         /// <returns>Media name</returns>
-        string GetVehicleViewData(out DataTable dtVisuel, out Hashtable htValue);
+        void GetVehicleViewData(out DataTable dtVisuel, out Hashtable htValue);
         /// <summary>
         /// Get detail media html
         /// </summary>
@@ -65,6 +66,11 @@ namespace TNS.AdExpressI.Portofolio {
 		/// <param name="endDate">end Date</param>
 		/// <returns></returns>
 		Dictionary<string, string> GetVisualList(string beginnDate, string endDate);
+        /// <summary>
+        /// Get vehicle cover items
+        /// </summary>
+        /// <returns>cover items</returns>
+        List<VehicleView.VehicleItem> GetVehicleItems();
 	
     }
 }

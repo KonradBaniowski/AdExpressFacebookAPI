@@ -85,12 +85,20 @@ namespace AdExpress.Private.Results.Jpeg{
 		/// </summary>
 		/// <returns></returns>
 		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
-			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();			
-
+			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
+            try
+            {
 			portofolioChartWebControl1.CustomerWebSession = _webSession;
 			portofolioChartWebControl1.TypeFlash = false;
 
-
+             }
+            catch (System.Exception exc)
+            {
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                }
+            }
 
 			return tmp;
 		}

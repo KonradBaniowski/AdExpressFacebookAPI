@@ -29,14 +29,19 @@ using TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Web.Controls.Selections;
 using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using TNS.AdExpress.Web.Core.Selection;
+using TNS.AdExpress.Domain.CampaignTypes;
+
 #endregion
 
-namespace TNS.AdExpress.Web.Controls.Headers {
+
+namespace TNS.AdExpress.Web.Controls.Headers
+{
     /// <summary>
     /// Composant affichant le titre  et le descriptif de la page
     /// </summary>
     [ToolboxData("<{0}:ResultsOptionsWebControl runat=server></{0}:ResultsOptionsWebControl>")]
-    public class ResultsOptionsWebControl : System.Web.UI.WebControls.WebControl {
+    public class ResultsOptionsWebControl : System.Web.UI.WebControls.WebControl
+    {
 
         #region Variables
         /// <summary>
@@ -63,6 +68,14 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// If dependentSelection == true we allow a checkbox list to be selectionable only if the reference one is checked
         /// </summary>
         private bool _dependentSelection = false;
+        /// <summary>
+        /// Ad type control width
+        /// </summary>
+        private bool _withAdType = false;
+        /// <summary>
+        /// Table personnalisation width
+        /// </summary>
+        protected string _tablePersoWidth;
         #endregion
 
         #region Variables MMI
@@ -206,7 +219,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// Banners Format Filter WebControl
         /// </summary>
         protected GenericFilterWebControl _bannersFormatWebControl;
-        
+
         /// <summary>
         /// Multipe sector selection webcontrol
         /// </summary>
@@ -219,7 +232,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// </summary>
         protected WebSession customerWebSession = null;
         /// <summary>Session du client</summary>
-        public WebSession CustomerWebSession {
+        public WebSession CustomerWebSession
+        {
             get { return customerWebSession; }
             set { customerWebSession = value; }
         }
@@ -231,10 +245,21 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Option choix de l'unité")]
         protected string cssClass = "txtNoir11Bold";
         /// <summary>CSS</summary>
-        public string CommonCssClass {
+        public string CommonCssClass
+        {
             get { return cssClass; }
             set { cssClass = value; }
         }
+
+        /// <summary>
+        /// Contrôle Choice of Campaign type
+        /// </summary>
+        protected System.Web.UI.WebControls.DropDownList _campaignTypeDropDownList;
+
+
+
+
+
 
         /// <summary>
         /// Option unité
@@ -243,7 +268,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Option choix de l'unité")]
         protected bool unitOption = true;
         /// <summary>Option d'unité</summary>
-        public bool UnitOption {
+        public bool UnitOption
+        {
             get { return unitOption; }
             set { unitOption = value; }
         }
@@ -255,7 +281,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Option choix de l'unité Appm")]
         protected bool unitOptionAppm = false;
         /// <summary>Option unité Appm</summary>
-        public bool UnitOptionAppm {
+        public bool UnitOptionAppm
+        {
             get { return unitOptionAppm; }
             set { unitOptionAppm = value; }
         }
@@ -267,7 +294,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Banners Format Filter Option")]
         protected bool bannersFormatOption = false;
         /// <summary>Option d'unité</summary>
-        public bool BannersFormatOption {
+        public bool BannersFormatOption
+        {
             get { return bannersFormatOption; }
         }
 
@@ -278,7 +306,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Option list of products")]
         protected bool productsOption = false;
         /// <summary>list products Appm</summary>
-        public bool ProductsOption {
+        public bool ProductsOption
+        {
             get { return productsOption; }
             set { productsOption = value; }
         }
@@ -291,7 +320,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>
         /// Propriété encart
         /// </summary>
-        public bool InsertOption {
+        public bool InsertOption
+        {
             get { return insertOption; }
             set { insertOption = value; }
         }
@@ -303,7 +333,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Option visualiser la PDM")]
         protected bool pdmOption = false;
         /// <summary></summary>
-        public bool PdmOption {
+        public bool PdmOption
+        {
             get { return pdmOption; }
             set { pdmOption = value; }
         }
@@ -315,7 +346,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Option visualiser la PDV")]
         protected bool pdvOption = false;
         /// <summary></summary>
-        public bool PdvOption {
+        public bool PdvOption
+        {
             get { return pdvOption; }
             set { pdvOption = value; }
         }
@@ -327,7 +359,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Option visualiser une évolution")]
         protected bool evolutionOption = false;
         /// <summary></summary>
-        public bool EvolutionOption {
+        public bool EvolutionOption
+        {
             get { return evolutionOption; }
             set { evolutionOption = value; }
         }
@@ -339,7 +372,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Option : Visualiser uniquement les éléments de références et concurrents")]
         protected bool personalizedElementsOption = false;
         /// <summary></summary>
-        public bool PersonalizedElementsOption {
+        public bool PersonalizedElementsOption
+        {
             get { return personalizedElementsOption; }
             set { personalizedElementsOption = value; }
         }
@@ -351,13 +385,15 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Option Auto-promo Evaliant")]
         protected bool autopromoEvaliantOption = false;
         /// <summary></summary>
-        public bool AutopromoEvaliantOption {
+        public bool AutopromoEvaliantOption
+        {
             get { return autopromoEvaliantOption; }
             set { autopromoEvaliantOption = value; }
         }
 
         /// <summary>Option pourcentage</summary>
-        public System.Web.UI.WebControls.CheckBox PercentageCheckBox {
+        public System.Web.UI.WebControls.CheckBox PercentageCheckBox
+        {
             get { return percentageCheckBox; }
             set { percentageCheckBox = value; }
         }
@@ -369,7 +405,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Option choix du niveau de détail produit")]
         protected bool productDetailOption = false;
         /// <summary></summary>
-        public bool ProductDetailOption {
+        public bool ProductDetailOption
+        {
             get { return productDetailOption; }
             set { productDetailOption = value; }
         }
@@ -381,7 +418,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Option choix niveau de détail media")]
         protected bool mediaDetailOption = false;
         /// <summary></summary>
-        public bool MediaDetailOption {
+        public bool MediaDetailOption
+        {
             get { return mediaDetailOption; }
             set { mediaDetailOption = value; }
         }
@@ -393,7 +431,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Option choix de tableau préformaté")]
         protected bool tblChoiceOption = false;
         /// <summary></summary>
-        public bool PreformatedTableOption {
+        public bool PreformatedTableOption
+        {
             get { return tblChoiceOption; }
             set { tblChoiceOption = value; }
         }
@@ -405,7 +444,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("autoPostBack")]
         protected bool autoPostBackOption = true;
         /// <summary></summary>
-        public bool AutoPostBackOption {
+        public bool AutoPostBackOption
+        {
             get { return autoPostBackOption; }
             set { autoPostBackOption = value; }
         }
@@ -417,7 +457,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("pdm")]
         protected bool percentage = false;
         /// <summary>Affiche en %</summary>
-        public bool Percentage {
+        public bool Percentage
+        {
             get { return percentage; }
             set { percentage = value; }
         }
@@ -429,7 +470,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Option type de résultat")]
         protected bool resultOption = true;
         /// <summary>Type de résultat</summary>
-        public bool ResultOption {
+        public bool ResultOption
+        {
             get { return resultOption; }
             set { resultOption = value; }
         }
@@ -441,7 +483,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Option type de résultat")]
         protected bool forceMediaDetailForMediaPlan = false;
         /// <summary></summary>
-        public bool ForceMediaDetailForMediaPlan {
+        public bool ForceMediaDetailForMediaPlan
+        {
             get { return forceMediaDetailForMediaPlan; }
             set { forceMediaDetailForMediaPlan = value; }
         }
@@ -451,7 +494,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// </summary>
         [Bindable(true),
         Description("Option type de résultat")]
-        public bool ForceMediaDetailForSlogan {
+        public bool ForceMediaDetailForSlogan
+        {
             get { return _forceMediaDetailForSlogan; }
             set { _forceMediaDetailForSlogan = value; }
         }
@@ -465,7 +509,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>
         ///Format de résultat 
         /// </summary>
-        public bool ResultFormat {
+        public bool ResultFormat
+        {
             get { return _resultFormat; }
             set { _resultFormat = value; }
         }
@@ -479,7 +524,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>
         /// Option de calcul de comparaison Total 
         /// </summary>
-        public bool TotalChoice {
+        public bool TotalChoice
+        {
             get { return _totalChoice; }
             set { _totalChoice = value; }
         }
@@ -493,7 +539,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>
         ///Set/Get Show Zoom graphic option 
         /// </summary>
-        public bool ZoomGraphic {
+        public bool ZoomGraphic
+        {
             get { return _zoomGraphic; }
             set { _zoomGraphic = value; }
         }
@@ -501,9 +548,11 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>
         /// Get Zoom Graphic status
         /// </summary>
-        public bool IsZoomGraphicChecked {
-            get {
-                if(_zoomGraphicCheckBox != null && _zoomGraphicCheckBox.Visible) return (_zoomGraphicCheckBox.Checked);
+        public bool IsZoomGraphicChecked
+        {
+            get
+            {
+                if (_zoomGraphicCheckBox != null && _zoomGraphicCheckBox.Visible) return (_zoomGraphicCheckBox.Checked);
                 return (false);
             }
         }
@@ -511,7 +560,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>
         ///Titre graphique de résultat 
         /// </summary>
-        public string ChartTitle {
+        public string ChartTitle
+        {
             get { return _chartTitle; }
             set { _chartTitle = value; }
         }
@@ -519,7 +569,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>
         ///Titre tableau de résultat 
         /// </summary>
-        public string TableTitle {
+        public string TableTitle
+        {
             get { return _tableTitle; }
             set { _tableTitle = value; }
         }
@@ -527,7 +578,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>
         ///Contrôle Choix du type de résultat sous forme graphique
         /// </summary>
-        public System.Web.UI.WebControls.RadioButton GraphRadioButton {
+        public System.Web.UI.WebControls.RadioButton GraphRadioButton
+        {
             get { return graphRadioButton; }
             set { graphRadioButton = value; }
         }
@@ -535,7 +587,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>
         ///Contrôle Choix du type de résultat sous forme tableau
         /// </summary>
-        public System.Web.UI.WebControls.RadioButton TableRadioButton {
+        public System.Web.UI.WebControls.RadioButton TableRadioButton
+        {
             get { return tableRadioButton; }
             set { tableRadioButton = value; }
         }
@@ -543,14 +596,16 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>
         /// Initialisation des éléments de références
         /// </summary>
-        public TNS.AdExpress.Web.Controls.Headers.InitializeProductWebControl InitializeProductWebControl {
+        public TNS.AdExpress.Web.Controls.Headers.InitializeProductWebControl InitializeProductWebControl
+        {
             get { return _initializeProductWebControl; }
             set { _initializeProductWebControl = value; }
         }
         /// <summary>
         /// Initialisation des éléments média
         /// </summary>
-        public TNS.AdExpress.Web.Controls.Headers.InitializeMediaWebControl InitializeMediaWebControl {
+        public TNS.AdExpress.Web.Controls.Headers.InitializeMediaWebControl InitializeMediaWebControl
+        {
             get { return _initializeMediaWebControl; }
             set { _initializeMediaWebControl = value; }
         }
@@ -562,7 +617,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Option initialisation des annonceurs de concurrents")]
         protected bool _inializeAdvertiserOption = false;
         /// <summary>Option initialisation des annonceurs de concurrents</summary>
-        public bool InializeAdVertiserOption {
+        public bool InializeAdVertiserOption
+        {
             get { return _inializeAdvertiserOption; }
             set { _inializeAdvertiserOption = value; }
         }
@@ -573,9 +629,22 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Option initialisation des produits")]
         protected bool _initializeProductOption = false;
         /// <summary>Option initialisation des produits</summary>
-        public bool InializeProductOption {
+        public bool InializeProductOption
+        {
             get { return _initializeProductOption; }
             set { _initializeProductOption = value; }
+        }
+        /// <summary>
+        /// Option initialisation Advertisement Type
+        /// </summary>
+        [Bindable(true),
+        Description("Option initialisation Advertisement Type")]
+        protected bool _initializeAdvertisementTypeOption = false;
+        /// <summary>Option initialisation Advertisement Type</summary>
+        public bool InitializeAdvertisementTypeOption
+        {
+            get { return _initializeAdvertisementTypeOption; }
+            set { _initializeAdvertisementTypeOption = value; }
         }
         /// <summary>
         /// Option initialisation des slogans
@@ -584,7 +653,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Option initialisation des slogans")]
         protected bool _inializeSlogansOption = false;
         /// <summary>Option initialisation des slogans</summary>
-        public bool InializeSlogansOption {
+        public bool InializeSlogansOption
+        {
             get { return _inializeSlogansOption; }
             set { _inializeSlogansOption = value; }
         }
@@ -595,7 +665,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Option initialisation des supports")]
         protected bool _initializeMediaOption = false;
         /// <summary></summary>
-        public bool InializeMediaOption {
+        public bool InializeMediaOption
+        {
             get { return _initializeMediaOption; }
             set { _initializeMediaOption = value; }
         }
@@ -607,7 +678,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Option type de pourcentage (horizontal ou vertical)")]
         protected bool _percentageTypeOption = false;
         /// <summary>Option type de pourcentage (horizontal ou vertical)</summary>
-        public bool PercentageTypeOption {
+        public bool PercentageTypeOption
+        {
             get { return _percentageTypeOption; }
             set { _percentageTypeOption = value; }
         }
@@ -615,7 +687,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>Contrôle Choix du type de pourcentage (horizontal ou vertical)</summary>
         [Bindable(true),
         Description("Contrôle choix  type de pourcentage (horizontal ou vertical)")]
-        public System.Web.UI.WebControls.DropDownList PercentageTypeDropDownList {
+        public System.Web.UI.WebControls.DropDownList PercentageTypeDropDownList
+        {
             get { return _percentageTypeDropDownList; }
             set { _percentageTypeDropDownList = value; }
         }
@@ -623,7 +696,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>
         /// Selected media universe
         /// </summary>
-        public MediaItemsList SelectedMediaUniverse {
+        public MediaItemsList SelectedMediaUniverse
+        {
             get { return _selectedMediaUniverse; }
             set { _selectedMediaUniverse = value; }
         }
@@ -637,7 +711,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>
         /// Get/Set Period Detail Options
         /// </summary>
-        public bool PeriodDetailOptions {
+        public bool PeriodDetailOptions
+        {
             get { return _periodDetailOptions; }
             set { _periodDetailOptions = value; }
         }
@@ -651,7 +726,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>
         /// Get/Set Sector Selection Options
         /// </summary>
-        public bool SectorSelectionOptions {
+        public bool SectorSelectionOptions
+        {
             get { return _sectorSelectionOptions; }
             set { _sectorSelectionOptions = value; }
         }
@@ -665,7 +741,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>
         /// Get/Set Results Table Types Options
         /// </summary>
-        public bool ResultsTableTypesOptions {
+        public bool ResultsTableTypesOptions
+        {
             get { return _resultsTableTypesOptions; }
             set { _resultsTableTypesOptions = value; }
         }
@@ -679,7 +756,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>
         /// Get/Set Detail Advertiser Brand Product Options
         /// </summary>
-        public bool DetailAdvertiserBrandProductOptions {
+        public bool DetailAdvertiserBrandProductOptions
+        {
             get { return _detailAdvertiserBrandProductOptions; }
             set { _detailAdvertiserBrandProductOptions = value; }
         }
@@ -687,7 +765,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>
         /// Get / Set Mutual Exclusion option
         /// </summary>
-        public bool MutualExclusion {
+        public bool MutualExclusion
+        {
             get { return _mutualExclusion; }
             set { _mutualExclusion = value; }
         }
@@ -721,7 +800,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Comparative Study Date Type Option")]
         protected bool comparativeStudyDateTypeOption = false;
         /// <summary></summary>
-        public bool ComparativeStudyDateTypeOption {
+        public bool ComparativeStudyDateTypeOption
+        {
             get { return comparativeStudyDateTypeOption; }
             set { comparativeStudyDateTypeOption = value; }
         }
@@ -733,7 +813,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Retailer Selection Option")]
         protected bool _retailerSelectionOption = false;
         /// <summary></summary>
-        public bool RetailerSelectionOption {
+        public bool RetailerSelectionOption
+        {
             get { return _retailerSelectionOption; }
             set { _retailerSelectionOption = value; }
         }
@@ -745,7 +826,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         [Bindable(true), Category("Appearance")]
         private double imageHeight = 15.0;
         /// <summary></summary>
-        public double ImageHeight {
+        public double ImageHeight
+        {
             get { return imageHeight; }
             set { imageHeight = value; }
         }
@@ -756,7 +838,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         [Bindable(true), Category("Appearance")]
         private double imageWidth = 15.0;
         /// <summary></summary>
-        public double ImageWidth {
+        public double ImageWidth
+        {
             get { return imageWidth; }
             set { imageWidth = value; }
         }
@@ -767,7 +850,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         [Bindable(true), Category("Appearance"), DefaultValue(1.0)]
         private double borderWidth = 1.0;
         /// <summary></summary>
-        public new double BorderWidth {
+        public new double BorderWidth
+        {
             get { return borderWidth; }
             set { borderWidth = Math.Max(0, value); }
         }
@@ -778,7 +862,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         [Bindable(true), DefaultValue(true)]
         protected bool pictShow = true;
         /// <summary></summary>
-        public bool ShowPictures {
+        public bool ShowPictures
+        {
             get { return pictShow; }
             set { pictShow = value; }
         }
@@ -788,7 +873,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         [Bindable(true), DefaultValue("ddlOut")]
         protected string outCssClass = "ddlOut";
         /// <summary></summary>
-        public string OutCssClass {
+        public string OutCssClass
+        {
             get { return outCssClass; }
             set { outCssClass = value; }
         }
@@ -799,7 +885,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         [Bindable(true), DefaultValue("ddlOver")]
         protected string overCssClass = "ddlOver";
         /// <summary></summary>
-        public string OverCssClass {
+        public string OverCssClass
+        {
             get { return overCssClass; }
             set { overCssClass = value; }
         }
@@ -810,7 +897,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         [Bindable(true), DefaultValue("")]
         private string texts = "";
         /// <summary></summary>
-        public string List {
+        public string List
+        {
             get { return texts; }
             set { texts = value; }
         }
@@ -821,7 +909,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         [Bindable(true), DefaultValue("")]
         private string textsAppm = "";
         /// <summary> liste des unités APPM</summary>
-        public string ListUnitAppm {
+        public string ListUnitAppm
+        {
             get { return textsAppm; }
             set { textsAppm = value; }
         }
@@ -832,7 +921,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         [Bindable(true), DefaultValue("")]
         private string images = "";
         /// <summary></summary>
-        public string Images {
+        public string Images
+        {
             get { return images; }
             set { images = value; }
         }
@@ -843,7 +933,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         [Bindable(true), DefaultValue(0)]
         private int index;
         /// <summary></summary>
-        public int ListIndex {
+        public int ListIndex
+        {
             get { return index; }
             set { index = Math.Min(value, texts.Split('|').Length - 1); }
         }
@@ -859,7 +950,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>
         /// Generic Column Level Detail Selection Options
         /// </summary>
-        public bool GenericColumnLevelDetailSelectionOptions {
+        public bool GenericColumnLevelDetailSelectionOptions
+        {
             get { return _GenericColumnLevelDetailSelectionOptions; }
             set { _GenericColumnLevelDetailSelectionOptions = value; }
         }
@@ -874,7 +966,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         [Bindable(true),
         Category("Appearance"),
         Description("Type des niveaux de détail colonne")]
-        public WebConstantes.GenericDetailLevel.Type GenericColumnDetailLevelType {
+        public WebConstantes.GenericDetailLevel.Type GenericColumnDetailLevelType
+        {
             get { return (_genericColumnDetailLevelType); }
             set { _genericColumnDetailLevelType = value; }
         }
@@ -889,10 +982,12 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         [Bindable(true),
         Category("Appearance"),
         DefaultValue("4")]
-        public int NbColumnDetailLevelItemList {
+        public int NbColumnDetailLevelItemList
+        {
             get { return (_nbColumnDetailLevelItemList); }
-            set {
-                if(value < 1 || value > 1) throw (new ArgumentOutOfRangeException("The value of NbDetailLevelItemList must be between 1 and 4"));
+            set
+            {
+                if (value < 1 || value > 1) throw (new ArgumentOutOfRangeException("The value of NbDetailLevelItemList must be between 1 and 4"));
                 _nbColumnDetailLevelItemList = value;
             }
         }
@@ -908,7 +1003,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>
         /// Generic Media Level Detail Selection Options
         /// </summary>
-        public bool GenericMediaLevelDetailSelectionOptions {
+        public bool GenericMediaLevelDetailSelectionOptions
+        {
             get { return _GenericMediaLevelDetailSelectionOptions; }
             set { _GenericMediaLevelDetailSelectionOptions = value; }
         }
@@ -923,7 +1019,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         [Bindable(true),
         Category("Appearance"),
         Description("Type des niveaux de détail")]
-        public WebConstantes.GenericDetailLevel.Type GenericDetailLevelType {
+        public WebConstantes.GenericDetailLevel.Type GenericDetailLevelType
+        {
             get { return (_genericDetailLevelType); }
             set { _genericDetailLevelType = value; }
         }
@@ -940,7 +1037,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Description("Profile du composant"),
         DefaultValue("media")
         ]
-        public WebConstantes.GenericDetailLevel.ComponentProfile GenericDetailLevelComponentProfile {
+        public WebConstantes.GenericDetailLevel.ComponentProfile GenericDetailLevelComponentProfile
+        {
             get { return (_componentProfile); }
             set { _componentProfile = value; }
         }
@@ -956,7 +1054,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Category("Appearance"),
         DefaultValue("test.aspx"),
         Description("Page permettant de supprimer un niveaux de détail sauvegardé")]
-        public string RemoveASPXFilePath {
+        public string RemoveASPXFilePath
+        {
             get { return (_removeASPXFilePath); }
             set { _removeASPXFilePath = value; }
         }
@@ -972,11 +1071,12 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         Category("Appearance"),
         DefaultValue("test.aspx"),
         Description("Page permettant de sauvegarer le niveaux de détail")]
-        public string SaveASPXFilePath {
+        public string SaveASPXFilePath
+        {
             get { return (_saveASPXFilePath); }
             set { _saveASPXFilePath = value; }
         }
-        
+
         /// <summary>
         /// Nb Detail Level Item List
         /// </summary>
@@ -987,12 +1087,27 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         [Bindable(true),
         Category("Appearance"),
         DefaultValue("4")]
-        public int NbDetailLevelItemList {
+        public int NbDetailLevelItemList
+        {
             get { return (_nbDetailLevelItemList); }
-            set {
-                if(value < 1 || value > 4) throw (new ArgumentOutOfRangeException("The value of NbDetailLevelItemList must be between 1 and 4"));
+            set
+            {
+                if (value < 1 || value > 4) throw (new ArgumentOutOfRangeException("The value of NbDetailLevelItemList must be between 1 and 4"));
                 _nbDetailLevelItemList = value;
             }
+        }
+        /// <summary>
+        /// Get /Set table personnalisation levels width
+        /// </summary>
+        [Bindable(true),
+        Category("Appearance"),
+        Description("Get /Set table personnalisation levels width"),
+        DefaultValue("194")
+        ]
+        public string TablePersoWidth
+        {
+            get { return (_tablePersoWidth); }
+            set { _tablePersoWidth = value; }
         }
         #endregion
 
@@ -1018,6 +1133,38 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             set { _sectorsDropDownCheckBoxListWebControl = value; }
         }
 
+
+
+
+        /// <summary>
+        /// Option campaign type
+        /// </summary>
+        [Bindable(true),
+        Description("Option type de campagne")]
+        protected bool _campaignTypeOption = false;
+        /// <summary>Option campaign type</summary>
+        public bool CampaignTypeOption
+        {
+            get { return _campaignTypeOption; }
+            set { _campaignTypeOption = value; }
+        }
+
+        /// <summary>Contrôlecampaign type</summary>
+        [Bindable(true),
+        Description("Contrôle choix  type de campagne")]
+        public System.Web.UI.WebControls.DropDownList CampaignTypeDropDownList
+        {
+            get { return _campaignTypeDropDownList; }
+            set { _campaignTypeDropDownList = value; }
+        }
+        /// <summary>
+        /// Get / Set if has Ad Type otpion
+        /// </summary>
+        public bool WithAdType
+        {
+            get { return _withAdType; }
+            set { _withAdType = value; }
+        }
         #endregion
 
         #region Constructeur
@@ -1025,7 +1172,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// Constructeur
         /// </summary>
         public ResultsOptionsWebControl()
-            : base() {
+            : base()
+        {
             this.EnableViewState = true;
             this.PreRender += new EventHandler(Custom_PreRender);
         }
@@ -1038,9 +1186,11 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// Initialisation
         /// </summary>
         /// <param name="e">Arguments</param>
-        protected override void OnInit(EventArgs e) {
+        protected override void OnInit(EventArgs e)
+        {
 
-            if (customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) {
+            if (customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+            {
                 comparativeStudyOption = comparativeStudyOption && WebApplicationParameters.UseComparativeMediaSchedule;
                 comparativeStudyDateTypeOption = comparativeStudyDateTypeOption && WebApplicationParameters.UseComparativeMediaSchedule;
                 if (comparativeStudyOption && !WebFunctions.Dates.IsValidComparativePeriodType(customerWebSession.PeriodType, customerWebSession.PeriodSelectionType))
@@ -1057,6 +1207,20 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             _initializeProductWebControl.InitializeAdvertiser = InializeAdVertiserOption;
             _initializeProductWebControl.initializeProductCheckBox.EnableViewState = true;
             _initializeProductWebControl.InitializeProduct = InializeProductOption;
+            ArrayList detailSelections = null;
+            TNS.AdExpress.Domain.Web.Navigation.Module module = null;
+            module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(customerWebSession.CurrentModule);
+            detailSelections = ((ResultPageInformation)module.GetResultPageInformation((int)customerWebSession.CurrentTab)).DetailSelectionItemsType;
+            if (detailSelections.Contains(WebConstantes.DetailSelection.Type.advertisementType.GetHashCode()))
+            {
+                _initializeProductWebControl.Visible = true;
+                _initializeAdvertisementTypeOption = true;
+                _initializeProductWebControl.InitializeAdvertisementType = _initializeAdvertisementTypeOption;
+                _withAdType = true;
+            }
+            
+            _initializeProductWebControl.InitializeAdvertisementType = InitializeAdvertisementTypeOption;
+            _initializeProductWebControl.initializeAdvertisementTypeCheckBox.EnableViewState = true;
             _initializeProductWebControl.InitializeSlogans = InializeSlogansOption;
             _initializeProductWebControl.ID = this.ID + "_initializeAdvertiser";
             Controls.Add(_initializeProductWebControl);
@@ -1074,7 +1238,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Options Period Detail
-            if(PeriodDetailOptions) {
+            if (PeriodDetailOptions)
+            {
                 _periodDetailWebControl = new PeriodDetailWebControl();
                 _periodDetailWebControl.Session = customerWebSession;
                 _periodDetailWebControl.LanguageCode = customerWebSession.SiteLanguage;
@@ -1082,47 +1247,63 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 _periodDetailWebControl.SkinID = "PeriodDetailWebControl";
                 Controls.Add(_periodDetailWebControl);
 
-                if(Page.Request.QueryString.Get("zoomDate") != null
-                    && Page.Request.QueryString.Get("zoomDate") != string.Empty) {
+                if (Page.Request.QueryString.Get("zoomDate") != null
+                    && Page.Request.QueryString.Get("zoomDate") != string.Empty)
+                {
                     _periodDetailWebControl.Visible = false;
                 }
-                else {
+                else
+                {
                     _periodDetailWebControl.Visible = true;
                     customerWebSession.DetailPeriod = _periodDetailWebControl.SelectedValue;
 
-                    if(customerWebSession.DetailPeriod == TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.dayly) {
-                        if(TNS.AdExpress.Web.Functions.Dates.getPeriodBeginningDate(customerWebSession.PeriodBeginningDate, TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDate)
-                            < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3)) {
+                    if (customerWebSession.DetailPeriod == TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.dayly)
+                    {
+                        if (TNS.AdExpress.Web.Functions.Dates.getPeriodBeginningDate(customerWebSession.PeriodBeginningDate, TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDate)
+                            < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
+                        {
                             customerWebSession.DetailPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.monthly;
                         }
                     }
                 }
 
-                if(!Page.IsPostBack) {
+                if (!Page.IsPostBack)
+                {
                     _periodDetailWebControl.Select(customerWebSession.DetailPeriod);
                 }
-                else {
+                else
+                {
                     customerWebSession.DetailPeriod = _periodDetailWebControl.SelectedValue;
                 }
             }
             #endregion
 
-            if (WebApplicationParameters.VehiclesFormatInformation != null 
-                && WebApplicationParameters.VehiclesFormatInformation.Use) {
-                    bannersFormatOption = true;
+            if (WebApplicationParameters.VehiclesFormatInformation != null
+                && WebApplicationParameters.VehiclesFormatInformation.Use)
+            {
+                bannersFormatOption = true;
             }
+            _campaignTypeOption = WebApplicationParameters.AllowCampaignTypeOption;
 
             #region IsPostBack
-            if(Page.IsPostBack) {
-                if(unitOption) {
-                    try {
+            if (Page.IsPostBack)
+            {
+                if (unitOption)
+                {
+                    try
+                    {
                         SessionCst.Unit unitSelected = (SessionCst.Unit)Int64.Parse(Page.Request.Form.GetValues("_units")[0]);
-                        if(customerWebSession.Unit != unitSelected) customerWebSession.Unit = unitSelected;
+                        if (customerWebSession.Unit != unitSelected)
+                        {
+                            customerWebSession.Unit = unitSelected;
+                            // customerWebSession.Save();
+                        }
                     }
-                    catch(SystemException) { }
+                    catch (SystemException) { }
                 }
 
-                if (bannersFormatOption) {
+                if (bannersFormatOption)
+                {
                     try
                     {
                         var strGenericFilter = Page.Request.Form.GetValues("_genericFilter");
@@ -1143,7 +1324,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                                             isEqual = false;
                                         }
                                     }
-                                    if(isEqual)
+                                    if (isEqual)
                                         customerWebSession.SelectedBannersFormatList = string.Empty;
                                     else
                                         customerWebSession.SelectedBannersFormatList = strGenericFilter[0];
@@ -1160,126 +1341,172 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                             }
 
                         }
-                        else {
+                        else
+                        {
                             customerWebSession.SelectedBannersFormatList = string.Empty;
                         }
                     }
                     catch (SystemException) { }
                 }
 
-                if(insertOption && WebApplicationParameters.AllowInsetOption) {
-                    if(Page.Request.Form.GetValues("_inserts") != null) {
+                if (insertOption && WebApplicationParameters.AllowInsetOption)
+                {
+                    if (Page.Request.Form.GetValues("_inserts") != null)
+                    {
                         customerWebSession.Insert = (SessionCst.Insert)Int64.Parse(Page.Request.Form.GetValues("_inserts")[0]);
                     }
                 }
-                if(resultOption) {
+                if (resultOption)
+                {
                     Int64 tabSelected = Int64.Parse(Page.Request.Form.GetValues("_resultsPages")[0]);
-                    if(customerWebSession.CurrentTab != tabSelected)
+                    if (customerWebSession.CurrentTab != tabSelected)
                         customerWebSession.CurrentTab = tabSelected;
                 }
 
-                if(percentage) {
-                    try {
-                        if(Page.Request.Form.GetValues("_percentage")[0] != null) customerWebSession.Percentage = true;
+                if (percentage)
+                {
+                    try
+                    {
+                        if (Page.Request.Form.GetValues("_percentage")[0] != null) customerWebSession.Percentage = true;
                     }
-                    catch(System.Exception) { customerWebSession.Percentage = false; }
+                    catch (System.Exception) { customerWebSession.Percentage = false; }
                 }
-                if(pdmOption) {
-                    try {
-                        if(Page.Request.Form.GetValues(this.ID + "_pdm")[0] != null) customerWebSession.PDM = true;
+                if (pdmOption)
+                {
+                    try
+                    {
+                        if (Page.Request.Form.GetValues(this.ID + "_pdm")[0] != null) customerWebSession.PDM = true;
                     }
-                    catch(System.Exception) {
+                    catch (System.Exception)
+                    {
                         customerWebSession.PDM = false;
                     }
                 }
-                if(pdvOption) {
-                    try {
-                        if(Page.Request.Form.GetValues(this.ID + "_pdv")[0] != null) customerWebSession.PDV = true;
+                if (pdvOption)
+                {
+                    try
+                    {
+                        if (Page.Request.Form.GetValues(this.ID + "_pdv")[0] != null) customerWebSession.PDV = true;
                     }
-                    catch(System.Exception) {
+                    catch (System.Exception)
+                    {
                         customerWebSession.PDV = false;
                     }
                 }
-                if(evolutionOption) {
-                    try {
-                        if(Page.Request.Form.GetValues(this.ID + "_evol")[0] != null) customerWebSession.Evolution = true;
+                if (evolutionOption)
+                {
+                    try
+                    {
+                        if (Page.Request.Form.GetValues(this.ID + "_evol")[0] != null) customerWebSession.Evolution = true;
                     }
-                    catch(System.Exception) {
+                    catch (System.Exception)
+                    {
                         customerWebSession.Evolution = false;
                     }
                 }
                 if (comparativeStudyOption)
                 {
-                    try {
+                    try
+                    {
                         if (Page.Request.Form.GetValues(this.ID + "_comparativeStudy")[0] != null) customerWebSession.ComparativeStudy = true;
-                        if (comparativeStudyDateTypeOption && Page.Request.Form.GetValues("selectionType_" + this.ID + "_comparativeStudyDateTypeOption")[0] != null) {
+                        if (comparativeStudyDateTypeOption && Page.Request.Form.GetValues("selectionType_" + this.ID + "_comparativeStudyDateTypeOption")[0] != null)
+                        {
                             customerWebSession.ComparativePeriodType = (TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType)Enum.Parse(typeof(TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType), Page.Request.Form["selectionType_" + this.ID + "_comparativeStudyDateTypeOption"].ToString());
                         }
                     }
-                    catch (System.Exception) {
+                    catch (System.Exception)
+                    {
                         customerWebSession.ComparativeStudy = false;
                     }
-                    if (!customerWebSession.ComparativeStudy) {
+                    if (!customerWebSession.ComparativeStudy)
+                    {
                         customerWebSession.ComparativePeriodType = TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate;
                     }
                 }
-                
-                if(personalizedElementsOption) {
-                    try {
-                        if(Page.Request.Form.GetValues(this.ID + "_perso")[0] != null && (Page.Request.Form.GetValues("_initializeAdvertiser") == null)
+
+                if (personalizedElementsOption)
+                {
+                    try
+                    {
+                        if (Page.Request.Form.GetValues(this.ID + "_perso")[0] != null && (Page.Request.Form.GetValues("_initializeAdvertiser") == null)
                             ) customerWebSession.PersonalizedElementsOnly = true;
-                        else {
+                        else
+                        {
                             customerWebSession.PersonalizedElementsOnly = false;
-                            if(PersonalizedElementsCheckBox != null) PersonalizedElementsCheckBox.Checked = false;
+                            if (PersonalizedElementsCheckBox != null) PersonalizedElementsCheckBox.Checked = false;
                         }
                     }
-                    catch(System.Exception) {
+                    catch (System.Exception)
+                    {
                         customerWebSession.PersonalizedElementsOnly = false;
                     }
                 }
-                if(autopromoEvaliantOption) {
-                    try {
-                        if(Page.Request.Form.GetValues(this.ID + "_autopromoEvaliant")[0] != null) customerWebSession.AutopromoEvaliant = true;
+                if (autopromoEvaliantOption)
+                {
+                    try
+                    {
+                        if (Page.Request.Form.GetValues(this.ID + "_autopromoEvaliant")[0] != null) customerWebSession.AutopromoEvaliant = true;
                     }
-                    catch(System.Exception) {
+                    catch (System.Exception)
+                    {
                         customerWebSession.AutopromoEvaliant = false;
                     }
                 }
 
-                if(tblChoiceOption) {
+                if (tblChoiceOption)
+                {
                     customerWebSession.PreformatedTable = (SessionCst.PreformatedDetails.PreformatedTables)Int64.Parse(Page.Request.Form.GetValues("DDL" + this.ID)[0]);
                 }
-                if(productDetailOption)
-                    try {
+                if (productDetailOption)
+                    try
+                    {
                         SessionCst.PreformatedDetails.PreformatedProductDetails detailSelected = (SessionCst.PreformatedDetails.PreformatedProductDetails)int.Parse(Page.Request.Form.GetValues("productDetail_" + this.ID)[0]);
-                        if(customerWebSession.PreformatedProductDetail != detailSelected)
+                        if (customerWebSession.PreformatedProductDetail != detailSelected)
                             customerWebSession.PreformatedProductDetail = detailSelected;
                     }
-                    catch(System.Exception) { }
-                if(mediaDetailOption)
-                    try {
+                    catch (System.Exception) { }
+                if (mediaDetailOption)
+                    try
+                    {
                         customerWebSession.PreformatedMediaDetail = (SessionCst.PreformatedDetails.PreformatedMediaDetails)int.Parse(Page.Request.Form.GetValues("mediaDetail_" + this.ID)[0]);
                     }
-                    catch(System.Exception) { }
+                    catch (System.Exception) { }
 
                 // Sauvegarde du type d'alignement des résultats en pourcentage lorsque la page est publiée
-                if(_percentageTypeOption) {
-                    try {
+                if (_percentageTypeOption)
+                {
+                    try
+                    {
                         //int productID=Convert.ToInt32(products.SelectedItem.Value);
                         int percentageTypeID = Convert.ToInt32(Page.Request.Form.GetValues("_percentageTypePercentageDropDownList")[0]);
-                        if(customerWebSession.PreformatedTable == WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units
-                            && (WebConstantes.Percentage.Alignment)percentageTypeID == WebConstantes.Percentage.Alignment.horizontal) {
+                        if (customerWebSession.PreformatedTable == WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units
+                            && (WebConstantes.Percentage.Alignment)percentageTypeID == WebConstantes.Percentage.Alignment.horizontal)
+                        {
                             customerWebSession.PercentageAlignment = WebConstantes.Percentage.Alignment.none;
                         }
                         else customerWebSession.PercentageAlignment = (WebConstantes.Percentage.Alignment)percentageTypeID;
                     }
-                    catch(SystemException) { }
+                    catch (SystemException) { }
                 }
-                try {
+                try
+                {
                     if (Page.Request.Form.GetValues(this.ID + "_isSelectRetailerDisplay")[0] != null) customerWebSession.IsSelectRetailerDisplay = true;
                 }
-                catch (System.Exception) {
+                catch (System.Exception)
+                {
                     customerWebSession.IsSelectRetailerDisplay = false;
+                }
+
+                if (_campaignTypeOption)
+                {
+                    try
+                    {
+                        int campagneTypeID = Convert.ToInt32(Page.Request.Form.GetValues("_campaignTypeDropDownList")[0]);
+                        customerWebSession.CampaignType = (WebConstantes.CustomerSessions.CampaignType)campagneTypeID;
+                    }
+                    catch (SystemException)
+                    {
+                    }
                 }
             }
             #endregion
@@ -1307,13 +1534,15 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Options Set result pages
-            if(resultOption) {
+            if (resultOption)
+            {
                 SetResultPageOption();
             }
             #endregion
 
             #region Options spécifique AS
-            if(TotalChoice) {
+            if (TotalChoice)
+            {
                 _totalChoiceRadioButtonList = new RadioButtonList();
                 _totalChoiceRadioButtonList.ID = this.ID + "_totalChoice";
                 _totalChoiceRadioButtonList.CssClass = "txtBlanc11Bold";
@@ -1324,7 +1553,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 Controls.Add(_totalChoiceRadioButtonList);
             }
 
-            if(ZoomGraphic) {
+            if (ZoomGraphic)
+            {
                 _zoomGraphicCheckBox = new System.Web.UI.WebControls.CheckBox();
                 _zoomGraphicCheckBox.ID = this.ID + "_zoomGraphicCheckBox";
                 _zoomGraphicCheckBox.AutoPostBack = autoPostBackOption;
@@ -1333,7 +1563,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Options Results Table Types (An. Dispositifs)
-            if(ResultsTableTypesOptions) {
+            if (ResultsTableTypesOptions)
+            {
                 _resultsTableTypesWebControl = new ResultsTableTypesWebControl();
                 _resultsTableTypesWebControl.CustomerWebSession = customerWebSession;
                 _resultsTableTypesWebControl.ID = "DDLResultsTableTypesWebControl1";
@@ -1348,7 +1579,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Options Generic Column Level Detail
-            if(GenericColumnLevelDetailSelectionOptions) {
+            if (GenericColumnLevelDetailSelectionOptions)
+            {
                 _genericColumnLevelDetailSelectionWebControl = new GenericColumnLevelDetailSelectionWebControl();
                 _genericColumnLevelDetailSelectionWebControl.CustomerWebSession = customerWebSession;
                 _genericColumnLevelDetailSelectionWebControl.GenericColumnDetailLevelType = GenericColumnDetailLevelType;
@@ -1359,7 +1591,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Options Generic Media Level Detail
-            if(GenericMediaLevelDetailSelectionOptions) {
+            if (GenericMediaLevelDetailSelectionOptions)
+            {
                 _genericMediaLevelDetailSelectionWebControl = new GenericMediaLevelDetailSelectionWebControl();
                 _genericMediaLevelDetailSelectionWebControl.CustomerWebSession = customerWebSession;
                 _genericMediaLevelDetailSelectionWebControl.GenericDetailLevelComponentProfile = GenericDetailLevelComponentProfile;
@@ -1368,12 +1601,14 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 _genericMediaLevelDetailSelectionWebControl.RemoveASPXFilePath = RemoveASPXFilePath;
                 _genericMediaLevelDetailSelectionWebControl.SaveASPXFilePath = SaveASPXFilePath;
                 _genericMediaLevelDetailSelectionWebControl.Width = 194;
+                _genericMediaLevelDetailSelectionWebControl.TablePersoWidth = !string.IsNullOrEmpty(TablePersoWidth) ? TablePersoWidth : "194";
                 Controls.Add(_genericMediaLevelDetailSelectionWebControl);
             }
             #endregion
 
             #region Options Sector Selection
-            if(SectorSelectionOptions) {
+            if (SectorSelectionOptions)
+            {
                 _sectorWebControl = new SectorWebControl();
                 _sectorWebControl.Session = customerWebSession;
                 _sectorWebControl.LanguageCode = customerWebSession.SiteLanguage;
@@ -1398,7 +1633,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Options Detail Advertiser Brand Product
-            if(DetailAdvertiserBrandProductOptions) {
+            if (DetailAdvertiserBrandProductOptions)
+            {
                 _detailAdvertiserBrandProductWebControl = new DetailWebControl();
                 _detailAdvertiserBrandProductWebControl.CustomerWebSession = customerWebSession;
                 _detailAdvertiserBrandProductWebControl.ShowProduct = customerWebSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
@@ -1419,10 +1655,12 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// launched when the control is loaded
         /// </summary>
         /// <param name="e">arguments</param>
-        protected override void OnLoad(EventArgs e) {
+        protected override void OnLoad(EventArgs e)
+        {
 
             _retailerSelectionOption = customerWebSession.IsRetailerDisplay;
-            if (customerWebSession.IsSelectRetailerDisplay && _retailerSelectionOption) {
+            if (customerWebSession.IsSelectRetailerDisplay && _retailerSelectionOption)
+            {
                 customerWebSession.IsSelectRetailerDisplay = customerWebSession.IsSelectRetailerDisplay && _retailerSelectionOption;
                 customerWebSession.Save();
             }
@@ -1435,7 +1673,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             _showSegment = customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SEGMENT_LEVEL_ACCESS_FLAG);
 
             #region products APPM
-            if(showProduct) {
+            if (showProduct)
+            {
                 products = new DropDownList();
                 products.EnableViewState = true;
                 products.ID = "_products";
@@ -1447,18 +1686,23 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 
             #region Loading controls for the first time
             // Création de la liste des produits appm
-            if(productsOption && showProduct) {
-                if(!Page.IsPostBack || products.Items.Count <= 0) {
+            if (productsOption && showProduct)
+            {
+                if (!Page.IsPostBack || products.Items.Count <= 0)
+                {
                     products.CssClass = cssClass;
                     products.AutoPostBack = autoPostBackOption;
                     DataTable productsTable = TNS.AdExpress.Web.DataAccess.Selections.Products.ProductListDataAccess.getProductList(customerWebSession).Tables[0];
-                    if(productsTable.Rows.Count > 1)
+                    if (productsTable.Rows.Count > 1)
                         products.Items.Add(new ListItem("----------------------------------------", "0"));
-                    if(productsTable.Rows.Count == 1) {
-                        try {
+                    if (productsTable.Rows.Count == 1)
+                    {
+                        try
+                        {
                             //int productID=Convert.ToInt32(products.SelectedItem.Value);
                             int productID = Convert.ToInt32(productsTable.Rows[0]["id_product"]);
-                            if(productID != 0) {
+                            if (productID != 0)
+                            {
                                 adExpressUniverse = new AdExpressUniverse(Dimension.product);
                                 nomenclatureElementsGroup = new NomenclatureElementsGroup(0, AccessType.includes);
                                 nomenclatureElementsGroup.AddItem(TNSClassificationLevels.PRODUCT, productID);
@@ -1469,36 +1713,45 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                             }
                             else customerWebSession.SecondaryProductUniverses = new Dictionary<int, AdExpressUniverse>();
                         }
-                        catch(SystemException) { }
+                        catch (SystemException) { }
                     }
 
-                    if(productsTable.Rows.Count > 0) {
-                        foreach(DataRow dr in productsTable.Rows) {
+                    if (productsTable.Rows.Count > 0)
+                    {
+                        foreach (DataRow dr in productsTable.Rows)
+                        {
                             products.Items.Add(new ListItem(dr["product"].ToString(), dr["id_product"].ToString()));
                         }
                     }
                 }
-                try {
+                try
+                {
                     //string productTag=customerWebSession.GetSelection(customerWebSession.CurrentUniversProduct,CustomerCst.type.productAccess);
                     string productTag = customerWebSession.SecondaryProductUniverses[0].GetGroup(0).GetAsString(TNSClassificationLevels.PRODUCT);
                     products.Items.FindByValue(productTag).Selected = true;
                 }
-                catch(System.Exception) {
-                    try {
+                catch (System.Exception)
+                {
+                    try
+                    {
                         products.Items.FindByValue("0").Selected = true;
                     }
-                    catch(System.Exception) { }
+                    catch (System.Exception) { }
                 }
             }
             #endregion
 
             #region Loading univers and websession
-            if(Page.IsPostBack) {
+            if (Page.IsPostBack)
+            {
                 // Saving the selected products in the current univers product when the page is posted back.
-                if(productsOption && showProduct) {
-                    try {
+                if (productsOption && showProduct)
+                {
+                    try
+                    {
                         int productID = Convert.ToInt32(Page.Request.Form.GetValues("_products")[0]);
-                        if(productID != 0) {
+                        if (productID != 0)
+                        {
                             adExpressUniverse = new AdExpressUniverse(Dimension.product);
                             nomenclatureElementsGroup = new NomenclatureElementsGroup(0, AccessType.includes);
                             nomenclatureElementsGroup.AddItem(TNSClassificationLevels.PRODUCT, productID);
@@ -1510,27 +1763,34 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                         else customerWebSession.SecondaryProductUniverses = new Dictionary<int, AdExpressUniverse>();
 
                     }
-                    catch(SystemException) { }
+                    catch (SystemException) { }
                 }
-                if(unitOptionAppm) {
-                    try {
+                if (unitOptionAppm)
+                {
+                    try
+                    {
                         customerWebSession.Unit = (SessionCst.Unit)Int64.Parse(Page.Request.Form.GetValues("_unitsAppm")[0]);
                     }
-                    catch(SystemException) { }
+                    catch (SystemException) { }
                 }
             }
             #endregion
 
             #region InitializeProductWebControl display
-            if(this._initializeProductWebControl != null 
-                && (this._inializeAdvertiserOption || this.InializeProductOption || this.InializeSlogansOption)) {
-                
-                switch(customerWebSession.CurrentModule) {
+
+            if (this._initializeProductWebControl != null
+                && (this._inializeAdvertiserOption || _initializeAdvertisementTypeOption || this.InializeProductOption || this.InializeSlogansOption))
+            {
+
+                switch (customerWebSession.CurrentModule)
+                {
                     case WebConstantes.Module.Name.ALERTE_PLAN_MEDIA:
                     case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
-                        if((!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(customerWebSession)
+                        if (((!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(customerWebSession)
                             || !customerWebSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG))
-                            || customerWebSession.DetailPeriod != TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.dayly) {
+                            || customerWebSession.DetailPeriod != TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.dayly)
+                            && !_initializeAdvertisementTypeOption)
+                        {
                             _initializeProductWebControl.Visible = false;
                         }
                         else
@@ -1542,9 +1802,10 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                         break;
 
                     case WebConstantes.Module.Name.BILAN_CAMPAGNE:
-                        if(!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(customerWebSession) 
+                        if (!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(customerWebSession)
                             || !customerWebSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_SLOGAN_ACCESS_FLAG)
-                            || customerWebSession.CurrentTab != TNS.AdExpress.Constantes.FrameWork.Results.APPM.mediaPlanByVersion) {
+                            || customerWebSession.CurrentTab != TNS.AdExpress.Constantes.FrameWork.Results.APPM.mediaPlanByVersion)
+                        {
                             _initializeProductWebControl.Visible = false;
                         }
                         else
@@ -1552,8 +1813,11 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                         break;
 
                     case WebConstantes.Module.Name.INDICATEUR:
-                        if(customerWebSession.CurrentTab == SynthesisRecap.SYNTHESIS)
-                            _initializeProductWebControl.Visible = false;
+                        if (customerWebSession.CurrentTab == SynthesisRecap.SYNTHESIS)
+                        {
+                            _initializeProductWebControl.Visible = _withAdType;
+                            if (_withAdType) _initializeProductWebControl.InitializeAdvertiser = false;
+                        }
                         else
                             _initializeProductWebControl.Visible = true;
                         break;
@@ -1567,8 +1831,10 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region InitializeMediaWebControl display
-            if(this._initializeMediaWebControl != null && this._initializeMediaOption) {
-                switch(customerWebSession.CurrentModule) {
+            if (this._initializeMediaWebControl != null && this._initializeMediaOption)
+            {
+                switch (customerWebSession.CurrentModule)
+                {
                     case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
                         _initializeMediaWebControl.Visible = false;
                         break;
@@ -1580,14 +1846,17 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Total Choice (AS)
-            if(TotalChoice) {
-                if(_totalChoiceRadioButtonList.Items.FindByValue(TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.universTotal.GetHashCode().ToString()) == null) _totalChoiceRadioButtonList.Items.Insert(0, new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1188, customerWebSession.SiteLanguage), TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.universTotal.GetHashCode().ToString()));
-                if(_totalChoiceRadioButtonList.Items.FindByValue(TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.sectorTotal.GetHashCode().ToString()) == null) _totalChoiceRadioButtonList.Items.Insert(1, new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1189, customerWebSession.SiteLanguage), TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.sectorTotal.GetHashCode().ToString()));
-                if(_totalChoiceRadioButtonList.Items.FindByValue(TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.marketTotal.GetHashCode().ToString()) == null) _totalChoiceRadioButtonList.Items.Insert(2, new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1190, customerWebSession.SiteLanguage), TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.marketTotal.GetHashCode().ToString()));
+            if (TotalChoice)
+            {
+                if (_totalChoiceRadioButtonList.Items.FindByValue(TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.universTotal.GetHashCode().ToString()) == null) _totalChoiceRadioButtonList.Items.Insert(0, new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1188, customerWebSession.SiteLanguage), TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.universTotal.GetHashCode().ToString()));
+                if (_totalChoiceRadioButtonList.Items.FindByValue(TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.sectorTotal.GetHashCode().ToString()) == null) _totalChoiceRadioButtonList.Items.Insert(1, new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1189, customerWebSession.SiteLanguage), TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.sectorTotal.GetHashCode().ToString()));
+                if (_totalChoiceRadioButtonList.Items.FindByValue(TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.marketTotal.GetHashCode().ToString()) == null) _totalChoiceRadioButtonList.Items.Insert(2, new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1190, customerWebSession.SiteLanguage), TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion.marketTotal.GetHashCode().ToString()));
 
-                switch(customerWebSession.CurrentTab) {
+                switch (customerWebSession.CurrentTab)
+                {
                     case SynthesisRecap.PALMARES:
-                        if(graphRadioButton.Checked) {
+                        if (graphRadioButton.Checked)
+                        {
                             _totalChoiceRadioButtonList.Items.Clear();
                         }
                         break;
@@ -1600,27 +1869,33 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                         break;
                 }
                 bool hasSelected = false;
-                foreach(ListItem currentItem in _totalChoiceRadioButtonList.Items) {
-                    if(currentItem.Selected) {
+                foreach (ListItem currentItem in _totalChoiceRadioButtonList.Items)
+                {
+                    if (currentItem.Selected)
+                    {
                         hasSelected = true;
                         break;
                     }
                 }
-                if(_totalChoiceRadioButtonList.Items.Count > 0 && !hasSelected) _totalChoiceRadioButtonList.Items[0].Selected = true;
-                if(_totalChoiceRadioButtonList.Items.Count > 0) {
-                    try {
+                if (_totalChoiceRadioButtonList.Items.Count > 0 && !hasSelected) _totalChoiceRadioButtonList.Items[0].Selected = true;
+                if (_totalChoiceRadioButtonList.Items.Count > 0)
+                {
+                    try
+                    {
                         customerWebSession.ComparaisonCriterion = (TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion)Convert.ToInt32(_totalChoiceRadioButtonList.Items.FindByValue(_totalChoiceRadioButtonList.SelectedItem.Value).Value);
                     }
-                    catch(System.Exception) { }
+                    catch (System.Exception) { }
                 }
             }
             #endregion
 
             #region Zoom Graphics
-            if(ZoomGraphic) {
-                switch(customerWebSession.CurrentTab) {
+            if (ZoomGraphic)
+            {
+                switch (customerWebSession.CurrentTab)
+                {
                     case SynthesisRecap.SEASONALITY:
-                        if(graphRadioButton.Checked)
+                        if (graphRadioButton.Checked)
                             _zoomGraphicCheckBox.Visible = true;
                         else
                             _zoomGraphicCheckBox.Visible = false;
@@ -1634,12 +1909,15 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Options Generic Media Level Detail
-            if(GenericMediaLevelDetailSelectionOptions) {
+            if (GenericMediaLevelDetailSelectionOptions)
+            {
 
-                switch(customerWebSession.CurrentModule) {
+                switch (customerWebSession.CurrentModule)
+                {
                     case WebConstantes.Module.Name.ALERTE_PORTEFEUILLE:
                     case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
-                        switch(customerWebSession.CurrentTab) {
+                        switch (customerWebSession.CurrentTab)
+                        {
                             case Portofolio.SYNTHESIS:
                             case Portofolio.DETAIL_MEDIA:
                             case Portofolio.STRUCTURE:
@@ -1667,8 +1945,10 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Options Results Table Types (An. Dispositifs)
-            if(ResultsTableTypesOptions) {
-                 switch(customerWebSession.PreformatedTable) {
+            if (ResultsTableTypesOptions)
+            {
+                switch (customerWebSession.PreformatedTable)
+                {
                     case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Media:
                         UnitOption = true;
                         break;
@@ -1676,7 +1956,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                         UnitOption = true;
                         break;
                     case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units:
-                        if(customerWebSession.PercentageAlignment == WebConstantes.Percentage.Alignment.horizontal)
+                        if (customerWebSession.PercentageAlignment == WebConstantes.Percentage.Alignment.horizontal)
                             customerWebSession.PercentageAlignment = WebConstantes.Percentage.Alignment.none;
                         UnitOption = false;
                         break;
@@ -1685,9 +1965,10 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Options Detail Advertiser Brand Product
-            if(DetailAdvertiserBrandProductOptions) {
-                
-                if(customerWebSession.CurrentTab == 1)
+            if (DetailAdvertiserBrandProductOptions)
+            {
+
+                if (customerWebSession.CurrentTab == 1)
                     _detailAdvertiserBrandProductWebControl.Visible = true;
                 else
                     _detailAdvertiserBrandProductWebControl.Visible = false;
@@ -1704,9 +1985,11 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// </summary>
         /// <param name="sender">object qui lance l'évènement</param>
         /// <param name="e">arguments</param>
-        private void Custom_PreRender(object sender, System.EventArgs e) {
+        private void Custom_PreRender(object sender, System.EventArgs e)
+        {
 
-            if (comparativeStudyOption && customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) {
+            if (comparativeStudyOption && customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+            {
                 customerWebSession.ComparativeStudy = customerWebSession.ComparativeStudy && !customerWebSession.GenericMediaDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.slogan);
                 customerWebSession.Save();
             }
@@ -1716,23 +1999,26 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             List<System.Web.UI.WebControls.CheckBox> _checkBoxListDependentSelection = new List<System.Web.UI.WebControls.CheckBox>();
 
             #region Unité
-            if(unitOption) {
+            if (unitOption)
+            {
                 //Création de la liste des unités
                 list = new DropDownList();
                 list.ID = "_units";
                 list.CssClass = cssClass;
                 list.AutoPostBack = autoPostBackOption;
-                if(!percentage) list.Width = new System.Web.UI.WebControls.Unit("100%");
+                if (!percentage) list.Width = new System.Web.UI.WebControls.Unit("100%");
                 //ArrayList units;
                 List<UnitInformation> units = customerWebSession.GetValidUnitForResult();
 
-                foreach(UnitInformation currentUnit in units) {
-                    if(currentUnit.Id != SessionCst.Unit.volume || customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT))
+                foreach (UnitInformation currentUnit in units)
+                {
+                    if (currentUnit.Id != SessionCst.Unit.volume || customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_VOLUME_MARKETING_DIRECT))
                         list.Items.Add(new ListItem(GestionWeb.GetWebWord(currentUnit.WebTextId, customerWebSession.SiteLanguage), currentUnit.Id.GetHashCode().ToString()));
-                    else if(customerWebSession.Unit == SessionCst.Unit.volume)
+                    else if (customerWebSession.Unit == SessionCst.Unit.volume)
                         customerWebSession.Unit = UnitsInformation.DefaultCurrency;
                 }
-                if(!units.Contains(UnitsInformation.Get(customerWebSession.Unit))) {
+                if (!units.Contains(UnitsInformation.Get(customerWebSession.Unit)))
+                {
                     customerWebSession.Unit = units[0].Id;
                 }
                 customerWebSession.Save();
@@ -1743,14 +2029,16 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Unité Appm
-            if(unitOptionAppm) {
+            if (unitOptionAppm)
+            {
                 //Création de la liste des unités appm
                 listUnitAppm = new DropDownList();
                 listUnitAppm.ID = "_unitsAppm";
                 listUnitAppm.CssClass = cssClass;
                 listUnitAppm.AutoPostBack = autoPostBackOption;
                 ArrayList unitsAppm = WebFunctions.Units.getUnitsFromAppmPress();
-                for(int i = 0; i < unitsAppm.Count; i++) {
+                for (int i = 0; i < unitsAppm.Count; i++)
+                {
 
                     listUnitAppm.Items.Add(new ListItem(GestionWeb.GetWebWord((int)SessionCst.UnitsTraductionCodes[(SessionCst.Unit)unitsAppm[i]], customerWebSession.SiteLanguage), ((int)(SessionCst.Unit)unitsAppm[i]).ToString()));
                 }
@@ -1771,8 +2059,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                     _bannersFormatWebControl.ID = "_bannersFormatWebControl";
                     _bannersFormatWebControl.CustomerWebSession = customerWebSession;
                     _bannersFormatWebControl.FilterItems = activeBannersFormatList;
-                    if(string.IsNullOrEmpty(customerWebSession.SelectedBannersFormatList))
-                        _bannersFormatWebControl.SelectedFilterItems = string.Join(",", activeBannersFormatList.FindAll(p=>p.IsEnable).ConvertAll(p=>p.Id.ToString()).ToArray());
+                    if (string.IsNullOrEmpty(customerWebSession.SelectedBannersFormatList))
+                        _bannersFormatWebControl.SelectedFilterItems = string.Join(",", activeBannersFormatList.FindAll(p => p.IsEnable).ConvertAll(p => p.Id.ToString()).ToArray());
                     else _bannersFormatWebControl.SelectedFilterItems = customerWebSession.SelectedBannersFormatList;
                     _bannersFormatWebControl.Width = 194;
                     _bannersFormatWebControl.NbElemByColumn = 1;
@@ -1786,14 +2074,16 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Encart
-            if (insertOption && WebApplicationParameters.AllowInsetOption) {
+            if (insertOption && WebApplicationParameters.AllowInsetOption)
+            {
                 //Création de la liste des encarts
                 listInsert = new DropDownList();
                 listInsert.ID = "_inserts";
                 listInsert.CssClass = cssClass;
                 listInsert.AutoPostBack = autoPostBackOption;
                 ArrayList inserts = WebFunctions.Units.getInserts();
-                for(int j = 0; j < inserts.Count; j++) {
+                for (int j = 0; j < inserts.Count; j++)
+                {
                     listInsert.Items.Add(new ListItem(GestionWeb.GetWebWord((int)SessionCst.InsertsTraductionCodes[(SessionCst.Insert)inserts[j]], customerWebSession.SiteLanguage), ((int)(SessionCst.Insert)inserts[j]).ToString()));
                 }
                 listInsert.Items.FindByValue(((int)customerWebSession.Insert).ToString()).Selected = true;
@@ -1802,7 +2092,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Percentage
-            if(percentage) {
+            if (percentage)
+            {
                 percentageCheckBox = new System.Web.UI.WebControls.CheckBox();
                 percentageCheckBox.ID = "_percentage";
                 percentageCheckBox.CssClass = "txtBlanc11Bold";
@@ -1814,7 +2105,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region PDM
-            if (pdmOption) {
+            if (pdmOption)
+            {
                 PdmCheckBox = new System.Web.UI.WebControls.CheckBox();
                 PdmCheckBox.ID = this.ID + "_pdm";
                 PdmCheckBox.ToolTip = GestionWeb.GetWebWord(1179, customerWebSession.SiteLanguage);
@@ -1830,7 +2122,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region PDV
-            if(pdvOption) {
+            if (pdvOption)
+            {
                 PdvCheckBox = new System.Web.UI.WebControls.CheckBox();
                 PdvCheckBox.ID = this.ID + "_pdv";
                 PdvCheckBox.ToolTip = GestionWeb.GetWebWord(1180, customerWebSession.SiteLanguage);
@@ -1854,7 +2147,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Evolution
-            if (evolutionOption) {
+            if (evolutionOption)
+            {
                 EvolutionCheckBox = new System.Web.UI.WebControls.CheckBox();
                 EvolutionCheckBox.ID = this.ID + "_evol";
                 EvolutionCheckBox.CssClass = "txtBlanc11Bold";
@@ -1882,24 +2176,28 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 _comparativeStudyCheckBox.Checked = customerWebSession.ComparativeStudy && IsValidPeriodComparative();
                 _comparativeStudyCheckBox.Enabled = IsValidPeriodComparative();
 
-                if (comparativeStudyDateTypeOption) {
+                if (comparativeStudyDateTypeOption)
+                {
                     _dateComparativeSelection = new DateComparativeSelection(customerWebSession, comparativeStudyDateTypeOption, false);
                     _dateComparativeSelection.ID = this.ID + "_comparativeStudyDateTypeOption";
                     _dateComparativeSelectionLabel = new System.Web.UI.WebControls.Label();
                     _dateComparativeSelectionLabel.ID = this.ID + "_comparativeStudyDateTypeOptionSelection";
                     _dateComparativeSelectionLabel.CssClass = "txtComparativeStudy";
-                    if (_comparativeStudyCheckBox.Checked && _comparativeStudyCheckBox.Enabled) {
+                    if (_comparativeStudyCheckBox.Checked && _comparativeStudyCheckBox.Enabled)
+                    {
                         if (customerWebSession.ComparativePeriodType == TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.comparativeWeekDate)
                             _dateComparativeSelectionLabel.Text = GestionWeb.GetWebWord(2295, customerWebSession.SiteLanguage);
                         else if (customerWebSession.ComparativePeriodType == TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate)
                             _dateComparativeSelectionLabel.Text = GestionWeb.GetWebWord(2294, customerWebSession.SiteLanguage);
 
                     }
-                    if (_comparativeStudyCheckBox.Enabled) {
+                    if (_comparativeStudyCheckBox.Enabled)
+                    {
                         _comparativeStudyCheckBox.Attributes.Add("onClick", "javacript:if(this.checked){this.checked=false; " + _dateComparativeSelection.JavascriptFunctionOnDisplay + "}else{document.getElementById('selectionType_" + _dateComparativeSelection.ID + "').value=document.getElementById('selectionType_" + _dateComparativeSelection.ID + "').value='';document.getElementById('" + _dateComparativeSelectionLabel.ID + "').innerHTML='';}");
                         _dateComparativeSelectionLabel.Attributes.Add("onClick", "javacript:" + _dateComparativeSelection.JavascriptFunctionOnDisplay);
                     }
-                    if (!_dependentSelection) {
+                    if (!_dependentSelection)
+                    {
                         Controls.Add(_dateComparativeSelectionLabel);
                         Controls.Add(_dateComparativeSelection);
                     }
@@ -1911,7 +2209,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Retailer Selection
-            if (_retailerSelectionOption) {
+            if (_retailerSelectionOption)
+            {
                 _retailerSelectionCheckBox = new System.Web.UI.WebControls.CheckBox();
                 _retailerSelectionCheckBox.ID = this.ID + "_isSelectRetailerDisplay";
                 _retailerSelectionCheckBox.ToolTip = GestionWeb.GetWebWord(2857, customerWebSession.SiteLanguage);
@@ -1932,7 +2231,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Personalized Elements
-            if(personalizedElementsOption) {
+            if (personalizedElementsOption)
+            {
                 PersonalizedElementsCheckBox = new System.Web.UI.WebControls.CheckBox();
                 PersonalizedElementsCheckBox.ID = this.ID + "_perso";
                 PersonalizedElementsCheckBox.ToolTip = GestionWeb.GetWebWord(1181, customerWebSession.SiteLanguage);
@@ -1945,7 +2245,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Autopromo
-            if(autopromoEvaliantOption) {
+            if (autopromoEvaliantOption)
+            {
                 AutopromoEvaliantCheckBox = new System.Web.UI.WebControls.CheckBox();
                 AutopromoEvaliantCheckBox.ID = this.ID + "_autopromoEvaliant";
                 AutopromoEvaliantCheckBox.ToolTip = GestionWeb.GetWebWord(2476, customerWebSession.SiteLanguage);
@@ -1958,11 +2259,13 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Media Detail
-            if(mediaDetailOption) {
+            if (mediaDetailOption)
+            {
                 mediaDetail = new DropDownList();
                 mediaDetail.Width = new System.Web.UI.WebControls.Unit("100%");
                 // Pour les Plan media
-                if(forceMediaDetailForMediaPlan || customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA || customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PLAN_MEDIA) {
+                if (forceMediaDetailForMediaPlan || customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA || customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PLAN_MEDIA)
+                {
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1292, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1143, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategoryMedia.GetHashCode().ToString()));
@@ -1979,7 +2282,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 
                     #region Accroches
                     // Gestion des droits sur les accroches
-                    if(customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) &&
+                    if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG) &&
                         (_forceMediaDetailForSlogan ||
                         // Sélection par produit ou marque
                         (customerWebSession.GetSelection(customerWebSession.SelectionUniversAdvertiser, TNS.AdExpress.Constantes.Customer.Right.type.productAccess).Length > 0 ||
@@ -1992,7 +2295,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                         customerWebSession.GetSelection(customerWebSession.SelectionUniversAdvertiser, TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess).Length == 0) &&
                         // Niveau de détail par jour
                         customerWebSession.DetailPeriod == WebConstantes.CustomerSessions.Period.DisplayLevel.dayly
-                        ) {
+                        )
+                    {
                         // On augmente la taille pour les accroches
                         mediaDetail.Width = 200;
                         mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1866, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategoryMediaSlogan.GetHashCode().ToString()));
@@ -2014,22 +2318,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                     #endregion
 
                 }
-                else if(customerWebSession.CurrentModule == WebConstantes.Module.Name.INDICATEUR || customerWebSession.CurrentModule == WebConstantes.Module.Name.TABLEAU_DYNAMIQUE) {
-                    VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID);
-
-                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
-
-                    if(vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category))
-                        mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
-                    if(customerWebSession.CurrentModule != WebConstantes.Module.Name.INDICATEUR && vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media))
-                        mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1544, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMedia.GetHashCode().ToString()));
-                    if(vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category) && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media))
-                        mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1143, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategoryMedia.GetHashCode().ToString()));
-
-                    if((mediaDetail.Items.Count == 1) && (mediaDetail.Items[0].Value == SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()))
-                        mediaDetail.Enabled = false;
-                }
-                else if (customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES) {
+                else if (customerWebSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
+                {
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1382, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.category.GetHashCode().ToString()));
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(18, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.Media.GetHashCode().ToString()));
@@ -2040,14 +2330,105 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2812, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.mediaSellerVehicle.GetHashCode().ToString()));
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1862, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.mediaSellerMedia.GetHashCode().ToString()));
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2813, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.mediaSellerCategory.GetHashCode().ToString()));
+
                 }
-                else{
+                else if (customerWebSession.CurrentModule == WebConstantes.Module.Name.INDICATEUR || customerWebSession.CurrentModule == WebConstantes.Module.Name.TABLEAU_DYNAMIQUE)
+                {
                     VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID);
-                    switch (vehicleInfo.Id){
+                    /* WARNING !!! : This patch is just temporarily used in order to add specific levels for the Russia version of the site
+               * */
+                    if (!WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.RUSSIA))
+                    {
+                        switch (vehicleInfo.Id)
+                        {
+                            case ClassificationCst.DB.Vehicles.names.tv:
+                            case ClassificationCst.DB.Vehicles.names.tvGeneral:
+                            case ClassificationCst.DB.Vehicles.names.tvSponsorship:
+                            case ClassificationCst.DB.Vehicles.names.tvAnnounces:
+                            case ClassificationCst.DB.Vehicles.names.tvNonTerrestrials:
+                            case ClassificationCst.DB.Vehicles.names.radio:
+                            case ClassificationCst.DB.Vehicles.names.radioGeneral:
+                            case ClassificationCst.DB.Vehicles.names.radioSponsorship:
+                            case ClassificationCst.DB.Vehicles.names.radioMusic:
+                            case ClassificationCst.DB.Vehicles.names.outdoor:
+                            case ClassificationCst.DB.Vehicles.names.indoor:
+                            case ClassificationCst.DB.Vehicles.names.mediasTactics:
+                                mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
+                                if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category))
+                                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
+                                if (customerWebSession.CurrentModule != WebConstantes.Module.Name.INDICATEUR && vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media))
+                                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1544, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMedia.GetHashCode().ToString()));
+                                if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category) && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media))
+                                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1143, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategoryMedia.GetHashCode().ToString()));
+                                break;
+                            case ClassificationCst.DB.Vehicles.names.press:
+                            case ClassificationCst.DB.Vehicles.names.newspaper:
+                            case ClassificationCst.DB.Vehicles.names.magazine:
+                            case ClassificationCst.DB.Vehicles.names.internationalPress:
+                            case ClassificationCst.DB.Vehicles.names.internet:
+                            case ClassificationCst.DB.Vehicles.names.mobileTelephony:
+                            case ClassificationCst.DB.Vehicles.names.emailing:
+                            case ClassificationCst.DB.Vehicles.names.plurimedia:
+                            case ClassificationCst.DB.Vehicles.names.directMarketing:
+                                mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
+                                if (vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category))
+                                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
+                                break;
+                            default:
+                                mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
+                                mediaDetail.Enabled = false;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        switch (vehicleInfo.Id)
+                        {
+                            case ClassificationCst.DB.Vehicles.names.plurimedia:
+                                mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
+                                mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2652, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.region.GetHashCode().ToString()));
+                                if ((customerWebSession.CurrentModule != WebConstantes.Module.Name.INDICATEUR) ||
+                                    (customerWebSession.CurrentModule == WebConstantes.Module.Name.INDICATEUR && !graphRadioButton.Checked))
+                                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2740, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleRegion.GetHashCode().ToString()));
+                                break;
+                            default:
+                                if ((customerWebSession.CurrentModule != WebConstantes.Module.Name.INDICATEUR) ||
+                                   (customerWebSession.CurrentModule == WebConstantes.Module.Name.INDICATEUR && !graphRadioButton.Checked))
+                                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
+
+                                mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(971, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.Media.GetHashCode().ToString()));
+                                mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2652, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.region.GetHashCode().ToString()));
+                                if ((customerWebSession.CurrentModule != WebConstantes.Module.Name.INDICATEUR) ||
+                                  (customerWebSession.CurrentModule == WebConstantes.Module.Name.INDICATEUR && !graphRadioButton.Checked))
+                                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2740, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleRegion.GetHashCode().ToString()));
+                                if (customerWebSession.CurrentModule != WebConstantes.Module.Name.INDICATEUR && vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media))
+                                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1544, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMedia.GetHashCode().ToString()));
+                                if ((customerWebSession.CurrentModule != WebConstantes.Module.Name.INDICATEUR) ||
+                                   (customerWebSession.CurrentModule == WebConstantes.Module.Name.INDICATEUR && !graphRadioButton.Checked))
+                                {
+                                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2731, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.regionMedia.GetHashCode().ToString()));
+                                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2741, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleRegionMedia.GetHashCode().ToString()));
+                                }
+                                break;
+                        }
+                    }
+                }
+                else
+                {
+                    VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID);
+                    switch (vehicleInfo.Id)
+                    {
                         case ClassificationCst.DB.Vehicles.names.tv:
+                        case ClassificationCst.DB.Vehicles.names.tvGeneral:
+                        case ClassificationCst.DB.Vehicles.names.tvSponsorship:
+                        case ClassificationCst.DB.Vehicles.names.tvAnnounces:
+                        case ClassificationCst.DB.Vehicles.names.tvNonTerrestrials:
                         case ClassificationCst.DB.Vehicles.names.radio:
+                        case ClassificationCst.DB.Vehicles.names.radioGeneral:
+                        case ClassificationCst.DB.Vehicles.names.radioSponsorship:
+                        case ClassificationCst.DB.Vehicles.names.radioMusic:
                         case ClassificationCst.DB.Vehicles.names.outdoor:
-                        case ClassificationCst.DB.Vehicles.names.instore:
+                        case ClassificationCst.DB.Vehicles.names.indoor:
                         case ClassificationCst.DB.Vehicles.names.mediasTactics:
                             mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
                             mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
@@ -2073,101 +2454,171 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 mediaDetail.ID = "mediaDetail_" + this.ID;
                 mediaDetail.AutoPostBack = autoPostBackOption;
                 mediaDetail.CssClass = cssClass;
-                try {
+                try
+                {
                     mediaDetail.Items.FindByValue(customerWebSession.PreformatedMediaDetail.GetHashCode().ToString()).Selected = true;
                 }
-                catch(System.Exception) {
+                catch (System.Exception)
+                {
                     mediaDetail.Items[0].Selected = true;
+                    try
+                    {
+                        customerWebSession.PreformatedMediaDetail = (SessionCst.PreformatedDetails.PreformatedMediaDetails)int.Parse(mediaDetail.Items[0].Value);
+                        customerWebSession.Save();
+                    }
+                    catch (System.Exception) { }
                 }
-
                 Controls.Add(mediaDetail);
             }
-            #endregion
 
             #region Product Detail
-            if(ProductDetailOption) {
+
+
+            if (ProductDetailOption)
+            {
                 productDetail = new DropDownList();
                 productDetail.Width = new System.Web.UI.WebControls.Unit("100%");
                 productDetail.ID = "productDetail_" + this.ID;
                 productDetail.CssClass = cssClass;
                 productDetail.AutoPostBack = autoPostBackOption;
 
-                /* WARNING !!! : This patch is just temporarily used in order to add specific levels for the Finland version of the site
-                * the levels are : Category, Sub Category, Category/Advertiser and Sub Category/Advertiser
-                * */
-                if(WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND)) {
-                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(175, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.sector.GetHashCode().ToString()));
-                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1491, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.sectorAdvertiser.GetHashCode().ToString()));
+                /* WARNING !!! : This patch is just temporarily used in order to add specific levels for the Russia version of the site
+                   * */
+                if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.RUSSIA))
+                {
+                    if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
+                    {
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1147, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.advertiserBrand.GetHashCode().ToString()));
+                    }
+                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2905, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.advertiserSubSector.GetHashCode().ToString()));
+                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2733, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.advertiserGroup.GetHashCode().ToString()));
+                    if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1148, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.advertiserProduct.GetHashCode().ToString()));
+                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2734, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.advertiserSubbrand.GetHashCode().ToString()));
+                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1146, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.advertiser.GetHashCode().ToString()));
+
+                    if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
+                    {
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2906, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.brandGroup.GetHashCode().ToString()));
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2736, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.brandProduct.GetHashCode().ToString()));
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1149, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.brand.GetHashCode().ToString()));
+                    }
+
                     productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(552, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.subSector.GetHashCode().ToString()));
-                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2610, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.subSectorAdvertiser.GetHashCode().ToString()));
-                }
+                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2908, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.subSectorAdvertiser.GetHashCode().ToString()));
 
-                productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1110, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.group.GetHashCode().ToString()));
-                if(_showSegment)
-                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1144, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.groupSegment.GetHashCode().ToString()));
+                    if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
+                    {
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2910, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.subSectorBrand.GetHashCode().ToString()));
+                    }
 
-                // Rights verification for Brand
-                if(customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE)) {
-                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1111, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.groupBrand.GetHashCode().ToString()));
-                }
-                if(customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
+                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2907, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.subSectorGroup.GetHashCode().ToString()));
+                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2909, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.subSectorProduct.GetHashCode().ToString()));
+                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2911, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.subSectorSubbrand.GetHashCode().ToString()));
+
+                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(859, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.group.GetHashCode().ToString()));
+                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1145, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.groupAdvertiser.GetHashCode().ToString()));
+                    if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
+                    {
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1111, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.groupBrand.GetHashCode().ToString()));
+                    }
+
                     productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1112, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.groupProduct.GetHashCode().ToString()));
-                productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1145, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.groupAdvertiser.GetHashCode().ToString()));
+                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2738, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.groupSubbrand.GetHashCode().ToString()));
 
-                // Modifications for segmentAdvertiser,segmentProduct,SegmentBrand(3 new items added in the dropdownlist)
-                if(_showSegment)
-                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1577, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.segmentAdvertiser.GetHashCode().ToString()));
-                if((customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) && _showSegment)
-                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1578, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.segmentProduct.GetHashCode().ToString()));
-                if(customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE) && _showSegment) {
-                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1579, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.segmentBrand.GetHashCode().ToString()));
-                }
-                productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1146, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.advertiser.GetHashCode().ToString()));
-                if(customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE)) {
-                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1147, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.advertiserBrand.GetHashCode().ToString()));
-                }
-                if(customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
-                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1148, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.advertiserProduct.GetHashCode().ToString()));
-                if(customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE)) {
-                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1149, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.brand.GetHashCode().ToString()));
-                }
-                if(customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
-                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(858, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.product.GetHashCode().ToString()));
 
-                try {
+                    if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(858, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.product.GetHashCode().ToString()));
+                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2662, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.subbrand.GetHashCode().ToString()));
+                }
+                else
+                {
+                    /* WARNING !!! : This patch is just temporarily used in order to add specific levels for the Finland version of the site
+                    * the levels are : Category, Sub Category, Category/Advertiser and Sub Category/Advertiser
+                    * */
+                    if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FINLAND))
+                    {
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(175, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.sector.GetHashCode().ToString()));
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1491, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.sectorAdvertiser.GetHashCode().ToString()));
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(552, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.subSector.GetHashCode().ToString()));
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2610, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.subSectorAdvertiser.GetHashCode().ToString()));
+                    }
+
+                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1110, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.group.GetHashCode().ToString()));
+                    if (_showSegment)
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1144, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.groupSegment.GetHashCode().ToString()));
+                    //Rights verification for Brand
+                    if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
+                    {
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1111, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.groupBrand.GetHashCode().ToString()));
+                    }
+                    if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1112, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.groupProduct.GetHashCode().ToString()));
+                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1145, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.groupAdvertiser.GetHashCode().ToString()));
+                    //modifications for segmentAdvertiser,segmentProduct,SegmentBrand(3 new items added in the dropdownlist)
+                    if (_showSegment)
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1577, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.segmentAdvertiser.GetHashCode().ToString()));
+                    if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1578, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.segmentProduct.GetHashCode().ToString()));
+                    if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
+                    {
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1579, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.segmentBrand.GetHashCode().ToString()));
+                    }
+                    productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1146, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.advertiser.GetHashCode().ToString()));
+                    if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
+                    {
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1147, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.advertiserBrand.GetHashCode().ToString()));
+                    }
+                    if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1148, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.advertiserProduct.GetHashCode().ToString()));
+                    if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE))
+                    {
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1149, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.brand.GetHashCode().ToString()));
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2736, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.brandProduct.GetHashCode().ToString()));
+                    }
+                    if (customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG))
+                        productDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(858, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedProductDetails.product.GetHashCode().ToString()));
+                }
+                try
+                {
                     productDetail.Items.FindByValue(customerWebSession.PreformatedProductDetail.GetHashCode().ToString()).Selected = true;
                 }
-                catch(System.Exception) {
+                catch (System.Exception)
+                {
                     productDetail.SelectedIndex = 0;
                 }
                 Controls.Add(productDetail);
             }
-            #endregion
 
             #region Table Choice
-            if(tblChoiceOption) {
+            if (tblChoiceOption)
+            {
                 tblChoice = new ImageDropDownListWebControl();
                 tblChoice.BackColor = this.BackColor;
                 tblChoice.BorderColor = this.BorderColor;
                 tblChoice.BorderWidth = new System.Web.UI.WebControls.Unit(this.borderWidth);
                 int sponsorshipListIndex = 24;
-                if(this.List != "") tblChoice.List = this.List;
-                else {
-                    if(customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS
+                if (this.List != "") tblChoice.List = this.List;
+                else
+                {
+                    if (customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS
                         || customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_PROGRAMMES)
                         tblChoice.List = "&nbsp;|&nbsp;|&nbsp;";
                     else
                         tblChoice.List = "&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;";
                 }
-                if(this.images != "") tblChoice.Images = this.images;
-                else {
-                    if(customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS
-                        || customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_PROGRAMMES) {
+                if (this.images != "") tblChoice.Images = this.images;
+                else
+                {
+                    if (customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS
+                        || customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_PROGRAMMES)
+                    {
                         tblChoice.Images = "/App_Themes/" + themeName + "/Images/Culture/Tables/Parrainage_type1.gif" +
                             "|/App_Themes/" + themeName + "/Images/Culture/Tables/Parrainage_type2.gif" +
                             "|/App_Themes/" + themeName + "/Images/Culture/Tables/Parrainage_type3.gif";
                     }
-                    else {
+                    else
+                    {
                         tblChoice.Images = "/App_Themes/" + themeName + "/Images/Culture/Tables/type1.gif" +
                             "|/App_Themes/" + themeName + "/Images/Culture/Tables/type2.gif" +
                             "|/App_Themes/" + themeName + "/Images/Culture/Tables/type3.gif" +
@@ -2181,7 +2632,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                             "|/App_Themes/" + themeName + "/Images/Culture/Tables/type9.gif";
                     }
                 }
-                if(customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS
+                if (customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS
                     || customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_PROGRAMMES)
                     tblChoice.ListIndex = customerWebSession.PreformatedTable.GetHashCode() - sponsorshipListIndex;
                 else tblChoice.ListIndex = customerWebSession.PreformatedTable.GetHashCode();
@@ -2198,45 +2649,91 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
-            #region Percentage Type
-            // Contrôle choix type de pourcentage
-            if(_percentageTypeOption) {
+
+            //Contrôle choix type de pourcentage
+            if (_percentageTypeOption)
+            {
 
                 _percentageTypeDropDownList = new System.Web.UI.WebControls.DropDownList();
                 _percentageTypeDropDownList.ID = "_percentageTypePercentageDropDownList";
 
-                //if(!Page.IsPostBack||_percentageTypeDropDownList.Items.Count<=0){
+                //				if(!Page.IsPostBack||_percentageTypeDropDownList.Items.Count<=0){
                 _percentageTypeDropDownList.CssClass = cssClass;
                 _percentageTypeDropDownList.AutoPostBack = autoPostBackOption;
                 _percentageTypeDropDownList.Items.Add(new ListItem("----------------------", WebConstantes.Percentage.Alignment.none.GetHashCode().ToString()));
                 _percentageTypeDropDownList.Items.Add(new ListItem(GestionWeb.GetWebWord(2065, customerWebSession.SiteLanguage), WebConstantes.Percentage.Alignment.vertical.GetHashCode().ToString()));
-                if(customerWebSession.PreformatedTable != WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units)
+                if (customerWebSession.PreformatedTable != WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units)
                     _percentageTypeDropDownList.Items.Add(new ListItem(GestionWeb.GetWebWord(2064, customerWebSession.SiteLanguage), WebConstantes.Percentage.Alignment.horizontal.GetHashCode().ToString()));
-                //}
-                try {
+                //				}
+                try
+                {
                     _percentageTypeDropDownList.Items.FindByValue(customerWebSession.PercentageAlignment.GetHashCode().ToString()).Selected = true;
 
                 }
-                catch(System.Exception) {
-                    try {
+                catch (System.Exception)
+                {
+                    try
+                    {
                         _percentageTypeDropDownList.Items.FindByValue(WebConstantes.Percentage.Alignment.none.GetHashCode().ToString()).Selected = true;
                     }
-                    catch(System.Exception) {
+                    catch (System.Exception)
+                    {
                     }
                 }
                 Controls.Add(_percentageTypeDropDownList);
             }
-            #endregion
+
+            //Controle choice of campaign type
+            if (_campaignTypeOption)
+            {
+
+                _campaignTypeDropDownList = new System.Web.UI.WebControls.DropDownList();
+                _campaignTypeDropDownList.ID = "_campaignTypeDropDownList";
+                _campaignTypeDropDownList.CssClass = cssClass;
+                _campaignTypeDropDownList.AutoPostBack = autoPostBackOption;
+
+                try
+                {
+                    List<CampaignTypeInformation> campaignTypes = customerWebSession.GetValidCampaignTypeForResult();
+
+                    foreach (CampaignTypeInformation currentCampaignType in campaignTypes)
+                    {
+                        _campaignTypeDropDownList.Items.Add(new ListItem(GestionWeb.GetWebWord(currentCampaignType.WebTextId, customerWebSession.SiteLanguage), currentCampaignType.Id.GetHashCode().ToString()));
+                    }
+                    if (customerWebSession.CampaignType == TNS.AdExpress.Constantes.Web.CustomerSessions.CampaignType.notDefined
+                        || !campaignTypes.Contains(CampaignTypesInformation.Get(customerWebSession.CampaignType)))
+                    {
+                        customerWebSession.CampaignType = customerWebSession.GetDefaultCampaignType();
+                        customerWebSession.Save();
+                    }
+                    _campaignTypeDropDownList.Items.FindByValue(customerWebSession.CampaignType.GetHashCode().ToString()).Selected = true;
+
+                }
+                catch (System.Exception)
+                {
+                    try
+                    {
+                        _campaignTypeDropDownList.Items.FindByValue(customerWebSession.CampaignType.GetHashCode().ToString()).Selected = true;
+                    }
+                    catch (System.Exception)
+                    {
+                    }
+                }
+                Controls.Add(_campaignTypeDropDownList);
+            }
 
         }
-        #endregion
+
+
+            #endregion
 
         #region Render
         /// <summary> 
         /// Génère ce contrôle dans le paramètre de sortie spécifié.
         /// </summary>
         /// <param name="output"> Le writer HTML vers lequel écrire </param>
-        protected override void Render(HtmlTextWriter output) {
+        protected override void Render(HtmlTextWriter output)
+        {
 
             string themeName = WebApplicationParameters.Themes[customerWebSession.SiteLanguage].Name;
             bool showProduct = customerWebSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
@@ -2268,7 +2765,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             output.Write("\n</TR>");
 
             #region Option résultat
-            if(resultOption) {
+            if (resultOption)
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td class=\"txtBlanc11Bold\">");
                 output.Write(GestionWeb.GetWebWord(793, customerWebSession.SiteLanguage) + " : ");
@@ -2314,7 +2812,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             //    output.Write("\n</TR>");
             //}
 
-            if(unitOption) {
+            if (unitOption)
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td title=\"" + GestionWeb.GetWebWord(1182, customerWebSession.SiteLanguage) + "\" class=\"txtBlanc11Bold\">");
                 output.Write(GestionWeb.GetWebWord(304, customerWebSession.SiteLanguage) + " : ");
@@ -2328,7 +2827,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 output.Write("\n<td>");
                 list.RenderControl(output);
                 output.Write("\n</td>");
-                if(percentage) {
+                if (percentage)
+                {
                     output.Write("\n<td>");
                     percentageCheckBox.RenderControl(output);
                     output.Write("\n</td>");
@@ -2346,7 +2846,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Option unité Appm
-            if(unitOptionAppm) {
+            if (unitOptionAppm)
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td title=\"" + GestionWeb.GetWebWord(1182, customerWebSession.SiteLanguage) + "\" class=\"txtBlanc11Bold\">");
                 output.Write(GestionWeb.GetWebWord(304, customerWebSession.SiteLanguage) + " : ");
@@ -2364,7 +2865,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Option detail media
-            if(mediaDetailOption) {
+            if (mediaDetailOption)
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td class=\"txtBlanc11Bold\">");
                 output.Write(GestionWeb.GetWebWord(1150, customerWebSession.SiteLanguage));
@@ -2382,7 +2884,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Option choix d'un encart
-            if(insertOption && WebApplicationParameters.AllowInsetOption) {
+            if (insertOption && WebApplicationParameters.AllowInsetOption)
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td class=\"txtBlanc11Bold\">");
                 output.Write(GestionWeb.GetWebWord(1400, customerWebSession.SiteLanguage));
@@ -2400,7 +2903,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Option Sector Selection
-            if(SectorSelectionOptions) {
+            if (SectorSelectionOptions)
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td>");
                 _sectorWebControl.RenderControl(output);
@@ -2427,7 +2931,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Option Period Detail
-            if(PeriodDetailOptions) {
+            if (PeriodDetailOptions)
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td>");
                 _periodDetailWebControl.RenderControl(output);
@@ -2439,7 +2944,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
             #endregion
 
-            if (bannersFormatOption) {
+            if (bannersFormatOption)
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td><hr class=\"hrSpacer\" />");
                 _bannersFormatWebControl.RenderControl(output);
@@ -2451,7 +2957,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             }
 
             #region Option type de pourcentage (horizontal ou vertical)
-            if(_percentageTypeOption) {
+            if (_percentageTypeOption)
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td class=\"txtBlanc11Bold\">");
                 output.Write(GestionWeb.GetWebWord(1236, customerWebSession.SiteLanguage) + " : ");
@@ -2467,9 +2974,28 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 output.Write("\n</TR>");
             }
             #endregion
+            //Option type de campagne
+            if (_campaignTypeOption)
+            {
 
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                output.Write("\n<td class=\"txtBlanc11Bold\">");
+                output.Write(GestionWeb.GetWebWord(2671, customerWebSession.SiteLanguage));
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
+                output.Write("\n<td>");
+                _campaignTypeDropDownList.RenderControl(output);
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<TR>");
+                output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n</TR>");
+
+            }
             #region Option Generic Column Level Detail
-            if(GenericColumnLevelDetailSelectionOptions) {
+            if (GenericColumnLevelDetailSelectionOptions)
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td>");
                 _genericColumnLevelDetailSelectionWebControl.RenderControl(output);
@@ -2482,7 +3008,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Option Generic Media Level Detail
-            if(GenericMediaLevelDetailSelectionOptions && _genericMediaLevelDetailSelectionWebControl.Visible) {
+            if (GenericMediaLevelDetailSelectionOptions && _genericMediaLevelDetailSelectionWebControl.Visible)
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td><hr class=\"hrSpacer\" />");
                 _genericMediaLevelDetailSelectionWebControl.RenderControl(output);
@@ -2495,7 +3022,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Option detail produit
-            if(productDetailOption) {
+            if (productDetailOption)
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td class=\"txtBlanc11Bold\">");
                 output.Write(GestionWeb.GetWebWord(1124, customerWebSession.SiteLanguage));
@@ -2513,7 +3041,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Option format de tableau
-            if(tblChoiceOption) {
+            if (tblChoiceOption)
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td class=\"txtBlanc11Bold\">");
                 output.Write(GestionWeb.GetWebWord(1140, customerWebSession.SiteLanguage));
@@ -2531,16 +3060,21 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Options PDM, PDV, evolution, Comparative STudy, Retailer Selection
-            if (pdmOption || pdvOption || evolutionOption || comparativeStudyOption || _retailerSelectionOption) {
+            if (pdmOption || pdvOption || evolutionOption || comparativeStudyOption || _retailerSelectionOption)
+            {
 
-                if (pdmOption || pdvOption || evolutionOption || comparativeStudyOption) {
+                if (pdmOption || pdvOption || evolutionOption || comparativeStudyOption)
+                {
                     output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                     output.Write("\n<td class=\"txtBlanc11Bold\">");
 
-                    if (!_dependentSelection) {
-                        if (comparativeStudyOption) {
+                    if (!_dependentSelection)
+                    {
+                        if (comparativeStudyOption)
+                        {
 
-                            if (comparativeStudyDateTypeOption) {
+                            if (comparativeStudyDateTypeOption)
+                            {
 
                                 #region javascript
                                 output.Write("\n<script language=\"JavaScript\" type=\"text/JavaScript\">\n");
@@ -2567,13 +3101,16 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 
                                 _dateComparativeSelection.RenderControl(output);
                             }
-                            else {
+                            else
+                            {
                                 _comparativeStudyCheckBox.RenderControl(output);
                             }
                         }
 
-                        if (evolutionOption) {
-                            if (!customerWebSession.ComparativeStudy) {
+                        if (evolutionOption)
+                        {
+                            if (!customerWebSession.ComparativeStudy)
+                            {
                                 EvolutionCheckBox.Enabled = false;
                                 EvolutionCheckBox.Checked = false;
                             }
@@ -2581,8 +3118,10 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                             output.Write("&nbsp;&nbsp;");
                         }
                     }
-                    else {
-                        if (!customerWebSession.ComparativeStudy) {
+                    else
+                    {
+                        if (!customerWebSession.ComparativeStudy)
+                        {
                             //EvolutionCheckBox.Enabled = false;
                             EvolutionCheckBox.InputAttributes.Add("disabled", "true");
                             EvolutionCheckBox.Checked = false;
@@ -2596,16 +3135,20 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                         output.Write("\n</TR>");
                     }
 
-                    if (!_mutualExclusion) {
-                        if (pdmOption) {
+                    if (!_mutualExclusion)
+                    {
+                        if (pdmOption)
+                        {
                             PdmCheckBox.RenderControl(output);
                             output.Write("&nbsp;&nbsp;");
                         }
-                        if (pdvOption) {
+                        if (pdvOption)
+                        {
                             PdvCheckBox.RenderControl(output);
                         }
                     }
-                    else {
+                    else
+                    {
                         output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                         output.Write("\n<td class=\"txtBlanc11Bold\">");
                         _checkBoxsMutualExclusion.RenderControl(output);
@@ -2613,7 +3156,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                     output.Write("\n</td>");
                     output.Write("\n</tr>");
                 }
-                if (_retailerSelectionOption) {
+                if (_retailerSelectionOption)
+                {
                     output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                     output.Write("\n<td class=\"txtBlanc11Bold\">");
                     _retailerSelectionCheckBox.RenderControl(output);
@@ -2628,7 +3172,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Option auto-promo Evaliant
-            if(autopromoEvaliantOption) {
+            if (autopromoEvaliantOption)
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td>");
                 AutopromoEvaliantCheckBox.RenderControl(output);
@@ -2641,22 +3186,25 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Eléments personnalisés
-            if(personalizedElementsOption) {
+            if (personalizedElementsOption)
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td>");
 
                 bool withAdvertisers = false;
                 string tempString = "";
-                if(customerWebSession.SecondaryProductUniverses.Count > 0 && customerWebSession.SecondaryProductUniverses.ContainsKey(0) && customerWebSession.SecondaryProductUniverses[0].Contains(0)) {
+                if (customerWebSession.SecondaryProductUniverses.Count > 0 && customerWebSession.SecondaryProductUniverses.ContainsKey(0) && customerWebSession.SecondaryProductUniverses[0].Contains(0))
+                {
                     tempString = customerWebSession.SecondaryProductUniverses[0].GetGroup(0).GetAsString(TNSClassificationLevels.ADVERTISER);
-                    if(!string.IsNullOrEmpty(tempString)) withAdvertisers = true;
+                    if (!string.IsNullOrEmpty(tempString)) withAdvertisers = true;
                     if (!withAdvertisers)
                     {
                         tempString = customerWebSession.SecondaryProductUniverses[0].GetGroup(0).GetAsString(TNSClassificationLevels.BRAND);
                         if (!string.IsNullOrEmpty(tempString)) withAdvertisers = true;
                     }
-                }               
-                else if(customerWebSession.SecondaryProductUniverses.Count > 0 && customerWebSession.SecondaryProductUniverses.ContainsKey(1) && customerWebSession.SecondaryProductUniverses[1].Contains(0)) {
+                }
+                else if (customerWebSession.SecondaryProductUniverses.Count > 0 && customerWebSession.SecondaryProductUniverses.ContainsKey(1) && customerWebSession.SecondaryProductUniverses[1].Contains(0))
+                {
                     tempString = customerWebSession.SecondaryProductUniverses[1].GetGroup(0).GetAsString(TNSClassificationLevels.ADVERTISER);
                     if (!string.IsNullOrEmpty(tempString)) withAdvertisers = true;
                     if (!withAdvertisers)
@@ -2677,8 +3225,10 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Option products for APPM
-            if(productsOption && showProduct) {
-                if(products.Items.Count > 0) {
+            if (productsOption && showProduct)
+            {
+                if (products.Items.Count > 0)
+                {
                     output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                     output.Write("\n<td class=\"txtBlanc11Bold\">");
                     output.Write(GestionWeb.GetWebWord(1164, customerWebSession.SiteLanguage) + " : ");
@@ -2697,13 +3247,14 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Result format
-            if(_resultFormat) {
+            if (_resultFormat)
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td class=\"txtBlanc11Bold\">");
                 graphRadioButton.RenderControl(output);
-                if(graphRadioButton.Visible) output.Write("<A onmouseover=\"graph.src = '/App_Themes/" + themeName + "/Images/Common/Button/chart_down.gif';\" onclick=\"graphRadioButton.checked=true;\" onmouseout=\"graph.src = '/App_Themes/" + themeName + "/Images/Common/Button/chart_up.gif';\" href=\"#\"><IMG id=graph title=\"" + ChartTitle + "\" src=\"/App_Themes/" + themeName + "/Images/Common/Button/chart_up.gif\" border=0 ></A>&nbsp;");
+                if (graphRadioButton.Visible) output.Write("<A onmouseover=\"graph.src = '/App_Themes/" + themeName + "/Images/Common/Button/chart_down.gif';\" onclick=\"graphRadioButton.checked=true;\" onmouseout=\"graph.src = '/App_Themes/" + themeName + "/Images/Common/Button/chart_up.gif';\" href=\"#\"><IMG id=graph title=\"" + ChartTitle + "\" src=\"/App_Themes/" + themeName + "/Images/Common/Button/chart_up.gif\" border=0 ></A>&nbsp;");
                 tableRadioButton.RenderControl(output);
-                if(tableRadioButton.Visible) output.Write("<A onmouseover=\"table.src = '/App_Themes/" + themeName + "/Images/Common/Button/table_down.gif';\" onclick=\"tableRadioButton.checked=true;\" onmouseout=\"table.src = '/App_Themes/" + themeName + "/Images/Common/Button/table_up.gif';\" href=\"#\"><IMG id=table title=\"" + TableTitle + "\" src=\"/App_Themes/" + themeName + "/Images/Common/Button/table_up.gif\" border=0 ></A>");
+                if (tableRadioButton.Visible) output.Write("<A onmouseover=\"table.src = '/App_Themes/" + themeName + "/Images/Common/Button/table_down.gif';\" onclick=\"tableRadioButton.checked=true;\" onmouseout=\"table.src = '/App_Themes/" + themeName + "/Images/Common/Button/table_up.gif';\" href=\"#\"><IMG id=table title=\"" + TableTitle + "\" src=\"/App_Themes/" + themeName + "/Images/Common/Button/table_up.gif\" border=0 ></A>");
                 output.Write("\n</td>");
                 output.Write("\n</tr>");
                 output.Write("\n<TR>");
@@ -2713,7 +3264,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Zoom Graphic
-            if(ZoomGraphic && _zoomGraphicCheckBox.Visible) {
+            if (ZoomGraphic && _zoomGraphicCheckBox.Visible)
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td class=\"txtBlanc11Bold\">");
                 _zoomGraphicCheckBox.RenderControl(output);
@@ -2730,7 +3282,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Total comparaison (AS)
-            if(TotalChoice && _totalChoiceRadioButtonList.Items.Count > 0) {
+            if (TotalChoice && _totalChoiceRadioButtonList.Items.Count > 0)
+            {
                 output.Write("\n<tr  >");
                 output.Write("\n<td class=\"txtBlanc11Bold\">");
                 _totalChoiceRadioButtonList.RenderControl(output);
@@ -2743,7 +3296,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Options Results Table Types (An. Dispositifs)
-            if(ResultsTableTypesOptions) {
+            if (ResultsTableTypesOptions)
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td>");
                 _resultsTableTypesWebControl.RenderControl(output);
@@ -2756,7 +3310,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Options Detail Advertiser Brand Product
-            if(DetailAdvertiserBrandProductOptions) {
+            if (DetailAdvertiserBrandProductOptions)
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td>");
                 _detailAdvertiserBrandProductWebControl.RenderControl(output);
@@ -2769,10 +3324,11 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             #endregion
 
             #region Initialisation
-            if(this._initializeProductWebControl != null 
-                && 
-                (this._inializeAdvertiserOption || this.InializeProductOption || this.InializeSlogansOption)
-                ) {
+            if (this._initializeProductWebControl != null
+                &&
+                (this._inializeAdvertiserOption || _initializeAdvertisementTypeOption || this.InializeProductOption || this.InializeSlogansOption)
+                )
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td>");
                 this._initializeProductWebControl.RenderControl(output);
@@ -2782,7 +3338,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 output.Write("\n<TD height=\"5\"></TD>");
                 output.Write("\n</TR>");
             }
-            if(this._initializeMediaWebControl != null && this.InializeMediaOption) {
+            if (this._initializeMediaWebControl != null && this.InializeMediaOption)
+            {
                 output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                 output.Write("\n<td>");
                 this._initializeMediaWebControl.RenderControl(output);
@@ -2798,7 +3355,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         }
         #endregion
 
-        #endregion
+            #endregion
 
         #region Méthodes internes
         /// <summary>
@@ -2807,13 +3364,15 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <param name="webSession">Session du client</param>
         /// <param name="current">Page en cours</param>
         /// <returns>Vrai si un résultat doit être montré </returns>
-        protected bool CanShowResult(WebSession webSession, ResultPageInformation current) {
-            switch(webSession.CurrentModule) {
+        protected bool CanShowResult(WebSession webSession, ResultPageInformation current)
+        {
+            switch (webSession.CurrentModule)
+            {
                 case WebConstantes.Module.Name.ALERTE_PORTEFEUILLE:
                 case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
                     return CanShowPortofolioResult(webSession, current);
                 case WebConstantes.Module.Name.BILAN_CAMPAGNE:
-                    if((webSession.CurrentModule == WebConstantes.Module.Name.BILAN_CAMPAGNE)
+                    if ((webSession.CurrentModule == WebConstantes.Module.Name.BILAN_CAMPAGNE)
                    && current.Id == FrameWorkResults.APPM.mediaPlanByVersion && !webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG)) return false;
                     else return true;
                 default: return true;
@@ -2824,24 +3383,34 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// </summary>
         /// <param name="webSession">Session du client</param>
         /// <param name="current">Page en cours</param>
-        protected bool CanShowPortofolioResult(WebSession webSession, ResultPageInformation current) {
+        protected bool CanShowPortofolioResult(WebSession webSession, ResultPageInformation current)
+        {
             #region VehicleInformation
             VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
             #endregion
 
-            switch(vehicleInformation.Id) {
+            switch (vehicleInformation.Id)
+            {
                 case ClassificationCst.DB.Vehicles.names.directMarketing:
                 case ClassificationCst.DB.Vehicles.names.internet:
                     return ((current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO));
                 case ClassificationCst.DB.Vehicles.names.outdoor:
                 case ClassificationCst.DB.Vehicles.names.instore:
+                case ClassificationCst.DB.Vehicles.names.indoor:
                 case ClassificationCst.DB.Vehicles.names.cinema:
                 case ClassificationCst.DB.Vehicles.names.adnettrack:
                 case ClassificationCst.DB.Vehicles.names.evaliantMobile:
                     return (current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO || (current.Id == FrameWorkResults.Portofolio.CALENDAR && webSession.CustomerPeriodSelected.IsSliding4M));
                 case ClassificationCst.DB.Vehicles.names.others:
                 case ClassificationCst.DB.Vehicles.names.tv:
+                case ClassificationCst.DB.Vehicles.names.tvGeneral:
+                case ClassificationCst.DB.Vehicles.names.tvSponsorship:
+                case ClassificationCst.DB.Vehicles.names.tvAnnounces:
+                case ClassificationCst.DB.Vehicles.names.tvNonTerrestrials:
                 case ClassificationCst.DB.Vehicles.names.radio:
+                case ClassificationCst.DB.Vehicles.names.radioGeneral:
+                case ClassificationCst.DB.Vehicles.names.radioSponsorship:
+                case ClassificationCst.DB.Vehicles.names.radioMusic:
                 case ClassificationCst.DB.Vehicles.names.press:
                 case ClassificationCst.DB.Vehicles.names.newspaper:
                 case ClassificationCst.DB.Vehicles.names.magazine:
@@ -2854,7 +3423,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// <summary>
         /// Set result pages options
         /// </summary>
-        protected void SetResultPageOption() {
+        protected void SetResultPageOption()
+        {
             // Création des options concernant le choix du resultat
             resultsPages = new DropDownList();
             resultsPages.ID = "_resultsPages";
@@ -2863,8 +3433,9 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             List<long> resultToShow = new List<long>();
             List<ResultPageInformation> resultPages = ((TNS.AdExpress.Domain.Web.Navigation.Module)customerWebSession.CustomerLogin.GetModule(customerWebSession.CurrentModule)).GetValidResultsPage(_selectedMediaUniverse);
 
-            foreach(ResultPageInformation current in resultPages) {
-                if(!CanShowResult(customerWebSession, current)) continue;
+            foreach (ResultPageInformation current in resultPages)
+            {
+                if (!CanShowResult(customerWebSession, current)) continue;
                 resultToShow.Add(current.Id);
                 resultsPages.Items.Add(new ListItem(GestionWeb.GetWebWord((int)current.IdWebText, customerWebSession.SiteLanguage), current.Id.ToString()));
             }
@@ -2878,14 +3449,18 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// </summary>
         /// <param name="resultToShow">tab list</param>
         /// <remarks>Synthesis tab is define by default for portofolio module depending on poeriod selected or vehicle</remarks>
-        protected void SetDefaultTab(List<long> resultToShow) {
-            switch(customerWebSession.CurrentModule) {
+        protected void SetDefaultTab(List<long> resultToShow)
+        {
+            switch (customerWebSession.CurrentModule)
+            {
                 case WebConstantes.Module.Name.ALERTE_PORTEFEUILLE:
                 case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
-                    if(resultToShow != null && resultToShow.Count > 0 && resultToShow.Contains(customerWebSession.CurrentTab)) {
+                    if (resultToShow != null && resultToShow.Count > 0 && resultToShow.Contains(customerWebSession.CurrentTab))
+                    {
                         resultsPages.Items.FindByValue(customerWebSession.CurrentTab.ToString()).Selected = true;
                     }
-                    else {
+                    else
+                    {
                         customerWebSession.CurrentTab = FrameWorkResults.Portofolio.SYNTHESIS;
                         resultsPages.Items.FindByValue(FrameWorkResults.Portofolio.SYNTHESIS.ToString()).Selected = true;
                         customerWebSession.Save();
@@ -2899,10 +3474,12 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         /// Is Valid Period Comparative
         /// </summary>
         /// <returns></returns>
-        protected bool IsValidPeriodComparative() {
+        protected bool IsValidPeriodComparative()
+        {
 
             if (customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA ||
-                customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES) {
+                customerWebSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES)
+            {
                 DateTime dtBegin = WebFunctions.Dates.getPeriodBeginningDate(customerWebSession.PeriodBeginningDate, customerWebSession.PeriodType);
                 DateTime dtEnd = WebFunctions.Dates.getPeriodEndDate(customerWebSession.PeriodEndDate, customerWebSession.PeriodType);
 
@@ -2913,5 +3490,8 @@ namespace TNS.AdExpress.Web.Controls.Headers {
         }
         #endregion
 
+        #endregion
+
+        #endregion
     }
 }

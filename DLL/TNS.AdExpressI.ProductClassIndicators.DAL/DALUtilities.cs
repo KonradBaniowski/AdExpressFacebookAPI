@@ -20,6 +20,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
 
         protected WebSession _session;
         protected CstDBClassif.Vehicles.names _vehicle;
+        #region Accessors
+        public CstDBClassif.Vehicles.names Vehicle
+        {
+            get { return _vehicle; }
+        }
+        #endregion
 
         #region Constructor
         public DALUtilities(WebSession session)

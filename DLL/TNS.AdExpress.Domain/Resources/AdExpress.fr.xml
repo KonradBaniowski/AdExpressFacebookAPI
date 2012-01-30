@@ -1818,7 +1818,7 @@
     <item mnemonic="w2630" type="System.String">Radio General</item>
     <item mnemonic="w2631" type="System.String">Radio Music</item>
     <item mnemonic="w2632" type="System.String">Raido Sponsorship</item>
-    <item mnemonic="w2633" type="System.String">TV Générale</item>
+    <item mnemonic="w2633" type="System.String">TV</item>
     <item mnemonic="w2634" type="System.String">TV Parrainage</item>
     <item mnemonic="w2635" type="System.String">TV Annonces</item>
     <item mnemonic="w2636" type="System.String">TV Non-terrestres</item>
@@ -1922,7 +1922,7 @@
     <item mnemonic="w2733" type="System.String">!</item>
     <item mnemonic="w2734" type="System.String">!</item>
     <item mnemonic="w2735" type="System.String">!</item>
-    <item mnemonic="w2736" type="System.String">!</item>
+    <item mnemonic="w2736" type="System.String">Marque/Produit</item>
     <item mnemonic="w2737" type="System.String">!</item>
     <item mnemonic="w2738" type="System.String">!</item>
     <item mnemonic="w2739" type="System.String">!</item>
@@ -2090,8 +2090,8 @@
     <item mnemonic="w2869" type="System.String">Concurrents</item>
     <item mnemonic="w2870" type="System.String">Famille de produits</item>
     <item mnemonic="w2871" type="System.String">Niveaux de détails</item>
-    
-    
+
+
     <item mnemonic="w2872" type="System.String">Niveaux</item>
     <item mnemonic="w2873" type="System.String">Tableau détaillé par</item>
     <item mnemonic="w2874" type="System.String">Personnalisation des promotions</item>
@@ -2120,7 +2120,7 @@
     <item mnemonic="w2897" type="System.String">AdExpress - Fichier PDF Fiches Veille promotionnelle généré</item>
     <item mnemonic="w2898" type="System.String">AdExpress - Fichier PDF Veille Promotionnelle généré</item>
     <item mnemonic="w2899" type="System.String">Fiches</item>
-   
+
     <!-- ********************************* -->
     <!-- Add text for RU region selection -->
     <item mnemonic="w2900" type="System.String">!</item>
@@ -2160,5 +2160,8 @@
     <item mnemonic="w2928" type="System.String">Formats</item>
     <!-- Add text for RU: Link go back to login page -->
     <item mnemonic="w2929" type="System.String">Cliquez ici pour retourner à la page d'identification</item>
+    <!--Add text for FR : Help for banner format-->
+    <item mnemonic="w2930" type="System.String">Sélection du type format Evaliant</item>
+    <item mnemonic="w2931" type="System.String">Vous avez la possibilité d’effectuer un filtre par format Evaliant  à l’aide des cases à cocher ci-dessous pour visualiser uniquement les formats souhaités. Par défaut, tous les formats en accès sont sélectionnés. Il vous  suffit de décocher les formats que vous ne souhaitez plus voir dans vos résultats et valider votre sélection à l’aide de la touche</item>
   </items>
 </localization>

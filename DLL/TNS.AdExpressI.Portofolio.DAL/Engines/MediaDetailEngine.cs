@@ -57,9 +57,16 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 		/// <returns>Data set</returns>
 		protected override DataSet ComputeData() {
 			switch (_vehicleInformation.Id) {
-				case DBClassificationConstantes.Vehicles.names.radio:					
+				case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
 					return GetCommercialBreak();
 				default: throw new PortofolioDALException("The method to get data is not defined for this vehicle.");
 			}
@@ -139,11 +146,18 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			sql = WebFunctions.SQLGenerator.GetUnitFieldsNameForPortofolio(_webSession, TNS.AdExpress.Constantes.DB.TableType.Type.dataVehicle4M);
 			switch (_vehicleInformation.Id) {
 				case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
 					sql += ",commercial_break as code_ecran";
 					sql += " , date_media_num  ";
 					return sql;
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
 					sql += ",id_commercial_break as code_ecran";
 					sql += ",date_media_num  ";
 					return sql;
@@ -161,9 +175,16 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
         protected virtual string GetGroupByDetailMedia() {
             switch (_vehicleInformation.Id) {
                 case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
                     return "group by date_media_num ,commercial_break order by commercial_break";
                 case DBClassificationConstantes.Vehicles.names.tv:
                 case DBClassificationConstantes.Vehicles.names.others:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
                     return "group by date_media_num ,id_commercial_break order by id_commercial_break";
                 default:
                     throw new PortofolioDALException("GetGroupByDetailMediaForTvRadio()-->Vehicle unknown.");

@@ -34,6 +34,7 @@ using TNS.AdExpressI.ProductClassIndicators.DAL;
 using TNS.AdExpressI.ProductClassIndicators.Exceptions;
 using System.Collections;
 using TNS.FrameWork.Date;
+using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpressI.ProductClassIndicators.Engines
@@ -183,7 +184,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             StringBuilder str = new StringBuilder(50000);
 			bool showProduct = _session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 			CultureInfo cInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
-            UnitInformation defaultKCurrency = UnitsInformation.List[UnitsInformation.DefaultKCurrency];
+            UnitInformation selectedCurrency = GetUnit();
 
             #region CSS Styles
             string cssTotalLabel = "pmtotal";
@@ -268,7 +269,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 			str.Append("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
 
 			#region headers
-            str.AppendFormat("<tr ><td colspan=2 class=\"p2\"></td><td nowrap class=\"p2\">{0} {1}</td>", defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + " (" + GestionWeb.GetWebWord(2782, _session.SiteLanguage) + ")", _periodBegin.Year);
+            str.AppendFormat("<tr ><td colspan=2 class=\"p2\"></td><td nowrap class=\"p2\">{0} {1}</td>", selectedCurrency.GetUnitSignWebText(_session.SiteLanguage) + " (" + GestionWeb.GetWebWord(2782, _session.SiteLanguage) + ")", _periodBegin.Year);
 			//Evol (optionnelle)
 			if(_session.ComparativeStudy){
                 str.AppendFormat("<td nowrap class=\"p2\">{0} {1}/{2}</td>", GestionWeb.GetWebWord(1168,_session.SiteLanguage), _periodBegin.Year, _periodBegin.AddYears(-1).Year);
@@ -466,6 +467,329 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         }
         #endregion
 
+        #region GetResultTable
+        /// <summary>
+        /// Get data to build  seasonality report as a table
+        /// Give : 
+        ///     -Investments on N
+        ///     -Evol n vs N-1 (only if comparative study)
+        ///     -Reference number
+        ///     -Average of investment per reference
+        ///     -First advertiser in k€ and SOV (only for eventual advertiser lines)
+        ///     -First reference in k€ and SOV (only for eventual product lines)
+        /// For univers, market or sector and on potential references and competitors advertisers
+        /// </summary>
+        /// <returns>Table with a mensual compareason N vs N-1</returns>
+        /// <returns></returns>
+        public override ResultTable GetResultTable() {
+
+            ResultTable resultTable = null;
+
+            bool showProduct = _session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+
+            #region GetData
+            object[] tabResult = this.GetTableData();
+            UnitInformation selectedCurrency = GetUnit();
+            #endregion
+
+            #region No data
+            if (tabResult.GetLength(0) == 0) {
+                return null;
+            }
+            #endregion
+
+            #region construction du tableau de saisonnalité
+            //Init var tables
+            object[,] tab = (object[,])tabResult[0];
+            object[,] tabTotal = (object[,])tabResult[1];
+            object[,] tabTotalUniverse = (object[,])tabResult[2];
+            int TAB_MAX_COLUMN_INDEX = 0;
+            int TAB_MAX_LINE_INDEX = 0;
+            if (tab != null) {
+                TAB_MAX_COLUMN_INDEX = tab.GetLength(1);
+                TAB_MAX_LINE_INDEX = tab.GetLength(0);
+            }
+            else if (tabTotal != null && (tab == null || tab.GetLength(0) == 0)) {
+                TAB_MAX_COLUMN_INDEX = tabTotal.GetLength(1);
+                TAB_MAX_LINE_INDEX = tabTotal.GetLength(0);
+            }
+            #endregion
+
+            #region Headers
+            int indexColheader = 1;
+            Headers headers = new Headers();
+
+            HeaderColumnLineHeader currentHeaderColumnLineHeader = new HeaderColumnLineHeader(string.Empty);
+            headers.Root.Add(currentHeaderColumnLineHeader);
+
+            Header currentHeader = new Header(string.Empty, indexColheader);
+            headers.Root.Add(currentHeader);
+
+            indexColheader++;
+            currentHeader = new Header(selectedCurrency.GetUnitSignWebText(_session.SiteLanguage) + " (" + GestionWeb.GetWebWord(2782, _session.SiteLanguage) + ")" + " " + _periodBegin.Year, indexColheader);
+            headers.Root.Add(currentHeader);
+
+
+			//Evol (optionnelle)
+			if(_session.ComparativeStudy){
+                indexColheader++;
+                currentHeader = new Header(GestionWeb.GetWebWord(1168, _session.SiteLanguage) + " " + _periodBegin.Year + "/" + _periodBegin.AddYears(-1).Year, indexColheader);
+                headers.Root.Add(currentHeader);
+            }
+
+            indexColheader++;
+            currentHeader = new Header(GestionWeb.GetWebWord(1152, _session.SiteLanguage), indexColheader);
+            headers.Root.Add(currentHeader);
+
+            indexColheader++;
+            currentHeader = new Header(GestionWeb.GetWebWord(1153, _session.SiteLanguage), indexColheader);
+            headers.Root.Add(currentHeader);
+
+			//First advertiser (optionnels)
+            indexColheader++;
+            currentHeader = new Header(GestionWeb.GetWebWord(1154, _session.SiteLanguage), true, indexColheader);
+            headers.Root.Add(currentHeader);
+
+            indexColheader++;
+            currentHeader = new Header(string.Empty, indexColheader);
+            headers.Root.Add(currentHeader);
+
+            indexColheader++;
+            currentHeader = new Header(GestionWeb.GetWebWord(437, _session.SiteLanguage), indexColheader);
+            headers.Root.Add(currentHeader);
+
+			if (showProduct) {
+				//Separator
+				if (!_excel) {
+					//str.Append("<td class=\"violetBackGround columnSeparator\"><img width=1px></td>");
+				}
+				//1er références (optionnels)	
+                indexColheader++;
+                currentHeader = new Header(GestionWeb.GetWebWord(1155, _session.SiteLanguage), true, indexColheader);
+                headers.Root.Add(currentHeader);
+
+                indexColheader++;
+                currentHeader = new Header(string.Empty, indexColheader);
+                headers.Root.Add(currentHeader);
+
+                indexColheader++;
+                currentHeader = new Header(GestionWeb.GetWebWord(437, _session.SiteLanguage), indexColheader);
+                headers.Root.Add(currentHeader);
+			}
+			#endregion
+
+            #region Get monthes
+            int nbMonths = _periodEnd.Month - _periodBegin.Month + 1;
+            int currentmonth = _periodBegin.Month;
+            int month = _periodBegin.Month;
+            //Nombre de lignes à traiter
+            int maxLineToTreat = nbMonths;
+            #endregion
+
+            #region Indexes
+            DataTable dtTotalMarket = null;
+            int nbAdvertiser = 0;
+            if (tab != null) {
+                nbAdvertiser = (nbMonths > 0) ? (TAB_MAX_LINE_INDEX - 1) / nbMonths : 0;
+            }
+            else if ((tabTotal != null || tabTotalUniverse != null) && (tab == null || tab.GetLength(0) == 0)) {
+                nbAdvertiser = 0;
+            }
+            //Total Univers line
+            Int64 TOTAL_UNIVERS_LINE_INDEX = 1;
+            //Market or sector total lineindex ligne total marché ou famille
+            Int64 TOTAL_SECTOR_LINE_INDEX = 1;
+            //Rowspan
+            int rowspan = 0;
+            if (((tabTotal == null || tabTotal.GetLength(0) == 0) || (tabResult == null || tabResult[3] == null && dtTotalMarket == null)) && (tabTotalUniverse == null || tabTotalUniverse.GetLength(0) == 0)) {
+                rowspan = nbAdvertiser + 1;
+            }
+            else if ((tabTotal == null) && (tabResult != null && tabResult[3] == null) && (tabTotalUniverse != null || tabTotalUniverse.GetLength(0) > 0)) {
+                rowspan = nbAdvertiser + 1;
+            }
+            else if (((tabTotal != null && tabTotal.GetLength(0) > 0) || (tabResult != null || tabResult[3] != null && (dtTotalMarket != null && dtTotalMarket.Rows.Count > 0))) && (tabTotalUniverse == null || tabTotalUniverse.GetLength(0) == 0)) {
+                rowspan = nbAdvertiser + 1;
+            }
+            else {
+                rowspan = nbAdvertiser + 2;
+            }
+            #endregion
+
+            #region Calcul nb line for the result Table
+            int nbLine = 0;
+
+            //Has Line Totals Sector or Toltals market
+            if ((_session.ComparaisonCriterion == CstComparaisonCriterion.sectorTotal && tabTotal != null && !(tabTotal.GetLength(0) == 0))
+                || (_session.ComparaisonCriterion == CstComparaisonCriterion.marketTotal && tabResult != null && tabResult[3] != null)) {
+                nbLine += nbMonths;
+            }
+            //Has Line Totals univers
+            if (tabTotalUniverse != null && !(tabTotalUniverse.GetLength(0) == 0)) {
+                nbLine += nbMonths;
+            }
+            //Has Line Advertisers
+            
+            if (tab != null && !(tab.GetLength(0) == 0)) {
+                Int64 currentLineindex = 1;
+                for (int resultIndex = 0, m = 1; m <= nbMonths; m++, resultIndex++) {
+                    for (Int64 i = currentLineindex; i < tab.GetLength(0); i += nbMonths) {
+                        nbLine++;
+                    }
+                    currentLineindex = m + 1;
+                    currentmonth++;
+                }
+            }
+            #endregion
+
+            resultTable = new ResultTable(nbLine, headers);
+
+            #region Monthes
+            //For each selected monthes
+            DataRow[] foundRows;
+            Int64 currentLine = 1;
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+            CultureInfo cInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
+            CellUnitFactory cellUnitFactory = GetCellUnitFactory();
+            double value = 0;
+            currentmonth = _periodBegin.Month;
+            object invest;
+            object evol;
+            object refNb;
+            object avgInvest;
+            object advLabel;
+            object advInvest;
+            object advSOV;
+            object refLabel = null;
+            object refInvest = null;
+            object refSOV = null;
+            LineType currentLineType = LineType.total;
+
+
+            for (int resultIndex=0, m = 1; m <= nbMonths; m++, resultIndex++) {
+
+                HeaderLine currentHeaderLine = new HeaderLine(MonthString.GetCharacters(currentmonth, cInfo, 0));
+                currentLineType = LineType.total;
+
+                #region Total sector
+                if (_session.ComparaisonCriterion == CstComparaisonCriterion.sectorTotal && tabTotal != null && !(tabTotal.GetLength(0) == 0)) {
+                    invest = tabTotal[TOTAL_SECTOR_LINE_INDEX, INVESTMENT_COLUMN_INDEX];
+                    evol = tabTotal[TOTAL_SECTOR_LINE_INDEX, EVOLUTION_COLUMN_INDEX];
+                    refNb = tabTotal[TOTAL_SECTOR_LINE_INDEX, REFERENCE_COLUMN_INDEX];
+                    avgInvest = tabTotal[TOTAL_SECTOR_LINE_INDEX, AVERAGE_BUDGET_COLUMN_INDEX];
+                    advLabel = tabTotal[TOTAL_SECTOR_LINE_INDEX, FIRST_ADVERTISER_COLUMN_INDEX];
+                    advInvest = tabTotal[TOTAL_SECTOR_LINE_INDEX, FIRST_ADVERTISER_INVEST_COLUMN_INDEX];
+                    advSOV = tabTotal[TOTAL_SECTOR_LINE_INDEX, FIRST_ADVERTISER_SOV_COLUMN_INDEX];
+                    if (showProduct) {
+                        refLabel = tabTotal[TOTAL_SECTOR_LINE_INDEX, FIRST_PRODUCT_COLUMN_INDEX];
+                        refInvest = tabTotal[TOTAL_SECTOR_LINE_INDEX, FIRST_PRODUCT_INVEST_COLUMN_INDEX];
+                        refSOV = tabTotal[TOTAL_SECTOR_LINE_INDEX, FIRST_PRODUCT_SOV_COLUMN_INDEX];
+                    }
+                    AppendLineResultTable(currentLineType, resultTable, currentHeaderLine, GestionWeb.GetWebWord(1189, _session.SiteLanguage), invest, evol, refNb, avgInvest, advLabel, advInvest, advSOV, refLabel, refInvest, refSOV);
+                }
+                #endregion
+
+                #region Total Market
+                else if (_session.ComparaisonCriterion == CstComparaisonCriterion.marketTotal && tabResult != null && tabResult[3] != null) {
+                    dtTotalMarket = (DataTable)tabResult[3];
+                    if (dtTotalMarket != null && dtTotalMarket.Rows.Count > 0) {
+
+                        foundRows = dtTotalMarket.Select(string.Format("MOIS = {0}", month), "MOIS ASC", DataViewRowState.OriginalRows);
+                        if (foundRows != null && foundRows.Length > 0 && foundRows[0] != null) {
+                            invest = foundRows[0]["TOTAL_N"];
+                            evol = null;
+                            if (foundRows[0].Table.Columns.Contains("EVOL")) {
+                                evol = foundRows[0]["EVOL"];
+                            }
+                            refNb = foundRows[0]["NBREF"];
+                            avgInvest = foundRows[0]["BUDGET_MOYEN"];
+                            advLabel = foundRows[0]["ADVERTISER"];
+                            advInvest = foundRows[0]["INVESTMENT_ADVERTISER"];
+                            advSOV = foundRows[0]["SOV_FIRST_ADVERTISER"];
+                            if (showProduct) {
+                                refLabel = foundRows[0]["PRODUCT"];
+                                refInvest = foundRows[0]["INVESTMENT_PRODUCT"];
+                                refSOV = foundRows[0]["SOV_FIRST_PRODUCT"];
+                            }
+
+                            AppendLineResultTable(currentLineType, resultTable, currentHeaderLine, GestionWeb.GetWebWord(1190, _session.SiteLanguage), invest, evol, refNb, avgInvest, advLabel, advInvest, advSOV, refLabel, refInvest, refSOV);
+
+                        }
+                    }
+                }
+                #endregion
+
+                #region Total univers
+                //Total univers	
+                if (tabTotalUniverse != null && !(tabTotalUniverse.GetLength(0) == 0)) {
+
+                    invest = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, INVESTMENT_COLUMN_INDEX];
+                    evol = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, EVOLUTION_COLUMN_INDEX];
+                    refNb = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, REFERENCE_COLUMN_INDEX];
+                    avgInvest = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, AVERAGE_BUDGET_COLUMN_INDEX];
+                    advLabel = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, FIRST_ADVERTISER_COLUMN_INDEX];
+                    advInvest = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, FIRST_ADVERTISER_INVEST_COLUMN_INDEX];
+                    advSOV = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, FIRST_ADVERTISER_SOV_COLUMN_INDEX];
+                    if (showProduct) {
+                        refLabel = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, FIRST_PRODUCT_COLUMN_INDEX];
+                        refInvest = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, FIRST_PRODUCT_INVEST_COLUMN_INDEX];
+                        refSOV = tabTotalUniverse[TOTAL_UNIVERS_LINE_INDEX, FIRST_PRODUCT_SOV_COLUMN_INDEX];
+                    }
+                    AppendLineResultTable(currentLineType, resultTable, currentHeaderLine, GestionWeb.GetWebWord(1188, _session.SiteLanguage), invest, evol, refNb, avgInvest, advLabel, advInvest, advSOV, refLabel, refInvest, refSOV);
+
+                }
+                #endregion
+
+                #region Advertisers
+                if (tab != null && !(tab.GetLength(0) == 0)) {
+                    for (Int64 i = currentLine; i < tab.GetLength(0); i += nbMonths) {
+
+                        #region Reference or competitor?
+                        if (tab[i, ID_ADVERTISER_COLUMN_INDEX] != null) {
+                            Int64 idAdv = Convert.ToInt64(tab[i, ID_ADVERTISER_COLUMN_INDEX]);
+                            if (_referenceIDS.Contains(idAdv)) {
+                                currentLineType = LineType.level1;
+                            }
+                            else if (_competitorIDS.Contains(idAdv)) {
+                                currentLineType = LineType.level2;
+                            }
+                        }
+                        #endregion
+
+                        invest = tab[i, INVESTMENT_COLUMN_INDEX];
+                        evol = tab[i, EVOLUTION_COLUMN_INDEX];
+                        refNb = tab[i, REFERENCE_COLUMN_INDEX];
+                        avgInvest = tab[i, AVERAGE_BUDGET_COLUMN_INDEX];
+                        advLabel = null;
+                        advInvest = null;
+                        advSOV = null;
+                        refLabel = null;
+                        refInvest = null;
+                        refSOV = null;
+
+                        AppendLineResultTable(currentLineType, resultTable, currentHeaderLine, tab[i, ADVERTISER_COLUMN_INDEX].ToString(), invest, evol, refNb, avgInvest, advLabel, advInvest, advSOV, refLabel, refInvest, refSOV);
+
+                    }
+                }
+                #endregion
+
+                //Next monh
+                currentLine = m + 1;
+                currentmonth++;
+                TOTAL_UNIVERS_LINE_INDEX++;
+                TOTAL_SECTOR_LINE_INDEX++;
+                month++;
+            }
+            #endregion
+
+            #region Add HeadersLine to Header Columns Line Header
+            currentHeaderColumnLineHeader.HeadersLine =resultTable.NewHeadersLine;
+            #endregion
+
+            return resultTable;
+
+        }
+        #endregion
+
         #region GetTableData
         /// <summary>
         /// Get data to build  seasonality report as a table
@@ -480,7 +804,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// </summary>
         /// <returns>Table with a mensual compareason N vs N-1</returns>
         /// <returns></returns>
-        public object[] GetTableData()
+        public virtual object[] GetTableData()
         {
 
             object[] tabResult = new object[4];
@@ -725,7 +1049,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// </summary>
         /// <remarks>Used to build seasonality graph.</remarks>
         /// <returns>Month by month investments</returns>
-        public object[,] GetChartData()
+        public virtual object[,] GetChartData()
         {
 
             #region Load data
@@ -739,11 +1063,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             //Get univers total
             DataSet dsTotalUniverse = _dalLayer.GetSeasonalityGraphData(false, true);
             DataTable dtTotalUniverse = null;
-            if (dsTotalUniverse != null && dsTotalUniverse.Tables[0] != null && dsTotalUniverse.Tables[0].Rows.Count > 0) dtTotalUniverse = dsTotalUniverse.Tables[0];
+            if (dsTotalUniverse != null && dsTotalUniverse.Tables.Count>0 && dsTotalUniverse.Tables[0] != null && dsTotalUniverse.Tables[0].Rows.Count > 0) dtTotalUniverse = dsTotalUniverse.Tables[0];
             //Get market or sector total
             DataSet dsTotal = _dalLayer.GetSeasonalityGraphData(false, false);
             DataTable dtTotal = null;
-            if (dsTotal != null && dsTotal.Tables[0] != null && dsTotal.Tables[0].Rows.Count > 0) dtTotal = dsTotal.Tables[0];
+            if (dsTotal != null && dsTotal.Tables.Count>0 && dsTotal.Tables[0] != null && dsTotal.Tables[0].Rows.Count > 0) dtTotal = dsTotal.Tables[0];
             #endregion
 
             #region Indexes
@@ -895,7 +1219,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             int indexLineRef = 0;
             int nbProduct = 0;
             int nbAdvertiser = 0;
-			Int64 oldIdProduct = long.MinValue, currentIdProduct = -1;
+            Int64 oldIdProduct = long.MinValue, currentIdProduct = -1;
             Int64 TotStartIndex = 0;
             object[,] tab = null;
             int[] TotNbRefByMonth = new int[MonthsInterval];
@@ -1320,7 +1644,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 str.Append("<td class=\"violetBackGround columnSeparator\"><img width=1px></td>");
             }
-            if ((Convert.ToDecimal(advInvest) / (Decimal)1000) > 0)
+            if ((Convert.ToDouble(advInvest) / (Double)1000) > 0)
             {
                 //1er advertiser (optionnels)
                 if (advLabel != null)
@@ -1366,6 +1690,221 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         }
         #endregion
 
+        #region AppendLine result Table
+        /// <summary>
+        /// Append cells to the current line
+        /// </summary>
+        /// <param name="lineType">Line Type</param>
+        /// <param name="resultTable">Object to fill</param>
+        /// <param name="headerLine">Header Line</param>
+        /// <param name="lineLabel">label Line</param>
+        /// <param name="oInvest">Investments object</param>
+        /// <param name="oEvol">Evolution object</param>
+        /// <param name="oRefNb">Number of reference</param>
+        /// <param name="oAvgInvest">Average of investments</param>
+        /// <param name="oAdvLabel">First Advertiser Label</param>
+        /// <param name="oAdvInvest">First Advertiser Investments</param>
+        /// <param name="oAdvSOV">First Advertiser Share of voice</param>
+        /// <param name="oRefLabel">First Product Label</param>
+        /// <param name="oRefInvest">First Product Investments</param>
+        /// <param name="oRefSOV">First Product Share of voice</param>
+        protected void AppendLineResultTable(LineType lineType, ResultTable resultTable, HeaderLine headerLine, string lineLabel, object oInvest, object oEvol, object oRefNb, object oAvgInvest, object oAdvLabel, object oAdvInvest, object oAdvSOV, object oRefLabel, object oRefInvest, object oRefSOV) {
+            bool showProduct = _session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
+            int currentLine = resultTable.AddNewLine(lineType, headerLine);
+            int indexCol = 1;
+            CellUnitFactory cellUnitFactory = GetCellUnitFactory();
+            CellNumber cellNumber = null;
+            CellEvol cellEvol = null;
+            CellPercent cellPercent = null;
+            CellLabel cellLabel = null;
+
+            #region Level Label
+            if (lineLabel != null) {
+                resultTable[currentLine, indexCol] = GetCellLabel(lineLabel.ToString());
+            }
+            else {
+                resultTable[currentLine, indexCol] = GetCellLabel(string.Empty);
+            }
+            #endregion
+
+            #region Invest
+            indexCol++;
+            if (oInvest != null && oInvest != System.DBNull.Value)
+            {
+                resultTable[currentLine, indexCol] = cellUnitFactory.Get(Convert.ToDouble(oInvest));
+            }
+            else {
+                resultTable[currentLine, indexCol] = GetCellLabel("-");
+            }
+            #endregion
+
+            #region Evol
+            if (_session.ComparativeStudy) {
+                indexCol++;
+                if (oEvol != null && oEvol != System.DBNull.Value)
+                {
+                    cellEvol = new CellEvol(Convert.ToDouble(oEvol));
+                    
+                }
+                else {
+                    cellEvol = new CellEvol(0);
+                }
+
+                cellEvol.StringFormat = "{0:percentage}";
+                resultTable[currentLine, indexCol] = cellEvol;
+            }
+            #endregion
+
+            #region Nb Ref
+                indexCol++;
+                if (oRefNb != null && oRefNb != System.DBNull.Value)
+                {
+                    cellNumber = new CellNumber(Convert.ToDouble(oRefNb));
+                    cellNumber.StringFormat = "{0:max0}";
+                    resultTable[currentLine, indexCol] = cellNumber;
+                }
+                else {
+                    resultTable[currentLine, indexCol] = GetCellLabel("-");
+                }
+            
+            #endregion
+
+            #region Average
+            indexCol++;
+            if (oAvgInvest != null && oAvgInvest != System.DBNull.Value)
+            {
+                resultTable[currentLine, indexCol] = cellUnitFactory.Get(Convert.ToDouble(oAvgInvest));
+            }
+            else {
+                resultTable[currentLine, indexCol] = GetCellLabel("-");
+            }
+            #endregion
+
+            if (oAdvInvest != null && oAdvInvest !=System.DBNull.Value && (Convert.ToDouble(oAdvInvest) / (Double)1000) > 0)
+            {
+
+                #region First Advertiser
+                indexCol++;
+                if (oAdvLabel != null && oAdvLabel != System.DBNull.Value)
+                {
+                    cellLabel = GetCellLabel(oAdvLabel.ToString());
+                }
+                else {
+                    cellLabel = GetCellLabel("-");
+                }
+                cellLabel.NewGroup = true;
+                resultTable[currentLine, indexCol] = cellLabel;
+                #endregion
+
+                #region First Advertiser Invest
+                indexCol++;
+                if (oAdvInvest != null && oAdvInvest != System.DBNull.Value)
+                {
+                    resultTable[currentLine, indexCol] = cellUnitFactory.Get(Convert.ToDouble(oAdvInvest));
+                }
+                else {
+                    resultTable[currentLine, indexCol] = GetCellLabel("-");
+                }
+                #endregion
+
+                #region First Advertiser SOV
+                indexCol++;
+                if (oAdvSOV != null && oAdvSOV != System.DBNull.Value)
+                {
+                    cellPercent = new CellPercent(Convert.ToDouble(oAdvSOV));
+                    cellPercent.StringFormat = "{0:percentage}";
+                    resultTable[currentLine, indexCol] = cellPercent;
+                }
+                else {
+                    resultTable[currentLine, indexCol] = GetCellLabel("-");
+                }
+                #endregion
+
+                if (showProduct) {
+
+                    #region First Product
+                    indexCol++;
+                    if (oRefLabel != null && oRefLabel != System.DBNull.Value)
+                    {
+                        cellLabel = GetCellLabel(oRefLabel.ToString());
+                    }
+                    else {
+                        cellLabel = GetCellLabel("-");
+                    }
+                    cellLabel.NewGroup = true;
+                    resultTable[currentLine, indexCol] = cellLabel;
+                    #endregion
+
+                    #region First Product Invest
+                    indexCol++;
+                    if (oRefInvest != null && oRefInvest != System.DBNull.Value)
+                    {
+                        resultTable[currentLine, indexCol] = cellUnitFactory.Get(Convert.ToDouble(oRefInvest));
+                    }
+                    else {
+                        resultTable[currentLine, indexCol] = GetCellLabel("-");
+                    }
+                    #endregion
+
+                    #region First Product SOV
+                    indexCol++;
+                    if (oRefSOV != null && oRefSOV != System.DBNull.Value)
+                    {
+                        cellPercent = new CellPercent(Convert.ToDouble(oRefSOV));
+                        cellPercent.StringFormat = "{0:percentage}";
+                        resultTable[currentLine, indexCol] = cellPercent;
+                    }
+                    else {
+                        resultTable[currentLine, indexCol] = GetCellLabel("-");
+                    }
+                    #endregion	
+
+                }
+            }
+            else {
+
+                #region First Advertiser
+                indexCol++;
+                cellLabel = GetCellLabel("-");
+                cellLabel.NewGroup = true;
+                resultTable[currentLine, indexCol] = cellLabel;
+                #endregion
+
+                #region First Advertiser Invest
+                indexCol++;
+                resultTable[currentLine, indexCol] = GetCellLabel("-");
+                #endregion
+
+                #region First Advertiser SOV
+                indexCol++;
+                resultTable[currentLine, indexCol] = GetCellLabel("-");
+                #endregion
+
+                if (showProduct) {
+
+                    #region First Product
+                    indexCol++;
+                    cellLabel = GetCellLabel("-");
+                    cellLabel.NewGroup = true;
+                    resultTable[currentLine, indexCol] = cellLabel;
+                    #endregion
+
+                    #region First Product Invest
+                    indexCol++;
+                    resultTable[currentLine, indexCol] = GetCellLabel("-");
+                    #endregion
+
+                    #region First Product SOV
+                    indexCol++;
+                    resultTable[currentLine, indexCol] = GetCellLabel("-");
+                    #endregion
+
+                }
+            }
+
+        }
+        #endregion
+
 		#region ComputeInvest for one advertiser
 		/// <summary>
 		/// Compute investment by month for adevrtiser or product
@@ -1403,6 +1942,24 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 		#endregion
 
 		#endregion
+
+        #region GetCellUnitFactory
+        /// <summary>
+        /// CellUnitfactory according to the unit chosen by customer acquires
+        /// </summary>
+        /// <returns></returns>
+        protected virtual CellUnitFactory GetCellUnitFactory()
+        {
+
+            UnitInformation selectedUnit = GetUnit();
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(selectedUnit.Assembly);
+            Type type = assembly.GetType(selectedUnit.CellType);
+            Cell cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
+            cellUnit.StringFormat = selectedUnit.StringFormat;
+            return (new CellUnitFactory((CellUnit)cellUnit));
+        }
+        #endregion
+      
 
 	}
 }

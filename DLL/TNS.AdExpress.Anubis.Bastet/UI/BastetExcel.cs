@@ -20,6 +20,7 @@ using BastetExceptions=TNS.AdExpress.Anubis.Bastet.Exceptions;
 using TNS.AdExpress.Bastet.Translation;
 using TNS.AdExpress.Bastet.Web;
 using Aspose.Cells.Drawing;
+using TNS.FrameWork.DB.Common;
 
 
 namespace TNS.AdExpress.Anubis.Bastet.UI {
@@ -657,8 +658,8 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		/// Top médias utilisés
 		/// </summary>
 		/// <param name="parameters">paramètres</param>
-		protected void TopVehicle(BastetCommon.Parameters parameters){
-			UI.Vehicle.TopUsed(_excel,parameters,_language);
+        protected void TopVehicle(BastetCommon.Parameters parameters, IDataSource dataSourceClassification) {
+			UI.Vehicle.TopUsed(_excel,parameters,_language, dataSourceClassification);
 		}
 		#endregion
 
@@ -667,10 +668,24 @@ namespace TNS.AdExpress.Anubis.Bastet.UI {
 		/// Top médias utilisés par module
 		/// </summary>
 		/// <param name="parameters">paramètres</param>
-		protected void TopVehicleByModule(BastetCommon.Parameters parameters){
-			UI.Vehicle.TopByModule(_excel,parameters,_language);
+        protected void TopVehicleByModule(BastetCommon.Parameters parameters, IDataSource dataSourceClassification) {
+			UI.Vehicle.TopByModule(_excel,parameters,_language, dataSourceClassification);
 		}
 		#endregion
+
+        #region Top connections Clients, IP, time slot
+        /// <summary>
+        /// Top connections Clients, IP, time slot
+        /// </summary>
+        ///<param name="excelpath">chemin fichier excel</param>
+        ///<param name="parameters">paramètres des statistiques</param>
+        protected void TopConnectedByIpTimeSlot(string excelpath, BastetCommon.Parameters parameters)
+        {
+
+            _excel = UI.Client.TopConnectedByIpTimeSlot(_excel, parameters, _language);
+
+        }
+        #endregion
 		
 		#region Sauvegarde du fichier
 		/// <summary>

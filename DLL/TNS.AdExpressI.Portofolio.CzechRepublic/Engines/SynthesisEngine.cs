@@ -30,13 +30,16 @@ using TNS.FrameWork.WebResultUI;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpressI.Portofolio.Engines;
 #endregion
 
-namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
+namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines
+{
     /// <summary>
     /// CzechRepublic synthesis engine
     /// </summary>
-    public class SynthesisEngine : AbstractResult.SynthesisEngine {
+    public class SynthesisEngine : AbstractResult.SynthesisEngine
+    {
 
         #region Constructor
         /// <summary>
@@ -48,7 +51,8 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
         /// <param name="periodBeginning">Period Beginning </param>
         /// <param name="periodEnd">Period End</param>
         public SynthesisEngine(WebSession webSession, VehicleInformation vehicleInformation, Int64 idMedia, string periodBeginning, string periodEnd)
-            : base(webSession, vehicleInformation, idMedia, periodBeginning, periodEnd) {
+            : base(webSession, vehicleInformation, idMedia, periodBeginning, periodEnd)
+        {
         }
         #endregion
 
@@ -58,7 +62,8 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
         /// </summary>
         /// <param name="isAlertModule">isAlertModule</param>
         /// <returns>List of result</returns>
-        protected override List<ICell> ComputeDataProductNumberInTracking(bool isAlertModule) {
+        protected override List<ICell> ComputeDataProductNumberInTracking(bool isAlertModule)
+        {
             return null;
         }
         /// <summary>
@@ -66,7 +71,8 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
         /// </summary>
         /// <param name="isAlertModule">isAlertModule</param>
         /// <returns>List of result</returns>
-        protected override List<ICell> ComputeDataProductNumberInVehicle(bool isAlertModule) {
+        protected override List<ICell> ComputeDataProductNumberInVehicle(bool isAlertModule)
+        {
             return null;
         }
         /// <summary>
@@ -74,7 +80,7 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
         /// </summary>
         /// <param name="isAlertModule">isAlertModule</param>
         /// <returns>List of result</returns>
-        protected override List<ICell> ComputeDataAverageDurationEcran(bool isAlertModule) {
+        protected override List<ICell> ComputeDataAverageDurationEcran(DataEcran dataEcran) {
             return null;
         }
         /// <summary>
@@ -82,11 +88,12 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
         /// </summary>
         /// <param name="isAlertModule">isAlertModule</param>
         /// <returns>List of result</returns>
-        protected override List<ICell> ComputeDataSpotNumberByEcran(bool isAlertModule) {
+        protected override List<ICell> ComputeDataSpotNumberByEcran(DataEcran dataEcran) {
             return null;
         }
         //_displayTypeSale
-        protected override List<ICell> ComputeDataNetworkType(bool isAlertModule) {
+        protected override List<ICell> ComputeDataNetworkType(bool isAlertModule)
+        {
             return null;
         }
 
@@ -95,7 +102,8 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
         /// Compute Data investment Total (override for evaliant SK)
         /// </summary>
         /// <returns></returns>
-        protected override List<ICell> ComputeDataInvestissementsTotal() {
+        protected override List<ICell> ComputeDataInvestissementsTotal(AbstractResult.DataUnit dataUnit)
+        {
 
             #region Variables
             List<ICell> data = null;
@@ -104,11 +112,12 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
             #endregion
 
             #region Get Data
-            investment = GetInvestment(GetDataInvestment());
+            investment = dataUnit.GetInvestment();
             #endregion
 
             #region Compute data
-            if (investment != null && investment.Length > 0 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) {
+            if (investment != null && investment.Length > 0 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile)
+            {
                 data = new List<ICell>(2);
                 data.Add(new CellLabel(GestionWeb.GetWebWord(2787, _webSession.SiteLanguage) + " (" + defaultCurrency.GetUnitWebText(_webSession.SiteLanguage) + ")"));
                 CellEuro cE = new CellEuro(double.Parse(investment));
@@ -122,78 +131,24 @@ namespace TNS.AdExpressI.Portofolio.CzechRepublic.Engines {
         }
         #endregion
 
-        #region SpotNumberGetData
-        /// <summary>
-        /// Spot Number Get Data
-        /// </summary>
-        /// <returns>Spot Number</returns>
-        protected override string SpotNumberGetData(){
-            return GetSpotNumber(GetDataInvestment());
-        }
-        #endregion
-
-        #region EcranNumberGetData
-        /// <summary>
-        /// Ecran Number Get Data
-        /// </summary>
-        /// <param name="isAlertModule">Is Alert Module</param>
-        /// <returns>Ecran Number</returns>
-        protected override string EcranNumberGetData(bool isAlertModule) {
-            return GetEcranNumber(GetDataEncartData(isAlertModule));
-        }
-        #endregion
-
-        #region TotalDurationGetData
-        /// <summary>
-        /// Total Duration Get Data
-        /// </summary>
-        /// <returns>Total Duration</returns>
-        protected override string TotalDurationGetData() {
-            return GetTotalDuration(GetDataInvestment());
-        }
-        #endregion
-
-        #region GetSpotNumber
-        /// <summary>
-        /// GetSpotNumber
-        /// </summary>
-        protected override string GetSpotNumber(DataTable dt) {
-            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.insertion) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString())
-                && dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString().Length > 0)
-                return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
-            else if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.spot) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString()))
-                return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString()].ToString());
-            else if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.occurence) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.occurence].Id.ToString()))
-                return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.occurence].Id.ToString()].ToString());
-            else
-                return string.Empty;
-        }
-        #endregion
-
-        #region GetEcranNumber
-        /// <summary>
-        /// GetEcranNumber
-        /// </summary>
-        protected override string GetEcranNumber(DataTable dt) {
-            if (dt != null) {
-                return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
-            }
-            else return string.Empty;
-        }
-        #endregion
-
-        #region GetTotalDuration
-        /// <summary>
-        /// GetTotalDuration
-        /// </summary>
-        protected override string GetTotalDuration(DataTable dt) {
-            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.duration) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()))
-                return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()].ToString());
-            return string.Empty;
-        }
-        #endregion
-
         #endregion
 
     }
+    #region Class Data Unit
+    /// <summary>
+    /// Data Unit
+    /// </summary>
+    public class DataUnit : AbstractResult.DataUnit
+    {
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public DataUnit(IPortofolioDAL portofolioDAL, VehicleInformation vehicleInformation)
+            : base(portofolioDAL, vehicleInformation)
+        {
+        }
+        #endregion
+    }
+    #endregion
 }

@@ -184,11 +184,19 @@ namespace AdExpress.Private.Selection{
 		{
 
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode ();
-
+            try{
 //			recallWebControl.CustomerWebSession=_webSession;
 			recapAdvertiserSelectionWebControl.WebSession=_webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
 			MenuWebControl2.ForbidRecall = true;
+            }
+            catch (System.Exception exc)
+            {
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                }
+            }
 			return tmp;
 
 		}
@@ -196,6 +204,8 @@ namespace AdExpress.Private.Selection{
 
 		#region Bouton Valider
 		protected void validateButton_Click(object sender, System.EventArgs e) {
+
+              try{
 			string errorText=string.Empty;
 			List<long> advertisers = null, savedAdvertisers = null;
 			int nbSavedAdvertisers = 0;
@@ -245,13 +255,9 @@ namespace AdExpress.Private.Selection{
 				}
 				nbSavedAdvertisers = nbSavedAdvertisers + advertisers.Count;
 
-				//Action valider ==> enregistrement dans concurrents
-				//if(_webSession.CurrentUniversAdvertiser.Nodes.Count + 
-				//    _webSession.ReferenceUniversAdvertiser.Nodes.Count
-				//    <51){
+				
 				if(nbSavedAdvertisers<51){
-					//_webSession.CompetitorUniversAdvertiser.Clear();
-					//_webSession.CompetitorUniversAdvertiser.Add(0,_webSession.CurrentUniversAdvertiser);
+					
 					if (advertisers.Count > 0) {
 						nomenclatureElementsGroup = new NomenclatureElementsGroup(0, AccessType.includes);
 						nomenclatureElementsGroup.AddItems(TNSClassificationLevels.ADVERTISER, advertisers);
@@ -283,6 +289,14 @@ namespace AdExpress.Private.Selection{
 				}
 			}
 			_webSession.Save();
+              }
+              catch (System.Exception exc)
+              {
+                  if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                  {
+                      this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                  }
+              }
 		}
 		#endregion
 

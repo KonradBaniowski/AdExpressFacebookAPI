@@ -1146,10 +1146,17 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 			switch(idVehicle){
 				case DBClassificationConstantes.Vehicles.names.others:
 				case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
 					sql+=GetMediaTables(preformatedMediaDetail);
 					sql+=", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+DBConstantes.Tables.GROUP_+ "  "+DbTables.GROUP_PREFIXE;
 					break;
-				case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
 					sql+=GetMediaTables(preformatedMediaDetail);
 					sql+=", "+DBConstantes.Schema.ADEXPRESS_SCHEMA+"."+DBConstantes.Tables.GROUP_+ "  "+DbTables.GROUP_PREFIXE;
 					break;
@@ -1329,14 +1336,21 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 
 				case DBClassificationConstantes.Vehicles.names.others:
 				case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
 					// Groupe
 					sql.Append(" and "+DbTables.GROUP_PREFIXE+".id_group_="+dataTablePrefixe+".id_group_ ");
 					sql.Append(" and "+DbTables.GROUP_PREFIXE+".id_language="+webSession.DataLanguage.ToString());
 					sql.Append(" and "+DbTables.GROUP_PREFIXE+".activation < "+ DBConstantes.ActivationValues.UNACTIVATED);
 
 					sql.Append(GetMediaJoinConditions(webSession,dataTablePrefixe,true));
-					break;
-				case DBClassificationConstantes.Vehicles.names.radio:
+					break;			
+                case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
 					sql.Append(GetMediaJoinConditions(webSession,dataTablePrefixe,true));
 					// Groupe
 					sql.Append(" and "+DbTables.GROUP_PREFIXE+".id_group_="+dataTablePrefixe+".id_group_ ");

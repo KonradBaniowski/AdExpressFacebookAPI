@@ -131,58 +131,7 @@ namespace AdExpress.Private.MyAdExpress{
 		protected void oKImageButtonRollOverWebControl_Click(object sender, System.EventArgs e) {
 			
 			try {
-				#region Ancienne version
-				//if (directoryDropDownList.Items.Count!=0){
-				//    string mySessionName = this.mySessionTextBox.Text;
-				//    mySessionName = CheckedText.CheckedAccentText(mySessionName);
-				//    if (mySessionName.Length!=0 && mySessionName.Length<TNS.AdExpress.Constantes.Web.MySession.MAX_LENGHT_TEXT){				
-				//        if (!MySessionsDataAccess.IsSessionExist(_webSession, mySessionName)){
-				//            if(MySessionDataAccess.SaveMySession(Int64.Parse(directoryDropDownList.SelectedItem.Value),mySessionName,_webSession)){
-
-				//                #region Tracking utilisation sauvegarde
-				//                _webSession.OnUseMyAdExpressSave();
-				//                #endregion
-
-				//                // Validation : confirmation d'enregistrement de la requête
-				//                Response.Write("<script language=javascript>");
-				//                Response.Write("	alert(\""+GestionWeb.GetWebWord(826,_webSession.SiteLanguage)+"\");");
-				//                Response.Write("	window.close();");						
-				//                Response.Write("</script>");
-				//            }
-				//            else{
-				//                // Erreur : Echec de l'enregistrement de la requête
-				//                Response.Write("<script language=javascript>");
-				//                Response.Write("	alert(\""+GestionWeb.GetWebWord(825,_webSession.SiteLanguage)+"\");");
-				//                Response.Write("</script>");
-				//            }
-				//        }
-				//        else{
-				//            // Erreur : session déjà existante
-				//            Response.Write("<script language=javascript>");
-				//            Response.Write("	alert(\""+GestionWeb.GetWebWord(824,_webSession.SiteLanguage)+"\");");
-				//            Response.Write("</script>");
-				//        }
-				//    }
-				//    else if(mySessionName.Length==0){
-				//        // Erreur : Le champs est vide
-				//        Response.Write("<script language=javascript>");
-				//        Response.Write("	alert(\""+GestionWeb.GetWebWord(822,_webSession.SiteLanguage)+"\");");
-				//        Response.Write("</script>");
-				//    }
-				//    else{
-				//        // Erreur : suppérieur à 50 caractères
-				//        Response.Write("<script language=javascript>");
-				//        Response.Write("	alert(\""+GestionWeb.GetWebWord(823,_webSession.SiteLanguage)+"\");");
-				//        Response.Write("</script>");
-				//    }
-				//}
-				//else{
-				//    // Erreur : Impossible de sauvegarder, pas de répertoire créé
-				//    Response.Write("<script language=javascript>");
-				//    Response.Write("	alert(\""+GestionWeb.GetWebWord(711,_webSession.SiteLanguage)+"\");");
-				//    Response.Write("</script>");
-				//}
-				#endregion
+				
 
 				if (directoryDropDownList.Items.Count != 0) {
 					//string mySessionName = this.mySessionTextBox.Text;

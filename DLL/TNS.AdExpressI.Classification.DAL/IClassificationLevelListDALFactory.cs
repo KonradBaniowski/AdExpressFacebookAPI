@@ -8,6 +8,7 @@ using System;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Level;
+using TNS.Classification.Universe;
 
 namespace TNS.AdExpressI.Classification.DAL {
 	/// <summary>
@@ -28,18 +29,22 @@ namespace TNS.AdExpressI.Classification.DAL {
 		/// <param name="idList">classification items' identifier list</param>
 		ClassificationLevelListDAL CreateClassificationLevelListDAL(DetailLevelItemInformation detailLevelItemInformation, string idList);
 
-
-		/// Get partial items list of a classification's level
-		/// </summary>
-		/// <param name="table">Target table used to build the list</param>
-		/// <param name="idList">classification items' identifier list</param>
-		ClassificationLevelListDAL CreateDefaultClassificationLevelListDAL(string table, string idList);
-
+        /// Get partial items list of a classification's level
+        /// </summary>
+        /// <param name="levelType">Classification level type</param>
+        /// <param name="idList">classification items' identifier list</param>
         ClassificationLevelListDAL CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type levelType, string idList);
+
+		
+
         ClassificationLevelListDAL CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type levelType, string idList, string dbSchema);
         /// <summary>
         /// Get if data items shiould be in lower case
         /// </summary>
         bool ToLowerCase { get; }	
+        ClassificationLevelListDAL CreateDefaultClassificationLevelListDAL(UniverseLevel level, string idList);
+
+      
+		
 	}
 }

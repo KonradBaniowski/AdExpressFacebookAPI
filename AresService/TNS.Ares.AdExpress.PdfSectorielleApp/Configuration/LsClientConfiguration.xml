@@ -6,9 +6,9 @@
   </lsClientConfiguration>-->
 
   <!-- Config SK (421) -->
-  <lsClientConfiguration familyId="130" familyName="AdExpress SK Treatment service" monitorPort="30260" productName="Ares Service treatment - PDF Analyse Secto (Hotep)" maxAvailableSlots="1" directoryName="421\Plugins\Hotep.xml">
+  <!--<lsClientConfiguration familyId="130" familyName="AdExpress SK Treatment service" monitorPort="30260" productName="Ares Service treatment - PDF Analyse Secto (Hotep)" maxAvailableSlots="1" directoryName="421\Plugins\Hotep.xml">
     <moduleDescription description="Ares Service treatment - PDF Analyse Secto (Hotep)" moduleId="6"/>
-  </lsClientConfiguration>
+  </lsClientConfiguration>-->
 
   <!-- Config SK Evaliant (4211) 
   <lsClientConfiguration familyId="130" familyName="AdExpress SK Evaliant Treatment service" monitorPort="30272" productName="Ares Service treatment - PDF Analyse Secto (Hotep)" maxAvailableSlots="1" directoryName="4211\Plugins\Hotep.xml">
@@ -25,8 +25,8 @@
   <moduleDescription description="Ares Service treatment - PDF Analyse Secto (Hotep)" moduleId="6"/>
 </lsClientConfiguration>-->
 
-  <!-- Config RU (7) 
-  <lsClientConfiguration familyId="130" familyName="AdExpress RU Treatment service" monitorPort="30281" productName="Ares Service treatment - PDF Analyse Secto (Hotep)" maxAvailableSlots="1" directoryName="7\Plugins\Hotep.xml">
+  <!-- Config RU (7) -->
+  <lsClientConfiguration familyId="139" familyName="AdExpress RU Treatment service" monitorPort="30281" productName="Ares Service treatment - PDF Analyse Secto (Hotep)" maxAvailableSlots="1" directoryName="7\Plugins\Hotep.xml">
     <moduleDescription description="Ares Service treatment - PDF Analyse Secto (Hotep)" moduleId="6"/>
-  </lsClientConfiguration>-->
+  </lsClientConfiguration>
 </configurations>

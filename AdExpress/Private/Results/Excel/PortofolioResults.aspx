@@ -4,7 +4,7 @@
 <HTML>
 	<HEAD runat="server">
 		<title>AdExpress</title>
-		<meta http-equiv="Content-Type" content="application/vnd.ms-excel;"/>
+		<meta http-equiv="Content-Type" content="application/vnd.ms-excel;charset=ISO-8859-5"/>
 		<meta name="GENERATOR" Content="Microsoft Visual Studio .NET 7.1"/>
 		<meta name="CODE_LANGUAGE" Content="C#"/>
 		<meta name="vs_defaultClientScript" content="JavaScript"/>
@@ -12,7 +12,7 @@
 		<meta http-equiv="expires" content="Wed, 23 Feb 1999 10:49:02 GMT"/>
 		<meta http-equiv="expires" content="0"/>
 		<meta http-equiv="pragma" content="no-cache"/>
-		<meta name="Cache-control" content="no-cache"/>
+		<meta name="Cache-control" content="no-cache"/>		
 	</HEAD>
 	<body>
 		<form id="Form1" method="post" runat="server">

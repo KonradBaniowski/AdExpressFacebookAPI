@@ -51,6 +51,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <asp:image runat="server" ImageUrl="Images/Common/Menu/sponsorshipMenuIcon.gif" SkinID="sponsorship" />
 <asp:image runat="server" ImageUrl="Images/Common/Menu/programMenuIcon.gif" SkinID="program" />
 <asp:image runat="server" ImageUrl="Images/Common/Menu/helpMenuIcon.gif" SkinID="help" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/regionMenuIcon.gif" SkinID="region" />
 
 
 <%-- Boutons --%>
@@ -90,7 +91,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%@ Register TagPrefix="ctrCreatives" Namespace="TNS.AdExpress.Web.Controls.Results.Creatives" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="ctrMadiaPlan" Namespace="TNS.AdExpress.Web.Controls.Results.MediaPlan" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="ctrAppm" Namespace="TNS.AdExpress.Web.Controls.Results.Appm" Assembly="TNS.AdExpress.Web.Controls" %>
-<%@ Register TagPrefix="indicatorCharts" Namespace="TNS.AdExpressI.ProductClassIndicators.Charts" Assembly="TNS.AdExpressI.ProductClassIndicators" %>
+<%@ Register TagPrefix="indicatorCharts" Namespace="TNS.AdExpressI.ProductClassIndicators.Russia.Charts" Assembly="TNS.AdExpressI.ProductClassIndicators.Russia" %>
 <%@ Register TagPrefix="ctrProductClassResults" Namespace="TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis" Assembly="TNS.AdExpress.Web.Controls" %>
 
 
@@ -662,6 +663,33 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            SkinID="portofolioResultTable" 
 />
 
+
+<%-- Result web control : used to display a generic result table (HTML) (Product Class Indicator) --%>
+<ctrResults:ResultWebControl  
+                           runat="server" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel" 
+                           CssDetailSelectionL1="dsLv1" 
+                           CssDetailSelectionL2="dsLv2" 
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3" 
+                           CssLHeader="productClassIndicatorH2" 
+                           CssCHeader="productClassIndicatorH2" 
+                           CssLTotal="productClassIndicatorTotal" 
+                           CssSubTotal1="productClassIndicatorSubTotal1" 
+                           CssSubTotal2="productClassIndicatorSubTotal2" 
+                           CssL1="productClassIndicatorRef" 
+                           CssL2="productClassIndicatorComp" 
+                           BackgroudColorL1="#ffd0ca"
+						   BackgroudColorL2="#d1ffca"
+						   BackgroudColorSubTotal1="#e1e0da" 
+                           BackgroudColorSubTotal2="#f1f1f1" 					    
+                           SkinID="productClassIndicatorResultTable" 
+/>
+
 <%-- Result web control : used to display a list of insertions --%>
 <ctrCreatives:InsertionsWebControl  
                            runat="server"
@@ -708,7 +736,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            CssL1="exlv1" 
                            CssL2="exlv2" 
                            CssL3="exlv3" 
-                           CssL4="exlv4" 
+                           CssL4="insertionExlv4" 
                            CssCellInfo="insertionInfo"
                            CssLHeader="exh2"
 						   CssLTotal="exlv0" 
@@ -964,7 +992,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%-- Portofolio detail media result : used to display generic result for portofolio media detail (Excel) --%>
 <ctrResults:PortofolioDetailMediaResultWebControl  
                            runat="server" 
-                           CssL1="exlv3" 
+                           CssL1="insertionDetailExlv3" 
                            CssL2="exlv2"
                            CssLHeader="exh2" 
                            CssDetailSelectionBordelLevel="dsBorderLevel" 
@@ -1193,7 +1221,9 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%-- Generic detail selection web control : used to display columns detail --%>
 <ctrHeader:genericdetailselectionwebcontrol 
                            runat="server"
-                           ThemeName = "RuAE-Uk"
+                           ThemeName = "RuAE-Uk"                        
+                           TitleBarWidth = "1700"
+                           TitleDivWidth = "1696"
 />
 
 <%-- Media insertions creations result web control 

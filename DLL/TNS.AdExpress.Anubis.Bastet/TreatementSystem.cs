@@ -31,6 +31,7 @@ using TNS.AdExpress.Bastet.Web;
 using TNS.AdExpress.Domain.Layers;
 using TNS.Ares.Domain.LS;
 using TNS.AdExpress.Anubis.Bastet.Exceptions;
+using TNS.AdExpress.Domain.XmlLoader;
 
 
 namespace TNS.AdExpress.Anubis.Bastet {
@@ -110,7 +111,11 @@ namespace TNS.AdExpress.Anubis.Bastet {
 		/// <summary>
 		/// Source de données pour charger la session du résultat
 		/// </summary>
-        protected IDataSource _dataSource;
+		private IDataSource _dataSource;
+        /// <summary>
+        /// Source de données pour charger la nomenclature
+        /// </summary>
+        private IDataSource _dataSourceClassification;
 		/// <summary>
 		/// Configuration du plug-in
 		/// </summary>
@@ -187,7 +192,22 @@ namespace TNS.AdExpress.Anubis.Bastet {
                 catch (Exception e) {
                     throw new BastetExcelException("Impossible to Create Instance Of Layer IStaticNavSessionDAL ", e);
                 }
-                #endregion
+                #endregion               
+
+
+                bool useDefaultConnection = false;
+
+                try {
+                    useDefaultConnection = RightOptionsXL.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.RIGHT_OPTIONS_CONFIGURATION_FILENAME));
+                }
+                catch (Exception e) {
+                    throw new BastetExcelException("Impossible to Right Option", e);
+                }
+
+                if (useDefaultConnection)
+                    _dataSourceClassification = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(TNS.AdExpress.Domain.DataBaseDescription.DefaultConnectionIds.adExpressRussia);
+                else
+                    _dataSourceClassification = dataSource;
 
                 #region Check Path File
                 if (configurationFilePath == null) {
@@ -247,8 +267,8 @@ namespace TNS.AdExpress.Anubis.Bastet {
 				#endregion
 
 				#region Excel management
-				
-				_excel = new BastetExcelSystem(_dataSource,_bastetConfig,rqDetails,(Parameters)Parameters.Load(_navSessionId, _dataSource));
+
+                _excel = new BastetExcelSystem(_dataSource, _dataSourceClassification, _bastetConfig, rqDetails, (Parameters)Parameters.Load(_navSessionId, _dataSource));
 				string fileName = _excel.Init();
 				_excel.Fill();
                 _dataAccess.RegisterFile(_navSessionId, fileName);
@@ -268,9 +288,10 @@ namespace TNS.AdExpress.Anubis.Bastet {
 			}
 			finally{
 				try{
-                    //if (File.Exists(_excel.ExcelFilePath)) {
-                    //    File.Delete(_excel.ExcelFilePath);
-                    //}
+                    if (File.Exists(_excel.ExcelFilePath))
+                    {
+                        File.Delete(_excel.ExcelFilePath);
+                    }
 				}
 				catch(System.Exception){					
 				}

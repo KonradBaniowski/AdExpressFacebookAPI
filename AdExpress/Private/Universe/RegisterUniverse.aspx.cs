@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+
+using System;
 using System.Text;
 using System.Data;
 using System.Configuration;
@@ -35,6 +37,8 @@ public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.Pr
 	/// Branch type product or media
 	/// </summary>
 	string stringBranch = "";
+
+    protected int _nbMaxItemByLevel = 1000;
 	#endregion
 
 	#region Constructor
@@ -54,6 +58,15 @@ public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.Pr
 	/// <param name="e">Arguments</param>
 	protected void Page_Load(object sender, EventArgs e) {
 		try {
+
+
+            switch (_webSession.CurrentModule)
+            {               
+                case WebConstantes.Module.Name.INDICATEUR:
+                case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
+                    _nbMaxItemByLevel = 100000;
+                    break;
+            }
 
 			stringBranch = Page.Request.QueryString.Get("brancheType");
 			idUniverseClientDescription = Int64.Parse(Page.Request.QueryString.Get("idUniverseClientDescription"));
@@ -206,6 +219,10 @@ public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.Pr
         else if (stringBranch.Equals(TNS.AdExpress.Constantes.Classification.Branch.type.advertisingAgency.GetHashCode().ToString())) {
             return TNS.AdExpress.Constantes.Classification.Branch.type.advertisingAgency;
         }
+        else if (stringBranch.Equals(TNS.AdExpress.Constantes.Classification.Branch.type.advertisementType.GetHashCode().ToString()))
+        {
+            return TNS.AdExpress.Constantes.Classification.Branch.type.advertisementType;
+        }
 		else
 			return 0;
 	}
@@ -303,7 +320,7 @@ public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.Pr
 				// Erreur : Impossible de sauvegarder, pas de groupe d'univers créé
 				Response.Write(WebFunctions.Script.AlertWithWindowClose(GestionWeb.GetWebWord(925, _webSession.SiteLanguage)));
 			}
-		}
+		}       
         catch (System.Exception err)
         {
             if (err.GetType() == typeof(TNS.Classification.Universe.SecurityException) ||
@@ -320,8 +337,8 @@ public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.Pr
             else if (err.GetType() != typeof(System.Threading.ThreadAbortException))
             {
                 this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, err, _webSession));
-            }
-        }
+			}
+		}
 	}
 	#endregion
 
@@ -382,6 +399,9 @@ public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.Pr
                     case TNS.AdExpress.Constantes.Classification.Branch.type.advertisingAgency:
                         adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(Dimension.advertisingAgency);
                         break;
+                    case TNS.AdExpress.Constantes.Classification.Branch.type.advertisementType:
+                        adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(Dimension.advertisementType);
+                        break;
 					default: return null;
 				}
 				
@@ -390,11 +410,11 @@ public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.Pr
 				if (levelsIdsHiddenField != null && levelsIdsHiddenField[0] != null && levelsIdsHiddenField[0].ToString().Trim().Length > 0) {
 					
 					string[] levelsArr = levelsIdsHiddenField[0].Split('|');
-					
+                   
 					for (int i = 0; i < levelsArr.Length; i++) {
 						string[] tempArr = levelsArr[i].Split(':');
 						string[] levelParams = tempArr[0].Split('_');
-
+                        string[] tempArr2 = null;
 						//Create a new group
 						if (!oldGroupIdList.Contains(long.Parse(levelParams[0]))) {
 							if (!first && oGroup != null && oGroup.Count()>0) adExpressUniverse.AddGroup(adExpressUniverse.Count(), oGroup);
@@ -403,6 +423,9 @@ public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.Pr
 						}
 
 						if (oGroup != null && tempArr[1] != null && tempArr[1].Length>0) {
+                            tempArr2 =  tempArr[1].Split(',');
+                            if (tempArr2 != null && tempArr2.Length > _nbMaxItemByLevel) throw new TNS.Classification.Universe.CapacityException("Dépassement du nombre d'éléments autorisés pour un niveau");
+							
 							oGroup.AddItems(long.Parse(levelParams[2]), tempArr[1]);
 						}
 						if (!oldGroupIdList.Contains(long.Parse(levelParams[0])))
@@ -413,7 +436,7 @@ public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.Pr
 			}
 		}
 
-		return adExpressUniverse;
+        return adExpressUniverse;
 	}
 	#endregion
 }

@@ -1,10 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configuration>
   <layers>
-    <layer id="classification" name="layer of classification" assemblyName="TNS.AdExpressI.Classification.DAL.SqlServerRussia.dll" class="TNS.AdExpressI.Classification.DAL.SqlServerRussia.ClassificationDAL"/>
+    <layer id="classification" name="layer of classification" assemblyName="TNS.AdExpressI.Classification.DAL.Russia.dll" class="TNS.AdExpressI.Classification.DAL.Russia.ClassificationDAL"/>
     <layer id="date" name="layer of date functions" assemblyName="TNS.AdExpressI.Date.Default.dll" class="TNS.AdExpressI.Date.Default.Date"/>
     <layer id="dateDAL" name="layer of date DataAccess" assemblyName="TNS.AdExpressI.Date.DAL.Russia.dll" class="TNS.AdExpressI.Date.DAL.Russia.DateDAL"/>
-    <layer id="classificationLevelList" name="layer of classification" assemblyName="TNS.AdExpressI.Classification.DAL.SqlServerRussia.dll" class="TNS.AdExpressI.Classification.DAL.SqlServerRussia.ClassificationLevelListDALFactory"/>
-    <layer id="visual" name="layer of visual" assemblyName="TNS.AdExpressI.Visual.Default.dll" class="TNS.AdExpressI.Visual.Default.Visual"/>
+    <layer id="classificationLevelList" name="layer of classification" assemblyName="TNS.AdExpressI.Classification.DAL.Russia.dll" class="TNS.AdExpressI.Classification.DAL.Russia.ClassificationLevelListDALFactory"/>
+    <layer id="sourceProvider" name="layer of russia data source" assemblyName="TNS.AdExpress.Web.Core.Russia.dll" class="TNS.AdExpress.Web.Core.Russia.SourceProvider"/>
+    <layer id="insertions" name="insertions layer" assemblyName="TNS.AdExpressI.Insertions.Russia.dll" class="TNS.AdExpressI.Insertions.Russia.InsertionsResult"/>
+    <layer id="insertionsDAL" name="insertions DAL layer" assemblyName="TNS.AdExpressI.Insertions.DAL.Russia.dll" class="TNS.AdExpressI.Insertions.DAL.Russia.InsertionsDAL"/>
+    <layer id="creativesUtilities" name="layer of creatives Utilities" assemblyName="TNS.AdExpress.Web.Core.Russia.dll" class="TNS.AdExpress.Web.Core.Russia.Utilities.Creatives"/>
+    <layer id="creativePopUp" name="layer of creative Pop Up" assemblyName="TNS.AdExpressI.Insertions.Russia.dll" class="TNS.AdExpressI.Insertions.Russia.CreativeResult.CreativePopUp"/>
+    <layer id="mediaDetailLevelUtilities" name="layer of media Detail Level Utilities" assemblyName="TNS.AdExpress.Web.Core.Russia.dll" class="TNS.AdExpress.Web.Core.Russia.Utilities.MediaDetailLevel"/>
+    <layer id="productDetailLevelUtilities" name="layer of product Detail Level Utilities" assemblyName="TNS.AdExpress.Web.Core.Russia.dll" class="TNS.AdExpress.Web.Core.Russia.Utilities.ProductDetailLevel"/>
+    <layer id="classificationLevelListRussia" name="layer of classification" assemblyName="TNS.AdExpressI.Classification.DAL.Russia.dll" class="TNS.AdExpressI.Classification.DAL.Russia.ClassificationLevelListDALRussia"/>
+    <!--<layer id="visual" name="layer of visual" assemblyName="TNS.AdExpressI.Visual.Russia.dll" class="TNS.AdExpressI.Visual.Russia.Visual"/>-->
+    <layer id="visual" name="layer of visual" assemblyName="TNS.AdExpressI.Visual.Russia.WebService.dll" class="TNS.AdExpressI.Visual.Russia.WebService.Visual"/>
   </layers>
 </configuration>

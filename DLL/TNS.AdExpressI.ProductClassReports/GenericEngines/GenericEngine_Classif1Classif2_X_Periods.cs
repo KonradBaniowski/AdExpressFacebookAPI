@@ -31,6 +31,9 @@ using TNS.FrameWork.Date;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpressI.Date.DAL;
+using System.Reflection;
 
 namespace TNS.AdExpressI.ProductClassReports.GenericEngines
 {
@@ -42,14 +45,14 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
     {
 
         #region Constants
-        private const Int32 ID_PRODUCT = 0;
-        private const Int32 ID_YEAR_N = -1;
-        private const Int32 ID_PDV_YEAR_N = -2;
-        private const Int32 ID_PDM_YEAR_N = -3;
-        private const Int32 ID_YEAR_N1 = -4;
-        private const Int32 ID_PDV_YEAR_N1 = -5;
-        private const Int32 ID_PDM_YEAR_N1 = -6;
-        private const Int32 ID_EVOL = -7;
+        protected const Int32 ID_PRODUCT = 0;
+        protected const Int32 ID_YEAR_N = -1;
+        protected const Int32 ID_PDV_YEAR_N = -2;
+        protected const Int32 ID_PDM_YEAR_N = -3;
+        protected const Int32 ID_YEAR_N1 = -4;
+        protected const Int32 ID_PDV_YEAR_N1 = -5;
+        protected const Int32 ID_PDM_YEAR_N1 = -6;
+        protected const Int32 ID_EVOL = -7;
         #endregion
 
         #region Attributes
@@ -197,7 +200,13 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
 
             #region Periods
             DateTime begin = FctUtilities.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
-            string periodEnd = FctUtilities.Dates.CheckPeriodValidity(_session, _session.PeriodEndDate);
+
+            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+            object[] param = new object[1];
+            param[0] = _session;
+            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            string periodEnd = dateDAL.CheckPeriodValidity(_session, _session.PeriodEndDate);
+
             int yearN = Convert.ToInt32(_session.PeriodBeginningDate.Substring(0, 4));
             int yearN1 = _session.ComparativeStudy ? yearN - 1 : -1;
             Int32 DATA_FIRST_MONTH_COLUMN = -1;
@@ -698,5 +707,6 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
 
         }
         #endregion
+                
     }
 }

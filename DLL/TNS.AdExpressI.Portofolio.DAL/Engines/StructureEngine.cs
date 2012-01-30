@@ -111,7 +111,14 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 		protected override DataSet ComputeData() {
 			switch (_vehicleInformation.Id) {
 				case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
 				case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
 				case DBClassificationConstantes.Vehicles.names.others:
 					return GetStructData();
 				case DBClassificationConstantes.Vehicles.names.press:
@@ -251,11 +258,18 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 			string sql = "";
 			switch (_vehicleInformation.Id) {
 				case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
 					sql += " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_top_diffusion>=" + hourBegin;
 					sql += " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_top_diffusion<=" + hourEnd;
 					return sql;
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
 					sql += " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".top_diffusion>=" + hourBegin;
 					sql += " and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".top_diffusion<=" + hourEnd;
 					return sql;

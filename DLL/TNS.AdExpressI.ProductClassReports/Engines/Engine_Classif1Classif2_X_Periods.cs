@@ -16,6 +16,9 @@ using TNS.Classification.Universe;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web;
 using TNS.FrameWork.Date;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpressI.Date.DAL;
+using System.Reflection;
 
 namespace TNS.AdExpressI.ProductClassReports.Engines
 {
@@ -222,8 +225,14 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 			//Month
 			int RESULT_MONTHS = -10;
 			int RESULT_LAST_MONTHS = -10;
-			string absolutePeriodEnd = FctUtilities.Dates.CheckPeriodValidity(_session, _session.PeriodEndDate);
-			if (_monthlyExtended) 
+
+            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+            object[] param = new object[1];
+            param[0] = _session;
+            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            string absolutePeriodEnd = dateDAL.CheckPeriodValidity(_session, _session.PeriodEndDate);
+			
+            if (_monthlyExtended) 
 			{
 				RESULT_MONTHS = Math.Max(RESULT_PDV_N_1_INDEX, 
 					Math.Max(RESULT_PDM_N_1_INDEX, 
@@ -761,8 +770,14 @@ namespace TNS.AdExpressI.ProductClassReports.Engines
 			//Monthes of N
 			int MONTH_COLUMN = -1;
 			int LAST_MONTH_COLUMN = -2;
-			string absolutePeriodEnd = FctUtilities.Dates.CheckPeriodValidity(_session, _session.PeriodEndDate);
-			if (_monthlyExtended)
+
+            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+            object[] param = new object[1];
+            param[0] = _session;
+            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            string absolutePeriodEnd = dateDAL.CheckPeriodValidity(_session, _session.PeriodEndDate);
+
+            if (_monthlyExtended)
 			{
 				MONTH_COLUMN = Math.Max(EVOL_COLUMN,
 					Math.Max(PDV_N_1_COLUMN,

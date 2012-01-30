@@ -38,6 +38,13 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
     public class ChartEvolution : ChartProductClassIndicator
     {
 
+        #region Variables
+        /// <summary>
+        /// Engine Evolution
+        /// </summary>
+        protected EngineEvolution _engine;
+        #endregion
+
         #region Constructor
         /// <summary>
         /// Default Constructor
@@ -48,6 +55,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             : base(session, dalLayer)
         {
             this._classifLevel = classifLevel;
+            InitEngine();
         }
         #endregion
 
@@ -57,7 +65,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             base.OnPreRender(e);
 
             IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
-            UnitInformation defaultKCurrency = UnitsInformation.List[UnitsInformation.DefaultKCurrency];
+            UnitInformation defaultKCurrency = GetUnit();
 
             #region Series Init
             Series series = new Series("Evolution");
@@ -68,15 +76,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             #endregion
 
             #region Get Data
-            EngineEvolution engine = new EngineEvolution(this._session, this._dalLayer);
-            object[,] tab = engine.GetData(this._classifLevel); 
-            long last = tab.GetLongLength(0) - 1;
+            object[,] tab = _engine.GetData(this._classifLevel); 
 
-            if (tab.GetLongLength(0) == 0)
+            if (tab == null || tab.GetLongLength(0) == 0)
             {
                 this.Visible = false;
                 return;
             }
+            long last = tab.GetLongLength(0) - 1;
             #endregion
 
             #region Chart Design
@@ -111,79 +118,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             #endregion
 
             #region Series building
-            double ecart = 0;
-            string sEcart = string.Empty;
-            int typeElt = 0;
-            int compteur = 0;
             bool hasComp = false;
             bool hasRef = false;
-			bool hasMixed = false;
-			
-
-            for (int i = 0; i < tab.GetLongLength(0) && i < 10; i++)
-            {
-                ecart = Convert.ToDouble(tab[i, EngineEvolution.ECART]);
-                if (ecart > 0)
-                {
-                    series.Points.AddXY(tab[i, EngineEvolution.PRODUCT].ToString(), Math.Round(FctUtilities.Units.ConvertUnitValue(ecart, _session.Unit)));
-                    series.Points[compteur].ShowInLegend = true;
-
-                    #region Reference or competitor ?
-                    if (tab[i, EngineEvolution.COMPETITOR] != null)
-                    {
-                        typeElt = Convert.ToInt32(tab[i, EngineEvolution.COMPETITOR]);
-						if (typeElt == 3) {
-							series.Points[compteur].Color = (Color)_colorConverter.ConvertFrom(_mixedSerieColor);
-							hasMixed = true;
-						}
-						else if (typeElt == 2)
-                        {
-                            series.Points[compteur].Color = (Color)_colorConverter.ConvertFrom(_competitorSerieColor);
-                            hasComp = true;
-                        }
-                        else if (typeElt == 1)
-                        {
-                            series.Points[compteur].Color = (Color)_colorConverter.ConvertFrom(_referenceSerieColor);
-                            hasRef = true;
-                        }
-                    }
-                    #endregion
-
-                    compteur++;
-                }
-                ecart = Convert.ToDouble(tab[last, EngineEvolution.ECART]);
-                if (ecart < 0)
-                {
-                    series.Points.AddXY(tab[last, EngineEvolution.PRODUCT].ToString(), Math.Round(FctUtilities.Units.ConvertUnitValue(ecart, _session.Unit)));
-                    series.Points[compteur].ShowInLegend = true;
-
-                    #region Reference or competitor ?
-                    if (tab[last, EngineEvolution.COMPETITOR] != null)
-                    {
-                        typeElt = Convert.ToInt32(tab[last, EngineEvolution.COMPETITOR]);
-						if (typeElt == 3) {
-							series.Points[compteur].Color = (Color)_colorConverter.ConvertFrom(_mixedSerieColor);
-							hasMixed = true;
-						}
-                        else if (typeElt == 2)
-                        {
-                            series.Points[compteur].Color = (Color)_colorConverter.ConvertFrom(_competitorSerieColor);
-                            hasComp = true;
-                        }
-                        else if (typeElt == 1)
-                        {
-                            series.Points[compteur].Color = (Color)_colorConverter.ConvertFrom(_referenceSerieColor);
-                            hasRef = true;
-                        }
-                    }
-                    #endregion
-
-                    compteur++;
-                }
-
-                last--;
-
-            }
+            bool hasMixed = false;
+            SetSeriesData( tab,  series,  last, ref  hasComp, ref  hasRef, ref    hasMixed);            
             #endregion
 
             #region Legends
@@ -273,6 +211,100 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
         }
         #endregion
 
+        #region Init Engine
+        /// <summary>
+        /// Init Engine
+        /// </summary>
+        protected virtual void InitEngine()
+        { 
+            _engine = new EngineEvolution(this._session, this._dalLayer);
+        }
+        #endregion
+
+        #region SetSeriesData
+        /// <summary>
+        /// Set Series Data
+        /// </summary>
+        /// <param name="tab">tab</param>
+        /// <param name="series">series</param>
+        /// <param name="last">last</param>
+        /// <param name="hasComp">has Competitor</param>
+        /// <param name="hasRef">has Reference</param>
+        /// <param name="hasMixed">has Mixed</param>
+        protected virtual void SetSeriesData(object[,] tab, Series series, long last, ref bool hasComp, ref bool hasRef, ref   bool hasMixed)
+        {
+            double ecart = 0;
+            string sEcart = string.Empty;
+            int typeElt = 0;
+            int compteur = 0;           
+            for (int i = 0; i < tab.GetLongLength(0) && i < 10; i++)
+            {
+                ecart = Convert.ToDouble(tab[i, EngineEvolution.ECART]);
+                if (ecart > 0)
+                {
+                    series.Points.AddXY(tab[i, EngineEvolution.PRODUCT].ToString(), Math.Round(FctUtilities.Units.ConvertUnitValue(ecart, _session.Unit)));
+                    series.Points[compteur].ShowInLegend = true;
+
+                    #region Reference or competitor ?
+                    if (tab[i, EngineEvolution.COMPETITOR] != null)
+                    {
+                        typeElt = Convert.ToInt32(tab[i, EngineEvolution.COMPETITOR]);
+                        if (typeElt == 3)
+                        {
+                            series.Points[compteur].Color = (Color)_colorConverter.ConvertFrom(_mixedSerieColor);
+                            hasMixed = true;
+                        }
+                        else if (typeElt == 2)
+                        {
+                            series.Points[compteur].Color = (Color)_colorConverter.ConvertFrom(_competitorSerieColor);
+                            hasComp = true;
+                        }
+                        else if (typeElt == 1)
+                        {
+                            series.Points[compteur].Color = (Color)_colorConverter.ConvertFrom(_referenceSerieColor);
+                            hasRef = true;
+                        }
+                    }
+                    #endregion
+
+                    compteur++;
+                }
+                ecart = Convert.ToDouble(tab[last, EngineEvolution.ECART]);
+                if (ecart < 0)
+                {
+                    series.Points.AddXY(tab[last, EngineEvolution.PRODUCT].ToString(), Math.Round(FctUtilities.Units.ConvertUnitValue(ecart, _session.Unit)));
+                    series.Points[compteur].ShowInLegend = true;
+
+                    #region Reference or competitor ?
+                    if (tab[last, EngineEvolution.COMPETITOR] != null)
+                    {
+                        typeElt = Convert.ToInt32(tab[last, EngineEvolution.COMPETITOR]);
+                        if (typeElt == 3)
+                        {
+                            series.Points[compteur].Color = (Color)_colorConverter.ConvertFrom(_mixedSerieColor);
+                            hasMixed = true;
+                        }
+                        else if (typeElt == 2)
+                        {
+                            series.Points[compteur].Color = (Color)_colorConverter.ConvertFrom(_competitorSerieColor);
+                            hasComp = true;
+                        }
+                        else if (typeElt == 1)
+                        {
+                            series.Points[compteur].Color = (Color)_colorConverter.ConvertFrom(_referenceSerieColor);
+                            hasRef = true;
+                        }
+                    }
+                    #endregion
+
+                    compteur++;
+                }
+
+                last--;
+
+            }
+        }
+        #endregion
     }
 
 }

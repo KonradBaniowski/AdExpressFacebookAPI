@@ -48,7 +48,10 @@ namespace TNS.AdExpress.Constantes.FrameWork.Selection {
 		/// Evènement Rppel des options
 		/// </summary>
 		public const int RECALL_OPTIONS_EVENT = 9;
-
+        /// <summary>
+        /// Evènement Initialisation en conservant la sélection précédente
+        /// </summary>
+        public const int INITIALIZE_WITH_PREVIOUS_SELECTION_EVENT = 10;
 		#endregion
 
 	}
@@ -107,4 +110,25 @@ namespace TNS.AdExpress.Constantes.FrameWork.Selection {
 	}
 	
 	#endregion
+
+    #region OptionalSelections
+    /// <summary>
+    /// Optional Page Selections
+    /// </summary>
+    public class OptionalPageSelections
+    {
+        /// <summary>
+        /// Option slogan page selection
+        /// </summary>
+        public const int SLOGAN = 7;
+
+        /// <summary>
+        /// Option Ad type page selection
+        /// </summary>
+        public const int ADVERTISEMENT_TYPE = 8;
+    }
+
+    #endregion
+
+
 }

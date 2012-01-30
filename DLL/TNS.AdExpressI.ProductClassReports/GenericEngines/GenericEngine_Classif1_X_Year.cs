@@ -7,7 +7,7 @@ using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstFormat = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstPersonalized = TNS.AdExpress.Constantes.Web.AdvertiserPersonalisation.Type;
-using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
+using FctUtilities = TNS.AdExpress.Web.Functions;
 
 using TNS.Classification.Universe;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -27,12 +27,12 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
     {
 
         #region Constant
-        private const Int32 ID_LEVEL = -1;
-        private const Int32 ID_N = -2;
-        private const Int32 ID_PDMV_N = -3;
-        private const Int32 ID_N1 = -4;
-        private const Int32 ID_PDMV_N1 = -5;
-        private const Int32 ID_EVOL = -6;
+        protected const Int32 ID_LEVEL = -1;
+        protected const Int32 ID_N = -2;
+        protected const Int32 ID_PDMV_N = -3;
+        protected const Int32 ID_N1 = -4;
+        protected const Int32 ID_PDMV_N1 = -5;
+        protected const Int32 ID_EVOL = -6;
         #endregion
 
         #region Constructor

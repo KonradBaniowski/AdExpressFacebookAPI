@@ -45,6 +45,9 @@ using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpressI.Date;
 using TNS.AdExpress.Domain.Web;
 using refSystem = System.Reflection;
+using TNS.AdExpressI.Date.DAL;
+using System.Reflection;
+using System.Collections.Generic;
 
 
 namespace AdExpress.Private.MyAdExpress{
@@ -131,6 +134,16 @@ namespace AdExpress.Private.MyAdExpress{
         public bool IsAlertsActivated {
             get {
                 return (AlertConfiguration.IsActivated && _webSession.CustomerLogin.HasModuleAssignmentAlertsAdExpress());
+            }
+        }
+        /// <summary>
+        /// Get if can save insertion customised levels
+        /// </summary>
+        public bool CanSaveInsertionCustomisedLevels
+        {
+            get
+            {
+                return (WebApplicationParameters.InsertionOptions.CanSaveLevels);
             }
         }
 
@@ -407,6 +420,11 @@ namespace AdExpress.Private.MyAdExpress{
                 bool verifCustomerPeriod = false;
                 bool validResultPage = true;
 
+                CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+                object[] param = new object[1];
+                param[0] = _webSession;
+                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+
 
 				foreach (string currentKey in Request.Form.AllKeys){
 					tabParent=currentKey.Split('_');
@@ -427,7 +445,7 @@ namespace AdExpress.Private.MyAdExpress{
 							validModule=true; 
 						}
                         //Verifie droit accès resultat courant
-                        Module module = right.GetModule(webSessionSave.CurrentModule);
+                        TNS.AdExpress.Domain.Web.Navigation.Module module = right.GetModule(webSessionSave.CurrentModule);
                         if (module != null)
                         {
                             validResultPage = (module.GetResultPageInformation(Convert.ToInt32(webSessionSave.CurrentTab)) != null);
@@ -598,8 +616,9 @@ namespace AdExpress.Private.MyAdExpress{
 
                         int oldYear = 2000;
                         long selectedVehicle = ((LevelInformation)webSessionSave.SelectionUniversMedia.FirstNode.Tag).ID;
-						if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE)
-							FirstDayNotEnable = WebFunctions.Dates.GetFirstDayNotEnabled(webSessionSave, selectedVehicle, oldYear,_webSession.Source); 
+                        if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE)
+                            //FirstDayNotEnable = WebFunctions.Dates.GetFirstDayNotEnabled(webSessionSave, selectedVehicle, oldYear,_webSession.Source); 
+                            FirstDayNotEnable = dateDAL.GetFirstDayNotEnabled(new List<Int64>(new Int64[]{selectedVehicle}), oldYear); 
 
                         switch (webSessionSave.DetailPeriod) {
                             case CstCustomerSession.Period.DisplayLevel.monthly:
@@ -680,21 +699,29 @@ namespace AdExpress.Private.MyAdExpress{
                                             periodDisponibilityType = webSessionSave.CustomerPeriodSelected.PeriodDisponibilityType;
                                         }
 
-                                        switch (periodDisponibilityType) {
-
-                                            case CstWeb.globalCalendar.periodDisponibilityType.currentDay:
-                                                lastDayEnable = DateTime.Now;
-                                                break;
-                                            case CstWeb.globalCalendar.periodDisponibilityType.lastCompletePeriod:
-                                                lastDayEnable = FirstDayNotEnable.AddDays(-1);
-                                                break;
-
+                                        if (WebApplicationParameters.UseComparativeLostWon 
+                                            && webSessionSave.CustomerPeriodSelected != null 
+                                            && webSessionSave.CustomerPeriodSelected.WithComparativePeriodPersonnalized) {
+                                            _webSession.CustomerPeriodSelected = new CustomerPeriod(webSessionSave.PeriodBeginningDate, webSessionSave.PeriodEndDate, webSessionSave.CustomerPeriodSelected.ComparativeStartDate, webSessionSave.CustomerPeriodSelected.ComparativeEndDate);
                                         }
+                                        else {
+ 
+                                            switch (periodDisponibilityType) {
 
-                                        if (CompareDateEnd(lastDayEnable, tmpEndDate) || CompareDateEnd(tmpBeginDate, DateTime.Now))
-                                            _webSession.CustomerPeriodSelected = new CustomerPeriod(_webSession.PeriodBeginningDate, _webSession.PeriodEndDate, true, comparativePeriodType, periodDisponibilityType);
-                                        else 
-                                            _webSession.CustomerPeriodSelected = new CustomerPeriod(_webSession.PeriodBeginningDate, lastDayEnable.ToString("yyyyMMdd"), true, comparativePeriodType, periodDisponibilityType);
+                                                case CstWeb.globalCalendar.periodDisponibilityType.currentDay:
+                                                    lastDayEnable = DateTime.Now;
+                                                    break;
+                                                case CstWeb.globalCalendar.periodDisponibilityType.lastCompletePeriod:
+                                                    lastDayEnable = FirstDayNotEnable.AddDays(-1);
+                                                    break;
+
+                                            }
+
+                                            if (CompareDateEnd(lastDayEnable, tmpEndDate) || CompareDateEnd(tmpBeginDate, DateTime.Now))
+                                                _webSession.CustomerPeriodSelected = new CustomerPeriod(_webSession.PeriodBeginningDate, _webSession.PeriodEndDate, true, comparativePeriodType, periodDisponibilityType);
+                                            else
+                                                _webSession.CustomerPeriodSelected = new CustomerPeriod(_webSession.PeriodBeginningDate, lastDayEnable.ToString("yyyyMMdd"), true, comparativePeriodType, periodDisponibilityType);
+                                        }
                                     }
                                     else {
                                         if (CompareDateEnd(DateTime.Now, tmpEndDate) || CompareDateEnd(tmpBeginDate, DateTime.Now))
@@ -713,8 +740,10 @@ namespace AdExpress.Private.MyAdExpress{
 					//rajouté le 27/10 par Guillaume Ragneau
 					if (_webSession.CurrentModule == CstWeb.Module.Name.INDICATEUR 
 						|| _webSession.CurrentModule == CstWeb.Module.Name.TABLEAU_DYNAMIQUE){
-						_webSession.LastAvailableRecapMonth = DBFunctions.CheckAvailableDateForMedia(
-							((LevelInformation)_webSession.SelectionUniversMedia.Nodes[0].Tag).ID, _webSession);
+                           
+                            _webSession.LastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(((LevelInformation)_webSession.SelectionUniversMedia.Nodes[0].Tag).ID);
+						//_webSession.LastAvailableRecapMonth = DBFunctions.CheckAvailableDateForMedia(
+						//	((LevelInformation)_webSession.SelectionUniversMedia.Nodes[0].Tag).ID, _webSession);
 					}
 
                     if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE
@@ -1297,8 +1326,14 @@ namespace AdExpress.Private.MyAdExpress{
 			}
 			
 			if(periodType == CstCustomerSession.Period.Type.nLastMonth || periodType == CstCustomerSession.Period.Type.currentYear){
-				string absolutEndPeriod = Dates.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
-				if ((int.Parse(absolutEndPeriod) < int.Parse(_webSession.PeriodBeginningDate)) 	|| (absolutEndPeriod.Substring(4,2).Equals("00"))){
+                
+                CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+                object[] param = new object[1];
+                param[0] = _webSession;
+                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                string absolutEndPeriod = dateDAL.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
+				
+                if ((int.Parse(absolutEndPeriod) < int.Parse(_webSession.PeriodBeginningDate)) 	|| (absolutEndPeriod.Substring(4,2).Equals("00"))){
 					notValidPeriod=true;
 					invalidPeriodMessage = GestionWeb.GetWebWord(1787,_webSession.SiteLanguage);
 				}else{						
@@ -1335,7 +1370,26 @@ namespace AdExpress.Private.MyAdExpress{
         #endregion
 
 		#endregion
-	
-		
-	}
+
+        /// <summary>
+        /// Open insertion saved pages
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">arguments</param>
+        protected void insertionOpenImageButtonRollOverWebControl_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                _webSession.Source.Close();
+                Response.Redirect("/Private/MyAdExpress/PersonnalizeInsertion.aspx?idSession=" + _webSession.IdSession + "");
+            }
+            catch (System.Exception exc)
+            {
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                }
+            }
+        }
+}
 }

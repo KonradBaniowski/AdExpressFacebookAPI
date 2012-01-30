@@ -44,6 +44,6 @@
     <level id="19" name="Agence"/>
   </branch>
   <branch id="11" name="brand" labelId="1889">
-    <level id="8" name ="brand"/>    
+    <level id="8" name ="brand"/>
   </branch>
 </universeBranches>

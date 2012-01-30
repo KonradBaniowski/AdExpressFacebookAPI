@@ -56,6 +56,7 @@ namespace TNS.AdExpress.Domain.Units {
         /// String format name
         /// </summary>
         private string _strFormat = "N";
+        private  string _assembly = "";
         #endregion
 
         #region Constructor
@@ -68,7 +69,9 @@ namespace TNS.AdExpress.Domain.Units {
         /// <param name="baseId">Parent Id</param>
         /// <param name="databaseField">Field name in occurencies data</param>
         /// <param name="databaseMultimediaField">Field name in aggregated data</param>
-        public UnitInformation(string id, string format, Int64 webTextId, Int64 webTextSignId, string baseId, string cellType, string databaseField, string databaseMultimediaField, string databaseTrendsField) {
+        /// <param name="assembly">assembly</param>
+        public UnitInformation(string id, string format, Int64 webTextId, Int64 webTextSignId ,string baseId, string cellType, string databaseField, string databaseMultimediaField, string databaseTrendsField, string assembly)
+        {
             if(id==null || id.Length==0) throw (new ArgumentException("Invalid paramter unit id"));
             if (cellType != null || cellType.Length > 0) _cellType = cellType;
             if(databaseField!=null || databaseField.Length>0) _databaseField=databaseField;
@@ -80,6 +83,7 @@ namespace TNS.AdExpress.Domain.Units {
             }
             _webTextId=webTextId;
             _webTextSignId = webTextSignId;
+            if (_assembly != null || _assembly.Length > 0) _assembly = assembly;
             try {
                 _id=(CustomerSessions.Unit)Enum.Parse(typeof(CustomerSessions.Unit),id,true);
                 if(baseId!=null && baseId.Length>0) _baseId=(CustomerSessions.Unit)Enum.Parse(typeof(CustomerSessions.Unit),baseId,true);
@@ -104,14 +108,13 @@ namespace TNS.AdExpress.Domain.Units {
         public Int64 WebTextId {
             get { return (_webTextId); }
         }
-
         /// <summary>
         /// Get Web Text Id for unit sign
         /// </summary>
-        public Int64 WebTextSignId {
+        public Int64 WebTextSignId
+        {
             get { return (_webTextSignId); }
-        }
-
+        }      
         /// <summary>
         /// Get base unit Id
         /// </summary>
@@ -146,7 +149,13 @@ namespace TNS.AdExpress.Domain.Units {
         public string CellType {
             get { return(_cellType); }
         }
-
+        /// <summary>
+        /// Get assembly name of cell
+        /// </summary>
+        public string Assembly
+        {
+            get { return (_assembly); }
+        }
         /// <summary>
         /// Get Unit format when displayed
         /// </summary>
@@ -221,7 +230,8 @@ namespace TNS.AdExpress.Domain.Units {
         /// </summary>
         /// <param name="siteLanguage">Site language</param>
         /// <returns>Web text</returns>
-        public string GetUnitWebText(int siteLanguage) {
+        public string GetUnitWebText(int siteLanguage)
+        {
             return GestionWeb.GetWebWord(_webTextId, siteLanguage);
         }
         /// <summary>
@@ -229,7 +239,8 @@ namespace TNS.AdExpress.Domain.Units {
         /// </summary>
         /// <param name="siteLanguage">Site language</param>
         /// <returns>Web text</returns>
-        public string GetUnitCapitalLetterWebText(int siteLanguage) {
+        public string GetUnitCapitalLetterWebText(int siteLanguage)
+        {
             string unitWebText = GetUnitWebText(siteLanguage);
             return WebApplicationParameters.AllowedLanguages[siteLanguage].CultureInfo.TextInfo.ToTitleCase(unitWebText);
         }
@@ -238,7 +249,8 @@ namespace TNS.AdExpress.Domain.Units {
         /// </summary>
         /// <param name="siteLanguage">Site language</param>
         /// <returns>Web text</returns>
-        public string GetUnitSignWebText(int siteLanguage) {
+        public string GetUnitSignWebText(int siteLanguage)
+        {
             return (_webTextSignId > 0) ? GestionWeb.GetWebWord(_webTextSignId, siteLanguage) : GestionWeb.GetWebWord(_webTextId, siteLanguage);
         }
         #endregion

@@ -665,6 +665,33 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            CssLTotal="prClLv0Excel" 
                            SkinID="productClassResultTableClassif1XYearXL" 
 />
+
+<%-- Result web control : used to display a generic result table (HTML) (Product Class Indicator) --%>
+<ctrResults:ResultWebControl  
+                           runat="server" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel" 
+                           CssDetailSelectionL1="dsLv1" 
+                           CssDetailSelectionL2="dsLv2" 
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3" 
+                           CssLHeader="productClassIndicatorH2" 
+                           CssCHeader="productClassIndicatorH2" 
+                           CssLTotal="productClassIndicatorTotal" 
+                           CssSubTotal1="productClassIndicatorSubTotal1" 
+                           CssSubTotal2="productClassIndicatorSubTotal2" 
+                           CssL1="productClassIndicatorRef" 
+                           CssL2="productClassIndicatorComp" 
+                           BackgroudColorL1="#ffd0ca"
+						   BackgroudColorL2="#d1ffca"
+						   BackgroudColorSubTotal1="#e1e0da" 
+                           BackgroudColorSubTotal2="#f1f1f1" 					    
+                           SkinID="productClassIndicatorResultTable" 
+/>
+
 <%-- Result web control : used to display a list of insertions --%>
 <ctrCreatives:InsertionsWebControl  
                            runat="server"
@@ -1188,7 +1215,9 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%-- Generic detail selection web control : used to display columns detail --%>
 <ctrHeader:genericdetailselectionwebcontrol 
                            runat="server"
-                           ThemeName = "AE-Fr"
+                           ThemeName = "AE-Fr"                          
+                           TitleBarWidth = "990"
+                           TitleDivWidth = "986"
 />
 
 <%-- Media insertions creations result web control 

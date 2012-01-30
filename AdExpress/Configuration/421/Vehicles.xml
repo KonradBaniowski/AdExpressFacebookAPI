@@ -61,6 +61,15 @@
       <allowedUniverseLevel id="15" name="interest_center"/>
 	  <allowedUniverseLevel id="16" name="basic_media"/>
     </allowedUniverseLevels>
+    <!--Allowed column broken down-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+        <allowedColumnDetailLevelItem id="27" name="Basic Media"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
   <!-- RADIO -->
   <vehicle id="radio" databaseId="5" showInsertions="true" showCreations="false">
@@ -147,6 +156,17 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
+    <!--Allowed column broken down-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <!--<allowedColumnDetailLevelItem id="17" name="Titre"/>-->
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+        <allowedColumnDetailLevelItem id="27" name="Basic Media"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
   <!-- TV -->
   <vehicle id="tv" databaseId="3" showInsertions="true" showCreations="false">
@@ -232,6 +252,17 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
+    <!--Allowed column broken down-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <!--<allowedColumnDetailLevelItem id="17" name="Titre"/>-->
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+        <allowedColumnDetailLevelItem id="27" name="Basic Media"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
   <!-- NewsPaper -->
   <vehicle id="newspaper" databaseId="1" showInsertions="true" showCreations="false">
@@ -316,6 +347,17 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
+    <!--Allowed column broken down-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <!--<allowedColumnDetailLevelItem id="17" name="Titre"/>-->
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+        <allowedColumnDetailLevelItem id="27" name="Basic Media"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
   <!-- Magazine -->
   <vehicle id="magazine" databaseId="2" showInsertions="true" showCreations="false">
@@ -400,6 +442,17 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
+    <!--Allowed column broken down-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <!--<allowedColumnDetailLevelItem id="17" name="Titre"/>-->
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+        <allowedColumnDetailLevelItem id="27" name="Basic Media"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
   <!-- OUTDOOR -->
   <vehicle id="outdoor" databaseId="6" showInsertions="true" showCreations="false">
@@ -503,6 +556,17 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
+    <!--Allowed column broken down-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <!--<allowedColumnDetailLevelItem id="17" name="Titre"/>-->
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+        <allowedColumnDetailLevelItem id="27" name="Basic Media"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
   <!-- INSTORE -->
   <vehicle id="instore" databaseId="8" showInsertions="true" showCreations="false">
@@ -606,6 +670,17 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
+    <!--Allowed column broken down-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <!--<allowedColumnDetailLevelItem id="17" name="Titre"/>-->
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+        <allowedColumnDetailLevelItem id="27" name="Basic Media"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
   <!-- CINEMA -->
   <vehicle id="cinema" databaseId="7" showInsertions="true" showCreations="false">
@@ -691,6 +766,17 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
+    <!--Allowed column broken down-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <!--<allowedColumnDetailLevelItem id="17" name="Titre"/>-->
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+        <allowedColumnDetailLevelItem id="27" name="Basic Media"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
   <!-- PLURIMEDIA -->
   <vehicle id="plurimedia" databaseId="50" showInsertions="false" showCreations="false">

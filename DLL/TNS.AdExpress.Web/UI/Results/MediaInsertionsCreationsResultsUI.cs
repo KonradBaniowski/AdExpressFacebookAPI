@@ -2481,10 +2481,10 @@ namespace TNS.AdExpress.Web.UI.Results{
 			string classe="";
 			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
-			#region Paramètres du tableau
-            HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
-			HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(webSession,false,periodBeginning,periodEnd,mediaImpactedList,idVehicle));
-			#endregion
+            //#region Paramètres du tableau
+            //HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
+            //HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(webSession,false,periodBeginning,periodEnd,mediaImpactedList,idVehicle));
+            //#endregion
 
 			if(MediaInsertionsCreationsRules.IsRequiredGenericColmuns(webSession)){
 
@@ -2716,10 +2716,10 @@ namespace TNS.AdExpress.Web.UI.Results{
             UnitInformation defaultCurrency = UnitsInformation.List[UnitsInformation.DefaultCurrency];
 			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
-			#region Paramètres du tableau
-            HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
-			HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(webSession,false,periodBeginning,periodEnd,mediaImpactedList,idVehicle));
-			#endregion	
+            //#region Paramètres du tableau
+            //HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
+            //HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(webSession,false,periodBeginning,periodEnd,mediaImpactedList,idVehicle));
+            //#endregion	
 			
 			if(MediaInsertionsCreationsRules.IsRequiredGenericColmuns(webSession)){
 
@@ -2948,10 +2948,10 @@ namespace TNS.AdExpress.Web.UI.Results{
             UnitInformation defaultCurrency = UnitsInformation.List[UnitsInformation.DefaultCurrency];
 			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
-			#region Paramètres du tableau
-            HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
-			HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(webSession,false,periodBeginning,periodEnd,mediaImpactedList,idVehicle));
-			#endregion
+            //#region Paramètres du tableau
+            //HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
+            //HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(webSession,false,periodBeginning,periodEnd,mediaImpactedList,idVehicle));
+            //#endregion
 
 			#region Début du tableau
             HtmlTxt.Append("<TABLE width=\"500\" class=\"whiteBackGround\" cellPadding=\"0\" align=\"center\" border=\"0\">");
@@ -3188,10 +3188,10 @@ namespace TNS.AdExpress.Web.UI.Results{
             UnitInformation defaultCurrency = UnitsInformation.List[UnitsInformation.DefaultCurrency];
 			bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
-			#region Paramètres du tableau
-            HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
-			HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(webSession,false,periodBeginning,periodEnd,mediaImpactedList,idVehicle));
-			#endregion
+            //#region Paramètres du tableau
+            //HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
+            //HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(webSession,false,periodBeginning,periodEnd,mediaImpactedList,idVehicle));
+            //#endregion
 
 			if(MediaInsertionsCreationsRules.IsRequiredGenericColmuns(webSession)){
 
@@ -3427,8 +3427,8 @@ namespace TNS.AdExpress.Web.UI.Results{
             bool showProduct = webSession.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
             #region Paramètres du tableau
-            HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
-            HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(webSession, false, periodBeginning, periodEnd, mediaImpactedList, idVehicle));
+            //HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
+            //HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(webSession, false, periodBeginning, periodEnd, mediaImpactedList, idVehicle));
             #endregion
 
             if (MediaInsertionsCreationsRules.IsRequiredGenericColmuns(webSession)) {
@@ -3695,10 +3695,10 @@ namespace TNS.AdExpress.Web.UI.Results{
             prefixeCAGT.Add(prefixePNATemp + prefixeCAGNTemp);
             #endregion
 
-            #region Paramètres du tableau
-            HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
-            HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(webSession, false, periodBeginning, periodEnd, mediaImpactedList, idVehicle));
-            #endregion
+            //#region Paramètres du tableau
+            //HtmlTxt.Append(ExcelFunction.GetLogo(webSession));
+            //HtmlTxt.Append(ExcelFunction.GetExcelHeaderForCreationsPopUpFromMediaPlan(webSession, false, periodBeginning, periodEnd, mediaImpactedList, idVehicle));
+            //#endregion
 
             #region Détail insertion presse sans gestion des colonnes génériques
 

@@ -741,7 +741,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 				// Affichage des genres d'émissions à partir de SelectionUniversProgramType
 				if(eventButton==4 || eventButton==3 || eventButton==8) {
 				//if(eventButton==constEvent.eventSelection.LOAD_EVENT || eventButton==constEvent.eventSelection.SAVE_EVENT || eventButton==8) {
-					t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSession.SelectionUniversProgramType,true,true,true,"100",true,true,webSession.SiteLanguage,3,1,true));
+                    t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSession.SelectionUniversProgramType, true, true, true, "100", true, true, webSession.SiteLanguage, 3, 1, true, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource));
 				}
 				t.Append("</td></tr></table></td></tr>");				
 				output.Write(t.ToString());	

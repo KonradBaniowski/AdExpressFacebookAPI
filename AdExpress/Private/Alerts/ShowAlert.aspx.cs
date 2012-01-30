@@ -154,9 +154,16 @@ public partial class Private_Alerts_ShowAlert : TNS.AdExpress.Web.UI.PrivateWebP
                             case ModuleName.NEW_CREATIVES:
                             case ModuleName.ANALYSE_MANDATAIRES:
                                 // Updated customer period (module use globalCalendar)
-                                _webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(occ.DateBeginStudy.ToString("yyyyMMdd"), occ.DateEndStudy.ToString("yyyyMMdd"),
-                                                                                                       _webSession.CustomerPeriodSelected.WithComparativePeriod, _webSession.CustomerPeriodSelected.ComparativePeriodType,
-                                                                                                       _webSession.CustomerPeriodSelected.PeriodDisponibilityType);
+//TODO: Vérifier pour fusion Dev=>Trunk
+                                if (session.CustomerPeriodSelected.WithComparativePeriodPersonnalized) {
+                                    session.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(occ.DateBeginStudy.ToString("yyyyMMdd"), occ.DateEndStudy.ToString("yyyyMMdd"),
+                                                                       session.CustomerPeriodSelected.ComparativeStartDate, session.CustomerPeriodSelected.ComparativeEndDate);
+                                }
+                                else {
+                                    session.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(occ.DateBeginStudy.ToString("yyyyMMdd"), occ.DateEndStudy.ToString("yyyyMMdd"),
+                                                                                                           session.CustomerPeriodSelected.WithComparativePeriod, session.CustomerPeriodSelected.ComparativePeriodType,
+                                                                                                       session.CustomerPeriodSelected.PeriodDisponibilityType);
+                                }
                                 break;
                             default:
                                 break;

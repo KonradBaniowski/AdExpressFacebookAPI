@@ -32,6 +32,9 @@ using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Web.Core.Exceptions;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpressI.Date.DAL;
+using System.Reflection;
 
 namespace TNS.AdExpress.Web.Functions{
 	/// <summary>
@@ -219,72 +222,82 @@ namespace TNS.AdExpress.Web.Functions{
 		}*/
 		#endregion
 
-		#region Affichage de la période
-		/// <summary>
-		///  Affichage de la période dans les tableaux dynamiques en fonction de l'année choisie
-		/// </summary>
-		/// <param name="webSession">Session client</param>
-		/// <param name="period">period</param>
-		/// <returns>Période dans les tableaux dynamiques en fonction de l'année choisie</returns>
-		/*public static string getPeriodLabel(WebSession webSession,TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type period){
-			string beginPeriod="";
-			string endPeriod="";
-			string year="";
-			
+        #region Get Period Label
+        /// <summary>
+        ///  Get Period label in product class analysis depending on selected year
+        /// </summary>
+        /// <param name="_session">User session</param>
+        /// <param name="period">period</param>
+        /// <returns>Label describing period in Product Class Analysis depending on selected year</returns>
+        public static string getPeriodLabel(WebSession _session, CstCustomerSession.Period.Type period)
+        {
 
-			switch(period){
-				case CstWeb.CustomerSessions.Period.Type.currentYear :
-					beginPeriod=webSession.PeriodBeginningDate;
-					endPeriod=FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
-					
-					break;
-				case CstWeb.CustomerSessions.Period.Type.previousYear :
-					year=(int.Parse(webSession.PeriodBeginningDate.Substring(0,4))-1).ToString();
-					beginPeriod=year+webSession.PeriodBeginningDate.Substring(4);
-					//endPeriod= year+webSession.PeriodEndDate.Substring(4);
-					endPeriod= year+FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate).Substring(4);
-                    						
-					break;
-				default :
-					throw new Exception("getPeriodLabel(WebSession webSession,TNS.AdExpress.Constantes.Web.CustomerSessions.Period period)-->Impossible de déterminer le type de période.");
-			}
+            string beginPeriod = "";
+            string endPeriod = "";
+            string year = "";
 
-			return Convertion.ToHtmlString(switchPeriod(webSession,beginPeriod,endPeriod));
-		}*/
-		
-        /*
-		/// <summary>
-		/// Affichage de la période dans les tableaux dynamiques
-		/// </summary>
-		/// <param name="webSession">Session client</param>
-		/// <param name="beginPeriod">Début de la période</param>
-		/// <param name="endPeriod">Fin de la période</param>
-		/// <returns>Retourne la période sélectionnée</returns>
-		public static string switchPeriod(WebSession webSession,string beginPeriod,string endPeriod){
-				
-			string periodText;
-			switch(webSession.PeriodType){
+            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+            object[] param = new object[1];
+            param[0] = _session;
+            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
 
-				case CstCustomerSession.Period.Type.nLastMonth:
-				case CstCustomerSession.Period.Type.dateToDateMonth:
-				case CstCustomerSession.Period.Type.previousMonth:
-				case CstCustomerSession.Period.Type.currentYear:
-				case CstCustomerSession.Period.Type.previousYear:
-				case CstCustomerSession.Period.Type.nextToLastYear:			
+            switch (period) 
+            {
+                case CstWeb.CustomerSessions.Period.Type.currentYear:
+                    beginPeriod = _session.PeriodBeginningDate;
+                    endPeriod = dateDAL.CheckPeriodValidity(_session, _session.PeriodEndDate);
 
-					if(beginPeriod!=endPeriod)
-						periodText=MonthString.Get(int.Parse(beginPeriod.Substring(4,2)),webSession.SiteLanguage,0)+"-"+MonthString.Get(int.Parse(endPeriod.Substring(4,2)),webSession.SiteLanguage,0)+" "+beginPeriod.Substring(0,4);				
-					else
-						periodText=MonthString.Get(int.Parse(beginPeriod.Substring(4,2)),webSession.SiteLanguage,0)+" "+beginPeriod.Substring(0,4);				
-					break;
-				default:
-					throw new Exception("switchPeriod(WebSession webSession,string beginPeriod,string endPeriod)-->Impossible de déterminer le type de période.");
-			
-			}
+                    break;
+                case CstWeb.CustomerSessions.Period.Type.previousYear:
+                    year = (int.Parse(_session.PeriodBeginningDate.Substring(0, 4)) - 1).ToString();
+                    beginPeriod = year + _session.PeriodBeginningDate.Substring(4);
+                    endPeriod = year + dateDAL.CheckPeriodValidity(_session, _session.PeriodEndDate).Substring(4);
 
-			return periodText;
-		}*/
-		#endregion
+                    break;
+                default:
+                    throw new ArgumentException(string.Format("Unable to treat this type of period ({0}) .", period.ToString()));
+            }
+
+            return Convertion.ToHtmlString(switchPeriod(_session, beginPeriod, endPeriod));
+        }
+
+        /// <summary>
+        /// Display of period in product classs analysis
+        /// </summary>
+        /// <param name="_session">User session</param>
+        /// <param name="beginPeriod">Period beginning</param>
+        /// <param name="endPeriod">End of period</param>
+        /// <returns>Selected period</returns>
+        public static string switchPeriod(WebSession _session, string beginPeriod, string endPeriod)
+        {
+
+            string periodText;
+            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
+
+            switch (_session.PeriodType)
+            {
+
+                case CstCustomerSession.Period.Type.nLastMonth:
+                case CstCustomerSession.Period.Type.dateToDateMonth:
+                case CstCustomerSession.Period.Type.previousMonth:
+                case CstCustomerSession.Period.Type.currentYear:
+                case CstCustomerSession.Period.Type.previousYear:
+                case CstCustomerSession.Period.Type.nextToLastYear:
+
+                    if (beginPeriod != endPeriod)
+                        periodText = MonthString.GetCharacters(int.Parse(beginPeriod.Substring(4, 2)), cultureInfo, 0) + "-" + MonthString.GetCharacters(int.Parse(endPeriod.Substring(4, 2)), cultureInfo, 0) + " " + beginPeriod.Substring(0, 4);
+                    else
+                        periodText = MonthString.GetCharacters(int.Parse(beginPeriod.Substring(4, 2)), cultureInfo, 0) + " " + beginPeriod.Substring(0, 4);
+                    break;
+                default:
+                    throw new Exception("switchPeriod(_session _session,string beginPeriod,string endPeriod)-->Unable to determine type of period.");
+
+            }
+
+            return periodText;
+        }
+
+        #endregion
 
 		#region Dates de chargement des données
 
@@ -572,10 +585,18 @@ namespace TNS.AdExpress.Web.Functions{
                 case DBClassificationConstantes.Vehicles.names.magazine:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                 case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
                 case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
                 case DBClassificationConstantes.Vehicles.names.others:
                 case DBClassificationConstantes.Vehicles.names.outdoor:
                 case DBClassificationConstantes.Vehicles.names.instore:
+                case DBClassificationConstantes.Vehicles.names.indoor:
                 case DBClassificationConstantes.Vehicles.names.cinema:
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:

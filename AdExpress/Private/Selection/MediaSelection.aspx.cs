@@ -407,17 +407,24 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
             {
                 branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaNewsPaper;
             }
-            else if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio)
-            {
-                branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadio;
-            }
-            else if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv)
-            {
-                if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES)
-                    branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvSponsorship;
-                else
-                    branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaTv;
-            }
+           	else if(vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+                || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioGeneral
+                || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioMusic
+                || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioSponsorship
+                ){
+				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadio;
+			}
+           else if(vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
+                || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvGeneral
+                || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship
+                || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvAnnounces
+                || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
+                ){
+				if(_webSession.CurrentModule==WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES )
+				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvSponsorship;
+				else
+				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaTv;
+			}
             else if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor)
             {
                 branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaOutdoor;
@@ -437,7 +444,11 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
             else if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.cinema)
             {
                 branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaCinema;
-            }
+            }								
+            else if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.indoor)
+            {
+                branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaIndoor;
+            }					
 
 
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode ();

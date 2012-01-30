@@ -22,6 +22,12 @@ using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.DataBaseDescription;
+using System.Globalization;
+using TNS.AdExpress.Web.Core.Sessions;
+using CstWeb = TNS.AdExpress.Constantes.Web;
+using CstCustomerSession=TNS.AdExpress.Constantes.Web.CustomerSessions;
+using DBFunctions = TNS.AdExpress.Web.DataAccess.Functions;
+using TNS.AdExpress.Web.DataAccess.MyAdExpress;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Web.Navigation;
@@ -35,11 +41,16 @@ using TNS.Ares.Alerts.DAL;
 using TNS.Ares.Domain.Layers;
 using TNS.Ares.Domain.LS;
 using TNS.FrameWork.Date;
-using CstCustomerSession = TNS.AdExpress.Constantes.Web.CustomerSessions;
-using CstWeb = TNS.AdExpress.Constantes.Web;
+
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Domain.Level;
 #endregion
+using System.Reflection;
+using TNS.AdExpress.Constantes.Classification.DB;
+using System.Collections.Generic;
+using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpressI.Date.DAL;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace AdExpress.Private.MyAdExpress{
 	/// <summary>
@@ -63,7 +74,11 @@ namespace AdExpress.Private.MyAdExpress{
 		/// <summary>
 		/// Texte
 		/// </summary>
-		protected string advertiserText;		
+		protected string advertiserText;
+        /// <summary>
+        /// Liste des médias
+        /// </summary>
+        protected string listOfVehicleText;
 		/// <summary>
 		/// Script
 		/// </summary>
@@ -167,6 +182,10 @@ namespace AdExpress.Private.MyAdExpress{
 
          public bool displayPersonnalizedLevel = false;
 
+        /// <summary>
+        /// Affiche liste des médias
+        /// </summary>
+        public bool displayListOfVehicles = false;
 		#endregion
 		
 		#region Constructeur
@@ -201,6 +220,10 @@ namespace AdExpress.Private.MyAdExpress{
                 CstWeb.globalCalendar.periodDisponibilityType periodDisponibilityType;
                 bool verifCustomerPeriod = false;
                 CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
+                TNS.AdExpress.Domain.Layers.CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.dateDAL];
+                object[] param = new object[1];
+                param[0] = _webSession;
+                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
 				#endregion
 
 
@@ -290,7 +313,8 @@ namespace AdExpress.Private.MyAdExpress{
 					if(webSessionSave.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA
                         && webSessionSave.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES
                         && webSessionSave.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
-						FirstDayNotEnable = WebFunctions.Dates.GetFirstDayNotEnabled(webSessionSave, selectedVehicle, oldYear,_webSession.Source);
+                        //FirstDayNotEnable = WebFunctions.Dates.GetFirstDayNotEnabled(webSessionSave, selectedVehicle, oldYear,_webSession.Source);
+                        FirstDayNotEnable = dateDAL.GetFirstDayNotEnabled(new List<Int64>(new Int64[] { selectedVehicle }), oldYear);
                     _webSession.CurrentModule = webSessionSave.CurrentModule;
 
                     switch (webSessionSave.DetailPeriod) {
@@ -519,7 +543,7 @@ namespace AdExpress.Private.MyAdExpress{
 
                 if (displayMedia = webSessionSave.isMediaSelected() && (_webSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.VP))
                 {
-                    mediaText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSessionSave.SelectionUniversMedia, false, false, false, 600, false, false, _webSession.SiteLanguage, 2, 1, true);
+                    mediaText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSessionSave.SelectionUniversMedia, false, false, false, 600, false, false, _webSession.SiteLanguage, 2, 1, true, _webSession.DataLanguage, _webSession.CustomerDataFilters.DataSource);
                 }
 				
 				#region Agences médias
@@ -593,8 +617,8 @@ namespace AdExpress.Private.MyAdExpress{
 								}
 
 								//Render universe html code
-								t.Append("<TR height=\"20\">");
-                                t.Append("<TD align=\"center\" vAlign=\"top\" class=\"backGroundWhite\">" + selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.PrincipalProductUniverses[k], _webSession.DataLanguage, _webSession.Source) + "</TD>");
+								t.Append("<TR height=\"20\">");								
+                                t.Append("<TD align=\"center\" vAlign=\"top\" class=\"backGroundWhite\">" + selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.PrincipalProductUniverses[k], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession)) + "</TD>");
 								t.Append("</TR>");
 								t.Append("<TR height=\"5\">");
                                 t.Append("<TD class=\"backGroundWhite\"></TD>");
@@ -605,7 +629,7 @@ namespace AdExpress.Private.MyAdExpress{
 						}
 						else {
 							if (webSessionSave.PrincipalProductUniverses.ContainsKey(k)) {
-								productText += selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.PrincipalProductUniverses[k], _webSession.DataLanguage, _webSession.Source);
+                                productText += selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.PrincipalProductUniverses[k], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession));
 							}
 						}
 					}
@@ -650,7 +674,7 @@ namespace AdExpress.Private.MyAdExpress{
 							//Universe Label							
 							referenceAdvertiserDisplay = true;
 							referenceAdvertiserAdexpresstext.Code = 1195;
-                            referenceAdvertiserText += selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.SecondaryProductUniverses[0],_webSession.DataLanguage,_webSession.Source);
+                            referenceAdvertiserText += selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.SecondaryProductUniverses[0], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession));
 						}
 
 						//Listes des annonceurs concurrents
@@ -674,7 +698,7 @@ namespace AdExpress.Private.MyAdExpress{
 								}
 								else {
 									if (WebFunctions.Modules.IsDashBoardModule(webSessionSave))
-                                        productText = selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.SecondaryProductUniverses[k],_webSession.DataLanguage,_webSession.Source);
+                                        productText = selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.SecondaryProductUniverses[k], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession));
 									else {
 										//Universe Label
 										if (webSessionSave.SecondaryProductUniverses[k].Label != null && webSessionSave.SecondaryProductUniverses[k].Label.Length > 0) {
@@ -683,7 +707,7 @@ namespace AdExpress.Private.MyAdExpress{
 											referenceAdvertiserText += "<Label>" + webSessionSave.SecondaryProductUniverses[k].Label + "</Label>";
 											referenceAdvertiserText += "</TD></TR>";
 										}
-                                        referenceAdvertiserText += selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.SecondaryProductUniverses[k],_webSession.DataLanguage,_webSession.Source);
+                                        referenceAdvertiserText += selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.SecondaryProductUniverses[k], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession));
 									}
 								}
 							}
@@ -732,9 +756,10 @@ namespace AdExpress.Private.MyAdExpress{
                 }
                 #endregion
 
-                #region Medias concurrents
-                if (webSessionSave.isCompetitorMediaSelected()){
-					displayDetailMedia=true;
+               
+				#region Medias concurrents
+				if (webSessionSave.isCompetitorMediaSelected()){
+					displayListOfVehicles=true;
 					System.Text.StringBuilder mediaSB=new System.Text.StringBuilder(1000);
 				
 					mediaSB.Append("<TR>");
@@ -746,7 +771,7 @@ namespace AdExpress.Private.MyAdExpress{
 					
 						System.Windows.Forms.TreeNode tree=(System.Windows.Forms.TreeNode)webSessionSave.CompetitorUniversMedia[idMedia];				
 						mediaSB.Append("<TR height=\"20\">");
-                        mediaSB.Append("<TD align=\"center\" vAlign=\"top\" class=\"backGroundWhite\">" + TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)webSessionSave.CompetitorUniversMedia[idMedia], false, true, true, 600, true, false, _webSession.SiteLanguage, 2, i, true) + "</TD>");
+                        mediaSB.Append("<TD align=\"center\" vAlign=\"top\" class=\"backGroundWhite\">" + TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)webSessionSave.CompetitorUniversMedia[idMedia], false, true, true, 600, true, false, _webSession.SiteLanguage, 2, i, true, _webSession.DataLanguage, _webSession.CustomerDataFilters.DataSource) + "</TD>");
 						mediaSB.Append("</TR>");
 						mediaSB.Append("<TR height=\"5\">");
                         mediaSB.Append("<TD class=\"backGroundWhite\"></TD>");
@@ -758,7 +783,7 @@ namespace AdExpress.Private.MyAdExpress{
 						i++;
 						idMedia++;
 					}
-					mediaDetailText=mediaSB.ToString();
+					listOfVehicleText=mediaSB.ToString();
 				}
 				#endregion
 
@@ -775,8 +800,8 @@ namespace AdExpress.Private.MyAdExpress{
                     detailMedia.Append("<label>" + GestionWeb.GetWebWord(webTextId, _webSession.SiteLanguage) + "</label></TD>");
 					detailMedia.Append("</TR>");				
 
-					detailMedia.Append("<TR height=\"20\">");
-                    detailMedia.Append("<TD align=\"center\" vAlign=\"top\" class=\"backGroundWhite\">" + TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)webSessionSave.SelectionUniversMedia.FirstNode, false, true, true, 600, true, false, _webSession.SiteLanguage, 2, i, true,_webSession.DataLanguage,_webSession.Source,false) + "</TD>");
+					detailMedia.Append("<TR height=\"20\">");					
+                    detailMedia.Append("<TD align=\"center\" vAlign=\"top\" class=\"backGroundWhite\">" + TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)webSessionSave.SelectionUniversMedia.FirstNode, false, true, true, 600, true, false, _webSession.SiteLanguage, 2, i, true, _webSession.DataLanguage, _webSession.CustomerDataFilters.DataSource) + "</TD>");
 					detailMedia.Append("</TR>");
 					detailMedia.Append("<TR height=\"5\">");
                     detailMedia.Append("<TD class=\"backGroundWhite\"></TD>");
@@ -831,7 +856,7 @@ namespace AdExpress.Private.MyAdExpress{
 					referenceDetailMedia.Append("<label>"+GestionWeb.GetWebWord(1194,_webSession.SiteLanguage)+"</label></TD>");
 					referenceDetailMedia.Append("</TR>");									
 					referenceDetailMedia.Append("<TR height=\"20\">");
-                    referenceDetailMedia.Append("<TD align=\"center\" vAlign=\"top\" class=\"backGroundWhite\">" + TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)_webSession.ReferenceUniversMedia, false, true, true, 600, true, false, _webSession.SiteLanguage, 2, i, true) + "</TD>");
+                    referenceDetailMedia.Append("<TD align=\"center\" vAlign=\"top\" class=\"backGroundWhite\">" + TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)_webSession.ReferenceUniversMedia, false, true, true, 600, true, false, _webSession.SiteLanguage, 2, i, true, _webSession.DataLanguage, _webSession.CustomerDataFilters.DataSource) + "</TD>");
 					referenceDetailMedia.Append("</TR>");
 					referenceDetailMedia.Append("<TR height=\"5\">");
                     referenceDetailMedia.Append("<TD class=\"backGroundWhite\"></TD>");
@@ -962,7 +987,8 @@ namespace AdExpress.Private.MyAdExpress{
 
 			//Render universe html code
 			t.Append("<TR height=\"20\">");
-            t.Append("<TD align=\"center\" vAlign=\"top\" class=\"backGroundWhite\">" + selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.SecondaryProductUniverses[k], webSession.DataLanguage, webSession.Source) + "</TD>");
+			t.Append("<TD>&nbsp;</TD>");
+            t.Append("<TD align=\"center\" vAlign=\"top\" class=\"backGroundWhite\">" + selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.SecondaryProductUniverses[k], webSession.DataLanguage, DBFunctions.GetDataSource(webSession)) + "</TD>");
 			t.Append("</TR>");
 			t.Append("<TR height=\"5\">");
             t.Append("<TD class=\"backGroundWhite\"></TD>");

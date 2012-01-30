@@ -121,9 +121,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.DB.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.26494, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.18774, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Trunk\Bin\TNS.FrameWork.WebResultUI.dll</HintPath>
+      <HintPath>\\Frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.WebResultUI.dll</HintPath>
     </Reference>
     <Reference Include="TNS.Isis.Constantes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -149,10 +149,12 @@
     <Compile Include="CustomerDataFilters.cs" />
     <Compile Include="CustomerPeriod.cs" />
     <Compile Include="DataAccess\VehicleFormatListDataAccess.cs" />
+    <Compile Include="DataAccess\ClassificationList\InsertionLevelDAL.cs" />
     <Compile Include="DataAccess\ClassificationList\SearchLevelDataAccess.cs" />
     <Compile Include="DataAccess\DetailMediaDataAccess.cs" />
     <Compile Include="DataAccess\Session\GenericDetailLevelDataAccess.cs" />
     <Compile Include="Exceptions\ActiveBannersFormatListDataAccessException.cs" />
+    <Compile Include="Exceptions\InsertionLevelDALException.cs" />
     <Compile Include="Exceptions\CustomerDataFiltersException.cs" />
     <Compile Include="Exceptions\DetailMediaDataAccessException.cs" />
     <Compile Include="Exceptions\ExtendedHashTableException.cs" />
@@ -160,13 +162,24 @@
     <Compile Include="Exceptions\WebThemesDataAccessException.cs" />
     <Compile Include="Exceptions\WebLanguagesDataAccessException.cs" />
     <Compile Include="Exceptions\SearchLevelDataAccessException.cs" />
+    <Compile Include="ISourceProvider.cs" />
     <Compile Include="Result\CellInsertionMediaScheduleLink.cs" />
     <Compile Include="Result\CellAdExpressImageLink.cs" />
+    <Compile Include="Result\CellInternetCreativeLink.cs" />
     <Compile Include="Result\CellOneLevelInsertionsLink.cs" />
     <Compile Include="Result\CellAdExpressInsertionsLink.cs" />
     <Compile Include="Result\CellOneLevelCreativesLink.cs" />
     <Compile Include="Result\CellAdExpressCreativesLink.cs" />
+    <Compile Include="Result\CellRussiaCreativeLink.cs" />
+    <Compile Include="Result\CellRussiaEvol.cs" />
+    <Compile Include="Result\CellRussiaKCurrency.cs" />
+    <Compile Include="Result\CellRussiaPage.cs" />
+    <Compile Include="Result\CellRussiaPDM.cs" />
+    <Compile Include="Result\CellRussiaPercent.cs" />
     <Compile Include="Result\CellVersionNbPDM.cs" />
+    <Compile Include="Result\CellOneLevelRussiaCreativesLink.cs" />
+    <Compile Include="Result\CellOneLevelRussiaInsertionsLink.cs" />
+    <Compile Include="Result\OneLevelRussiaShowLinkRules.cs" />
     <Compile Include="Result\OneLevelShowLinkRules.cs" />
     <Compile Include="Result\DefaultShowLinkRules.cs" />
     <Compile Include="Result\ILinkRules.cs" />
@@ -293,12 +306,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Result\SponsorshipShowLinkRules.cs" />
+    <Compile Include="SourceProvider.cs" />
     <Compile Include="Utilities\CheckedText.cs" />
+    <Compile Include="Utilities\Creatives.cs" />
     <Compile Include="Utilities\DataAdapter.cs" />
     <Compile Include="Utilities\Dates.cs" />
     <Compile Include="Utilities\ExtendedHashTable.cs" />
     <Compile Include="Utilities\LastAvailableDate.cs" />
     <Compile Include="Utilities\MediaDetailLevel.cs" />
+    <Compile Include="Utilities\ProductDetailLevel.cs" />
     <Compile Include="Utilities\SqlGenerator.cs" />
     <Compile Include="Utilities\Text.cs" />
     <Compile Include="Utilities\Units.cs" />

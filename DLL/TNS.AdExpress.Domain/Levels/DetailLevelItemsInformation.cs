@@ -46,6 +46,20 @@ namespace TNS.AdExpress.Domain.Level {
 		#endregion
 
 		#region Méthodes publiques
+        /// <summary>
+        /// Check if contains current level
+        /// </summary>
+        public static bool Contains(int id)
+        {
+            try
+            {
+                return (_list.ContainsKey(id));
+            }
+            catch (System.Exception err)
+            {
+                throw (new ArgumentException("impossible to reteive a detail level item information with this Id", err));
+            }
+        }
 		/// <summary>
 		/// Accès à la description d'un élément de niveau de détail par son identifiant
 		/// </summary>
@@ -94,6 +108,18 @@ namespace TNS.AdExpress.Domain.Level {
                     levels.Add(Get(DetailLevelItemInformation.Levels.brand));
                     levels.Add(Get(DetailLevelItemInformation.Levels.product));
                    break;
+                case CstFormat.PreformatedProductDetails.advertiserSubbrand:
+                   levels.Add(Get(DetailLevelItemInformation.Levels.advertiser));
+                   levels.Add(Get(DetailLevelItemInformation.Levels.subBrand));
+                   break;
+                case CstFormat.PreformatedProductDetails.advertiserSegment:
+                   levels.Add(Get(DetailLevelItemInformation.Levels.advertiser));
+                   levels.Add(Get(DetailLevelItemInformation.Levels.segment));
+                   break;
+                case CstFormat.PreformatedProductDetails.advertiserGroup:
+                   levels.Add(Get(DetailLevelItemInformation.Levels.advertiser));
+                   levels.Add(Get(DetailLevelItemInformation.Levels.group));
+                   break;
                 case CstFormat.PreformatedProductDetails.advertiserGroupBrand:
                     levels.Add(Get(DetailLevelItemInformation.Levels.advertiser));
                     levels.Add(Get(DetailLevelItemInformation.Levels.group));
@@ -127,6 +153,10 @@ namespace TNS.AdExpress.Domain.Level {
                     levels.Add(Get(DetailLevelItemInformation.Levels.advertiser));
                     levels.Add(Get(DetailLevelItemInformation.Levels.product));
                     break;
+                case CstFormat.PreformatedProductDetails.advertiserSubSector:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.advertiser));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.subSector));
+                    break;
                 case CstFormat.PreformatedProductDetails.agencyAdvertiser:
                     levels.Add(Get(DetailLevelItemInformation.Levels.agency));
                     levels.Add(Get(DetailLevelItemInformation.Levels.advertiser));
@@ -137,6 +167,17 @@ namespace TNS.AdExpress.Domain.Level {
                     break;
                 case CstFormat.PreformatedProductDetails.brand:
                     levels.Add(Get(DetailLevelItemInformation.Levels.brand));
+                    break;
+                case CstFormat.PreformatedProductDetails.brandSegment:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.brand));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.segment));
+                    break;
+                case CstFormat.PreformatedProductDetails.brandProduct:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.brand));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.product));
+                    break;
+                case CstFormat.PreformatedProductDetails.subbrand:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.subBrand));
                     break;
                 case CstFormat.PreformatedProductDetails.group:
                     levels.Add(Get(DetailLevelItemInformation.Levels.group));
@@ -183,6 +224,10 @@ namespace TNS.AdExpress.Domain.Level {
                     levels.Add(Get(DetailLevelItemInformation.Levels.group));
                     levels.Add(Get(DetailLevelItemInformation.Levels.brand));
                     levels.Add(Get(DetailLevelItemInformation.Levels.product));
+                    break;
+                case CstFormat.PreformatedProductDetails.groupSubbrand:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.group));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.subBrand));
                     break;
                 case CstFormat.PreformatedProductDetails.groupProduct:
                     levels.Add(Get(DetailLevelItemInformation.Levels.group));
@@ -249,6 +294,9 @@ namespace TNS.AdExpress.Domain.Level {
                     levels.Add(Get(DetailLevelItemInformation.Levels.subSector));
                     levels.Add(Get(DetailLevelItemInformation.Levels.advertiser));
                     break;
+                case CstFormat.PreformatedProductDetails.segment:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.segment));
+                    break;
                 case CstFormat.PreformatedProductDetails.segmentAdvertiser:
                     levels.Add(Get(DetailLevelItemInformation.Levels.segment));
                     levels.Add(Get(DetailLevelItemInformation.Levels.advertiser));
@@ -271,6 +319,34 @@ namespace TNS.AdExpress.Domain.Level {
                     levels.Add(Get(DetailLevelItemInformation.Levels.segment));
                     levels.Add(Get(DetailLevelItemInformation.Levels.product));
                     break;
+                case CstFormat.PreformatedProductDetails.segmentSubbrand:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.segment));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.subBrand));
+                    break;
+                case CstFormat.PreformatedProductDetails.subSectorBrand:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.subSector));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.brand));
+                    break;
+                case CstFormat.PreformatedProductDetails.subSectorGroup:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.subSector));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.group));
+                    break;
+                case CstFormat.PreformatedProductDetails.subSectorProduct:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.subSector));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.product));
+                    break;
+                case CstFormat.PreformatedProductDetails.subSectorSubbrand:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.subSector));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.subBrand));
+                    break;
+                case CstFormat.PreformatedProductDetails.advertiserClass:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.advertiser));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.subSector));
+                    break;
+                case CstFormat.PreformatedProductDetails.brandGroup:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.brand));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.group));
+                    break;
                 default:
                     throw (new ArgumentException("Performated detail not supported"));
                     break;
@@ -289,6 +365,12 @@ namespace TNS.AdExpress.Domain.Level {
                 case CstFormat.PreformatedMediaDetails.vehicle:
                     levels.Add(Get(DetailLevelItemInformation.Levels.vehicle));
                     break;
+                case CstFormat.PreformatedMediaDetails.region:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.region));
+                    break;
+                case CstFormat.PreformatedMediaDetails.Media:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.media));
+                    break;
                 case CstFormat.PreformatedMediaDetails.vehicleCategory:
                     levels.Add(Get(DetailLevelItemInformation.Levels.vehicle));
                     levels.Add(Get(DetailLevelItemInformation.Levels.category));
@@ -300,6 +382,19 @@ namespace TNS.AdExpress.Domain.Level {
                     break;
                 case CstFormat.PreformatedMediaDetails.vehicleMedia:
                     levels.Add(Get(DetailLevelItemInformation.Levels.vehicle));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.media));
+                    break;
+                case CstFormat.PreformatedMediaDetails.vehicleRegion:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.vehicle));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.region));
+                    break;
+                case CstFormat.PreformatedMediaDetails.regionVehicle:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.region));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.vehicle));
+                    break;
+                case CstFormat.PreformatedMediaDetails.vehicleRegionMedia:
+                    levels.Add(Get(DetailLevelItemInformation.Levels.vehicle));
+                    levels.Add(Get(DetailLevelItemInformation.Levels.region));
                     levels.Add(Get(DetailLevelItemInformation.Levels.media));
                     break;
                 default:

@@ -12,7 +12,7 @@
     <column id="9" name="Produit" webTextId="858" dbId="id_product" dbLabel="product" dbTable="product" dbTablePrefixe="pr" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="10" name="Spot" webTextId="869"  dbLabel="associated_file"/>
     <column id="11" name="Format" webTextId="1420" dbId="id_format" dbLabel="format" dbTable="format" dbTablePrefixe="fo"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="12" name="Surface page" webTextId="469"  dbLabel="area_page" CellType="TNS.FrameWork.WebResultUI.CellPage" format="max3"/>
+    <column id="12" name="Surface page" webTextId="469"  dbLabel="area_page" CellType="TNS.FrameWork.WebResultUI.CellPage" format="max3"/>  
     <column id="13" name="Couleur" webTextId="1438" dbId="id_color" dbLabel="color" dbTable="color" dbTablePrefixe="cl"   dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="14" name="Prix" webTextId="1936" dbLabel="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
     <column id="15" name="Descriptif" webTextId="1769" dbId="id_location" dbLabel="location" dbTable="location" dbTablePrefixe="lo" dbRelatedTablePrefixe="dl" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel">
@@ -56,7 +56,7 @@
     <column id="30" name="Type de réseau" webTextId="1609"  dbLabel="type_sale" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="31" name="Réseau afficheur" webTextId="1611"  dbLabel="poster_network" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="32" name="Agglomeration" webTextId="1660"  dbId="id_agglomeration" dbLabel="agglomeration" dbTable="agglomeration" dbTablePrefixe="agglo" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="33" name="Date" webTextId="895"  dbLabel="date_media_num" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
+    <column id="33" name="Date" webTextId="895"  dbLabel="date_media_num" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="shortdatepattern"/>
     <column id="34" name="Page" webTextId="894"  dbLabel="media_paging"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="35" name="Visuel" webTextId="1909"  dbLabel="visual">
       <constraints>
@@ -87,14 +87,14 @@
     <column id="39" name="Formes de Parrainage" webTextId="2121" dbId="id_form_sponsorship" dbLabel="form_sponsorship" dbTable="form_sponsorship" dbTablePrefixe="fs" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="40" name="Jour Semaine" webTextId="2068"  dbLabel="date_media_num" dbLabelAlias="day_of_week" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="dddd"/>
     <column id="41" name="Affiche" webTextId="1610"  dbLabel="associated_file"/>
-    <column id="42" name="Date du Support" webTextId="2267"  dbLabel="date_media_num" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
+    <column id="42" name="Date du Support" webTextId="2267"  dbLabel="date_media_num" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="shortdatepattern"/>
     <column id="43" name="Agence Media" webTextId="731" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="44" name="Famille" webTextId="1103" dbId="id_sector" dbLabel="sector" dbTable="sector" dbTablePrefixe="sc" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="45" name="Surface en mmc" webTextId="595"  dbLabel="area_mmc" CellType="TNS.FrameWork.WebResultUI.CellMMC" format="max0"/>
     <column id="46" name="Rang famille" webTextId="1426"  dbLabel="rank_sector" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="47" name="Rang groupe" webTextId="1427"  dbLabel="rank_group_" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="48" name="Rang support" webTextId="1428"  dbLabel="rank_media" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
-    <column id="49" name="Date de diffusion" webTextId="1380"  dbLabel="date_media_num" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
+    <column id="49" name="Date de diffusion" webTextId="1380"  dbLabel="date_media_num" CellType="TNS.FrameWork.WebResultUI.CellDate" format="shortdatepattern"/>
     <column id="50" name="Code écran" webTextId="495"  dbLabel="commercial_break" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran"/>
     <column id="51" name="Prix du 30 sec" webTextId="1446" dbLabel="expenditure_30s_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
     <column id="52" name="Type page" webTextId="2246"  dbLabel="id_type_page" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
@@ -148,13 +148,89 @@
     <column id="83" name="Format banner Internet" webTextId="1420" dbLabel="format" dbLabelAlias="format" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="84" name="Dimension banner Internet" webTextId="2542" dbLabel="dimension" dbLabelAlias="dimension" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="85" name="Euros" webTextId="1712" isSum="true"  dbLabel="expenditure_euro" dbLabelAlias="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="currency"/>
-    <column id="86" name="Date de parution" webTextId="1381" dbLabel="date_media_num" dbLabelAlias="date_media_num" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
+    <column id="86" name="Date de parution" webTextId="1381" dbLabel="date_media_num" dbLabelAlias="date_media_num" CellType="TNS.FrameWork.WebResultUI.CellDate" format="shortdatepattern"/>
     <column id="87" name="Gad" webTextId="2222" dbId="id_advertiser" dbLabel="id_address" dbTable="gad" dbTablePrefixe="gd"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" useLanguage="false"/>
-    <column id="88" name="Banner first parution" webTextId="2545" dbTablePrefixe="wp" dbLabel="date_creation" dbLabelAlias="dateParution" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
+    <column id="88" name="Banner first parution" webTextId="2545" dbTablePrefixe="wp" dbLabel="date_creation" dbLabelAlias="dateParution" CellType="TNS.FrameWork.WebResultUI.CellDate" format="shortdatepattern"/>
     <column id="89" name="Id Category" webTextId="860" dbLabel="id_category" dbTablePrefixe="wp" dbLabelAlias="idCategory"/>
     <column id="90" name="Row number" webTextId="2560"  dbLabel="rownum" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
     <column id="91" name="Dimension banner mobile" webTextId="2542" dbId="id_dimension_banners_mobile" dbLabel="dimension_banners_mobile" dbLabelAlias="dimension_banners_mobile" dbTable="dimension_banners_mobile" dbTablePrefixe="dbanm"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel" useLanguage="false"/>
     <column id="92" name="Produit evaliant mobile" webTextId="468" dbId="id_product" dbLabel="product" dbTable="product" dbTablePrefixe="pr" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <!--Start New columns for Russia-->
+    <column id="95" name="Region" webTextId="2652" dbId="id_region" dbLabel="region" dbTable="region" dbTablePrefixe="rg" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="96" name="National Channel" webTextId="2683" dbId="id_network" dbLabel="network" dbTable="network" dbTablePrefixe="nch" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="97" name="TV Company" webTextId="2653" dbId="id_tv_company" dbLabel="tv_company" dbTable="tv_company" dbTablePrefixe="tc" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="98" name="TV Channel" webTextId="2684" dbId="id_channel" dbLabel="channel" dbTable="channel" dbTablePrefixe="tch" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="99" name="Time start" webTextId="895"  dbLabel="time_start" dbTablePrefixe="tst" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="100" name="Sub brand" webTextId="2650"  dbId="id_sub_brand" dbLabel="subbrand" dbTablePrefixe="sbr" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="101" name="brand" webTextId="1889"  dbId="id_brand" dbLabel="brand" dbTablePrefixe="br" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="102" name="Internet - Square" webTextId="2685" dbLabel="internet_square" dbTable="internet_square" dbTablePrefixe="isq" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
+    <column id="103" name="Radio holding" webTextId="2686" dbId="id_holding" dbLabel="holding" dbTable="holding" dbTablePrefixe="rho" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
+    <column id="104" name="Category Level 4" webTextId="592" dbId="id_segment" dbLabel="segment" dbTable="segment" dbTablePrefixe="sg" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="105" name="Advertisment" webTextId="2687" dbLabel="ad_name" dbTable="ad_name" dbTablePrefixe="adn" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="106" name="Advertisment description" webTextId="2688" dbLabel="ad_descr" dbTable="ad_descr" dbTablePrefixe="add" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="107" name="Advertisement Type" webTextId="2663" dbId="id_advertisement_type" dbLabel="advertisement_type" dbTable="advertisement_type" dbTablePrefixe="avt" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="108" name="First issue date" webTextId="2689"  dbLabel="fiss" dbTable="fiss" dbTablePrefixe="fid" CellType="TNS.FrameWork.WebResultUI.CellDate"/>
+    <column id="109" name="Clip position" webTextId="2690"  dbLabel="ad_pos" dbTable="ad_pos" dbTablePrefixe="adp" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
+    <column id="110" name="Clips count" webTextId="2691"  dbLabel="ad_cnt" dbTable="ad_cnt" dbTablePrefixe="adc" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
+    <column id="111" name="Break flight start" webTextId="2692"  dbLabel="time_bris" dbTable="time_bris" dbTablePrefixe="tbs" CellType="TNS.FrameWork.WebResultUI.CellDate"/>
+    <column id="112" name="Break" webTextId="2693"  dbId="id_break" dbLabel="break" dbTable="break" dbTablePrefixe="brk" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="113" name="Break distribution" webTextId="2694" dbLabel="break_distr" dbTable="break_distr" dbTablePrefixe="brd" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="114" name="Programme flight start" webTextId="2695"  dbLabel="time_pris" dbTable="time_pris" dbTablePrefixe="tps" CellType="TNS.FrameWork.WebResultUI.CellDate"/>
+    <column id="115" name="Cost USD" webTextId="2696" dbLabel="cost" dbTable="cost" dbTablePrefixe="cst" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
+    <column id="116" name="Cost RUB" webTextId="2697" dbLabel="cost_rub" dbTable="cost_rub" dbTablePrefixe="csr" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
+    <column id="117" name="Station" webTextId="2655" dbId="id_station" dbLabel="station" dbTable="station" dbTablePrefixe="st" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="118" name="Allocation" webTextId="2698" dbLabel="alloc" dbTable="alloc" dbTablePrefixe="alo" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="119" name="Publishing house" webTextId="2656" dbId="id_publishing_house" dbLabel="publishing_house" dbTable="publishing_house" dbTablePrefixe="ph" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="120" name="Edition" webTextId="2699" dbId="id_edition" dbLabel="edition" dbTable="edition" dbTablePrefixe="edt" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="121" name="Edition type" webTextId="2659" dbId="id_edition_type" dbLabel="edition_type" dbTable="edition_type" dbTablePrefixe="et" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="122" name="St Format" webTextId="2700" dbId="id_st_format" dbLabel="st_format" dbTable="st_format" dbTablePrefixe="sfo" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="123" name="Position" webTextId="862"  dbId="id_position" dbLabel="position" dbTablePrefixe="pos" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="124" name="St Design" webTextId="2701" dbId="id_st_design" dbLabel="st_design" dbTable="st_design" dbTablePrefixe="sde" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="125" name="Ad PageNo" webTextId="2719" dbLabel="pageno" dbTable="pageno" dbTablePrefixe="pno" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="126" name="Issue Local Number" webTextId="2720" dbLabel="lnumber" dbTable="lnumber" dbTablePrefixe="lnu" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="127" name="Volume (page)" webTextId="2721" dbLabel="rel_vol" dbTable="rel_vol" dbTablePrefixe="rlv" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
+    <column id="128" name="Volume (page A2)" webTextId="2722" dbLabel="vol" dbTable="vol" dbTablePrefixe="vl" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
+    <column id="129" name="Carrier type" webTextId="2702" dbId="id_carrier" dbLabel="carrier" dbTable="carrier" dbTablePrefixe="crt" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="130" name="District" webTextId="2703" dbId="id_district" dbLabel="district" dbTable="district" dbTablePrefixe="dst" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="131" name="Address" webTextId="1133" dbId="id_address" dbLabel="address" dbTable="address" dbTablePrefixe="adr" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="132" name="Outdoor agency" webTextId="2704" dbId="id_agency" dbLabel="agency" dbTable="agency" dbTablePrefixe="nag" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="133" name="Surface Height" webTextId="2705" dbLabel="height" dbTable="height" dbTablePrefixe="ht" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
+    <column id="134" name="Surface Weight" webTextId="2706" dbLabel="weight" dbTable="weight" dbTablePrefixe="ht" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
+    <column id="135" name="Surface side" webTextId="2707" dbLabel="side_num" dbTable="side_num" dbTablePrefixe="snu" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
+    <column id="136" name="Surface count" webTextId="2708" dbLabel="side_cnt" dbTable="side_cnt" dbTablePrefixe="sct" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
+    <column id="137" name="Volume (m2)" webTextId="2709" dbLabel="vol" dbTable="vol" dbTablePrefixe="vl" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
+    <column id="138" name="Clip expected duration" webTextId="2710" dbLabel="ad_dur" dbTable="ad_dur" dbTablePrefixe="adu" CellType="TNS.FrameWork.WebResultUI.CellDuration" format="duration"/>
+    <column id="139" name="Budget USD" webTextId="2711" dbLabel="budget" dbTable="budget" dbTablePrefixe="bgd" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
+    <column id="140" name="Budget RUB" webTextId="2712" dbLabel="budget_rub" dbTable="budget_rub" dbTablePrefixe="bgdr" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>        
+    <column id="141" name="Press - PagesA2" webTextId="2717" dbLabel="press_pagesa2" dbTable="press_pagesa2" dbTablePrefixe="pp" CellType="TNS.FrameWork.WebResultUI.CellPagesA2" format="pages"/>
+    <column id="142" name="Outdoor - Square" webTextId="2718" dbLabel="outdoor_square" dbTable="outdoor_square" dbTablePrefixe="osq" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
+    <column id="143" name="Price USD" webTextId="2758" dbLabel="budget" dbTable="budget" dbTablePrefixe="bgd" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
+    <column id="144" name="Price RUB" webTextId="2757" dbLabel="budget_rub" dbTable="budget_rub" dbTablePrefixe="bgdr" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
+    <column id="145" name="Design" webTextId="2764" dbLabel="design" dbTable="design" dbTablePrefixe="de" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="146" name="Geo" webTextId="2768" dbLabel="geo" dbTable="geo" dbTablePrefixe="geo" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="147" name="Advertisment placement" webTextId="2769" dbLabel="placement_type" dbTable="placement_type" dbTablePrefixe="plct" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="148" name="Holding" webTextId="2654" dbId="id_holding" dbLabel="holding" dbTable="holding" dbTablePrefixe="hld" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="149" name="Site" webTextId="2770" dbId="id_site" dbLabel="site" dbTable="site" dbTablePrefixe="sit" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="150" name="Site section" webTextId="2771" dbId="id_site_section" dbLabel="site_section" dbTable="site_section" dbTablePrefixe="ssec" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="151" name="Site subsection" webTextId="2772" dbId="id_site_subsection" dbLabel="site_subsection" dbTable="site_subsection" dbTablePrefixe="sbsec" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="152" name="Landing page" webTextId="2773" dbLabel="landing_page" dbTable="landing_page" dbTablePrefixe="ldp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="153" name="Advertisment file type" webTextId="2774" dbLabel="file_type" dbTable="file_type" dbTablePrefixe="aft" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="154" name="Advertisment display type" webTextId="2775" dbId="id_display_type" dbLabel="display_type" dbTable="display_type" dbTablePrefixe="dpt" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="155" name="Advertisment position" webTextId="2776" dbLabel="banner_position" dbTable="banner_position" dbTablePrefixe="bpo" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="156" name="Advertisment St format" webTextId="2777" dbId="id_st_format" dbLabel="st_format" dbTable="st_format" dbTablePrefixe="sfo" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="157" name="Advertisment format" webTextId="2778" dbId="id_format" dbLabel="format" dbTable="format" dbTablePrefixe="for" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="158" name="Age" webTextId="2779" dbLabel="age" dbTable="age" dbTablePrefixe="age" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="159" name="Gender" webTextId="2780" dbLabel="gender" dbTable="gender" dbTablePrefixe="gdr" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="160" name="Distribution type" webTextId="2781" dbLabel="distr_type" dbTable="distr_type" dbTablePrefixe="dst" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="161" name="Column" webTextId="2806" dbLabel="column" dbTable="column" dbTablePrefixe="clm" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="162" name="Type of publication" webTextId="2803" dbId="id_publication_type" dbLabel="publication_type" dbTable="publication_type" dbTablePrefixe="put" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="163" name="Square" webTextId="2718" dbLabel="square" dbTable="square" dbTablePrefixe="sq" CellType="TNS.FrameWork.WebResultUI.CellNumber"  format="max0"/>
+    <column id="164" name="Mentions" webTextId="2805" dbLabel="mentions" dbTable="mentions" dbTablePrefixe="mt" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
+    <column id="165" name="Ad break" webTextId="495"  dbLabel="commercial_break" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="166" name="Ad break" webTextId="1575"  dbLabel="screencode" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="167" name="Banner width" webTextId="2776" dbLabel="banner_width" dbTable="banner_width" dbTablePrefixe="bwd" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="168" name="Banner height" webTextId="2776" dbLabel="banner_height" dbTable="banner_height" dbTablePrefixe="bht" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <!--End New columns for Russia-->
   </columnItems>
 
   <detailColumns>

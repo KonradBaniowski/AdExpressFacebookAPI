@@ -234,6 +234,19 @@
                                                              </table>
 														</td>
 													</tr>
+<!--Debut TODO: A vérifier : provient de DEv suite à la fusion Dev Trunk-->
+  <tr><td></td>
+														<td width="15"></td>
+											<td>
+                                                                       <table id="Table17" cellspacing="0" cellpadding="0" width="100%" border="0">
+                                                                      	 <tr><td width="20">&nbsp;</td>
+                                                                       <td>
+				                                                                                    <cc4:ImageButtonRollOverWebControl runat="server" ID="validateButton1" OnClientClick="javascript:return valid(this.id); function valid(id){ PostBack(id); return false;}" />
+				                                                                                                     </td> </tr>
+		                                                                                </table>
+		                                                                                </td>
+													</tr>
+<!--Fin TODO: A vérifier : provient de DEv suite à la fusion Dev Trunk-->
 												</table>
 											</td>
 										</tr>

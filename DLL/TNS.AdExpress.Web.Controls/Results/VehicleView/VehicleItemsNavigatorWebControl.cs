@@ -20,6 +20,9 @@ using System.Globalization;
 using TNS.AdExpress.Web.Controls.Headers;
 using TNS.AdExpress.Web.Core.Utilities;
 using TNS.FrameWork.Date;
+using TNS.AdExpressI.Classification.DAL;
+using TNS.Ares.Domain.Layers;
+using TNS.AdExpressI.Portofolio.VehicleView;
 
 namespace TNS.AdExpress.Web.Controls.Results.VehicleView
 {
@@ -34,7 +37,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView
         /// <summary>
         /// Items collection
         /// </summary>
-        private List<VehicleItemWebControl> _itemsCollection = new List<VehicleItemWebControl>();
+        private List<VehicleItem> _itemsCollection = new List<VehicleItem>();
         /// <summary>
         /// Displayable Items Number(total items that will be generated in the client side)
         /// </summary>
@@ -101,7 +104,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView
         /// <summary>
         /// Get / Set Items collection
         /// </summary>
-        public List<VehicleItemWebControl> ItemsCollection
+        public List<VehicleItem> ItemsCollection
         {
             get { return _itemsCollection; }
             set { _itemsCollection = value; }
@@ -202,25 +205,20 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView
             if (_visible)
             {
                 string zoomDate = string.Empty;
-                Domain.Web.Navigation.Module module = _customerWebSession.CustomerLogin.GetModule(_customerWebSession.CurrentModule);
-                object[] parameters = new object[1];
-                parameters[0] = _customerWebSession;
-                Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
-                _media = (portofolioResult.GetVehicleViewData(out _dtVisuel, out _htValue));
-                _vehicleInformation = GetVehicleInformation();
                 _idMedia = GetMediaId();
 
-                DateTime end = Dates.getPeriodBeginningDate(_customerWebSession.PeriodEndDate, _customerWebSession.PeriodType);
-                if (_customerWebSession.DetailPeriod == WebCst.CustomerSessions.Period.DisplayLevel.weekly)
-                {
-                    AtomicPeriodWeek week = new AtomicPeriodWeek(end);
-                    zoomDate = string.Format("{0}{1}", week.Year, week.Week.ToString("0#"));
-                }
-                else
-                {
-                    zoomDate = end.ToString("yyyyMM");
-                }
-                _subPeriodSelectionWebControl.ZoomDate = zoomDate;
+                object[] param = new object[2];
+                param[0] = _customerWebSession.CustomerDataFilters.DataSource;
+                param[1] = _customerWebSession.DataLanguage;
+                TNS.AdExpress.Domain.Layers.CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classificationLevelList];
+                if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
+                TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL levels = factoryLevels.CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.mediaAccess, _idMedia.ToString());
+                _media = levels[_idMedia];
+                _vehicleInformation = GetVehicleInformation();
+
+
+
             }
 
         }
@@ -244,12 +242,14 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView
             CoverLinkItemWebControl coverLinkItem = null;
             CoverLinkItemSynthesisWebControl coverLinkItemSynthesis = null;
             VehicleItemWebControl vehicleItem = null;
-            List<VehicleItemWebControl> itemsCollection = new List<VehicleItemWebControl>();
+            List<VehicleItem> itemsCollection = new List<VehicleItem>();
             #endregion
 
             // Vérifie si le client a le droit aux créations
             if (_customerWebSession.CustomerLogin.ShowCreatives(_vehicleInformation.Id))
             {
+
+
                 if (!_excel)
                 {
                     if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
@@ -258,103 +258,43 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView
                         || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
                         )
                     {
+                        Domain.Web.Navigation.Module module = _customerWebSession.CustomerLogin.GetModule(_customerWebSession.CurrentModule);
+                        object[] parameters = new object[1];
+                        parameters[0] = _customerWebSession;
+                        Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 
+                        _itemsCollection = portofolioResult.GetVehicleItems();
 
                         StringBuilder js = new StringBuilder();
                         string setParameters = string.Empty;
                         _subPeriodSelectionWebControl.JavascriptRefresh = "SetParameters";
 
-                        if (_resultType == FrameWorkResultConstantes.Portofolio.DETAIL_MEDIA)
-                        {
-                            sb.Append("\r\n<SCRIPT language=javascript>\r\n");
-                            sb.Append("\r\n\t var resultParameters = new Object();");
-                            sb.Append("\r\n\r\n</SCRIPT>");
-                        }
-
-                        sb.Append("<table  border=0 cellpadding=0 cellspacing=0 align=center class=\"paleVioletBackGroundV2 violetBorder\">");
-                        //Vehicle view
-                        switch (_resultType)
-                        {
-                            case FrameWorkResultConstantes.Portofolio.SYNTHESIS:
-                                sb.Append("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc12Bold violetBackGround portofolioSynthesisBorder\" align=\"center\">" + GestionWeb.GetWebWord(1397, _customerWebSession.SiteLanguage) + "</td></tr>");
-                                break;
-                            case FrameWorkResultConstantes.Portofolio.DETAIL_MEDIA:
-                                sb.Append("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc14Bold violetBackGround portofolioSynthesisBorder\" align=\"center\">" + _media + "</td></tr>");
-                                break;
-                        }
-
-                        CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_customerWebSession.SiteLanguage].Localization);
-                        if (_mediaList == null)
-                        {
-                            try
-                            {
-                                string[] mediaList = Media.GetItemsList(WebCst.AdExpressUniverse.CREATIVES_KIOSQUE_LIST_ID).MediaList.Split(',');
-                                if (mediaList != null && mediaList.Length > 0)
-                                    _mediaList = new List<Int64>(Array.ConvertAll<string, Int64>(mediaList, (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); }));
-                            }
-                            catch { }
-                        }
-                        for (int i = 0; i < _dtVisuel.Rows.Count; i++)
-                        {
-                            //date_media_num
-
-                            if (_dtVisuel.Rows[i]["disponibility_visual"] != System.DBNull.Value && int.Parse(_dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10)
-                            {
-                                if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
-                                    pathWeb = WebCst.CreationServerPathes.IMAGES + "/" + _idMedia.ToString() + "/" + _dtVisuel.Rows[i]["date_media_num"].ToString() + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "";
-                                else pathWeb = WebCst.CreationServerPathes.IMAGES + "/" + _idMedia.ToString() + "/" + _dtVisuel.Rows[i]["date_cover_num"].ToString() + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "";
-                            }
-                            else
-                            {
-                                pathWeb = "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif";
-                            }
-                            DateTime dayDT = new DateTime(int.Parse(_dtVisuel.Rows[i]["date_media_num"].ToString().Substring(0, 4)), int.Parse(_dtVisuel.Rows[i]["date_media_num"].ToString().Substring(4, 2)), int.Parse(_dtVisuel.Rows[i]["date_media_num"].ToString().Substring(6, 2)));
-
-                            if (_dtVisuel.Rows[i]["disponibility_visual"] != System.DBNull.Value && int.Parse(_dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10)
-                            {
-
-                                if (_resultType == FrameWorkResultConstantes.Portofolio.SYNTHESIS)
-                                {
-                                    if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
-                                        coverLinkItemSynthesis = new CoverLinkItemSynthesisWebControl(_dtVisuel.Rows[i]["media"].ToString(), _dtVisuel.Rows[i]["number_page_media"].ToString(), _customerWebSession.IdSession, _idMedia, _dtVisuel.Rows[i]["date_media_num"].ToString(), _dtVisuel.Rows[i]["date_media_num"].ToString());
-                                    else
-                                        coverLinkItemSynthesis = new CoverLinkItemSynthesisWebControl(_dtVisuel.Rows[i]["media"].ToString(), _dtVisuel.Rows[i]["number_page_media"].ToString(), _customerWebSession.IdSession, _idMedia, _dtVisuel.Rows[i]["date_media_num"].ToString(), _dtVisuel.Rows[i]["date_cover_num"].ToString());
-                                    coverItem = new CoverItemWebControl(i + 1, GestionWeb.GetWebWord(1409, _customerWebSession.SiteLanguage), pathWeb, coverLinkItemSynthesis);
-                                }
-                                else if (_resultType == FrameWorkResultConstantes.Portofolio.DETAIL_MEDIA)
-                                {
-                                    coverLinkItem = new CoverLinkItemWebControl(_customerWebSession.IdSession, _idMedia, _dtVisuel.Rows[i]["date_media_num"].ToString(), "");
-                                    coverItem = new CoverItemWebControl(i + 1, "", pathWeb, coverLinkItem);
-                                }
-                            }
-                            else
-                                if (_resultType == FrameWorkResultConstantes.Portofolio.SYNTHESIS)
-                                    coverItem = new CoverItemWebControl(i + 1, GestionWeb.GetWebWord(1409, _customerWebSession.SiteLanguage), pathWeb, null);
-                                else if (_resultType == FrameWorkResultConstantes.Portofolio.DETAIL_MEDIA)
-                                    coverItem = new CoverItemWebControl(i + 1, "", pathWeb, null);
 
 
-                            if (_htValue.Count > 0)
-                            {
-                                if (_htValue.ContainsKey(_dtVisuel.Rows[i]["date_cover_num"]))
-                                {
-                                    vehicleItem = new VehicleItemWebControl(dayDT, ((string[])_htValue[_dtVisuel.Rows[i]["date_cover_num"]])[1], int.Parse(((string[])_htValue[_dtVisuel.Rows[i]["date_cover_num"]])[0]).ToString("### ### ### ###"), _customerWebSession.SiteLanguage, coverItem);
-                                }
-                                else
-                                {
-                                    vehicleItem = new VehicleItemWebControl(dayDT, "0", "0", _customerWebSession.SiteLanguage, coverItem);
-
-                                }
-                            }
-
-                            _itemsCollection.Add(vehicleItem);
-
-                        }
 
                         double groupDivNumber = Math.Ceiling((double)_itemsCollection.Count / _visibleItemsNumber);
 
                         if (_itemsCollection != null && _itemsCollection.Count > 0)
                         {
+                            if (_resultType == FrameWorkResultConstantes.Portofolio.DETAIL_MEDIA)
+                            {
+                                sb.Append("\r\n<SCRIPT language=javascript>\r\n");
+                                sb.Append("\r\n\t var resultParameters = new Object();");
+                                sb.Append("\r\n\r\n</SCRIPT>");
+                            }
+
+                            sb.Append("<table  border=0 cellpadding=0 cellspacing=0 align=center class=\"paleVioletBackGroundV2 violetBorder\">");
+                            //Vehicle view
+                            switch (_resultType)
+                            {
+                                case FrameWorkResultConstantes.Portofolio.SYNTHESIS:
+                                    sb.Append("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc12Bold violetBackGround portofolioSynthesisBorder\" align=\"center\">" + GestionWeb.GetWebWord(1397, _customerWebSession.SiteLanguage) + "</td></tr>");
+                                    break;
+                                case FrameWorkResultConstantes.Portofolio.DETAIL_MEDIA:
+                                    sb.Append("\r\n\t<tr height=\"25px\" ><td colspan=3 class=\"txtBlanc14Bold violetBackGround portofolioSynthesisBorder\" align=\"center\">" + _media + "</td></tr>");
+                                    break;
+                            }
+
                             //TODO We've removed this control because is not very accurate for our customer 
                             //This test is only temporary until we've time to develop a better solution (08/10/2010)
                             groupDivNumber = 0;
@@ -414,7 +354,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView
             sb.Append("\n   var indexInf_" + _controlName + " = 0;                                              ");
             sb.Append("\n   var indexSup_" + _controlName + " = 0;                                              ");
             sb.Append("\n   var time_" + _controlName + " = 0;                                                  ");
-            foreach (VehicleItemWebControl vehicleItem in _itemsCollection)
+            foreach (VehicleItem vehicleItem in _itemsCollection)
                 sb.Append("\n imagesName_" + _controlName + "[" + imageIndex++ + "] = '" + vehicleItem.CoverItem.Src + "';");
 
             sb.Append("\nvar navigatorIndex_" + _controlName + " = " + groupDivNumber + ";");
@@ -690,7 +630,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView
         /// <param name="output">output</param>
         protected override void Render(HtmlTextWriter output)
         {
-            if (_visible && _dtVisuel != null && _htValue != null)
+            if (_visible)
             {
                 output.Write(Render());
             }

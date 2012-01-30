@@ -20,7 +20,7 @@
 	</head>
 	<body bottomMargin="0" leftMargin="0" topMargin="0" class="bodyStyle" onload="javascript:activateActiveX();">
 		<form id="Form2" method="post" runat="server">
-			<table id="Table1" height="600" cellspacing="0" cellpadding="0" width="800" border="0">
+			<table id="Table1" height="600" cellspacing="0" cellpadding="0" width="900" border="0">
 				<!-- Gradient -->
 				<tr>
 					<td colspan="7" height="3" class="gradientBar"></td>

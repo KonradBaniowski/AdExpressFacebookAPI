@@ -628,5 +628,294 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 		}
 		#endregion
 
+        #region Top connections Clients, IP, time slot
+        /// <summary>
+        /// Top connections Clients, IP, time slot
+        /// </summary>		
+        ///<param name="parameters">parametres</param>
+        ///<param name="excel"> excel file</param>
+        internal static Workbook TopConnectedByIpTimeSlot(Workbook excel, BastetCommon.Parameters parameters, int language)
+        {
+            try
+            {
+
+                //Data loading
+                DataTable dt = DataAccess.Client.TopConnectedByIpTimeSlot(parameters);
+
+                #region Intégration  données client
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    //Insertion into excel file
+                    int cellRow = 4;
+                    int startIndex = cellRow;
+                    int[] iArray = null, iArrayTotal =null;
+                    string[] strArray;
+                    int upperLeftColumn = 5;
+                    int minimunVPageBreaks = 9;
+                    int s = 1, start = 0;
+                    const int nbMaxRowByPage = 40;
+                    string vPageBreaks = "", oldLogin ="";
+                    Range range = null;
+                    Worksheet sheet = excel.Worksheets[excel.Worksheets.Add()];
+                    Cells cells = sheet.Cells;
+                    long oldIdLogin = long.MinValue, oldIdCompany = long.MinValue;
+                    int total_24_3 = 0, total_3_6 = 0, total_6_9 = 0, total_9_12 = 0, total_12_15 = 0, total_15_18 = 0, total_18_21 = 0, total_21_24 = 0;
+                    int totalLine = 0, totalCol =0;
+
+                    //Header Number connections
+                    int i = 4;
+                    cells["E" + cellRow].PutValue(GestionWeb.GetWebWord(2490, language));
+                    cells[cellRow-1, i].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                    cells[cellRow - 1, i].Style.ForegroundColor = Color.FromArgb(128, 128, 192);
+                    cells[cellRow - 1, i].Style.Pattern = BackgroundType.Solid;
+                    cells[cellRow - 1, i].Style.Font.Color = Color.White;
+                    cells[cellRow - 1, i].Style.Font.IsBold = true;                  
+                    cells["E" + cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+                    cells["E" + cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
+                    cells.Merge(cellRow - 1, 4, 1, 9);
+                    for (int j = 4; j <= 12; j++)
+                    {
+                        cells[cellRow - 1, j].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+                    }
+                    cells["M" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                    cells["E" + cellRow].Style.HorizontalAlignment = TextAlignmentType.Center;
+                    cellRow++;                 
+
+                    //Labels Customer, IP address, Date, connection numbers by time slots
+                    startIndex = cellRow;
+                    strArray = new string[] { GestionWeb.GetWebWord(1132, language), GestionWeb.GetWebWord(2485, language), GestionWeb.GetWebWord(2532, language), GestionWeb.GetWebWord(2806, language), "00h00-3h00", "03H00-6H00", "06H00-9h00", "09H00-12h00", "12H00-15h00", "15H00-18h00", "18H00-21h00", "21H00-24h00","TOTAL"};
+                     range = cells.CreateRange("A" + startIndex, "M" + startIndex);
+                     BastetFunctions.WorkSheet.CellsHeaderStyle(cells, null, cellRow-1, 0, 12, true, Color.White);                                       
+                    cells.ImportObjectArray(strArray, range.FirstRow, range.FirstColumn, false);
+                    range.SetOutlineBorder(BorderType.RightBorder, CellBorderType.Thin, Color.Black);
+                    range.SetOutlineBorder(BorderType.TopBorder, CellBorderType.Thin, Color.Black);
+                    range.SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Thin, Color.Black);
+                    range.SetOutlineBorder(BorderType.LeftBorder, CellBorderType.Thin, Color.Black);
+                    cellRow++;
+
+                    //Treating each company, customer, IP adress, Date, connection numbers by time slots                                                            
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+
+                            //Connexions par login
+                           
+
+                            if (oldIdLogin != long.Parse(dr["id_login"].ToString()) && start > 0)
+                            {
+                                range = cells.CreateRange("E" + cellRow, "M" + cellRow);
+
+                                //Add tota line
+                                totalCol = total_24_3+ total_3_6 + total_6_9 + total_9_12+ total_12_15 + total_15_18 + total_18_21 + total_21_24;
+                                iArrayTotal = new int[] { total_24_3, total_3_6, total_6_9, total_9_12, total_12_15, total_15_18, total_18_21, total_21_24, totalCol };
+
+                                cells.ImportArray(iArrayTotal, range.FirstRow, range.FirstColumn, false);
+                                range.SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Thin, Color.Black);
+                                range.SetOutlineBorder(BorderType.LeftBorder, CellBorderType.Thin, Color.Black);
+
+                                //Company
+                               // cells["A" + cellRow].PutValue(dr["COMPANY"].ToString());
+                                cells["A" + cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+                                cells["A" + cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
+                                cells["A" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                                cells["A" + cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+                                cells["A" + cellRow].Style.Font.IsBold = true;
+
+                                //Login
+                                cells["B" + cellRow].PutValue(oldLogin);
+                                cells["B" + cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+                                cells["B" + cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
+                                cells["B" + cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+
+                                //IP ADDRESS
+                                cells["C" + cellRow].PutValue("TOTAL");
+                                cells["C" + cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+                                cells["C" + cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
+                                cells["C" + cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+                                cells["C" + cellRow].Style.Font.IsBold = true;
+
+                                //DATE                               
+                                //cells["D" + cellRow].PutValue(dateConnection);
+                                cells["D" + cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+                                cells["D" + cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
+                                cells["D" + cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+
+
+                                cells["E" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                                cells["E" + cellRow].Style.Font.IsBold = true;
+                                cells["F" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                                cells["F" + cellRow].Style.Font.IsBold = true;
+                                cells["G" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                                cells["G" + cellRow].Style.Font.IsBold = true;
+                                cells["H" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                                cells["H" + cellRow].Style.Font.IsBold = true;
+                                cells["I" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                                cells["I" + cellRow].Style.Font.IsBold = true;
+                                cells["J" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                                cells["J" + cellRow].Style.Font.IsBold = true;
+                                cells["K" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                                cells["K" + cellRow].Style.Font.IsBold = true;
+                                cells["L" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                                cells["L" + cellRow].Style.Font.IsBold = true;
+                                cells["M" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                                cells["M" + cellRow].Style.Font.IsBold = true;
+                                cellRow++;
+
+                                total_24_3 = 0; total_3_6 = 0; total_6_9 = 0; total_9_12 = 0; total_12_15 = 0; total_15_18 = 0; total_18_21 = 0; total_21_24 = 0;
+                                totalCol=0;
+
+                            }
+                            range = cells.CreateRange("E" + cellRow, "M" + cellRow);
+                            totalLine = int.Parse(dr["CONNECTION_NUMBER_24_3"].ToString()) + int.Parse(dr["CONNECTION_NUMBER_3_6"].ToString()) + int.Parse(dr["CONNECTION_NUMBER_6_9"].ToString()) + int.Parse(dr["CONNECTION_NUMBER_9_12"].ToString()) +
+                                                  int.Parse(dr["CONNECTION_NUMBER_12_15"].ToString()) + int.Parse(dr["CONNECTION_NUMBER_15_18"].ToString()) + int.Parse(dr["CONNECTION_NUMBER_18_21"].ToString()) + int.Parse(dr["CONNECTION_NUMBER_21_24"].ToString());
+
+                            iArray = new int[]{int.Parse(dr["CONNECTION_NUMBER_24_3"].ToString()),int.Parse(dr["CONNECTION_NUMBER_3_6"].ToString()),int.Parse(dr["CONNECTION_NUMBER_6_9"].ToString()),int.Parse(dr["CONNECTION_NUMBER_9_12"].ToString()),
+												  int.Parse(dr["CONNECTION_NUMBER_12_15"].ToString()),int.Parse(dr["CONNECTION_NUMBER_15_18"].ToString()),int.Parse(dr["CONNECTION_NUMBER_18_21"].ToString()),int.Parse(dr["CONNECTION_NUMBER_21_24"].ToString()),totalLine};
+                          
+                            total_24_3 = total_24_3 + int.Parse(dr["CONNECTION_NUMBER_24_3"].ToString());
+                            total_3_6 = total_3_6 + int.Parse(dr["CONNECTION_NUMBER_3_6"].ToString());
+                            total_6_9 = total_6_9 + int.Parse(dr["CONNECTION_NUMBER_6_9"].ToString());
+                            total_9_12 = total_9_12 + int.Parse(dr["CONNECTION_NUMBER_9_12"].ToString());
+                            total_12_15 = total_12_15 + int.Parse(dr["CONNECTION_NUMBER_12_15"].ToString());
+                            total_15_18 = total_15_18 + int.Parse(dr["CONNECTION_NUMBER_15_18"].ToString());
+                            total_18_21 = total_18_21 + int.Parse(dr["CONNECTION_NUMBER_18_21"].ToString());
+                            total_21_24 = total_21_24 + int.Parse(dr["CONNECTION_NUMBER_21_24"].ToString());
+
+                            cells.ImportArray(iArray, range.FirstRow, range.FirstColumn, false);
+                            range.SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Thin, Color.Black);
+                            range.SetOutlineBorder(BorderType.LeftBorder, CellBorderType.Thin, Color.Black);
+
+                            //Company
+                            if (oldIdCompany != long.Parse(dr["id_company"].ToString()))
+                            cells["A" + cellRow].PutValue(dr["COMPANY"].ToString());
+                            cells["A" + cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+                            cells["A" + cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
+                            cells["A" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["A" + cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+                            cells["A" + cellRow].Style.Font.IsBold = true;
+
+                            //Login
+                            cells["B" + cellRow].PutValue(dr["LOGIN"].ToString());
+                            cells["B" + cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+                            cells["B" + cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
+                            cells["B" + cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+
+                            //IP ADDRESS
+                            cells["C" + cellRow].PutValue(dr["IP_ADDRESS"].ToString());
+                            cells["C" + cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+                            cells["C" + cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
+                            cells["C" + cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+                            
+                            //DATE
+                            string dateConnection = dr["DATE_CONNECTION"].ToString();
+                           dateConnection =  dateConnection.Substring(6, 2) + "/" + dateConnection.Substring(4, 2) + "/" + dateConnection.Substring(0, 4);
+                            cells["D" + cellRow].PutValue(dateConnection);
+                            cells["D" + cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+                            cells["D" + cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
+                            cells["D" + cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+
+                           
+                            cells["E" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["F" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["G" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["H" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["I" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["J" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["K" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["L" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["M" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["M" + cellRow].Style.Font.IsBold = true;
+                            cellRow++;
+                            start = 1;
+
+                            oldLogin = dr["LOGIN"].ToString();
+                            oldIdLogin = long.Parse(dr["id_login"].ToString());
+                            oldIdCompany = long.Parse(dr["id_company"].ToString());
+                        }
+
+                        if (start > 0)
+                        {
+                            range = cells.CreateRange("E" + cellRow, "M" + cellRow);
+
+                            //Add tota line
+                            totalCol = total_24_3 + total_3_6 + total_6_9 + total_9_12 + total_12_15 + total_15_18 + total_18_21 + total_21_24;
+                            iArrayTotal = new int[] { total_24_3, total_3_6, total_6_9, total_9_12, total_12_15, total_15_18, total_18_21, total_21_24, totalCol };
+
+                            cells.ImportArray(iArrayTotal, range.FirstRow, range.FirstColumn, false);
+                            range.SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Thin, Color.Black);
+                            range.SetOutlineBorder(BorderType.LeftBorder, CellBorderType.Thin, Color.Black);
+                            //Company
+                            // cells["A" + cellRow].PutValue(dr["COMPANY"].ToString());
+                            cells["A" + cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+                            cells["A" + cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
+                            cells["A" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["A" + cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+                            cells["A" + cellRow].Style.Font.IsBold = true;
+
+                            //Login
+                            cells["B" + cellRow].PutValue(oldLogin);
+                            cells["B" + cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+                            cells["B" + cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
+                            cells["B" + cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+
+                            //IP ADDRESS
+                            cells["C" + cellRow].PutValue("TOTAL");
+                            cells["C" + cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+                            cells["C" + cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
+                            cells["C" + cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+                            cells["C" + cellRow].Style.Font.IsBold = true;
+
+                            //DATE                               
+                            //cells["D" + cellRow].PutValue(dateConnection);
+                            cells["D" + cellRow].Style.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+                            cells["D" + cellRow].Style.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
+                            cells["D" + cellRow].Style.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+
+                            cells["E" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["E" + cellRow].Style.Font.IsBold = true;
+                            cells["F" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["F" + cellRow].Style.Font.IsBold = true;
+                            cells["G" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["G" + cellRow].Style.Font.IsBold = true;
+                            cells["H" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["H" + cellRow].Style.Font.IsBold = true;
+                            cells["I" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["I" + cellRow].Style.Font.IsBold = true;
+                            cells["J" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["J" + cellRow].Style.Font.IsBold = true;
+                            cells["K" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["K" + cellRow].Style.Font.IsBold = true;
+                            cells["L" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["L" + cellRow].Style.Font.IsBold = true;
+                            cells["M" + cellRow].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+                            cells["M" + cellRow].Style.Font.IsBold = true;
+                          
+                            total_24_3 = 0; total_3_6 = 0; total_6_9 = 0; total_9_12 = 0; total_12_15 = 0; total_15_18 = 0; total_18_21 = 0; total_21_24 = 0;
+
+                        }
+                       //Ajustement de la taile des cellules en fonction du contenu					                      
+                    
+                   
+                    vPageBreaks = cells[(cellRow - 1 + 30), (minimunVPageBreaks)].Name;
+                    BastetFunctions.WorkSheet.PageSettings(sheet, GestionWeb.GetWebWord(2491, language), dt, nbMaxRowByPage, ref s, upperLeftColumn, vPageBreaks, language);
+                    //Ajustement de la taile des cellules en fonction du contenu
+                    for (int c = 0; c <= 12; c++)
+                    {
+                        sheet.AutoFitColumn(c);
+                    }
+                #endregion
+                }
+
+            }
+            catch (System.Exception e)
+            {
+                throw new BastetExceptions.ClientUIException(" Impossible to insert data in excel file.", e);
+            }
+            return excel;
+
+        }
+        #endregion
+
 	}
 }

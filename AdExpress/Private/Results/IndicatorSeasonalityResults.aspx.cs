@@ -34,59 +34,68 @@ using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Web.Navigation;
 #endregion
 
-namespace AdExpress.Private.Results {
-	
-	/// <summary>
-	///Résultas des différentes planches indicateurs :
-	///- Saisonnalité : répartition des investissements par média et par annonceurs ou références.
-	///- totalChoice : le top 10 des annonceurs et références ayant le plus investi sur la période sélectionnée
-	///en fonction du média.
-	///- Nouveautés : nouveaux annonceurs ou références sur la période sélectionnée.
-	///- Evolution : annonceurs et références dont l'investissement a le plus augmenté entre la période N-1 et N.
-	///- Stratégie Média : répartion des investissements par média et par annonceurs et références.
-	/// </summary>
-    public partial class IndicatorSeasonalityResults : TNS.AdExpress.Web.UI.ResultWebPage {
+namespace AdExpress.Private.Results
+{
 
-		#region variables
-		/// <summary>
-		/// Code HTML des résultats
-		/// </summary>
-		public string result ;
-		/// <summary> 
-		/// Script de fermeture du flash d'attente
-		/// </summary>
-		public string divClose=LoadingSystem.GetHtmlCloseDiv();
-		/// <summary>
-		/// Choix du type de total (bas sélection, famille, marché)
-		/// </summary>
+    /// <summary>
+    ///Résultas des différentes planches indicateurs :
+    ///- Saisonnalité : répartition des investissements par média et par annonceurs ou références.
+    ///- totalChoice : le top 10 des annonceurs et références ayant le plus investi sur la période sélectionnée
+    ///en fonction du média.
+    ///- Nouveautés : nouveaux annonceurs ou références sur la période sélectionnée.
+    ///- Evolution : annonceurs et références dont l'investissement a le plus augmenté entre la période N-1 et N.
+    ///- Stratégie Média : répartion des investissements par média et par annonceurs et références.
+    /// </summary>
+    public partial class IndicatorSeasonalityResults : TNS.AdExpress.Web.UI.ResultWebPage
+    {
+
+        #region variables
+        /// <summary>
+        /// Code HTML des résultats
+        /// </summary>
+        public string result;
+        /// <summary> 
+        /// Script de fermeture du flash d'attente
+        /// </summary>
+        public string divClose = LoadingSystem.GetHtmlCloseDiv();
+        /// <summary>
+        /// Choix du type de total (bas sélection, famille, marché)
+        /// </summary>
         public bool totalChoice = true;
-		/// <summary>
-		/// Commentaire Agrandissement de l'image
-		/// </summary>
-		public string zoomTitle="";
-		#endregion
-		
-		#region Constructeur
-		/// <summary>
-		/// Constructeur : chargement de la session
-		/// </summary>
-		public IndicatorSeasonalityResults():base(){
-			// Chargement de la Session			
-			_webSession.CurrentModule = CstWeb.Module.Name.INDICATEUR;
-		}
-		#endregion		
+       
+        /// <summary>
+        /// Commentaire Agrandissement de l'image
+        /// </summary>
+        public string zoomTitle = "";
 
-		#region Evènements
+        private bool _withAdType = false;
 
-		#region chargement de la page
-		/// <summary>
-		/// Chargement de la page
-		/// Suivant l'indicateur choisi une méthode contenue dans UI est appelé
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+        #endregion
+
+        #region Constructeur
+        /// <summary>
+        /// Constructeur : chargement de la session
+        /// </summary>
+        public IndicatorSeasonalityResults()
+            : base()
+        {
+            // Chargement de la Session			
+            _webSession.CurrentModule = CstWeb.Module.Name.INDICATEUR;
+        }
+        #endregion
+
+        #region Evènements
+
+        #region chargement de la page
+        /// <summary>
+        /// Chargement de la page
+        /// Suivant l'indicateur choisi une méthode contenue dans UI est appelé
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Page_Load(object sender, System.EventArgs e)
         {
             try
@@ -127,24 +136,27 @@ namespace AdExpress.Private.Results {
                 InformationWebControl1.Language = _webSession.SiteLanguage;
                 #endregion
 
-				VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+                VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 
-				if (_webSession.CurrentTab == CstResult.MediaStrategy.MEDIA_STRATEGY) {
-					if (vehicleInfo != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null
-						&& !vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category)
-						&& !vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media)
-						&& vehicleInfo.Id != TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia) {
-						_webSession.Graphics = false;
-						ResultsOptionsWebControl1.GraphRadioButton.Checked = false;
-						ResultsOptionsWebControl1.GraphRadioButton.Visible = false;
-						ResultsOptionsWebControl1.TableRadioButton.Visible = false;
-						_webSession.PreformatedMediaDetail = CstPreformatedDetail.PreformatedMediaDetails.vehicle;
-						_webSession.Save();
-					}					
-				}
-				else {
-					ResultsOptionsWebControl1.GraphRadioButton.Visible = true;
-					ResultsOptionsWebControl1.TableRadioButton.Visible = true;
+                if (_webSession.CurrentTab == CstResult.MediaStrategy.MEDIA_STRATEGY)
+                {
+                    if (vehicleInfo != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null
+                        && !vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category)
+                        && !vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.media)
+                        && vehicleInfo.Id != TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.plurimedia)
+                    {
+                        _webSession.Graphics = false;
+                        ResultsOptionsWebControl1.GraphRadioButton.Checked = false;
+                        ResultsOptionsWebControl1.GraphRadioButton.Visible = false;
+                        ResultsOptionsWebControl1.TableRadioButton.Visible = false;
+                        _webSession.PreformatedMediaDetail = CstPreformatedDetail.PreformatedMediaDetails.vehicle;
+                        _webSession.Save();
+                    }
+                }
+                else
+                {
+                    ResultsOptionsWebControl1.GraphRadioButton.Visible = true;
+                    ResultsOptionsWebControl1.TableRadioButton.Visible = true;
                 }
 
                 if (!IsPostBack)
@@ -216,6 +228,7 @@ namespace AdExpress.Private.Results {
 
                 #region MAJ _webSession
                 _webSession.LastReachedResultUrl = Page.Request.Url.AbsolutePath;
+                _webSession.ReachedModule = true;               
                 #endregion
 
             }
@@ -227,7 +240,7 @@ namespace AdExpress.Private.Results {
                 }
             }
         }
-		#endregion
+        #endregion
 
         #region OnLoadComplete
         /// <summary>
@@ -251,12 +264,31 @@ namespace AdExpress.Private.Results {
 			ModuleBridgeWebControl1.CustomerWebSession=_webSession;
 			ResultsOptionsWebControl1.CustomerWebSession=_webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
-            ProductClassContainerWebControl1.Session = _webSession;
+            ProductClassContainerWebControl1.WebSession = _webSession;
+            TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_webSession.CurrentModule);
+            ResultPageInformation resultPageInformation = module.GetResultPageInformation(_webSession.CurrentTab);
+            ResultsOptionsWebControl1.UnitOption = resultPageInformation.CanDisplayUnitOption;
+            //ResultsOptionsWebControl1.CampaignTypeOption = resultPageInformation.CanDisplayCampaignType;
+           
 			return tmp;
 		}
 		#endregion
 
-		#endregion
+        #region Aucun Résultat
+        /// <summary>
+        /// Affichage d'un message d'erreur
+        /// </summary>
+        /// <returns></returns>
+        private string noResult(string message)
+        {
+            System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
+            t.Append("<table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+            t.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
+            t.Append(GestionWeb.GetWebWord(177, _webSession.SiteLanguage) + " " + message);
+            t.Append("</td></tr></table>");
+            return t.ToString();
+        }
+        #endregion
 
         #region OnPreInit
         /// <summary>
@@ -266,6 +298,8 @@ namespace AdExpress.Private.Results {
         protected override void OnPreInit(EventArgs e) {
             base.OnPreInit(e);
         }
+        #endregion
+
         #endregion
 
         #region Code généré par le Concepteur Web Form
@@ -291,74 +325,90 @@ namespace AdExpress.Private.Results {
 		}
 		#endregion
 
-		#region Aucun Résultat
-		/// <summary>
-		/// Affichage d'un message d'erreur
-		/// </summary>
-		/// <returns></returns>
-		private string noResult(string message){
-			System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
-			t.Append("<table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
-			t.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
-			t.Append(GestionWeb.GetWebWord(177,_webSession.SiteLanguage)+" "+message);
-			t.Append("</td></tr></table>");
-			return t.ToString();
-		} 
-		#endregion
 
-		#region Render
-		/// <summary>
-		/// Render
-		/// </summary>
-		/// <param name="output"></param>
+        #region Render
+        /// <summary>
+        /// Render
+        /// </summary>
+        /// <param name="output"></param>
         protected override void Render(HtmlTextWriter output)
         {
-            // Suppime les items inutiles de la list "niveau media" pour le graphe de strategie Media
-            if (_webSession.CurrentTab == CstResult.PalmaresRecap.MEDIA_STRATEGY && ResultsOptionsWebControl1.GraphRadioButton.Checked)
-            {
-				VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-				if (vehicleInfo != null) {
-					switch (vehicleInfo.Id) {
-						case CstDBClassif.Vehicles.names.tv:
-						case CstDBClassif.Vehicles.names.radio:
-						case CstDBClassif.Vehicles.names.outdoor:
-                        case CstDBClassif.Vehicles.names.instore:
-						case CstDBClassif.Vehicles.names.mediasTactics:
-						case CstDBClassif.Vehicles.names.mobileTelephony:
-						case CstDBClassif.Vehicles.names.emailing:
-							ResultsOptionsWebControl1.mediaDetail.Items.Remove(ResultsOptionsWebControl1.mediaDetail.Items.FindByText(GestionWeb.GetWebWord(1141, _webSession.SiteLanguage)));
-							break;
-						case CstDBClassif.Vehicles.names.press:
-                        case CstDBClassif.Vehicles.names.newspaper:
-                        case CstDBClassif.Vehicles.names.magazine:
-						case CstDBClassif.Vehicles.names.internet:
-							ResultsOptionsWebControl1.mediaDetail.Items.Remove(ResultsOptionsWebControl1.mediaDetail.Items.FindByText(GestionWeb.GetWebWord(1141, _webSession.SiteLanguage)));
-							break;
-						case CstDBClassif.Vehicles.names.cinema:
-							result = noResult("");
-							break;
-						case CstDBClassif.Vehicles.names.plurimedia:
-							ResultsOptionsWebControl1.mediaDetail.Enabled = true;
-							break;
-						default:
-							ResultsOptionsWebControl1.mediaDetail.Enabled = false;
-							break;
-					}
-				}
-            }
-            base.Render(output);
+            
+                // Suppime les items inutiles de la list "niveau media" pour le graphe de strategie Media
+                if (_webSession.CurrentTab == CstResult.PalmaresRecap.MEDIA_STRATEGY && ResultsOptionsWebControl1.GraphRadioButton.Checked)
+                {
+                    VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+                    if (vehicleInfo != null)
+                    {
+                        switch (vehicleInfo.Id)
+                        {
+                            case CstDBClassif.Vehicles.names.tv:
+                            case CstDBClassif.Vehicles.names.tvGeneral:
+                            case CstDBClassif.Vehicles.names.tvSponsorship:
+                            case CstDBClassif.Vehicles.names.tvAnnounces:
+                            case CstDBClassif.Vehicles.names.tvNonTerrestrials:
+                            case CstDBClassif.Vehicles.names.radio:
+                            case CstDBClassif.Vehicles.names.radioGeneral:
+                            case CstDBClassif.Vehicles.names.radioMusic:
+                            case CstDBClassif.Vehicles.names.radioSponsorship:
+                            case CstDBClassif.Vehicles.names.outdoor:
+                            case CstDBClassif.Vehicles.names.indoor:
+                            case CstDBClassif.Vehicles.names.instore: 
+                            case CstDBClassif.Vehicles.names.mediasTactics:
+                            case CstDBClassif.Vehicles.names.mobileTelephony:
+                            case CstDBClassif.Vehicles.names.emailing:
+                                ResultsOptionsWebControl1.mediaDetail.Items.Remove(ResultsOptionsWebControl1.mediaDetail.Items.FindByText(GestionWeb.GetWebWord(1141, _webSession.SiteLanguage)));
+                                break;
+                            case CstDBClassif.Vehicles.names.press:
+                            case CstDBClassif.Vehicles.names.newspaper:
+                            case CstDBClassif.Vehicles.names.magazine:
+                            case CstDBClassif.Vehicles.names.internet:
+                                ResultsOptionsWebControl1.mediaDetail.Items.Remove(ResultsOptionsWebControl1.mediaDetail.Items.FindByText(GestionWeb.GetWebWord(1141, _webSession.SiteLanguage)));
+                                break;
+                            case CstDBClassif.Vehicles.names.cinema:
+                                result = noResult("");
+                                break;
+                            case CstDBClassif.Vehicles.names.plurimedia:
+                                ResultsOptionsWebControl1.mediaDetail.Enabled = true;
+                                break;
+                            default:
+                                ResultsOptionsWebControl1.mediaDetail.Enabled = false;
+                                break;
+                        }
+                    }
+                }
+                base.Render(output);
+           
         }
-		#endregion
+        #endregion
 
-		#region Abstract Methods
-		/// <summary>
-		/// Get next Url from contextual menu
-		/// </summary>
-		/// <returns></returns>
-		protected override string GetNextUrlFromMenu() {
-			return this.MenuWebControl2.NextUrl;
-		}
-		#endregion
+        #region Abstract Methods
+        /// <summary>
+        /// Get next Url from contextual menu
+        /// </summary>
+        /// <returns></returns>
+        protected override string GetNextUrlFromMenu()
+        {
+            return this.MenuWebControl2.NextUrl;
+        }
+        #endregion
 
-	}
+        #region SetAdvertisementTypeOptions
+        ///// <summary>
+        ///// Indicate if customer can refine ad type
+        ///// </summary>		
+        //private void SetAdvertisementTypeOptions()
+        //{   //TODO : A déplacer dans resultoptionswebcontrol pour fusion Dev Trunk
+        //    //TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_webSession.CurrentModule);
+        //    //ArrayList detailSelections = ((ResultPageInformation)module.GetResultPageInformation((int)_webSession.CurrentTab)).DetailSelectionItemsType;
+        //    //if (detailSelections.Contains(CstWeb.DetailSelection.Type.advertisementType.GetHashCode()))
+        //    //{
+        //    //    //InitializeProductWebControl1.Visible = true;
+        //    //    ResultsOptionsWebControl1.InitializeAdvertisementTypeOption = true;
+        //    //    _withAdType = true;
+        //    //}
+        //}
+        #endregion
+
+    }
 }

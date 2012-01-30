@@ -255,7 +255,7 @@ namespace TNS.AdExpress.Constantes.Web{
             /// </summary>
             periodSelectiontype = 57,
             /// <summary>
-            /// Selected Banners Foramt List
+            /// Selected Banners Format List
             /// </summary>
             selectedBannersFormatList = 58,
             /// <summary>
@@ -273,7 +273,19 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// personnalizedLevel
             /// </summary>
-            idPromotion = 62
+            idPromotion = 62,
+            /// <summary>
+            /// Indique s'il s'agit d'une étude comparative personalisé
+            /// </summary>
+            withComparativePeriodPersonnalized = 63,
+            /// <summary>
+            /// Date de début d'une étude comparative
+            /// </summary>
+            startDateComparative = 64,
+            /// <summary>
+            /// Date de fin d'une étude comparative
+            /// </summary>
+            endDateComparative = 65
 		}
 	
 	}
@@ -611,21 +623,20 @@ namespace TNS.AdExpress.Constantes.Web{
 
 		#region Etudes
 		/// <summary>
-		/// Critère de comparaison ( comparaison sur le total univers, marché ou famille)
-		/// </summary>	
-		
+		/// Criteria of total computing market , sector or working set
+		/// </summary>			
 		public enum ComparisonCriterion
 		{
 			/// <summary>
-			/// Comparaison par rapport au total marché
+			/// Total market option
 			/// </summary>
 			marketTotal,
 			/// <summary>
-			/// Comparaison par rapport au total des familles concernées par la sélection
+			/// Total sector option
 			/// </summary>
 			sectorTotal,
 			/// <summary>
-			/// Comparaison par rapport au total de l'univers sélectionné
+			/// Total working set option
 			/// </summary>
 			universTotal
 		}
@@ -633,187 +644,185 @@ namespace TNS.AdExpress.Constantes.Web{
 
 		#region Niveaux de détail préformatés
 		/// <summary>
-		/// Constantes des niveaux de détails préformatés (produits, médias, périodes)
+        /// Constantes of PreformatedDetails
 		/// </summary>
 		public class PreformatedDetails
 		{
 			/// <summary>
-			/// Niveau de détails préformatés pour la nomenclature produit et annonceur
+            /// Preformated Product Details
 			/// </summary>
 			public enum PreformatedProductDetails
 			{
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau famille
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Sector
+                /// </summary>
 				sector,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau famille > produit
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Sector / Product
+                /// </summary>
 				sectorProduct,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau famille > classe > groupe
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Sector / Subsector / Group
+                /// </summary>
 				sectorSubsectorGroup,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau famille > classe
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Sector / Subsector 
+                /// </summary>
 				sectorSubsector,
-				/// <summary>
-				///  Nomenclature produit détaillée au niveau famille > annonceur 
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Sector / Advertiser 
+                /// </summary>
 				sectorAdvertiser,
-				/// <summary>
-				///  Nomenclature produit détaillée au niveau famille > annonceur > produit 
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Sector / Advertiser  /Product
+                /// </summary>
 				sectorAdvertiserProduct,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau groupe
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by group
+                /// </summary>
 				group,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau groupe > variété
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by group  /Segement
+                /// </summary>
 				groupSegment,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau groupe > marque
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by group  /Brand
+                /// </summary>
 				groupBrand,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau groupe > produit
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by group  /Product
+                /// </summary>
 				groupProduct,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau groupe > annonceur
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by group / Advertiser  
+                /// </summary>
 				groupAdvertiser,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau groupe > marque > produit
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by group  / Brand / Product
+                /// </summary>
 				groupBrandProduct,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau groupe > annonceur > marque
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by group  /advertiser / brand
+                /// </summary>
 				groupAdvertiserBrand,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau groupe > annonceur > produit
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by group  / Advertiser  / Product
+                /// </summary>
 				groupAdvertiserProduct,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau groupe > annonceur > marque > produit
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by group  / Advertiser  / Brand / Product
+                /// </summary>
 				groupAvertiserBrandProduct,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau groupe d'agence > agence
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by group agency 
+                /// </summary>
 				group_agencyAgency,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau groupe d'agence > agence > Annonceur
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by group agency /agency  
+                /// </summary>
 				group_agencyAgencyAdvertiser,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau groupe d'agence > agence > Produit
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by group agency /agency / Advertiser 
+                /// </summary>
 				group_agencyAgencyProduct,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau agence > produit
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by agency / Product 
+                /// </summary>
 				agencyProduct,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau agence > annonceur
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by agency / Advertiser 
+                /// </summary>
 				agencyAdvertiser,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau annonceur
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Advertiser 
+                /// </summary>
 				advertiser,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau annonceur > marque
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Advertiser / Brand 
+                /// </summary>
 				advertiserBrand,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau annonceur > produit
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Advertiser  / product
+                /// </summary>
 				advertiserProduct,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau annonceur > groupe > marque
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Advertiser  / Group /Brand
+                /// </summary>
 				advertiserGroupBrand,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau annonceur > groupe > produit
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Advertiser  /Group / Product
+                /// </summary>
 				advertiserGroupProduct,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau anonceur > marque > produit
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Advertiser / Brand /product
+                /// </summary>
 				advertiserBrandProduct,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau annonceur > groupe > marque > produit
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Advertiser / group / Product 
+                /// </summary>
 				advertiserGroupBrandProduct,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau annonceur > groupe > catégorie > produit
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Advertiser / group / Segement / product
+                /// </summary>
 				advertiserGroupSegmentProduct,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau annonceur > groupe > catégorie > marque > produit
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Advertiser / group / Segement / brand / Product
+                /// </summary>
 				advertiserGroupSegmentBrandProduct,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau marque
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Brand 
+                /// </summary>
 				brand,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau groupe de société
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by HodlingCompany 
+                /// </summary>
 				holdingCompany,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau groupe de société > annonceur
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by HodlingCompany / Advertiser
+                /// </summary>
 				holdingCompanyAdvertiser,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau groupe de société > annonceur > marques
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by HodlingCompany / Advertiser / brand
+                /// </summary>
 				holdingCompanyAdvertiserBrand,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau groupe de société > annonceur > produits
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by HodlingCompany / Advertiser / product
+                /// </summary>
 				holdingCompanyAdvertiserProduct,
-
-				//modifications for the addition of segmentAdvertiser, segmentProduct, segmentBrand
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau variété -> announceur
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Segement / advertiser
+                /// </summary>
 				segmentAdvertiser,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau variété -> produit
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by segement / product
+                /// </summary>
 				segmentProduct,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau variété -> marque
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Segment /Brand 
+                /// </summary>
 				segmentBrand,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau variété -> Annoneur -> Produit
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Segement /Advertiser / Product 
+                /// </summary>
 				segmentAdvertiserProduct,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau variété -> Annoceur -> marque
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Segement /Advertiser / Brand 
+                /// </summary>
 				segmentAdvertiserBrand,
-				/// <summary>
-				/// Nomenclature produit détaillée au niveau produit
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by product
+                /// </summary>
 				product,
-				/// <summary>
-				///  Nomenclature produit détaillée au niveau Famille -> Groupe de société -> Annonceur
-				/// </summary>
+                /// <summary>
+                ///  Table detailed by Sector /Hiolding company / advertiser 
+                /// </summary>
                 sectorHoldingCompanyAdvertiser,
                 /// <summary>
-                /// Nomenclature produit détaillée au niveau Classe
+                ///  Table detailed by subSector
                 /// </summary>
                 subSector,
                 /// <summary>
-                /// Nomenclature produit détaillée au niveau Classe -> Annonceur
+                ///  Table detailed by subSector / advertiser /
                 /// </summary>
                 subSectorAdvertiser,
                 /// <summary>
@@ -835,7 +844,7 @@ namespace TNS.AdExpress.Constantes.Web{
                 /// <summary>
                 ///  Table detailed by Brand / Product
                 /// </summary>
-                brandProduct,
+                brandProduct,              
                 /// <summary>
                 ///  Table detailed by segment
                 /// </summary>
@@ -855,38 +864,38 @@ namespace TNS.AdExpress.Constantes.Web{
                 sectorBrand,
                 ///  Table detailed by Segment / Subbrand
                 /// </summary>
-                segmentSubbrand,
-                ///  Table detailed by Sector / Subbrand
-                /// </summary>
-                subbrand,
+               segmentSubbrand,
+               ///  Table detailed by Sector / Subbrand
+               /// </summary>
+               subbrand,
                 /// <summary>
-                /// Table detailed by Advertiser / Class
+               /// Table detailed by Advertiser / Class
                 /// </summary>
-                advertiserClass,
+               advertiserClass,
+               /// <summary>
+               ///  Table detailed by Brand / Group
+               /// </summary>
+               brandGroup,
+               /// <summary>
+               ///  Table detailed by SubSector / Group
+               /// </summary>
+               subSectorGroup,
+               /// <summary>
+               ///  Table detailed by SubSector /Brand 
+               /// </summary>
+               subSectorBrand,
+               ///  Table detailed by SubSector / Subbrand
+               /// </summary>
+               subSectorSubbrand,
                 /// <summary>
-                ///  Table detailed by Brand / Group
+               /// Table detailed by Advertiser / SubSector
                 /// </summary>
-                brandGroup,
-                /// <summary>
-                ///  Table detailed by SubSector / Group
-                /// </summary>
-                subSectorGroup,
-                /// <summary>
-                ///  Table detailed by SubSector /Brand 
-                /// </summary>
-                subSectorBrand,
-                ///  Table detailed by SubSector / Subbrand
-                /// </summary>
-                subSectorSubbrand,
-                /// <summary>
-                /// Table detailed by Advertiser / SubSector
-                /// </summary>
-                advertiserSubSector
+               advertiserSubSector
 			}
 
 	
 			/// <summary>
-			/// Niveau de détails préformatés pour la nomenclature support
+            /// Preformated Media Details levels for media classification
 			/// </summary>
 			public enum PreformatedMediaDetails
 			{
@@ -895,7 +904,7 @@ namespace TNS.AdExpress.Constantes.Web{
 				/// </summary>
 				vehiculeTotal,
 				/// <summary>
-				/// Tableau détaillé par média
+                ///  Table detailed by Media 
 				/// </summary>
 				vehicle,
 				/// <summary>
@@ -915,7 +924,7 @@ namespace TNS.AdExpress.Constantes.Web{
 				/// </summary>
 				vehicleInterestCenterMedia,
 				/// <summary>
-				/// Tableau détaillé par média et supports
+                ///  Table detailed by Media /Vehicle
 				/// </summary>
 				vehicleMedia,
 				/// <summary>
@@ -1007,7 +1016,7 @@ namespace TNS.AdExpress.Constantes.Web{
 				/// </summary>
 				vehicleTitleMedia,
 				/// <summary>
-				/// Tableau détaillé par Supports
+                ///  Table detailed by Vehicle
 				/// </summary>
 				Media,
 				/// <summary>
@@ -1018,14 +1027,14 @@ namespace TNS.AdExpress.Constantes.Web{
 				/// Tableau détaillé par Formes de parrainage
 				/// </summary>
 				sponsorshipForm,
-				/// <summary>
-				/// Tableau détaillé par Media / Titre/ Supports
-				/// </summary>
+                /// <summary>
+                /// Table detailed by Media / country / vehicle
+                /// </summary>
 				vehicleCountryMedia,
                 /// <summary>
                 /// Table detailed by Media /Region
                 /// </summary>
-                vehicleRegion,                
+                vehicleRegion,
                 /// <summary>
                 /// Table detailed by Region
                 /// </summary>
@@ -1393,6 +1402,40 @@ namespace TNS.AdExpress.Constantes.Web{
 
 		#endregion
 
+        #region Enumerator of Campaign Type
+        /// <summary>
+        /// Campaign type
+        /// </summary>
+        public enum CampaignType
+        {
+           
+            /// <summary>
+            /// national
+            /// </summary>
+            national = 0,
+            /// <summary>
+            ///    National & Moscow
+            /// </summary>
+            nationalMoscow = 1,
+            /// <summary>
+            ///  National & Local
+            /// </summary>
+            nationalLocal = 2,
+            /// <summary>
+            /// local
+            /// </summary>
+            local = 3,
+            /// <summary>
+            /// none
+            /// </summary>
+            none = 4,
+            /// <summary>
+            /// Not define
+            /// </summary>
+            notDefined = 5
+        }
+        #endregion
+
 	}
 	#endregion
 
@@ -1500,6 +1543,14 @@ namespace TNS.AdExpress.Constantes.Web{
         /// Lien vers la pop-up de plan média générique
         /// </summary>
         public const string MEDIA_SCHEDULE_POP_UP = "/Private/Results/MediaSchedulePopUp.aspx";
+        /// <summary>
+        /// Creative view page
+        /// </summary>
+        public const string CREATIVE_VIEW_PAGE = "/Private/CreativeView.aspx";
+        /// <summary>
+        /// ZOOM  CREATIVE POP UP
+        /// </summary>
+        public const string ZOOM_CREATIVE_POP_UP_2 = "/Private/Results/ZoomCreationPopUp2.aspx";
     }
 	#endregion
 
@@ -1769,6 +1820,10 @@ namespace TNS.AdExpress.Constantes.Web{
         /// Country Code For Poland
         /// </summary>
         public const string POLAND = "48";
+        /// <summary>
+        /// Country Code For Russia
+        /// </summary>
+        public const string RUSSIA = "7";
 
     }
     #endregion
@@ -1905,7 +1960,7 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Advertising Agency Selected
             /// </summary>
-            advertisingAgencySelected = 31,           
+            advertisingAgencySelected = 31,
             /// <summary>
             /// Campaing type
             /// </summary>
@@ -1926,7 +1981,6 @@ namespace TNS.AdExpress.Constantes.Web{
             /// Selected Banenrs format
             /// </summary>
             bannersFormatSelected = 36
-
 		}
 	}
 
@@ -2326,10 +2380,15 @@ namespace TNS.AdExpress.Constantes.Web{
         /// Répertoire virtuel des créations de la publicité extérieure
         /// </summary>
         public static string IMAGES_OUTDOOR = string.Empty;
+
         /// <summary>
         /// Répertoire virtuel des créations de la publicité INTERRIEUR
         /// </summary>
         public static string IMAGES_INSTORE = string.Empty;
+        /// <summary>
+        /// Répertoire virtuel des créations de Editorial
+        /// </summary>
+        public static string IMAGES_EDITORIAL = string.Empty;
         /// <summary>
         /// Serveur Real en streaming en radio
         /// </summary>
@@ -2430,6 +2489,14 @@ namespace TNS.AdExpress.Constantes.Web{
         /// </summary>
         public static string LOCAL_PATH_VP = string.Empty;
         
+        /// <summary>
+        /// Répertoire contenant les visuels Internet (Russie)
+        /// </summary>
+        public static string LOCAL_PATH_INTERNET = string.Empty;
+        /// <summary>
+        /// Répertoire contenant les visuels Editorial (Russie)
+        /// </summary>
+        public static string LOCAL_PATH_EDITORIAL = string.Empty;
     }
     #endregion
 
@@ -3697,7 +3764,7 @@ namespace TNS.AdExpress.Constantes.Web{
             /// Insertions layer
             /// </summary>
             insertions = 8,
-            /// <summary>
+             /// <summary>
             /// Insertions DAL layer
             /// </summary>
             insertionsDAL = 9,
@@ -3721,7 +3788,6 @@ namespace TNS.AdExpress.Constantes.Web{
             /// Classification level list layer Id for Russia
             /// </summary>
             classificationLevelListRussia = 14
-
 		}
 	}
 

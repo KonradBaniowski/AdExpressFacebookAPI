@@ -38,6 +38,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
         /// Sport duration
         /// </summary>
         protected TimeSpan _duration;
+      
         #endregion
 
         #region Accessors
@@ -54,12 +55,13 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
         ///<summary>Constructor</summary>
         ///<author>Guillaume Ragneau</author>
         ///<since>jeudi 09 aout 2007</since>
-        public CreativeRadio(long id): base(id) {
+        public CreativeRadio(long id,long vehicleId): base(id) {
             this._sorting.Add(new VersionComparer(1987));
             this._sorting.Add(new BudgetComparer(1712));
             this._sorting.Add(new InsertNbComparer(2253));
             this._sorting.Add(new TVDurationComparer(1933));
             this._sorting.Add(new MediaNbComparer(2252));
+            _vehicleId = vehicleId;
         }
         #endregion
 
@@ -74,7 +76,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
 
             long id = Convert.ToInt64(row["version"]);
 			
-            CreativeRadio item = new CreativeRadio(id);
+            CreativeRadio item = new CreativeRadio(id,_vehicleId);
             item.Session = session;
 			item.ShowProduct = session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
 
@@ -111,7 +113,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
 
             output.AppendFormat("<tr><td class=\"creativeVisualCell\">");
             if (_session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_RADIO_CREATION_ACCESS_FLAG)) {
-                output.AppendFormat("<a href=\"javascript:openDownload('{0},{1}','{2}','{3}');\"><div class=\"audioFileBackGround\"></div></a>", this._path, this._id, this._session.IdSession, VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.radio));
+                output.AppendFormat("<a href=\"javascript:openDownload('{0},{1}','{2}','{3}');\"><div class=\"audioFileBackGround\"></div></a>", this._path, this._id, this._session.IdSession, _vehicleId);
             }
             else {
                 output.AppendFormat("<p class=\"txtViolet12Bold\" valign=\"top\" width=\"240\">{0}</p>", GestionWeb.GetWebWord(2250, _session.SiteLanguage));

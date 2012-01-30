@@ -161,7 +161,7 @@ namespace AdExpress.Private.Selection {
 
 				//Annuler l'univers de version 
 				_webSession.IdSlogans = new ArrayList();
-				_webSession.SloganIdZoom=-1;
+                _webSession.SloganIdZoom = long.MinValue;
 				_webSession.Save();
 				
 

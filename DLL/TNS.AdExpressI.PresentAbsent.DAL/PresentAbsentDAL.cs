@@ -35,6 +35,8 @@ using FctWeb = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
+using System.Reflection;
+using System.Collections;
 
 #endregion
 
@@ -117,6 +119,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
             _vehicleInformation = VehiclesInformation.Get(Int64.Parse(vehicleSelection));
             #endregion
 
+           
         }
         #endregion
 
@@ -639,7 +642,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 
 			#region Execution of the query
 			try {
-                return _session.Source.Fill(sql.ToString());				
+                return GetDataSource().Fill(sql.ToString());				
 
             }
             catch (System.Exception err) {
@@ -1040,7 +1043,7 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 
 			#region Execution of the query
 			try {
-				return _session.Source.Fill(sql.ToString());
+                return GetDataSource().Fill(sql.ToString());
 			}
 			catch (System.Exception err) {
 				throw (new PresentAbsentDALException("Unable to load the list of supports for columns details:" + sql, err));
@@ -1078,7 +1081,9 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
 		protected virtual string GetUniversFilter(CstDB.TableType.Type type, string dateField, CustomerPeriod customerPeriod) {
 			StringBuilder sql = new StringBuilder();
 
-         
+            //Tests products universe
+            Dictionary<TNS.Classification.Universe.AccessType, List<Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, string>>> test = _session.CustomerDataFilters.PrincipalProductUniverses;
+
 			// Query filter by period
 			switch (type) {
 				case CstDB.TableType.Type.dataVehicle4M:
@@ -1168,5 +1173,42 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
             return sql.ToString();
         }
 		#endregion
+
+
+        /// <summary>
+        /// Get Data Source
+        /// </summary>
+        /// <returns>Data source</returns>
+        protected virtual TNS.FrameWork.DB.Common.IDataSource GetDataSource()
+        {
+            TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.sourceProvider];
+            object[] param = new object[1];
+            param[0] = _session;
+            if (cl == null) throw (new NullReferenceException("Core layer is null for the source provider layer"));
+             TNS.AdExpress.Web.Core.ISourceProvider sourceProvider = ( TNS.AdExpress.Web.Core.SourceProvider)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            return sourceProvider.GetSource();
+
+        }
+
+        /// <summary>
+        /// Get summary product classification levels
+        /// </summary>
+        /// <returns>summary product classification levels</returns>
+        protected virtual GenericDetailLevel GetSummaryLevels(){
+            //TODO : Impelements all the mechanism via configuration file
+           
+            ArrayList levelsIds = new ArrayList();
+           
+            levelsIds.Add(11); 
+            levelsIds.Add(12);
+            levelsIds.Add(13);
+            levelsIds.Add(14);
+            levelsIds.Add(10);
+            levelsIds.Add(9);
+            levelsIds.Add(28); 
+            levelsIds.Add(8);
+            GenericDetailLevel levels = new GenericDetailLevel(levelsIds);
+            return levels;
+        }
 	}
 }

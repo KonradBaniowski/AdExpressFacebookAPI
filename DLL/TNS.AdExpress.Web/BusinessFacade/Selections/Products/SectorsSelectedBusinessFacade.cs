@@ -14,6 +14,9 @@ using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Domain.Translation;
 
 using SSDataAccess= TNS.AdExpress.Web.DataAccess.Selections.Products;
+using TNS.AdExpressI.Classification.DAL;
+using TNS.AdExpress.Domain.Layers;
+using System.Reflection;
 
 namespace TNS.AdExpress.Web.BusinessFacade.Selections.Products{
 	/// <summary>
@@ -30,36 +33,43 @@ namespace TNS.AdExpress.Web.BusinessFacade.Selections.Products{
 		/// <returns>Code HTML du famille qui sont selectionées</returns>
 		public static String GetSectorsSelected(WebSession webSession){
 			try{
-				//calling the DataAccess class to get the DataSet
-				DataSet ds=SSDataAccess.SectorsSelectedDataAccess.getData(webSession);
-				//checking that Dataset is null or not if null we just return an empty string 
-				if(ds==null)return "";
+                CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
+                if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
+                object[] param = new object[1];
+                param[0] = webSession;
+                IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                DataSet ds = classficationDAL.GetSectors();
+
 				StringBuilder html = new StringBuilder(2000);
-				
-				DataTable sectors = ds.Tables[0];
-				Boolean flag=false;
-				html.Append("<br>");
-				html.Append("<div class=\"txtViolet11Bold\" align=\"left\" >"+"&nbsp;&nbsp;"+GestionWeb.GetWebWord(1601,webSession.SiteLanguage)+ "</div>");
-				
-				//creation of the table
-				
-				html.Append("<table style=\"border-bottom :#644883 1px solid; border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width="+600+"  >");
-				foreach(DataRow dr in sectors.Rows){
-					if(flag){
-						html.Append("<tr>");
-						html.Append("<td bgcolor=\"#644883\" height=\"1px\" >");	
-						html.Append("</td>");
-						html.Append("</tr>");
-					}
-					flag=true;
-					html.Append("<tr>");
-					html.Append("<td align=\"left\" height=\"10\"  valign=\"middle\" nowrap>");	
-					html.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+dr["sector"].ToString());
-					html.Append("</td>");
-					html.Append("</tr>");				
-			
-				}
-				html.Append("</table>");
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    DataTable sectors = ds.Tables[0];
+                    Boolean flag = false;
+                    html.Append("<br>");
+                    html.Append("<div class=\"txtViolet11Bold\" align=\"left\" >" + "&nbsp;&nbsp;" + GestionWeb.GetWebWord(1601, webSession.SiteLanguage) + "</div>");
+
+                    //creation of the table
+
+                    html.Append("<table style=\"border-bottom :#644883 1px solid; border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=" + 600 + "  >");
+                    foreach (DataRow dr in sectors.Rows)
+                    {
+                        if (flag)
+                        {
+                            html.Append("<tr>");
+                            html.Append("<td bgcolor=\"#644883\" height=\"1px\" >");
+                            html.Append("</td>");
+                            html.Append("</tr>");
+                        }
+                        flag = true;
+                        html.Append("<tr>");
+                        html.Append("<td align=\"left\" height=\"10\"  valign=\"middle\" nowrap>");
+                        html.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + dr["sector"].ToString());
+                        html.Append("</td>");
+                        html.Append("</tr>");
+
+                    }
+                    html.Append("</table>");
+                }
 				return html.ToString();
 			}
 			catch (System.Exception err){
@@ -78,38 +88,46 @@ namespace TNS.AdExpress.Web.BusinessFacade.Selections.Products{
 		/// <returns>Code HTML du famille qui sont selectionées</returns>
 		public static String GetSectorsSelected(WebSession webSession,bool withTitle){
 			try{
-				//calling the DataAccess class to get the DataSet
-				DataSet ds=SSDataAccess.SectorsSelectedDataAccess.getData(webSession);
-				//checking that Dataset is null or not if null we just return an empty string 
-				if(ds==null)return "";
+                CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
+                if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
+                object[] param = new object[1];
+                param[0] = webSession;
+                IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                DataSet ds = classficationDAL.GetSectors();
+
 				StringBuilder html = new StringBuilder(2000);
-				
-				DataTable sectors = ds.Tables[0];
-				Boolean flag=false;
-				if(withTitle){
-					html.Append("<br>");
-					html.Append("<div class=\"txtViolet11Bold\" align=\"left\" >"+"&nbsp;&nbsp;"+GestionWeb.GetWebWord(1601,webSession.SiteLanguage)+ "</div>");
-				}
-				
-				//creation of the table
-				
-				html.Append("<table align=\"center\" style=\"border-bottom :#644883 1px solid; border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width="+600+"  >");
-				foreach(DataRow dr in sectors.Rows){
-					if(flag){
-						html.Append("<tr>");
-						html.Append("<td bgcolor=\"#644883\" height=\"1px\" >");	
-						html.Append("</td>");
-						html.Append("</tr>");
-					}
-					flag=true;
-					html.Append("<tr>");
-					html.Append("<td align=\"left\" height=\"10\"  valign=\"middle\" nowrap>");	
-					html.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+dr["sector"].ToString());
-					html.Append("</td>");
-					html.Append("</tr>");				
-			
-				}
-				html.Append("</table>");
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    DataTable sectors = ds.Tables[0];
+                    Boolean flag = false;
+                    if (withTitle)
+                    {
+                        html.Append("<br>");
+                        html.Append("<div class=\"txtViolet11Bold\" align=\"left\" >" + "&nbsp;&nbsp;" + GestionWeb.GetWebWord(1601, webSession.SiteLanguage) + "</div>");
+                    }
+
+                    //creation of the table
+
+                    html.Append("<table align=\"center\" style=\"border-bottom :#644883 1px solid; border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=" + 600 + "  >");
+                    foreach (DataRow dr in sectors.Rows)
+                    {
+                        if (flag)
+                        {
+                            html.Append("<tr>");
+                            html.Append("<td bgcolor=\"#644883\" height=\"1px\" >");
+                            html.Append("</td>");
+                            html.Append("</tr>");
+                        }
+                        flag = true;
+                        html.Append("<tr>");
+                        html.Append("<td align=\"left\" height=\"10\"  valign=\"middle\" nowrap>");
+                        html.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + dr["sector"].ToString());
+                        html.Append("</td>");
+                        html.Append("</tr>");
+
+                    }
+                    html.Append("</table>");
+                }
 				return html.ToString();
 			}
 			catch (System.Exception err){
@@ -129,29 +147,43 @@ namespace TNS.AdExpress.Web.BusinessFacade.Selections.Products{
 		{
 			try{
 
-				DataSet ds=SSDataAccess.SectorsSelectedDataAccess.getData(webSession);
-				if(ds==null)return "";
-				StringBuilder html = new StringBuilder(2000);
-				DataTable sectors = ds.Tables[0];
-				Boolean flag=false;
-				html.Append("<br>");
-				html.Append("<div class=\"txtViolet11Bold\" align=\"left\" >"+"&nbsp;&nbsp;"+GestionWeb.GetWebWord(1601,webSession.SiteLanguage)+ "</div>");
-				html.Append("<table style=\"border-bottom :#644883 1px solid; border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 >");
-				foreach(DataRow dr in sectors.Rows){
-					html.Append("<tr>");
-					if(flag){
-						html.Append("<td style=\"border-top :#644883 1px solid;\" align=\"left\" valign=\"middle\" height=\"10\" nowrap>");	
-					}
-					else
-						html.Append("<td align=\"left\" valign=\"middle\" height=\"10\" nowrap>");	
-					
-					flag=true;								
-					html.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+dr["sector"].ToString());
-					html.Append("</td>");
-					html.Append("</tr>");				
-			
-				}
-				html.Append("</table>");
+                //DataSet ds=SSDataAccess.SectorsSelectedDataAccess.getData(webSession);
+                //Data loading
+                CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
+                if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
+                object[] param = new object[1];
+                param[0] = webSession;
+                IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                DataSet ds = classficationDAL.GetSectors();
+
+                StringBuilder html = new StringBuilder(2000);
+                if (ds != null && ds.Tables.Count>0 && ds.Tables[0].Rows.Count > 0)
+                {
+
+                   
+                    DataTable sectors = ds.Tables[0];
+                    Boolean flag = false;
+                    html.Append("<br>");
+                    html.Append("<div class=\"txtViolet11Bold\" align=\"left\" >" + "&nbsp;&nbsp;" + GestionWeb.GetWebWord(1601, webSession.SiteLanguage) + "</div>");
+                    html.Append("<table style=\"border-bottom :#644883 1px solid; border-top :#644883 1px solid; border-left :#644883 1px solid; border-right :#644883 1px solid; \" class=\"txtViolet11Bold\"  cellpadding=0 cellspacing=0 >");
+                    foreach (DataRow dr in sectors.Rows)
+                    {
+                        html.Append("<tr>");
+                        if (flag)
+                        {
+                            html.Append("<td style=\"border-top :#644883 1px solid;\" align=\"left\" valign=\"middle\" height=\"10\" nowrap>");
+                        }
+                        else
+                            html.Append("<td align=\"left\" valign=\"middle\" height=\"10\" nowrap>");
+
+                        flag = true;
+                        html.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + dr["sector"].ToString());
+                        html.Append("</td>");
+                        html.Append("</tr>");
+
+                    }
+                    html.Append("</table>");
+                }
 				return html.ToString();
 			}
 			catch (System.Exception err){

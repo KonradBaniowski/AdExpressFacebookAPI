@@ -49,6 +49,7 @@ using AlertStatuses = TNS.Ares.Constantes.Constantes.Alerts.AlertStatuses;
 using TNS.Ares.Alerts.DAL;
 using TNS.Ares.Domain.LS;
 using TNS.Ares.Domain.Layers;
+using TNS.AdExpressI.Date.DAL;
 
 
 namespace AdExpress.Private.Alerts{
@@ -128,6 +129,20 @@ namespace AdExpress.Private.Alerts{
         /// </summary>
         private IAlertDAL alertDAL = null;
 		#endregion
+        #region Properties
+        
+        /// <summary>
+        /// Get if can save insertion customised levels
+        /// </summary>
+        public bool CanSaveInsertionCustomisedLevels
+        {
+            get
+            {
+                return (WebApplicationParameters.InsertionOptions.CanSaveLevels);
+            }
+        }
+        #endregion
+
 
 		#region Constructeur
 		/// <summary>
@@ -717,9 +732,15 @@ namespace AdExpress.Private.Alerts{
 				default:
 					break;
 			}
-			
+            
 			if(periodType == CstCustomerSession.Period.Type.nLastMonth || periodType == CstCustomerSession.Period.Type.currentYear){
-				string absolutEndPeriod = Dates.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
+            
+                TNS.AdExpress.Domain.Layers.CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+                object[] param = new object[1];
+                param[0] = _webSession;
+                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+
+                string absolutEndPeriod = dateDAL.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
 				if ((int.Parse(absolutEndPeriod) < int.Parse(_webSession.PeriodBeginningDate)) 	|| (absolutEndPeriod.Substring(4,2).Equals("00"))){
 					notValidPeriod=true;
 					invalidPeriodMessage = GestionWeb.GetWebWord(1787,_webSession.SiteLanguage);
@@ -958,7 +979,26 @@ namespace AdExpress.Private.Alerts{
         #endregion
 
 		#endregion
-	
-		
-	}
+
+        /// <summary>
+        /// Open insertion saved pages
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">arguments</param>
+        protected void insertionOpenImageButtonRollOverWebControl_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                _webSession.Source.Close();
+                Response.Redirect("/Private/MyAdExpress/PersonnalizeInsertion.aspx?idSession=" + _webSession.IdSession + "");
+            }
+            catch (System.Exception exc)
+            {
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                }
+            }
+        }
+}
 }

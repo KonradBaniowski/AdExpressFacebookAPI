@@ -28,6 +28,7 @@ using TNS.FrameWork.Date;
 using ExcelFunction=TNS.AdExpress.Web.UI.ExcelWebPage;
 using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpress.Web.UI.Results{
 	/// <summary>
@@ -516,8 +517,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 			//t.Append(ExcelFunction.GetExcelHeader(webSession,true,true));
 			// Rappel de la sélection
 			string dateBegin,dateEnd;
-			dateBegin=DateString.dateTimeToDD_MM_YYYY((new AtomicPeriodWeek(int.Parse(webSession.PeriodBeginningDate.Substring(0,4)),int.Parse(webSession.PeriodBeginningDate.Substring(4,2)))).FirstDay,webSession.SiteLanguage);
-			dateEnd=DateString.dateTimeToDD_MM_YYYY((new AtomicPeriodWeek(int.Parse(webSession.PeriodEndDate.Substring(0,4)),int.Parse(webSession.PeriodEndDate.Substring(4,2)))).LastDay,webSession.SiteLanguage);
+			dateBegin=Dates.DateToString((new AtomicPeriodWeek(int.Parse(webSession.PeriodBeginningDate.Substring(0,4)),int.Parse(webSession.PeriodBeginningDate.Substring(4,2)))).FirstDay,webSession.SiteLanguage);
+			dateEnd=Dates.DateToString((new AtomicPeriodWeek(int.Parse(webSession.PeriodEndDate.Substring(0,4)),int.Parse(webSession.PeriodEndDate.Substring(4,2)))).LastDay,webSession.SiteLanguage);
 			#region Ajout CSS
 			t.Append("<Style><!--");
 			t.Append(".TexteTitreRappelScanpub { font-family: Arial, Helvetica, sans-serif; font-size: 11px; color: #FFFFFF; font-weight:bold; }");

@@ -58,6 +58,10 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// The value represents the list of ids to exclude (example of a list : 9999,999,2541)
         /// </summary>
         protected Dictionary<long, string> _filters = new Dictionary<long, string>();
+        /// <summary>
+        /// Data Source
+        /// </summary>
+        protected TNS.FrameWork.DB.Common.IDataSource _dataSource = null;
 		#endregion
 
 		#region Constructor		
@@ -94,6 +98,17 @@ namespace TNS.AdExpressI.Classification.DAL {
             get { return _filters; }
             set { _filters = value; }
         }
+        /// <summary>
+        /// Get Data Source
+        /// </summary>
+        public TNS.FrameWork.DB.Common.IDataSource DataSource
+        {
+            set
+            {
+                _dataSource = value;
+            }
+        }
+
         #endregion
 
         /// <summary>

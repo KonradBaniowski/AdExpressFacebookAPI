@@ -22,6 +22,7 @@ using System.IO;
 using TNS.AdExpress.Bastet.Translation;
 using Aspose.Cells.Charts;
 using Aspose.Cells.Drawing;
+using TNS.FrameWork.DB.Common;
 
 namespace TNS.AdExpress.Anubis.Bastet.UI
 {
@@ -37,10 +38,10 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 		///<param name="parameters">paramètres des statistiques</param>
 		///<param name="excel">fichier excel</param>				
 		/// <returns>objet excel</returns>
-		internal static Workbook TopUsed(Workbook excel,BastetCommon.Parameters parameters,int language) {
+        internal static Workbook TopUsed(Workbook excel, BastetCommon.Parameters parameters, int language, IDataSource dataSourceClassification) {
 			try{
 				//Chargement des données des résultats
-				DataTable dt = DataAccess.Vehicle.TopUsed(parameters,language);
+                DataTable dt = DataAccess.Vehicle.TopUsed(parameters, language, dataSourceClassification);
 		
 				if(dt!=null && dt.Rows.Count>0){
 
@@ -147,12 +148,12 @@ namespace TNS.AdExpress.Anubis.Bastet.UI
 		/// </summary>		
 		///<param name="parameters">paramètres des statistiques</param>
 		///<param name="excel">fichier excel</param>
-		internal static Workbook TopByModule(Workbook excel,BastetCommon.Parameters parameters,int language){
+        internal static Workbook TopByModule(Workbook excel, BastetCommon.Parameters parameters, int language, IDataSource dataSourceClassification) {
 			try{
 								
 				//Chargement des données
 				DataTable dt=null;				
-				dt = BastetRules.Vehicle.TopByModule(parameters,language);
+				dt = BastetRules.Vehicle.TopByModule(parameters,language, dataSourceClassification);
 													
 				#region Intégration  données client
 						

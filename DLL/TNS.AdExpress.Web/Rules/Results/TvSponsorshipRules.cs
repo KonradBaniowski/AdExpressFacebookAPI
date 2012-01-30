@@ -37,6 +37,7 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpress.Web.Rules.Results
 {
@@ -273,17 +274,21 @@ namespace TNS.AdExpress.Web.Rules.Results
 			if(webSession.PreformatedTable!=WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units ){//Pas de colonnes total pour le tableau Autres dimensions X unités 
 				if(showTotal && !computePercentage)resultTable[currentLineInTabResult,totalColIndex]=cellUnitFactory.Get(0.0);
 				if(showTotal && computePercentage){					
-						resultTable[currentLineInTabResult,totalColIndex]=new CellPercent(0.0,null);					
+						resultTable[currentLineInTabResult,totalColIndex]=new CellPercent(0.0,null);
+                        ((CellPercent)resultTable[currentLineInTabResult, totalColIndex]).StringFormat = "{0:percentWOSign}";
 				}
 			}
 			
 			for(k=startDataColIndexInit;k<=nbCol;k++){
 				if(computePercentage){
-					if(webSession.PercentageAlignment==WebConstantes.Percentage.Alignment.horizontal)
-						resultTable[currentLineInTabResult,k]=new CellPercent(0.0,(CellUnit)resultTable[currentLineInTabResult,totalColIndex]);
-					else if(webSession.PercentageAlignment==WebConstantes.Percentage.Alignment.vertical){
-						resultTable[currentLineInTabResult,k] = new CellPercent(0.0,null);						
-					}
+                    if (webSession.PercentageAlignment == WebConstantes.Percentage.Alignment.horizontal) {
+                        resultTable[currentLineInTabResult, k] = new CellPercent(0.0, (CellUnit)resultTable[currentLineInTabResult, totalColIndex]);
+                        ((CellPercent)resultTable[currentLineInTabResult, k]).StringFormat = "{0:percentWOSign}";
+                    }
+                    else if (webSession.PercentageAlignment == WebConstantes.Percentage.Alignment.vertical) {
+                        resultTable[currentLineInTabResult, k] = new CellPercent(0.0, null);
+                        ((CellPercent)resultTable[currentLineInTabResult, k]).StringFormat = "{0:percentWOSign}";
+                    }
 
 				}
 				else{
@@ -338,19 +343,28 @@ namespace TNS.AdExpress.Web.Rules.Results
 					if(webSession.PreformatedTable!=WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units ){//Pas de colonnes total pour le tableau Autres dimensions X unités 
 						if(showTotal && !computePercentage)resultTable[currentLineInTabResult,totalColIndex]=cellUnitFactory.Get(0.0);
 						if(showTotal && computePercentage){
-							if(webSession.PercentageAlignment==WebConstantes.Percentage.Alignment.horizontal)
-							resultTable[currentLineInTabResult,totalColIndex]=new CellPercent(0.0,null);
-							else if(webSession.PercentageAlignment==WebConstantes.Percentage.Alignment.vertical)
-								resultTable[currentLineInTabResult,totalColIndex]=new CellPercent(0.0,(CellUnit)resultTable[currentCellLevel0.LineIndexInResultTable,totalColIndex]);
+                            if (webSession.PercentageAlignment == WebConstantes.Percentage.Alignment.horizontal){
+                                resultTable[currentLineInTabResult, totalColIndex] = new CellPercent(0.0, null);
+                                ((CellPercent)resultTable[currentLineInTabResult, totalColIndex]).StringFormat = "{0:percentWOSign}";
+                            }
+                            else if (webSession.PercentageAlignment == WebConstantes.Percentage.Alignment.vertical) {
+                                resultTable[currentLineInTabResult, totalColIndex] = new CellPercent(0.0, (CellUnit)resultTable[currentCellLevel0.LineIndexInResultTable, totalColIndex]);
+                                ((CellPercent)resultTable[currentLineInTabResult, totalColIndex]).StringFormat = "{0:percentWOSign}";
+                            }
 
 						}
 					}
 					for(k=startDataColIndexInit;k<=nbCol;k++){
 						if(computePercentage){
-							if(webSession.PercentageAlignment==WebConstantes.Percentage.Alignment.horizontal)
-								resultTable[currentLineInTabResult,k]=new CellPercent(0.0,(CellUnit)resultTable[currentLineInTabResult,totalColIndex]);
-							else if(webSession.PercentageAlignment==WebConstantes.Percentage.Alignment.vertical)
-								resultTable[currentLineInTabResult,k]=new CellPercent(0.0,(CellUnit)resultTable[currentCellLevel0.LineIndexInResultTable,k]);
+                            if (webSession.PercentageAlignment == WebConstantes.Percentage.Alignment.horizontal)
+                            {
+                                resultTable[currentLineInTabResult, k] = new CellPercent(0.0, (CellUnit)resultTable[currentLineInTabResult, totalColIndex]);
+                                ((CellPercent)resultTable[currentLineInTabResult, k]).StringFormat = "{0:percentWOSign}";
+                            }
+                            else if (webSession.PercentageAlignment == WebConstantes.Percentage.Alignment.vertical) {
+                                resultTable[currentLineInTabResult, k] = new CellPercent(0.0, (CellUnit)resultTable[currentCellLevel0.LineIndexInResultTable, k]);
+                                ((CellPercent)resultTable[currentLineInTabResult, k]).StringFormat = "{0:percentWOSign}";
+                            }
 
 						}
 						else{
@@ -406,18 +420,26 @@ namespace TNS.AdExpress.Web.Rules.Results
 					if(webSession.PreformatedTable!=WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units ){//Pas de colonnes total pour le tableau Autres dimensions X unités 
 						if(showTotal && !computePercentage)resultTable[currentLineInTabResult,totalColIndex]=cellUnitFactory.Get(0.0);
 						if(showTotal && computePercentage){
-							if(webSession.PercentageAlignment==WebConstantes.Percentage.Alignment.horizontal)
-								resultTable[currentLineInTabResult,totalColIndex]=new CellPercent(0.0,null);
-							else if(webSession.PercentageAlignment==WebConstantes.Percentage.Alignment.vertical)
-								resultTable[currentLineInTabResult,totalColIndex]=new CellPercent(0.0,(CellUnit)resultTable[currentCellLevel1.LineIndexInResultTable,totalColIndex]);
+                            if (webSession.PercentageAlignment == WebConstantes.Percentage.Alignment.horizontal) {
+                                resultTable[currentLineInTabResult, totalColIndex] = new CellPercent(0.0, null);
+                                ((CellPercent)resultTable[currentLineInTabResult, totalColIndex]).StringFormat = "{0:percentWOSign}";
+                            }
+                            else if (webSession.PercentageAlignment == WebConstantes.Percentage.Alignment.vertical) {
+                                resultTable[currentLineInTabResult, totalColIndex] = new CellPercent(0.0, (CellUnit)resultTable[currentCellLevel1.LineIndexInResultTable, totalColIndex]);
+                                ((CellPercent)resultTable[currentLineInTabResult, totalColIndex]).StringFormat = "{0:percentWOSign}";
+                            }
 						}
 					}
 					for(k=startDataColIndexInit;k<=nbCol;k++){
 						if(computePercentage){
-							if(webSession.PercentageAlignment==WebConstantes.Percentage.Alignment.horizontal)
-								resultTable[currentLineInTabResult,k]=new CellPercent(0.0,(CellUnit)resultTable[currentLineInTabResult,totalColIndex]);
-							else if(webSession.PercentageAlignment==WebConstantes.Percentage.Alignment.vertical)
-								resultTable[currentLineInTabResult,k]=new CellPercent(0.0,(CellUnit)resultTable[currentCellLevel1.LineIndexInResultTable,k]);
+                            if (webSession.PercentageAlignment == WebConstantes.Percentage.Alignment.horizontal) {
+                                resultTable[currentLineInTabResult, k] = new CellPercent(0.0, (CellUnit)resultTable[currentLineInTabResult, totalColIndex]);
+                                ((CellPercent)resultTable[currentLineInTabResult, k]).StringFormat = "{0:percentWOSign}";
+                            }
+                            else if (webSession.PercentageAlignment == WebConstantes.Percentage.Alignment.vertical) {
+                                resultTable[currentLineInTabResult, k] = new CellPercent(0.0, (CellUnit)resultTable[currentCellLevel1.LineIndexInResultTable, k]);
+                                ((CellPercent)resultTable[currentLineInTabResult, k]).StringFormat = "{0:percentWOSign}";
+                            }
 						}
 						else{
 							if(webSession.PreformatedTable!=WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units )
@@ -470,18 +492,26 @@ namespace TNS.AdExpress.Web.Rules.Results
 					if(webSession.PreformatedTable!=WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units ){//Pas de colonnes total pour le tableau Autres dimensions X unités 
 						if(showTotal && !computePercentage)resultTable[currentLineInTabResult,totalColIndex]=cellUnitFactory.Get(0.0);
 						if(showTotal && computePercentage){
-							if(webSession.PercentageAlignment==WebConstantes.Percentage.Alignment.horizontal)
-								resultTable[currentLineInTabResult,totalColIndex]=new CellPercent(0.0,null);
-							else if(webSession.PercentageAlignment==WebConstantes.Percentage.Alignment.vertical)
-								resultTable[currentLineInTabResult,totalColIndex]=new CellPercent(0.0,(CellUnit)resultTable[currentCellLevel2.LineIndexInResultTable,totalColIndex]);
+                            if (webSession.PercentageAlignment == WebConstantes.Percentage.Alignment.horizontal) {
+                                resultTable[currentLineInTabResult, totalColIndex] = new CellPercent(0.0, null);
+                                ((CellPercent)resultTable[currentLineInTabResult, totalColIndex]).StringFormat = "{0:percentWOSign}";
+                            }
+                            else if (webSession.PercentageAlignment == WebConstantes.Percentage.Alignment.vertical) {
+                                resultTable[currentLineInTabResult, totalColIndex] = new CellPercent(0.0, (CellUnit)resultTable[currentCellLevel2.LineIndexInResultTable, totalColIndex]);
+                                ((CellPercent)resultTable[currentLineInTabResult, totalColIndex]).StringFormat = "{0:percentWOSign}";
+                            }
 						}
 					}
 					for(k=startDataColIndexInit;k<=nbCol;k++){
 						if(computePercentage){
-							if(webSession.PercentageAlignment==WebConstantes.Percentage.Alignment.horizontal)
-								resultTable[currentLineInTabResult,k]=new CellPercent(0.0,(CellUnit)resultTable[currentLineInTabResult,totalColIndex]);
-							else if(webSession.PercentageAlignment==WebConstantes.Percentage.Alignment.vertical)
-								resultTable[currentLineInTabResult,k]=new CellPercent(0.0,(CellUnit)resultTable[currentCellLevel2.LineIndexInResultTable,k]);
+                            if (webSession.PercentageAlignment == WebConstantes.Percentage.Alignment.horizontal) {
+                                resultTable[currentLineInTabResult, k] = new CellPercent(0.0, (CellUnit)resultTable[currentLineInTabResult, totalColIndex]);
+                                ((CellPercent)resultTable[currentLineInTabResult, k]).StringFormat = "{0:percentWOSign}";
+                            }
+                            else if (webSession.PercentageAlignment == WebConstantes.Percentage.Alignment.vertical) {
+                                resultTable[currentLineInTabResult, k] = new CellPercent(0.0, (CellUnit)resultTable[currentCellLevel2.LineIndexInResultTable, k]);
+                                ((CellPercent)resultTable[currentLineInTabResult, k]).StringFormat = "{0:percentWOSign}";
+                            }
 						}
 						else{
 							if(webSession.PreformatedTable!=WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units )
@@ -535,18 +565,25 @@ namespace TNS.AdExpress.Web.Rules.Results
 					if(webSession.PreformatedTable!=WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units ){//Pas de colonnes total pour le tableau Autres dimensions X unités 
 						if(showTotal && !computePercentage)resultTable[currentLineInTabResult,totalColIndex]=cellUnitFactory.Get(0.0);
 						if(showTotal && computePercentage){
-							if(webSession.PercentageAlignment==WebConstantes.Percentage.Alignment.horizontal)
-								resultTable[currentLineInTabResult,totalColIndex]=new CellPercent(0.0,null);
-							else if(webSession.PercentageAlignment==WebConstantes.Percentage.Alignment.vertical)
-								resultTable[currentLineInTabResult,totalColIndex]=new CellPercent(0.0,(CellUnit)resultTable[currentCellLevel3.LineIndexInResultTable,totalColIndex]);
+                            if (webSession.PercentageAlignment == WebConstantes.Percentage.Alignment.horizontal) {
+                                resultTable[currentLineInTabResult, totalColIndex] = new CellPercent(0.0, null);
+                                ((CellPercent)resultTable[currentLineInTabResult, totalColIndex]).StringFormat = "{0:percentWOSign}";
+                            }
+                            else if (webSession.PercentageAlignment == WebConstantes.Percentage.Alignment.vertical)
+                                resultTable[currentLineInTabResult, totalColIndex] = new CellPercent(0.0, (CellUnit)resultTable[currentCellLevel3.LineIndexInResultTable, totalColIndex]);
+                                ((CellPercent)resultTable[currentLineInTabResult, totalColIndex]).StringFormat = "{0:percentWOSign}";
 						}
 					}
 					for(k=startDataColIndexInit;k<=nbCol;k++){
 						if(computePercentage){
-							if(webSession.PercentageAlignment==WebConstantes.Percentage.Alignment.horizontal)
-								resultTable[currentLineInTabResult,k]=new CellPercent(0.0,(CellUnit)resultTable[currentLineInTabResult,totalColIndex]);
-							else if(webSession.PercentageAlignment==WebConstantes.Percentage.Alignment.vertical)
-								resultTable[currentLineInTabResult,k]=new CellPercent(0.0,(CellUnit)resultTable[currentCellLevel3.LineIndexInResultTable,k]);
+                            if (webSession.PercentageAlignment == WebConstantes.Percentage.Alignment.horizontal) {
+                                resultTable[currentLineInTabResult, k] = new CellPercent(0.0, (CellUnit)resultTable[currentLineInTabResult, totalColIndex]);
+                                ((CellPercent)resultTable[currentLineInTabResult, k]).StringFormat = "{0:percentWOSign}";
+                            }
+                            else if (webSession.PercentageAlignment == WebConstantes.Percentage.Alignment.vertical) {
+                                resultTable[currentLineInTabResult, k] = new CellPercent(0.0, (CellUnit)resultTable[currentCellLevel3.LineIndexInResultTable, k]);
+                                ((CellPercent)resultTable[currentLineInTabResult, k]).StringFormat = "{0:percentWOSign}";
+                            }
 						}
 						else{
 							if(webSession.PreformatedTable!=WebConstantes.CustomerSessions.PreformatedDetails.PreformatedTables.othersDimensions_X_Units )
@@ -1066,8 +1103,8 @@ namespace TNS.AdExpress.Web.Rules.Results
 							switch(webSession.DetailPeriod){
 
 								case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
-									dateLabel = DateString.dateTimeToDD_MM_YYYY(WebFunctions.Dates.getPeriodBeginningDate(currentDate, webSession.PeriodType), webSession.SiteLanguage)
-									+ "-" + DateString.dateTimeToDD_MM_YYYY(WebFunctions.Dates.getPeriodEndDate(currentDate, webSession.PeriodType), webSession.SiteLanguage);
+									dateLabel = Dates.DateToString(WebFunctions.Dates.getPeriodBeginningDate(currentDate, webSession.PeriodType), webSession.SiteLanguage)
+									+ "-" + Dates.DateToString(WebFunctions.Dates.getPeriodEndDate(currentDate, webSession.PeriodType), webSession.SiteLanguage);
 									break;
 								case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
 									i++;

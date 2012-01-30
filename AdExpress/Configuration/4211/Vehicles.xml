@@ -61,6 +61,15 @@
       <allowedUniverseLevel id="15" name="interest_center"/>
       <allowedUniverseLevel id="16" name="basic_media"/>
     </allowedUniverseLevels>
+    <!--Allow column broken down-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+        <allowedColumnDetailLevelItem id="27" name="Basic Media"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
  
 </vehicles>

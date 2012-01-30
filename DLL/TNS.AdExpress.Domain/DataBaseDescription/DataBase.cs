@@ -116,7 +116,7 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// Web
         /// </summary>
-        webnav01=5,
+        webnav01=5,       
         /// <summary>
         /// 
         /// </summary>

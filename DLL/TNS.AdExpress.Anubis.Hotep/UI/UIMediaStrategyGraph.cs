@@ -40,31 +40,31 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 		/// <summary>
 		/// User Session
 		/// </summary>
-		private WebSession _webSession = null;
+		protected WebSession _webSession = null;
 		/// <summary>
 		/// Data Source
 		/// </summary>
-		private IDataSource _dataSource = null;
+        protected IDataSource _dataSource = null;
 		/// <summary>
 		/// Hotep configuration
 		/// </summary>
-		private HotepConfig _config = null;
+        protected HotepConfig _config = null;
         /// <summary>
         /// Style
         /// </summary>
-        private TNS.FrameWork.WebTheme.Style _style = null;
+        protected TNS.FrameWork.WebTheme.Style _style = null;
         /// <summary>
         /// Pie ColorS
         /// </summary>
-        private List<Color> _pieColors = null;
+        protected List<Color> _pieColors = null;
         /// <summary>
         /// 
         /// </summary>
-        Dictionary<string, Series> _listSeriesMedia = null;
+        protected Dictionary<string, Series> _listSeriesMedia = null;
         /// <summary>
         /// 
         /// </summary>
-        Dictionary<int, string> _listSeriesName = null;
+        protected Dictionary<int, string> _listSeriesName = null;
 		#endregion
 		
 		#region Constructeur
@@ -89,7 +89,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 		/// <summary>
 		/// Graphiques Media Strategy
 		/// </summary>
-		internal void BuildMediaStrategy(){
+		public virtual void BuildMediaStrategy(){
 
             #region Constantes
             /// <summary>

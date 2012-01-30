@@ -55,7 +55,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         /// <summary>
         /// Column name : Product, media schedule, total ...
         /// </summary>
-        private enum ColumnName { 
+        protected enum ColumnName { 
             /// <summary>
             /// Product colomn
             /// </summary>
@@ -114,7 +114,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             int iCurLine = 0;
 			int iNbLine = 0;
 			int iNbLevels = 0;
-			ArrayList parutions = new ArrayList();
+            List<Int32> parutions = new List<Int32>();
 
             InitLine initLine = null;
             SetLine setLine = null;
@@ -218,43 +218,58 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
         #region InitLine
         protected delegate void InitLine(ResultTable oTab, int cLine, CellUnitFactory cellFactory, AdExpressCellLevel parent);
-        protected void InitDoubleLine(ResultTable oTab, int cLine, CellUnitFactory cellFactory, AdExpressCellLevel parent)
+        protected virtual void InitDoubleLine(ResultTable oTab, int cLine, CellUnitFactory cellFactory, AdExpressCellLevel parent)
         {
             //total
-            if(!_webSession.Percentage) oTab[cLine, GetColumnIndex(ColumnName.total)] = cellFactory.Get(0.0);
-            else oTab[cLine, GetColumnIndex(ColumnName.total)] = new CellPDM(0.0, null);
+            if (!_webSession.Percentage) oTab[cLine, GetColumnIndex(ColumnName.total)] = cellFactory.Get(null);
+            else
+            {
+                oTab[cLine, GetColumnIndex(ColumnName.total)] = GetCellPDM(null);
+            }
 
             //pourcentage
-            if (parent == null) oTab[cLine, GetColumnIndex(ColumnName.percentage)] = new CellPercent(0.0, null);
-            else oTab[cLine, GetColumnIndex(ColumnName.percentage)] = new CellPercent(0.0, (CellUnit)oTab[parent.LineIndexInResultTable, GetColumnIndex(ColumnName.percentage)]);
+            if (parent == null) oTab[cLine, GetColumnIndex(ColumnName.percentage)] = new CellPercent(null, null);
+            else oTab[cLine, GetColumnIndex(ColumnName.percentage)] = new CellPercent(null, (CellUnit)oTab[parent.LineIndexInResultTable, GetColumnIndex(ColumnName.percentage)]);
+
+            ((CellPercent)oTab[cLine, GetColumnIndex(ColumnName.percentage)]).StringFormat = "{0:percentWOSign}";
 
             //initialisation des autres colonnes
             for (int j = GetColumnIndex(ColumnName.data); j < oTab.DataColumnsNumber + 1; j++) {
-                if(!_webSession.Percentage) oTab[cLine, j] = cellFactory.Get(0.0);
-                else oTab[cLine, j] = new CellPDM(0.0, (CellUnit)oTab[cLine, GetColumnIndex(ColumnName.total)]);
+                if (!_webSession.Percentage) oTab[cLine, j] = cellFactory.Get(null);
+                else {
+                    oTab[cLine, j] = GetCellPDM((CellUnit)oTab[cLine, GetColumnIndex(ColumnName.total)]);
+                }
             }
         }
-        protected void InitListLine(ResultTable oTab, int cLine, CellUnitFactory cellFactory, AdExpressCellLevel parent)
+        protected virtual void InitListLine(ResultTable oTab, int cLine, CellUnitFactory cellFactory, AdExpressCellLevel parent)
         {
             //total
-            if (!_webSession.Percentage) oTab[cLine, GetColumnIndex(ColumnName.total)] = cellFactory.Get(0.0);
-            else oTab[cLine, GetColumnIndex(ColumnName.total)] = new CellVersionNbPDM(null);
+            if (!_webSession.Percentage) oTab[cLine, GetColumnIndex(ColumnName.total)] = cellFactory.Get(null);
+            else {
+                oTab[cLine, GetColumnIndex(ColumnName.total)] = new CellVersionNbPDM(null);
+                ((CellVersionNbPDM)oTab[cLine, GetColumnIndex(ColumnName.total)]).StringFormat = "{0:percentWOSign}";
+            }
 
             //pourcentage
             if (parent == null) oTab[cLine, GetColumnIndex(ColumnName.percentage)] = new CellVersionNbPDM(null);
             else oTab[cLine, GetColumnIndex(ColumnName.percentage)] = new CellVersionNbPDM((CellIdsNumber)oTab[parent.LineIndexInResultTable, GetColumnIndex(ColumnName.total)]);
 
+            ((CellVersionNbPDM)oTab[cLine, GetColumnIndex(ColumnName.percentage)]).StringFormat = "{0:percentWOSign}";
+
             //initialisation des autres colonnes
             for (int j = GetColumnIndex(ColumnName.data); j < oTab.DataColumnsNumber + 1; j++) {
-                if(!_webSession.Percentage) oTab[cLine, j] = cellFactory.Get(0.0);
-                else oTab[cLine, j] = new CellVersionNbPDM((CellIdsNumber)oTab[cLine, GetColumnIndex(ColumnName.total)]);
+                if (!_webSession.Percentage) oTab[cLine, j] = cellFactory.Get(null);
+                else {
+                    oTab[cLine, j] = new CellVersionNbPDM((CellIdsNumber)oTab[cLine, GetColumnIndex(ColumnName.total)]);
+                    ((CellVersionNbPDM)oTab[cLine, j]).StringFormat = "{0:percentWOSign}";
+                }
             }
         }
         #endregion
 
         #region SetLine
         protected delegate void SetLine(ResultTable oTab, int iLineIndex, DataRow dr);
-        protected void SetDoubleLine(ResultTable oTab, int cLine, DataRow row)
+        protected virtual void SetDoubleLine(ResultTable oTab, int cLine, DataRow row)
         {
             if(row != null) {
                 int lCol = oTab.GetHeadersIndexInResultTable(row["date_media_num"].ToString());
@@ -265,7 +280,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 oTab.AffectValueAndAddToHierarchy(1, cLine, GetColumnIndex(ColumnName.total), valu);
             }
         }
-        protected void SetListLine(ResultTable oTab, int cLine, DataRow row)
+        protected virtual void SetListLine(ResultTable oTab, int cLine, DataRow row)
         {
             if(row != null) {
                 int lCol = oTab.GetHeadersIndexInResultTable(row["date_media_num"].ToString());
@@ -281,6 +296,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         }
         #endregion
 
+        #region BuildHtmlResult
         /// <summary>
 		/// Build Html result
 		/// </summary>
@@ -290,15 +306,31 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		}
 		#endregion
 
-		#region GetCalendarSize
-		/// <summary>
+        #endregion
+
+        #region GetCellPDM
+        /// <summary>
+        /// Get Cell PDM
+        /// </summary>
+        /// <param name="unitValue">Value</param>
+        /// <param name="reference">Reference Value</param>
+        /// <returns>Cell PDM object</returns>
+        protected virtual CellUnit GetCellPDM(CellUnit reference) {
+            CellPDM cellPdm = new CellPDM(null, reference);
+            cellPdm.StringFormat = "{0:percentWOSign}";
+            return cellPdm;
+        }
+        #endregion
+
+        #region GetCalendarSize
+        /// <summary>
 		/// Calcul la taille du tableau de résultats d'un calendrier d'action
 		/// </summary>
 		/// <param name="webSession">session du client</param>
 		/// <param name="dt">table de données</param>
 		/// <returns>nombre de ligne du tableau de résultats</returns>
 		/// <param name="parutions">Parutions</param>
-		protected virtual int GetCalendarSize(DataTable dt, ArrayList parutions) {
+        protected virtual int GetCalendarSize(DataTable dt, List<Int32> parutions) {
 
 			#region Variable
 			Int64 OldL1Id = -1;
@@ -331,8 +363,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 					nbL3Id++;
 					OldL3Id = cL3Id;
 				}
-				if (!parutions.Contains(dr["date_media_num"])) {
-					parutions.Add(dr["date_media_num"]);
+                Int32 dateMediaNum = Int32.Parse(dr["date_media_num"].ToString());
+                if (!parutions.Contains(dateMediaNum)) {
+                    parutions.Add(dateMediaNum);
 				}
 			}
 
@@ -348,8 +381,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		/// Calendar Headers and Cell factory
 		/// </summary>
 		/// <returns></returns>
-		protected virtual void GetCalendarHeaders(out Headers headers, out CellUnitFactory cellFactory, ArrayList parutions) {
-			headers = new Headers();
+        protected virtual void GetCalendarHeaders(out Headers headers, out CellUnitFactory cellFactory, List<Int32> parutions) {
+            headers = new Headers();
 			headers.Root.Add(new Header(true, GestionWeb.GetWebWord(PROD_COL, _webSession.SiteLanguage), PROD_COL));
             /* If the customer don't have the right to media schedule module, we don't show the MS column
              * */
@@ -367,7 +400,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 cellFactory = _webSession.GetCellUnitFactory();
 			}
 			else {
-				cellFactory = new CellUnitFactory(new CellPDM(0.0));
+
+                cellFactory = new CellUnitFactory(GetCellPDM(null));
 			}
 		}
 		#endregion
@@ -379,7 +413,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         /// </summary>
         /// <param name="columnName">Column name (product, meddia schedule link ...)</param>
         /// <returns>Column index</returns>
-        private int GetColumnIndex(ColumnName columnName) {
+        protected int GetColumnIndex(ColumnName columnName) {
 
             int showMediaSchedule = 0;
 

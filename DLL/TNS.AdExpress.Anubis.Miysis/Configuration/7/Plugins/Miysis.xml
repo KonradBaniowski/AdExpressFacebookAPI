@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+  <CustomerMail server="frmitpu-msprod" port="25" from="tnsadexpress@tnsmi.fr" webServer="http://localhost" subject="AdExpress"/>
+  <PdfPath path="C:\Storage\AdExpress\CustomerFiles"/>
+  <!--<PdfPath path="AdExCustomerFiles"/>-->
+  <!--If path empty then path = current directory of executable-->
+  <ThemePath path="App_Themes"/>
+  <PressScanPath path="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\"/>
+  <VMCScanPath path="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\MarketingDirect"/>
+  <OutdoorScanPath path="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Outdoor"/>
+  <PdfCreatorPilot login="KantarMedia" pass="53HN7-JV7XK-Z7JBD-RTA92">
+    <TxFontCharset id="7" name="Russian"  charset="charsetRUSSIAN_CHARSET"/>
+    <TxFontCharset id="44" name="English"  charset="charsetRUSSIAN_CHARSET"/>
+  </PdfCreatorPilot>  
+  <Html2Pdf login="KantarMedia" pass="T83L6-ZMNJ8-33Y93-CT3Y8"/>
+  <PdfProperties author="TNS Media Intelligence" subject="Media Schedule" title="Media Schedule" producer="TNS AdExpress (Anubis)" keywords="Media Schedule,AdExpress,TNS Media Intelligence"/>
+</Configuration>

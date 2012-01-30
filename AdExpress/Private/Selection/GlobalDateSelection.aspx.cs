@@ -37,8 +37,11 @@ using TNS.AdExpressI.Date;
 using TNS.AdExpressI.Date.DAL;
 using System.Reflection;
 using TNS.AdExpress.Constantes.Web;
+using System.Collections.Generic;
+using TNS.AdExpress.Domain.Exceptions;
 
-namespace AdExpress.Private.Selection {
+namespace AdExpress.Private.Selection
+{
     /// <summary>
     /// Page de sélection des dates (global)
     /// </summary>
@@ -49,7 +52,11 @@ namespace AdExpress.Private.Selection {
         /// <summary>
         /// Day selection value
         /// </summary>
-        private const string DAY_SELECTION = "2";
+        private const string DAY_SELECTION = "2";      
+        /// <summary>
+        /// L'Id de la sub section qui represente la page du calendrier de comparaison
+        /// </summary>
+        protected const int COMPARAISON_CALENDAR_FORM_ID = 9;
         #endregion
 
         #region Variables
@@ -73,7 +80,10 @@ namespace AdExpress.Private.Selection {
         /// Type de la période comparative
         /// </summary>
         public WebConstantes.globalCalendar.comparativePeriodType comparativePeriodCalendarType = WebConstantes.globalCalendar.comparativePeriodType.dateToDate;
-
+        /// <summary>
+        /// Display Button Comparative
+        /// </summary>
+        public bool _displayButtonComparative = false;
         #endregion
 
         #region Evènements
@@ -84,10 +94,12 @@ namespace AdExpress.Private.Selection {
         /// </summary>
         /// <param name="sender">Objet qui lance l'évènement</param>
         /// <param name="e">Argument</param>
-        protected void Page_Load(object sender, System.EventArgs e) {
-            try {
-
-                long selectedVehicle;
+        protected void Page_Load(object sender, System.EventArgs e)
+        {
+            try
+            {
+                _displayButtonComparative = WebApplicationParameters.UseComparativeLostWon
+                    && !string.IsNullOrEmpty(this._currentModule.GetSubSectionURL(COMPARAISON_CALENDAR_FORM_ID, Page.Request.Url.AbsolutePath, true));
 
                 #region Option de période sélectionnée
                 if (Request.Form.GetValues("selectedItemIndex") != null) selectedIndex = int.Parse(Request.Form.GetValues("selectedItemIndex")[0]);
@@ -109,6 +121,20 @@ namespace AdExpress.Private.Selection {
                     else
                         _webSession.PeriodSelectionType = globalCalendar.periodSelectiontype.other;
                 }
+                validateButton1.ImageUrl = "/App_Themes/" + this.Theme + "/Images/Culture/button/valider_up.gif";
+                validateButton1.RollOverImageUrl = "/App_Themes/" + this.Theme + "/Images/Culture/button/valider_down.gif";
+                validateButton1.Attributes.Add("style", "cursor:pointer;");
+                validateButton1.OnClientClick = "javascript:return valid(this.id); function valid(id){ PostBack(id); return false;}";
+
+                validateButton2.ImageUrl = "/App_Themes/" + this.Theme + "/Images/Culture/button/valider_up.gif";
+                validateButton2.RollOverImageUrl = "/App_Themes/" + this.Theme + "/Images/Culture/button/valider_down.gif";
+                validateButton2.Attributes.Add("style", "cursor:pointer;");
+                validateButton2.OnClientClick = "javascript:return valid(this.id); function valid(id){ PostBack(id); return false;}";
+
+                buttonComparative.ImageUrl = "/App_Themes/" + this.Theme + "/Images/Culture/button/comparative_up.gif";
+                buttonComparative.RollOverImageUrl = "/App_Themes/" + this.Theme + "/Images/Culture/button/comparative_down.gif";
+                buttonComparative.Attributes.Add("style", "cursor:pointer;");
+                buttonComparative.OnClientClick = "javascript:return valid(this.id); function valid(id){ PostBack(id); return false;}";
                 #endregion
 
                 string selectionType = "";
@@ -119,68 +145,106 @@ namespace AdExpress.Private.Selection {
                 param[0] = _webSession;
                 IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
 
-
                 if (_webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA
                     && _webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_MANDATAIRES){
 
-                    if (Page.Request.Form.GetValues("selectionType") != null) selectionType = Page.Request.Form.GetValues("selectionType")[0];
-                    
-                    if (Page.Request.Form.GetValues("disponibilityType") != null) disponibilityType = Page.Request.Form.GetValues("disponibilityType")[0];
+                    if (_webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
+                        || (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
+                            && WebApplicationParameters.UseTypeOptionPeriodLostWon))
+                    {
 
-                    if (selectionType.Equals("dateWeekComparative"))
-                        comparativePeriodCalendarType = WebConstantes.globalCalendar.comparativePeriodType.comparativeWeekDate;
+                        if (Page.Request.Form.GetValues("selectionType") != null)
+                            selectionType = Page.Request.Form.GetValues("selectionType")[0];
+                        if (selectionType.Equals("dateWeekComparative"))
+                            comparativePeriodCalendarType = WebConstantes.globalCalendar.comparativePeriodType.comparativeWeekDate;
 
-                    if (disponibilityType.Equals("lastPeriod"))
-                        periodCalendarDisponibilityType = WebConstantes.globalCalendar.periodDisponibilityType.lastCompletePeriod;
-                
+                    }
+                    else
+                    {
+                        comparativePeriodCalendarType = globalCalendar.comparativePeriodType.dateToDate;
+                    }
+                    if (_webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
+                        || (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
+                            && WebApplicationParameters.UseDiponibilityOptionPeriodLostWon))
+                    {
+
+                        if (Page.Request.Form.GetValues("disponibilityType") != null)
+                            disponibilityType = Page.Request.Form.GetValues("disponibilityType")[0];
+                        if (disponibilityType.Equals("lastPeriod"))
+                            periodCalendarDisponibilityType = WebConstantes.globalCalendar.periodDisponibilityType.lastCompletePeriod;
+
+                    }
+                    else
+                    {
+                        periodCalendarDisponibilityType = WebConstantes.globalCalendar.periodDisponibilityType.currentDay;
+                    }
+
+
                 }
-
                 GlobalCalendarWebControl1.PeriodSelectionTitle = GestionWeb.GetWebWord(2275, _webSession.SiteLanguage);
                 GlobalCalendarWebControl1.Language = _webSession.SiteLanguage;
-                
-                if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE) {
+
+                if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
+                {
                     GlobalCalendarWebControl1.PeriodRestrictedLabel = GestionWeb.GetWebWord(2280, _webSession.SiteLanguage);
                     GlobalCalendarWebControl1.StartYear = dateDAL.GetCalendarStartDate();
                     if (DateTime.Now.Month == 12) GlobalCalendarWebControl1.StopYear = (DateTime.Now.AddYears(1)).Year;
-                    else {
+                    else
+                    {
                         GlobalCalendarWebControl1.StopYear = DateTime.Now.Year;
                     }
                     isDynamicModule = true;
                 }
-                else {
+                else
+                {
                     GlobalCalendarWebControl1.PeriodRestrictedLabel = GestionWeb.GetWebWord(2284, _webSession.SiteLanguage);
                     GlobalCalendarWebControl1.StartYear = dateDAL.GetCalendarStartDate();
                 }
 
-                if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA 
-                    || _webSession.CurrentModule == WebConstantes.Module.Name.NEW_CREATIVES
-                    || _webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
-                    GlobalCalendarWebControl1.IsRestricted = false;
-                else{
-                    GlobalCalendarWebControl1.IsRestricted = true;
-                    selectedVehicle = ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID;
-                    if (IsPostBack) {
+                GlobalCalendarWebControl1.IsRestricted = ModulesList.GetModule(_webSession.CurrentModule).DisplayIncompleteDateInCalendar;
+                List<Int64> selectedVehicleList = new List<Int64>();
+                if (GlobalCalendarWebControl1.IsRestricted)
+                {
+                    string vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+                    if (vehicleSelection == null) throw (new VehicleException("Selection of media type is not correct"));
+                    selectedVehicleList = new List<Int64>((new List<string>(vehicleSelection.Split(','))).ConvertAll<Int64>(ConvertStringToInt64));
+
+                    if (IsPostBack)
+                    {
                         if (this.ViewState["FirstDayNotEnabledVS"] != null)
                             GlobalCalendarWebControl1.FirstDayNotEnable = (DateTime)this.ViewState["FirstDayNotEnabledVS"];
                     }
-                    else {
-                        GlobalCalendarWebControl1.FirstDayNotEnable = dateDAL.GetFirstDayNotEnabled(_webSession, selectedVehicle, GlobalCalendarWebControl1.StartYear);
+                    else
+                    {
+                        GlobalCalendarWebControl1.FirstDayNotEnable = dateDAL.GetFirstDayNotEnabled(selectedVehicleList, GlobalCalendarWebControl1.StartYear);
                         ViewState.Add("FirstDayNotEnabledVS", GlobalCalendarWebControl1.FirstDayNotEnable);
                     }
                 }
+
                 #region Script
                 //Gestion de la sélection comparative
-                if(!Page.ClientScript.IsClientScriptBlockRegistered("PostBack"))
+                if (!Page.ClientScript.IsClientScriptBlockRegistered("PostBack"))
                 {
-                    if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
-                        Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "PostBack", TNS.AdExpress.Web.Functions.Script.PostBack(_webSession.SiteLanguage, true, GlobalCalendarWebControl1.ID, validateButton2.ID, "comparativeLink", monthDateList.ID, weekDateList.ID, dayDateList.ID, previousWeekCheckBox.ID, previousDayCheckBox.ID, currentYearCheckbox.ID, previousYearCheckbox.ID, previousMonthCheckbox.ID, "dateSelectedItem"));
+                    if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
+                        && !WebApplicationParameters.UseDiponibilityOptionPeriodLostWon
+                        && !WebApplicationParameters.UseTypeOptionPeriodLostWon)
+                    {
+                        Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "PostBack", TNS.AdExpress.Web.Functions.Script.PostBackWithoutDispoAndTypePeriod());
+                    }
                     else
-                        Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "PostBack", TNS.AdExpress.Web.Functions.Script.PostBack(_webSession.SiteLanguage, false, GlobalCalendarWebControl1.ID, validateButton2.ID, "comparativeLink", monthDateList.ID, weekDateList.ID, dayDateList.ID, previousWeekCheckBox.ID, previousDayCheckBox.ID, currentYearCheckbox.ID, previousYearCheckbox.ID, previousMonthCheckbox.ID, "dateSelectedItem"));
+                    {
+                        if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
+                            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "PostBack", TNS.AdExpress.Web.Functions.Script.PostBack(_webSession.SiteLanguage, true, validateButton1.ID, validateButton2.ID, buttonComparative.ID, "comparativeLink", monthDateList.ID, weekDateList.ID, dayDateList.ID, previousWeekCheckBox.ID, previousDayCheckBox.ID, currentYearCheckbox.ID, previousYearCheckbox.ID, previousMonthCheckbox.ID, "dateSelectedItem"));
+                        else
+                            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "PostBack", TNS.AdExpress.Web.Functions.Script.PostBack(_webSession.SiteLanguage, false, validateButton1.ID, validateButton2.ID, buttonComparative.ID, "comparativeLink", monthDateList.ID, weekDateList.ID, dayDateList.ID, previousWeekCheckBox.ID, previousDayCheckBox.ID, currentYearCheckbox.ID, previousYearCheckbox.ID, previousMonthCheckbox.ID, "dateSelectedItem"));
+                    }
                 }
                 #endregion
             }
-            catch (System.Exception exc) {
-                if (exc.GetType() != typeof(System.Threading.ThreadAbortException)) {
+            catch (System.Exception exc)
+            {
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                {
                     this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
                 }
             }
@@ -193,30 +257,39 @@ namespace AdExpress.Private.Selection {
         /// </summary>
         /// <param name="sender">Objet qui lance l'évènement</param>
         /// <param name="e">Argument</param>
-        protected void Page_PreRender(object sender, System.EventArgs e) {
-            try {
-                if (this.IsPostBack) {
+        protected void Page_PreRender(object sender, System.EventArgs e)
+        {
+            try
+            {
+                if (this.IsPostBack)
+                {
 
                     string valueInput = Page.Request.Form.GetValues("__EVENTTARGET")[0];
 
                     #region Url Suivante
-                    if (_nextUrlOk) {
-                        if (selectedIndex >= 0 && selectedIndex<=8)
+                    if (_nextUrlOk)
+                    {
+                        if (selectedIndex >= 0 && selectedIndex <= 8)
                             validateButton2_Click(this, null);
                         else
                             validateButton1_Click(this, null);
                     }
-                    else {
-                        if (valueInput == GlobalCalendarWebControl1.ID)
+                    else
+                    {
+                        if (valueInput == validateButton1.ID)
                             validateButton1_Click(this, null);
+                        else if (valueInput == buttonComparative.ID)
+                            validateButtonComparative_Click(this, null);
                         else
                             validateButton2_Click(this, null);
                     }
                     #endregion
                 }
             }
-            catch (System.Exception exc) {
-                if (exc.GetType() != typeof(System.Threading.ThreadAbortException)) {
+            catch (System.Exception exc)
+            {
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                {
                     this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
                 }
             }
@@ -229,7 +302,8 @@ namespace AdExpress.Private.Selection {
         /// </summary>
         /// <param name="sender">Objet qui lance l'évènement</param>
         /// <param name="e">Argument</param>
-        protected void Page_UnLoad(object sender, System.EventArgs e) {
+        protected void Page_UnLoad(object sender, System.EventArgs e)
+        {
             _webSession.Source.Close();
             _webSession.Save();
         }
@@ -240,17 +314,27 @@ namespace AdExpress.Private.Selection {
         /// On l'utilise pour l'initialisation de certains composants
         /// </summary>
         /// <returns>?</returns>
-        protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
+        protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode()
+        {
             System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
-            yearDateList.WebSession = _webSession;
-            yearDateList.NbYearsToDisplay = WebApplicationParameters.DataNumberOfYear;
-            monthDateList.WebSession = _webSession;
-            weekDateList.WebSession = _webSession;
-            dayDateList.WebSession = _webSession;
-            MenuWebControl2.CustomerWebSession = _webSession;
+            try
+            {
+                yearDateList.WebSession = _webSession;
+                yearDateList.NbYearsToDisplay = WebApplicationParameters.DataNumberOfYear;
+                monthDateList.WebSession = _webSession;
+                weekDateList.WebSession = _webSession;
+                dayDateList.WebSession = _webSession;
+                MenuWebControl2.CustomerWebSession = _webSession;
 
-            previousWeekCheckBox.Language = previousMonthCheckbox.Language = previousYearCheckbox.Language = previousDayCheckBox.Language = currentYearCheckbox.Language = _webSession.SiteLanguage;
-
+                previousWeekCheckBox.Language = previousMonthCheckbox.Language = previousYearCheckbox.Language = previousDayCheckBox.Language = currentYearCheckbox.Language = _webSession.SiteLanguage;
+            }
+            catch (System.Exception exc)
+            {
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                }
+            }
             return tmp;
         }
         #endregion
@@ -261,13 +345,38 @@ namespace AdExpress.Private.Selection {
         /// </summary>
         /// <param name="sender">Objet qui lance l'évènement</param>
         /// <param name="e">Argument</param>
-        protected void validateButton1_Click(object sender, System.EventArgs e) {
-            try {
+        protected void validateButton1_Click(object sender, System.EventArgs e)
+        {
+            try
+            {
                 calendarValidation();
                 _webSession.Source.Close();
                 Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession);
             }
-            catch (System.Exception ex) {
+            catch (System.Exception ex)
+            {
+                testSelection = "<script language=\"JavaScript\">alert(\"" + ex.Message + "\");</script>";
+            }
+        }
+        #endregion
+
+        #region Validation du calendrier puis go to Comparative page
+        /// <summary>
+        /// Evènement de validation du calendrier
+        /// </summary>
+        /// <param name="sender">Objet qui lance l'évènement</param>
+        /// <param name="e">Argument</param>
+        protected void validateButtonComparative_Click(object sender, System.EventArgs e)
+        {
+            try
+            {
+                calendarValidation();
+                _webSession.Source.Close();
+                _nextUrl = this._currentModule.GetSubSectionURL(COMPARAISON_CALENDAR_FORM_ID, Page.Request.Url.AbsolutePath, true);
+                Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession);
+            }
+            catch (System.Exception ex)
+            {
                 testSelection = "<script language=\"JavaScript\">alert(\"" + ex.Message + "\");</script>";
             }
         }
@@ -279,13 +388,16 @@ namespace AdExpress.Private.Selection {
         /// </summary>
         /// <param name="sender">Objet qui lance l'évènement</param>
         /// <param name="e">Argument</param>
-        protected void validateButton2_Click(object sender, System.EventArgs e) {
-            try {
+        protected void validateButton2_Click(object sender, System.EventArgs e)
+        {
+            try
+            {
                 CoreLayer cl = WebApplicationParameters.CoreLayers[WebConstantes.Layers.Id.date];
                 IDate date = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
                 int selectedValue = -1;
 
-                switch (selectedIndex) {
+                switch (selectedIndex)
+                {
                     case 0:
                         selectedValue = int.Parse(yearDateList.SelectedValue);
                         break;
@@ -298,10 +410,10 @@ namespace AdExpress.Private.Selection {
                     case 3:
                         selectedValue = int.Parse(dayDateList.SelectedValue);
                         break;
-                    case 4: 
-                    case 5: 
-                    case 6: 
-                    case 7: 
+                    case 4:
+                    case 5:
+                    case 6:
+                    case 7:
                     case 8:
                         break;
                     default:
@@ -313,7 +425,8 @@ namespace AdExpress.Private.Selection {
                 _webSession.Source.Close();
                 Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession);
             }
-            catch (AdExpressException.AnalyseDateSelectionException ex) {
+            catch (AdExpressException.AnalyseDateSelectionException ex)
+            {
                 testSelection = "<script language=\"JavaScript\">alert(\"" + ex.Message + "\");</script>";
             }
         }
@@ -327,12 +440,14 @@ namespace AdExpress.Private.Selection {
         /// <summary>
         /// Traitement des dates d'un calendrier
         /// </summary>
-        public void calendarValidation() {
+        public void calendarValidation()
+        {
             // On sauvegarde les données
-            try {
+            try
+            {
                 DateTime endDate;
                 DateTime beginDate;
-                DateTime lastDayEnable=DateTime.Now;
+                DateTime lastDayEnable = DateTime.Now;
 
                 _webSession.DetailPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.DisplayLevel.dayly;
                 _webSession.PeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.dateToDate;
@@ -342,9 +457,11 @@ namespace AdExpress.Private.Selection {
                 endDate = new DateTime(Convert.ToInt32(_webSession.PeriodEndDate.Substring(0, 4)), Convert.ToInt32(_webSession.PeriodEndDate.Substring(4, 2)), Convert.ToInt32(_webSession.PeriodEndDate.Substring(6, 2)));
                 beginDate = new DateTime(Convert.ToInt32(_webSession.PeriodBeginningDate.Substring(0, 4)), Convert.ToInt32(_webSession.PeriodBeginningDate.Substring(4, 2)), Convert.ToInt32(_webSession.PeriodBeginningDate.Substring(6, 2)));
 
-                if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE) {
+                if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
+                {
 
-                    switch (periodCalendarDisponibilityType) {
+                    switch (periodCalendarDisponibilityType)
+                    {
 
                         case WebConstantes.globalCalendar.periodDisponibilityType.currentDay:
                             lastDayEnable = DateTime.Now;
@@ -357,9 +474,11 @@ namespace AdExpress.Private.Selection {
 
                     if (CompareDateEnd(lastDayEnable, endDate) || CompareDateEnd(beginDate, DateTime.Now))
                         _webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_webSession.PeriodBeginningDate, _webSession.PeriodEndDate, true, comparativePeriodCalendarType, periodCalendarDisponibilityType);
-                    else {
+                    else
+                    {
 
-                        switch (periodCalendarDisponibilityType) {
+                        switch (periodCalendarDisponibilityType)
+                        {
 
                             case WebConstantes.globalCalendar.periodDisponibilityType.currentDay:
                                 _webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_webSession.PeriodBeginningDate, lastDayEnable.ToString("yyyyMMdd"), true, comparativePeriodCalendarType, periodCalendarDisponibilityType);
@@ -370,7 +489,8 @@ namespace AdExpress.Private.Selection {
                         }
                     }
                 }
-                else {
+                else
+                {
                     if (CompareDateEnd(DateTime.Now, endDate) || CompareDateEnd(beginDate, DateTime.Now))
                         _webSession.CustomerPeriodSelected = new TNS.AdExpress.Web.Core.CustomerPeriod(_webSession.PeriodBeginningDate, _webSession.PeriodEndDate);
                     else
@@ -379,7 +499,8 @@ namespace AdExpress.Private.Selection {
 
                 _webSession.Save();
             }
-            catch (System.Exception e) {
+            catch (System.Exception e)
+            {
                 _webSession.PeriodBeginningDate = "";
                 _webSession.PeriodEndDate = "";
                 throw (new AdExpressException.AnalyseDateSelectionException(GestionWeb.GetWebWord(885, _webSession.SiteLanguage)));
@@ -392,7 +513,8 @@ namespace AdExpress.Private.Selection {
         /// Verifie si la date de fin est inférieur ou non à la date de début
         /// </summary>
         /// <returns>vrai si la date de fin et inférieur à la date de début</returns>
-        private bool CompareDateEnd(DateTime dateBegin, DateTime dateEnd) {
+        private bool CompareDateEnd(DateTime dateBegin, DateTime dateEnd)
+        {
             if (dateEnd < dateBegin)
                 return true;
             else
@@ -403,11 +525,25 @@ namespace AdExpress.Private.Selection {
         #endregion
 
         #region Implémentation méthodes abstraites
-        protected override void ValidateSelection(object sender, System.EventArgs e) {
+        protected override void ValidateSelection(object sender, System.EventArgs e)
+        {
             this.Page_PreRender(sender, e);
         }
-        protected override string GetNextUrlFromMenu() {
+        protected override string GetNextUrlFromMenu()
+        {
             return (this.MenuWebControl2.NextUrl);
+        }
+        #endregion
+
+        #region ConvertStringToInt64
+        /// <summary>
+        /// Convert String To Int64
+        /// </summary>
+        /// <param name="p">String parameter</param>
+        /// <returns>Int64 Result</returns>
+        private Int64 ConvertStringToInt64(string p)
+        {
+            return Int64.Parse(p);
         }
         #endregion
 

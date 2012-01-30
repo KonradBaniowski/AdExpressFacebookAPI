@@ -43,4 +43,5 @@
       <matchingTable defaultEnumId="220"  retailerEnumId="228" description="Dash Board Data: Pluri Week" />
     </matchingTables>
   </retailer>
+  <lostWon useComparative="false"  useDiponibility="true" useType="true"/>
 </resultOptions>

@@ -232,11 +232,30 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 				case DBCst.Vehicles.names.radio:
 					dtSet = VersionDataAccess.GetVersions(_versions.Keys, _webSession,DBCst.Vehicles.names.radio,_period);
 					break;
-
+                case DBCst.Vehicles.names.radioGeneral:
+                    dtSet = VersionDataAccess.GetVersions(_versions.Keys, _webSession, DBCst.Vehicles.names.radioGeneral, _period);
+                    break;
+                case DBCst.Vehicles.names.radioSponsorship:
+                    dtSet = VersionDataAccess.GetVersions(_versions.Keys, _webSession, DBCst.Vehicles.names.radioSponsorship, _period);
+                    break;
+                case DBCst.Vehicles.names.radioMusic:
+                    dtSet = VersionDataAccess.GetVersions(_versions.Keys, _webSession, DBCst.Vehicles.names.radioMusic, _period);
+                    break;
 				case DBCst.Vehicles.names.tv:										
 					dtSet = VersionDataAccess.GetVersions(_versions.Keys, _webSession,DBCst.Vehicles.names.tv,_period);					
 					break;
-
+                case DBCst.Vehicles.names.tvAnnounces:
+                    dtSet = VersionDataAccess.GetVersions(_versions.Keys, _webSession, DBCst.Vehicles.names.tvAnnounces, _period);
+                    break;
+                case DBCst.Vehicles.names.tvGeneral:
+                    dtSet = VersionDataAccess.GetVersions(_versions.Keys, _webSession, DBCst.Vehicles.names.tvGeneral, _period);
+                    break;
+                case DBCst.Vehicles.names.tvSponsorship:
+                    dtSet = VersionDataAccess.GetVersions(_versions.Keys, _webSession, DBCst.Vehicles.names.tvSponsorship, _period);
+                    break;
+                case DBCst.Vehicles.names.tvNonTerrestrials:
+                    dtSet = VersionDataAccess.GetVersions(_versions.Keys, _webSession, DBCst.Vehicles.names.tvNonTerrestrials, _period);
+                    break;
                 case DBCst.Vehicles.names.directMarketing:
                     dtSet = VersionDataAccess.GetVersions(_versions.Keys, _webSession, DBCst.Vehicles.names.directMarketing,_period);
                     break;
@@ -353,15 +372,63 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 								if (path.Length>0){
 									item.Path = path;
 								}
-								versionUi = new VersionRadioUI(this._webSession, item);
+                                versionUi = new VersionRadioUI(this._webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.radio));
 								break;
-
+                            case DBCst.Vehicles.names.radioGeneral:
+                                if (path.Length > 0)
+                                {
+                                    item.Path = path;
+                                }
+                                versionUi = new VersionRadioUI(this._webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.radioGeneral));
+                                break;
+                            case DBCst.Vehicles.names.radioSponsorship:
+                                if (path.Length > 0)
+                                {
+                                    item.Path = path;
+                                }
+                                versionUi = new VersionRadioUI(this._webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.radioSponsorship));
+                                break;
+                            case DBCst.Vehicles.names.radioMusic:
+                                if (path.Length > 0)
+                                {
+                                    item.Path = path;
+                                }
+                                versionUi = new VersionRadioUI(this._webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.radioSponsorship));
+                                break;
 							case DBCst.Vehicles.names.tv:
 								if (path.Length>0){
 									item.Path = path;
 								}
-								versionUi = new VersionTvUI(this._webSession, item);
+                                versionUi = new VersionTvUI(this._webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.tv));
 								break;
+                            case DBCst.Vehicles.names.tvGeneral:
+                                if (path.Length > 0)
+                                {
+                                    item.Path = path;
+                                }
+                                versionUi = new VersionTvUI(this._webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.tvGeneral));
+                                break;
+                            case DBCst.Vehicles.names.tvSponsorship:
+                                if (path.Length > 0)
+                                {
+                                    item.Path = path;
+                                }
+                                versionUi = new VersionTvUI(this._webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.tvSponsorship));
+                                break;
+                            case DBCst.Vehicles.names.tvAnnounces:
+                                if (path.Length > 0)
+                                {
+                                    item.Path = path;
+                                }
+                                versionUi = new VersionTvUI(this._webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.tvAnnounces));
+                                break;
+                            case DBCst.Vehicles.names.tvNonTerrestrials:
+                                if (path.Length > 0)
+                                {
+                                    item.Path = path;
+                                }
+                                versionUi = new VersionTvUI(this._webSession, item, VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.tvNonTerrestrials));
+                                break;
 
 							default:
 								throw new VersionUIException("Non authorized vehicle level : " + this._vehicle.ToString());
@@ -397,16 +464,34 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 
 						case DBCst.Vehicles.names.tv:
 							_title = GestionWeb.GetWebWord(2012, this._webSession.SiteLanguage);
-							break;
-
+							break;                       
+                        case DBCst.Vehicles.names.tvGeneral:
+                            _title = GestionWeb.GetWebWord(2640, this._webSession.SiteLanguage);
+                            break;
+                        case DBCst.Vehicles.names.tvSponsorship:
+                            _title = GestionWeb.GetWebWord(2641, this._webSession.SiteLanguage);
+                            break;
+                        case DBCst.Vehicles.names.tvNonTerrestrials:
+                            _title = GestionWeb.GetWebWord(2643, this._webSession.SiteLanguage);
+                            break;
+                        case DBCst.Vehicles.names.tvAnnounces:
+                            _title = GestionWeb.GetWebWord(2642, this._webSession.SiteLanguage);
+                            break;
 						case DBCst.Vehicles.names.radio:
 							_title = GestionWeb.GetWebWord(2011, this._webSession.SiteLanguage);
 							break;
-
+                        case DBCst.Vehicles.names.radioGeneral:
+                            _title = GestionWeb.GetWebWord(2637, this._webSession.SiteLanguage);
+                            break;
+                        case DBCst.Vehicles.names.radioSponsorship:
+                            _title = GestionWeb.GetWebWord(2638, this._webSession.SiteLanguage);
+                            break;
+                        case DBCst.Vehicles.names.radioMusic:
+                            _title = GestionWeb.GetWebWord(2639, this._webSession.SiteLanguage);
+                            break;
                         case DBCst.Vehicles.names.directMarketing:
                             _title = GestionWeb.GetWebWord(2217, this._webSession.SiteLanguage);
 							break;
-
                         case DBCst.Vehicles.names.outdoor:
                             _title = GestionWeb.GetWebWord(2255, this._webSession.SiteLanguage);
                             break;
@@ -465,8 +550,33 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
                         _title = GestionWeb.GetWebWord(2012, this._webSession.SiteLanguage);
                         break;
 
+                    case DBCst.Vehicles.names.tvGeneral:
+                        _title = GestionWeb.GetWebWord(2633, this._webSession.SiteLanguage);
+                        break;
+
+                    case DBCst.Vehicles.names.tvAnnounces:
+                        _title = GestionWeb.GetWebWord(2635, this._webSession.SiteLanguage);
+                        break;
+
+                    case DBCst.Vehicles.names.tvSponsorship:
+                        _title = GestionWeb.GetWebWord(2634, this._webSession.SiteLanguage);
+                        break;
+
+                    case DBCst.Vehicles.names.tvNonTerrestrials:
+                        _title = GestionWeb.GetWebWord(2636, this._webSession.SiteLanguage);
+                        break;
+
                     case DBCst.Vehicles.names.radio:
                         _title = GestionWeb.GetWebWord(2011, this._webSession.SiteLanguage);
+                        break;
+                    case DBCst.Vehicles.names.radioGeneral:
+                        _title = GestionWeb.GetWebWord(2637, this._webSession.SiteLanguage);
+                        break;
+                    case DBCst.Vehicles.names.radioSponsorship:
+                        _title = GestionWeb.GetWebWord(2638, this._webSession.SiteLanguage);
+                        break;
+                    case DBCst.Vehicles.names.radioMusic:
+                        _title = GestionWeb.GetWebWord(2639, this._webSession.SiteLanguage);
                         break;
 
                     case DBCst.Vehicles.names.directMarketing:

@@ -119,7 +119,7 @@ namespace AdExpress{
 					return GestionWeb.GetWebWord(1488,_siteLanguage);
 				case 5:
 					title=GestionWeb.GetWebWord(887,_siteLanguage);
-					return GestionWeb.GetWebWord(1489,_siteLanguage);
+                    return GestionWeb.GetWebWord(1489, _siteLanguage) + "<br/><a class=\"Tips1\" href=\"/index.aspx\">" + GestionWeb.GetWebWord(2929, _siteLanguage) + "</a>";
 				default: 
 					title=GestionWeb.GetWebWord(887,_siteLanguage);
 					return GestionWeb.GetWebWord(1490,_siteLanguage);

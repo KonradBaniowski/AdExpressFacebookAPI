@@ -111,7 +111,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// <param name="typeYear">Type of study (current or previous year)</param>
         /// <param name="classifLevel">Classification detail (product or advertiser)</param>
         /// <returns></returns>
-        public object[,] GetData(CstResult.PalmaresRecap.typeYearSelected typeYear, CstResult.MotherRecap.ElementType classifLevel)
+        virtual public object[,] GetData(CstResult.PalmaresRecap.typeYearSelected typeYear, CstResult.MotherRecap.ElementType classifLevel)
         {
 
 
@@ -249,7 +249,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// <param name="classifLevel">Detail level (advertiser or product)</param>
         /// <param name="typeYear">Year N or N-1?</param>
         /// <returns>Code HTML</returns>
-        protected StringBuilder BuildTop(CstResult.PalmaresRecap.typeYearSelected typeYear, CstResult.MotherRecap.ElementType classifLevel)
+        protected virtual StringBuilder BuildTop(CstResult.PalmaresRecap.typeYearSelected typeYear, CstResult.MotherRecap.ElementType classifLevel)
         {
 
             #region Variables
@@ -286,7 +286,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
 			CultureInfo cInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
 			DateTimeFormatInfo myDTFI = cInfo.DateTimeFormat;
-            UnitInformation defaultKCurrency = UnitsInformation.List[UnitsInformation.DefaultKCurrency];
+            UnitInformation selectedCurrency = GetUnit();
 
             if (typeYear == CstResult.PalmaresRecap.typeYearSelected.currentYear) {				
 				periodDate = string.Format("{0}-{1}", FctUtilities.Dates.DateToString(_periodBegin.Date,_session.SiteLanguage), FctUtilities.Dates.DateToString(_periodEnd.Date,_session.SiteLanguage));
@@ -296,7 +296,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 				periodDate = string.Format("{0}-{1}", FctUtilities.Dates.DateToString(_periodBegin.Date.AddYears(-1),_session.SiteLanguage),FctUtilities.Dates.DateToString(_periodEnd.Date.AddYears(-1),_session.SiteLanguage));
             }
 
-            if (tab.GetLongLength(0) == 1 || Convert.ToDouble(tab[0, TOTAL_N]) == 0)
+            if (tab == null || tab.GetLongLength(0) == 1 || Convert.ToDouble(tab[0, TOTAL_N]) == 0)
             {
 
                 if (classifLevel == CstResult.PalmaresRecap.ElementType.advertiser)
@@ -323,7 +323,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\"  align=\"center\">{1}<br>{2}</td>", P2, GestionWeb.GetWebWord(1184, _session.SiteLanguage), periodDate);
             }
             //Unit
-            t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\"  align=\"center\">{1}</td>", P2, GestionWeb.GetWebWord(1401, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")");
+            t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\"  align=\"center\">{1}</td>", P2, GestionWeb.GetWebWord(1401, _session.SiteLanguage) + " (" + selectedCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")");
             //SOV
             t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\"  align=\"center\">{1}</td>", P2, GestionWeb.GetWebWord(1186, _session.SiteLanguage));
             t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\"  align=\"center\">{1}</td>", P2, GestionWeb.GetWebWord(1171, _session.SiteLanguage));
@@ -462,7 +462,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// Build the four reports
         /// </summary>		
         /// <returns>Top report</returns>
-        protected StringBuilder BuildTops()
+        protected virtual StringBuilder BuildTops()
         {
 
             System.Text.StringBuilder t = new System.Text.StringBuilder(5000);
@@ -507,46 +507,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             return t;
 
         }
-        #endregion
-
-		#region Internal Methods
-		///// <summary>
-		///// Set advertiser personnalisation
-		///// </summary>
-		///// <param name="tabResult">tab Result</param>
-		///// <param name="idProductList">id Product List</param>
-		//protected virtual void SetAdvertiserPersonalisation(object[,] tabResult,string idProductList,int nbLine ) {
-		//    Dictionary<long, List<long>> res = _dalLayer.GetProductsPersonnalisationType(idProductList);
-		//    List<long> temp = null;
-		//    long idAdv=-1;
-		//    bool inRef = false, inComp = false;
-		//    if(res !=null && res.Count>0){
-
-		//        for (int i = 0; i < nbLine; i++) {
-		//            if (tabResult[i, ID_PRODUCT_INDEX] != null && res.ContainsKey(long.Parse(tabResult[i, ID_PRODUCT_INDEX].ToString()))) {
-		//                temp = res[long.Parse(tabResult[i, ID_PRODUCT_INDEX].ToString())];
-		//                if (temp != null && temp.Count > 0) {
-		//                    for (int j = 0; j < temp.Count; j++) {
-		//                        idAdv = temp[j];
-		//                        if (_competitorIDS.Contains(idAdv)) inComp = true;
-		//                        if (_referenceIDS.Contains(idAdv)) inRef = true;
-		//                        if (inComp && inRef) break;								
-		//                    }
-		//                    if (inComp && inRef)
-		//                        tabResult[i, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.mixed;
-		//                    else if (inComp)
-		//                        tabResult[i, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.competitor;
-		//                    else if (inRef)
-		//                        tabResult[i, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.reference;
-		//                    else tabResult[i, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.none;							
-		//                }
-		//            }
-		//            inRef = false;
-		//            inComp = false;
-		//        }
-		//    }
-		//}
-		#endregion
+        #endregion		
 
 		#region SetAdvertiserPersonalisation
 		/// <summary>

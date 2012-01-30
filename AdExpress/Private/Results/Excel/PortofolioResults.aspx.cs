@@ -59,6 +59,7 @@ namespace AdExpress.Private.Results.Excel{
         /// </summary>
         /// <param name="e">Arguments</param>
         protected override void OnPreInit(EventArgs e) {
+            try{
             base.OnPreInit(e);
             switch (_webSession.CurrentTab) {
                 case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
@@ -68,6 +69,14 @@ namespace AdExpress.Private.Results.Excel{
                 case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
                     _resultWebControl.SkinID = "portofolioExcelResultTable";
                     break;
+            }
+            }
+            catch (System.Exception exc)
+            {
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                }
             }
         }
         #endregion

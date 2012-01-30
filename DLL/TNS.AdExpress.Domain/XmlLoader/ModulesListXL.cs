@@ -67,8 +67,10 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                 string createAlertUrlValue = "";
                 string functionName = "";
                 string allowedUnitValue="";
+                string allowedCampaignTypeValue = "";
                 bool useBaalForModule=false;
                 bool useBaalForResult=false;
+                bool displayIncompleteDateInCalendar = false;
                 Constante.CustomerSessions.Unit defaultUnit;
 				Int64 module=0;
                 Int32 resultLimitation = 0;
@@ -106,7 +108,9 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 								break;
 							case "module":
                                 if(reader.GetAttribute("privilegecode") != null && reader.GetAttribute("traductioncode") != null && reader.GetAttribute("urlNextPage") != null && reader.GetAttribute("descriptionWebTextId") != null && reader.GetAttribute("descriptionImageName") != null && reader.GetAttribute("moduleCategoryId") != null) {
-                                    htModule.Add(Int64.Parse(reader.GetAttribute("privilegecode")), new Module(Int64.Parse(reader.GetAttribute("privilegecode")), Int64.Parse(reader.GetAttribute("traductioncode")), Int64.Parse(reader.GetAttribute("descriptionWebTextId")), Int64.Parse(reader.GetAttribute("moduleCategoryId")), reader.GetAttribute("urlNextPage"), moduleType, reader.GetAttribute("descriptionImageName")));
+                                    if (!string.IsNullOrEmpty(reader.GetAttribute("displayIncompleteDateInCalendar"))) displayIncompleteDateInCalendar = bool.Parse(reader.GetAttribute("displayIncompleteDateInCalendar"));
+                                    else displayIncompleteDateInCalendar = false;
+                                    htModule.Add(Int64.Parse(reader.GetAttribute("privilegecode")), new Module(Int64.Parse(reader.GetAttribute("privilegecode")), Int64.Parse(reader.GetAttribute("traductioncode")), Int64.Parse(reader.GetAttribute("descriptionWebTextId")), Int64.Parse(reader.GetAttribute("moduleCategoryId")), reader.GetAttribute("urlNextPage"), moduleType, reader.GetAttribute("descriptionImageName"), displayIncompleteDateInCalendar));
 									module = Int64.Parse(reader.GetAttribute("privilegecode"));
 								}
 								break;
@@ -185,6 +189,10 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                                     if (subtree2.GetAttribute("id") != null)
                                                         currentResultPageInformation.DetailSelectionItemsType.Add(int.Parse(subtree2.GetAttribute("id")));
                                                     break;
+                                                case "allowedUnits":
+                                                    if (subtree2.GetAttribute("forceDisplay") != null && subtree2.GetAttribute("forceDisplay").Length > 0)
+                                                        currentResultPageInformation.CanDisplayUnitOption = bool.Parse(reader.GetAttribute("forceDisplay"));
+                                                    break;
                                                 case "allowedUnit":
                                                     allowedUnitValue = subtree2.ReadString();
                                                     if (allowedUnitValue != null && allowedUnitValue.Length > 0 && module != 0 && currentResultPageInformation != null)
@@ -193,6 +201,17 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                                 case "retailerOption":
                                                     if (subtree2.GetAttribute("use") != null)
                                                         currentResultPageInformation.UseRetailerOption = (bool.Parse(subtree2.GetAttribute("use")));
+                                                    break;
+                                                case "campaignTypes":
+                                                    if (subtree2.GetAttribute("default") != null && subtree2.GetAttribute("default").Length > 0)                                                   
+                                                        currentResultPageInformation.DefaultCampaignType = (Constante.CustomerSessions.CampaignType)Enum.Parse(typeof(Constante.CustomerSessions.CampaignType), reader.GetAttribute("default"));
+                                                    if (subtree2.GetAttribute("forceDisplay") != null && subtree2.GetAttribute("forceDisplay").Length > 0)
+                                                        currentResultPageInformation.CanDisplayCampaignType = bool.Parse(reader.GetAttribute("forceDisplay"));                                                  
+                                                    break;
+                                                case "campaignType":
+                                                    allowedCampaignTypeValue = subtree2.ReadString();
+                                                    if (allowedCampaignTypeValue != null && allowedCampaignTypeValue.Length > 0 && module != 0 && currentResultPageInformation != null)
+                                                        currentResultPageInformation.AllowedCampaignTypeEnumList.Add((Constante.CustomerSessions.CampaignType)Enum.Parse(typeof(Constante.CustomerSessions.CampaignType), allowedCampaignTypeValue, true));
                                                     break;
                                                 case "ResultAllowedMediaUniverse":
                                                     useBaalForResult = false;
@@ -253,6 +272,11 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                 if (reader.GetAttribute("use") != null)
                                     ((Module)htModule[module]).UseRetailerOption = (bool.Parse(reader.GetAttribute("use")));
                                 break;
+                            case "allowedUnit":
+                                allowedUnitValue = reader.ReadString();
+                                if (allowedUnitValue != null && allowedUnitValue.Length > 0)
+                                    ((Module)htModule[module]).AllowedUnitEnumList.Add((Constante.CustomerSessions.Unit)Enum.Parse(typeof(Constante.CustomerSessions.Unit), allowedUnitValue, true));
+                                break;
                             case "link":
 								if(reader.GetAttribute("privilegecode")!=null && module!=0){
 									((Module)htModule[module]).Bridges.Add(Int64.Parse(reader.GetAttribute("privilegecode")));
@@ -282,12 +306,28 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                 if (reader.GetAttribute("id") != null && module != 0) {
                                     ((Module)htModule[module]).AllowedColumnDetailLevelItems.Add(DetailLevelItemsInformation.Get(int.Parse(reader.GetAttribute("id"))));
                                 }
+                                break;  
+                            case "allowedUniverseLevels" :
+                                if (reader.GetAttribute("levelsIdToReadOnly") != null)
+                                {
+                                    currentSelectionPage.LevelsIdToReadOnly = reader.GetAttribute("levelsIdToReadOnly");
+                                }
                                 break;
 							case "allowedUniverseLevel":
 								if (reader.GetAttribute("id") != null) {
 									currentSelectionPage.AllowedLevelsIds.Add(int.Parse(reader.GetAttribute("id")));
 								}
 								break;
+                            case "allowedUniverseBranches":
+                                if (reader.GetAttribute("defaultBranchId") != null)
+                                {
+                                    currentSelectionPage.DefaultBranchId = int.Parse(reader.GetAttribute("defaultBranchId"));
+                                }
+                                if (reader.GetAttribute("forceBranchId") != null)
+                                {
+                                    currentSelectionPage.ForceBranchId = int.Parse(reader.GetAttribute("forceBranchId"));
+                                }                                
+                                break;
 							case "allowedUniverseBranch":
 								if (reader.GetAttribute("id") != null) {
 									currentSelectionPage.AllowedBranchesIds.Add(int.Parse(reader.GetAttribute("id")));

@@ -20,13 +20,7 @@ namespace TNS.AdExpress.Web.Core.Result {
     /// </summary>
     public class CellPressCreativeLink : CellAdExpressImageLink {
 
-        #region Variables
-        /// <summary>
-        /// Liste des chemins vers les créations
-        /// </summary>
-        protected string _creatives;
-
-        #endregion
+      
 
         #region Constructeur
         /// <summary>
@@ -37,7 +31,7 @@ namespace TNS.AdExpress.Web.Core.Result {
             _link = "javascript:openPressCreation('{0}');";
             _creatives = creatives;
             _webSession = webSession;
-            _imagePath = "/App_Themes/"+WebApplicationParameters.Themes[_webSession.SiteLanguage].Name+"/Images/Common/picto_plus.gif";
+            _imagePath = "/App_Themes/" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + "/Images/Common/Picto_press.gif";
         }
         #endregion
 

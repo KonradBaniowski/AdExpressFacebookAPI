@@ -64,6 +64,15 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// allowed branches identifiers
 		/// </summary>
 		protected List<int> _allowedBranchesIds = new List<int>();
+        /// <summary>
+        /// Filter used for client universe
+        /// </summary>
+        protected LevelInformation _filter = null;
+
+        /// <summary>
+        /// Forbidden universe levels
+        /// </summary>
+        protected List<Int64> _forbiddenLevelsId = new List<long>();
 		#endregion
 
 		#region Accesseurs
@@ -103,7 +112,20 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				_dimension = value;
 			}
 		}
-
+        /// <summary>
+        /// Filter
+        /// </summary>
+        public LevelInformation Filter{
+            get { return _filter; }
+            set { _filter = value; }
+        }
+        /// <summary>
+        /// Forbidden universe levels
+        /// </summary>
+        public List<Int64> ForbiddenLevelsId
+        {
+            set { _forbiddenLevelsId = value; }
+        }
 		#endregion
 
 		/// <summary>
@@ -199,6 +221,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 							_allowedBranchesIds = tempBranchIds;
 						if (tempLevels != null && tempLevels.Count > 0) {
 							for (int i = 0; i < tempLevels.Count; i++) {
+                                if(_forbiddenLevelsId==null  || _forbiddenLevelsId.Count==0 || !_forbiddenLevelsId.Contains(tempLevels[i].ID))
 								_allowedLevelsId.Add(tempLevels[i].ID);
 							}
 						}
@@ -209,20 +232,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				foreach(OptionalPageInformation currentPage in currentModuleDescription.OptionalsPages){
 					if (currentPage.Url.Equals(this.Page.Request.Url.AbsolutePath)) {
 						listUniverseClientDescription += currentPage.LoadableUniversString;
-						#region Old region
-						////Apply rigth Rules for getting levels and branches
-						//if (currentPage.AllowedLevelsIds != null && currentPage.AllowedLevelsIds.Count > 0) {
-						//    tempLevels = UniverseLevels.GetList(currentPage.AllowedLevelsIds);
-						//    if (tempLevels != null && tempLevels.Count > 0) {
-						//        for (int i = 0; i < tempLevels.Count; i++) {
-						//            _allowedLevelsId.Add(tempLevels[i].ID);
-						//        }
-						//    }
-
-						//}
-						//if (currentPage.AllowedBranchesIds != null && currentPage.AllowedBranchesIds.Count > 0)
-						//    _allowedBranchesIds = currentPage.AllowedBranchesIds;
-						#endregion
+						
 
 						//Apply rigth Rules for getting levels and branches
 						levelsRules = new CoreSelection.AdExpressLevelsRules(webSession, currentPage.AllowedBranchesIds, UniverseLevels.GetList(currentPage.AllowedLevelsIds), _dimension);
@@ -232,6 +242,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 							_allowedBranchesIds = tempBranchIds;
 						if (tempLevels != null && tempLevels.Count > 0) {
 							for (int i = 0; i < tempLevels.Count; i++) {
+                                if (_forbiddenLevelsId == null || _forbiddenLevelsId.Count == 0 || !_forbiddenLevelsId.Contains(tempLevels[i].ID))
 								_allowedLevelsId.Add(tempLevels[i].ID);
 							}
 						}
@@ -267,11 +278,13 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		//<%=listUniverses%>
 
 			TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI listUnivers=  new TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI(webSession,listBranchType,600);
-			if (_forGenericUniverse) {
-				listUniverseClientDescription = TNS.AdExpress.Constantes.Web.LoadableUnivers.GENERIC_UNIVERSE.ToString();
-				listUniverses = listUnivers.GetSelectionTableHtmlUI(4, listUniverseClientDescription, _allowedLevelsId);
-			}else
-			listUniverses = listUnivers.GetSelectionTableHtmlUI(4, listUniverseClientDescription);
+            if (_forGenericUniverse){
+                listUniverseClientDescription = TNS.AdExpress.Constantes.Web.LoadableUnivers.GENERIC_UNIVERSE.ToString();
+                listUniverses = listUnivers.GetSelectionTableHtmlUI(4, listUniverseClientDescription, _allowedLevelsId, _filter);
+            }
+            else{
+                listUniverses = listUnivers.GetSelectionTableHtmlUI(4, listUniverseClientDescription, _filter);
+            }
 			if(listUniverses.Length==0) {
 				existUnivers=false;
 				listUniverses="<tr><td class=\"txtViolet12Bold\" colspan=3 align=middle>";

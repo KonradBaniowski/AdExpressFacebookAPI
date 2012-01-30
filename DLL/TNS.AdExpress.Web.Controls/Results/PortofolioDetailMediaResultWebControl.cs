@@ -250,7 +250,11 @@ namespace TNS.AdExpress.Web.Controls.Results {
 			parameters[2] = _dayOfWeek;
 			Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 			//return (portofolioResult.GetPortofolioDetailMediaResultTable());
-            ResultTable r = portofolioResult.GetInsertionDetailResultTable();
+            ResultTable r;
+            if(_renderType == RenderType.excel)
+                r = portofolioResult.GetInsertionDetailResultTable(true);
+            else
+                r = portofolioResult.GetInsertionDetailResultTable(false);
             if(r != null)r.CultureInfo = WebApplicationParameters.AllowedLanguages[customerWebSession.SiteLanguage].CultureInfo;
 			return r;
         }

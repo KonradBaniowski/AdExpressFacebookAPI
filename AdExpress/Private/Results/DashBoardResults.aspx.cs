@@ -522,7 +522,14 @@ namespace AdExpress.Private.Results{
 			DBClassificationConstantes.Vehicles.names vehicletype=VehiclesInformation.DatabaseIdToEnum(idVehicle);
 			switch(vehicletype) {
 				case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
 				case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
 				case DBClassificationConstantes.Vehicles.names.others:
 					return(true);
 					 default:

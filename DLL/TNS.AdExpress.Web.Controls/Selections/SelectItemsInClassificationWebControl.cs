@@ -401,19 +401,28 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <param name="dataLanguage">language</param>
 		/// <param name="connection">connection</param>
 		/// <returns>Html code of universe selected</returns>
-		public string ShowUniverse(TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse, int dataLanguage, TNS.FrameWork.DB.Common.IDataSource source) {
+		public virtual string ShowUniverse(TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse, int dataLanguage, TNS.FrameWork.DB.Common.IDataSource source) {
 
 			DataSet ds = null;
 			int treeViewId = 0;
 			string nodeCurrentText = "", childNodeCss = "";
 			UniverseAccessType accessType;
 			List<NomenclatureElementsGroup> groups = null;
-            TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess universeItems = null;
+       
+            CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classificationLevelList];
+            if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
+            object[] param = new object[2];
+            param[0] = source;
+            param[1] = dataLanguage;
+            TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL universeItems = null;
+
 			string childId = "";
 			StringBuilder html = new StringBuilder();
 			int code = 0, headerCode = 0;
 			string treeFrameCss = "", treeFrameBodyCss = "", treeFrameHeaderCss = "";
-			ArrayList itemIdList = null;
+            //ArrayList itemIdList = null;
+            List<long> itemIdList = null;
 			obout_ASPTreeView_2_NET.Tree oTree = null;
 			string nodeCss = "";
             _lowerCase = true;
@@ -449,7 +458,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
 						for (int j = 0; j < levelIdsList.Count; j++) {
 
-                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),dataLanguage,source);                           
+                            universeItems = factoryLevels.CreateDefaultClassificationLevelListDAL(UniverseLevels.Get(levelIdsList[j]), groups[i].GetAsString(levelIdsList[j]));
 							if (universeItems != null) {
 								itemIdList = universeItems.IdListOrderByClassificationItem;
 								if (itemIdList != null && itemIdList.Count > 0) {
@@ -457,8 +466,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 									oTree.Add("root", "t" + treeViewId.ToString() + "_" + accessType.GetHashCode().ToString() + "_" + levelIdsList[j].ToString(), nodeCurrentText, false, null, null);
 
 									for (int k = 0; k < itemIdList.Count; k++) {
-                                        nodeCurrentText = "<div class=" + childNodeCss + " nowrap>" + ((_lowerCase) ? universeItems[Int64.Parse(itemIdList[k].ToString())].ToLower() : universeItems[Int64.Parse(itemIdList[k].ToString())]);
-										nodeCurrentText += "</div>";
+                                        nodeCurrentText = "<div class=" + childNodeCss + " nowrap>" + ((factoryLevels.ToLowerCase) ? universeItems[itemIdList[k]].ToLower() : universeItems[itemIdList[k]]);
+                                        nodeCurrentText += "</div>";
 										childId = treeViewId + "_" + levelIdsList[j] + "_" + j.ToString();
 										oTree.Add("t" + treeViewId.ToString() + "_" + accessType.GetHashCode().ToString() + "_" + levelIdsList[j].ToString(), childId, nodeCurrentText, false, null, null);
 									}
@@ -519,7 +528,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
 						for (int j = 0; j < levelIdsList.Count; j++) {
 
-                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),dataLanguage,source);
+                            universeItems = factoryLevels.CreateDefaultClassificationLevelListDAL(UniverseLevels.Get(levelIdsList[j]), groups[i].GetAsString(levelIdsList[j]));
 							if (universeItems != null) {
 								itemIdList = universeItems.IdListOrderByClassificationItem;
 								if (itemIdList != null && itemIdList.Count > 0) {
@@ -527,8 +536,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 									oTree.Add("root", "t" + treeViewId.ToString() + "_" + accessType.GetHashCode().ToString() + "_" + levelIdsList[j].ToString(), nodeCurrentText, false, null, null);
 
 									for (int k = 0; k < itemIdList.Count; k++) {
-                                        nodeCurrentText = "<div class=" + childNodeCss + " nowrap>" + ((_lowerCase) ? universeItems[Int64.Parse(itemIdList[k].ToString())].ToLower() : universeItems[Int64.Parse(itemIdList[k].ToString())]);
-										nodeCurrentText += "</div>";
+                                        nodeCurrentText = "<div class=" + childNodeCss + " nowrap>" + ((factoryLevels.ToLowerCase) ? universeItems[itemIdList[k]].ToLower() : universeItems[itemIdList[k]]);
+                                        nodeCurrentText += "</div>";
 										childId = treeViewId + "_" + levelIdsList[j] + "_" + j.ToString();
 										oTree.Add("t" + treeViewId.ToString() + "_" + accessType.GetHashCode().ToString() + "_" + levelIdsList[j].ToString(), childId, nodeCurrentText, false, null, null);
 									}
@@ -543,7 +552,6 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 						oTree.Width = _treeViewWidth;
 						oTree.ShowRootPlusMinus = false;
 						//Debut Boite  arbe element selectionnés  
-						//html.Append("<table cellpadding=\"0\" cellspacing=\"0\">");
 						html.Append("<td valign=\"top\">");//<tr>
 						html.Append("<table class=\"" + treeFrameCss + "\" cellpadding=\"0\" cellspacing=\"0\">");
 						html.Append("<tr class=\"" + treeFrameHeaderCss + "\"><td>&nbsp;" + GetWebWord(headerCode, _siteLanguage) + "</td><tr>");
@@ -610,14 +618,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				}
 			}else{
 				foreach (OptionalPageInformation currentPage in module.OptionalsPages) {
-					if (currentPage.Url.Equals(this.Page.Request.Url.AbsolutePath)) {
-						#region Old version
-						//if (currentPage.AllowedLevelsIds != null && currentPage.AllowedLevelsIds.Count > 0)
-						//    _allowedLevels = UniverseLevels.GetList(currentPage.AllowedLevelsIds);
-						//if (currentPage.AllowedBranchesIds != null && currentPage.AllowedBranchesIds.Count > 0)
-						//    _allowedBranchesIds = currentPage.AllowedBranchesIds;
-
-						#endregion
+					if (currentPage.Url.Equals(this.Page.Request.Url.AbsolutePath)) {						
 						//Apply rigth Rules for getting levels and branches
 						levelsRules = new CoreSelection.AdExpressLevelsRules(_webSession, currentPage.AllowedBranchesIds, UniverseLevels.GetList(currentPage.AllowedLevelsIds), _dimension);
 						tempBranchIds = levelsRules.GetAuthorizedBranches();
@@ -646,17 +647,21 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				switch (_eventTarget) {
 					case FrameWorkSelection.eventSelection.LOAD_EVENT :
 					case FrameWorkSelection.eventSelection.SAVE_EVENT:
-					//case FrameWorkSelection.eventSelection.NEXT_EVENT:
+                    case FrameWorkSelection.eventSelection.INITIALIZE_WITH_PREVIOUS_SELECTION_EVENT:
 						switch (_dimension) {
+                            case TNS.Classification.Universe.Dimension.advertisementType:
+                                universes = _webSession.AdvertisementTypeUniverses;
+                                break;
 							case TNS.Classification.Universe.Dimension.product:
-								universes = _webSession.PrincipalProductUniverses;
+                                if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA && !_forSelectionPage)
+                                    universes = _webSession.SecondaryProductUniverses;
+								else universes = _webSession.PrincipalProductUniverses;
 								break;
                             case TNS.Classification.Universe.Dimension.advertisingAgency:
                                 universes = _webSession.PrincipalAdvertisingAgnecyUniverses;
                                 break;
                             case TNS.Classification.Universe.Dimension.media:
-                                if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA
-                                    || _webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES)
+                                if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES || (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA && !_forSelectionPage))
                                     universes = _webSession.SecondaryMediaUniverses;
                                 else
                                     universes = _webSession.PrincipalMediaUniverses;
@@ -703,7 +708,6 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			int treeviewId = 0, nbCurrentTree =0;
 			//int code = 0, headerCode = 0;
 			int nbTotalTree = 0;
-			//string treeFrameCss = "", treeFrameBodyCss = "", treeFrameHeaderCss = "";
 			int coutTree = 0, dif=0;
 			List<NomenclatureElementsGroup> elementsGroups = null;
 
@@ -790,6 +794,14 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			string treeFrameCss = "", treeFrameBodyCss = "", treeFrameHeaderCss = "";
 			int nbCurrentTree = 0, nbTotalTree = _nbMaxExcludeTree + _nbMaxIncludeTree;
 
+            CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
+            if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
+            object[] param = new object[2];
+            param[0] = _webSession;
+            param[1] = _dimension;
+            TNS.AdExpressI.Classification.DAL.ClassificationDAL classficationDAL = (TNS.AdExpressI.Classification.DAL.ClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            classficationDAL.DBSchema = _dBSchema;
+                
 			foreach (UniverseLevel level in _allowedLevels)
 				listId = listId + "classificationList_" + level.ID + ",";
 			if (listId != null && listId.Length > 0) listId = listId.Substring(0, listId.Length - 1);
@@ -798,7 +810,6 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			foreach (string currentKey in Page.Request.Form.AllKeys) {
 				if (currentKey.IndexOf("TreeLevelSelectedIds") > -1) {
 					st = Page.Request.Form.GetValues(currentKey);
-					//if (st != null && st.Length > 0 && st[0].Length > 0) {
 						selectedIds = st[0].ToString();
 						tempArr = currentKey.Split('_');
 						
@@ -889,12 +900,13 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 						
 						//Child node
 						hiddenFieldIds = "";
-						if (selectedIds != null && selectedIds.Length > 0 && selectedIds.Split(',').Length<_nbMaxItemByLevel) {
-                            ds = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.SearchLevelDataAccess.GetOneLevelItems(currentLevel.TableName, selectedIds, _webSession, _dBSchema, _dimension);
-							if (ds != null && ds.Tables[0].Rows.Count > 0) {								
+						if (selectedIds != null && selectedIds.Length > 0 ) {
+                            ds = classficationDAL.GetSelectedItems(currentLevel.TableName, selectedIds);
+                            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                            {								
 								foreach (DataRow dr in ds.Tables[0].Rows) {
 									childId = treeViewId + "_" + currentLevel.ID + "_" + dr[0].ToString();
-									nodeCurrentText = "<div class=" + childNodeCss + " nowrap>" + dr[1].ToString().ToLower();
+									nodeCurrentText = "<div class=" + childNodeCss + " nowrap>" + dr[1].ToString();
 									nodeCurrentText += "</td><td nowrap>&nbsp;<a href=# onclick=\"removeItem('TreeLevelSelectedIds" + treeViewId + "_" + accessType.GetHashCode().ToString() + "_" + currentLevel.ID + "' , '" + dr[0].ToString() + "');ob_t2_Remove('" + childId + "');\" ><img src=\""+_deleteImage+"\" border=0></a></div>";
 									hiddenFieldIds += dr[0].ToString() + ",";
 									oTree.Add("t" + treeViewId.ToString() + "_" + accessType.GetHashCode().ToString() + "_" + currentLevel.ID.ToString(), childId, nodeCurrentText, false, null, null);
@@ -913,13 +925,11 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 						oldLevelsId.Add(levelId);
 						oldAccessType = accessType;
 						oldIntTreeViewId = treeViewId;
-						first = false;
-					//}
+						first = false;					
 				}
 			}
 
 			if (!first) {
-				//levelIds = levelIds + "t" + treeViewId.ToString() + "_" + accessType.GetHashCode().ToString() + "_" + currentLevel.ID.ToString() + ",";
 				if (levelIds != null && levelIds.Length > 0) levelIds = levelIds.Substring(0, levelIds.Length - 1);
 				nodeCurrentText = "<div > <a href=# onclick=customDeleteAllChild('" + levelIds + "'); class=\"" + _trashNodeCss + "\"><img src=\"" + _trashImage + "\" heigth=14px width=14px border=0>" + GetWebWord(_deleteAllTreeNodeTextCode, _siteLanguage) + "</a></div>";
 				oTree.Add("root", "root0", nodeCurrentText, false);				
@@ -972,6 +982,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			}
 			html.Append("</tr></table>");
 
+            cl = null;
+            classficationDAL = null;
 		}
 
 
@@ -996,6 +1008,15 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				string childNodeCss = (accessType == UniverseAccessType.includes) ? _childNodeIncludeCss : _childNodeExcludeCss;
 
 				List<long> oldLevelsId = new List<long>();
+                
+                CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
+                if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
+                object[] param = new object[2];
+                param[0] = _webSession;
+                param[1] = _dimension;
+                TNS.AdExpressI.Classification.DAL.ClassificationDAL classficationDAL = (TNS.AdExpressI.Classification.DAL.ClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                classficationDAL.DBSchema = _dBSchema;
+                
 
 				foreach (UniverseLevel currentLevel in levels) {
 					if (!oldLevelsId.Contains(currentLevel.ID)) {
@@ -1005,11 +1026,12 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 						//Add saved childs
 						hiddenFieldIds = "";
 						if (groups != null && groups.Contains(currentLevel.ID)) {
-                            ds = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.SearchLevelDataAccess.GetOneLevelItems(currentLevel.TableName, groups.GetAsString(currentLevel.ID), _webSession, _dBSchema, _dimension);
-							if (ds != null && ds.Tables[0].Rows.Count > 0) {								
+                            ds = classficationDAL.GetSelectedItems(currentLevel.TableName, groups.GetAsString(currentLevel.ID));
+                            if (ds != null && ds.Tables.Count>0 && ds.Tables[0].Rows.Count > 0)
+                            {								
 								foreach (DataRow dr in ds.Tables[0].Rows) {
 									childId = treeViewId + "_" + currentLevel.ID + "_" + dr[0].ToString();
-									nodeCurrentText = "<div class=" + childNodeCss + " nowrap>" + dr[1].ToString().ToLower();
+									nodeCurrentText = "<div class=" + childNodeCss + " nowrap>" + dr[1].ToString();
 									nodeCurrentText += "</td><td nowrap>&nbsp;<a href=# onclick=\"removeItem('TreeLevelSelectedIds" + treeViewId + "_" + accessType.GetHashCode().ToString() + "_" + currentLevel.ID + "' , '" + dr[0].ToString() + "');ob_t2_Remove('" + childId + "');\" ><img src=\""+_deleteImage+"\" border=0></a></div>";
 									hiddenFieldIds += dr[0].ToString() + ",";
 									oTree.Add("t" + treeViewId.ToString() + "_" + accessType.GetHashCode().ToString() + "_" + currentLevel.ID.ToString(), childId, nodeCurrentText, false, null, null);
@@ -1037,6 +1059,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				oTree.Height = _treeViewHeight;
 				oTree.Width = _treeViewWidth;
 				oTree.ShowRootPlusMinus = false;
+                cl = null;
+                classficationDAL = null;
 				return "<div id=\"universeTreeViewZone_" + treeViewId.ToString() + "\">" + oTree.HTML() + "</div>" + inputHiddenFields;
 			}
 			catch (System.Exception err) {
@@ -1117,7 +1141,10 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		protected override string SetHiddenFields() {			
 			StringBuilder html = new StringBuilder(1000);
 			
-				if((_eventTarget !=FrameWorkSelection.eventSelection.LOAD_EVENT || _eventTarget != FrameWorkSelection.eventSelection.SAVE_EVENT)
+				if((_eventTarget !=FrameWorkSelection.eventSelection.LOAD_EVENT 
+                    || _eventTarget != FrameWorkSelection.eventSelection.SAVE_EVENT
+                    || _eventTarget != FrameWorkSelection.eventSelection.INITIALIZE_WITH_PREVIOUS_SELECTION_EVENT
+                    )
 					&& (_errorCode != FrameWorkSelection.error.SECURITY_EXCEPTION
 					|| _errorCode != FrameWorkSelection.error.MAX_ELEMENTS
 					|| _errorCode != FrameWorkSelection.error.VALIDATION_NOT_POSSIBLE)
@@ -1246,13 +1273,13 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
 				object[] param = new object[2];
 				param[0] = _webSession;
-				param[1] = _dimension;                
+				param[1] = _dimension;
                 TNS.AdExpressI.Classification.DAL.ClassificationDAL classficationDAL = (TNS.AdExpressI.Classification.DAL.ClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                 classficationDAL.DBSchema = _dBSchema;
                 _lowerCase = classficationDAL.ToLowerCase;
                 classficationDAL.Filters = _filters;
-                classficationDAL.FilterWithProductSelection = FilterWithProductSelection();
-				return classficationDAL.GetItems(universeLevelId, selectedItemIds, UniverseLevels.Get(universeLevelOfSelectedItem).TableName).Tables[0];
+                classficationDAL.FilterWithProductSelection = FilterWithProductSelection();				              
+                return classficationDAL.GetItems(universeLevelId, selectedItemIds, universeLevelOfSelectedItem).Tables[0];
 			}
 			catch (Exception err) {
 				throw new TNS.AdExpress.Web.Controls.Exceptions.SelectItemsInClassificationWebControlException("Impossible d'obtenir les données.", err);
@@ -1267,7 +1294,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <returns></returns>
 		protected override DataTable GetData(int universeLevelId, string wordToSearch) {
 			try {
-				_webSession = (WebSession)WebSession.Load(_idSession);              
+				_webSession = (WebSession)WebSession.Load(_idSession);
+
 				CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];                
 				if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
 				object[] param = new object[2];
@@ -1277,8 +1305,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                 classficationDAL.DBSchema = _dBSchema;
                 _lowerCase = classficationDAL.ToLowerCase;             
                 classficationDAL.FilterWithProductSelection = FilterWithProductSelection();
-                classficationDAL.Filters = _filters;     
-               
+                classficationDAL.Filters = _filters;                                
                 return classficationDAL.GetItems(universeLevelId, wordToSearch).Tables[0];
 			}
 			catch (Exception err) {
@@ -1316,7 +1343,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		#endregion
 
 
-		#endregion
+		#endregion       
 
         #region GetHeaderCode
         /// <summary>

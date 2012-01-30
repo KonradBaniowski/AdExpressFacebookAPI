@@ -28,6 +28,9 @@ using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Web.Controls.Buttons;
 using TNS.AdExpress.Domain.Classification;
 using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
+using TNS.AdExpressI.Insertions.DAL;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpressI.Insertions;
 
 namespace TNS.AdExpress.Web.Controls.Selections {
 	/// <summary>
@@ -62,6 +65,11 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 		/// Period type
 		/// </summary>
 		protected Constantes.Web.CustomerSessions.Period.Type _periodType;
+
+        /// <summary>
+        /// Data Access Layer
+        /// </summary>
+        protected IInsertionsDAL _dalLayer;
 		#endregion
 	
 		#region Accesseurs
@@ -143,8 +151,17 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 						else periodBeginning = periodEnd = _zoomDate;						 
 					}
 					//Chargement des données
-					if(WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(webSession))
-						dsSloganList = SloganDataAccess.GetData(webSession,periodBeginning,periodEnd);		
+                    if (WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(webSession))
+                    {                       
+                        //Get data                       
+                        object[] param = new object[2];
+                        param[0] = webSession;
+                        param[1] = webSession.CurrentModule;
+                        CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.insertionsDAL];
+                        if (cl == null) throw (new NullReferenceException("Core layer is null for the insertions DAL"));
+                        _dalLayer = (IInsertionsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null, null);
+                        dsSloganList = _dalLayer.GetVersions(periodBeginning, periodEnd);
+                    }
 				}
 				else throw (new WebControlInitializationException("Impossible d'initialiser le composant, la session n'est pas définie"));
 
@@ -185,7 +202,12 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 			}
 			if (!Page.ClientScript.IsClientScriptBlockRegistered("openPressCreation")){
 				Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"openPressCreation",WebFunctions.Script.OpenPressCreation());
+                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "OpenInternetCreation", WebFunctions.Script.OpenInternetCreation());
 			}
+            if (!Page.ClientScript.IsClientScriptBlockRegistered("OpenWindow"))
+            {
+                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "OpenWindow", WebFunctions.Script.OpenWindow());
+            }
 			#endregion
 		}
 		#endregion
@@ -224,9 +246,10 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 			
 			if(WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(webSession)){
 				//Construction de la liste de checkbox	
-				if(dsSloganList != null && dsSloganList.Tables[0].Rows.Count>0){
-					foreach(DataRow currentRow in dsSloganList.Tables[0].Rows) {	
-						if(currentRow["id_slogan"]!=null && Int64.Parse(currentRow["id_slogan"].ToString())!= 0 ){
+				if(dsSloganList != null && dsSloganList.Tables.Count>0 && dsSloganList.Tables[0].Rows.Count>0){
+					foreach(DataRow currentRow in dsSloganList.Tables[0].Rows) {
+                        if (currentRow["id_slogan"] != null && currentRow["id_slogan"] != System.DBNull.Value && Int64.Parse(currentRow["id_slogan"].ToString()) != 0)
+                        {
 							if ((IdAvertiser = Int64.Parse(currentRow["id_advertiser"].ToString())) != oldIdAdvertiser){
 								oldIdAdvertiser =IdAvertiser;
 								isNewAdvertiser=true;
@@ -266,21 +289,18 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 		/// </summary>
 		/// <param name="output"> Le writer HTML vers lequel écrire </param>
 		protected override void Render(HtmlTextWriter output) {
-			System.Text.StringBuilder t = new System.Text.StringBuilder(5000);
-			//			int insertIndex = 0;
-			//			string productList="";
+			System.Text.StringBuilder t = new System.Text.StringBuilder(5000);		
 		
 			string[] fileList = null;
             string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
 
 			#region Construction du code HTML
-			if(WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(webSession) && dsSloganList != null && dsSloganList.Tables[0].Rows.Count>0 && hasSlogans) {
+            if (WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(webSession) && dsSloganList != null && dsSloganList.Tables.Count>0 && dsSloganList.Tables[0].Rows.Count > 0 && hasSlogans)
+            {
 				
 				#region variables locales
 				//Hastable de versions
-				//				Hashtable slogans = null;
 				Int64 i = 0;
-//				int indexGp = -1;
 
 				//variables du niveau  Annonceur
 				Int64 idAdvertiserOld=-1;
@@ -306,23 +326,32 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 				string checkBox="";																	
 				Int64 idSloganOld=-1;
 				Int64 idSlogan=-1;
+
+                IInsertionsResult _rulesLayer = null;
 				#endregion
 
 				#region Debut Tableau global 
                 output.Write("<tr vAlign=\"top\" height=\"100%\" align=\"center\"><td class=\"backGroundWhite\"><table  vAlign=\"top\">");		
-				//				output.Write("<a href=\"javascript: ExpandColapseAllDivs('");
+				
 				output.Write("<a href=\"javascript: SelectAllChilds('selectAllSlogans");
-				//				insertIndex = t.Length;
 				output.Write("')\" class=\"roll04\" >"+GestionWeb.GetWebWord(816,webSession.SiteLanguage)+"</a>");								
 				output.Write("<tr><td vAlign=\"top\">");
 				output.Write("<DIV id=selectAllSlogans>");//Ouverture calque permettant de sélectionner tous les éléménts
 				#endregion
 
+                CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.insertions];
+                if (cl == null) throw (new NullReferenceException("Core layer is null for the insertions rules"));
+                object[] param = new object[2];
+                param[0] = webSession;
+                param[1] = webSession.CurrentModule;
+                _rulesLayer = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null, null);				
+
 				#region Foreach  Dataset des versions
 				foreach(DataRow currentRow in dsSloganList.Tables[0].Rows) {
 
 					#region Pour chaque slogan
-					if(currentRow["id_slogan"]!=null && Int64.Parse(currentRow["id_slogan"].ToString())!=0){
+                    if (currentRow["id_slogan"] != null && currentRow["id_slogan"] != System.DBNull.Value && Int64.Parse(currentRow["id_slogan"].ToString()) != 0)
+                    {
 						//Initialisation des identifiants parents
 						idAdvertiser=Int64.Parse(currentRow["id_advertiser"].ToString());
 						idProduct=Int64.Parse(currentRow["id_product"].ToString());
@@ -331,9 +360,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 				
 						#region Fermeture media
 						if ((idVehicle!= idVehicleOld && startVehicle==0) || (idProduct!= idProductOld && startProduct==0) 
-							|| (idAdvertiser!= idAdvertiserOld && startAdvertiser==0) ) {	
-							//					if (idVehicle!= idVehicleOld && startVehicle==0) {			
-							//							if (numColumn!=0) {
+							|| (idAdvertiser!= idAdvertiserOld && startAdvertiser==0) ) {								
 							if (numColumn==1) {
 								output.Write("<td align=\"center\" class=\"txtViolet10\" width=\"33%\">&nbsp;</td>");
 								output.Write("<td align=\"center\" class=\"txtViolet10\" width=\"33%\">&nbsp;</td>");
@@ -347,19 +374,16 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 						#endregion
 
 						#region Fermeture produit
-						//					if (idProduct!= idProductOld && startProduct==0) {
 						if ((idProduct!= idProductOld && startProduct==0) 
 							|| (idAdvertiser!= idAdvertiserOld && startAdvertiser==0)
 							){
 							startVehicle=-1;
-							//						idSloganOld = -1;
 							output.Write("</table></div></td></tr></table></td></tr>");
 						}
 						#endregion 
 					
 						#region Fermeture Annonceur
 						if (idAdvertiser!= idAdvertiserOld && startAdvertiser==0) {
-							//						startVehicle=-1;
 							startProduct=-1;						
 							output.Write("</table></div></td></tr></table>");
 						}
@@ -370,7 +394,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 							//bordure du haut de tableau
 							if (idAdvertiserOld == -1)output.Write("<table class=\"violetBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\"><tr onClick=\"javascript : DivDisplayer('ad_"+idAdvertiser+"');\" style=\"cursor : pointer\">");
                             else output.Write("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\"><tr onClick=\"javascript : DivDisplayer('ad_" + idAdvertiser + "');\" style=\"cursor : pointer\">");
-							idAdvertiserOld=idAdvertiser;
+                            //idAdvertiserOld=idAdvertiser;
 							startAdvertiser=0;
 							output.Write("<td align=\"left\" height=\"10\" valign=\"middle\" class=\"txtGroupViolet11Bold\">&nbsp;&nbsp;&nbsp;"+currentRow["advertiser"].ToString());
 							output.Write("</td>");
@@ -387,7 +411,6 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 						if ((idProduct!= idProductOld) 
 							|| (idAdvertiser!= idAdvertiserOld && startAdvertiser==0)
 							){
-							//						if (idProduct!= idProductOld) {
 							//bordure du haut de tableau
 							if (startProduct == -1)output.Write("<tr><td ><table class=\"violetBackGroundV3 txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\"><tr onClick=\"javascript : DivDisplayer('ad"+idAdvertiser+"pr_"+idProduct+"');\" style=\"cursor : pointer\">");
                             else output.Write("<tr><td ><table class=\"violetBackGroundV3 violetBorderTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\"><tr onClick=\"javascript : DivDisplayer('ad" + idAdvertiser + "pr_" + idProduct + "');\" style=\"cursor : pointer\">");
@@ -407,7 +430,6 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 						#region Nouveau media (vehicle)
 						if ((idVehicle!= idVehicleOld) || (isNewProduct) 
 							|| (idAdvertiser!= idAdvertiserOld && startAdvertiser==0) ) {
-							//						if (idVehicle!= idVehicleOld) {
 							numColumn = 0;
 							//bordure du haut de tableau#
                             output.Write("<tr><td ><table class=\"mediumPurple1 whiteTopBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"643\"><tr width=100%>");
@@ -422,146 +444,22 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 						}
 						#endregion
 
+                        //correction bug set id old advertiser
+                        if (idAdvertiser != idAdvertiserOld) idAdvertiserOld = idAdvertiser;
+
 						if (( idSlogan!=idSloganOld ) ||(isNewVehicle) || (isNewProduct) 
 							|| (isNewAdvertiser) && idSlogan!=0) {
 
 							#region versions (fils de media)
 							string vignettes="";
 							string sloganDetail="";
-							string imagesList="";
-							bool first=true;
+                            //string imagesList="";
+                            //bool first=true;
 							string pathWeb = string.Empty;
-							string dateField = "date_media_num";
 
-							//if( webSession.CustomerLogin.GetFlag(Flags.ID_CREATION_ACCESS_FLAG)!=null){//droit créations
-							if (webSession.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(idVehicle))) {//droit créations
-								if(currentRow["sloganFile"]!=null && currentRow["sloganFile"].ToString().Length > 0){
-									
-									switch (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString()))) {
+                            //Get creative links
+                            sloganDetail = _rulesLayer.GetCreativeLinks(idVehicle, currentRow);
 
-										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press :
-                                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.newspaper:
-                                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.magazine:
-										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
-
-											#region Construction de la liste des images presse
-											fileList = currentRow["sloganFile"].ToString().Split(',');
-
-											if (webSession.CurrentModule == Constantes.Web.Module.Name.BILAN_CAMPAGNE) dateField = "date_cover_num";
-
-											string pathWebImagette = WebConstantes.CreationServerPathes.IMAGES + "/" + currentRow["id_media"].ToString() + "/" + currentRow[dateField].ToString() + "/imagette/";
-											pathWeb = WebConstantes.CreationServerPathes.IMAGES + "/" + currentRow["id_media"].ToString() + "/" + currentRow[dateField].ToString() + "/";
-											string pathImagette = WebConstantes.CreationServerPathes.LOCAL_PATH_IMAGE + currentRow["id_media"].ToString() + @"\" + currentRow[dateField].ToString() + @"\imagette\";
-											
-											if (fileList != null) {
-												for (int j = 0; j < fileList.Length; j++) {
-
-													//												if(File.Exists(fileImagePath)){
-													vignettes += "<img src='" + pathWebImagette + fileList[j] + "' border=\"0\" width=\"50\" height=\"64\" >";
-													if (first) imagesList = pathWeb + fileList[j];
-													else { imagesList += "," + pathWeb + fileList[j]; }
-													first = false;
-													//												}
-												}
-
-												if (vignettes.Length > 0) {
-													vignettes = "<a href=\"javascript:openPressCreation('" + imagesList.Replace("/Imagette", "") + "');\">" + vignettes + "</a>";
-													vignettes += "\n<br>";
-												}
-
-											}
-											else vignettes = GestionWeb.GetWebWord(843, webSession.SiteLanguage) + "<br>";
-											#endregion
-
-											break;
-
-										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio :
-
-											if(currentRow["sloganFile"]!=null && currentRow["sloganFile"].ToString().CompareTo("")!=0)
-											vignettes = "<a href=\"javascript:openDownload('" + currentRow["sloganFile"].ToString() + "','" + webSession.IdSession + "','" + idVehicle + "');\"><img border=\"0\" src=\"/App_Themes/"+themeName+"/Images/Common/Picto_Radio.gif\"></a>";
-											break;
-
-										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv :
-										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others :
-											if (currentRow["sloganFile"] != null && currentRow["sloganFile"].ToString().CompareTo("") != 0)
-											vignettes = "<a href=\"javascript:openDownload('" + currentRow["sloganFile"].ToString() + "','" + webSession.IdSession + "','" + idVehicle + "');\"><img border=\"0\" src=\"/App_Themes/"+themeName+"/Images/Common/Picto_pellicule.gif\"></a>";
-											break;
-
-										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing :
-										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
-                                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.instore:
-
-                                            #region Construction de la liste des images du marketing direct ou de la publicité extérieure
-											fileList = currentRow["sloganFile"].ToString().Split(',');
-											string idAssociatedFile = currentRow["sloganFile"].ToString();
-
-											
-
-#if Debug
-											//////visuels disponible
-											//fileList = "25427945001.jpg".Split(',');
-											//idAssociatedFile = "25427945001.jpg";
-#endif
-											
-
-											if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBConstantesClassification.Vehicles.names.directMarketing)
-											pathWeb = WebConstantes.CreationServerPathes.IMAGES_MD;
-                                            else if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBConstantesClassification.Vehicles.names.instore)
-                                                pathWeb = WebConstantes.CreationServerPathes.IMAGES_INSTORE;
-											else pathWeb = WebConstantes.CreationServerPathes.IMAGES_OUTDOOR;
-											string dir1 = idAssociatedFile.Substring(idAssociatedFile.Length - 8, 1);
-											pathWeb = string.Format(@"{0}/{1}", pathWeb, dir1);
-											string dir2 = idAssociatedFile.Substring(idAssociatedFile.Length - 9, 1);
-											pathWeb = string.Format(@"{0}/{1}", pathWeb, dir2);
-											string dir3 = idAssociatedFile.Substring(idAssociatedFile.Length - 10, 1);
-											pathWeb = string.Format(@"{0}/{1}/imagette/", pathWeb, dir3);
-
-											if (fileList != null) {
-												for (int j = 0; j < fileList.Length; j++) {
-													vignettes += "<img src='" + pathWeb + fileList[j] + "' border=\"0\" width=\"50\" height=\"64\" >";
-													if (first) imagesList = pathWeb + fileList[j];
-													else { imagesList += "," + pathWeb + fileList[j]; }
-													first = false;												
-												}
-
-												if (vignettes.Length > 0) {
-													vignettes = "<a href=\"javascript:openPressCreation('" + imagesList.Replace("/Imagette", "") + "');\">" + vignettes + "</a>";
-													vignettes += "\n<br>";
-												}
-
-											}
-											else vignettes = GestionWeb.GetWebWord(843, webSession.SiteLanguage) + "<br>";
-											#endregion
-											
-                                            break;
-										case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack :
-											if (currentRow["sloganFile"] != null && currentRow["sloganFile"].ToString().CompareTo("") != 0)
-                                                vignettes = string.Format("<a href=\"javascript:openEvaliantCreative('{1}/{0}', '{3}');\"><img border=\"0\" src=\"/App_Themes/{2}/Images/Common/Button/adnettrack.gif\"></a>", currentRow["sloganFile"].ToString().Replace(@"\", "/"), WebConstantes.CreationServerPathes.CREA_ADNETTRACK, themeName, currentRow["advertDimension"]);
-											break;
-                                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
-                                            if (currentRow["sloganFile"] != null && currentRow["sloganFile"].ToString().CompareTo("") != 0)
-                                                vignettes = string.Format("<a href=\"javascript:openEvaliantCreative('{1}/{0}', '{3}');\"><img border=\"0\" src=\"/App_Themes/{2}/Images/Common/Button/adnettrack.gif\"></a>", currentRow["sloganFile"].ToString().Replace(@"\", "/"), WebConstantes.CreationServerPathes.CREA_EVALIANT_MOBILE, themeName, currentRow["advertDimension"]);
-                                            break;
-									}
-
-								}
-							}
-							sloganDetail="\n<table border=\"0\" width=\"50\" height=\"64\" class=\"txtViolet10\">";										
-							if(vignettes.Length>0){
-								sloganDetail+="\n<tr><td   nowrap align=\"center\">";
-								sloganDetail+=vignettes;
-								sloganDetail+="\n</td></tr>";
-							}
-							sloganDetail+="\n<tr><td  nowrap align=\"center\">";
-							sloganDetail+=currentRow["id_slogan"].ToString();
-							if (currentRow["advertDimension"] != null) {
-								if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) != DBConstantesClassification.Vehicles.names.directMarketing 
-									||(VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == DBConstantesClassification.Vehicles.names.directMarketing && webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_POIDS_MARKETING_DIRECT)))
-								sloganDetail += " - " + currentRow["advertDimension"].ToString();
-							}
-							sloganDetail+="\n</td></tr>";
-							sloganDetail+="\n</table>";
-						
 							if(numColumn==0) {								
 								output.Write("<tr>");
 								output.Write("<td align=\"center\" class=\"txtViolet10\" width=\"33%\">");								
@@ -599,7 +497,6 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 				#endregion
 				
 				#region Fermeture Tableau global
-				//				if (numColumn!=0) {
 				if (numColumn==1) {
 					output.Write("<td align=\"center\" class=\"txtViolet10\" width=\"33%\">&nbsp;</td>");
 					output.Write("<td align=\"center\" class=\"txtViolet10\" width=\"33%\">&nbsp;</td>");
@@ -613,18 +510,9 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 				output.Write("</tr>");
 				if(advertiserIds!=null && advertiserIds.Length>0){
 					advertiserIds = advertiserIds.Remove(advertiserIds.Length-1, 1);
-					//					t.Insert(insertIndex, advertiserIds);
 				}
 				#endregion
-
-				#region bouton valider
-				
-//				output.Write("<tr valign=\"top\" bgcolor=\"#ffffff\"><td>&nbsp;</td></tr>");
-//				output.Write("<tr height=\"100%\" valign=\"top\">");
-//				output.Write("<td background=\"/Images/Common/dupli_fond.gif\" align=\"right\">	");
-//				_validateButton.RenderControl(output);
-//				output.Write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>");
-				#endregion
+			
 			}
 			else {
                 output.Write("<tr><td class=\"backGroundWhite txtGris11Bold\"><div align=\"center\" class=\"txtGris11Bold\">" + GestionWeb.GetWebWord(177, webSession.SiteLanguage)
@@ -639,9 +527,5 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 		#endregion
 
 
-		#region Méthodes privées
-		
-		#endregion
-		
 	}
 }

@@ -195,6 +195,14 @@ height and width of the icon image.
 	position: absolute; /* Do not alter this line! */
 	width: 20px;
 }
+.regionMenuIcon {
+	background-image: url(/App_Themes/RuAE-Ru/Images/Common/Menu/regionMenuIcon.gif);
+	background-repeat: no-repeat; /* Do not alter this line! */
+	height: 20px;
+	left: 2px;
+	position: absolute; /* Do not alter this line! */
+	width: 20px;
+}
 .excelColMenuIcon {
 	background-image: url(/App_Themes/RuAE-Ru/Images/Common/Menu/excelColMenuIcon.gif);
 	background-repeat: no-repeat;

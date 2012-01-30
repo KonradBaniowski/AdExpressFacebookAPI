@@ -4,4 +4,5 @@
   <mediaSchedule useComparative="false"/>
   <bannersFormat use="false"/>
   <retailer use ="false"/>
+  <lostWon useComparative="false" useDiponibility="true" useType="true"/>
 </resultOptions>

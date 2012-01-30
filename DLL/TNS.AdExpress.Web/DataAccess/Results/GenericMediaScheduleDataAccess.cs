@@ -389,9 +389,16 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                         case ConstantesDBClassif.Vehicles.names.internationalPress:
                             return ConstantesDB.Schema.ADEXPRESS_SCHEMA + "." + ConstantesDB.Tables.ALERT_DATA_PRESS_INTER;
                         case ConstantesDBClassif.Vehicles.names.radio:
+                        case ConstantesDBClassif.Vehicles.names.radioGeneral:
+                        case ConstantesDBClassif.Vehicles.names.radioMusic:
+                        case ConstantesDBClassif.Vehicles.names.radioSponsorship:
                             return ConstantesDB.Schema.ADEXPRESS_SCHEMA + "." + ConstantesDB.Tables.ALERT_DATA_RADIO;
                         case ConstantesDBClassif.Vehicles.names.tv:
-                        case ConstantesDBClassif.Vehicles.names.others:
+                        case ConstantesDBClassif.Vehicles.names.tvGeneral:
+                        case ConstantesDBClassif.Vehicles.names.tvSponsorship:
+                        case ConstantesDBClassif.Vehicles.names.tvAnnounces:
+                        case ConstantesDBClassif.Vehicles.names.tvNonTerrestrials:
+                        case ConstantesDBClassif.Vehicles.names.others:	
                             return ConstantesDB.Schema.ADEXPRESS_SCHEMA + "." + ConstantesDB.Tables.ALERT_DATA_TV;
                         case ConstantesDBClassif.Vehicles.names.outdoor:
 
@@ -413,9 +420,16 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                         case ConstantesDBClassif.Vehicles.names.internationalPress:
                             return ConstantesDB.Schema.ADEXPRESS_SCHEMA + "." + ConstantesDB.Tables.DATA_PRESS_INTER;
                         case ConstantesDBClassif.Vehicles.names.radio:
+                        case ConstantesDBClassif.Vehicles.names.radioGeneral:
+                        case ConstantesDBClassif.Vehicles.names.radioMusic:
+                        case ConstantesDBClassif.Vehicles.names.radioSponsorship:
                             return ConstantesDB.Schema.ADEXPRESS_SCHEMA + "." + ConstantesDB.Tables.DATA_RADIO;
                         case ConstantesDBClassif.Vehicles.names.tv:
-                        case ConstantesDBClassif.Vehicles.names.others:
+                        case ConstantesDBClassif.Vehicles.names.tvGeneral:
+                        case ConstantesDBClassif.Vehicles.names.tvSponsorship:
+                        case ConstantesDBClassif.Vehicles.names.tvAnnounces:
+                        case ConstantesDBClassif.Vehicles.names.tvNonTerrestrials:
+                        case ConstantesDBClassif.Vehicles.names.others:	
                             return ConstantesDB.Schema.ADEXPRESS_SCHEMA + "." + ConstantesDB.Tables.DATA_TV;
                         case ConstantesDBClassif.Vehicles.names.outdoor:
                             return ConstantesDB.Schema.ADEXPRESS_SCHEMA + "." + ConstantesDB.Tables.DATA_OUTDOOR;
@@ -505,7 +519,14 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                         //            return (" (max(duration)/86400) as period_count ");
                         //    }
                         case ConstantesDBClassif.Vehicles.names.radio:
+                        case ConstantesDBClassif.Vehicles.names.radioGeneral:
+                        case ConstantesDBClassif.Vehicles.names.radioSponsorship:
+                        case ConstantesDBClassif.Vehicles.names.radioMusic:
                         case ConstantesDBClassif.Vehicles.names.tv:
+                        case ConstantesDBClassif.Vehicles.names.tvGeneral:
+                        case ConstantesDBClassif.Vehicles.names.tvSponsorship:
+                        case ConstantesDBClassif.Vehicles.names.tvAnnounces:
+                        case ConstantesDBClassif.Vehicles.names.tvNonTerrestrials:
                         case ConstantesDBClassif.Vehicles.names.others:
                         case ConstantesDBClassif.Vehicles.names.internet:
                         case ConstantesDBClassif.Vehicles.names.adnettrack:

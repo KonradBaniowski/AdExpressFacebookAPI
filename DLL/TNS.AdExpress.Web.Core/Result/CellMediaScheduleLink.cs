@@ -76,8 +76,11 @@ namespace TNS.AdExpress.Web.Core.Result{
 					detailLevelItemInformation==DetailLevelItemInformation.Levels.holdingCompany||
 					detailLevelItemInformation==DetailLevelItemInformation.Levels.sector||
 					detailLevelItemInformation==DetailLevelItemInformation.Levels.subSector||
-					detailLevelItemInformation==DetailLevelItemInformation.Levels.group ||
-                    detailLevelItemInformation==DetailLevelItemInformation.Levels.segment) {
+                    detailLevelItemInformation == DetailLevelItemInformation.Levels.group ||
+                    detailLevelItemInformation == DetailLevelItemInformation.Levels.segment ||
+                    detailLevelItemInformation == DetailLevelItemInformation.Levels.subBrand 
+                    )
+                {
 					
 					return(_link.Replace("{0}",_webSession.IdSession).Replace("{1}",_classificationId.ToString()).Replace("{2}",_level.ToString()));
 				}

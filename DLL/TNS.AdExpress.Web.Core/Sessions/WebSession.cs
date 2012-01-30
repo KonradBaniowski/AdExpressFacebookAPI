@@ -1,3 +1,4 @@
+
 #region Information
 /*
  * Author : 
@@ -505,6 +506,13 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		[System.NonSerialized]
 		protected Weighting _unitWeighting = null;
+
+        /// <summary>
+        /// Campaign Type
+        /// </summary>
+        [System.NonSerialized]
+        protected Constantes.Web.CustomerSessions.CampaignType _campaignType = Constantes.Web.CustomerSessions.CampaignType.none;
+
 		#endregion
 
 		#endregion
@@ -674,16 +682,11 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		public IDataSource Source {
 			get {
-                if (WebApplicationParameters.UseRightDefaultConnection)
-                {
-                    _source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.adExpressRussia);
-                }
-                else
-                {
+               
                     if (_source == null)
                         //_source = new OracleDataSource(CustomerLogin.OracleConnectionString);
                         _source = customerLogin.Source;
-                }
+                
 				return (_source);
 			}
 			set {
@@ -1010,17 +1013,8 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 					}
 					else {
 						Login login = new Login(CustomerLogin.IdLogin, CustomerLogin.Login, CustomerLogin.PassWord);
-                        if (WebApplicationParameters.UseRightDefaultConnection)
-                        {
-                            string nlsSort = "";
-                            if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
-                            {
-                                nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
-                            }
-                            login.Source = WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03);
-                        }
-                        else
-                            login.Source = Source;
+                       
+                         login.Source = Source;
 						_company = login.LoginCompany;
 					}
 				}
@@ -1215,9 +1209,10 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 			}
 		}
 
-		/// <summary>
-		/// Get/Set le critère de comparaison (total marché ou total famille)
-		/// </summary>
+		
+        /// <summary>
+        /// Get/Set Criteria of total computing market , sector or working set
+        /// </summary>			
 		public TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion ComparaisonCriterion {
 			get { return comparaisonCriterion; }
 			set {
@@ -1229,7 +1224,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		}
 
 		/// <summary>
-		/// Get/Set la possibilité de faire un étude comparative ou non
+		/// Get/Set if can realized a comparative study
 		/// </summary>
 		public bool ComparativeStudy {
 			get { return comparativeStudy; }
@@ -1388,6 +1383,106 @@ namespace TNS.AdExpress.Web.Core.Sessions {
         }
     }
     #endregion
+
+        /// <summary>
+        ///Get/Set  dictionary of  universe Advertisement Type selection
+        /// </summary>
+        public Dictionary<int, AdExpressUniverse> AdvertisementTypeUniverses
+        {
+            get
+            {
+                Dictionary<int, AdExpressUniverse> list = new Dictionary<int, AdExpressUniverse>();
+                AdExpressUniverse adexUniverse = new AdExpressUniverse(TNS.Classification.Universe.Dimension.advertisementType);
+                TNS.Classification.Universe.NomenclatureElementsGroup group = null;
+                int g=0;
+                //Get Avertisement universe  
+                  if (userParameters.ContainsKey(CoreConstantes.SessionParamters.advertisementTypeIncluded) && userParameters[CoreConstantes.SessionParamters.advertisementTypeIncluded] != null)
+                {
+                    group = new TNS.Classification.Universe.NomenclatureElementsGroup(g, TNS.Classification.Universe.AccessType.includes);
+                    group.AddItems(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISEMENT_TYPE, Convert.ToString(userParameters[CoreConstantes.SessionParamters.advertisementTypeIncluded]));
+                    adexUniverse.AddGroup(adexUniverse.Count(), group);
+                    g++;
+                }
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.advertisementTypeIntersection) && userParameters[CoreConstantes.SessionParamters.advertisementTypeIntersection] != null)
+                {
+                    group = new TNS.Classification.Universe.NomenclatureElementsGroup(g, TNS.Classification.Universe.AccessType.includes);
+                    group.AddItems(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISEMENT_TYPE, Convert.ToString(userParameters[CoreConstantes.SessionParamters.advertisementTypeIntersection]));
+                    adexUniverse.AddGroup(adexUniverse.Count(), group);
+                    g++;
+                }
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.advertisementTypeExcluded) && userParameters[CoreConstantes.SessionParamters.advertisementTypeExcluded] != null)
+                {
+                    group = new TNS.Classification.Universe.NomenclatureElementsGroup(g, TNS.Classification.Universe.AccessType.excludes);
+                    group.AddItems(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISEMENT_TYPE, Convert.ToString(userParameters[CoreConstantes.SessionParamters.advertisementTypeExcluded]));
+                    adexUniverse.AddGroup(adexUniverse.Count(), group);
+                }
+
+                if (adexUniverse != null && adexUniverse.Count() > 0)
+                {                  
+                    list.Add(list.Count, adexUniverse);
+                }
+              
+                return (list);
+            }
+            set
+            {
+                //Empty old selected items                   
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.advertisementTypeIncluded))                
+                    userParameters.Remove(CoreConstantes.SessionParamters.advertisementTypeIncluded);
+                    //userParameters[CoreConstantes.SessionParamters.advertisementTypeIncluded] = string.Empty;                
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.advertisementTypeExcluded))
+                    userParameters.Remove(CoreConstantes.SessionParamters.advertisementTypeExcluded);
+                    //userParameters[CoreConstantes.SessionParamters.advertisementTypeExcluded] = string.Empty;
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.advertisementTypeIntersection))
+                    userParameters.Remove(CoreConstantes.SessionParamters.advertisementTypeIntersection);
+                    //userParameters[CoreConstantes.SessionParamters.advertisementTypeIntersection] = string.Empty;
+
+                AdExpressUniverse adexUniverse = (value!=null && value.Count>0)? value[0] : null;
+                if (adexUniverse != null)
+                {
+                   
+                    //Get included intems                  
+                    List<TNS.Classification.Universe.NomenclatureElementsGroup> groups = adexUniverse.GetIncludes();
+                    if (groups != null && groups.Count > 0)
+                    {
+                        for(int i=0; i<groups.Count;i++){
+
+                              switch (i)
+                            {
+                                case 0:
+                                    if(!userParameters.ContainsKey(CoreConstantes.SessionParamters.advertisementTypeIncluded))
+                                    userParameters.Add(CoreConstantes.SessionParamters.advertisementTypeIncluded, groups[i].GetAsString(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISEMENT_TYPE));
+                                    else userParameters[CoreConstantes.SessionParamters.advertisementTypeIncluded] =  groups[i].GetAsString(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISEMENT_TYPE);
+                                    break;
+                                case 1:
+                                    if (!userParameters.ContainsKey(CoreConstantes.SessionParamters.advertisementTypeIntersection))
+                                        userParameters.Add(CoreConstantes.SessionParamters.advertisementTypeIntersection, groups[i].GetAsString(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISEMENT_TYPE));
+                                    else userParameters[CoreConstantes.SessionParamters.advertisementTypeIntersection] = groups[i].GetAsString(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISEMENT_TYPE);
+                                    break;
+                                default: throw (new Exception("Avertisement Type Universes must be limited to 2 included groups"));
+                            }
+
+                        }
+                    }
+                    //Get excluded intems                  
+                   groups = adexUniverse.GetExludes();
+                    if (groups != null && groups.Count > 0)
+                    {
+                        for (int i = 0; i < groups.Count; i++)
+                        {
+
+                            if (!userParameters.ContainsKey(CoreConstantes.SessionParamters.advertisementTypeExcluded))
+                                userParameters.Add(CoreConstantes.SessionParamters.advertisementTypeExcluded, groups[i].GetAsString(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISEMENT_TYPE));
+                            else userParameters[CoreConstantes.SessionParamters.advertisementTypeExcluded] = groups[i].GetAsString(TNS.Classification.Universe.TNSClassificationLevels.ADVERTISEMENT_TYPE);
+
+                        }
+                    }
+
+                }
+                modificationDate = DateTime.Now;
+            }
+        }
+		#endregion
 
 		/// <summary>
 		/// Obtient ou définit Ecart
@@ -1866,7 +1961,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 					return ((Int64)userParameters[CoreConstantes.SessionParamters.sloganIdZoom]);
 				}
 				else {
-					return (-1);
+					return (long.MinValue);
 				}
 			}
 			set {
@@ -2332,10 +2427,10 @@ namespace TNS.AdExpress.Web.Core.Sessions {
         /// </summary>
         public CustomerPeriod CustomerPeriodSelected {
             get {
-                bool withComparativePeriod = false;
+                bool withComparativePeriod = false, withComparativePeriodPersonnalized = false;
                 WebConstantes.globalCalendar.comparativePeriodType comparativeCalendarPeriodType = WebConstantes.globalCalendar.comparativePeriodType.dateToDate;
                 WebConstantes.globalCalendar.periodDisponibilityType periodDisponibilityType = WebConstantes.globalCalendar.periodDisponibilityType.currentDay;
-                string startDate = "", endDate = "", now = string.Empty;
+                string startDate = "", endDate = "", now = string.Empty, startDateComparative = "", endDateComparative = "";
                 int endDateI, periodEndDateI, nowI;
                 if (_customerPeriod == null || (_customerPeriod.StartDate.Length==0 && _customerPeriod.EndDate.Length==0)) {
                     if (userParameters.ContainsKey(CoreConstantes.SessionParamters.startDate)) {
@@ -2353,6 +2448,15 @@ namespace TNS.AdExpress.Web.Core.Sessions {
                     if (userParameters.ContainsKey(CoreConstantes.SessionParamters.periodDisponibilityType)) {
                         periodDisponibilityType = (WebConstantes.globalCalendar.periodDisponibilityType)userParameters[CoreConstantes.SessionParamters.periodDisponibilityType];
                     }
+                    if(userParameters.ContainsKey(CoreConstantes.SessionParamters.withComparativePeriodPersonnalized)){
+                        withComparativePeriodPersonnalized = (bool)userParameters[CoreConstantes.SessionParamters.withComparativePeriodPersonnalized];
+                    }
+                    if (userParameters.ContainsKey(CoreConstantes.SessionParamters.startDateComparative)) {
+                        startDateComparative = (string)userParameters[CoreConstantes.SessionParamters.startDateComparative];
+                    }
+                    if (userParameters.ContainsKey(CoreConstantes.SessionParamters.endDateComparative)) {
+                        endDateComparative = (string)userParameters[CoreConstantes.SessionParamters.endDateComparative];
+                    }
 
                     now = DateTime.Now.ToString("yyyyMMdd");
                     endDateI = int.Parse(endDate);
@@ -2366,20 +2470,40 @@ namespace TNS.AdExpress.Web.Core.Sessions {
                         if (periodEndDateI > endDateI)
                             endDate = periodEndDate;
 
-                    if (withComparativePeriod)
-                        _customerPeriod = new CustomerPeriod(startDate, endDate, withComparativePeriod, comparativeCalendarPeriodType, periodDisponibilityType);
-                    else
-                        _customerPeriod = new CustomerPeriod(startDate, endDate);
+                    if (withComparativePeriodPersonnalized) {
+                        _customerPeriod = new CustomerPeriod(startDate, endDate, startDateComparative, endDateComparative);
+                    }
+                    else {
+                        if (withComparativePeriod)
+                            _customerPeriod = new CustomerPeriod(startDate, endDate, withComparativePeriod, comparativeCalendarPeriodType, periodDisponibilityType);
+                        else
+                            _customerPeriod = new CustomerPeriod(startDate, endDate);
+                    }
                 }
                 return (_customerPeriod);
             }
             set {
                 _customerPeriod = value;
-                userParameters[CoreConstantes.SessionParamters.startDate] = value.StartDate;
-                userParameters[CoreConstantes.SessionParamters.endDate] = value.EndDate;
-                userParameters[CoreConstantes.SessionParamters.withComparativePeriod] = value.WithComparativePeriod;
-                userParameters[CoreConstantes.SessionParamters.comparativePeriodType] = value.ComparativePeriodType;
-                userParameters[CoreConstantes.SessionParamters.periodDisponibilityType] = value.PeriodDisponibilityType;
+                if (value == null) {
+                    userParameters.Remove(CoreConstantes.SessionParamters.startDate);
+                    userParameters.Remove(CoreConstantes.SessionParamters.endDate);
+                    userParameters.Remove(CoreConstantes.SessionParamters.withComparativePeriod);
+                    userParameters.Remove(CoreConstantes.SessionParamters.comparativePeriodType);
+                    userParameters.Remove(CoreConstantes.SessionParamters.periodDisponibilityType);
+                    userParameters.Remove(CoreConstantes.SessionParamters.withComparativePeriodPersonnalized);
+                    userParameters.Remove(CoreConstantes.SessionParamters.startDateComparative);
+                    userParameters.Remove(CoreConstantes.SessionParamters.endDateComparative);
+                }
+                else {
+                    userParameters[CoreConstantes.SessionParamters.startDate] = value.StartDate;
+                    userParameters[CoreConstantes.SessionParamters.endDate] = value.EndDate;
+                    userParameters[CoreConstantes.SessionParamters.withComparativePeriod] = value.WithComparativePeriod;
+                    userParameters[CoreConstantes.SessionParamters.comparativePeriodType] = value.ComparativePeriodType;
+                    userParameters[CoreConstantes.SessionParamters.periodDisponibilityType] = value.PeriodDisponibilityType;
+                    userParameters[CoreConstantes.SessionParamters.withComparativePeriodPersonnalized] = value.WithComparativePeriodPersonnalized;
+                    userParameters[CoreConstantes.SessionParamters.startDateComparative] = value.ComparativeStartDate;
+                    userParameters[CoreConstantes.SessionParamters.endDateComparative] = value.ComparativeEndDate;
+                }
                 modificationDate = DateTime.Now;
             }
         }
@@ -2624,7 +2748,43 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 			set { userParameters[CoreConstantes.SessionParamters.serverName] = value; }
 
 		}
-		#endregion
+
+        /// <summary>
+        /// Get/Set domain name
+        /// </summary>
+        public string DomainName {
+            get {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.domainName))
+                    return (userParameters[CoreConstantes.SessionParamters.domainName].ToString());
+                return ("Not set");
+            }
+            set { userParameters[CoreConstantes.SessionParamters.domainName] = value; }
+        }
+	
+
+        #region Campaign type
+        /// <summary>
+        /// Get \Set Campaign Type 
+        /// </summary>
+        public WebConstantes.CustomerSessions.CampaignType CampaignType
+        {
+            get
+            {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.campaignType))
+                {
+                    _campaignType = (WebConstantes.CustomerSessions.CampaignType)userParameters[CoreConstantes.SessionParamters.campaignType];
+                }
+
+                return (_campaignType);
+            }
+            set
+            {
+                _campaignType = value;
+                userParameters[CoreConstantes.SessionParamters.campaignType] = value;
+                modificationDate = DateTime.Now;
+            }
+        }
+        #endregion
 
         public void CopyFrom(WebSession session)
         {
@@ -2732,9 +2892,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 
 				//create anonymous PL/SQL command
                 string label ="";
-                if (WebApplicationParameters.UseRightDefaultConnection)
-                label = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label;
-                else label = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mou01).Label;
+                label = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mou01).Label;
 
                     string block = " BEGIN " +
                         " DELETE " + label + "." + Tables.TABLE_SESSION + " WHERE ID_NAV_SESSION=" + this.idSession + "; " +
@@ -2827,9 +2985,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 				i = 1;
 				//create anonymous PL/SQL command
                 string label = "";
-                if (WebApplicationParameters.UseRightDefaultConnection)
-                    label = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01).Label;
-                else label = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mou01).Label;
+                label = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.mou01).Label;
 
 				string block = " BEGIN " +
                     " SELECT nav_session INTO :1 FROM " + label + "." + Tables.TABLE_SESSION + " WHERE id_nav_session = " + idWebSession + "; " +
@@ -3182,6 +3338,15 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 			return (mediaNumber);
 
 		}
+
+        /// <summary>
+        /// Indique si des supports ont été sélectionnés
+        /// </summary>
+        /// <returns>True si des supports ont été enregistrées, false sinon</returns>
+        public bool IsPrincipalMediaUniversesSelected()
+        {
+            return (_principalMediaUniverses!=null && _principalMediaUniverses.Count > 0);           
+        }
 		#endregion
 
 		#region Vagues
@@ -3263,7 +3428,14 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 			return (productNumber);
 
 		}
-
+        /// <summary>
+        /// Check if Advertisement Type Universe is Selected
+        /// </summary>
+        /// <returns></returns>
+        public bool IsAdvertisementTypeUniverseSelected()
+        {
+            return (AdvertisementTypeUniverses != null && AdvertisementTypeUniverses.Count > 0);
+        }
 		#endregion
 
 		#region Generic Checking
@@ -3290,17 +3462,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// Insère l'évènement nouvelle connexion dans le tracking system
 		/// </summary>
 		public void OnNewConnection(string IP) {
-			try {
-                if (WebApplicationParameters.UseRightDefaultConnection)
-                {
-                    string nlsSort = "";
-                    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
-                    {
-                        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
-                    }
-                    DATracking.NewConnection(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, IP);
-                }
-                else
+			try {              
                     DATracking.NewConnection(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, IP);
 			}
 			catch (System.Exception) { }
@@ -3311,16 +3473,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		private void OnSetModule() {
 			try {
-                if (WebApplicationParameters.UseRightDefaultConnection)
-                {
-                    string nlsSort = "";
-                    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
-                    {
-                        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
-                    }
-                    DATracking.SetModule(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord,nlsSort, CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule);
-                }
-                else
+             
                     DATracking.SetModule(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule);
 			}
 			catch (System.Exception) { }
@@ -3332,16 +3485,16 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// <param name="vehicleId">Identifiant du media (Vehicle)</param>
 		public void OnSetVehicle(Int64 vehicleId) {
 			try {
-                if (WebApplicationParameters.UseRightDefaultConnection)
-                {
-                    string nlsSort = "";
-                    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
-                    {
-                        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
-                    }
-                    DATracking.SetVehicle(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(IdSession), CustomerLogin.IdLogin, CurrentModule, vehicleId);
-                }
-                else
+                //if (WebApplicationParameters.UseRightDefaultConnection)
+                //{
+                //    string nlsSort = "";
+                //    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
+                //    {
+                //        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
+                //    }
+                //    DATracking.SetVehicle(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(IdSession), CustomerLogin.IdLogin, CurrentModule, vehicleId);
+                //}
+                //else
                     DATracking.SetVehicle(Source, Int64.Parse(IdSession), CustomerLogin.IdLogin, CurrentModule, vehicleId);
 			}
 			catch (System.Exception) { }
@@ -3355,17 +3508,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 				Module moduleSelected = customerLogin.GetModule(currentModule);
 				Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
 				//customerLogin.HtModulesList.Clear();
-                if (WebApplicationParameters.UseRightDefaultConnection)
-                {
-                    string nlsSort = "";
-                    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
-                    {
-                        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
-                    }
-                    DATracking.SetVehicle(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
-                }
-                else
-                    DATracking.SetVehicle(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                DATracking.SetVehicle(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
 			}
 			catch (System.Exception) { }
 
@@ -3380,17 +3523,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
                     Module moduleSelected = customerLogin.GetModule(currentModule);
 					Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
 					//customerLogin.HtModulesList.Clear();
-                    if (WebApplicationParameters.UseRightDefaultConnection)
-                    {
-                        string nlsSort = "";
-                        if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
-                        {
-                            nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
-                        }
-                        DATracking.SetMediaAgency(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
-                    }
-                    else
-                        DATracking.SetMediaAgency(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                    DATracking.SetMediaAgency(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
 				}
 				catch (System.Exception) { }
 			}
@@ -3411,17 +3544,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
                         Module moduleSelected = customerLogin.GetModule(currentModule);
 						Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
 						//customerLogin.HtModulesList.Clear();
-                        if (WebApplicationParameters.UseRightDefaultConnection)
-                        {
-                            string nlsSort = "";
-                            if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
-                            {
-                                nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
-                            }
-                            DATracking.SetMediaAgency(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
-                        }
-                        else
-                            DATracking.SetMediaAgency(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                        DATracking.SetMediaAgency(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
 					}
 					catch (System.Exception) { }
 					break;
@@ -3435,16 +3558,16 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		private void OnSetPeriodType() {
 			try {
-                if (WebApplicationParameters.UseRightDefaultConnection)
-                {
-                    string nlsSort = "";
-                    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
-                    {
-                        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
-                    }
-                    DATracking.SetPeriodType(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, (int)periodType);
-                }
-                else
+                //if (WebApplicationParameters.UseRightDefaultConnection)
+                //{
+                //    string nlsSort = "";
+                //    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
+                //    {
+                //        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
+                //    }
+                //    DATracking.SetPeriodType(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, (int)periodType);
+                //}
+                //else
                     DATracking.SetPeriodType(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, (int)periodType);
 			}
 			catch (System.Exception) { }
@@ -3456,17 +3579,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// </summary>
 		private void OnSetUnit() {
 			try {
-                if (WebApplicationParameters.UseRightDefaultConnection)
-                {
-                    string nlsSort = "";
-                    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
-                    {
-                        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
-                    }
-                    DATracking.SetUnit(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, (int)unit);
-                }
-                else
-                    DATracking.SetUnit(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, (int)unit);
+                DATracking.SetUnit(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, (int)unit);
 			}
 			catch (System.Exception) { }
 		}
@@ -3480,17 +3593,8 @@ namespace TNS.AdExpress.Web.Core.Sessions {
                 Module moduleSelected = customerLogin.GetModule(currentModule);
 				Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
 				//customerLogin.HtModulesList.Clear();
-                if (WebApplicationParameters.UseRightDefaultConnection)
-                {
-                    string nlsSort = "";
-                    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
-                    {
-                        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
-                    }
-                    DATracking.SetResult(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord,nlsSort, CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
-                }
-                else
-                    DATracking.SetResult(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                
+              DATracking.SetResult(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
 			}
 			catch (System.Exception) { }
 
@@ -3505,16 +3609,16 @@ namespace TNS.AdExpress.Web.Core.Sessions {
                 Module moduleSelected = customerLogin.GetModule(currentModule);
 				Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
 				//customerLogin.HtModulesList.Clear();
-                if (WebApplicationParameters.UseRightDefaultConnection)
-                {
-                    string nlsSort = "";
-                    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
-                    {
-                        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
-                    }
-                    DATracking.UseFileExport(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
-                }
-                else
+                //if (WebApplicationParameters.UseRightDefaultConnection)
+                //{
+                //    string nlsSort = "";
+                //    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
+                //    {
+                //        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
+                //    }
+                //    DATracking.UseFileExport(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                //}
+                //else
                     DATracking.UseFileExport(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
 			}
 			catch (System.Exception) { }
@@ -3529,17 +3633,8 @@ namespace TNS.AdExpress.Web.Core.Sessions {
                 Module moduleSelected = customerLogin.GetModule(currentModule);
 				Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
 				//customerLogin.HtModulesList.Clear();
-                if (WebApplicationParameters.UseRightDefaultConnection)
-                {
-                    string nlsSort = "";
-                    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
-                    {
-                        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
-                    }
-                    DATracking.UseMyAdExpressSave(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord,nlsSort, CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
-                }
-                else
-                    DATracking.UseMyAdExpressSave(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                
+                 DATracking.UseMyAdExpressSave(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
 			}
 			catch (System.Exception) { }
 
@@ -3569,10 +3664,12 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 		/// <returns></returns>
 		public CellUnitFactory GetCellUnitFactory() {
             try {
-                System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(@"TNS.FrameWork.WebResultUI");
-                Type type = assembly.GetType(GetSelectedUnit().CellType);
+                //System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(@"TNS.FrameWork.WebResultUI");
+                UnitInformation selectedUnit = GetSelectedUnit();
+                System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(selectedUnit.Assembly);
+                Type type = assembly.GetType(selectedUnit.CellType);
                 Cell cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
-                cellUnit.StringFormat = GetSelectedUnit().StringFormat;
+                cellUnit.StringFormat = selectedUnit.StringFormat;
                 return (new CellUnitFactory((CellUnit)cellUnit));
             }
             catch {
@@ -3631,6 +3728,45 @@ namespace TNS.AdExpress.Web.Core.Sessions {
                 throw (new UnitException("Unit selection is not managed"));
             }
         }
+
+        /// <summary>
+        /// Get Valid Campaign type List for current result
+        /// </summary>
+        /// <returns>Valid Campaign type List for current result</returns>
+        public List<Domain.CampaignTypes.CampaignTypeInformation> GetValidCampaignTypeForResult()
+        {
+            try
+            {
+                Module moduleDescription = ModulesList.GetModule(currentModule);
+                ResultPageInformation resultPageInformation = (ResultPageInformation)moduleDescription.GetResultPageInformation((int)currentTab);
+
+                return resultPageInformation.GetValidCampaignTypes();
+            }
+            catch
+            {
+                throw (new Exception("Campaign Type selection is not managed"));
+            }
+        }
+
+        /// <summary>
+        /// Get Default Campaign type for current result
+        /// </summary>
+        /// <returns>Default Campaign type for current result</returns>
+        public TNS.AdExpress.Constantes.Web.CustomerSessions.CampaignType GetDefaultCampaignType()
+        {
+            try
+            {
+                Module moduleDescription = ModulesList.GetModule(currentModule);
+                ResultPageInformation resultPageInformation = (ResultPageInformation)moduleDescription.GetResultPageInformation((int)currentTab);
+
+                return resultPageInformation.DefaultCampaignType;
+            }
+            catch
+            {
+                throw (new Exception("Campaign Type default selection is not managed"));
+            }
+        }
+
 		#endregion
 
         #region Get Vehicles Selected
@@ -3786,8 +3922,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
 
         #region Dates
 
-        #region UpdateDates
-        public CustomerPeriod UpdateDates(DateTime FirstDayNotEnable, DateTime dateRef) 
+        public CustomerPeriod UpdateDates(DateTime FirstDayNotEnable, DateTime dateRef)
         {
             bool isLastCompletePeriod = false;
             DateTime lastDayEnable = dateRef;
@@ -3983,7 +4118,7 @@ namespace TNS.AdExpress.Web.Core.Sessions {
         }
         #endregion
 
-        #endregion
+      
 
 
     }

@@ -19,6 +19,7 @@ using TNS.FrameWork;
 using CustomerRightConstante=TNS.AdExpress.Constantes.Customer.Right;
 using CstDB = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.Units;
+using System.Reflection;
 
 namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 
@@ -64,6 +65,10 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 		/// Determine if show product level
 		/// </summary>
 		protected bool _showProduct = true;
+        /// <summary>
+        /// Media Type ID
+        /// </summary>
+        protected long _vehicleId;
 
 		#endregion
 
@@ -231,7 +236,12 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions{
 			//Render version nb cell
             output.Append("<tr align=\"left\"><td align=\"left\" nowrap=\"nowrap\" " + //<tr height=100% >
 				((this._version.CssClass.Length>0)?"class=\"" + this._version.CssClass + "\">":"class=\"sloganVioletBackGround\">"));
-			if(_webSession.SloganIdZoom<0){
+            TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.creativesUtilities];
+            if (cl == null) throw (new NullReferenceException("Core layer is null for the creatives utilities class"));
+            TNS.AdExpress.Web.Core.Utilities.Creatives creativesUtilities = (TNS.AdExpress.Web.Core.Utilities.Creatives)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
+
+            if (creativesUtilities.IsSloganZoom(_webSession.SloganIdZoom))
+            {
 				output.Append("<a href=\"javascript:get_version('"+this._version.Id+"');\" onmouseover=\"res_"+this._version.Id+".src='/App_Themes/"+themeName+"/Images/Common/button/result2_down.gif';\" onmouseout=\"res_"+this._version.Id+".src ='/App_Themes/"+themeName+"/Images/Common/button/result2_up.gif';\">");
 				output.Append("<img name=\"res_" + this._version.Id + "\" border=0  align=\"left\" src=\"/App_Themes/"+themeName+"/Images/Common/button/result2_up.gif\">");//align=\"absmiddle\"
 				output.Append("</a>");

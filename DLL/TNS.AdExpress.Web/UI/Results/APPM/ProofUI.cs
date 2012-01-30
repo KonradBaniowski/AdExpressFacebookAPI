@@ -24,6 +24,7 @@ using TxtFct = TNS.AdExpress.Web.Functions.Text;
 using TNS.FrameWork;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpress.Web.UI.Results.APPM{
 	/// <summary>
@@ -152,11 +153,11 @@ namespace TNS.AdExpress.Web.UI.Results.APPM{
 					html.Append("\n<tr>");
 					if(File.Exists(pathCouv2)){
 						html.Append("\n<td colspan=\"2\" align=\"center\"><img src='"+pathCouv+"' border=\"0\" width=\"100\" height=\"141\"><br><font class=\"txtViolet14Bold\">"+ row["Media"] +"</font>");
-						if (row["date"] != System.DBNull.Value) html.Append("<br><font class=txtViolet11>" + DateString.dateTimeToDD_MM_YYYY((DateTime)row["date"], webSession.SiteLanguage) + "</font>");//dateParution
+						if (row["date"] != System.DBNull.Value) html.Append("<br><font class=txtViolet11>" + Dates.DateToString((DateTime)row["date"], webSession.SiteLanguage) + "</font>");//dateParution
 					}
 					else{
 						html.Append("\n<td colspan=\"2\" align=\"center\"><img src=\"/Images/"+webSession.SiteLanguage+"/Others/no_visuel.gif\"><br><font class=\"txtViolet14Bold\">"+ row["Media"] +"</font>");
-						if (row["date"] != System.DBNull.Value) html.Append("<br><font class=txtViolet11>" + DateString.dateTimeToDD_MM_YYYY((DateTime)row["date"], webSession.SiteLanguage) + "</font>");//dateParution
+						if (row["date"] != System.DBNull.Value) html.Append("<br><font class=txtViolet11>" + Dates.DateToString((DateTime)row["date"], webSession.SiteLanguage) + "</font>");//dateParution
 					}
 					html.Append("\n</tr>");
 					#endregion

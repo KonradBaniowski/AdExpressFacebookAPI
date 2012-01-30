@@ -92,37 +92,37 @@ namespace TNS.AdExpress.Constantes.Classification{
             /// </summary>
             mediaCinema = 17,
             /// <summary>
-            /// type Indoor
-            /// </summary>
-            mediaIndoor = 18,
+			/// type Indoor
+			/// </summary>
+			mediaIndoor=18,
             /// <summary>
             /// type radio general
             /// </summary>
-            mediaRadioGeneral = 19,
+            mediaRadioGeneral=19,
             /// <summary>
             /// type radio music
             /// </summary>
-            mediaRadioMusic = 20,
+            mediaRadioMusic=20,
             /// <summary>
             /// type radio sponsorship
             /// </summary>
-            mediaRadioSponsorship = 21,
+            mediaRadioSponsorship=21,
             /// <summary>
             /// type tv general
             /// </summary>
-            mediaTvGeneral = 22,
+            mediaTvGeneral=22,
             /// <summary>
             /// type tv sponsorshîp
             /// </summary>
-            mediaTvSponsorshipRu = 23,
+            mediaTvSponsorshipRu=23,
             /// <summary>
             /// type tv announces
             /// </summary>
-            mediaTvAnnounces = 24,
+            mediaTvAnnounces=24,
             /// <summary>
             /// type tv non terrestrials
             /// </summary>
-            mediaTvNonTerrestrials = 25,
+            mediaTvNonTerrestrials=25,
             /// <summary>
             /// type tv niche channels
             /// </summary>
@@ -140,9 +140,9 @@ namespace TNS.AdExpress.Constantes.Classification{
             /// </summary>
             advertisingAgency = 29,
             /// <summary>
-			/// Type Magazine
-			/// </summary>
-			mediaMagazine=30,
+            /// Type Magazine
+            /// </summary>
+            mediaMagazine = 30,
             /// <summary>
             /// Type NewsPaper
             /// </summary>
@@ -206,7 +206,7 @@ namespace TNS.AdExpress.Constantes.Classification{
 			/// Niveau de nomenclature marque
 			/// </summary>
 			brand,
-              /// <summary>
+            /// <summary>
             /// Niveau de nomenclature sous marque
             /// </summary>
             subBrand,
@@ -218,6 +218,7 @@ namespace TNS.AdExpress.Constantes.Classification{
             /// Niveau de nomenclature region
             /// </summary>
             region
+
 
 		}
 		#endregion

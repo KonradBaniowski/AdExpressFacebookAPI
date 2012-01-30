@@ -47,6 +47,8 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 
         #region DataBase description
         protected static Schema _schAdexpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
+       
+
         #endregion
 
         #region Module
@@ -131,6 +133,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
         public MediaScheduleResultDAL(WebSession session, MediaSchedulePeriod period) {
             _session = session;
             _period = period;
+            
 
         }
         /// <summary>
@@ -231,6 +234,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             DataSet ds = new DataSet();
             StringBuilder sql = new StringBuilder();
             string groupOptional = string.Empty;
+
             #endregion
 
             #region Query Building
@@ -556,7 +560,9 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             string slogans = _session.SloganIdList;
             
             // Zoom on a specific version
-            if(_session.SloganIdZoom > 0 && periodDisplay == CstPeriod.DisplayLevel.dayly) {
+            TNS.AdExpress.Web.Core.Utilities.Creatives creativesUtilities = new TNS.AdExpress.Web.Core.Utilities.Creatives();
+            if (creativesUtilities.IsSloganZoom(_session.SloganIdZoom) && periodDisplay == CstPeriod.DisplayLevel.dayly)
+            {
                 sql.AppendFormat(" and {0}.{2} = {1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.SloganIdZoom
                     ,(vehicleInfo != null && (vehicleInfo.Id != CstDBClassif.Vehicles.names.adnettrack && vehicleInfo.Id != CstDBClassif.Vehicles.names.evaliantMobile ))?"id_slogan":"hashcode");
             }
@@ -844,7 +850,9 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 			string slogans = _session.SloganIdList;
 
 			// Zoom on a specific version
-			if (_session.SloganIdZoom > 0 && periodDisplay == CstPeriod.DisplayLevel.dayly) {
+            TNS.AdExpress.Web.Core.Utilities.Creatives creativesUtilities = new TNS.AdExpress.Web.Core.Utilities.Creatives();
+            if (creativesUtilities.IsSloganZoom(_session.SloganIdZoom) && periodDisplay == CstPeriod.DisplayLevel.dayly)
+            {
 				sql.AppendFormat(" and {0}.{2} = {1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.SloganIdZoom
 					,"hashcode");
 			}
@@ -973,6 +981,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                         case CstDBClassif.Vehicles.names.internationalPress:
                         case CstDBClassif.Vehicles.names.outdoor:
                         case CstDBClassif.Vehicles.names.instore:
+                        case CstDBClassif.Vehicles.names.indoor:
                             switch(displayPeriod) {
                                 case CstPeriod.DisplayLevel.monthly:
                                     return string.Format(" max({0}DURATION_MONTH(date_media_num,duration)) as period_count ", _schAdexpr03.Sql);
@@ -988,7 +997,14 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                                     }
                             }
                         case CstDBClassif.Vehicles.names.radio:
+                        case CstDBClassif.Vehicles.names.radioGeneral:
+                        case CstDBClassif.Vehicles.names.radioSponsorship:
+                        case CstDBClassif.Vehicles.names.radioMusic:
                         case CstDBClassif.Vehicles.names.tv:
+                        case CstDBClassif.Vehicles.names.tvGeneral:
+                        case CstDBClassif.Vehicles.names.tvSponsorship:
+                        case CstDBClassif.Vehicles.names.tvNonTerrestrials:
+                        case CstDBClassif.Vehicles.names.tvAnnounces:
                         case CstDBClassif.Vehicles.names.others:
                         case CstDBClassif.Vehicles.names.internet:
                         case CstDBClassif.Vehicles.names.adnettrack:

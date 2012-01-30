@@ -32,6 +32,12 @@ namespace TNS.AdExpress.Web.Core.Result {
         /// Session du client
         /// </summary>
         protected WebSession _webSession;
+        
+        /// <summary>
+        /// Liste des chemins vers les créations
+        /// </summary>
+        protected string _creatives;
+       
         #endregion
 
         /// <summary>

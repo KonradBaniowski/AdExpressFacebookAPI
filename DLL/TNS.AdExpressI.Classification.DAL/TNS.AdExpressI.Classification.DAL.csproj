@@ -65,6 +65,7 @@
     <Compile Include="MediaBrand\CategoryLevelListDAL.cs" />
     <Compile Include="MediaBrand\VpCircuitLevelListDAL.cs" />
     <Compile Include="MediaBrand\VpBrandLevelListDAL.cs" />
+    <Compile Include="MediaBrand\RegionLevelListDAL.cs" />
     <Compile Include="MediaBrand\InterestCenterLevelListDAL.cs" />
     <Compile Include="MediaBrand\MediaLevelListDAL.cs" />
     <Compile Include="MediaBrand\MediaSellerLevelListDALs.cs" />
@@ -74,6 +75,8 @@
     <Compile Include="ProductBrand\VpProductLevelListDAL.cs" />
     <Compile Include="ProductBrand\vpSegmentLevelListDAL.cs" />
     <Compile Include="ProductBrand\vpSubSegmentLevelListDAL.cs" />
+    <Compile Include="ProductBrand\AdvertisementTypeLevelListDAL.cs" />
+    <Compile Include="ProductBrand\SubBrandLevelListDAL.cs" />
     <Compile Include="ProductBrand\GroupLevelListDAL.cs" />
     <Compile Include="ProductBrand\HoldingCompanyLevelListDAL.cs" />
     <Compile Include="ProductBrand\SectorLevelListDAL.cs" />

@@ -409,7 +409,7 @@ namespace AdExpress.Private.Selection {
 				if(_webSession.CurrentModule == WebConstantes.Module.Name.ALERTE_PLAN_MEDIA
 					|| _webSession.CurrentModule == WebConstantes.Module.Name.JUSTIFICATIFS_PRESSE){
 					_webSession.IdSlogans = new ArrayList();
-					_webSession.SloganIdZoom=-1;
+					_webSession.SloganIdZoom=long.MinValue;
 					_webSession.Save();
 				}
 				

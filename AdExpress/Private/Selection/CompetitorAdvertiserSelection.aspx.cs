@@ -436,7 +436,7 @@ namespace AdExpress.Private.Selection{
 				//Annuler l'univers de version pour APPM
 				if(_webSession.CurrentModule == WebConstantes.Module.Name.BILAN_CAMPAGNE){
 					_webSession.IdSlogans = new ArrayList();
-					_webSession.SloganIdZoom=-1;
+                    _webSession.SloganIdZoom = long.MinValue;
 					_webSession.Save();
 				}
 				

@@ -465,7 +465,9 @@ namespace TNS.AdExpressI.Insertions.DAL {
         /// <param name="fromDate">Beginning of the period</param>
         /// <param name="toDate">End of the period</param>
         /// <param name="universId">The univers identifier used for the study, in the Present/Absent module it equal to -1 because we don't need this information</param>
-        /// <param name="filters">Each parameter of the filters list represents a value for a classification level, the first one correspond to the Level1 the seconed to Level2</param>
+        /// <param name="filters">Each parameter of the filters list represents a value for a classification level, the first one correspond to the Level1 the seconed to Level2
+        /// Note that if the value of the level is long.MinValue  (-9223372036854775808), it's mean that the level was not selected.
+        /// </param>
         /// <returns>Advertising detail Data</returns>		
         protected virtual DataSet GetData(VehicleInformation vehicle, int fromDate, int toDate, int universId, string filters) {
 
@@ -551,6 +553,115 @@ namespace TNS.AdExpressI.Insertions.DAL {
         }
         #endregion
 
+        #region Get version  detail
+
+        /// <summary>
+        /// Get one verion informations like :
+        /// ID version , product label,group label,advertiser label
+        /// </summary>
+        /// <remarks>Use only for media type Tv in France</remarks>
+        /// <param name="idVersion">ID version</param> 
+        /// <param name="idVehicle">ID Media type</param>
+        /// <returns>ID version , product label,group label,advertiser label</returns>
+        public virtual DataSet GetVersion(string idVersion,long idVehicle)
+        {
+            System.Text.StringBuilder sql = new System.Text.StringBuilder(1000);
+            Schema sAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
+            //Get table version
+            Table sloganTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.slogan);
+            //Get View
+            TNS.AdExpress.Domain.DataBaseDescription.View oView = WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allProduct);
+
+            try
+            {
+                //SELECT id version , product label, group label, advertiser label
+                sql.AppendFormat("  SELECT id_slogan,{0}.product,{0}.group_,{0}.advertiser ", oView.Prefix);
+                //FROM
+                sql.AppendFormat("  FROM {0} , {1}{2} {3}", sloganTable.SqlWithPrefix, oView.Sql, _session.DataLanguage, oView.Prefix);
+                //WHERE
+                sql.AppendFormat("  WHERE {1}.id_slogan={0}", idVersion, sloganTable.Prefix);//Filtering with version ID
+                sql.AppendFormat("  and {0}.id_product = {1}.id_product ", sloganTable.Prefix, oView.Prefix);//Joins
+                sql.AppendFormat("  and {0}.id_language={1}", sloganTable.Prefix, _session.DataLanguage);//Filtering with data language
+
+                return _session.Source.Fill(sql.ToString());
+            }
+            catch (System.Exception exc)
+            {
+                throw new InsertionsDALException(" Error impossible to obtain version data" , exc);
+            }
+
+        }
+
+        /// <summary>
+        /// Get version(s) data. The query will return the following fields, in order :
+        /// "id_advertiser" : advertiser identifier.
+        /// "advertiser" : advertiser label.
+        /// "id_product" : product identifier.
+        /// "product" : product label.
+        /// "id_vehicle" : media type identifier.
+        /// "vehicle" :  media type label.
+        /// "id_slogan" : version identifier.
+        /// "date_media_num" : publication date with format YYYYMMDD.
+        /// "id_media" : vehicle identifier.
+        /// "advertDimension" : It will be the duration of spot for media type RADIO  and TV. The FORMAT of Ad for media type PRESS. The type of board for media type Outdoor.
+        /// "associated_file" : creative file.
+        /// </summary>
+        /// <param name="beginningDate">date beginning (YYYYMMDD)</param>
+        /// <param name="endDate">date end (YYYYMMDD)</param>
+        /// <returns>versions data ["id_advertiser","advertiser","id_product","product","id_vehicle","vehicle","id_slogan","date_media_num","id_media","advertDimension", "associated_file" </returns>
+        public virtual DataSet GetVersions(string beginningDate, string endDate)
+        {
+            System.Text.StringBuilder sql = new System.Text.StringBuilder(1000);
+            string tempSql = "";
+            bool first = true;
+
+            try
+            {
+                //Get media type ID list ex. 1,2,3
+                string mediaTypeStringIds = _session.CustomerDataFilters.SelectedMediaType;
+               
+                //Media type array
+                string[] mediaTypeList = mediaTypeStringIds.Split(new char[] { ',' });
+               
+
+                //Build SQL query for each Media type
+                for (int i = 0; i < mediaTypeList.Length; i++)
+                {
+                    try {
+                        tempSql = GetSQLQuery(mediaTypeList[i], beginningDate, endDate);
+                        if (tempSql.Length > 0)
+                        {
+                            if (!first) sql.Append("  union  ");
+                            sql.Append(tempSql);
+                            first = false;
+                        }
+                    }
+                    catch (System.Exception err)
+                    {
+                        throw new InsertionsDALException(" Impossible to bulid SQL query for media type : " + mediaTypeList[i], err);
+                    }
+
+                }
+
+                //Set final SQL query (all media type)
+                if (sql.Length > 0)
+                {
+                    tempSql = sql.ToString();
+                    sql = new System.Text.StringBuilder(1000);
+                    sql.Append(" select * from ( ");
+                    sql.Append(tempSql);
+                    sql.Append(" ) order by advertiser,id_advertiser,product ,id_product, vehicle,id_vehicle,id_slogan,associated_file,date_media_num");
+                }
+
+                return _session.Source.Fill(sql.ToString());
+            }
+            catch (System.Exception exc)
+            {
+                throw new InsertionsDALException(" Error impossible to obtain versions data", exc);
+            }
+        }
+        #endregion
+
         #region Sub Methods
 
         #region AppendInsertionsSqlFields
@@ -631,7 +742,13 @@ namespace TNS.AdExpressI.Insertions.DAL {
 			    AppendSloganField(sql, tData, vehicle, columns);
 
             //Category
-            if (!_msCreaConfig && vehicle.Id == CstDBClassif.Vehicles.names.tv && !hasCategory) {
+            if (!_msCreaConfig && (vehicle.Id == CstDBClassif.Vehicles.names.tv
+                || vehicle.Id == CstDBClassif.Vehicles.names.tvGeneral
+                || vehicle.Id == CstDBClassif.Vehicles.names.tvAnnounces
+                || vehicle.Id == CstDBClassif.Vehicles.names.tvSponsorship
+                || vehicle.Id == CstDBClassif.Vehicles.names.tvNonTerrestrials
+                ) && !hasCategory)
+            {
                 sql.AppendFormat(" {0}.id_category,", tData.Prefix);
             }
 
@@ -652,7 +769,10 @@ namespace TNS.AdExpressI.Insertions.DAL {
             /* The method CustormerFlagAccess is used to check if the user has the right to the slogan level or not
              * */
             if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG)
-                && vehicle.Id == CstDBClassif.Vehicles.names.radio
+                && (vehicle.Id == CstDBClassif.Vehicles.names.radio
+                  || vehicle.Id == CstDBClassif.Vehicles.names.radioGeneral
+                  || vehicle.Id == CstDBClassif.Vehicles.names.radioSponsorship
+                || vehicle.Id == CstDBClassif.Vehicles.names.radioMusic)
                 && !_session.DetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.slogan)
                 && sql.ToString().IndexOf("id_slogan") < 0
                 ) {
@@ -791,14 +911,12 @@ namespace TNS.AdExpressI.Insertions.DAL {
              * There are several treenodes to save the univers media, so according to the module we can get the media list
              * */
             string listMediaAccess = string.Empty;
-            if (_module.Id == CstWeb.Module.Name.ANALYSE_PORTEFEUILLE) {
-                listMediaAccess = _session.GetSelection((TreeNode)_session.ReferenceUniversMedia, CstCustomer.Right.type.mediaAccess) + ",";
-            }
-            if (_module.Id == CstWeb.Module.Name.ANALYSE_CONCURENTIELLE) {
-                int positionUnivers = 1;
-                while (_session.CompetitorUniversMedia[positionUnivers] != null) {
-                    listMediaAccess += _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[positionUnivers], CstCustomer.Right.type.mediaAccess) + ",";
-                    positionUnivers++;
+            if (_module.Id == CstWeb.Module.Name.ANALYSE_CONCURENTIELLE || _module.Id == CstWeb.Module.Name.ANALYSE_PORTEFEUILLE)
+            {
+                Dictionary<CstCustomer.Right.type, string> selectedVehicles = _session.CustomerDataFilters.SelectedVehicles;
+                if (selectedVehicles != null && selectedVehicles.ContainsKey(CstCustomer.Right.type.mediaAccess))
+                {
+                    listMediaAccess = selectedVehicles[CstCustomer.Right.type.mediaAccess];
                 }
             }
             if (_module.Id == CstWeb.Module.Name.ANALYSE_PLAN_MEDIA) {
@@ -807,7 +925,7 @@ namespace TNS.AdExpressI.Insertions.DAL {
                 if (list.Length > 0) sql.AppendFormat(" and ({0}.id_vehicle in ({1})) ", tData.Prefix, list);
             }
             if (listMediaAccess.Length > 0) {
-                sql.AppendFormat(" and (({1}.id_media in ({0}))) ", listMediaAccess.Substring(0, listMediaAccess.Length - 1), tData.Prefix);
+                sql.AppendFormat(" and (({1}.id_media in ({0}))) ", listMediaAccess.Substring(0, listMediaAccess.Length), tData.Prefix);
             }
 
             if (_session.SecondaryMediaUniverses != null && _session.SecondaryMediaUniverses.Count > 0)
@@ -929,7 +1047,7 @@ namespace TNS.AdExpressI.Insertions.DAL {
                 sql.Append(GetFiltersClause(tData, detailLevels, filters, vehicle));
                 sql.AppendFormat(CheckZeroVersion(tData, detailLevels,vehicle, filters));
             }
-            if (_session.SloganIdZoom > -1) {
+            if (_session.SloganIdZoom > -1) {//For Russia : _session.SloganIdZoom > long.MinValue (correspond to the absence of ID for the version)
                 sql.AppendFormat(" and wp.id_slogan={0}", _session.SloganIdZoom);
             }
             if ((_msCreaConfig || _creaConfig) && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack && vehicle.Id != CstDBClassif.Vehicles.names.internet && vehicle.Id != CstDBClassif.Vehicles.names.evaliantMobile) {
@@ -1021,13 +1139,22 @@ namespace TNS.AdExpressI.Insertions.DAL {
             }
 
             if (!_msCreaConfig && _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_SLOGAN_ACCESS_FLAG)
-                && vehicle.Id == CstDBClassif.Vehicles.names.radio
+                && (vehicle.Id == CstDBClassif.Vehicles.names.radio
+                || vehicle.Id == CstDBClassif.Vehicles.names.radioGeneral
+                || vehicle.Id == CstDBClassif.Vehicles.names.radioSponsorship
+                || vehicle.Id == CstDBClassif.Vehicles.names.radioMusic)
                 && !_session.DetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.slogan)
                 ) {
                 sql.AppendFormat(", {0}.id_slogan ", tData.Prefix);
             }
 
-            if (!_msCreaConfig && !first && vehicle.Id == CstDBClassif.Vehicles.names.tv && !_session.DetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.category)) {
+            if (!_msCreaConfig && !first 
+                &&( vehicle.Id == CstDBClassif.Vehicles.names.tv
+                || vehicle.Id == CstDBClassif.Vehicles.names.tvGeneral
+                || vehicle.Id == CstDBClassif.Vehicles.names.tvAnnounces
+                || vehicle.Id == CstDBClassif.Vehicles.names.tvSponsorship
+                || vehicle.Id == CstDBClassif.Vehicles.names.tvNonTerrestrials)
+                && !_session.DetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.category)) {
                 sql.AppendFormat(" , {0}.id_category", tData.Prefix);
             }
 
@@ -1092,6 +1219,370 @@ namespace TNS.AdExpressI.Insertions.DAL {
         }
         #endregion
 
+        #region GetSQLQuery
+        /// <summary>
+        /// Get versions SQL query
+        /// </summary>
+        /// <param name="idVehicle">ID media type</param>
+        /// <param name="beginingDate">beginning date</param>
+        /// <param name="endDate">end date</param>
+        /// <returns>versions SQL query</returns>
+        protected virtual string GetSQLQuery(string idVehicle, string beginingDate, string endDate){
+
+            System.Text.StringBuilder sql = new System.Text.StringBuilder(1000);
+
+            VehicleInformation vehicleInformation = null;
+
+            //Get vehicle information
+            if (idVehicle != null)
+                vehicleInformation = VehiclesInformation.Get(Int64.Parse(idVehicle));
+
+            //Get tables description
+            Table TblVehicle = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.vehicle);
+            Table TblProduct = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.product);
+            Table TblAdvertiser = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.advertiser);
+            Table TblFormat = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.format);
+
+            //Ge table name
+            string tableName = GetTableName(vehicleInformation,_module);
+
+            //Ge table prefix
+            string tablePrefixe = GetTablePrefix();
+
+
+            if (CanBuildSqlQuery(vehicleInformation))
+            {
+                //SELECT clause
+                sql.AppendFormat(" select distinct {0}.id_advertiser,advertiser,{0}.id_product,product,{0}.id_vehicle, vehicle ", tablePrefixe);
+                
+                //Get version ID field
+                sql.Append(GetSloganField(vehicleInformation,tablePrefixe));
+
+                //Date field
+                sql.Append(GetDateFields(vehicleInformation));
+
+                //Fields specific to a media type
+                sql.Append(GetFields(vehicleInformation.Id, tablePrefixe));
+
+                //FROM clause                
+                sql.Append(" from ");
+                //Tables 
+                AppendTables(sql,vehicleInformation,TblVehicle, TblProduct, TblAdvertiser, TblFormat, tableName, tablePrefixe);
+                
+                //WHERE clause
+                AppendTablesJoins(sql, vehicleInformation, TblVehicle, TblProduct, TblAdvertiser, TblFormat, tableName, tablePrefixe);
+            
+                //period
+                sql.AppendFormat( " and date_media_num >={0} ", beginingDate);
+                sql.AppendFormat(" and date_media_num <={0} " ,endDate);
+                
+                #region Products rights
+                //Products rights
+				sql.Append( SQLGenerator.getAnalyseCustomerProductRight(_session, tablePrefixe, true));
+				
+                // Product to exclude 
+                ProductItemsList productItemsList = null;
+                if (Product.Contains(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID) && (productItemsList = Product.GetItemsList(TNS.AdExpress.Constantes.Web.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID)) != null)
+                {
+                    sql.Append(productItemsList.GetExcludeItemsSql(true, tablePrefixe));
+                }
+				#endregion
+
+                #region Product selection
+                //product selection
+                if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
+                    sql.Append( _session.PrincipalProductUniverses[0].GetSqlConditions(tablePrefixe, true));
+
+                #endregion
+
+                #region Media rights
+                // Media rights
+                sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(_session, tablePrefixe, true));
+                #endregion
+
+                #region Media Universe
+                //Media Universe
+                sql.Append(SQLGenerator.GetResultMediaUniverse(_session, tablePrefixe));
+                #endregion
+
+                #region AppendFilters
+                //Append Filters
+                AppendFilters(sql,vehicleInformation,idVehicle,tablePrefixe);
+                #endregion
+            }
+
+            return sql.ToString();
+        }
+
+        protected virtual string GetSloganField(VehicleInformation vehicleInformation, string tablePrefixe)
+        {
+            System.Text.StringBuilder sql = new System.Text.StringBuilder(500);
+            if (_session.CurrentModule == CstWeb.Module.Name.BILAN_CAMPAGNE)
+            {
+                sql.AppendFormat(", nvl({0}.id_slogan, 0) as id_slogan", tablePrefixe);
+            }
+            else
+            {
+                if (vehicleInformation.Id != CstDBClassif.Vehicles.names.adnettrack
+                   && vehicleInformation.Id != CstDBClassif.Vehicles.names.evaliantMobile)
+                {
+                    sql.AppendFormat(" , nvl({0}.id_slogan,0) as id_slogan", tablePrefixe);
+                }
+                else
+                {
+                    sql.AppendFormat(" , nvl({0}.hashcode,0) as id_slogan", tablePrefixe);
+                }
+            }
+            return sql.ToString();
+        }
+
+        
+        #endregion
+
+        #region AppendFilters
+        /// <summary>
+        /// Append Filters
+        /// </summary>
+        /// <param name="sql">string builder</param>
+        /// <param name="vehicleInformation">vehicle Information</param>
+        /// <param name="idVehicle">ID media type</param>
+        /// <param name="tablePrefixe">tablePrefixe</param>
+        protected virtual void AppendFilters(StringBuilder sql, VehicleInformation vehicleInformation, string idVehicle,string tablePrefixe)
+        {
+            if (_session.CurrentModule == CstWeb.Module.Name.BILAN_CAMPAGNE)
+            {
+                Int64 idAdditionalTarget = Int64.Parse(_session.GetSelection(_session.SelectionUniversAEPMTarget, CstCustomer.Right.type.aepmTargetAccess));
+                //on one target
+                sql.AppendFormat(" and {0}.id_target in({1}) ", WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.appmTargetMediaAssignment).Prefix, idAdditionalTarget);
+
+                //outside encart
+                sql.AppendFormat(" and {0}.id_inset is null ", tablePrefixe);
+
+            }
+            else
+            {
+
+                // Niveau de produit
+                sql.Append(SQLGenerator.getLevelProduct(_session, tablePrefixe, true));
+
+                //ID Vehicle
+                sql.AppendFormat(" and (({0}.id_vehicle= {1})) ",tablePrefixe,idVehicle);
+
+                //Adnettrack and Evaliant mobile
+                if (vehicleInformation.Id != CstDBClassif.Vehicles.names.adnettrack
+                   && vehicleInformation.Id != CstDBClassif.Vehicles.names.evaliantMobile)
+                {
+                    sql.AppendFormat(" and {0}.id_slogan!=0 ",tablePrefixe);
+                }
+            }
+        }
+        #endregion
+
+
+        #region AppendTablesJoins
+               
+        /// <summary>
+        /// Append Tables Joins
+        /// </summary>
+        /// <param name="sql">sql builder</param>
+        /// <param name="vehicleInformation">vehicle Information</param>
+        /// <param name="TblVehicle"> Table Media type</param>
+        /// <param name="TblProduct">Table product</param>
+        /// <param name="TblAdvertiser">Table advertiser</param>
+        /// <param name="TblFormat">Table format</param>
+        /// <param name="tableName">table name</param>
+        /// <param name="tablePrefixe">table Prefixe</param>
+        private void AppendTablesJoins(StringBuilder sql, VehicleInformation vehicleInformation, Table TblVehicle, Table TblProduct, Table TblAdvertiser, Table TblFormat, string tableName, string tablePrefixe)
+        {
+            sql.Append(" Where ");
+            if (_session.CurrentModule == CstWeb.Module.Name.BILAN_CAMPAGNE)
+            {
+                sql.AppendFormat(" {0}.id_slogan!=0 and  ", tablePrefixe);
+            }
+            sql.Append("  " + TblVehicle.Prefix + ".id_vehicle=" + tablePrefixe + ".id_vehicle ");
+            sql.Append(" and " + TblVehicle.Prefix + ".id_language=" + _session.DataLanguage.ToString());
+            sql.Append(" and " + TblVehicle.Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+            sql.Append(" and " + TblProduct.Prefix + ".id_product=" + tablePrefixe + ".id_product ");
+            sql.Append(" and " + TblProduct.Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+            sql.Append(" and " + TblProduct.Prefix + ".id_language=" + _session.DataLanguage.ToString());
+            sql.Append(" and " + TblAdvertiser.Prefix + ".id_advertiser=" + tablePrefixe + ".id_advertiser ");
+            sql.Append(" and " + TblAdvertiser.Prefix + ".id_language=" + _session.DataLanguage.ToString());
+            sql.Append(" and " + TblAdvertiser.Prefix + ".activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+
+            if (_session.CurrentModule == CstWeb.Module.Name.BILAN_CAMPAGNE
+                  || vehicleInformation.Id == CstDBClassif.Vehicles.names.press
+                  || vehicleInformation.Id == CstDBClassif.Vehicles.names.internationalPress
+                  || vehicleInformation.Id == CstDBClassif.Vehicles.names.newspaper
+                  || vehicleInformation.Id == CstDBClassif.Vehicles.names.magazine)
+            {
+                sql.Append(" and " + TblFormat.Prefix + ".id_format(+)=" + tablePrefixe + ".id_format ");
+                sql.Append(" and " + TblFormat.Prefix + ".id_language(+)=" + _session.DataLanguage.ToString());
+                sql.Append(" and " + TblFormat.Prefix + ".activation(+)<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
+            }
+            if (_session.CurrentModule == CstWeb.Module.Name.BILAN_CAMPAGNE)
+            {
+                sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.appmTargetMediaAssignment).Prefix + ".id_media_secodip = " + tablePrefixe + ".id_media ");
+            }
+        }
+
+        protected virtual void AppendTables( System.Text.StringBuilder sql, VehicleInformation vehicleInformation,Table TblVehicle, Table TblProduct, Table TblAdvertiser, Table TblFormat, string tableName, string tablePrefixe)
+        {
+            sql.AppendFormat(" {0}, {1}, {2} ", TblVehicle.SqlWithPrefix, TblProduct.SqlWithPrefix, TblAdvertiser.SqlWithPrefix);
+            if (vehicleInformation.Id == CstDBClassif.Vehicles.names.press
+               || vehicleInformation.Id == CstDBClassif.Vehicles.names.internationalPress
+               || vehicleInformation.Id == CstDBClassif.Vehicles.names.newspaper
+               || vehicleInformation.Id == CstDBClassif.Vehicles.names.magazine
+               )
+            {
+                sql.AppendFormat(",{0} ", TblFormat.SqlWithPrefix);
+            }
+            if (_session.CurrentModule == CstWeb.Module.Name.BILAN_CAMPAGNE)
+            {
+                sql.AppendFormat(" ,{0} ", tableName);
+                sql.AppendFormat(" ,{0} ", WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.appmTargetMediaAssignment).SqlWithPrefix);
+            }
+            else sql.AppendFormat(" ,{0}.{1} {2} ", WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label, tableName, tablePrefixe);
+
+
+        }
+
+        #endregion
+
+
+        #region GetDateFields
+        /// <summary>
+        /// Ge date fields
+        /// </summary>
+        /// <param name="vehicleInformation">vehicle Information</param>
+        /// <returns>date fields</returns>
+        protected virtual string GetDateFields(VehicleInformation vehicleInformation)
+        {
+            string sql = "";
+
+            // Date fields
+            if (_session.CurrentModule == CstWeb.Module.Name.BILAN_CAMPAGNE)
+            {
+                sql += ", date_media_num,date_cover_num ";
+            }
+            else
+            {
+                if (vehicleInformation.Id == CstDBClassif.Vehicles.names.press
+                    || vehicleInformation.Id == CstDBClassif.Vehicles.names.internationalPress
+                    || vehicleInformation.Id == CstDBClassif.Vehicles.names.newspaper
+                    || vehicleInformation.Id == CstDBClassif.Vehicles.names.magazine
+                    )
+                    sql += ", date_cover_num as date_media_num ";
+                else sql += ", date_media_num ";
+            }
+            return sql;
+        }
+        #endregion
+
+        #region CanBuildSqlQuery
+        /// <summary>
+        /// Check if can build sql query
+        /// </summary>
+        /// <param name="vehicleInformation">vehicle Information</param>
+        /// <returns>True if can build sql query</returns>
+        protected virtual bool CanBuildSqlQuery(VehicleInformation vehicleInformation)
+        {
+            return (vehicleInformation != null
+                && ((vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.slogan) 
+                &&  vehicleInformation.Id != CstDBClassif.Vehicles.names.internet
+                 && vehicleInformation.Id != CstDBClassif.Vehicles.names.cinema)
+                || _session.CurrentModule == CstWeb.Module.Name.BILAN_CAMPAGNE));
+        }
+
+        #endregion
+
+
+        #region GetTableName
+        /// <summary>
+        /// Get table name
+        /// </summary>
+        /// <param name="vehicleInformation">vehicle Information</param>
+        /// <param name="currentModuleDescription">current Module Description</param>
+        /// <returns>table name</returns>
+        protected virtual string GetTableName(VehicleInformation vehicleInformation, TNS.AdExpress.Domain.Web.Navigation.Module currentModuleDescription)
+        {
+            string tableName = "";
+
+            if (_session.CurrentModule == CstWeb.Module.Name.BILAN_CAMPAGNE)
+            {
+                tableName = " " + WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.dataPressAPPM).SqlWithPrefix;
+            }
+            else
+            {
+                tableName = FctWeb.SQLGenerator.GetVehicleTableNameForDetailResult(vehicleInformation.Id, currentModuleDescription.ModuleType, _session.IsSelectRetailerDisplay);
+            }
+            return tableName;
+        }
+        
+        #endregion
+
+        #region GetTablePrefix
+        /// <summary>
+        /// Get table prefix
+        /// </summary>
+        /// <param name="vehicleInformation">vehicle Information</param>
+        /// <param name="currentModuleDescription">current Module Description</param>
+        /// <returns>table name</returns>
+        protected virtual string GetTablePrefix()
+        {
+            string tablePrefixe = "";
+
+            if (_session.CurrentModule == CstWeb.Module.Name.BILAN_CAMPAGNE)
+            {
+                tablePrefixe = WebApplicationParameters.DataBaseDescription.GetTable(TNS.AdExpress.Domain.DataBaseDescription.TableIds.dataPressAPPM).Prefix;
+
+            }
+            else
+            {
+                tablePrefixe = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+            }
+            return tablePrefixe;
+        }
+        
+        #endregion
+
+        #region GetFields
+        /// <summary>
+        /// Get SqL fields specific to one Mdia type
+        /// </summary>
+        /// <param name="idVehicle">ID media type</param>
+        /// <param name="prefixeTable">Table Prefixe</param>
+        /// <returns> champs de requêtes </returns>
+        protected virtual string GetFields(CstDBClassif.Vehicles.names idVehicle, string prefixeTable)
+        {
+            switch (idVehicle)
+            {
+                case CstDBClassif.Vehicles.names.radio:
+                case CstDBClassif.Vehicles.names.radioGeneral:
+                case CstDBClassif.Vehicles.names.radioSponsorship:
+                case CstDBClassif.Vehicles.names.radioMusic:
+                case CstDBClassif.Vehicles.names.tv:
+                case CstDBClassif.Vehicles.names.tvGeneral:
+                case CstDBClassif.Vehicles.names.tvSponsorship:
+                case CstDBClassif.Vehicles.names.tvAnnounces:
+                case CstDBClassif.Vehicles.names.tvNonTerrestrials:
+                case CstDBClassif.Vehicles.names.others:
+                    return ",id_media,TO_CHAR( duration)  as advertDimension, TO_CHAR(associated_file) as associated_file";
+                case CstDBClassif.Vehicles.names.internationalPress:
+                case CstDBClassif.Vehicles.names.press:
+                case CstDBClassif.Vehicles.names.magazine:
+                case CstDBClassif.Vehicles.names.newspaper:
+                    return ",id_media,format as advertDimension, visual as associated_file";
+                case CstDBClassif.Vehicles.names.outdoor:
+                    return ",id_media,type_board as advertDimension, associated_file as associated_file";
+                case CstDBClassif.Vehicles.names.directMarketing:
+                    return ",id_media,TO_CHAR(weight) as advertDimension, TO_CHAR(associated_file) as associated_file";
+                case CstDBClassif.Vehicles.names.adnettrack:
+                case CstDBClassif.Vehicles.names.evaliantMobile:
+                    return ",id_media, (dimension || ' / ' || format) as advertDimension, TO_CHAR(associated_file) as associated_file";
+                default: return "";
+            }
+        } 
+        #endregion
         #endregion
 
     }

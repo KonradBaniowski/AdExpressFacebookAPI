@@ -35,6 +35,9 @@ using TNS.AdExpress.Classification;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpressI.Classification.DAL;
+using System.Reflection;
+using TNS.AdExpress.Domain.CampaignTypes;
 
 #endregion
 
@@ -496,7 +499,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				#endregion
 
 				//_webSession.CustomerLogin.ModuleList();
-				Module currentModule = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
+				TNS.AdExpress.Domain.Web.Navigation.Module currentModule = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
 				try{
 					detailSelections=((ResultPageInformation) currentModule.GetResultPageInformation((int)_webSession.CurrentTab)).DetailSelectionItemsType;
 				}
@@ -597,6 +600,12 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                         case WebConstantes.DetailSelection.Type.bannersFormatSelected :
 							t.Append(GetBannersFormatSelected(_webSession));
 					        break;
+                        case WebConstantes.DetailSelection.Type.campaignType :
+                            t.Append(GetCampaignType(_webSession,currentModule));
+                            break;
+                        case WebConstantes.DetailSelection.Type.advertisementType:
+                            t.Append(GetAdTypeSelected(_webSession));
+                            break;
 						default:
 							break;
 					}
@@ -624,14 +633,16 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			
 			StringBuilder t = new System.Text.StringBuilder();
             string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
+            string absolutePath = string.Empty;
+            if (webSession.DomainName.Length > 0) absolutePath = "http://" + webSession.DomainName;
 
 			t.Append("<table cellpadding=0 cellspacing=0 width=100% >");
-            t.Append("<tr><td><img src=\"/App_Themes/" + themeName + WebConstantes.Images.LOGO_TNS + "\"></td>");
+            t.Append("<tr><td><img src=\"" + absolutePath + "/App_Themes/" + themeName + WebConstantes.Images.LOGO_TNS + "\"></td>");
 			switch (webSession.CurrentModule) {
 				case WebConstantes.Module.Name.DONNEES_DE_CADRAGE:
 				case WebConstantes.Module.Name.BILAN_CAMPAGNE:								
 					t.Append("<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>");
-					t.Append("<td><img src=\"/App_Themes/" + themeName + WebConstantes.Images.LOGO_APPM + "\"></td></tr>");
+                    t.Append("<td><img src=\"" + absolutePath + "/App_Themes/" + themeName + WebConstantes.Images.LOGO_APPM + "\"></td></tr>");
 					t.Append("<tr><td colspan=8>&nbsp;</td></tr>");
 					break;
 				default: 
@@ -692,7 +703,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <param name="webSession">Session du client</param>
 		/// <param name="currentModule">Module</param>
 		/// <returns>HTML</returns>
-		private string GetResultName(WebSession webSession, Module currentModule){
+		private string GetResultName(WebSession webSession, TNS.AdExpress.Domain.Web.Navigation.Module currentModule){
 			string currentResult = "";
 			StringBuilder html = new StringBuilder();
 			try{
@@ -720,7 +731,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <param name="periodEnd">Date de fin</param>
 		/// <returns>HTML</returns>
 		/// <remarks>Date format to be like for example novembre 2004 - janvier 2005</remarks>
-		protected virtual string GetDateSelected(WebSession webSession, Module currentModule, bool dateFormatText, string periodBeginning, string periodEnd){
+		protected virtual string GetDateSelected(WebSession webSession, TNS.AdExpress.Domain.Web.Navigation.Module currentModule, bool dateFormatText, string periodBeginning, string periodEnd){
 			StringBuilder html = new StringBuilder();
 			string startDate="";
 			string endDate="";
@@ -902,7 +913,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			if (webSession.isMediaSelected()){
 				html.Append(GetBlankLine());
 				html.Append("<tr><td "+cssTitleData+"><font "+cssTitle+">"+GestionWeb.GetWebWord(190,webSession.SiteLanguage)+" :</font></td></tr>");
-				html.Append(ToExcel(webSession.SelectionUniversMedia,cssLevel1,cssLevel2,cssLevel3));
+				html.Append(ToExcel(webSession.SelectionUniversMedia,cssLevel1,cssLevel2,cssLevel3,webSession.DataLanguage,webSession.CustomerDataFilters.DataSource));
 			}
 			return(html.ToString());
 		}
@@ -918,13 +929,15 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			StringBuilder t = new StringBuilder();
 			int idAdvertiser = 1;
 
+            TNS.FrameWork.DB.Common.IDataSource dataSource = webSession.CustomerDataFilters.DataSource;
+
 			#region Liste des supports de référence
 			// Alerte et Analyse portefeuille
 		
 			if(webSession.isReferenceMediaSelected()){
 				t.Append(GetBlankLine());
 				t.Append("<TR><TD colspan=4 " + cssTitleData + " ><font " + cssTitle + ">&nbsp;" + GestionWeb.GetWebWord(971, webSession.SiteLanguage) + " :</font></TD></TR>");
-				t.Append(ToExcel((System.Windows.Forms.TreeNode)webSession.ReferenceUniversMedia,cssLevel1,cssLevel2,cssLevel3));
+				t.Append(ToExcel((System.Windows.Forms.TreeNode)webSession.ReferenceUniversMedia,cssLevel1,cssLevel2,cssLevel3,webSession.DataLanguage,dataSource));
 			}
 			#endregion
 
@@ -933,198 +946,54 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			if (webSession.PrincipalProductUniverses.Count ==1) {
 				t.Append(GetBlankLine()); 
 				t.Append("<TR><TD colspan=4 " + cssTitleData + " ><font " + cssTitle + ">" + GestionWeb.GetWebWord(1759, webSession.SiteLanguage) + " :</font></TD></TR>");
-				adExpressUniverse = webSession.PrincipalProductUniverses[0];
-                //if (webSession.CustomerLogin.Connection == null) {
-                //    TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
-                //    webSession.CustomerLogin.Connection = (OracleConnection)dataSource.GetSource();
-                //}
-				t.Append(ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.Source));//TNS.AdExpress.Web.Functions.DisplayUniverse
+				adExpressUniverse = webSession.PrincipalProductUniverses[0];              
+                t.Append(ToExcel(adExpressUniverse, webSession.SiteLanguage, dataSource));
 			}
 			else if (webSession.PrincipalProductUniverses.Count > 1) {
-				
-                //if (webSession.CustomerLogin.Connection == null) {
-                //    TNS.FrameWork.DB.Common.IDataSource dataSource = new TNS.FrameWork.DB.Common.OracleDataSource(new OracleConnection(webSession.CustomerLogin.OracleConnectionString));
-                //    webSession.CustomerLogin.Connection = (OracleConnection)dataSource.GetSource();
-                //}
+				              
 				for (int k = 0; k < webSession.PrincipalProductUniverses.Count; k++) {
 					if(webSession.PrincipalProductUniverses.ContainsKey(k)){
 						t.Append(GetBlankLine());
 						t.Append("<TR><TD colspan=4 " + cssTitleData + " ><font " + cssTitle + ">" + GestionWeb.GetWebWord(1759, webSession.SiteLanguage) + " :</font></TD></TR>");
                         t.Append("<TR><TD colspan=4 class=\"txtViolet11Bold whiteBackGround\" ><font>" + webSession.PrincipalProductUniverses[k].Label + " </font></TD></TR>");
 						adExpressUniverse = webSession.PrincipalProductUniverses[k];
-						t.Append(ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.Source));
+                        t.Append(ToExcel(adExpressUniverse, webSession.SiteLanguage, dataSource));
 					}
 				}
 			}
-			#endregion	
-
-			#region Liste d'annonceurs / Liste des produits en affinage (Inactivated by Dédé 06/12/2007)
-			//// Alerte et Analyse Plan média
-			//// Alerte et Analyse Concurrentielle et Potentiel pour 'AFFINER'
-			//// Alerte Portefeuille pour 'AFFINER'
-
-			//if (webSession.isAdvertisersSelected() && !webSession.isCompetitorAdvertiserSelected()){
-			//    t.Append(GetBlankLine());
-			//    if(((LevelInformation)webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess  ||	((LevelInformation)webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException ) {
-			//        t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(814,webSession.SiteLanguage)+"</font></td></tr>");
-			//    }
-			//    else if(((LevelInformation)webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess ||	((LevelInformation)webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.advertiserException ) {
-			//        t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(813,webSession.SiteLanguage)+"</font></td></tr>");
-			//    }
-			//    else if(((LevelInformation)webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.brandAccess ||	((LevelInformation)webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.brandException ) {
-			//        t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(1585,webSession.SiteLanguage)+"</font></td></tr>");
-			//    }
-			//    else if(((LevelInformation)webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.productAccess ||	((LevelInformation)webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.productException ) {
-			//        t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(815,webSession.SiteLanguage)+"</font></td></tr>");
-			//    }
-			//    else if(((LevelInformation)webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess ||	((LevelInformation)webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.sectorException ) {
-			//        t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(965,webSession.SiteLanguage)+"</font></td></tr>");
-			//    }
-			//    else if(((LevelInformation)webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess ||	((LevelInformation)webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.subSectorException ) {
-			//        t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(966,webSession.SiteLanguage)+"</font></td></tr>");
-			//    }
-			//    else if(((LevelInformation)webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.groupAccess ||	((LevelInformation)webSession.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.groupException ) {
-			//        t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(964,webSession.SiteLanguage)+"</font></td></tr>");
-			//    }
-			//    // Affichage du System.Windows.Forms.TreeNode
-			//    t.Append(ToExcel(webSession.CurrentUniversAdvertiser,cssLevel1,cssLevel2,cssLevel3));
-			//}
-			#endregion
-
-			#region Liste de produits (Inactivated by Dédé 06/12/2007)
-			//// Indicateurs et tableaux dynamiques
-			//// Tableaux de bord
-
-			//if (webSession.isSelectionProductSelected()){
-			//    t.Append(GetBlankLine());
-			//    if(((LevelInformation)webSession.CurrentUniversProduct.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.productAccess ||	((LevelInformation)webSession.SelectionUniversProduct.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.productException ) {
-			//        t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(815,webSession.SiteLanguage)+"</font></td></tr>");
-			//    }
-			//    else if(((LevelInformation)webSession.SelectionUniversProduct.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess ||	((LevelInformation)webSession.SelectionUniversProduct.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.sectorException ) {
-			//        t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(965,webSession.SiteLanguage)+"</font></td></tr>");
-			//    }
-			//    else if(((LevelInformation)webSession.SelectionUniversProduct.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess ||	((LevelInformation)webSession.SelectionUniversProduct.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.subSectorException ) {
-			//        t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(966,webSession.SiteLanguage)+"</font></td></tr>");
-			//    }
-			//    else if(((LevelInformation)webSession.SelectionUniversProduct.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.groupAccess ||	((LevelInformation)webSession.SelectionUniversProduct.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.groupException ) {
-			//        t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(964,webSession.SiteLanguage)+"</font></td></tr>");
-			//    }
-			//    // Affichage du System.Windows.Forms.TreeNode
-			//    t.Append(ToExcel(webSession.SelectionUniversProduct,cssLevel1,cssLevel2,cssLevel3));
-				
-			//    if(webSession.CurrentModule==195) {
-			//        //t.Append("<tr height=\"20\">");
-			//        //t.Append("<td colspan=4 vAlign=\"top\" >"+TNS.AdExpress.Web.BusinessFacade.Selections.Products.SectorsSelectedBusinessFacade.GetExcelSectorsSelected(webSession)+"</td>");
-			//        //t.Append("</tr>");
-
-			//        t.Append(GetSectorsSelected());
-			//    }
-			//}
-			//else if(IsSelectionProductSelected(webSession)){
-			//    if(((LevelInformation)webSession.CurrentUniversProduct.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess ||	((LevelInformation)webSession.CurrentUniversProduct.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.sectorException) {
-			//        t.Append(GetBlankLine());
-			//        t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(965,webSession.SiteLanguage)+"</font></td></tr>");
-			//    }
-			//    // Affichage du System.Windows.Forms.TreeNode
-			//    t.Append(ToExcel(webSession.CurrentUniversProduct,cssLevel1,cssLevel2,cssLevel3));
-			//}
-			#endregion
-
-			#region Annonceurs de références (Inactivated by Dédé 06/12/2007)
-			//// Indicateurs et tableaux dynamiques
-
-			//if (webSession.isReferenceAdvertisersSelected()){
-			//    t.Append(GetBlankLine());
-			//    if(((LevelInformation)webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess ||	((LevelInformation)webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException ) {
-			//        t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(814,webSession.SiteLanguage)+"</font></td></tr>");
-			//    }
-			//    else if(((LevelInformation)webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess||	((LevelInformation)webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.advertiserException ) {
-			//        t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(813,webSession.SiteLanguage)+"</font></td></tr>");
-			//    }
-			//    else if(((LevelInformation)webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.brandAccess||	((LevelInformation)webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.brandException ) {
-			//        t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(1585,webSession.SiteLanguage)+"</font></td></tr>");
-			//    }
-			//    else if(((LevelInformation)webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.productAccess ||	((LevelInformation)webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.productException ) {
-			//        t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(815,webSession.SiteLanguage)+"</font></td></tr>");
-			//    }
-			//    else if(((LevelInformation)webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess ||	((LevelInformation)webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.sectorException ) {
-			//        t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(965,webSession.SiteLanguage)+"</font></td></tr>");
-			//    }
-			//    else if(((LevelInformation)webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess ||	((LevelInformation)webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.subSectorException ) {
-			//        t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(966,webSession.SiteLanguage)+"</font></td></tr>");
-			//    }
-			//    else if(((LevelInformation)webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.groupAccess ||	((LevelInformation)webSession.ReferenceUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.groupException ) {
-			//        t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(964,webSession.SiteLanguage)+"</font></td></tr>");
-			//    }
-			//    if(webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR || webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE ){
-			//        t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(1195,webSession.SiteLanguage)+"</font></td></tr>");
-			//    }
-			//    // Affichage du System.Windows.Forms.TreeNode
-			//    t.Append(ToExcel(webSession.ReferenceUniversAdvertiser,cssLevel1,cssLevel2,cssLevel3));
-			//}
-			#endregion
-
-			#region Annonceurs Concurrents (Inactivated by Dédé 06/12/2007)
-			//// Alerte et Analyse Plan Média Concurrentiel
-			//// Indicateurs et tableaux dynamiques
-			//// Chronopresse
-
-			//if(webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR || webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE ){
-			//    idAdvertiser=0;
-			//}
-			//if(webSession.isCompetitorAdvertiserSelected()){
-			//    while(webSession.CompetitorUniversAdvertiser[idAdvertiser]!=null){
-			//        System.Windows.Forms.TreeNode tree=null;
-			//        if(webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR || webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE ){
-			//            tree=(System.Windows.Forms.TreeNode)webSession.CompetitorUniversAdvertiser[idAdvertiser];
-			//        }
-			//        else{
-			//            tree=((TNS.AdExpress.Web.Core.Sessions.CompetitorAdvertiser)webSession.CompetitorUniversAdvertiser[idAdvertiser]).TreeCompetitorAdvertiser;
-			//        }
-			//        if(tree.FirstNode!=null){
-			//            t.Append(GetBlankLine());
-			//            if(((LevelInformation)tree.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess ||	((LevelInformation)tree.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException ) {
-			//                t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(814,webSession.SiteLanguage)+"</font></td></tr>");
-			//            }
-			//            else if(((LevelInformation)tree.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess||	((LevelInformation)tree.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.advertiserException ) {
-			//                t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(813,webSession.SiteLanguage)+"</font></td></tr>");
-			//            }
-			//            else if(((LevelInformation)tree.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.brandAccess||	((LevelInformation)tree.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.brandException ) {
-			//                t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(1585,webSession.SiteLanguage)+"</font></td></tr>");
-			//            }
-			//            else if(((LevelInformation)tree.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.productAccess ||	((LevelInformation)tree.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.productException ) {
-			//                t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(815,webSession.SiteLanguage)+"</font></td></tr>");
-			//            }
-			//            if(webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR || webSession.CurrentModule==TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE ){
-			//                t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(1196,webSession.SiteLanguage)+"</font></td></tr>");
-			//            }
-			//            if(webSession.CurrentModule!=TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR && webSession.CurrentModule!=TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE ){
-			//                t.Append("<TR>");
-			//                //t.Append("<TD colspan=4 class=\"txtViolet11Bold\" bgColor=\"#ffffff\">");
-			//                t.Append("<TD colspan=4 "+cssTitleData+">");
-			//                t.Append("<Label>"+(string)(((TNS.AdExpress.Web.Core.Sessions.CompetitorAdvertiser)webSession.CompetitorUniversAdvertiser[idAdvertiser]).NameCompetitorAdvertiser)+"</Label>");
-			//                t.Append("</TD></TR>");
-			//            }
-			//            // Affichage du System.Windows.Forms.TreeNode	
-			//            if(webSession.CurrentModule!=TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR && webSession.CurrentModule!=TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE ){
-			//                t.Append(ToExcel((System.Windows.Forms.TreeNode)(((TNS.AdExpress.Web.Core.Sessions.CompetitorAdvertiser)webSession.CompetitorUniversAdvertiser[idAdvertiser]).TreeCompetitorAdvertiser),cssLevel1,cssLevel2,cssLevel3));
-			//            }
-			//            else{
-			//                t.Append(ToExcel(tree,cssLevel1,cssLevel2,cssLevel3));
-			//            }
-			//            idAdvertiser++;
-			//        }
-			//        else{
-			//            idAdvertiser++;
-			//        }
-			//    }
-			//}
-			#endregion
+			#endregion				
 
 			return(t.ToString());
 		}
 		#endregion
 
+        #region Ad type selected
+        /// <summary>
+        ///Ad type selected
+        /// </summary>
+        /// <param name="webSession">Session client</param>
+        /// <returns>HTML</returns>
+        private string GetAdTypeSelected(WebSession webSession)
+        {
+            StringBuilder t = new StringBuilder();
+            TNS.FrameWork.DB.Common.IDataSource dataSource = webSession.CustomerDataFilters.DataSource;
+            AdExpressUniverse adExpressUniverse = null;
+
+            #region selection Ad type
+            if ( webSession.IsAdvertisementTypeUniverseSelected())
+            {
+                t.Append(GetBlankLine());
+                t.Append("<TR><TD colspan=4 " + cssTitleData + " ><font " + cssTitle + ">" + GestionWeb.GetWebWord(2675, webSession.SiteLanguage) + " :</font></TD></TR>");
+                adExpressUniverse = webSession.AdvertisementTypeUniverses[0];
+                t.Append(ToExcel(adExpressUniverse, webSession.SiteLanguage, dataSource));
+            }            
+            #endregion
+
+            return (t.ToString());
+        }
+        #endregion
+
+		#region Niveau de détail support (Média détaillé par)
         #region Advertising Agency Selected
 		/// <summary>
         /// Advertising Agency Selected
@@ -1242,7 +1111,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <param name="webSession">User session</param>
         /// <param name="m">Current module</param>
 		/// <returns>HTML</returns>
-        private string GetAutoPromo(WebSession webSession, Module m)
+        private string GetAutoPromo(WebSession webSession, TNS.AdExpress.Domain.Web.Navigation.Module m)
         {
             bool isEvaliant = false;
             if (m.Id != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA)
@@ -1282,8 +1151,30 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		}
 		#endregion
 
-		#region Nouveau support dans :
-		/// <summary>
+        #region Get campaign type
+        /// <summary>
+        /// Get campaign type selection
+        /// </summary>
+        /// <param name="webSession">web Session</param>
+        /// <param name="m">module</param>
+        /// <returns>HTML</returns>
+        private string GetCampaignType(WebSession webSession, TNS.AdExpress.Domain.Web.Navigation.Module m)
+        {
+            ArrayList detailSelections = ((ResultPageInformation)m.GetResultPageInformation((int)_webSession.CurrentTab)).DetailSelectionItemsType;
+            if (detailSelections.Contains(WebConstantes.DetailSelection.Type.campaignType.GetHashCode())
+                && webSession.CampaignType != WebConstantes.CustomerSessions.CampaignType.notDefined
+                && WebApplicationParameters.AllowCampaignTypeOption)
+            {
+                return ("<tr><td colspan=4 " + cssTitleData + "><font " + cssTitle + ">" + GestionWeb.GetWebWord(2671, webSession.SiteLanguage) + ": </font>" + GestionWeb.GetWebWord(CampaignTypesInformation.Get(_webSession.CampaignType).WebTextId, webSession.SiteLanguage) + "</td></tr>");
+
+            }
+
+            return ("");
+        }
+        #endregion
+
+        #region Nouveau support dans :
+        /// <summary>
 		/// Nouveau support dans :
 		/// </summary>
 		/// <param name="webSession">Session du client</param>
@@ -1319,8 +1210,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				t.Append(GetBlankLine());
 				t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(1087,webSession.SiteLanguage) +"</font></td></tr>");
 				while((System.Windows.Forms.TreeNode)webSession.CompetitorUniversMedia[idMedia]!=null){
-					System.Windows.Forms.TreeNode tree=(System.Windows.Forms.TreeNode)webSession.CompetitorUniversMedia[idMedia];				
-					t.Append(ToExcel(((System.Windows.Forms.TreeNode)webSession.CompetitorUniversMedia[idMedia]),cssLevel1,cssLevel2,cssLevel3));
+					System.Windows.Forms.TreeNode tree=(System.Windows.Forms.TreeNode)webSession.CompetitorUniversMedia[idMedia];
+                    t.Append(ToExcel(((System.Windows.Forms.TreeNode)webSession.CompetitorUniversMedia[idMedia]), cssLevel1, cssLevel2, cssLevel3, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource));
 					t.Append(GetBlankLine());
 					idMedia++;
 				}
@@ -1340,7 +1231,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			if(webSession.IsCurrentUniversProgramTypeSelected()){				
 				t.Append(GetBlankLine());
 				t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(2066,webSession.SiteLanguage) +"</font></td></tr>");
-				t.Append(ToExcel(((System.Windows.Forms.TreeNode)webSession.CurrentUniversProgramType),cssLevel1,cssLevel2,cssLevel3));
+				t.Append(ToExcel(((System.Windows.Forms.TreeNode)webSession.CurrentUniversProgramType),cssLevel1,cssLevel2,cssLevel3,webSession.DataLanguage,webSession.CustomerDataFilters.DataSource));
 				t.Append(GetBlankLine());
 			}
 			return(t.ToString());
@@ -1360,7 +1251,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				
 				t.Append(GetBlankLine());
 				t.Append("<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+ GestionWeb.GetWebWord(2067,webSession.SiteLanguage) +"</font></td></tr>");
-				t.Append(ToExcel(((System.Windows.Forms.TreeNode)webSession.CurrentUniversSponsorshipForm),cssLevel1,cssLevel2,cssLevel3));
+                t.Append(ToExcel(((System.Windows.Forms.TreeNode)webSession.CurrentUniversSponsorshipForm), cssLevel1, cssLevel2, cssLevel3, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource));
 				t.Append(GetBlankLine());
 			}
 			return(t.ToString());
@@ -1456,7 +1347,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 					if(((LevelInformation)webSession.SelectionUniversAEPMTarget.LastNode.Tag).Text.Length>0){
 						html.Append("<tr height=\"20\"><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+GestionWeb.GetWebWord(1763,webSession.SiteLanguage)+"</font></td></tr>");
 						// Affichage du System.Windows.Forms.TreeNode
-						html.Append(ToExcel(webSession.SelectionUniversAEPMTarget,cssLevel1,cssLevel2,cssLevel3));
+                        html.Append(ToExcel(webSession.SelectionUniversAEPMTarget, cssLevel1, cssLevel2, cssLevel3, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource));
 					}
 				}
 			}
@@ -1483,7 +1374,12 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		private string GetSloganSelected(WebSession webSession){
 			string tmp="";
 			int nbCol=0;
-			if(webSession.SloganIdZoom>0){
+            TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.creativesUtilities];
+            if (cl == null) throw (new NullReferenceException("Core layer is null for the creatives utilities class"));
+            TNS.AdExpress.Web.Core.Utilities.Creatives creativesUtilities = (TNS.AdExpress.Web.Core.Utilities.Creatives)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
+
+            if (creativesUtilities.IsSloganZoom(webSession.SloganIdZoom))
+            {
 				tmp+="<tr><td colspan=4 "+cssTitleData+"><font "+cssTitle+">"+GestionWeb.GetWebWord(1888,webSession.SiteLanguage)+" :</font> "+webSession.SloganIdZoom.ToString()+"</td></tr>";
 				return(tmp);
 			}
@@ -1562,13 +1458,14 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <param name="cssLevel2">Style CSS du niveau 2</param>
 		/// <param name="cssLevel3">Style CSS du niveau 3</param>
 		/// <returns>Code HTML</returns>
-        public string ToExcel(System.Windows.Forms.TreeNode root, string cssLevel1, string cssLevel2, string cssLevel3)
+        public string ToExcel(System.Windows.Forms.TreeNode root, string cssLevel1, string cssLevel2, string cssLevel3,int dataLanguage, TNS.FrameWork.DB.Common.IDataSource source)
         {
 			int maxLevel=0;
+            Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL> dicClassif = GetLevelsLabels(root, source,dataLanguage);
 			GetNbLevels(root,1,ref maxLevel);
 			StringBuilder html = new StringBuilder();
 			int nbTD=1;
-			ToExcel(root,ref html,0,maxLevel-1,ref nbTD);
+			ToExcel(root,ref html,0,maxLevel-1,ref nbTD,dicClassif);
 			return(html.ToString());
 		}
 
@@ -1640,6 +1537,77 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             }
         }
 
+        private void GetLevelsIdList(System.Windows.Forms.TreeNode root, Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, List<long>> dic)
+        {
+
+            TNS.AdExpress.Constantes.Customer.Right.type levelType = TNS.AdExpress.Constantes.Customer.Right.type.nothing;
+            List<long> idList = null;
+            long id = long.MinValue;
+            if (dic == null) dic = new Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, List<long>>();
+
+            if (root.Tag != null)
+            {
+                 id = ((LevelInformation)root.Tag).ID;
+                levelType = ((LevelInformation)root.Tag).Type;
+                idList = new List<long>();
+                if (dic.ContainsKey(levelType))
+                {
+                    if (!dic[levelType].Contains(id)) dic[levelType].Add(id);
+                }
+                else
+                {
+                    idList = new List<long>();
+                    idList.Add(id);
+                    dic.Add(levelType, idList);
+                }
+            }
+
+            foreach (System.Windows.Forms.TreeNode currentNode in root.Nodes)
+            {               
+                GetLevelsIdList(currentNode, dic);
+            }
+        }
+        /// <summary>
+        /// Get classification levels labels
+        /// </summary>
+        /// <returns></returns>
+        private Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL>  GetLevelsLabels(System.Windows.Forms.TreeNode root, TNS.FrameWork.DB.Common.IDataSource source, int dataLanguage)
+        {
+            Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, List<long>> dic = new Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, List<long>>();
+            Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL> dicClassif = null;
+            TNS.AdExpress.Domain.Layers.CoreLayer cl = null;
+            TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = null;
+            TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL levelItems = null;
+            List<long> idList = null;
+            long id = -1;
+            TNS.AdExpress.Constantes.Customer.Right.type levelType = TNS.AdExpress.Constantes.Customer.Right.type.nothing;
+                  
+            GetLevelsIdList(root, dic);
+           
+            if (dic != null && dic.Count > 0)
+            {
+                cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classificationLevelList];
+                if (cl == null) throw (new NullReferenceException("Core layer is null for the Detail selection control"));
+                object[] param = new object[2];
+                param[0] = source;
+                param[1] = dataLanguage;
+                factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+
+                foreach (KeyValuePair<TNS.AdExpress.Constantes.Customer.Right.type, List<long>> kpv in dic)
+                {
+                    string[] intArrayStr = Array.ConvertAll<long, string>(kpv.Value.ToArray(), new Converter<long, string>(Convert.ToString));
+                    string temp = String.Join(",", intArrayStr);
+                    levelItems = factoryLevels.CreateClassificationLevelListDAL(kpv.Key, temp);
+                    if (levelItems != null && levelItems.IdListOrderByClassificationItem.Count > 0)
+                    {
+                        if (dicClassif == null) dicClassif = new Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, ClassificationLevelListDAL>();
+                        dicClassif.Add(kpv.Key, levelItems);
+                    }
+                }
+            }
+
+            return dicClassif;
+        }
 		/// <summary>
 		/// Affichage d'un arbre pour l'export Excel
 		/// </summary>
@@ -1655,13 +1623,14 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// dans la méthode ci-après et ajouter les niveaux dans la méthode GetLevelCss(int level)
 		/// - Affichage sur 3 colonnes dans le dernier niveau
 		/// </remarks>
-        private bool ToExcel(System.Windows.Forms.TreeNode root, ref StringBuilder html, int level, int maxLevel, ref int nbTD)
+        private bool ToExcel(System.Windows.Forms.TreeNode root, ref StringBuilder html, int level, int maxLevel, ref int nbTD, Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL> dicClassif)
         {
             #region Variables
             string img = "";
             string rightBorder = string.Empty;
             string rightBottomBorder = string.Empty;
             string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
+            string absolutePath = string.Empty;
             #endregion
 
 			#region Border Color
@@ -1679,20 +1648,35 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			#endregion
 
 			#region Checkbox
+            if (_webSession.DomainName.Length > 0) absolutePath = "http://" + _webSession.DomainName;
 			// Non cocher
-			if(!root.Checked) img="<img src=/App_Themes/"+themeName+"/Images/Common/checkbox_not_checked.GIF>";
-				// Cocher
-			else if(root.Checked) img="<img src=/App_Themes/"+themeName+"/Images/Common/checkbox.GIF>";
+            if (!root.Checked) img = "<img src=\"" + absolutePath + "/App_Themes/" + themeName + "/Images/Common/checkbox_not_checked.GIF\">";
+			// Cocher
+            else if (root.Checked) img = "<img src=\"" + absolutePath + "/App_Themes/" + themeName + "/Images/Common/checkbox.GIF\">";
 			#endregion
 
 			// Si on est dans le dernier niveau de l'arbre
 			if(level==maxLevel){ 
 				// Ajout d'une cellule TD, valable pour n'importe quel niveau de l'arbre (affichage du noeud)
-				html.Append("<td "+GetLevelCss(level)+" >"+img+"&nbsp;&nbsp;&nbsp;&nbsp;"+((LevelInformation)root.Tag).Text+"</td>");	
+                
+                    //html.Append("<td " + GetLevelCss(level) + " >" + img + "&nbsp;&nbsp;&nbsp;&nbsp;" + ((LevelInformation)root.Tag).Text + "</td>");
+                    html.Append("<td " + GetLevelCss(level) + " >" + img + "&nbsp;&nbsp;&nbsp;&nbsp;");
+                    if (dicClassif != null && dicClassif.ContainsKey(((LevelInformation)root.Tag).Type) && dicClassif[((LevelInformation)root.Tag).Type].IdListOrderByClassificationItem.Contains(((LevelInformation)root.Tag).ID))                
+                    html.Append(dicClassif[((LevelInformation)root.Tag).Type][((LevelInformation)root.Tag).ID]);
+                    html.Append( "</td>");	
+                
+				
 			}
 			else{
 				// Ajout d'une cellule TD, valable pour n'importe quel niveau de l'arbre (affichage du noeud)
-				if(level!=0)html.Append("<tr \""+cssBorderLevel+"\"><td colspan=4 "+GetLevelCss(level)+" >"+img+"&nbsp;&nbsp;&nbsp;&nbsp;"+((LevelInformation)root.Tag).Text+"</td></tr>");
+				if(level!=0)
+                {
+                    //html.Append("<tr \""+cssBorderLevel+"\"><td colspan=4 "+GetLevelCss(level)+" >"+img+"&nbsp;&nbsp;&nbsp;&nbsp;")+((LevelInformation)root.Tag).Text+"</td></tr>");
+                    html.Append("<tr \""+cssBorderLevel+"\"><td colspan=4 "+GetLevelCss(level)+" >"+img+"&nbsp;&nbsp;&nbsp;&nbsp;");
+                    if (dicClassif != null && dicClassif.ContainsKey(((LevelInformation)root.Tag).Type) && dicClassif[((LevelInformation)root.Tag).Type].IdListOrderByClassificationItem.Contains(((LevelInformation)root.Tag).ID))
+                        html.Append(dicClassif[((LevelInformation)root.Tag).Type][((LevelInformation)root.Tag).ID]);
+                    html.Append("</td></tr>");
+                }
 				// On prépare l'affichage du dernier niveau de l'arbre (nouvelle ligne) si on affiche le père d'une feuille
 				if(level==maxLevel-1 && root.Nodes.Count>0)
 					html.Append("<tr>");
@@ -1700,7 +1684,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 			// Boucle sur chaque noeud de l'arbre
 			foreach(System.Windows.Forms.TreeNode currentNode in root.Nodes){
 				// Si le niveau inférieur indique qu'il faut changer de ligne et que la demande n'a pas été faite par le dernier fils
-				if(ToExcel(currentNode,ref html,level+1,maxLevel,ref nbTD) && currentNode!=root.LastNode){
+				if(ToExcel(currentNode,ref html,level+1,maxLevel,ref nbTD,dicClassif) && currentNode!=root.LastNode){
 					html.Append("</tr><tr>");
 				}
 			}
@@ -1822,14 +1806,21 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
             #region Variables
             int level = 1;
-            ArrayList itemIdList = null;
+            List<long> itemIdList = null;
             bool lineClosed = false;
             int colSpan = 0;
             string rightBorder = string.Empty;
             string rightBottomBorder = string.Empty;
             string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
-            string img = "<img src=/App_Themes/" + themeName + "/Images/Common/checkbox.GIF>";
-            TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess universeItems = null;
+            string img = string.Empty;
+            if(_webSession.DomainName.Length>0)
+                img = "<img src=\"http://" + _webSession.DomainName + "/App_Themes/" + themeName + "/Images/Common/checkbox.GIF\">";
+            else
+                img = "<img src=\"/App_Themes/" + themeName + "/Images/Common/checkbox.GIF\">";
+            //TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess universeItems = null;
+            TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL universeItems = null;
+            TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = null;
+            TNS.AdExpress.Domain.Layers.CoreLayer cl = null;
             int code = 0;
             StringBuilder html = new StringBuilder();
             #endregion
@@ -1854,7 +1845,13 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 
 			if (groups != null && groups.Count > 0) {
 
-
+                 cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classificationLevelList];
+                if (cl == null) throw (new NullReferenceException("Core layer is null for the Detail selection control"));
+                object[] param = new object[2];
+                param[0] = source;
+                param[1] = _webSession.DataLanguage;
+                factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+        
 				for (int i = 0; i < groups.Count; i++) {
 					List<long> levelIdsList = groups[i].GetLevelIdsList();
 
@@ -1875,7 +1872,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 							//Show items of the current level
 							level = 2;
 							html.Append("<tr>");
-                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),_webSession.DataLanguage,source);
+                            universeItems = factoryLevels.CreateDefaultClassificationLevelListDAL(UniverseLevels.Get(levelIdsList[j]), groups[i].GetAsString(levelIdsList[j]));
+                            //universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),_webSession.DataLanguage,source);
 							if (universeItems != null) {
 								itemIdList = universeItems.IdListOrderByClassificationItem;
 								if (itemIdList != null && itemIdList.Count > 0) {
@@ -1906,11 +1904,13 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 					}
 				}
 			}
-
+            universeItems = null;
+            factoryLevels = null; 
+            cl =null;
 			return html.ToString();
 		}
 
 		#endregion
-
-	}
+        #endregion
+    }
 }

@@ -190,7 +190,7 @@ namespace TNS.AdExpressI.ProductClassReports
         /// <param name="excel">Report as Excel output ? </param>
         /// <exception cref="TNS.AdExpressI.ProductClassReports.Exceptions.NotImplementedReportException">Thrown when the invoked report is not implemented.</exception>
         /// <returns>HTML Code</returns>
-        protected string GetProductClassReport(int resultType, bool excel)
+        protected virtual string GetProductClassReport(int resultType, bool excel)
         {
             switch (resultType)
             {
@@ -231,7 +231,7 @@ namespace TNS.AdExpressI.ProductClassReports
         /// <param name="excel">Report as Excel output ? </param>
         /// <exception cref="TNS.AdExpressI.ProductClassReports.Exceptions.NotImplementedReportException">Thrown when the invoked report is not implemented.</exception>
         /// <returns>Data Result</returns>
-        protected ResultTable GetGenericProductClassReport(int resultType, bool excel)
+        virtual protected ResultTable GetGenericProductClassReport(int resultType, bool excel)
         {
             switch (resultType)
             {

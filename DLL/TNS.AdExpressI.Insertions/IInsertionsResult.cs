@@ -16,15 +16,42 @@ using System.Text;
 
 using TNS.AdExpress.Domain.Classification;
 using TNS.FrameWork.WebResultUI;
+using System.Data;
 
 namespace TNS.AdExpressI.Insertions
 {
     public interface IInsertionsResult
     {
 
+        #region Properties
+        /// <summary>
+        /// Define Render Type
+        /// </summary>
+        TNS.FrameWork.WebResultUI.RenderType RenderType
+        {
+            get;
+            set;
+        }
+
+        #endregion
+
         ResultTable GetInsertions(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate);
         ResultTable GetCreatives(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate);
         ResultTable GetMSCreatives(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate);
         List<VehicleInformation> GetPresentVehicles(string filters, int universId, bool sloaganNotNull);
+          /// <summary>
+        /// True if can show insertion 
+        /// </summary>
+        /// <param name="vehicle">vehicle</param>
+        /// <returns>True if can show insertion</returns>
+        bool CanShowInsertion(VehicleInformation vehicle);
+
+        /// <summary>
+        /// Get creative Links
+        /// </summary>
+        /// <param name="idVehicle">Identifier Vehicle</param>
+        /// <param name="currentRow">Current row</param>
+        /// <returns>Creative Links string</returns>
+        string GetCreativeLinks(long idVehicle, DataRow currentRow);
     }
 }

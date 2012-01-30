@@ -4,17 +4,26 @@
     <vehicle id="1" name="presse">
       <detailColumn id="6"/>
     </vehicle>
-    <vehicle id="11" name="presse internationale">
-      <detailColumn id="6"/>
-    </vehicle>
-    <vehicle id="2" name="radio">
+    <vehicle id="200" name="radioGeneral">
       <detailColumn id="7"/>
     </vehicle>
-    <vehicle id="3" name="télévision">
-      <detailColumn id="8"/>
+    <vehicle id="201" name="radioSponsorship">
+      <detailColumn id="7"/>
     </vehicle>
-    <vehicle id="5" name="Autres">
-      <detailColumn id="8"/>
+    <vehicle id="202" name="radioMusic">
+      <detailColumn id="7"/>
+    </vehicle>
+    <vehicle id="100" name="tvGeneral">
+      <detailColumn id="7"/>
+    </vehicle>
+    <vehicle id="101" name="tvSponsorship">
+      <detailColumn id="7"/>
+    </vehicle>
+    <vehicle id="102" name="tvAnnounces">
+      <detailColumn id="7"/>
+    </vehicle>
+    <vehicle id="103" name="tvNonTerrestrials">
+      <detailColumn id="7"/>
     </vehicle>
   </vehicleGroups>
 </configuration> 

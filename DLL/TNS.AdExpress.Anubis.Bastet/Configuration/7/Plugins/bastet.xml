@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <Configuration>
-	<CustomerMail server="frmitch-msprod" port="25" from="tnsadexpress@kantarmedia.com" webServer="http://www.tnsadexpress.com" subject="AdExpress"/>
+	<CustomerMail server="frmitch-msprod" port="25" from="tnsadexpress@kantarmedia.com" webServer="http://adexpr-ww" subject="AdExpress"/>
 	<!--<ExcelPath path="\\testarossa2\adexdatas\AdExCustomerFiles"/>-->
 	<ExcelPath path="C:\Program Files\TNS\Ares XlsStats Service\tempStatsCustomerFiles"/>
 	<!--If path empty then path = current directory of executable-->

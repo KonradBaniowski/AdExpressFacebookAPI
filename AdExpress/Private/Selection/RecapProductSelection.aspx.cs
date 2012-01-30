@@ -35,6 +35,11 @@ using CstPeriodDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Dis
 using TNS.Classification.Universe;
 using TNS.AdExpress.Classification;
 using TNS.AdExpress.Web.Core.Utilities;
+using TNS.AdExpressI.Date.DAL;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Classification;
+using System.Reflection;
 
 #endregion
 
@@ -539,7 +544,12 @@ namespace AdExpress.Private.Selection{
 				_webSession.OnSetVehicle(DBConstantesClassification.Vehicles.names.plurimedia.GetHashCode());
 
 				// Extraction Last Available Recap Month
-				_webSession.LastAvailableRecapMonth = DBFunctions.CheckAvailableDateForMedia(DBConstantesClassification.Vehicles.names.plurimedia.GetHashCode(), _webSession);
+                //_webSession.LastAvailableRecapMonth = DBFunctions.CheckAvailableDateForMedia(DBConstantesClassification.Vehicles.names.plurimedia.GetHashCode(), _webSession);
+                CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+                object[] param = new object[1];
+                param[0] = _webSession;
+                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                _webSession.LastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(VehiclesInformation.EnumToDatabaseId(DBConstantesClassification.Vehicles.names.plurimedia));
 
 				_webSession.SelectionUniversMedia = _webSession.CurrentUniversMedia = current;
 				_webSession.PreformatedMediaDetail = WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicle;				
@@ -574,7 +584,12 @@ namespace AdExpress.Private.Selection{
 					//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 					//du dernier mois dispo en BDD
 					//traitement de la notion de fréquence
-					absolutEndPeriod = Dates.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
+
+                    CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+                    object[] param = new object[1];
+                    param[0] = _webSession;
+                    IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                    absolutEndPeriod = dateDAL.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
 
 					if ((int.Parse(absolutEndPeriod) < int.Parse(_webSession.PeriodBeginningDate)) || (absolutEndPeriod.Substring(4, 2).Equals("00"))) {
 						throw (new TNS.AdExpress.Domain.Exceptions.NoDataException());

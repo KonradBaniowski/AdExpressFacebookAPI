@@ -43,6 +43,19 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		///  allowed branches identifiers
 		/// </summary>
 		protected List<int> _allowedBranchesIds = new List<int>();
+        /// <summary>
+        /// Default Branch Id
+        /// </summary>
+        protected int _defaultBranchId = -1;
+        /// <summary>
+        /// Branch Id to force selection by default
+        /// <remarks>Used in recap modules if user has adveriser rights </remarks>
+        /// </summary>
+        protected int _forceBranchId = -1;
+        /// <summary>
+        /// Levels Id To Read Only
+        /// </summary>
+        protected string _levelsIdToReadOnly = "";
 		#endregion
 
 		#region Constructeur
@@ -138,6 +151,29 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		public List<int> AllowedBranchesIds {
 			get { return (_allowedBranchesIds); }
 		}
+        /// <summary>
+        /// Get default Branch Id
+        /// </summary>
+        public int DefaultBranchId
+        {
+            get { return (_defaultBranchId); }
+            set { _defaultBranchId = value; }
+        }
+        /// <summary>
+        /// Get  Branch Id to force selection by default
+        /// <remarks>Used in recap modules if user has adveriser rights </remarks>
+        /// </summary>
+        public int ForceBranchId
+        {
+            get { return (_forceBranchId); }
+            set { _forceBranchId = value; }
+        }
+
+        public string LevelsIdToReadOnly
+        {
+            get { return _levelsIdToReadOnly; }
+            set { _levelsIdToReadOnly = value; }
+        }
 		#endregion
 	}
 }

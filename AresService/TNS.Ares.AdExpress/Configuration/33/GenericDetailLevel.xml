@@ -28,6 +28,45 @@
     <level id="25" name="Formes de Parrainage" webTextId="2121" dbId="id_form_sponsorship" dbLabel="form_sponsorship" dbTable="form_sponsorship" dbTablePrefixe="fs"/>
     <level id="26" name="Pays" webTextId="2091" dbId="id_country" dbLabel="country" dbTable="country" dbTablePrefixe="co"/>
     <level id="27" name="Basic Media" webTextId="2544" dbId="id_basic_media" dbLabel="basic_media" dbTable="basic_media" dbTablePrefixe="bm"/>
+    <level id="28" name="Sub Brand" webTextId="2650" dbId="id_sub_brand" dbLabel="sub_brand" dbTable="sub_brand" dbTablePrefixe="sb"/>
+    <level id="29" name="Network" webTextId="2651" dbId="id_network" dbLabel="network" dbTable="network" dbTablePrefixe="nt"/>
+    <level id="30" name="Region"  webTextId="2652" dbId="id_region"  dbLabel="region"  dbTable="region"  dbTablePrefixe="rg"/>
+    <level id="31" name="TVCompany" webTextId="2653" dbId="id_tv_company" dbLabel="tv_company" dbTable="tv_company" dbTablePrefixe="tc"/>
+    <level id="32" name="Holding" webTextId="2654" dbId="id_holding" dbLabel="holding" dbTable="holding" dbTablePrefixe="ho"/>
+    <level id="33" name="Station" webTextId="2655" dbId="id_station" dbLabel="station" dbTable="station" dbTablePrefixe="st"/>
+    <level id="34" name="Publishing house" webTextId="2656" dbId="id_publishing_house" dbLabel="publishing_house" dbTable="publishing_house" dbTablePrefixe="ph"/>
+    <level id="35" name="Syndicate" webTextId="2657" dbId="id_syndicate" dbLabel="syndicate" dbTable="syndicate" dbTablePrefixe="sy"/>
+    <level id="36" name="Periodic" webTextId="2658" dbId="id_periodic" dbLabel="periodic" dbTable="periodic" dbTablePrefixe="pe"/>
+    <level id="37" name="Edition type" webTextId="2659" dbId="id_edition_type" dbLabel="edition_type" dbTable="edition_type" dbTablePrefixe="et"/>
+    <level id="38" name="Advertisement Type" webTextId="2663" dbId="id_advertisement_type" dbLabel="advertisement_type" dbTable="advertisement_type" dbTablePrefixe="avt"/>
+    <!--Start New columns for Russia-->
+    <level id="39" name="National Channel" webTextId="2683" dbId="id_network" dbLabel="network" dbTable="network" dbTablePrefixe="nch"/>
+    <level id="40" name="TV Channel" webTextId="2684" dbId="id_channel" dbLabel="channel" dbTable="channel" dbTablePrefixe="tch"/>
+    <level id="41" name="Advertisment" webTextId="2687" dbId="ad_name" dbIdAlias="id_ad_name" dbLabel="ad_name" dbTable="ad_name" dbTablePrefixe="adn"/>
+    <level id="42" name="Break distribution" webTextId="2694" dbId="break_distr" dbIdAlias="id_break_distr" dbLabel="break_distr" dbTable="break_distr" dbTablePrefixe="brd"/>
+    <level id="43" name="Radio holding" webTextId="2686" dbId="id_holding" dbLabel="holding" dbTable="holding" dbTablePrefixe="rho"/>
+    <level id="44" name="Edition" webTextId="2699" dbId="id_edition" dbLabel="edition" dbTable="edition" dbTablePrefixe="edt"/>
+    <level id="45" name="Position" webTextId="862"  dbId="id_position" dbLabel="position" dbTable="position" dbTablePrefixe="pos"/>
+    <level id="46" name="St Format" webTextId="2700" dbId="id_st_format" dbLabel="st_format" dbTable="st_format" dbTablePrefixe="sfo"/>
+    <level id="47" name="St Design" webTextId="2701" dbId="id_st_design" dbLabel="st_design" dbTable="st_design" dbTablePrefixe="sde"/>
+    <level id="48" name="Carrier type" webTextId="2702" dbId="id_carrier" dbLabel="carrier" dbTable="carrier" dbTablePrefixe="crt"/>
+    <level id="49" name="Outdoor agency" webTextId="2704" dbId="id_agency" dbLabel="agency" dbTable="agency" dbTablePrefixe="nag"/>
+    <level id="50" name="Outdoor Network" webTextId="1611"   dbId="id_network" dbLabel="network" dbTable="network" dbTablePrefixe="ntw"/>
+    <level id="51" name="District" webTextId="2703" dbId="id_district" dbLabel="district" dbTable="district" dbTablePrefixe="dst"/>
+    <level id="52" name="Address" webTextId="1133" dbId="id_address" dbLabel="address" dbTable="address" dbTablePrefixe="adr"/>
+
+    <level id="53" name="Site" webTextId="2770" dbId="id_site" dbLabel="site" dbTable="site" dbTablePrefixe="sit"/>
+    <level id="54" name="Site section" webTextId="2771" dbId="id_site_section" dbLabel="site_section" dbTable="site_section" dbTablePrefixe="ssec"/>
+    <level id="55" name="Site subsection" webTextId="2772"  dbId="id_site_subsection" dbLabel="site_subsection" dbTable="site_subsection" dbTablePrefixe="ssb"/>
+    <level id="56" name="Advertisment file type" webTextId="2774" dbId="file_type" dbIdAlias="id_file_type" dbLabel="file_type" dbTable="file_type" dbTablePrefixe="aft"/>
+    <level id="57" name="Advertisment display type" webTextId="2775" dbId="id_display_type" dbLabel="display_type" dbTable="display_type" dbTablePrefixe="dpt"/>
+    <level id="58" name="Age" webTextId="2779" dbId="age" dbIdAlias="id_age" dbLabel="age" dbTable="age" dbTablePrefixe="age"/>
+    <level id="59" name="Gender" webTextId="2780" dbId="gender" dbIdAlias="id_gender" dbLabel="gender" dbTable="gender" dbTablePrefixe="gdr"/>
+    <level id="60" name="Distribution type" webTextId="2781"  dbId="distr_type"  dbIdAlias="id_distr_type" dbLabel="distr_type" dbTable="distr_type" dbTablePrefixe="dst"/>
+    <level id="61" name="Advertisment St format" webTextId="2777" dbId="id_st_format" dbLabel="st_format" dbTable="st_format" dbTablePrefixe="sfo"/>
+    <level id="62" name="Type of publication" webTextId="2803" dbId="id_publication_type" dbLabel="publication_type" dbTable="publication_type" dbTablePrefixe="put"/>
+
+    <!--End New columns for Russia-->
 
     <level id="63" name="Circuit VP"      webTextId="2879" dbId="id_circuit"  dbLabel="circuit"   dbTable="circuit"   dbTablePrefixe="cr"/>
     <level id="64" name="Segment VP"      webTextId="2877" dbId="id_segment"  dbLabel="segment"   dbTable="segment"   dbTablePrefixe="se"/>
@@ -197,4 +236,3 @@
     </detailLevel>
   </detailLevels>
 </genericDetailLevel>
-

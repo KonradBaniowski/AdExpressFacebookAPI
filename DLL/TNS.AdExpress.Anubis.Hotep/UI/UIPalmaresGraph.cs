@@ -29,6 +29,7 @@ using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpressI.ProductClassIndicators.Engines;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Anubis.Hotep.UI
 {
@@ -42,23 +43,23 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 		/// <summary>
 		/// User Session
 		/// </summary>
-		private WebSession _webSession = null;
+		protected WebSession _webSession = null;
 		/// <summary>
 		/// Data Source
 		/// </summary>
-		private IDataSource _dataSource = null;
+        protected IDataSource _dataSource = null;
 		/// <summary>
 		/// Hotep configuration
 		/// </summary>
-		private HotepConfig _config = null;
+        protected HotepConfig _config = null;
 		/// <summary>
 		/// Tableau d'objets qui contient les résultats
 		/// </summary>
-		private object[,] _tab=null;
+        protected object[,] _tab = null;
         /// <summary>
         /// Style
         /// </summary>
-        private TNS.FrameWork.WebTheme.Style _style = null;
+        protected TNS.FrameWork.WebTheme.Style _style = null;
 		#endregion
 
 		#region Constructeur
@@ -76,9 +77,10 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 		/// <summary>
 		/// Graphiques Palmares
 		/// </summary>
-		internal void BuildPalmares(FrameWorkConstantes.Results.PalmaresRecap.ElementType tableType) {
+		public virtual void BuildPalmares(FrameWorkConstantes.Results.PalmaresRecap.ElementType tableType) {
 
-            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
+            AdExpressCultureInfo fp = WebApplicationParameters.AllowedLanguages[_webSession.DataLanguage].CultureInfo;
+            UnitInformation selectedCurrency = _webSession.GetSelectedUnit();
 
             #region Init Chart
             Color colorTemp = Color.Black;
@@ -146,40 +148,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			#endregion			
 
             #region Data building
-            for (int i = 1; i < _tab.GetLongLength(0) && i < 11; i++) {
-                double d = Convert.ToDouble(_tab[i, EngineTop.TOTAL_N]);
-                string u = FctUtilities.Units.ConvertUnitValueToString(d, _webSession.Unit, fp);
-                if (d != 0 && FctUtilities.CheckedText.IsNotEmpty(u)) {
-                    oneProductExist = true;
-
-                    series.Points.AddXY(_tab[i, EngineTop.PRODUCT].ToString(), Math.Round(FctUtilities.Units.ConvertUnitValue(d, _webSession.Unit)));
-
-                    series.Points[i - 1].ShowInLegend = true;
-                    // Competitor in red
-                    if (_tab[i, EngineTop.COMPETITOR] != null) {
-						// Mixed in yellow
-						if ((int)_tab[i, EngineTop.COMPETITOR] == 3) {
-							_style.GetTag("PalmaresGraphColorLegendItemMixed").SetStyleDundas(ref colorTemp);
-							series.Points[i - 1].Color = colorTemp;
-							mixedElement = true;
-						}
-						// Competitor in red
-						else if ((int)_tab[i, EngineTop.COMPETITOR] == 2) {
-                            _style.GetTag("PalmaresGraphColorLegendItemCompetitor").SetStyleDundas(ref colorTemp);
-                            series.Points[i - 1].Color = colorTemp;
-                            competitorElement = true;
-                        }
-                        // Reference in green
-                        else if ((int)_tab[i, EngineTop.COMPETITOR] == 1) {
-                            _style.GetTag("PalmaresGraphColorLegendItemReference").SetStyleDundas(ref colorTemp);
-                            series.Points[i - 1].Color = colorTemp;	
-                            referenceElement = true;
-                        }
-                    }
-                }
-            }
-            if (!oneProductExist)
-                this.Visible = false;
+            DataBuilding( series,  fp, ref  oneProductExist, ref  mixedElement, ref  competitorElement, ref  referenceElement, ref  colorTemp);
             #endregion
 
 			#region Légendes
@@ -238,17 +207,8 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			this.ChartAreas[strChartArea].AxisX.LabelStyle.FontAngle = 35;
 			#endregion
 
-			#region Axe des Y
-			this.ChartAreas[strChartArea].AxisY.Enabled=AxisEnabled.True;
-			this.ChartAreas[strChartArea].AxisY.LabelStyle.Enabled=true;
-			this.ChartAreas[strChartArea].AxisY.LabelsAutoFit=false;
-            _style.GetTag("PalmaresGraphLabelFontAxisY").SetStyleDundas(this.ChartAreas[strChartArea].AxisY.LabelStyle);
-			this.ChartAreas[strChartArea].AxisY.Title=""+GestionWeb.GetWebWord(1206,_webSession.SiteLanguage)+"";
-            _style.GetTag("PalmaresGraphTitleFontAxisY").SetStyleDundas(this.ChartAreas[strChartArea].AxisY);
-            double dd = Convert.ToDouble(_tab[0, EngineTop.TOTAL_N]);
-            double uu = FctUtilities.Units.ConvertUnitValue(dd, _webSession.Unit);
-            if (uu <= 0) this.ChartAreas[strChartArea].AxisY.Maximum = (double)0.0;
-			this.ChartAreas[strChartArea].AxisY.MajorGrid.LineWidth=0;
+			#region Axe des Y			
+             SetAxeY(selectedCurrency, strChartArea,fp);
 			#endregion
 
 			#region Axe des Y2
@@ -257,6 +217,79 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 
 		}
 		#endregion
+
+
+         /// <summary>
+        /// Dat building
+        /// </summary>     
+        /// <param name="series">series</param>
+        /// <param name="fp">IFormatProvider</param>
+        /// <param name="oneProductExist">test if one Product Exist</param>
+        /// <param name="mixedElement">test if mixe dElement</param>
+        /// <param name="competitorElement">test if competitor Element</param>
+        /// <param name="referenceElement">test if reference Element</param>
+        protected virtual void DataBuilding(Series series, AdExpressCultureInfo fp, ref bool oneProductExist, ref bool mixedElement, ref bool competitorElement, ref bool referenceElement, ref Color colorTemp)
+        {
+            for (int i = 1; i < _tab.GetLongLength(0) && i < 11; i++)
+            {
+                double d = Convert.ToDouble(_tab[i, EngineTop.TOTAL_N]);
+                string u = FctUtilities.Units.ConvertUnitValueToString(d, _webSession.Unit, fp);
+                if (d != 0 && FctUtilities.CheckedText.IsNotEmpty(u))
+                {
+                    oneProductExist = true;
+
+                    series.Points.AddXY(_tab[i, EngineTop.PRODUCT].ToString(), Math.Round(FctUtilities.Units.ConvertUnitValue(d, _webSession.Unit)));
+
+                    series.Points[i - 1].ShowInLegend = true;
+                    // Competitor in red
+                    if (_tab[i, EngineTop.COMPETITOR] != null)
+                    {
+                        // Mixed in yellow
+                        if ((int)_tab[i, EngineTop.COMPETITOR] == 3)
+                        {
+                            _style.GetTag("PalmaresGraphColorLegendItemMixed").SetStyleDundas(ref colorTemp);
+                            series.Points[i - 1].Color = colorTemp;
+                            mixedElement = true;
+                        }
+                        // Competitor in red
+                        else if ((int)_tab[i, EngineTop.COMPETITOR] == 2)
+                        {
+                            _style.GetTag("PalmaresGraphColorLegendItemCompetitor").SetStyleDundas(ref colorTemp);
+                            series.Points[i - 1].Color = colorTemp;
+                            competitorElement = true;
+                        }
+                        // Reference in green
+                        else if ((int)_tab[i, EngineTop.COMPETITOR] == 1)
+                        {
+                            _style.GetTag("PalmaresGraphColorLegendItemReference").SetStyleDundas(ref colorTemp);
+                            series.Points[i - 1].Color = colorTemp;
+                            referenceElement = true;
+                        }
+                    }
+                }
+            }
+            if (!oneProductExist)
+                this.Visible = false;
+        }
+
+         /// <summary>
+        /// Set Axe Y
+        /// </summary>        
+        /// <param name="selectedCurrency">selected Currency</param>
+        /// <param name="strChartArea">string Chart Area</param>
+        protected virtual void SetAxeY( UnitInformation selectedCurrency, string strChartArea, IFormatProvider fp)
+        {
+            this.ChartAreas[strChartArea].AxisY.Enabled=AxisEnabled.True;
+			this.ChartAreas[strChartArea].AxisY.LabelStyle.Enabled=true;
+			this.ChartAreas[strChartArea].AxisY.LabelsAutoFit=false;
+            _style.GetTag("PalmaresGraphLabelFontAxisY").SetStyleDundas(this.ChartAreas[strChartArea].AxisY.LabelStyle);
+            this.ChartAreas[strChartArea].AxisY.Title = "" + GestionWeb.GetWebWord(1246, _webSession.SiteLanguage) + " (" + selectedCurrency.GetUnitSignWebText(_webSession.DataLanguage) + ")";
+            _style.GetTag("PalmaresGraphTitleFontAxisY").SetStyleDundas(this.ChartAreas[strChartArea].AxisY);
+            double dd = Convert.ToDouble(_tab[0, EngineTop.TOTAL_N]);
+            double uu = FctUtilities.Units.ConvertUnitValue(dd, _webSession.Unit);
+            if (uu <= 0) this.ChartAreas[strChartArea].AxisY.Maximum = (double)0.0;
+			this.ChartAreas[strChartArea].AxisY.MajorGrid.LineWidth=0;
+        }
 
 	}
 }

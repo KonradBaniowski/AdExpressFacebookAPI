@@ -6,6 +6,9 @@
     <insetItem  id="Excart" dataBaseId="999"/>
     <insetItem  id="subScriberEncart" dataBaseId="1983"/>
   </inset>
+  <campaignType available="false" description="Specify if the option campaign Type is available overall the website"/>
+  <refineUniverse keepSelection="true" description="Specify if client select is kept when go back to universe refine selection page"/>
+  <lostWon useComparative="false"  useDiponibility="true" useType="true"/>
   <mediaSchedule useComparative="true"/>
   <bannersFormat use="true">
     <allowVehicle id="6" description="Evaliant" rightBannersType="FormatEvaliantInternet" dataTableName="banners" formatTableName="groupFormatBanners"/>

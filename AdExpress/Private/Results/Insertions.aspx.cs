@@ -18,6 +18,7 @@ using DBClassifCst = TNS.AdExpress.Constantes.Classification;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using System.Text;
 using TNS.FrameWork.Date;
+using TNS.AdExpress.Domain.Web;
 
 namespace Private.Results {
     /// <summary>
@@ -78,7 +79,16 @@ namespace Private.Results {
 
                 MenuWebControl2.DisplayHtmlPrint = true;
 
-
+                //Gestion de la sélection d'un radiobutton dans la liste des univers
+                if (!Page.ClientScript.IsClientScriptBlockRegistered("InsertIdMySession4"))
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "InsertIdMySession4", TNS.AdExpress.Web.Functions.Script.InsertIdMySession4());
+                }
+                // Ouverture/fermeture des fenêtres pères
+                if (!Page.ClientScript.IsClientScriptBlockRegistered("showHideContent"))
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "showHideContent", TNS.AdExpress.Web.Functions.Script.ShowHideContent());
+                }
             }
             catch (System.Exception exc) {
                 if (exc.GetType() != typeof(System.Threading.ThreadAbortException)) {
@@ -167,10 +177,11 @@ namespace Private.Results {
                 //Module Id
                 this.InsertionsWebControl1.IdModule = idModule;
                 //Current vehicle
-                this.InsertionsWebControl1.IdVehicle = (idVehicle != null && idVehicle.Length > 0) ? Convert.ToInt32(idVehicle) : -1;
+                this.InsertionsWebControl1.IdVehicle = (idVehicle != null && idVehicle.Length > 0) ? Convert.ToInt32(idVehicle) : long.MinValue;
                 //Current page
                 this.InsertionsWebControl1.PageIndex = (page != null && page.Length > 0) ? Convert.ToInt32(page) : 1;
-
+                //Is All Period Is Restrict To 4 Month In Insertion Report
+                this.InsertionsWebControl1.IsAllPeriodIsRestrictTo4Month = WebApplicationParameters.InsertionOptions.IsAllPeriodIsRestrictTo4Month;
 
                 string sizes = "10,15,20";
                 this.InsertionsWebControl1.PageSizeOptions = sizes;

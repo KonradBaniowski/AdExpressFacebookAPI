@@ -249,9 +249,9 @@ namespace TNS.AdExpressI.LostWon {
                 case DynamicAnalysis.PORTEFEUILLE:
                 case DynamicAnalysis.WON:
                     this._result = result;
-                    return this.GetData();
+                    return GetData();
                 case DynamicAnalysis.SYNTHESIS:
-                    return this.GetSynthesisData();
+                    return GetSynthesisData();
                 default: return null;
             }
         }
@@ -262,7 +262,7 @@ namespace TNS.AdExpressI.LostWon {
         /// Compute Result Data
         /// </summary>
         /// <returns>Computed Result Data</returns>
-        protected ResultTable GetData()
+        protected virtual ResultTable GetData()
         {
             ResultTable tabData = GetRawTable();
             ResultTable tabResult = null;
@@ -309,7 +309,8 @@ namespace TNS.AdExpressI.LostWon {
         /// Get synthesis report about number of products matching Loyal, Loayl sliding, Loyal rising, Won, lost
         /// </summary>
         /// <returns>Result Table</returns>
-        protected ResultTable GetSynthesisData() {
+        protected virtual ResultTable GetSynthesisData()
+        {
 
             #region variables
             Int32 nbLine;
@@ -372,17 +373,18 @@ namespace TNS.AdExpressI.LostWon {
                 object[] parameters = new object[1];
                 parameters[0] = _session;
                 ILostWonResultDAL lostwonDAL = (ILostWonResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
-                dt = lostwonDAL.GetSynthesisData();
+                DataSet ds = lostwonDAL.GetSynthesisData();
+                if(ds !=null && ds.Tables !=null && ds.Tables[0] !=null)
+                    dt = ds.Tables[0];
 
-                //dt = DynamicDataAccess.GetGenericSynthesisData(_session, vehicleName); 
             }
             catch (System.Exception err) {
                 throw (new LostWonException("Unable to load data for synthesis report.", err));
             }
             #endregion
 
-            #region Aucune données (par rapport aux données)
-            if (dt == null || dt.Rows == null || dt.Rows.Count < 1) {
+            #region No Data
+            if (dt == null || dt.Rows == null || dt.Rows.Count==0) {
                 return null;
             }
             #endregion
@@ -392,8 +394,7 @@ namespace TNS.AdExpressI.LostWon {
             CellUnitFactory cellUnitFactory = _session.GetCellUnitFactory();
             GetProductActivity getProductActivity;
             string expression = string.Empty;
-            if (cellUnitFactory.Get(0.0) is CellIdsNumber)
-            {
+            if (cellUnitFactory.Get(null) is CellIdsNumber){
                 expression = _session.GetSelectedUnit().Id.ToString();
                 getProductActivity = new GetProductActivity(GetListProductActivity);
             }
@@ -642,7 +643,7 @@ namespace TNS.AdExpressI.LostWon {
         /// Get Table with data without any filtering on required result
         /// </summary>
         /// <returns>Data</returns>
-        protected ResultTable GetRawTable()
+        protected virtual ResultTable GetRawTable()
         {
             #region Date
             Int32 dateBegin = Int32.Parse(_session.PeriodBeginningDate);
@@ -665,15 +666,16 @@ namespace TNS.AdExpressI.LostWon {
                 object[] parameters = new object[1];
                 parameters[0] = _session;
                 ILostWonResultDAL lostwonDAL = (ILostWonResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
-                dt = lostwonDAL.GetData();
-                dsMedia = lostwonDAL.GetMediaDetails();
+                DataSet ds = lostwonDAL.GetData();
+                dt = (ds!=null) ? lostwonDAL.GetData().Tables[0]:null;
+                dsMedia = lostwonDAL.GetColumnDetails();
 
             }
             catch (System.Exception err)
             {
                 throw (new LostWonException("Unable to load dynamic report data.", err));
             }
-            DataTable dtMedia = dsMedia.Tables[0];
+            DataTable dtMedia = (dsMedia != null) ? dsMedia.Tables[0] : null;
 
             if (dt == null || dt.Rows.Count == 0)
             {
@@ -738,7 +740,7 @@ namespace TNS.AdExpressI.LostWon {
         /// <param name="level">Current level</param>
         /// <param name="parent">Parent level</param>
         /// <returns>Index of current line</returns>
-        protected Int32 InitLine(ResultTable tab, DataRow row, CellUnitFactory cellFactory, Int32 level, CellLevel parent)
+        protected virtual Int32 InitLine(ResultTable tab, DataRow row, CellUnitFactory cellFactory, Int32 level, CellLevel parent)
         {
 
             Int32 cLine = -1;
@@ -803,7 +805,7 @@ namespace TNS.AdExpressI.LostWon {
         /// <param name="periodBegin">Period Begin</param>
         /// <param name="periodEnd">Period End</param>
         /// <returns>Current line</returns>
-        protected Int64 SetDoubleLine(ResultTable tab, Int32 cLine, DataRow row, CellUnitFactory cellFactory, Int64 periodBegin, Int64 periodEnd)
+        protected virtual Int64 SetDoubleLine(ResultTable tab, Int32 cLine, DataRow row, CellUnitFactory cellFactory, Int64 periodBegin, Int64 periodEnd)
         {
 
             Int64 idElement = Convert.ToInt64(row["columnDetailLevel"]);
@@ -839,7 +841,7 @@ namespace TNS.AdExpressI.LostWon {
         /// <param name="periodBegin">Period Begin</param>
         /// <param name="periodEnd">Period End</param>
         /// <returns>Current line</returns>
-        protected Int64 SetListLine(ResultTable tab, Int32 cLine, DataRow row, CellUnitFactory cellFactory, Int64 periodBegin, Int64 periodEnd)
+        protected virtual Int64 SetListLine(ResultTable tab, Int32 cLine, DataRow row, CellUnitFactory cellFactory, Int64 periodBegin, Int64 periodEnd)
         {
 
             Int64 idElement = Convert.ToInt64(row["columnDetailLevel"]);
@@ -891,7 +893,8 @@ namespace TNS.AdExpressI.LostWon {
         /// <param name="beginningDate">Beginning of comparative period</param>
         /// <param name="endDate">End of comparative period</param>
         /// <returns>True if dateToCompare belongs to the comparative period, false neither</returns>
-        protected bool IsComparativeDateLine(Int64 dateToCompare, Int64 beginningDate, Int64 endDate) {
+        protected virtual bool IsComparativeDateLine(Int64 dateToCompare, Int64 beginningDate, Int64 endDate)
+        {
 
             if (dateToCompare.ToString().Length == 6) {
                 beginningDate = beginningDate / 100;
@@ -909,7 +912,7 @@ namespace TNS.AdExpressI.LostWon {
         /// </summary>
         /// <param name="dtMedia">List of column levels</param>
         /// <returns>Headers of the final table</returns>
-        protected Headers GetHeaders(DataTable dtMedia)
+        protected virtual Headers GetHeaders(DataTable dtMedia)
         {
 
             #region Dates
@@ -985,9 +988,9 @@ namespace TNS.AdExpressI.LostWon {
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.holdingCompany) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.sector) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.subSector) ||
-                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.group) ||
-                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.segment)
-                )
+                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.group)||
+                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.segment)||
+                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.subBrand))
                 && _session.CustomerLogin.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)!=null
                 )
             {
@@ -1033,7 +1036,7 @@ namespace TNS.AdExpressI.LostWon {
         /// </summary>
         /// <param name="tabData">Raw Data table</param>
         /// <returns>Final Data</returns>
-        protected ResultTable GetFinalTable(ResultTable tabData)
+        protected virtual ResultTable GetFinalTable(ResultTable tabData)
         {
 
             #region Lines number
@@ -1194,13 +1197,14 @@ namespace TNS.AdExpressI.LostWon {
 
         #region InitFinalLineValuesDelegate
         protected delegate Int32 InitFinalLineValuesDelegate(ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, bool isPDM, Int32 NIndex, Int32 N1Index, Int32 EvolIndex);
-        protected Int32 InitFinalDoubleValuesLine(ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, bool isPDM, Int32 NIndex, Int32 N1Index, Int32 EvolIndex)
+        protected virtual Int32 InitFinalDoubleValuesLine(ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, bool isPDM, Int32 NIndex, Int32 N1Index, Int32 EvolIndex)
         {
 
             // Units
             if (isPDM)
             {
                 toTab[toLine, NIndex] = new CellPDM(0.0, null);
+                ((CellPDM)toTab[toLine, NIndex]).StringFormat = "{0:percentWOSign}";
             }
             else
             {
@@ -1212,6 +1216,7 @@ namespace TNS.AdExpressI.LostWon {
                 if (isPDM)
                 {
                     toTab[toLine, k] = new CellPDM(0.0, (CellUnit)toTab[toLine, NIndex]);
+                    ((CellPDM)toTab[toLine, k]).StringFormat = "{0:percentWOSign}";
                 }
                 else
                 {
@@ -1222,6 +1227,7 @@ namespace TNS.AdExpressI.LostWon {
             if (isPDM)
             {
                 toTab[toLine, N1Index] = new CellPDM(0.0, null);
+                ((CellPDM)toTab[toLine, N1Index]).StringFormat = "{0:percentWOSign}";
             }
             else
             {
@@ -1232,6 +1238,7 @@ namespace TNS.AdExpressI.LostWon {
                 if (isPDM)
                 {
                     toTab[toLine, k] = new CellPDM(0.0, (CellUnit)toTab[toLine, N1Index]);
+                    ((CellPDM)toTab[toLine, k]).StringFormat = "{0:percentWOSign}";
                 }
                 else
                 {
@@ -1252,13 +1259,14 @@ namespace TNS.AdExpressI.LostWon {
             return toLine;
 
         }
-        protected Int32 InitFinalListValuesLine(ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, bool isPDM, Int32 NIndex, Int32 N1Index, Int32 EvolIndex)
+        protected virtual Int32 InitFinalListValuesLine(ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, bool isPDM, Int32 NIndex, Int32 N1Index, Int32 EvolIndex)
         {
 
             // Units
             if (isPDM)
             {
                 toTab[toLine, NIndex] = new CellVersionNbPDM(null);
+                ((CellVersionNbPDM)toTab[toLine, NIndex]).StringFormat = "{0:percentWOSign}";
             }
             else
             {
@@ -1270,6 +1278,7 @@ namespace TNS.AdExpressI.LostWon {
                 if (isPDM)
                 {
                     toTab[toLine, k] = new CellVersionNbPDM((CellVersionNbPDM)toTab[toLine, NIndex]);
+                    ((CellVersionNbPDM)toTab[toLine, k]).StringFormat = "{0:percentWOSign}";
                 }
                 else
                 {
@@ -1280,6 +1289,7 @@ namespace TNS.AdExpressI.LostWon {
             if (isPDM)
             {
                 toTab[toLine, N1Index] = new CellVersionNbPDM(null);
+                ((CellVersionNbPDM)toTab[toLine, N1Index]).StringFormat = "{0:percentWOSign}";
             }
             else
             {
@@ -1290,6 +1300,7 @@ namespace TNS.AdExpressI.LostWon {
                 if (isPDM)
                 {
                     toTab[toLine, k] = new CellVersionNbPDM((CellVersionNbPDM)toTab[toLine, N1Index]);
+                    ((CellVersionNbPDM)toTab[toLine, k]).StringFormat = "{0:percentWOSign}";
                 }
                 else
                 {
@@ -1310,7 +1321,7 @@ namespace TNS.AdExpressI.LostWon {
             return toLine;
 
         }
-        protected Int32 InitFinalLine(ResultTable fromTab, ResultTable toTab, Int32 fromLine, CellLevel parent, Int32 msIndex)
+        protected virtual Int32 InitFinalLine(ResultTable fromTab, ResultTable toTab, Int32 fromLine, CellLevel parent, Int32 msIndex)
         {
             CellLevel cFromLevel = (CellLevel)fromTab[fromLine, 1];
             Int32 cLine = toTab.AddNewLine(fromTab.GetLineStart(fromLine).LineType);
@@ -1332,17 +1343,17 @@ namespace TNS.AdExpressI.LostWon {
 
         #region SetLineDelegate
         protected delegate Int32 SetFinalLineDelegate(ResultTable fromTab, ResultTable toTab, Int32 fromLine, Int32 toLine, Int32 NIndex, Int32 N1Index, Int32 EvolIndex, Int32 NTotalIndex, Int32 N1TotalIndex);
-        protected Int32 SetFinalDoubleLine(ResultTable fromTab, ResultTable toTab, Int32 fromLine, Int32 toLine, Int32 NIndex, Int32 N1Index, Int32 EvolIndex, Int32 NTotalIndex, Int32 N1TotalIndex)
+        protected virtual Int32 SetFinalDoubleLine(ResultTable fromTab, ResultTable toTab, Int32 fromLine, Int32 toLine, Int32 NIndex, Int32 N1Index, Int32 EvolIndex, Int32 NTotalIndex, Int32 N1TotalIndex)
         {
             Double v = 0;
             //year N
             if (NTotalIndex < 0)
             {
-                toTab.AffectValueAndAddToHierarchy(1, toLine, NIndex, ((CellUnit)fromTab[fromLine, NIndex]).Get_value());
+                toTab.AffectValueAndAddToHierarchy(1, toLine, NIndex, ((CellUnit)fromTab[fromLine, NIndex]).GetValue());
             }
             for (Int32 k = NIndex + 1; k < N1Index; k++)
             {
-                v = ((CellUnit)fromTab[fromLine, k]).Get_value();
+                v = ((CellUnit)fromTab[fromLine, k]).GetValue();
                 toTab.AffectValueAndAddToHierarchy(1, toLine, k, v);
                 if (NTotalIndex > -1)
                 {
@@ -1352,11 +1363,11 @@ namespace TNS.AdExpressI.LostWon {
             //year N1
             if (N1TotalIndex < 0)
             {
-                toTab.AffectValueAndAddToHierarchy(1, toLine, N1Index, ((CellUnit)fromTab[fromLine, N1Index]).Get_value());
+                toTab.AffectValueAndAddToHierarchy(1, toLine, N1Index, ((CellUnit)fromTab[fromLine, N1Index]).GetValue());
             }
             for (Int32 k = N1Index + 1; k < EvolIndex; k++)
             {
-                v = ((CellUnit)fromTab[fromLine, k]).Get_value();
+                v = ((CellUnit)fromTab[fromLine, k]).GetValue();
                 toTab.AffectValueAndAddToHierarchy(1, toLine, k, v);
                 if (N1TotalIndex > -1)
                 {
@@ -1367,7 +1378,7 @@ namespace TNS.AdExpressI.LostWon {
             return toLine;
 
         }
-        protected Int32 SetFinalListLine(ResultTable fromTab, ResultTable toTab, Int32 fromLine, Int32 toLine, Int32 NIndex, Int32 N1Index, Int32 EvolIndex, Int32 NTotalIndex, Int32 N1TotalIndex)
+        protected virtual Int32 SetFinalListLine(ResultTable fromTab, ResultTable toTab, Int32 fromLine, Int32 toLine, Int32 NIndex, Int32 N1Index, Int32 EvolIndex, Int32 NTotalIndex, Int32 N1TotalIndex)
         {
 
             HybridList value = null;
@@ -1438,7 +1449,7 @@ namespace TNS.AdExpressI.LostWon {
         /// </summary>
         /// <param name="tabData">Data</param>
         /// <returns>Number of lines</returns>
-        protected Int32 GetNbLine(DataTable dt)
+        protected virtual Int32 GetNbLine(DataTable dt)
         {
 
             Int32 nbLine = 0;
@@ -1851,7 +1862,8 @@ namespace TNS.AdExpressI.LostWon {
         /// Get Number of parution by media data
         /// </summary>
         /// <returns>Number of parution by media data</returns>
-        protected Dictionary<string, double> GetNbParutionsByMedia() {
+        protected virtual Dictionary<string, double> GetNbParutionsByMedia()
+        {
 
             #region Variables
             Dictionary<string, double> res = new Dictionary<string, double>();

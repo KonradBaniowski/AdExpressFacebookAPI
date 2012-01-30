@@ -214,6 +214,16 @@
 					<TD></TD>
 				</TR>
 				<%}%>
+				<%if(displayListOfVehicles){%>
+				<TR height="5">
+					<td width="5"></td>
+					<TD class="txtViolet11" vAlign="top" align="center" bgColor="#ffffff"><%=listOfVehicleText%></TD>
+				</TR>
+				<TR height="7">
+					<td width="5"></td>
+					<TD></TD>
+				</TR>
+				<%}%>
 				<!--Reference média -->
 				<%if(displayReferenceDetailMedia){%>
 				<TR height="5">
@@ -254,6 +264,25 @@
 				<TR height="20">
 					<TD></TD>
 					<TD class="txtViolet11" vAlign="top" align="center" bgColor="#ffffff"><%=sponsorshipFormText%></TD>
+				</TR>
+				<TR height="5">
+					<TD></TD>
+					<TD bgColor="#ffffff"></TD>
+				</TR>
+				<TR height="7">
+					<TD colSpan="2"></TD>
+				</TR>
+				<%}%>
+				<!--Campaign type-->
+				<%if(displayCampaignTypeSelection){%>
+				<TR>
+					<TD></TD>
+					<TD class="txtViolet11Bold" bgColor="#ffffff">&nbsp;
+						<cc1:adexpresstext language="33" id="Adexpresstext1" runat="server" Code="2671"></cc1:adexpresstext></TD>
+				</TR>
+				<TR height="20">
+					<TD></TD>
+					<TD class="txtViolet11" vAlign="top" bgColor="#ffffff">&nbsp;&nbsp;<%=campaignTypeSelectionText%></TD>
 				</TR>
 				<TR height="5">
 					<TD></TD>
@@ -400,6 +429,28 @@
 				<%}%>
 				
 				<!-- Personnalisation des supports (affiner dans les résultats) -->
+				<%if(displayMediaSelection){%>
+				<TR>
+					<td width="5"></td>
+					<TD class="txtViolet11Bold" bgColor="#ffffff">&nbsp;
+						<%=mediaSelectionWebText%>
+					</TD>
+				</TR>
+				<TR height="20">
+					<td width="5"></td>
+					<TD vAlign="top" align="center" bgColor="#ffffff"><%=mediaSelectionText%></TD>
+				</TR>
+				<TR height="5">
+					<td width="5"></td>
+					<TD bgColor="#ffffff"></TD>
+				</TR>
+				<TR height="7">
+					<td width="5"></td>
+					<TD></TD>
+				</TR>
+				<%}%>
+				
+				<!-- Personnalisation des supports (affiner dans les résultats) -->
 				<%if(displayMediaPersonnalized){%>
 				<TR>
 					<td width="5"></td>
@@ -433,6 +484,27 @@
 				<TR height="20">
 					<td width="5"></td>
 					<TD vAlign="top" align="center" bgColor="#ffffff"><%=referenceAdvertiserText%></TD>
+				</TR>
+				<TR height="5">
+					<td width="5"></td>
+					<TD bgColor="#ffffff"></TD>
+				</TR>
+				<TR height="7">
+					<td width="5"></td>
+					<TD></TD>
+				</TR>
+				<%}%>
+				<!--Ad type-->
+				<%if(displayAdType){%>
+				<TR>
+					<td width="5"></td>
+					<TD class="txtViolet11Bold" bgColor="#ffffff">&nbsp;
+						<%=adTypeText%>
+					</TD>
+				</TR>
+				<TR height="20">
+					<td width="5"></td>
+					<TD vAlign="top" align="center" bgColor="#ffffff"><%=productText%></TD>
 				</TR>
 				<TR height="5">
 					<td width="5"></td>

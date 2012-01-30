@@ -92,31 +92,31 @@ namespace TNS.AdExpress.Anubis.Hotep{
 		/// <summary>
 		/// Thread qui traite l'alerte
 		/// </summary>
-		private System.Threading.Thread _myThread;
+		protected System.Threading.Thread _myThread;
 		/// <summary>
 		/// Identifiant du résultat à traiter
 		/// </summary>
-		private Int64 _navSessionId;
+        protected Int64 _navSessionId;
 		/// <summary>
 		/// Source de données pour charger la session du résultat
 		/// </summary>
-		private IDataSource _dataSource;
+        protected IDataSource _dataSource;
 		/// <summary>
 		/// Configuration du plug-in
 		/// </summary>
-		private HotepConfig _hotepConfig;
+        protected HotepConfig _hotepConfig;
         /// <summary>
         /// Theme
         /// </summary>
-        private TNS.FrameWork.WebTheme.Theme _theme;
+        protected TNS.FrameWork.WebTheme.Theme _theme;
         /// <summary>
         /// Data Access Layer
         /// </summary>
-        private IStaticNavSessionDAL _dataAccess;
+        protected IStaticNavSessionDAL _dataAccess;
         /// <summary>
         /// WebSession
         /// </summary>
-        private WebSession _webSession = null;
+        protected WebSession _webSession = null;
 		#endregion
 
         #region Constructeur
@@ -132,7 +132,7 @@ namespace TNS.AdExpress.Anubis.Hotep{
 		/// Obtient le nom du plug-in
 		/// </summary>
 		/// <returns>Le nom du plug-in</returns>
-		public string GetPluginName(){
+		public virtual string GetPluginName(){
 			return("Hotep (Indicateurs) PDF Generator");
 		}
 		#endregion
@@ -147,7 +147,8 @@ namespace TNS.AdExpress.Anubis.Hotep{
 		/// <remarks>
 		/// Le traitement se charge de charger les données nécessaires à son execution et de lancer le résultat
 		/// </remarks>
-		public void Treatement(string configurationFilePath,IDataSource dataSource,Int64 navSessionId){
+        public virtual void Treatement(string configurationFilePath, IDataSource dataSource, Int64 navSessionId)
+        {
             try {
                 _navSessionId = navSessionId;
 
@@ -232,7 +233,8 @@ namespace TNS.AdExpress.Anubis.Hotep{
 		/// <summary>
 		/// Arrête le traitement du résultat
 		/// </summary>
-		public void AbortTreatement(){
+        public virtual void AbortTreatement()
+        {
 			_myThread.Abort();
 		}
 		#endregion
@@ -241,10 +243,11 @@ namespace TNS.AdExpress.Anubis.Hotep{
 		/// <summary>
 		/// Generate the PDF for Hotep plug-in
 		/// </summary>
-		private void ComputeTreatement(){
+		protected virtual void ComputeTreatement(){
 			HotepPdfSystem pdf = null;
 			try{
-				OnStartWork(_navSessionId,this.GetPluginName()+" started for "+_navSessionId);
+				//OnStartWork(_navSessionId,this.GetPluginName()+" started for "+_navSessionId);
+                RaiseStartWorkEvent();
 
 				#region Request Details
                 DataRow rqDetails = _dataAccess.GetRow(_navSessionId);
@@ -267,15 +270,31 @@ namespace TNS.AdExpress.Anubis.Hotep{
                     _dataAccess.DeleteRow(_navSessionId);
 				#endregion
 
-				OnStopWorkerJob(_navSessionId,"","",this.GetPluginName()+" finished for "+_navSessionId);
+				//OnStopWorkerJob(_navSessionId,"","",this.GetPluginName()+" finished for "+_navSessionId);
+                RaiseStopWorkerJobEvent();
 			}
 			catch(System.Exception err){
                 if (_dataAccess != null)
                     _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.error.GetHashCode());
-				OnError(_navSessionId,"Erreur lors du traitement du résultat.", err);
+				//OnError(_navSessionId,"Erreur lors du traitement du résultat.", err);
+                RaiseErrorEvent(err);
 				return;
 			}
 		}
 		#endregion
+
+      
+        protected virtual void RaiseStartWorkEvent()
+        {
+            OnStartWork(_navSessionId, this.GetPluginName() + " started for " + _navSessionId);
+        }
+        protected virtual void RaiseStopWorkerJobEvent()
+        {
+            OnStopWorkerJob(_navSessionId, "", "", this.GetPluginName() + " finished for " + _navSessionId);
+        }
+        protected virtual void RaiseErrorEvent(System.Exception err)
+        {
+            OnError(_navSessionId, "Erreur lors du traitement du résultat.", err);
+        }
 	}
 }

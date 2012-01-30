@@ -634,6 +634,54 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            CssLTotal="lv0" 
                            SkinID="portofolioResultTable" 
 />
+<%-- Result web control : used to display a generic result table (HTML) (Product Class Indicator) --%>
+<ctrResults:ResultWebControl  
+                           runat="server" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel" 
+                           CssDetailSelectionL1="dsLv1" 
+                           CssDetailSelectionL2="dsLv2" 
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3" 
+                           CssLHeader="productClassIndicatorH2" 
+                           CssLTotal="productClassIndicatorTotal" 
+                           CssSubTotal1="productClassIndicatorSubTotal1" 
+                           CssSubTotal2="productClassIndicatorSubTotal2" 
+                           CssL1="productClassIndicatorRef" 
+                           CssL2="productClassIndicatorComp" 
+                           BackgroudColorL1="#ffd0ca"
+						   BackgroudColorL2="#d1ffca"
+						   BackgroudColorSubTotal1="#e1e0da" 
+                           BackgroudColorSubTotal2="#f1f1f1" 					    
+                           SkinID="productClassIndicatorResultTable" 
+/>
+<ctrResults:ResultWebControl  
+                          runat="server" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel" 
+                           CssDetailSelectionL1="dsLv1" 
+                           CssDetailSelectionL2="dsLv2" 
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3"  
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData"
+                           CssDetailSelectionTitleGlobal="dsTitleGlobal"    
+                           CssLHeader="productClassIndicatorH2" 
+                           CssLTotal="prClLv0Excel"   
+                           CssSubTotal1="productClassIndicatorSubTotal1XL" 
+                           CssSubTotal2="productClassIndicatorSubTotal2XL" 
+                           CssL1="productClassIndicatorRef" 
+                           CssL2="productClassIndicatorComp"    
+                            BackgroudColorL1="#ffd0ca"
+						   BackgroudColorL2="#d1ffca"                                                                                                     					    
+                           SkinID="productClassIndicatorResultTableXL" 
+/>
 <%-- Result web control : used to display a generic result table (HTML) (Product Class) --%>
 <ctrProductClassResults:ProductClassReportWebControl  
                            runat="server" 
@@ -656,12 +704,12 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            CssL1="prClLv1" 
                            CssL2="prClLv5" 
                            HighlightBackgroundColorL1="#FFFFFF" 
-                           HighlightBackgroundColorL2="#FFFFFF" 
+                           HighlightBackgroundColorL2="#FFFFFF"                    
                            ImgBtnCroiOverPath="/App_Themes/KMAE-Fr/Images/Common/fl_tri_croi3_in.gif" 
                            ImgBtnCroiPath="/App_Themes/KMAE-Fr/Images/Common/fl_tri_croi3.gif" 
                            ImgBtnDeCroiOverPath="/App_Themes/KMAE-Fr/Images/Common/fl_tri_decroi3_in.gif" 
                            ImgBtnDeCroiPath="/App_Themes/KMAE-Fr/Images/Common/fl_tri_decroi3.gif" 
-                           CssLTotal="prClLv0" 
+                          CssLTotal="prClLv0" 
                            SkinID="productClassResultTableClassif1XYear" 
 />
 <%-- Result web control : used to display a generic result table (HTML) (Product Class) --%>
@@ -1247,6 +1295,8 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <ctrHeader:genericdetailselectionwebcontrol 
                            runat="server"
                            ThemeName = "KMAE-Fr"
+                            TitleBarWidth = "1700"
+                           TitleDivWidth = "1696"
 />
 
 <%-- Media insertions creations result web control 

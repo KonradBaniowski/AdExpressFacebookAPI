@@ -42,14 +42,15 @@ namespace TNS.AdExpress.Web.Core.Result {
         /// Obtient la hierarchie de la nomenclature sur 4 niveaux
         /// </summary>
         /// <remarks>
-        /// La valeur -1 correspond à un niveau dont il ne faut pas tenir compte
+        /// La valeur long.MinValue correspond à un niveau dont il ne faut pas tenir compte
         /// </remarks>
         /// <example>
-        /// hierarchie: "1,235,366665,-1"
+        /// hierarchie: "1,235,366665,long.MinValue.ToString()"
         /// </example>
         /// <returns>Chaîne représentant la hierarchie</returns>
         public virtual string GetHierarchy() {
-            string[] IdList =  { "-1","-1","-1","-1" };
+            //string[] IdList =  { "-1","-1","-1","-1" };
+            string[] IdList = { long.MinValue.ToString(), long.MinValue.ToString(), long.MinValue.ToString(), long.MinValue.ToString() };
             string sep = ",";
             CellLevel localCellLevel = _cellLevel;
 

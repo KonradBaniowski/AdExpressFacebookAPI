@@ -121,6 +121,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
             int classificationLanguageId;
             string charset="";
             string contentEncoding = "";
+            string excelCharset = "";
             string excelContentEncoding = "";
             string pdfContentEncoding = "";
 			string nlsSort = "";
@@ -131,9 +132,10 @@ namespace TNS.AdExpress.Domain.XmlLoader{
             string format = string.Empty;
             string excelFormat = string.Empty;
             string numberGroupSeparator = string.Empty;
-            string numberDecimalSeparator = string.Empty;
+            string numberDecimalSeparator = string.Empty, percentDecimalSeparator = "";
             Rss rss = null;
             CompanyNameTexts companyNameTexts = null;
+            TextWrap textWrap = null;
             #endregion
 
             try {
@@ -148,21 +150,24 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 						isUTF8 = false;
                         numberGroupSeparator = string.Empty;
                         numberDecimalSeparator = string.Empty;
+                        percentDecimalSeparator = "";
                         switch(reader.LocalName) {
                             case "language":
-                                if(reader.GetAttribute("id")==null || reader.GetAttribute("id").Length==0) throw (new InvalidXmlValueException("Invalid id parameter"));
+                                if (reader.GetAttribute("id")==null || reader.GetAttribute("id").Length==0) throw (new InvalidXmlValueException("Invalid id parameter"));
                                 id=int.Parse(reader.GetAttribute("id"));
-                                if(reader.GetAttribute("localization")==null || reader.GetAttribute("localization").Length==0) throw (new XmlNullValueException("Invalid localization parameter"));
+                                if (reader.GetAttribute("localization")==null || reader.GetAttribute("localization").Length==0) throw (new XmlNullValueException("Invalid localization parameter"));
                                 localization=reader.GetAttribute("localization");
                                 if (reader.GetAttribute("NumberGroupSeparator") != null && reader.GetAttribute("NumberGroupSeparator").Length > 0) numberGroupSeparator = reader.GetAttribute("NumberGroupSeparator");
                                 if (reader.GetAttribute("NumberDecimalSeparator") != null && reader.GetAttribute("NumberDecimalSeparator").Length > 0) numberDecimalSeparator = reader.GetAttribute("NumberDecimalSeparator");
-                                if(reader.GetAttribute("name")!=null) name=reader.GetAttribute("name");
-                                if(reader.GetAttribute("charset")!=null) charset=reader.GetAttribute("charset");
+                                if (reader.GetAttribute("PercentDecimalSeparator") != null && reader.GetAttribute("PercentDecimalSeparator").Length > 0) percentDecimalSeparator = reader.GetAttribute("PercentDecimalSeparator");
+                                if (reader.GetAttribute("name")!=null) name=reader.GetAttribute("name");
+                                if (reader.GetAttribute("charset")!=null) charset=reader.GetAttribute("charset");
                                 if (reader.GetAttribute("contentEncoding") != null) contentEncoding = reader.GetAttribute("contentEncoding");
+                                if (reader.GetAttribute("excelCharset") != null) excelCharset = reader.GetAttribute("excelCharset");
                                 if (reader.GetAttribute("excelContentEncoding") != null) excelContentEncoding = reader.GetAttribute("excelContentEncoding");
                                 if (reader.GetAttribute("pdfContentEncoding") != null) pdfContentEncoding = reader.GetAttribute("pdfContentEncoding");
-                                if(reader.GetAttribute("imageSourceText")!=null) imageSourceText=reader.GetAttribute("imageSourceText");
-                                if(reader.GetAttribute("classificationLanguageId")!=null && reader.GetAttribute("classificationLanguageId").Length>0)
+                                if (reader.GetAttribute("imageSourceText")!=null) imageSourceText=reader.GetAttribute("imageSourceText");
+                                if (reader.GetAttribute("classificationLanguageId")!=null && reader.GetAttribute("classificationLanguageId").Length>0)
                                     classificationLanguageId=int.Parse(reader.GetAttribute("classificationLanguageId"));
                                 else
                                     classificationLanguageId=id;
@@ -172,9 +177,11 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                 cInfoExcel = new AdExpressCultureInfo(localization);
                                 if (numberDecimalSeparator.Length > 0) cInfoExcel.NumberFormat.NumberDecimalSeparator = cInfo.NumberFormat.NumberDecimalSeparator = numberDecimalSeparator;
                                 if (numberGroupSeparator.Length > 0) cInfoExcel.NumberFormat.NumberGroupSeparator = cInfo.NumberFormat.NumberGroupSeparator = numberGroupSeparator;
+                                if (numberGroupSeparator.Length > 0) cInfoExcel.NumberFormat.PercentDecimalSeparator = cInfo.NumberFormat.PercentDecimalSeparator = percentDecimalSeparator;
                                 rss = new Rss();
                                 companyNameTexts = new CompanyNameTexts();
-                                languages.Add(id,new WebLanguage(id,name,imageSourceText,localization,classificationLanguageId,charset,contentEncoding,excelContentEncoding,pdfContentEncoding,nlsSort, cInfo, cInfoExcel, rss, companyNameTexts));
+                                textWrap = new TextWrap();
+                                languages.Add(id, new WebLanguage(id, name, imageSourceText, localization, classificationLanguageId, charset, contentEncoding, excelCharset, excelContentEncoding, pdfContentEncoding, nlsSort, cInfo, cInfoExcel, rss, companyNameTexts,textWrap));
                                 break;
                             case "unitformat":
                                 if(reader.GetAttribute("name")!=null) formatName=reader.GetAttribute("name");
@@ -204,6 +211,12 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                             case "companyNameTexts":
                                 if (reader.GetAttribute("companyName") != null) companyNameTexts.CompanyNameCode = int.Parse(reader.GetAttribute("companyName"));
                                 if (reader.GetAttribute("companyShortName") != null) companyNameTexts.CompanyShortNameCode = int.Parse(reader.GetAttribute("companyShortName"));
+                                break;
+                            case "textWrap":
+                                if (reader.GetAttribute("nbChar") != null) textWrap.NbChar = int.Parse(reader.GetAttribute("nbChar"));
+                                if (reader.GetAttribute("nbCharHeader") != null) textWrap.NbCharHeader = int.Parse(reader.GetAttribute("nbCharHeader"));
+                                if (reader.GetAttribute("nbCharDescription") != null) textWrap.NbCharDescription = int.Parse(reader.GetAttribute("nbCharDescription"));
+                                if (reader.GetAttribute("offset") != null) textWrap.Offset = int.Parse(reader.GetAttribute("offset"));
                                 break;
                         }
                     }

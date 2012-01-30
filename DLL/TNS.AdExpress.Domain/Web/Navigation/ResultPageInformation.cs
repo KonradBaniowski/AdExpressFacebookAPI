@@ -14,6 +14,7 @@ using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Exceptions;
+using TNS.AdExpress.Domain.CampaignTypes;
 
 namespace TNS.AdExpress.Domain.Web.Navigation {
 	/// <summary>
@@ -89,8 +90,24 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
         /// <summary>
         /// Use Retailer Option
         /// </summary>
-        protected bool? _useRetailerOption = null;
-		#endregion
+        protected bool? _useRetailerOption = null;	
+        /// <summary>
+        /// Allowed CampaignTypes list
+        /// </summary>
+        protected List<CustomerSessions.CampaignType> _allowedCampaignTypeList = new List<CustomerSessions.CampaignType>();
+        /// <summary>
+        /// Default Campaign type
+        /// </summary>
+        protected CustomerSessions.CampaignType _defaultCampaignType = CustomerSessions.CampaignType.none;
+        /// <summary>
+        /// Determine if can display option campaign type
+        /// </summary>
+        protected bool _canDisplayCampaignType = false;
+        /// <summary>
+        /// Determine if can display unit selection
+        /// </summary>
+        protected bool _canDisplayUnitOption = false;
+        #endregion
 
 		#region Constructeur
 		/// <summary>
@@ -294,6 +311,23 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
             get { return _useRetailerOption; }
             set { _useRetailerOption = value; }
         }
+
+        /// <summary>
+        /// Get / Set allowed CampaignTypes enum list
+        /// </summary>
+        public List<CustomerSessions.CampaignType> AllowedCampaignTypeEnumList
+        {
+            get { return _allowedCampaignTypeList; }
+            set { _allowedCampaignTypeList = value; }
+        }
+        /// <summary>
+        /// Get / Set allowed CampaignTypes enum list
+        /// </summary>
+        public CustomerSessions.CampaignType DefaultCampaignType
+        {
+            get { return _defaultCampaignType; }
+            set { _defaultCampaignType = value; }
+        }
 		#endregion
 
 		#region Méthodes Externe
@@ -386,6 +420,22 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 			return (true);
 		}
 
+        /// <summary>
+        ///Get /Set if can display option campaign type
+        /// </summary>
+        public bool CanDisplayCampaignType
+        {          
+            get{ return _canDisplayCampaignType;} 
+            set{ _canDisplayCampaignType = value;} 
+        }
+        /// <summary>
+        /// Get /Set if can display unit selection
+        /// </summary>
+        public bool CanDisplayUnitOption
+        {
+            get { return _canDisplayUnitOption; }
+            set { _canDisplayUnitOption = value; }
+        }
 
         /// <summary>
         /// Get commun Unit list
@@ -423,7 +473,21 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
             return (GetValidUnits(VehiclesInformation.DatabaseIdToEnumListList(databaseVehiclesList)));
         }
 
+        /// <summary>
+        /// Get Campaign Type list
+        /// </summary>
+        /// <returns>Campaign Type list</returns>
+        public List<CampaignTypeInformation> GetValidCampaignTypes()
+        {
+            List<CampaignTypeInformation> validCampaignTypesList = new List<CampaignTypeInformation>();
+            foreach (CustomerSessions.CampaignType currentCampaignType in _allowedCampaignTypeList)
+            {
 
+                if (CampaignTypesInformation.List.ContainsKey(currentCampaignType))
+                    validCampaignTypesList.Add(CampaignTypesInformation.Get(currentCampaignType));
+            }
+            return validCampaignTypesList;
+        }
 
         /// <summary>
         /// Get commun UnitInformation list

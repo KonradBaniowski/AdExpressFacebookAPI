@@ -62,7 +62,7 @@
     </Reference>
     <Reference Include="TNS.FrameWorks.LSConnectivity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWorks.LSConnectivity.dll</HintPath>  
+      <HintPath>\\frmitch-fs04\Programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWorks.LSConnectivity.dll</HintPath>
     </Reference>
     <Reference Include="TNS.LinkSystem, Version=3.3.8.0, Culture=neutral, PublicKeyToken=32c946e5f5c6d4a5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -115,6 +115,10 @@
     <ProjectReference Include="..\..\DLL\TNS.AdExpress.Web\TNS.AdExpress.Web.csproj">
       <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
       <Name>TNS.AdExpress.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Common.DAL.Russia\TNS.AdExpressI.Common.DAL.Russia.csproj">
+      <Project>{10D39D83-B876-4ED0-BC3C-3FBB29A1BB7F}</Project>
+      <Name>TNS.AdExpressI.Common.DAL.Russia</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Insertions.DAL.Default\TNS.AdExpressI.Insertions.DAL.Default.csproj">
       <Project>{04D00ADF-5026-4790-9D76-8B9F6F0B6F47}</Project>

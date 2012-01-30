@@ -5,9 +5,10 @@
 
 using System;
 using System.Drawing;
-
+using System.Collections.Generic;
 using TNS.AdExpress.Anubis.Miysis.DataAccess;
 using TNS.FrameWork.DB.Common;
+using PDFCreatorPilotLib;
 
 namespace TNS.AdExpress.Anubis.Miysis.Common
 {
@@ -51,6 +52,10 @@ namespace TNS.AdExpress.Anubis.Miysis.Common
 		/// Pass for PDF Creator Pilot
 		/// </summary>
 		private string _pdfCreatorPilotPass = "";
+        /// <summary>
+        /// Login for PDF Creator Pilot
+        /// </summary>
+        private Dictionary<string, TxFontCharset> _pdfCreatorPilotCharsets = new Dictionary<string, TxFontCharset>();
 		/// <summary>
 		/// Login for Html2Pdf
 		/// </summary>
@@ -264,7 +269,18 @@ namespace TNS.AdExpress.Anubis.Miysis.Common
             set { _outdoorScanPath = value; }
         }
         #endregion
-		
+
+        #region PdfCreatorPilotCharsets
+        /// <summary>
+        /// Pdf Creator Pilot Charsets
+        /// </summary>
+        public Dictionary<string, TxFontCharset> PdfCreatorPilotCharsets
+        {
+            get { return _pdfCreatorPilotCharsets; }
+            set { _pdfCreatorPilotCharsets = value; }
+        }
+        #endregion
+       
 		#endregion
 
 		#region Method

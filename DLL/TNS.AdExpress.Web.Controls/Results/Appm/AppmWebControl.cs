@@ -138,7 +138,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Appm{
 				#endregion
 
 				#region Mise à jour des version
-				webSession.SloganIdZoom=-1;
+                webSession.SloganIdZoom = long.MinValue;
 				webSession.Save();
 				#endregion
 

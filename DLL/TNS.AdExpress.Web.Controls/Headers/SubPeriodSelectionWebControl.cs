@@ -119,7 +119,27 @@ namespace TNS.AdExpress.Web.Controls.Headers
             {
                 _isAllPeriodAllowed = value;
             }
-        }        /// <summary>
+        }
+        /// <summary>
+        /// Specify if "All periods" optrion is allowed for more than 4 month
+        /// </summary>
+        protected bool _isAllPeriodIsRestrictTo4Month = true;
+        /// <summary>
+        /// Get / Set "All periods" optrion is allowed for more than 4 month
+        /// </summary>
+        public bool IsAllPeriodIsRestrictTo4Month
+        {
+            get
+            {
+                return _isAllPeriodIsRestrictTo4Month;
+            }
+            set
+            {
+                _isAllPeriodIsRestrictTo4Month = value;
+            }
+        }
+
+        /// <summary>
         /// Zomm on this specific date
         /// </summary>
         protected string _zoom = string.Empty;
@@ -210,7 +230,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 
             DateTime begin = Dates.getPeriodBeginningDate(realPeriodBegin, _webSession.PeriodType);
             DateTime today = DateTime.Now.Date;
-            if (begin < today.AddDays(1 - today.Day).AddMonths(-3))
+            if (_isAllPeriodIsRestrictTo4Month && begin < today.AddDays(1 - today.Day).AddMonths(-3))
             {
                 _isAllPeriodAllowed = false;
             }
@@ -286,9 +306,9 @@ namespace TNS.AdExpress.Web.Controls.Headers
                         , GestionWeb.GetWebWord(897, _webSession.SiteLanguage)
                         , Dates.DateToString(Dates.getPeriodEndDate(realPeriodEnd, _webSession.PeriodType), _webSession.SiteLanguage)
                     );
-                    sb.AppendFormat("\r\ntab_periodImage_{0}[{1}] = '/App_Themes/"+themeName+"/Images/Common/button/bt_calendar_up.gif';", this.ID, i + 1);
-                    sb.AppendFormat("\r\ntab_periodImage_selected_{0}[{1}] = '/App_Themes/"+themeName+"/Images/Common/button/bt_calendar_up.gif';", this.ID, i + 1);
-                    sb.AppendFormat("\r\ntab_periodImage_over_{0}[{1}] = '/App_Themes/"+themeName+"/Images/Common/button/bt_calendar_down.gif';", this.ID, i + 1);
+                    sb.AppendFormat("\r\ntab_periodImage_{0}[{1}] = '/App_Themes/" + themeName + "/Images/Common/button/bt_calendar_up.gif';", this.ID, i + 1);
+                    sb.AppendFormat("\r\ntab_periodImage_selected_{0}[{1}] = '/App_Themes/" + themeName + "/Images/Common/button/bt_calendar_up.gif';", this.ID, i + 1);
+                    sb.AppendFormat("\r\ntab_periodImage_over_{0}[{1}] = '/App_Themes/" + themeName + "/Images/Common/button/bt_calendar_down.gif';", this.ID, i + 1);
                 }
                 if (periodIndex < 0)
                 {
@@ -415,7 +435,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                     if (_isAllPeriodAllowed)
                     {
                         sb.Append("\r\n<td valign=\"top\">&nbsp;&nbsp;&nbsp;</td>");
-                        sb.AppendFormat("<td valign=\"top\"><img id=\"img_{0}_{1}\" src=\"/App_Themes/"+themeName+"/Images/Common/button/bt_calendar_up.gif\" onMouseOver=\"javascript:PeriodMouseOver_{0}({1});\" onMouseOut=\"javascript:PeriodMouseOut_{0}({1});\"  onclick=\"javascript:PeriodSelectAll_{0}();\"/></td>"
+                        sb.AppendFormat("<td valign=\"top\"><img id=\"img_{0}_{1}\" src=\"/App_Themes/" + themeName + "/Images/Common/button/bt_calendar_up.gif\" onMouseOver=\"javascript:PeriodMouseOver_{0}({1});\" onMouseOut=\"javascript:PeriodMouseOut_{0}({1});\"  onclick=\"javascript:PeriodSelectAll_{0}();\"/></td>"
                             , this.ID
                             , i + 1
                             );
@@ -475,7 +495,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                     sb.AppendFormat("\r\n\t\t\ttheScrollTrack_{0}.style.left = parseInt(posInit_{0})+'px';", this.ID);
                     sb.AppendFormat("\r\n\t\t\ttheScrollTrack_{0}.onDrag(posInit_{0},0);", this.ID);
                     sb.Append("\r\n\t\t}");
-                    sb.Append("\r\n\t}"); 
+                    sb.Append("\r\n\t}");
                     sb.Append("\r\n\t}");
                     sb.Append("\r\n\telse");
                     sb.Append("\r\n\t{");
@@ -552,11 +572,13 @@ namespace TNS.AdExpress.Web.Controls.Headers
             {
                 sb.AppendFormat("<table border=0 cellspacing=0 cellpadding=0 class=\"{0}\" width=\"100%\">", WHITE_BACK_GROUND);
 
-                if (_webSession.PeriodType == WebCst.CustomerSessions.Period.Type.dateToDate) {
+                if (_webSession.PeriodType == WebCst.CustomerSessions.Period.Type.dateToDate)
+                {
                     labBegin = Dates.DateToString(Dates.getPeriodBeginningDate(realPeriodBegin, WebCst.CustomerSessions.Period.Type.dateToDate), _webSession.SiteLanguage);
                     labEnd = Dates.DateToString(Dates.getPeriodEndDate(realPeriodEnd, WebCst.CustomerSessions.Period.Type.dateToDate), _webSession.SiteLanguage);
                 }
-                else {
+                else
+                {
                     labBegin = Dates.DateToString(Dates.getPeriodBeginningDate(periodBegin, periodType), _webSession.SiteLanguage);
                     labEnd = Dates.DateToString(Dates.getPeriodEndDate(periodEnd, periodType), _webSession.SiteLanguage);
                 }
@@ -650,7 +672,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                     , themeName
                     , Int32.Parse(currentPeriod.Substring(4, 2))
                     , this.ID, i);
-          
+
             }
 
             if (_zoom == currentPeriod)

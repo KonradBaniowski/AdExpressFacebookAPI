@@ -152,6 +152,14 @@ namespace TNS.AdExpress.Web.Controls.Selections
         /// Td background color
         /// </summary>
         protected string _tdBgcolor = "#FFFFFF";
+        /// <summary>
+        /// Indique si le calendrier contient des périodes en grisées
+        /// </summary>
+        protected bool _isRestricted = false;
+        /// <summary>
+        /// Le premier jour du calendrier à partir duquel les données ne sont pas encore chargées
+        /// </summary>
+        protected DateTime _firstDayNotEnable;
 		#endregion
 
 		#region Accesseurs
@@ -282,6 +290,20 @@ namespace TNS.AdExpress.Web.Controls.Selections
         public string TdBgcolor {
             get { return _tdBgcolor; }
             set { _tdBgcolor = value; }
+        }
+        /// <summary>
+        /// Set / Get si le calendrier contient des périodes en grisées
+        /// </summary>
+        public bool IsRestricted {
+            get { return _isRestricted; }
+            set { _isRestricted = value; }
+        }
+        /// <summary>
+        /// Set / Get Le premier jour du calendrier à partir duquel les données ne sont pas encore chargées
+        /// </summary>
+        public DateTime FirstDayNotEnable {
+            get { return _firstDayNotEnable; }
+            set { _firstDayNotEnable = value; }
         }
 		#endregion
 		
@@ -434,7 +456,16 @@ namespace TNS.AdExpress.Web.Controls.Selections
 			for(i=0;i<months.Length;i++)
 			{
 				htmlBuilder.Append("<tr>");
-				if(display==MonthCalendarWebControl.Display.month) htmlBuilder.Append("<td colspan=6 bgcolor="+_tdBgcolor+"><a href=\"javascript:__doPostBack('"+this.ID+"','"+(this.selectedYear).ToString()+(i+1).ToString("00")+"')\"><img border=0 src=\"/App_Themes/"+themeName+"/Images/Culture/Calendar/Month_"+(i+1).ToString()+".gif\"></a></td>");				
+                if (display == MonthCalendarWebControl.Display.month) {
+                    htmlBuilder.Append("<td colspan=6 bgcolor=" + _tdBgcolor + ">");
+                    htmlBuilder.Append("<a href=\"javascript:__doPostBack('" + this.ID + "','" + (this.selectedYear).ToString() + (i + 1).ToString("00") + "')\">");
+                    if(IsRestricted && selectedYear == _firstDayNotEnable.Year && months[i]>= _firstDayNotEnable.Month)
+                        htmlBuilder.Append("<img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Month_" + (i + 1).ToString() + "NC_bis.gif\">");
+                    else
+                        htmlBuilder.Append("<img border=0 src=\"/App_Themes/" + themeName + "/Images/Culture/Calendar/Month_" + (i + 1).ToString() + ".gif\">");
+                    htmlBuilder.Append("</a>");
+                    htmlBuilder.Append("</td>");
+                }
 				htmlBuilder.Append("</tr>");
 			}
 			htmlBuilder.Append("<tr><td colspan=6  bgcolor="+_tableColorSelectedDate+"><font size=1 color="+_fontColorSelectedDate+" face=\"Arial\">"+dateSelectedString+"</font></td></tr>");

@@ -138,6 +138,15 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
         /// Use Retailer Option
         /// </summary>
         protected bool _useRetailerOption = false;
+
+        /// <summary>
+        /// Allowed units list
+        /// </summary>
+        protected List<CustomerSessions.Unit> _allowedUnitsList = new List<CustomerSessions.Unit>();
+        /// <summary>
+        /// Display or not incomplete date in gray in date selection page
+        /// </summary>
+        protected bool _displayIncompleteDateInCalendar = false;
 		#endregion
 
 		#region Constructeur
@@ -150,11 +159,14 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		/// <param name="moduleCategoryId">Identifiant de la catégorie de module</param>
 		/// <param name="urlNextPage">Adresse URL de la page suivante</param>
 		/// <param name="moduleTypeValue">Type de module (alert, analyse, recap ...)</param>
-        public Module(Int64 id, Int64 idWebText, Int64 descriptionWebTextId, Int64 moduleCategoryId, string urlNextPage, int moduleTypeValue, string descriptionImageName) : base(id, idWebText, descriptionWebTextId, descriptionImageName) {
+        /// <param name="displayIncompleteDateInCalendar">Display or not incomplete date in gray in date selection page</paparam>
+        public Module(Int64 id, Int64 idWebText, Int64 descriptionWebTextId, Int64 moduleCategoryId, string urlNextPage, int moduleTypeValue, string descriptionImageName, bool displayIncompleteDateInCalendar)
+            : base(id, idWebText, descriptionWebTextId, descriptionImageName) {
 			_urlNextPage=urlNextPage;
 			_idWebText=idWebText;
 			_moduleType=(TNS.AdExpress.Constantes.Web.Module.Type)moduleTypeValue;
 			_moduleCategoryId=moduleCategoryId;
+            _displayIncompleteDateInCalendar = displayIncompleteDateInCalendar;
 		}
 		#endregion
 
@@ -304,6 +316,20 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
         public bool UseRetailerOption {
             get { return _useRetailerOption; }
             set { _useRetailerOption = value; }
+        }
+        /// <summary>
+        /// Get / Set allowed units enum list
+        /// </summary>
+        public List<CustomerSessions.Unit> AllowedUnitEnumList
+        {
+            get { return _allowedUnitsList; }
+            set { _allowedUnitsList = value; }
+        }
+        /// <summary>
+        /// Get Display or not incomplete date in gray in date selection page
+        /// </summary>
+        public bool DisplayIncompleteDateInCalendar {
+            get { return _displayIncompleteDateInCalendar; }
         }
 		#endregion
 

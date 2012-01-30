@@ -122,6 +122,8 @@
     <Content Include="Images\AdExpress\checkbox_not_checked.GIF" />
     <Content Include="Images\AdExpress\Common\APPM.bmp" />
     <Content Include="Images\AdExpress\Common\logo_Tns.bmp" />
+    <Content Include="Images\AdExpress\7\LogoAdExpress.jpg" />
+    <Content Include="Images\AdExpress\7\LogoAdExpress220.jpg" />
     <Content Include="Images\AdExpress\g.jpg" />
     <Content Include="Images\AdExpress\Gray.gif" />
     <Content Include="Images\AdExpress\gsep.jpg" />

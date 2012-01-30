@@ -104,7 +104,15 @@ namespace AdExpress.Private.Results.Excel{
 		/// <returns>PostBackMode</returns>
 		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
+            try
+            {
 			ResultWebControl1.CustomerWebSession=_webSession;
+            }			
+			catch(System.Exception exc){
+				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
+					this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this,exc,_webSession));
+				}
+			}
 			return tmp;
 		}
 		#endregion

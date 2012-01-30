@@ -85,7 +85,7 @@ namespace AdExpress.Private.Results.Excel{
         /// <returns></returns>
         protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode()
         {
-            ProductClassContainerWebControl1.Session = _webSession;
+            ProductClassContainerWebControl1.WebSession = _webSession;
 
             return base.DeterminePostBackMode();
         }
@@ -98,7 +98,7 @@ namespace AdExpress.Private.Results.Excel{
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Arguments</param>
 		private void Page_UnLoad(object sender, System.EventArgs e){
-            _webSession.Source.Close();
+            if (_webSession!=null) _webSession.Source.Close();
 		}
 		#endregion
 

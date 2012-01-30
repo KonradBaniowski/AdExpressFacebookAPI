@@ -37,6 +37,7 @@ using WebExceptions=TNS.AdExpress.Web.Exceptions;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Web;
 
 
 #endregion
@@ -178,18 +179,12 @@ namespace AdExpress.Private.Results{
 				}
 				#endregion
 			
-				#region Textes et Langage du site
-                //for (int i = 0; i < this.Controls.Count; i++) {
-                //    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _webSession.SiteLanguage);
-                //}
+				#region Textes et Langage du site             
 				Moduletitlewebcontrol2.CustomerWebSession=_webSession;
 				ModuleBridgeWebControl1.CustomerWebSession=_webSession;
 				InformationWebControl1.Language = _webSession.SiteLanguage;
 				#endregion
-			
-				#region Agence média
-				//displayMediaAgencyList=MediaAgencyYearWebControl1.DisplayListMediaAgency();
-				#endregion
+							
 
 				#region Sélection du vehicle
 				string vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess);
@@ -227,11 +222,23 @@ namespace AdExpress.Private.Results{
 					_webSession.PDM=false;					
 				}
 				#endregion
-			
+
+             
 				#region MAJ _webSession
 				_webSession.ReachedModule=true;
 				#endregion	              
-
+                //TODO: fusion Dev Trunk : à déplacer dans resultoptionwebcontrol
+                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.editorial &&
+                _webSession.GenericProductDetailLevel[1].Id == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.advertiser)
+                {
+                    //Set default product detail level for media Editorial
+                    ArrayList levelsIds = new ArrayList();
+                    if (_webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE))
+                        levelsIds.Add((int)TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.brand);
+                    else levelsIds.Add((int)TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.product);
+                    _webSession.GenericProductDetailLevel = new TNS.AdExpress.Domain.Level.GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.unknown);
+                    _webSession.Save();
+                }
 
 			}			
 			catch(System.Exception exc){
@@ -266,6 +273,7 @@ namespace AdExpress.Private.Results{
 		/// <returns></returns>
 		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
+            try{
 			ResultsOptionsWebControl1.CustomerWebSession = _webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
 			resultwebcontrol1.CustomerWebSession = _webSession;
@@ -276,8 +284,15 @@ namespace AdExpress.Private.Results{
             {				
 				ResultsOptionsWebControl1.AutopromoEvaliantOption = VehiclesInformation.Get(id).Autopromo; 
             }
-            #endregion
-
+            #endregion                      
+            }
+            catch (System.Exception exc)
+            {
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                }
+            }
 			return tmp;
 		}
 		#endregion
@@ -359,6 +374,20 @@ namespace AdExpress.Private.Results{
 			return MenuWebControl2.NextUrl;
 		}
 		#endregion
+
+        /// <summary>
+        /// Indicate if customer can refine ad type
+        /// </summary>	
+        //private void SetAdvertisementTypeOptions()
+        //{   //TODO: fusion Dev Trunk : à déplacer dans resultoptionswebcontrol
+        //    //TNS.AdExpress.Domain.Web.Navigation.Module module = TNS.AdExpress.Domain.Web.Navigation.ModulesList.GetModule(_webSession.CurrentModule);
+        //    //ArrayList detailSelections = ((ResultPageInformation)module.GetResultPageInformation((int)_webSession.CurrentTab)).DetailSelectionItemsType;
+        //    //if (detailSelections.Contains(WebConstantes.DetailSelection.Type.advertisementType.GetHashCode()))
+        //    //{
+        //    //    InitializeProductWebControl1.Visible = true;
+        //    //    InitializeProductWebControl1.InitializeAdvertisementType = true;
+        //    //}
+        //}
 				
 	}
 }

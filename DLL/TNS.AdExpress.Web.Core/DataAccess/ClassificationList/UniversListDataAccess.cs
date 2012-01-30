@@ -97,7 +97,11 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 
 			#region Request construction		
 
-			string sql = "select distinct " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ID_GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ID_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".UNIVERSE_CLIENT ";
+            /* TODO MODIFICATION
+             * Code add to improve the performance of the universe loading process
+            * 
+            string sql = "select distinct " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ID_GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ID_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".COLUMN_NAME ";*/
+            string sql = "select distinct " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ID_GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ID_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".UNIVERSE_CLIENT ";
 			sql += " from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).SqlWithPrefix + " , "
 				+ WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).SqlWithPrefix + " , "
 				+ WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseDescription).SqlWithPrefix;
@@ -127,6 +131,55 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 
 		}
 
+        /// <summary>
+        /// Get the customer universes list which are recorded according to a filter
+        /// </summary>
+        /// <param name="webSession">Customer session</param>
+        /// <param name="branch">Branch used (media, product)</param>
+        /// <param name="ListUniverseClientDescription">ID_UNIVERSE_CLIENT_DESCRIPTION</param>
+        /// <param name="filter">Filter</param>
+        /// <returns>Universes list</returns>
+        public static DataSet GetData(WebSession webSession, string branch, string ListUniverseClientDescription, LevelInformation filter){
+
+            #region Request construction
+
+            /* TODO MODIFICATION
+             * Code add to improve the performance of the universe loading process
+            * 
+            string sql = "select distinct " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ID_GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ID_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".COLUMN_NAME ";*/
+            string sql = "select distinct " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ID_GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ID_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".UNIVERSE_CLIENT ";
+            sql += " from " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).SqlWithPrefix + " , "
+                + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).SqlWithPrefix + " , "
+                + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseDescription).SqlWithPrefix;
+            sql += " where " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ID_LOGIN=" + webSession.CustomerLogin.IdLogin.ToString();
+            sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ACTIVATION<" + DBConstantes.ActivationValues.UNACTIVATED;
+            sql += " and (" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ACTIVATION<" + DBConstantes.ActivationValues.UNACTIVATED + " or " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ACTIVATION is null) ";
+            sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".ID_GROUP_UNIVERSE_CLIENT=" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ID_GROUP_UNIVERSE_CLIENT(+) ";
+
+            if (ListUniverseClientDescription.Trim().Length > 0){
+                sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ID_UNIVERSE_CLIENT_DESCRIPTION = " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseDescription).Prefix + ".ID_UNIVERSE_CLIENT_DESCRIPTION";
+                sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".ID_UNIVERSE_CLIENT_DESCRIPTION in (" + ListUniverseClientDescription + ") ";
+            }
+            if (branch.Length > 0){
+                sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".id_type_universe_client in (" + branch + ")";
+            }
+            if (filter != null) {
+                sql += " and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".filter in (" + filter.ID + ")";
+            }
+            sql += " order by " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverseGroup).Prefix + ".GROUP_UNIVERSE_CLIENT, " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse).Prefix + ".UNIVERSE_CLIENT ";
+            #endregion
+
+            #region Request execution
+            try{
+                return (webSession.Source.Fill(sql));
+            }
+            catch (System.Exception err){
+                throw (new UniversListException("Impossible to retreive the customer universe whitch are recorded", err));
+            }
+            #endregion
+
+        }
+
 		/// <summary>
 		/// Get the customer universes list which are recorded dependind on allowed universe levels
 		/// </summary>
@@ -140,7 +193,11 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 
 			DataSet ds = GetData(webSession, branch, ListUniverseClientDescription);
 			List<long> levelsIds = null;
-			Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universes = null;
+            /* TODO MODIFICATION
+             * Code add to improve the performance of the universe loading process
+            * 
+            string[] levelsIds = null;*/
+            Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universes = null;
 			bool isValidUniverse = true;
 			if (ds != null && ds.Tables[0].Rows.Count > 0) {
 
@@ -148,28 +205,128 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 				dt.Columns.Add("GROUP_UNIVERSE_CLIENT", ds.Tables[0].Rows[0]["GROUP_UNIVERSE_CLIENT"].GetType());
 				dt.Columns.Add("ID_UNIVERSE_CLIENT", ds.Tables[0].Rows[0]["ID_UNIVERSE_CLIENT"].GetType());
 				dt.Columns.Add("UNIVERSE_CLIENT", ds.Tables[0].Rows[0]["UNIVERSE_CLIENT"].GetType());
+                /* TODO MODIFICATION
+                 * Code add to improve the performance of the universe loading process
+                * 
+                dt.Columns.Add("COLUMN_NAME", ds.Tables[0].Rows[0]["COLUMN_NAME"].GetType());*/
 
-				foreach (DataRow dr in ds.Tables[0].Rows) {
-					universes = (Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>)GetObjectUniverses(long.Parse(dr["ID_UNIVERSE_CLIENT"].ToString()), webSession);
-					if (universes != null && universes.Count > 0) {
-						levelsIds = WebSession.GetLevelListId(universes);
-						for (int j = 0; j < levelsIds.Count; j++) {
-							if (!allowedLevels.Contains(levelsIds[j])) {
-								isValidUniverse = false;
-							}
-						}
+                foreach (DataRow dr in ds.Tables[0].Rows) {
 
-						//Univers valide
-						if (isValidUniverse) {
-							dt.Rows.Add(dr.ItemArray);
-						}
-					}
-					isValidUniverse = true;
-				}
+                    /* TODO MODIFICATION
+                     * Code add to improve the performance of the universe loading process
+                    * 
+                    if (dr["COLUMN_NAME"] != null && dr["COLUMN_NAME"].ToString().Length > 0)
+                        levelsIds = dr["COLUMN_NAME"].ToString().Split('-');
+
+                    foreach (string levelId in levelsIds) {
+                        if (!allowedLevels.Contains(Int64.Parse(levelId))) {
+                            isValidUniverse = false;
+                        }
+                    }
+
+                    //Univers valide
+                    if (isValidUniverse) {
+                        dt.Rows.Add(dr.ItemArray);
+                    }
+
+                    isValidUniverse = true;*/
+
+                    universes = (Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>)GetObjectUniverses(long.Parse(dr["ID_UNIVERSE_CLIENT"].ToString()), webSession);
+                    if (universes != null && universes.Count > 0) {
+                        levelsIds = WebSession.GetLevelListId(universes);
+                        for (int j = 0; j < levelsIds.Count; j++) {
+                            if (!allowedLevels.Contains(levelsIds[j])) {
+                                isValidUniverse = false;
+                            }
+                        }
+
+                        //Univers valide
+                        if (isValidUniverse) {
+                            dt.Rows.Add(dr.ItemArray);
+                        }
+                    }
+                    isValidUniverse = true;
+
+                }
 			}
 
 			return dt;
 		}
+
+        /// <summary>
+        /// Get the customer universes list which are recorded dependind on allowed universe levels
+        /// </summary>
+        /// <param name="webSession">Customer session</param>
+        /// <param name="branch">Branch used (media, product)</param>
+        /// <param name="ListUniverseClientDescription">ID_UNIVERSE_CLIENT_DESCRIPTION</param>
+        /// <param name="allowedLevels">allowed universe levels</param>
+        /// <param name="filter">Filter</param>
+        /// <returns>Universes list</returns>
+        public static DataTable GetData(WebSession webSession, string branch, string ListUniverseClientDescription, List<Int64> allowedLevels, LevelInformation filter){
+            DataTable dt = new DataTable();
+
+            DataSet ds = GetData(webSession, branch, ListUniverseClientDescription,filter);
+            List<long> levelsIds = null;
+            /* TODO MODIFICATION
+             * Code add to improve the performance of the universe loading process
+            * 
+            string[] levelsIds = null;*/
+            Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universes = null;
+            bool isValidUniverse = true;
+            if (ds != null && ds.Tables[0].Rows.Count > 0){
+
+                dt.Columns.Add("ID_GROUP_UNIVERSE_CLIENT", ds.Tables[0].Rows[0]["ID_GROUP_UNIVERSE_CLIENT"].GetType());
+                dt.Columns.Add("GROUP_UNIVERSE_CLIENT", ds.Tables[0].Rows[0]["GROUP_UNIVERSE_CLIENT"].GetType());
+                dt.Columns.Add("ID_UNIVERSE_CLIENT", ds.Tables[0].Rows[0]["ID_UNIVERSE_CLIENT"].GetType());
+                dt.Columns.Add("UNIVERSE_CLIENT", ds.Tables[0].Rows[0]["UNIVERSE_CLIENT"].GetType());
+                
+                /* TODO MODIFICATION
+                 * Code add to improve the performance of the universe loading process
+                * 
+                dt.Columns.Add("COLUMN_NAME", ds.Tables[0].Rows[0]["COLUMN_NAME"].GetType());*/
+
+                foreach (DataRow dr in ds.Tables[0].Rows){
+
+                    /* TODO MODIFICATION
+                     * Code add to improve the performance of the universe loading process
+                    * 
+                    if (dr["COLUMN_NAME"] != null && dr["COLUMN_NAME"].ToString().Length > 0)
+                        levelsIds = dr["COLUMN_NAME"].ToString().Split('-');
+
+                    foreach (string levelId in levelsIds) {
+                        if (!allowedLevels.Contains(Int64.Parse(levelId))) {
+                            isValidUniverse = false;
+                        }
+                    }
+
+                    //Univers valide
+                    if (isValidUniverse) {
+                        dt.Rows.Add(dr.ItemArray);
+                    }
+
+                    isValidUniverse = true;*/
+
+                    universes = (Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>)GetObjectUniverses(long.Parse(dr["ID_UNIVERSE_CLIENT"].ToString()), webSession);
+                    if (universes != null && universes.Count > 0){
+                        levelsIds = WebSession.GetLevelListId(universes);
+                        for (int j = 0; j < levelsIds.Count; j++){
+                            if (!allowedLevels.Contains(levelsIds[j])){
+                                isValidUniverse = false;
+                            }
+                        }
+
+                        //Univers valide
+                        if (isValidUniverse){
+                            dt.Rows.Add(dr.ItemArray);
+                        }
+                    }
+                    isValidUniverse = true;
+
+                }
+            }
+
+            return dt;
+        }
 		#endregion
 
 		#region GetGroupUniverses
@@ -474,6 +631,119 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 			return(success);
 		}
 
+        /// <summary>
+        /// Sauvegarde d'un nouvel univers
+        /// </summary>
+        /// <remarks>A Tester</remarks>
+        /// <param name="idGroupUniverse">Identifiant du groupe d'univers</param>
+        /// <param name="universe">Non de l'univers</param>
+        /// <param name="alUniverseTreeNode"> Liste contenant les 2 arbres utilisés pour la sauvegarde des univers</param>
+        /// <param name="type">Branche de l'univers</param>
+        /// <param name="webSession">Session utilisateur</param>
+        /// <param name="idUniverseClientDescription">idUniverseClientDescription</param>
+        /// <param name="filter">filter</param>
+        /// <returns>Retourne true si l'univers a été crée</returns>
+        public static bool SaveUniverse(Int64 idGroupUniverse, string universe, ArrayList alUniverseTreeNode, TNS.AdExpress.Constantes.Classification.Branch.type type, Int64 idUniverseClientDescription, WebSession webSession, int filter){
+
+            #region Ouverture de la base de données
+            OracleConnection connection = (OracleConnection)webSession.Source.GetSource();
+            bool DBToClosed = false;
+            bool success = false;
+            if (connection.State == System.Data.ConnectionState.Closed){
+                DBToClosed = true;
+                try{
+                    connection.Open();
+                }
+                catch (System.Exception e){
+                    throw (new UniversListException("Impossible d'ouvrir la base de données", e));
+                }
+            }
+            #endregion
+
+            int idTypeUniverseClient = type.GetHashCode();
+
+            #region Sérialisation et sauvegarde de la session
+            OracleCommand sqlCommand = null;
+            MemoryStream ms = null;
+            BinaryFormatter bf = null;
+            byte[] binaryData = null;
+            TreeNode tree;
+            Int64 filterId=-1;
+            string filterField = string.Empty;
+            string filterValue = string.Empty;
+
+            try{
+                
+                Table universeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse);
+                Schema schema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01);
+                //"Serialization"
+                ms = new MemoryStream();
+                bf = new BinaryFormatter();
+                bf.Serialize(ms, alUniverseTreeNode);
+                binaryData = new byte[ms.GetBuffer().Length];
+                binaryData = ms.GetBuffer();
+
+                //create anonymous PL/SQL command
+                if (filter == 1) {
+                    if (webSession.SelectionUniversMedia.FirstNode.Nodes[0] != null) {
+                        tree = webSession.SelectionUniversMedia.FirstNode.Nodes[0];
+                        filterId = ((TNS.AdExpress.Web.Core.Sessions.LevelInformation)(tree.Tag)).ID;
+                        filterField = ", FILTER";  
+                        filterValue = "," + filterId + "";
+                    }
+                }
+
+                string block = " BEGIN " +
+                    " INSERT INTO " + universeTable.Sql +
+                    " (ID_UNIVERSE_CLIENT, ID_GROUP_UNIVERSE_CLIENT, UNIVERSE_CLIENT, BLOB_UNIVERSE_CLIENT,ID_TYPE_UNIVERSE_CLIENT ,ID_UNIVERSE_CLIENT_DESCRIPTION ,DATE_CREATION, DATE_MODIFICATION, ACTIVATION " + filterField +") " +
+                    " VALUES " +
+                    " (" + schema.Label + ".seq_universe_client.nextval, " + idGroupUniverse + ", '" + universe + "', :1, " + idTypeUniverseClient + "," + idUniverseClientDescription + ",sysdate, sysdate," + DBConstantes.ActivationValues.ACTIVATED + filterValue +"); " +
+                    " END; ";
+                sqlCommand = new OracleCommand(block);
+                sqlCommand.Connection = connection;
+                sqlCommand.CommandType = CommandType.Text;
+                //Fill parametres
+                OracleParameter param = sqlCommand.Parameters.Add("blobtodb", OracleDbType.Blob);
+                param.Direction = ParameterDirection.Input;
+                param.Value = binaryData;
+
+                //Execute PL/SQL block
+                sqlCommand.ExecuteNonQuery();
+
+            }
+            #endregion
+
+            #region Gestion des erreurs dues à la sérialisation et à la sauvegarde de l'objet
+            catch (System.Exception e){
+                // Fermeture des structures
+                try{
+                    if (ms != null) ms.Close();
+                    if (bf != null) bf = null;
+                    if (sqlCommand != null) sqlCommand.Dispose();
+                    if (DBToClosed) connection.Close();
+                }
+                catch (System.Exception et){
+                    throw (new MySessionDataAccessException("Impossible de libérer les ressources après échec de la méthode" + et));
+                }
+                throw (new MySessionDataAccessException("Echec de la sauvegarde de l'objet dans la base de donnée" + e));
+            }
+            //pas d'erreur
+            try{
+                // Fermeture des structures
+                ms.Close();
+                bf = null;
+                if (sqlCommand != null) sqlCommand.Dispose();
+                if (DBToClosed) connection.Close();
+                success = true;
+            }
+            catch (System.Exception et){
+                throw (new MySessionDataAccessException("Impossible de fermer la base de données", et));
+            }
+            #endregion
+
+            return (success);
+        }
+
 
 		/// <summary>
 		/// Sauvegarde d'un nouvel univers
@@ -510,9 +780,13 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 			MemoryStream ms = null;
 			BinaryFormatter bf = null;
 			byte[] binaryData = null;
+            /* TODO MODIFICATION
+             * Code add to improve the performance of the universe loading process
+            * 
+            List<long> levelsIds = null;
+            string levelsIdsField = string.Empty;*/
 
-
-			try {
+            try {
 				Table universeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse);
 				Schema schema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.webnav01);
 
@@ -523,13 +797,34 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 				binaryData = new byte[ms.GetBuffer().Length];
 				binaryData = ms.GetBuffer();
 
-				//create anonymous PL/SQL command
+                /* TODO MODIFICATION
+                 * Code add to improve the performance of the universe loading process
+                * 
+                //Get the levels identifiers from the universes selected
+                levelsIds = WebSession.GetLevelListId(universesToSave);
+
+                if (levelsIds != null && levelsIds.Count > 0) {
+                    for (int j = 0; j < levelsIds.Count; j++) {
+                        levelsIdsField += levelsIds[j] + "-";
+                    }
+                    levelsIdsField = levelsIdsField.Substring(0, levelsIdsField.Length - 1);
+                }*/
+
+                //create anonymous PL/SQL command
 				string block = " BEGIN " +
 					" INSERT INTO " + universeTable.Sql +
-					" (ID_UNIVERSE_CLIENT, ID_GROUP_UNIVERSE_CLIENT, UNIVERSE_CLIENT, BLOB_UNIVERSE_CLIENT,ID_TYPE_UNIVERSE_CLIENT ,ID_UNIVERSE_CLIENT_DESCRIPTION ,DATE_CREATION, DATE_MODIFICATION, ACTIVATION) " +
+                    " (ID_UNIVERSE_CLIENT, ID_GROUP_UNIVERSE_CLIENT, UNIVERSE_CLIENT, BLOB_UNIVERSE_CLIENT,ID_TYPE_UNIVERSE_CLIENT ,ID_UNIVERSE_CLIENT_DESCRIPTION ,DATE_CREATION, DATE_MODIFICATION, ACTIVATION) " +
 					" VALUES " +
-					" (" + schema.Label + ".seq_universe_client.nextval, " + idGroupUniverse + ", '" + universe + "', :1, " + idTypeUniverseClient + "," + idUniverseClientDescription + ",sysdate, sysdate," + DBConstantes.ActivationValues.ACTIVATED + "); " +
-					" END; ";
+					" (" + schema.Label + ".seq_universe_client.nextval, " + idGroupUniverse + ", '" + universe + "', :1, " + idTypeUniverseClient + "," + idUniverseClientDescription + ",sysdate, sysdate, " + DBConstantes.ActivationValues.ACTIVATED + "); " +
+
+                    /* TODO MODIFICATION
+                     * Code add to improve the performance of the universe loading process
+                    * 
+                    " (ID_UNIVERSE_CLIENT, ID_GROUP_UNIVERSE_CLIENT, UNIVERSE_CLIENT, BLOB_UNIVERSE_CLIENT,ID_TYPE_UNIVERSE_CLIENT ,ID_UNIVERSE_CLIENT_DESCRIPTION ,DATE_CREATION, DATE_MODIFICATION, COMMENTARY, ACTIVATION) " +
+                    " VALUES " +
+                    " (" + schema.Label + ".seq_universe_client.nextval, " + idGroupUniverse + ", '" + universe + "', :1, " + idTypeUniverseClient + "," + idUniverseClientDescription + ",sysdate, sysdate," + levelsIdsField + ", " + DBConstantes.ActivationValues.ACTIVATED + "); " +*/
+
+                    " END; ";
 				sqlCommand = new OracleCommand(block);
 				sqlCommand.Connection = connection;
 				sqlCommand.CommandType = CommandType.Text;
@@ -924,6 +1219,107 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 
 		}
 
+        /// <summary>
+        ///  Renommer un univers
+        /// </summary>
+        /// <remarks>Testée</remarks>
+        /// <param name="idUniverse">Identifiant de l'univers</param>
+        /// <param name="webSession">Session du client</param>
+        public static bool UpdateUniverse(Int64 idUniverse, WebSession webSession, Int64 idUniverseClientDescription, int idTypeUniverseClient, ArrayList alUniverseTreeNode, int filter){
+
+            #region Ouverture de la base de données
+            OracleConnection connection = (OracleConnection)webSession.Source.GetSource();
+            bool DBToClosed = false;
+            bool success = false;
+            if (connection.State == System.Data.ConnectionState.Closed){
+                DBToClosed = true;
+                try{
+                    connection.Open();
+                }
+                catch (System.Exception e){
+                    throw (new UniversListException("Impossible d'ouvrir la base de données :" + e.Message));
+                }
+            }
+            #endregion
+
+            #region Sérialisation et Mise à jour de la session
+            OracleCommand sqlCommand = null;
+            MemoryStream ms = null;
+            BinaryFormatter bf = null;
+            byte[] binaryData = null;
+            TreeNode tree;
+            Int64 filterId = -1;
+            string filterSet = string.Empty;
+
+            try{
+                Table universeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse);
+
+                //"Serialization"
+                ms = new MemoryStream();
+                bf = new BinaryFormatter();
+                bf.Serialize(ms, alUniverseTreeNode);
+                binaryData = new byte[ms.GetBuffer().Length];
+                binaryData = ms.GetBuffer();
+
+                //mise à jour de la session
+                if (filter == 1){
+                    if (webSession.SelectionUniversMedia.FirstNode.Nodes[0] != null){
+                        tree = webSession.SelectionUniversMedia.FirstNode.Nodes[0];
+                        filterId = ((TNS.AdExpress.Web.Core.Sessions.LevelInformation)(tree.Tag)).ID;
+                        filterSet = ", FILTER = " + filterId;
+                    }
+                }
+
+                string sql = " UPDATE  " + universeTable.Sql + " ";
+                sql += " SET  BLOB_UNIVERSE_CLIENT = :1,DATE_MODIFICATION=SYSDATE, ID_TYPE_UNIVERSE_CLIENT=" + idTypeUniverseClient + ",ID_UNIVERSE_CLIENT_DESCRIPTION =" + idUniverseClientDescription + filterSet;
+                sql += " WHERE  ID_UNIVERSE_CLIENT=" + idUniverse + " ";
+
+                //Exécution de la requête
+                sqlCommand = new OracleCommand(sql);
+                sqlCommand.Connection = connection;
+                sqlCommand.CommandType = CommandType.Text;
+                //parametres
+                OracleParameter param = sqlCommand.Parameters.Add("blobtodb", OracleDbType.Blob);
+                param.Direction = ParameterDirection.Input;
+                param.Value = binaryData;
+                //Execution PL/SQL block
+                sqlCommand.ExecuteNonQuery();
+
+            }
+            #endregion
+
+            #region Gestion des erreurs dues à la sérialisation et à la sauvegarde de l'objet
+            catch (System.Exception e){
+                // Fermeture des structures
+                try{
+                    if (ms != null) ms.Close();
+                    if (bf != null) bf = null;
+                    if (sqlCommand != null) sqlCommand.Dispose();
+                    if (DBToClosed) connection.Close();
+                }
+                catch (System.Exception et){
+                    throw (new UniversListException(" Impossible de libérer les ressources après échec de la méthode : " + et.Message));
+                }
+                throw (new UniversListException(" Echec de la sauvegarde de l'objet dans la base de donnée : " + e.Message));
+            }
+            //pas d'erreur
+            try{
+                // Fermeture des structures
+                ms.Close();
+                bf = null;
+                if (sqlCommand != null) sqlCommand.Dispose();
+                if (DBToClosed) connection.Close();
+                success = true;
+            }
+            catch (System.Exception et){
+                throw (new UniversListException(" Impossible de fermer la base de données : " + et.Message));
+            }
+            #endregion
+
+            return (success);
+
+        }
+
 		/// <summary>
 		///  Update Universe
 		/// </summary>
@@ -955,8 +1351,13 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 			MemoryStream ms = null;
 			BinaryFormatter bf = null;
 			byte[] binaryData = null;
+            /* TODO MODIFICATION
+             * Code add to improve the performance of the universe loading process
+            * 
+            List<long> levelsIds = null;
+            string levelsIdsField = string.Empty;*/
 
-			try {
+            try {
 				Table universeTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.customerUniverse);
 
 				//"Serialization"
@@ -966,9 +1367,26 @@ namespace TNS.AdExpress.Web.Core.DataAccess.ClassificationList{
 				binaryData = new byte[ms.GetBuffer().Length];
 				binaryData = ms.GetBuffer();
 
-				//mise à jour de la session
+                /* TODO MODIFICATION
+                 * Code add to improve the performance of the universe loading process
+                * 
+                //Get the levels identifiers from the universes selected
+                levelsIds = WebSession.GetLevelListId(universesToSave);
+
+                if (levelsIds != null && levelsIds.Count > 0) {
+                    for (int j = 0; j < levelsIds.Count; j++) {
+                        levelsIdsField += levelsIds[j] + "-";
+                    }
+                    levelsIdsField = levelsIdsField.Substring(0, levelsIdsField.Length - 1);
+                }*/
+
+                //mise à jour de la session
 				string sql = " UPDATE  " + universeTable.Sql + " ";
-				sql += " SET  BLOB_UNIVERSE_CLIENT = :1,DATE_MODIFICATION=SYSDATE, ID_TYPE_UNIVERSE_CLIENT=" + idTypeUniverseClient + ",ID_UNIVERSE_CLIENT_DESCRIPTION =" + idUniverseClientDescription;
+                /* TODO MODIFICATION
+                 * Code add to improve the performance of the universe loading process
+                * 
+                sql += " SET  BLOB_UNIVERSE_CLIENT = :1,DATE_MODIFICATION=SYSDATE, ID_TYPE_UNIVERSE_CLIENT=" + idTypeUniverseClient + ",ID_UNIVERSE_CLIENT_DESCRIPTION =" + idUniverseClientDescription + ", COMMENTARY =" + levelsIdsField;*/
+                sql += " SET  BLOB_UNIVERSE_CLIENT = :1,DATE_MODIFICATION=SYSDATE, ID_TYPE_UNIVERSE_CLIENT=" + idTypeUniverseClient + ",ID_UNIVERSE_CLIENT_DESCRIPTION =" + idUniverseClientDescription;
 				sql += " WHERE  ID_UNIVERSE_CLIENT=" + idUniverse + " ";
 
 				//Exécution de la requête

@@ -82,4 +82,22 @@ namespace TNS.AdExpressI.Portofolio.Finland.Engines {
         #endregion
 
     }
+
+    #region Class Data Unit
+    /// <summary>
+    /// Data Unit
+    /// </summary>
+    public class DataUnit : AbstractResult.DataUnit
+    {
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public DataUnit(IPortofolioDAL portofolioDAL, VehicleInformation vehicleInformation)
+            : base(portofolioDAL, vehicleInformation)
+        {
+        }
+        #endregion
+    }
+    #endregion
 }

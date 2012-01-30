@@ -139,11 +139,21 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					sql.Append("  " + _webSession.GenericInsertionColumns.GetSqlJoins(_webSession.DataLanguage, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, null));
 				sql.Append("  " + _webSession.GenericInsertionColumns.GetSqlContraintJoins());
 
-				if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio && _adBreak != null && _adBreak.Length > 0)
+				if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioGeneral
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioSponsorship
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioMusic)
+                    && _adBreak != null && _adBreak.Length > 0)
 					sql.Append("  and commercial_break = " + _adBreak + "");
 
 
-				if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others )  && _adBreak != null && _adBreak.Length > 0) {
+				if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv 
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvGeneral
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvAnnounces)  
+                    && _adBreak != null && _adBreak.Length > 0) {
 					sql.Append(" and id_commercial_break = " + _adBreak + "");
 				}
 
@@ -172,7 +182,11 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				sql.Append( " " + GetMediaUniverse(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
 
 				//Rights detail spot to spot TNT
-				if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
+				if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvGeneral
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvAnnounces)
 					&& !_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_DIGITAL_TV_ACCESS_FLAG)) {					
 					string idTNTCategory = TNS.AdExpress.Domain.Lists.GetIdList(WebConstantes.GroupList.ID.category, WebConstantes.GroupList.Type.digitalTv);
 					if (idTNTCategory != null && idTNTCategory.Length > 0) {
@@ -234,9 +248,16 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                
                 return res;
 				case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
 					if (allPeriod) return "order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_top_diffusion";
 					else return " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_top_diffusion";
-				case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
 					// Top diffusion
 					if (allPeriod)
 						return " order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num," + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".top_diffusion ";

@@ -49,6 +49,11 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Web.Functions;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpressI.Classification.DAL;
+using System.Reflection;
+using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Domain.CampaignTypes;
 
 #endregion
 
@@ -94,12 +99,16 @@ namespace TNS.AdExpress.Web.UI
         {
             StringBuilder t = new System.Text.StringBuilder();
             string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
-            #region Logo TNS
-            t.Append("<table cellpadding=0 cellspacing=0 width=100% >");
-            t.Append("<tr><td><img src=\"/App_Themes/" + themeName + WebConstantes.Images.LOGO_TNS + "\"></td></tr>");
-            t.Append(GetBlankLine());
-            t.Append("</table><br>");
-            #endregion
+            string absolutePath = string.Empty;
+
+            if (webSession.DomainName.Length > 0) absolutePath = "http://" + webSession.DomainName;
+
+			#region Logo TNS
+			t.Append("<table cellpadding=0 cellspacing=0 width=100% >");
+            t.Append("<tr><td><img src=\"" + absolutePath + "/App_Themes/" + themeName + WebConstantes.Images.LOGO_TNS + "\"></td></tr>");
+			t.Append(GetBlankLine());
+			t.Append("</table><br>");
+			#endregion
 
             return Convertion.ToHtmlString(t.ToString());
         }
@@ -112,14 +121,18 @@ namespace TNS.AdExpress.Web.UI
         {
             StringBuilder t = new System.Text.StringBuilder();
             string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
-            #region Logo TNS
-            t.Append("<table cellpadding=0 cellspacing=0 width=100% >");
-            t.Append("<tr><td><img src=\"/App_Themes/" + themeName + WebConstantes.Images.LOGO_TNS + "\"></td>");
-            t.Append("<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>");
-            t.Append("<td><img src=\"/App_Themes/" + themeName + WebConstantes.Images.LOGO_APPM + "\"></td></tr>");
-            t.Append("<tr><td colspan=8>&nbsp;</td></tr>");
-            t.Append("</table><br>");
-            #endregion
+            string absolutePath = string.Empty;
+
+            if (webSession.DomainName.Length > 0) absolutePath = "http://" + webSession.DomainName;
+
+			#region Logo TNS
+			t.Append("<table cellpadding=0 cellspacing=0 width=100% >");
+            t.Append("<tr><td><img src=\"" + absolutePath + "/App_Themes/" + themeName + WebConstantes.Images.LOGO_TNS + "\"></td>");
+			t.Append("<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>");
+            t.Append("<td><img src=\"" + absolutePath + "/App_Themes/" + themeName + WebConstantes.Images.LOGO_APPM + "\"></td></tr>");
+			t.Append ("<tr><td colspan=8>&nbsp;</td></tr>");
+			t.Append("</table><br>");
+			#endregion
 
             return Convertion.ToHtmlString(t.ToString());
         }
@@ -184,29 +197,25 @@ namespace TNS.AdExpress.Web.UI
                 t.Append("<tr><td class=\"excelDataItalic\">" + GestionWeb.GetWebWord(512, webSession.SiteLanguage) + "</td></tr>");
                 #endregion
 
-                //webSession.CustomerLogin.ModuleList();
-                Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
-                try
-                {
-                    detailSelections = ((ResultPageInformation)currentModule.GetResultPageInformation((int)webSession.CurrentTab)).DetailSelectionItemsType;
-                }
-                catch (System.Exception)
-                {
-                    if (currentModule.Id == WebConstantes.Module.Name.ALERTE_PORTEFEUILLE)
-                        detailSelections = ((ResultPageInformation)currentModule.GetResultPageInformation(5)).DetailSelectionItemsType;
-                }
-
-                foreach (int currentType in detailSelections)
-                {
-                    switch ((WebConstantes.DetailSelection.Type)currentType)
-                    {
-                        case WebConstantes.DetailSelection.Type.moduleName:
-                            t.Append(GetModuleName(webSession));
-                            break;
-                        case WebConstantes.DetailSelection.Type.resultName:
-                            t.Append(GetResultName(webSession, currentModule));
-                            break;
-                        case WebConstantes.DetailSelection.Type.dateSelected:
+				//webSession.CustomerLogin.ModuleList();
+				TNS.AdExpress.Domain.Web.Navigation.Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+				try{
+					detailSelections=((ResultPageInformation) currentModule.GetResultPageInformation((int)webSession.CurrentTab)).DetailSelectionItemsType;
+				}
+				catch(System.Exception){
+					if(currentModule.Id==WebConstantes.Module.Name.ALERTE_PORTEFEUILLE)
+						detailSelections=((ResultPageInformation) currentModule.GetResultPageInformation(5)).DetailSelectionItemsType;
+				}
+				
+				foreach(int currentType in detailSelections){
+					switch((WebConstantes.DetailSelection.Type)currentType){
+						case WebConstantes.DetailSelection.Type.moduleName:
+							t.Append(GetModuleName(webSession));
+							break;
+						case WebConstantes.DetailSelection.Type.resultName:
+							t.Append(GetResultName(webSession,currentModule));
+							break;
+						case WebConstantes.DetailSelection.Type.dateSelected:
                             if (zoomDate == null) zoomDate = "";
                             if (zoomDate.Length > 0)
                                 t.Append(GetZoomDate(webSession, zoomDate, periodDisplayLevel));
@@ -249,12 +258,16 @@ namespace TNS.AdExpress.Web.UI
                         case WebConstantes.DetailSelection.Type.mediaPersonnalizedSelected:
                             t.Append(GetMediaPersonnalizedSelected(webSession));
                             break;
-                        case WebConstantes.DetailSelection.Type.competitorMediaSelected:
-                            t.Append(GetCompetitorMediaSelected(webSession));
+                        case WebConstantes.DetailSelection.Type.mediaSelected:
+                        case WebConstantes.DetailSelection.Type.regionSelected:
+                            t.Append(GetPrincipalMediaSelected(webSession));
                             break;
-                        case WebConstantes.DetailSelection.Type.insetSelected:
-                            t.Append(GetInsetSelected(webSession));
-                            break;
+						case WebConstantes.DetailSelection.Type.competitorMediaSelected:
+							t.Append(GetCompetitorMediaSelected(webSession));
+							break;
+						case WebConstantes.DetailSelection.Type.insetSelected:
+							t.Append(GetInsetSelected(webSession)); 
+							break;
                         case WebConstantes.DetailSelection.Type.isAutoPromo:
                             t.Append(GetAutoPromo(webSession, currentModule));
                             break;
@@ -284,6 +297,12 @@ namespace TNS.AdExpress.Web.UI
                             break;
                         case WebConstantes.DetailSelection.Type.genericProductLevelDetail:
                             t.Append(GetGenericProductLevelDetail(webSession));
+                            break;
+                       case WebConstantes.DetailSelection.Type.advertisementType:
+                            t.Append(GetAdTypeSelected(webSession));
+                            break;
+                        case WebConstantes.DetailSelection.Type.campaignType:
+                            t.Append(GetCampaignType(webSession,currentModule));
                             break;
                         default:
                             break;
@@ -321,6 +340,9 @@ namespace TNS.AdExpress.Web.UI
             return (html.ToString());
         }
         #endregion
+                              
+
+
 
         #region Nom du résultat
         /// <summary>
@@ -329,7 +351,7 @@ namespace TNS.AdExpress.Web.UI
         /// <param name="webSession">Session du client</param>
         /// <param name="currentModule">Module</param>
         /// <returns>HTML</returns>
-        protected static string GetResultName(WebSession webSession, Module currentModule)
+        protected static string GetResultName(WebSession webSession, TNS.AdExpress.Domain.Web.Navigation.Module currentModule)
         {
             string currentResult = "";
             StringBuilder html = new StringBuilder();
@@ -361,7 +383,7 @@ namespace TNS.AdExpress.Web.UI
         /// <param name="periodEnd">Date de fin</param>
         /// <returns>HTML</returns>
         /// <remarks>Date format to be like for example novembre 2004 - janvier 2005</remarks>
-        protected static string GetDateSelected(WebSession webSession, Module currentModule, bool dateFormatText, string periodBeginning, string periodEnd)
+        protected static string GetDateSelected(WebSession webSession, TNS.AdExpress.Domain.Web.Navigation.Module currentModule, bool dateFormatText, string periodBeginning, string periodEnd)
         {
             StringBuilder html = new StringBuilder();
             string startDate = "";
@@ -494,7 +516,7 @@ namespace TNS.AdExpress.Web.UI
         /// <param name="dateFormatText">Booléen date en format texte</param>
         /// <returns>HTML</returns>
         /// <remarks>Date format to be like for example novembre 2004 - janvier 2005</remarks>
-        protected static string GetComparativePeriodDetail(WebSession webSession, Module currentModule, bool dateFormatText)
+        protected static string GetComparativePeriodDetail(WebSession webSession, TNS.AdExpress.Domain.Web.Navigation.Module currentModule, bool dateFormatText)
         {
             StringBuilder html = new StringBuilder();
             string dateBegin;
@@ -542,7 +564,7 @@ namespace TNS.AdExpress.Web.UI
         /// <param name="currentModule">Module en cours</param>
         /// <returns>HTML</returns>
         /// <remarks>Date format to be like for example novembre 2004 - janvier 2005</remarks>
-        protected static string GetComparativePeriodTypeDetail(WebSession webSession, Module currentModule)
+        protected static string GetComparativePeriodTypeDetail(WebSession webSession, TNS.AdExpress.Domain.Web.Navigation.Module currentModule)
         {
             StringBuilder html = new StringBuilder();
 
@@ -625,7 +647,7 @@ namespace TNS.AdExpress.Web.UI
             {
                 html.Append(GetBlankLine());
                 html.Append("<tr><td class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(190, webSession.SiteLanguage) + " :</font></td></tr>");
-                html.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(webSession.SelectionUniversMedia, webSession.SiteLanguage));
+                html.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(webSession.SelectionUniversMedia, webSession.SiteLanguage, webSession.DomainName));
             }
             return (html.ToString());
         }
@@ -653,7 +675,7 @@ namespace TNS.AdExpress.Web.UI
                 productSelection += "<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
                 adExpressUniverse = webSession.PrincipalProductUniverses[0];
 
-                productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.DataLanguage, webSession.Source);
+                productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource, webSession.DomainName);
             }
             else if (webSession.PrincipalProductUniverses.Count > 1)
             {
@@ -675,7 +697,8 @@ namespace TNS.AdExpress.Web.UI
                         productSelection += "<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
                         productSelection += "<TR><TD colspan=4 class=\"txtViolet11Bold whiteBackGround\" >" + webSession.PrincipalProductUniverses[k].Label + " </TD></TR>";
                         adExpressUniverse = webSession.PrincipalProductUniverses[k];
-                        productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.DataLanguage, webSession.Source);
+                        productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource, webSession.DomainName);
+
                     }
                 }
             }
@@ -715,7 +738,7 @@ namespace TNS.AdExpress.Web.UI
                     productSelection += GetBlankLine();
                 }
                 productSelection += "<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
-                productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.DataLanguage, webSession.Source);
+                productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.DataLanguage,webSession.CustomerDataFilters.DataSource, webSession.DomainName);
             }
             else if (webSession.SecondaryProductUniverses.Count > 1)
             {
@@ -742,11 +765,11 @@ namespace TNS.AdExpress.Web.UI
                         }
                         productSelection += "<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
                         productSelection += "<TR><TD colspan=4 class=\"txtViolet11Bold whiteBackGround\" >" + webSession.SecondaryProductUniverses[k].Label + " </TD></TR>";
-                        adExpressUniverse = webSession.SecondaryProductUniverses[k];
-                        productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.DataLanguage, webSession.Source);
-                    }
-                }
-            }
+						adExpressUniverse = webSession.SecondaryProductUniverses[k];
+						productSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage,webSession.DataLanguage, webSession.CustomerDataFilters.DataSource, webSession.DomainName);
+					}
+				}
+			}
 
             t.Append(productSelection);
             #endregion
@@ -754,17 +777,64 @@ namespace TNS.AdExpress.Web.UI
             #region Liste des supports de référence
             //// Alerte et Analyse portefeuille
 
-            if (webSession.isReferenceMediaSelected())
-            {
-                t.Append(GetBlankLine());
-                t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(971, webSession.SiteLanguage) + " :</font></TD></TR>");
-                t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel((TreeNode)webSession.ReferenceUniversMedia, webSession.SiteLanguage));
-            }
-            #endregion
+			if (webSession.isReferenceMediaSelected()) {
+				t.Append(GetBlankLine());
+				t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(971, webSession.SiteLanguage) + " :</font></TD></TR>");
+				t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel((TreeNode)webSession.ReferenceUniversMedia, webSession.SiteLanguage, webSession.DomainName));
+			}
+			#endregion
 
             return (t.ToString());
         }
         #endregion
+
+        #region GetAdTypeSelected
+        /// <summary>
+        /// Get AdType Selected
+		/// </summary>
+		/// <param name="webSession">Session client</param>
+		/// <returns>HTML</returns>
+        public static string GetAdTypeSelected(WebSession webSession)
+        {          
+            int universeCodeTitle = 2675;
+            AdExpressUniverse adExpressUniverse = null;
+            string adTypeSelection = "";
+
+            if (webSession.IsAdvertisementTypeUniverseSelected())
+            {
+                adExpressUniverse = webSession.AdvertisementTypeUniverses[0];
+                adTypeSelection = GetBlankLine();
+                adTypeSelection += "<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
+                adTypeSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource, webSession.DomainName);
+            }
+            return adTypeSelection;
+        }
+        #endregion
+
+        #region GetCampaignType
+        /// <summary>
+        /// Get AdType Selected
+        /// </summary>
+        /// <param name="webSession">Session client</param>
+        /// <returns>HTML</returns>
+        public static string GetCampaignType(WebSession webSession, TNS.AdExpress.Domain.Web.Navigation.Module currentModule)
+        {
+            int universeCodeTitle = 2671;
+            string campaingnTypeSelection = "";
+
+            ArrayList detailSelections = ((ResultPageInformation)currentModule.GetResultPageInformation((int)webSession.CurrentTab)).DetailSelectionItemsType;
+            if (detailSelections != null && detailSelections.Contains(WebConstantes.DetailSelection.Type.campaignType.GetHashCode())
+                && webSession.CampaignType != WebConstantes.CustomerSessions.CampaignType.notDefined
+                && WebApplicationParameters.AllowCampaignTypeOption)
+            {
+                campaingnTypeSelection = GetBlankLine();
+                campaingnTypeSelection += "<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font> " + GestionWeb.GetWebWord(CampaignTypesInformation.Get(webSession.CampaignType).WebTextId, webSession.SiteLanguage) + "</TD></TR>";
+            }
+            return campaingnTypeSelection;
+         
+        }
+        #endregion
+
 
         #region Personnalisation des supports (affiner dans les résultats)
         /// <summary>
@@ -786,7 +856,7 @@ namespace TNS.AdExpress.Web.UI
             {
                 mediaSelection += GetBlankLine();
                 mediaSelection += "<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
-                mediaSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(webSession.SecondaryMediaUniverses[0], webSession.SiteLanguage, webSession.DataLanguage, webSession.Source);
+                mediaSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(webSession.SecondaryMediaUniverses[0], webSession.SiteLanguage, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource, webSession.DomainName);
             }
             t.Append(mediaSelection);
             #endregion
@@ -815,11 +885,54 @@ namespace TNS.AdExpress.Web.UI
                 advertisingAgencySelection += "<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
                 adExpressUniverse = webSession.PrincipalAdvertisingAgnecyUniverses[0];
 
-                advertisingAgencySelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.DataLanguage, webSession.Source);
+                advertisingAgencySelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource, webSession.DomainName);
             }
             #endregion
 
             return (advertisingAgencySelection);
+        }
+        #endregion
+
+        #region Personnalisation des supports (affiner dans les résultats)
+        /// <summary>
+        /// Supports sélectionnés
+        /// </summary>
+        /// <param name="webSession">Session du client</param>
+        /// <returns>HTML</returns>
+        public static string GetPrincipalMediaSelected(WebSession webSession)
+        {
+
+            #region Variables
+            StringBuilder t = new StringBuilder();
+            int universeCodeTitle = 2540; // Univers support
+            string mediaSelection = "";
+            #endregion
+
+            #region Sélection support secondaire
+            if (webSession.PrincipalMediaUniverses != null && webSession.PrincipalMediaUniverses.Count > 0)
+            {
+                TNS.AdExpress.Domain.Web.Navigation.Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+                ArrayList detailSelections = null;
+                try
+                {
+                    detailSelections = ((ResultPageInformation)currentModule.GetResultPageInformation((int)webSession.CurrentTab)).DetailSelectionItemsType;
+                }
+                catch (System.Exception)
+                {
+                    if (currentModule.Id == CstWeb.Module.Name.ALERTE_PORTEFEUILLE)
+                        detailSelections = ((ResultPageInformation)currentModule.GetResultPageInformation(5)).DetailSelectionItemsType;
+                }
+                 if (detailSelections != null && detailSelections.Contains(CstWeb.DetailSelection.Type.regionSelected.GetHashCode()))
+                 universeCodeTitle = 2680; 
+
+                mediaSelection += GetBlankLine();
+                mediaSelection += "<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
+                mediaSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(webSession.PrincipalMediaUniverses[0], webSession.SiteLanguage, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource, webSession.DomainName);
+            }
+            t.Append(mediaSelection);
+            #endregion
+
+            return (t.ToString());
         }
         #endregion
 
@@ -912,7 +1025,7 @@ namespace TNS.AdExpress.Web.UI
         /// <param name="webSession">User session</param>
         /// <param name="m">Current module</param>
         /// <returns>HTML</returns>
-        protected static string GetAutoPromo(WebSession webSession, Module m)
+        private static string GetAutoPromo(WebSession webSession, TNS.AdExpress.Domain.Web.Navigation.Module m)
         {
             bool isEvaliant = false;
             if (m.Id != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA)
@@ -972,30 +1085,27 @@ namespace TNS.AdExpress.Web.UI
         // Alerte et Analyse de potentielle
         // Analyse dynamique
 
-        /// <summary>
-        /// Support sélectionnés pour les concurrents
-        /// </summary>
-        /// <param name="webSession">Session du client</param>
-        /// <returns>HTML</returns>
-        protected static string GetCompetitorMediaSelected(WebSession webSession)
-        {
-            StringBuilder t = new StringBuilder();
-            if (webSession.isCompetitorMediaSelected())
-            {
-                int idMedia = 1;
-                t.Append(GetBlankLine());
-                t.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1087, webSession.SiteLanguage) + "</font></td></tr>");
-                while ((TreeNode)webSession.CompetitorUniversMedia[idMedia] != null)
-                {
-                    TreeNode tree = (TreeNode)webSession.CompetitorUniversMedia[idMedia];
-                    t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(((TreeNode)webSession.CompetitorUniversMedia[idMedia]), webSession.SiteLanguage));
-                    t.Append(GetBlankLine());
-                    idMedia++;
-                }
-            }
-            return (t.ToString());
-        }
-        #endregion
+		/// <summary>
+		/// Support sélectionnés pour les concurrents
+		/// </summary>
+		/// <param name="webSession">Session du client</param>
+		/// <returns>HTML</returns>
+		private static string GetCompetitorMediaSelected(WebSession webSession){
+			StringBuilder t = new StringBuilder();
+			if(webSession.isCompetitorMediaSelected()){
+				int idMedia=1;
+				t.Append(GetBlankLine());
+				t.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(1087,webSession.SiteLanguage) +"</font></td></tr>");
+				while((TreeNode)webSession.CompetitorUniversMedia[idMedia]!=null){
+					TreeNode tree=(TreeNode)webSession.CompetitorUniversMedia[idMedia];				
+					t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(((TreeNode)webSession.CompetitorUniversMedia[idMedia]),webSession.SiteLanguage, webSession.DomainName));
+					t.Append(GetBlankLine());
+					idMedia++;
+				}
+			}
+			return(t.ToString());
+		}
+		#endregion
 
         #region Etude comparative
         /// <summary>
@@ -1073,38 +1183,32 @@ namespace TNS.AdExpress.Web.UI
         }
         #endregion
 
-        #region Wave et Cible sélectionnées
-        /// <summary>
-        /// Tranche horaire sélectionnée
-        /// </summary>
-        /// <param name="webSession">Session client</param>
-        /// <returns>HTML</returns>
-        protected static string GetTargetSelected(WebSession webSession)
-        {
-            StringBuilder html = new StringBuilder();
-            if (webSession.IsWaveSelected())
-            {
-                if (((LevelInformation)webSession.SelectionUniversAEPMWave.FirstNode.Tag).Text.Length > 0)
-                {
-                    html.Append(GetBlankLine());
-                    html.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1762, webSession.SiteLanguage) + "</font> " + ((LevelInformation)webSession.SelectionUniversAEPMWave.FirstNode.Tag).Text + "</td></tr>");
-                }
-            }
-            if (!(webSession.CurrentTab == APPM.affinities))
-            {
-                if (webSession.IsTargetSelected())
-                {
-                    if (((LevelInformation)webSession.SelectionUniversAEPMTarget.LastNode.Tag).Text.Length > 0)
-                    {
-                        html.Append("<tr height=\"20\"><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1763, webSession.SiteLanguage) + "</font></td></tr>");
-                        // Affichage du TreeNode
-                        html.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(webSession.SelectionUniversAEPMTarget, webSession.SiteLanguage));
-                    }
-                }
-            }
-            return (html.ToString());
-        }
-        #endregion
+		#region Wave et Cible sélectionnées
+		/// <summary>
+		/// Tranche horaire sélectionnée
+		/// </summary>
+		/// <param name="webSession">Session client</param>
+		/// <returns>HTML</returns>
+		private static string GetTargetSelected(WebSession webSession){
+			StringBuilder html = new StringBuilder();
+			if (webSession.IsWaveSelected()){
+				if(((LevelInformation)webSession.SelectionUniversAEPMWave.FirstNode.Tag).Text.Length>0){
+					html.Append(GetBlankLine());
+					html.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1762,webSession.SiteLanguage)+"</font> "+((LevelInformation) webSession.SelectionUniversAEPMWave.FirstNode.Tag).Text+"</td></tr>");
+				}
+			}
+			if(!(webSession.CurrentTab==APPM.affinities)){									
+				if (webSession.IsTargetSelected()){
+					if(((LevelInformation)webSession.SelectionUniversAEPMTarget.LastNode.Tag).Text.Length>0){
+						html.Append("<tr height=\"20\"><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1763,webSession.SiteLanguage)+"</font></td></tr>");
+						// Affichage du TreeNode
+						html.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(webSession.SelectionUniversAEPMTarget,webSession.SiteLanguage, webSession.DomainName));
+					}
+				}
+			}
+			return(html.ToString());
+		}
+		#endregion
 
         #region Ligne séparatrice
         /// <summary>
@@ -1314,170 +1418,130 @@ namespace TNS.AdExpress.Web.UI
                     break;
             }
 
-            if (webTexId > 0)
-            {
-                t.Append(GetBlankLine());
-                t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(webTexId, webSession.SiteLanguage) + " : </font></TD></TR>");
-                // Récupération du libellé
-                if (elementIsAdvertiser)
-                { // Annonceur sélectionné
-                    AdExClassification.ProductBranch.PartialAdvertiserLevelListDataAccess elementName = new AdExClassification.ProductBranch.PartialAdvertiserLevelListDataAccess(idElement.ToString(), webSession.DataLanguage, webSession.Source);
-                    t.Append("<TR><TD colspan=4 class=\"excelData\" >" + elementName[idElement].ToString() + "</TD></TR>");
-                }
-                else
-                { // Produit sélectionné
-                    AdExClassification.ProductBranch.PartialProductLevelListDataAccess elementName = new AdExClassification.ProductBranch.PartialProductLevelListDataAccess(idElement.ToString(), webSession.DataLanguage, webSession.Source);
-                    t.Append("<TR><TD colspan=4 class=\"excelData\" >" + elementName[idElement].ToString() + "</TD></TR>");
-                }
-            }
-            return (t.ToString());
-        }
-        #endregion
+			if(webTexId > 0){
+				t.Append(GetBlankLine());
+				t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(webTexId,webSession.SiteLanguage)+" : </font></TD></TR>");
+				// Récupération du libellé
+				if(elementIsAdvertiser){ // Annonceur sélectionné
+                    AdExClassification.ProductBranch.PartialAdvertiserLevelListDataAccess elementName = new AdExClassification.ProductBranch.PartialAdvertiserLevelListDataAccess(idElement.ToString(), webSession.DataLanguage, webSession.CustomerDataFilters.DataSource);
+					t.Append("<TR><TD colspan=4 class=\"excelData\" >"+ elementName[idElement].ToString() +"</TD></TR>");
+				}
+				else{ // Produit sélectionné
+                    AdExClassification.ProductBranch.PartialProductLevelListDataAccess elementName = new AdExClassification.ProductBranch.PartialProductLevelListDataAccess(idElement.ToString(), webSession.DataLanguage, webSession.CustomerDataFilters.DataSource);
+					t.Append("<TR><TD colspan=4 class=\"excelData\" >"+ elementName[idElement].ToString() +"</TD></TR>");
+				}
+			}
+			return(t.ToString());
+		}
+		#endregion
 
-        #region Détail de sélection des insertions dans la pop up des insertions
-        /// <summary>
-        /// Détail de sélection des insertions (pop up plan media, alerte plan media)
-        /// </summary>
-        /// <param name="webSession">Session du client</param>
-        /// <param name="mediaImpactedList">Liste des medias impactés</param>
-        /// <returns>HTML</returns>
-        protected static string GetMediaSelectedForCreationsPopUp(WebSession webSession, ListDictionary mediaImpactedList)
+		#region Détail de sélection des insertions dans la pop up des insertions
+		/// <summary>
+		/// Détail de sélection des insertions (pop up plan media, alerte plan media)
+		/// </summary>
+		/// <param name="webSession">Session du client</param>
+		/// <param name="mediaImpactedList">Liste des medias impactés</param>
+		/// <returns>HTML</returns>
+        private static string GetMediaSelectedForCreationsPopUp(WebSession webSession, TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels, string[] filters, long idVehicle)
         {
-            StringBuilder t = new StringBuilder();
-            string mediaSelectLabel = "";
-            Int64 mediaSelectId = 0;
-            AdExClassification.ClassificationLevelListDataAccess elementName = null;
-
-            t.Append(GetBlankLine());
-            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1150, webSession.SiteLanguage) + "</font></TD></TR>");
-
-            //Obtient le média  sélectionné
-            IEnumerator myEnumerator = mediaImpactedList.GetEnumerator();
-            foreach (DictionaryEntry de in mediaImpactedList)
+			StringBuilder t = new StringBuilder();
+			string mediaSelectLabel="";
+			Int64 mediaSelectId=0;
+            TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL levels = null;
+			
+			t.Append(GetBlankLine());
+			t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(1150,webSession.SiteLanguage) +"</font></TD></TR>");
+			
+			//Obtient le média  sélectionné
+            if (filters != null && filters.Length > 0)
             {
-                if (long.Parse(de.Value.ToString()) > -1)
-                {
-                    mediaSelectId = long.Parse(de.Value.ToString());
-                    mediaSelectLabel = de.Key.ToString().Trim();
 
-                    //Obtient le libellé du média sélectionné
-                    switch (mediaSelectLabel)
+                GenericDetailLevel detailLevels = null;
+                switch (webSession.CurrentModule)
+                {
+                    case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
+                    case WebConstantes.Module.Name.NEW_CREATIVES:
+                    case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
+                        detailLevels = webSession.GenericProductDetailLevel;
+                        break;
+                    case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
+                    case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
+                    case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
+                    case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
+                        detailLevels = webSession.GenericMediaDetailLevel;
+                        break;
+                }
+                for (int i = 0; i < detailLevels.GetNbLevels; i++)
+                {
+                    DetailLevelItemInformation cLevel = (DetailLevelItemInformation)detailLevels.Levels[i];
+                    if (filters[i] != long.MinValue.ToString() || (((VehiclesInformation.Contains(ClassificationCst.DB.Vehicles.names.adnettrack) && idVehicle == VehiclesInformation.EnumToDatabaseId(ClassificationCst.DB.Vehicles.names.adnettrack)) || (VehiclesInformation.Contains(ClassificationCst.DB.Vehicles.names.evaliantMobile) && idVehicle == VehiclesInformation.EnumToDatabaseId(ClassificationCst.DB.Vehicles.names.evaliantMobile))) && cLevel.Id == DetailLevelItemInformation.Levels.slogan && filters[i] != long.MinValue.ToString()))
                     {
-                        case DBCst.Fields.ID_VEHICLE:
-                            elementName = new AdExClassification.MediaBranch.PartialVehicleListDataAccess(mediaSelectId.ToString(), webSession.DataLanguage, webSession.Source);
-                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1292, webSession.SiteLanguage) + " : </font> " + elementName[mediaSelectId].ToString() + "</TD></TR>");
-                            break;
-                        case DBCst.Fields.ID_CATEGORY:
-                            elementName = new AdExClassification.MediaBranch.PartialCategoryListDataAccess(mediaSelectId.ToString(), webSession.DataLanguage, webSession.Source);
-                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1382, webSession.SiteLanguage) + " : </font> " + elementName[mediaSelectId].ToString() + "</TD></TR>");
-                            break;
-                        case DBCst.Fields.ID_INTEREST_CENTER:
-                            elementName = new AdExClassification.MediaBranch.PartialInterestCenterListDataAccess(mediaSelectId.ToString(), webSession.DataLanguage, webSession.Source);
-                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1411, webSession.SiteLanguage) + " : </font> " + elementName[mediaSelectId].ToString() + "</TD></TR>");
-                            break;
-                        case DBCst.Fields.ID_MEDIA_SELLER:
-                            elementName = new AdExClassification.MediaBranch.PartialMediaSellerListDataAccess(mediaSelectId.ToString(), webSession.DataLanguage, webSession.Source);
-                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1383, webSession.SiteLanguage) + " : </font> " + elementName[mediaSelectId].ToString() + "</TD></TR>");
-                            break;
-                        case DBCst.Fields.ID_MEDIA:
-                            elementName = new AdExClassification.MediaBranch.PartialMediaListDataAccess(mediaSelectId.ToString(), webSession.DataLanguage, webSession.Source);
-                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(971, webSession.SiteLanguage) + " : </font> " + elementName[mediaSelectId].ToString() + "</TD></TR>");
-                            break;
-                        case DBCst.Fields.ID_BASIC_MEDIA:
-                            elementName = new AdExClassification.MediaBranch.PartialBasicMediaListDataAccess(mediaSelectId.ToString(), webSession.DataLanguage, webSession.Source);
-                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(2544, webSession.SiteLanguage) + " : </font> " + elementName[mediaSelectId].ToString() + "</TD></TR>");
-                            break;
-                        case DBCst.Fields.ID_SLOGAN:
-                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1888, webSession.SiteLanguage) + " : </font> " + mediaSelectId.ToString() + "</TD></TR>");
-                            break;
-                        case DBCst.Fields.ID_ADVERTISER:
-                            elementName = new AdExClassification.ProductBranch.PartialAdvertiserLevelListDataAccess(mediaSelectId.ToString(), webSession.DataLanguage, webSession.Source);
-                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(857, webSession.SiteLanguage) + " : </font> " + elementName[mediaSelectId].ToString() + "</TD></TR>");
-                            break;
-                        case DBCst.Fields.ID_BRAND:
-                            elementName = new AdExClassification.ProductBranch.PartialBrandLevelListDataAccess(mediaSelectId.ToString(), webSession.DataLanguage, webSession.Source);
-                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1889, webSession.SiteLanguage) + " : </font> " + elementName[mediaSelectId].ToString() + "</TD></TR>");
-                            break;
-                        case DBCst.Fields.ID_PRODUCT:
-                            elementName = new AdExClassification.ProductBranch.PartialProductLevelListDataAccess(mediaSelectId.ToString(), webSession.DataLanguage, webSession.Source);
-                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(858, webSession.SiteLanguage) + " : </font> " + elementName[mediaSelectId].ToString() + "</TD></TR>");
-                            break;
-                        case DBCst.Fields.ID_SECTOR:
-                            elementName = new AdExClassification.ProductBranch.PartialSectorLevelListDataAccess(mediaSelectId.ToString(), webSession.DataLanguage, webSession.Source);
-                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1103, webSession.SiteLanguage) + " : </font> " + elementName[mediaSelectId].ToString() + "</TD></TR>");
-                            break;
-                        case DBCst.Fields.ID_SUBSECTOR:
-                            elementName = new AdExClassification.ProductBranch.PartialSubSectorLevelListDataAccess(mediaSelectId.ToString(), webSession.DataLanguage, webSession.Source);
-                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1931, webSession.SiteLanguage) + " : </font> " + elementName[mediaSelectId].ToString() + "</TD></TR>");
-                            break;
-                        case DBCst.Fields.ID_GROUP_:
-                            elementName = new AdExClassification.ProductBranch.PartialGroupLevelListDataAccess(mediaSelectId.ToString(), webSession.DataLanguage, webSession.Source);
-                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1110, webSession.SiteLanguage) + " : </font> " + elementName[mediaSelectId].ToString() + "</TD></TR>");
-                            break;
+                        levels = factoryLevels.CreateClassificationLevelListDAL(cLevel, filters[i]);
+                        if (levels != null && levels.IdListOrderByClassificationItem != null && levels.IdListOrderByClassificationItem.Count > 0)
+                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(cLevel.WebTextId, webSession.SiteLanguage) + " : </font> " + levels[Convert.ToInt64(filters[i].ToString())] + "</TD></TR>");
                     }
                 }
             }
-            return (t.ToString());
-        }
+			//}
+			return(t.ToString());
+		}
+		#endregion
+
+		#region Version sélectionnée
+		/// <summary>
+		/// Version sélectionnée
+		/// </summary>
+		/// <param name="webSession">Session du client</param>
+		/// <returns>HTML</returns>
+		private static string GetSloganSelected(WebSession webSession){
+			string tmp="";
+			int nbCol=0;
+            
+            TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.creativesUtilities];
+            if (cl == null) throw (new NullReferenceException("Core layer is null for the creatives utilities class"));
+            TNS.AdExpress.Web.Core.Utilities.Creatives creativesUtilities = (TNS.AdExpress.Web.Core.Utilities.Creatives)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, null, null, null, null);
+
+            if (creativesUtilities.IsSloganZoom(webSession.SloganIdZoom))
+            {
+				tmp+="<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1888,webSession.SiteLanguage)+" :</font> "+webSession.SloganIdZoom.ToString()+"</td></tr>";
+				return(tmp);
+			}
+			else{
+				if(webSession.IdSlogans!=null && webSession.IdSlogans.Count > 0){
+					tmp+="<tr><td colspan=1 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1888,webSession.SiteLanguage)+" :</font> </td>";
+					foreach(Int64 currentSlogan in webSession.IdSlogans){
+						if(nbCol>2){
+							tmp+="</tr><tr><td>&nbsp;</td>";
+							nbCol=0;
+						}
+						tmp+="<td class=\"excelData\">"+currentSlogan.ToString()+"</td>";
+						nbCol++;
+					}
+					if(nbCol!=3)tmp+="<td colspan="+(3-nbCol).ToString()+">&nbsp;</td>";
+					tmp+="</tr>";
+					return(tmp);
+				}
+			}
+			return("");
+		}
+		#endregion
+
         #endregion
 
-        #region Version sélectionnée
-        /// <summary>
-        /// Version sélectionnée
-        /// </summary>
-        /// <param name="webSession">Session du client</param>
-        /// <returns>HTML</returns>
-        protected static string GetSloganSelected(WebSession webSession)
-        {
-            string tmp = "";
-            int nbCol = 0;
-            if (webSession.SloganIdZoom > 0)
-            {
-                tmp += "<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1888, webSession.SiteLanguage) + " :</font> " + webSession.SloganIdZoom.ToString() + "</td></tr>";
-                return (tmp);
-            }
-            else
-            {
-                if (webSession.IdSlogans != null && webSession.IdSlogans.Count > 0)
-                {
-                    tmp += "<tr><td colspan=1 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1888, webSession.SiteLanguage) + " :</font> </td>";
-                    foreach (Int64 currentSlogan in webSession.IdSlogans)
-                    {
-                        if (nbCol > 2)
-                        {
-                            tmp += "</tr><tr><td>&nbsp;</td>";
-                            nbCol = 0;
-                        }
-                        tmp += "<td class=\"excelData\">" + currentSlogan.ToString() + "</td>";
-                        nbCol++;
-                    }
-                    if (nbCol != 3) tmp += "<td colspan=" + (3 - nbCol).ToString() + ">&nbsp;</td>";
-                    tmp += "</tr>";
-                    return (tmp);
-                }
-            }
-            return ("");
-        }
-        #endregion
-
-        #endregion
-
-        #region GetExcelHeader pour les pops up plan média
-        /// <summary>
-        /// Génère l'en tête html pour le fichier Excel de la pop up plan média
-        /// </summary>
-        /// <param name="webSession">Session du client</param>
-        /// <param name="dateFormatText">Date en format texte</param>
-        /// <param name="periodBeginning">Date de début</param>
-        /// <param name="periodEnd">Date de fin</param>
-        /// <returns>HTML</returns>
-        public static string GetExcelHeaderForMediaPlanPopUp(WebSession webSession, bool dateFormatText, string periodBeginning, string periodEnd)
-        {
-            StringBuilder t = new StringBuilder(2000);
-            try
-            {
-                //webSession.CustomerLogin.ModuleList();
-                Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+		#region GetExcelHeader pour les pops up plan média
+		/// <summary>
+		/// Génère l'en tête html pour le fichier Excel de la pop up plan média
+		/// </summary>
+		/// <param name="webSession">Session du client</param>
+		/// <param name="dateFormatText">Date en format texte</param>
+		/// <param name="periodBeginning">Date de début</param>
+		/// <param name="periodEnd">Date de fin</param>
+		/// <returns>HTML</returns>
+		public static string GetExcelHeaderForMediaPlanPopUp(WebSession webSession, bool dateFormatText, string periodBeginning, string periodEnd){
+			StringBuilder t=new StringBuilder(2000);
+			try{
+				//webSession.CustomerLogin.ModuleList();
+				TNS.AdExpress.Domain.Web.Navigation.Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
 
                 #region Début du tableau
                 t.Append("<table style=\"border:solid 1px #808080;\" cellpadding=0 cellspacing=0>");
@@ -1526,7 +1590,7 @@ namespace TNS.AdExpress.Web.UI
             try
             {
                 //webSession.CustomerLogin.ModuleList();
-                Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+                TNS.AdExpress.Domain.Web.Navigation.Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
 
                 #region Début du tableau
                 t.Append("<table class=\"greyBorder\" cellpadding=0 cellspacing=0>");
@@ -1580,45 +1644,43 @@ namespace TNS.AdExpress.Web.UI
             return ("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(190, webSession.SiteLanguage) + " :</font> " + ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).Text + "</TD></TR>");
         }
 
-        /// <summary>
-        /// Affichage des produits sélectionnés dans la pop up plan média
-        /// </summary>
-        /// <param name="webSession">Session du client</param>
-        /// <returns>HTML</returns>
-        protected static string GetProductSelectedForMediaPlanPopUp(WebSession webSession)
-        {
-            StringBuilder t = new StringBuilder();
-            int webTexId = 0;
-            switch (webSession.ProductDetailLevel.LevelProduct)
-            {
-                case TNS.AdExpress.Constantes.Classification.Level.type.sector:
-                    webTexId = 965;
-                    break;
-                case TNS.AdExpress.Constantes.Classification.Level.type.subsector:
-                    webTexId = 966;
-                    break;
-                case TNS.AdExpress.Constantes.Classification.Level.type.group:
-                    webTexId = 967;
-                    break;
-                case TNS.AdExpress.Constantes.Classification.Level.type.segment:
-                    webTexId = 1894;
-                    break;
-                case TNS.AdExpress.Constantes.Classification.Level.type.product:
-                    webTexId = 1895;
-                    break;
-                case TNS.AdExpress.Constantes.Classification.Level.type.advertiser:
-                    webTexId = 813;
-                    break;
-                case TNS.AdExpress.Constantes.Classification.Level.type.brand:
-                    webTexId = 1585;
-                    break;
-                case TNS.AdExpress.Constantes.Classification.Level.type.holding_company:
-                    webTexId = 814;
-                    break;
-            }
-            t.Append(GetBlankLine());
-            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(webTexId, webSession.SiteLanguage) + "</font></TD></TR>");
-            t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel((TreeNode)webSession.ProductDetailLevel.ListElement, webSession.SiteLanguage));
+		/// <summary>
+		/// Affichage des produits sélectionnés dans la pop up plan média
+		/// </summary>
+		/// <param name="webSession">Session du client</param>
+		/// <returns>HTML</returns>
+		private static string GetProductSelectedForMediaPlanPopUp(WebSession webSession){
+			StringBuilder t = new StringBuilder();
+			int webTexId=0;
+			switch(webSession.ProductDetailLevel.LevelProduct){
+				case TNS.AdExpress.Constantes.Classification.Level.type.sector:
+					webTexId=965;
+					break;
+				case TNS.AdExpress.Constantes.Classification.Level.type.subsector:
+					webTexId=966;
+					break;
+				case TNS.AdExpress.Constantes.Classification.Level.type.group:
+					webTexId=967;
+					break;
+				case TNS.AdExpress.Constantes.Classification.Level.type.segment:
+					webTexId=1894;
+					break;
+				case TNS.AdExpress.Constantes.Classification.Level.type.product:
+					webTexId=1895;
+					break;
+				case TNS.AdExpress.Constantes.Classification.Level.type.advertiser:
+					webTexId=813;
+					break;
+				case TNS.AdExpress.Constantes.Classification.Level.type.brand:
+					webTexId=1585;
+					break;
+				case TNS.AdExpress.Constantes.Classification.Level.type.holding_company:
+					webTexId=814;
+					break;
+			}
+			t.Append(GetBlankLine());
+			t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(webTexId,webSession.SiteLanguage)+"</font></TD></TR>");
+			t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel((TreeNode)webSession.ProductDetailLevel.ListElement,webSession.SiteLanguage, webSession.DomainName));
 
             return (t.ToString());
         }
@@ -1635,11 +1697,10 @@ namespace TNS.AdExpress.Web.UI
         /// <returns>HTML</returns>
         public static string GetExcelHeaderForAdnettrackMediaPlanPopUp(WebSession webSession, bool dateFormatText, string zoomDate, int periodDisplayLevel)
         {
-            StringBuilder t = new StringBuilder(2000);
-            try
-            {
-                //webSession.CustomerLogin.ModuleList();
-                Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+			StringBuilder t=new StringBuilder(2000);
+			try{
+				//webSession.CustomerLogin.ModuleList();
+                TNS.AdExpress.Domain.Web.Navigation.Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
 
                 #region Début du tableau
                 t.Append("<table class=\"greyBorder\" cellpadding=0 cellspacing=0>");
@@ -1659,27 +1720,22 @@ namespace TNS.AdExpress.Web.UI
                 // Media sélectionné (Adnettrack)
                 t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(190, webSession.SiteLanguage) + " :</font> " + GestionWeb.GetWebWord(648, webSession.SiteLanguage).ToUpper() + "</TD></TR>");
 
-                // Niveau de détail
-                t.Append(GetAdNetTrackMediaLevelDetail(webSession));
-
-                // Elément sélectionné (Annonceur ou  produit ou visuel)
-                if (webSession.AdNetTrackSelection.Id.ToString().Length > 0)
-                {
-                    switch (webSession.AdNetTrackSelection.SelectionType)
-                    {
-                        case AdNetTrackMediaSchedule.Type.advertiser:
-                            AdExClassification.ProductBranch.PartialAdvertiserLevelListDataAccess advertiser = new AdExClassification.ProductBranch.PartialAdvertiserLevelListDataAccess(webSession.AdNetTrackSelection.Id.ToString(), webSession.DataLanguage, webSession.Source);
-                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(857, webSession.SiteLanguage) + " :</font> " + advertiser[webSession.AdNetTrackSelection.Id].ToString() + "</TD></TR>");
-                            break;
-                        case AdNetTrackMediaSchedule.Type.product:
-                            AdExClassification.ProductBranch.PartialProductLevelListDataAccess product = new AdExClassification.ProductBranch.PartialProductLevelListDataAccess(webSession.AdNetTrackSelection.Id.ToString(), webSession.DataLanguage, webSession.Source);
-                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(858, webSession.SiteLanguage) + " :</font> " + product[webSession.AdNetTrackSelection.Id].ToString() + "</TD></TR>");
-                            break;
-                        case AdNetTrackMediaSchedule.Type.visual:
-                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1909, webSession.SiteLanguage) + " :</font> " + webSession.AdNetTrackSelection.Id.ToString() + "</TD></TR>");
-                            break;
-                    }
-                }
+				// Elément sélectionné (Annonceur ou  produit ou visuel)
+				if(webSession.AdNetTrackSelection.Id.ToString().Length>0){
+					switch(webSession.AdNetTrackSelection.SelectionType){
+						case AdNetTrackMediaSchedule.Type.advertiser:
+                            AdExClassification.ProductBranch.PartialAdvertiserLevelListDataAccess advertiser = new AdExClassification.ProductBranch.PartialAdvertiserLevelListDataAccess(webSession.AdNetTrackSelection.Id.ToString(), webSession.DataLanguage, webSession.CustomerDataFilters.DataSource);
+							t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(857,webSession.SiteLanguage)+" :</font> "+ advertiser[webSession.AdNetTrackSelection.Id].ToString() +"</TD></TR>");
+							break;
+						case AdNetTrackMediaSchedule.Type.product:
+                            AdExClassification.ProductBranch.PartialProductLevelListDataAccess product = new AdExClassification.ProductBranch.PartialProductLevelListDataAccess(webSession.AdNetTrackSelection.Id.ToString(), webSession.DataLanguage, webSession.CustomerDataFilters.DataSource);
+							t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(858,webSession.SiteLanguage)+" :</font> "+ product[webSession.AdNetTrackSelection.Id].ToString() +"</TD></TR>");
+							break;
+						case AdNetTrackMediaSchedule.Type.visual:
+							t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1909,webSession.SiteLanguage)+" :</font> "+ webSession.AdNetTrackSelection.Id.ToString() +"</TD></TR>");
+							break;
+					}
+				}
                 int code = 2551;
                 if (webSession.AutopromoEvaliant)
                 {
@@ -1732,24 +1788,22 @@ namespace TNS.AdExpress.Web.UI
         }
         #endregion
 
-        #region GetExcelHeader pour les pops up insertions (Colonne création depuis les alertes concu, potentiel, etc.)
-        /// <summary>
-        /// Génère l'en tête html pour le fichier Excel de la pop up des insertions
-        /// </summary>
-        /// <param name="webSession">Session du client</param>
-        /// <param name="dateFormatText">Date en format texte</param>
-        /// <param name="periodBeginning">Date de début</param>
-        /// <param name="periodEnd">Date de fin</param>
-        /// <param name="idElement">identifiant de l'élément</param>
-        /// <param name="level">Niveau de l'élément sélectionné</param>
-        /// <returns>HTML</returns>
-        public static string GetExcelHeaderForCreationsPopUp(WebSession webSession, bool dateFormatText, string periodBeginning, string periodEnd, Int64 idElement, int level)
-        {
-            StringBuilder t = new StringBuilder(2000);
-            try
-            {
-                //webSession.CustomerLogin.ModuleList();
-                Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+		#region GetExcelHeader pour les pops up insertions (Colonne création depuis les alertes concu, potentiel, etc.)
+		/// <summary>
+		/// Génère l'en tête html pour le fichier Excel de la pop up des insertions
+		/// </summary>
+		/// <param name="webSession">Session du client</param>
+		/// <param name="dateFormatText">Date en format texte</param>
+		/// <param name="periodBeginning">Date de début</param>
+		/// <param name="periodEnd">Date de fin</param>
+		/// <param name="idElement">identifiant de l'élément</param>
+		/// <param name="level">Niveau de l'élément sélectionné</param>
+		/// <returns>HTML</returns>
+		public static string GetExcelHeaderForCreationsPopUp(WebSession webSession, bool dateFormatText, string periodBeginning, string periodEnd, Int64 idElement,int level){
+			StringBuilder t=new StringBuilder(2000);
+			try{
+				//webSession.CustomerLogin.ModuleList();
+                TNS.AdExpress.Domain.Web.Navigation.Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
 
                 #region Début du tableau
                 t.Append("<table class=\"BorderLevel\" cellpadding=0 cellspacing=0>");
@@ -1779,26 +1833,24 @@ namespace TNS.AdExpress.Web.UI
         }
         #endregion
 
-        #region GetExcelHeader pour les pops up insertions (Colonne création depuis une pop up plan média et un zoom plan média)
-        /// <summary>
-        /// Génère l'en tête html pour le fichier Excel de la pop up des insertions
-        /// </summary>
-        /// <param name="webSession">Session du client</param>
-        /// <param name="dateFormatText">Date en format texte</param>
-        /// <param name="periodBeginning">Date de début</param>
-        /// <param name="periodEnd">Date de fin</param>
-        /// <param name="mediaImpactedList">Liste des medias impactés</param>
-        /// <param name="idVehicle">Identifiant du media sélectionné</param>
-        /// <returns>HTML</returns>
-        public static string GetExcelHeaderForCreationsPopUpFromMediaPlan(WebSession webSession, bool dateFormatText, string periodBeginning, string periodEnd, ListDictionary mediaImpactedList, int idVehicle)
-        {
-            // ListDictionary mediaImpactedList : permet de connaitre l'élément sélectionné
+		#region GetExcelHeader pour les pops up insertions (Colonne création depuis une pop up plan média et un zoom plan média)
+		/// <summary>
+		/// Génère l'en tête html pour le fichier Excel de la pop up des insertions
+		/// </summary>
+		/// <param name="webSession">Session du client</param>
+		/// <param name="dateFormatText">Date en format texte</param>
+		/// <param name="periodBeginning">Date de début</param>
+		/// <param name="periodEnd">Date de fin</param>
+		/// <param name="mediaImpactedList">Liste des medias impactés</param>
+		/// <param name="idVehicle">Identifiant du media sélectionné</param>
+		/// <returns>HTML</returns>
+		public static string GetExcelHeaderForCreationsPopUpFromMediaPlan(WebSession webSession, bool dateFormatText, string periodBeginning, string periodEnd, string[] mediaImpactedList, long idVehicle){
+			// ListDictionary mediaImpactedList : permet de connaitre l'élément sélectionné
 
-            StringBuilder t = new StringBuilder(2000);
-            try
-            {
-                //webSession.CustomerLogin.ModuleList();
-                Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+			StringBuilder t=new StringBuilder(2000);
+			try{
+				//webSession.CustomerLogin.ModuleList();
+                TNS.AdExpress.Domain.Web.Navigation.Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
 
                 #region Début du tableau
                 t.Append("<table class=\"greyBorder\" cellpadding=0 cellspacing=0>");
@@ -1807,14 +1859,22 @@ namespace TNS.AdExpress.Web.UI
 
                 // Résultat : Insertions
                 t.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(793, webSession.SiteLanguage) + " :</font> " + Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[WebConstantes.CustomerSessions.Unit.insertion].WebTextId, webSession.SiteLanguage)) + "</td></tr>");
-                // Période
-                t.Append(GetDateSelected(webSession, currentModule, dateFormatText, periodBeginning, periodEnd));
-                // Media
-                AdExClassification.MediaBranch.PartialVehicleListDataAccess vehicleName = new AdExClassification.MediaBranch.PartialVehicleListDataAccess(idVehicle.ToString(), webSession.DataLanguage, webSession.Source);
-                t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(190, webSession.SiteLanguage) + " : </font> " + vehicleName[idVehicle].ToString() + "</TD></TR>");
-                // Elément du niveau sélectionné (L1 ou L2 ou L3 ou L4) depuis le picto creation du PM
-                if (mediaImpactedList != null)
-                    t.Append(GetMediaSelectedForCreationsPopUp(webSession, mediaImpactedList));
+				// Période
+				t.Append(GetDateSelected(webSession, currentModule, dateFormatText, periodBeginning, periodEnd));			
+				// Media
+                CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classificationLevelList];
+                if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
+                object[] param = new object[2];
+                param[0] = webSession.CustomerDataFilters.DataSource;
+                param[1] = webSession.DataLanguage;
+                TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL levels = factoryLevels.CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, idVehicle.ToString());
+
+				//AdExClassification.MediaBranch.PartialVehicleListDataAccess vehicleName = new AdExClassification.MediaBranch.PartialVehicleListDataAccess(idVehicle.ToString(),webSession.DataLanguage,webSession.CustomerDataFilters.DataSource);
+                t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(190, webSession.SiteLanguage) + " : </font> " + levels[idVehicle].ToString() + "</TD></TR>");
+				// Elément du niveau sélectionné (L1 ou L2 ou L3 ou L4) depuis le picto creation du PM
+				if(mediaImpactedList!=null)
+                    t.Append(GetMediaSelectedForCreationsPopUp(webSession, factoryLevels, mediaImpactedList,idVehicle));
 
                 t.Append(GetBlankLine());
                 t.Append("</table><br>");
@@ -1845,26 +1905,24 @@ namespace TNS.AdExpress.Web.UI
             return (GetExcelHeaderForCreationsPopUpFromPortofolio(webSession, dateFormatText, periodBeginning, periodEnd, idVehicle, idMedia, allPeriod, "", ""));
         }
 
-        /// <summary>
-        /// Génère l'en tête html pour le fichier Excel de la pop up des insertions
-        /// </summary>
-        /// <param name="webSession">Session du client</param>
-        /// <param name="dateFormatText">Date en format texte</param>
-        /// <param name="periodBeginning">Date de début</param>
-        /// <param name="periodEnd">Date de fin</param>
-        /// <param name="idVehicle">Identifiant du media sélectionné</param>
-        /// <param name="idMedia">Identifiant du support</param>
-        /// <param name="allPeriod">Booléen pour préciser si nous avons toute la période</param>
-        /// <param name="nameDay">Jour nommé en radio tv</param>
-        /// <param name="codeEcran">Code écran en radio tv</param>
-        /// <returns>HTML</returns>
-        public static string GetExcelHeaderForCreationsPopUpFromPortofolio(WebSession webSession, bool dateFormatText, string periodBeginning, string periodEnd, int idVehicle, int idMedia, bool allPeriod, string nameDay, string codeEcran)
-        {
-            StringBuilder t = new StringBuilder(2000);
-            try
-            {
-                //webSession.CustomerLogin.ModuleList();
-                Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+		/// <summary>
+		/// Génère l'en tête html pour le fichier Excel de la pop up des insertions
+		/// </summary>
+		/// <param name="webSession">Session du client</param>
+		/// <param name="dateFormatText">Date en format texte</param>
+		/// <param name="periodBeginning">Date de début</param>
+		/// <param name="periodEnd">Date de fin</param>
+		/// <param name="idVehicle">Identifiant du media sélectionné</param>
+		/// <param name="idMedia">Identifiant du support</param>
+		/// <param name="allPeriod">Booléen pour préciser si nous avons toute la période</param>
+		/// <param name="nameDay">Jour nommé en radio tv</param>
+		/// <param name="codeEcran">Code écran en radio tv</param>
+		/// <returns>HTML</returns>
+		public static string GetExcelHeaderForCreationsPopUpFromPortofolio(WebSession webSession, bool dateFormatText, string periodBeginning, string periodEnd, int idVehicle, int idMedia, bool allPeriod, string nameDay, string codeEcran){
+			StringBuilder t=new StringBuilder(2000);
+			try{
+				//webSession.CustomerLogin.ModuleList();
+                TNS.AdExpress.Domain.Web.Navigation.Module currentModule = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
 
                 #region Début du tableau
                 t.Append("<table style=\"border:solid 1px #808080;\" cellpadding=0 cellspacing=0>");
@@ -1885,16 +1943,23 @@ namespace TNS.AdExpress.Web.UI
                         case ClassificationConstant.Vehicles.names.press:
                         case ClassificationConstant.Vehicles.names.newspaper:
                         case ClassificationConstant.Vehicles.names.magazine:
-                        case ClassificationConstant.Vehicles.names.internationalPress:
-                            // Date de parution (presse)
-                            t.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1541, webSession.SiteLanguage) + " :</font> " + TNS.FrameWork.Date.DateString.YYYYMMDDToDD_MM_YYYY(periodBeginning, webSession.SiteLanguage) + "</td></tr>");
-                            break;
-                        case ClassificationConstant.Vehicles.names.radio:
-                        case ClassificationConstant.Vehicles.names.tv:
-                        case ClassificationConstant.Vehicles.names.others:
-                            // Période
-                            t.Append(GetDateSelected(webSession, currentModule, dateFormatText, periodBeginning, periodEnd));
-                            // jour nommé
+						case ClassificationConstant.Vehicles.names.internationalPress:
+							// Date de parution (presse)
+							t.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1541,webSession.SiteLanguage) +" :</font> "+ TNS.FrameWork.Date.DateString.YYYYMMDDToDD_MM_YYYY(periodBeginning,webSession.SiteLanguage) +"</td></tr>");
+							break;
+						case ClassificationConstant.Vehicles.names.radio:
+                        case ClassificationConstant.Vehicles.names.radioGeneral:
+                        case ClassificationConstant.Vehicles.names.radioSponsorship:
+                        case ClassificationConstant.Vehicles.names.radioMusic:
+						case ClassificationConstant.Vehicles.names.tv:
+                        case ClassificationConstant.Vehicles.names.tvGeneral:
+                        case ClassificationConstant.Vehicles.names.tvSponsorship:
+                        case ClassificationConstant.Vehicles.names.tvAnnounces:
+                        case ClassificationConstant.Vehicles.names.tvNonTerrestrials:
+						case ClassificationConstant.Vehicles.names.others:
+							// Période
+							t.Append(GetDateSelected(webSession, currentModule, dateFormatText, periodBeginning, periodEnd));
+							// jour nommé
                             CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].Localization);
                             string[] dayNames = cultureInfo.DateTimeFormat.DayNames;
                             string namedDay = string.Empty;
@@ -1908,17 +1973,17 @@ namespace TNS.AdExpress.Web.UI
                                 namedDay = cultureInfo.TextInfo.ToTitleCase(dayNames[dayNamed.GetHashCode()]);
 
                             t.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1574, webSession.SiteLanguage) + " :</font> " + namedDay + "</td></tr>");
-                            // code écran
-                            t.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(1431, webSession.SiteLanguage) + " :</font> " + codeEcran + "</td></tr>");
-                            break;
-                    }
-                }
-                // Media
-                AdExClassification.MediaBranch.PartialVehicleListDataAccess vehicleName = new AdExClassification.MediaBranch.PartialVehicleListDataAccess(idVehicle.ToString(), webSession.DataLanguage, webSession.Source);
-                t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(190, webSession.SiteLanguage) + " : </font> " + vehicleName[idVehicle].ToString() + "</TD></TR>");
-                // Support
-                AdExClassification.MediaBranch.PartialMediaListDataAccess mediaName = new AdExClassification.MediaBranch.PartialMediaListDataAccess(idMedia.ToString(), webSession.DataLanguage, webSession.Source);
-                t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(971, webSession.SiteLanguage) + " : </font> " + mediaName[idMedia].ToString() + "</TD></TR>");
+							// code écran
+							t.Append("<tr><td colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>"+GestionWeb.GetWebWord(1431,webSession.SiteLanguage) +" :</font> "+ codeEcran +"</td></tr>");
+							break;
+					}
+				}			
+				// Media
+                AdExClassification.MediaBranch.PartialVehicleListDataAccess vehicleName = new AdExClassification.MediaBranch.PartialVehicleListDataAccess(idVehicle.ToString(), webSession.DataLanguage, webSession.CustomerDataFilters.DataSource);
+				t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(190,webSession.SiteLanguage) +" : </font> "+ vehicleName[idVehicle].ToString() +"</TD></TR>");
+				// Support
+                AdExClassification.MediaBranch.PartialMediaListDataAccess mediaName = new AdExClassification.MediaBranch.PartialMediaListDataAccess(idMedia.ToString(), webSession.DataLanguage, webSession.CustomerDataFilters.DataSource);
+				t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>"+ GestionWeb.GetWebWord(971,webSession.SiteLanguage) +" : </font> "+ mediaName[idMedia].ToString() +"</TD></TR>");
 
                 t.Append(GetBlankLine());
                 t.Append("</table><br>");
@@ -2308,103 +2373,74 @@ namespace TNS.AdExpress.Web.UI
                         case ClassificationConstant.Vehicles.names.magazine:
                             mediaNames += GestionWeb.GetWebWord(2621, webSession.SiteLanguage);
                             break;
-                        case ClassificationConstant.Vehicles.names.press:
-                            mediaNames += GestionWeb.GetWebWord(204, webSession.SiteLanguage);
+						case ClassificationConstant.Vehicles.names.press:
+							mediaNames+=GestionWeb.GetWebWord(204,webSession.SiteLanguage);
+							break;
+						case ClassificationConstant.Vehicles.names.radio:
+							mediaNames+=GestionWeb.GetWebWord(205,webSession.SiteLanguage);
+							break;
+                        case ClassificationConstant.Vehicles.names.radioGeneral:
+                            mediaNames += GestionWeb.GetWebWord(2630, webSession.SiteLanguage).ToUpper(); 
                             break;
-                        case ClassificationConstant.Vehicles.names.radio:
-                            mediaNames += GestionWeb.GetWebWord(205, webSession.SiteLanguage);
+                        case ClassificationConstant.Vehicles.names.radioSponsorship:
+                            mediaNames += GestionWeb.GetWebWord(2632, webSession.SiteLanguage).ToUpper(); 
                             break;
-                        case ClassificationConstant.Vehicles.names.tv:
-                            mediaNames += GestionWeb.GetWebWord(206, webSession.SiteLanguage);
+                        case ClassificationConstant.Vehicles.names.radioMusic:
+                            mediaNames += GestionWeb.GetWebWord(2631, webSession.SiteLanguage).ToUpper(); 
                             break;
-                        case ClassificationConstant.Vehicles.names.mediasTactics:
-                            mediaNames += GestionWeb.GetWebWord(1593, webSession.SiteLanguage);
+						case ClassificationConstant.Vehicles.names.tv:
+							mediaNames+=GestionWeb.GetWebWord(206,webSession.SiteLanguage);
+							break;
+                        case ClassificationConstant.Vehicles.names.tvGeneral:
+                            mediaNames += GestionWeb.GetWebWord(2633, webSession.SiteLanguage).ToUpper(); 
                             break;
-                        case ClassificationConstant.Vehicles.names.others:
-                            mediaNames += GestionWeb.GetWebWord(1594, webSession.SiteLanguage);
+                        case ClassificationConstant.Vehicles.names.tvSponsorship:
+                            mediaNames += GestionWeb.GetWebWord(2634, webSession.SiteLanguage).ToUpper(); 
                             break;
-                        case ClassificationConstant.Vehicles.names.internet:
-                            mediaNames += GestionWeb.GetWebWord(1301, webSession.SiteLanguage);
+                        case ClassificationConstant.Vehicles.names.tvAnnounces:
+                            mediaNames += GestionWeb.GetWebWord(2635, webSession.SiteLanguage).ToUpper(); 
                             break;
-                        case ClassificationConstant.Vehicles.names.outdoor:
-                            mediaNames += GestionWeb.GetWebWord(1302, webSession.SiteLanguage);
+                        case ClassificationConstant.Vehicles.names.tvNonTerrestrials:
+                            mediaNames += GestionWeb.GetWebWord(2636, webSession.SiteLanguage).ToUpper();
                             break;
-                        case ClassificationConstant.Vehicles.names.instore:
-                            mediaNames += GestionWeb.GetWebWord(2665, webSession.SiteLanguage);
+						case ClassificationConstant.Vehicles.names.mediasTactics:
+							mediaNames+=GestionWeb.GetWebWord(1593,webSession.SiteLanguage);
+							break;
+						case ClassificationConstant.Vehicles.names.others:
+							mediaNames+=GestionWeb.GetWebWord(1594,webSession.SiteLanguage);
+							break;
+						case ClassificationConstant.Vehicles.names.internet:
+							mediaNames+=GestionWeb.GetWebWord(1301,webSession.SiteLanguage);
+							break;
+						case ClassificationConstant.Vehicles.names.outdoor:
+							mediaNames+=GestionWeb.GetWebWord(1302,webSession.SiteLanguage);
+							break;
+                        case ClassificationConstant.Vehicles.names.indoor:
+                            mediaNames += GestionWeb.GetWebWord(2644, webSession.SiteLanguage);
                             break;
-                        case ClassificationConstant.Vehicles.names.cinema:
-                            mediaNames += GestionWeb.GetWebWord(1303, webSession.SiteLanguage);
+						case ClassificationConstant.Vehicles.names.cinema:
+							mediaNames+=GestionWeb.GetWebWord(1303,webSession.SiteLanguage);
+							break;
+						case ClassificationConstant.Vehicles.names.plurimedia:
+							mediaNames+=GestionWeb.GetWebWord(1596,webSession.SiteLanguage);
+							break;
+						case ClassificationConstant.Vehicles.names.internationalPress:
+							mediaNames+=GestionWeb.GetWebWord(646,webSession.SiteLanguage);
+							break;
+                        case ClassificationConstant.Vehicles.names.editorial:
+                            mediaNames += GestionWeb.GetWebWord(2801, webSession.SiteLanguage);
                             break;
-                        case ClassificationConstant.Vehicles.names.plurimedia:
-                            mediaNames += GestionWeb.GetWebWord(1596, webSession.SiteLanguage);
-                            break;
-                        case ClassificationConstant.Vehicles.names.internationalPress:
-                            mediaNames += GestionWeb.GetWebWord(646, webSession.SiteLanguage);
-                            break;
-                        default:
-                            mediaNames += "no value";
-                            break;
-                    }
-                }
-                return mediaNames;
-            }
-            catch (Exception)
-            {
-                return ("no value");
-            }
-        }
-
-        /// <summary>
-        /// Calculates and returns the detail media that is being selected
-        /// </summary>
-        /// <param name="webSession">Session of the client</param>
-        /// <returns>Returns the detail media string</returns>	
-        protected static string StringLevelMedia(WebSession webSession)
-        {
-            try
-            {
-                switch (webSession.PreformatedMediaDetail)
-                {
-                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicle:
-                        return (GestionWeb.GetWebWord(1292, webSession.SiteLanguage));
-                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategory:
-                        return (GestionWeb.GetWebWord(1142, webSession.SiteLanguage));
-                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategoryMedia:
-                        return (GestionWeb.GetWebWord(1143, webSession.SiteLanguage));
-                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenter:
-                        return (GestionWeb.GetWebWord(1542, webSession.SiteLanguage));
-                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleInterestCenterMedia:
-                        return (GestionWeb.GetWebWord(1543, webSession.SiteLanguage));
-                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleMedia:
-                        return (GestionWeb.GetWebWord(1544, webSession.SiteLanguage));
-                    default:
-                        return ("no value");
-                }
-            }
-            catch (Exception)
-            {
-                return ("no value");
-            }
-        }
-
-        /// <summary>
-        /// Vérifie si produits sélectionnés
-        /// </summary>
-        /// <param name="webSession">session du client</param>
-        /// <returns>vrai si produis sélectionnés</returns>
-        protected static bool IsSelectionProductSelected(WebSession webSession)
-        {
-            switch (webSession.CurrentModule)
-            {
-                case CstWeb.Module.Name.TABLEAU_DE_BORD_PRESSE:
-                case CstWeb.Module.Name.TABLEAU_DE_BORD_RADIO:
-                case CstWeb.Module.Name.TABLEAU_DE_BORD_TELEVISION:
-                case CstWeb.Module.Name.TABLEAU_DE_BORD_PAN_EURO:
-                    if (webSession.PrincipalProductUniverses != null && webSession.PrincipalProductUniverses.Count > 0) return true;
-                    else return false;
-                default: return false;
-            }
-        }
+						default:
+							mediaNames+="no value";
+							break;
+					}
+				}
+				return mediaNames;
+			}
+			catch(Exception){
+				return("no value");
+			}
+		}
 
         /// <summary>
         /// Ajoute la liste des clés des styles Css
@@ -2448,12 +2484,36 @@ namespace TNS.AdExpress.Web.UI
         protected void ExcelWebPage_Load(object sender, EventArgs e)
         {
 
+            HtmlMeta metaKeywords;
+
             this.Response.ContentEncoding = Encoding.GetEncoding(WebApplicationParameters.AllowedLanguages[_siteLanguage].ExcelContentEncoding);
 
-            //			TNS.AdExpress.Web.UI.HtmlHeader header = new HtmlHeader(_cssKeys);
-            //			this.Response.ContentType = "application/vnd.ms-excel";
-            //			this.Page.Controls.AddAt(0,header);			
-        }
+            if (WebApplicationParameters.AllowedLanguages[_siteLanguage].ExcelCharset.Length > 0) {
+                metaKeywords = new HtmlMeta();
+                metaKeywords.Name = "charset";
+                metaKeywords.Content = WebApplicationParameters.AllowedLanguages[_siteLanguage].ExcelCharset;
+                this.Page.Header.Controls.Add(metaKeywords);
+            }
+
+            string temp = string.Empty;
+            string absolutePath = string.Empty;
+
+            if (_webSession.DomainName.Length > 0) absolutePath = "http://" + _webSession.DomainName;
+
+            for (int i = 0; i < this.Header.Controls.Count; i++){
+                if (this.Header.Controls[i] is HtmlLink && ((HtmlLink)this.Header.Controls[i]).Href.Contains("App_Themes")) {
+                    if (_webSession.DomainName.Length > 0) {
+                        temp = ((HtmlLink)this.Header.Controls[i]).Href;
+                        temp = temp.Substring(1, temp.Length - 1);
+                        ((HtmlLink)this.Header.Controls[i]).Href = absolutePath + temp;
+                    }
+                }
+            }
+
+//			TNS.AdExpress.Web.UI.HtmlHeader header = new HtmlHeader(_cssKeys);
+//			this.Response.ContentType = "application/vnd.ms-excel";
+//			this.Page.Controls.AddAt(0,header);			
+		}
 
         #endregion
 

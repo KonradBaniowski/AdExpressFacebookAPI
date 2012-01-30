@@ -32,6 +32,7 @@ using WebCst = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Classification;
 using TNS.Ares.Domain.LS;
 using TNS.Alert.Domain;
+using TNS.AdExpress.Domain.Web;
 
 namespace AdExpress.Private.MyAdExpress{
 	/// <summary>
@@ -118,7 +119,16 @@ namespace AdExpress.Private.MyAdExpress{
                 return (AlertConfiguration.IsActivated && _webSession.CustomerLogin.HasModuleAssignmentAlertsAdExpress()); 
             }
         }
-
+        /// <summary>
+        /// Get if can save insertion customised levels
+        /// </summary>
+        public bool CanSaveInsertionCustomisedLevels
+        {
+            get
+            {
+                return (WebApplicationParameters.InsertionOptions.CanSaveLevels);
+            }
+        }
         #endregion
 
         #region Constructeur
@@ -374,6 +384,26 @@ namespace AdExpress.Private.MyAdExpress{
 		}
 		#endregion
 
-	}
+        /// <summary>
+        /// Open insertion saved pages
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">arguments</param>
+        protected void insertionOpenImageButtonRollOverWebControl_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                _webSession.Source.Close();
+                Response.Redirect("/Private/MyAdExpress/PersonnalizeInsertion.aspx?idSession=" + _webSession.IdSession + "");
+            }
+            catch (System.Exception exc)
+            {
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                }
+            }
+        }
+}
 }
 

@@ -16,10 +16,4 @@
   <flag id="244" description="Accéder aux creations Pub Extérieure"/>
   <flag id="245" description="Accéder aux créations Autres"/>
   <flag id="246" description="Accéder aux créations Presse Internationale"/>
-  <flag id="251" description="Accéder aux créations du Media Courrier"/>
-  <flag id="252" description="Accès aux volumes du Media Courrier"/>
-  <flag id="256" description="Accès aux poids du Media Courrier"/>
-  <flag id="261" description="Accès Parrainage dans analyse sectorielle"/>
-  <flag id="266" description="Accéder Spot à Spot TNT"/>
-  <flag id="276" description="Accéder aux création Evaliant Mobile"/>
 </flags>

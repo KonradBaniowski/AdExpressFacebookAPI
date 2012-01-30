@@ -41,16 +41,18 @@ namespace TNS.AdExpress.Web.Core {
             {
                 foreach (VehicleFormatInformation vehicleFormatInformation in vehicleFormatInformationList.Values)
                 {
-
-                    _list.Add(vehicleFormatInformation.VehicleId
-                              , new VehicleFormatList(
-                                    vehicleFormatInformation.VehicleId
-                                    , GetFormatBannerList(vehicleFormatInformation.DataTableName
-                                                          , vehicleFormatInformation.FormatTableName
-                                                          , defaultDataLanguage
-                                          )
-                                    )
-                        );
+                    if (!_list.ContainsKey(vehicleFormatInformation.VehicleId))
+                    {
+                        _list.Add(vehicleFormatInformation.VehicleId
+                                  , new VehicleFormatList(
+                                        vehicleFormatInformation.VehicleId
+                                        , GetFormatBannerList(vehicleFormatInformation.DataTableName
+                                                              , vehicleFormatInformation.FormatTableName
+                                                              , defaultDataLanguage
+                                              )
+                                        )
+                            );
+                    }
                 }
             }
         }

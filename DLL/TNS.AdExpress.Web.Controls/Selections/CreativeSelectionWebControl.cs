@@ -15,6 +15,7 @@ using TNS.AdExpress.Domain.Translation;
 using TNS.FrameWork.Date;
 using ProductClassification=TNS.AdExpress.DataAccess.Classification.ProductBranch;
 using TNS.Classification.Universe;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpress.Web.Controls.Selections{
 	/// <summary>
@@ -60,8 +61,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		protected override void Render(HtmlTextWriter output){
 			string dateBegin,dateEnd;
 
-            dateBegin = DateString.dateTimeToDD_MM_YYYY((new DateTime(int.Parse(_webSession.PeriodBeginningDate.Substring(0, 4)), int.Parse(_webSession.PeriodBeginningDate.Substring(4, 2)), int.Parse(_webSession.PeriodBeginningDate.Substring(6, 2)))), _webSession.SiteLanguage);
-            dateEnd = DateString.dateTimeToDD_MM_YYYY((new DateTime(int.Parse(_webSession.PeriodEndDate.Substring(0, 4)), int.Parse(_webSession.PeriodEndDate.Substring(4, 2)), int.Parse(_webSession.PeriodEndDate.Substring(6, 2)))), _webSession.SiteLanguage);
+            dateBegin = Dates.DateToString((new DateTime(int.Parse(_webSession.PeriodBeginningDate.Substring(0, 4)), int.Parse(_webSession.PeriodBeginningDate.Substring(4, 2)), int.Parse(_webSession.PeriodBeginningDate.Substring(6, 2)))), _webSession.SiteLanguage);
+            dateEnd = Dates.DateToString((new DateTime(int.Parse(_webSession.PeriodEndDate.Substring(0, 4)), int.Parse(_webSession.PeriodEndDate.Substring(4, 2)), int.Parse(_webSession.PeriodEndDate.Substring(6, 2)))), _webSession.SiteLanguage);
 
 			output.Write("<table border=0 cellspacing=1 cellpadding=0 class=\"TexteTitreRappelScanpub\">");
 			// Titre

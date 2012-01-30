@@ -2823,6 +2823,24 @@ td.pmcategorynb
 	border-bottom: 1px solid #644883;
 	border-left: 1px solid #644883;
 }
+.CellTopRight {
+	border-top: 1px solid #644883;
+	border-right: 1px solid #644883;
+	border-bottom: 1px dotted #644883;
+	border-left: 1px none #644883;
+}
+.CellMiddleRight {
+	border-top: 1px none #644883;
+	border-right: 1px solid #644883;
+	border-bottom: 1px dotted #644883;
+	border-left: 1px none #644883;
+}
+.CellBottomRight {
+	border-top: 1px none #644883;
+	border-right: 1px solid #644883;
+	border-bottom: 1px solid #644883;
+	border-left: 1px none #644883;
+}
 .CellSolid {
 	border: 1px solid #644883;
 }

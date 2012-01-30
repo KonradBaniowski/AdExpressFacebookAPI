@@ -11,4 +11,6 @@
   <server server_id="4" host="adexpressweb" port="30000" />
   <!-- Finland -->
   <server server_id="5" host="fitnses-apad01" port="30000" />
+  <!--Russia-->
+  <server server_id="7" host="adexpr-ww.Gallup.tns" port="30000" />
 </servers>

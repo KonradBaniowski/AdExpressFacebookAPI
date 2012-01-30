@@ -1,4 +1,5 @@
-﻿using System;
+﻿#define DEBUG
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Text;
@@ -13,6 +14,7 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Units;
+using System.Reflection;
 
 namespace TNS.AdExpress.Web.Core
 {
@@ -35,7 +37,7 @@ namespace TNS.AdExpress.Web.Core
         /// <summary>
         /// Current module Descritpion
         /// </summary>
-        Module _currentModule = null;
+        TNS.AdExpress.Domain.Web.Navigation.Module _currentModule = null;
         /// <summary>
         /// Customer's Media rights
         /// </summary>
@@ -292,11 +294,16 @@ namespace TNS.AdExpress.Web.Core
                 switch (_currentModule.Id)
                 {
                     case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
+                    case CstWeb.Module.Name.BILAN_CAMPAGNE:
                         return _customerSession.GetSelection(_customerSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+                    case CstWeb.Module.Name.INDICATEUR:
+                    case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
+                        string me = _customerSession.GetSelection(_customerSession.CurrentUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+                        if (me == null || me.Length == 0) me = _customerSession.GetSelection(_customerSession.CurrentUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleException);
+                        return me;
+                    case CstWeb.Module.Name.JUSTIFICATIFS_PRESSE: return VehiclesInformation.EnumToDatabaseId(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press).ToString();
                     default:
-                        if (_customerSession.SelectionUniversMedia != null && _customerSession.SelectionUniversMedia.FirstNode != null)
-                            return ((LevelInformation)_customerSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
-                        else return null;
+                        return ((LevelInformation)_customerSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
                 }
             }
         }
@@ -304,19 +311,12 @@ namespace TNS.AdExpress.Web.Core
         /// <summary>
         /// Get media category  selected by the customer from current module. 
         /// </summary>
-        /// <returns>media category identifier </returns>
+        /// <returns>media category identifier </returns>*
+        [Obsolete(" Thsi variable is no longer use for market selection")]
         public string SelectedMediaCategory
         {
             get
             {
-                if (string.IsNullOrEmpty(_selectedMediaCategory))
-                {
-                    /*Obtains the identifier of the selected current media. Example if the user as selected the media PRESS,
-                            the joins could be like this : id_vehicle = 3" */
-                    if (_customerSession.SelectionUniversMedia != null && _customerSession.SelectionUniversMedia.FirstNode != null &&
-                        _customerSession.SelectionUniversMedia.FirstNode.Nodes.Count > 0)
-                        _selectedMediaCategory = ((LevelInformation)_customerSession.SelectionUniversMedia.FirstNode.FirstNode.Tag).ID.ToString();
-                }
                 return _selectedMediaCategory;
             }
         }
@@ -409,6 +409,7 @@ namespace TNS.AdExpress.Web.Core
         }
 
 
+
         /// <summary>
         /// Get informations about selected unit
         /// </summary>
@@ -437,6 +438,52 @@ namespace TNS.AdExpress.Web.Core
             {
                 //Get product classification selected universe
                 TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = GetSelectedProducts(0);
+                return GetUniverses(adExpressUniverse);
+            }
+        }
+        /// <summary>
+        /// Get universes Advertisement Types selected by the client. 
+        /// The produts classification selected are grouped on max of 3 dictionary.
+        /// The items to exclude are contains in the dictionary which can be obtained with key : TNS.Classification.Universe.AccessType.excludes as follows :
+        /// <code>Dictionary[TNS.AdExpress.Constantes.Customer.Right.type, string] dic = AdvertisementTypeUniverses[TNS.Classification.Universe.AccessType.excludes][0];</code> 
+        /// 
+        /// The items to excludes are contained on max 2 dictionary. Note that if the are two dictionary, the items to include will correspond to the intersection of these two dictionaries.
+        /// To get the items to includes, do as follows :
+        /// <code>List<Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, string>> list = AdvertisementTypeUniverses[TNS.Classification.Universe.AccessType.includes];</code> 
+        /// </summary>
+        public Dictionary<TNS.Classification.Universe.AccessType, List<Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, string>>> AdvertisementTypeUniverses
+        {
+            get
+            {
+                //Get Advertisement Type classification selected universe
+                TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = null;
+                if (_customerSession.AdvertisementTypeUniverses != null && _customerSession.AdvertisementTypeUniverses.Count > 0)
+                {
+                    adExpressUniverse = _customerSession.AdvertisementTypeUniverses[0];
+                }
+                return GetUniverses(adExpressUniverse);
+            }
+        }
+        /// <summary>
+        /// Get universes Regions selected by the client. 
+        /// The produts classification selected are grouped on max of 3 dictionary.
+        /// The items to exclude are contains in the dictionary which can be obtained with key : TNS.Classification.Universe.AccessType.excludes as follows :
+        /// <code>Dictionary[TNS.AdExpress.Constantes.Customer.Right.type, string] dic = RegionUniverses[TNS.Classification.Universe.AccessType.excludes][0];</code> 
+        /// 
+        /// The items to excludes are contained on max 2 dictionary. Note that if the are two dictionary, the items to include will correspond to the intersection of these two dictionaries.
+        /// To get the items to includes, do as follows :
+        /// <code>List<Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, string>> list = RegionUniverses[TNS.Classification.Universe.AccessType.includes];</code> 
+        /// </summary>
+        public Dictionary<TNS.Classification.Universe.AccessType, List<Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, string>>> RegionUniverses
+        {
+            get
+            {
+                //Get Advertisement Type classification selected universe
+                TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = null;
+                if (_customerSession.PrincipalMediaUniverses != null && _customerSession.PrincipalMediaUniverses.Count > 0)
+                {
+                    adExpressUniverse = _customerSession.PrincipalMediaUniverses[0];
+                }
                 return GetUniverses(adExpressUniverse);
             }
         }
@@ -478,6 +525,88 @@ namespace TNS.AdExpress.Web.Core
                 return GetUniverses(adExpressUniverse);
             }
         }
+        /// <summary>
+        /// Get Data Source
+        /// </summary>
+        /// <returns>Data source</returns>
+        public TNS.FrameWork.DB.Common.IDataSource DataSource
+        {
+            get
+            {
+                TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.sourceProvider];
+                object[] param = new object[1];
+                param[0] = _customerSession;
+                if (cl == null) throw (new NullReferenceException("Core layer is null for the source provider layer"));
+                TNS.AdExpress.Web.Core.ISourceProvider sourceProvider = (TNS.AdExpress.Web.Core.SourceProvider)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                return sourceProvider.GetSource();
+            }
+
+        }
+
+        #region Campaign type
+        /// <summary>
+        /// Get  Campaign Type 
+        /// </summary>
+        public CstWeb.CustomerSessions.CampaignType CampaignType
+        {
+            get
+            {
+
+                return (_customerSession.CampaignType);
+            }
+        }
+        #endregion
+
+        #region Reference advertisers
+        /// <summary>
+        /// Get Reference advertisers list.
+        /// <example>eg. 12,45,46</example>
+        /// </summary>
+        public string ReferencesAdvertisers
+        {
+            get
+            {
+                string refString = "";
+
+                if (_customerSession.SecondaryProductUniverses.Count > 0 && _customerSession.SecondaryProductUniverses.ContainsKey(0))
+                {
+                    NomenclatureElementsGroup refElts = null;
+                    refElts = _customerSession.SecondaryProductUniverses[0].GetGroup(0);
+                    if (refElts != null && refElts.Count() > 0 && refElts.Contains(TNSClassificationLevels.ADVERTISER))
+                    {
+                        refString = refElts.GetAsString(TNSClassificationLevels.ADVERTISER);
+                    }
+                }
+                return refString;
+            }
+        }
+        #endregion
+
+        #region Competing advertisers
+        /// <summary>
+        /// Get Competing advertisers list.
+        /// <example>eg. 12,45,46</example>
+        /// </summary>
+        public string CompetingAdvertisers
+        {
+            get
+            {
+                string compString = "";
+                if (_customerSession.SecondaryProductUniverses.Count > 0 && _customerSession.SecondaryProductUniverses.ContainsKey(1))
+                {
+                    NomenclatureElementsGroup compElts = null;
+                    compElts = _customerSession.SecondaryProductUniverses[1].GetGroup(0);
+                    if (compElts != null && compElts.Count() > 0 && compElts.Contains(TNSClassificationLevels.ADVERTISER))
+                    {
+                        compString = compElts.GetAsString(TNSClassificationLevels.ADVERTISER);
+                    }
+                }
+                return compString;
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region Constructors
@@ -547,7 +676,7 @@ namespace TNS.AdExpress.Web.Core
                 //Get selected vehicles from the module "Vehicle Portofolio"
                 case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
                     mediaList = _customerSession.GetSelection((TreeNode)_customerSession.ReferenceUniversMedia, CstCustomer.Right.type.mediaAccess);
-                    if (mediaList.Length > 0) selection.Add(CstCustomer.Right.type.mediaAccess, mediaList.Substring(0, mediaList.Length - 1));
+                    if (mediaList.Length > 0) selection.Add(CstCustomer.Right.type.mediaAccess, mediaList);
                     break;
                 //Get selected media classification from the module "Media schedule"
                 case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
@@ -558,9 +687,14 @@ namespace TNS.AdExpress.Web.Core
                     //Media Category level
                     mediaList = _customerSession.GetSelection(_customerSession.SelectionUniversMedia, CstCustomer.Right.type.categoryAccess);
                     if (!string.IsNullOrEmpty(mediaList)) selection.Add(CstCustomer.Right.type.categoryAccess, mediaList);
+                    //Media Region level
+                    mediaList = _customerSession.GetSelection(_customerSession.SelectionUniversMedia, CstCustomer.Right.type.regionAccess);
+                    if (!string.IsNullOrEmpty(mediaList)) selection.Add(CstCustomer.Right.type.regionAccess, mediaList);
                     //Media vehicle level
                     mediaList = _customerSession.GetSelection(_customerSession.SelectionUniversMedia, CstCustomer.Right.type.mediaAccess);
                     if (!string.IsNullOrEmpty(mediaList)) selection.Add(CstCustomer.Right.type.mediaAccess, mediaList);
+                    break;
+                case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
                     break;
                 default:
                     throw (new CustomerDataFiltersException("Impossible to identify the current module "));
@@ -692,6 +826,11 @@ namespace TNS.AdExpress.Web.Core
             {
                 rights.Add(CstCustomer.Right.type.categoryAccess, _customerSession.CustomerLogin[CstCustomer.Right.type.categoryAccess]);
             }
+            // Get the region authorized for the current customer   
+            if (_customerSession.CustomerLogin[CstCustomer.Right.type.regionAccess].Length > 0)
+            {
+                rights.Add(CstCustomer.Right.type.regionAccess, _customerSession.CustomerLogin[CstCustomer.Right.type.regionAccess]);
+            }
             // Get the vehicles authorized for the current customer   
             if (_customerSession.CustomerLogin[CstCustomer.Right.type.mediaAccess].Length > 0)
             {
@@ -709,6 +848,11 @@ namespace TNS.AdExpress.Web.Core
             if (_customerSession.CustomerLogin[CstCustomer.Right.type.categoryException].Length > 0)
             {
                 rights.Add(CstCustomer.Right.type.categoryException, _customerSession.CustomerLogin[CstCustomer.Right.type.categoryException]);
+            }
+            // Get the region not authorized for the current customer   
+            if (_customerSession.CustomerLogin[CstCustomer.Right.type.regionException].Length > 0)
+            {
+                rights.Add(CstCustomer.Right.type.regionException, _customerSession.CustomerLogin[CstCustomer.Right.type.regionException]);
             }
             // Get the vehicles not authorized for the current customer   
             if (_customerSession.CustomerLogin[CstCustomer.Right.type.mediaException].Length > 0)
@@ -735,9 +879,13 @@ namespace TNS.AdExpress.Web.Core
                 //Get selected products the module " Present /Absent report"
                 case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
                 //Get selected products the module " Lost /Won report "
-                case CstWeb.Module.Name.ANALYSE_POTENTIELS:
+                case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
                 //Get selected products the module " Media Schedule "
                 case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
+                //Get selected products the module " Product class analysis: Graphic key reports"
+                case CstWeb.Module.Name.INDICATEUR:
+                //Get selected products the module " Product class analysis: reports"
+                case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
                     if (_customerSession.PrincipalProductUniverses != null && _customerSession.PrincipalProductUniverses.Count > 0)
                     {
                         return _customerSession.PrincipalProductUniverses[universeId];
@@ -773,6 +921,10 @@ namespace TNS.AdExpress.Web.Core
                     break;
                 //Get selected products the module " Present /Absent report"
                 case CstWeb.Module.Name.ANALYSE_CONCURENTIELLE:
+                //Get selected products the module "Vehicle Portofolio"
+                case CstWeb.Module.Name.ANALYSE_PORTEFEUILLE:
+                //Get selected products the module " Lost /Won report "
+                case CstWeb.Module.Name.ANALYSE_DYNAMIQUE:
                     return selection;
                 default:
                     throw (new CustomerDataFiltersException("Impossible to identify the current module "));
@@ -823,6 +975,12 @@ namespace TNS.AdExpress.Web.Core
                         break;
                     case (ClassificationConstantes.Level.type.brand):
                         products.Add(CstCustomer.Right.type.brandAccess, _customerSession.GetSelection(_customerSession.ProductDetailLevel.ListElement, CstCustomer.Right.type.brandAccess));
+                        break;
+                    case (ClassificationConstantes.Level.type.subBrand):
+                        products.Add(CstCustomer.Right.type.subBrandAccess, _customerSession.GetSelection(_customerSession.ProductDetailLevel.ListElement, CstCustomer.Right.type.subBrandAccess));
+                        break;
+                    case (ClassificationConstantes.Level.type.advertisementType):
+                        products.Add(CstCustomer.Right.type.advertisementTypeAccess, _customerSession.GetSelection(_customerSession.ProductDetailLevel.ListElement, CstCustomer.Right.type.advertisementTypeAccess));
                         break;
                 }
             }
@@ -920,6 +1078,7 @@ namespace TNS.AdExpress.Web.Core
                 rights.Add(CstCustomer.Right.type.segmentAccess, _customerSession.CustomerLogin[CstCustomer.Right.type.segmentAccess]);
             }
 
+
             //Get products rights in exception			
             // Sector in exception
             if (_customerSession.CustomerLogin[CstCustomer.Right.type.sectorException].Length > 0)
@@ -942,6 +1101,34 @@ namespace TNS.AdExpress.Web.Core
                 rights.Add(CstCustomer.Right.type.segmentException, _customerSession.CustomerLogin[CstCustomer.Right.type.segmentException]);
             }
 
+            if (_currentModule.Id == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
+              || _currentModule.Id == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE
+              || _currentModule.Id == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+            {
+                //Get products rights in access
+                // Advertiser in access		
+                if (_customerSession.CustomerLogin[CstCustomer.Right.type.advertiserAccess].Length > 0)
+                {
+                    rights.Add(CstCustomer.Right.type.advertiserAccess, _customerSession.CustomerLogin[CstCustomer.Right.type.advertiserAccess]);
+                }
+                // Brand in access		
+                if (_customerSession.CustomerLogin[CstCustomer.Right.type.brandAccess].Length > 0)
+                {
+                    rights.Add(CstCustomer.Right.type.brandAccess, _customerSession.CustomerLogin[CstCustomer.Right.type.brandAccess]);
+                }
+                //Get products rights in exception	
+                // Advertiser in exception
+                if (_customerSession.CustomerLogin[CstCustomer.Right.type.advertiserException].Length > 0)
+                {
+                    rights.Add(CstCustomer.Right.type.advertiserException, _customerSession.CustomerLogin[CstCustomer.Right.type.advertiserException]);
+                }
+
+                // Brand in exception
+                if (_customerSession.CustomerLogin[CstCustomer.Right.type.brandException].Length > 0)
+                {
+                    rights.Add(CstCustomer.Right.type.brandException, _customerSession.CustomerLogin[CstCustomer.Right.type.brandException]);
+                }
+            }
             return rights;
         }
         #endregion
@@ -1061,6 +1248,21 @@ namespace TNS.AdExpress.Web.Core
                                         AddLevelListId(selection, CstCustomer.Right.type.vehicleAccess, listIds);
                                     else AddLevelListId(selection, CstCustomer.Right.type.vehicleException, listIds);
                                     break;
+                                case TNS.Classification.Universe.TNSClassificationLevels.REGION:
+                                    if (accessType == AccessType.includes)
+                                        AddLevelListId(selection, CstCustomer.Right.type.regionAccess, listIds);
+                                    else AddLevelListId(selection, CstCustomer.Right.type.regionException, listIds);
+                                    break;
+                                case TNS.Classification.Universe.TNSClassificationLevels.SUB_BRAND:
+                                    if (accessType == AccessType.includes)
+                                        AddLevelListId(selection, CstCustomer.Right.type.subBrandAccess, listIds);
+                                    else AddLevelListId(selection, CstCustomer.Right.type.subBrandException, listIds);
+                                    break;
+                                case TNS.Classification.Universe.TNSClassificationLevels.ADVERTISEMENT_TYPE:
+                                    if (accessType == AccessType.includes)
+                                        AddLevelListId(selection, CstCustomer.Right.type.advertisementTypeAccess, listIds);
+                                    else AddLevelListId(selection, CstCustomer.Right.type.advertisementTypeException, listIds);
+                                    break;
                                 default:
                                     throw (new CustomerDataFiltersException("Impossible to identify the level of the universe."));
 
@@ -1173,6 +1375,21 @@ namespace TNS.AdExpress.Web.Core
                                 if (accessType == AccessType.includes)
                                     AddLevelListId(selection, CstCustomer.Right.type.vehicleAccess, listIds);
                                 else AddLevelListId(selection, CstCustomer.Right.type.vehicleException, listIds);
+                                break;
+                            case TNS.Classification.Universe.TNSClassificationLevels.REGION:
+                                if (accessType == AccessType.includes)
+                                    AddLevelListId(selection, CstCustomer.Right.type.regionAccess, listIds);
+                                else AddLevelListId(selection, CstCustomer.Right.type.regionException, listIds);
+                                break;
+                            case TNS.Classification.Universe.TNSClassificationLevels.SUB_BRAND:
+                                if (accessType == AccessType.includes)
+                                    AddLevelListId(selection, CstCustomer.Right.type.subBrandAccess, listIds);
+                                else AddLevelListId(selection, CstCustomer.Right.type.subBrandException, listIds);
+                                break;
+                            case TNS.Classification.Universe.TNSClassificationLevels.ADVERTISEMENT_TYPE:
+                                if (accessType == AccessType.includes)
+                                    AddLevelListId(selection, CstCustomer.Right.type.advertisementTypeAccess, listIds);
+                                else AddLevelListId(selection, CstCustomer.Right.type.advertisementTypeException, listIds);
                                 break;
                             default:
                                 throw (new CustomerDataFiltersException("Impossible to identify the level of the universe."));

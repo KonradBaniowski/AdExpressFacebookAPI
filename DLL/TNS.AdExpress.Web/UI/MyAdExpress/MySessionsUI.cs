@@ -278,6 +278,122 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 			return("");
 		}
 
+        /// <summary>
+        /// Méthode utilisée pour l'affichage d'un tableau contenant un type de répertoire 
+        /// (Mon AdExpress, Mes Univers...)
+        /// </summary>
+        /// <param name="valueTable">valeur utilisée pour choisir le bon script</param>
+        /// <param name="ListUniverseClientDescription">ID_UNIVERSE_CLIENT_DESCRIPTION</param>
+        /// <param name="filter">Filter</param>
+        /// <returns>Retourne le tableau correspondant au choix fait au niveau du constructeur</returns>
+        public string GetSelectionTableHtmlUI(int valueTable, string ListUniverseClientDescription, LevelInformation filter){
+            DataSet dsListRepertory = null;
+            if (_request == type.mySession){
+                dsListRepertory = MySessionsDataAccess.GetData(_webSession);
+            }
+            else if (_request == type.universe){
+                if(filter != null)
+                    dsListRepertory = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetData(_webSession, _branch, ListUniverseClientDescription,filter);   
+                else
+                    dsListRepertory = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetData(_webSession, _branch, ListUniverseClientDescription);   
+            }
+            System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
+            Int64 idParent;
+            Int64 idParentOld = -1;
+            string textParent;
+            string textParentOld;
+            int start = -1;
+            int compteur = 0;
+
+            if (dsListRepertory.Tables[0].Rows.Count != 0){
+                foreach (DataRow currentRow in dsListRepertory.Tables[0].Rows){
+                    idParent = (Int64)currentRow[0];
+                    textParent = currentRow[1].ToString();
+                    //Premier
+                    if (idParent != idParentOld && start != 0){
+
+                        t.Append("<table class=\"violetBorder txtViolet11Bold\" cellpadding=0 cellspacing=0   width=" + _width + ">");
+
+                        t.Append("<tr onClick=\"showHideContent" + valueTable + "('" + idParent + "');\" class=\"cursorHand\">");
+                        t.Append("<td align=\"left\" height=\"10\" valign=\"middle\">");
+                        t.Append("<label ID=\"" + currentRow[0] + valueTable + "\">&nbsp;");
+                        t.Append("" + textParent + "");
+                        t.Append("</label>");
+                        t.Append("</td>");
+                        t.Append("<td class=\"arrowBackGround\"></td>");
+                        t.Append("</tr>");
+                        t.Append("</table>");
+                        t.Append("<div id=\"" + idParent + "Content" + valueTable + "\" style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\" >");
+                        t.Append("<table class=\"violetBorderWithoutTop paleVioletBackGround\" width=" + _width + ">");
+                        //	t.Append("<tr><td>");
+                        //	t.Append("<label style=\"cursor : hand\" onclick=\"allSelection2('"+idParent+textParent+"')\" ID=\""+currentRow[0]+"\">");
+                        //	t.Append("</td></tr>");			
+
+
+                        idParentOld = idParent;
+                        textParentOld = textParent;
+                        start = 0;
+                        compteur = 0;
+
+                    }
+                    else if (idParent != idParentOld){
+                        t.Append("</table>");
+                        t.Append("</div>");
+                        t.Append("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=" + _width + ">");
+                        t.Append("<tr onClick=\"showHideContent" + valueTable + "('" + idParent + "');\" class=\"cursorHand\">");
+                        t.Append("<td align=\"left\" height=\"10\" valign=\"middle\">");
+                        t.Append("<label ID=\"" + currentRow[0] + valueTable + "\">&nbsp;");
+                        t.Append("" + textParent + "");
+                        t.Append("</label>");
+                        t.Append("</td>");
+                        t.Append("<td class=\"arrowBackGround\"></td>");
+                        t.Append("</tr>");
+                        t.Append("</table>");
+                        t.Append("<div id=\"" + idParent + "Content" + valueTable + "\"  style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\">");
+                        t.Append("<table class=\"violetBorderWithoutTop paleVioletBackGround\" width=" + _width + ">");
+                        //	t.Append("<tr><td>");
+                        //	t.Append("<label style=\"cursor : hand\" onclick=\"allSelection2('"+idParent+textParent+"')\" ID=\""+currentRow[0]+"\">");
+                        //	t.Append("</td></tr>");	
+
+
+                        idParentOld = idParent;
+                        textParentOld = textParent;
+                        compteur = 0;
+                    }
+
+                    if (currentRow[2] != System.DBNull.Value){
+                        if (compteur == 0){
+                            t.Append("<tr><td class=\"txtViolet10\" width=50%>");
+                            //	t.Append("<input type=\"radio\" ID=\""+currentRow[2]+currentRow[3]+"\"  value=\""+currentRow[2]+"_"+currentRow[3].ToString()+"\" name=\"CKB_"+currentRow[0]+"_"+currentRow[2]+"\">"+currentRow[3].ToString()+"<br>");
+                            t.Append("<input type=\"radio\" ID=\"" + currentRow[2] + currentRow[3] + valueTable + "\" onClick=\"insertIdMySession" + valueTable + "('" + currentRow[2] + "','" + currentRow[0] + "');\" value=\"" + currentRow[2] + "\" name=\"Session\">" + currentRow[3].ToString() + "<br>");
+                            t.Append("</td>");
+                            compteur = 1;
+                        }
+                        else{
+                            t.Append("<td class=\"txtViolet10\" width=50%>");
+                            t.Append("<input type=\"radio\" ID=\"" + currentRow[2] + currentRow[3] + valueTable + "\" onClick=\"insertIdMySession" + valueTable + "('" + currentRow[2] + "','" + currentRow[0] + "');\" value=\"" + currentRow[2] + "\" name=\"Session\">" + currentRow[3].ToString() + "<br>");
+                            t.Append("</td></tr>");
+                            compteur = 0;
+                        }
+                    }
+                    else{
+                        t.Append("<tr><td class=\"txtViolet10\" width=50%>");
+                        t.Append(GestionWeb.GetWebWord(285, _webSession.SiteLanguage));
+                        t.Append("</td></tr>");
+
+                    }
+                }
+                if (compteur != 0){
+                    t.Append("</tr>");
+                }
+                t.Append("</table>");
+                t.Append("</div>");
+
+                return (t.ToString());
+            }
+            return ("");
+        }
+
 
 		/// <summary>
 		/// Méthode utilisée pour l'affichage d'un tableau contenant un type de répertoire 
@@ -286,8 +402,9 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 		/// <param name="valueTable">valeur utilisée pour choisir le bon script</param>
 		/// <param name="ListUniverseClientDescription">ID_UNIVERSE_CLIENT_DESCRIPTION</param>
 		/// <param name="allowedLevels">Allowed levels</param>
+        /// <param name="filter">Filter</param>
 		/// <returns>Retourne le tableau correspondant au choix fait au niveau du constructeur</returns>
-		public string GetSelectionTableHtmlUI(int valueTable, string ListUniverseClientDescription, List<Int64> allowedLevels) {
+		public string GetSelectionTableHtmlUI(int valueTable, string ListUniverseClientDescription, List<Int64> allowedLevels, LevelInformation filter) {
 			DataSet dsListRepertory = null;
 			DataTable dt = null;
 		
@@ -296,7 +413,10 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 				if(dsListRepertory.Tables[0].Rows.Count != 0)dt =dsListRepertory.Tables[0];
 			}
 			else if (_request == type.universe) {
-				dt = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetData(_webSession, _branch, ListUniverseClientDescription,allowedLevels);
+                if(filter != null)
+				    dt = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetData(_webSession, _branch, ListUniverseClientDescription,allowedLevels,filter);
+                else
+                    dt = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetData(_webSession, _branch, ListUniverseClientDescription, allowedLevels);
 			}
 			System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
 			Int64 idParent;

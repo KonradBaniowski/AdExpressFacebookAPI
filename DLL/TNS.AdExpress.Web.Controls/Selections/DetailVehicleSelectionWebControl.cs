@@ -633,8 +633,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                     t.Append("<table class=\"backGroundWhite\">");				
 					t.Append("<tr><td>");	
 					// Affichage des annonceur à partir de SelectionUniversAdvertiser où CurrentUniversAdvertiser
-							
-					t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSession.CurrentUniversMedia,true,true,true,645,true,true,webSession.SiteLanguage,3,1,true));
+
+                    t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSession.CurrentUniversMedia, true, true, true, 645, true, true, webSession.SiteLanguage, 3, 1, true, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource));
 				
 					t.Append("</td></tr></table></td></tr>");
 					output.Write(t.ToString());	

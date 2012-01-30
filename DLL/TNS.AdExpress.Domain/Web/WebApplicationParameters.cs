@@ -121,6 +121,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// </summary>
         protected static Dictionary<TableIds, MatchingTable> _matchingRetailerTableList = new Dictionary<TableIds, MatchingTable>();
         /// <summary>
+        /// Use comparative date In module Lost Won Module
+        /// </summary>
+        protected static bool _useComparativeLostWon = false;
+        /// <summary>
         /// Dundas Configuration
         /// </summary>
         protected static DundasConfiguration _dundas = null;
@@ -158,6 +162,31 @@ namespace TNS.AdExpress.Domain.Web {
         /// Vp Date Configuration List
         /// </summary>
         protected static VpDateConfigurations _vpDateConfigurations = null;
+      
+        /// <summary>
+        /// Campaign type option is allowed
+        /// </summary>
+        protected static bool _allowCampaignTypeOption = false;
+        /// <summary>
+        /// Determine if keep universe selection each time user go back to refine selection page
+        /// </summary>
+        protected static bool _keepRefineUniverseSelection = false;
+        /// <summary>
+        /// Diponibility Option Period
+        /// </summary>
+        protected static bool _useDiponibilityOptionPeriodLostWon = true;
+        /// <summary>
+        /// Type Option Period 
+        /// </summary>
+        protected static bool _useTypeOptionPeriodLostWon = true;
+        /// <summary>
+        /// Is All Period Is Restrict To 4 Month In Insertion Report 
+        /// </summary>
+        protected static bool _isAllPeriodIsRestrictTo4MonthInInsertionReport = true;
+        /// <summary>
+        ///  Insertions reports options
+        /// </summary>
+        protected static TNS.AdExpress.Domain.Results.InsertionOptions _insertionOptions = null;
         #endregion
         
         #region Contructeur
@@ -195,7 +224,10 @@ namespace TNS.AdExpress.Domain.Web {
             _trends = new Trends(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.TRENDS_FILENAME));
             _dataNumberOfYear = DataHistoryXL.LoadDataHistory(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.DATA_HISTORY_CONFIGURATION_FILENAME));
 
-            _RightMenuLinks = new RightMenuLinks(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.RIGHT_MENU_LINKS_FILENAME));
+            _RightMenuLinks = new RightMenuLinks(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.RIGHT_MENU_LINKS_FILENAME));      
+            _useRightDefaultConnection = RightOptionsXL.Load(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + ConfigurationFile.RIGHT_OPTIONS_CONFIGURATION_FILENAME));
+           
+
         }
         #endregion
 
@@ -364,6 +396,18 @@ namespace TNS.AdExpress.Domain.Web {
         }
 
         /// <summary>
+        /// Get / Set Use comparative date In module Lost Won Module
+		/// </summary>
+        public static bool UseComparativeLostWon {
+			get {
+                return _useComparativeLostWon;
+			}
+			set {
+                _useComparativeLostWon = value;
+			}
+		}
+        
+        /// <summary>
         /// Get Dundas Virtual Path File Temporary
         /// </summary>
         public static DundasConfiguration DundasConfiguration {
@@ -462,6 +506,64 @@ namespace TNS.AdExpress.Domain.Web {
                 return _dataBase.GetTable(_matchingRetailerTableList[tableId].TableId);
             else
                 return _dataBase.GetTable(tableId);
+        }
+      
+        /// <summary>
+        ///  Campaign Type option is allowed
+        /// </summary>
+        public static bool AllowCampaignTypeOption
+        {
+            get
+            {
+                return _allowCampaignTypeOption;
+            }
+            set
+            {
+                _allowCampaignTypeOption = value;
+            }
+        }
+        /// <summary>
+        /// Determine if keep universe selection each time user go back to refine selection page
+        /// </summary>
+        public static bool KeepRefineUniverseSelection
+        {
+            get
+            {
+                return _keepRefineUniverseSelection;
+            }
+            set
+            {
+                _keepRefineUniverseSelection = value;
+            }
+        }
+        /// <summary>
+        /// Get Diponibility Option Period
+        /// </summary>
+        public static bool UseDiponibilityOptionPeriodLostWon {
+            get { return _useDiponibilityOptionPeriodLostWon; }
+            set { _useDiponibilityOptionPeriodLostWon = value; }
+        }
+        /// <summary>
+        /// Get Type Option Period 
+        /// </summary>
+        public static bool UseTypeOptionPeriodLostWon {
+            get { return _useTypeOptionPeriodLostWon; }
+            set { _useTypeOptionPeriodLostWon = value; }
+        }
+        ///// <summary>
+        ///// Get / Set Is All Period Is Restrict To 4 Month In Insertion Report 
+        ///// </summary>
+        //public static bool IsAllPeriodIsRestrictTo4MonthInInsertionReport {
+        //    get { return _isAllPeriodIsRestrictTo4MonthInInsertionReport; }
+        //    set { _isAllPeriodIsRestrictTo4MonthInInsertionReport = value; }
+        //}
+        /// <summary>
+        /// Get / Set Insertions reports options
+        /// </summary>
+        public static InsertionOptions InsertionOptions
+        {
+            get { return _insertionOptions; }
+            set { _insertionOptions = value; }
         }
         #endregion
 

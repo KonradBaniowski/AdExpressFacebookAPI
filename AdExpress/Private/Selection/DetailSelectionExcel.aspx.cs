@@ -21,6 +21,9 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.UI;
 using TNS.FrameWork;
 using TNS.FrameWork.Date;
+using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.CampaignTypes;
 
 namespace AdExpress.Private.Selection{
 	/// <summary>
@@ -85,6 +88,10 @@ namespace AdExpress.Private.Selection{
 		/// System.Windows.Forms.TreeNode des annonceurs/références
 		/// </summary>
 		protected string advertiserText;
+        /// <summary>
+        /// Liste des médias
+        /// </summary>
+        protected string listOfVehicleText;
 		/// <summary>
 		/// Affiche les media dans page aspx
 		/// </summary>
@@ -153,6 +160,10 @@ namespace AdExpress.Private.Selection{
         /// True if we need to display advertising agency
         /// </summary>
         public bool displayAdvertisingAgency = false;
+        /// <summary>
+        /// Affiche liste des médias
+        /// </summary>
+        public bool displayListOfVehicles = false;
 		/// <summary>
 		/// Code html pour afficher les annonceurs de références séléctionnée
 		/// </summary>
@@ -200,7 +211,8 @@ namespace AdExpress.Private.Selection{
 		/// <summary>
 		/// Affiche les éléments dans reference media
 		/// </summary>
-		public bool displayReferenceDetailMedia=false;
+		public bool displayReferenceDetailMedia=false;       
+
 		/// <summary>
 		/// Affiche le code pour les éléments contenue dans reference media
 		/// </summary>
@@ -265,6 +277,20 @@ namespace AdExpress.Private.Selection{
         /// Indique si on affiche la personnalisation des supports
         /// </summary>
         protected bool displayMediaPersonnalized = false;
+
+        public bool displayMediaSelection = false;
+        public string mediaSelectionWebText = "";
+        public string mediaSelectionText = "";
+        public bool displayCampaignTypeSelection = false;
+        public string campaignTypeSelectionText="";
+        /// <summary>
+        /// Ad type Text
+        /// </summary>
+        public string adTypeText = "";
+        /// <summary>
+        /// Ture if display Ad type 
+        /// </summary>
+        protected bool displayAdType = false;
 		#endregion
 
 		#region Constructeur
@@ -284,7 +310,9 @@ namespace AdExpress.Private.Selection{
 		protected void Page_Load(object sender, System.EventArgs e){
 			try{
                 Response.ContentType = "application/vnd.ms-excel";
-			
+
+                TNS.FrameWork.DB.Common.IDataSource dataSource = _webSession.CustomerDataFilters.DataSource;
+
 				#region Variables
 				//string periodText;
 				int i=1;
@@ -308,7 +336,7 @@ namespace AdExpress.Private.Selection{
 				#region Affichage des paramètres sélectionnés
 
                 #region Choix de l'étude
-                detailSelection = Convertion.ToHtmlString(GestionWeb.GetWebWord(1539, _webSession.SiteLanguage)) + " " + DateTime.Now.ToString("dd/MM/yyyy") + "";
+                detailSelection = Convertion.ToHtmlString(GestionWeb.GetWebWord(1539, _webSession.SiteLanguage)) + " " + FctUtilities.Dates.DateToString(DateTime.Now, _webSession.SiteLanguage) + "";
                 #endregion
 
                 #region Module
@@ -323,13 +351,13 @@ namespace AdExpress.Private.Selection{
                 #region Media
                 if (_webSession.isMediaSelected()){
 					displayMedia=true;
-					mediaText= TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(_webSession.SelectionUniversMedia,_webSession.SiteLanguage,false);
+                    mediaText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(_webSession.SelectionUniversMedia, _webSession.SiteLanguage, false, _webSession.DomainName, _webSession.DataLanguage, dataSource);
                 }
                 #endregion
 
                 #region Media concurrents
                 if(_webSession.isCompetitorMediaSelected()){
-					displayDetailMedia=true;
+					displayListOfVehicles=true;
 					System.Text.StringBuilder mediaSB=new System.Text.StringBuilder(1000);
 				
 					mediaSB.Append("<TR>");
@@ -343,7 +371,7 @@ namespace AdExpress.Private.Selection{
 						System.Windows.Forms.TreeNode tree=(System.Windows.Forms.TreeNode)_webSession.CompetitorUniversMedia[idMedia];				
 						mediaSB.Append("<TR height=\"20\">");
 						mediaSB.Append("<td width=\"5\"></td>");
-						mediaSB.Append("<TD align=\"center\" vAlign=\"top\" bgColor=\"#ffffff\">"+TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel((System.Windows.Forms.TreeNode)_webSession.CompetitorUniversMedia[idMedia],_webSession.SiteLanguage,true)+"</TD>");
+						mediaSB.Append("<TD align=\"center\" vAlign=\"top\" bgColor=\"#ffffff\">"+TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel((System.Windows.Forms.TreeNode)_webSession.CompetitorUniversMedia[idMedia],_webSession.SiteLanguage,true,_webSession.DomainName,_webSession.DataLanguage,dataSource)+"</TD>");
 						mediaSB.Append("</TR>");
 						mediaSB.Append("<TR>");
 						mediaSB.Append("<td width=\"5\"></td>");
@@ -352,7 +380,7 @@ namespace AdExpress.Private.Selection{
 						i++;
 						idMedia++;
 					}
-					mediaDetailText=mediaSB.ToString();
+					listOfVehicleText=mediaSB.ToString();
 				}
 				#endregion
 
@@ -370,7 +398,7 @@ namespace AdExpress.Private.Selection{
 					referenceDetailMedia.Append("</TR>");									
 					referenceDetailMedia.Append("<TR height=\"20\">");
 					referenceDetailMedia.Append("<td width=\"5\"></td>");
-					referenceDetailMedia.Append("<TD align=\"center\" vAlign=\"top\" bgColor=\"#ffffff\">"+TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel((System.Windows.Forms.TreeNode)_webSession.ReferenceUniversMedia,_webSession.SiteLanguage,true)+"</TD>");
+					referenceDetailMedia.Append("<TD align=\"center\" vAlign=\"top\" bgColor=\"#ffffff\">"+TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel((System.Windows.Forms.TreeNode)_webSession.ReferenceUniversMedia,_webSession.SiteLanguage,true, _webSession.DomainName,_webSession.DataLanguage,dataSource)+"</TD>");
 					referenceDetailMedia.Append("</TR>");
 					referenceDetailMedia.Append("<TR height=\"5\">");
 					referenceDetailMedia.Append("<td width=\"5\"></td>");
@@ -400,7 +428,7 @@ namespace AdExpress.Private.Selection{
 									
 					detailMedia.Append("<TR height=\"20\">");
 					detailMedia.Append("<td width=\"5\"></td>");
-					detailMedia.Append("<TD align=\"center\" vAlign=\"top\" bgColor=\"#ffffff\">"+TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel((System.Windows.Forms.TreeNode)_webSession.SelectionUniversMedia.FirstNode,_webSession.SiteLanguage,true)+"</TD>");
+					detailMedia.Append("<TD align=\"center\" vAlign=\"top\" bgColor=\"#ffffff\">"+TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel((System.Windows.Forms.TreeNode)_webSession.SelectionUniversMedia.FirstNode,_webSession.SiteLanguage,true,_webSession.DomainName,_webSession.DataLanguage,dataSource)+"</TD>");
 					detailMedia.Append("</TR>");
 					detailMedia.Append("<TR height=\"5\">");
 					detailMedia.Append("<td width=\"5\"></td>");
@@ -424,14 +452,14 @@ namespace AdExpress.Private.Selection{
                 #region Vague
                 if (_webSession.IsWaveSelected()){
 					displayWave=true;
-					waveText= TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(_webSession.SelectionUniversAEPMWave,_webSession.SiteLanguage,false);
+					waveText= TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(_webSession.SelectionUniversAEPMWave,_webSession.SiteLanguage,false,_webSession.DomainName,_webSession.DataLanguage,dataSource);
                 }
                 #endregion
 
                 #region Cibles
                 if (_webSession.IsTargetSelected()){
 					displayTargets=true;
-					targetsText= TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(_webSession.SelectionUniversAEPMTarget,_webSession.SiteLanguage,false);
+                    targetsText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(_webSession.SelectionUniversAEPMTarget, _webSession.SiteLanguage, false, _webSession.DomainName, _webSession.DataLanguage, dataSource);
                 }
                 #endregion
 
@@ -458,6 +486,16 @@ namespace AdExpress.Private.Selection{
                 {
                     advertisingAgencyText = "<table>" + advertisingAgencyText + "</table>";
                     displayAdvertisingAgency = true;
+                }
+                #endregion
+
+
+                #region Selection univers supports 
+                mediaSelectionText = Convertion.ToHtmlString(TNS.AdExpress.Web.UI.ExcelWebPage.GetPrincipalMediaSelected(_webSession));
+                if (mediaSelectionText != null && mediaSelectionText.Length > 0)
+                {
+                    mediaSelectionText = "<table>" + mediaSelectionText + "</table>";
+                    displayMediaSelection = true;
                 }
                 #endregion
 
@@ -562,14 +600,14 @@ namespace AdExpress.Private.Selection{
                 if (_webSession.IsCurrentUniversProgramTypeSelected()){
 					displayProgramType=true;
 					programTypeLabel = Convertion.ToHtmlString(GestionWeb.GetWebWord(2066,_webSession.SiteLanguage));
-					programTypeText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(_webSession.CurrentUniversProgramType,_webSession.SiteLanguage,false);
+                    programTypeText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(_webSession.CurrentUniversProgramType, _webSession.SiteLanguage, false, _webSession.DomainName, _webSession.DataLanguage, dataSource);
                 }
                 #endregion
 
                 #region Sponsorship Form
                 if (_webSession.IsCurrentUniversSponsorshipFormSelected()){
 					displaySponsorshipForm=true;
-					sponsorshipFormText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(_webSession.CurrentUniversSponsorshipForm,_webSession.SiteLanguage,false);
+                    sponsorshipFormText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(_webSession.CurrentUniversSponsorshipForm, _webSession.SiteLanguage, false, _webSession.DomainName, _webSession.DataLanguage, dataSource);
                 }
                 #endregion
 
@@ -599,7 +637,36 @@ namespace AdExpress.Private.Selection{
                 if (displayGenericlevelDetailColumnLabel) genericlevelDetailColumnLabelTitle = Convertion.ToHtmlString(GestionWeb.GetWebWord(2300, _webSession.SiteLanguage));
                 #endregion
 
+                #region Campaign type
+                TNS.AdExpress.Domain.Web.Navigation.Module currentModule = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
+                ArrayList detailSelections = ((ResultPageInformation)currentModule.GetResultPageInformation((int)_webSession.CurrentTab)).DetailSelectionItemsType;
+                if (detailSelections.Contains(CstWeb.DetailSelection.Type.campaignType.GetHashCode())
+                    && _webSession.CampaignType != CstWeb.CustomerSessions.CampaignType.notDefined
+                    && WebApplicationParameters.AllowCampaignTypeOption)
+                {
+
+                    displayCampaignTypeSelection = true;
+                    campaignTypeSelectionText = GestionWeb.GetWebWord(CampaignTypesInformation.Get(_webSession.CampaignType).WebTextId, _webSession.SiteLanguage);
+
+                }
                 #endregion
+
+                #region Advertisement Type
+                if (detailSelections.Contains(CstWeb.DetailSelection.Type.advertisementType.GetHashCode())
+                    && _webSession.IsAdvertisementTypeUniverseSelected())
+                {
+                    adTypeText = Convertion.ToHtmlString(TNS.AdExpress.Web.UI.ExcelWebPage.GetAdTypeSelected(_webSession));
+                    if (adTypeText != null && adTypeText.Length > 0)
+                    {
+                        adTypeText = "<table>" + adTypeText + "</table>";
+                        displayAdType = true;
+                    }
+                }
+
+                #endregion
+
+                #endregion
+
 
                 #region copyright
                 copyRight = TNS.AdExpress.Web.UI.ExcelWebPage.GetFooter(_webSession);

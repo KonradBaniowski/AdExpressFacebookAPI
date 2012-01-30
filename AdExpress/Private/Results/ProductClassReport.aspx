@@ -95,6 +95,7 @@
 							</tr>
 						</table>
 					</td>
+<!--TODO :Vérifier le composant initproductwebcontrol pour fusion dev trunk-->
 					
 					<!-- New separator -->
 					<td vAlign="top" class="whiteBackGround"><asp:Image ID="Image10" runat="server" height="100" width="5" SkinID="logo_cote_droit" /></td>

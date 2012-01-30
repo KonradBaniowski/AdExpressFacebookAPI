@@ -173,7 +173,7 @@ namespace AdExpress.Private.Selection{
 
 				//Annuler l'univers de version car les cibles changent en fonction de la période sélectionnée				
 					_webSession.IdSlogans = new ArrayList();
-					_webSession.SloganIdZoom=-1;
+                    _webSession.SloganIdZoom = long.MinValue;
 					_webSession.Save();
 				
 				if(_webSession.IsTargetSelected()){

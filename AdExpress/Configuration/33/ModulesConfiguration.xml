@@ -62,7 +62,7 @@
               <allowedUniverseLevel id="8" name="brand"/>
               <allowedUniverseLevel id="5" name="product"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="2">
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
               <allowedUniverseBranch id="2"  name="holding_company\advertiser\product"/>
               <allowedUniverseBranch id="3" name="brand\product"/>
@@ -79,7 +79,7 @@
               <allowedUniverseLevel id="14" name="media"/>
               <allowedUniverseLevel id="15" name="interest_center"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="7">
               <allowedUniverseBranch id="7" name="vehicle\category\media"/>
               <allowedUniverseBranch id="8" name="vehicle\interest_center\media"/>
             </allowedUniverseBranches>
@@ -88,8 +88,7 @@
           </optionalSelection>
         </optionalSelections>
         <results>
-          <page id="0" resultid="16" name="Résultats" traductioncode="1474" url="/Private/Results/MediaPlanResults.aspx" printExcelUrl="/Private/Results/Excel/MediaPlanResults.aspx" valueExcelUrl="/Private/Results/ValueExcel/MediaPlanResults.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPlanAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
-            <!--<page name="Synthèses" traductioncode="750" url="#" />-->
+          <page id="0" resultid="16" name="Résultats" traductioncode="1474" url="/Private/Results/MediaPlanResults.aspx" printExcelUrl="/Private/Results/Excel/MediaPlanResults.aspx" valueExcelUrl="/Private/Results/ValueExcel/MediaPlanResults.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPlanAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">            
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="2" name="Result name"/>
@@ -108,7 +107,7 @@
         </results>
       </module>
       <!-- *****************************************      Present / Absent                    *****************************************-->
-      <module name="Present/Absent" privilegecode="278" traductioncode="2167" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2196" descriptionImageName="/Images/Common/Infobulle/Concurrentiels.png">
+      <module name="Present/Absent" privilegecode="278" traductioncode="2167" moduleCategoryId="1" displayIncompleteDateInCalendar="True" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2196" descriptionImageName="/Images/Common/Infobulle/Concurrentiels.png">
        <RulesLayer name="Default Present Absent rules layers" assemblyName="TNS.AdExpressI.PresentAbsent.Default.dll" class="TNS.AdExpressI.PresentAbsent.Default.PresentAbsentResult"/>
         <DataAccessLayer name="Default Present Absent data access layers" assemblyName="TNS.AdExpressI.PresentAbsent.DAL.Default.dll" class="TNS.AdExpressI.PresentAbsent.DAL.Default.PresentAbsentDAL"/>
         <ProductRights branches="product|advertiser"/>
@@ -166,7 +165,7 @@
               <allowedUniverseLevel id="3" name="group_"/>
               <allowedUniverseLevel id="4" name="segment"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="1">
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
             </allowedUniverseBranches>
           </optionalSelection>
@@ -347,6 +346,31 @@
             </detailSelections>
           </page>
           <page id="6" resultid="52" name="Résultats synthèse" traductioncode="1664" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+            <ProductDetailLevel>
+              <defaultProductDetailLevels>
+                <defaultProductDetailLevel id="11" name="famille" />
+                <defaultProductDetailLevel id="15" name="famille\classe\groupe" />
+                <defaultProductDetailLevel id="16" name="famille\annonceur" />
+                <defaultProductDetailLevel id="17" name="famille\annonceur\produit" />
+                <defaultProductDetailLevel id="19" name="groupe" />
+                <defaultProductDetailLevel id="20" name="groupe\annonceur" />
+                <defaultProductDetailLevel id="10" name="annonceur" />
+                <defaultProductDetailLevel id="18" name="annonceur\produit" />
+                <defaultProductDetailLevel id="21" name="produit" />
+              </defaultProductDetailLevels>
+              <allowedProductLevelItems>
+                <allowedProductLevelItem id="11" name="Famille"/>
+                <allowedProductLevelItem id="12" name="Classe"/>
+                <allowedProductLevelItem id="13" name="Groupe"/>
+                <allowedProductLevelItem id="14" name="Variete"/>
+                <allowedProductLevelItem id="10" name="Produit"/>
+                <allowedProductLevelItem id="9" name="Marque"/>
+                <allowedProductLevelItem id="7" name="Groupe de société"/>
+                <allowedProductLevelItem id="8" name="Annonceur"/>
+                <allowedProductLevelItem id="15" name="Groupe d'agence"/>
+                <allowedProductLevelItem id="16" name="Agence"/>
+              </allowedProductLevelItems>
+            </ProductDetailLevel>
             <allowedUnits>
               <allowedUnit>kEuro</allowedUnit>
               <allowedUnit>euro</allowedUnit>
@@ -376,7 +400,7 @@
         </results>
       </module>
       <!-- *****************************************      Lost / Won                          *****************************************-->
-      <module name="Lost/won" privilegecode="197" traductioncode="2169" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2198" descriptionImageName="/Images/Common/Infobulle/Dynamique.png">
+      <module name="Lost/won" privilegecode="197" traductioncode="2169" moduleCategoryId="1" displayIncompleteDateInCalendar="True" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2198" descriptionImageName="/Images/Common/Infobulle/Dynamique.png">
         <RulesLayer name="Default Lost Won rules layers" assemblyName="TNS.AdExpressI.LostWon.Default.dll" class="TNS.AdExpressI.LostWon.Default.LostWonResult"/>
         <DataAccessLayer name="Default Lost Won data access layers" assemblyName="TNS.AdExpressI.LostWon.DAL.Default.dll" class="TNS.AdExpressI.LostWon.DAL.Default.LostWonResultDAL"/>
         <ProductRights branches="product|advertiser"/>
@@ -434,7 +458,7 @@
               <allowedUniverseLevel id="3" name="group_"/>
               <allowedUniverseLevel id="4" name="segment"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="1">
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
             </allowedUniverseBranches>
           </optionalSelection>
@@ -677,7 +701,7 @@
             <allowedUniverseLevel id="8" name="brand"/>
             <allowedUniverseLevel id="5" name="product"/>
           </allowedUniverseLevels>
-          <allowedUniverseBranches>
+          <allowedUniverseBranches defaultBranchId="4">
             <allowedUniverseBranch id="4"  name="advertiser\product"/>
             <allowedUniverseBranch id="3" name="brand\product"/>
           </allowedUniverseBranches>
@@ -700,7 +724,7 @@
         </results>
       </module>
       <!-- *****************************************      Portefeuille d'un support           *****************************************-->
-      <module name="Portefeuille d'un support" privilegecode="283" traductioncode="2170" moduleCategoryId="1" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2199" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
+      <module name="Portefeuille d'un support" privilegecode="283" traductioncode="2170" moduleCategoryId="1" displayIncompleteDateInCalendar="True" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2199" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
         <RulesLayer name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Default.dll" class="TNS.AdExpressI.Portofolio.Default.Results"/>
         <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.France.dll" class="TNS.AdExpressI.Portofolio.DAL.France.PortofolioDAL"/>
         <ProductRights branches="product|advertiser"/>
@@ -745,7 +769,7 @@
               <allowedUniverseLevel id="3" name="group_"/>
               <allowedUniverseLevel id="4" name="segment"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="1">
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
             </allowedUniverseBranches>
           </optionalSelection>
@@ -870,7 +894,7 @@
               <allowedUniverseLevel id="6" name="advertiser"/>
               <allowedUniverseLevel id="8" name="brand"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="1" forceBranchId="9">
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
               <allowedUniverseBranch id="9" name="advertiser"/>
               <allowedUniverseBranch id="11" name="brand"/>
@@ -889,7 +913,7 @@
               <allowedUniverseLevel id="6" name="advertiser"/>
               <allowedUniverseLevel id="8" name="brand"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="9">
               <allowedUniverseBranch id="9" name="advertiser"/>
               <allowedUniverseBranch id="11" name="brand"/>
             </allowedUniverseBranches>
@@ -937,7 +961,7 @@
               <allowedUniverseLevel id="6" name="advertiser"/>
               <allowedUniverseLevel id="8" name="brand"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="1" advertiserBranchId="9">
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
               <allowedUniverseBranch id="9" name="advertiser"/>
               <allowedUniverseBranch id="11" name="brand"/>
@@ -956,7 +980,7 @@
               <allowedUniverseLevel id="6" name="advertiser"/>
               <allowedUniverseLevel id="8" name="brand"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="9">
               <allowedUniverseBranch id="9" name="advertiser"/>
               <allowedUniverseBranch id="11" name="brand"/>
             </allowedUniverseBranches>
@@ -1060,14 +1084,14 @@
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
               <detailSelection id="3" name="Date"/>
-              <detailSelection id="5" name="Vehicle Selected"/>
-              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="5" name="Vehicle Selected"/>   
+               <detailSelection id="4" name="Unit"/>         
             </detailSelections>
           </page>
         </results>
       </module>
       <!-- *****************************************      Modules Tableaux de bord Presse     *****************************************-->
-      <module name="Tableaux de bord Presse" privilegecode="475" traductioncode="2175" moduleCategoryId="6" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2204" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">
+      <module name="Tableaux de bord Presse" privilegecode="475" traductioncode="2175" moduleCategoryId="6" displayIncompleteDateInCalendar="True" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2204" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">     
         <ProductRights branches="product|advertiser"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="1"/>
@@ -1078,7 +1102,7 @@
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="5">
               <allowedUniverseBranch id="5" name="sector"/>
             </allowedUniverseBranches>
           </selection>
@@ -1105,7 +1129,7 @@
         </results>
       </module>
       <!-- *****************************************      Modules Tableaux de bord Radio      *****************************************-->
-      <module name="Tableaux de bord Radio" privilegecode="601" traductioncode="2177" moduleCategoryId="6" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2206" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">
+      <module name="Tableaux de bord Radio" privilegecode="601" traductioncode="2177" moduleCategoryId="6" displayIncompleteDateInCalendar="True" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2206" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">      
         <ProductRights branches="product|advertiser"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="2"/>
@@ -1116,7 +1140,7 @@
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="5">
               <allowedUniverseBranch id="5" name="sector"/>
             </allowedUniverseBranches>
           </selection>
@@ -1156,7 +1180,7 @@
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="5">
               <allowedUniverseBranch id="5" name="sector"/>
             </allowedUniverseBranches>
           </selection>
@@ -1185,7 +1209,7 @@
         </results>
       </module>
       <!-- *****************************************      Modules Tableaux de bord Pan euro   *****************************************-->
-      <module name="Tableaux de bord Pan Euro" privilegecode="1036" traductioncode="2214" moduleCategoryId="6" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2215" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">
+      <module name="Tableaux de bord Pan Euro" privilegecode="1036" traductioncode="2214" moduleCategoryId="6" displayIncompleteDateInCalendar="True" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2215" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">     
         <ProductRights branches="product|advertiser"/>
         <ModuleAllowedMediaUniverse initFromBaal="true" baalId="340">
         </ModuleAllowedMediaUniverse>
@@ -1195,7 +1219,7 @@
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="5">
               <allowedUniverseBranch id="5" name="sector"/>
             </allowedUniverseBranches>
           </selection>
@@ -1224,7 +1248,7 @@
         </results>
       </module>
       <!-- *****************************************      Modules Tableaux de bord Evaliant   *****************************************-->
-      <module name="Tableaux de bord Evaliant" privilegecode="4370" traductioncode="2536" moduleCategoryId="6" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2537" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">
+      <module name="Tableaux de bord Evaliant" privilegecode="4370" traductioncode="2536" moduleCategoryId="6" displayIncompleteDateInCalendar="True" urlNextPage="/Private/Selection/MultipleSectorSelection.aspx" descriptionWebTextId="2537" descriptionImageName="/Images/Common/Infobulle/TableauBord.png">      
         <ProductRights branches="product|advertiser"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="6"/>
@@ -1235,7 +1259,7 @@
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="5">
               <allowedUniverseBranch id="5" name="sector"/>
             </allowedUniverseBranches>
           </selection>
@@ -1294,7 +1318,7 @@
               <allowedUniverseLevel id="20" name="Groupe d'agence"/>
               <allowedUniverseLevel id="19" name="Agence"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="10">
               <allowedUniverseBranch id="10" name="Groupe d'agence\Agence"/>
             </allowedUniverseBranches>
           </selection>
@@ -1309,7 +1333,7 @@
               <allowedUniverseLevel id="14" name="media"/>
               <allowedUniverseLevel id="15" name="interest_center"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="7">
               <allowedUniverseBranch id="7" name="vehicle\category\media"/>
               <allowedUniverseBranch id="8" name="vehicle\interest_center\media"/>
             </allowedUniverseBranches>
@@ -1321,7 +1345,7 @@
               <allowedUniverseLevel id="3" name="group_"/>
               <allowedUniverseLevel id="4" name="segment"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="1">
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
             </allowedUniverseBranches>
           </optionalSelection>
@@ -1367,7 +1391,7 @@
             <allowedUniverseLevel id="8" name="brand"/>
             <allowedUniverseLevel id="5" name="product"/>
           </allowedUniverseLevels>
-          <allowedUniverseBranches>
+          <allowedUniverseBranches defaultBranchId="4">
             <allowedUniverseBranch id="4" name="advertiser\product"/>
             <allowedUniverseBranch id="3" name="brand\product"/>
           </allowedUniverseBranches>
@@ -1477,7 +1501,7 @@
             <allowedUniverseLevel id="3" name="group_"/>
             <allowedUniverseLevel id="4" name="segment"/>
           </allowedUniverseLevels>
-          <allowedUniverseBranches>
+          <allowedUniverseBranches defaultBranchId="1">
             <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
           </allowedUniverseBranches>
         </selection>
@@ -1602,7 +1626,7 @@
               <allowedUniverseLevel id="8" name="brand"/>
               <allowedUniverseLevel id="5" name="product"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="1">
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
               <allowedUniverseBranch id="2"  name="holding_company\advertiser\product"/>
               <allowedUniverseBranch id="3" name="brand\product"/>
@@ -1687,7 +1711,7 @@
               <allowedUniverseLevel id="8" name="brand"/>
               <allowedUniverseLevel id="5" name="product"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="1">
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
               <allowedUniverseBranch id="2"  name="holding_company\advertiser\product"/>
               <allowedUniverseBranch id="3" name="brand\product"/>

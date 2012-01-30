@@ -150,6 +150,18 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 sql += " " + tablePrefixe + ".id_category in (" + webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess] + ") ";
                 premier = false;
             }
+            // Region
+            if (webSession.CustomerLogin[CustomerRightConstante.type.regionAccess].Length > 0)
+            {
+                if (!premier) sql += " or";
+                else
+                {
+                    if (beginByAnd) sql += " and";
+                    sql += " ((";
+                }
+                sql += " " + tablePrefixe + ".id_region in (" + webSession.CustomerLogin[CustomerRightConstante.type.regionAccess] + ") ";
+                premier = false;
+            }
             // Media
             if (webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess].Length > 0)
             {
@@ -185,6 +197,18 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     sql += " (";
                 }
                 sql += " " + tablePrefixe + ".id_category not in (" + webSession.CustomerLogin[CustomerRightConstante.type.categoryException] + ") ";
+                premier = false;
+            }
+            // region
+            if (webSession.CustomerLogin[CustomerRightConstante.type.regionException].Length > 0)
+            {
+                if (!premier) sql += " and";
+                else
+                {
+                    if (beginByAnd) sql += " and";
+                    sql += " (";
+                }
+                sql += " " + tablePrefixe + ".id_region not in (" + webSession.CustomerLogin[CustomerRightConstante.type.regionException] + ") ";
                 premier = false;
             }
             // Media
@@ -237,6 +261,18 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 sql += " " + tablePrefixe + ".id_category in (" + webSession.CustomerLogin[CustomerRightConstante.type.categoryAccess] + ") ";
                 premier = false;
             }
+            // Region
+            if (webSession.CustomerLogin[CustomerRightConstante.type.regionAccess].Length > 0)
+            {
+                if (!premier) sql += " or";
+                else
+                {
+                    if (beginByAnd) sql += " and";
+                    sql += " ((";
+                }
+                sql += " " + tablePrefixe + ".id_region in (" + webSession.CustomerLogin[CustomerRightConstante.type.regionAccess] + ") ";
+                premier = false;
+            }
             // Media
             if (webSession.CustomerLogin[CustomerRightConstante.type.mediaAccess].Length > 0)
             {
@@ -276,6 +312,18 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 sql += " " + tablePrefixe + ".id_category not in (" + webSession.CustomerLogin[CustomerRightConstante.type.categoryException] + ") ";
                 premier = false;
             }
+            // Region
+            if (webSession.CustomerLogin[CustomerRightConstante.type.regionException].Length > 0)
+            {
+                if (!premier) sql += " and";
+                else
+                {
+                    if (beginByAnd) sql += " and";
+                    sql += " (";
+                }
+                sql += " " + tablePrefixe + ".id_region not in (" + webSession.CustomerLogin[CustomerRightConstante.type.regionException] + ") ";
+                premier = false;
+            }
             // Media
             if (webSession.CustomerLogin[CustomerRightConstante.type.mediaException].Length > 0)
             {
@@ -310,8 +358,6 @@ namespace TNS.AdExpress.Web.Core.Utilities
         {
             return (getClassificationCustomerProductRight(webSession, tablePrefixe, tablePrefixe, tablePrefixe, tablePrefixe, beginByAnd));
         }
-
-     
 
         /// <summary>
         /// Génère les droits clients Produit.
@@ -669,6 +715,156 @@ namespace TNS.AdExpress.Web.Core.Utilities
 		}
 		
 
+
+        #region GetProductRights
+
+        /// <summary>
+        /// Get product classification branch rights
+        /// </summary>
+        /// <param name="prefix">prefix</param> 
+        /// <param name="beginByAnd">True if sql clause start with "AND"</param>
+        /// <param name="session">Client session</param>
+        /// <returns>string sql</returns>
+        public static string GetProductRights(WebSession session, string prefix, bool beginByAnd)
+        {
+            return GetProductRights(session, prefix, prefix, prefix, prefix, beginByAnd);
+        }
+
+        /// <summary>
+        /// Get vehicle classification branch rights
+        /// </summary>
+        /// <param name="sectorTable">Sector Table description</param>
+        /// <param name="subSectorTable">Sub sector Table description</param>
+        /// <param name="groupTable">group Table description</param>
+        /// <param name="segmentTable">Segement Table description</param>
+        /// <param name="session">Client session</param>
+        /// <param name="beginByAnd">True if sql clause start with "AND"</param>
+        /// <returns>sql rights string</returns>
+        public static string GetProductRights(WebSession session, Table sectorTable, Table subSectorTable, Table groupTable, Table segmentTable, bool beginByAnd)
+        {
+            return GetProductRights(session, sectorTable.Prefix, subSectorTable.Prefix, groupTable.Prefix, segmentTable.Prefix, beginByAnd);
+        }
+
+        /// <summary>
+        /// Get vehicle classification branch rights.
+        /// </summary>
+        /// <param name="sectorTablePrefix">sector Table Prefix</param>
+        /// <param name="subSectorTablePrefix">sub sector Table Prefix</param>
+        /// <param name="groupTablePrefix">group Table Prefix</param>
+        /// <param name="segmentTablePrefix">segment Table Prefix</param>
+        /// <param name="session">Client session</param>
+        /// <param name="beginByAnd">True if sql clause start with "AND"</param>
+        /// <returns>string sql</returns>
+        public static string GetProductRights(WebSession session, string sectorTablePrefix, string subSectorTablePrefix, string groupTablePrefix,string segmentTablePrefix, bool beginByAnd)
+        {
+            string sql = "";
+
+            bool fisrt = true;
+            //Get product rights filter data
+            Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, string> rights = session.CustomerDataFilters.ProductsRights;
+
+            if (rights != null)
+            {
+
+                // Get the sector authorized for the current customer
+                if (rights.ContainsKey(CustomerRightConstante.type.sectorAccess) && rights[CustomerRightConstante.type.sectorAccess].Length > 0)
+                {
+                    if (beginByAnd) sql += " and";
+                    sql += " ((" + ((sectorTablePrefix != null && sectorTablePrefix.Length > 0) ? sectorTablePrefix + "." : "") + "id_sector in (" + rights[CustomerRightConstante.type.sectorAccess] + ") ";
+                    fisrt = false;
+                }
+                // Get the sub sector authorized for the current customer
+                if (rights.ContainsKey(CustomerRightConstante.type.subSectorAccess) && rights[CustomerRightConstante.type.subSectorAccess].Length > 0)
+                {
+                    if (!fisrt) sql += " or";
+                    else
+                    {
+                        if (beginByAnd) sql += " and";
+                        sql += " ((";
+                    }
+                    sql += " " + ((subSectorTablePrefix != null && subSectorTablePrefix.Length > 0) ? subSectorTablePrefix + "." : "") + "id_subsector in (" + rights[CustomerRightConstante.type.subSectorAccess] + ") ";
+                    fisrt = false;
+                }
+                // Get the group authorized for the current customer                
+                if (rights.ContainsKey(CustomerRightConstante.type.groupAccess) && rights[CustomerRightConstante.type.groupAccess].Length > 0)
+                {
+                    if (!fisrt) sql += " or";
+                    else
+                    {
+                        if (beginByAnd) sql += " and";
+                        sql += " ((";
+                    }
+                    sql += " " + ((groupTablePrefix != null && groupTablePrefix.Length > 0) ? groupTablePrefix + "." : "") + " id_group_ in (" + rights[CustomerRightConstante.type.groupAccess] + ") ";
+                    fisrt = false;
+                }
+                // Get the segment authorized for the current customer                
+                if (rights.ContainsKey(CustomerRightConstante.type.segmentAccess) && rights[CustomerRightConstante.type.segmentAccess].Length > 0)
+                {
+                    if (!fisrt) sql += " or";
+                    else
+                    {
+                        if (beginByAnd) sql += " and";
+                        sql += " ((";
+                    }
+                    sql += " " + ((segmentTablePrefix != null && segmentTablePrefix.Length > 0) ? segmentTablePrefix + "." : "") + "id_segment in (" + rights[CustomerRightConstante.type.segmentAccess] + ") ";
+                    fisrt = false;
+                }
+                if (!fisrt) sql += " )";
+
+                // Get the sector not authorized for the current customer
+                if (rights.ContainsKey(CustomerRightConstante.type.sectorException) && rights[CustomerRightConstante.type.sectorException].Length > 0)
+                {
+                    if (!fisrt) sql += " and";
+                    else
+                    {
+                        if (beginByAnd) sql += " and";
+                        sql += " (";
+                    }
+                    sql += " " + ((sectorTablePrefix != null && sectorTablePrefix.Length > 0) ? sectorTablePrefix + "." : "") + " id_sector not in (" + rights[CustomerRightConstante.type.sectorException] + ") ";
+                    fisrt = false;
+                }
+                // Get the sub sector not authorized for the current customer
+                if (rights.ContainsKey(CustomerRightConstante.type.subSectorException) && rights[CustomerRightConstante.type.subSectorException].Length > 0)
+                {
+                    if (!fisrt) sql += " and";
+                    else
+                    {
+                        if (beginByAnd) sql += " and";
+                        sql += " (";
+                    }
+                    sql += " " + ((subSectorTablePrefix != null && subSectorTablePrefix.Length > 0) ? subSectorTablePrefix + "." : "") + "id_subsector not in (" + rights[CustomerRightConstante.type.subSectorException] + ") ";
+                    fisrt = false;
+                }
+                // Get the group not authorized for the current customer
+                if (rights.ContainsKey(CustomerRightConstante.type.groupException) && rights[CustomerRightConstante.type.groupException].Length > 0)
+                {
+                    if (!fisrt) sql += " and";
+                    else
+                    {
+                        if (beginByAnd) sql += " and";
+                        sql += " (";
+                    }
+                    sql += " " + ((groupTablePrefix != null && groupTablePrefix.Length > 0) ? groupTablePrefix + "." : "") + "id_group_ not in (" + rights[CustomerRightConstante.type.groupException] + ") ";
+                    fisrt = false;
+                }
+                // Get the segment not authorized for the current customer
+                if (rights.ContainsKey(CustomerRightConstante.type.segmentException) && rights[CustomerRightConstante.type.segmentException].Length > 0)
+                {
+                    if (!fisrt) sql += " and";
+                    else
+                    {
+                        if (beginByAnd) sql += " and";
+                        sql += " (";
+                    }
+                    sql += " " + ((segmentTablePrefix != null && segmentTablePrefix.Length > 0) ? segmentTablePrefix + "." : "") + "id_segment not in (" + rights[CustomerRightConstante.type.segmentException] + ") ";
+                    fisrt = false;
+                }
+                if (!fisrt) sql += " )";
+            }
+            return sql;
+        }
+        #endregion
+
 		#endregion
 
 		#region media ||plurimedia
@@ -949,6 +1145,126 @@ namespace TNS.AdExpress.Web.Core.Utilities
 
 		}
 
+
+        #region GetMediaRights
+
+        /// <summary>
+        /// Get vehicle classification brand rights
+        /// </summary>
+        /// <param name="prefix">prefix</param> 
+        /// <param name="beginByAnd">True if sql clause start with "AND"</param>
+        /// <returns>string sql</returns>
+        public static string GetMediaRights(WebSession session, string prefix, bool beginByAnd)
+        {
+            return GetMediaRights(session,prefix, prefix, prefix, beginByAnd);
+        }
+
+        /// <summary>
+        /// Get vehicle classification brand rights
+        /// </summary>
+        /// <param name="categoryTable">Sub media Table description</param>
+        /// <param name="mediaTable">vehicle Table description</param>
+        /// <param name="vehicleTable">media Table description</param>
+        /// <param name="beginByAnd">True if sql clause start with "AND"</param>
+        /// <returns>sql rights string</returns>
+        public static string GetMediaRights(WebSession session, Table vehicleTable, Table categoryTable, Table mediaTable, bool beginByAnd)
+        {
+            return GetMediaRights(session,vehicleTable.Prefix, categoryTable.Prefix, mediaTable.Prefix, beginByAnd);
+        }
+
+        /// <summary>
+        /// Get vehicle classification brand rights.
+        /// </summary>
+        /// <param name="categoryTable">sub media Table Prefix</param>
+        /// <param name="mediaTable">vehicle Table Prefix</param>
+        /// <param name="vehicleTable">media Table Prefix</param>
+        /// <param name="beginByAnd">True if sql clause start with "AND"</param>
+        /// <returns>string sql</returns>
+        public static string GetMediaRights(WebSession session, string vehicleTablePrefix, string categoryTablePrefix, string mediaTablePrefix, bool beginByAnd)
+        {
+            string sql = "";
+
+            bool fisrt = true;
+            //Get Media rights filter data
+            Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, string> rights = session.CustomerDataFilters.MediaRights;
+
+            if (rights != null)
+            {
+
+                // Get the medias authorized for the current customer
+                if (rights.ContainsKey(CustomerRightConstante.type.vehicleAccess) && rights[CustomerRightConstante.type.vehicleAccess].Length > 0)
+                {
+                    if (beginByAnd) sql += " and";
+                    sql += " ((" + ((vehicleTablePrefix != null && vehicleTablePrefix.Length > 0) ? vehicleTablePrefix + "." : "") + " id_vehicle in (" + rights[CustomerRightConstante.type.vehicleAccess] + ") ";
+                    fisrt = false;
+                }
+                // Get the sub medias authorized for the current customer
+                if (rights.ContainsKey(CustomerRightConstante.type.categoryAccess) && rights[CustomerRightConstante.type.categoryAccess].Length > 0)
+                {
+                    if (!fisrt) sql += " or";
+                    else
+                    {
+                        if (beginByAnd) sql += " and";
+                        sql += " ((";
+                    }
+                    sql += " " + ((categoryTablePrefix != null && categoryTablePrefix.Length > 0) ? categoryTablePrefix + "." : "") + " id_category in (" + rights[CustomerRightConstante.type.categoryAccess] + ") ";
+                    fisrt = false;
+                }
+                // Get the vehicles authorized for the current customer                
+                if (rights.ContainsKey(CustomerRightConstante.type.mediaAccess) && rights[CustomerRightConstante.type.mediaAccess].Length > 0)
+                {
+                    if (!fisrt) sql += " or";
+                    else
+                    {
+                        if (beginByAnd) sql += " and";
+                        sql += " ((";
+                    }
+                    sql += " " + ((mediaTablePrefix != null && mediaTablePrefix.Length > 0) ? mediaTablePrefix + "." : "") + " id_media in (" + rights[CustomerRightConstante.type.mediaAccess] + ") ";
+                    fisrt = false;
+                }
+                if (!fisrt) sql += " )";
+
+                // Get the medias not authorized for the current customer
+                if (rights.ContainsKey(CustomerRightConstante.type.vehicleException) && rights[CustomerRightConstante.type.vehicleException].Length > 0)
+                {
+                    if (!fisrt) sql += " and";
+                    else
+                    {
+                        if (beginByAnd) sql += " and";
+                        sql += " (";
+                    }
+                    sql += " " + ((vehicleTablePrefix != null && vehicleTablePrefix.Length > 0) ? vehicleTablePrefix + "." : "") + " id_vehicle not in (" + rights[CustomerRightConstante.type.vehicleException] + ") ";
+                    fisrt = false;
+                }
+                // Get the sub medias not authorized for the current customer
+                if (rights.ContainsKey(CustomerRightConstante.type.categoryException) && rights[CustomerRightConstante.type.categoryException].Length > 0)
+                {
+                    if (!fisrt) sql += " and";
+                    else
+                    {
+                        if (beginByAnd) sql += " and";
+                        sql += " (";
+                    }
+                    sql += " " + ((categoryTablePrefix != null && categoryTablePrefix.Length > 0) ? categoryTablePrefix + "." : "") + " id_category not in (" + rights[CustomerRightConstante.type.categoryException] + ") ";
+                    fisrt = false;
+                }
+                // Get the vehicles not authorized for the current customer
+                if (rights.ContainsKey(CustomerRightConstante.type.mediaException) && rights[CustomerRightConstante.type.mediaException].Length > 0)
+                {
+                    if (!fisrt) sql += " and";
+                    else
+                    {
+                        if (beginByAnd) sql += " and";
+                        sql += " (";
+                    }
+                    sql += " " + ((mediaTablePrefix != null && mediaTablePrefix.Length > 0) ? mediaTablePrefix + "." : "") + " id_media not in (" + rights[CustomerRightConstante.type.mediaException] + ") ";
+                    fisrt = false;
+                }
+                if (!fisrt) sql += " )";
+            }
+            return sql;
+        }
+        #endregion
 
         #endregion
 
@@ -2809,6 +3125,25 @@ namespace TNS.AdExpress.Web.Core.Utilities
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="periodType"></param>
+        /// <returns></returns>
+        public static Table GetTrendTableInformation(WebConstantes.CustomerSessions.Period.DisplayLevel periodType)
+        {
+            switch (periodType)
+            {
+                case WebConstantes.CustomerSessions.Period.DisplayLevel.monthly:
+                case WebConstantes.CustomerSessions.Period.DisplayLevel.yearly:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.tendencyMonth));
+                case WebConstantes.CustomerSessions.Period.DisplayLevel.weekly:
+                    return (WebApplicationParameters.DataBaseDescription.GetTable(TableIds.tendencyWeek));
+                default:
+                    throw (new SQLGeneratorException("Le détails période sélectionné est incorrect pour le choix de la table"));
+            }
+        }
+
+        /// <summary>
         /// Get table description for trends total according to the period selected by the client
         /// </summary>
         /// <param name="periodType">Period type selected</param>
@@ -2862,7 +3197,14 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return "" + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_category," + DBConstantes.Tables.CATEGORY_PREFIXE + ".category"
                         + " ," + DBConstantes.Tables.TITLE_PREFIXE + ".id_title as id_media," + DBConstantes.Tables.TITLE_PREFIXE + ".title as media";
                 case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
                 case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
                 case DBClassificationConstantes.Vehicles.names.others:
                     return "" + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_category," + DBConstantes.Tables.CATEGORY_PREFIXE + ".category"
                         + " ," + DBConstantes.Tables.MEDIA_PREFIXE + ".id_media as id_media," + DBConstantes.Tables.MEDIA_PREFIXE + ".media as media";
@@ -2888,7 +3230,14 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return " " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".media " + DBConstantes.Tables.MEDIA_PREFIXE + "," + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".title " + DBConstantes.Tables.TITLE_PREFIXE + ""
                             + " ," + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".category " + DBConstantes.Tables.CATEGORY_PREFIXE + "";
                 case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
                 case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
                 case DBClassificationConstantes.Vehicles.names.others:
                     return " " + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".media " + DBConstantes.Tables.MEDIA_PREFIXE + ""
                             + " ," + DBConstantes.Schema.ADEXPRESS_SCHEMA + ".category " + DBConstantes.Tables.CATEGORY_PREFIXE + "";
@@ -2947,7 +3296,14 @@ namespace TNS.AdExpress.Web.Core.Utilities
                             + " and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".activation<" + DBConstantes.ActivationValues.UNACTIVATED;
 
                 case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
                 case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
                     return " and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_media=" + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_media"
                         + " and " + DBConstantes.Tables.CATEGORY_PREFIXE + ".id_category=" + DBConstantes.Tables.WEB_PLAN_PREFIXE + ".id_category"
                         + " and " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_language=" + webSession.DataLanguage
@@ -2986,7 +3342,14 @@ namespace TNS.AdExpress.Web.Core.Utilities
                             + " ,wp.id_category "
                             + " ,category";
                 case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
                 case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
                 case DBClassificationConstantes.Vehicles.names.others:
                     return " group by " + DBConstantes.Tables.MEDIA_PREFIXE + ".id_media,media "
                         + " ,wp.id_category "
@@ -3011,7 +3374,14 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                     return " order by category, title";
                 case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
                 case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
                 case DBClassificationConstantes.Vehicles.names.others:
                     return " order by category, media";
                 default:
@@ -3095,6 +3465,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case DBClassificationConstantes.Vehicles.names.radio:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataRadio, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
                 case DBClassificationConstantes.Vehicles.names.others:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataTv, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
@@ -3146,6 +3520,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case DBClassificationConstantes.Vehicles.names.radio:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataRadioAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
                 case DBClassificationConstantes.Vehicles.names.others:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataTvAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
@@ -3218,6 +3596,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case DBClassificationConstantes.Vehicles.names.radio:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataRadio, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
                 case DBClassificationConstantes.Vehicles.names.others:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataTv, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
@@ -3269,6 +3651,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case DBClassificationConstantes.Vehicles.names.radio:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataRadioAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
                 case DBClassificationConstantes.Vehicles.names.others:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataTvAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.outdoor:
@@ -3315,6 +3701,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         case DBClassificationConstantes.Vehicles.names.radio:
                             return WebApplicationParameters.GetDataTable(TableIds.dataRadioAlert, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.tv:
+                        case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                        case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                        case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                        case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
                         case DBClassificationConstantes.Vehicles.names.others:
                             return WebApplicationParameters.GetDataTable(TableIds.dataTvAlert, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.outdoor:
@@ -3347,6 +3737,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         case DBClassificationConstantes.Vehicles.names.radio:
                             return WebApplicationParameters.GetDataTable(TableIds.dataRadio, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.tv:
+                        case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                        case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                        case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                        case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
                         case DBClassificationConstantes.Vehicles.names.others:
                             return WebApplicationParameters.GetDataTable(TableIds.dataTv, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.outdoor:
@@ -4207,7 +4601,14 @@ namespace TNS.AdExpress.Web.Core.Utilities
             switch (vehicleName)
             {
                 case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
                 case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:    
                 case DBClassificationConstantes.Vehicles.names.others:
                     fields = dataTablePrefixe + ".EXPENDITURE_CUR, ";
                     fields += dataTablePrefixe + ".EXPENDITURE_PREV, ";
@@ -4429,6 +4830,9 @@ namespace TNS.AdExpress.Web.Core.Utilities
                         break;
                     case (ClassificationConstantes.Level.type.category):
                         sql += " " + tablePrefixe + ".id_category in (" + webSession.GetSelection(webSession.MediaDetailLevel.ListElement, CustomerRightConstante.type.categoryAccess) + ")";
+                        break;
+                    case (ClassificationConstantes.Level.type.region):
+                        sql += " " + tablePrefixe + ".id_region in (" + webSession.GetSelection(webSession.MediaDetailLevel.ListElement, CustomerRightConstante.type.regionAccess) + ")";
                         break;
                     case (ClassificationConstantes.Level.type.vehicle):
                         sql += " " + tablePrefixe + ".id_vehicle in (" + webSession.GetSelection(webSession.MediaDetailLevel.ListElement, CustomerRightConstante.type.vehicleAccess) + ") ";

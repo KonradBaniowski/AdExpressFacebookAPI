@@ -15,6 +15,7 @@ using System.Text;
 using Dundas.Charting.WebControl;
 
 using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
+using TNS.FrameWork.WebResultUI;
 
 namespace TNS.AdExpressI.ProductClassIndicators
 {
@@ -135,6 +136,14 @@ namespace TNS.AdExpressI.ProductClassIndicators
         /// </summary>
         /// <returns>Html code</returns>
         string GetSeasonalityTable();
+        #endregion
+
+        #region GetResultTable
+        /// <summary>
+        /// Get Result table
+        /// </summary>
+        /// <returns>Result table</returns>
+        ResultTable GetResultTable();
         #endregion
 
     }

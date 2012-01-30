@@ -54,6 +54,11 @@ namespace TNS.AdExpress.Domain.Web {
         /// <example>France = "utf-8"</example>
         private string _contentEncoding = "utf-8";
         /// <summary>
+        /// Charset used for Excel aspw page
+        /// By default, we don't modify excel charset but for some countries we have to alter the excel charset (countries like Russia)
+        /// </summary>
+        private string _excelCharset = "";
+        /// <summary>
         /// Content Encoding used for excel aspx page
         /// By default, the content encoding is set to utf-8
         /// </summary>
@@ -86,6 +91,10 @@ namespace TNS.AdExpress.Domain.Web {
         /// Company Name Texts
         /// </summary>
         private CompanyNameTexts _companyNameTexts;
+        /// <summary>
+        /// Rss Description
+        /// </summary>
+        private TextWrap _textWrap;
         #endregion
 
         #region Constructor
@@ -97,8 +106,9 @@ namespace TNS.AdExpress.Domain.Web {
         /// <param name="localization">Localisation text string id</param>
         /// <param name="charset">Charset used for the language</param>
         /// <param name="contentEncoding">Content Encoding used for the aspx page</param>
+        /// <param name="excelCharset">Excel charset used for excel aspx page</param>
         /// <param name="excelContentEncoding">Content Encoding used for the excel aspx page</param>
-        public WebLanguage(int id, string imageSourceText, string localization, string charset, string contentEncoding, string excelContentEncoding, string pdfContentEncoding) {
+        public WebLanguage(int id, string imageSourceText, string localization, string charset, string contentEncoding, string excelCharset, string excelContentEncoding, string pdfContentEncoding) {
             if(id<0) throw (new ArgumentException("The language Id cannot be inferior to 0"));
             _id=id;
             if(imageSourceText!=null) _imageSourceText=imageSourceText;
@@ -107,6 +117,7 @@ namespace TNS.AdExpress.Domain.Web {
             _localization=localization;
             if(charset!=null && charset.Length!=0) _charset=charset;
             if (contentEncoding != null && contentEncoding.Length != 0) _contentEncoding = contentEncoding;
+            if (excelCharset != null && excelCharset.Length != 0) _excelCharset = excelCharset;
             if (ExcelContentEncoding != null && ExcelContentEncoding.Length != 0) _excelContentEncoding = excelContentEncoding;
             if (pdfContentEncoding != null && pdfContentEncoding.Length != 0) _pdfContentEncoding = pdfContentEncoding;
             _name="Country name is not defined:"+_id.ToString();
@@ -123,12 +134,13 @@ namespace TNS.AdExpress.Domain.Web {
         /// <param name="classificationLanguageId">Classification language Id</param>
         /// <param name="charset">Charset used for the language</param>
         /// <param name="contentEncoding">Content Encoding used for the aspx page</param>
+        /// <param name="excelCharset">Excel charset used for excel aspx page</param>
         /// <param name="excelContentEncoding">Content Encoding used for the excel aspx page</param>
         /// <param name="nlsSort">nls sort</param>
         /// <param name="cInfo">Culture info object</param>
         /// <param name="rss">Rss object</param>
-        public WebLanguage(int id, string name, string imageSourceText, string localization, int classificationLanguageId, string charset, string contentEncoding, string excelContentEncoding, string pdfContentEncoding, string nlsSort, AdExpressCultureInfo cInfo, AdExpressCultureInfo cInfoExcel, Rss rss)
-            : this(id,imageSourceText,localization,charset,contentEncoding,excelContentEncoding,pdfContentEncoding) {
+        public WebLanguage(int id, string name, string imageSourceText, string localization, int classificationLanguageId, string charset, string contentEncoding, string excelCharset, string excelContentEncoding, string pdfContentEncoding, string nlsSort, AdExpressCultureInfo cInfo, AdExpressCultureInfo cInfoExcel, Rss rss)
+            : this(id,imageSourceText,localization,charset,contentEncoding,excelCharset,excelContentEncoding,pdfContentEncoding) {
             if(name!=null&&name.Length>0) _name=name;
 			if (nlsSort != null && nlsSort.Length > 0) _nlsSort = nlsSort;		
             if(classificationLanguageId<0) throw (new ArgumentException("The classification language Id cannot be inferior to 0"));
@@ -141,19 +153,51 @@ namespace TNS.AdExpress.Domain.Web {
         /// Contructor
         /// </summary>
         /// <param name="id">Language Id</param>
+        /// <param name="imageSourceText">Language Image</param>
+        /// <param name="localization">Localisation text string id</param>
+        /// <param name="charset">Charset used for the language</param>
+        /// <param name="contentEncoding">Content Encoding used for the aspx page</param>
+        /// <param name="excelCharset">Excel charset used for excel aspx page</param>
+        /// <param name="excelContentEncoding">Content Encoding used for the excel aspx page</param>
+        /// <param name="textWrap">textWrap</param>
+        public WebLanguage(int id, string imageSourceText, string localization, string charset, string contentEncoding, string excelCharset, string excelContentEncoding, string pdfContentEncoding, CompanyNameTexts companyNameTexts, TextWrap textWrap)
+        {
+            if (id < 0) throw (new ArgumentException("The language Id cannot be inferior to 0"));
+            _id = id;
+            if (imageSourceText != null) _imageSourceText = imageSourceText;
+            if (localization == null) throw (new ArgumentNullException("The localization parameter cannot be null"));
+            if (localization.Length == 0) throw (new ArgumentException("Invalid localization parameter"));
+            _localization = localization;
+            if (charset != null && charset.Length != 0) _charset = charset;
+            if (contentEncoding != null && contentEncoding.Length != 0) _contentEncoding = contentEncoding;
+            if (excelCharset != null && excelCharset.Length != 0) _excelCharset = excelCharset;
+            if (ExcelContentEncoding != null && ExcelContentEncoding.Length != 0) _excelContentEncoding = excelContentEncoding;
+            if (pdfContentEncoding != null && pdfContentEncoding.Length != 0) _pdfContentEncoding = pdfContentEncoding;
+            _name = "Country name is not defined:" + _id.ToString();
+            _classificationLanguageId = _id;
+            _textWrap = textWrap;
+            _companyNameTexts = companyNameTexts;
+
+        }
+        /// <summary>
+        /// Contructor
+        /// </summary>
+        /// <param name="id">Language Id</param>
         /// <param name="name">Language name</param>
         /// <param name="imageSourceText">Language Image</param>
         /// <param name="localization">Localisation text string id</param>
         /// <param name="classificationLanguageId">Classification language Id</param>
         /// <param name="charset">Charset used for the language</param>
         /// <param name="contentEncoding">Content Encoding used for the aspx page</param>
+        /// <param name="excelCharset">Excel charset used for excel aspx page</param>
         /// <param name="excelContentEncoding">Content Encoding used for the excel aspx page</param>
         /// <param name="nlsSort">nls sort</param>
         /// <param name="cInfo">Culture info object</param>
         /// <param name="rss">Rss object</param>
-        /// <param name="companyNameTexts">Company Name Texts</param>
-        public WebLanguage(int id, string name, string imageSourceText, string localization, int classificationLanguageId, string charset, string contentEncoding, string excelContentEncoding, string pdfContentEncoding, string nlsSort, AdExpressCultureInfo cInfo, AdExpressCultureInfo cInfoExcel, Rss rss, CompanyNameTexts companyNameTexts)
-            : this(id, imageSourceText, localization, charset, contentEncoding, excelContentEncoding, pdfContentEncoding) {
+        /// <param name="TextWrap">TextWrap</param>
+        public WebLanguage(int id, string name, string imageSourceText, string localization, int classificationLanguageId, string charset, string contentEncoding, string excelCharset, string excelContentEncoding, string pdfContentEncoding, string nlsSort, AdExpressCultureInfo cInfo, AdExpressCultureInfo cInfoExcel, Rss rss,  CompanyNameTexts companyNameTexts,TextWrap textWrap)
+            : this(id, imageSourceText, localization, charset, contentEncoding, excelCharset, excelContentEncoding, pdfContentEncoding, companyNameTexts,textWrap)
+        {
             if (name != null && name.Length > 0) _name = name;
             if (nlsSort != null && nlsSort.Length > 0) _nlsSort = nlsSort;
             if (classificationLanguageId < 0) throw (new ArgumentException("The classification language Id cannot be inferior to 0"));
@@ -209,6 +253,12 @@ namespace TNS.AdExpress.Domain.Web {
             get { return (_contentEncoding); }
         }
         /// <summary>
+        /// Get Excel Charset used for the excel aspx page
+        /// </summary>
+        public string ExcelCharset {
+            get { return (_excelCharset); }
+        }
+        /// <summary>
         /// Get Content Encoding used for the excel aspx page
         /// </summary>
         public string ExcelContentEncoding {
@@ -250,9 +300,17 @@ namespace TNS.AdExpress.Domain.Web {
             get { return _rss; }
         }
         /// <summary>
+        /// Get Set TextWrap
+        /// </summary>
+        public TextWrap textWrap
+        {
+            get { return _textWrap; }
+        }
+        /// <summary>
         /// Get Company Name Texts
         /// </summary>
-        public CompanyNameTexts CompanyNameTexts {
+        public CompanyNameTexts CompanyNameTexts
+        {
             get { return _companyNameTexts; }
         }
         #endregion

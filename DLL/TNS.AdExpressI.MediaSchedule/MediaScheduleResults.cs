@@ -210,7 +210,7 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// <summary>
         /// Vehicle Id filter
         /// </summary>
-        protected Int64 _vehicleId = -1;
+        protected Int64 _vehicleId = long.MinValue;
         /// <summary>
         /// Get / Set Vehicle Id filter
         /// </summary>
@@ -447,7 +447,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             _isPDFReport = true;
             _allowInsertions = AllowInsertions();
             _allowVersion = AllowVersions();
-            _allowTotal = _allowPdm = ((!VehiclesInformation.Contains(_vehicleId) || (VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.adnettrack && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.evaliantMobile && VehiclesInformation.DatabaseIdToEnum(_vehicleId) != CstDBClassif.Vehicles.names.internet)) && _module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE);
+            _allowTotal = _allowPdm = (_module.Id != TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE);
             _style = new PDFMediaScheduleStyle();
             return ComputeDesign(ComputeData());
         }
@@ -509,6 +509,8 @@ namespace TNS.AdExpressI.MediaSchedule {
             object[,] oTab = null;
             GenericDetailLevel detailLevel = GetDetailsLevelSelected();;
 
+           
+
             #region Data
             DataSet ds = null;
             DataTable dt = null;
@@ -548,16 +550,16 @@ namespace TNS.AdExpressI.MediaSchedule {
                 return (new object[0, 0]);
             }
             dt = ds.Tables[0];
-            #endregion
+            #endregion            
 
             dtLevels = GetDataLevels(mediaScheduleDAL, detailLevel, dt);
 
             #region Count nb of elements for each classification level
             int nbLevels = detailLevel.GetNbLevels;
-            Int64 oldIdL1 = -1;
-            Int64 oldIdL2 = -1;
-            Int64 oldIdL3 = -1;
-            Int64 oldIdL4 = -1;
+            Int64 oldIdL1 = long.MinValue;
+            Int64 oldIdL2 = long.MinValue;
+            Int64 oldIdL3 = long.MinValue;
+            Int64 oldIdL4 = long.MinValue;
             int nbL1 = 0;
             int nbL2 = 0;
             int nbL3 = 0;
@@ -590,7 +592,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 }
             }
             newL2 = newL3 = newL4 = false;
-            oldIdL1 = oldIdL2 = oldIdL3 = oldIdL4 = -1;
+            oldIdL1 = oldIdL2 = oldIdL3 = oldIdL4 = long.MinValue;
             #endregion
 
             //No Data
@@ -745,7 +747,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                         // Next L2 is new
                         newL2 = true;
                         // PDM
-                        if (oldIdL1 != -1) {
+                        if (oldIdL1 != long.MinValue) {
                             for (int i = 0; i < currentL2PDMIndex; i++) {
                                 if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
                                     if (oTab[tabL2Index[i], TOTAL_COLUMN_INDEX] != null && oTab[currentL1Index, TOTAL_COLUMN_INDEX] != null && ((CellIdsNumber)oTab[currentL1Index, TOTAL_COLUMN_INDEX]).Value != 0)
@@ -823,7 +825,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                         newL3 = true;
                         newL2 = false;
                         //Level 3 PDMs
-                        if (oldIdL2 != -1) {
+                        if (oldIdL2 != long.MinValue) {
                             for (int i = 0; i < currentL3PDMIndex; i++) {
                                 if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
                                     if (oTab[tabL3Index[i], TOTAL_COLUMN_INDEX] != null && oTab[currentL2Index, TOTAL_COLUMN_INDEX] != null && ((CellIdsNumber)oTab[currentL2Index, TOTAL_COLUMN_INDEX]).Value != 0)
@@ -901,7 +903,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                         newL4 = true;
                         newL3 = false;
                         //  L4 PDMs
-                        if (oldIdL3 != -1) {
+                        if (oldIdL3 != long.MinValue) {
                             for (Int64 i = currentL3Index + 1; i <= currentLineIndex; i++) {
                                 if (selectedUnit == CstWeb.CustomerSessions.Unit.versionNb) {
                                     if (oTab[i, TOTAL_COLUMN_INDEX] != null && oTab[currentL3Index, TOTAL_COLUMN_INDEX] != null && ((CellIdsNumber)oTab[currentL3Index, TOTAL_COLUMN_INDEX]).Value != 0)
@@ -1548,6 +1550,8 @@ namespace TNS.AdExpressI.MediaSchedule {
                 (!_isExcelReport||_isCreativeDivisionMS) ? WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo
                 : WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfoExcel;
 
+         
+
             #region Theme Name
             string themeName = WebApplicationParameters.Themes[_session.SiteLanguage].Name;
             #endregion
@@ -1738,22 +1742,6 @@ namespace TNS.AdExpressI.MediaSchedule {
             string link = string.Empty;
             System.Uri uri = new Uri(_session.LastWebPage);
             link = uri.AbsolutePath;
-            //switch(_session.CurrentModule) {
-            //    case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_POTENTIELS:
-            //    case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE:
-            //    case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE:
-            //    case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE:
-            //    case TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PORTEFEUILLE:
-            //    case TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES:
-            //        link = TNS.AdExpress.Constantes.Web.Links.MEDIA_SCHEDULE_POP_UP;                   
-            //        break;
-            //    case TNS.AdExpress.Constantes.Web.Module.Name.BILAN_CAMPAGNE:
-            //        link = TNS.AdExpress.Constantes.Web.Links.APPM_ZOOM_PLAN_MEDIA;
-            //        break;
-            //    default:
-            //        link = TNS.AdExpress.Constantes.Web.Links.ZOOM_PLAN_MEDIA;
-            //        break;
-            //}
 
             switch(_period.PeriodDetailLEvel) {
                 case CstWeb.CustomerSessions.Period.DisplayLevel.monthly:
@@ -1894,7 +1882,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 int colorItemIndex = 1;
                 int colorNumberToUse = 0;
                 int sloganIndex = GetSloganIdIndex();
-                Int64 sloganId = -1;
+                Int64 sloganId = long.MinValue;
                 string stringItem = "&nbsp;";
                 string cssPresentClass = string.Empty;
                 string cssExtendedClass = string.Empty;
@@ -1926,6 +1914,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, cssClasse));
                                         break;
                                     case CstDBClassif.Vehicles.names.outdoor:
+                                    case CstDBClassif.Vehicles.names.indoor:
                                         oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportOutdoorVersionItem(sloganId, cssClasse));
                                         break;
                                     case CstDBClassif.Vehicles.names.instore:
@@ -1949,6 +1938,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
                                         break;
                                     case CstDBClassif.Vehicles.names.outdoor:
+                                    case CstDBClassif.Vehicles.names.indoor:
                                         oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportOutdoorVersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
                                         break;
                                     case CstDBClassif.Vehicles.names.instore:
@@ -2225,7 +2215,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 if(_allowPdm) {
                     t.AppendFormat("<td class=\"{0}\">{1}</td>"
                         , cssClasseNb
-                        , string.Format(fp, "{0:percentWOSign}", data[line, PDM_COLUMN_INDEX]));
+                        , string.Format(fp, "{0:pdm}", data[line, PDM_COLUMN_INDEX]));
                 }
             }
             else {
@@ -2277,7 +2267,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 if(_allowPdm) {
                     t.AppendFormat("<td class=\"{0}\">{1}</td>"
                         , cssClasseNb
-                        , string.Format(fp, "{0:percentWOSign}", data[line, PDM_COLUMN_INDEX]));
+                        , string.Format(fp, "{0:pdm}", data[line, PDM_COLUMN_INDEX]));
                 }
             }
             if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal) {
@@ -2390,16 +2380,16 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// <param name="data">Data source</param>
         /// <param name="line">Current line</param>
         /// <param name="level">Current level</param>
-        /// <returns>Filters as "id1,id2,id3,id4,-1" (idX replace by -1 if required depending on the curretn level)</returns>
+        /// <returns>Filters as "id1,id2,id3,id4,long.MinValue" (idX replace by long.MinValue if required depending on the curretn level)</returns>
         protected virtual string GetLevelFilter(object[,] data, int line, int level) {
             switch(level) {
                 case L1_COLUMN_INDEX:
-                    return string.Format("{0},-1,-1,-1,-1", data[line, L1_ID_COLUMN_INDEX]);
+                    return string.Format("{0},{1},{1},{1},{1}", data[line, L1_ID_COLUMN_INDEX], long.MinValue.ToString());
                 case L2_COLUMN_INDEX:
-                    return string.Format("{0},{1},-1,-1,-1", data[line, L1_ID_COLUMN_INDEX], data[line, L2_ID_COLUMN_INDEX]);
+                    return string.Format("{0},{1},{2},{2},{2}", data[line, L1_ID_COLUMN_INDEX], data[line, L2_ID_COLUMN_INDEX], long.MinValue.ToString());
                     break;
                 case L3_COLUMN_INDEX:
-                    return string.Format("{0},{1},{2},-1,-1", data[line, L1_ID_COLUMN_INDEX], data[line, L2_ID_COLUMN_INDEX], data[line, L3_ID_COLUMN_INDEX]);
+                    return string.Format("{0},{1},{2},{3},-1", data[line, L1_ID_COLUMN_INDEX], data[line, L2_ID_COLUMN_INDEX], data[line, L3_ID_COLUMN_INDEX], long.MinValue.ToString());
                 case L4_COLUMN_INDEX:
                     return string.Format("{0},{1},{2},{3},-1", data[line, L1_ID_COLUMN_INDEX], data[line, L2_ID_COLUMN_INDEX], data[line, L3_ID_COLUMN_INDEX], data[line, L4_ID_COLUMN_INDEX]);
             }
@@ -2476,7 +2466,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                 int colorItemIndex = 1;
                 int colorNumberToUse = 0;
                 int sloganIndex = GetSloganIdIndex();
-                Int64 sloganId = -1;
+                Int64 sloganId = long.MinValue;
                 string stringItem = "";
                 string presentstyle = string.Empty;
                 string extendedStyle = string.Empty;

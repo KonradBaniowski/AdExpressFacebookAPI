@@ -160,8 +160,17 @@ namespace AdExpress.Private.Selection{
 		/// <returns>?</returns>
 		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode ();
-			OneVehicleSelectionWebControl1.CustomerWebSession=_webSession;
+			try{
+            OneVehicleSelectionWebControl1.CustomerWebSession=_webSession;
 			MenuWebControl2.CustomerWebSession=_webSession;
+            }
+            catch (System.Exception exc)
+            {
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                }
+            }
 			return tmp;
 
 		}

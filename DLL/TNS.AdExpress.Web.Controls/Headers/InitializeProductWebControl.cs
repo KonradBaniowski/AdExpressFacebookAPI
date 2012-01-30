@@ -34,7 +34,12 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// <summary>
 		/// Checkbox dédiée à l'annulation des versions affinées
 		/// </summary>
-		protected System.Web.UI.WebControls.CheckBox initializeSlogansUniverseCheckBox;
+        public System.Web.UI.WebControls.CheckBox initializeSlogansUniverseCheckBox;
+
+        /// <summary>
+        /// CheckBox Initialization of AdvertisementType
+        /// </summary>
+        public System.Web.UI.WebControls.CheckBox initializeAdvertisementTypeCheckBox = new System.Web.UI.WebControls.CheckBox();
 
 		#endregion
 
@@ -108,6 +113,19 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			get{return autoPostBackOption;}
 			set{autoPostBackOption=value;}
 		}
+
+        /// <summary>
+        /// Initialization of initializeAdvertisementType
+        /// </summary>
+        [Bindable(true), DefaultValue(false),
+        Description("Option Initialization of initializeAdvertisementType")]
+        protected bool _initializeAdvertisementType = false;
+        /// <summary></summary>
+        public bool InitializeAdvertisementType
+        {
+            get { return _initializeAdvertisementType; }
+            set { _initializeAdvertisementType = value; }
+        }
 		#endregion
 
 		#region Constructeur
@@ -127,7 +145,7 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 		/// </summary>
 		/// <param name="e">argument</param>
 		protected override void OnInit(EventArgs e) {
-			
+            bool canSaveSession = false;
 			if(initializeProduct){
 				try{
 					if(Page.Request.Form.GetValues("_initializeProduct")[0]!=null){
@@ -139,8 +157,8 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 						customerWebSession.SelectionUniversProduct=new System.Windows.Forms.TreeNode("produit");
 						customerWebSession.SelectionUniversAdvertiser=new System.Windows.Forms.TreeNode("produit");
 						customerWebSession.ReferenceUniversProduct=new System.Windows.Forms.TreeNode("produit");
-						customerWebSession.ReferenceUniversAdvertiser=new System.Windows.Forms.TreeNode("produit");
-						customerWebSession.Save();
+						customerWebSession.ReferenceUniversAdvertiser=new System.Windows.Forms.TreeNode("produit");						
+                        canSaveSession = true;
 					}
 				}catch(Exception){			
 				}				
@@ -152,15 +170,28 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 						customerWebSession.SecondaryProductUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 
 						customerWebSession.ReferenceUniversAdvertiser=new System.Windows.Forms.TreeNode("advertiser");
-						customerWebSession.CompetitorUniversAdvertiser=new Hashtable(5);
-						customerWebSession.Save();
+						customerWebSession.CompetitorUniversAdvertiser=new Hashtable(5);						
+                        canSaveSession = true;
 					}
 				}catch(Exception){			
 				}				
 			}
 
-		
-			
+            if (_initializeAdvertisementType)
+            {
+                try
+                {
+                    if (Page.Request.Form.GetValues("_initializeAdvertisementType")[0] != null)
+                    {
+                        customerWebSession.AdvertisementTypeUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();                        
+                        canSaveSession = true;
+                    }
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (canSaveSession) customerWebSession.Save();
 			base.OnInit (e);
 		}
 
@@ -185,16 +216,14 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 							
 				Controls.Add(initializeSlogansUniverseCheckBox);
 
-			
-				if(Page.IsPostBack &&  Page.Request.Form.GetValues(this.ID +"_initializeSlogans")!=null
-					&& Page.Request.Form.GetValues(this.ID +"_initializeSlogans")[0]!=null)
-					initializeSlogansUniverseCheckBox.Checked=true;
-				else initializeSlogansUniverseCheckBox.Checked=false;
 
-				if(initializeSlogansUniverseCheckBox.Checked){
-					customerWebSession.IdSlogans=new ArrayList();
-					customerWebSession.Save();
-				}
+                if (Page.IsPostBack && Page.Request.Form.GetValues(this.ID + "_initializeSlogans") != null
+                    && Page.Request.Form.GetValues(this.ID + "_initializeSlogans")[0] != null)
+                {
+                    customerWebSession.IdSlogans = new ArrayList();
+                    customerWebSession.Save();
+                }
+                
 				if(customerWebSession.IdSlogans!=null && customerWebSession.IdSlogans.Count>0){
 					initializeSlogansUniverseCheckBox.Enabled=true;
 				}else{
@@ -249,7 +278,24 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 			
 			}
 
-		
+            // Advertisement Type	
+            if (_initializeAdvertisementType)
+            {
+                initializeAdvertisementTypeCheckBox.ID = "_initializeAdvertisementType";
+                initializeAdvertisementTypeCheckBox.CssClass = cssClass;
+                initializeAdvertisementTypeCheckBox.AutoPostBack = autoPostBackOption;
+                initializeAdvertisementTypeCheckBox.Text = GestionWeb.GetWebWord(2674, customerWebSession.SiteLanguage);
+                if (customerWebSession.AdvertisementTypeUniverses != null && customerWebSession.AdvertisementTypeUniverses.Count > 0)
+                {
+                    initializeAdvertisementTypeCheckBox.Enabled = true;
+                }
+                else
+                {
+                    initializeAdvertisementTypeCheckBox.Enabled = false;
+                }
+                Controls.Add(initializeAdvertisementTypeCheckBox);
+
+            }
 		
 		
 		}
@@ -286,7 +332,18 @@ namespace TNS.AdExpress.Web.Controls.Headers{
 				output.Write("\n<TD height=\"5\"></TD>");
 				output.Write("\n</TR>");			
 			}
-			
+            // Advertisement Type	
+            if (_initializeAdvertisementType)
+            {
+                output.Write("\n<tr>");
+                output.Write("\n<td>");
+                initializeAdvertisementTypeCheckBox.RenderControl(output);
+                output.Write("\n</td>");
+                output.Write("\n</tr>");
+                output.Write("\n<TR>");
+                output.Write("\n<TD height=\"5\"></TD>");
+                output.Write("\n</TR>");
+            }
 			//options de affiner versions
 			if (initializeSlogans){
 				output.Write("\n<tr>");

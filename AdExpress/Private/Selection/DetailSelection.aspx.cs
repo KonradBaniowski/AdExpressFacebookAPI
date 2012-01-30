@@ -42,6 +42,8 @@ using TNS.Classification.Universe;
 using System.Text;
 using System.Collections.Generic;
 using TNS.AdExpress.Web.Core.Selection;
+using System.Reflection;
+using TNS.AdExpress.Domain.CampaignTypes;
 #endregion
 
 namespace AdExpress.Private.Selection{
@@ -82,6 +84,10 @@ namespace AdExpress.Private.Selection{
 		/// Détail des médias
 		/// </summary>
 		protected string mediaDetailText;
+        /// <summary>
+        /// Liste des médias
+        /// </summary>
+        protected string listOfVehicleText;
 		/// <summary>
 		/// System.Windows.Forms.TreeNode des annonceurs/références
 		/// </summary>
@@ -154,6 +160,10 @@ namespace AdExpress.Private.Selection{
 		///Affiche les cibles sélectionnées 
 		/// </summary>
 		public bool displayTargets=false;
+        /// <summary>
+        /// Affiche liste des médias
+        /// </summary>
+        public bool displayListOfVehicles = false;
 		/// <summary>
 		/// Code html pour afficher les annonceurs de références séléctionnée
 		/// </summary>
@@ -240,6 +250,23 @@ namespace AdExpress.Private.Selection{
         /// Display Banners Format
         /// </summary>
 	    protected bool _displayBannersFormat = false;
+
+        public bool displayMediaSelection = false;
+
+        public bool displayCampaignTypeSelection = false;
+        /// <summary>
+        /// selection des medias
+        /// </summary>
+        public string mediaSelectiondText = "";
+
+        /// <summary>
+        /// Ad Type Texte
+        /// </summary>
+        public string AdTypeText = "";
+        /// <summary>
+        /// True if display Ad Type selection
+        /// </summary>
+        public bool displayAdTypeSelection = false;
 		#endregion
 
 		#region Constructeur
@@ -259,7 +286,8 @@ namespace AdExpress.Private.Selection{
 		protected void Page_Load(object sender, System.EventArgs e){
 		
 			try{
-			
+                TNS.FrameWork.DB.Common.IDataSource dataSource = _webSession.CustomerDataFilters.DataSource;
+
 				#region Variables
                 string themeName = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
 //				string periodText;
@@ -302,11 +330,11 @@ namespace AdExpress.Private.Selection{
                 #region Media
                 if (_webSession.isMediaSelected()){
 					displayMedia=true;
-					mediaText= TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversMedia,false,false,false,"100",false,false,_webSession.SiteLanguage,2,1,true);
+                    mediaText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversMedia, false, false, false, "100", false, false, _webSession.SiteLanguage, 2, 1, true, _webSession.DataLanguage, dataSource);
 				}
 
 				if(_webSession.isCompetitorMediaSelected()){
-					displayDetailMedia=true;
+                    displayListOfVehicles = true;
 					System.Text.StringBuilder mediaSB=new System.Text.StringBuilder(1000);
 				
 					mediaSB.Append("<TR>");
@@ -316,8 +344,8 @@ namespace AdExpress.Private.Selection{
 
 					while((System.Windows.Forms.TreeNode)_webSession.CompetitorUniversMedia[idMedia]!=null){
 						System.Windows.Forms.TreeNode tree=(System.Windows.Forms.TreeNode)_webSession.CompetitorUniversMedia[idMedia];				
-						mediaSB.Append("<TR height=\"20\">");
-                        mediaSB.Append("<TD align=\"center\" vAlign=\"top\">" + TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)_webSession.CompetitorUniversMedia[idMedia], false, true, true, "100", true, false, _webSession.SiteLanguage, 2, i, true) + "</TD>");
+						mediaSB.Append("<TR height=\"20\">");					
+                        mediaSB.Append("<TD align=\"center\" vAlign=\"top\">" + TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)_webSession.CompetitorUniversMedia[idMedia], false, true, true, "100", true, false, _webSession.SiteLanguage, 2, i, true, _webSession.DataLanguage, dataSource) + "</TD>");
 						mediaSB.Append("</TR>");
 						mediaSB.Append("<TR height=\"10\"><TD></TD></TR>");
 						if (!Page.ClientScript.IsClientScriptBlockRegistered("showHideContent"+i+"")) {
@@ -326,7 +354,7 @@ namespace AdExpress.Private.Selection{
 						i++;
 						idMedia++;
 					}
-					mediaDetailText=mediaSB.ToString();
+                    listOfVehicleText = mediaSB.ToString();
                 }
                 #endregion
 
@@ -340,8 +368,8 @@ namespace AdExpress.Private.Selection{
 					referenceDetailMedia.Append("<label>"+GestionWeb.GetWebWord(1194,_webSession.SiteLanguage)+"</label></TD>");
 					referenceDetailMedia.Append("</TR>");				
 							
-					referenceDetailMedia.Append("<TR height=\"20\">");
-                    referenceDetailMedia.Append("<TD align=\"center\" vAlign=\"top\">" + TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)_webSession.ReferenceUniversMedia, false, true, true, "100", true, false, _webSession.SiteLanguage, 2, i, true) + "</TD>");
+					referenceDetailMedia.Append("<TR height=\"20\">");					
+                    referenceDetailMedia.Append("<TD align=\"center\" vAlign=\"top\">" + TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)_webSession.ReferenceUniversMedia, false, true, true, "100", true, false, _webSession.SiteLanguage, 2, i, true, _webSession.DataLanguage, dataSource) + "</TD>");
 					referenceDetailMedia.Append("</TR>");
                     referenceDetailMedia.Append("<TR height=\"10\"><TD></TD></TR>");
 					if (!Page.ClientScript.IsClientScriptBlockRegistered("showHideContent"+i+"")) {
@@ -363,7 +391,7 @@ namespace AdExpress.Private.Selection{
 					detailMedia.Append("</TR>");				
 							
 					detailMedia.Append("<TR height=\"20\">");
-                    detailMedia.Append("<TD align=\"center\" vAlign=\"top\">" + TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)_webSession.SelectionUniversMedia.FirstNode, false, true, true, "100", true, false, _webSession.SiteLanguage, 2, i, true) + "</TD>");
+                    detailMedia.Append("<TD align=\"center\" vAlign=\"top\">" + TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml((System.Windows.Forms.TreeNode)_webSession.SelectionUniversMedia.FirstNode, false, true, true, "100", true, false, _webSession.SiteLanguage, 2, i, true, _webSession.DataLanguage, dataSource) + "</TD>");
 					detailMedia.Append("</TR>");
                     detailMedia.Append("<TR height=\"10\"><TD></TD></TR>");
 					if (!Page.ClientScript.IsClientScriptBlockRegistered("showHideContent"+i+"")) {
@@ -394,16 +422,29 @@ namespace AdExpress.Private.Selection{
                 #region Vague
                 if (_webSession.IsWaveSelected()){
 					displayWave=true;
-					waveText= TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversAEPMWave,false,false,false,"100",false,false,_webSession.SiteLanguage,2,1,true);
+                    waveText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversAEPMWave, false, false, false, "100", false, false, _webSession.SiteLanguage, 2, 1, true, _webSession.DataLanguage, dataSource);
                 }
                 #endregion
 
                 #region Cibles
 				if (_webSession.IsTargetSelected()){
 					displayTargets=true;
-					targetsText= TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversAEPMTarget,false,false,false,"100",false,false,_webSession.SiteLanguage,2,1,true);
+                    targetsText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversAEPMTarget, false, false, false, "100", false, false, _webSession.SiteLanguage, 2, 1, true, _webSession.DataLanguage, dataSource);
                 }
                 #endregion
+
+                 TNS.AdExpress.Domain.Web.Navigation.Module currentModule = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
+                ArrayList detailSelections = null;
+                try
+                {
+                    detailSelections = ((ResultPageInformation)currentModule.GetResultPageInformation((int)_webSession.CurrentTab)).DetailSelectionItemsType;
+                }
+                catch (System.Exception)
+                {
+                    if (currentModule.Id == CstWeb.Module.Name.ALERTE_PORTEFEUILLE)
+                        detailSelections = ((ResultPageInformation)currentModule.GetResultPageInformation(5)).DetailSelectionItemsType;
+                }
+
 
                 #region Univers produit principal sélectionné
                 if(_webSession.PrincipalProductUniverses != null && _webSession.PrincipalProductUniverses.Count > 0) {
@@ -460,14 +501,14 @@ namespace AdExpress.Private.Selection{
 
                                 // Render universe html code
                                 t.Append("<TR height=\"20\">");
-                                t.Append("<TD align=\"center\" vAlign=\"top\">" + selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProductUniverses[k], _webSession.DataLanguage, _webSession.Source) + "</TD>");
+                                 t.Append("<TD align=\"center\" vAlign=\"top\">" + selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProductUniverses[k], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession)) + "</TD>");
                                 t.Append("</TR>");
                                 t.Append("<TR height=\"10\"><TD></TD></TR>");
                             }
                         }
                         else {
                             if(_webSession.PrincipalProductUniverses.ContainsKey(k)) {
-                                productText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProductUniverses[k], _webSession.DataLanguage, _webSession.Source);
+                                productText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProductUniverses[k], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession));
                             }
                         }
                     }
@@ -489,7 +530,7 @@ namespace AdExpress.Private.Selection{
 							&& _webSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE
 							) {
 							referenceProductAdExpressText.Code = 2302;
-							displayReferenceAdvertiser = true;
+							displayReferenceAdvertiser = true;                           
 						}
 					}
 					TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl selectItemsInClassificationWebControl = new TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl();
@@ -514,7 +555,7 @@ namespace AdExpress.Private.Selection{
 
 						if(_webSession.SecondaryProductUniverses.ContainsKey(0)){
 							//Liste des annonceurs de référence personnalisés
-							referenceAdvertiserText = selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[0], _webSession.DataLanguage, _webSession.Source);
+                            referenceAdvertiserText = selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[0], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession));
 							referenceProductAdExpressText.Code = (_webSession.SecondaryProductUniverses[0].ContainsLevel(TNSClassificationLevels.BRAND,AccessType.includes)) ? 1203 : 1195;
 							displayReferenceAdvertiser = true;
 						}
@@ -522,7 +563,7 @@ namespace AdExpress.Private.Selection{
 							//Liste des annonceurs de référence personnalisés
 							 advertiserAdexpresstext.Code = 1196;
 							 displayAdvertiser = true;
-                             advertiserText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[1],_webSession.DataLanguage,_webSession.Source);
+                             advertiserText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[1], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession));
 						}
 
 					}
@@ -540,14 +581,14 @@ namespace AdExpress.Private.Selection{
 										advertiserAdexpresstext.Code = 2301;
 										displayAdvertiser = true;
 									}
-                                    advertiserText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[k],_webSession.DataLanguage,_webSession.Source);
+                                    advertiserText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[k], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession));
 								}
 								else {
 									if (WebFunctions.Modules.IsDashBoardModule(_webSession)) {
-                                        productText = selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[k],_webSession.DataLanguage,_webSession.Source);
+                                        productText = selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[k], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession));
 									}
 									else {
-                                        referenceAdvertiserText = selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[k],_webSession.DataLanguage,_webSession.Source);										
+                                        referenceAdvertiserText = selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryProductUniverses[k], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession));										
 									}
 								}
 							}
@@ -588,7 +629,37 @@ namespace AdExpress.Private.Selection{
                     selectItemsInClassificationWebControl.SiteLanguage = _webSession.SiteLanguage;
                     selectItemsInClassificationWebControl.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
 
-                    mediaPersonnalizedText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryMediaUniverses[0], _webSession.DataLanguage, _webSession.Source);
+                    mediaPersonnalizedText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.SecondaryMediaUniverses[0], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession));
+                }
+                #endregion
+
+                #region Univers support principal sélectionné
+                if (_webSession.PrincipalMediaUniverses != null && _webSession.PrincipalMediaUniverses.Count > 0)
+                {
+                    displayMediaSelection = true;
+                    mediaSelectiondWebText.Code = 2540; // Univers support
+                    
+                    if (detailSelections.Contains(CstWeb.DetailSelection.Type.regionSelected.GetHashCode()))
+                    mediaSelectiondWebText.Code = 2680; 
+
+                    TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl selectItemsInClassificationWebControl = new TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl();
+                    selectItemsInClassificationWebControl.TreeViewIcons = "/App_Themes/" + themeName + "/Styles/TreeView/Icons";
+                    selectItemsInClassificationWebControl.TreeViewScripts = "/App_Themes/" + themeName + "/Styles/TreeView/Scripts";
+                    selectItemsInClassificationWebControl.TreeViewStyles = "/App_Themes/" + themeName + "/Styles/TreeView/Css";
+                    selectItemsInClassificationWebControl.ChildNodeExcludeCss = "txtChildNodeExcludeCss";
+                    selectItemsInClassificationWebControl.ChildNodeIncludeCss = "txtChildNodeIncludeCss";
+                    selectItemsInClassificationWebControl.ParentNodeChildExcludeCss = "txtParentNodeChildExcludeCss";
+                    selectItemsInClassificationWebControl.ParentNodeChildIncludeCss = "txtParentNodeChildIncludeCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameBodyCss = "treeExcludeFrameBodyCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameCss = "treeExcludeFrameCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameHeaderCss = "treeExcludeFrameHeaderCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameBodyCss = "treeIncludeFrameBodyCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameCss = "treeIncludeFrameCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameHeaderCss = "treeIncludeFrameHeaderCss";
+                    selectItemsInClassificationWebControl.SiteLanguage = _webSession.SiteLanguage;
+                    selectItemsInClassificationWebControl.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
+
+                    mediaSelectiondText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalMediaUniverses[0], _webSession.DataLanguage, dataSource);
                 }
                 #endregion
 
@@ -708,14 +779,14 @@ namespace AdExpress.Private.Selection{
                 #region Program Type
 				if (_webSession.IsCurrentUniversProgramTypeSelected()){
 					displayProgramType=true;
-					programTypeText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.CurrentUniversProgramType,false,true,true,"100",true,false,_webSession.SiteLanguage,2,1,true);
+					programTypeText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.CurrentUniversProgramType,false,true,true,"100",true,false,_webSession.SiteLanguage,2,1,true,_webSession.DataLanguage,dataSource);
                 }
                 #endregion
 
                 #region Sponsorship Form
 				if (_webSession.IsCurrentUniversSponsorshipFormSelected()){
 					displaySponsorshipForm=true;
-					sponsorshipFormText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.CurrentUniversSponsorshipForm,false,true,true,"100",true,false,_webSession.SiteLanguage,2,1,true);
+					sponsorshipFormText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.CurrentUniversSponsorshipForm,false,true,true,"100",true,false,_webSession.SiteLanguage,2,1,true,_webSession.DataLanguage,dataSource);
                 }
                 #endregion
 
@@ -741,21 +812,10 @@ namespace AdExpress.Private.Selection{
                 WebFunctions.MediaDetailLevel.GetGenericLevelDetailColumn(_webSession, ref displayGenericlevelDetailColumnLabel, genericlevelDetailColumnLabel, false);
                 #endregion
 
-                Module currentModule = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
-                ArrayList detailSelections = null;
-                try
-                {
-                    detailSelections = ((ResultPageInformation)currentModule.GetResultPageInformation((int)_webSession.CurrentTab)).DetailSelectionItemsType;
-                }
-                catch (System.Exception)
-                {
-                    if (currentModule.Id == CstWeb.Module.Name.ALERTE_PORTEFEUILLE)
-                        detailSelections = ((ResultPageInformation)currentModule.GetResultPageInformation(5)).DetailSelectionItemsType;
-                }
-
+               
 
                 #region Inset
-                if (detailSelections.Contains(CstWeb.DetailSelection.Type.insetSelected))
+                if (detailSelections.Contains(CstWeb.DetailSelection.Type.insetSelected.GetHashCode()))
                 {
                     if (_webSession.CurrentModule != CstWeb.Module.Name.ANALYSE_PLAN_MEDIA && _webSession.SelectionUniversMedia.FirstNode != null)
                     {
@@ -798,6 +858,18 @@ namespace AdExpress.Private.Selection{
                                 break;
                         }
                     }
+                }
+                #endregion
+
+                #region Campaign type
+                if (detailSelections.Contains(CstWeb.DetailSelection.Type.campaignType.GetHashCode())
+                    && _webSession.CampaignType != CstWeb.CustomerSessions.CampaignType.notDefined
+                    && WebApplicationParameters.AllowCampaignTypeOption)
+                {
+                   
+                    displayCampaignTypeSelection = true;                   
+                    AdExpressTextCampaintypeValue.Code = CampaignTypesInformation.Get(_webSession.CampaignType).WebTextId;                        
+                    
                 }
                 #endregion
 
@@ -861,6 +933,39 @@ namespace AdExpress.Private.Selection{
                 }
 
 			    #endregion
+
+                #region Advertisement Type
+                if (detailSelections.Contains(CstWeb.DetailSelection.Type.advertisementType.GetHashCode())
+                    && _webSession.IsAdvertisementTypeUniverseSelected())
+                {                   
+                     AdTypeWebText.Code = 2675;
+                     displayAdTypeSelection = true;
+
+                     TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl selectItemsInClassificationWebControl = new TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl();
+                     selectItemsInClassificationWebControl.TreeViewIcons = "/App_Themes/" + themeName + "/Styles/TreeView/Icons";
+                     selectItemsInClassificationWebControl.TreeViewScripts = "/App_Themes/" + themeName + "/Styles/TreeView/Scripts";
+                     selectItemsInClassificationWebControl.TreeViewStyles = "/App_Themes/" + themeName + "/Styles/TreeView/Css";
+                     selectItemsInClassificationWebControl.ChildNodeExcludeCss = "txtChildNodeExcludeCss";
+                     selectItemsInClassificationWebControl.ChildNodeIncludeCss = "txtChildNodeIncludeCss";
+                     selectItemsInClassificationWebControl.ParentNodeChildExcludeCss = "txtParentNodeChildExcludeCss";
+                     selectItemsInClassificationWebControl.ParentNodeChildIncludeCss = "txtParentNodeChildIncludeCss";
+                     selectItemsInClassificationWebControl.TreeExcludeFrameBodyCss = "treeExcludeFrameBodyCss";
+                     selectItemsInClassificationWebControl.TreeExcludeFrameCss = "treeExcludeFrameCss";
+                     selectItemsInClassificationWebControl.TreeExcludeFrameHeaderCss = "treeExcludeFrameHeaderCss";
+                     selectItemsInClassificationWebControl.TreeIncludeFrameBodyCss = "treeIncludeFrameBodyCss";
+                     selectItemsInClassificationWebControl.TreeIncludeFrameCss = "treeIncludeFrameCss";
+                     selectItemsInClassificationWebControl.TreeIncludeFrameHeaderCss = "treeIncludeFrameHeaderCss";
+                     selectItemsInClassificationWebControl.SiteLanguage = _webSession.SiteLanguage;
+                     selectItemsInClassificationWebControl.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
+                     for (int k = 0; k < _webSession.AdvertisementTypeUniverses.Count; k++)
+                     {
+                         if (_webSession.AdvertisementTypeUniverses.ContainsKey(k))
+                         {
+                             AdTypeText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.AdvertisementTypeUniverses[k], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession));
+                         }
+                     }                  
+                }
+                #endregion
 
                 #endregion
 
@@ -951,7 +1056,7 @@ namespace AdExpress.Private.Selection{
 			ArrayList detailSelections = null;
 
 			//_webSession.CustomerLogin.ModuleList();
-			Module currentModule = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
+			TNS.AdExpress.Domain.Web.Navigation.Module currentModule = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
 			try{
 				detailSelections=((ResultPageInformation) currentModule.GetResultPageInformation((int)_webSession.CurrentTab)).DetailSelectionItemsType;
 			}

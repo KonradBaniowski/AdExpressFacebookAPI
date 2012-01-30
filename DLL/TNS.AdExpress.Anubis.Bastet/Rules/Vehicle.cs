@@ -14,6 +14,7 @@ using System.Data;
 using System.Text;
 using BastetDataAccess=TNS.AdExpress.Anubis.Bastet.DataAccess;
 using BastetCommon=TNS.AdExpress.Bastet.Common;
+using TNS.FrameWork.DB.Common;
 
 namespace TNS.AdExpress.Anubis.Bastet.Rules
 {
@@ -28,13 +29,13 @@ namespace TNS.AdExpress.Anubis.Bastet.Rules
 		/// </summary>
 		/// <param name="parameters">paramètres client.</param>
 		/// <returns>données top connections médias par module.</returns>
-		public static DataTable TopByModule(BastetCommon.Parameters parameters, int language) {
+        public static DataTable TopByModule(BastetCommon.Parameters parameters, int language, IDataSource dataSourceClassification) {
 			
 			DataTable dt=null, dtResult=null;
 			ArrayList idModuleArr=null;
 			ArrayList idVehicleArr = null;
 			DataRow resultRow=null;
-			dt = BastetDataAccess.Vehicle.TopByModule(parameters,language);
+            dt = BastetDataAccess.Vehicle.TopByModule(parameters, language, dataSourceClassification);
 			object tempValue=null;
 			string columnName="";
 			if(dt!=null && dt.Rows.Count>0){				

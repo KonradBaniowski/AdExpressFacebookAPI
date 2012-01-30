@@ -122,7 +122,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         /// <param name="dtVisuel">Visuel information</param>
         /// <param name="htValue">investment values</param>
         /// <returns>Media name</returns>
-        public string GetVehicleViewData(out DataTable dtVisuel, out Hashtable htValue) {
+        public void GetVehicleViewData(out DataTable dtVisuel, out Hashtable htValue) {
 
             string media = "";
             DataSet dsVisuel;
@@ -137,13 +137,12 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 
             dsVisuel = portofolioDAL.GetListDate(true, DBCst.TableType.Type.dataVehicle);
-            dtVisuel = dsVisuel.Tables[0];
-            if (dtVisuel.Rows.Count > 0)
-                media = dtVisuel.Rows[0]["media"].ToString();
+            dtVisuel = (dsVisuel != null && dsVisuel.Tables.Count>0) ? dsVisuel.Tables[0] : null;
+          
 
             htValue = portofolioDAL.GetInvestmentByMedia();
 
-            return media;
+         
         }
         #endregion
 

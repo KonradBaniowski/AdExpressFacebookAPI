@@ -205,7 +205,10 @@ namespace TNS.AdExpress.Web.Controls.Results
 					bool isNewWindowsAudioFilePath = false;
 
 					switch(_vehicle){
-						case CstClassification.DB.Vehicles.names.radio:
+                        case CstClassification.DB.Vehicles.names.radio:
+                        case CstClassification.DB.Vehicles.names.radioGeneral:
+                        case CstClassification.DB.Vehicles.names.radioSponsorship:
+                        case CstClassification.DB.Vehicles.names.radioMusic:
 
 							//Vérification de l'existence du fichier real
 							#region Old version
@@ -259,7 +262,11 @@ namespace TNS.AdExpress.Web.Controls.Results
 
 							break;
 
-						case CstClassification.DB.Vehicles.names.tv:
+                        case CstClassification.DB.Vehicles.names.tv:
+                        case CstClassification.DB.Vehicles.names.tvGeneral:
+                        case CstClassification.DB.Vehicles.names.tvSponsorship:
+                        case CstClassification.DB.Vehicles.names.tvAnnounces:
+                        case CstClassification.DB.Vehicles.names.tvNonTerrestrials:
 
 							if (File.Exists(CstWeb.CreationServerPathes.LOCAL_PATH_VIDEO+@"\rm\3\"+_creationfile.Substring(0,3)+@"\3"+_creationfile+".rm")){
 								_realFormatFound = true;

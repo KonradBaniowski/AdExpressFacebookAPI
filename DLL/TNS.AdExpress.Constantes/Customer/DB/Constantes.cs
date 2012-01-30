@@ -44,7 +44,14 @@ namespace TNS.AdExpress.Constantes.Customer.DB {
 		/// Identifiant Media
 		/// </summary>
 		public const Int64 ID_MEDIA_TYPE=3;
-	
+        /// <summary>
+        /// Identifiant Region
+        /// </summary>
+        public const Int64 ID_REGION_TYPE = 10;
+        /// <summary>
+        /// Identifiant Brand
+        /// </summary>
+        public const Int64 ID_BRAND_TYPE = 66;
 
 		#endregion
 	}

@@ -144,6 +144,14 @@ namespace TNS.Ares.Domain.LS {
         /// Family Id (LS family)
         /// </summary>
         private Int32 _familyId;
+        /// <summary>
+        /// Assembly class
+        /// </summary>
+        private string _class;
+        /// <summary>
+        /// Assembly name
+        /// </summary>
+        private string _assemblyName;       
         #endregion
 
         #region Assessor
@@ -231,6 +239,21 @@ namespace TNS.Ares.Domain.LS {
         public int FamilyId {
             get { return (this._familyId); }
         }
+        /// <summary>
+        /// Assembly name
+        /// </summary>
+        public string AssemblyName
+        {
+            get { return _assemblyName; }
+        }
+
+        /// <summary>
+        /// Assembly class
+        /// </summary>
+        public string Class_
+        {
+            get { return _class; }
+        }
         #endregion
 
         #region Constructors
@@ -251,7 +274,9 @@ namespace TNS.Ares.Domain.LS {
         /// <param name="extension">Extension</param>
         /// <param name="pathFileConfiguration">Path File Configuration</param>
         /// <param name="deleteRowSuccess">If Delete Row When success or not</param>
-        public PluginInformation(string filePath, string virtualPath, int longevity, int resultType, string themePath, PluginType typeOfPlugin, int familyId, bool useExec, Dictionary<DayOfWeek, PluginExec> pluginExec, bool deleteRowSuccess, bool deleteExpired, string name, string extension, string pathFileConfiguration) {
+        /// <param name="class_">assembly default Class</param>
+        /// <param name="assemblyName">Assembly Name</param>
+        public PluginInformation(string filePath, string virtualPath, int longevity, int resultType, string themePath, PluginType typeOfPlugin, int familyId, bool useExec, Dictionary<DayOfWeek, PluginExec> pluginExec, bool deleteRowSuccess, bool deleteExpired, string name, string extension, string pathFileConfiguration, string class_,string assemblyName) {
             this._filePath = filePath;
             this._longevity = longevity;
             this._deleteExpired = deleteExpired;
@@ -269,6 +294,8 @@ namespace TNS.Ares.Domain.LS {
                 this._pluginExecList = pluginExec;
             else
                 this._pluginExecList = new Dictionary<DayOfWeek,PluginExec>();
+            _class = class_;
+            _assemblyName = assemblyName;
         }
         /// <summary>
         /// Constructor
@@ -287,7 +314,8 @@ namespace TNS.Ares.Domain.LS {
         /// <param name="extension">Extension</param>
         /// <param name="deleteRowSuccess">If Delete Row When success or not</param>
         public PluginInformation(string filePath, string virtualPath, int longevity, int resultType, string themePath, PluginType typeOfPlugin, int familyId, bool useExec, Dictionary<DayOfWeek, PluginExec> pluginExec, bool deleteRowSuccess, bool deleteExpired, string name, string extension)
-            : this(filePath, virtualPath, longevity, resultType, themePath, typeOfPlugin, familyId, useExec, pluginExec, deleteRowSuccess, deleteExpired, name, extension, string.Empty) {
+            : this(filePath, virtualPath, longevity, resultType, themePath, typeOfPlugin, familyId, useExec, pluginExec, deleteRowSuccess, deleteExpired, name, extension, string.Empty, string.Empty, string.Empty)
+        {
 
         }
         /// <summary>

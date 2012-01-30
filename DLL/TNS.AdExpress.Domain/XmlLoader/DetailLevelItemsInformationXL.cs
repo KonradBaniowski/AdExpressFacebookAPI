@@ -99,7 +99,9 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 									if(reader.GetAttribute("convertNullDbId")!=null && reader.GetAttribute("convertNullDbId").Length>0)convertNullDbId=bool.Parse(reader.GetAttribute("convertNullDbId"));
 									if(reader.GetAttribute("convertNullDbLabel")!=null && reader.GetAttribute("convertNullDbLabel").Length>0)convertNullDbLabel=bool.Parse(reader.GetAttribute("convertNullDbLabel"));
 									if(reader.GetAttribute("dbExternalJoin")!=null && reader.GetAttribute("dbExternalJoin").Length>0)dbExternalJoin=bool.Parse(reader.GetAttribute("dbExternalJoin"));
-									list.Add(id,new DetailLevelItemInformation(id,name,webTextId,dbId,dbIdAlias,convertNullDbId,dbLabel,dbLabelAlias,convertNullDbLabel,dbTable,dbTablePrefixe,toTrack,dbExternalJoin));
+                                    DetailLevelItemInformation detailLv = new DetailLevelItemInformation(id, name, webTextId, dbId, dbIdAlias, convertNullDbId, dbLabel, dbLabelAlias, convertNullDbLabel, dbTable, dbTablePrefixe, toTrack, dbExternalJoin);
+                                    if (reader.GetAttribute("isContainsSeparator") != null && reader.GetAttribute("isContainsSeparator").Length > 0) detailLv.IsContainsSeparator = bool.Parse(reader.GetAttribute("isContainsSeparator"));
+                                    list.Add(id, detailLv);
 								}
 								else{
 									throw(new XmlException("Invalid Attribute for level"));

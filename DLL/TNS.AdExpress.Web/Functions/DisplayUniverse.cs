@@ -16,6 +16,8 @@ using AdExClassification=TNS.AdExpress.DataAccess.Classification;
 using TNS.FrameWork;
 using TNS.AdExpress.Domain.Web;
 using TNS.FrameWork.DB.Common;
+using TNS.AdExpressI.Classification.DAL;
+using System.Reflection;
 
 namespace TNS.AdExpress.Web.Functions {
 	/// <summary>
@@ -30,7 +32,7 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="language">language</param>
 		/// <param name="source">Data Source</param>
 		/// <returns>Html render to show universe selection</returns>
-		public static string ToExcel(AdExpressUniverse adExpressUniverse, int language, int dataLanguage,IDataSource source) {
+		public static string ToExcel(AdExpressUniverse adExpressUniverse, int language, int dataLanguage,IDataSource source, string domainName) {
 			
 
 			#region Variables
@@ -42,11 +44,11 @@ namespace TNS.AdExpress.Web.Functions {
 			if (adExpressUniverse != null && adExpressUniverse.Count() > 0) {
 				//Groups of items excludes
 				groups = adExpressUniverse.GetExludes();
-				html.Append(GetUniverseGroupForExcel(groups, baseColSpan, language,dataLanguage, source, AccessType.excludes));
+				html.Append(GetUniverseGroupForExcel(groups, baseColSpan, language,dataLanguage, source, AccessType.excludes, domainName));
 
 				//Groups of items includes
 				groups = adExpressUniverse.GetIncludes();
-				html.Append(GetUniverseGroupForExcel(groups, baseColSpan, language,dataLanguage, source, AccessType.includes));
+				html.Append(GetUniverseGroupForExcel(groups, baseColSpan, language,dataLanguage, source, AccessType.includes, domainName));
 
 			}
 			return html.ToString();
@@ -124,18 +126,26 @@ namespace TNS.AdExpress.Web.Functions {
 		/// <param name="source">Data Source</param>
 		/// <param name="accessType">items access type</param>
 		/// <returns>Html render to show universe selection</returns>
-		private static string GetUniverseGroupForExcel(List<NomenclatureElementsGroup> groups, int baseColSpan, int language,int dataLanguage, IDataSource source, AccessType accessType) {
+		private static string GetUniverseGroupForExcel(List<NomenclatureElementsGroup> groups, int baseColSpan, int language,int dataLanguage, IDataSource source, AccessType accessType, string domainName) {
 			
 			#region Variables
 			int level = 1;
-			ArrayList itemIdList = null;
+			List<long> itemIdList = null;
 			bool lineClosed = false;
 			int colSpan = 0;
             string themeName = WebApplicationParameters.Themes[language].Name;
-            string img = "<img src=/App_Themes/" + themeName + "/Images/Common/checkbox.GIF>";
-            TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess universeItems = null;
+            string img = string.Empty;
+            //TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess universeItems = null;
+            TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL universeItems = null;
+            TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = null;
+            TNS.AdExpress.Domain.Layers.CoreLayer cl = null;
 			int code = 0;
 			StringBuilder html = new StringBuilder();
+
+            if(domainName.Length>0)
+                img = "<img src=\"http://" + domainName + "/App_Themes/" + themeName + "/Images/Common/checkbox.GIF\">";
+            else
+                img = "<img src=\"/App_Themes/" + themeName + "/Images/Common/checkbox.GIF\">";
 			#endregion
 
 			if (accessType == AccessType.includes) code = 2281;
@@ -143,7 +153,13 @@ namespace TNS.AdExpress.Web.Functions {
 
 
 			if (groups != null && groups.Count >0) {
-							
+                cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classificationLevelList];
+                if (cl == null) throw (new NullReferenceException("Core layer is null for the Detail selection control"));
+                object[] param = new object[2];
+                param[0] = source;
+                param[1] = dataLanguage;
+                factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+        			
 				for (int i = 0; i < groups.Count; i++) {
 					List<long> levelIdsList = groups[i].GetLevelIdsList();
 					
@@ -157,7 +173,8 @@ namespace TNS.AdExpress.Web.Functions {
 						for(int j = 0; j<levelIdsList.Count; j++){
 
 
-                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),dataLanguage,source);
+                            //universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),dataLanguage,source);
+                            universeItems = factoryLevels.CreateDefaultClassificationLevelListDAL(UniverseLevels.Get(levelIdsList[j]), groups[i].GetAsString(levelIdsList[j]));
 							if (universeItems != null) {
 								itemIdList = universeItems.IdListOrderByClassificationItem;
 								if (itemIdList != null && itemIdList.Count > 0) {
@@ -197,7 +214,9 @@ namespace TNS.AdExpress.Web.Functions {
 					}
 				}
 			}
-
+            universeItems = null;
+            factoryLevels = null;
+            cl = null;
 			return html.ToString();
 		}
 
@@ -214,12 +233,14 @@ namespace TNS.AdExpress.Web.Functions {
 
 			
 			#region Variables
-			ArrayList itemIdList = null;
+			List<long> itemIdList = null;
 			//int colSpan = 0;
 			string checkBox = "";
 			string buttonAutomaticChecked = "checked";
 			string disabled = "disabled";
-            TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess universeItems = null;
+            TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL universeItems = null;
+            TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = null;
+            TNS.AdExpress.Domain.Layers.CoreLayer cl = null;
 			int code = 0;
 			StringBuilder html = new StringBuilder();
 			int colonne = 0;
@@ -231,7 +252,12 @@ namespace TNS.AdExpress.Web.Functions {
 
 
 			if (groups != null && groups.Count > 0) {
-
+                cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classificationLevelList];
+                if (cl == null) throw (new NullReferenceException("Core layer is null for the Detail selection control"));
+                object[] param = new object[2];
+                param[0] = source;
+                param[1] = dataLanguage;
+                factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
 				for (int i = 0; i < groups.Count; i++) {
 					List<long> levelIdsList = groups[i].GetLevelIdsList();
 					displayBorder = true;
@@ -259,8 +285,9 @@ namespace TNS.AdExpress.Web.Functions {
 
 							//Show items of the current level							
 							colonne = 0;
-                            universeItems = new TNS.AdExpress.DataAccess.Classification.ClassificationLevelListDataAccess(UniverseLevels.Get(levelIdsList[j]).TableName,groups[i].GetAsString(levelIdsList[j]),dataLanguage,source);
-							if (universeItems != null) {
+                            universeItems = factoryLevels.CreateDefaultClassificationLevelListDAL(UniverseLevels.Get(levelIdsList[j]), groups[i].GetAsString(levelIdsList[j]));
+                            if (universeItems != null)
+                            {
 								itemIdList = universeItems.IdListOrderByClassificationItem;
 								if (itemIdList != null && itemIdList.Count > 0) {
                                     html.Append("<table class=\"UniverseItemsStyle\" width=\"100%\">");

@@ -138,7 +138,7 @@ namespace TNS.AdExpress.Web.Controls.Headers {
 
             #region Partie scrollable
             writer.WriteLine("\t\t\t <tr> ");
-            writer.WriteLine("\t\t\t <td><div id=\"scroller_" + this.ID + "\" style=\"display: none; width:100%; overflow: visible; background-color: " + bgColor + "; layer-background-color: " + bgColor + "; border: 1px none #000000; \">");
+            writer.WriteLine("\t\t\t <td><div id=\"scroller_" + this.ID + "\" style=\"display: none; width:100%; overflow: visible; background-color: " + bgColor + "; layer-background-color: " + bgColor + "; border: 1px none #000000; position: absolute;\">");
             writer.WriteLine("\t\t\t <table width=\"100%\" border=\"0\" cellPadding=\"1\" cellSpacing=\"0\" style=\"border: " + borderWidth + "px solid " + borderColor + "; cursor: hand;\">");
 
             //Les items

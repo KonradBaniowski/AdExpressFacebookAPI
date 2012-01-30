@@ -79,8 +79,16 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Finland
                             }
                         case CstDBClassif.Vehicles.names.outdoor:
                         case CstDBClassif.Vehicles.names.instore:
+                        case CstDBClassif.Vehicles.names.indoor:
                         case CstDBClassif.Vehicles.names.radio:
+                        case CstDBClassif.Vehicles.names.radioGeneral:
+                        case CstDBClassif.Vehicles.names.radioSponsorship:
+                        case CstDBClassif.Vehicles.names.radioMusic:
                         case CstDBClassif.Vehicles.names.tv:
+                        case CstDBClassif.Vehicles.names.tvGeneral:
+                        case CstDBClassif.Vehicles.names.tvSponsorship:
+                        case CstDBClassif.Vehicles.names.tvNonTerrestrials:
+                        case CstDBClassif.Vehicles.names.tvAnnounces:
                         case CstDBClassif.Vehicles.names.others:
                         case CstDBClassif.Vehicles.names.internet:
                         case CstDBClassif.Vehicles.names.adnettrack:

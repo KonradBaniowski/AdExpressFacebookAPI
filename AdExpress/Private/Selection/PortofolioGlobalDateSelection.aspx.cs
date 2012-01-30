@@ -43,6 +43,7 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpressI.Date;
 using TNS.AdExpressI.Date.DAL;
 using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Exceptions;
 
 /// <summary>
 /// Page de sélection des dates (global)
@@ -84,8 +85,6 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
 	protected void Page_Load(object sender, System.EventArgs e) {
 		try {
 
-			long selectedVehicle;
-
 			#region Option de période sélectionnée
 			if (Request.Form.GetValues("selectedItemIndex") != null) selectedIndex = int.Parse(Request.Form.GetValues("selectedItemIndex")[0]);
 			#endregion
@@ -98,10 +97,13 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
 			ModuleTitleWebControl1.CustomerWebSession = _webSession;
 			InformationWebControl1.Language = _webSession.SiteLanguage;
 
-			//validateButton1.ImageUrl = "/Images/" + _siteLanguage + "/button/valider_up.gif";
-			//validateButton1.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/valider_down.gif";
-			//validateButton2.ImageUrl = "/Images/" + _siteLanguage + "/button/valider_up.gif";
-			//validateButton2.RollOverImageUrl = "/Images/" + _siteLanguage + "/button/valider_down.gif";
+            validateButton1.ImageUrl = "/App_Themes/" + this.Theme + "/Images/Culture/button/valider_up.gif";
+            validateButton1.RollOverImageUrl = "/App_Themes/" + this.Theme + "/Images/Culture/button/valider_down.gif";
+            validateButton1.Attributes.Add("style", "cursor:pointer;");
+
+            validateButton2.ImageUrl = "/App_Themes/" + this.Theme + "/Images/Culture/button/valider_up.gif";
+            validateButton2.RollOverImageUrl = "/App_Themes/" + this.Theme + "/Images/Culture/button/valider_down.gif";
+            validateButton2.Attributes.Add("style", "cursor:pointer;");
 			#endregion
 
 			string selectionType = "";
@@ -135,27 +137,30 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
             GlobalCalendarWebControl1.StartYear = dateDAL.GetCalendarStartDate();
 			
 
-			
-				GlobalCalendarWebControl1.IsRestricted = true;
-				selectedVehicle = ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID;
-                if (IsPostBack)
-                {
+            GlobalCalendarWebControl1.IsRestricted = ModulesList.GetModule(_webSession.CurrentModule).DisplayIncompleteDateInCalendar;
+            List<Int64> selectedVehicleList = new List<Int64>();
+            if (GlobalCalendarWebControl1.IsRestricted) {
+                string vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+                if (vehicleSelection == null) throw (new VehicleException("Selection of media type is not correct"));
+                selectedVehicleList = new List<Int64>((new List<string>(vehicleSelection.Split(','))).ConvertAll<Int64>(ConvertStringToInt64));
+
+                if (IsPostBack) {
                     if (this.ViewState["FirstDayNotEnabledVS"] != null)
                         GlobalCalendarWebControl1.FirstDayNotEnable = (DateTime)this.ViewState["FirstDayNotEnabledVS"];
                 }
-                else
-                {
-                    GlobalCalendarWebControl1.FirstDayNotEnable = WebFunctions.Dates.GetFirstDayNotEnabled(_webSession, selectedVehicle, GlobalCalendarWebControl1.StartYear, _webSession.Source);
+                else {
+                    GlobalCalendarWebControl1.FirstDayNotEnable = dateDAL.GetFirstDayNotEnabled(selectedVehicleList, GlobalCalendarWebControl1.StartYear);
                     ViewState.Add("FirstDayNotEnabledVS", GlobalCalendarWebControl1.FirstDayNotEnable);
                 }
-			
+            }
+
 			#region Script
 			//Gestion de la sélection comparative
 			if (!Page.ClientScript.IsClientScriptBlockRegistered("PostBack")) {
 				if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE)
-					Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "PostBack", TNS.AdExpress.Web.Functions.Script.PostBack(_webSession.SiteLanguage, true, GlobalCalendarWebControl1.ID, validateButton2.ID, "comparativeLink", monthDateList.ID, weekDateList.ID, dayDateList.ID, previousWeekCheckBox.ID, previousDayCheckBox.ID, currentYearCheckbox.ID, previousYearCheckbox.ID, previousMonthCheckbox.ID, "dateSelectedItem"));
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "PostBack", TNS.AdExpress.Web.Functions.Script.PostBack(_webSession.SiteLanguage, true, validateButton1.ID, validateButton2.ID, "", "comparativeLink", monthDateList.ID, weekDateList.ID, dayDateList.ID, previousWeekCheckBox.ID, previousDayCheckBox.ID, currentYearCheckbox.ID, previousYearCheckbox.ID, previousMonthCheckbox.ID, "dateSelectedItem"));
 				else
-					Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "PostBack", TNS.AdExpress.Web.Functions.Script.PostBack(_webSession.SiteLanguage, false, GlobalCalendarWebControl1.ID, validateButton2.ID, "comparativeLink", monthDateList.ID, weekDateList.ID, dayDateList.ID, previousWeekCheckBox.ID, previousDayCheckBox.ID, currentYearCheckbox.ID, previousYearCheckbox.ID, previousMonthCheckbox.ID, "dateSelectedItem"));
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "PostBack", TNS.AdExpress.Web.Functions.Script.PostBack(_webSession.SiteLanguage, false, validateButton1.ID, validateButton2.ID, "", "comparativeLink", monthDateList.ID, weekDateList.ID, dayDateList.ID, previousWeekCheckBox.ID, previousDayCheckBox.ID, currentYearCheckbox.ID, previousYearCheckbox.ID, previousMonthCheckbox.ID, "dateSelectedItem"));
 			}
 			#endregion
 		}
@@ -187,7 +192,7 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
 						validateButton1_Click(this, null);
 				}
 				else {
-					if (valueInput == GlobalCalendarWebControl1.ID)
+					if (valueInput == validateButton1.ID)
 						validateButton1_Click(this, null);
 					else
 						validateButton2_Click(this, null);
@@ -222,6 +227,7 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
 	/// <returns>?</returns>
 	protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
 		System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
+        try {
 		yearDateList.WebSession = _webSession;
         yearDateList.NbYearsToDisplay = WebApplicationParameters.DataNumberOfYear;
 		monthDateList.WebSession = _webSession;
@@ -243,6 +249,14 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
 				GlobalCalendarWebControl1.WithParutionDates = true;
 			}
 		}
+        }
+        catch (System.Exception exc)
+        {
+            if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+            {
+                this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+            }
+        }
 		return tmp;
 	}
 	#endregion
@@ -387,4 +401,15 @@ public partial class Private_Selection_PortofolioGlobalDateSelection : TNS.AdExp
 		//return null;
 	}
 	#endregion
+
+    #region ConvertStringToInt64
+    /// <summary>
+    /// Convert String To Int64
+    /// </summary>
+    /// <param name="p">String parameter</param>
+    /// <returns>Int64 Result</returns>
+    private Int64 ConvertStringToInt64(string p) {
+        return Int64.Parse(p);
+    }
+    #endregion
 }

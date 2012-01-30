@@ -79,6 +79,7 @@ namespace TNS.AdExpress.Web.Core.Selection {
 					}
 					break;
 				case TNS.Classification.Universe.Dimension.media:
+                case TNS.Classification.Universe.Dimension.advertisementType:
 					return _branchesIds;
 			}
 			return tempList;
@@ -93,7 +94,8 @@ namespace TNS.AdExpress.Web.Core.Selection {
 		/// </summary>
 		/// <param name="levelId">level Id</param>
 		/// <returns>Checks if classification level can be added</returns>
-		protected bool CanAddLevel(long levelId) {
+        protected virtual bool CanAddLevel(long levelId)
+        {
 			
 			if ((levelId == TNS.Classification.Universe.TNSClassificationLevels.BRAND && !_webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE))//No brand rights
 				|| (levelId == TNS.Classification.Universe.TNSClassificationLevels.HOLDING_COMPANY && !_webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_HOLDING_COMPANY))//No holding group rights
@@ -119,7 +121,8 @@ namespace TNS.AdExpress.Web.Core.Selection {
 		/// </summary>
 		/// <param name="branchId">branch Id</param>
 		/// <returns>Checks if branch can be added</returns>
-		protected bool CanAddBranch(int branchId) {
+        protected virtual bool CanAddBranch(int branchId)
+        {
 
 			if (!_webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE) &&
 				(UniverseBranches.Get(branchId) != null && UniverseBranches.Get(branchId).Contains(TNS.Classification.Universe.TNSClassificationLevels.BRAND) && UniverseBranches.Get(branchId).Levels.Count <= 2)
@@ -135,29 +138,34 @@ namespace TNS.AdExpress.Web.Core.Selection {
 		/// determine universe level validity
 		/// </summary>
 		/// <returns>Tur if level is valid</returns>
-		public bool IsValidLevels(long levelId) {
+		public virtual bool IsValidLevels(long levelId) {
 			bool val = true;
 			try {
-				Module moduleDescription = ModulesList.GetModule(_webSession.CurrentModule);
-				List<Int64> vehicleList = new List<Int64>();
-				string listStr = _webSession.GetSelection(_webSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
-				if (listStr != null && listStr.Length > 0) {
-					string[] list = listStr.Split(',');
-					for (int i = 0; i < list.Length; i++)
-						vehicleList.Add(Convert.ToInt64(list[i]));
-				}
-				else {
-					//When a vehicle is not checked but one or more category, this get the vehicle correspondly
-					Int64 Vehicle = ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID;
-					vehicleList.Add(Vehicle);
-				}
-				for(int j=0; j<vehicleList.Count;j++) {
-					if (VehiclesInformation.Contains(vehicleList[j])) {
-						if (!VehiclesInformation.Get(vehicleList[j]).AllowedUniverseLevels.Contains(levelId)) {
-							val = false; break;
-						}
-					}
-				}
+                Module moduleDescription = ModulesList.GetModule(_webSession.CurrentModule);
+                List<Int64> vehicleList = new List<Int64>();
+                string listStr = _webSession.GetSelection(_webSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+                if (listStr != null && listStr.Length > 0)
+                {
+                    string[] list = listStr.Split(',');
+                    for (int i = 0; i < list.Length; i++)
+                        vehicleList.Add(Convert.ToInt64(list[i]));
+                }
+                else
+                {
+                    //When a vehicle is not checked but one or more category, this get the vehicle correspondly
+                    Int64 Vehicle = ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID;
+                    vehicleList.Add(Vehicle);
+                }
+                for (int j = 0; j < vehicleList.Count; j++)
+                {
+                    if (VehiclesInformation.Contains(vehicleList[j]))
+                    {
+                        if (!VehiclesInformation.Get(vehicleList[j]).AllowedUniverseLevels.Contains(levelId))
+                        {
+                            val = false; break;
+                        }
+                    }
+                }
 
 				return val;
 			}

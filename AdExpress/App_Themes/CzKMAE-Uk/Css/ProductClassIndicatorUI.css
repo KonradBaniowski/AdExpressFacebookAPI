@@ -1,0 +1,204 @@
+﻿/* Header Style */
+
+tr.productClassIndicatorH2
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #FFFFFF;
+	font-weight: bold;
+	background-color: #646262;
+	height: 20px;
+	white-space: nowrap;
+	text-decoration: none;
+	border-left-width: 0px;
+	border-top-width: 0px;
+	border-bottom-color: #FFFFFF;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-right-color: #FFFFFF;
+	border-right-width: 1px;
+	border-right-style: solid;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+td.productClassIndicatorH2
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #FFFFFF;
+	font-weight: bold;
+	height: 20px;
+	white-space: nowrap;
+	text-decoration: none;
+	background-color: #646262;
+	padding-left: 5px;
+	padding-right: 5px;
+	border-left-width: 0px;
+	border-top-width: 0px;
+	border-bottom-color: #FFFFFF;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-right-color: #FFFFFF;
+	border-right-width: 1px;
+	border-right-style: solid;
+	text-align: left;
+}
+
+/*table styles*/
+.productClassIndicatorTotal, .productClassIndicatorSubTotal1, .productClassIndicatorSubTotal2
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	height: 18px;
+	white-space: nowrap;
+	text-decoration: none;
+	text-align: right;
+	padding-right: 3px;
+}
+.productClassIndicatorRef
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	height: 18px;
+	white-space: nowrap;
+	text-decoration: none;
+	padding-right: 3px;
+	background-color: #D1FFCA;
+	border-left-width: 0px;
+	border-top-width: 0px;
+	border-bottom-color: #FFFFFF;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-right-color: #FFFFFF;
+	border-right-width: 1px;
+	border-right-style: solid;
+}
+.productClassIndicatorComp
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	height: 18px;
+	white-space: nowrap;
+	text-decoration: none;
+	padding-right: 3px;
+	background-color: #FFD0CA;
+	border-left-width: 0px;
+	border-top-width: 0px;
+	border-bottom-color: #FFFFFF;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-right-color: #FFFFFF;
+	border-right-width: 1px;
+	border-right-style: solid;
+}
+.productClassIndicatorSubTotal1XL
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	height: 18px;
+	white-space: nowrap;
+	text-decoration: none;
+	padding-right: 3px;
+	background-color: #969696;
+	border-left-width: 0px;
+	border-top-width: 0px;
+	border-bottom-color: #FFFFFF;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-right-color: #FFFFFF;
+	border-right-width: 1px;
+	border-right-style: solid;
+}
+.productClassIndicatorSubTotal2XL
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	height: 18px;
+	white-space: nowrap;
+	text-decoration: none;
+	padding-right: 3px;
+	background-color: #C0C0C0;
+	border-left-width: 0px;
+	border-top-width: 0px;
+	border-bottom-color: #FFFFFF;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-right-color: #FFFFFF;
+	border-right-width: 1px;
+	border-right-style: solid;
+}
+
+.productClassIndicatorTotal
+{
+	border-left-width: 0px;
+	border-top-width: 0px;
+	border-bottom-color: #FFFFFF;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-right-color: #FFFFFF;
+	border-right-width: 1px;
+	border-right-style: solid;
+}
+
+tr.productClassIndicatorTotal
+{
+	white-space: nowrap;
+	font-weight: bold;
+	padding-left: 4px;
+}
+tr.productClassIndicatorTotal td
+{
+	white-space: nowrap;
+	font-weight: bold;
+}
+
+tr.productClassIndicatorSubTotal1, tr.productClassIndicatorSubTotal2
+{
+	white-space: nowrap;
+	font-weight: normal;
+	padding-left: 4px;
+}
+tr.productClassIndicatorSubTotal1XL, tr.productClassIndicatorSubTotal2XL
+{
+	white-space: nowrap;
+	font-weight: normal;
+	padding-left: 4px;
+}
+tr.productClassIndicatorSubTotal1 td, tr.productClassIndicatorSubTotal2 td
+{
+	white-space: nowrap;
+	font-weight: normal;
+	white-space: nowrap;
+	font-weight: normal;
+	border-bottom-color: #FFFFFF;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-right-color: #FFFFFF;
+	border-right-width: 1px;
+	border-right-style: solid;
+}
+tr.productClassIndicatorSubTotal1XL td, tr.productClassIndicatorSubTotal2XL td
+{
+	white-space: nowrap;
+	font-weight: normal;
+}
+tr.productClassIndicatorRef
+{
+	white-space: nowrap;
+	font-weight: normal;
+	padding-left: 4px;
+}
+tr.productClassIndicatorComp
+{
+	white-space: nowrap;
+	font-weight: normal;
+	padding-left: 4px;
+}
+
+

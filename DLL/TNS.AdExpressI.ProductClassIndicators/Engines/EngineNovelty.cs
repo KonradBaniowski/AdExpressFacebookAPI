@@ -145,7 +145,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// </summary>
         /// <param name="classifLevel">Classification detail (product or advertiser)</param>
         /// <returns></returns>
-        public object[,] GetData()
+        virtual public object[,] GetData()
         {
 
 
@@ -249,7 +249,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// </summary>
         /// <param name="classifLevel">Detail level (advertiser or product)</param>
         /// <returns>Novelty Table</returns>
-        protected StringBuilder BuildTables()
+        protected virtual StringBuilder BuildTables()
         {
             StringBuilder str = new StringBuilder();
             StringBuilder tmp = null;
@@ -299,11 +299,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// </summary>
         /// <param name="classifLevel">Detail level (advertiser or product)</param>
         /// <returns>Novelty Table</returns>
-        protected StringBuilder BuildTable()
+        protected virtual StringBuilder BuildTable()
         {
 
             System.Text.StringBuilder t = new System.Text.StringBuilder(5000);
 			DataSet res = null;
+            UnitInformation selectedCurrency = GetUnit();
 
             #region Styles
             string cssLabelNone = "p7";
@@ -318,10 +319,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
             object[,] tab = this.GetData();
             IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
-            UnitInformation defaultKCurrency = UnitsInformation.List[UnitsInformation.DefaultKCurrency];
 
             #region No data
-            if (tab.GetLength(0) == 0)
+            if (tab == null || tab.GetLength(0) == 0)
             {
                 return t;
             }
@@ -344,14 +344,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             //Investments last active month (kE)
             if (_session.ComparativeStudy)
             {
-                t.AppendFormat("<td nowrap class=\"p2\">{0}</td>", GestionWeb.GetWebWord(1219, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")");
+                t.AppendFormat("<td nowrap class=\"p2\">{0}</td>", GestionWeb.GetWebWord(1219, _session.SiteLanguage) + " (" + selectedCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")");
                 //Last active month label
                 t.AppendFormat("<td nowrap class=\"p2\">{0}</td>", GestionWeb.GetWebWord(1219, _session.SiteLanguage));
                 //Période d'inactivité
                 t.AppendFormat("<td nowrap class=\"p2\">{0}</td>", GestionWeb.GetWebWord(1220, _session.SiteLanguage));
             }
             //Current month (KE)
-            t.AppendFormat("<td nowrap class=\"p2\">{0}{1}-{2} </td>", (GestionWeb.GetWebWord(2786, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ") "), _periodEnd.ToString("MM"), _periodEnd.Year);
+            t.AppendFormat("<td nowrap class=\"p2\">{0}{1}-{2} </td>", (GestionWeb.GetWebWord(2786, _session.SiteLanguage) + " (" + selectedCurrency.GetUnitSignWebText(_session.SiteLanguage) + ") "), _periodEnd.ToString("MM"), _periodEnd.Year);
             //SOV			
             t.AppendFormat("<td nowrap class=\"p2\">{0}</td>", GestionWeb.GetWebWord(437, _session.SiteLanguage));
             t.Append("\n</tr>");
@@ -445,17 +445,17 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// Build Novelty as a graph (product OR advertiser)
         /// </summary>		
         /// <returns>Novelty graph</returns>
-        protected StringBuilder BuildGraph()
+        protected virtual StringBuilder BuildGraph()
         {
 
             StringBuilder t = new StringBuilder(10000);
             object[,] tab = this.GetData();
             IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
 			DataSet res = null;
-            UnitInformation defaultKCurrency = UnitsInformation.List[UnitsInformation.DefaultKCurrency];
+            UnitInformation selectedCurrency = GetUnit();
 
             #region No data
-            if (tab.GetLength(0) == 0)
+            if (tab==null || tab.GetLength(0) == 0)
             {
                 return t;
             }
@@ -526,7 +526,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                     t.Append("<td bgcolor=\"#646262\" style=\"BORDER-RIGHT: white 2px solid;BORDER-LEFT: white 1px solid\"><img width=2px></td>");
                 }
                 //Currnet month
-                t.AppendFormat("<td nowrap align=center class=\"p2\">{2}<br>{0}-{1}</td>", _periodEnd.Month.ToString("00"), _periodEnd.Year, (GestionWeb.GetWebWord(2786, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")"));
+                t.AppendFormat("<td nowrap align=center class=\"p2\">{2}<br>{0}-{1}</td>", _periodEnd.Month.ToString("00"), _periodEnd.Year, (GestionWeb.GetWebWord(2786, _session.SiteLanguage) + " (" + selectedCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")"));
                 t.Append("\n</tr>");
                 #endregion
 

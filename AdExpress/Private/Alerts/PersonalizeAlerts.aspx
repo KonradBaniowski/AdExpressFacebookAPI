@@ -146,7 +146,53 @@
 							<tr>
 								<td><asp:Image ID="Image12" runat="server" SkinID="pixel" height="5" width="1" /></td>
 							</tr>
-							<!--Mes PDF-->
+								<!--Mes insertions-->
+								<% if (CanSaveInsertionCustomisedLevels) { %>
+								<tr>
+									<td class="whiteBackGround">
+										<table cellSpacing="0" cellPadding="0" border="0">
+											<tr class="violetBackGround">
+												<td><asp:Image ID="Image72" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												<td><asp:Image ID="Image73" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												<td><asp:Image ID="Image74" runat="server" SkinID="pixel" height="1" width="159" /></td>
+												<td><asp:Image ID="Image75" runat="server" SkinID="pixel" height="1" width="1" /></td>
+											</tr>
+											<tr>
+												<td vAlign="top"><asp:Image ID="Image76" runat="server" SkinID="block_fleche" height="12" width="12" /></td>
+												<td class="blockdupliBackGround"><asp:Image ID="Image77" runat="server" SkinID="pixel" height="1" width="13" /></td>
+												<td class="txtNoir11Bold">
+													<p style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px"><cc1:adexpresstext language="33" id="AdExpressText26" runat="server" Code="2915"></cc1:adexpresstext></p>
+												</td>
+												<td class="violetBackGround"><asp:Image ID="Image78" runat="server" SkinID="pixel" height="1" width="1" /></td>
+											</tr>
+											<tr>
+												<td><asp:Image ID="Image79" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												<td class="violetBackGround"><asp:Image ID="Image80" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												<td class="violetBackGround"><asp:Image ID="Image81" runat="server" SkinID="pixel" height="1" width="1" /></td>
+												<td class="violetBackGround"><asp:Image ID="Image82" runat="server" SkinID="pixel" height="1" width="1" /></td>
+											</tr>
+										</table>
+								<tr>
+									<td class="whiteBackGround" height="5"></td>
+								</tr>
+								<tr>
+									<td class="txtGris11Bold whiteBackGround"><cc1:adexpresstext language="33" id="AdExpressText27" runat="server" Code="2916"></cc1:adexpresstext></td>
+								</tr>
+								<tr>
+									<td height="5"></td>
+								</tr>
+								<tr>
+									<td class="whiteBackGround" height="5"> <cc3:ImageButtonRollOverWebControl ID="Imagebuttonrolloverwebcontrol4" runat="server"
+                                OnClick="insertionOpenImageButtonRollOverWebControl_Click" SkinID="personnaliserButton"></cc3:ImageButtonRollOverWebControl></td>
+								</tr>
+								<tr>
+									<td height="10"></td>
+								</tr>
+								<tr>
+									<td class="whiteBackGround"><asp:Image ID="Image84" runat="server" SkinID="pixel" height="5" width="1" /></td>
+								</tr>
+								<% } %>	
+                           <!--Mes PDF-->
 							<tr>
 								<td>
 									<table cellSpacing="0" cellPadding="0" border="0">

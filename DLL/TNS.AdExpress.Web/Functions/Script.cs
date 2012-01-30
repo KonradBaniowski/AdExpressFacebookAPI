@@ -20,10 +20,27 @@ namespace TNS.AdExpress.Web.Functions{
 	/// <summary>
 	/// Fonctions javascript
 	/// </summary>
-	public class Script{
+	public class Script
+    {
 
-		#region Selection Detail
-		/// <summary>
+        #region Open Window
+        /// <summary>
+        /// Get Java script for help popup
+        /// </summary>
+        /// <returns>Javascript Code</returns>
+        public static string OpenWindow()
+        {
+            string script = "<script language=\"JavaScript\"> ";
+            script += "function OpenWindow(page){";
+            script += "	window.open(page,'AdExpress',\"toolbar=0, directories=0, status=0, menubar=0, scrollbars=1, location=0, resizable=1\"); ";
+            script += "}";
+            script += "</script>";
+            return script;
+        }
+        #endregion
+
+        #region Selection Detail
+        /// <summary>
 		/// Register name for GetHelpJS javascript
 		/// </summary>
 		public static string GET_SELECTION_JS_REGISTER = "ScriptRecallpopup";
@@ -539,6 +556,26 @@ namespace TNS.AdExpress.Web.Functions{
 		}
 		#endregion
 
+        /// <summary>
+        /// Construit le code HTML de la fonction JavaScript qui permet d'ouvrir une création Press
+        /// </summary>
+        /// <remarks>
+        /// Enregistrer sous openPressCreation
+        /// </remarks>
+        /// <returns>Code HTML du script</returns>
+        public static string OpenInternetCreation()
+        {
+            System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
+            t.Append("\n<script language=\"JavaScript\" type=\"text/JavaScript\">");
+            t.Append("\n\tfunction OpenInternetCreation(params){");
+            t.Append("\n\t\twindow.open('/Private/Results/ZoomCreationPopUp2.aspx?'+params,"
+            +"'',"
+            +"\"top=\"+(screen.height-600)/2+\", left=\"+(screen.width-1024)/2+\", toolbar=0, directories=0, status=0, menubar=0, width=1024, height=540, scrollbars=1, location=0, resizable=1\");");
+            t.Append("\n\t}");
+            t.Append("\n</script>");
+            return t.ToString();
+        }
+
 		#region Script d'ouverture de la PopUp de téléchargement d'une vidéo ou d'un fichier son
 		/// <summary>
 		/// Ouvre la popUp qui permet de lire ou de télécharger une création radio ou tv
@@ -595,7 +632,24 @@ namespace TNS.AdExpress.Web.Functions{
         //    t.Append("\n</script>");
         //    return t.ToString();
         //}
-
+		
+        /// <summary>
+        /// Script d'ouverture de la popUp de détail des insertions.
+        /// </summary>
+        /// <remarks>
+        /// Script à enregistrer sous le nom openCreation
+        /// </remarks>
+        /// <returns>Code du scriptopenCreation</returns>
+        public static string OpenCreation2()
+        {
+            System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
+            t.Append("\n<script language=\"JavaScript\" type=\"text/JavaScript\">");
+            t.Append("\n\tfunction openCreation(idSession,ids,zoomDate){");
+            t.Append("\n\t\twindow.open('/Private/Results/ZoomCreationPopUp2.aspx.aspx?idSession='+idSession+'&ids='+ids+'&zoomDate='+zoomDate+'&param='+" + GenerateNumber() + ", '', \"top=\"+(screen.height-600)/2+\", left=\"+(screen.width-1024)/2+\", toolbar=0, directories=0, status=0, menubar=0, width=1024, height=540, scrollbars=1, location=0, resizable=1\");");
+            t.Append("\n\t}");
+            t.Append("\n</script>");
+            return t.ToString();
+        }
         /// <summary>
         /// Script d'ouverture de la popUp de détail des insertions.
         /// </summary>
@@ -1498,6 +1552,24 @@ namespace TNS.AdExpress.Web.Functions{
 				+"&idUniverseClientDescription="+idUniverseClientDescription+"&atd="+DateTime.Now.ToString("yyyyMMddhhmmss")+" ',null, 'dialogHeight:300px;dialogWidth:450px;help:no;resizable:no;scroll:no;status:no;');";
 		}
 		#endregion
+      
+
+        #region Ouverture de la popup de sauvegarde d'un univers with filter
+        /// <summary>
+        /// Script permettant d'ouvrir la fenetre modale d'enregistrement d'un univers
+        /// Elle est ouverte par la fenetre appelante mais se ferme independemment de cette derniere
+        /// Le script est destinée à être placé dans un lien ou un onClick, onLoad...
+        /// Pas d'enregistrement
+        /// </summary>
+        /// <returns>Code JavaScript</returns>
+        public static string SaveUniverseOpen(string idSession, TNS.AdExpress.Constantes.Classification.Branch.type branch, Int64 idUniverseClientDescription, int filter)
+        {
+            return "window.showModalDialog('/Private/Universe/SaveUniverse.aspx?idSession=" + idSession + "&brancheType=" + branch + "&filter=" + filter
+                + "&idUniverseClientDescription=" + idUniverseClientDescription + "&atd=" + DateTime.Now.ToString("yyyyMMddhhmmss") + " ',null, 'dialogHeight:300px;dialogWidth:450px;help:no;resizable:no;scroll:no;status:no;');";
+        }
+        #endregion
+
+       
 
 		#region Gestion de la sélection d'un univers à charger
 		/// <summary>
@@ -1534,6 +1606,7 @@ namespace TNS.AdExpress.Web.Functions{
 		public static string CheckAllChilds(){ 
 			StringBuilder script = new StringBuilder(500);
 			script.Append("\n<script language=\"JavaScript\" type=\"text/JavaScript\">");
+         
 			script.Append("\n function CheckAllChilds(chkName,ids,highParent){ ");
 			script.Append("\n var nbElement = 0; ");
 			script.Append(" if(document.getElementById(chkName)!=null){");
@@ -1553,7 +1626,8 @@ namespace TNS.AdExpress.Web.Functions{
 			script.Append("\n\t	if(document.activeElement.checked==true){ ");
 				script.Append("\n if(divs.length >0){ ");
 					script.Append("\n for(j=0;j<divs.length; j++){");
-						script.Append("\n if(highParent != divs[j]){");
+                        //script.Append("\n if(highParent != divs[j]){");                    
+                            script.Append("\n if(oldParentVehicle != highParent && oldParentVehicle == divs[j]){");
 							script.Append(" if(document.getElementById(divs[j])!=null){");	
 								script.Append("nbChilds=document.getElementById(divs[j]).getElementsByTagName(\'input\').length; ");																			
 									
@@ -1569,6 +1643,8 @@ namespace TNS.AdExpress.Web.Functions{
 					script.Append(" } ");
 				script.Append(" } ");
 			script.Append(" } ");
+            //script.Append("\n alert('oldParentVehicle : '+ oldParentVehicle);");
+            script.Append("\n oldParentVehicle = highParent;  ");
 			script.Append(" } ");
 			script.Append("\n</script>");
 			return script.ToString();
@@ -1816,6 +1892,7 @@ namespace TNS.AdExpress.Web.Functions{
 		public static string SelectExclusiveAllChilds() { 
 			StringBuilder script = new StringBuilder(500);
 			script.Append("\n<script language=\"JavaScript\" type=\"text/JavaScript\">");
+            script.Append("\n var oldParentVehicle = '-1';  ");
 			script.Append("\n function SelectExclusiveAllChilds(chkName,ids,highParent,prefixeVehicle,prefixeCategory){ ");
 			script.Append("\n var nbElement = document.getElementById(chkName).getElementsByTagName(\'input\').length; ");
 			script.Append("\n var sel=0; ");
@@ -1873,7 +1950,8 @@ namespace TNS.AdExpress.Web.Functions{
 			//Decoche tous les checkbox des parents concurrents et leurs fils			
 			script.Append("\n if(divs.length >0){ ");
 			script.Append("\n for(j=0;j<divs.length; j++){");
-			script.Append("\n if(highParent != divs[j]){");
+            //script.Append("\n if(highParent != divs[j]){");
+            script.Append("\n if(oldParentVehicle != highParent && oldParentVehicle == divs[j]){");
 			script.Append(" if(document.getElementById(divs[j])!=null){");	
 			script.Append("nbChilds=document.getElementById(divs[j]).getElementsByTagName(\'input\').length; ");																			
 									
@@ -1890,6 +1968,7 @@ namespace TNS.AdExpress.Web.Functions{
 			script.Append(" } ");
 			#endregion
 
+            script.Append("\n oldParentVehicle = highParent;  ");
 			script.Append(" } ");
 			script.Append("\n</script>");
 			return script.ToString();
@@ -2301,9 +2380,10 @@ namespace TNS.AdExpress.Web.Functions{
         /// Vérifie s'il faut afficher le choix de sélectyion comparative ou non
         /// </summary>
         /// <param name="language">Langue du site</param>
-        /// <param name="IsDynamicModule">Indique si on est dans le module dynamique</param>
+        /// <param name="isDynamicModule">Indique si on est dans le module dynamique</param>
         /// <param name="calendarButtonId">Le boutton valider du calendrier</param>
-        /// <param name="ListButtonId">Le boutton valider des listes</param>
+        /// <param name="listButtonId">Le boutton valider des listes</param>
+        /// <param name="comparativeButtonId">Le boutton valider du calendrier</param>
         /// <param name="comparativeLinkId">Le boutton qui affiche la sélection comparative</param>
         /// <param name="weekListId">La liste des semaines</param>
         /// <param name="dateSelectedItemId">Le hidden input qui contient les informations sur le calendrier</param>
@@ -2315,7 +2395,7 @@ namespace TNS.AdExpress.Web.Functions{
         /// <param name="previousMonthCheckBox">Mois précédent</param>
         /// <param name="previousYearCheckBox">Année précédente</param>
         /// <returns></returns>
-        public static string PostBack(int language, bool IsDynamicModule, string calendarButtonId, string ListButtonId, string comparativeLinkId, string monthListId, string weekListId, string dayListId, string previousWeekCheckBox, string previousDayCheckBox, string currentYearCheckBox, string previousYearCheckBox, string previousMonthCheckBox, string dateSelectedItemId) { 
+        public static string PostBack(int language, bool isDynamicModule, string calendarButtonId, string listButtonId, string comparativeButtonId, string comparativeLinkId, string monthListId, string weekListId, string dayListId, string previousWeekCheckBox, string previousDayCheckBox, string currentYearCheckBox, string previousYearCheckBox, string previousMonthCheckBox, string dateSelectedItemId) { 
 			StringBuilder res = new StringBuilder(2000);
             string caption = "";
             string label = "";
@@ -2323,7 +2403,7 @@ namespace TNS.AdExpress.Web.Functions{
             res.Append("<script language=\"JavaScript\" type=\"text/javascript\">");
             
             res.Append(" function PostBack(buttonClicked){");
-            if (IsDynamicModule) {
+            if (isDynamicModule) {
                 res.Append("\n var on = document.getElementById('" + comparativeLinkId + "');");
                 res.Append("\n var comparativeON = document.getElementById('comparativeDiv');");
                 res.Append("\n var disponibilityON = document.getElementById('disponibilityDiv');");
@@ -2338,19 +2418,21 @@ namespace TNS.AdExpress.Web.Functions{
                 res.Append("\n on.title = \"" + GestionWeb.GetWebWord(2370, language) + "\"; ");
                 caption = GestionWeb.GetWebWord(2371, language);
                 label = GestionWeb.GetWebWord(2372, language);
-                res.Append("\n on.alt = \"#TB_inline?height=200&width=400&inlineId=myOnPageContent&caption="+caption+"&label="+label+"\"; ");
+                res.Append("\n on.alt = \"#TB_inline?height=200&width=400&inlineId=myOnPageContent&caption=" + caption + "&label=" + label + "\"; ");
                 res.Append("\n buttonName = buttonClicked;");
-                res.Append("\n if((buttonClicked != '" +ListButtonId+"') && (buttonClicked != '" +calendarButtonId+"'))");
+                res.Append("\n if((buttonClicked != '" + listButtonId + "') && (buttonClicked != '" + calendarButtonId + "'))");
                 res.Append("\n buttonNameValue = '9999';");
                 res.Append("\n else");
                 res.Append("\n buttonNameValue = '';");
-                res.Append("\n if(buttonClicked == '" + ListButtonId + "'){");
+                res.Append("\n if(buttonClicked == '" + listButtonId + "'){");
+
+                #region Period Glissante Click
                 res.Append("\n if(document.forms[0]." + monthListId + ".selectedIndex!=0){");
                 res.Append("\n comparativeON.style.display=\"none\"; ");
                 res.Append("\n espDivON1.style.display=\"none\"; ");
                 res.Append("\n espDivON2.style.display=\"\"; ");
                 res.Append("\n document.forms[0].selectionType.value = 'dateToDate';");
-                res.Append("\n on.alt = \"#TB_inline?height=145&width=400&inlineId=myOnPageContent&caption="+caption+"&label="+label+"\"; ");
+                res.Append("\n on.alt = \"#TB_inline?height=145&width=400&inlineId=myOnPageContent&caption=" + caption + "&label=" + label + "\"; ");
 
                 res.Append("\n if (GECKO) {");
                 res.Append("\n tb_show('" + GestionWeb.GetWebWord(2370, language) + "', '#TB_inline?height=145&width=400&inlineId=myOnPageContent&caption=" + caption + "&label=" + label + "+', ''); ");
@@ -2369,12 +2451,12 @@ namespace TNS.AdExpress.Web.Functions{
                 res.Append("\n else {");
                 res.Append("\n on.click();");
                 res.Append("\n }");
-                
+
                 res.Append("\n }");
                 res.Append("\n else if((document.forms[0]." + previousWeekCheckBox + ".checked==true)||(document.forms[0]." + previousDayCheckBox + ".checked==true)){");
                 res.Append("\n disponibilityON.style.display=\"none\";");
                 res.Append("\n document.forms[0].selectionType.value = 'dateWeekComparative';");
-                res.Append("\n on.alt = \"#TB_inline?height=145&width=400&inlineId=myOnPageContent&caption="+caption+"&label="+label+"\"; ");
+                res.Append("\n on.alt = \"#TB_inline?height=145&width=400&inlineId=myOnPageContent&caption=" + caption + "&label=" + label + "\"; ");
 
                 res.Append("\n if (GECKO) {");
                 res.Append("\n tb_show('" + GestionWeb.GetWebWord(2370, language) + "', '#TB_inline?height=145&width=400&inlineId=myOnPageContent&caption=" + caption + "&label=" + label + "+', ''); ");
@@ -2386,16 +2468,20 @@ namespace TNS.AdExpress.Web.Functions{
                 res.Append("\n }");
                 res.Append("\n else {");
                 res.Append("\n document.forms[0].selectionType.value = 'dateToDate';");
-                res.Append("\n __doPostBack('" + ListButtonId + "','');");
+                res.Append("\n __doPostBack('" + listButtonId + "','');");
                 res.Append("\n }");
+                #endregion
+
                 res.Append("\n }");
                 res.Append("\n else if(buttonClicked == '" + calendarButtonId + "'){");
+
+                #region Calendar Button Click
                 res.Append("\n selectedType = document.forms[0]." + dateSelectedItemId + ".value;");
                 res.Append("\n selectedType = selectedType.split(\",\");");
                 res.Append("\n if(selectedType[0]==1 || selectedType[0]==2){");
                 res.Append("\n disponibilityON.style.display=\"none\"; ");
                 res.Append("\n document.forms[0].selectionType.value = 'dateWeekComparative';");
-                res.Append("\n on.alt = \"#TB_inline?height=145&width=400&inlineId=myOnPageContent&caption="+caption+"&label="+label+"\"; ");
+                res.Append("\n on.alt = \"#TB_inline?height=145&width=400&inlineId=myOnPageContent&caption=" + caption + "&label=" + label + "\"; ");
 
                 res.Append("\n if (GECKO) {");
                 res.Append("\n tb_show('" + GestionWeb.GetWebWord(2370, language) + "', '#TB_inline?height=145&width=400&inlineId=myOnPageContent&caption=" + caption + "&label=" + label + "+', ''); ");
@@ -2409,8 +2495,20 @@ namespace TNS.AdExpress.Web.Functions{
                 res.Append("\n document.forms[0].selectionType.value = 'dateToDate';");
                 res.Append("\n __doPostBack(''+buttonClicked+'','');");
                 res.Append("\n }");
+                #endregion
+
                 res.Append("\n }");
+                res.Append("\n else if(buttonClicked == '" + comparativeButtonId + "'){");
+
+                #region Comparative Button Click
+                res.Append("\n document.forms[0].selectionType.value = 'dateToDate';");
+                res.Append("\n __doPostBack(''+buttonClicked+'','');");
+                #endregion
+                res.Append("\n }");
+
                 res.Append("\n else {");
+
+                #region Default Click
                 res.Append("\n selectedType = document.forms[0]." + dateSelectedItemId + ".value;");
                 res.Append("\n selectedType = selectedType.split(\",\");");
                 res.Append("\n if(document.forms[0]." + monthListId + ".selectedIndex!=0){");
@@ -2418,7 +2516,7 @@ namespace TNS.AdExpress.Web.Functions{
                 res.Append("\n espDivON1.style.display=\"none\"; ");
                 res.Append("\n espDivON2.style.display=\"\"; ");
                 res.Append("\n document.forms[0].selectionType.value = 'dateToDate';");
-                res.Append("\n on.alt = \"#TB_inline?height=145&width=400&inlineId=myOnPageContent&caption="+caption+"&label="+label+"\"; ");
+                res.Append("\n on.alt = \"#TB_inline?height=145&width=400&inlineId=myOnPageContent&caption=" + caption + "&label=" + label + "\"; ");
 
                 res.Append("\n if (GECKO) {");
                 res.Append("\n tb_show('" + GestionWeb.GetWebWord(2370, language) + "', '#TB_inline?height=145&width=400&inlineId=myOnPageContent&caption=" + caption + "&label=" + label + "+', ''); ");
@@ -2442,7 +2540,7 @@ namespace TNS.AdExpress.Web.Functions{
                 res.Append("\n else if((document.forms[0]." + previousWeekCheckBox + ".checked==true)||(document.forms[0]." + previousDayCheckBox + ".checked==true)){");
                 res.Append("\n disponibilityON.style.display=\"none\";");
                 res.Append("\n document.forms[0].selectionType.value = 'dateWeekComparative';");
-                res.Append("\n on.alt = \"#TB_inline?height=145&width=400&inlineId=myOnPageContent&caption="+caption+"&label="+label+"\"; ");
+                res.Append("\n on.alt = \"#TB_inline?height=145&width=400&inlineId=myOnPageContent&caption=" + caption + "&label=" + label + "\"; ");
 
                 res.Append("\n if (GECKO) {");
                 res.Append("\n tb_show('" + GestionWeb.GetWebWord(2370, language) + "', '#TB_inline?height=145&width=400&inlineId=myOnPageContent&caption=" + caption + "&label=" + label + "+', ''); ");
@@ -2455,7 +2553,7 @@ namespace TNS.AdExpress.Web.Functions{
                 res.Append("\n else if((selectedType[0]==1 || selectedType[0]==2) && (document.forms[0]." + previousMonthCheckBox + ".checked!=true) && (document.forms[0]." + previousYearCheckBox + ".checked!=true) && (document.forms[0]." + currentYearCheckBox + ".checked!=true)){");
                 res.Append("\n disponibilityON.style.display=\"none\"; ");
                 res.Append("\n document.forms[0].selectionType.value = 'dateWeekComparative';");
-                res.Append("\n on.alt = \"#TB_inline?height=145&width=400&inlineId=myOnPageContent&caption="+caption+"&label="+label+"\"; ");
+                res.Append("\n on.alt = \"#TB_inline?height=145&width=400&inlineId=myOnPageContent&caption=" + caption + "&label=" + label + "\"; ");
 
                 res.Append("\n if (GECKO) {");
                 res.Append("\n tb_show('" + GestionWeb.GetWebWord(2370, language) + "', '#TB_inline?height=145&width=400&inlineId=myOnPageContent&caption=" + caption + "&label=" + label + "+', ''); ");
@@ -2463,12 +2561,14 @@ namespace TNS.AdExpress.Web.Functions{
                 res.Append("\n else {");
                 res.Append("\n on.click();");
                 res.Append("\n }");
-                
+
                 res.Append("\n }");
                 res.Append("\n else {");
                 res.Append("\n document.forms[0].selectionType.value = 'dateToDate';");
                 res.Append("\n __doPostBack(''+buttonClicked+'','9999');");
                 res.Append("\n }");
+                #endregion
+
                 res.Append("\n }");
             }
             else
@@ -2478,8 +2578,23 @@ namespace TNS.AdExpress.Web.Functions{
             return res.ToString();
 
         }
-        #endregion
+        /// <summary>
+        /// Post back
+        /// </summary>
+        /// <returns></returns>
+        public static string PostBackWithoutDispoAndTypePeriod() {
+            StringBuilder res = new StringBuilder(2000);
 
+            res.Append("<script language=\"JavaScript\" type=\"text/javascript\">");
+
+            res.Append(" function PostBack(buttonClicked){");
+            res.Append(" __doPostBack(''+buttonClicked+'','');");
+            res.Append("}");
+            res.Append("</script>");
+            return res.ToString();
+
+        }
+        #endregion
 
     }
 }

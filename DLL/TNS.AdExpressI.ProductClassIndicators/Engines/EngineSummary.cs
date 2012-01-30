@@ -20,7 +20,7 @@ using CstComparaisonCriterion = TNS.AdExpress.Constantes.Web.CustomerSessions.Co
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using CstUnit = TNS.AdExpress.Constantes.Web.CustomerSessions.Unit;
-using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
+using FctUtilities = TNS.AdExpress.Web.Functions;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 
 
@@ -127,11 +127,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// Get data ready for display
         /// </summary>
         /// <returns></returns>
-        public object[,] GetData()
+        virtual public object[,] GetData()
         {
 
             object[,] tab = null;
-            UnitInformation defaultKCurrency = UnitsInformation.List[UnitsInformation.DefaultKCurrency];
+            UnitInformation selectedCurrency = GetUnit();
 
             try
             {
@@ -168,15 +168,15 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                         tab[0, ECART_COLUMN_INDEX] = GestionWeb.GetWebWord(1213, _session.SiteLanguage);
 
                     }
-                    tab[1, 0] = GestionWeb.GetWebWord(1712, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ") (" + GestionWeb.GetWebWord(2790, _session.SiteLanguage) + ")";
-                    tab[2, 0] = GestionWeb.GetWebWord(1712, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ") (" + GestionWeb.GetWebWord(2791, _session.SiteLanguage) + ")";
+                    tab[1, 0] = GestionWeb.GetWebWord(1712, _session.SiteLanguage) + " (" + selectedCurrency.GetUnitSignWebText(_session.SiteLanguage) + ") (" + GestionWeb.GetWebWord(2790, _session.SiteLanguage) + ")";
+                    tab[2, 0] = GestionWeb.GetWebWord(1712, _session.SiteLanguage) + " (" + selectedCurrency.GetUnitSignWebText(_session.SiteLanguage) + ") (" + GestionWeb.GetWebWord(2791, _session.SiteLanguage) + ")";
                     tab[3, 0] = GestionWeb.GetWebWord(1903, _session.SiteLanguage);
-                    tab[4, 0] = GestionWeb.GetWebWord(1712, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ") (" + GestionWeb.GetWebWord(2792, _session.SiteLanguage) + ")";
+                    tab[4, 0] = GestionWeb.GetWebWord(1712, _session.SiteLanguage) + " (" + selectedCurrency.GetUnitSignWebText(_session.SiteLanguage) + ") (" + GestionWeb.GetWebWord(2792, _session.SiteLanguage) + ")";
                     tab[5, 0] = GestionWeb.GetWebWord(1904, _session.SiteLanguage);
                     tab[6, 0] = GestionWeb.GetWebWord(1905, _session.SiteLanguage);
-                    tab[7, 0] = GestionWeb.GetWebWord(1153, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ") " + GestionWeb.GetWebWord(2793, _session.SiteLanguage);
+                    tab[7, 0] = GestionWeb.GetWebWord(1153, _session.SiteLanguage) + " (" + selectedCurrency.GetUnitSignWebText(_session.SiteLanguage) + ") " + GestionWeb.GetWebWord(2793, _session.SiteLanguage);
                     tab[8, 0] = GestionWeb.GetWebWord(1906, _session.SiteLanguage);
-                    tab[9, 0] = GestionWeb.GetWebWord(1153, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ") " + GestionWeb.GetWebWord(2794, _session.SiteLanguage);
+                    tab[9, 0] = GestionWeb.GetWebWord(1153, _session.SiteLanguage) + " (" + selectedCurrency.GetUnitSignWebText(_session.SiteLanguage) + ") " + GestionWeb.GetWebWord(2794, _session.SiteLanguage);
                     #endregion
 
                     #region Data
@@ -266,7 +266,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// Build Sumamry report
         /// </summary>
         /// <returns>Novelty Table</returns>
-        protected StringBuilder BuildReport()
+        protected virtual StringBuilder BuildReport()
         {
 
             System.Text.StringBuilder t = new System.Text.StringBuilder(5000);
@@ -388,7 +388,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// <param name="tab">Data table</param>
         /// <param name="cssNb">CSS Style to apply</param>
         /// <param name="line">Current line</param>
-        protected void AppendEvol(System.Text.StringBuilder t, object[,] tab, string cssNb, int line, IFormatProvider fp)
+        protected virtual void AppendEvol(System.Text.StringBuilder t, object[,] tab, string cssNb, int line, IFormatProvider fp)
         {
             //Evol
             string img = string.Empty;

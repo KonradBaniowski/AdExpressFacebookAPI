@@ -142,6 +142,13 @@
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
 				            <%}%>
+                            <!--TODO: A vérifier fusion dev trunk-->
+                            <%if(displayListOfVehicles){%>
+				            <TR height="5">					
+					         <TD class="txtViolet11" vAlign="top" align="center"><%=listOfVehicleText%></TD>
+				          </TR>
+				           <TR height="10"><TD></TD></TR>
+				          <%}%>
 				            <!--Reference média -->
 				            <%if(displayReferenceDetailMedia){%>
 				            <TR height="5">
@@ -219,6 +226,24 @@
                             </tr>
                             <TR height="10"><TD></TD></TR>
                             <%} %>
+<!--TODO : Tester fusion dev trunk-->
+                             <!--Campaign type-->
+                <%if (displayCampaignTypeSelection){ %>
+                <tr>                   
+                    <td class="txtViolet11Bold">
+                        &nbsp;
+                        <cc1:AdExpressText ID="AdExpressTextCampaintypeLabel" runat="server" Code="2671" Language="33" />
+                    </td>
+                </tr>   
+                <tr height="20">
+                    
+                    <td class="txtViolet11" valign="top">
+                        &nbsp;
+                        <cc1:AdExpressText ID="AdExpressTextCampaintypeValue" runat="server" Language="33" />
+                    </td>
+                </tr>
+                 <TR height="10"><TD></TD></TR>
+                <%} %>
                             <!--Auto promo-->
                             <%if (displayAutoPromo){ %>
                             <tr>
@@ -259,6 +284,18 @@
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
 				            <%}%>
+<!--TODO : A tester fusion dev trunk-->
+                            <!-- Sélection des médias (affiner dans les résultats) -->
+				<%if (displayMediaSelection) {%>
+				<TR>				
+					<TD class="txtViolet11Bold">&nbsp;
+						<cc1:adexpresstext language="33" id="mediaSelectiondWebText" runat="server" Code="0"></cc1:adexpresstext></TD>
+				</TR>
+				<TR height="20">					
+					<TD vAlign="top" align="center" class="txtViolet11Bold"><%=mediaSelectiondText%></TD>
+				</TR>				
+				 <TR height="10"><TD></TD></TR>
+				<%}%>
 				            <!-- Personnalisation des supports (affiner dans les résultats) -->
 				            <%if(displayMediaPersonnalized){%>
 				            <TR>
@@ -293,6 +330,18 @@
 				            <%if(displayCompetitorAdvertiser){%>
 				            <%=competitorAdvertiserText%>
 				            <%}%>
+<!--TODO: vérifier pour fusion dev trunk-->
+                            	<!--Ad type-->
+				<%if(displayAdTypeSelection){%>
+				<TR>					
+					<TD class="txtViolet11Bold">&nbsp;
+						<cc1:adexpresstext language="33" id="AdTypeWebText" runat="server" Code="0"></cc1:adexpresstext></TD>
+				</TR>
+				<TR height="20">					
+					<TD vAlign="top" align="center" class="txtViolet11Bold"><%=AdTypeText%></TD>
+				</TR>
+				<TR height="10"><TD></TD></TR>
+				<%}%>
 			            </TABLE>
 					</td>
 				</tr>

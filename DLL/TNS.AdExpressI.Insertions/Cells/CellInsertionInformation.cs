@@ -22,6 +22,7 @@ using System.Data;
 using System.Text;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpressI.Insertions.Cells
 {
@@ -31,6 +32,7 @@ namespace TNS.AdExpressI.Insertions.Cells
     [System.Serializable]
     public class CellInsertionInformation : Cell
     {
+        protected const string CARRIAGE_RETURN = "<br/>";
 
         #region Variables
         /// <summary>
@@ -57,6 +59,10 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// User session
         /// </summary>
         protected WebSession _session = null;
+        /// <summary>
+        /// Vehicle
+        /// </summary>
+        protected VehicleInformation _vehicle = null;
         #endregion
 
         #region Properties
@@ -86,35 +92,7 @@ namespace TNS.AdExpressI.Insertions.Cells
         /// <param name="label">Texte</param>
         public CellInsertionInformation(WebSession session, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells)
         {
-            _session = session;
-            _columns = columns;
-            _columnsName = columnNames;
-            for (int i = 0; i < columnNames.Count; i++)
-            {
-                _previousValues.Add(string.Empty);
-            }
-            foreach (Cell c in cells)
-            {
-                if (c is CellUnit)
-                {
-                    _values.Add(((CellUnit)c).Clone(0.0));
-                }
-                else if(c is CellDate)
-                {
-                    CellDate d = (CellDate)CellDate.GetInstance();
-                    d.StringFormat = c.StringFormat;
-                    _values.Add(d);
-                }
-                else
-                {
-                    _values.Add(new CellLabel(string.Empty));
-                }
-
-            }
-            for (int i = 0; i < _values.Count; i++)
-            {
-                _values[i].StringFormat = string.Format("{{0:{0}}}", _columns[i].StringFormat);
-            }
+            InitCellsValue(session,columns,columnNames,cells);
         }
         #endregion
 
@@ -306,9 +284,8 @@ namespace TNS.AdExpressI.Insertions.Cells
                 if (cCell is CellUnit)
                 {
                     if (g.Id == GenericColumnItemInformation.Columns.numberBoard &&
-                      (cValue == null || cValue.Length == 0)) 
-                        cValue = "0";
-                    ((CellUnit)cCell).Add(Convert.ToDouble(cValue));
+                        (cValue == null || cValue.Length == 0)) ((CellUnit)cCell).SetCellValue(null);                      
+                    else ((CellUnit)cCell).Add(Convert.ToDouble(cValue));
                 }
                 else
                 {
@@ -347,6 +324,65 @@ namespace TNS.AdExpressI.Insertions.Cells
                     return true;
             }
 
+        }
+        #endregion
+
+        #region InitCellsValue
+
+        /// <summary>
+        /// InitCellsValue
+        /// </summary>
+        protected virtual void InitCellsValue(WebSession session, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells)
+        {
+            _session = session;
+            _columns = columns;
+            _columnsName = columnNames;
+            for (int i = 0; i < columnNames.Count; i++)
+            {
+                _previousValues.Add(string.Empty);
+            }
+            foreach (Cell c in cells)
+            {
+                if (c is CellUnit)
+                {
+                    _values.Add(((CellUnit)c).Clone(0.0));
+                }
+                else if (c is CellDate)
+                {
+                    CellDate d = (CellDate)CellDate.GetInstance();
+                    d.StringFormat = c.StringFormat;
+                    _values.Add(d);
+                }
+                else
+                {
+                    _values.Add(new CellLabel(string.Empty));
+                }
+
+            }
+            for (int i = 0; i < _values.Count; i++)
+            {
+                _values[i].StringFormat = string.Format("{{0:{0}}}", _columns[i].StringFormat);
+            }
+        }
+        #endregion
+
+        #region SplitStringValue
+        /// <summary>
+        /// Split string value
+        /// </summary>
+        /// <param name="s">string</param>
+        /// <returns></returns>
+        protected virtual string SplitStringValue(string s, char separator)
+        {
+            string[] sArr = s.Split(separator);
+            string stringValue = string.Empty;
+            for (int z = 0; z < sArr.Length; z++)
+            {
+                stringValue += sArr[z].ToString();
+                if (sArr.Length > 1 && z < sArr.Length - 1) stringValue += CARRIAGE_RETURN;
+            }
+            s = stringValue;
+            return s;
         }
         #endregion
 

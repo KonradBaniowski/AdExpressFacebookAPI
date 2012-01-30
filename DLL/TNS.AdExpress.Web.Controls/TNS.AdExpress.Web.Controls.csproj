@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F9CEFF0A-7A0A-4724-8B68-2A9DB9FBCC51}</ProjectGuid>
     <SccProjectName>SAK</SccProjectName>
@@ -145,9 +145,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\frmitch-fs04\programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.Net.dll</HintPath>
     </Reference>
-    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.26494, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TNS.FrameWork.WebResultUI, Version=1.2.0.21630, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\frmitch-fs04\programme\Projets\France\AdExpress Olympe 2009\Trunk\Bin\TNS.FrameWork.WebResultUI.dll</HintPath>
+      <HintPath>\\frmitch-fs04\programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.WebResultUI.dll</HintPath>
     </Reference>
     <Reference Include="TNS.Isis.Constantes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -295,6 +295,7 @@
     <Compile Include="Headers\ResultsTableTypesWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Headers\Russia\GenericMediaDetailSelectionWebControl.cs" />
     <Compile Include="Headers\SearchSaveWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -420,6 +421,8 @@
     <Compile Include="Selections\AdvertiserSelectionWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Selections\LoadableCustomisedLevelsWebControl.cs" />
+    <Compile Include="Selections\RegionWebControl.cs" />
     <Compile Include="Selections\CheckBoxsDependentSelection.cs" />
     <Compile Include="Selections\CheckBoxsMutualExclusion.cs" />
     <Compile Include="Selections\DateComparativeSelection.cs" />
@@ -481,6 +484,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Selections\Russia\GenericDetailVehicleSelectionWebControl.cs" />
+    <Compile Include="Selections\Russia\PortofolioGenericDetailVehicleSelectionWebControl.cs.cs" />
+    <Compile Include="Selections\Russia\RecapAdvertiserSelectionWebControl.cs" />
+    <Compile Include="Selections\Russia\SectorAnalysisVehicleSelectionWebControl.cs" />
     <Compile Include="Selections\Russia\SubMediaSelectionWebControl.cs" />
     <Compile Include="Selections\SectorAnalysisVehicleSelectionWebControl.cs">
       <SubType>Code</SubType>
@@ -579,6 +585,10 @@
       <Project>{D24531CC-E000-4AEF-8218-56885D87DFCB}</Project>
       <Name>TNS.AdExpressI.Date</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.Insertions.DAL\TNS.AdExpressI.Insertions.DAL.csproj">
+      <Project>{446AA1FA-2CE3-49D1-99CC-6EBAECCDA911}</Project>
+      <Name>TNS.AdExpressI.Insertions.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.Insertions\TNS.AdExpressI.Insertions.csproj">
       <Project>{E1A418FC-6512-46D5-99CF-374682F0C792}</Project>
       <Name>TNS.AdExpressI.Insertions</Name>
@@ -594,10 +604,6 @@
     <ProjectReference Include="..\TNS.AdExpressI.NewCreatives\TNS.AdExpressI.NewCreatives.csproj">
       <Project>{BBABD681-7FA1-473D-B9DA-B1B3173491B8}</Project>
       <Name>TNS.AdExpressI.NewCreatives</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TNS.AdExpressI.Portofolio.Default\TNS.AdExpressI.Portofolio.Default.csproj">
-      <Project>{638BEFDD-6370-4AEA-8943-DD6961FE3FDE}</Project>
-      <Name>TNS.AdExpressI.Portofolio.Default</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.Portofolio\TNS.AdExpressI.Portofolio.csproj">
       <Project>{7E85C26D-A9C8-40CD-B98D-AD04E96D340B}</Project>
@@ -619,9 +625,9 @@
       <Project>{C0D576BE-BB8D-4F27-B361-385162442113}</Project>
       <Name>TNS.AdExpressI.ProductClassReports</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TNS.AdExpressI.Protofolio.Default\TNS.AdExpressI.Portofolio.Default.csproj">
-      <Project>{638BEFDD-6370-4AEA-8943-DD6961FE3FDE}</Project>
-      <Name>TNS.AdExpressI.Portofolio.Default</Name>
+    <ProjectReference Include="..\TNS.AdExpressI.Trends\TNS.AdExpressI.Trends.csproj">
+      <Project>{B2BE1C87-8341-462E-907A-F2EDAA87F819}</Project>
+      <Name>TNS.AdExpressI.Trends</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.Trends\TNS.AdExpressI.Trends.csproj">
       <Project>{B2BE1C87-8341-462E-907A-F2EDAA87F819}</Project>

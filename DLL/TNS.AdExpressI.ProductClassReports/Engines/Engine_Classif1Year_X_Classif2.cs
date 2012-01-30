@@ -8,7 +8,7 @@ using CstFormat = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetai
 using CstPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
-using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
+using FctUtilities = TNS.AdExpress.Web.Functions;
 
 using TNS.Classification.Universe;
 using TNS.AdExpressI.ProductClassReports.Exceptions;

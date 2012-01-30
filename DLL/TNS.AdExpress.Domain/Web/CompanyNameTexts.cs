@@ -9,11 +9,13 @@ using System.Collections.Generic;
 using System.Text;
 using TNS.AdExpress.Domain.Translation;
 
-namespace TNS.AdExpress.Domain.Web{
+namespace TNS.AdExpress.Domain.Web
+{
     /// <summary>
     /// Company name texts management
     /// </summary>
-    public class CompanyNameTexts {
+    public class CompanyNameTexts
+    {
 
         #region Variables
         /// <summary>
@@ -30,7 +32,8 @@ namespace TNS.AdExpress.Domain.Web{
         /// <summary>
         /// Constructor
         /// </summary>
-        public CompanyNameTexts(){
+        public CompanyNameTexts()
+        {
         }
         #endregion
 
@@ -38,14 +41,16 @@ namespace TNS.AdExpress.Domain.Web{
         /// <summary>
         /// Get Company Name Code
         /// </summary>
-        public int CompanyNameCode {
+        public int CompanyNameCode
+        {
             get { return (_companyNameCode); }
             set { _companyNameCode = value; }
         }
         /// <summary>
         /// Get Short Company Name Code
         /// </summary>
-        public int CompanyShortNameCode {
+        public int CompanyShortNameCode
+        {
             get { return (_companyShortNameCode); }
             set { _companyShortNameCode = value; }
         }
@@ -55,13 +60,15 @@ namespace TNS.AdExpress.Domain.Web{
         /// <summary>
         /// Get Company Name (KANTAR MEDIA, TNS MEDIA Intelligence)
         /// </summary>
-        public string GetCompanyName(int siteLanguage) {
+        public string GetCompanyName(int siteLanguage)
+        {
             return GestionWeb.GetWebWord(_companyNameCode, siteLanguage);
         }
         /// <summary>
         /// Get Short Company Name (KANTAR, TNS)
         /// </summary>
-        public string GetCompanyShortName(int siteLanguage) {
+        public string GetCompanyShortName(int siteLanguage)
+        {
             return GestionWeb.GetWebWord(_companyShortNameCode, siteLanguage);
         }
         #endregion

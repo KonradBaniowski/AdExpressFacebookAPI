@@ -20,6 +20,7 @@ using TNS.FrameWork.Date;
 
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpress.Web.Controls.Results {
 		/// <summary>
@@ -222,7 +223,7 @@ namespace TNS.AdExpress.Web.Controls.Results {
 			#endregion
 			CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
 			DateTime dayDT = new DateTime(int.Parse(_dateParution.Substring(0, 4)), int.Parse(_dateParution.Substring(4, 2)), int.Parse(_dateParution.ToString().Substring(6, 2)));
-			day = DayString.GetCharacters(dayDT, cultureInfo) + " " + dayDT.ToString("dd/MM/yyyy");
+			day = DayString.GetCharacters(dayDT, cultureInfo) + " " + Dates.DateToString(dayDT, _webSession.SiteLanguage);
 
 			t.Append("<table border=1 class=\"violetBorder paleVioletBackGroundV2\" cellpadding=0 cellspacing=0 width=100% ><tr>");
 			t.Append("<td class=\"portofolio1\" style=\"BORDER-RIGHT-STYLE: none;BORDER-BOTTOM-STYLE: none\">" + day + "</td>");

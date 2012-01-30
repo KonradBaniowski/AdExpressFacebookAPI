@@ -21,7 +21,7 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
 using WebFunctions = TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Domain.DataBaseDescription;
-using DBConstantes = TNS.AdExpress.Constantes.DB;
+using DBConstantes=TNS.AdExpress.Constantes.DB;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Exceptions;
@@ -129,6 +129,7 @@ namespace TNS.AdExpressI.Trends.DAL
         }
         #endregion
 
+        
 
 
         /// <summary>

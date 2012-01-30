@@ -31,6 +31,9 @@ using TNS.AdExpress.Domain.Exceptions;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Domain.Classification;
 using TNS.Classification.Universe;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpressI.Date.DAL;
+using System.Reflection;
 
 
 namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
@@ -113,12 +116,18 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             set { _session = value; }
         }
         /// <summary>
-        /// Vehicle to study
+        /// Period Begin
         /// </summary>
-        protected CstDBClassif.Vehicles.names Vehicle
+        public DateTime PeriodBegin
         {
-            get { return _vehicle; }
-            set { _vehicle = value; }
+            get { return _periodBegin; }          
+        }
+        /// </summary>
+        /// Period end
+        /// </summary>
+        public DateTime PeriodEnd
+        {
+            get { return _periodEnd; }        
         }
         #endregion
 
@@ -153,7 +162,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
 
             #region Dates
             //Get last available month depending on data delivering frequency
-            string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(_session, _session.PeriodEndDate);
+            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+            object[] param = new object[1];
+            param[0] = _session;
+            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            string absolutEndPeriod = dateDAL.CheckPeriodValidity(_session, _session.PeriodEndDate);
 
             if (int.Parse(absolutEndPeriod) < int.Parse(_session.PeriodBeginningDate))
                 throw new NoDataException();

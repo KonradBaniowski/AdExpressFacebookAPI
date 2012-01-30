@@ -63,6 +63,10 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 		/// <param name="idCategory">Id Category</param>
 		/// <returns></returns>
 		bool IsMediaBelongToCategory(Int64 idMedia, string idCategory);
-		
+        /// <summary>
+        /// Get Table of issue
+        /// </summary>
+        /// <returns></returns>
+        DataSet TableOfIssue();
     }
 }

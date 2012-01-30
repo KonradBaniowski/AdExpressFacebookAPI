@@ -21,375 +21,376 @@ namespace TNS.AdExpress.Domain.Level
 		/// <summary>
 		/// Eléments compsant les Colonnes
 		/// </summary>
-		public enum Columns {
-			/// <summary>
-			/// Media
-			/// </summary>
-			vehicle = 1,
-			/// <summary>
-			/// Catégorie
-			/// </summary>
-			category = 2,
-			/// <summary>
-			/// Support
-			/// </summary>
-			media = 3,
-			/// <summary>
-			/// Centre d'interet
-			/// </summary>
-			interestCenter = 4,
-			/// <summary>
-			/// Régie
-			/// </summary>
-			mediaSeller = 5,
-			/// <summary>
-			/// Version
-			/// </summary>
-			slogan = 6,
-			/// <summary>
-			/// Annonceur
-			/// </summary>
-			advertiser = 7,
-			/// <summary>
-			/// Groupe
-			/// </summary>
-			group = 8,
-			/// <summary>
-			/// Produit
-			/// </summary>
-			product = 9,
-			/// <summary>
-			/// Spot
-			/// </summary>
-			associatedFile = 10,
-			/// <summary>
-			/// Format
-			/// </summary>
-			format = 11,
-			/// <summary>
-			/// Surface
-			/// </summary>
-			areaPage = 12,
-			/// <summary>
-			/// Couleur
-			/// </summary>
-			color = 13,
-			/// <summary>
-			/// Prix
-			/// </summary>
-			expenditureEuro = 14,
-			/// <summary>
-			/// Descriptif
-			/// </summary>
-			location = 15,
-			/// <summary>
-			/// Top de diffusion radio
-			/// </summary>
-			idTopDiffusion = 16,
-			/// <summary>
-			/// Top de diffusion télévision
-			/// </summary>
-			topDiffusion = 17,
-			/// <summary>
-			/// Durée
-			/// </summary>
-			duration = 18,
-			/// <summary>
-			/// Position radio
-			/// </summary>
-			rank = 19,
-			/// <summary> 
-			/// Position télévision
-			/// </summary>
-			idRank = 20,
-			/// <summary> 
-			/// Durée écran
-			/// </summary>
-			durationCommercialBreak = 21,
-			/// <summary> 
-			/// Nombre Spots écran télévision
-			/// </summary>
-			numberMessageCommercialBrea = 22,
-			/// <summary> 
-			/// Nombre Spots écran radio
-			/// </summary>
-			numberSpotComBreak = 23,
-			/// <summary> 
-			/// Position hap
-			/// </summary>
-			rankWap = 24,
-			/// <summary> 
-			/// Durée écran hap
-			/// </summary>
-			durationComBreakWap = 25,
-			/// <summary> 
-			/// Nombre spots hap
-			/// </summary>
-			numberSpotComBreakWap = 26,
-			/// <summary> 
-			/// Code écran
-			/// </summary>
-			idCommercialBreak = 27,
-			/// <summary> 
-			/// Nombre de panneaux
-			/// </summary>
-			numberBoard = 28,
-			/// <summary> 
-			/// Format du panneau
-			/// </summary>
-			typeBoard = 29,
-			/// <summary> 
-			/// Type de réseau
-			/// </summary>
-			typeSale = 30,
-			/// <summary> 
-			/// Réseau afficheur
-			/// </summary>
-			posterNetwork = 31,
-			/// <summary> 
-			/// Agglomeration
-			/// </summary>
-			agglomeration = 32,
-			/// <summary> 
-			/// Date
-			/// </summary>
-			dateMediaNum = 33,
-			/// <summary> 
-			/// Page
-			/// </summary>
-			mediaPaging = 34,
-			/// <summary> 
-			/// Visuel
-			/// </summary>
-			visual = 35,
-			/// <summary>
-			/// Position Presse
-			/// </summary>
-			rankMedia = 36,
-			/// <summary>
-			/// Genre d'émissions
-			/// </summary>
-			programType = 37,
-			/// <summary>
-			/// Emission
-			/// </summary>
-			program = 38,
-			/// <summary>
-			/// Forme de parrainage
-			/// </summary>
-			formSponsorship = 39,
-			/// <summary>
-			/// Jour de la semaine
-			/// </summary>
-			dayOfWeek = 40,
-			/// <summary>
-			/// Affiche
-			/// </summary>
-			poster = 41,
-			/// <summary>
-			/// Date de Parution
-			/// </summary>
-			dateParution = 42,
-			/// <summary>
-			/// Agence Media
-			/// </summary>
-			agenceMedia = 43,
-			/// <summary>
-			/// Famille
-			/// </summary>
-			famille = 44,
-			/// <summary>
-			/// Surface en mmc
-			/// </summary>
-			surfaceMMC = 45,
-			/// <summary>
-			/// Rang famille
-			/// </summary>
-			rangFamille = 46,
-			/// <summary>
-			/// Rang groupe
-			/// </summary>
-			rangGroupe = 47,
-			/// <summary>
-			/// Rang support
-			/// </summary>
-			rangSupport = 48,
-			/// <summary>
-			/// Date de diffusion
-			/// </summary>
-			dateDiffusion = 49,
-			/// <summary>
-			/// Code écran
-			/// </summary>
-			codeEcran = 50,
-			/// <summary>
-			/// Prix du 30 sec
-			/// </summary>
-			prix30Sec = 51,
-			/// <summary>
-			/// Type page
-			/// </summary>
-			typePage = 52,
-			/// <summary>
-			/// Plan Media
-			/// </summary>
-			planMedia = 53,
-			/// <summary>
-			/// Id pub presse
-			/// </summary>
-			idPressAdvertisment = 54,
-			/// <summary>
-			/// Id Cobranding
-			/// </summary>
-			idCobranding = 55,
-			/// <summary>
-			/// Id Outdoor
-			/// </summary>            
-			idDataOutDoor = 56,
-			/// <summary>
-			/// Cover date
-			/// </summary>
-			dateCoverNum = 57,
-			/// <summary>
-			/// ID VMC data
-			/// </summary>
-			idVMC = 58,
-			/// <summary>
-			/// Mailing rapidity
-			/// </summary>
-			rapidity = 59,
-			/// <summary>
-			/// Type of document
-			/// </summary>
-			typeDoc = 60,
-			/// <summary>
-			/// Volume
-			/// </summary>
-			volume = 61,
-			/// <summary>
-			/// Weight
-			/// </summary>
-			weight = 62,
-			/// <summary>
-			/// Item number
-			/// </summary>
-			itemNb = 63,
-			/// <summary>
-			/// Mail format (standard or specific)
-			/// </summary>
-			mailFormat = 64,
-			/// <summary>
-			/// Mail Content
-			/// </summary>
-			content = 65,
-			/// <summary>
-			/// Type of mail (blister...)
-			/// </summary>
-			mailType = 66,
-			/// <summary>
-			/// Expenditure as a sum
-			/// </summary>
-			sumExpenditure = 67,
-			/// <summary>
-			/// Somme Surface page
-			/// </summary>
-			sumSurface = 68,
-			/// <summary>
-			/// Somme Durée
-			/// </summary>
-			sumDuration = 69,
-			/// <summary>
-			/// Nombre de supports
-			/// </summary>
-			countMedia = 70,
-			/// <summary>
-			/// Nombre de supports press
-			/// </summary>
-			countMediaPress = 71,
-			/// <summary>
-			/// Insertions
-			/// </summary>
-			sumInsert = 72,
-			/// <summary>
-			/// Date kiosque (press)
-			/// </summary>
-			dateKiosque = 73,
-			/// <summary>
-			/// Nb spots
-			/// </summary>
-			sumSpot = 74,
-			/// <summary>
-			/// Max path (for unicity purpose)
-			/// </summary>
-			associatedFileMax = 75,
-			/// <summary>
-			/// Max path (for unicity purpose)
-			/// </summary>
-			numberBoardSum = 76,
-			/// <summary>
-			/// AdNetTrack product
-			/// </summary>
-			productAdNetTrack = 77,
-			/// <summary>
-			/// Banner Format
-			/// </summary>
-			bannerFormat = 78,
-			/// <summary>
-			/// Banner dimension
-			/// </summary>
-			bannerDimension = 79,
-			/// <summary>
-			/// Banner url
-			/// </summary>
-			bannerUrl = 80,
-			/// <summary>
-			/// Banner hashcode
-			/// </summary>
-			bannerHashcode = 81,
-			/// <summary>
-			/// Sub Sector
-			/// </summary>
-			subSector = 82,
-			/// <summary>
-			/// Banner Internet format
-			/// </summary>
-			bannerInternetFormat = 83,
-			/// <summary>
-			/// Banner Internet DImension
-			/// </summary>
-			bannerInternetDimension = 84,
-			/// <summary>
-			/// Euros
-			/// </summary>
-			euros = 85,
-			/// <summary>
-			/// First date parution
-			/// </summary>
-			firstDateParution = 86,
-			/// <summary>
-			/// Advertiser address id
-			/// </summary>
-			addressId = 87,
-			/// <summary>
-			/// Banner first parution
-			/// </summary>
-			bannerFirstParution = 88,
-			/// <summary>
-			/// Cetgory Identifiant
-			/// </summary>
-			idCategory = 89,
-			/// <summary>
-			/// Row number
-			/// </summary>
-			rowNum = 90,
+        public enum Columns
+        {
+            /// <summary>
+            /// Media
+            /// </summary>
+            vehicle = 1,
+            /// <summary>
+            /// Catégorie
+            /// </summary>
+            category = 2,
+            /// <summary>
+            /// Support
+            /// </summary>
+            media = 3,
+            /// <summary>
+            /// Centre d'interet
+            /// </summary>
+            interestCenter = 4,
+            /// <summary>
+            /// Régie
+            /// </summary>
+            mediaSeller = 5,
+            /// <summary>
+            /// Version
+            /// </summary>
+            slogan = 6,
+            /// <summary>
+            /// Annonceur
+            /// </summary>
+            advertiser = 7,
+            /// <summary>
+            /// Groupe
+            /// </summary>
+            group = 8,
+            /// <summary>
+            /// Produit
+            /// </summary>
+            product = 9,
+            /// <summary>
+            /// Spot
+            /// </summary>
+            associatedFile = 10,
+            /// <summary>
+            /// Format
+            /// </summary>
+            format = 11,
+            /// <summary>
+            /// Surface
+            /// </summary>
+            areaPage = 12,
+            /// <summary>
+            /// Couleur
+            /// </summary>
+            color = 13,
+            /// <summary>
+            /// Prix
+            /// </summary>
+            expenditureEuro = 14,
+            /// <summary>
+            /// Descriptif
+            /// </summary>
+            location = 15,
+            /// <summary>
+            /// Top de diffusion radio
+            /// </summary>
+            idTopDiffusion = 16,
+            /// <summary>
+            /// Top de diffusion télévision
+            /// </summary>
+            topDiffusion = 17,
+            /// <summary>
+            /// Durée
+            /// </summary>
+            duration = 18,
+            /// <summary>
+            /// Position radio
+            /// </summary>
+            rank = 19,
+            /// <summary> 
+            /// Position télévision
+            /// </summary>
+            idRank = 20,
+            /// <summary> 
+            /// Durée écran
+            /// </summary>
+            durationCommercialBreak = 21,
+            /// <summary> 
+            /// Nombre Spots écran télévision
+            /// </summary>
+            numberMessageCommercialBrea = 22,
+            /// <summary> 
+            /// Nombre Spots écran radio
+            /// </summary>
+            numberSpotComBreak = 23,
+            /// <summary> 
+            /// Position hap
+            /// </summary>
+            rankWap = 24,
+            /// <summary> 
+            /// Durée écran hap
+            /// </summary>
+            durationComBreakWap = 25,
+            /// <summary> 
+            /// Nombre spots hap
+            /// </summary>
+            numberSpotComBreakWap = 26,
+            /// <summary> 
+            /// Code écran
+            /// </summary>
+            idCommercialBreak = 27,
+            /// <summary> 
+            /// Nombre de panneaux
+            /// </summary>
+            numberBoard = 28,
+            /// <summary> 
+            /// Format du panneau
+            /// </summary>
+            typeBoard = 29,
+            /// <summary> 
+            /// Type de réseau
+            /// </summary>
+            typeSale = 30,
+            /// <summary> 
+            ///Outdoor Network 
+            /// </summary>
+            posterNetwork = 31,
+            /// <summary> 
+            /// Agglomeration
+            /// </summary>
+            agglomeration = 32,
+            /// <summary> 
+            /// Date
+            /// </summary>
+            dateMediaNum = 33,
+            /// <summary> 
+            /// Page
+            /// </summary>
+            mediaPaging = 34,
+            /// <summary> 
+            /// Visuel
+            /// </summary>
+            visual = 35,
+            /// <summary>
+            /// Position Presse
+            /// </summary>
+            rankMedia = 36,
+            /// <summary>
+            /// Genre d'émissions
+            /// </summary>
+            programType = 37,
+            /// <summary>
+            /// Emission
+            /// </summary>
+            program = 38,
+            /// <summary>
+            /// Forme de parrainage
+            /// </summary>
+            formSponsorship = 39,
+            /// <summary>
+            /// Jour de la semaine
+            /// </summary>
+            dayOfWeek = 40,
+            /// <summary>
+            /// Affiche
+            /// </summary>
+            poster = 41,
+            /// <summary>
+            /// Date de Parution
+            /// </summary>
+            dateParution = 42,
+            /// <summary>
+            /// Agence Media
+            /// </summary>
+            agenceMedia = 43,
+            /// <summary>
+            /// Famille
+            /// </summary>
+            famille = 44,
+            /// <summary>
+            /// Surface en mmc
+            /// </summary>
+            surfaceMMC = 45,
+            /// <summary>
+            /// Rang famille
+            /// </summary>
+            rangFamille = 46,
+            /// <summary>
+            /// Rang groupe
+            /// </summary>
+            rangGroupe = 47,
+            /// <summary>
+            /// Rang support
+            /// </summary>
+            rangSupport = 48,
+            /// <summary>
+            /// Date de diffusion
+            /// </summary>
+            dateDiffusion = 49,
+            /// <summary>
+            /// Code écran
+            /// </summary>
+            codeEcran = 50,
+            /// <summary>
+            /// Prix du 30 sec
+            /// </summary>
+            prix30Sec = 51,
+            /// <summary>
+            /// Type page
+            /// </summary>
+            typePage = 52,
+            /// <summary>
+            /// Plan Media
+            /// </summary>
+            planMedia = 53,
+            /// <summary>
+            /// Id pub presse
+            /// </summary>
+            idPressAdvertisment = 54,
+            /// <summary>
+            /// Id Cobranding
+            /// </summary>
+            idCobranding = 55,
+            /// <summary>
+            /// Id Outdoor
+            /// </summary>            
+            idDataOutDoor = 56,
+            /// <summary>
+            /// Cover date
+            /// </summary>
+            dateCoverNum = 57,
+            /// <summary>
+            /// ID VMC data
+            /// </summary>
+            idVMC = 58,
+            /// <summary>
+            /// Mailing rapidity
+            /// </summary>
+            rapidity = 59,
+            /// <summary>
+            /// Type of document
+            /// </summary>
+            typeDoc = 60,
+            /// <summary>
+            /// Volume
+            /// </summary>
+            volume = 61,
+            /// <summary>
+            /// Weight
+            /// </summary>
+            weight = 62,
+            /// <summary>
+            /// Item number
+            /// </summary>
+            itemNb = 63,
+            /// <summary>
+            /// Mail format (standard or specific)
+            /// </summary>
+            mailFormat = 64,
+            /// <summary>
+            /// Mail Content
+            /// </summary>
+            content = 65,
+            /// <summary>
+            /// Type of mail (blister...)
+            /// </summary>
+            mailType = 66,
+            /// <summary>
+            /// Expenditure as a sum
+            /// </summary>
+            sumExpenditure = 67,
+            /// <summary>
+            /// Somme Surface page
+            /// </summary>
+            sumSurface = 68,
+            /// <summary>
+            /// Somme Durée
+            /// </summary>
+            sumDuration = 69,
+            /// <summary>
+            /// Nombre de supports
+            /// </summary>
+            countMedia = 70,
+            /// <summary>
+            /// Nombre de supports press
+            /// </summary>
+            countMediaPress = 71,
+            /// <summary>
+            /// Number of Insertions
+            /// </summary>
+            sumInsert = 72,
+            /// <summary>
+            /// Date kiosque (press)
+            /// </summary>
+            dateKiosque = 73,
+            /// <summary>
+            /// Nb spots
+            /// </summary>
+            sumSpot = 74,
+            /// <summary>
+            /// Max path (for unicity purpose)
+            /// </summary>
+            associatedFileMax = 75,
+            /// <summary>
+            /// Max path (for unicity purpose)
+            /// </summary>
+            numberBoardSum = 76,
+            /// <summary>
+            /// AdNetTrack product
+            /// </summary>
+            productAdNetTrack = 77,
+            /// <summary>
+            /// Banner Format
+            /// </summary>
+            bannerFormat = 78,
+            /// <summary>
+            /// Banner dimension
+            /// </summary>
+            bannerDimension = 79,
+            /// <summary>
+            /// Banner url
+            /// </summary>
+            bannerUrl = 80,
+            /// <summary>
+            /// Banner hashcode
+            /// </summary>
+            bannerHashcode = 81,
+            /// <summary>
+            /// Sub Sector
+            /// </summary>
+            subSector = 82,
+            /// <summary>
+            /// Banner Internet format
+            /// </summary>
+            bannerInternetFormat = 83,
+            /// <summary>
+            /// Banner Internet DImension
+            /// </summary>
+            bannerInternetDimension = 84,
+            /// <summary>
+            /// Euros
+            /// </summary>
+            euros = 85,
+            /// <summary>
+            /// First date parution
+            /// </summary>
+            firstDateParution = 86,
+            /// <summary>
+            /// Advertiser address id
+            /// </summary>
+            addressId = 87,
+            /// <summary>
+            /// Banner first parution
+            /// </summary>
+            bannerFirstParution = 88,
+            /// <summary>
+            /// Cetgory Identifiant
+            /// </summary>
+            idCategory = 89,
+            /// <summary>
+            /// Row number
+            /// </summary>
+            rowNum = 90,
             /// <summary>
             /// Banner Evaliant mobile DImension
             /// </summary>
             bannerEvaliantMobileDimension = 91,
-			/// <summary>
-			/// product evaliant mobile
-			/// </summary>
-			productEvaliantMobile = 92,
+            /// <summary>
+            /// product evaliant mobile
+            /// </summary>
+            productEvaliantMobile = 92,
             /// <summary>
             /// Descriptif Magazine
             /// </summary>
@@ -397,8 +398,305 @@ namespace TNS.AdExpress.Domain.Level
             /// <summary>
             /// Descriptif NewsPaper
             /// </summary>
-            locationNewsPaper = 94
-		}
+            locationNewsPaper = 94,
+
+            /// <summary>
+            /// region
+            /// </summary>
+            region = 95,
+            /// <summary>
+            /// National Channel
+            /// </summary>
+            nationalChannel = 96,
+            /// <summary>
+            /// TV Company
+            /// </summary>
+            tVCompany = 97,
+            /// <summary>
+            /// TV Channel
+            /// </summary>
+            tVChannel = 98,
+            /// <summary>
+            /// 
+            /// </summary>
+            timestart = 99,
+            /// <summary>
+            /// Sub brand
+            /// </summary>
+            subbrand = 100,
+            /// <summary>
+            /// Brand
+            /// </summary>
+            brand = 101,
+            /// <summary>
+            ///  Internet Square
+            /// </summary>
+            internetSquare = 102,
+            /// <summary>
+            /// Radio holding
+            /// </summary>
+            radioholding = 103,
+            /// <summary>
+            /// Category Level 4
+            /// </summary>
+            segment = 104,
+            /// <summary>
+            /// Advertisment
+            /// </summary>
+            advertisment = 105,
+            /// <summary>
+            /// advertisment Description
+            /// </summary>
+            advertismentDescription = 106,
+            /// <summary>
+            /// Advertisement Type
+            /// </summary>
+            advertisementType = 107,
+            /// <summary>
+            /// First issue date
+            /// </summary>
+            firstIssueDate = 108,
+            /// <summary>
+            ///Clip position 
+            /// </summary>
+            clipPosition = 109,
+            /// <summary>
+            /// Clips count
+            /// </summary>
+            clipsCount = 110,
+            /// <summary>
+            /// Break flight start
+            /// </summary>
+            breakFlightStart = 111,
+            /// <summary>
+            ///Break 
+            /// </summary>
+            break_ = 112,
+            /// <summary>
+            ///Break distribution 
+            /// </summary>
+            breakDistribution = 113,
+            /// <summary>
+            /// Programme flight start
+            /// </summary>
+            programmeFlightStart = 114,
+            /// <summary>
+            ///costUSD 
+            /// </summary>
+            costUSD = 115,
+            /// <summary>
+            /// CostRUB
+            /// </summary>
+            costRUB = 116,
+            /// <summary>
+            /// station
+            /// </summary>
+            station = 117,
+            /// <summary>
+            /// Allocation
+            /// </summary>
+            allocation = 118,
+            /// <summary>
+            /// Publishing house
+            /// </summary>
+            publishinghouse = 119,
+            /// <summary>
+            ///Edition 
+            /// </summary>
+            edition = 120,
+            /// <summary>
+            /// Edition type
+            /// </summary>
+            editionType = 121,
+            /// <summary>
+            /// St Format
+            /// </summary>
+            stFormat = 122,
+            /// <summary>
+            ///Position 
+            /// </summary>
+            position = 123,
+            /// <summary>
+            /// stDesign
+            /// </summary>
+            stDesign = 124,
+            /// <summary>
+            ///Ad PageNo 
+            /// </summary>
+            adPageNo = 125,
+            /// <summary>
+            /// Issue Local Number
+            /// </summary>
+            issueLocalNumber = 126,
+            /// <summary>
+            /// Volume Page
+            /// </summary>
+            volumePage = 127,
+            /// <summary>
+            /// Volume Page A2 
+            /// </summary>
+            volumePageA2 = 128,
+            /// <summary>
+            /// Carrier type 
+            /// </summary>
+            carriertype = 129,
+            /// <summary>
+            /// District
+            /// </summary>
+            District = 130,
+            /// <summary>
+            /// Address
+            /// </summary>
+            address = 131,
+            /// <summary>
+            /// Outdoor agency
+            /// </summary>
+            outdoorAgency = 132,
+            /// <summary>
+            /// Surface Height
+            /// </summary>
+            surfaceHeight = 133,
+            /// <summary>
+            /// SurfaceWeight
+            /// </summary>
+            SurfaceWeight = 134,
+            /// <summary>
+            /// Surface side
+            /// </summary>
+            surfaceSide = 135,
+            /// <summary>
+            /// Surface Count
+            /// </summary>
+            surfaceCount = 136,
+            /// <summary>
+            /// Volume M2
+            /// </summary>
+            volumeM2 = 137,
+            /// <summary>
+            /// Clip expected duration
+            /// </summary>
+            clipExpectedDuration = 138,
+            /// <summary>
+            /// Budget USD
+            /// </summary>
+            budgetUSD = 139,
+            /// <summary>
+            /// Budget RUB
+            /// </summary>
+            budgetRUB = 140,           
+            /// <summary>
+            ///Press PagesA2 
+            /// </summary>
+            pressPagesA2 = 141,
+            /// <summary>
+            /// Outdoor Square
+            /// </summary>
+            outdoorSquare = 142,
+            /// <summary>
+            /// Price USD
+            /// </summary>
+            priceUSD = 143,
+            /// <summary>
+            /// Price RUB
+            /// </summary>
+            priceRUB = 144,
+            /// <summary>
+            /// Design
+            /// </summary>
+            design = 145,
+            /// <summary>
+            /// Geo
+            /// </summary>
+            geo = 146,
+            /// <summary>
+            /// Advertisment placement
+            /// </summary>
+            advertismentPlacement  = 147,
+            /// <summary>
+            /// Holding
+            /// </summary>
+            holding = 148,
+            /// <summary>
+            /// Site
+            /// </summary>
+            site = 149,
+            /// <summary>
+            /// Site section
+            /// </summary>
+            siteSection = 150,
+            /// <summary>
+            /// Site subsection
+            /// </summary>
+            siteSubsection = 151,
+            /// <summary>
+            /// Landing page
+            /// </summary>
+            landingPage = 152,
+            /// <summary>
+            /// Advertisment file type
+            /// </summary>
+            advertismentFileType = 153,
+            /// <summary>
+            /// Advertisment display type
+            /// </summary>
+            advertismentDisplayType = 154,
+            /// <summary>
+            /// Advertisment position
+            /// </summary>
+            advertismentPosition = 155,
+            /// <summary>
+            /// Advertisment St format
+            /// </summary>
+            advertismentStFormat = 156,
+            /// <summary>
+            ///  Advertisment format
+            /// </summary>
+            advertismentFormat = 157,
+            /// <summary>
+            /// Age
+            /// </summary>
+            age = 158,
+            /// <summary>
+            /// Gender
+            /// </summary>
+            gender = 159,
+            /// <summary>
+            /// Distribution type 
+            /// </summary>
+            distributionType = 160,
+            /// <summary>
+            /// Column
+            /// </summary>
+            column = 161,
+            /// <summary>
+            ///  Type of publication
+            /// </summary>
+            publicationType = 162,
+            /// <summary>
+            /// Square (Editorial)
+            /// </summary>
+            square = 163,
+            /// <summary>
+            ///Mentions
+            /// </summary>
+            mentions = 164,
+            /// <summary>
+            ///Ad Break (For Russia diffrent than code ecran)
+            /// </summary>
+            adBreak = 165,
+            /// <summary>
+            ///Time slot
+            /// </summary>
+            timeSlot = 166,
+            /// <summary>
+            /// Banner Width
+            /// </summary>
+            bannerWidth = 167,
+            /// <summary>
+            /// Banner Height
+            /// </summary>
+            bannerHeight = 168
+        }
 		#endregion
 
 		#region Variables
@@ -507,6 +805,14 @@ namespace TNS.AdExpress.Domain.Level
         /// Specify if column is submitted to   activation rule or not
         /// </summary>
         private bool _useActivation = true;
+        /// <summary>
+        /// Specify if column is in basket from the beginning or not
+        /// </summary>
+        private bool _inBasket = false;
+        /// <summary>
+        /// Indique si les données peuvent contenir un separateur
+        /// </summary>
+        private bool _isContainsSeparator = false;
         #endregion
 
 		#region Constructeur
@@ -757,6 +1063,23 @@ namespace TNS.AdExpress.Domain.Level
         public string StringFormat {
             get { return _strFormat; }
             set { _strFormat = value; }
+        }
+
+        /// <summary>
+        /// Indicate if the column is in the basket from the beginning
+        /// </summary>
+        public bool InBasket{
+            get { return (_inBasket); }
+            set { _inBasket = value; }
+        }
+
+        /// <summary>
+        ///Obtient \ Définit si les données peuvent contenir un separateur
+        /// </summary>
+        public bool IsContainsSeparator
+        {
+            get { return _isContainsSeparator; }
+            set { _isContainsSeparator = value; }
         }
 		#endregion
 

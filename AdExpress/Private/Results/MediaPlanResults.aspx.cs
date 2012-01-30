@@ -28,9 +28,9 @@ using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Rules.Results;
 using TNS.AdExpress.Web.UI.Results;
 using TNS.AdExpress.Domain.Web.Navigation;
-using WebConstantes=TNS.AdExpress.Constantes.Web;
-using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
-using WebFunctions=TNS.AdExpress.Web.Functions;
+using WebConstantes = TNS.AdExpress.Constantes.Web;
+using DBFunctions = TNS.AdExpress.Web.DataAccess.Functions;
+using WebFunctions = TNS.AdExpress.Web.Functions;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using ConstantesPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
@@ -44,11 +44,13 @@ using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Web;
 #endregion
 
-namespace AdExpress.Private.Results{
+namespace AdExpress.Private.Results
+{
     /// <summary>
     /// Page de calendrier d'action d'un plan media
     /// </summary>
-    public partial class MediaPlanResults : TNS.AdExpress.Web.UI.BaseResultWebPage{
+    public partial class MediaPlanResults : TNS.AdExpress.Web.UI.BaseResultWebPage
+    {
 
         #region Variables
         /// <summary>
@@ -99,6 +101,8 @@ namespace AdExpress.Private.Results{
         /// Initial Period Detail Saving
         /// </summary>
         ConstantesPeriod.DisplayLevel _savePeriod = ConstantesPeriod.DisplayLevel.monthly;
+
+        protected bool _initializeSlogans = false;
         #endregion
 
         #region Variable MMI
@@ -152,21 +156,26 @@ namespace AdExpress.Private.Results{
         /// </summary>
         /// <param name="sender">Objet qui lance l'évènement</param>
         /// <param name="e">Arguments</param>
-        protected void Page_Load(object sender, System.EventArgs e){
-            try{
-				bool withZoomDateEventArguments = false;
+        protected void Page_Load(object sender, System.EventArgs e)
+        {
+            try
+            {
+                bool withZoomDateEventArguments = false;
 
                 #region Flash d'attente
                 if (Page.Request.Form.GetValues("__EVENTTARGET") != null)
                 {
                     string nomInput = Page.Request.Form.GetValues("__EVENTTARGET")[0];
-					if (nomInput != MenuWebControl2.ID) {
-						Page.Response.Write(LoadingSystem.GetHtmlDiv(_webSession.SiteLanguage, Page));
-						Page.Response.Flush();
-					}
-					else {
-						if (Page.Request.Form.GetValues("__EVENTARGUMENT")[0] == "7") withZoomDateEventArguments = true;
-					}
+                    if (nomInput != MenuWebControl2.ID)
+                    {
+                        Page.Response.Write(LoadingSystem.GetHtmlDiv(_webSession.SiteLanguage, Page));
+                        Page.Response.Flush();
+                    }
+                    else
+                    {
+                        if (Page.Request.Form.GetValues("__EVENTARGUMENT")[0] == "7") withZoomDateEventArguments = true;
+                    }
+
                 }
                 else
                 {
@@ -191,13 +200,15 @@ namespace AdExpress.Private.Results{
                 #endregion
 
                 #region Texte et langage du site
+
                 Moduletitlewebcontrol2.CustomerWebSession = _webSession;
                 InformationWebControl1.Language = _webSession.SiteLanguage;
+
                 #endregion
 
                 #region Period Detail
-               
-                if(_zoom != null && _zoom != string.Empty && _zoom.Length > 0) {
+                 if (!string.IsNullOrEmpty(_zoom))
+                {
                     zoomButton = string.Format("<tr><td align=\"left\"><object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"30\" height=\"8\" VIEWASTEXT><param name=movie value=\"/App_Themes/" + this.Theme + "/Flash/Common/Arrow_Back.swf\"><param name=quality value=\"high\"><param name=menu value=\"false\"><embed src=\"/App_Themes/" + this.Theme + "/Flash/Common/Arrow_Back.swf\" width=\"30\" height=\"8\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" menu=\"false\"></embed></object><a class=\"roll06\" href=\"/Private/Results/MediaPlanResults.aspx?idSession={0}\">{2}</a></td></tr><tr><td height=\"5\"></td></tr>",
                         _webSession.IdSession,
                         _webSession.SiteLanguage,
@@ -205,12 +216,14 @@ namespace AdExpress.Private.Results{
                 }
                 #endregion
 
-                #region Annuler l'univers de version
-                if (_webSession.DetailPeriod != ConstantesPeriod.DisplayLevel.dayly) {
-					_webSession.IdSlogans = new ArrayList();
-					_webSession.SloganIdZoom = -1;
+                //Annuler l'univers de version
+                 if (_webSession.DetailPeriod != ConstantesPeriod.DisplayLevel.dayly && string.IsNullOrEmpty(_zoom))
+                {
+                    _webSession.IdSlogans = new ArrayList();
+                    _webSession.SloganIdZoom = long.MinValue;
                 }
-                #endregion
+
+
             }
             catch (System.Exception exc)
             {
@@ -263,7 +276,8 @@ namespace AdExpress.Private.Results{
         /// Initialise la propriété CustomerSession des composants "options de résultats" et gestion de la navigation"
         /// </summary>
         /// <returns>DeterminePostBackMode</returns>
-        protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode(){
+        protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode()
+        {
             System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
             ResultsOptionsWebControl1.CustomerWebSession = _webSession;
             MenuWebControl2.CustomerWebSession = _webSession;
@@ -272,15 +286,17 @@ namespace AdExpress.Private.Results{
 
             #region Period Detail
             _zoom = Page.Request.QueryString.Get("zoomDate");
-
-            if(_zoom != null && _zoom != string.Empty) {
-                if(Page.Request.Form.GetValues("zoomParam") != null && Page.Request.Form.GetValues("zoomParam")[0].Length > 0) {
+            if (_zoom != null && _zoom != string.Empty)
+            {
+                if (Page.Request.Form.GetValues("zoomParam") != null && Page.Request.Form.GetValues("zoomParam")[0].Length > 0)
+                {
                     _zoom = Page.Request.Form.GetValues("zoomParam")[0];
                 }
                 MenuWebControl2.UrlPameters = string.Format("zoomDate={0}", _zoom);
                 MenuWebControl2.ForbidSave = true;
                 SubPeriodSelectionWebControl1.Visible = true;
-                SubPeriodSelectionWebControl1.AllPeriodAllowed = false;               
+                SubPeriodSelectionWebControl1.AllPeriodAllowed = false;
+               
                 GenericMediaScheduleWebControl1.ZoomDate = _zoom;
                 SubPeriodSelectionWebControl1.ZoomDate = _zoom;
                 SubPeriodSelectionWebControl1.JavascriptRefresh = "SetZoom";
@@ -309,32 +325,39 @@ namespace AdExpress.Private.Results{
                 SetZoom = js.ToString();
                 #endregion
 
+            #endregion
+
                 #region Script
-                if(!this.ClientScript.IsClientScriptBlockRegistered("SetZoom"))
+                if (!this.ClientScript.IsClientScriptBlockRegistered("SetZoom"))
                     this.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetZoom", SetZoom);
                 #endregion
 
             }
-            else {
+            else
+            {
                 SubPeriodSelectionWebControl1.Visible = false;
-                if(_webSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly) {
-                    if(Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, ConstantesPeriod.Type.dateToDate)
-                        < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3)) {
+                if (_webSession.DetailPeriod == ConstantesPeriod.DisplayLevel.dayly)
+                {
+                    if (Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, ConstantesPeriod.Type.dateToDate)
+                        < DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-3))
+                    {
                         _webSession.DetailPeriod = ConstantesPeriod.DisplayLevel.monthly;
                     }
                 }
             }
-            #endregion
+        #endregion
 
             #region Option par media (Evaliant)
             string vehicleListId = _webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess);
             string[] vehicles = vehicleListId.Split(',');
-            foreach(string cVehicle in vehicles) {
-                switch(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(cVehicle))){
+            foreach (string cVehicle in vehicles)
+            {
+                switch (VehiclesInformation.DatabaseIdToEnum(Int64.Parse(cVehicle)))
+                {
                     case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
-					case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
+                    case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
                         //ResultsOptionsWebControl1.AutopromoEvaliantOption = true;
-						ResultsOptionsWebControl1.AutopromoEvaliantOption = VehiclesInformation.Get(Int64.Parse(cVehicle)).Autopromo; 
+                        ResultsOptionsWebControl1.AutopromoEvaliantOption = VehiclesInformation.Get(Int64.Parse(cVehicle)).Autopromo;
                         break;
                     case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
                     case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.newspaper:
@@ -344,11 +367,10 @@ namespace AdExpress.Private.Results{
                         break;
                 }
             }
-            #endregion
-
+           
             return (tmp);
         }
-        #endregion
+            #endregion
 
         #region PreRender
         /// <summary>
@@ -363,7 +385,7 @@ namespace AdExpress.Private.Results{
                 SetSloganUniverseOptions();
 
                 #region MAJ _webSession
-              
+               
                 _webSession.LastReachedResultUrl = Page.Request.Url.AbsolutePath;
                 _webSession.Save();
                 #endregion
@@ -392,19 +414,25 @@ namespace AdExpress.Private.Results{
         }
         #endregion
 
-		#region Méthodes internes
-		/// <summary>
-		/// Indique si le client peut affiner l'univers de versions
-		/// </summary>		
-		private void SetSloganUniverseOptions() {
-			if ((!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(_webSession) || !_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG)) //droits affiner univers Versions
-                || (_webSession.DetailPeriod != ConstantesPeriod.DisplayLevel.dayly && string.IsNullOrEmpty(_zoom)) ) {
+        #region Méthodes internes
+        
+
+        /// <summary>
+        /// Indique si le client peut affiner l'univers de versions
+        /// </summary>		
+        private void SetSloganUniverseOptions()
+        {
+            if ((!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(_webSession) || !_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG)) //droits affiner univers Versions
+                  || (_webSession.DetailPeriod != ConstantesPeriod.DisplayLevel.dayly && string.IsNullOrEmpty(_zoom)) ) {
+
+          
+                //ResultsOptionsWebControl1.InializeSlogansOption = false;
                 ArrayList forbiddenOptions = new ArrayList();
-                forbiddenOptions.Add(7);
+                forbiddenOptions.Add(TNS.AdExpress.Constantes.FrameWork.Selection.OptionalPageSelections.SLOGAN);
                 MenuWebControl2.ForbidOptionPagesList = forbiddenOptions;
-			}
-		}
-		#endregion
+            }
+        }
+        #endregion
 
     }
 }

@@ -183,6 +183,23 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
         /// SubPeriodSelection Component
         /// </summary>
         SubPeriodSelectionWebControl _subPeriodSelectionWebControl = null;
+        /// <summary>
+        /// Specify if "All periods" optrion is allowed for more than 4 month
+        /// </summary>
+        protected bool _isAllPeriodIsRestrictTo4Month = true;
+        /// <summary>
+        /// Get / Set "All periods" optrion is allowed for more than 4 month
+        /// </summary>
+        public bool IsAllPeriodIsRestrictTo4Month {
+            get {
+                return _isAllPeriodIsRestrictTo4Month;
+            }
+            set {
+                _isAllPeriodIsRestrictTo4Month = value;
+                _subPeriodSelectionWebControl.IsAllPeriodIsRestrictTo4Month = _isAllPeriodIsRestrictTo4Month;
+            }
+        }
+        
         #endregion
 
         #region Constructor
@@ -251,8 +268,29 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                     case DBClassifCst.Vehicles.names.radio:
                         vehicle = GestionWeb.GetWebWord(644, _webSession.SiteLanguage); 
                         break;
+                    case DBClassifCst.Vehicles.names.radioGeneral:
+                        vehicle = GestionWeb.GetWebWord(2630, _webSession.SiteLanguage);
+                        break;
+                    case DBClassifCst.Vehicles.names.radioSponsorship:
+                        vehicle = GestionWeb.GetWebWord(2632, _webSession.SiteLanguage);
+                        break;
+                    case DBClassifCst.Vehicles.names.radioMusic:
+                        vehicle = GestionWeb.GetWebWord(2631, _webSession.SiteLanguage);
+                        break;
                     case DBClassifCst.Vehicles.names.tv:
                         vehicle = GestionWeb.GetWebWord(1300, _webSession.SiteLanguage); 
+                        break;
+                    case DBClassifCst.Vehicles.names.tvGeneral:
+                        vehicle = GestionWeb.GetWebWord(2633, _webSession.SiteLanguage);
+                        break;
+                    case DBClassifCst.Vehicles.names.tvSponsorship:
+                        vehicle = GestionWeb.GetWebWord(2634, _webSession.SiteLanguage);
+                        break;
+                    case DBClassifCst.Vehicles.names.tvAnnounces:
+                        vehicle = GestionWeb.GetWebWord(2635, _webSession.SiteLanguage);
+                        break;
+                    case DBClassifCst.Vehicles.names.tvNonTerrestrials:
+                        vehicle = GestionWeb.GetWebWord(2636, _webSession.SiteLanguage);
                         break;
                     case DBClassifCst.Vehicles.names.others:
                         vehicle = GestionWeb.GetWebWord(647, _webSession.SiteLanguage); 
@@ -262,6 +300,9 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                         break;
                     case DBClassifCst.Vehicles.names.instore:
                         vehicle = GestionWeb.GetWebWord(2665, _webSession.SiteLanguage);
+                        break;
+                    case DBClassifCst.Vehicles.names.indoor:
+                        vehicle = GestionWeb.GetWebWord(2644, _webSession.SiteLanguage);
                         break;
                     case DBClassifCst.Vehicles.names.adnettrack:
                         vehicle = GestionWeb.GetWebWord(648, _webSession.SiteLanguage); 
@@ -278,6 +319,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                     case DBClassifCst.Vehicles.names.cinema:
                         vehicle = GestionWeb.GetWebWord(2726, _webSession.SiteLanguage);
                         break;
+                    case DBClassifCst.Vehicles.names.editorial:
+                        vehicle = GestionWeb.GetWebWord(2801, _webSession.SiteLanguage);
+                        break;
+                        
                 }
                 #endregion
 

@@ -20,6 +20,7 @@ using WebFunctions = TNS.AdExpress.Web.Functions;
 using FrameWorkSelection = TNS.AdExpress.Constantes.FrameWork.Selection;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Web.Navigation;
 
 public partial class Private_Selection_RecapUniverseProductSelection : TNS.AdExpress.Web.UI.SelectionWebPage {
 	#region Variables
@@ -367,10 +368,18 @@ public partial class Private_Selection_RecapUniverseProductSelection : TNS.AdExp
 	/// </summary>
 	/// <returns></returns>
 	private int GetDefaultBranchId(){
-		string accessItems = "";
-		accessItems = TNS.AdExpress.Web.Core.Utilities.SQLGenerator.GetInClauseMagicMethod("id_advertiser", _webSession.CustomerLogin[CustomerRightConstante.type.advertiserAccess], true);
-		if (accessItems != null && accessItems.Length > 0) return 9; //Branch advertiser
-		return 1; //Branch sector
+        int defaultBranchId = -1;
+        foreach (SelectionPageInformation currentPage in _currentModule.SelectionsPages)
+        {
+            if (currentPage.Url.Equals(this.Page.Request.Url.AbsolutePath))
+            {               
+                if (_webSession.CustomerLogin[CustomerRightConstante.type.advertiserAccess] != null && _webSession.CustomerLogin[CustomerRightConstante.type.advertiserAccess].Length > 0 && currentPage.ForceBranchId > 0) 
+                    defaultBranchId = currentPage.ForceBranchId; //Force Branch advertiser
+                else defaultBranchId = currentPage.DefaultBranchId; //Branch by default
+                break;
+            }
+        }
+        return defaultBranchId;
 	}
 	#endregion
 

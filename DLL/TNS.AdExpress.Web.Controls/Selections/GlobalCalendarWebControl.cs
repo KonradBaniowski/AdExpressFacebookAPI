@@ -351,10 +351,6 @@ namespace TNS.AdExpress.Web.Controls.Selections {
             js.Append(InitSelectedItemIndex());
             #endregion
 
-            #region PostBack
-            js.Append(PostBack());
-            #endregion
-
             #region memoryDispose
             js.Append(memoryDispose());
             #endregion
@@ -788,42 +784,6 @@ namespace TNS.AdExpress.Web.Controls.Selections {
             js.Append("\r\n\t\t\t if(strStart.length==1) strStart = '0' + strStart;");
             js.Append("\r\n\t\t\t if(strEnd.length==1) strEnd = '0' + strEnd;");
             js.AppendFormat("\r\n\t\t\t document.forms[0].dateSelectedItem.value = ''+selectedDateType_{0}+','+selectedYear_{0}+strStart+','+yearCur_{0}+strEnd+'';", this.ID);
-            js.Append("\r\n\t\t\t break;");
-            js.Append("\r\n\t }");
-            js.Append("\r\n\t }");
-
-            return (js.ToString());
-        }
-        #endregion
-
-        #region PostBack
-        /// <summary>
-        /// PostBack
-        /// </summary>
-        /// <returns>Script de la fonction</returns>
-        protected virtual string PostBack() {
-            StringBuilder js = new StringBuilder();
-
-            js.Append("\r\n\n  function postBack(){");
-            js.Append("\r\n\t var strStart, strEnd;");
-            js.Append("\r\n\t switch(selectedPeriodType_" + this.ID + "){");
-            js.Append("\r\n\t\t case 'Day':");
-            js.Append("\r\n\t\t case 'Year':");
-            js.Append("\r\n\t\t\t memoryDispose();");
-            js.AppendFormat("\r\n\t\t\t __doPostBack('" + this.ID + "',''+selectedDateType_{0}+','+dateBegin_{0}+','+dateEnd_{0}+'');", this.ID);
-            js.Append("\r\n\t\t\t break;");
-            js.Append("\r\n\t\t case 'Month':");
-            js.Append("\r\n\t\t case 'Trimester':");
-            js.Append("\r\n\t\t case 'Semester':");
-            js.Append("\r\n\t\t\t memoryDispose();");
-            js.AppendFormat("\r\n\t\t\t strStart = dateBegin_{0};", this.ID);
-            js.AppendFormat("\r\n\t\t\t strEnd = dateEnd_{0};", this.ID);
-            js.Append("\r\n\t\t\t if(strStart.length==1) strStart = '0' + strStart;");
-            js.Append("\r\n\t\t\t if(strEnd.length==1) strEnd = '0' + strEnd;");
-            js.AppendFormat("\r\n\t\t\t __doPostBack('" + this.ID + "',''+selectedDateType_{0}+','+selectedYear_{0}+strStart+','+yearCur_{0}+strEnd+'');", this.ID);
-            js.Append("\r\n\t\t\t break;");
-            js.Append("\r\n\t\t default:");
-            js.Append("\r\n\t\t\t alert('" + GestionWeb.GetWebWord(885, _language) + "');");
             js.Append("\r\n\t\t\t break;");
             js.Append("\r\n\t }");
             js.Append("\r\n\t }");
@@ -2186,18 +2146,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
             htmlBuilder.Append("\r\n\t</td>");
             htmlBuilder.Append("\r\n\t</tr>");
             htmlBuilder.Append("\r\n\t</table>");
-            htmlBuilder.Append("\r\n\t<table id=\"Table11\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" border=\"0\">");
-            htmlBuilder.Append("\r\n\t<tr>");
-            htmlBuilder.Append("\r\n\t<td>");
-            htmlBuilder.Append("\r\n\t<table id=\"Table12\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" border=\"0\">");
-            htmlBuilder.Append("\r\n\t<tr>");
-            htmlBuilder.Append("\r\n\t<td width=\"10\">&nbsp;</td>");
-            htmlBuilder.Append("\r\n\t<td><img id=\"valider\" src=\"/App_Themes/" + _themeName + "/Images/Culture/button/valider_up.gif\" onmouseover=\"valider.src='/App_Themes/" + _themeName + "/Images/Culture/button/valider_down.gif';\" onmouseout=\"valider.src='/App_Themes/" + _themeName + "/Images/Culture/button/valider_up.gif';\" onclick=\"PostBack('" + this.ID + "');\" style=\"cursor:pointer\"/></td>");
-            htmlBuilder.Append("\r\n\t</tr>");
-            htmlBuilder.Append("\r\n\t</table>");
-            htmlBuilder.Append("\r\n\t</td>");
-            htmlBuilder.Append("\r\n\t</tr>");
-            htmlBuilder.Append("\r\n\t</table>");
+          
 
             return (htmlBuilder.ToString());
 

@@ -42,10 +42,12 @@ namespace Private.Results.Excel
 		/// <returns>PostBackMode</returns>
 		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
-			ResultWebControl1.CustomerWebSession=_webSession;
+		
 
             try
             {
+                ResultWebControl1.CustomerWebSession = _webSession;
+
                 //Paramètres postés
                 string idsString = Page.Request.QueryString.Get("ids");
                 string[] ids = idsString.Split(',');

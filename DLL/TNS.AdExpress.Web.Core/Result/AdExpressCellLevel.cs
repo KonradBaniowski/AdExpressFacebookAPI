@@ -11,6 +11,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Domain.Level;
+using TNS.FrameWork.WebResultUI.Functions;
 
 namespace TNS.AdExpress.Web.Core.Result{
 	/// <summary>
@@ -106,6 +107,87 @@ namespace TNS.AdExpress.Web.Core.Result{
 			_webSession=webSession;
 			_genericDetailLevel =genericDetailLevel;
 		}
+
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="id">identifiant de l'élément du niveau</param>
+        /// <param name="label">Libellé du niveau</param>
+        /// <param name="level">Niveau de profondeur du niveau</param>
+        /// <param name="lineIndexInResultTable">Index de la ligne du niveau dans le tableau de resultat</param>
+        /// <param name="nbChar">Nombre de caractère sur une ligne</param>
+        /// <param name="tolerance">Tolérence du nombre de caratère sur une ligne</param>
+        public AdExpressCellLevel(long id, string label, int level, int lineIndexInResultTable, int nbChar, int tolerance)
+            : base(id, label, level, lineIndexInResultTable, nbChar,tolerance)
+        {
+        }
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="id">identifiant de l'élément du niveau</param>
+        /// <param name="label">Libellé du niveau</param>
+        /// <param name="parentLevel">Niveau supérieur</param>
+        /// <param name="level">Niveau de profondeur du niveau</param>
+        /// <param name="lineIndexInResultTable">Index de la ligne du niveau dans le tableau de resultat</param>
+        /// <param name="nbChar">Nombre de caractère sur une ligne</param>
+        /// <param name="tolerance">Tolérence du nombre de caratère sur une ligne</param>
+        public AdExpressCellLevel(long id, string label, CellLevel parentLevel, int level, int lineIndexInResultTable, int nbChar, int tolerance)
+            : base(id, label, parentLevel, level, lineIndexInResultTable, nbChar, tolerance)
+        {
+        }
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="id">identifiant de l'élément du niveau</param>
+        /// <param name="label">Libellé du niveau</param>
+        /// <param name="level">Niveau de profondeur du niveau</param>
+        /// <param name="lineIndexInResultTable">Index de la ligne du niveau dans le tableau de resultat</param>
+        /// <param name="webSession">Session du client</param>
+        /// <param name="nbChar">Nombre de caractère sur une ligne</param>
+        /// <param name="tolerance">Tolérence du nombre de caratère sur une ligne</param>
+        public AdExpressCellLevel(long id, string label, int level, int lineIndexInResultTable, WebSession webSession, int nbChar, int tolerance)
+            : base(id, label, level, lineIndexInResultTable, nbChar, tolerance)
+        {
+            if (webSession == null) throw (new ArgumentNullException("L'objet WebSession est null"));
+            _webSession = webSession;
+        }
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="id">identifiant de l'élément du niveau</param>
+        /// <param name="label">Libellé du niveau</param>
+        /// <param name="parentLevel">Niveau supérieur</param>
+        /// <param name="level">Niveau de profondeur du niveau</param>
+        /// <param name="lineIndexInResultTable">Index de la ligne du niveau dans le tableau de resultat</param>
+        /// <param name="webSession">Session du client</param>
+        /// <param name="nbChar">Nombre de caractère sur une ligne</param>
+        /// <param name="tolerance">Tolérence du nombre de caratère sur une ligne</param>
+        public AdExpressCellLevel(long id, string label, CellLevel parentLevel, int level, int lineIndexInResultTable, WebSession webSession, int nbChar, int tolerance)
+            : base(id, label, parentLevel, level, lineIndexInResultTable, nbChar, tolerance)
+        {
+            if (webSession == null) throw (new ArgumentNullException("L'objet WebSession est null"));
+            _webSession = webSession;
+        }
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="id">identifiant de l'élément du niveau</param>
+        /// <param name="label">Libellé du niveau</param>
+        /// <param name="parentLevel">Niveau supérieur</param>
+        /// <param name="level">Niveau de profondeur du niveau</param>
+        /// <param name="lineIndexInResultTable">Index de la ligne du niveau dans le tableau de resultat</param>
+        /// <param name="webSession">Session du client</param>
+        /// <param name="genericDetailLevel">Niveau de détail générique</param>
+        /// <param name="nbChar">Nombre de caractère sur une ligne</param>
+        /// <param name="tolerance">Tolérence du nombre de caratère sur une ligne</param>
+        public AdExpressCellLevel(long id, string label, CellLevel parentLevel, int level, int lineIndexInResultTable, WebSession webSession, GenericDetailLevel genericDetailLevel, int nbChar, int tolerance)
+            : base(id, label, parentLevel, level, lineIndexInResultTable, nbChar, tolerance)
+        {
+            if (webSession == null) throw (new ArgumentNullException("L'objet WebSession est null"));
+            if (genericDetailLevel == null) throw (new ArgumentNullException("L'objet GenericDetailLevel est null"));
+            _webSession = webSession;
+            _genericDetailLevel = genericDetailLevel;
+        }
 		#endregion
 
 		#region Implémentation de ICell (par héritage de Cell)
@@ -133,18 +215,34 @@ namespace TNS.AdExpress.Web.Core.Result{
 				html.AppendFormat("<td "+ ((cssClass.Length>0)?" class=\"" + cssClass + "\"":""));
 				html.Append("align=\"left\">");
 				html.AppendFormat("<a class=\"gad\" href=\""+_link+"\">", _webSession.IdSession, _label, _addressId);
-				for(int i = 0; i < _level; i++)
-					html.Append("&nbsp;");
-				html.AppendFormat("> {0}</a></td>",this._label);
+                StringBuilder separator = new StringBuilder(100);
+                for (int i = 0; i < _level; i++)
+                        separator.Append("&nbsp;");
+                if (_isWrapped)
+                {
+                    html.AppendFormat("> {0}</a></td>", TextWrap.WrapHtml(_label, _nbChar, _tolerance, separator.ToString()));
+                }
+                else
+                {
+                    html.Append(separator.ToString());
+                    html.AppendFormat("> {0}</a></td>", this._label);
+                }
 				if (_newGroup)
 					html.Insert(0,this.RenderSeparator());
 			}
 			else{
 				html.AppendFormat("<td "+ ((cssClass.Length>0)?" class=\"" + cssClass + "\"":""));
 				html.Append("align=\"left\">");
+                StringBuilder separator = new StringBuilder(100);
 				for(int i = 0; i < _level; i++)
-					html.Append("&nbsp;");
-				html.AppendFormat("{0}</td>",this._label);
+                    separator.Append("&nbsp;");
+                if (_isWrapped)
+                    html.AppendFormat("{0}</td>", TextWrap.WrapHtml(this._label, _nbChar, _tolerance, separator.ToString()));
+                else
+                {
+                    html.Append(separator.ToString());
+                    html.AppendFormat("{0}</td>", this._label);
+                }
 				if (_newGroup)
 					html.Insert(0,this.RenderSeparator());
 			}

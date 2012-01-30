@@ -497,6 +497,9 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 case DBClassificationConstantes.Vehicles.names.internet:
                     return "";
                 case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
                     sql += " select  distinct ID_COBRANDING_ADVERTISER";
                     sql += " ,duration_commercial_break as ecran_duration";
                     sql += " , NUMBER_spot_com_break nbre_spot";
@@ -504,6 +507,10 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     return sql;
                 case DBClassificationConstantes.Vehicles.names.tv:
                 case DBClassificationConstantes.Vehicles.names.others:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
                     sql += "select  distinct id_commercial_break ";
                     sql += " ,duration_commercial_break as ecran_duration";
                     sql += " ,NUMBER_MESSAGE_COMMERCIAL_BREA nbre_spot ";
@@ -716,6 +723,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 				case DBClassificationConstantes.Vehicles.names.others:
 				case DBClassificationConstantes.Vehicles.names.outdoor:
                 case DBClassificationConstantes.Vehicles.names.instore:
+                case DBClassificationConstantes.Vehicles.names.indoor:
 				case DBClassificationConstantes.Vehicles.names.internet:
 					return sql;
 				case DBClassificationConstantes.Vehicles.names.directMarketing:

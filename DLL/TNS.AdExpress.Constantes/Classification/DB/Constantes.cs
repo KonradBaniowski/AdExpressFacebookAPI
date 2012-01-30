@@ -74,10 +74,14 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
 			/// centre d'intérêt
 			/// </summary>
 			interest_center,
-            /// <summary>
+             /// <summary>
             /// Basic Media
             /// </summary>
-            basic_media
+            basic_media,
+            /// <summary>
+            /// Region
+            /// </summary>
+            region
 
 		}
 	}
@@ -85,15 +89,15 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
 
 	#region Vehicles
 	/// <summary>
-	/// Valeurs des vehicles dans la base de données
+	/// Media type List
 	/// </summary>
 	public class Vehicles{
 		/// <summary>
-		/// Véhicles
+        /// Media type
 		/// </summary>
 		public enum names{
 			/// <summary>
-			/// Presse
+			/// Press
 			/// </summary>
 			press=1,
 			/// <summary>
@@ -101,7 +105,7 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
 			/// </summary>
 			radio=2,
 			/// <summary>
-			/// Télévision
+			/// Television
 			/// </summary>
 			tv=3,
 			/// <summary>
@@ -109,7 +113,7 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
 			/// </summary>
 			mediasTactics=4,			
 			/// <summary>
-			/// Les autres média
+			/// Others media types
 			/// </summary>
 			others=5,	
 			/// <summary>
@@ -121,7 +125,7 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
 			/// </summary>
 			internet=7,
 			/// <summary>
-			/// Prublicité extéreur
+			/// Outdoor
 			/// </summary>
 			outdoor=8,
 			/// <summary>
@@ -162,16 +166,16 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
             magazine = 17,
             /// <summary>
             /// Radio General
-            /// </summary>
-            radioGeneral = 18,
+			/// </summary>
+			radioGeneral=18,
             /// <summary>
             /// Radio Sponsorship
-            /// </summary>
-            radioSponsorship = 19,
+			/// </summary>
+			radioSponsorship=19,
             /// <summary>
-            /// Radio Music
-            /// </summary>
-            radioMusic = 20,
+			/// Radio Music
+			/// </summary>
+			radioMusic=20,
             /// <summary>
             /// Television General
             /// </summary>
@@ -186,21 +190,24 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
             tvAnnounces = 23,
             /// <summary>
             /// Television non Terrestrials
-            /// </summary>
-            tvNonTerrestrials = 24,
+			/// </summary>
+			tvNonTerrestrials=24,
             /// <summary>
             /// inDoor
             /// </summary>
             indoor = 25,
-            /// <summary>
+             /// <summary>
             /// Television Niche Channels
-            /// </summary>
-            tvNicheChannels = 26,
+			/// </summary>
+			tvNicheChannels=26,
             /// <summary>
             /// IN Store 
             /// </summary>
             instore = 27,
-
+            /// <summary>
+            /// Editorial
+			/// </summary>
+			editorial=28
 		}
 	}
 	#endregion

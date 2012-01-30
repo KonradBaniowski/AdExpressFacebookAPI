@@ -123,10 +123,6 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             try
             {
                 data = GetData();
-                if (data == null || data.Tables[0].Rows.Count < 1)
-                {
-                    throw new NoDataException();
-                }
             }
             catch (DeliveryFrequencyException)
             {

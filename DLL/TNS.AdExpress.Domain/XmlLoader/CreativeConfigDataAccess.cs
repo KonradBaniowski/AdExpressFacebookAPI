@@ -163,6 +163,15 @@ namespace TNS.AdExpress.Domain.XmlLoader
                                         CreationServerPathes.LOCAL_PATH_VP = value;
                                         break;
                                     
+                                    case "IMAGES_EDITORIAL":
+                                        CreationServerPathes.IMAGES_EDITORIAL = value;
+                                        break;
+                                    case "LOCAL_PATH_EDITORIAL" :
+                                        CreationServerPathes.LOCAL_PATH_EDITORIAL = value;
+                                        break;
+                                    case "LOCAL_PATH_INTERNET":
+                                        CreationServerPathes.LOCAL_PATH_INTERNET = value;
+                                        break;
                                 }
                                 break;
                         }

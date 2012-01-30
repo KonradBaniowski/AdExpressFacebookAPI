@@ -23,6 +23,7 @@ using System.IO;
 using TNS.Ares.AdExpress.Exceptions;
 using TNS.Ares.Domain.Mail;
 using TNS.AdExpress.Domain.XmlLoader;
+using TNS.AdExpress.Domain.CampaignTypes;
 
 namespace TNS.Ares.AdExpress
 {
@@ -204,6 +205,9 @@ namespace TNS.Ares.AdExpress
                 #endregion
 
                 this._confFile = WebApplicationParameters.ConfigurationDirectoryRoot + pathConfiguration;
+
+                //Campaign  types
+                CampaignTypesInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.CAMPAIGN_TYPES_CONFIGURATION_FILENAME));
 
                 base.InitializeShell(pathConfiguration);
             }

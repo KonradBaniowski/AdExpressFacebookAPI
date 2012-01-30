@@ -36,7 +36,10 @@ namespace TNS.AdExpress.Domain.Level {
         /// Specify Filter columns foreach Column set
         /// </summary>
         private Dictionary<Int64, Dictionary<GenericColumnItemInformation.Columns, bool>> _filters = new Dictionary<Int64, Dictionary<GenericColumnItemInformation.Columns, bool>>();
-
+        /// <summary>
+        /// Foreach Column Set and each Column Item, Specify if column is in basket or not
+        /// </summary>
+        private Dictionary<Int64, Dictionary<GenericColumnItemInformation.Columns, bool>> _basketList = new Dictionary<Int64, Dictionary<GenericColumnItemInformation.Columns, bool>>();
 		#endregion
 
 		#region Constructeurs
@@ -45,7 +48,7 @@ namespace TNS.AdExpress.Domain.Level {
 		/// </summary>
         public GenericColumnsInformation(IDataSource source)
         {
-            GenericColumnsInformationXL.Load(source, _list, _visibility, _keys, _filters);
+            GenericColumnsInformationXL.Load(source, _list, _visibility, _keys, _filters, _basketList);
         }
 		#endregion
 
@@ -78,6 +81,12 @@ namespace TNS.AdExpress.Domain.Level {
         {
 			return _filters[idDetailColumn][columnId];
 		}
+        ///  <summary>Get if in basket tag for a specific column in a specific set of columns</summary>
+        ///  <param name="idDetailColumn">Column detail Id</param>
+        ///  <returns>True if the column is in basket, false neither</returns>
+        public bool InBasket(Int64 idDetailColumn, GenericColumnItemInformation.Columns columnId){
+            return _basketList[idDetailColumn][columnId];
+        }
 		#endregion
 
 

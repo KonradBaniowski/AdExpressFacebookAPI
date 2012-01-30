@@ -19,6 +19,10 @@ namespace TNS.AdExpressI.Visual
     public interface IVisual
     {
         /// <summary>
+        /// Theme
+        /// </summary>
+        string Theme { set; }
+        /// <summary>
         /// Get virtual path
         /// </summary>
         /// <param name="isBlur">Is Blur or not</param>
@@ -29,6 +33,16 @@ namespace TNS.AdExpressI.Visual
         /// </summary>
         /// <param name="isBlur">Is Blur or not</param>
         /// <returns>Binaries visual</returns>
-        byte[] GetBinaries(bool isBlur);   
+        byte[] GetBinaries(bool isBlur);
+        /// <summary>
+        /// Get Content Type
+        /// </summary>
+        /// <returns>Content Type string </returns>
+        string GetContentType();
+        /// <summary>
+        /// Add header
+        /// </summary>
+        /// <returns></returns>
+        string AddHeader();
     }
 }

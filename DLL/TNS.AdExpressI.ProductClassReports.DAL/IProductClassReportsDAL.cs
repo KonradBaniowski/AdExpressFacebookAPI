@@ -39,5 +39,13 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
         /// <returns></returns>
         DataSet GetUniversAdvertisers(string exclude);
 
+         /// <summary>
+        /// Get Advertisers which are part of the selected univers
+        /// </summary>
+        /// <param name="exclude">List of Advertiser Ids to exclude from the result</param>
+        /// <param name="keyWord">Key word for advertisers to search</param>
+        /// <returns>DataSet with (id_advertiser, advertiser) records</returns>
+        DataSet GetUniversAdvertisers(string exclude, string keyWord);
+
     }
 }

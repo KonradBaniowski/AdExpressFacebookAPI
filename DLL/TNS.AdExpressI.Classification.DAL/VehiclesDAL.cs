@@ -122,7 +122,7 @@ namespace TNS.AdExpressI.Classification.DAL {
 			#region Execution of the query
 			try {
                 //Exectuing the SQL query
-				ds = _session.Source.Fill(sql);
+				ds = _dataSource.Fill(sql);
 
                 /*The result must be a data table with firt field the identifier of the media ("idMediaType")
                  * and the second the label of the media ("mediaType").*/
@@ -175,12 +175,12 @@ namespace TNS.AdExpressI.Classification.DAL {
                         DataRow dr;
                         foreach (DataRow row in dt.Rows)
                         {
-                            Int64 idV = Convert.ToInt64(row["idVehicle"].ToString());
+                            Int64 idV = Convert.ToInt64(row["idMediaType"].ToString());
                             if (_session.CustomerLogin.CustomerMediaAgencyFlagAccess(idV))
                             {
                                 dr = dataTable.NewRow();
                                 dr["idMediaType"] = idV;
-                                dr["mediaType"] = row["vehicle"].ToString();
+                                dr["mediaType"] = row["mediaType"].ToString();
                                 dataTable.Rows.Add(dr);
                             }
                         }

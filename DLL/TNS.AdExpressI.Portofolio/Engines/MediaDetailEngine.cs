@@ -100,8 +100,15 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		protected override string BuildHtmlResult() {
 			switch (_vehicleInformation.Id) {
 				case DBClassificationConstantes.Vehicles.names.radio :
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others :
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
 					return GetDetailMediaHtml();					
 				default: throw new PortofolioException("The method to get data is not defined for this vehicle.");
 			}
@@ -117,7 +124,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		/// </summary>
 		/// <returns>table with each week day the media's investment
 		///  and the number of spot</returns>
-		public DataTable GetFormattedTableDetailMedia(IPortofolioDAL portofolioDAL) {
+		virtual public DataTable GetFormattedTableDetailMedia(IPortofolioDAL portofolioDAL) {
 
 			#region Variables
 			DataTable dt = null, dtResult = null;
@@ -292,70 +299,87 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			#region Table
 			foreach(DataRow dr in dt.Rows) {
 
-                #region Define color line
-                if (oldEcranCode != long.Parse(dr["screenCode"].ToString())) {
-                    color = !color;
-                }
-                #endregion
-
-                #region Init line
-                if (color) {
-					t.Append("<tr  onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='violetBackGroundV2';\" class=\"violetBackGroundV2\">");
-				}
-				else {
-					t.Append("<tr  onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='greyBackGround';\" class=\"greyBackGround\">");
-                }
-                #endregion
-
-                #region First column : screenCode
-                if (oldEcranCode != long.Parse(dr["screenCode"].ToString())) {
-					// Screen code
-					t.Append("<td class=\"p2\" rowspan=" + unitsList.Count + " align=\"left\" nowrap>" + dr["screenCode"].ToString() + "</td>");
-                }
-                #endregion
-
                 #region Get current information for current unit result
                 unitInformation = UnitsInformation.Get((TNS.AdExpress.Constantes.Web.CustomerSessions.Unit)long.Parse(dr["idUnit"].ToString()));
                 #endregion
 
-                #region Column units
-                if (unitInformation.Id == UnitsInformation.DefaultCurrency || unitInformation.Id == UnitsInformation.DefaultKCurrency)
-                    unitWebText = GestionWeb.GetWebWord(471, _webSession.SiteLanguage) + " (" + GestionWeb.GetWebWord(unitInformation.WebTextId, _webSession.SiteLanguage) + ")";
-                else
-                    unitWebText = GestionWeb.GetWebWord(unitInformation.WebTextId, _webSession.SiteLanguage);
-                if (color) {
-                    t.Append("<td class=\"" + classStyleValue + "\" align=\"left\" nowrap>" + unitWebText + "</td>");
-				}
-				else {
-                    t.Append("<td class=\"" + classStyleValue + "\" align=\"left\" nowrap>" + unitWebText + "</td>");
-                }
-                #endregion
+                if (unitsList.Contains(unitInformation))
+                {
 
-                #region Column day of week
-                for (int i = 0; i < dayName.Length; i++) {
-                    if (dr[dayName[i]] != null && dr[dayName[i]] != System.DBNull.Value && !dr[dayName[i]].ToString().Equals("0")) {
-
-                        t.Append("<td class=\"" + cssClass + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">");
-                        if (!_excel && !isTvNatThematiques)
-                            t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','" + dayName[i] + "','" + dr["screenCode"].ToString() + "');\" class=\"txtLinkBlack11\"> ");
-                        
-                        t.Append(Units.ConvertUnitValueAndPdmToString(dr[dayName[i]], unitInformation.Id, false, fp));
-
-                        if (!_excel && !isTvNatThematiques)
-                            t.Append("</a>");
-                        t.Append("</td>");
+                    #region Define color line
+                    if (oldEcranCode != long.Parse(dr["screenCode"].ToString()))
+                    {
+                        color = !color;
                     }
-                    else {
-                        t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
+                    #endregion
+
+                    #region Init line
+                    if (color)
+                    {
+                        t.Append("<tr  onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='violetBackGroundV2';\" class=\"violetBackGroundV2\">");
                     }
+                    else
+                    {
+                        t.Append("<tr  onmouseover=\"this.className='whiteBackGround';\" onmouseout=\"this.className='greyBackGround';\" class=\"greyBackGround\">");
+                    }
+                    #endregion
+
+                    #region First column : screenCode
+                    if (oldEcranCode != long.Parse(dr["screenCode"].ToString()))
+                    {
+                        // Screen code
+                        t.Append("<td class=\"p2\" rowspan=" + unitsList.Count + " align=\"left\" nowrap>" + GetScreenCodeText(dr["screenCode"].ToString()) + "</td>");
+                    }
+                    #endregion
+
+                    #region Column units
+                    if (unitInformation.Id == WebCst.CustomerSessions.Unit.euro
+                        || unitInformation.Id == WebCst.CustomerSessions.Unit.kEuro
+                        || unitInformation.Id == WebCst.CustomerSessions.Unit.rubles
+                        || unitInformation.Id == WebCst.CustomerSessions.Unit.usd)
+                        unitWebText = GestionWeb.GetWebWord(471, _webSession.SiteLanguage) + " (" + GestionWeb.GetWebWord(unitInformation.WebTextId, _webSession.SiteLanguage) + ")";
+                    else
+                        unitWebText = GestionWeb.GetWebWord(unitInformation.WebTextId, _webSession.SiteLanguage);
+                    if (color)
+                    {
+                        t.Append("<td class=\"" + classStyleValue + "\" align=\"left\" nowrap>" + unitWebText + "</td>");
+                    }
+                    else
+                    {
+                        t.Append("<td class=\"" + classStyleValue + "\" align=\"left\" nowrap>" + unitWebText + "</td>");
+                    }
+                    #endregion
+
+                    #region Column day of week
+                    for (int i = 0; i < dayName.Length; i++)
+                    {
+                        if (dr[dayName[i]] != null && dr[dayName[i]] != System.DBNull.Value && !dr[dayName[i]].ToString().Equals("0"))
+                        {
+
+                            t.Append("<td class=\"" + cssClass + (style.Length > 0 ? " " + style + "" : "") + "\" align=\"right\" nowrap title=\"" + GestionWeb.GetWebWord(1429, _webSession.SiteLanguage) + "\">");
+                            if (!_excel && !isTvNatThematiques)
+                                t.Append("<a href=\"javascript:portofolioDetailMedia('" + _webSession.IdSession + "','" + _idMedia + "','" + dayName[i] + "','" + dr["screenCode"].ToString() + "');\" class=\"txtLinkBlack11\"> ");
+
+                            t.Append(Units.ConvertUnitValueAndPdmToString(dr[dayName[i]], unitInformation.Id, false, fp));
+
+                            if (!_excel && !isTvNatThematiques)
+                                t.Append("</a>");
+                            t.Append("</td>");
+                        }
+                        else
+                        {
+                            t.Append("<td class=\"" + classStyleValue + "\" align=\"right\" nowrap>&nbsp;</td>");
+                        }
+                    }
+                    #endregion
+
+                    #region End line
+                    t.Append("</tr>");
+                    #endregion
+
+                    oldEcranCode = long.Parse(dr["screenCode"].ToString());
+
                 }
-                #endregion
-
-                #region End line
-                t.Append("</tr>");
-                #endregion
-
-                oldEcranCode = long.Parse(dr["screenCode"].ToString());
 				
 			}
 			#endregion
@@ -365,5 +389,20 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
 		}
 		#endregion
+
+        #region GetScreenCodeText
+        /// <summary>
+        /// Get screen code formated depending on country specificities
+        /// </summary>
+        /// <param name="screenCode">screen code that we get from DAL</param>
+        /// <returns>Screen code formated</returns>
+        /// <remarks>We've added this method for Russia</remarks>
+        virtual protected string GetScreenCodeText(string screenCode) {
+
+            return screenCode;
+
+        }
+        #endregion
+
 	}
 }

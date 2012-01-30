@@ -15,6 +15,7 @@ using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.XmlLoader;
 using TNS.AdExpress.Domain.Exceptions;
 using TNS.AdExpress.Domain.Units;
+using System.Collections;
 
 namespace TNS.AdExpress.Domain.Classification {
     /// <summary>
@@ -450,6 +451,37 @@ namespace TNS.AdExpress.Domain.Classification {
             return communlevelList;
 
         }
+        /// <summary>
+        /// Get commun DetailLevelItemInformation list
+        /// </summary>
+        /// <param name="vehicleList">Vehicle Information List</param>
+        /// <param name="idMarket">Id market</param>
+        /// <returns>Detail Level Information List</returns>
+        /// <remarks>This method is used when we have a dataBaseId list</remarks>
+        public static List<DetailLevelItemInformation.Levels> GetCommunDetailLevelList(List<Int64> vehicleList, long idMarket){
+
+            List<DetailLevelItemInformation.Levels> communlevelList = new List<DetailLevelItemInformation.Levels>();
+            if (vehicleList.Count > 0){
+                
+                    List<DetailLevelItemInformation.Levels> levelList = Get(vehicleList[0]).AllowedMediaLevelItemsEnumList;
+                    if (vehicleList.Count == 1)
+                        return levelList;
+                    else{
+                        foreach (DetailLevelItemInformation.Levels currentKey in levelList){
+                            communlevelList.Add(currentKey);
+                        }
+                        foreach (Int64 currentVehicle in vehicleList){
+                            foreach (DetailLevelItemInformation.Levels currentLevel in levelList)
+                                if (!Get(currentVehicle).AllowedMediaLevelItemsEnumList.Contains(currentLevel))
+                                    communlevelList.Remove(currentLevel);
+                        }
+                    }
+                
+            }
+
+            return communlevelList;
+
+        }
         #endregion
 
         #region Get DetailLevelItemInformation list
@@ -481,6 +513,58 @@ namespace TNS.AdExpress.Domain.Classification {
 
 			return selectionlevelList;
 		}
+
+        /// <summary>
+        /// Get Columns broken down (DetailLevelItemInformation) list
+        /// </summary>
+        /// <param name="vehicleList">Vehicle Information List</param>
+        /// <returns>Detail Level Information List</returns>
+        /// <remarks>This method is used when we have a dataBaseId list</remarks>
+        public static List<DetailLevelItemInformation.Levels> GetColumnsDetailLevelList(List<Int64> vehicleList)
+        {
+
+            List<DetailLevelItemInformation.Levels> communlevelList = new List<DetailLevelItemInformation.Levels>();
+            if (vehicleList.Count > 0)
+            {
+                List<DetailLevelItemInformation> levelList = Get(vehicleList[0]).AllowedColumnDetailLevelItems;
+                if (vehicleList.Count == 1)
+                {
+                    foreach (DetailLevelItemInformation currentLevel in levelList)
+                    {
+                        communlevelList.Add(currentLevel.Id);                       
+                    }
+                    return communlevelList;
+                }
+                else
+                {                    
+                    for(int i=0; i<vehicleList.Count;i++)
+                    {
+                        levelList = Get(vehicleList[i]).AllowedColumnDetailLevelItems;
+
+                        for (int j = 0; j < vehicleList.Count; j++)
+                        {
+                            if (j != i)
+                            {
+                             
+                                foreach (DetailLevelItemInformation currentLevel in levelList)
+                                {
+                                    if (!communlevelList.Contains(currentLevel.Id)) communlevelList.Add(currentLevel.Id);
+                                    List<DetailLevelItemInformation> temp = Get(vehicleList[j]).AllowedColumnDetailLevelItems;
+                                    if (temp != null && temp.Count > 0)
+                                    {
+                                        if(!temp.Contains(currentLevel))
+                                        communlevelList.Remove(currentLevel.Id);
+                                    }
+                                }                                   
+                            }
+                        }
+                    }
+                }
+            }
+
+            return communlevelList;
+
+        }
         #endregion
 
         #region Init

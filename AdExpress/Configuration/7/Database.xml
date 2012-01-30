@@ -1,31 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <database>
   <customerConnections>
-    <customerConnection enumId="0" description="AdExpress user connection" dataBaseEnumId="2"  dataSource="adexprodfr01.test" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <!--<customerConnection enumId="0" description="AdExpress user connection" login="TNSRussie" password="adextest1" dataBaseEnumId="7"  dataSource="194.58.36.199" databaseName="AX_CTL" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150"/>-->
+    <customerConnection enumId="0" description="AdExpress user connection" dataBaseEnumId="2"  dataSource="ADEXPRRU01.PROD" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <!--<customerConnection enumId="0" description="AdExpress user connection" dataBaseEnumId="2"  dataSource="ADEXPRRU01.PROD" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>-->
   </customerConnections>
   <defaultConnections>
-    <defaultConnection enumId="0" description="Session" dataBaseEnumId="2" login="gfacon" password="sandie5"  dataSource="adexprodfr01.test" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <defaultConnection enumId="1" description="Translation" dataBaseEnumId="2" login="admin_web" password="zepabony9"           dataSource="adexprodfr01.test" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="2" login="recap01" password="itulatif8"  dataSource="adexprodfr01.test" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <!--<defaultConnection enumId="0" description="Session" dataBaseEnumId="2" login="gfacon" password="sandie5"  dataSource="ADEXPRRU01.PROD" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>-->
+    <defaultConnection enumId="0" description="Session" dataBaseEnumId="2" login="adexpr_right" password="sandie5"  dataSource="ADEXPRRU01.PROD" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="1" description="Translation" dataBaseEnumId="2" login="admin_web" password="zepabony9"           dataSource="ADEXPRRU01.PROD" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="2" login="recap01" password="itulatif8"  dataSource="ADEXPRRU01.PROD" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <!--<defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="2" login="gfacon" password="sandie5"  dataSource="adexpr04.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="false"/>-->
     <defaultConnection enumId="3" description="APPM (Chronopresse)" dataBaseEnumId="2" login="grp" password="rpgdoom3"          dataSource="PITAFR02.PIGE" connectionTimeOut="120" isUtf8="true"/>
-    <defaultConnection enumId="4" description="Geb" dataBaseEnumId="2" login="adexpr03_proc_7" password="pushit76"              dataSource="adexprodfr01.test" connectionTimeOut="120" pooling="false" isUtf8="true"/>
-    <defaultConnection enumId="5" description="Hermes" dataBaseEnumId="2" login="adexpr03_proc_8" password="lnampt8"            dataSource="adexprodfr01.test" connectionTimeOut="120" pooling="false" isUtf8="true"/>
-    <defaultConnection enumId="6" description="Publication" dataBaseEnumId="2" login="user_web" password="zebony8"              dataSource="adexprodfr01.test" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <defaultConnection enumId="7" description="Web Administration" dataBaseEnumId="2" login="admin_web" password="zepabony9"    dataSource="adexprodfr01.test" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <defaultConnection enumId="8" description="Alerts" dataBaseEnumId="2" login="adexpr03_proc_11" password="trela5"            dataSource="adexprodfr01.test" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="4" description="Geb" dataBaseEnumId="2" login="adexpr03_proc_7" password="pushit76"              dataSource="ADEXPRRU01.PROD" connectionTimeOut="120" pooling="false" isUtf8="true"/>
+    <defaultConnection enumId="5" description="Hermes" dataBaseEnumId="2" login="adexpr03_proc_8" password="lnampt8"            dataSource="ADEXPRRU01.PROD" connectionTimeOut="120" pooling="false" isUtf8="true"/>
+    <defaultConnection enumId="6" description="Publication" dataBaseEnumId="2" login="user_web" password="zebony8"              dataSource="ADEXPRRU01.PROD" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="7" description="Web Administration" dataBaseEnumId="2" login="admin_web" password="zepabony9"    dataSource="ADEXPRRU01.PROD" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="8" description="Alerts" dataBaseEnumId="2" login="adexpr03_proc_11" password="trela5"            dataSource="ADEXPRRU01.PROD" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="9" description="EasyMusic" dataBaseEnumId="2" login="nicotest3000" password="nicotest3000"       dataSource="music01_test.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <!--Test default rights connection-->
-    <defaultConnection enumId="10" description="Rights" dataBaseEnumId="2" login="gfacon" password="sandie5"    dataSource="adexprodfr01.test" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <defaultConnection enumId="11" description="AdExpress Russia connection" login="TNSRussie" password="adextest1" dataBaseEnumId="7"  dataSource="194.58.36.199" databaseName="AX_CTL" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150"/>
+    <!--default rights connection to AdExpress-->
+    <defaultConnection enumId="10" description="Rights AdExpress" dataBaseEnumId="2" login="adexpr_right" password="sandie5"    dataSource="ADEXPRRU01.PROD" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="11" description="AdExpress Russia connection" login="TNSRussie" password="adextest1" dataBaseEnumId="7"  dataSource="194.190.21.21" databaseName="AX_CTL_2" connectionTimeOut="180" pooling="false" decrPoolSize="20" maxPoolSize="150"/>    
   </defaultConnections>
   <schemas>
     <schema enumId="0" description="AdExpress Data (AdExpr03)" label="adexpr03"/>
     <schema enumId="1" description="APPM (Chronopress)" label="appm01"/>
     <schema enumId="2" description="Right" label="mau01"/>
     <!--<schema enumId="3" description="Mou" label="mou01"/>-->
-    <schema enumId="3" description="Mou" label="mou01"/>
+    <schema enumId="3" description="Mou" label="webnav01"/>
     <schema enumId="4" description="Product class analysis" label="recap01"/>
     <schema enumId="5" description="Web" label="webnav01"/>
     <schema enumId="10" description="Alert" label="mau01"/>
@@ -154,7 +155,8 @@
 
     <table enumId="131" description="Right: Module Assignment" schemaEnumId="2" label="module_assignment" prefix="ma"/>
     <table enumId="132" description="Right: Right Assignment" schemaEnumId="2" label="right_assignment" prefix="ra"/>
-    <table enumId="133" description="Right: My Login view" schemaEnumId="2" label="my_login" prefix="mylo"/>
+    <!--Utilisation de la table login au lieu de la vue my_login en Russie -->
+    <table enumId="133" description="Right: My Login view" schemaEnumId="2" label="login" prefix="mylo"/>
     <table enumId="134" description="Right: Product Order" schemaEnumId="2" label="order_client_product" prefix="ocp"/>
     <table enumId="135" description="Right: Media Order" schemaEnumId="2" label="order_client_media" prefix="ocm"/>
     <table enumId="136" description="Right: Module frequency types" schemaEnumId="2" label="frequency" prefix="mfq"/>
@@ -204,7 +206,7 @@
     <table enumId="179" description="Recap Data: Instore Segment" schemaEnumId="4" label="recap_instore_segment" prefix="rcp"/>
     <table enumId="180" description="Data: Instore" schemaEnumId="0" label="data_instore" prefix="wp"/>
     <table enumId="181" description="Data: Instore 4M" schemaEnumId="0" label="data_instore_4M" prefix="wp"/>
-
+ <table enumId="183" description="Tracking: Connection number By Login Ip Time slot" schemaEnumId="5" label="connection_by_login_ip" prefix="cli"/>
     <table enumId="184" description="Data: Cinema Retailer"             schemaEnumId="0" label="data_cinema_retailer" prefix="wp"/>
     <table enumId="185" description="Data: Cinema Retailer 4M"          schemaEnumId="0" label="data_cinema_retailer_4M" prefix="wp"/>
     <table enumId="186" description="Data: Internet Retailer"           schemaEnumId="0" label="data_internet_retailer" prefix="wp"/>
@@ -252,7 +254,9 @@
 
     <table enumId="227" description="Dash Board Data: Pluri Month Retailer"   schemaEnumId="0" label="TABLEAU_BORD_PLURI_MONTH_RET" prefix="dshb"/>
     <table enumId="228" description="Dash Board Data: Pluri Week Retailer"    schemaEnumId="0" label="TABLEAU_BORD_PLURI_WEEK_RET" prefix="dshb"/>
-    
+    <table enumId="235" description="Customer Insertions levels: Group insertion save" schemaEnumId="5" label="group_insertion_save" prefix="dir"/>
+    <table enumId="236" description="Customer Insertions levels: insertion leves save" schemaEnumId="5" label="insertion_save" prefix="isl"/>
+
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>
     <table enumId="302" description="Alert Schedule" schemaEnumId="10" label="alert_schedule" prefix="as"/>

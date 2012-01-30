@@ -480,8 +480,67 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess {
 		}
 		#endregion
 
-		
+        #region Top connections Clients, IP, Tranches horaires
+        /// <summary>
+        /// Top connections Clients, IP, time slot
+        /// </summary>
+        /// <param name="parameters">parametres</param>
+        /// <returns>Données Top connections Clients, IP, time slot</returns>
+        public static DataTable TopConnectedByIpTimeSlot(BastetCommon.Parameters parameters)
+        {
+            try
+            {
+                #region Requête
+                StringBuilder sql = new StringBuilder(3000);
+                Table companyTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightCompany);
+                Table contactTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightContact);
+                Table addressTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightAddress);
+                Table loginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightLogin);
+                Table connectionByLoginTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingConnectionByLoginIpTimeslot);
 
-	}//end BastetDataAccess
+                //select				
+                sql.Append(" select ");
+                sql.Append(" " + companyTable.Prefix + ".id_company ," + companyTable.Prefix + ".company," + connectionByLoginTable.Prefix + ".id_login," + loginTable.Prefix + ".login ");
+                sql.Append(" ,IP_ADDRESS," + connectionByLoginTable.Prefix + ".date_connection ,sum(" + connectionByLoginTable.Prefix + ".CONNECTION_NUMBER_24_3) as CONNECTION_NUMBER_24_3 ");
+                sql.Append(",sum(" + connectionByLoginTable.Prefix + ".CONNECTION_NUMBER_3_6) as CONNECTION_NUMBER_3_6,sum(" + connectionByLoginTable.Prefix + ".CONNECTION_NUMBER_6_9) as CONNECTION_NUMBER_6_9 ");
+                sql.Append(",sum(" + connectionByLoginTable.Prefix + ".CONNECTION_NUMBER_9_12) as CONNECTION_NUMBER_9_12,sum(" + connectionByLoginTable.Prefix + ".CONNECTION_NUMBER_12_15) as CONNECTION_NUMBER_12_15");
+                sql.Append(",sum(" + connectionByLoginTable.Prefix + ".CONNECTION_NUMBER_15_18) as CONNECTION_NUMBER_15_18,sum(" + connectionByLoginTable.Prefix + ".CONNECTION_NUMBER_18_21) as CONNECTION_NUMBER_18_21");
+                sql.Append(",sum(" + connectionByLoginTable.Prefix + ".CONNECTION_NUMBER_21_24) as CONNECTION_NUMBER_21_24 ");
+
+                //From
+                sql.Append(" from " + connectionByLoginTable.SqlWithPrefix);
+                sql.Append(" ," + companyTable.SqlWithPrefix + "," + contactTable.SqlWithPrefix
+                    + "," + addressTable.SqlWithPrefix + "," + loginTable.SqlWithPrefix);
+                //Where
+                sql.Append(" where " + connectionByLoginTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
+                if (parameters != null && parameters.Logins.Length > 0)
+                    sql.Append(" and " + connectionByLoginTable.Prefix + ".id_login in (" + parameters.Logins + ") ");
+                sql.Append(" and " + loginTable.Prefix + ".id_login=" + connectionByLoginTable.Prefix + ".id_login ");
+                sql.Append(" and " + loginTable.Prefix + ".id_contact=" + contactTable.Prefix + ".id_contact ");
+                sql.Append(" and " + contactTable.Prefix + ".id_address = " + addressTable.Prefix + ".id_address ");
+                sql.Append(" and " + addressTable.Prefix + ".id_company=" + companyTable.Prefix + ".id_company ");
+                //Gourp by
+                sql.Append(" group by  " + companyTable.Prefix + ".id_company," + companyTable.Prefix + ".company," + connectionByLoginTable.Prefix + ".id_login," + loginTable.Prefix + ".login , IP_ADDRESS, "+ connectionByLoginTable.Prefix + ".date_connection  ");
+                //Order by
+                sql.Append(" order by  " + companyTable.Prefix + ".company  asc," + loginTable.Prefix + ".login asc,IP_ADDRESS, " + connectionByLoginTable.Prefix + ".date_connection ");
+                #endregion
+
+                #region Execution
+
+                return (parameters.Source.Fill(sql.ToString()).Tables[0]);
+                #endregion
+            }
+            catch (System.Exception err)
+            {
+                throw (new AnubisBastet.Exceptions.BastetDataAccessException(" TopConnectedByIpTimeSlot : Impossible to get the list of most connected Clients, IP, time slot ", err));
+            }
+
+
+        }
+        #endregion
+
+
+
+    }//end BastetDataAccess
 
 }//end namespace DataAccess

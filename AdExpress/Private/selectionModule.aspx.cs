@@ -28,8 +28,11 @@ using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Domain.Classification;
-using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpressI.Date.DAL;
+using System.Reflection;
+using TNS.AdExpress.Domain.Units;
 
 namespace AdExpress{
 	/// <summary>
@@ -61,7 +64,7 @@ namespace AdExpress{
 		/// Constructeur
 		/// </summary>
 		public selectionModule():base(){
-            int t = 0;
+           
 		}
 		#endregion
 
@@ -125,59 +128,30 @@ namespace AdExpress{
 
                     _webSession.Unit = UnitsInformation.DefaultCurrency;
 
-                    _webSession.PreformatedProductDetail=WebFunctions.ProductDetailLevel.GetDefault(_webSession);
+                    TNS.AdExpress.Domain.Layers.CoreLayer clProductU = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.productDetailLevelUtilities];
+                    if (clProductU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
+                    TNS.AdExpress.Web.Core.Utilities.ProductDetailLevel productDetailLevelUtilities = (TNS.AdExpress.Web.Core.Utilities.ProductDetailLevel)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + clProductU.AssemblyName, clProductU.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
+                    _webSession.PreformatedProductDetail = productDetailLevelUtilities.GetDefaultPreformatedProductDetails(_webSession);
+
+                    //_webSession.PreformatedProductDetail=WebFunctions.ProductDetailLevel.GetDefault(_webSession);
 
 					_webSession.LastReachedResultUrl="";
 					_webSession.Percentage=false;
 					_webSession.ProductDetailLevel=null;
 					// Niveau de détail support par défaut pour les plan media
-//					if(_webSession.CurrentModule ==TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PLAN_MEDIA
-//						|| _webSession.CurrentModule ==TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                   
+                   
 					if(_webSession.CurrentModule !=TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE &&_webSession.CurrentModule !=TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR){
-						
-						if(_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS)
-							_webSession.PreformatedMediaDetail=TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.Media;
-                        else if(_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES)
-                            _webSession.PreformatedMediaDetail=TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicle;
-						else _webSession.PreformatedMediaDetail=TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategory;
+                        
+                        TNS.AdExpress.Domain.Layers.CoreLayer clMediaU = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.mediaDetailLevelUtilities];
+                        if (clMediaU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
+                        TNS.AdExpress.Web.Core.Utilities.MediaDetailLevel mediaDetailLevelUtilities = (TNS.AdExpress.Web.Core.Utilities.MediaDetailLevel)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + clMediaU.AssemblyName, clMediaU.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
+                        _webSession.PreformatedMediaDetail = mediaDetailLevelUtilities.GetDefaultPreformatedMediaDetails(_webSession);
+                      
 						#region Niveau de détail media (Generic)
-						ArrayList levels=new ArrayList();
-                        switch(_webSession.CurrentModule){
-                            case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS:
-                                // Support
-                                levels.Add(3);
-                                break;
-                            case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_PROGRAMMES:
-                                levels.Add(8);
-                                break;
-                            case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA_CONCURENTIELLE:
-                            case TNS.AdExpress.Constantes.Web.Module.Name.ALERTE_PLAN_MEDIA_CONCURENTIELLE:
-                                // Media/catégorie/Support
-                                levels.Add(1);
-							    levels.Add(2);
-                                levels.Add(3);
-                                break;
-                            case TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES:
-                                // Famille
-                                levels.Add(11);
-                                break;
-                            case TNS.AdExpress.Constantes.Web.Module.Name.VP:                               
-                                //VP Product category
-                                levels.Add(65);
-                                //VP product
-                                levels.Add(67);
-                                //VP Brand
-                                levels.Add(66);                               
-                                break;
-                            default:
-                                // Media/catégorie
-                                levels.Add(1);
-							    levels.Add(2);
-
-								
-                                break;
-                        }			
-						_webSession.GenericMediaDetailLevel=new GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+                        
+                        ArrayList levels = mediaDetailLevelUtilities.GetDefaultGenericDetailLevelIds(_webSession.CurrentModule);
+                        _webSession.GenericMediaDetailLevel=new GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
 						_webSession.GenericAdNetTrackDetailLevel=new GenericDetailLevel(levels,TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
 						#endregion
 
@@ -185,20 +159,17 @@ namespace AdExpress{
                         CstWeb.GenericDetailLevel.SelectedFrom selectedFrom;
 						// Initialisation à annonceur
 						levels.Clear();
-                        switch(_webSession.CurrentModule) {
-                            case TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES:
-                                // Famille
-                                levels.Add(11);
+                        
+
+                        levels = productDetailLevelUtilities.GetDefaultGenericDetailLevelIds(_webSession.CurrentModule);
+                         switch(_webSession.CurrentModule) {
+                            case TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES:                              
                                 selectedFrom = TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels;
                                 break;
-                            case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES:
-                                levels.Add(15);
-                                levels.Add(16);
-                                levels.Add(8);
+                            case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES:                               
                                 selectedFrom = TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.customLevels;
                                 break;
-                            default:
-                                levels.Add(8);
+                            default:                               
                                 selectedFrom = TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels;
                                 break;
                         }
@@ -264,7 +235,7 @@ namespace AdExpress{
 					#region Paramètres pour les accroches - G Ragneau - 23/12/2005
 					_webSession.IdSlogans = new ArrayList();
 					_webSession.SloganColors = new Hashtable();
-					_webSession.SloganIdZoom=-1;
+                    _webSession.SloganIdZoom = long.MinValue; 
 					#endregion
 
 					//Rajouté le 14/12/05 par D.V. Mussuma
@@ -309,6 +280,11 @@ namespace AdExpress{
                     else
                         _webSession.PersonnalizedLevel = DetailLevelItemInformation.Levels.vpBrand;
 
+                    //Campaign type 
+                    _webSession.CampaignType = TNS.AdExpress.Constantes.Web.CustomerSessions.CampaignType.notDefined;
+
+                    //Avertisement Type
+                    _webSession.AdvertisementTypeUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
                     //Initialisation de customerPeriod
                     try {
                         if (_webSession.CustomerPeriodSelected != null)
@@ -388,7 +364,13 @@ namespace AdExpress{
 				_webSession.OnSetVehicle(DBConstantes.Vehicles.names.plurimedia.GetHashCode());
 
 				// Extraction Last Available Recap Month
-				_webSession.LastAvailableRecapMonth = DBFunctions.CheckAvailableDateForMedia(DBConstantes.Vehicles.names.plurimedia.GetHashCode(), _webSession);
+                CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+                object[] param = new object[1];
+                param[0] = _webSession;
+                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+
+                //_webSession.LastAvailableRecapMonth = DBFunctions.CheckAvailableDateForMedia(DBConstantes.Vehicles.names.plurimedia.GetHashCode(), _webSession);
+                _webSession.LastAvailableRecapMonth = dateDAL.CheckAvailableDateForMedia(VehiclesInformation.EnumToDatabaseId(DBConstantes.Vehicles.names.plurimedia));
 
 				_webSession.SelectionUniversMedia = _webSession.CurrentUniversMedia = current;
 				_webSession.PreformatedMediaDetail = CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicle;
@@ -423,7 +405,11 @@ namespace AdExpress{
 					//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 					//du dernier mois dispo en BDD
 					//traitement de la notion de fréquence
-					absolutEndPeriod = Dates.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
+                    CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+                    object[] param = new object[1];
+                    param[0] = _webSession;
+                    IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                    absolutEndPeriod = dateDAL.CheckPeriodValidity(_webSession, _webSession.PeriodEndDate);
 
 					if ((int.Parse(absolutEndPeriod) < int.Parse(_webSession.PeriodBeginningDate)) || (absolutEndPeriod.Substring(4, 2).Equals("00"))) {
 						throw (new TNS.AdExpress.Domain.Exceptions.NoDataException());

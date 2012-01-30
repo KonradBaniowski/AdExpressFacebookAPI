@@ -174,7 +174,14 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 					switch (_vehicleInformation.Id) {
 						case DBClassificationConstantes.Vehicles.names.others :
 						case DBClassificationConstantes.Vehicles.names.tv :
+                        case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                        case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                        case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                        case DBClassificationConstantes.Vehicles.names.tvAnnounces:
 						case DBClassificationConstantes.Vehicles.names.radio:
+                        case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                        case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                        case DBClassificationConstantes.Vehicles.names.radioMusic:
 						res = new Engines.MediaDetailEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate);
 					break;
 					default:
@@ -215,11 +222,21 @@ namespace TNS.AdExpressI.Portofolio.DAL {
         /// récupère les écrans
         /// </summary>
         /// <returns>Ecrans</returns>
-        public DataSet GetEcranData() {
+        public virtual DataSet GetEcranData() {
             Engines.SynthesisEngine res = new Engines.SynthesisEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate);
             return res.GetEcranData();
-
         }
+
+        #region TableOfIssue
+        /// <summary>
+        /// Implements  data access layer for table of issue. 
+        /// </summary>
+        /// <returns>Data Set with Data Table Result</returns>
+        public virtual DataSet TableOfIssue(){
+            throw new NotImplementedException("This methods is not implemented");
+        }
+        #endregion
+
         #endregion
 
         #region Get Struct Data
@@ -236,7 +253,14 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 			switch (_vehicleInformation.Id) {
 				case DBClassificationConstantes.Vehicles.names.others :
 				case DBClassificationConstantes.Vehicles.names.tv :
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
 				case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
 					res = new Engines.StructureEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate,_hourBeginningList,_hourEndList);
 					break;
 				case DBClassificationConstantes.Vehicles.names.press :
@@ -531,6 +555,9 @@ namespace TNS.AdExpressI.Portofolio.DAL {
                 case DBClassificationConstantes.Vehicles.names.internet:
                     return "";
                 case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
                     sql += " select  distinct ID_COBRANDING_ADVERTISER";
                     sql += " ,duration_commercial_break as ecran_duration";
                     sql += " , NUMBER_spot_com_break nbre_spot";
@@ -539,6 +566,10 @@ namespace TNS.AdExpressI.Portofolio.DAL {
                     return sql;
                 case DBClassificationConstantes.Vehicles.names.tv:
                 case DBClassificationConstantes.Vehicles.names.others:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
                     sql += "select  distinct id_commercial_break ";
                     sql += " ,duration_commercial_break as ecran_duration";
                     sql += " ,NUMBER_MESSAGE_COMMERCIAL_BREA nbre_spot ";

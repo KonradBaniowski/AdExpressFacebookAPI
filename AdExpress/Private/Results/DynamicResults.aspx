@@ -58,6 +58,7 @@
 					                        <td><asp:Image ID="Image5" runat="server" height="10" width="1" SkinID="pixel" /></td>
 				                        </tr>
 				                        <tr vAlign="top">
+<!--TODO: Vérifier fusion Dev Trunk-->
 					                        <TD vAlign="top"><cc2:resultsoptionswebcontrol id="ResultsOptionsWebControl1" 
                                                     runat="server" InsertOption="True" Percentage="True"
 							                        AutoPostBackOption="False" ResultOption="True" 

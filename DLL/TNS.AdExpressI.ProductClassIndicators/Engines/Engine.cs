@@ -25,6 +25,11 @@ using TNS.Classification.Universe;
 
 using TNS.AdExpressI.ProductClassIndicators.DAL;
 using TNS.AdExpress.Web.Core.Utilities;
+using TNS.FrameWork.WebResultUI;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpress.Domain.Web;
+using TNS.AdExpressI.Date.DAL;
+using TNS.AdExpress.Domain.Units;
 
 
 
@@ -148,7 +153,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             #endregion
 
             #region Period
-            string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(_session, _session.PeriodEndDate);
+            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+            object[] param = new object[1];
+            param[0] = _session;
+            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            string absolutEndPeriod = dateDAL.CheckPeriodValidity(_session, _session.PeriodEndDate);
+
             if (int.Parse(absolutEndPeriod) < int.Parse(_session.PeriodBeginningDate))
                 throw new NoDataException();
             _periodBegin = FctUtilities.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
@@ -167,7 +177,29 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// </summary>
         /// <returns>String container filled with html code</returns>
         public abstract StringBuilder GetResult();
+        /// <summary>
+        /// Process to build a result
+        /// </summary>
+        /// <returns>ResultTable</returns>
+        public virtual ResultTable GetResultTable() { return null; }
         #endregion
+
+        #region Method
+        public virtual CellLabel GetCellLabel(String label)
+        {
+            return new CellLabel(label);
+        }
+        #endregion
+
+        /// <summary>
+        /// Get unit
+        /// </summary>
+        /// <returns>unit</returns>
+        protected virtual UnitInformation GetUnit()
+        {
+            return UnitsInformation.List[UnitsInformation.DefaultKCurrency];
+
+        }
 
     }
 }

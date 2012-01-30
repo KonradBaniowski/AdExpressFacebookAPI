@@ -137,7 +137,16 @@ namespace TNS.Ares.Domain.XmlLoader
                                     bool deleteRowSuccess = false;
                                     if (reader.GetAttribute("deleteRowSuccess") != null)
                                         bool.TryParse(reader.GetAttribute("deleteRowSuccess"), out deleteRowSuccess);
-                                    
+
+                                    // Loading assembly name
+                                    string assemblyname = "";
+                                    if (reader.GetAttribute("assemblyName") != null)
+                                        assemblyname = reader.GetAttribute("assemblyName");
+
+                                    // Loading assembly class
+                                    string assemblynameClass = "";
+                                    if (reader.GetAttribute("class") != null)
+                                        assemblynameClass = reader.GetAttribute("class");
 
                                     // Adding plugin configuration
                                     PluginType pluginType = (PluginType)Enum.Parse(typeof(PluginType), reader.GetAttribute("enumId"));
@@ -157,7 +166,7 @@ namespace TNS.Ares.Domain.XmlLoader
                                             }
                                         }
                                     }
-                                    info = new PluginInformation(filePath, virtualPath, longevity, resultType, themePath, pluginType, familyId, exec, pluginExecList, deleteRowSuccess, deleteExpired, name, extension, pathFileConfiguration);
+                                    info = new PluginInformation(filePath, virtualPath, longevity, resultType, themePath, pluginType, familyId, exec, pluginExecList, deleteRowSuccess, deleteExpired, name, extension, pathFileConfiguration,assemblynameClass,assemblyname);
                                     plugins.Add(pluginType, info);
                                     #endregion
                                 }

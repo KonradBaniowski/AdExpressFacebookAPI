@@ -84,22 +84,22 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
         /// Reference serie color
         /// </summary>
         protected string _referenceSerieColor = string.Empty;
-		/// <summary>
-		/// Mixed (reference and competiror) serie color
-		/// </summary>
-		protected string _mixedSerieColor = string.Empty;
+        /// <summary>
+        /// Mixed (reference and competiror) serie color
+        /// </summary>
+        protected string _mixedSerieColor = string.Empty;
         /// <summary>
         /// Legend item competitor color
         /// </summary>
         protected string _legendItemCompetitorColor = string.Empty;
-        /// <summary
+        /// <summary>
         /// Legend item reference color
         /// </summary>
         protected string _legendItemReferenceColor = string.Empty;
-		/// <summary>
-		/// Legend item Mixed (reference and competiror) color
-		/// </summary>
-		protected string _legendItemMixedColor = string.Empty;
+        /// <summary>
+        /// Legend item Mixed (reference and competiror) color
+        /// </summary>
+        protected string _legendItemMixedColor = string.Empty;
         /// <summary>
         /// Pie colors list
         /// </summary>
@@ -133,7 +133,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
         public ChartImageType ChartType
         {
             get { return _chartType; }
-            set { _chartType = value;  }
+            set { _chartType = value; }
         }
         /// <summary>
         /// Get / Set Classification level to study (advertiser or product)
@@ -182,13 +182,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             get { return _referenceSerieColor; }
             set { _referenceSerieColor = value; }
         }
-		/// <summary>
-		/// Get / Set mixed (reference and competiror) serie color
-		/// </summary>
-		public string MixedSerieColor {
-			get { return _mixedSerieColor; }
-			set { _mixedSerieColor = value; }
-		}
+        /// <summary>
+        /// Get / Set mixed (reference and competiror) serie color
+        /// </summary>
+        public string MixedSerieColor
+        {
+            get { return _mixedSerieColor; }
+            set { _mixedSerieColor = value; }
+        }
         /// <summary>
         /// Get / Set Legend item competitor color
         /// </summary>
@@ -205,13 +206,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             get { return _legendItemReferenceColor; }
             set { _legendItemReferenceColor = value; }
         }
-		/// <summary>
-		/// Get / Set Legend item  mixed (reference and competiror) color
-		/// </summary>
-		public string LegendItemMixedColor {
-			get { return _legendItemMixedColor; }
-			set { _legendItemMixedColor = value; }
-		}
+        /// <summary>
+        /// Get / Set Legend item  mixed (reference and competiror) color
+        /// </summary>
+        public string LegendItemMixedColor
+        {
+            get { return _legendItemMixedColor; }
+            set { _legendItemMixedColor = value; }
+        }
         /// <summary>
         /// Get / Set Pie colors list
         /// </summary>
@@ -276,15 +278,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                 this.AnimationTheme = AnimationTheme.GrowingTogether;
                 this.AnimationDuration = 5;
                 this.RepeatAnimation = false;
-               
             }
             #endregion
 
             #region Rendering Params
             this.BackGradientType = GradientType.TopBottom;
-			this.BorderStyle=ChartDashStyle.Solid;
+            this.BorderStyle = ChartDashStyle.Solid;
             this.BorderLineColor = (Color)_colorConverter.ConvertFrom(_chartBorderLineColor);
-			this.BorderLineWidth=2;            
+            this.BorderLineWidth = 2;
             #endregion
 
         }
@@ -298,7 +299,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
         protected override void Render(HtmlTextWriter writer)
         {
             CultureInfo cInfoSave = System.Threading.Thread.CurrentThread.CurrentCulture;
-            
+
             System.Threading.Thread.CurrentThread.CurrentCulture = WebApplicationParameters.AllowedLanguages[_session.DataLanguage].CultureInfo;
             HtmlTextWriter txt = new HtmlTextWriter(new StringWriter());
             base.Render(txt);
@@ -322,7 +323,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
         /// </summary>
         protected void AddHeader()
         {
-            
+
+
             if (_chartType != ChartImageType.Flash)
             {
                 Title title = new Title(GestionWeb.GetWebWord(2848, _session.SiteLanguage) + " "
@@ -342,11 +344,10 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                 title2.BackImageAlign = ChartImageAlign.TopRight;
                 title2.BackImageMode = ChartImageWrapMode.Unscaled;
                 title2.Position.Height = 9;
-                title2.Position.Width = 100; 
+                title2.Position.Width = 100;
                 this.Titles.Add(title2);
 
             }
-            
         }
         #endregion
 

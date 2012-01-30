@@ -22,9 +22,11 @@ using TNS.AdExpress.Domain.DataBaseDescription;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
 using CustomerRightConstante = TNS.AdExpress.Constantes.Customer.Right;
 using VehicleClassificationCst = TNS.AdExpress.Constantes.Classification.DB.Vehicles.names;
+using DBClassificationCst = TNS.AdExpress.Constantes.Classification.DB;
 
 using TNS.FrameWork.DB.Common;
 using TNS.Classification.Universe;
+using System.Reflection;
 
 namespace TNS.AdExpressI.Classification.DAL {
 
@@ -87,7 +89,11 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// </summary>
         protected bool _filterWithProductSelection = false;
 
-     
+        /// <summary>
+        /// Data Source
+        /// </summary>
+        protected TNS.FrameWork.DB.Common.IDataSource _dataSource = null;
+        /// <summary>
 		#endregion
 
 		#region Constructors
@@ -98,6 +104,8 @@ namespace TNS.AdExpressI.Classification.DAL {
 		public ClassificationDAL(WebSession session) {
             //Set  customer web session
 			_session = session;
+            //Get data source
+            _dataSource = GetDataSource();
             _toLowerCase = true;
 		}
 		
@@ -110,6 +118,8 @@ namespace TNS.AdExpressI.Classification.DAL {
 			: this(session) {
                 //Set  Current classification brand (product or vehicle)
 			_dimension = dimension;
+            //Get data source
+            _dataSource = GetDataSource();
             _toLowerCase = true;
 		}
 		/// <summary>
@@ -124,6 +134,8 @@ namespace TNS.AdExpressI.Classification.DAL {
 			_genericDetailLevel = genericDetailLevel;
             //Set List of vehicles selected by the user
             _vehicleList = vehicleList;
+            //Get data source
+            _dataSource = GetDataSource();
             _toLowerCase = true;
 		}
 		#endregion
@@ -183,6 +195,7 @@ namespace TNS.AdExpressI.Classification.DAL {
 		public virtual DataSet GetMediaType() {
             //Calling the engine which compute data
 			VehiclesDAL engineDal = new VehiclesDAL(_session);
+            engineDal.DataSource = _dataSource;
 			return engineDal.GetData();
 		}
 		#endregion
@@ -223,6 +236,7 @@ namespace TNS.AdExpressI.Classification.DAL {
 		public virtual DataSet GetDetailMedia() {
             //Calling the engine which compute data
 			DetailMediaDAL engineDal = new DetailMediaDAL(_session,_genericDetailLevel,_vehicleList);
+            engineDal.DataSource = _dataSource;
 			return engineDal.GetData();
 		}
 
@@ -246,6 +260,7 @@ namespace TNS.AdExpressI.Classification.DAL {
 		public virtual DataSet GetDetailMedia(string keyWord) {
             //Calling the engine which compute data
 			DetailMediaDAL engineDal = new DetailMediaDAL(_session, _genericDetailLevel, _vehicleList);
+            engineDal.DataSource = _dataSource;
 			return engineDal.GetData(keyWord);
 		}
 		#endregion
@@ -263,7 +278,92 @@ namespace TNS.AdExpressI.Classification.DAL {
         public virtual DataSet GetSubMediaData()
         {
             DetailMediaDAL engineDal = new DetailMediaDAL(_session, _genericDetailLevel, _vehicleList);
+            engineDal.DataSource = _dataSource;
             return engineDal.GetSubMediaData();
+        }
+        #endregion
+
+        #region GetRecapDetailMedia
+        /// <summary>
+        /// Get detailed media for Product class analysis in Russia.
+        /// with fields [id_vehicle,vehicle,id_region,region,id_media,media]
+        /// Where:
+        /// id_vehicle : ID of  media type.
+        /// id_vehicle : media type label
+        /// id_region : ID of  region
+        /// region : region label
+        /// id_media : ID of  vehicle
+        /// media : vehicle label
+        /// </summary>
+        public virtual DataSet GetRecapDetailMedia()
+        {
+            WebSession webSession = _session;
+            DataSet ds = new DataSet();
+            string sql = "";
+            bool isRecap = true;
+            Table vehicleTable = null, categoryTable = null, basicMediaTable = null, mediaTable = null;
+            vehicleTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapVehicle);
+            categoryTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapCategory);
+            mediaTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapMedia);
+            int activationCode = (isRecap) ? DBConstantes.ActivationValues.DEAD : DBConstantes.ActivationValues.UNACTIVATED;
+            WebNavigation.Module module = webSession.CustomerLogin.GetModule(webSession.CurrentModule);
+
+            sql = "Select distinct " + vehicleTable.Prefix + ".id_vehicle," + vehicleTable.Prefix + ".vehicle ";
+            if (isRecap) sql += ", " + categoryTable.Prefix + ".id_category as id_region," + categoryTable.Prefix + ".category as region, " + mediaTable.Prefix + ".id_media ," + mediaTable.Prefix + ".media";
+            sql += " from " + vehicleTable.SqlWithPrefix + ",";
+            sql += categoryTable.SqlWithPrefix + ",";
+            if (!isRecap) sql += basicMediaTable.SqlWithPrefix + ",";
+            sql += mediaTable.SqlWithPrefix + " ";
+            sql += " where";
+            // Langue
+            sql += " " + vehicleTable.Prefix + ".id_language=" + webSession.DataLanguage.ToString();
+            sql += " and " + categoryTable.Prefix + ".id_language=" + webSession.DataLanguage.ToString();
+            if (!isRecap) sql += " and " + basicMediaTable.Prefix + ".id_language=" + webSession.DataLanguage.ToString();
+            sql += " and " + mediaTable.Prefix + ".id_language=" + webSession.DataLanguage.ToString();
+            // Activation
+            sql += " and " + vehicleTable.Prefix + ".activation<" + activationCode;
+            sql += " and " + categoryTable.Prefix + ".activation<" + activationCode;
+            if (!isRecap) sql += " and " + basicMediaTable.Prefix + ".activation<" + activationCode;
+            sql += " and " + mediaTable.Prefix + ".activation<" + activationCode;
+
+            // Jointure
+            if (isRecap)
+            {
+                sql += " and " + vehicleTable.Prefix + ".id_vehicle=" + categoryTable.Prefix + ".id_vehicle";
+                sql += " and " + categoryTable.Prefix + ".id_category=" + mediaTable.Prefix + ".id_category";
+            }
+            else
+            {
+                sql += " and " + vehicleTable.Prefix + ".id_vehicle=" + categoryTable.Prefix + ".id_vehicle";
+                sql += " and " + categoryTable.Prefix + ".id_category=" + basicMediaTable.Prefix + ".id_category";
+                sql += " and " + basicMediaTable.Prefix + ".id_basic_media=" + mediaTable.Prefix + ".id_basic_media";
+            }
+
+            //Media universe
+            if (module != null)
+                sql += module.GetAllowedMediaUniverseSql(vehicleTable.Prefix, categoryTable.Prefix, mediaTable.Prefix, true);
+
+            //Media Rights
+            sql += TNS.AdExpress.Web.Core.Utilities.SQLGenerator.getAccessVehicleList(webSession, vehicleTable.Prefix, true);
+
+
+            sql += " order by " + vehicleTable.Prefix + ".vehicle," + vehicleTable.Prefix + ".id_vehicle";
+            if (isRecap) sql += ", " + categoryTable.Prefix + ".category," + categoryTable.Prefix + ".id_category, " + mediaTable.Prefix + ".media ," + mediaTable.Prefix + ".id_media";
+
+            #region Execution of the query
+            try
+            {
+                //Execution of the query
+                return WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis,WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].NlsSort).Fill(sql.ToString());
+
+            }
+            catch (System.Exception err)
+            {
+                throw (new Exceptions.DetailMediaDALException("Impossible to load data for the media detail", err));
+            }
+            #endregion
+
+           // throw new NotImplementedException(" This query should be only implemented in Russia");
         }
         #endregion
 
@@ -276,7 +376,7 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <code>
         /// Select distinct wp.id_media as id_item, wp.media  as item
         /// 
-        /// //Query on View of vehicle classification
+        /// //Query on View of media classification
         /// from all_media_33 wp
         /// 
         /// //Search by label
@@ -292,14 +392,17 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// </code>
         /// </example>
         /// </summary>
-        /// <param name="classificationLevelLabel">Label of classification level. For example, for the classification level
-        /// product, the label will be "product". It corresponds also to the current classification level's table.</param>
+        /// <param name="levelId">Identifer of classification level from constantes of type TNS.Classification.Universe.TNSClassificationLevels. For example, for the classification level
+        /// product, Identifer will be TNS.Classification.Universe.TNSClassificationLevels.PRODUCT with value 5.         
+        /// 
+        /// </param>
         /// <param name="wordToSearch">Key word to search</param>
         /// <remarks>     
-        /// - We use the parameter "classificationLevelLabel" to build the SQL query fields as follows :
+        /// - We use the parameter "levelId" to build the SQL query fields as follows :
         ///  <code>
-        ///  public virtual DataSet GetItems(string classificationLevelLabel, ...){
+        ///  public virtual DataSet GetItems(string levelId, string wordToSearch){
         ///  
+        ///    string classificationLevelLabel = UniverseLevels.Get(levelId).TableName;
         /// ...
         /// //Set fields of the query with the current classification level
         /// sql.AppendFormat(" select distinct pr.id_{0} as id_item, pr.{0} as item ", classificationLevelLabel);
@@ -320,34 +423,38 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <returns>Data set with data table[id_item,item] : identifer and label of a level of brand classification</returns>
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">Throw exception when error occurs during 
         /// execution or building of the query</exception>
-		public virtual DataSet GetItems(int classificationLevelId, string wordToSearch) {
+        public virtual DataSet GetItems(long levelId , string wordToSearch)
+        {
+           string classificationLevelLabel = UniverseLevels.Get(levelId).TableName;
             //Calling the engine which compute data
             if (_dBSchema == null || _dBSchema.Length == 0)
                 throw (new ArgumentException("Invalid dBSchema parameter"));//Excepted for france data base, can be null for other country         
             ClassificationItemsDAL engineDal = new ClassificationItemsDAL(_session,_dimension);
             engineDal.DBSchema = _dBSchema;
             engineDal.Filters = _filters;
-            engineDal.FilterWithProductSelection = _filterWithProductSelection;
-            return engineDal.GetItems(classificationLevelId, wordToSearch);
+            engineDal.FilterWithProductSelection = _filterWithProductSelection;            
+            engineDal.DataSource = _dataSource;
+            return engineDal.GetItems(classificationLevelLabel, wordToSearch);
 		}
 
         /// <summary>
         ///  Search function for Product or vehicle classification Items. The data will be filter 
         ///  with customer classification rights. It means product or media restriction.
         ///  
-        /// The parameter "classificationLevelLabel" corresponds to classification level label
+        /// The parameter "levelId" corresponds to classification level Identifier
         /// where items must be included in SELECT clause.
         /// 
-        /// The parameters "selectedClassificationLevelIds" and "selectedClassificationLevelLabel"
-        /// correspond respectively to identifier list and the label of classification level  selected by the customer.
-        /// It uses to filter data of the result level ( "classificationLevelLabel").
+        /// The parameters "selectedClassificationLevelIds" and "selectedLevelId"
+        /// correspond respectively to identifier items selected and the identifier of classification level  selected by the customer.
+        /// It uses to filter data of the result level.
         /// 
-        ///  To build the SQL quer, the preceding parameters are used as follows :
+        ///  To build the SQL query, the preceding parameters are used as follows :
         ///  <example>              
         ///  <code>
-        ///  public virtual DataSet GetItems(string classificationLevelLabel, string selectedClassificationLevelIds, string selectedClassificationLevelLabel){
-        ///  
-        /// View oVioew = ...//Get classification brand view : all_product_33 or all_media_44 (each one contains all items of its classification) 
+        ///  public virtual DataSet GetItems(string levelId, string selectedClassificationLevelIds, string selectedLevelId){
+        ///   string classificationLevelLabel = UniverseLevels.Get(levelId).TableName;
+        ///  string selectedClassificationLevelLabel = UniverseLevels.Get(selectedLevelId).TableName; 
+        ///  View oView = ...//Get classification brand view : all_product_33 or all_media_44 (each one contains all items of its classification) 
         /// ...
         /// //Set fields of the query with the current classification level
         /// sql.AppendFormat(" select distinct pr.id_{0} as id_item, pr.{0} as item ", classificationLevelLabel);
@@ -367,8 +474,8 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// 
         /// Then if parameters of the method are :
         ///  <code>
-        ///  //Current classification level is product
-        /// string classificationLevelLabel = "product";
+        ///  //Current classification level is product     
+        /// Will have value TNS.Classification.Universe.TNSClassificationLevels.PRODUCT
         ///
         /// //If user has selected advertiser level
         /// string  selectedClassificationLevelLabel="advertiser";
@@ -395,26 +502,30 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// order by product
         /// </code>
         /// </summary>
-        /// <param name="classificationLevelLabel">Label of classification level. For example, for the classification level
-        /// product, the label will be "product". It corresponds also to the current classification level's table.</param>
+        /// <param name="levelId">Identifer of classification level from constantes of type TNS.Classification.Universe.TNSClassificationLevels. For example, for the classification level
+        /// product, Identifer will be TNS.Classification.Universe.TNSClassificationLevels.PRODUCT with value 5.                
+        /// </param>
         /// <param name="selectedClassificationLevelIds"> Selected (by user) classification level identifiers list (identifers separated by comma). These identifiers are used
         /// to filter the data.</param>
-        /// <param name="selectedClassificationLevelLabel">Selected (by user) classification level label. This lable is used as field
-        /// to filter the data as follows :         
+        /// <param name="selectedLevelId">Selected (by user) classification level Identifier. 
         /// </param>
         /// <returns>Data set with data table[id_item,item] : identifer and label of a level of brand classification</returns>
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">Throw exception when error occurs during 
         /// execution or building of the query</exception>
-        public virtual DataSet GetItems(int classificationLevelId, string selectedClassificationLevelIds, string selectedClassificationLevelLabel)
+        public virtual DataSet GetItems(long levelId, string selectedClassificationItemsIds, long selectedLevelId)
         {
+            string classificationLevelLabel = UniverseLevels.Get(levelId).TableName;
+            string selectedClassificationLevelLabel = UniverseLevels.Get(selectedLevelId).TableName; 
+
             //Calling the engine which compute data
             if (_dBSchema == null || _dBSchema.Length == 0)
                 throw (new ArgumentException("Invalid dBSchema parameter"));//Excepted for france data base, can be null for other country         
             ClassificationItemsDAL engineDal = new ClassificationItemsDAL(_session, _dimension);
             engineDal.DBSchema = _dBSchema;
             engineDal.Filters = _filters;
-            engineDal.FilterWithProductSelection = _filterWithProductSelection;
-            return engineDal.GetItems(classificationLevelId, selectedClassificationLevelIds, selectedClassificationLevelLabel);
+            engineDal.FilterWithProductSelection = _filterWithProductSelection;           
+            engineDal.DataSource = _dataSource;
+            return engineDal.GetItems(classificationLevelLabel, selectedClassificationItemsIds, selectedClassificationLevelLabel);
 		}
 
 
@@ -480,6 +591,7 @@ namespace TNS.AdExpressI.Classification.DAL {
             ClassificationItemsDAL engineDal = new ClassificationItemsDAL(_session, _dimension);
             engineDal.DBSchema = _dBSchema;
             engineDal.FilterWithProductSelection = _filterWithProductSelection;
+            engineDal.DataSource = _dataSource;
             return engineDal.GetSelectedItems(classificationLevelLabel, idList);
 		}
 
@@ -539,9 +651,88 @@ namespace TNS.AdExpressI.Classification.DAL {
                 throw (new ArgumentException("Invalid dBSchema parameter"));//Excepted for france data base, can be null for other country           
             ClassificationItemsDAL engineDal = new ClassificationItemsDAL(_session, _dimension);
             engineDal.DBSchema = _dBSchema;
+            engineDal.DataSource = _dataSource;
             return engineDal.GetRecapItems(classificationLevelLabel, customerRightType);
 		}
 		#endregion
+
+        #region GetSectors
+        /// <summary>
+        ///This method is used in Graphic key reports module  to get a list of Sectors
+        ///corresponding to product classification items selected. 
+        /// </summary>
+        /// <returns>Dataset with  sectors list</returns>
+        public virtual DataSet GetSectors()
+        {
+            #region Variables
+            StringBuilder sql = new StringBuilder(2000);
+            DataSet ds = new DataSet();            
+           
+            #endregion
+
+            #region Construction de la requête
+            try
+            {
+                View oView = WebApplicationParameters.DataBaseDescription.GetView(ViewIds.allRecapProduct);
+                Table sectorTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.sector);
+
+                // The query that is being used to collect sectors from the database using selected groups.
+                sql.Append("Select distinct ");
+
+                sql.Append(oView.Prefix + ".ID_" + sectorTable.Label + "," + oView.Prefix + "." + sectorTable.Label);
+
+                sql.Append(" from " + oView.Sql + _session.DataLanguage + " " + oView.Prefix );
+
+
+                // Product Selection
+                if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
+                {
+                    sql.Append(" where ");
+                    sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(oView.Prefix, false));
+                }
+           
+            }
+            catch (System.Exception e)
+            {
+                throw (new Exceptions.DetailMediaDALException("Impossible to build sql query " + e.Message));
+            }
+            #endregion
+
+            #region Execution de la requête
+            try
+            {
+                IDataSource source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis, WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].NlsSort);
+                ds = source.Fill(sql.ToString());
+                return (ds);
+            }
+            catch (System.Exception err)
+            {
+                throw (new Exceptions.DetailMediaDALException("Impossible de charger une liste de Famille pour le rappel de la sélection", err));
+            }
+            #endregion
+        }
+        #endregion
+
+       
+
+        /// <summary>
+        /// Get Data Source
+        /// </summary>
+        /// <returns></returns>
+        protected virtual TNS.FrameWork.DB.Common.IDataSource GetDataSource()
+        {
+            TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.sourceProvider];
+            object[] param = new object[1];
+            param[0] = _session;
+            if (cl == null) throw (new NullReferenceException("Core layer is null for the source provider layer"));
+            TNS.AdExpress.Web.Core.ISourceProvider sourceProvider = (TNS.AdExpress.Web.Core.ISourceProvider)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            return sourceProvider.GetSource();
+
+        }
+
+
+
+        
 
 		#endregion
 	}

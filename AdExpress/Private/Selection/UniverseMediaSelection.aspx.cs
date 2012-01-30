@@ -25,6 +25,7 @@ using WebFunctions = TNS.AdExpress.Web.Functions;
 using FrameWorkSelection = TNS.AdExpress.Constantes.FrameWork.Selection;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Web.Navigation;
 #endregion
 
 /// <summary>
@@ -49,6 +50,12 @@ public partial class Private_Selection_UniverseMediaSelection : TNS.AdExpress.We
     /// Session Identifier
     /// </summary>
     public string sessionId = "";
+    /// <summary>
+    /// Determnine if keep old refine selection
+    /// </summary>
+    protected bool _keepRefineUniverseSelection = false;
+
+    protected bool _isSelectionPage = true;
     #endregion
 
     #region Constructor
@@ -66,6 +73,8 @@ public partial class Private_Selection_UniverseMediaSelection : TNS.AdExpress.We
     /// <param name="sender">Objet qui lance l'évènement</param>
     /// <param name="e">Arguments</param>
     protected void Page_Load(object sender, EventArgs e) {
+         try
+            {
         ModuleTitleWebControl1.CustomerWebSession = _webSession;
         InformationWebControl1.Language = _webSession.SiteLanguage;
         sessionId = _webSession.IdSession;
@@ -107,6 +116,12 @@ public partial class Private_Selection_UniverseMediaSelection : TNS.AdExpress.We
         else if(Request.Form.Get("__EVENTTARGET") == "initializeImageButtonRollOverWebControl1") {
             eventButton = FrameWorkSelection.eventSelection.INITIALIZE_EVENT;
         }
+
+        if (!Page.IsPostBack && _keepRefineUniverseSelection)
+        {
+            eventButton = FrameWorkSelection.eventSelection.INITIALIZE_WITH_PREVIOUS_SELECTION_EVENT;
+            SelectItemsInClassificationWebControl1.EventTarget_ = FrameWorkSelection.eventSelection.INITIALIZE_WITH_PREVIOUS_SELECTION_EVENT;
+        }
         #endregion
 
         #region Chargement Univers
@@ -127,9 +142,17 @@ public partial class Private_Selection_UniverseMediaSelection : TNS.AdExpress.We
         //Annuler l'univers de version
         if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA) {
             _webSession.IdSlogans = new ArrayList();
-            _webSession.SloganIdZoom = -1;
+            _webSession.SloganIdZoom = long.MinValue;
             _webSession.Save();
         }
+            }
+         catch (System.Exception exc)
+         {
+             if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+             {
+                 this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+             }
+         }
     }
     #endregion
 
@@ -141,10 +164,18 @@ public partial class Private_Selection_UniverseMediaSelection : TNS.AdExpress.We
     /// <returns>DeterminePostBackMode</returns>
     protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
         System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
-
+         try
+            {
         //Component initialisation options
         ComponentsInitOptions();
-
+            }
+         catch (System.Exception exc)
+         {
+             if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+             {
+                 this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+             }
+         }
         return (tmp);
     }
     #endregion
@@ -200,7 +231,15 @@ public partial class Private_Selection_UniverseMediaSelection : TNS.AdExpress.We
                     Response.Write("</script>");
                 }
             }
-            else {
+            else if (!_isSelectionPage)
+            {
+                _webSession.SecondaryMediaUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>(); 
+                _webSession.Save();
+                _webSession.Source.Close();
+                Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession + "");
+            }
+            else
+            {
                 Response.Write("<script language=javascript>");
                 Response.Write("alert(\"" + GestionWeb.GetWebWord(878, _webSession.SiteLanguage) + "\");");
                 Response.Write("</script>");
@@ -331,11 +370,18 @@ public partial class Private_Selection_UniverseMediaSelection : TNS.AdExpress.We
     ///  Component Init Options
     /// </summary>
     private void ComponentsInitOptions() {
-        if(!Page.IsPostBack && _webSession.LastWebPage.IndexOf(this.Page.Request.Url.AbsolutePath) < 0) 
-            _webSession.SecondaryMediaUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-
+        
+        string dbSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
+        switch (_webSession.CurrentModule)
+        {
+            case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA: 
+              case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:              
+                _isSelectionPage = false;
+                break;
+        }
+        ReInitializeSelection(_isSelectionPage);
         MenuWebControl2.CustomerWebSession = _webSession;
-        SelectItemsInClassificationWebControl1.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
+        SelectItemsInClassificationWebControl1.DBSchema = dbSchema;
         SelectItemsInClassificationWebControl1.CustomerWebSession = _webSession;
         SelectItemsInClassificationWebControl1.SearchRulesTextCode = 2287;
         SelectItemsInClassificationWebControl1.SearchRulesTextCss = "SearchRulesTextCss";
@@ -343,15 +389,24 @@ public partial class Private_Selection_UniverseMediaSelection : TNS.AdExpress.We
         LoadableUniversWebControl1.ListBranchType = TNS.AdExpress.Constantes.Classification.Branch.type.media.GetHashCode().ToString();
         LoadableUniversWebControl1.Dimension_ = TNS.Classification.Universe.Dimension.media;
         LoadableUniversWebControl1.ForGenericUniverse = true;
-        LoadableUniversWebControl1.SelectionPage = true;
+        LoadableUniversWebControl1.SelectionPage = _isSelectionPage;
+        SelectItemsInClassificationWebControl1.ForSelectionPage = _isSelectionPage;
 
-        switch(_webSession.CurrentModule) {
-            case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
-            case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
-                SelectItemsInClassificationWebControl1.ForSelectionPage = false;
-                LoadableUniversWebControl1.SelectionPage = false;
-                SelectItemsInClassificationWebControl1.DefaultBranchId = 7;// Branche catégorie par défaut
-                break;
+        if (_isSelectionPage)
+        {
+            foreach (SelectionPageInformation currentPage in _currentModule.SelectionsPages)
+            {
+                if (currentPage.Url.Equals(this.Page.Request.Url.AbsolutePath))
+                    SelectItemsInClassificationWebControl1.DefaultBranchId = currentPage.DefaultBranchId;
+            }
+        }
+        else
+        {
+            foreach (OptionalPageInformation currentPage in _currentModule.OptionalsPages)
+            {
+                if (currentPage.Url.Equals(this.Page.Request.Url.AbsolutePath))
+                    SelectItemsInClassificationWebControl1.DefaultBranchId = currentPage.DefaultBranchId;
+            }
         }
         SelectItemsInClassificationWebControl1.IdSession = _webSession.IdSession;
         SelectItemsInClassificationWebControl1.Dimension_ = TNS.Classification.Universe.Dimension.media;
@@ -370,6 +425,18 @@ public partial class Private_Selection_UniverseMediaSelection : TNS.AdExpress.We
             default: return false;
         }
     }
+
+    private void ReInitializeSelection(bool isSelectionPage)
+    {
+        _keepRefineUniverseSelection = !isSelectionPage && WebApplicationParameters.KeepRefineUniverseSelection;
+        if (!_keepRefineUniverseSelection)
+        {
+            if (!Page.IsPostBack && _webSession.LastWebPage.IndexOf(this.Page.Request.Url.AbsolutePath) < 0)
+                _webSession.SecondaryMediaUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+        }
+
+    }
     #endregion
+
 
 }

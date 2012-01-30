@@ -310,8 +310,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", vehicle,"+prefixeMediaPlanTable+".id_category,category,"+prefixeMediaPlanTable+".id_media,media ,interest_center,media_seller,"+prefixeMediaPlanTable+".id_slogan,date_cover_num";
 					return sql;
 
-				case DBClassificationConstantes.Vehicles.names.radio:
-					
+                case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:       
 					
 					sql=" "+prefixeMediaPlanTable+".date_media_num"
 						+", "+prefixeMediaPlanTable+".id_top_diffusion"
@@ -332,7 +334,11 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", vehicle,"+prefixeMediaPlanTable+".id_category,category,"+prefixeMediaPlanTable+".id_media,media ,interest_center,media_seller,"+prefixeMediaPlanTable+".id_slogan";
 					return sql;
 
-				case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
 				case DBClassificationConstantes.Vehicles.names.others:										
 					sql=" "+prefixeMediaPlanTable+".date_media_num"
 						+", "+prefixeMediaPlanTable+".top_diffusion"
@@ -580,13 +586,20 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", "+prefixeMediaPlanTable+".media_paging, location";
 					return sql;
 
-				case DBClassificationConstantes.Vehicles.names.radio:										
+                case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:    								
 					sql+=" vehicle ,category, media ,"+prefixeMediaPlanTable+".id_slogan"	
 					+","+TNS.AdExpress.Web.DataAccess.Functions.GetRadioInsertionsOrder(0)+" asc"
 					+", wp.id_top_diffusion, wp.id_cobranding_advertiser";				
 					return sql;
 
-				case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
 				case DBClassificationConstantes.Vehicles.names.others:										
 					sql+=" vehicle ,category, media ,"+prefixeMediaPlanTable+".id_slogan"
 					+","+TNS.AdExpress.Web.DataAccess.Functions.GetTvInsertionsOrder(0)+" asc"					

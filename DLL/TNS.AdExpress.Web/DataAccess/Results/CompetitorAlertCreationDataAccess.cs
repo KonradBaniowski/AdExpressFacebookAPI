@@ -520,7 +520,10 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", wp.id_media"
                         +", wp.date_cover_num";
 
-				case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:    
 					return "media"
 						+", wp.date_media_num"
 						+", wp.id_top_diffusion"
@@ -540,8 +543,12 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", category"
 						+", vehicle"
 						+", id_slogan";
-				case DBClassificationConstantes.Vehicles.names.tv :
-				case DBClassificationConstantes.Vehicles.names.others :
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.others:	
 					return  "media"
 						+", wp.date_media_num"
 						+", wp.top_diffusion"
@@ -598,14 +605,21 @@ namespace TNS.AdExpress.Web.DataAccess.Results{
 						+", wp.id_advertisement"
 						+", wp.media_paging"
 						+", location";
-				case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:    
 					return "category"
 						+", media"
 						+", wp.date_media_num"
 						+", wp.id_top_diffusion"
 						+", wp.id_cobranding_advertiser";
-				case DBClassificationConstantes.Vehicles.names.tv:
-				case DBClassificationConstantes.Vehicles.names.others:
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.others:	
 					return  "category"
 						+", media"
 						+", wp.date_media_num"

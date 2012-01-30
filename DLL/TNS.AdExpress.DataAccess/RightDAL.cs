@@ -90,17 +90,21 @@ namespace TNS.AdExpress.DataAccess {
             } 
             #endregion
 
-            #region Construction de la requête
-            string sql=" select "+myloginTable.Prefix+".id_login";
-            sql+=" from "+myloginTable.SqlWithPrefix+" ";
-            sql+=" where login=upper('"+login+"')";
-            sql+=" and password=upper('"+password+"')";
-            sql+=" and date_expired>=sysdate";
-            sql+=" and activation<"+TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED+"";
-            #endregion
+          
 
             #region Execution de la requête
             try {
+                #region Construction de la requête
+                string sql = " select " + myloginTable.Prefix + ".id_login";
+                sql += " from " + myloginTable.SqlWithPrefix + " ";
+                if (login.Split(' ').Length > 1 || password.Split(' ').Length > 1) return (loginId);
+
+                sql += " where login=upper('" + login + "')";
+                sql += " and password=upper('" + password + "')";
+                sql += " and date_expired>=sysdate";
+                sql += " and activation<" + TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED + "";
+                #endregion
+
                 DataSet ds=source.Fill(sql);
                 foreach(DataRow currentRow in ds.Tables[0].Rows) {
                     loginId=Int64.Parse(currentRow[0].ToString());

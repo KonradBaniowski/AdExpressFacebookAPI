@@ -155,17 +155,17 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// </code>
         /// </example>
         /// </summary>
-        /// <param name="classificationLevelLabel">Label of classification level. For example, for the classification level
-        /// product, the label will be "product". It corresponds also to the current classification level's table.
-        /// names are defined in the configuration file: UniverseLevels.xml (tag dbTable)
+        /// <param name="levelId">Identifer of classification level from constantes of type TNS.Classification.Universe.TNSClassificationLevels. For example, for the classification level
+        /// product, Identifer will be TNS.Classification.Universe.TNSClassificationLevels.PRODUCT with value 5.         
         /// 
         /// </param>
         /// <param name="wordToSearch">Key word to search</param>
         /// <remarks>     
-        /// - We use the parameter "classificationLevelLabel" to build the SQL query fields as follows :
+        /// - We use the parameter "levelId" to build the SQL query fields as follows :
         ///  <code>
-        ///  public virtual DataSet GetItems(string classificationLevelLabel, ...){
+        ///  public virtual DataSet GetItems(string levelId, string wordToSearch){
         ///  
+        ///    string classificationLevelLabel = UniverseLevels.Get(levelId).TableName;
         /// ...
         /// //Set fields of the query with the current classification level
         /// sql.AppendFormat(" select distinct pr.id_{0} as id_item, pr.{0} as item ", classificationLevelLabel);
@@ -186,25 +186,26 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <returns>Data set with data table[id_item,item] : identifer and label of a level of brand classification</returns>
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">Throw exception when error occurs during 
         /// execution or building of the query</exception>
-        DataSet GetItems(int classificationLevelInt, string wordToSearch);
+        DataSet GetItems(long levelId, string wordToSearch);
 
         /// <summary>
         ///  Search function for Product or vehicle classification Items. The data will be filter 
         ///  with customer classification rights. It means product or media restriction.
         ///  
-        /// The parameter "classificationLevelLabel" corresponds to classification level label
+        /// The parameter "levelId" corresponds to classification level Identifier
         /// where items must be included in SELECT clause.
         /// 
-        /// The parameters "selectedClassificationLevelIds" and "selectedClassificationLevelLabel"
-        /// correspond respectively to identifier list and the label of classification level  selected by the customer.
-        /// It uses to filter data of the result level ( "classificationLevelLabel").
+        /// The parameters "selectedClassificationLevelIds" and "selectedLevelId"
+        /// correspond respectively to identifier items selected and the identifier of classification level  selected by the customer.
+        /// It uses to filter data of the result level.
         /// 
-        ///  To build the SQL quer, the preceding parameters are used as follows :
+        ///  To build the SQL query, the preceding parameters are used as follows :
         ///  <example>              
         ///  <code>
-        ///  public virtual DataSet GetItems(string classificationLevelLabel, string selectedClassificationLevelIds, string selectedClassificationLevelLabel){
-        ///  
-        /// View oVioew = ...//Get classification brand view : all_product_33 or all_media_44 (each one contains all items of its classification) 
+        ///  public virtual DataSet GetItems(string levelId, string selectedClassificationLevelIds, string selectedLevelId){
+        ///   string classificationLevelLabel = UniverseLevels.Get(levelId).TableName;
+        ///  string selectedClassificationLevelLabel = UniverseLevels.Get(selectedLevelId).TableName; 
+        ///  View oView = ...//Get classification brand view : all_product_33 or all_media_44 (each one contains all items of its classification) 
         /// ...
         /// //Set fields of the query with the current classification level
         /// sql.AppendFormat(" select distinct pr.id_{0} as id_item, pr.{0} as item ", classificationLevelLabel);
@@ -224,8 +225,8 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// 
         /// Then if parameters of the method are :
         ///  <code>
-        ///  //Current classification level is product
-        /// string classificationLevelLabel = "product";
+        ///  //Current classification level is product     
+        /// Will have value TNS.Classification.Universe.TNSClassificationLevels.PRODUCT
         ///
         /// //If user has selected advertiser level
         /// string  selectedClassificationLevelLabel="advertiser";
@@ -252,19 +253,17 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// order by product
         /// </code>
         /// </summary>
-        /// <param name="classificationLevelLabel">Label of classification level. For example, for the classification level
-        /// product, the label will be "product". It corresponds also to the current classification level's table.
-        /// names are defined in the configuration file: UniverseLevels.xml (tag dbTable)
+        /// <param name="levelId">Identifer of classification level from constantes of type TNS.Classification.Universe.TNSClassificationLevels. For example, for the classification level
+        /// product, Identifer will be TNS.Classification.Universe.TNSClassificationLevels.PRODUCT with value 5.                
         /// </param>
         /// <param name="selectedClassificationLevelIds"> Selected (by user) classification level identifiers list (identifers separated by comma). These identifiers are used
         /// to filter the data.</param>
-        /// <param name="selectedClassificationLevelLabel">Selected (by user) classification level label. This lable is used as field
-        /// to filter the data as follows :         
+        /// <param name="selectedLevelId">Selected (by user) classification level Identifier. 
         /// </param>
         /// <returns>Data set with data table[id_item,item] : identifer and label of a level of brand classification</returns>
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">Throw exception when error occurs during 
         /// execution or building of the query</exception>
-        DataSet GetItems(int classificationLevelInt, string selectedClassificationLevelIds, string selectedClassificationLevelLabel);
+        DataSet GetItems(long levelId, string selectedClassificationItemsIds, long selectedLevelId);
 
         /// <summary>
         ///  Search function for Product or vehicle classification Items. The data will be filter 
@@ -385,5 +384,27 @@ namespace TNS.AdExpressI.Classification.DAL {
             get;
             set;
         }
+		
+	    /// <summary>
+	    /// Get detailed media for Product class analysis in Russia.
+        /// with fields [id_vehicle,vehicle,id_region,region,id_media,media]
+        /// Where:
+        /// id_vehicle : ID of  media type.
+        /// id_vehicle : media type label
+        /// id_region : ID of  region
+        /// region : region label
+        /// id_media : ID of  vehicle
+        /// media : vehicle label
+	    /// </summary>
+        /// <returns>Dataset with fields [id_vehicle,vehicle,id_region,region,id_media,media]</returns>
+		DataSet GetRecapDetailMedia();
+
+        /// <summary>
+        ///This method is used in Graphic key reports module  to get a list of Sectors
+        ///corresponding to product classification items selected. 
+        /// </summary>
+        /// <returns>Dataset with  sectors list</returns>
+        DataSet GetSectors();
+       
 	}
 }

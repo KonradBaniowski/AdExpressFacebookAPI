@@ -70,10 +70,10 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 		/// Is listeMedia empty
 		/// </summary>
 		protected static bool _isEmptyList = false;
-        ///// <summary>
-        ///// Verify is it possible to load a saved universe
-        ///// </summary>
-        //protected static bool _canLoadUnivese = true;
+        /// <summary>
+        /// Verify is it possible to load a saved universe
+        /// </summary>
+        protected static bool _canLoadUnivese = true;
 		/// <summary>
 		/// selected media
 		/// </summary>
@@ -89,6 +89,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 
 		#region Constantes
 		const int MAX_SELECTABLE_ELEMENTS = 200;
+        const long idLev = long.MinValue + 1;
 		#endregion
 
 		#region Accessors
@@ -133,14 +134,15 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 			get { return _nbItemsValidity; }
 			set { _nbItemsValidity = value; }
 		}
-        ///// <summary> 
-        ///// Get if it's possible to load a saved universe
-        ///// </summary>
-        //[Bindable(true),
-        //Description("Get if it's possible to load a saved universe")]
-        //public static bool CanLoadUnivese {
-        //    get { return _canLoadUnivese; }
-        //}
+        /// <summary> 
+        /// Get if it's possible to load a saved universe
+        /// </summary>
+        [Bindable(true),
+        Description("Get if it's possible to load a saved universe")]
+        public static bool CanLoadUnivese
+        {
+            get { return _canLoadUnivese; }
+        }
 		#endregion
 
 		#region Constructor
@@ -226,35 +228,42 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 			#endregion			
 
 			#region Verify if can load data from save universe (Pour Bouton CHARGEMENT UNIVERS)
-			//Verify if can load data form save universe
-            //_canLoadUnivese = VerifyDataFromUniverse(_eventButton, _keyWord);
-            //if (_eventButton == constEvent.eventSelection.LOAD_EVENT) {
-            //    _canLoadUnivese = VerifyDataFromUniverse();
-            //    if (!_canLoadUnivese) {
-            //        _nbItemsValidity = constEvent.error.LOAD_NOT_POSSIBLE;
-            //    }
-            //}
+            //Verify if can load data form save universe
+            _canLoadUnivese = VerifyDataFromUniverse(_eventButton, _keyWord);
+            if (_eventButton == constEvent.eventSelection.LOAD_EVENT)
+            {
+                _canLoadUnivese = VerifyDataFromUniverse();
+                if (!_canLoadUnivese)
+                {
+                    _nbItemsValidity = constEvent.error.LOAD_NOT_POSSIBLE;
+                }
+            }
 			#endregion
 
 			#region Load items from data saved in web session (Pour Bouton CHARGEMENT UNIVERS)
-            //if (_eventButton == constEvent.eventSelection.LOAD_EVENT) {
-            //    if (_currentSelectedMediaList == null) _currentSelectedMediaList = new List<long>();
-            //    else _currentSelectedMediaList.Clear();
-            //    foreach (System.Windows.Forms.TreeNode currentNode in _webSession.CurrentUniversMedia.Nodes) {
-					
-            //        if (!_currentSelectedMediaList.Contains(((LevelInformation)currentNode.Tag).ID)) {
-            //            _currentSelectedMediaList.Add(((LevelInformation)currentNode.Tag).ID);
-            //            _isEmptyList = false;
-            //        }
-            //    }
-            //    if (_currentSelectedMediaList != null) {
-            //        _listAccessMedia = "";
-            //        for (int i = 0; i < _currentSelectedMediaList.Count; i++) {
-            //            _listAccessMedia += _currentSelectedMediaList[i].ToString() + ",";
-            //        }
-            //        if (_listAccessMedia.Length > 0) _listAccessMedia = _listAccessMedia.Substring(0, _listAccessMedia.Length - 1);
-            //    }
-            //}
+            if (_eventButton == constEvent.eventSelection.LOAD_EVENT)
+            {
+                if (_currentSelectedMediaList == null) _currentSelectedMediaList = new List<long>();
+                else _currentSelectedMediaList.Clear();
+                foreach (System.Windows.Forms.TreeNode currentNode in _webSession.CurrentUniversMedia.Nodes)
+                {
+
+                    if (!_currentSelectedMediaList.Contains(((LevelInformation)currentNode.Tag).ID))
+                    {
+                        _currentSelectedMediaList.Add(((LevelInformation)currentNode.Tag).ID);
+                        _isEmptyList = false;
+                    }
+                }
+                if (_currentSelectedMediaList != null)
+                {
+                    _listAccessMedia = "";
+                    for (int i = 0; i < _currentSelectedMediaList.Count; i++)
+                    {
+                        _listAccessMedia += _currentSelectedMediaList[i].ToString() + ",";
+                    }
+                    if (_listAccessMedia.Length > 0) _listAccessMedia = _listAccessMedia.Substring(0, _listAccessMedia.Length - 1);
+                }
+            }
 
 			#endregion
 
@@ -351,7 +360,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 				if (_eventButton == constEvent.eventSelection.ALL_INITIALIZE_EVENT) {
 					_webSession.CompetitorUniversMedia.Clear();
 					_webSession.Save();
-                    //_canLoadUnivese = true;
+                    _canLoadUnivese = true;
 				}
 			}
 			#endregion
@@ -379,7 +388,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 			string textOpenclose = "", checkBox = "", allDivIds = "", disabled = "", displayDiv = "none", cssTextItem = "txtViolet10",  cssL1="violetBackGroundV3"; 
 			int insertIndex = 0, nbLevels = 0, numColumn = 0, displayIndex = 0, counter = 0;
 			int startL1 = -1, startL2 = -1, startL3 = -1;	
-			Int64 i = 0, idL1 = -2, oldIdL1 = -1,idL1Div = -2, idL2 = -2, oldIdL2 = -1, idL3 = -2, oldIdL3 = -1;
+            Int64 i = 0, idL1 = idLev, oldIdL1 = long.MinValue, idL1Div = idLev, idL2 = idLev, oldIdL2 = long.MinValue, idL3 = idLev, oldIdL3 = long.MinValue;
 			string allIdL1 = "", allIdL2 = "", allIdL3 = "";
 			string labelL1 = "", labelL2 = "", labelL3 = "";
 			bool isNewL1 = false, isNewL2 = false, isNewL3 = false;
@@ -402,21 +411,22 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 				}
 
 				//Start Global Table
-				//t.Append(" <table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\">");
 				#region Debut Tableau global
-				t.Append("<tr class=\"whiteBackGround\"><td  vAlign=\"top\"><table  vAlign=\"top\">");
-				t.Append("<a href=\"javascript: ExpandColapseAllDivs('");
-				insertIndex = t.Length;
-				t.Append("')\" class=\"roll04\" >&nbsp;&nbsp;&nbsp;" + textOpenclose + "</a>");
+				t.Append("<tr class=\"backGroundWhite\"><td  vAlign=\"top\"><table  vAlign=\"top\">");
+                if (nbLevels > 1)
+                {
+                    t.Append("<a href=\"javascript: ExpandColapseAllDivs('");
+                    insertIndex = t.Length;
+                    t.Append("')\" class=\"roll04\" >&nbsp;&nbsp;&nbsp;" + textOpenclose + "</a>");
+                }
 				t.Append("<tr><td vAlign=\"top\">");
-				//t.Append("<DIV id=selectAllSlogans>");//Ouverture calque permettant de sélectionner tous les éléménts
 				#endregion
 
 				if (nbLevels > 0) {
 					
 					//Start render of All lines contents
 					List<Int64> alreadySelectedMedia = GetAlreadySelectedMedia();
-
+                    if (nbLevels == 1) t.Append("<table class=\"violetBorder violetBackGround violetBackGroundV3\"  cellpadding=0 cellspacing=0 width=\"700\" id=\"globalTable\">");
 					foreach (DataRow currentRow in _dsListMedia.Tables[0].Rows) {
 
 						counter += 1;
@@ -425,29 +435,32 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 
 							//Init ids parents
 							currentLevel = genericDetailLevel[lev];
-							if (lev == 1) {
+                            if (nbLevels>1 && lev == 1)
+                            {
 								idL1 = Int64.Parse(currentRow[currentLevel.GetSqlFieldIdWithoutTablePrefix()].ToString());
 								labelL1 = currentRow[currentLevel.GetSqlFieldWithoutTablePrefix()].ToString();
 							}
-							if (lev == 2) {
+                            if (nbLevels > 1 && lev == 2)
+                            {
 								idL2 = Int64.Parse(currentRow[currentLevel.GetSqlFieldIdWithoutTablePrefix()].ToString());
 								labelL2 = currentRow[currentLevel.GetSqlFieldWithoutTablePrefix()].ToString();
 							}
-							if (lev == 3) {
+							if (lev == 3 ||nbLevels==1) {
 								idL3 = Int64.Parse(currentRow[currentLevel.GetSqlFieldIdWithoutTablePrefix()].ToString());
 								labelL3 = currentRow[currentLevel.GetSqlFieldWithoutTablePrefix()].ToString();
 							}
 						}
 
-						if (counter == 1) {
+						if (nbLevels > 1  && counter == 1) {
 							idL1Div = idL1;
 						}
 						//to maintain the state of the list 
-						if (idL1Div != idL1) {
+						if (nbLevels > 1  && idL1Div != idL1) {
 							t.Insert(displayIndex, displayDiv);
 							displayDiv = "none";
 							idL1Div = idL1;
 						}
+                        if (nbLevels == 1) displayDiv = "";
 
 						#region Closing Level 2
 						if (nbLevels > 2 && ((idL2 != oldIdL2 && startL2 == 0) || (oldIdL1 != idL1 && startL1 == 0))) {
@@ -480,16 +493,17 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 								numColumn = 0;
 							}
 							startL1 = -1;
-							oldIdL2 = -1;
+                            oldIdL2 = long.MinValue;
 							t.Append("</table></div></td></tr></table>");
 						}
 						#endregion
 					
 						#region New Level 1
-						if (idL1 > -1 && idL1 != oldIdL1) {
+                        if (nbLevels > 1 && idL1 > long.MinValue && idL1 != oldIdL1)
+                        {
 							//border top table
-							if (oldIdL1 == -1) t.Append("<table class=\"violetBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\"><tr onClick=\"javascript : DivDisplayer('1_" + idL1 + "');\" style=\"cursor : pointer\">");
-							else t.Append("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"650\"><tr onClick=\"javascript : DivDisplayer('1_" + idL1 + "');\" style=\"cursor : pointer\">");
+                            if (oldIdL1 == long.MinValue) t.Append("<table class=\"violetBorder txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"700\"><tr onClick=\"javascript : DivDisplayer('1_" + idL1 + "');\" style=\"cursor : pointer\">");
+							else t.Append("<table class=\"violetBorderWithoutTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 width=\"700\"><tr onClick=\"javascript : DivDisplayer('1_" + idL1 + "');\" style=\"cursor : pointer\">");
 							oldIdL1 = idL1;
 							startL1 = 0;
 							t.Append("<td align=\"left\" height=\"10\" valign=\"middle\" class=\"txtGroupViolet11Bold\">&nbsp;&nbsp;&nbsp;" + labelL1);
@@ -502,7 +516,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 
 							t.Append("<table cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
 							//link for select all items
-							t.Append("<tr><td colspan=\"2\">&nbsp;<a href=\"javascript: SelectAllNotDisabledChilds('1_" + idL1 + "')\" title=\"" + GestionWeb.GetWebWord(GetWebWordCode(genericDetailLevel[2]), _webSession.SiteLanguage) + "\" class=\"roll04\">" + GestionWeb.GetWebWord(GetWebWordCode(genericDetailLevel[2]), _webSession.SiteLanguage) + "</a></td></tr>");
+							if(nbLevels>1) t.Append("<tr><td colspan=\"2\">&nbsp;<a href=\"javascript: SelectAllNotDisabledChilds('1_" + idL1 + "')\" title=\"" + GestionWeb.GetWebWord(GetWebWordCode(genericDetailLevel[2]), _webSession.SiteLanguage) + "\" class=\"roll04\">" + GestionWeb.GetWebWord(GetWebWordCode(genericDetailLevel[2]), _webSession.SiteLanguage) + "</a></td></tr>");
 
 							allDivIds = allDivIds + "1_" + idL1 + ",";
 							//isNewL1 = false;
@@ -511,7 +525,8 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 						#endregion
 
 						#region New Level 2 ( if nbLevels > 2)
-						if (nbLevels > 2 && (idL2 > -1 && idL2 != oldIdL2)) {
+                        if (nbLevels > 2 && (idL2 > long.MinValue && idL2 != oldIdL2))
+                        {
 							if (startL2 == -1) t.Append("<tr><td ><table class=\"violetBackGroundV3 txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\"><tr onClick=\"javascript : DivDisplayer('1_" + idL1 + "2_" + idL2 + "');\" style=\"cursor : pointer\">");
 							else t.Append("<tr><td ><table class=\"violetBackGroundV3 violetBorderTop txtViolet11Bold\"  cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\"><tr onClick=\"javascript : DivDisplayer('1_" + idL1 + "2_" + idL2 + "');\" style=\"cursor : pointer\">");
 							oldIdL2 = idL2;
@@ -550,9 +565,11 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 							checkBox = "checked";
 							displayDiv = "''";
 						}
-
+                        //link for select all items
+                        if (nbLevels == 1 && i == 0) t.Append("<tr><td colspan=\"3\">&nbsp;<a href=\"javascript: SelectAllNotDisabledChilds('globalTable')\" title=\"" + GestionWeb.GetWebWord(GetWebWordCode(genericDetailLevel[1]), _webSession.SiteLanguage) + "\" class=\"roll04\">" + GestionWeb.GetWebWord(GetWebWordCode(genericDetailLevel[1]), _webSession.SiteLanguage) + "</a></td></tr>");
+						
 						if (numColumn == 0) {
-                            cssTextItem = "txtViolet10";// int.Parse(currentRow["activation"].ToString()) != DBConstantes.ActivationValues.DEAD ? "txtViolet10" : "txtOrange10";
+                            cssTextItem = "txtViolet10";
 							t.Append("<tr>");
 							t.Append("<td class=\"" + cssTextItem + "\" width=\"33%\">");
 							t.Append("<input type=\"checkbox\" " + checkBox + " " + disabled + " name=\"GenericDetailVehicleSelectionWebControl1$" + i + "\" id=\"GenericDetailVehicleSelectionWebControl1_" + i + "\" value=" + idL3 + "><label for=\"GenericDetailVehicleSelectionWebControl1_	" + i + "\">" + labelL3 + "<br></label>");
@@ -561,7 +578,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 							i++;
 						}
 						else if (numColumn == 1) {
-                            cssTextItem = "txtViolet10"; //int.Parse(currentRow["activation"].ToString()) != DBConstantes.ActivationValues.DEAD ? "txtViolet10" : "txtOrange10";
+                            cssTextItem = "txtViolet10"; 
 							t.Append("<td  class=\"" + cssTextItem + "\" width=\"33%\">");
 							t.Append("<input type=\"checkbox\" " + checkBox + " " + disabled + " name=\"GenericDetailVehicleSelectionWebControl1$" + i + "\" id=\"GenericDetailVehicleSelectionWebControl1_" + i + "\" value=" + idL3 + "><label for=\"GenericDetailVehicleSelectionWebControl1_	" + i + "\">" + labelL3 + "<br></label>");
 							t.Append("</td>");
@@ -569,7 +586,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 							i++;
 						}
 						else {
-                            cssTextItem = "txtViolet10"; //int.Parse(currentRow["activation"].ToString()) != DBConstantes.ActivationValues.DEAD ? "txtViolet10" : "txtOrange10";
+                            cssTextItem = "txtViolet10";
 							t.Append("<td class=\"" + cssTextItem + "\" width=\"33%\">");
 							t.Append("<input type=\"checkbox\" " + checkBox + " " + disabled + " name=\"GenericDetailVehicleSelectionWebControl1$" + i + "\" id=\"GenericDetailVehicleSelectionWebControl1_" + i + "\" value=" + idL3 + "><label for=\"GenericDetailVehicleSelectionWebControl1_	" + i + "\">" + labelL3 + "<br></label>");
 							t.Append("</td></tr>");
@@ -579,17 +596,14 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 						oldIdL3 = idL3;
 
 						//To maintain the state of the list when its the last div as it wont be handeled by the first check
-						if (idL1Div == idL1 && _dsListMedia!=null && _dsListMedia.Tables[0].Rows.Count == counter) {
+						if (nbLevels>1 && idL1Div == idL1 && _dsListMedia!=null && _dsListMedia.Tables[0].Rows.Count == counter) {
 							t.Insert(displayIndex, displayDiv);
 							displayDiv = "none";
 							idL1Div = idL1;
 						}
-						#endregion
-
-						//isNewL1 = false;
-						//isNewL2 = false;
+						#endregion					
 					}
-					if (allDivIds.Length > 0) {
+					if (nbLevels>1 && allDivIds.Length > 0) {
 						allDivIds = allDivIds.Remove(allDivIds.Length - 1, 1);
 						t.Insert(insertIndex, allDivIds);
 					}
@@ -611,9 +625,9 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 				}
 
 				if (nbLevels > 2) t.Append("</table></div></td></tr></table></td></tr>");
-				t.Append("</table></div></td></tr></table>");//Close Level 1
+                if (nbLevels > 1) t.Append("</table></div></td></tr></table>");//Close Level 1
+                if (nbLevels == 1) t.Append(" </table>"); 
 				t.Append("   </td></tr></table></td>");
-				//output.Write(" </DIV>");//Fermeture calque permettant de sélectionner tous les éléménts
 				t.Append("</tr>");
 
 				#endregion
@@ -641,11 +655,11 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 
 			object[] param = null;
 			if (_eventButton == constEvent.eventSelection.OK_EVENT && _nbItemsValidity != constEvent.error.MAX_ELEMENTS) {
-				param = new object[4];
+				param = new object[3];
 				param[0] = _webSession;
 				param[1] = _webSession.GenericMediaSelectionDetailLevel;
 				param[2] = listAccessMedia;
-				param[3] = keyWord;
+				//param[3] = keyWord;
 				classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
 				return classficationDAL.GetDetailMedia(keyWord);
 
@@ -664,13 +678,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 			}
 			classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
 			return classficationDAL.GetDetailMedia();
-
-			//if (_eventButton == constEvent.eventSelection.OK_EVENT && _nbItemsValidity != constEvent.error.MAX_ELEMENTS)
-			//    return Core.DataAccess.DetailMediaDataAccess.keyWordDetailMediaListDataAccess(_webSession, keyWord, listAccessMedia, _webSession.GenericMediaSelectionDetailLevel);
-			//else if (_eventButton == constEvent.eventSelection.LOAD_EVENT || _eventButton == constEvent.eventSelection.SAVE_EVENT)
-			//    return Core.DataAccess.DetailMediaDataAccess.DetailMediaListDataAccess(_webSession, _webSession.GenericMediaSelectionDetailLevel,listAccessMedia);
-			//else
-			//    return Core.DataAccess.DetailMediaDataAccess.DetailMediaListDataAccess(_webSession, _webSession.GenericMediaSelectionDetailLevel);
+		
 		}
 		#endregion
 
@@ -701,8 +709,8 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 			if (_isEmptyList) return false;
 			if (!IsMediaFound(_keyWord, _eventButton, _isEmptyList)) return false; 
 			switch (_eventButton) {
-                //case constEvent.eventSelection.LOAD_EVENT :
-                //    return _canLoadUnivese;
+                case constEvent.eventSelection.LOAD_EVENT:
+                    return _canLoadUnivese;
 				case constEvent.eventSelection.SAVE_EVENT :
 					return true;
 				default :  return LoadItemsFromDataBase();
@@ -763,31 +771,32 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 		/// <param name="currentLevel">DetailLevelI tem Information</param>
 		/// <returns>web word code</returns>
 		private int GetWebWordCode(DetailLevelItemInformation currentLevel) {
-			int code = 0;
-			switch (currentLevel.Id) {
-				case DetailLevelItemInformation.Levels.media:
-					code = 1066;
-					break;
-				case DetailLevelItemInformation.Levels.category:
-					code = 1151;
-					break;
-				case DetailLevelItemInformation.Levels.interestCenter:
-					code = 2547;
-					break;
-				case DetailLevelItemInformation.Levels.mediaSeller:
-					code = 2548;
-					break;
-				case DetailLevelItemInformation.Levels.title:
-					code = 2546;
-					break;
-				case DetailLevelItemInformation.Levels.basicMedia:
-					code = 2549;
-					break;
-				case DetailLevelItemInformation.Levels.country:
-					code = 2550;
-					break;
-			}
-			return code;
+            return 1066;
+            //int code = 0;
+            //switch (currentLevel.Id) {
+            //    case DetailLevelItemInformation.Levels.media:
+            //        code = 1066;
+            //        break;
+            //    case DetailLevelItemInformation.Levels.category:
+            //        code = 1151;
+            //        break;
+            //    case DetailLevelItemInformation.Levels.interestCenter:
+            //        code = 2547;
+            //        break;
+            //    case DetailLevelItemInformation.Levels.mediaSeller:
+            //        code = 2548;
+            //        break;
+            //    case DetailLevelItemInformation.Levels.title:
+            //        code = 2546;
+            //        break;
+            //    case DetailLevelItemInformation.Levels.basicMedia:
+            //        code = 2549;
+            //        break;
+            //    case DetailLevelItemInformation.Levels.country:
+            //        code = 2550;
+            //        break;
+            //}
+            //return code;
 		}
 		#endregion
 
@@ -889,14 +898,14 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 			#region  Message d'erreurs
 			// Message d'erreur : veuillez saisir 2 caractères minimums
 			if (_keyWord.Length < 2 && _keyWord.Length > 0 && _eventButton == constEvent.eventSelection.OK_EVENT) {
-				t.Append("<tr class=\"whiteBackGround\" ><td class=\"whiteBackGround txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+				t.Append("<tr class=\"backGroundWhite\" ><td class=\"backGroundWhite txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 				t.Append(" " + GestionWeb.GetWebWord(1473, _webSession.SiteLanguage) + " " + _keyWord + ".</p> ");
 				t.Append("</td>");
 				t.Append("</tr>");				
 			}
 			// Message d'erreur : mot incorrect
 			else if (!TNS.AdExpress.Web.Functions.CheckedText.CheckedProductText(_keyWord) && _keyWord.Length > 0 && _eventButton == constEvent.eventSelection.OK_EVENT && _isEmptyList) {
-				t.Append("<tr><td class=\"whiteBackGround txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+				t.Append("<tr><td class=\"backGroundWhite txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 				t.Append(" " + GestionWeb.GetWebWord(1088, _webSession.SiteLanguage) + " " + _keyWord + ".</p> ");
 				t.Append("</td>");
 				t.Append("</tr>");				
@@ -904,7 +913,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 			// Message d'erreur : aucun résultat avec le mot clé
 			else if (_dsListMedia != null) {
 				if (_dsListMedia.Tables[0].Rows.Count == 0 || _isEmptyList) {
-					t.Append("<tr><td class=\"whiteBackGround txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+					t.Append("<tr><td class=\"backGroundWhite txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
 					t.Append(" " + GestionWeb.GetWebWord(819, _webSession.SiteLanguage) + " " + _keyWord + ".</p> ");
 					t.Append("</td>");
 					t.Append("</tr>");					
@@ -912,13 +921,14 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
 			}
 			#endregion
 
-            //// Message d'erreur : Chargement de l'univers impossible
-            //if (!_canLoadUnivese && _eventButton == constEvent.eventSelection.LOAD_EVENT) {
-            //    t.Append("<tr class=\"whiteBackGround\" ><td class=\"whiteBackGround txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
-            //    t.Append(" " + GestionWeb.GetWebWord(1086, _webSession.SiteLanguage) + "</p> ");
-            //    t.Append(" </td> ");
-            //    t.Append(" </tr> ");				
-            //}
+            // Message d'erreur : Chargement de l'univers impossible
+            if (!_canLoadUnivese && _eventButton == constEvent.eventSelection.LOAD_EVENT)
+            {
+                t.Append("<tr class=\"backGroundWhite\" ><td class=\"backGroundWhite txtGris11Bold\"><p style=\"PADDING-RIGHT:20px;PADDING-LEFT:80px\">");
+                t.Append(" " + GestionWeb.GetWebWord(1086, _webSession.SiteLanguage) + "</p> ");
+                t.Append(" </td> ");
+                t.Append(" </tr> ");
+            }
 
 			return t.ToString();
 		}

@@ -123,7 +123,7 @@
 						Form2.disponibilityType.value = "lastPeriod"; 
 						break;	
 				}
-			}
+}
 		</script>
 		<script type="text/javascript" src="/scripts/DateFormat.js"></script>
 	</head>
@@ -216,6 +216,19 @@
                                                                             <cc5:GlobalCalendarWebControl ID="GlobalCalendarWebControl1" runat="server"/>
                                                                         </td>    
                                                                     </tr>
+                                                                    <tr>
+                                                                    <!---------Début Boutons validation 1 et comparatif-->
+                                                                      <td><table id="Table17" cellspacing="0" cellpadding="0" width="100%" border="0">
+                                                                       <tr><td width="10">&nbsp</td> 
+                                                                       <td> <cc4:ImageButtonRollOverWebControl runat="server" ID="validateButton1" />
+				                                                                                        <% if (_displayButtonComparative) { %>
+				                                                                                        <cc4:ImageButtonRollOverWebControl runat="server" ID="buttonComparative" />
+					                                                                                    &nbsp;&nbsp;&nbsp;&nbsp;				                                                                                
+					                                                                                    <%} %>  </td> </tr>
+		                                                                                </table>
+                                                                      <!---------Fin Boutons validation 1  et comparatif-->
+                                                                      
+                                                                     </td></tr>
                                                                  </table>
 															</td>
 														</tr>
@@ -323,8 +336,7 @@
 														<tr>
 															<td width="10">&nbsp;</td>
 															<td>
-															    <!--<cc4:imagebuttonrolloverwebcontrol id="validateButton2" runat="server" onclick="validateButton2_Click"></cc4:imagebuttonrolloverwebcontrol>-->
-															    <img id="validateButton2" src="/App_Themes/<%= this.Theme %>/Images/Culture/button/valider_up.gif" onmouseover="validateButton2.src='/App_Themes/<%= this.Theme %>/Images/Culture/button/valider_down.gif';" onmouseout="validateButton2.src='/App_Themes/<%= this.Theme %>/Images/Culture/button/valider_up.gif';" onclick="PostBack('validateButton2');" style="cursor:pointer"/>
+															    <cc4:ImageButtonRollOverWebControl runat="server" ID="validateButton2"  />
 															</td>
 														</tr>
 													</table>

@@ -97,7 +97,7 @@ namespace TNS.AdExpressI.LostWon.DAL
         /// Get Data to build dynamic report (except summary)
         /// </summary>
         /// <returns>Dynamic Report Data</returns>
-        public DataTable GetData()
+        public virtual DataSet GetData()
         {
             #region Constantes
             string DATA_TABLE_PREFIXE = WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
@@ -238,8 +238,8 @@ namespace TNS.AdExpressI.LostWon.DAL
                 DataSet ds = _session.Source.Fill(sql.ToString());
                 if (ds == null || ds.Tables[0] == null || ds.Tables[0].Rows.Count <= 0)
                     return null;
-                DataTable dt = ds.Tables[0];
-                return dt;
+                return ds;
+              
             }
             catch (System.Exception err)
             {
@@ -255,7 +255,7 @@ namespace TNS.AdExpressI.LostWon.DAL
         /// Load Data for synthesis report in Dynamic Module
         /// </summary>
         /// <returns>Data</returns>
-        public DataTable GetSynthesisData()
+        public virtual DataSet GetSynthesisData()
         {
 
             #region Constantes
@@ -417,7 +417,7 @@ namespace TNS.AdExpressI.LostWon.DAL
             #region Execution de la requête
             try
             {
-                return _session.Source.Fill(sql.ToString()).Tables[0];
+                return _session.Source.Fill(sql.ToString());
             }
             catch (System.Exception err)
             {
@@ -429,12 +429,12 @@ namespace TNS.AdExpressI.LostWon.DAL
         }
         #endregion
 
-        #region GetMediaDetails
+        #region GetColumnDetails
         /// <summary>
         /// Get Media for column Details
         /// </summary>
         /// <returns>DataSet with Media Details</returns>
-        public DataSet GetMediaDetails()
+        public virtual DataSet GetColumnDetails()
         {
             #region Variables
             StringBuilder sql = new StringBuilder();
@@ -499,7 +499,7 @@ namespace TNS.AdExpressI.LostWon.DAL
         /// Get Number of parution data
         /// </summary>
         /// <returns> Number of parution data</returns>
-        public DataSet GetNbParutionData()
+        public virtual DataSet GetNbParutionData()
         {
 
             StringBuilder sql = new StringBuilder();

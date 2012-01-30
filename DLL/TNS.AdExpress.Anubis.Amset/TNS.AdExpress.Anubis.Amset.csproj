@@ -167,7 +167,7 @@
       <Name>TNS.Ares.StaticNavSession.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.Ares\TNS.Ares.csproj">
-      <Project>{614B37CF-80A5-4252-AC63-F1811B073F5D}</Project>
+       <Project>{614B37CF-80A5-4252-AC63-F1811B073F5D}</Project>
       <Name>TNS.Ares</Name>
     </ProjectReference>
   </ItemGroup>

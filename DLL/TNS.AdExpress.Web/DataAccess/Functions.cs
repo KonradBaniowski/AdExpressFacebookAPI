@@ -35,6 +35,9 @@ using TNS.AdExpress.Domain.Web;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Classification;
+using System.Reflection;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpressI.Date.DAL;
 
 namespace TNS.AdExpress.Web.DataAccess{
 	/// <summary>
@@ -57,68 +60,64 @@ namespace TNS.AdExpress.Web.DataAccess{
 		#endregion
 
 		#region Vérification de la dernière date disponible pour un media dans la base de données des recap
-		/// <summary>
-		/// Vérification de la dernière date disponible pour un media dans la base de données des recap
-		/// </summary>
-		/// <param name="idVehicle">Identifiant du vehicle</param>
-		/// <param name="webSession">Session du client</param>
-		/// <returns>Dernier mois disponible</returns>
-		public static string CheckAvailableDateForMedia(Int64 idVehicle, WebSession webSession){
-            int nbYears = WebApplicationParameters.DataNumberOfYear;
-			string lastAvailableDate = (DateTime.Now.Year-(nbYears-1)).ToString();
+        ///// <summary>
+        ///// Vérification de la dernière date disponible pour un media dans la base de données des recap
+        ///// </summary>
+        ///// <param name="idVehicle">Identifiant du vehicle</param>
+        ///// <param name="webSession">Session du client</param>
+        ///// <returns>Dernier mois disponible</returns>
+        //public static string CheckAvailableDateForMedia(Int64 idVehicle, WebSession webSession){
 
-			string sql = "";
-       
+        //    string lastAvailableDate = (DateTime.Now.Year-2).ToString();
 
-			DataSet ds;
+        //    string sql = "";
 
-			#region Construction de la requete
-			sql = "select ";
-			// Cas ou l'année en cours est différente de la dernière année chargée
-			if(DateTime.Now.Year>webSession.DownLoadDate){
-                for (int i = nbYears; i > 0; i--)
-                {
-					for(int j = 1; j <= 12; j++){
-						sql += " max(exp_euro_" + ((i-1!=0)?"N"+(i-1):"N") + "_" + j + ") as N"
-							+ (DateTime.Now.Year-i) + j.ToString("0#") + ",";
-					}
-				}			
-			}
-			else{
-                nbYears = nbYears - 1;
-                for (int i = nbYears; i >= 0; i--)
-                {
-					for(int j = 1; j <= 12; j++){
-						sql += " max(exp_euro_" + ((i!=0)?"N"+i:"N") + "_" + j + ") as N"
-							+ (DateTime.Now.Year-i) + j.ToString("0#") + ",";
-					}
-				}
-			}
+        //    DataSet ds;
 
-			sql = sql.Remove(sql.Length-1, 1);
+        //    #region Construction de la requete
+        //    sql = "select ";
+        //    // Cas ou l'année en cours est différente de la dernière année chargée
+        //    if(DateTime.Now.Year>webSession.DownLoadDate){
+        //        for(int i = 3; i >0; i--){
+        //            for(int j = 1; j <= 12; j++){
+        //                sql += " max(exp_euro_" + ((i-1!=0)?"N"+(i-1):"N") + "_" + j + ") as N"
+        //                    + (DateTime.Now.Year-i) + j.ToString("0#") + ",";
+        //            }
+        //        }			
+        //    }
+        //    else{
+        //        for(int i = 2; i >=0; i--){
+        //            for(int j = 1; j <= 12; j++){
+        //                sql += " max(exp_euro_" + ((i!=0)?"N"+i:"N") + "_" + j + ") as N"
+        //                    + (DateTime.Now.Year-i) + j.ToString("0#") + ",";
+        //            }
+        //        }
+        //    }
 
-			sql += " from " + WebFunctions.SQLGenerator.getVehicleTableNameForSectorAnalysisResult(VehiclesInformation.DatabaseIdToEnum(idVehicle), webSession.IsSelectRetailerDisplay);
-			#endregion
+        //    sql = sql.Remove(sql.Length-1, 1);
 
-			#region Exécution de la requete
-            IDataSource source=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis);
-			ds = source.Fill(sql);
+        //    sql += " from " + WebFunctions.SQLGenerator.getVehicleTableNameForSectorAnalysisResult(VehiclesInformation.DatabaseIdToEnum(idVehicle));
+        //    #endregion
 
-			#endregion
+        //    #region Exécution de la requete
+        //    IDataSource source=WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis);
+        //    ds = source.Fill(sql);
 
-			#region Extraction du dernier mois disponible
+        //    #endregion
+
+        //    #region Extraction du dernier mois disponible
 			
-			for(int i = ds.Tables[0].Columns.Count-1; i >= 0; i--){
-				if (ds.Tables[0].Rows[0][i].ToString() != "0"){
-					lastAvailableDate = ds.Tables[0].Columns[i].ColumnName.Remove(0,1);
-					break;
-				}
-			}
-			#endregion
+        //    for(int i = ds.Tables[0].Columns.Count-1; i >= 0; i--){
+        //        if (ds.Tables[0].Rows[0][i].ToString() != "0"){
+        //            lastAvailableDate = ds.Tables[0].Columns[i].ColumnName.Remove(0,1);
+        //            break;
+        //        }
+        //    }
+        //    #endregion
 
-			return lastAvailableDate;
+        //    return lastAvailableDate;
 
-		}
+        //}
 		#endregion
 
 		#region GetVehiculeTableName
@@ -690,7 +689,11 @@ namespace TNS.AdExpress.Web.DataAccess{
 			//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 			//du dernier mois dispo en BDD
 			//traitement de la notion de fréquence
-			string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
+            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+            object[] param = new object[1];
+            param[0] = webSession;
+            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            string absolutEndPeriod = dateDAL.CheckPeriodValidity(webSession, webSession.PeriodEndDate);
 			
 			if (int.Parse(absolutEndPeriod) < int.Parse(webSession.PeriodBeginningDate))
 				throw new TNS.AdExpress.Domain.Exceptions.NoDataException();
@@ -922,6 +925,21 @@ namespace TNS.AdExpress.Web.DataAccess{
 			
 		}
 		#endregion
+
+        /// <summary>
+        /// Get Data Source
+        /// </summary>
+        /// <returns>Data source</returns>
+        public static TNS.FrameWork.DB.Common.IDataSource GetDataSource(WebSession webSession)
+        {
+            TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.sourceProvider];
+            object[] param = new object[1];
+            param[0] = webSession;
+            if (cl == null) throw (new NullReferenceException("Core layer is null for the source provider layer"));
+            TNS.AdExpress.Web.Core.ISourceProvider sourceProvider = (TNS.AdExpress.Web.Core.SourceProvider)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            return sourceProvider.GetSource();
+
+        }
 		
 		
 	}

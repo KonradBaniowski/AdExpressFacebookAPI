@@ -209,77 +209,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 foreach (string currentVehicle in vehicles)
                     vehiclesLong.Add(Int64.Parse(currentVehicle));
 
-                units = VehiclesInformation.GetCommunUnitList(vehiclesLong);
-
-                #region Old Code
-                //if (vehicles.Contains("7") || vehicles.Contains("9"))
-                //{
-                //    //cinéma or internet in the list
-                //    units.Add(CstWeb.CustomerSessions.Unit.euro);
-                //}
-                //else
-                //{
-                //    if (vehicles.Count == 2 && vehicles.Contains("2") && vehicles.Contains("3"))
-                //    {
-                //        //radio or tv only
-                //        units.Add(CstWeb.CustomerSessions.Unit.kEuro);
-                //        units.Add(CstWeb.CustomerSessions.Unit.euro);
-                //        units.Add(CstWeb.CustomerSessions.Unit.duration);
-                //        units.Add(CstWeb.CustomerSessions.Unit.spot);
-                //    }
-                //    else if (vehicles.Count >= 2)
-                //    {
-                //        //more than one media (different of "radio, tv")
-                //        units.Add(CstWeb.CustomerSessions.Unit.kEuro);
-                //        units.Add(CstWeb.CustomerSessions.Unit.euro);
-                //        if (!vehicles.Contains("10"))
-                //            units.Add(CstWeb.CustomerSessions.Unit.insertion);
-                //    }
-                //    else
-                //    {
-                //        switch (vehicles[0])
-                //        {
-                //            case "1":
-                //            case "11":
-                //                //presse
-                //                units.Add(CstWeb.CustomerSessions.Unit.kEuro);
-                //                units.Add(CstWeb.CustomerSessions.Unit.euro);
-                //                units.Add(CstWeb.CustomerSessions.Unit.pages);
-                //                units.Add(CstWeb.CustomerSessions.Unit.mmPerCol);
-                //                units.Add(CstWeb.CustomerSessions.Unit.insertion);
-                //                break;
-                //            case "2":
-                //            //radio
-                //            case "3":
-                //            case "5":
-                //                //tv
-                //                units.Add(CstWeb.CustomerSessions.Unit.kEuro);
-                //                units.Add(CstWeb.CustomerSessions.Unit.euro);
-                //                units.Add(CstWeb.CustomerSessions.Unit.duration);
-                //                units.Add(CstWeb.CustomerSessions.Unit.spot);
-                //                break;
-                //            case "8":
-                //                //affichage
-                //                units.Add(CstWeb.CustomerSessions.Unit.kEuro);
-                //                units.Add(CstWeb.CustomerSessions.Unit.euro);
-                //                units.Add(CstWeb.CustomerSessions.Unit.numberBoard);
-                //                //units.Add(CstWeb.CustomerSessions.Unit.insertion);
-                //                break;
-                //            case "10":
-                //                //MarketingDirect
-                //                units.Add(CstWeb.CustomerSessions.Unit.kEuro);
-                //                units.Add(CstWeb.CustomerSessions.Unit.euro);
-                //                units.Add(CstWeb.CustomerSessions.Unit.volume);
-                //                break;
-                //            default:
-                //                units.Add(CstWeb.CustomerSessions.Unit.kEuro);
-                //                units.Add(CstWeb.CustomerSessions.Unit.euro);
-                //                break;
-                //        }
-                //    }
-                //}
-                #endregion
-
+                units = VehiclesInformation.GetCommunUnitList(vehiclesLong);                
             }
             else
             {
@@ -287,6 +217,27 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 units.Add(UnitsInformation.DefaultCurrency);
             }
             return units;
+        }
+         /// <summary>
+        /// Get allowed units 
+        /// </summary>
+        /// <param name="vehicleSelection">List of media joined by commas</param>
+        /// <returns>Allowed units</returns>
+        public static ArrayList GetAllowedUnits(ArrayList unitList, List<CstWeb.CustomerSessions.Unit> AllowedUnitEnumList)
+        {
+            ArrayList temp = new ArrayList();
+            if (AllowedUnitEnumList != null && AllowedUnitEnumList.Count > 0)
+            {
+                for (int i = 0; i < unitList.Count; i++)
+                {
+                    if (AllowedUnitEnumList.Contains((CstWeb.CustomerSessions.Unit)unitList[i]))
+                    {
+                        temp.Add((CstWeb.CustomerSessions.Unit)unitList[i]);
+                    }
+                }
+                return temp;
+            }
+            return unitList;
         }
 
         /// <summary>

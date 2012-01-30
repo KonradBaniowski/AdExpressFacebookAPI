@@ -21,6 +21,9 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.ProductClassIndicators.DAL;
 using System.Reflection;
 using TNS.AdExpressI.ProductClassIndicators.Engines;
+using TNS.FrameWork.WebResultUI;
+using TNS.AdExpressI.ProductClassIndicators.Exceptions;
+using TNS.AdExpress.Constantes.FrameWork.Results;
 
 
 namespace TNS.AdExpressI.ProductClassIndicators
@@ -28,14 +31,14 @@ namespace TNS.AdExpressI.ProductClassIndicators
     /// <summary>
     /// Defines available indicators for Product Class Analysis
     /// </summary>
-    public abstract class ProductClassIndicators:IProductClassIndicators
+    public abstract class ProductClassIndicators : IProductClassIndicators
     {
 
         #region Attributes
         /// <summary>
         /// User session
         /// </summary>
-        protected WebSession _session;
+        protected WebSession _webSession;
         /// <summary>
         /// Dal layer (should be ProductClassIndicatorsDAL)
         /// </summary>
@@ -64,8 +67,8 @@ namespace TNS.AdExpressI.ProductClassIndicators
         /// </summary>
         protected WebSession Session
         {
-            get { return _session; }
-            set { _session = value; }
+            get { return _webSession; }
+            set { _webSession = value; }
         }
         /// <summary>
         /// Get / Set Excel format ?
@@ -78,7 +81,8 @@ namespace TNS.AdExpressI.ProductClassIndicators
         /// <summary>
         /// Get / Set PDF format ?
         /// </summary>
-        public bool Pdf {
+        public bool Pdf
+        {
             get { return _pdf; }
             set { _pdf = value; }
         }
@@ -97,13 +101,13 @@ namespace TNS.AdExpressI.ProductClassIndicators
         /// Default Constructor
         /// </summary>
         /// <param name="session">User session</param>
-        public ProductClassIndicators(WebSession session)
+        public ProductClassIndicators(WebSession webSession)
         {
-            _session = session;
-            Navigation.Module module =  Navigation.ModulesList.GetModule(session.CurrentModule);
+            _webSession = webSession;
+            Navigation.Module module = Navigation.ModulesList.GetModule(webSession.CurrentModule);
             if (module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the product class indicators."));
             object[] parameters = new object[1];
-            parameters[0] = _session;
+            parameters[0] = _webSession;
             _dalLayer = (IProductClassIndicatorsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryDataAccessLayer.AssemblyName, module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 
         }
@@ -119,7 +123,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
         /// <returns>Chart control filled with top elements</returns>
         public virtual Chart GetTopsChart(CstResult.MotherRecap.ElementType _classifLevel)
         {
-            ChartProductClassIndicator chart = new ChartTop(this._session, this._dalLayer, _classifLevel);
+            ChartProductClassIndicator chart = new ChartTop(this._webSession, this._dalLayer, _classifLevel);
             chart.ChartType = _chartType;
             return chart;
         }
@@ -129,7 +133,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
         /// <returns>Html code</returns>
         public virtual string GetTopsTable()
         {
-            Engine engine = new EngineTop(this._session, this._dalLayer);
+            Engine engine = new EngineTop(this._webSession, this._dalLayer);
             engine.Excel = _excel;
             return engine.GetResult().ToString();
         }
@@ -145,14 +149,14 @@ namespace TNS.AdExpressI.ProductClassIndicators
 
             if (this._engine == null || !(this._engine is EngineNovelty))
             {
-                this._engine = new EngineNovelty(this._session, this._dalLayer);
+                this._engine = new EngineNovelty(this._webSession, this._dalLayer);
             }
             EngineNovelty e = (EngineNovelty)this._engine;
             e.Excel = _excel;
             return e.GetGraph().ToString();
 
         }
-       /// <summary>
+        /// <summary>
         /// Get indicator novelties as a Table (product and advertiser)
         /// </summary>
         /// <returns>Chart control filled with top elements</returns>
@@ -161,7 +165,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
 
             if (this._engine == null || !(this._engine is EngineNovelty))
             {
-                this._engine = new EngineNovelty(this._session, this._dalLayer);
+                this._engine = new EngineNovelty(this._webSession, this._dalLayer);
             }
             EngineNovelty e = (EngineNovelty)this._engine;
             e.Excel = _excel;
@@ -178,7 +182,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
         /// <returns>Chart control filled with evolution elements</returns>
         public virtual Chart GetEvolutionChart(CstResult.MotherRecap.ElementType _classifLevel)
         {
-            ChartProductClassIndicator chart = new ChartEvolution(this._session, this._dalLayer, _classifLevel);
+            ChartProductClassIndicator chart = new ChartEvolution(this._webSession, this._dalLayer, _classifLevel);
             chart.ChartType = _chartType;
             return chart;
         }
@@ -188,7 +192,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
         /// <returns>Html code</returns>
         public virtual string GetEvolutionTable()
         {
-            Engine engine = new EngineEvolution(this._session, this._dalLayer);
+            Engine engine = new EngineEvolution(this._webSession, this._dalLayer);
             engine.Excel = _excel;
             return engine.GetResult().ToString();
         }
@@ -201,11 +205,11 @@ namespace TNS.AdExpressI.ProductClassIndicators
         /// <returns>Html code</returns>
         public virtual string GetSummary()
         {
-            Engine engine = new EngineSummary(this._session, this._dalLayer);
+            Engine engine = new EngineSummary(this._webSession, this._dalLayer);
             engine.Excel = _excel;
             engine.Pdf = _pdf;
             return engine.GetResult().ToString();
-        }        
+        }
         #endregion
 
         #region Media Strategy
@@ -215,7 +219,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
         /// <returns>Chart control filled with evolution elements</returns>
         public virtual Chart GetMediaStrategyChart()
         {
-            ChartProductClassIndicator chart = new ChartMediaStartegy(this._session, this._dalLayer);
+            ChartProductClassIndicator chart = new ChartMediaStartegy(this._webSession, this._dalLayer);
             chart.ChartType = _chartType;
             return chart;
         }
@@ -225,7 +229,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
         /// <returns>Html code</returns>
         public virtual string GetMediaStrategyTable()
         {
-            Engine engine = new EngineMediaStrategy(this._session, this._dalLayer);
+            Engine engine = new EngineMediaStrategy(this._webSession, this._dalLayer);
             engine.Excel = _excel;
             return engine.GetResult().ToString();
         }
@@ -239,7 +243,7 @@ namespace TNS.AdExpressI.ProductClassIndicators
         /// <returns>Chart control filled with seasonality elements</returns>
         public virtual Chart GetSeasonalityChart(bool bigSize)
         {
-            ChartProductClassIndicator chart = new ChartSeasonality(this._session, this._dalLayer, bigSize);
+            ChartProductClassIndicator chart = new ChartSeasonality(this._webSession, this._dalLayer, bigSize);
             chart.ChartType = _chartType;
             return chart;
         }
@@ -249,9 +253,50 @@ namespace TNS.AdExpressI.ProductClassIndicators
         /// <returns>Html code</returns>
         public virtual string GetSeasonalityTable()
         {
-            Engine engine = new EngineSeasonality(this._session, this._dalLayer);
+            Engine engine = new EngineSeasonality(this._webSession, this._dalLayer);
             engine.Excel = _excel;
             return engine.GetResult().ToString();
+        }
+        #endregion
+
+        #region GetResultTable
+        /// <summary>
+        /// Get Result Table
+        /// </summary>
+        /// <returns></returns>
+        public virtual ResultTable GetResultTable()
+        {
+            Engines.Engine result = null;
+            try
+            {
+                switch (_webSession.CurrentTab)
+                {
+                    case MotherRecap.MEDIA_STRATEGY:
+                        result = new Engines.EngineMediaStrategy(_webSession, this._dalLayer);
+                        break;
+                    case MotherRecap.PALMARES:
+                        result = new Engines.EngineTop(_webSession, this._dalLayer);
+                        break;
+                    case MotherRecap.SEASONALITY:
+                        result = new Engines.EngineSeasonality(_webSession, this._dalLayer);
+                        break;
+                    case EvolutionRecap.EVOLUTION:
+                        result = new Engines.EngineEvolution(_webSession, this._dalLayer);
+                        break;
+                    case MotherRecap.NOVELTY:
+                        result = new Engines.EngineNovelty(_webSession, this._dalLayer);
+                        break;
+                    default:
+                        result = new Engines.EngineMediaStrategy(_webSession, this._dalLayer);
+                        break;
+                }
+            }
+            catch (System.Exception err)
+            {
+                throw (new ProductClassIndicatorsException("Impossible to compute Product Class Indicator results", err));
+            }
+
+            return result.GetResultTable();
         }
         #endregion
 

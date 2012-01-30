@@ -24,18 +24,18 @@ namespace TNS.AdExpress.Web.Core.Result {
         /// <summary>
         /// Id solgan
         /// </summary>
-        protected Int64 _creative;
+        protected string _creative;
         /// <summary>
         /// Id du vehicle (Tv ou others)
         /// </summary>
-        protected int _vehicleId;
+        protected long _vehicleId;
         #endregion
 
         #region Constructeur
         /// <summary>
         /// Constructor
         /// </summary>
-        public CellTvCreativeLink(Int64 creative, WebSession webSession, int vehicleId) {
+        public CellTvCreativeLink(string creative, WebSession webSession, long vehicleId) {
             if (webSession == null) throw (new ArgumentNullException("L'objet WebSession est null"));
             _link = "javascript:openDownload('{0}','{1}','{2}');";
             _creative = creative;
@@ -51,7 +51,7 @@ namespace TNS.AdExpress.Web.Core.Result {
         /// </summary>
         /// <returns>Adresse du lien</returns>
         public override string GetLink() {
-            if (_creative != -1)
+            if (!string.IsNullOrEmpty(_creative) && _creative != long.MinValue.ToString())
                 return (string.Format(_link, _creative, _webSession.IdSession, _vehicleId));
             else
                 return "";

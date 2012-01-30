@@ -4,7 +4,11 @@
     <dataAccessLayer enum="Alert" name="AlertDAL" assemblyName="TNS.Ares.Alerts.DAL.Default.dll" class="TNS.Ares.Alerts.DAL.Default.AlertsDAL" />
     <dataAccessLayer enum="Session" name="SessionDAL" assemblyName="TNS.Ares.StaticNavSession.DAL.Default.dll" class="TNS.Ares.StaticNavSession.DAL.Default.StaticNavSessionDAL" />
   </dataAccessLayers>
-  <plugins description="List of plugins" defaultFamilyId="130" defaultLongevity="30" defaultFilePath="\\testarossa2\adexdatas\AdExCustomerFiles" defaultVirtualPath="Export" alertDal="AlertDAL" sessionDal="SessionDAL" defaultThemePath="C:\Dev\Csharp2\AdExpress International Demo\Dev\Anubis">
-    <plugin enumId="Miysis" name="Miysis" resultType="7" resultLongevity="5" deleteExpired="true" extension=".pdf"  />
+  <plugins description="List of plugins" defaultFamilyId="123" defaultLongevity="30" defaultFilePath="\\testarossa2\adexdatas\AdExCustomerFiles" defaultVirtualPath="Export" alertDal="AlertDAL" sessionDal="SessionDAL" defaultThemePath="C:\Dev\Csharp2\AdExpress International Demo\Dev\Anubis">
+    <plugin enumId="Miysis" name="Miysis" resultType="7" resultLongevity="5" deleteExpired="true" extension=".pdf"  assemblyName="TNS.AdExpress.Anubis.Miysis.dll" class="TNS.AdExpress.Anubis.Miysis.TreatementSystem"/>
+    <plugin enumId="Alertes" name="Alertes" resultType="20" longevity="120" deleteExpired="true" useExec="true" deleteRowSuccess="true">
+      <exec dayOfWeekFrom="Saturday"  dayOfWeekTo="Monday"  dayOfWeekHourTo="08:00:00"/>
+      <exec dayOfWeekFrom="Sunday"    dayOfWeekTo="Monday"  dayOfWeekHourTo="08:00:00"/>
+    </plugin>
   </plugins>
 </pluginConfiguration>

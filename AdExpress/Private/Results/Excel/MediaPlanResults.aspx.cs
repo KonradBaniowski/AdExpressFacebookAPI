@@ -124,7 +124,7 @@ namespace AdExpress.Private.Results.Excel{
                 //result = GenericMediaScheduleUI.GetExcel(GenericMediaPlanRules.GetFormattedTableWithMediaDetailLevel(_webSession, period, -1), _webSession, period, zoomDate, false,(int)periodDisplayLevel).HTMLCode;
                 object[] param = null;
                 TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(_webSession.CurrentModule);
-                if (module.Id != WebConstantes.Module.Name.BILAN_CAMPAGNE){
+                if (module.Id != WebConstantes.Module.Name.BILAN_CAMPAGNE){                   
                     module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
                     _webSession.CurrentTab = 0;
                     _webSession.ReferenceUniversMedia = new System.Windows.Forms.TreeNode("media");

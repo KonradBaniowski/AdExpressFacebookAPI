@@ -26,6 +26,9 @@ using TNS.Classification.Universe;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpressI.Classification.DAL;
+using TNS.AdExpress.Domain.Layers;
+using System.Reflection;
 
 namespace TNS.AdExpress.Web.Controls.Selections {
 	[DefaultProperty("Text")]
@@ -95,8 +98,18 @@ namespace TNS.AdExpress.Web.Controls.Selections {
 		protected override void OnLoad(EventArgs e) {
 
 			VehicleInformation vehicleInformation = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
+            IClassificationDAL classficationDAL = null;
+            CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
+            if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
+            object[] param = null;
+            param = new object[3];
+            param[0] = _webSession;
+            param[1] = _webSession.GenericMediaSelectionDetailLevel;
+            param[2] = "";
+            classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
 
-			_dsListMedia = TNS.AdExpress.Web.Core.DataAccess.DetailMediaDataAccess.keyWordDetailMediaListDataAccess(_webSession, _keyWord, "", _webSession.GenericMediaSelectionDetailLevel);
+            _dsListMedia = classficationDAL.GetDetailMedia(_keyWord);
+			//_dsListMedia = TNS.AdExpress.Web.Core.DataAccess.DetailMediaDataAccess.keyWordDetailMediaListDataAccess(_webSession, _keyWord, "", _webSession.GenericMediaSelectionDetailLevel);
 			if (_dsListMedia != null && _dsListMedia.Tables[0].Rows.Count > 0) {
 				_isEmptyList = false;
 			}

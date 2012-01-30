@@ -12,7 +12,7 @@
 using System;
 using TNS.FrameWork.Exceptions;
 
-namespace TNS.AdExpressI.Trends.Exceptions
+namespace TNS.AdExpressI.Visual.Exceptions
 {
 	/// <summary>
 	/// Excepion class for Visual

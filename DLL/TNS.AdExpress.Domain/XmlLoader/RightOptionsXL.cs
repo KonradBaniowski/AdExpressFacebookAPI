@@ -25,10 +25,11 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 		/// </summary>
 		/// <param name="dataSource">Data Source</param>
 		/// <summary>
-		public static void Load(IDataSource dataSource) {
+		public static bool Load(IDataSource dataSource) {
 
 			#region Variables
 			XmlTextReader reader = null;
+            bool? useRightDefaultConnection = null;
 			#endregion
 
 			try {
@@ -39,7 +40,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 						switch (reader.LocalName) {
 							case "rightOption":
 								if (reader.GetAttribute("useDefaultConnection") != null && reader.GetAttribute("useDefaultConnection").Length > 0) {
-									WebApplicationParameters.UseRightDefaultConnection = Convert.ToBoolean(reader.GetAttribute("useDefaultConnection"));
+                                    useRightDefaultConnection = Convert.ToBoolean(reader.GetAttribute("useDefaultConnection"));
 								}
 								break;
 						}
@@ -59,6 +60,8 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 			#endregion
 
 			dataSource.Close();
+
+            return useRightDefaultConnection.Value;
 
 		}
 	}

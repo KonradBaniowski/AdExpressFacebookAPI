@@ -346,6 +346,10 @@ namespace TNS.AdExpress.Domain.Level{
 		/// Relation de données de type jointure externe
 		/// </summary>
 		private bool _dataBaseExternalJoin=false;
+        /// <summary>
+        /// Indique si les données peuvent contenir un separateur
+        /// </summary>
+        private bool _isContainsSeparator = false;
 		#endregion
 
 		#region Constructeur
@@ -474,6 +478,14 @@ namespace TNS.AdExpress.Domain.Level{
 		public bool DataBaseExternalJoin{
 			get{return(_dataBaseExternalJoin);}
 		}
+        /// <summary>
+        ///Obtient \ Définit si les données peuvent contenir un separateur
+        /// </summary>
+        public bool IsContainsSeparator
+        {
+            get { return _isContainsSeparator; }
+            set { _isContainsSeparator = value; }
+        }
 		#endregion
 
 		#region Méthode publiques

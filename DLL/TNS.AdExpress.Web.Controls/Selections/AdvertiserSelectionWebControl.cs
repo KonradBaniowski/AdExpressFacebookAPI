@@ -1458,10 +1458,10 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				// Affichage des annonceur à partir de SelectionUniversAdvertiser où CurrentUniversAdvertiser
 				//if(buttonTarget==4 || buttonTarget==6 || buttonTarget==8){
 				if(buttonTarget==4 || buttonTarget==3 || buttonTarget==8){
-					t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSession.SelectionUniversAdvertiser,true,true,true,645,true,true,webSession.SiteLanguage,3,1,true));
+                    t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSession.SelectionUniversAdvertiser, true, true, true, 645, true, true, webSession.SiteLanguage, 3, 1, true, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource));
 				}
 				else{
-					t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSession.CurrentUniversAdvertiser,true,true,true,645,true,true,webSession.SiteLanguage,3,1,true));
+                    t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(webSession.CurrentUniversAdvertiser, true, true, true, 645, true, true, webSession.SiteLanguage, 3, 1, true, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource));
 				}
 				t.Append("</td></tr></table></td></tr>");				
 				output.Write(t.ToString());	

@@ -27,6 +27,7 @@ using WebConstantes = TNS.AdExpress.Constantes.Web;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using FrameWorkSelection = TNS.AdExpress.Constantes.FrameWork.Selection;
 using TNS.Classification.Universe;
+using TNS.AdExpress.Domain.Web.Navigation;
 
 /// <summary>
 /// Page to select competitive product universe
@@ -275,7 +276,7 @@ public partial class Private_Selection_CompetitorUniverseProductSelection : TNS.
 		LoadableUniversWebControl1.Dimension_ = TNS.Classification.Universe.Dimension.product;
 		LoadableUniversWebControl1.ForGenericUniverse = true;
 		LoadableUniversWebControl1.SelectionPage = true;
-
+        bool isSelectionPage = true;
 		switch (_webSession.CurrentModule) {
 			case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
 			case WebConstantes.Module.Name.ALERTE_PORTEFEUILLE:
@@ -288,16 +289,25 @@ public partial class Private_Selection_CompetitorUniverseProductSelection : TNS.
 
 				SelectItemsInClassificationWebControl1.ForSelectionPage = false;
 				LoadableUniversWebControl1.SelectionPage = false;
-				break;
-			case WebConstantes.Module.Name.ALERTE_PLAN_MEDIA_CONCURENTIELLE:
-			case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA_CONCURENTIELLE:
-				SelectItemsInClassificationWebControl1.DefaultBranchId = 2;//Branche annonceur par défaut
-				break;
-			case WebConstantes.Module.Name.BILAN_CAMPAGNE:
-				SelectItemsInClassificationWebControl1.DefaultBranchId = 4;
-				break;
+                isSelectionPage = false;
+				break;			
 		}
-
+        if (isSelectionPage)
+        {
+            foreach (SelectionPageInformation currentPage in _currentModule.SelectionsPages)
+            {
+                if (currentPage.Url.Equals(this.Page.Request.Url.AbsolutePath))
+                    SelectItemsInClassificationWebControl1.DefaultBranchId = currentPage.DefaultBranchId;
+            }
+        }
+        else
+        {
+            foreach (OptionalPageInformation currentPage in _currentModule.OptionalsPages)
+            {
+                if (currentPage.Url.Equals(this.Page.Request.Url.AbsolutePath))
+                    SelectItemsInClassificationWebControl1.DefaultBranchId = currentPage.DefaultBranchId;
+            }
+        }
 		SelectItemsInClassificationWebControl1.IdSession = _webSession.IdSession;
 		SelectItemsInClassificationWebControl1.Dimension_ = TNS.Classification.Universe.Dimension.product;
 		SelectItemsInClassificationWebControl1.SiteLanguage = _webSession.SiteLanguage;
@@ -326,7 +336,7 @@ public partial class Private_Selection_CompetitorUniverseProductSelection : TNS.
 			//Annuler l'univers de version
 			if ( _webSession.CurrentModule == WebConstantes.Module.Name.BILAN_CAMPAGNE) {
 				_webSession.IdSlogans = new ArrayList();
-				_webSession.SloganIdZoom = -1;				
+                _webSession.SloganIdZoom = long.MinValue;				
 			}
 			if (idUnivers.Text.Length > 0) {
 				if (!HasAlreadyThisUniverseName(_webSession.PrincipalProductUniverses, idUnivers.Text)) {
@@ -421,7 +431,7 @@ public partial class Private_Selection_CompetitorUniverseProductSelection : TNS.
 			//Annuler l'univers de version
 			if (_webSession.CurrentModule == WebConstantes.Module.Name.BILAN_CAMPAGNE) {
 				_webSession.IdSlogans = new ArrayList();
-				_webSession.SloganIdZoom = -1;
+                _webSession.SloganIdZoom = long.MinValue;
 			}
 			if (idUnivers.Text.Length > 0) {
 				if (!HasAlreadyThisUniverseName(_webSession.PrincipalProductUniverses,idUnivers.Text)) {

@@ -40,7 +40,7 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
 		/// <summary>
 		/// User session
 		/// </summary>
-		protected WebSession _session = null;
+		protected WebSession _webSession = null;
         /// <summary>
         /// Product level chart (or default if only one)
         /// </summary>
@@ -52,7 +52,7 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
         /// <summary>
         /// Report as table
         /// </summary>
-        protected ProductClassTableWebControl _tableChart = null;
+        protected WebControl _resultTableWebControl = null;
         /// <summary>
         /// Big Charts ?
         /// </summary>
@@ -79,9 +79,9 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
 		/// <summary>
 		/// Get / Set User session
 		/// </summary>
-		public WebSession Session{
-			set{_session = value;}
-			get{return _session;}
+		public WebSession WebSession{
+			set{_webSession = value;}
+			get{return _webSession;}
 		}
 		/// <summary>
 		/// Get / Set Big Size Param
@@ -110,8 +110,8 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
 		
 		#region Evènements
 
-		#region Load
-		/// <summary>
+        #region Load
+        /// <summary>
 		/// Load components
 		/// </summary>
 		/// <param name="e">arguments</param>
@@ -119,14 +119,14 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
 			Controls.Clear();
 		
 			//Graphical mode
-            if (_session != null && !_excel && _session.Graphics && _session.CurrentTab != MotherRecap.NOVELTY && _session.CurrentTab != MotherRecap.SYNTHESIS)
+            if (_webSession != null && !_excel && _webSession.Graphics && _webSession.CurrentTab != MotherRecap.NOVELTY && _webSession.CurrentTab != MotherRecap.SYNTHESIS)
             {
                 Navigation.Module module = ModulesList.GetModule(CstWeb.Module.Name.INDICATEUR);
                 if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Indicator result"));
-                object[] param = new object[1] { _session };
+                object[] param = new object[1] { _webSession };
                 IProductClassIndicators productClassIndicator = (IProductClassIndicators)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                 productClassIndicator.ChartType = _chartType;
-				switch(_session.CurrentTab){
+				switch(_webSession.CurrentTab){
 					case MotherRecap.MEDIA_STRATEGY :
                         _advertiserChart = productClassIndicator.GetMediaStrategyChart();
 						break;
@@ -134,7 +134,7 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
                         _withAdvertiser = true;
 						//_withReference = true;
                         _advertiserChart = productClassIndicator.GetTopsChart(MotherRecap.ElementType.advertiser);
-						if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
+						if (_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
 							_withReference = true;
 							_referenceChart = productClassIndicator.GetTopsChart(MotherRecap.ElementType.product);
 						}
@@ -145,7 +145,7 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
                     case EvolutionRecap.EVOLUTION:
                         _withAdvertiser = true;                        
                         _advertiserChart = productClassIndicator.GetEvolutionChart(MotherRecap.ElementType.advertiser);
-						if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
+						if (_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
 							_referenceChart = productClassIndicator.GetEvolutionChart(MotherRecap.ElementType.product);
 							_withReference = true;
 						}
@@ -165,14 +165,30 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
             }
 
 			//Table mode
-            else if (_session != null)
-            {
-					_tableChart = new ProductClassTableWebControl(_session);
-                    _tableChart.Excel = _excel;
-                    _tableChart.ID = "tableChartWebControl_" + this.ID;
-					_tableChart.AjaxProTimeOut = 240000;
-                    Controls.Add(_tableChart);
-			}			
+            else if (_webSession != null) {
+                switch (_webSession.CurrentTab) {
+                    case MotherRecap.MEDIA_STRATEGY:
+                    case MotherRecap.SEASONALITY:
+                        ResultWebControl resultWebControl = new ResultWebControl();
+                        resultWebControl.AllowPaging = false;
+                        resultWebControl.ShowContainer = false;
+                        if(_excel) resultWebControl.OutputType = TNS.FrameWork.WebResultUI.RenderType.excel;
+                        resultWebControl.AjaxProTimeOut = 240000;
+                        resultWebControl.CustomerWebSession = _webSession;
+                        resultWebControl.SkinID = (_excel) ? "productClassIndicatorResultTableXL" : "productClassIndicatorResultTable";
+                        _resultTableWebControl = resultWebControl;
+                        break;
+                    default:
+                        ProductClassTableWebControl productClassTableWebControl = new ProductClassTableWebControl(_webSession);
+                        productClassTableWebControl.Excel = _excel;
+                        productClassTableWebControl.AjaxProTimeOut = 240000;
+                        _resultTableWebControl = productClassTableWebControl;
+                        break;
+                }
+                _resultTableWebControl.ID = "tableChartWebControl_" + this.ID;
+
+                Controls.Add(_resultTableWebControl);
+            }	
 			base.OnLoad (e);
 		}
 		
@@ -190,14 +206,14 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
                 {
                     output.WriteLine("<br><table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
                     output.WriteLine("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
-                    output.WriteLine("{0} {1}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(1239, _session.SiteLanguage));
+                    output.WriteLine("{0} {1}", GestionWeb.GetWebWord(177, _webSession.SiteLanguage), GestionWeb.GetWebWord(1239, _webSession.SiteLanguage));
                     output.WriteLine("</td></tr></table>");
                 }
                 if (_withReference && !_referenceChart.Visible)
                 {
                     output.WriteLine("<br><table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
                     output.WriteLine("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
-                    output.WriteLine("{0} {1}", GestionWeb.GetWebWord(177, _session.SiteLanguage), GestionWeb.GetWebWord(1238, _session.SiteLanguage));
+                    output.WriteLine("{0} {1}", GestionWeb.GetWebWord(177, _webSession.SiteLanguage), GestionWeb.GetWebWord(1238, _webSession.SiteLanguage));
                     output.WriteLine("</td></tr></table>");
                 }
             }
@@ -205,7 +221,7 @@ namespace TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis
             {
                 output.WriteLine("<br><table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
                 output.WriteLine("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
-                output.WriteLine("{0}", GestionWeb.GetWebWord(177, _session.SiteLanguage));
+                output.WriteLine("{0}", GestionWeb.GetWebWord(177, _webSession.SiteLanguage));
                 output.WriteLine("</td></tr></table>");
             }
 			base.Render(output);

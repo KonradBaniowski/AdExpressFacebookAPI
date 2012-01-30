@@ -45,6 +45,15 @@ namespace TNS.AdExpressI.Portofolio.Finland {
 		public PortofolioResults(WebSession webSession,  TNS.AdExpress.Constantes.DB.TableType.Type tableType) 
 		: base(webSession,tableType){
 		}
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="webSession">Customer Session</param>		
+        /// <param name="resultType">resultType</param>
+        public PortofolioResults(WebSession webSession, int resultType)
+            : base(webSession, resultType)
+        {
+        }
         #endregion
 
         #region Implementation of abstract methods
@@ -91,10 +100,10 @@ namespace TNS.AdExpressI.Portofolio.Finland {
         /// <param name="dtVisuel">Visuel information</param>
         /// <param name="htValue">investment values</param>
         /// <returns>Media name</returns>
-        override public string GetVehicleViewData(out DataTable dtVisuel, out Hashtable htValue){
+        override public void GetVehicleViewData(out DataTable dtVisuel, out Hashtable htValue){
             dtVisuel = null;
             htValue = null;
-            return "";
+          
         }
         #endregion
 

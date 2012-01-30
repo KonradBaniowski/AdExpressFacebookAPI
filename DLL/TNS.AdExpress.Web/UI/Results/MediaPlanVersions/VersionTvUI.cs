@@ -14,6 +14,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using DBCst = TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Results;
+using System.Reflection;
 
 
 namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
@@ -30,14 +31,20 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 		/// </summary>
 		/// <param name="webSession">Customer Session</param>
 		/// <param name="version">Version to display</param>
-		public VersionTvUI(WebSession webSession, VersionItem version):base(webSession, version){
+        public VersionTvUI(WebSession webSession, VersionItem version, long vehicleId)
+            : base(webSession, version)
+        {
+            _vehicleId = vehicleId;
 		} 
 		/// <summary>
 		/// Constructor with exportVersion
 		/// </summary>
 		/// <param name="webSession">Customer Session</param>
 		/// <param name="exportVersion">Version to display</param>
-		public VersionTvUI(WebSession webSession, ExportVersionItem exportVersion):base(webSession, exportVersion){
+        public VersionTvUI(WebSession webSession, ExportVersionItem exportVersion, long vehicleId)
+            : base(webSession, exportVersion)
+        {
+            _vehicleId = vehicleId;
 		}
 		#endregion
 
@@ -56,7 +63,12 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 			//Render version nb cell
 			output.Append("<tr ><td  bgcolor=\"#E0D7EC\" nowrap " + 
 				((this._version.CssClass.Length>0)?"class=\"" + this._version.CssClass + "\">":"\">"));
-			if(_webSession.SloganIdZoom<0){
+            TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.creativesUtilities];
+            if (cl == null) throw (new NullReferenceException("Core layer is null for the creatives utilities class"));
+            TNS.AdExpress.Web.Core.Utilities.Creatives creativesUtilities = (TNS.AdExpress.Web.Core.Utilities.Creatives)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
+
+            if (!creativesUtilities.IsSloganZoom(_webSession.SloganIdZoom))
+            {
 				output.Append("<a href=\"javascript:get_version('"+this._version.Id+"');\" onmouseover=\"res_"+this._version.Id+".src='/Images/Common/button/result2_down.gif';\" onmouseout=\"res_"+this._version.Id+".src ='/Images/Common/button/result2_up.gif';\">");
 				output.Append("<img name=\"res_"+this._version.Id+"\" border=0 align=\"absmiddle\" src=\"/Images/Common/button/result2_up.gif\">");
 				output.Append("</a>");
@@ -77,7 +89,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 		///  <since>mardi 5 septembre 2006</since>
 		protected override void RenderImage(StringBuilder output) {
 		
-			output.Append("<a href=\"javascript:openDownload('"+this._version.Path+"','"+this._webSession.IdSession+"','"+VehiclesInformation.EnumToDatabaseId(DBCst.Vehicles.names.tv).ToString()+"');\">");			
+			output.Append("<a href=\"javascript:openDownload('"+this._version.Path+"','"+this._webSession.IdSession+"','"+_vehicleId.ToString()+"');\">");			
 			output.Append("<img border=0 src=\"/Images/common/Picto_pellicule.gif\">");			
 			output.Append("</a>");
 		

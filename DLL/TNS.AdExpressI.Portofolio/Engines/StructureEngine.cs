@@ -105,8 +105,15 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		protected override string BuildHtmlResult() {
 			switch (_vehicleInformation.Id) {
 				case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
 					return GetStructureHtml();
 				case DBClassificationConstantes.Vehicles.names.press:
                 case DBClassificationConstantes.Vehicles.names.newspaper:
@@ -135,8 +142,15 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
 			switch (_vehicleInformation.Id) {
 				case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
 					return ComputeChartData();
 				case DBClassificationConstantes.Vehicles.names.press:
                 case DBClassificationConstantes.Vehicles.names.newspaper:
@@ -265,26 +279,36 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
 			IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 			ds = portofolioDAL.GetData();
+           
 
-			// Selection recall
-			if (_excel) {
-				t.Append(ExcelFunction.GetLogo(_webSession));
-				t.Append(ExcelFunction.GetExcelHeader(_webSession, GestionWeb.GetWebWord(1379, _webSession.SiteLanguage)));
-			}
-			if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) {
+            // Selection recall
+            if (_excel)
+            {
+                t.Append(ExcelFunction.GetLogo(_webSession));
+                t.Append(ExcelFunction.GetExcelHeader(_webSession, GestionWeb.GetWebWord(1379, _webSession.SiteLanguage)));
+            }
+
+			if (ds != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) {
 				dt = ds.Tables[0];
 
-
-                unitInformationList = _webSession.GetValidUnitForResult();   
+                unitInformationList = _webSession.GetValidUnitForResult();
                     
 				t.Append("<table class=\"backGroundWhite\" border=0 cellpadding=0 cellspacing=0 >");
 
 				#region libellés colonnes
 				// Première ligne
 				t.Append("\r\n\t<tr height=\"20px\" >");
-				if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio)
+				if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioGeneral
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioSponsorship
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioMusic)
 					t.Append("<td class=\"" + P2 + "\" nowrap>" + GestionWeb.GetWebWord(1299, _webSession.SiteLanguage) + "</td>");
-				else if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)
+				else if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
+                         || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvGeneral
+                         || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship
+                         || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
+                         || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvAnnounces
+                         || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)
 					t.Append("<td class=\"" + P2 + "\" nowrap>" + GestionWeb.GetWebWord(1451, _webSession.SiteLanguage) + "</td>");
 
                 for (int i = 0; i < unitInformationList.Count; i++) {
@@ -341,10 +365,20 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 					//backGround = "violetBackGroundV3";
 				}
 				t.Append("</table>");
+               
 			}
-			if (_excel) {
-				t.Append(ExcelFunction.GetFooter(_webSession));
-			}
+            else
+            {
+                t.Append("<br><table bgcolor=#ffffff border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
+                t.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
+                t.AppendFormat("{0}", GestionWeb.GetWebWord(177, _webSession.SiteLanguage));
+                t.Append("</td></tr></table>");
+            }
+
+            if (_excel)
+            {
+                t.Append(ExcelFunction.GetFooter(_webSession));
+            }
 			return t.ToString();
 		}
 
@@ -394,7 +428,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
 			IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 			ds = portofolioDAL.GetData();
-
+            
 			if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) {
 				dt = ds.Tables[0];
 
@@ -464,9 +498,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			parameters[6] = _hourEndList;
 
 			IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
-			ds = portofolioDAL.GetData();
+		    ds = portofolioDAL.GetData();
 
-			if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) {
+			if (ds != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) {
 				dt = ds.Tables[0];
 
                 unitInformationList = _webSession.GetValidUnitForResult();  

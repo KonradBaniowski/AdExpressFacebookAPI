@@ -146,10 +146,7 @@ namespace TNS.AdExpress.Web.Core.Result{
             string str = "";
             if (_newGroup)
                 str += RenderSeparator();
-            double value = this.Value;
-            return str + ((value != 0)
-                ? "<td " + ((cssClass.Length > 0) ? " class=\"" + cssClass + "\"" : "") + ">" + this.ToString() + "</td>"
-                : "<td " + ((cssClass.Length > 0) ? " class=\"" + cssClass + "\"" : "") + ">&nbsp;</td>");
+            return str + "<td " + ((cssClass.Length > 0) ? " class=\"" + cssClass + "\"" : "") + ">" + this.ToString() + "</td>";
         }
         /// <summary>
         /// Rendu de code HTML pour Excel
@@ -157,10 +154,7 @@ namespace TNS.AdExpress.Web.Core.Result{
         /// <returns>Code HTML pour Excel</returns>
         public override string RenderExcel(string cssClass)
         {
-            double value = this.Value;
-            return ((value != 0)
-                ? "<td " + ((cssClass.Length > 0) ? " class=\"" + cssClass + "\"" : "") + ">" + this.ToString() + "</td>"
-                : "<td " + ((cssClass.Length > 0) ? " class=\"" + cssClass + "\"" : "") + ">&nbsp;</td>");
+            return "<td " + ((cssClass.Length > 0) ? " class=\"" + cssClass + "\"" : "") + ">" + this.ToString() + "</td>";
         }
 
         /// <summary>
@@ -169,10 +163,7 @@ namespace TNS.AdExpress.Web.Core.Result{
         /// <returns>Code HTML pour Excel brut</returns>
         public override string RenderRowExcel()
         {
-            double value = this.Value;
-            return ((value != 0)
-                ? "<td>" + this.ToString() + "</td>"
-                : "<td>&nbsp;</td>");
+            return "<td>" + this.ToString() + "</td>";
         }
         #endregion
 

@@ -39,6 +39,7 @@ using System.Collections;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web;
+using TNS.FrameWork.WebResultUI;
 
 namespace TNS.AdExpressI.ProductClassIndicators.Engines
 {
@@ -679,6 +680,499 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 			}
             t.Append("</tr>");
         }
+        #endregion
+
+        
+
+        #endregion
+
+        #region GetResultTable
+        /// <summary>
+        /// Get data to build  seasonality report as a table
+        /// Give : 
+        ///     -Investments on N
+        ///     -Evol n vs N-1 (only if comparative study)
+        ///     -Reference number
+        ///     -Average of investment per reference
+        ///     -First advertiser in k€ and SOV (only for eventual advertiser lines)
+        ///     -First reference in k€ and SOV (only for eventual product lines)
+        /// For univers, market or sector and on potential references and competitors advertisers
+        /// </summary>
+        /// <returns>Table with a mensual compareason N vs N-1</returns>
+        /// <returns></returns>
+        public override ResultTable GetResultTable() {
+
+            ResultTable resultTable = null;
+
+            #region GetData
+            object[,] tab = this.GetTableData();
+            #endregion
+
+            #region Pas de données à afficher
+            if (tab.GetLength(0) == 0) {
+                return null;
+            }
+            #endregion
+
+            #region Constantes
+            string cssHeader = "p2";
+            string cssL1Label = "pmtotal";
+            string cssL1Nb = "pmtotalnb";
+            string cssL2Label = (_excel) ? "p142xls" : "asl5";
+            string cssL2nb = (_excel) ? "p142xls" : "asl5nb";
+            string cssL3Label = (_excel) ? "asl5bxls" : "asl5b";
+            string cssL3Nb = (_excel) ? "asl5bxls" : "asl5bnb"; ;
+            //string cssL3Nb = "asl5bnb"; ;
+            string cssRefLabel = "p15";
+            string cssRefNb = "p151";
+            string cssCompLabel = (_excel) ? "p142" : "p14";
+            string cssCompNb = (_excel) ? "p143" : "p141";
+            #endregion
+
+            #region Headers
+            Headers headers = new Headers();
+
+            //Header Media
+            int indexCol = 1;
+            Header currentHeader = new Header(string.Empty, indexCol);
+            headers.Root.Add(currentHeader);
+
+
+            //Header Type line
+            indexCol++;
+            currentHeader = new Header(string.Empty, indexCol);
+            headers.Root.Add(currentHeader);
+
+            //Header Investment
+            indexCol++;
+            currentHeader = new Header(GestionWeb.GetWebWord(1246, _session.SiteLanguage) + " " + _periodEnd.Year, true, indexCol);
+            headers.Root.Add(currentHeader);
+
+            //Header PDM
+            indexCol++;
+            currentHeader = new Header(GestionWeb.GetWebWord(806, _session.SiteLanguage), indexCol);
+            headers.Root.Add(currentHeader);
+
+            //Header Evol
+            if (_session.ComparativeStudy) {
+                indexCol++;
+                currentHeader = new Header(GestionWeb.GetWebWord(1168, _session.SiteLanguage) + " " + _periodEnd.Year + "/" + (_periodEnd.Year - 1), indexCol);
+                headers.Root.Add(currentHeader);
+            }
+
+            //Header Advertiser
+            indexCol++;
+            currentHeader = new Header(GestionWeb.GetWebWord(1154, _session.SiteLanguage), true, indexCol);
+            headers.Root.Add(currentHeader);
+
+            //Header Advertiser Investment
+            indexCol++;
+            currentHeader = new Header(GestionWeb.GetWebWord(1246, _session.SiteLanguage) + " " + _periodEnd.Year, indexCol);
+            headers.Root.Add(currentHeader);
+
+            if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
+
+                //Header Product
+                indexCol++;
+                currentHeader = new Header(GestionWeb.GetWebWord(1155, _session.SiteLanguage), true, indexCol);
+                headers.Root.Add(currentHeader);
+
+                //Header Product Investment
+                indexCol++;
+                currentHeader = new Header(GestionWeb.GetWebWord(1246, _session.SiteLanguage) + " " + _periodEnd.Year, indexCol);
+                headers.Root.Add(currentHeader);
+            }
+            #endregion
+
+            #region Calcul Total Nb Line
+            int nbLine = 0;
+            for (int i = 0; i < tab.GetLength(0); i++) {
+                if (tab[i, TOTAL_MARKET_INVEST_COLUMN_INDEX] != null || tab[i, TOTAL_SECTOR_INVEST_COLUMN_INDEX] != null) {
+                    nbLine++;
+                }
+                if (tab[i, TOTAL_MARKET_VEHICLE_INVEST_COLUMN_INDEX] != null || tab[i, TOTAL_SECTOR_VEHICLE_INVEST_COLUMN_INDEX] != null) {
+                    nbLine++;
+                }
+                if (tab[i, TOTAL_UNIV_INVEST_COLUMN_INDEX] != null || tab[i, TOTAL_UNIV_VEHICLE_INVEST_COLUMN_INDEX] != null) {
+                    nbLine++;
+                }
+                if (TreatCategory()) {
+                    if (tab[i, TOTAL_MARKET_CATEGORY_INVEST_COLUMN_INDEX] != null || tab[i, TOTAL_SECTOR_CATEGORY_INVEST_COLUMN_INDEX] != null) {
+                        nbLine++;
+                    }
+                    if (tab[i, TOTAL_UNIV_CATEGORY_INVEST_COLUMN_INDEX] != null) {
+                        nbLine++;
+                    }
+                }
+                if (TreatMedia()) {
+                    if (tab[i, TOTAL_MARKET_MEDIA_INVEST_COLUMN_INDEX] != null || tab[i, TOTAL_SECTOR_MEDIA_INVEST_COLUMN_INDEX] != null) {
+                        nbLine++;
+                    }
+                    if (tab[i, TOTAL_UNIV_MEDIA_INVEST_COLUMN_INDEX] != null) {
+                        nbLine++;
+                    }
+                }
+                if ((tab[i, REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX] != null || tab[i, TOTAL_REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX] != null)
+                    && (
+                        (tab[i, ID_CATEGORY_COLUMN_INDEX] == null && tab[i, ID_MEDIA_COLUMN_INDEX] == null)
+                        || (tab[i, ID_CATEGORY_COLUMN_INDEX] != null && tab[i, ID_MEDIA_COLUMN_INDEX] == null && ((_session.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategory) || (_session.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategoryMedia)))
+                        || (tab[i, ID_CATEGORY_COLUMN_INDEX] != null && tab[i, ID_MEDIA_COLUMN_INDEX] != null && (_session.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategoryMedia))
+                        )
+                    ) {
+                    nbLine++;
+                }
+            }
+            #endregion
+
+            resultTable = new ResultTable(nbLine, headers);
+
+            #region Build table
+            object oLabel = null;
+            object oTotal = null;
+            object oPDM = null;
+            object oEvol = null;
+            object oAdvLabel = null;
+            object oAdvInvest = null;
+            object oRefLabel = null;
+            object oRefInvest = null;
+            for (int i = 0; i < tab.GetLength(0); i++) {
+
+                #region TOTAL MARKET OR SECTOR (IF PLURI)
+                if (tab[i, TOTAL_MARKET_INVEST_COLUMN_INDEX] != null || tab[i, TOTAL_SECTOR_INVEST_COLUMN_INDEX] != null) {
+                    if ((oTotal = tab[i, TOTAL_MARKET_INVEST_COLUMN_INDEX]) != null) {
+                        oLabel = GestionWeb.GetWebWord(1190, _session.SiteLanguage);
+                    }
+                    else {
+                        oLabel = GestionWeb.GetWebWord(1189, _session.SiteLanguage);
+                        oTotal = tab[i, TOTAL_SECTOR_INVEST_COLUMN_INDEX];
+                    }
+                    //Plurimedia
+                    oPDM = tab[i, PDM_COLUMN_INDEX];
+                    oEvol = tab[i, EVOL_COLUMN_INDEX];
+                    oAdvLabel = tab[i, LABEL_FIRST_ADVERT_COLUMN_INDEX];
+                    oAdvInvest = tab[i, INVEST_FIRST_ADVERT_COLUMN_INDEX];
+                    oRefLabel = tab[i, LABEL_FIRST_REF_COLUMN_INDEX];
+                    oRefInvest = tab[i, INVEST_FIRST_REF_COLUMN_INDEX];
+
+                    AppendLineResultTable(LineType.total, resultTable, GestionWeb.GetWebWord(210, _session.SiteLanguage), oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest);
+                }
+                #endregion
+
+                #region TOTAL MARKET OR SECTOR BY VEHICLE
+                if (tab[i, TOTAL_MARKET_VEHICLE_INVEST_COLUMN_INDEX] != null || tab[i, TOTAL_SECTOR_VEHICLE_INVEST_COLUMN_INDEX] != null) {
+                    if ((oTotal = tab[i, TOTAL_MARKET_VEHICLE_INVEST_COLUMN_INDEX]) != null) {
+                        oLabel = GestionWeb.GetWebWord(1190, _session.SiteLanguage);
+                    }
+                    else {
+                        oLabel = GestionWeb.GetWebWord(1189, _session.SiteLanguage);
+                        oTotal = tab[i, TOTAL_SECTOR_VEHICLE_INVEST_COLUMN_INDEX];
+                    }
+
+                    //Current Vehicle
+                    oPDM = tab[i, PDM_COLUMN_INDEX];
+                    oEvol = tab[i, EVOL_COLUMN_INDEX];
+                    oAdvLabel = tab[i, LABEL_FIRST_ADVERT_COLUMN_INDEX];
+                    oAdvInvest = tab[i, INVEST_FIRST_ADVERT_COLUMN_INDEX];
+                    oRefLabel = tab[i, LABEL_FIRST_REF_COLUMN_INDEX];
+                    oRefInvest = tab[i, INVEST_FIRST_REF_COLUMN_INDEX];
+
+                    AppendLineResultTable(LineType.total, resultTable, tab[i, LABEL_VEHICLE_COLUMN_INDEX].ToString(), oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest);
+
+                }
+                #endregion
+
+                #region UNIVERS TOTAL
+                if (tab[i, TOTAL_UNIV_INVEST_COLUMN_INDEX] != null || tab[i, TOTAL_UNIV_VEHICLE_INVEST_COLUMN_INDEX] != null) {
+                    if (tab[i, TOTAL_UNIV_INVEST_COLUMN_INDEX] != null) {
+                        oTotal = tab[i, TOTAL_UNIV_INVEST_COLUMN_INDEX];
+                    }
+                    else {
+                        oTotal = tab[i, TOTAL_UNIV_VEHICLE_INVEST_COLUMN_INDEX];
+                    }
+                    //Current Label Vehicle
+                    oLabel = GestionWeb.GetWebWord(1188, _session.SiteLanguage);
+                    oPDM = tab[i, PDM_COLUMN_INDEX];
+                    oEvol = tab[i, EVOL_COLUMN_INDEX];
+                    oAdvLabel = tab[i, LABEL_FIRST_ADVERT_COLUMN_INDEX];
+                    oAdvInvest = tab[i, INVEST_FIRST_ADVERT_COLUMN_INDEX];
+                    oRefLabel = tab[i, LABEL_FIRST_REF_COLUMN_INDEX];
+                    oRefInvest = tab[i, INVEST_FIRST_REF_COLUMN_INDEX];
+
+                    AppendLineResultTable(LineType.total, resultTable, null, oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest);
+
+                }
+                #endregion
+
+                #region Total cat
+                if (TreatCategory()) {
+
+                    #region Market or Sector total
+                    if (tab[i, TOTAL_MARKET_CATEGORY_INVEST_COLUMN_INDEX] != null || tab[i, TOTAL_SECTOR_CATEGORY_INVEST_COLUMN_INDEX] != null) {
+
+                        if ((oTotal = tab[i, TOTAL_MARKET_CATEGORY_INVEST_COLUMN_INDEX]) != null) {
+                            oLabel = GestionWeb.GetWebWord(1190, _session.SiteLanguage);
+                        }
+                        else {
+                            oLabel = GestionWeb.GetWebWord(1189, _session.SiteLanguage);
+                            oTotal = tab[i, TOTAL_SECTOR_CATEGORY_INVEST_COLUMN_INDEX];
+                        }
+
+                        //Current Label Vehicle Category
+                        oPDM = tab[i, PDM_COLUMN_INDEX];
+                        oEvol = tab[i, EVOL_COLUMN_INDEX];
+                        oAdvLabel = tab[i, LABEL_FIRST_ADVERT_COLUMN_INDEX];
+                        oAdvInvest = tab[i, INVEST_FIRST_ADVERT_COLUMN_INDEX];
+                        oRefLabel = tab[i, LABEL_FIRST_REF_COLUMN_INDEX];
+                        oRefInvest = tab[i, INVEST_FIRST_REF_COLUMN_INDEX];
+
+                        AppendLineResultTable(LineType.subTotal1, resultTable, tab[i, LABEL_CATEGORY_COLUMN_INDEX].ToString(), oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest);
+
+                    }
+                    #endregion
+
+                    #region Univers total
+                    // lignes total univers pour chaque catégorie sélectionnée
+                    if (tab[i, TOTAL_UNIV_CATEGORY_INVEST_COLUMN_INDEX] != null) {
+                        //Current Label Vehicle Category
+                        oLabel = GestionWeb.GetWebWord(1188, _session.SiteLanguage);
+                        oTotal = tab[i, TOTAL_UNIV_CATEGORY_INVEST_COLUMN_INDEX];
+                        oPDM = tab[i, PDM_COLUMN_INDEX];
+                        oEvol = tab[i, EVOL_COLUMN_INDEX];
+                        oAdvLabel = tab[i, LABEL_FIRST_ADVERT_COLUMN_INDEX];
+                        oAdvInvest = tab[i, INVEST_FIRST_ADVERT_COLUMN_INDEX];
+                        oRefLabel = tab[i, LABEL_FIRST_REF_COLUMN_INDEX];
+                        oRefInvest = tab[i, INVEST_FIRST_REF_COLUMN_INDEX];
+
+                        AppendLineResultTable(LineType.subTotal1, resultTable, null, oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest);
+
+                    }
+                    #endregion
+
+                }
+                #endregion
+
+                #region Media
+                if (TreatMedia()) {
+
+                    #region Market or sector total
+                    if (tab[i, TOTAL_MARKET_MEDIA_INVEST_COLUMN_INDEX] != null || tab[i, TOTAL_SECTOR_MEDIA_INVEST_COLUMN_INDEX] != null) {
+                        if ((oTotal = tab[i, TOTAL_MARKET_MEDIA_INVEST_COLUMN_INDEX]) != null) {
+                            oLabel = GestionWeb.GetWebWord(1190, _session.SiteLanguage);
+                        }
+                        else {
+                            oLabel = GestionWeb.GetWebWord(1189, _session.SiteLanguage);
+                            oTotal = tab[i, TOTAL_SECTOR_MEDIA_INVEST_COLUMN_INDEX];
+                        }
+                        //Label Vehicle
+                        oPDM = tab[i, PDM_COLUMN_INDEX];
+                        oEvol = tab[i, EVOL_COLUMN_INDEX];
+                        oAdvLabel = tab[i, LABEL_FIRST_ADVERT_COLUMN_INDEX];
+                        oAdvInvest = tab[i, INVEST_FIRST_ADVERT_COLUMN_INDEX];
+                        oRefLabel = tab[i, LABEL_FIRST_REF_COLUMN_INDEX];
+                        oRefInvest = tab[i, INVEST_FIRST_REF_COLUMN_INDEX];
+
+                        AppendLineResultTable(LineType.subTotal2, resultTable, tab[i, LABEL_MEDIA_COLUMN_INDEX].ToString(), oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest);
+
+                    }
+                    #endregion
+
+                    #region Univers total
+                    if (tab[i, TOTAL_UNIV_MEDIA_INVEST_COLUMN_INDEX] != null) {
+                        oLabel = GestionWeb.GetWebWord(1188, _session.SiteLanguage);
+                        oTotal = tab[i, TOTAL_UNIV_MEDIA_INVEST_COLUMN_INDEX];
+                        oPDM = tab[i, PDM_COLUMN_INDEX];
+                        oEvol = tab[i, EVOL_COLUMN_INDEX];
+                        oAdvLabel = tab[i, LABEL_FIRST_ADVERT_COLUMN_INDEX];
+                        oAdvInvest = tab[i, INVEST_FIRST_ADVERT_COLUMN_INDEX];
+                        oRefLabel = tab[i, LABEL_FIRST_REF_COLUMN_INDEX];
+                        oRefInvest = tab[i, INVEST_FIRST_REF_COLUMN_INDEX];
+
+                        AppendLineResultTable(LineType.subTotal2, resultTable, null, oLabel, oTotal, oPDM, oEvol, oAdvLabel, oAdvInvest, oRefLabel, oRefInvest);
+
+                    }
+                    #endregion
+
+                }
+                #endregion
+
+                #region Reference and competitor elements
+                if ((tab[i, REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX] != null || tab[i, TOTAL_REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX] != null)
+                    && (
+                        (tab[i, ID_CATEGORY_COLUMN_INDEX] == null && tab[i, ID_MEDIA_COLUMN_INDEX] == null)
+                        || (tab[i, ID_CATEGORY_COLUMN_INDEX] != null && tab[i, ID_MEDIA_COLUMN_INDEX] == null && ((_session.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategory) || (_session.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategoryMedia)))
+                        || (tab[i, ID_CATEGORY_COLUMN_INDEX] != null && tab[i, ID_MEDIA_COLUMN_INDEX] != null && (_session.PreformatedMediaDetail == CstWeb.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategoryMedia))
+                        )
+                    ) {
+
+                    LineType currentLinetype = LineType.total;
+
+                    if (tab[i, ID_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX] != null) {
+                        if (_referenceIDS.Contains(Convert.ToInt64(tab[i, ID_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX]))) {
+                            currentLinetype = LineType.level2;
+
+                        }
+                        else if (_competitorIDS.Contains(Convert.ToInt64(tab[i, ID_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX]))) {
+                            currentLinetype = LineType.level1;
+                        }
+                    }
+                    //Current Label Vehicle
+                    oLabel = tab[i, LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX];
+                    if (tab[i, TOTAL_REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX] != null) {
+                        oTotal = tab[i, TOTAL_REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX];
+                    }
+                    else {
+                        oTotal = tab[i, REF_OR_COMPETITOR_ADVERT_INVEST_COLUMN_INDEX];
+                    }
+                    oPDM = tab[i, PDM_COLUMN_INDEX];
+                    oEvol = tab[i, EVOL_COLUMN_INDEX];
+
+                    AppendLineResultTable(currentLinetype, resultTable, null, oLabel, oTotal, oPDM, oEvol, null, null, null, null);
+
+                }
+                #endregion
+
+            }
+            #endregion
+
+            return resultTable;
+
+        }
+
+        #region AppendLineResultTable
+        /// <summary>
+        /// Append LineResult Table
+        /// </summary>
+        /// <param name="lineType">Line Type</param>
+        /// <param name="resultTable">Result Table</param>
+        /// <param name="oLevelLabel">Level Label</param>
+        /// <param name="oLabel">Lavel</param>
+        /// <param name="oTotal">Total</param>
+        /// <param name="oPDM">PDM</param>
+        /// <param name="oEvol">Evol</param>
+        /// <param name="oAdvLabel">Avertiser Label</param>
+        /// <param name="oAdvInvest">Avertiser Investment</param>
+        /// <param name="oRefLabel">Reference Label</param>
+        /// <param name="oRefInvest">Reference Investment</param>
+        protected void AppendLineResultTable(LineType lineType, ResultTable resultTable, object oLevelLabel, object oLabel, object oTotal, object oPDM, object oEvol, object oAdvLabel, object oAdvInvest, object oRefLabel, object oRefInvest) {
+            int currentLine = resultTable.AddNewLine(lineType);
+            int indexCol = 1;
+            CellUnitFactory cellUnitFactory = _session.GetCellUnitFactory();
+            CellUnit cellUnit = null;
+            CellLabel cellLabel = null;
+            CellPDM cellPdm = null;
+
+
+            #region Level Label
+            if (oLevelLabel != null && oLevelLabel != System.DBNull.Value)
+            {
+                resultTable[currentLine, indexCol] = GetCellLabel(oLevelLabel.ToString());
+            }
+            else {
+                resultTable[currentLine, indexCol] = GetCellLabel(string.Empty);
+            }
+            #endregion
+
+            #region Label
+            indexCol++;
+            resultTable[currentLine, indexCol] = GetCellLabel(oLabel.ToString());
+            #endregion
+
+            #region Invest
+            indexCol++;
+            if (oTotal != null && oTotal != System.DBNull.Value && oTotal.ToString().Length > 0 && Convert.ToDouble(oTotal) > 0)
+            {
+                cellUnit = cellUnitFactory.Get(Convert.ToDouble(oTotal));
+                cellUnit.NewGroup=true;
+                resultTable[currentLine, indexCol] = cellUnit;             
+            }
+            else {
+                cellLabel = GetCellLabel(string.Empty);
+                cellLabel.NewGroup = true;
+                resultTable[currentLine, indexCol] = cellLabel;
+            }
+            #endregion
+
+            #region PDM
+            indexCol++;
+            if (oPDM != null && oPDM != System.DBNull.Value)
+            {
+                cellPdm = new CellPDM(Convert.ToDouble(oPDM));
+                cellPdm.StringFormat = "{0:percentage}";
+                resultTable[currentLine, indexCol] = cellPdm;
+            }
+            else {
+                resultTable[currentLine, indexCol] = GetCellLabel(string.Empty);
+            }
+            #endregion
+
+            #region Evol
+            if (_session.ComparativeStudy) {
+                indexCol++;
+                if (oEvol != null && oEvol != System.DBNull.Value)
+                {
+                    CellEvol cellEvol = new CellEvol(Convert.ToDouble(oEvol));
+                    cellEvol.StringFormat = "{0:percentage}";
+                    resultTable[currentLine, indexCol] = cellEvol;
+                }
+                else {
+                    resultTable[currentLine, indexCol] = GetCellLabel(string.Empty);
+                }
+            }
+            #endregion
+
+            #region First Advertiser
+            indexCol++;
+            if (oAdvLabel != null && oAdvLabel != System.DBNull.Value)
+            {
+                cellLabel = GetCellLabel(oAdvLabel.ToString());
+            }
+            else {
+                cellLabel = GetCellLabel(string.Empty);
+            }
+            cellLabel.NewGroup = true;
+            resultTable[currentLine, indexCol] = cellLabel;
+            #endregion
+
+            #region First Advertiser Invest
+            indexCol++;
+            if (oAdvInvest != null && oAdvInvest != System.DBNull.Value)
+            {
+                resultTable[currentLine, indexCol] = cellUnitFactory.Get(Convert.ToDouble(oAdvInvest));
+            }
+            else {
+                resultTable[currentLine, indexCol] = GetCellLabel(string.Empty);
+            }
+            #endregion
+
+            if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
+
+                #region First Product
+                indexCol++;
+                if (oRefLabel != null && oRefLabel != System.DBNull.Value)
+                {
+                    cellLabel = GetCellLabel(oRefLabel.ToString());
+                }
+                else {
+                    cellLabel = GetCellLabel(string.Empty);
+                }
+                cellLabel.NewGroup = true;
+                resultTable[currentLine, indexCol] = cellLabel;
+                #endregion
+
+                #region First Product Invest
+                indexCol++;
+                if (oRefInvest != null && oRefInvest != System.DBNull.Value)
+                {
+                    resultTable[currentLine, indexCol] = cellUnitFactory.Get(Convert.ToDouble(oRefInvest));
+                }
+                else {
+                    resultTable[currentLine, indexCol] = GetCellLabel(string.Empty);
+                }
+                #endregion
+            }
+        }
+
+        
         #endregion
 
         #endregion
@@ -1426,7 +1920,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// </summary>
         /// <remarks>Cette méthode est utilisée pour la présentation graphique des résultats.</remarks>
         /// <returns>tableau de résultats</returns>
-        public object[,] GetChartData()
+        public virtual object[,] GetChartData()
         {
 
             #region variables
@@ -3001,7 +3495,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// </summary>
         /// <param name="webSession">session client</param>		
         /// <returns>niveau média</returns>
-        protected CstResult.MediaStrategy.MediaLevel SwitchMedia()
+        protected virtual CstResult.MediaStrategy.MediaLevel SwitchMedia()
         {
             switch (_session.PreformatedMediaDetail)
             {
@@ -3020,7 +3514,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// </summary>
         /// <param name="webSession">session du client</param>
         /// <returns>vrai si niveau catégorie</returns>
-        protected bool TreatCategory()
+        protected virtual bool TreatCategory()
         {
             switch (_session.PreformatedMediaDetail)
             {
@@ -3036,7 +3530,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// </summary>
         /// <param name="webSession">session du client</param>
         /// <returns>vrai si niveau catégorie</returns>
-        protected bool TreatMedia()
+        protected virtual bool TreatMedia()
         {
             switch (_session.PreformatedMediaDetail)
             {
@@ -3052,7 +3546,6 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         #endregion
 
         #endregion
-    
     }
 
     #region Sélection Univers Recap

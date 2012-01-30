@@ -301,27 +301,32 @@ namespace TNS.AdExpressI.Classification.DAL
             }
             #endregion
         }
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public ClassificationLevelListDAL()
+        {
+        }
+		
         #endregion
 
-        #region Properties
-        /// <summary>
-        /// Returns Label of corresponding identifier
-        /// </summary>
-        public string this[Int64 id]
-        {
-            get
-            {
-                try
-                {
-                    return (_list[id].ToString());
-                }
-                catch (System.Exception e)
-                {
-                    throw (new ClassificationDALException("There is not label for identifying it " + id.ToString() + ". The vehicle is it maybe UNACTIVATED, in that case will be deleted during the next maintenance of vehicle", e));
-                }
-            }
-        }
+		
+       
+		
+		#region Properties
+		/// <summary>
+		/// Returns Label of corresponding identifier
+		/// </summary>
+		public string this [Int64 id]{
+			get{
+				try{
+					return(_list[id].ToString());
+				}
+				catch(System.Exception e){
+					throw (new ClassificationDALException("There is not label for identifying it " + id.ToString() + ". The vehicle is it maybe UNACTIVATED, in that case will be deleted during the next maintenance of vehicle", e));
+				}
+			}
+		}
 
         /// <summary>
         /// Returns the list of identifiers sorted by labels

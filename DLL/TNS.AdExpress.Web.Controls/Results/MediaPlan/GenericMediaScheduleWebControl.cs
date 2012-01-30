@@ -448,7 +448,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
                 
                 LoadParams(o);
 
-    			this.CustomerWebSession.SloganIdZoom=-1;
+                this.CustomerWebSession.SloganIdZoom = long.MinValue;
 
                 html = GetHTML(this.CustomerWebSession);
 				
@@ -551,6 +551,7 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
             if (!this.Page.ClientScript.IsClientScriptBlockRegistered("OpenInsertions")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "OpenInsertions", WebFunctions.Script.OpenInsertions());
             if(!this.Page.ClientScript.IsClientScriptBlockRegistered("OpenCreatives")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"OpenCreatives",WebFunctions.Script.OpenCreatives());
             if (!this.Page.ClientScript.IsClientScriptBlockRegistered("openPressCreation")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "openPressCreation", WebFunctions.Script.OpenPressCreation());
+            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("OpenInternetCreation")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "OpenInternetCreation", WebFunctions.Script.OpenInternetCreation());
             if (!this.Page.ClientScript.IsClientScriptBlockRegistered("Popup")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "Popup", WebFunctions.Script.Popup());
             if (!this.Page.ClientScript.IsClientScriptBlockRegistered("openDownload")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "openDownload", WebFunctions.Script.OpenDownload());
             if (!this.Page.ClientScript.IsClientScriptBlockRegistered("AppmInsertions")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "AppmInsertions", WebFunctions.Script.PopUpInsertion(false));
@@ -598,7 +599,6 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
             object[] param = null;
             long oldCurrentTab = _customerWebSession.CurrentTab;
             System.Windows.Forms.TreeNode oldReferenceUniversMedia = _customerWebSession.ReferenceUniversMedia;
-
 			try{
 				
 				//webSession.CurrentModule = WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA;
@@ -678,7 +678,13 @@ namespace TNS.AdExpress.Web.Controls.Results.MediaPlan{
 					#endregion
 
 					#region Revenir aux versions sans zoom
-					if(webSession.SloganIdZoom>0){
+                    TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.creativesUtilities];
+                    if (cl == null) throw (new NullReferenceException("Core layer is null for the creatives utilities class"));
+                    TNS.AdExpress.Web.Core.Utilities.Creatives creativesUtilities = (TNS.AdExpress.Web.Core.Utilities.Creatives)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
+
+
+                    if (creativesUtilities.IsSloganZoom(webSession.SloganIdZoom))
+                    {
                         html.Append("\r\n\t<tr align=\"left\" class=\"violetBackGroundV3\">\r\n\t\t<td>");
 						//todo txt en BDD
 						html.Append("<a class=\"roll06\" href=\"javascript:get_back();\" onmouseover=\"back_"+this.ID+".src='/App_Themes/"+_themeName+"/Images/Common/button/back_down.gif';\" onmouseout=\"back_"+this.ID+".src='/App_Themes/"+_themeName+"/Images/Common/button/back_up.gif';\"><img align=\"absmiddle\" name=\"back_"+this.ID+"\" border=0 src=\"/App_Themes/"+_themeName+"/Images/Common/button/back_up.gif\">&nbsp;" + GestionWeb.GetWebWord(1978 , webSession.SiteLanguage) + "</a>");

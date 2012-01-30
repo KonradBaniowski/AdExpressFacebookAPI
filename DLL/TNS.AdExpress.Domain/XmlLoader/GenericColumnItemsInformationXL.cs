@@ -184,7 +184,8 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                     if (reader.GetAttribute("isMin") != null && reader.GetAttribute("isMin").Length > 0) genericColumnItemInformation.IsMin = bool.Parse(reader.GetAttribute("isMin"));
                                     if (reader.GetAttribute("useLanguage") != null && reader.GetAttribute("useLanguage").Length > 0) genericColumnItemInformation.UseLanguageRule = bool.Parse(reader.GetAttribute("useLanguage"));
                                     if (reader.GetAttribute("useActivation") != null && reader.GetAttribute("useActivation").Length > 0) genericColumnItemInformation.UseActivationRule = bool.Parse(reader.GetAttribute("useActivation"));
-									list.Add(id,genericColumnItemInformation);
+                                    if (reader.GetAttribute("isContainsSeparator") != null && reader.GetAttribute("isContainsSeparator").Length > 0) genericColumnItemInformation.IsContainsSeparator = bool.Parse(reader.GetAttribute("isContainsSeparator"));
+                                    list.Add(id,genericColumnItemInformation);
 
 									
 									

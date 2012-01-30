@@ -63,7 +63,7 @@ namespace TNS.AdExpress.Domain.Units {
         }
 		#endregion
 
-		#region Méthodes publiques
+		#region Méthodes publiques            
 		/// <summary>
 		/// Get Unit informations
 		/// </summary>

@@ -244,7 +244,7 @@ public partial class Private_Selection_Russia_MediaSelection : TNS.AdExpress.Web
 				if(!Page.IsPostBack){
 					validImageButtonRollOverWebControl.Visible=true;
 					nextImageButtonRollOverWebControl.Visible=true;
-					//saveImageButtonRollOverWebControl.Visible=true;
+					saveImageButtonRollOverWebControl.Visible=true;
 				
 				}										
 						
@@ -374,41 +374,60 @@ public partial class Private_Selection_Russia_MediaSelection : TNS.AdExpress.Web
 		/// </summary>
 		/// <returns>?</returns>
 		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
+            System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
 
-			//Liste des univers			
-			if(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID==DBClassificationConstantes.Vehicles.names.press.GetHashCode()
-                || ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == DBClassificationConstantes.Vehicles.names.newspaper.GetHashCode()
-                || ((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == DBClassificationConstantes.Vehicles.names.magazine.GetHashCode()
+            try{
+            //Liste des univers			
+            if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.press).DatabaseId               
                 ){
 				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaPress;
-			}
-			else if(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID==(long)DBClassificationConstantes.Vehicles.names.radio.GetHashCode()){
-				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadio;
-			}
-			else if(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID==(long)DBClassificationConstantes.Vehicles.names.tv.GetHashCode()){
-				if(_webSession.CurrentModule==WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES )
-				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvSponsorship;
-				else
-				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaTv;
-			}
-			else if(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID==(long)DBClassificationConstantes.Vehicles.names.outdoor.GetHashCode()){
+			}           
+            else if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.radioGeneral).DatabaseId){
+                branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadioGeneral;
+            }
+            else if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.radioMusic).DatabaseId){
+                branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadioMusic;
+            }
+            else if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.radioSponsorship).DatabaseId){
+                branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadioSponsorship;
+            }           
+            else if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.tvGeneral).DatabaseId){
+                branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvGeneral;
+            }
+            else if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.tvSponsorship).DatabaseId){
+                branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvSponsorshipRu;
+            }
+            else if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.tvAnnounces).DatabaseId){
+                branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvAnnounces;
+            }
+            else if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.tvNonTerrestrials).DatabaseId){
+                branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvNonTerrestrials;
+            }
+            else if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.outdoor).DatabaseId)
+            {
 				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaOutdoor;
 			}
-            else if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == (long)DBClassificationConstantes.Vehicles.names.instore.GetHashCode()) {
+            else if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.indoor).DatabaseId)
+            {
+                branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaIndoor;
+            }	
+else if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == (long)DBClassificationConstantes.Vehicles.names.instore.GetHashCode()) {
                 branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaInstore;
-            }
-			else if(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID==(long)DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode()){
-				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaInternationalPress;
-			}
-			else if(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID==(long)DBClassificationConstantes.Vehicles.names.internet.GetHashCode()){
+            }		
+            else if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.internet).DatabaseId)
+            {
 				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaInternet;
 			}
+            else if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.Get(DBClassificationConstantes.Vehicles.names.editorial).DatabaseId)
+            {
+                branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaEditorial;
+            }
 
 
-			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode ();
 			
-            //LoadableUniversWebControl1.CustomerWebSession=_webSession;
-            //LoadableUniversWebControl1.ListBranchType=branchType.GetHashCode().ToString();
+            LoadableUniversWebControl1.CustomerWebSession=_webSession;
+            LoadableUniversWebControl1.ListBranchType=branchType.GetHashCode().ToString();
+          
 			MenuWebControl2.CustomerWebSession = _webSession;
 			
 			//On affiche pas l'icone représentant le racourci vers la page de résultats si les dates sélectionnées sont aux formats autres que mensuels
@@ -423,9 +442,17 @@ public partial class Private_Selection_Russia_MediaSelection : TNS.AdExpress.Web
             _webSession.Save();
 
 			GenericDetailVehicleSelectionWebControl1.CustomerWebSession = _webSession;
-            //_genericMediaDetailSelectionWebControl.CustomerWebSession = _webSession;
-			return tmp;
-
+            _genericMediaDetailSelectionWebControl.CustomerWebSession = _webSession;
+		
+            }
+            catch (System.Exception exc)
+            {
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                {
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                }
+            }
+            return tmp;
 		}
 		#endregion
 
@@ -509,12 +536,12 @@ public partial class Private_Selection_Russia_MediaSelection : TNS.AdExpress.Web
 							if (GenericDetailVehicleSelectionWebControl.IsEmptyList == true) {
 								validImageButtonRollOverWebControl.Visible=false;
 								nextImageButtonRollOverWebControl.Visible=false;
-                               					
+                                saveImageButtonRollOverWebControl.Visible = false;						
 							}
 							else{
 								//validImageButtonRollOverWebControl.Visible=true;
 								nextImageButtonRollOverWebControl.Visible=true;
-                               
+                                saveImageButtonRollOverWebControl.Visible = true;
 							}
 
 							break;
@@ -523,11 +550,11 @@ public partial class Private_Selection_Russia_MediaSelection : TNS.AdExpress.Web
 								if (GenericDetailVehicleSelectionWebControl.IsEmptyList == true) {
 									validImageButtonRollOverWebControl.Visible=false;
 									nextImageButtonRollOverWebControl.Visible=false;
-                                    //saveImageButtonRollOverWebControl.Visible=false;							
+                                    saveImageButtonRollOverWebControl.Visible=false;							
 								}
 								else{
 									validImageButtonRollOverWebControl.Visible=true;
-									//saveImageButtonRollOverWebControl.Visible=true;
+									saveImageButtonRollOverWebControl.Visible=true;
 								}
 
 								break;
@@ -537,12 +564,12 @@ public partial class Private_Selection_Russia_MediaSelection : TNS.AdExpress.Web
 							if (GenericDetailVehicleSelectionWebControl.IsEmptyList==true) {
 								validImageButtonRollOverWebControl.Visible=false;
 								nextImageButtonRollOverWebControl.Visible=false;
-								//saveImageButtonRollOverWebControl.Visible=false;							
+								saveImageButtonRollOverWebControl.Visible=false;							
 							}
 							else{
 								validImageButtonRollOverWebControl.Visible=true;
 								nextImageButtonRollOverWebControl.Visible=true;
-								//saveImageButtonRollOverWebControl.Visible=true;
+								saveImageButtonRollOverWebControl.Visible=true;
 							}
 
 							break;
@@ -635,8 +662,43 @@ public partial class Private_Selection_Russia_MediaSelection : TNS.AdExpress.Web
 		}
 		#endregion
 
-		
-		
+
+        #region Bouton sauvegarder
+        /// <summary>
+        /// Sauvegarde d'un univers
+        /// </summary>
+        /// <param name="sender">Objet qui lance l'évènement</param>
+        /// <param name="e">Arguments</param>
+        protected void saveImageButtonRollOverWebControl_Click(object sender, System.EventArgs e){
+
+            try{
+                if (GenericDetailVehicleSelectionWebControl1.NbItemsValidity != constEvent.error.CHECKBOX_NULL && GenericDetailVehicleSelectionWebControl1.NbItemsValidity != constEvent.error.MAX_ELEMENTS){
+                    Int64 idUniverseClientDescription = WebConstantes.LoadableUnivers.CATEGORY_MEDIA;
+
+                    saveScript = WebFunctions.Script.SaveUniverseOpen(_webSession.IdSession, branchType, idUniverseClientDescription);
+                }
+                else if (GenericDetailVehicleSelectionWebControl1.NbItemsValidity == constEvent.error.MAX_ELEMENTS){
+                    // Erreur : Il faut sélectionner moins de 200 éléments
+                    Response.Write("<script language=javascript>");
+                    Response.Write("alert(\"" + GestionWeb.GetWebWord(2264, _webSession.SiteLanguage) + "\");");
+                    Response.Write("history.go(-1);");
+                    Response.Write("</script>");
+                }
+                else{
+                    // Erreur : Il faut sélectionner au moins un média
+                    Response.Write("<script language=javascript>");
+                    Response.Write("	alert(\"" + GestionWeb.GetWebWord(1052, _webSession.SiteLanguage) + "\");");
+                    Response.Write("history.go(-1);");
+                    Response.Write("</script>");
+                }
+            }
+            catch (System.Exception exc){
+                if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
+                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                }
+            }
+        }
+        #endregion
 
 		#region Bouton charger
 		/// <summary>

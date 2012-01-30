@@ -54,21 +54,10 @@ namespace TNS.AdExpressI.Portofolio.Poland.Engines {
 
         #region Protected Methods Override
 
-        #region GetInvestment
-        /// <summary>
-        /// GetInvestment
-        /// </summary>
-        protected override string GetInvestment(DataTable dt)
-        {
-            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.pln) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.pln].Id.ToString()) && dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.pln].Id.ToString()].ToString().Length > 0)
-                return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.pln].Id.ToString()].ToString());
-            else
-                return ("0");
-        }
-        #endregion
+       
 
         #region ComputeDataInvestissementsTotal
-        protected override List<ICell> ComputeDataInvestissementsTotal()
+        protected override List<ICell> ComputeDataInvestissementsTotal(AbstractResult.DataUnit dataUnit)
         {
 
             #region Variables
@@ -78,7 +67,7 @@ namespace TNS.AdExpressI.Portofolio.Poland.Engines {
             #endregion
 
             #region Get Data
-            investment = GetInvestment(GetDataInvestment());
+            investment = dataUnit.GetInvestment();
             #endregion
 
             #region Compute data
@@ -120,4 +109,36 @@ namespace TNS.AdExpressI.Portofolio.Poland.Engines {
         #endregion
 
     }
+
+     #region Class Data Unit
+    /// <summary>
+    /// Data Unit
+    /// </summary>
+    public class DataUnit: AbstractResult.DataUnit 
+    {
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public DataUnit(IPortofolioDAL portofolioDAL, VehicleInformation vehicleInformation)
+            :base( portofolioDAL,  vehicleInformation)
+        {         
+        }
+        #endregion
+
+        #region GetInvestment
+        /// <summary>
+        /// GetInvestment
+        /// </summary>
+        public override string GetInvestment()
+        {
+            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.pln) && _dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.pln].Id.ToString()) && _dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.pln].Id.ToString()].ToString().Length > 0)
+                return (_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.pln].Id.ToString()].ToString());
+            else
+                return ("0");
+        }
+        #endregion
+
+    }
+     #endregion
 }

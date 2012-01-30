@@ -134,7 +134,7 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
             {                
 
                 int i = 0;
-                Int64 idSubMedia = -1;
+                Int64 idSubMedia = long.MinValue;
 
                 #region Print sub medias
 
@@ -153,16 +153,16 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia
                     //idSubMedia = Int64.Parse(currentRow["Id_SubMedia"].ToString());
 
                    
-                        if ((i % 3) < 1) t.Append("<tr>");
+                        if ((i % 1) < 1) t.Append("<tr>");
                         t.Append("<td width=\"33%\" ><input type=\"radio\" ");
                         if (item.Selected) output.Write("Checked");
                         t.Append(" id=\"SubMediaSelectionWebControl_" + i + "\" name=\"" + this.ID + "\"  value=\"" + item.Value + "\" >" + item.Text + "</td>");
-                        if ((i % 3) > 1) t.Append("</tr>");
+                        if ((i % 1) > 1) t.Append("</tr>");
                         i++;
                    
                 }
 
-                if (i > 0 && ((i - 1) % 3) < 2) t.Append("</tr>");
+                if (i > 0 && ((i - 1) % 1) < 2) t.Append("</tr>");
 
                 #endregion
 

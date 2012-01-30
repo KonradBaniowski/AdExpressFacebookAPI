@@ -45,13 +45,38 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// </summary>
         protected WebSession _session;
         /// <summary>
-        /// Report vehicle
+        /// ID media type
         /// </summary>
         protected CstDBClassif.Vehicles.names _vehicle;
+        /// <summary>
+        /// DAL utilities
+        /// </summary>
         protected DALUtilities _dalUtilities = null;
+        /// <summary>
+        /// Period Beginning date
+        /// </summary>
+        protected DateTime _periodBegin;
+        /// <summary>
+        /// Period End date
+        /// </summary>
+        protected DateTime _periodEnd;
         #endregion
 
         #region Accessors
+        /// <summary>
+        /// Period Begin
+        /// </summary>
+        public DateTime PeriodBegin
+        {
+            get { return _periodBegin; }
+        }
+        /// </summary>
+        /// Period end
+        /// </summary>
+        public DateTime PeriodEnd
+        {
+            get { return _periodEnd; }
+        }
         /// <summary>
         /// User session
         /// </summary>
@@ -71,6 +96,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         {
             _session = session;
             _dalUtilities = new DALUtilities(session);
+            _vehicle = _dalUtilities.Vehicle;           
         }
         #endregion
 
@@ -80,7 +106,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// </summary>
         /// <param name="classifLevel">Classification detail (product or advertiser)</param>
         /// <param name="typeYear">Type of study</param>
-        public DataSet GetTops(CstResult.PalmaresRecap.typeYearSelected typeYear, CstResult.MotherRecap.ElementType classifLevel)
+        public virtual DataSet GetTops(CstResult.PalmaresRecap.typeYearSelected typeYear, CstResult.MotherRecap.ElementType classifLevel)
         {
             return (new DALEngineTop(this._session, typeYear, classifLevel,_dalUtilities)).GetData();
         }
@@ -90,7 +116,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
 		/// <param name="idProductList">Id product list</param>
 		/// <param name="strYearId">Year Id</param>
 		/// <returns>DataTable[id_product,inref,incomp,inneutral]</returns>
-		public DataSet GetProductsPersonnalisationType(String idProductList, string strYearId) {
+        public virtual DataSet GetProductsPersonnalisationType(String idProductList, string strYearId)
+        {
 			return (new DALEngine(this._session, _dalUtilities)).GetProductsPersonnalisationType(idProductList,strYearId);
 		}
         /// <summary>
@@ -98,14 +125,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// </summary>
         /// <param name="classifLevel">Classification detail (product or advertiser)</param>
         /// <param name="typeYear">Type of study</param>
-        public DataSet GetEvolution(CstResult.MotherRecap.ElementType classifLevel)
+        public virtual DataSet GetEvolution(CstResult.MotherRecap.ElementType classifLevel)
         {
             return (new DALEngineEvolution(this._session, classifLevel, _dalUtilities)).GetData();
         }        /// <summary>
         /// Implements default data access layer for novelty indicator
         /// </summary>
         /// <param name="classifLevel">Classification detail (product or advertiser)</param>
-        public DataSet GetNovelty(CstResult.MotherRecap.ElementType classifLevel)
+        public virtual DataSet GetNovelty(CstResult.MotherRecap.ElementType classifLevel)
         {
             return (new DALEngineNovelty(this._session, classifLevel, _dalUtilities)).GetData();
         }
@@ -114,7 +141,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// </summary>
         /// <param name="typeYear">Get total of year N or year N-1?</param>
         /// <returns>Total depending on User selection</returns>
-        public double GetTotal(CstResult.PalmaresRecap.typeYearSelected typeYear)
+        public virtual  double GetTotal(CstResult.PalmaresRecap.typeYearSelected typeYear)
         {
             return (new DALEngine(this._session,_dalUtilities)).GetTotal(typeYear);
         }
@@ -123,7 +150,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// </summary>
         /// <param name="typeYear">Get total of year N or year N-1?</param>
         /// <returns>Total depending on User selection</returns>
-        public double GetMonthTotal(CstResult.PalmaresRecap.typeYearSelected typeYear)
+        public virtual double GetMonthTotal(CstResult.PalmaresRecap.typeYearSelected typeYear)
         {
             return (new DALEngine(this._session,_dalUtilities)).GetMonthTotal(typeYear);
         }
@@ -133,7 +160,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// <param name="totalType">Type of total</param>
         /// <param name="typeYear">Get total of year N or year N-1?</param>
         /// <returns>Total depending on User selection</returns>
-        public double GetTotal(CstComparisonCriterion totalType, CstResult.PalmaresRecap.typeYearSelected typeYear)
+        public virtual double GetTotal(CstComparisonCriterion totalType, CstResult.PalmaresRecap.typeYearSelected typeYear)
         {
             return (new DALEngine(this._session, _dalUtilities)).GetTotal(totalType, typeYear);
         }
@@ -143,7 +170,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// <param name="totalType">Type of total</param>
         /// <param name="typeYear">Get total of year N or year N-1?</param>
         /// <returns>Total depending on User selection</returns>
-        public double GetMonthTotal(CstComparisonCriterion totalType, CstResult.PalmaresRecap.typeYearSelected typeYear)
+        public virtual double GetMonthTotal(CstComparisonCriterion totalType, CstResult.PalmaresRecap.typeYearSelected typeYear)
         {
             return (new DALEngine(this._session, _dalUtilities)).GetMonthTotal(totalType, typeYear);
         }
@@ -152,7 +179,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// </summary>
         /// <param name="withAdvertisers">Include advertiser dimension</param>
         /// <param name="withRights">Aply product classification rights</param>
-        public DataSet GetSeasonalityTblData(bool withAdvertisers, bool withRights)
+        public virtual DataSet GetSeasonalityTblData(bool withAdvertisers, bool withRights)
         {
             return (new DALEngineSeasonality(this._session, _dalUtilities)).GetTableData(withAdvertisers, withRights);
         }
@@ -161,14 +188,14 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// </summary>
         /// <param name="withAdvertisers">Include advertiser dimension</param>
         /// <param name="withRights">Aply product classification rights</param>
-        public DataSet GetSeasonalityGraphData(bool withAdvertisers, bool withRights)
+        public virtual DataSet GetSeasonalityGraphData(bool withAdvertisers, bool withRights)
         {
             return (new DALEngineSeasonality(this._session, _dalUtilities)).GetChartData(withAdvertisers, withRights);
         }        /// <summary>
         /// Get Total of sector or advertising market on the Data from database for the seasonality table
         /// </summary>
         /// <returns>Total depending on User selection</returns>
-        public DataSet GetSeasonalityTotal()
+        public virtual DataSet GetSeasonalityTotal()
         {
             return (new DALEngineSeasonality(this._session, _dalUtilities)).GetSeasonalityTotal();
         }
@@ -178,7 +205,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// <param name="totalType">Type of univers (selected univers, sector, market)</param>
         /// <param name="classifLevel">Level of classification to study</param>
         /// <returns>Number of distinct advertisers or products on N and N-1</returns>
-        public DataSet GetSummaryVolumes(CstComparisonCriterion totalType, CstResult.MotherRecap.ElementType classifLevel)
+        public virtual DataSet GetSummaryVolumes(CstComparisonCriterion totalType, CstResult.MotherRecap.ElementType classifLevel)
         {
             return (new DALEngineSummary(this._session, _dalUtilities)).GetVolumes(totalType, classifLevel);
         }
@@ -187,7 +214,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// </summary>
         /// <param name="totalType">Type of univers (selected univers, sector, market)</param>
         /// <returns>Investments on N and N-1</returns>
-        public DataSet GetSummaryInvestments(CstComparisonCriterion totalType)
+        public virtual DataSet GetSummaryInvestments(CstComparisonCriterion totalType)
         {
             return (new DALEngineSummary(this._session, _dalUtilities)).GetInvestments(totalType);
         }
@@ -197,7 +224,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// <param name="totalType">Type of univers (selected univers, sector, market)</param>
         /// <param name="classifLevel">Level of classification to study</param>
         /// <returns>DataTable to build media Strategy Indicator</returns>
-        public DataSet GetMediaStrategyTblData(CstResult.MotherRecap.ElementType classifLevel, CstComparisonCriterion totalType, bool applyAdvFilter)
+        public virtual DataSet GetMediaStrategyTblData(CstResult.MotherRecap.ElementType classifLevel, CstComparisonCriterion totalType, bool applyAdvFilter)
         {
             return (new DALEngineMediaStrategy(this._session, _dalUtilities)).GetTableData(classifLevel, totalType, applyAdvFilter);
         }
@@ -209,10 +236,30 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// <param name="isPluri">True if calcul requires tops of the pluri media, false if vehicles, categories or medias required</param>
         /// <param name="mediaLevel">Media Level to study</param>
         /// <returns>DataTable to build media Strategy Indicator</returns>
-        public DataSet GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType classifLevel, CstComparisonCriterion totalType, CstResult.MediaStrategy.MediaLevel mediaLevel, bool isPluri)
+        public virtual DataSet GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType classifLevel, CstComparisonCriterion totalType, CstResult.MediaStrategy.MediaLevel mediaLevel, bool isPluri)
         {
             return (new DALEngineMediaStrategy(this._session, _dalUtilities)).GetTopElements(classifLevel, totalType, mediaLevel, isPluri);
-        }        
+        }
+
+        /// <summary>
+        ///Get media strategy data 
+        /// <remarks>Use specially in Russia</remarks>
+        /// </summary>       
+        /// <returns>DataTable to build media Strategy Indicator</returns>
+        public virtual DataSet GetMediaStrategyData()
+        {
+            throw new NotImplementedException("Currently Implemented only in Russia"); 
+        }
+        /// <summary>
+        /// Get summary data
+        /// </summary>
+        /// <remarks>Use specially in Russia</remarks>
+        /// </summary>       
+        /// <returns>DataTable to build Summary Indicator</returns>
+        public virtual DataSet GetSummary()
+        {
+            throw new NotImplementedException("Currently Implemented only in Russia"); 
+        }
         #endregion
     }
 }

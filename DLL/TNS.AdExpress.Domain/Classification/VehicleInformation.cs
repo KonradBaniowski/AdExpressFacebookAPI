@@ -12,6 +12,7 @@ using TNS.AdExpress.Constantes.Classification.DB;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Units; 
 using TNS.AdExpress.Constantes.Web;
+using System.Collections;
 
 namespace TNS.AdExpress.Domain.Classification {
     /// <summary>
@@ -111,6 +112,15 @@ namespace TNS.AdExpress.Domain.Classification {
         /// Media agency flag 
         /// </summary>
         private Int64 _mediaAgencyFlag = -1;
+            
+        ///<summary>
+        /// Eléments de niveau de détail colonne autorisés
+        /// </summary>
+        ///  <link>aggregation</link>
+        ///  <supplierCardinality>0..*</supplierCardinality>
+        ///  <associates>TNS.AdExpress.Web.Core.DetailLevelItemInformation</associates>
+        ///  <label>_allowedColumnDetailLevelItems</label>
+        protected List<DetailLevelItemInformation> _allowedColumnDetailLevelItems = new List<DetailLevelItemInformation>();
         #endregion
 
         #region Constructor
@@ -421,6 +431,13 @@ namespace TNS.AdExpress.Domain.Classification {
                     return currentUnit.Id;
 
             return baseIdUnit;
+        }
+      
+        ///<summary>Obtient les eléments de niveau de détail colonne autorisés</summary>
+        public List<DetailLevelItemInformation> AllowedColumnDetailLevelItems
+        {
+            get { return (_allowedColumnDetailLevelItems); }
+            set { _allowedColumnDetailLevelItems = value; }
         }
         #endregion
 

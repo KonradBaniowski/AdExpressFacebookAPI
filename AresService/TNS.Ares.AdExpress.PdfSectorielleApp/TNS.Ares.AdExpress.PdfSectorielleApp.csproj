@@ -79,6 +79,10 @@
       <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
       <Name>TNS.AdExpress.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Common.DAL.Russia\TNS.AdExpressI.Common.DAL.Russia.csproj">
+      <Project>{10D39D83-B876-4ED0-BC3C-3FBB29A1BB7F}</Project>
+      <Name>TNS.AdExpressI.Common.DAL.Russia</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.AdExpressI.ProductClassIndicators.DAL.Default\TNS.AdExpressI.ProductClassIndicators.DAL.Default.csproj">
       <Project>{F57A3E4F-A152-4815-AF94-DC94A885FC52}</Project>
       <Name>TNS.AdExpressI.ProductClassIndicators.DAL.Default</Name>

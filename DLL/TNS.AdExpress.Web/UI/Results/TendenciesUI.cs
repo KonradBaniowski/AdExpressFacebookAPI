@@ -74,9 +74,16 @@ namespace TNS.AdExpress.Web.UI.Results{
 					// Nombre d'insertion
 					t.Append("<td class=\""+P2+"\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>"+GestionWeb.GetWebWord(1398,webSession.SiteLanguage)+"</td>");
 					break;
-				case DBClassificationConstantes.Vehicles.names.radio:					
-				case DBClassificationConstantes.Vehicles.names.tv:
-				case DBClassificationConstantes.Vehicles.names.others:	
+                case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.others:	
 					//duree
 					t.Append("<td class=\""+P2+"\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>"+GestionWeb.GetWebWord(861,webSession.SiteLanguage)+"</td>");
 					// Nombre de spot
@@ -96,9 +103,16 @@ namespace TNS.AdExpress.Web.UI.Results{
 					//Titres
 					t.Append("<td class=\""+P2+"\" nowrap>"+GestionWeb.GetWebWord(1504,webSession.SiteLanguage)+"</td>");
 					break;
-				case DBClassificationConstantes.Vehicles.names.radio:					
-				case DBClassificationConstantes.Vehicles.names.tv:
-				case DBClassificationConstantes.Vehicles.names.others:	
+                case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.others:	
 					//Supports
 					t.Append("<td class=\""+P2+"\" nowrap>"+GestionWeb.GetWebWord(804,webSession.SiteLanguage)+"</td>");
 					break;
@@ -150,8 +164,15 @@ namespace TNS.AdExpress.Web.UI.Results{
 						totalUnit= ConvertUnitValueAndPdmToString(tab[FrameWorkConstantes.Tendencies.TOTAL_LINE,FrameWorkConstantes.Tendencies.EVOL_SURFACE],WebConstantes.CustomerSessions.Unit.pages,true, fp);
 						t.Append("<td align=\"right\" class=\""+L1+"\" nowrap>"+totalUnit + evolPicture+"</td>");
 						break;
-					case DBClassificationConstantes.Vehicles.names.radio:					
+					case DBClassificationConstantes.Vehicles.names.radio:
+                    case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                    case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                    case DBClassificationConstantes.Vehicles.names.radioMusic:
 					case DBClassificationConstantes.Vehicles.names.tv:
+                    case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                    case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                    case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                    case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
 					case DBClassificationConstantes.Vehicles.names.others:	
 						totalUnit= ConvertUnitValueAndPdmToString(tab[FrameWorkConstantes.Tendencies.TOTAL_LINE,FrameWorkConstantes.Tendencies.DURATION_N1],WebConstantes.CustomerSessions.Unit.duration,webSession.PDM, fp);
 						t.Append("<td align=\"right\" class=\""+L1+"\" nowrap>"+totalUnit+"</td>");
@@ -210,9 +231,16 @@ namespace TNS.AdExpress.Web.UI.Results{
 							totalUnit= ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Tendencies.EVOL_INVEST],WebConstantes.CustomerSessions.Unit.pages,true, fp);
 							t.Append("<td class=\""+L1+"\" nowrap>"+totalUnit + evolPicture+"</td>");
 							break;
-						case DBClassificationConstantes.Vehicles.names.radio:					
-						case DBClassificationConstantes.Vehicles.names.tv:
-						case DBClassificationConstantes.Vehicles.names.others:	
+                        case DBClassificationConstantes.Vehicles.names.radio:
+                        case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                        case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                        case DBClassificationConstantes.Vehicles.names.radioMusic:
+                        case DBClassificationConstantes.Vehicles.names.tv:
+                        case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                        case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                        case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                        case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                        case DBClassificationConstantes.Vehicles.names.others:	
 							totalUnit= ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Tendencies.DURATION_N1],WebConstantes.CustomerSessions.Unit.duration,webSession.PDM, fp);
 							t.Append("<td class=\""+L1+"\" nowrap>"+totalUnit+"</td>");
 							totalUnit= ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Tendencies.DURATION_N],WebConstantes.CustomerSessions.Unit.duration,webSession.PDM, fp);
@@ -271,9 +299,16 @@ namespace TNS.AdExpress.Web.UI.Results{
 							totalUnit= ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Tendencies.EVOL_SURFACE],WebConstantes.CustomerSessions.Unit.pages,true, fp);
 							t.Append("<td class=\""+L2+"\" nowrap>"+totalUnit + evolPicture+"</td>");
 							break;
-						case DBClassificationConstantes.Vehicles.names.radio:					
-						case DBClassificationConstantes.Vehicles.names.tv:
-						case DBClassificationConstantes.Vehicles.names.others:	
+                        case DBClassificationConstantes.Vehicles.names.radio:
+                        case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                        case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                        case DBClassificationConstantes.Vehicles.names.radioMusic:
+                        case DBClassificationConstantes.Vehicles.names.tv:
+                        case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                        case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                        case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                        case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                        case DBClassificationConstantes.Vehicles.names.others:	
 							totalUnit= ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Tendencies.DURATION_N1],WebConstantes.CustomerSessions.Unit.duration,webSession.PDM, fp);
 							t.Append("<td class=\""+L2+"\" nowrap>"+totalUnit+"</td>");
 							totalUnit= ConvertUnitValueAndPdmToString(tab[i,FrameWorkConstantes.Tendencies.DURATION_N],WebConstantes.CustomerSessions.Unit.duration,webSession.PDM, fp);
@@ -370,9 +405,16 @@ namespace TNS.AdExpress.Web.UI.Results{
 					// Nombre d'insertion
                     t.Append("<td class=\"" + P2 + "\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>" + GestionWeb.GetWebWord(1398, webSession.SiteLanguage) + "</td>");
 					break;
-				case DBClassificationConstantes.Vehicles.names.radio:					
-				case DBClassificationConstantes.Vehicles.names.tv:
-				case DBClassificationConstantes.Vehicles.names.others:	
+                case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.others:	
 					//duree
                     t.Append("<td class=\"" + P2 + "\" colspan=\"3\" align=\"center\" valign=\"middle\" nowrap>" + GestionWeb.GetWebWord(861, webSession.SiteLanguage) + "</td>");
 					// Nombre de spot
@@ -398,10 +440,17 @@ namespace TNS.AdExpress.Web.UI.Results{
 					//Titres
                     t.Append("<td class=\"" + P2 + "\" nowrap>" + GestionWeb.GetWebWord(1504, webSession.SiteLanguage) + "</td>");
 					break;
-				case DBClassificationConstantes.Vehicles.names.radio:					
-				case DBClassificationConstantes.Vehicles.names.tv:
-				case DBClassificationConstantes.Vehicles.names.others:	
-				case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
+                case DBClassificationConstantes.Vehicles.names.tv:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.others:		
+				case DBClassificationConstantes.Vehicles.names.outdoor:	
                 case DBClassificationConstantes.Vehicles.names.instore:	
 					//Supports
                     t.Append("<td class=\"" + P2 + "\" nowrap>" + GestionWeb.GetWebWord(804, webSession.SiteLanguage) + "</td>");
@@ -489,9 +538,16 @@ namespace TNS.AdExpress.Web.UI.Results{
 						totalUnit= ConvertUnitValueAndPdmToString(dtTotal.Rows[0]["page_evol"],WebConstantes.CustomerSessions.Unit.pages,true, fp);
 						t.Append("<td align=\"right\" class=\""+L1+"\" nowrap>"+totalUnit + evolPicture+"</td>");
 						break;
-					case DBClassificationConstantes.Vehicles.names.radio:					
-					case DBClassificationConstantes.Vehicles.names.tv:
-					case DBClassificationConstantes.Vehicles.names.others:
+                    case DBClassificationConstantes.Vehicles.names.radio:
+                    case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                    case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                    case DBClassificationConstantes.Vehicles.names.radioMusic:
+                    case DBClassificationConstantes.Vehicles.names.tv:
+                    case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                    case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                    case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                    case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                    case DBClassificationConstantes.Vehicles.names.others:	
                         if (!excel || webSession.PDM)
                         {
                             totalUnit = ConvertUnitValueAndPdmToString(dtTotal.Rows[0]["duration_cur"], WebConstantes.CustomerSessions.Unit.duration, webSession.PDM, fp);
@@ -565,9 +621,16 @@ namespace TNS.AdExpress.Web.UI.Results{
 							evolPicture=Evol(currentRow["sub_page_evol"],currentRow["sub_page_cur"],excel);
 							t.Append("<td class=\""+L1+"\" nowrap>"+totalUnit + evolPicture+"</td>");
 							break;
-						case DBClassificationConstantes.Vehicles.names.radio:
-						case DBClassificationConstantes.Vehicles.names.tv:
-						case DBClassificationConstantes.Vehicles.names.others:
+                        case DBClassificationConstantes.Vehicles.names.radio:
+                        case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                        case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                        case DBClassificationConstantes.Vehicles.names.radioMusic:
+                        case DBClassificationConstantes.Vehicles.names.tv:
+                        case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                        case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                        case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                        case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                        case DBClassificationConstantes.Vehicles.names.others:	
                             if (!excel || webSession.PDM)
                             {
                                 totalUnit = ConvertUnitValueAndPdmToString(currentRow["sub_duration_cur"], WebConstantes.CustomerSessions.Unit.duration, webSession.PDM, fp);
@@ -635,9 +698,16 @@ namespace TNS.AdExpress.Web.UI.Results{
 						evolPicture=Evol(currentRow["page_evol"],currentRow["page_cur"],excel);
 						t.Append("<td class=\""+L2+"\" nowrap>"+totalUnit + evolPicture+"</td>");
 						break;
-					case DBClassificationConstantes.Vehicles.names.radio:
-					case DBClassificationConstantes.Vehicles.names.tv:
-					case DBClassificationConstantes.Vehicles.names.others:
+                    case DBClassificationConstantes.Vehicles.names.radio:
+                    case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                    case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                    case DBClassificationConstantes.Vehicles.names.radioMusic:
+                    case DBClassificationConstantes.Vehicles.names.tv:
+                    case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                    case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                    case DBClassificationConstantes.Vehicles.names.tvAnnounces:
+                    case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                    case DBClassificationConstantes.Vehicles.names.others:	
                         if (!excel || webSession.PDM)
                         {
                             totalUnit = ConvertUnitValueAndPdmToString(currentRow["duration_cur"], WebConstantes.CustomerSessions.Unit.duration, webSession.PDM, fp);

@@ -2336,31 +2336,39 @@ namespace TNS.AdExpress.Constantes.FrameWork.Results{
 
 	#region Structure
 	/// <summary>
-	/// Constante pour structure de portefeuille d'un support
+	/// Constantes of tab structure of Vehicle Portofolio
 	/// </summary>
 	public class PortofolioStructure{
 
-		#region Enumérateurs
+		#region Enumerators
 		/// <summary>
-		/// Type de ventilation pour la presse
+		/// Type of Media type Press' ventilation 
 		/// </summary>
 		public enum Ventilation{
 			/// <summary>
-			/// format du média presse
+			/// Format
 			/// </summary>
 			format,
 			/// <summary>
-			/// couleur du média presse
+			/// Color
 			/// </summary>
 			color,
 			/// <summary>
-			/// Emplacement du média presse
+			/// Position
 			/// </summary>
 			location,
 			/// <summary>
-			/// Encarts du média presse
+			/// Inset
 			/// </summary>
-			insert
+			insert,
+            /// <summary>
+            /// Design
+            /// </summary>
+            design,
+            /// <summary>
+            /// Non standard placement
+            /// </summary>
+            nonStandardPlacement
 		}
 		#endregion
 

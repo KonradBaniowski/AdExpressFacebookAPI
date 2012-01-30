@@ -88,163 +88,34 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 		/// <returns>ResultTable</returns>
 		protected override ResultTable ComputeResultTable() {
 
-			#region Constantes
-			/// <summary>
-			/// Header column index
-			/// </summary>
-			const int HEADER_COLUMN_INDEX = 0;
-			/// <summary>
-			/// First column index
-			/// </summary>
-			const int FIRST_COLUMN_INDEX = 1;
-			/// <summary>
-			/// Second column index
-			/// </summary>
-			const int SECOND_COLUMN_INDEX = 2;
+            #region Constantes
+            /// <summary>
+            /// Header column index
+            /// </summary>
+            const int HEADER_COLUMN_INDEX = 0;
+            /// <summary>
+            /// First column index
+            /// </summary>
+            const int FIRST_COLUMN_INDEX = 1;
+            /// <summary>
+            /// Second column index
+            /// </summary>
+            const int SECOND_COLUMN_INDEX = 2;
 
-			#endregion
+            #endregion
 
-			#region Variables
-            List<ICell> dataTemp = null;
+            #region Variables
+            ResultTable resultTable = null;
             List<ICell> data = null;
-            List<ICell> dataInvestisment = null;
-            List<ICell> dataProductNumber = null;
-            List<ICell> dataAdvertiserNumber = null;
-			ResultTable resultTable = null;
-			LineType lineType = LineType.level1;
-            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
-			#endregion
-
-            #region AlertModule
-            bool isAlertModule = _webSession.CustomerPeriodSelected.IsSliding4M;
-            if (isAlertModule == false) {
-                DateTime DateBegin = WebFunctions.Dates.getPeriodBeginningDate(_periodBeginning, _webSession.PeriodType);
-                if (DateBegin > DateTime.Now)
-                    isAlertModule = true;
-            }
-            #endregion
-			
-			#region Building Data Result
-
-            #region Get Priority Data
-            dataInvestisment = ComputeDataInvestissementsTotal();
-            dataProductNumber = ComputeDataProductNumber();
-            dataAdvertiserNumber = ComputeDataAdvertiserNumber();
-
-            #region No Data
-            if ( (dataInvestisment == null || dataInvestisment.Count != 2 || !(dataInvestisment[1] is CellNumber) || ((CellNumber)dataInvestisment[1]).Value<=0)
-                && (dataProductNumber == null || dataProductNumber.Count != 2 || !(dataProductNumber[1] is CellNumber) || ((CellNumber)dataProductNumber[1]).Value <= 0)
-                && (dataAdvertiserNumber == null || dataAdvertiserNumber.Count != 2 || !(dataAdvertiserNumber[1] is CellNumber) || ((CellNumber)dataAdvertiserNumber[1]).Value <= 0))
-                return resultTable;
+            LineType lineType = LineType.level1;
             #endregion
 
+            #region GetDataList
+            data = GetDataCellList();
             #endregion
 
-            #region Compute Period Issue
-            data = ComputeDataPeriodIssue(isAlertModule);
-            #endregion
-
-            #region Periodicity
-            dataTemp = ComputeDataPeriodicity();
-            if(dataTemp!=null)  data.AddRange(dataTemp);
-            #endregion
-
-            #region Category
-            dataTemp = ComputeDataCategory();
-            if (dataTemp != null) data.AddRange(dataTemp);
-            #endregion
-
-            #region Media Seller
-            dataTemp = ComputeDataMediaSeller();
-            if (dataTemp != null) data.AddRange(dataTemp);
-            #endregion
-
-            #region Volume for Marketing Direct
-            dataTemp = ComputeDataVolumeForMarketingDirect();
-            if (dataTemp != null) data.AddRange(dataTemp);
-            #endregion
-
-            #region Interest center
-            dataTemp = ComputeDataInterestCenter();
-            if (dataTemp != null) data.AddRange(dataTemp);
-            #endregion
-
-            #region Number of banners
-            dataTemp = ComputeDataBannersNumber();
-            if (dataTemp != null) data.AddRange(dataTemp);
-            #endregion
-
-            #region number board and newtwork type
-            dataTemp = ComputeDataNumberBoard();
-            if (dataTemp != null) data.AddRange(dataTemp);
-
-            dataTemp = ComputeDataNetworkType(isAlertModule);
-            if (dataTemp != null) data.AddRange(dataTemp);
-            #endregion
-
-            #region Case vehicle press
-            List<ICell> dataPageNumber = ComputeDataPageNumber();
-            if (dataPageNumber != null) data.AddRange(dataPageNumber);
-
-            List<ICell> dataAdNumber = ComputeDataAdNumber();
-            if (dataAdNumber != null) data.AddRange(dataAdNumber);
-
-            if (dataAdNumber != null && dataAdNumber.Count == 2 && dataAdNumber[1] is CellUnit
-                && dataPageNumber != null && dataPageNumber.Count == 2 && dataPageNumber[1] is CellUnit)
-                dataTemp = ComputeDataPageRatio(((CellUnit)dataPageNumber[1]).Value, ((CellUnit)dataAdNumber[1]).Value);
-            else if (dataAdNumber != null && dataAdNumber.Count == 2 && dataAdNumber[1] is CellUnit)
-                dataTemp = ComputeDataPageRatio(-1, ((CellUnit)dataAdNumber[1]).Value);
-            else 
-                dataTemp = ComputeDataPageRatio(-1, -1);
-            if (dataTemp != null) data.AddRange(dataTemp);
-
-            dataTemp = ComputeDataAdNumberExcludingInsets(isAlertModule);
-            if (dataTemp != null) data.AddRange(dataTemp);
-
-            dataTemp = ComputeDataAdNumberIncludingInsets(isAlertModule);
-            if (dataTemp != null) data.AddRange(dataTemp);
-            #endregion
-
-            #region Cas tv, radio
-            dataTemp = ComputeDataSpotNumber(isAlertModule);
-            if (dataTemp != null) data.AddRange(dataTemp);
-
-            dataTemp = ComputeDataEcranNumber(isAlertModule);
-            if (dataTemp != null) data.AddRange(dataTemp);
-
-            dataTemp = ComputeDataTotalDuration(isAlertModule);
-            if (dataTemp != null) data.AddRange(dataTemp);
-
-            dataTemp = ComputeDataEvaliantInsertionNumber();
-            if (dataTemp != null) data.AddRange(dataTemp);
-            #endregion
-
-            #region Total investissements
-            if (dataInvestisment != null) data.AddRange(dataInvestisment);
-            #endregion
-
-            #region Nombre de produits
-            if (dataProductNumber != null) data.AddRange(dataProductNumber);
-
-            dataTemp = ComputeDataProductNumberInTracking(isAlertModule);
-            if (dataTemp != null) data.AddRange(dataTemp);
-
-            dataTemp = ComputeDataProductNumberInVehicle(isAlertModule);
-            if (dataTemp != null) data.AddRange(dataTemp);
-            #endregion
-
-            #region Nombre d'annonceurs
-            if (dataAdvertiserNumber != null) data.AddRange(dataAdvertiserNumber);
-            #endregion
-
-            #region Cas tv, radio, others
-            dataTemp = ComputeDataAverageDurationEcran(isAlertModule);
-            if (dataTemp != null) data.AddRange(dataTemp);
-
-            dataTemp = ComputeDataSpotNumberByEcran(isAlertModule);
-            if (dataTemp != null) data.AddRange(dataTemp);
-			#endregion
-
+            #region No Result
+            if (data == null) return null;
             #endregion
 
             #region Building Result Table
@@ -313,6 +184,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
             if (isAlertModule && (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet)) {
                 if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.indoor
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore) {
                     if (firstDate.Length > 0) {
                         dtFirstDate = Convert.ToDateTime(firstDate);
@@ -420,15 +292,6 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         }
         #endregion
 
-        #region GetDataInvestment
-        /// <summary>
-        /// GetDataInvestment
-        /// </summary>
-        protected virtual DataTable GetDataInvestment() {
-            return (_portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.investment).Tables[0]);
-        }
-        #endregion
-
         #region GetDataPeriodSelected
         /// <summary>
         /// GetDataPeriodSelected
@@ -509,41 +372,18 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         }
         #endregion
 
-        #region GetDataEncartData
-        /// <summary>
-        /// GetDataEncartData
-        /// </summary>
-        protected virtual DataTable GetDataEncartData(bool isAlertModule) {
-            if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
-                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
-                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)
-                && isAlertModule) {
-                return _portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberAdBreaks).Tables[0];
-            }
-            else return null;
-        }
-        #endregion
-
-        #region GetSpotData
-        /// <summary>
-        /// Get Spot Data
-        /// </summary>
-        protected virtual DataTable GetSpotData() {
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio) {
-                return _portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.spotData).Tables[0];
-            }
-            else return null;
-        }
-        #endregion
-
         #region GetDataProductNumber
         /// <summary>
         /// GetDataProductNumber
         /// </summary>
         protected virtual string GetDataProductNumber() {
             DataSet ds = _portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberProduct);
-            DataTable dt = ds.Tables[0];
-            return (dt.Rows[0]["nbLines"].ToString());
+            if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                return (dt.Rows[0]["nbLines"].ToString());
+            }
+            else return null;
         }
         #endregion
 
@@ -555,6 +395,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.instore
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.indoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
@@ -576,6 +417,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.instore
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.indoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
@@ -595,8 +437,12 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         /// </summary>
         protected virtual string GetDataAdvertiserNumber() {
             DataSet ds = _portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberAdvertiser);
-            DataTable dt = ds.Tables[0];
-            return (dt.Rows[0]["nbLines"].ToString());
+            if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                return (dt.Rows[0]["nbLines"].ToString());
+            }
+            else return null;
         }
         #endregion
 
@@ -620,168 +466,18 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         }
         #endregion
 
-        #region GetInvestment
-        /// <summary>
-        /// GetInvestment
-        /// </summary>
-        protected virtual string GetInvestment(DataTable dt) {
-            if (_vehicleInformation.AllowedUnitEnumList.Contains(UnitsInformation.DefaultCurrency) && dt.Columns.Contains(UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()) && dt.Rows[0][UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()].ToString().Length > 0)
-                return (dt.Rows[0][UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()].ToString());
-            else
-                return ("0");
-        }
-        #endregion
-
-        #region GetSpotNumber
-        /// <summary>
-        /// GetSpotNumber
-        /// </summary>
-        protected virtual string GetSpotNumber(DataTable dt) {
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio) {
-                if (dt.Columns.Contains("sum_spot_nb_wap") && dt.Rows[0]["sum_spot_nb_wap"] != System.DBNull.Value)
-                    return dt.Rows[0]["sum_spot_nb_wap"].ToString();
-                else
-                    return string.Empty;
-            }
-            else {
-                if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.insertion) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString())
-                    && dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString().Length > 0)
-                    return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
-                else if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.spot) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString()))
-                    return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString()].ToString());
-                else if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.occurence) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.occurence].Id.ToString()))
-                    return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.occurence].Id.ToString()].ToString());
-                else
-                    return string.Empty;
-            }
-        }
-        #endregion
-
-        #region GetVolume
-        /// <summary>
-        /// GetVolume
-        /// </summary>
-        protected virtual string GetVolume(DataTable dt) {
-            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.volume) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString())) {
-                if (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString()].ToString().Length > 0) {
-                    return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString()].ToString());
-                }
-                else return ("0");
-            }
-            return string.Empty;
-        }
-        #endregion
-
-        #region GetAdNumber
-        /// <summary>
-        /// GetVolume
-        /// </summary>
-        protected virtual string GetAdNumber(DataTable dt) {
-            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.pages) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString()))
-                return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString()].ToString());
-            return string.Empty;
-        }
-        #endregion
-
-        #region GetNumberBoard
-        /// <summary>
-        /// GetNumberBoard
-        /// </summary>
-        protected virtual string GetNumberBoard(DataTable dt) {
-            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.numberBoard) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString()))
-                return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString()].ToString());
-            return string.Empty;
-        }
-        #endregion
-
-        #region GetTotalDuration
-        /// <summary>
-        /// GetTotalDuration
-        /// </summary>
-        protected virtual string GetTotalDuration(DataTable dt) {
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio) {
-                if (dt.Columns.Contains("sum_dur_com_break") && dt.Rows[0]["sum_dur_com_break"] != System.DBNull.Value)
-                    return dt.Rows[0]["sum_dur_com_break"].ToString();
-                else
-                    return string.Empty;
-            }
-            else {
-                if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.duration) && dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()))
-                    return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()].ToString());
-                return string.Empty;
-            }
-        }
-        #endregion
-
         #region GetDataTypeSale
         /// <summary>
         /// GetDataTypeSale
         /// </summary>
         protected virtual DataTable GetDataTypeSale() {
             if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor
+                ||_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.indoor
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore) {
                 DataSet ds = _portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.typeSale);
                 return (ds.Tables[0]);
             }
             return null;
-        }
-        #endregion
-
-        #region GetEcranNumber
-        /// <summary>
-        /// GetEcranNumber
-        /// </summary>
-        protected virtual string GetEcranNumber(DataTable dt) {
-            if (dt != null) {
-                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio) {
-                    if (dt.Columns.Contains("com_break_nb") && dt.Rows[0]["com_break_nb"] != System.DBNull.Value)
-                        return dt.Rows[0]["com_break_nb"].ToString();
-                    else return string.Empty;
-                }
-                else
-                    return (dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
-            }
-            else return string.Empty;
-        }
-        #endregion
-
-        #region GetAverageDurationEcran
-        /// <summary>
-        /// GetAverageDurationEcran
-        /// </summary>
-        protected decimal GetAverageDurationEcran(DataTable dt) {
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio) {
-                if (dt != null && dt.Rows[0]["avg_dur_com_break"] != System.DBNull.Value)
-                    return decimal.Parse(dt.Rows[0]["avg_dur_com_break"].ToString());
-                else 
-                    return 0;
-            }
-            else {
-                if (dt != null && dt.Rows[0]["ecran_duration"] != System.DBNull.Value)
-                    return (decimal.Parse(dt.Rows[0]["ecran_duration"].ToString()) / decimal.Parse(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString()));
-                else 
-                    return 0;
-            }
-        }
-        #endregion
-
-        #region GetEcranNumber
-        /// <summary>
-        /// GetEcranNumber
-        /// </summary>
-        protected virtual decimal GetSpotNumberByEcran(DataTable dt) {
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio) {
-                if (dt != null && dt.Rows[0]["avg_spot_nb"] != System.DBNull.Value) {
-                    return decimal.Parse(dt.Rows[0]["avg_spot_nb"].ToString());
-                }
-                else return 0;
-            }
-            else {
-                if (dt != null && dt.Rows[0]["nbre_spot"] != System.DBNull.Value) {
-                    return (decimal.Parse(dt.Rows[0]["nbre_spot"].ToString()) / decimal.Parse(dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString()));
-                }
-                else return 0;
-            }
         }
         #endregion
 
@@ -812,8 +508,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 || (firstDate.Length > 0 && lastDate.Length > 0 && isAlertModule)) {
 
                 // Date begin and date end for outdooor
-                if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor 
-                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore)
+                if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.indoor
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore) 
                     && isAlertModule) {
                     data = new List<ICell>(4);
                     data.Add(new CellLabel(GestionWeb.GetWebWord(1607, _webSession.SiteLanguage)));
@@ -931,7 +628,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         #endregion
 
         #region ComputeDataVolumeForMarketingDirect
-        protected virtual List<ICell> ComputeDataVolumeForMarketingDirect() {
+        protected virtual List<ICell> ComputeDataVolumeForMarketingDirect(DataUnit dataUnit) {
 
             #region Variables
             string volume = string.Empty;
@@ -939,11 +636,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region Compute data
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.directMarketing &&
+            if (dataUnit!=null && _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.directMarketing &&
                 _webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_VOLUME_MARKETING_DIRECT)) {
 
                 #region Get Data
-                volume = GetVolume(GetDataInvestment());
+                volume = dataUnit.GetVolume();
                 #endregion
 
                 if (volume != null && volume.Length > 0) {
@@ -1020,7 +717,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         #endregion
 
         #region ComputeDataNumberBoard
-        protected virtual List<ICell> ComputeDataNumberBoard() {
+        protected virtual List<ICell> ComputeDataNumberBoard(DataUnit dataUnit) {
 
             #region Variables
             string numberBoard = string.Empty;
@@ -1028,11 +725,13 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region Compute data
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor
-                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore) {
+            if (dataUnit!=null 
+                && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.indoor
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore)) {
 
                 #region Get Data
-                numberBoard = GetNumberBoard(GetDataInvestment());
+                numberBoard = dataUnit.GetNumberBoard();
                 #endregion
 
                 //number board
@@ -1061,8 +760,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region Compute data
-            if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor 
-                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore )
+            if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.indoor
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore)
                 && isAlertModule) {
 
                 #region Get Data
@@ -1132,7 +832,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         #endregion
 
         #region ComputeDataAdNumber
-        protected virtual List<ICell> ComputeDataAdNumber() {
+        protected virtual List<ICell> ComputeDataAdNumber(DataUnit dataUnit) {
 
             #region Variables
             List<ICell> data = null;
@@ -1140,13 +840,13 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region Compute data
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+            if (dataUnit!=null && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
-                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress)) {
 
                 #region Get Data
-                adNumber = GetAdNumber(GetDataInvestment());
+                adNumber = dataUnit.GetAdNumber();
                 #endregion
 
                 if (adNumber != null && adNumber.Length > 0) {
@@ -1280,7 +980,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         #region ComputeData for Vehicle TV, Radio
 
         #region ComputeDataSpotNumber
-        protected virtual List<ICell> ComputeDataSpotNumber(bool isAlertModule) {
+        protected virtual List<ICell> ComputeDataSpotNumber(DataUnit dataUnit) {
 
             #region Variables
             List<ICell> data = null;
@@ -1288,11 +988,21 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region Compute data
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+            if (dataUnit!=null && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioGeneral
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioMusic
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioSponsorship
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
-                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others) {
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvAnnounces
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvGeneral
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNicheChannels
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)) {
 
-                nbrSpot = SpotNumberGetData();
+                #region Get Data
+                nbrSpot = dataUnit.GetSpotNumber();
+                #endregion
 
                 //Nombre de spot
                 if (nbrSpot.Length == 0) {
@@ -1309,20 +1019,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             return data;
 
         }
-        /// <summary>
-        /// Spot Number Get Data
-        /// </summary>
-        /// <returns>Spot Number</returns>
-        protected virtual string SpotNumberGetData() {
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio)
-                return GetSpotNumber(GetSpotData());
-            else
-                return GetSpotNumber(GetDataInvestment());
-        }
+       
         #endregion
 
         #region ComputeDataEcranNumber
-        protected virtual List<ICell> ComputeDataEcranNumber(bool isAlertModule) {
+        protected virtual List<ICell> ComputeDataEcranNumber(DataEcran dataEcran) {
 
             #region Variables
             List<ICell> data = null;
@@ -1330,12 +1031,23 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region Compute data
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+            if (dataEcran!=null &&
+                (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioGeneral
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioMusic
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioSponsorship
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
-                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others) {             
-                if (isAlertModule) {
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvAnnounces
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvGeneral
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNicheChannels
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)) {
+                if (dataEcran.IsAlertModule) {
 
-                    nbrEcran = EcranNumberGetData(isAlertModule);
+                    #region Get Data
+                    nbrEcran = dataEcran.GetNumber();
+                    #endregion
 
                     // Nombre d'ecran
                     if (nbrEcran.Length == 0) {
@@ -1353,21 +1065,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             return data;
 
         }
-        /// <summary>
-        /// Ecran Number Get Data
-        /// </summary>
-        /// <param name="isAlertModule">Is Alert Module</param>
-        /// <returns>Ecran Number</returns>
-        protected virtual string EcranNumberGetData(bool isAlertModule) {
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio)
-                return GetEcranNumber(GetSpotData());
-            else
-                return GetEcranNumber(GetDataEncartData(isAlertModule));
-        }
+       
         #endregion
 
         #region ComputeDataTotalDuration
-        protected virtual List<ICell> ComputeDataTotalDuration(bool isAlertModule) {
+        protected virtual List<ICell> ComputeDataTotalDuration(DataUnit dataUnit) {
 
             #region Variables
             List<ICell> data = null;
@@ -1375,11 +1077,21 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region Compute data
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+            if (dataUnit!= null && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioGeneral
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioMusic
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioSponsorship
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
-                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others) {
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvAnnounces
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvGeneral
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNicheChannels
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)) {
 
-                totalDuration = TotalDurationGetData();
+                #region Get Data
+                totalDuration = dataUnit.GetTotalDuration();
+                #endregion
 
                 if (totalDuration.Length == 0) {
                     totalDuration = "0";
@@ -1396,20 +1108,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             return data;
 
         }
-        /// <summary>
-        /// Total Duration Get Data
-        /// </summary>
-        /// <returns>Total Duration</returns>
-        protected virtual string TotalDurationGetData() {
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio)
-                return GetTotalDuration(GetSpotData());
-            else
-                return GetTotalDuration(GetDataInvestment());
-        }
+       
         #endregion
 
         #region ComputeDataEvaliantInsertionNumber
-        protected virtual List<ICell> ComputeDataEvaliantInsertionNumber() {
+        protected virtual List<ICell> ComputeDataEvaliantInsertionNumber(DataUnit dataUnit) {
 
             #region Variables
             List<ICell> data = null;
@@ -1417,13 +1120,21 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region Compute data
-            if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.radio
+            if (dataUnit!=null && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.radio
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioGeneral
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioMusic
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioSponsorship
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.tv
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvAnnounces
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvGeneral
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNicheChannels
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.others
                 && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile)) {
 
                 #region Get Data
-                nbrSpot = GetSpotNumber(GetDataInvestment());
+                nbrSpot = dataUnit.GetSpotNumber();
                 #endregion
 
                 // Number of insertion (occurrences) Evaliant
@@ -1446,7 +1157,12 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         #endregion
 
         #region ComputeDataInvestissementsTotal
-        protected virtual List<ICell> ComputeDataInvestissementsTotal() {
+        /// <summary>
+        /// Compute Data Investissements Total
+        /// </summary>
+        /// <param name="dataUnit">data Unit</param>
+        /// <returns>List of cells</returns>
+        protected virtual List<ICell> ComputeDataInvestissementsTotal(DataUnit dataUnit) {
 
             #region Variables
             List<ICell> data = null;
@@ -1455,11 +1171,11 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region Get Data
-            investment = GetInvestment(GetDataInvestment());
+            investment = dataUnit.GetInvestment();
             #endregion
 
             #region Compute data
-            if (investment != null && investment.Length > 0 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) {
+            if (dataUnit!=null && investment != null && investment.Length > 0 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) {
                 data = new List<ICell>(2);
                 data.Add(new CellLabel(GestionWeb.GetWebWord(2787, _webSession.SiteLanguage) + " (" + defaultCurrency.GetUnitWebText(_webSession.SiteLanguage) + ")"));
                 CellEuro cE = new CellEuro(double.Parse(investment));
@@ -1486,11 +1202,14 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region Compute data
-            data = new List<ICell>(2);
-            data.Add(new CellLabel(GestionWeb.GetWebWord(1393, _webSession.SiteLanguage)));
-            CellNumber cN6 = new CellNumber(double.Parse(numberProduct));
-            cN6.StringFormat = UNIT_FORMAT;
-            data.Add(cN6);
+            if (numberProduct != null)
+            {
+                data = new List<ICell>(2);
+                data.Add(new CellLabel(GestionWeb.GetWebWord(1393, _webSession.SiteLanguage)));
+                CellNumber cN6 = new CellNumber(double.Parse(numberProduct));
+                cN6.StringFormat = UNIT_FORMAT;
+                data.Add(cN6);
+            }
             #endregion
 
             return data;
@@ -1509,6 +1228,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #region Compute data
             if ((_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.instore
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.indoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
@@ -1545,6 +1265,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #region Compute data
             if ((_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.instore
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.indoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
@@ -1583,11 +1304,14 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region Compute data
-            data = new List<ICell>(2);
-            data.Add(new CellLabel(GestionWeb.GetWebWord(1396, _webSession.SiteLanguage)));
-            CellNumber cN9 = new CellNumber(double.Parse(numberAdvertiser));
-            cN9.StringFormat = UNIT_FORMAT;
-            data.Add(cN9);
+            if (numberAdvertiser != null)
+            {
+                data = new List<ICell>(2);
+                data.Add(new CellLabel(GestionWeb.GetWebWord(1396, _webSession.SiteLanguage)));
+                CellNumber cN9 = new CellNumber(double.Parse(numberAdvertiser));
+                cN9.StringFormat = UNIT_FORMAT;
+                data.Add(cN9);
+            }
             #endregion
 
             return data;
@@ -1598,37 +1322,37 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         #region Cas tv, radio, others
 
         #region ComputeDataAverageDurationEcran
-        protected virtual List<ICell> ComputeDataAverageDurationEcran(bool isAlertModule) {
+        protected virtual List<ICell> ComputeDataAverageDurationEcran(DataEcran dataEcran) {
 
             #region Variables
             List<ICell> data = null;
             decimal averageDurationEcran = 0;
-            DataTable dt = null;
-            string nbrEcran = string.Empty;
+            string nbrEcran = null;
             #endregion
 
             #region Get Data
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio) {
-                dt = GetSpotData();
-            }
-            else if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
-                  || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)
-            {
-                dt = GetDataEncartData(isAlertModule);
-                
-            }
-            nbrEcran = GetEcranNumber(dt);
-            if (nbrEcran.Length > 0) {
-                averageDurationEcran = GetAverageDurationEcran(dt);
+            if (dataEcran != null) {
+                nbrEcran = dataEcran.GetNumber();
+                if (nbrEcran.Length > 0) {
+                    averageDurationEcran = dataEcran.GetAverageDuration();
+                }
             }
             #endregion
 
             #region Compute data
             if (nbrEcran != null && nbrEcran.Length > 0
                 && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioGeneral
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioMusic
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioSponsorship
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvAnnounces
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvGeneral
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNicheChannels
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)
-                && isAlertModule) {
+                && dataEcran.IsAlertModule) {
 
                 // Durée moyenne d'un écran
 
@@ -1647,35 +1371,37 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         #endregion
 
         #region ComputeDataSpotNumberByEcran
-        protected virtual List<ICell> ComputeDataSpotNumberByEcran(bool isAlertModule) {
+        protected virtual List<ICell> ComputeDataSpotNumberByEcran(DataEcran dataEcran) {
 
             #region Variables
             List<ICell> data = null;
             decimal nbrSpotByEcran = 0;
-            DataTable dt = null;
-            string nbrEcran = string.Empty;
+            string nbrEcran = null;
             #endregion
 
             #region Get Data
-            if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio) {
-                dt = GetSpotData();
-            }
-            else if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
-                  || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others) {
-                dt = GetDataEncartData(isAlertModule);
-            }
-            nbrEcran = GetEcranNumber(dt);
-            if (nbrEcran.Length > 0) {
-                nbrSpotByEcran = GetSpotNumberByEcran(dt);
+            if (dataEcran != null) {
+                nbrEcran = dataEcran.GetNumber();
+                if (nbrEcran.Length > 0) {
+                    nbrSpotByEcran = dataEcran.GetSpotNumberByEcran();
+                }
             }
             #endregion
 
             #region Compute data
             if (nbrEcran != null && nbrEcran.Length > 0
                 && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioGeneral
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioMusic
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioSponsorship
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvAnnounces
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvGeneral
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNicheChannels
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)
-                && isAlertModule) {
+                && dataEcran.IsAlertModule) {
 
                 // Nombre moyen de spots par écran
                 data = new List<ICell>(2);
@@ -1693,6 +1419,404 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
         #endregion
 
+        #region GetDataCells
+        /// <summary>
+        /// Get Data Cell List
+        /// </summary>
+        /// <returns>Data Cell List</returns>
+        protected virtual List<ICell> GetDataCellList() {
+
+            #region Variables
+            List<ICell> dataTemp = null;
+            List<ICell> data = null;
+            List<ICell> dataInvestisment = null;
+            List<ICell> dataProductNumber = null;
+            List<ICell> dataAdvertiserNumber = null;
+            DataEcran dataEcran = null;
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].CultureInfo;
+            #endregion
+
+            #region AlertModule
+            bool isAlertModule = _webSession.CustomerPeriodSelected.IsSliding4M;
+            if (isAlertModule == false) {
+                DateTime DateBegin = WebFunctions.Dates.getPeriodBeginningDate(_periodBeginning, _webSession.PeriodType);
+                if (DateBegin > DateTime.Now)
+                    isAlertModule = true;
+            }
+            #endregion
+
+            #region Building Data Result
+
+            DataUnit dataUnit = new DataUnit(_portofolioDAL, _vehicleInformation);
+
+            #region Get Priority Data
+            dataInvestisment = ComputeDataInvestissementsTotal(dataUnit);
+            dataProductNumber = ComputeDataProductNumber();
+            dataAdvertiserNumber = ComputeDataAdvertiserNumber();
+
+            #region No Data
+            if ((dataInvestisment == null || dataInvestisment.Count != 2 || !(dataInvestisment[1] is CellNumber) || ((CellNumber)dataInvestisment[1]).Value <= 0)
+                && (dataProductNumber == null || dataProductNumber.Count != 2 || !(dataProductNumber[1] is CellNumber) || ((CellNumber)dataProductNumber[1]).Value <= 0)
+                && (dataAdvertiserNumber == null || dataAdvertiserNumber.Count != 2 || !(dataAdvertiserNumber[1] is CellNumber) || ((CellNumber)dataAdvertiserNumber[1]).Value <= 0))
+                return null;
+            #endregion
+
+            if(_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvAnnounces
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvGeneral
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNicheChannels
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioGeneral
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioMusic
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioSponsorship
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others){
+                 dataEcran = new DataEcran(_portofolioDAL, _vehicleInformation, isAlertModule);
+            }
+
+            #endregion
+
+            #region Compute Period Issue
+            data = ComputeDataPeriodIssue(isAlertModule);
+            #endregion
+
+            #region Periodicity
+            dataTemp = ComputeDataPeriodicity();
+            if (dataTemp != null) data.AddRange(dataTemp);
+            #endregion
+
+            #region Category
+            dataTemp = ComputeDataCategory();
+            if (dataTemp != null) data.AddRange(dataTemp);
+            #endregion
+
+            #region Media Seller
+            dataTemp = ComputeDataMediaSeller();
+            if (dataTemp != null) data.AddRange(dataTemp);
+            #endregion
+
+            #region Volume for Marketing Direct
+            dataTemp = ComputeDataVolumeForMarketingDirect(dataUnit);
+            if (dataTemp != null) data.AddRange(dataTemp);
+            #endregion
+
+            #region Interest center
+            dataTemp = ComputeDataInterestCenter();
+            if (dataTemp != null) data.AddRange(dataTemp);
+            #endregion
+
+            #region Number of banners
+            dataTemp = ComputeDataBannersNumber();
+            if (dataTemp != null) data.AddRange(dataTemp);
+            #endregion
+
+            #region number board and newtwork type
+            dataTemp = ComputeDataNumberBoard(dataUnit);
+            if (dataTemp != null) data.AddRange(dataTemp);
+
+            dataTemp = ComputeDataNetworkType(isAlertModule);
+            if (dataTemp != null) data.AddRange(dataTemp);
+            #endregion
+
+            #region Case vehicle press
+            List<ICell> dataPageNumber = ComputeDataPageNumber();
+            if (dataPageNumber != null) data.AddRange(dataPageNumber);
+
+            List<ICell> dataAdNumber = ComputeDataAdNumber(dataUnit);
+            if (dataAdNumber != null) data.AddRange(dataAdNumber);
+
+            if (dataAdNumber != null && dataAdNumber.Count == 2 && dataAdNumber[1] is CellUnit
+                && dataPageNumber != null && dataPageNumber.Count == 2 && dataPageNumber[1] is CellUnit)
+                dataTemp = ComputeDataPageRatio(((CellUnit)dataPageNumber[1]).Value, ((CellUnit)dataAdNumber[1]).Value);
+            else if (dataAdNumber != null && dataAdNumber.Count == 2 && dataAdNumber[1] is CellUnit)
+                dataTemp = ComputeDataPageRatio(-1, ((CellUnit)dataAdNumber[1]).Value);
+            else
+                dataTemp = ComputeDataPageRatio(-1, -1);
+            if (dataTemp != null) data.AddRange(dataTemp);
+
+            dataTemp = ComputeDataAdNumberExcludingInsets(isAlertModule);
+            if (dataTemp != null) data.AddRange(dataTemp);
+
+            dataTemp = ComputeDataAdNumberIncludingInsets(isAlertModule);
+            if (dataTemp != null) data.AddRange(dataTemp);
+            #endregion
+
+            #region Cas tv, radio
+            dataTemp = ComputeDataSpotNumber(dataUnit);
+            if (dataTemp != null) data.AddRange(dataTemp);
+
+            dataTemp = ComputeDataEcranNumber(dataEcran);
+            if (dataTemp != null) data.AddRange(dataTemp);
+
+            dataTemp = ComputeDataTotalDuration(dataUnit);
+            if (dataTemp != null) data.AddRange(dataTemp);
+
+            dataTemp = ComputeDataEvaliantInsertionNumber(dataUnit);
+            if (dataTemp != null) data.AddRange(dataTemp);
+            #endregion
+
+            #region Total investissements
+            if (dataInvestisment != null) data.AddRange(dataInvestisment);
+            #endregion
+
+            #region Nombre de produits
+            if (dataProductNumber != null) data.AddRange(dataProductNumber);
+
+            dataTemp = ComputeDataProductNumberInTracking(isAlertModule);
+            if (dataTemp != null) data.AddRange(dataTemp);
+
+            dataTemp = ComputeDataProductNumberInVehicle(isAlertModule);
+            if (dataTemp != null) data.AddRange(dataTemp);
+            #endregion
+
+            #region Nombre d'annonceurs
+            if (dataAdvertiserNumber != null) data.AddRange(dataAdvertiserNumber);
+            #endregion
+
+            #region Cas tv, radio, others
+            dataTemp = ComputeDataAverageDurationEcran(dataEcran);
+            if (dataTemp != null) data.AddRange(dataTemp);
+
+            dataTemp = ComputeDataSpotNumberByEcran(dataEcran);
+            if (dataTemp != null) data.AddRange(dataTemp);
+            #endregion
+
+            #endregion
+
+            return data;
+
+        }
+        #endregion
+
         #endregion
     }
+
+
+    #region Class Data Unit
+    /// <summary>
+    /// Data Unit
+    /// </summary>
+    public class DataUnit {
+
+        #region Variables
+        /// <summary>
+        /// Data Table
+        /// </summary>
+        protected DataTable _dt = null;
+        /// <summary>
+        /// Dal portofolio Synthesis
+        /// </summary>
+        protected IPortofolioDAL _portofolioDAL = null;
+        /// <summary>
+        /// Vehicle
+        /// </summary>
+        protected VehicleInformation _vehicleInformation;
+        #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public DataUnit(IPortofolioDAL portofolioDAL, VehicleInformation vehicleInformation) {
+            _portofolioDAL = portofolioDAL;
+            _vehicleInformation = vehicleInformation;
+            DataSet ds = _portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.investment);
+            if(ds!=null && ds.Tables!=null && ds.Tables.Count>0)
+                _dt = ds.Tables[0];
+        }
+        #endregion
+
+        #region Public Methods
+
+        #region GetVolume
+        /// <summary>
+        /// GetVolume
+        /// </summary>
+        public virtual string GetVolume() {
+            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.volume) && _dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString())) {
+                if (_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString()].ToString().Length > 0) {
+                    return (_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.volume].Id.ToString()].ToString());
+                }
+                else return ("0");
+            }
+            return string.Empty;
+        }
+        #endregion
+
+        #region GetNumberBoard
+        /// <summary>
+        /// GetNumberBoard
+        /// </summary>
+        public virtual string GetNumberBoard() {
+            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.numberBoard) && _dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString()))
+                return (_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString()].ToString());
+            return string.Empty;
+        }
+        #endregion
+
+        #region GetAdNumber
+        /// <summary>
+        /// GetVolume
+        /// </summary>
+        public virtual string GetAdNumber() {
+            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.pages) && _dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString()))
+                return (_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.pages].Id.ToString()].ToString());
+            return string.Empty;
+        }
+        #endregion
+
+        #region GetSpotNumber
+        /// <summary>
+        /// GetSpotNumber
+        /// </summary>
+        public virtual string GetSpotNumber() {
+            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.insertion) && _dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString())
+                && _dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString().Length > 0)
+                return (_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
+            else if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.spot) && _dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString()))
+                return (_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.spot].Id.ToString()].ToString());
+            else if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.occurence) && _dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.occurence].Id.ToString()))
+                return (_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.occurence].Id.ToString()].ToString());
+            else
+                return string.Empty;
+        }
+        #endregion
+
+        #region GetTotalDuration
+        /// <summary>
+        /// GetTotalDuration
+        /// </summary>
+        public virtual string GetTotalDuration() {
+            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.duration) && _dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()))
+                return (_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()].ToString());
+            return string.Empty;
+        }
+        #endregion
+
+        #region GetInvestment
+        /// <summary>
+        /// GetInvestment
+        /// </summary>
+        public virtual string GetInvestment() {
+            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.euro) && _dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()) && _dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()].ToString().Length > 0)
+                return (_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()].ToString());
+            else
+                return ("0");
+        }
+        #endregion
+
+        #endregion
+    }
+    #endregion
+
+    #region Class Data Ecran
+    /// <summary>
+    /// Data Ecran
+    /// </summary>
+    public class DataEcran {
+
+        #region Variables
+        /// <summary>
+        /// Data Table
+        /// </summary>
+        protected DataTable _dt = null;
+        /// <summary>
+        /// Dal portofolio Synthesis
+        /// </summary>
+        protected IPortofolioDAL _portofolioDAL = null;
+        /// <summary>
+        /// Vehicle
+        /// </summary>
+        protected VehicleInformation _vehicleInformation;
+        /// <summary>
+        /// is Alert Module
+        /// </summary>
+        protected bool _isAlertModule;
+        #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public DataEcran(IPortofolioDAL portofolioDAL, VehicleInformation vehicleInformation, bool isAlertModule) {
+            _portofolioDAL = portofolioDAL;
+            _vehicleInformation = vehicleInformation;
+            _isAlertModule = isAlertModule;
+            if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radio
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioGeneral
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioMusic
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioSponsorship
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tv
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvAnnounces
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvGeneral
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNicheChannels
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.others)
+                && _isAlertModule) {
+                _dt = _portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.numberAdBreaks).Tables[0];
+            }
+            else _dt = null;
+        }
+        #endregion
+
+        #region Assessor
+        /// <summary>
+        /// Get Is Alert Module or not
+        /// </summary>
+        public bool IsAlertModule {
+            get { return _isAlertModule; }
+        }
+        #endregion
+
+        #region Public Methods
+
+        #region GetNumber
+        /// <summary>
+        /// Get Number of Ecran
+        /// </summary>
+        public virtual string GetNumber() {
+            if (_dt != null) {
+                return (_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString());
+            }
+            else return string.Empty;
+        }
+        #endregion
+
+        #region GetAverageDuration
+        /// <summary>
+        /// Get Average Duration of a spot
+        /// </summary>
+        public virtual decimal GetAverageDuration() {
+            if (_dt != null && _dt.Rows[0]["ecran_duration"] != System.DBNull.Value) {
+                return (decimal.Parse(_dt.Rows[0]["ecran_duration"].ToString()) / decimal.Parse(_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString()));
+            }
+            else return 0;
+        }
+        #endregion
+
+        #region GetSpotNumberByEcran
+        /// <summary>
+        /// Get Spot Number By Ecran
+        /// </summary>
+        public virtual decimal GetSpotNumberByEcran() {
+
+            decimal nbrSpotByEcran = 0;
+            string nbrEcran = GetNumber();
+            if (nbrEcran.Length > 0) {
+                if (_dt != null && _dt.Rows[0]["nbre_spot"] != System.DBNull.Value) {
+                    nbrSpotByEcran = (decimal.Parse(_dt.Rows[0]["nbre_spot"].ToString()) / decimal.Parse(_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.insertion].Id.ToString()].ToString()));
+                }
+                else nbrSpotByEcran = 0;
+            }
+            return nbrSpotByEcran;
+        }
+        #endregion
+
+        #endregion
+    }
+    #endregion
+
+
 }

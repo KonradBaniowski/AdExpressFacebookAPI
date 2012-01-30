@@ -29,6 +29,7 @@ namespace TNS.AdExpressI.Date.DAL.Default {
         /// </summary>
         /// <param name="session">Client session</param>
         public DateDAL(WebSession session) : base(session) { }
+
         #endregion
 
     }

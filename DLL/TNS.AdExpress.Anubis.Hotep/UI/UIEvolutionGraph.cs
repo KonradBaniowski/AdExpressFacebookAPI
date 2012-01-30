@@ -28,6 +28,7 @@ using TNS.FrameWork;
 using TNS.AdExpressI.ProductClassIndicators.Engines;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpress.Anubis.Hotep.UI
 {
@@ -40,23 +41,23 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 		/// <summary>
 		/// User Session
 		/// </summary>
-		private WebSession _webSession = null;
+		protected WebSession _webSession = null;
 		/// <summary>
 		/// Data Source
 		/// </summary>
-		private IDataSource _dataSource = null;
+        protected IDataSource _dataSource = null;
 		/// <summary>
 		/// Hotep configuration
 		/// </summary>
-		private HotepConfig _config = null;
+        protected HotepConfig _config = null;
 		/// <summary>
 		/// Tableau d'objets qui contient les résultats
 		/// </summary>
-		private object[,] _tab=null;
+        protected object[,] _tab = null;
         /// <summary>
         /// Style
         /// </summary>
-        private TNS.FrameWork.WebTheme.Style _style = null;
+        protected TNS.FrameWork.WebTheme.Style _style = null;
 		#endregion
 		
 		#region Constructeur
@@ -74,7 +75,9 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 		/// <summary>
 		/// Graphiques Evolution
 		/// </summary>
-		internal void BuildEvolution(FrameWorkConstantes.Results.EvolutionRecap.ElementType tableType) {
+		public virtual void BuildEvolution(FrameWorkConstantes.Results.EvolutionRecap.ElementType tableType) {
+
+            UnitInformation selectedCurrency = _webSession.GetSelectedUnit();
 
             #region Series Init
             Color colorTemp = Color.Black;
@@ -122,74 +125,13 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			#endregion			
 
             #region Series building
-            double ecart = 0;
-            int typeElt = 0;
-            int compteur = 0;
+            //double ecart = 0;
+            //int typeElt = 0;
+            //int compteur = 0;
             bool hasComp = false;
             bool hasRef = false;
 			bool hasMixed = false;
-            for (int i = 0; i < _tab.GetLongLength(0) && i < 10; i++) {
-                ecart = Convert.ToDouble(_tab[i, EngineEvolution.ECART]);
-                if (ecart > 0) {
-                    series.Points.AddXY(_tab[i, EngineEvolution.PRODUCT].ToString(), Math.Round(FctUtilities.Units.ConvertUnitValue(ecart, _webSession.Unit)));
-                    series.Points[compteur].ShowInLegend = true;
-
-                    #region Reference or competitor ?
-                    if (_tab[i, EngineEvolution.COMPETITOR] != null) {
-                        typeElt = Convert.ToInt32(_tab[i, EngineEvolution.COMPETITOR]);
-						if (typeElt == 3) {
-							_style.GetTag("EvolutionGraphColorLegendItemMixed").SetStyleDundas(ref colorTemp);
-							series.Points[compteur].Color = colorTemp;
-							hasMixed = true;
-						}
-						else if (typeElt == 2) {
-                            _style.GetTag("EvolutionGraphColorLegendItemCompetitor").SetStyleDundas(ref colorTemp);
-                            series.Points[compteur].Color = colorTemp;
-                            hasComp = true;
-                        }
-                        else if (typeElt == 1) {
-                            _style.GetTag("EvolutionGraphColorLegendItemReference").SetStyleDundas(ref colorTemp);
-                            series.Points[compteur].Color = colorTemp;
-                            hasRef = true;
-                        }
-                    }
-                    #endregion
-
-                    compteur++;
-                }
-                ecart = Convert.ToDouble(_tab[last, EngineEvolution.ECART]);
-                if (ecart < 0) {
-                    series.Points.AddXY(_tab[last, EngineEvolution.PRODUCT].ToString(), Math.Round(FctUtilities.Units.ConvertUnitValue(ecart, _webSession.Unit)));
-                    series.Points[compteur].ShowInLegend = true;
-                    series.Points[compteur].CustomAttributes = "LabelStyle=top";
-
-                    #region Reference or competitor ?
-                    if (_tab[last, EngineEvolution.COMPETITOR] != null) {
-                        typeElt = Convert.ToInt32(_tab[last, EngineEvolution.COMPETITOR]);
-                        if (typeElt == 3) {
-                            _style.GetTag("EvolutionGraphColorLegendItemMixed").SetStyleDundas(ref colorTemp);
-                            series.Points[compteur].Color = colorTemp;
-                            hasMixed = true;
-                        }
-                        else if (typeElt == 2) {
-                            _style.GetTag("EvolutionGraphColorLegendItemCompetitor").SetStyleDundas(ref colorTemp);
-                            series.Points[compteur].Color = colorTemp;
-                            hasComp = true;
-                        }
-                        else if (typeElt == 1) {
-                            _style.GetTag("EvolutionGraphColorLegendItemReference").SetStyleDundas(ref colorTemp);
-                            series.Points[compteur].Color = colorTemp;
-                            hasRef = true;
-                        }
-                    }
-                    #endregion
-
-                    compteur++;
-                }
-
-                last--;
-
-            }
+            SetSeriesData( series,  last, ref hasComp, ref  hasRef, ref  hasMixed, ref colorTemp);
             #endregion
 
             #region Legends
@@ -265,7 +207,7 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 			this.ChartAreas[strChartArea].AxisY2.LabelsAutoFit=false;
             _style.GetTag("EvolutionGraphLabelFontAxisY2").SetStyleDundas(this.ChartAreas[strChartArea].AxisY2.LabelStyle);
             _style.GetTag("EvolutionGraphTitleFontAxisY2").SetStyleDundas(this.ChartAreas[strChartArea].AxisY2);
-			this.ChartAreas[strChartArea].AxisY2.Title=""+GestionWeb.GetWebWord(1217,_webSession.SiteLanguage)+"";
+            this.ChartAreas[strChartArea].AxisY2.Title = GestionWeb.GetWebWord(1213, _webSession.SiteLanguage) + " (" + selectedCurrency.GetUnitSignWebText(_webSession.SiteLanguage) + ")";
 			#endregion					
 
 		}
@@ -273,6 +215,95 @@ namespace TNS.AdExpress.Anubis.Hotep.UI
 		
 
 
-		
-	}
+		  #region SetSeriesData
+        /// <summary>
+        /// Set Series Data
+        /// </summary>
+        /// <param name="tab">tab</param>
+        /// <param name="series">series</param>
+        /// <param name="last">last</param>
+        /// <param name="hasComp">has Competitor</param>
+        /// <param name="hasRef">has Reference</param>
+        /// <param name="hasMixed">has Mixed</param>
+        protected virtual void SetSeriesData(Series series, long last, ref bool hasComp, ref bool hasRef, ref   bool hasMixed, ref Color colorTemp)
+        {
+            double ecart = 0;
+            int typeElt = 0;
+            int compteur = 0;           
+            for (int i = 0; i < _tab.GetLongLength(0) && i < 10; i++)
+            {
+                ecart = Convert.ToDouble(_tab[i, EngineEvolution.ECART]);
+                if (ecart > 0)
+                {
+                    series.Points.AddXY(_tab[i, EngineEvolution.PRODUCT].ToString(), Math.Round(FctUtilities.Units.ConvertUnitValue(ecart, _webSession.Unit)));
+                    series.Points[compteur].ShowInLegend = true;
+
+                    #region Reference or competitor ?
+                    if (_tab[i, EngineEvolution.COMPETITOR] != null)
+                    {
+                        typeElt = Convert.ToInt32(_tab[i, EngineEvolution.COMPETITOR]);
+                        if (typeElt == 3)
+                        {
+                            _style.GetTag("EvolutionGraphColorLegendItemMixed").SetStyleDundas(ref colorTemp);
+                            series.Points[compteur].Color = colorTemp;
+                            hasMixed = true;
+                        }
+                        else if (typeElt == 2)
+                        {
+                            _style.GetTag("EvolutionGraphColorLegendItemCompetitor").SetStyleDundas(ref colorTemp);
+                            series.Points[compteur].Color = colorTemp;
+                            hasComp = true;
+                        }
+                        else if (typeElt == 1)
+                        {
+                            _style.GetTag("EvolutionGraphColorLegendItemReference").SetStyleDundas(ref colorTemp);
+                            series.Points[compteur].Color = colorTemp;
+                            hasRef = true;
+                        }
+                    }
+                    #endregion
+
+                    compteur++;
+                }
+                ecart = Convert.ToDouble(_tab[last, EngineEvolution.ECART]);
+                if (ecart < 0)
+                {
+                    series.Points.AddXY(_tab[last, EngineEvolution.PRODUCT].ToString(), Math.Round(FctUtilities.Units.ConvertUnitValue(ecart, _webSession.Unit)));
+                    series.Points[compteur].ShowInLegend = true;
+                    series.Points[compteur].CustomAttributes = "LabelStyle=top";
+
+                    #region Reference or competitor ?
+                    if (_tab[last, EngineEvolution.COMPETITOR] != null)
+                    {
+                        typeElt = Convert.ToInt32(_tab[last, EngineEvolution.COMPETITOR]);
+                        if (typeElt == 3)
+                        {
+                            _style.GetTag("EvolutionGraphColorLegendItemMixed").SetStyleDundas(ref colorTemp);
+                            series.Points[compteur].Color = colorTemp;
+                            hasMixed = true;
+                        }
+                        else if (typeElt == 2)
+                        {
+                            _style.GetTag("EvolutionGraphColorLegendItemCompetitor").SetStyleDundas(ref colorTemp);
+                            series.Points[compteur].Color = colorTemp;
+                            hasComp = true;
+                        }
+                        else if (typeElt == 1)
+                        {
+                            _style.GetTag("EvolutionGraphColorLegendItemReference").SetStyleDundas(ref colorTemp);
+                            series.Points[compteur].Color = colorTemp;
+                            hasRef = true;
+                        }
+                    }
+                    #endregion
+
+                    compteur++;
+                }
+
+                last--;
+
+            }
+        }
+        #endregion
+    }
 }

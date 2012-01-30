@@ -33,6 +33,17 @@ namespace TNS.AdExpressI.Visual.WebService
             : base(idVehicle, relativePath)
         {
         }
+       /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="idVehicle">Vehicle identifier</param>
+        /// <param name="relativePath">Relative Path</param>
+        /// <param name="idSession">ID Session</param>
+        /// <param name="isEncrypted">true if is encrypted</param>
+        public Visual(Int64 idVehicle, string relativePath, string idSession, bool isEncrypted)
+            : base(idVehicle, relativePath, idSession, isEncrypted)
+        {
+        }
         #endregion
 
         #region IVisual Members

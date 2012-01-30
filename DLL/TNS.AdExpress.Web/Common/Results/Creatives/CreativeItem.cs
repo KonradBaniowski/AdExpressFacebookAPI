@@ -79,6 +79,10 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
 		/// Determine if show product level
 		/// </summary>
 		protected bool _showProduct = true;
+        /// <summary>
+        /// Media type Id
+        /// </summary>
+        protected long _vehicleId;
         #endregion
 
 		#region Accessors
@@ -261,7 +265,7 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
         public virtual CreativeItem GetInstance(DataRow row, WebSession session) {
 
             long id = Convert.ToInt64(row["version"]);
-            CreativeRadio item = new CreativeRadio(id);
+            CreativeRadio item = new CreativeRadio(id,_vehicleId);
             item.Session = session;
 			item.ShowProduct = session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
             FieldInstance(row, item);

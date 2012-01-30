@@ -89,9 +89,19 @@ namespace TNS.AdExpress.Web.Rules.Results {
                     item = new CreativePresse(-1);
                     break;
                 case DBClassifCst.Vehicles.names.radio:
-                    item = new CreativeRadio(-1);
+                    item = new CreativeRadio(-1, VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.radio));
+                    break;
+                case DBClassifCst.Vehicles.names.radioGeneral:
+                    item = new CreativeRadio(-1, VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.radioGeneral));
+                    break;
+                case DBClassifCst.Vehicles.names.radioSponsorship:
+                    item = new CreativeRadio(-1, VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.radioSponsorship));
+                    break;
+                case DBClassifCst.Vehicles.names.radioMusic:
+                    item = new CreativeRadio(-1, VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.radioMusic));                 
                     break;
                 case DBClassifCst.Vehicles.names.outdoor:
+                case DBClassifCst.Vehicles.names.indoor:
                     item = new CreativeOutdoor(-1);
                     break;
                 case DBClassifCst.Vehicles.names.instore:
@@ -209,8 +219,16 @@ namespace TNS.AdExpress.Web.Rules.Results {
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.magazine));
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.outdoor));
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.instore));
+                vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.indoor));
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.radio));
+                vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.radioGeneral));
+                vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.radioSponsorship));
+                vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.radioMusic));
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.tv));
+                vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.tvSponsorship));
+                vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.tvGeneral));
+                vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.tvAnnounces));
+                vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.tvNonTerrestrials));
 
             }
 

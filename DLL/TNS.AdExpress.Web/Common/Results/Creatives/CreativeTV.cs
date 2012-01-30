@@ -122,7 +122,12 @@ namespace TNS.AdExpress.Web.Common.Results.Creatives {
             output.AppendLine("<table width=\"100%\" cellpadding=\"2\" cellspacing=\"1\" class=\"violetBackGroundV3\">");
 
             output.AppendFormat("<tr><td class=\"creativeVisualCell\">");
-            if ((_session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_TV_CREATION_ACCESS_FLAG) && _vehicle == DBClassifCst.Vehicles.names.tv)
+            if ((_session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_TV_CREATION_ACCESS_FLAG) &&( _vehicle == DBClassifCst.Vehicles.names.tv
+                || _vehicle == DBClassifCst.Vehicles.names.tvGeneral
+                || _vehicle == DBClassifCst.Vehicles.names.tvAnnounces
+                || _vehicle == DBClassifCst.Vehicles.names.tvNonTerrestrials
+                || _vehicle == DBClassifCst.Vehicles.names.tvSponsorship
+                ))
                 || (_session.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_OTHERS_CREATION_ACCESS_FLAG) && _vehicle == DBClassifCst.Vehicles.names.others)
                 ) {
                 output.AppendFormat("<a href=\"javascript:openDownload('{0}','{1}','{2}');\"><div class=\"videoFileBackGround\"></div></a>", this._path, this._session.IdSession, (int)_vehicle);

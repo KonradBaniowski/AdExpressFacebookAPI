@@ -34,6 +34,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.ProductClassIndicators.DAL;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Units;
+using System.Globalization;
 
 
 namespace TNS.AdExpressI.ProductClassIndicators.Charts
@@ -45,6 +46,13 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
     public class ChartTop : ChartProductClassIndicator
     {
 
+        #region Variables
+        /// <summary>
+        /// Engine Evolution
+        /// </summary>
+        protected EngineTop _engine;
+        #endregion
+
         #region Constructor
         /// <summary>
         /// Default Constructor
@@ -55,6 +63,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
         public ChartTop(WebSession session, IProductClassIndicatorsDAL dalLayer, CstResult.MotherRecap.ElementType classifLevel):base(session, dalLayer)
         {
             this._classifLevel = classifLevel;
+            InitEngine();
         }
         #endregion
 
@@ -80,17 +89,16 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             string strChartArea = this.Series["Palmares"].ChartArea;
             #endregion
 
-            EngineTop engine = new EngineTop(this._session, this._dalLayer);
-            object[,] tab = engine.GetData(TNS.AdExpress.Constantes.FrameWork.Results.PalmaresRecap.typeYearSelected.currentYear, this._classifLevel); // TNS.AdExpress.Web.Rules.Results.IndicatorPalmaresRules.GetFormattedTable(_session, typeYear, tableType);
+            object[,] tab = _engine.GetData(TNS.AdExpress.Constantes.FrameWork.Results.PalmaresRecap.typeYearSelected.currentYear, this._classifLevel); // TNS.AdExpress.Web.Rules.Results.IndicatorPalmaresRules.GetFormattedTable(_session, typeYear, tableType);
 
-            if (tab.GetLongLength(0) == 1 || Convert.ToDouble(tab[0, EngineTop.TOTAL_N]) == 0)
+            if (!HasData(tab))
             {
                 this.Visible = false;
                 return;
             }
 
-            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
-            UnitInformation defaultKCurrency = UnitsInformation.List[UnitsInformation.DefaultKCurrency];
+            UnitInformation defaultKCurrency = GetUnit();
+            AdExpressCultureInfo fp = WebApplicationParameters.AllowedLanguages[_session.DataLanguage].CultureInfo;           
 
             #region Chart Design
             this.Width = new Unit("750px");
@@ -124,44 +132,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             series.FontAngle = 45;
             #endregion
 
-            #region Data building
-            for (int i = 1; i < tab.GetLongLength(0) && i < 11; i++)
-            {
-                double d = Convert.ToDouble(tab[i, EngineTop.TOTAL_N]);
-                string u = FctUtilities.Units.ConvertUnitValueToString(d, _session.Unit, fp).Trim();
-                if (d != 0 && u != null && u.Length > 0 )
-                {
-                    oneProductExist = true;
+            #region Data building            
 
-                    series.Points.AddXY(tab[i, EngineTop.PRODUCT], Convert.ToDouble(u.Replace(" ", string.Empty), fp));
-
-                    series.Points[i - 1].ShowInLegend = true;
-                   
-                    if (tab[i, EngineTop.COMPETITOR] != null)
-                    {
-						// Mixed in yellow
-                         if ((int)tab[i, EngineTop.COMPETITOR] == 3)
-                        {
-                            series.Points[i - 1].Color = (Color)_colorConverter.ConvertFrom(_mixedSerieColor);
-							mixedElement = true;
-                        }
-						// Competitor in red
-                        else if ((int)tab[i, EngineTop.COMPETITOR] == 2)
-                        {
-                            series.Points[i - 1].Color = (Color)_colorConverter.ConvertFrom(_competitorSerieColor);
-                            competitorElement = true;
-                        }
-                        // Reference in green
-                        else if ((int)tab[i, EngineTop.COMPETITOR] == 1)
-                        {
-                            series.Points[i - 1].Color = (Color)_colorConverter.ConvertFrom(_referenceSerieColor);
-                            referenceElement = true;
-                        }
-                    }
-                }
-            }
-            if (!oneProductExist)
-                this.Visible = false;
+            DataBuilding( tab,  series,  fp, ref  oneProductExist, ref  mixedElement, ref competitorElement, ref referenceElement);
             #endregion
 
             #region Legend
@@ -229,17 +202,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             #endregion
 
             #region Axe Y
-            this.ChartAreas[strChartArea].AxisY.Enabled = AxisEnabled.True;
-            this.ChartAreas[strChartArea].AxisY.LabelStyle.Enabled = true;
-            this.ChartAreas[strChartArea].AxisY.LabelsAutoFit = false;
-
-            this.ChartAreas[strChartArea].AxisY.LabelStyle.Font = new Font("Arial", (float)10);
-            this.ChartAreas[strChartArea].AxisY.Title = "" + GestionWeb.GetWebWord(1246, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")";
-            this.ChartAreas[strChartArea].AxisY.TitleFont = new Font("Arial", (float)10);
-            double dd = Convert.ToDouble(tab[0, EngineTop.TOTAL_N]);
-            double uu = FctUtilities.Units.ConvertUnitValue(dd, _session.Unit);
-            if (uu <= 0) this.ChartAreas[strChartArea].AxisY.Maximum = (double)0.0;
-            this.ChartAreas[strChartArea].AxisY.MajorGrid.LineWidth = 0;
+            SetAxeY(tab, defaultKCurrency, strChartArea,fp);
             #endregion
 
             #region Axe Y2
@@ -249,6 +212,109 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
 			
         }
 
+        #region Init Engine
+        /// <summary>
+        /// Init Engine
+        /// </summary>
+        virtual protected void InitEngine()
+        {
+            _engine = new EngineTop(this._session, this._dalLayer);
+        }
+        #endregion
+
+        /// <summary>
+        /// Check if table has data
+        /// </summary>
+        /// <param name="tab">table</param>
+        /// <returns>True if has data</returns>
+        protected virtual bool HasData(object[,] tab)
+        {
+            if (tab == null || tab.GetLongLength(0) == 1 || Convert.ToDouble(tab[0, EngineTop.TOTAL_N]) == 0)
+            {
+               
+                return false;
+            }
+            return true;
+        }
+
+
+        /// <summary>
+        /// Dat building
+        /// </summary>
+        /// <param name="tab">table</param>
+        /// <param name="series">series</param>
+        /// <param name="fp">IFormatProvider</param>
+        /// <param name="oneProductExist">test if one Product Exist</param>
+        /// <param name="mixedElement">test if mixe dElement</param>
+        /// <param name="competitorElement">test if competitor Element</param>
+        /// <param name="referenceElement">test if reference Element</param>
+        protected virtual void DataBuilding(object[,] tab, Series series, AdExpressCultureInfo fp, ref bool oneProductExist, ref bool mixedElement, ref bool competitorElement, ref bool referenceElement)
+        {
+           
+            for (int i = 1; i < tab.GetLongLength(0) && i < 11; i++)
+            {
+                double d = Convert.ToDouble(tab[i, EngineTop.TOTAL_N]);
+                string u = FctUtilities.Units.ConvertUnitValueToString(d, _session.Unit, fp).Trim();
+                if (d != 0 && u != null && u.Length > 0)
+                {
+                    oneProductExist = true;
+
+                    series.Points.AddXY(tab[i, EngineTop.PRODUCT], Convert.ToDouble(u.Replace(" ", string.Empty), fp));
+
+                    series.Points[i - 1].ShowInLegend = true;
+
+                    if (tab[i, EngineTop.COMPETITOR] != null)
+                    {
+                        // Mixed in yellow
+                        if ((int)tab[i, EngineTop.COMPETITOR] == 3)
+                        {
+                            series.Points[i - 1].Color = (Color)_colorConverter.ConvertFrom(_mixedSerieColor);
+                            mixedElement = true;
+                        }
+                        // Competitor in red
+                        else if ((int)tab[i, EngineTop.COMPETITOR] == 2)
+                        {
+                            series.Points[i - 1].Color = (Color)_colorConverter.ConvertFrom(_competitorSerieColor);
+                            competitorElement = true;
+                        }
+                        // Reference in green
+                        else if ((int)tab[i, EngineTop.COMPETITOR] == 1)
+                        {
+                            series.Points[i - 1].Color = (Color)_colorConverter.ConvertFrom(_referenceSerieColor);
+                            referenceElement = true;
+                        }
+                    }
+                }
+            }
+            if (!oneProductExist)
+                this.Visible = false;
+          
+        }
+
+        /// <summary>
+        /// Set Axe Y
+        /// </summary>
+        /// <param name="tab">table</param>
+        /// <param name="selectedCurrency">selected Currency</param>
+        /// <param name="strChartArea">string Chart Area</param>
+        protected virtual void SetAxeY(object[,] tab, UnitInformation selectedCurrency, string strChartArea, IFormatProvider fp)
+        {
+            
+            this.ChartAreas[strChartArea].AxisY.Enabled = AxisEnabled.True;
+            this.ChartAreas[strChartArea].AxisY.LabelStyle.Enabled = true;
+            this.ChartAreas[strChartArea].AxisY.LabelsAutoFit = false;
+
+            this.ChartAreas[strChartArea].AxisY.LabelStyle.Font = new Font("Arial", (float)10);
+            this.ChartAreas[strChartArea].AxisY.Title = "" + GestionWeb.GetWebWord(1246, _session.SiteLanguage) + " (" + selectedCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")";
+            this.ChartAreas[strChartArea].AxisY.TitleFont = new Font("Arial", (float)10);
+            double dd = Convert.ToDouble(tab[0, EngineTop.TOTAL_N]);
+            double uu = FctUtilities.Units.ConvertUnitValue(dd, _session.Unit);
+            if (uu <= 0) this.ChartAreas[strChartArea].AxisY.Maximum = (double)0.0;          
+            this.ChartAreas[strChartArea].AxisY.MajorGrid.LineWidth = 0;
+          
+        }
+
+        
     }
 
 }

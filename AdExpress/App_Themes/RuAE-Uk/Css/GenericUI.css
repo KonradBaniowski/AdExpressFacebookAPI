@@ -608,6 +608,25 @@ td.exlv3{
 	padding-left:4px;
 	padding-right:4px;			
 }
+td.insertionDetailExlv3{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;	
+	background-color:#CCCCFF;
+	/*height:20px;	
+	white-space:nowrap;*/
+	text-decoration : none;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;			
+}
 td.exlv4{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -615,6 +634,26 @@ td.exlv4{
 	background-color:#C0C0C0;
 	height:20px;	
 	white-space:nowrap;
+	text-decoration : none;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;			
+}
+td.insertionExlv4{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;	
+	background-color:#C0C0C0;
+	/*height:20px;*/
+	/*white-space:nowrap;*/
+	vertical-align:middle;
 	text-decoration : none;
 	border-left-width:0px;
 	border-top-width:0px;
@@ -935,6 +974,27 @@ tr.exlv3{
 	padding-right:4px;		
 	
 }
+tr.insertionDetailExlv3{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;	
+	background-color:#E1E0DA;
+	text-align : right;	
+	/*height:20px;	
+	white-space:nowrap;*/
+	text-decoration : none;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;		
+	
+}
 tr.lv4{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -982,6 +1042,28 @@ tr.exlv4{
 	text-align : right;	
 	height:20px;	
 	white-space:nowrap;
+	text-decoration : none;
+	border-left-width:0px;
+	border-top-width:0px;
+	border-bottom-color:#FFFFFF;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-right-color:#FFFFFF;
+	border-right-width: 1px; 
+	border-right-style:solid;
+	padding-left:4px;
+	padding-right:4px;		
+	
+}
+tr.insertionExlv4{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #000000;	
+	background-color:#C0C0C0;
+	text-align : right;	
+	/*height:20px;*/
+	/*white-space:nowrap;*/
+	vertical-align:middle;
 	text-decoration : none;
 	border-left-width:0px;
 	border-top-width:0px;
@@ -1635,4 +1717,8 @@ td.creativeTableDescriptorTdVisual
 	padding:0px;
 	padding:0px !important;
 	text-align:center;
+}
+br.mso
+{
+	mso-data-placement:same-cell;	
 }

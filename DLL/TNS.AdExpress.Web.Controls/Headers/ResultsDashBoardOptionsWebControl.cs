@@ -1091,7 +1091,14 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				format = new DropDownList();				
 				switch(VehiclesInformation.DatabaseIdToEnum(((LevelInformation) customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID)){					
 					case ClassificationCst.DB.Vehicles.names.tv:
-					case ClassificationCst.DB.Vehicles.names.radio:	
+                    case ClassificationCst.DB.Vehicles.names.tvGeneral:
+                    case ClassificationCst.DB.Vehicles.names.tvSponsorship:
+                    case ClassificationCst.DB.Vehicles.names.tvAnnounces:
+                    case ClassificationCst.DB.Vehicles.names.tvNonTerrestrials:
+					case ClassificationCst.DB.Vehicles.names.radio:
+                    case ClassificationCst.DB.Vehicles.names.radioGeneral:
+                    case ClassificationCst.DB.Vehicles.names.radioSponsorship:
+                    case ClassificationCst.DB.Vehicles.names.radioMusic:
 					case ClassificationCst.DB.Vehicles.names.others:
 						format.Items.Add(new ListItem(GestionWeb.GetWebWord(1401, customerWebSession.SiteLanguage),CstWeb.Repartition.Format.Total.GetHashCode().ToString()));
 						format.Items.Add(new ListItem(GestionWeb.GetWebWord(1545, customerWebSession.SiteLanguage),CstWeb.Repartition.Format.Spot_1_9.GetHashCode().ToString()));
@@ -1125,8 +1132,15 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			if(namedDayOption){
 				namedDay = new DropDownList();
 				switch (VehiclesInformation.DatabaseIdToEnum(((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID)) {
-					case ClassificationCst.DB.Vehicles.names.tv:
-					case ClassificationCst.DB.Vehicles.names.radio:
+                    case ClassificationCst.DB.Vehicles.names.tv:
+                    case ClassificationCst.DB.Vehicles.names.tvGeneral:
+                    case ClassificationCst.DB.Vehicles.names.tvSponsorship:
+                    case ClassificationCst.DB.Vehicles.names.tvAnnounces:
+                    case ClassificationCst.DB.Vehicles.names.tvNonTerrestrials:
+                    case ClassificationCst.DB.Vehicles.names.radio:
+                    case ClassificationCst.DB.Vehicles.names.radioGeneral:
+                    case ClassificationCst.DB.Vehicles.names.radioSponsorship:
+                    case ClassificationCst.DB.Vehicles.names.radioMusic:
 					case ClassificationCst.DB.Vehicles.names.others:
 						//namedDay.Items.Add(new ListItem(GestionWeb.GetWebWord(1401, customerWebSession.SiteLanguage),CstWeb.Repartition.namedDay.Total.GetHashCode().ToString()));
 						namedDay.Items.Add(new ListItem(GestionWeb.GetWebWord(848, customerWebSession.SiteLanguage),CstWeb.Repartition.namedDay.Total.GetHashCode().ToString()));
@@ -1162,7 +1176,11 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			if(timeIntervalOption){
 				drpTimeInterval = new DropDownList();				
 				switch(VehiclesInformation.DatabaseIdToEnum(((LevelInformation) customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID)){
-					case ClassificationCst.DB.Vehicles.names.tv:
+                    case ClassificationCst.DB.Vehicles.names.tv:
+                    case ClassificationCst.DB.Vehicles.names.tvGeneral:
+                    case ClassificationCst.DB.Vehicles.names.tvSponsorship:
+                    case ClassificationCst.DB.Vehicles.names.tvAnnounces:
+                    case ClassificationCst.DB.Vehicles.names.tvNonTerrestrials:                   
 					case ClassificationCst.DB.Vehicles.names.others:
 						drpTimeInterval.Items.Add(new ListItem(GestionWeb.GetWebWord(1401, customerWebSession.SiteLanguage),CstWeb.Repartition.timeInterval.Total.GetHashCode().ToString()));
 						drpTimeInterval.Items.Add(new ListItem(GestionWeb.GetWebWord(1564, customerWebSession.SiteLanguage),CstWeb.Repartition.timeInterval.Slice_7h_12h.GetHashCode().ToString()));
@@ -1173,7 +1191,10 @@ namespace TNS.AdExpress.Web.Controls.Headers
 						drpTimeInterval.Items.Add(new ListItem(GestionWeb.GetWebWord(1572, customerWebSession.SiteLanguage),CstWeb.Repartition.timeInterval.Slice_22h_24h.GetHashCode().ToString()));
 						drpTimeInterval.Items.Add(new ListItem(GestionWeb.GetWebWord(1573, customerWebSession.SiteLanguage),CstWeb.Repartition.timeInterval.Slice_24h_7h.GetHashCode().ToString()));						
 						break;
-					case ClassificationCst.DB.Vehicles.names.radio:	
+                    case ClassificationCst.DB.Vehicles.names.radio:
+                    case ClassificationCst.DB.Vehicles.names.radioGeneral:
+                    case ClassificationCst.DB.Vehicles.names.radioSponsorship:
+                    case ClassificationCst.DB.Vehicles.names.radioMusic:
 						drpTimeInterval.Items.Add(new ListItem(GestionWeb.GetWebWord(1401, customerWebSession.SiteLanguage),CstWeb.Repartition.timeInterval.Total.GetHashCode().ToString()));
 						drpTimeInterval.Items.Add(new ListItem(GestionWeb.GetWebWord(1562, customerWebSession.SiteLanguage),CstWeb.Repartition.timeInterval.Slice_5h_6h59.GetHashCode().ToString()));
 						drpTimeInterval.Items.Add(new ListItem(GestionWeb.GetWebWord(1563, customerWebSession.SiteLanguage),CstWeb.Repartition.timeInterval.Slice_7h_8h59.GetHashCode().ToString()));
@@ -1633,8 +1654,15 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// <returns>false s'il doit être montrer, true sinon</returns>
 		private bool showRepartition() {			
 			switch(VehiclesInformation.DatabaseIdToEnum(((LevelInformation)customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID)) {
-				case ClassificationCst.DB.Vehicles.names.tv:
-				case ClassificationCst.DB.Vehicles.names.radio:
+                case ClassificationCst.DB.Vehicles.names.tv:
+                case ClassificationCst.DB.Vehicles.names.tvGeneral:
+                case ClassificationCst.DB.Vehicles.names.tvSponsorship:
+                case ClassificationCst.DB.Vehicles.names.tvAnnounces:
+                case ClassificationCst.DB.Vehicles.names.tvNonTerrestrials:
+                case ClassificationCst.DB.Vehicles.names.radio:
+                case ClassificationCst.DB.Vehicles.names.radioGeneral:
+                case ClassificationCst.DB.Vehicles.names.radioSponsorship:
+                case ClassificationCst.DB.Vehicles.names.radioMusic:
 				case ClassificationCst.DB.Vehicles.names.others:
 					return(true);
 				default:

@@ -44,6 +44,7 @@ using ResultCstComp = TNS.AdExpress.Constantes.FrameWork.Results.CompetitorAlert
 using TNS.FrameWork;
 using WebDataAccess = TNS.AdExpress.Web.DataAccess;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Web.Core.Utilities;
 #endregion
 
 namespace TNS.AdExpress.Web.UI.Results {
@@ -79,7 +80,7 @@ namespace TNS.AdExpress.Web.UI.Results {
             #endregion
 
             DateTime dayDT = new DateTime(int.Parse(dateKiosque.Substring(0, 4)), int.Parse(dateKiosque.Substring(4, 2)), int.Parse(dateKiosque.ToString().Substring(6, 2)));
-            day = TNS.FrameWork.Date.DateString.dateTimeToDD_MM_YYYY(dayDT, languageId);
+            day = Dates.DateToString(dayDT, languageId);
 
             t.Append("<table border=1 cellpadding=0 cellspacing=0 width=100% class=\"portofolioCreation\" ><tr>");
             t.Append("<td width=\"33%\" class=\"portofolioCreation1\">" + day + "</td>");

@@ -143,7 +143,41 @@
 							<tr>
 								<td><asp:Image ID="Image27" runat="server" SkinID="pixel" height="5" width="1" /></td>
 							</tr>
-							
+<!--TODO:vérifier fusion Dev Trunk-->
+												<!--Mes insertions-->
+	<% if (CanSaveInsertionCustomisedLevels) { %>
+							<tr>
+								<td>
+									<table cellSpacing="0" cellPadding="0" border="0" width="185">
+										<tr>
+											<td class="blockdupliBackGround"><asp:Image ID="Image3" runat="server" SkinID="pixel" height="1" width="13" /></td>
+											<td class="txtNoir11Bold backGroundModuleTitle" width="100%">
+												<p style="PADDING-RIGHT: 5px; PADDING-LEFT: 5px"><cc1:adexpresstext language="33" id="Adexpresstext26" runat="server" Code="2915"></cc1:adexpresstext></p>
+											</td>
+											<td><asp:Image ID="Image5" runat="server" SkinID="pixel" height="1" width="1" /></td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td height="5"></td>
+							</tr>
+							<tr>
+								<td class="txtGris11Bold"><cc1:adexpresstext language="33" id="AdExpressText27" runat="server" Code="2916"></cc1:adexpresstext></td>
+							</tr>
+							<tr>
+								<td height="5"></td>
+							</tr>
+							<tr>
+								<td class="txtGris10" height="5"><cc3:imagebuttonrolloverwebcontrol id="Imagebuttonrolloverwebcontrol4" runat="server" onclick="insertionOpenImageButtonRollOverWebControl_Click" SkinID="personnaliserButton"></cc3:imagebuttonrolloverwebcontrol></td>
+							</tr>
+							<tr>
+								<td height="10"></td>
+							</tr>
+							<tr>
+								<td><asp:Image ID="Image6" runat="server" SkinID="pixel" height="5" width="1" /></td>
+							</tr>
+	<% } %>	
 							<!--Mes PDF-->
 							<tr>
 								<td>

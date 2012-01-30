@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <links>
-  <link name="Date de mises à jour" idWebText="1253"
+  <!--<link name="Date de mises à jour" idWebText="1253"
         cssIconName="updateDateMenuIcon"
         href="/Private/Informations/DataUpdate2.aspx"
         language="false" idSession="true"
@@ -11,5 +11,5 @@
         href="http://www.kantarmedia.com"
         language="false" idSession="false"
         target="blank"
-        />
+        />-->
 </links>

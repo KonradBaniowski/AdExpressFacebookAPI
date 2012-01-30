@@ -151,12 +151,10 @@ a.trashNodeCss,a.trashNodeCss:active, a.trashNodeCss:visited,a.trashNodeCss:hove
 }
 /*Autres*/	
 tr.listBoxHeaderCss{
-	/*height:10%;*/
 	height:19px;
     text-align:left;
 }
 tr.listBoxBodyCss{
-	/*height:90%;*/
 	height : 177px;
     background-color:#ffffff;
     text-align:center;

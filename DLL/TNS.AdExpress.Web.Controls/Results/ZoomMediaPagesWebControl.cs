@@ -114,19 +114,21 @@ namespace TNS.AdExpress.Web.Controls.Results {
 				_idMedia = value;
 			}
 		}
-
         /// <summary>
         /// Page anchor
         /// </summary>
         [Bindable(true)]
         [Category("Appearance")]
         [Localizable(true)]
-        public bool IsBlur {
-            get {
+        public bool IsBlur
+        {
+            get
+            {
                 return _isBlur;
             }
 
-            set {
+            set
+            {
                 _isBlur = value;
             }
         }

@@ -386,6 +386,7 @@ namespace TNS.AdExpressI.NewCreatives {
         /// </summary>
         protected virtual void GetCalendarHeaders(out Headers headers, out CellUnitFactory cellFactory, ArrayList parutions) {
             CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
+            CellPDM cellPDM = null;
 
             headers = new Headers();
             headers.Root.Add(new Header(true, GestionWeb.GetWebWord(PROD_COL, _webSession.SiteLanguage), PROD_COL));
@@ -431,7 +432,9 @@ namespace TNS.AdExpressI.NewCreatives {
                 cellFactory = _webSession.GetCellUnitFactory();
             }
             else {
-                cellFactory = new CellUnitFactory(new CellPDM(0.0));
+                cellPDM = new CellPDM(0.0);
+                cellPDM.StringFormat = "{0:percentWOSign}";
+                cellFactory = new CellUnitFactory(cellPDM);
             }
         }
         #endregion

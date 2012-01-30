@@ -10,7 +10,6 @@ using System.Drawing;
 using CstComparisonCriterion = TNS.AdExpress.Constantes.Web.CustomerSessions.ComparisonCriterion;
 using CstPreformatedDetail = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
 using CstDbClassif = TNS.AdExpress.Constantes.Classification.DB;
-using CstWeb = TNS.AdExpress.Constantes.Web;
 
 using TNS.AdExpress.Domain.Translation;
 using Dundas.Charting.WebControl;
@@ -27,15 +26,21 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
     public class ChartMediaStartegy : TNS.AdExpressI.ProductClassIndicators.Charts.ChartProductClassIndicator
     {
 
-        #region Constants
-        const int NBRE_MEDIA = 5;
+        #region Variables
+        /// <summary>
+        /// Engine Media Strategy
+        /// </summary>
+        protected EngineMediaStrategy _engine;
+
         #endregion
 
-		#region Varibales
-		#endregion
+        #region Constants
+        protected const int NBRE_MEDIA = 5;
+        #endregion
 
-		#region Constructor
-		/// <summary>
+
+        #region Constructor
+        /// <summary>
         /// Default Constructor
         /// </summary>
         /// <param name="session">User sessions</param>
@@ -43,14 +48,15 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
         public ChartMediaStartegy(WebSession session, IProductClassIndicatorsDAL dalLayer)
             : base(session, dalLayer)
         {
+            InitEngine();
         }
         #endregion
 
         #region OnPreRender
         protected override void OnPreRender(EventArgs e)
         {
-			bool withPluriByCategory = (_session.PreformatedMediaDetail==CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory 
-				&& CstDbClassif.Vehicles.names.plurimedia == VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID));
+            bool withPluriByCategory = (_session.PreformatedMediaDetail == CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory
+                && CstDbClassif.Vehicles.names.plurimedia == VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID));
             #region Animation Params
             if (_chartType != ChartImageType.Flash)
             {
@@ -74,9 +80,8 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
 
 
             #region Get Data
-            EngineMediaStrategy engine = new EngineMediaStrategy(this._session, this._dalLayer);
-            object[,] tab = engine.GetChartData();
-            if (tab.Length == 0)
+            object[,] tab = _engine.GetChartData();
+            if (tab == null || tab.Length == 0)
             {
                 this.Visible = false;
                 return;
@@ -95,24 +100,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             #endregion
 
             #region Niveau de détail
-            int MEDIA_LEVEL_NUMBER;
-            switch (_session.PreformatedMediaDetail)
-            {
-                case CstPreformatedDetail.PreformatedMediaDetails.vehicle:
-                    MEDIA_LEVEL_NUMBER = 1;
-                    break;
-                case CstPreformatedDetail.PreformatedMediaDetails.vehicleCategory:
-                    MEDIA_LEVEL_NUMBER = 2;
-                    break;
-                default:
-                    MEDIA_LEVEL_NUMBER = 3;
-                    break;
-            }
+            int MEDIA_LEVEL_NUMBER = GetMediaLevelNumber();
             #endregion
 
             #region Chart Design
             this.Width = new Unit("850px");
-            this.Height = new Unit("900px");
+            this.Height = new Unit("850px");
             this.Legend.Enabled = false;
             #endregion
 
@@ -143,32 +136,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
 
 
             // Create series (one per media)
-            for (int i = 1; i < tab.GetLongLength(0); i++)
-            {
-
-                //	Dictionary with advertiser label as key and total as value
-                if (tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX] != null)
-                {
-                    if (!listSeriesMediaRefCompetitor.ContainsKey(tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()))
-                    {
-                        listSeriesMediaRefCompetitor.Add(tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString(), new double());
-                    }
-
-                    if (!listTableRefCompetitor.ContainsKey(tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()))
-                    {
-                        DataTable tableCompetitorRef = new DataTable();
-                        tableCompetitorRef.Columns.Add("Name");
-                        tableCompetitorRef.Columns.Add("Position", typeof(double));
-                        listTableRefCompetitor.Add(tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString(), tableCompetitorRef);
-
-                    }
-
-                    if (!listSeriesMedia.ContainsKey(tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()))
-                    {
-                        listSeriesMedia.Add(tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString(), new Series());
-                    }
-                }
-            }
+            CreatesSeries(tab, listSeriesMediaRefCompetitor, listTableRefCompetitor, listSeriesMedia);
             #endregion
 
             #region Totals
@@ -176,6 +144,202 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
             double totalSectorValue = 0;
             double totalMarketValue = 0;
 
+            ComputeTotals(tab, listSeriesMediaRefCompetitor, ref  totalUniversValue, ref  totalSectorValue, ref  totalMarketValue, MEDIA_LEVEL_NUMBER);
+            #endregion
+
+            #region Table
+            DataTable tableUnivers = new DataTable();
+            DataTable tableSectorMarket = new DataTable();
+            FillTable(tab, listSeriesMediaRefCompetitor, listTableRefCompetitor, tableUnivers, tableSectorMarket, ref  totalUniversValue, ref totalSectorValue, ref  totalMarketValue, MEDIA_LEVEL_NUMBER, withPluriByCategory);
+            #endregion
+
+            #endregion
+
+
+
+            //Init series
+            int index = 0;
+            string strSort = "Position  DESC";
+            DataRow[] foundRows = null;
+            foundRows = tableUnivers.Select("", strSort);
+            DataRow[] foundRowsSectorMarket = null;
+            foundRowsSectorMarket = tableSectorMarket.Select("", strSort);
+            double[] yValues = new double[foundRows.Length];
+            string[] xValues = new string[foundRows.Length];
+            double[] yValuesSectorMarket = new double[foundRowsSectorMarket.Length];
+            string[] xValuesSectorMarket = new string[foundRowsSectorMarket.Length];
+            InitSeries(tableUnivers, tableSectorMarket, yValues, xValues, yValuesSectorMarket, xValuesSectorMarket, listSeriesMedia, listTableRefCompetitor, listSeriesName, MEDIA_LEVEL_NUMBER);
+
+            #region Design charts
+            index = 0;
+            decimal dec = 0;
+            int pCount = 0;
+            int nbLeftElements = 0, nbRigthElements = 1;
+            if (listSeriesMedia != null && listSeriesMedia.Count > 0)
+            {
+                for (int pc = 0; pc < listSeriesMedia.Count; pc++)
+                {
+                    if (listSeriesMedia[listSeriesName[pc]].Points.Count > 0)
+                        pCount++;
+                }
+            }
+            dec = pCount / (decimal)2;
+
+
+            for (int j = 0; j < listSeriesMedia.Count; j++)
+            {
+                if (listSeriesMedia[listSeriesName[j]].Points.Count > 0)
+                {
+
+                    #region Type of chart
+                    listSeriesMedia[listSeriesName[j]].Type = SeriesChartType.Pie;
+                    #endregion
+
+                    #region Colors
+                    for (int l = 0; l < 6 && l < listSeriesMedia[listSeriesName[j]].Points.Count; l++)
+                    {
+                        listSeriesMedia[listSeriesName[j]].Points[l].Color = pieColors[l];
+                    }
+                    #endregion
+
+                    #region Lengend
+                    listSeriesMedia[listSeriesName[j]]["LabelStyle"] = "Outside";
+                    listSeriesMedia[listSeriesName[j]].LegendToolTip = "#PERCENT";
+                    listSeriesMedia[listSeriesName[j]].ToolTip = " " + listSeriesName[j] + " \n #VALX : #PERCENT";
+                    listSeriesMedia[listSeriesName[j]]["PieLineColor"] = _pieLineColor;
+                    listSeriesMedia[listSeriesName[j]].Font = new Font("Arial", (float)7);
+                    #endregion
+
+                    #region Create Chart
+                    ChartArea chartArea2 = new ChartArea();
+                    this.ChartAreas.Add(chartArea2);
+                    chartArea2.Area3DStyle.Enable3D = true;
+                    chartArea2.Name = listSeriesName[j];
+                    listSeriesMedia[listSeriesName[j]].ChartArea = chartArea2.Name;
+                    #endregion
+
+                    #region Title
+                    this.Titles.Add(chartArea2.Name);
+                    this.Titles[index].DockInsideChartArea = true;
+                    this.Titles[index].Position.Auto = true;
+                    this.Titles[index].Font = (pCount < 15) ? new Font("Arial", (float)12) : new Font("Arial", (float)8);
+                    this.Titles[index].Color = (Color)_colorConverter.ConvertFrom(_titleColor);
+                    this.Titles[index].DockToChartArea = chartArea2.Name;
+                    #endregion
+
+                    #region Type image
+                    listSeriesMedia[listSeriesName[j]].SmartLabels.Enabled = true;
+                    listSeriesMedia[listSeriesName[j]].Label = "#VALX \n #PERCENT";
+                    listSeriesMedia[listSeriesName[j]]["3DLabelLineSize"] = "50";
+                    if (pCount > 4) listSeriesMedia[listSeriesName[j]]["MinimumRelativePieSize"] = "50";//70
+                    else listSeriesMedia[listSeriesName[j]]["MinimumRelativePieSize"] = "45";//45	
+                    if (j == 0 && _chartType != ChartImageType.Flash)
+                    {
+                        this.BackImage = string.Format("/App_themes/{0}{1}", WebApplicationParameters.Themes[_session.SiteLanguage].Name, TNS.AdExpress.Constantes.Web.Images.LOGO_TNS_2);
+                        this.BackImageAlign = ChartImageAlign.BottomRight;
+                        this.BackImageMode = ChartImageWrapMode.Unscaled;
+
+                    }
+                    #endregion
+
+                    #region Positionnement du graphique
+                    if (pCount > 4)
+                    {
+                        chartArea2.Position.Auto = false;
+                        chartArea2.Position.X = (index % 2 == 0) ? 2 : 52;
+                        chartArea2.Position.Y = (index % 2 == 0) ? (3 + (((96 / (float)Math.Ceiling(dec)) * nbLeftElements) + 1)) : (3 + (((96 / (float)Math.Ceiling(dec)) * (nbRigthElements - 1)) + 1));
+                        chartArea2.Position.Width = (pCount > 15) ? 47 : 43;
+                        chartArea2.Position.Height = ((96 / (float)Math.Ceiling(dec)) - 1);
+                        chartArea2.Area3DStyle.PointDepth = (pCount > 10) ? 10 : 40;
+                    }
+                    else
+                    {
+                        chartArea2.Position.Auto = true;
+                        chartArea2.Area3DStyle.PointDepth = 45;
+                    }
+                    chartArea2.Area3DStyle.Enable3D = true;
+                    chartArea2.Area3DStyle.XAngle = 20;
+                    #endregion
+
+                    if (index % 2 == 0) nbLeftElements++;
+                    else nbRigthElements++;
+                    index++;
+
+                    this.Series.Add(listSeriesMedia[listSeriesName[j]]);
+                }
+            }
+
+            #region Dimensionnement de l'image
+            ////// Taille d'un graphique * Nombre de graphique
+            if (pCount > 4)
+            {
+                this.Height = (pCount > 12) ? ((pCount > 20) ? new Unit("3000") : new Unit("2500")) : new Unit("1100");
+                this.Width = (pCount > 12) ? new Unit("1500") : new Unit("1100");
+            }
+            else if (pCount < 2)
+            {
+                this.Height = new Unit("600");
+            }
+            #endregion
+
+            #region Copyright & Logo
+            if (this._chartType != ChartImageType.Flash)
+            {
+                Title title = new Title("" + GestionWeb.GetWebWord(2848, _session.SiteLanguage) + " "
+                                           + WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CompanyNameTexts.GetCompanyShortName(_session.SiteLanguage) + " "
+                                           + GestionWeb.GetWebWord(2849, _session.SiteLanguage) + "");
+                title.Font = new Font("Arial", (float)8);
+                title.DockInsideChartArea = false;
+                title.Docking = Docking.Bottom;
+                this.Titles.Add(title);
+            }
+            #endregion
+
+            #endregion
+
+        }
+        #endregion
+
+        #region Init Engine
+        /// <summary>
+        /// Init Engine
+        /// </summary>
+        virtual protected void InitEngine()
+        {
+            _engine = new EngineMediaStrategy(this._session, this._dalLayer);
+        }
+        #endregion
+
+
+        /// <summary>
+        /// Get Media Level Number
+        /// </summary>
+        /// <returns>Media Level Number</returns>
+        protected virtual int GetMediaLevelNumber()
+        {
+            switch (_session.PreformatedMediaDetail)
+            {
+                case CstPreformatedDetail.PreformatedMediaDetails.vehicle:
+                    return 1;
+                case CstPreformatedDetail.PreformatedMediaDetails.vehicleRegion:
+                    return 2;
+                default:
+                    return 3;
+            }
+        }
+
+        #region ComputeTotals
+        /// <summary>
+        /// Compute totals values
+        /// </summary>
+        /// <param name="tab"></param>
+        /// <param name="listSeriesMediaRefCompetitor"></param>
+        /// <param name="totalUniversValue"></param>
+        /// <param name="totalSectorValue"></param>
+        /// <param name="totalMarketValue"></param>
+        /// <param name="MEDIA_LEVEL_NUMBER"></param>
+        protected virtual void ComputeTotals(object[,] tab, Dictionary<string, double> listSeriesMediaRefCompetitor, ref double totalUniversValue, ref double totalSectorValue, ref double totalMarketValue, int MEDIA_LEVEL_NUMBER)
+        {
             #region Once Media
             if (MEDIA_LEVEL_NUMBER == 2 || MEDIA_LEVEL_NUMBER == 3)
             {
@@ -307,13 +471,16 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                 }
             }
             #endregion
+        }
+        #endregion
 
-            #endregion
-
+        #region Fill Table
+        protected virtual void FillTable(object[,] tab, Dictionary<string, double> listSeriesMediaRefCompetitor, Dictionary<string, DataTable> listTableRefCompetitor, DataTable tableUnivers, DataTable tableSectorMarket, ref double totalUniversValue, ref double totalSectorValue, ref double totalMarketValue, int MEDIA_LEVEL_NUMBER, bool withPluriByCategory)
+        {
             #region Table
             double elementValue;
-            DataTable tableUnivers = new DataTable();
-            DataTable tableSectorMarket = new DataTable();
+            //DataTable tableUnivers = new DataTable();
+            //DataTable tableSectorMarket = new DataTable();
             // Define columns
             tableUnivers.Columns.Add("Name");
             tableUnivers.Columns.Add("Position", typeof(double));
@@ -471,7 +638,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
 
                         #region PluriMedia
                         case EngineMediaStrategy.TOTAL_UNIV_VEHICLE_INVEST_COLUMN_INDEX:
-                            if (tab[i, EngineMediaStrategy.TOTAL_UNIV_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1 && !withPluriByCategory )
+                            if (tab[i, EngineMediaStrategy.TOTAL_UNIV_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1 && !withPluriByCategory)
                             {
                                 if (totalUniversValue != 0)
                                 {
@@ -484,7 +651,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                             }
                             break;
                         case EngineMediaStrategy.TOTAL_SECTOR_VEHICLE_INVEST_COLUMN_INDEX:
-							if (tab[i, EngineMediaStrategy.TOTAL_SECTOR_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1 && !withPluriByCategory)
+                            if (tab[i, EngineMediaStrategy.TOTAL_SECTOR_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1 && !withPluriByCategory)
                             {
                                 if (totalSectorValue != 0)
                                 {
@@ -497,7 +664,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                             }
                             break;
                         case EngineMediaStrategy.TOTAL_MARKET_VEHICLE_INVEST_COLUMN_INDEX:
-							if (tab[i, EngineMediaStrategy.TOTAL_MARKET_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1 && !withPluriByCategory)
+                            if (tab[i, EngineMediaStrategy.TOTAL_MARKET_VEHICLE_INVEST_COLUMN_INDEX] != null && i > 1 && !withPluriByCategory)
                             {
                                 if (totalMarketValue != 0)
                                 {
@@ -517,48 +684,51 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                 }
             }
             #endregion
+        }
+        #endregion
 
-            #endregion
-
+        #region  Init Series
+        protected virtual void InitSeries(DataTable tableUnivers, DataTable tableSectorMarket, double[] yValues, string[] xValues, double[] yValuesSectorMarket, string[] xValuesSectorMarket, Dictionary<string, Series> listSeriesMedia, Dictionary<string, DataTable> listTableRefCompetitor, Dictionary<int, string> listSeriesName, int MEDIA_LEVEL_NUMBER)
+        {
             #region Init Series
             string strSort = "Position  DESC";
             DataRow[] foundRows = null;
             foundRows = tableUnivers.Select("", strSort);
             DataRow[] foundRowsSectorMarket = null;
             foundRowsSectorMarket = tableSectorMarket.Select("", strSort);
-            double[] yValues = new double[foundRows.Length];
-            string[] xValues = new string[foundRows.Length];
-            double[] yValuesSectorMarket = new double[foundRowsSectorMarket.Length];
-            string[] xValuesSectorMarket = new string[foundRowsSectorMarket.Length];
+            //double[] yValues = new double[foundRows.Length];
+            //string[] xValues = new string[foundRows.Length];
+            //double[] yValuesSectorMarket = new double[foundRowsSectorMarket.Length];
+            //string[] xValuesSectorMarket = new string[foundRowsSectorMarket.Length];
             double otherUniversValue = 0;
             double otherSectorMarketValue = 0;
             int index = 0;
 
             if (MEDIA_LEVEL_NUMBER != 1)
             {
-				for (int i = 0; i < NBRE_MEDIA && i < foundRows.Length; i++)
+                for (int i = 0; i < NBRE_MEDIA && i < foundRows.Length; i++)
                 {
                     xValues[i] = foundRows[i]["Name"].ToString();
                     yValues[i] = Convert.ToDouble(foundRows[i]["Position"]);
                     otherUniversValue += Convert.ToDouble(foundRows[i]["Position"]);
-                    index = i+1;
+                    index = i + 1;
                 }
                 if (foundRows.Length > NBRE_MEDIA)
                 {
-                    xValues[index] = GestionWeb.GetWebWord(647, _session.SiteLanguage);
+                    xValues[index] = GestionWeb.GetWebWord(2566, _session.SiteLanguage);
                     yValues[index] = 100 - otherUniversValue;
                 }
 
-				for (int i = 0; i < NBRE_MEDIA && i < foundRowsSectorMarket.Length; i++)
+                for (int i = 0; i < NBRE_MEDIA && i < foundRowsSectorMarket.Length; i++)
                 {
                     xValuesSectorMarket[i] = foundRowsSectorMarket[i]["Name"].ToString();
                     yValuesSectorMarket[i] = Convert.ToDouble(foundRowsSectorMarket[i]["Position"]);
                     otherSectorMarketValue += Convert.ToDouble(foundRowsSectorMarket[i]["Position"]);
-                    index = i+1;
+                    index = i + 1;
                 }
                 if (foundRowsSectorMarket.Length > NBRE_MEDIA)
                 {
-                    xValuesSectorMarket[index] = GestionWeb.GetWebWord(647, _session.SiteLanguage);
+                    xValuesSectorMarket[index] = GestionWeb.GetWebWord(2566, _session.SiteLanguage);
                     yValuesSectorMarket[index] = 100 - otherSectorMarketValue;
                 }
             }
@@ -621,11 +791,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                             yVal[i] = Convert.ToDouble(foundRowsCompetitorRef[i]["Position"]);
 
                             otherCompetitorRefValue += Convert.ToDouble(foundRowsCompetitorRef[i]["Position"]);
-                            index = i+1;
+                            index = i + 1;
                         }
                         if (foundRowsCompetitorRef.Length > NBRE_MEDIA)
                         {
-                            xVal[index] = "Autres";
+                            xVal[index] = GestionWeb.GetWebWord(2566, _session.DataLanguage);
                             yVal[index] = 100 - otherCompetitorRefValue;
                         }
                     }
@@ -648,144 +818,40 @@ namespace TNS.AdExpressI.ProductClassIndicators.Charts
                 }
 
             }
-            #endregion			
-
-            #region Design charts
-            index = 0;
-            decimal dec = 0;
-            int pCount = 0;
-            int nbLeftElements = 0, nbRigthElements = 1;
-            if (listSeriesMedia != null && listSeriesMedia.Count > 0)
-            {
-                for (int pc = 0; pc < listSeriesMedia.Count; pc++)
-                {
-                    if (listSeriesMedia[listSeriesName[pc]].Points.Count > 0)
-                        pCount++;
-                }
-            }
-            dec = pCount / (decimal)2;
-
-
-            for (int j = 0; j < listSeriesMedia.Count; j++)
-            {
-              if (listSeriesMedia[listSeriesName[j]].Points.Count > 0)
-                {
-                    
-
-                    #region Type of chart
-                    listSeriesMedia[listSeriesName[j]].Type = SeriesChartType.Pie;
-                    #endregion
-
-                    #region Colors
-                    for (int l = 0; l < 6 && l < listSeriesMedia[listSeriesName[j]].Points.Count; l++)
-                    {
-                        listSeriesMedia[listSeriesName[j]].Points[l].Color = pieColors[l];
-                    }
-                    #endregion
-
-                    #region Lengend
-                    listSeriesMedia[listSeriesName[j]]["LabelStyle"] = "Outside";
-                    listSeriesMedia[listSeriesName[j]].LegendToolTip = "#PERCENT";
-                    listSeriesMedia[listSeriesName[j]].ToolTip = " " + listSeriesName[j] + " \n #VALX : #PERCENT";
-                    listSeriesMedia[listSeriesName[j]]["PieLineColor"] = _pieLineColor;
-                    listSeriesMedia[listSeriesName[j]].Font = new Font("Arial", (float)7);
-                    #endregion
-
-                    #region Create Chart
-                    ChartArea chartArea2 = new ChartArea();
-                    this.ChartAreas.Add(chartArea2);
-                    chartArea2.Area3DStyle.Enable3D = true;
-                    chartArea2.Name = listSeriesName[j];
-                    listSeriesMedia[listSeriesName[j]].ChartArea = chartArea2.Name;
-                    #endregion
-
-                  
-                    #region Title
-                    this.Titles.Add(chartArea2.Name);
-                    this.Titles[index].DockInsideChartArea = true;
-                    this.Titles[index].Position.Auto = true;
-                    this.Titles[index].Font = (pCount < 15) ? new Font("Arial", (float)12) : new Font("Arial", (float)8);
-                    this.Titles[index].Color = (Color)_colorConverter.ConvertFrom(_titleColor);
-                    this.Titles[index].DockToChartArea = chartArea2.Name;
-                    #endregion
-
-                    #region Type image
-                    listSeriesMedia[listSeriesName[j]].SmartLabels.Enabled = true;
-                    listSeriesMedia[listSeriesName[j]].Label = "#VALX \n #PERCENT";
-                    listSeriesMedia[listSeriesName[j]]["3DLabelLineSize"] = "50";
-                    if (pCount > 4) listSeriesMedia[listSeriesName[j]]["MinimumRelativePieSize"] = "50";//70
-                    else listSeriesMedia[listSeriesName[j]]["MinimumRelativePieSize"] = "45";//45	
-                    if (j == 0 && _chartType!= ChartImageType.Flash)
-                    {
-                        this.BackImage = string.Format("/App_themes/{0}{1}", WebApplicationParameters.Themes[_session.SiteLanguage].Name, CstWeb.Images.LOGO_TNS_2);
-                        this.BackImageAlign = ChartImageAlign.BottomRight;
-                        this.BackImageMode = ChartImageWrapMode.Unscaled;            
-                      
-                    }
-                    #endregion
-
-                    #region Positionnement du graphique
-                    if (pCount > 4)
-                    {
-                        chartArea2.Position.Auto = false;
-                        chartArea2.Position.X = (index % 2 == 0) ? 2 : 52;
-                        chartArea2.Position.Y = (index % 2 == 0) ? (3 + (((96 / (float)Math.Ceiling(dec)) * nbLeftElements) + 1)) : (3 + (((96 / (float)Math.Ceiling(dec)) * (nbRigthElements - 1)) + 1));
-                        chartArea2.Position.Width = (pCount > 15) ? 47 : 43;
-                        chartArea2.Position.Height = ((96 / (float)Math.Ceiling(dec)) - 1);
-                        chartArea2.Area3DStyle.PointDepth = (pCount > 10) ? 10 : 40;
-                    }
-                    else
-                    {
-                        chartArea2.Position.Auto = true;
-                        //chartArea2.Position.X = 4;
-                        //chartArea2.Position.Y = 3 + (((96 / pCount) * index) + 1);
-                        //chartArea2.Position.Width = 80;
-                        //chartArea2.Position.Height = (96 / pCount) - 1;
-                        chartArea2.Area3DStyle.PointDepth = 45;
-                    }
-                    chartArea2.Area3DStyle.Enable3D = true;
-                    chartArea2.Area3DStyle.XAngle = 20;
-                    #endregion
-
-                    if (index % 2 == 0) nbLeftElements++;
-                    else nbRigthElements++;
-                    index++;
-
-                    this.Series.Add(listSeriesMedia[listSeriesName[j]]);
-                }
-            }
-
-            #region Dimensionnement de l'image
-            ////// Taille d'un graphique * Nombre de graphique
-            if (pCount > 4)
-            {
-                this.Height = (pCount > 12) ? ((pCount > 20) ? new Unit("3000") : new Unit("2500")) : new Unit("1100");
-                this.Width = (pCount > 12) ? new Unit("1500") : new Unit("1100");
-            }
-            else if (pCount < 2)
-            {
-                this.Height = new Unit("600");
-            }
             #endregion
-
-            #region Copyright & Logo
-            if (this._chartType != ChartImageType.Flash)
-            {
-                Title title = new Title("" + GestionWeb.GetWebWord(2848, _session.SiteLanguage) + " "
-                                           + WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CompanyNameTexts.GetCompanyShortName(_session.SiteLanguage) + " "
-                                           + GestionWeb.GetWebWord(2849, _session.SiteLanguage) + "");
-                title.Font = new Font("Arial", (float)8);
-                title.DockInsideChartArea = false;
-                title.Docking = Docking.Bottom;
-                this.Titles.Add(title);
-            }
-            #endregion
-           
-            #endregion
-
         }
         #endregion
 
+        protected virtual void CreatesSeries(object[,] tab, Dictionary<string, double> listSeriesMediaRefCompetitor, Dictionary<string, DataTable> listTableRefCompetitor, Dictionary<string, Series> listSeriesMedia)
+        {
+            // Create series (one per media)
+            for (int i = 1; i < tab.GetLongLength(0); i++)
+            {
+
+                //	Dictionary with advertiser label as key and total as value
+                if (tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX] != null)
+                {
+                    if (!listSeriesMediaRefCompetitor.ContainsKey(tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()))
+                    {
+                        listSeriesMediaRefCompetitor.Add(tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString(), new double());
+                    }
+
+                    if (!listTableRefCompetitor.ContainsKey(tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()))
+                    {
+                        DataTable tableCompetitorRef = new DataTable();
+                        tableCompetitorRef.Columns.Add("Name");
+                        tableCompetitorRef.Columns.Add("Position", typeof(double));
+                        listTableRefCompetitor.Add(tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString(), tableCompetitorRef);
+
+                    }
+
+                    if (!listSeriesMedia.ContainsKey(tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString()))
+                    {
+                        listSeriesMedia.Add(tab[i, EngineMediaStrategy.LABEL_REF_OR_COMPETITOR_ADVERT_COLUMN_INDEX].ToString(), new Series());
+                    }
+                }
+            }
+        }
     }
 
 }

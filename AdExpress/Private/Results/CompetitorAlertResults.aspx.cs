@@ -41,6 +41,7 @@ using TNS.FrameWork.WebResultUI;
 using TNS.AdExpressI.PresentAbsent.DAL;
 using System.Reflection;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Web;
 #endregion
 
 namespace AdExpress.Private.Results{
@@ -295,7 +296,7 @@ namespace AdExpress.Private.Results{
                 //Code html des résultats
 				result="";
 											
-				#endregion
+				#endregion           
 
 				#region MAJ _webSession
 				_webSession.LastReachedResultUrl=Page.Request.Url.AbsolutePath;
@@ -342,6 +343,8 @@ namespace AdExpress.Private.Results{
 		/// <returns></returns>
 		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
+            try
+            {
 			ResultsOptionsWebControl1.CustomerWebSession = _webSession;
 			MenuWebControl2.CustomerWebSession = _webSession;
 
@@ -369,8 +372,28 @@ namespace AdExpress.Private.Results{
             {
 				ResultsOptionsWebControl1.AutopromoEvaliantOption = VehiclesInformation.Get(id).Autopromo; 
             }
+
+            if (VehiclesInformation.DatabaseIdToEnum(id) == DBClassificationConstantes.Vehicles.names.editorial &&
+                 _webSession.GenericProductDetailLevel[1].Id == TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.advertiser)
+            {
+                //Set default product detail level for media Editorial
+                ArrayList levelsIds = new ArrayList();
+                if (_webSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE))
+                    levelsIds.Add((int)TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.brand);
+                else levelsIds.Add((int)TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.product);
+                _webSession.GenericProductDetailLevel = new TNS.AdExpress.Domain.Level.GenericDetailLevel(levelsIds, WebConstantes.GenericDetailLevel.SelectedFrom.unknown);
+                _webSession.Save();
+            }
             #endregion
 
+        
+          		
+             }			
+			catch(System.Exception exc){
+				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
+					this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this,exc,_webSession));
+				}
+			}
 			return tmp;
 		}
 		#endregion
@@ -445,7 +468,7 @@ namespace AdExpress.Private.Results{
 				int i;
 				if(_webSession.CompetitorUniversMedia.Count==1){
 					//Supprime l'affichage des onglets communs,absents,exclusifs,synthèse s'il n'ya pas d'univers concurrents
-//					for(i=1;i<=3;i++){
+
 					for(i=1;i<=6;i++){
 						ResultsOptionsWebControl1.resultsPages.Items.Remove(ResultsOptionsWebControl1.resultsPages.Items.FindByValue(i.ToString()));
 					}					
@@ -459,6 +482,7 @@ namespace AdExpress.Private.Results{
                         ResultsOptionsWebControl1.PercentageCheckBox.Enabled = false;
                 }
 
+              
 			}
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
@@ -504,5 +528,7 @@ namespace AdExpress.Private.Results{
 		}
 		#endregion
 
-	}
+     
+
+    }
 }

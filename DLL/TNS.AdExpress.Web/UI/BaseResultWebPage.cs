@@ -37,7 +37,7 @@ namespace TNS.AdExpress.Web.UI{
 		public BaseResultWebPage():base(){
 			base.Load +=new EventHandler(ResultWebPage_Load);
 			try{
-				SetSelectionError();
+                SetSelectionError();
 			}
 			catch(System.Exception){}
 		}
@@ -187,8 +187,9 @@ namespace TNS.AdExpress.Web.UI{
         /// Set Selection Error variable
         /// Check if the study univers are selected for the result page (if not we redirect the user to the error page)
         /// </summary>
-        protected virtual void SetSelectionError(){
-            _selectionError=CanShowResult();
+        protected virtual void SetSelectionError()
+        {
+            _selectionError = CanShowResult();
         }
 		#endregion
 

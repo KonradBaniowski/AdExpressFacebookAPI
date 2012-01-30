@@ -92,7 +92,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// </summary>
         /// <param name="classifLevel">Classification detail (product or advertiser)</param>
         /// <returns></returns>
-        public object[,] GetData(CstResult.MotherRecap.ElementType classifLevel)
+        virtual public object[,] GetData(CstResult.MotherRecap.ElementType classifLevel)
         {
 
             #region Data loading
@@ -174,110 +174,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             object[,] tab = new object[i, COMPETITOR + 1];
             Array.Copy(tabResult, tab, i*(tabResult.GetLength(1)));
 
-			#region Set advertiser personalisation for product level
-			bool inRef = false, inComp = false, inneutral = false;
-			int nbTypes = 0;
-			if (classifLevel == CstResult.MotherRecap.ElementType.product && tab != null && tab.GetLongLength(0) > 0) {
-				string idProductList = "";
-				long idProd = -1;
-				List<long> temp = null;
-				DataSet res = null;
-				idAdv = -1;
-				long last = tab.GetLongLength(0) - 1;
-				for (int m = 0; m < tab.GetLongLength(0) && m < 10; m++) {
-					if (tab[m, ID_PRODUCT_INDEX] != null)
-						idProductList += tab[m, ID_PRODUCT_INDEX].ToString() + ",";
-					if (tab[last, ID_PRODUCT_INDEX] != null)
-						idProductList += tab[last, ID_PRODUCT_INDEX].ToString() + ",";
-					last--;
-				}
-				last = tab.GetLongLength(0) - 1;
-				if (idProductList != null && idProductList.Length > 0) {
-					idProductList = idProductList.Substring(0, idProductList.Length - 1);
-					res = _dalLayer.GetProductsPersonnalisationType(idProductList,_strYearID);
-					if (res != null && res.Tables[0] != null && res.Tables[0].Rows.Count > 0) {
-
-						for (int j = 0; j < tab.GetLongLength(0) && j < 10; j++) {
-							tab[j, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.none;
-							if (tab[j, ID_PRODUCT_INDEX] != null && tab[j, EngineEvolution.ID_PRODUCT_INDEX].ToString().Length > 0 ) {
-								idProd = long.Parse(tab[j, ID_PRODUCT_INDEX].ToString());
-								foreach (DataRow row in res.Tables[0].Rows) {
-									if (long.Parse(row["id_product"].ToString()) == idProd) {
-										if (Convert.ToInt32(row["inref"]) > 0) {
-											nbTypes++;
-											inRef = true;
-										}
-										if (Convert.ToInt32(row["incomp"]) > 0) {
-											nbTypes++;
-											inComp = true;
-										}
-										if (Convert.ToInt32(row["inneutral"]) > 0) {
-											nbTypes++;
-											inneutral = true;
-										}
-
-										if (nbTypes > 1)
-											tab[j, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.mixed;
-										else if (inComp)
-											tab[j, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.competitor;
-										else if (inRef)
-											tab[j, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.reference;
-										nbTypes = 0;
-										inRef = false;
-										inComp = false;
-										inneutral = false;
-										break;
-									}
-								}
-								nbTypes = 0;
-								inRef = false;
-								inComp = false;
-								inneutral = false;							
-							}
-							if (tab[last, ID_PRODUCT_INDEX] != null && tab[last, ID_PRODUCT_INDEX].ToString().Length > 0) {
-								idProd = long.Parse(tab[last, ID_PRODUCT_INDEX].ToString());
-								foreach (DataRow row in res.Tables[0].Rows) {
-									if (long.Parse(row["id_product"].ToString()) == idProd) {
-										if (Convert.ToInt32(row["inref"]) > 0) {
-											nbTypes++;
-											inRef = true;
-										}
-										if (Convert.ToInt32(row["incomp"]) > 0) {
-											nbTypes++;
-											inComp = true;
-										}
-										if (Convert.ToInt32(row["inneutral"]) > 0) {
-											nbTypes++;
-											inneutral = true;
-										}
-
-										if (nbTypes > 1)
-											tab[last, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.mixed;
-										else if (inComp)
-											tab[last, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.competitor;
-										else if (inRef)
-											tab[last, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.reference;
-										nbTypes = 0;
-										inRef = false;
-										inComp = false;
-										inneutral = false;
-										break;
-									}
-								}
-								nbTypes = 0;
-								inRef = false;
-								inComp = false;
-								inneutral = false;									
-							}
-							last--;
-							inRef = false;
-							inComp = false;
-						}
-					}
-				}
-				last = tab.GetLongLength(0) - 1;
-			}
-			#endregion
+            SetAdvertiserPersonalisation(tab, classifLevel);
 
             return tab;        
         
@@ -290,11 +187,12 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// </summary>
         /// <param name="classifLevel">Detail level (advertiser or product)</param>
         /// <returns>Code HTML</returns>
-        protected StringBuilder BuildEvolution(CstResult.MotherRecap.ElementType classifLevel)
+        protected virtual StringBuilder BuildEvolution(CstResult.MotherRecap.ElementType classifLevel)
         {
 
             System.Text.StringBuilder t = new System.Text.StringBuilder(5000);
 			bool inRef = false, inComp = false;
+            UnitInformation selectedCurrency =  GetUnit();
 
             #region styles
             string cssHeader = "p2";
@@ -309,15 +207,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             string cssNoData = "mediumPurple1";
             #endregion
 
-
+            string periodLabel = string.Format("{0}-{1}", FctUtilities.Dates.DateToString(_periodBegin.Date, _session.SiteLanguage), FctUtilities.Dates.DateToString(_periodEnd.Date, _session.SiteLanguage));
             object[,] tab = this.GetData(classifLevel);
-            string periodLabel = string.Format("{0}-{1}",FctUtilities.Dates.DateToString( _periodBegin.Date ,_session.SiteLanguage), FctUtilities.Dates.DateToString(_periodEnd.Date,_session.SiteLanguage));
-            long last = tab.GetLongLength(0) - 1;
-            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
-            UnitInformation defaultKCurrency = UnitsInformation.List[UnitsInformation.DefaultKCurrency];
 
             #region No Data
-            if (tab.GetLongLength(0) == 0)
+            if (tab == null || tab.GetLongLength(0) == 0)
             {
                 t.Append("<table class=\"backGroundWhite\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
                 t.Append("<tr align=\"center\" class=\"txtViolet11Bold\"><td>");
@@ -331,69 +225,9 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             }
             #endregion
 
-			#region Set advertiser personalisation for product level
-			//if (classifLevel == CstResult.MotherRecap.ElementType.product) {
-			//    string idProductList = "";
-			//    long idProd = -1;
-			//    List<long> temp = null;
-			//    Dictionary<long, List<long>> res = null;
-			//    long idAdv = -1;
-			//    for (int i = 0; i < tab.GetLongLength(0) && i < 10; i++) {
-			//        if(tab[i, ID_PRODUCT_INDEX]!=null)
-			//            idProductList += tab[i, ID_PRODUCT_INDEX].ToString() + ",";
-			//        if (tab[last, ID_PRODUCT_INDEX] != null)
-			//            idProductList += tab[last, ID_PRODUCT_INDEX].ToString() + ",";
-			//        last--;
-			//    }
-			//    last = tab.GetLongLength(0) - 1;
-			//    if (idProductList != null && idProductList.Length > 0) {
-			//        idProductList = idProductList.Substring(0, idProductList.Length - 1);
-			//        res = _dalLayer.GetProductsAdvertisers(idProductList);
-			//        if (res != null && res.Count > 0) {
-						
-			//            for (int j = 0; j < tab.GetLongLength(0) && j < 10; j++) {
-			//                tab[j, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.none;
-			//                if (tab[j, ID_PRODUCT_INDEX] != null && tab[j, ID_PRODUCT_INDEX].ToString().Length > 0) {
-			//                    idProd = long.Parse(tab[j, ID_PRODUCT_INDEX].ToString());
-			//                     temp = res[idProd];
-			//                    if (temp != null && temp.Count > 0) {
-			//                        for (int k = 0; k < temp.Count; k++) {
-			//                            idAdv = temp[k];
-			//                            if (_competitorIDS.Contains(idAdv)) inComp = true;
-			//                            if (_referenceIDS.Contains(idAdv)) inRef = true;
-			//                            if (inComp && inRef) break;																			
-			//                        }
-			//                        if (inComp && inRef) tab[j, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.mixed;
-			//                        else if (inComp) tab[j, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.competitor;
-			//                        else if (inRef) tab[j, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.reference;
-			//                    }
-			//                    inRef = false;
-			//                    inComp = false;
-			//                }
-			//                if (tab[last, ID_PRODUCT_INDEX] != null && tab[last, ID_PRODUCT_INDEX].ToString().Length > 0) {
-			//                    idProd = long.Parse(tab[last, ID_PRODUCT_INDEX].ToString());
-			//                    temp = res[idProd];
-			//                    if (temp != null && temp.Count > 0) {
-			//                        for (int k = 0; k < temp.Count; k++) {
-			//                            idAdv = temp[k];
-			//                            if (_competitorIDS.Contains(idAdv)) inComp = true;
-			//                            if (_referenceIDS.Contains(idAdv)) inRef = true;
-			//                            if (inComp && inRef) break;	
-			//                        }
-			//                        if (inComp && inRef) tab[last, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.mixed;
-			//                        else if (inComp) tab[last, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.competitor;
-			//                        else if (inRef) tab[last, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.reference;
-			//                    }
-			//                }
-			//                last--;
-			//                inRef = false;
-			//                inComp = false;
-			//            }
-			//        }
-			//    }
-			//    last = tab.GetLongLength(0) - 1;
-			//}
-			#endregion
+            long last = tab.GetLongLength(0) - 1;
+            IFormatProvider fp = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
+			
 
 			t.Append("<table class=\"backGroundWhite\" border=0 cellpadding=0 cellspacing=0 width=\"100%\">");
 
@@ -409,7 +243,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\" align=\"center\">{1}<br>{2}</td>", cssHeader, GestionWeb.GetWebWord(1210, _session.SiteLanguage), periodLabel);
             }
-            t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1401, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")");
+            t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1401, _session.SiteLanguage) + " (" + selectedCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")");
             t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1212, _session.SiteLanguage));
             t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1213, _session.SiteLanguage));
             #endregion
@@ -425,7 +259,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             {
                 t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\" align=\"center\">{1}<br>{2}</td>", cssHeader, GestionWeb.GetWebWord(1211, _session.SiteLanguage), periodLabel);
             }
-            t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1401, _session.SiteLanguage) + " (" + defaultKCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")");
+            t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1401, _session.SiteLanguage) + " (" + selectedCurrency.GetUnitSignWebText(_session.SiteLanguage) + ")");
             t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1212, _session.SiteLanguage));
             t.AppendFormat("<td class=\"{0}\" nowrap valign=\"top\">{1}</td>", cssHeader, GestionWeb.GetWebWord(1213, _session.SiteLanguage));
             #endregion
@@ -469,11 +303,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 t.Append("\r\n\t<tr>");
 
                 #region Rise
-                ecart = Convert.ToDouble(tab[i, ECART]);
+                ecart = ConvertToDouble(tab[i, ECART]);
                 if (ecart > 0)
                 {
-                    evol = Convert.ToDouble(tab[i, EVOLUTION]);
-                    total = Convert.ToDouble(tab[i, TOTAL_N]);
+                    evol = ConvertToDouble(tab[i, EVOLUTION]);
+                    total = ConvertToDouble(tab[i, TOTAL_N]);
                     t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssLabel, tab[i, PRODUCT]);
                     t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(total, _session.Unit, fp));
                     if (!Double.IsInfinity(evol))
@@ -526,11 +360,11 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
                 #endregion
 
                 #region Decrease
-                ecart = Convert.ToDouble(tab[last, ECART]);
+                ecart = ConvertToDouble(tab[last, ECART]);
                 if (ecart < 0)
                 {
-                    evol = Convert.ToDouble(tab[last, EVOLUTION]);
-                    total = Convert.ToDouble(tab[last, TOTAL_N]);
+                    evol = ConvertToDouble(tab[last, EVOLUTION]);
+                    total = ConvertToDouble(tab[last, TOTAL_N]);
                     t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssLabel, tab[last, PRODUCT]);
                     t.AppendFormat("<td class=\"{0}\" nowrap>{1}</td>", cssNb, FctUtilities.Units.ConvertUnitValueToString(total, _session.Unit, fp));
                     if (!Double.IsInfinity(evol))
@@ -573,7 +407,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
         /// Build the four reports
         /// </summary>		
         /// <returns>Top report</returns>
-        protected StringBuilder BuildEvolutions()
+        protected virtual StringBuilder BuildEvolutions()
         {
 
             System.Text.StringBuilder t = new System.Text.StringBuilder(5000);
@@ -609,7 +443,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             #region Advertiser
             t.Append("<tr>");
             t.Append("<td valign=\"top\">");
-            t.Append(this.BuildEvolution(CstResult.MotherRecap.ElementType.advertiser));
+            t.Append(BuildEvolution(CstResult.MotherRecap.ElementType.advertiser));
             t.Append("</td>");
             t.Append("</tr>");
             #endregion
@@ -627,7 +461,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 			if (_session.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
 				t.Append("<tr>");
 				t.Append("<td valign=\"top\">");
-				t.Append(this.BuildEvolution(CstResult.MotherRecap.ElementType.product));
+				t.Append(BuildEvolution(CstResult.MotherRecap.ElementType.product));
 				t.Append("</td>");
 				t.Append("</tr>");
 			}
@@ -639,6 +473,140 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
 
         }
         #endregion		
+
+        #region SetAdvertiserPersonalisation
+        /// <summary>
+        /// Set advertiser personnalisation
+        /// </summary>
+        /// <param name="tab">tab Result</param>
+        /// <param name="classifLevel">Classif Level</param>
+        protected void SetAdvertiserPersonalisation(object[,] tab, CstResult.MotherRecap.ElementType classifLevel){
+
+            bool inRef = false, inComp = false, inneutral = false;
+            int nbTypes = 0;
+            Int64 idAdv;
+
+            if (classifLevel == CstResult.MotherRecap.ElementType.product && tab != null && tab.GetLongLength(0) > 0){
+
+                string idProductList = "";
+                long idProd = -1;
+                List<long> temp = null;
+                DataSet res = null;
+                idAdv = -1;
+                long last = tab.GetLongLength(0) - 1;
+
+                for (int m = 0; m < tab.GetLongLength(0) && m < 10; m++){
+                    if (tab[m, ID_PRODUCT_INDEX] != null)
+                        idProductList += tab[m, ID_PRODUCT_INDEX].ToString() + ",";
+                    if (tab[last, ID_PRODUCT_INDEX] != null)
+                        idProductList += tab[last, ID_PRODUCT_INDEX].ToString() + ",";
+                    last--;
+                }
+
+                last = tab.GetLongLength(0) - 1;
+                
+                if (idProductList != null && idProductList.Length > 0){
+
+                    idProductList = idProductList.Substring(0, idProductList.Length - 1);
+                    res = _dalLayer.GetProductsPersonnalisationType(idProductList, _strYearID);
+                    if (res != null && res.Tables[0] != null && res.Tables[0].Rows.Count > 0){
+
+                        for (int j = 0; j < tab.GetLongLength(0) && j < 10; j++){
+
+                            tab[j, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.none;
+                            if (tab[j, ID_PRODUCT_INDEX] != null && tab[j, EngineEvolution.ID_PRODUCT_INDEX].ToString().Length > 0){
+                                idProd = long.Parse(tab[j, ID_PRODUCT_INDEX].ToString());
+                                foreach (DataRow row in res.Tables[0].Rows){
+                                    if (long.Parse(row["id_product"].ToString()) == idProd){
+                                        if (Convert.ToInt32(row["inref"]) > 0){
+                                            nbTypes++;
+                                            inRef = true;
+                                        }
+                                        if (Convert.ToInt32(row["incomp"]) > 0){
+                                            nbTypes++;
+                                            inComp = true;
+                                        }
+                                        if (Convert.ToInt32(row["inneutral"]) > 0){
+                                            nbTypes++;
+                                            inneutral = true;
+                                        }
+
+                                        if (nbTypes > 1)
+                                            tab[j, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.mixed;
+                                        else if (inComp)
+                                            tab[j, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.competitor;
+                                        else if (inRef)
+                                            tab[j, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.reference;
+                                        nbTypes = 0;
+                                        inRef = false;
+                                        inComp = false;
+                                        inneutral = false;
+                                        break;
+                                    }
+                                }
+                                nbTypes = 0;
+                                inRef = false;
+                                inComp = false;
+                                inneutral = false;
+                            }
+                            if (tab[last, ID_PRODUCT_INDEX] != null && tab[last, ID_PRODUCT_INDEX].ToString().Length > 0){
+                                idProd = long.Parse(tab[last, ID_PRODUCT_INDEX].ToString());
+                                foreach (DataRow row in res.Tables[0].Rows){
+                                    if (long.Parse(row["id_product"].ToString()) == idProd){
+                                        if (Convert.ToInt32(row["inref"]) > 0){
+                                            nbTypes++;
+                                            inRef = true;
+                                        }
+                                        if (Convert.ToInt32(row["incomp"]) > 0){
+                                            nbTypes++;
+                                            inComp = true;
+                                        }
+                                        if (Convert.ToInt32(row["inneutral"]) > 0){
+                                            nbTypes++;
+                                            inneutral = true;
+                                        }
+
+                                        if (nbTypes > 1)
+                                            tab[last, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.mixed;
+                                        else if (inComp)
+                                            tab[last, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.competitor;
+                                        else if (inRef)
+                                            tab[last, COMPETITOR] = CstWeb.AdvertiserPersonalisation.Type.reference;
+                                        nbTypes = 0;
+                                        inRef = false;
+                                        inComp = false;
+                                        inneutral = false;
+                                        break;
+                                    }
+                                }
+                                nbTypes = 0;
+                                inRef = false;
+                                inComp = false;
+                                inneutral = false;
+                            }
+                            last--;
+                            inRef = false;
+                            inComp = false;
+                        }
+                    }
+                }
+                last = tab.GetLongLength(0) - 1;
+            }
+
+        }
+        #endregion
+
+        #region ConvertToDouble
+        /// <summary>
+        /// Convert to double according to culture info
+        /// </summary>
+        /// <param name="o">Object to convert</param>
+        /// <returns>double</returns>
+        protected virtual double ConvertToDouble(object o) {
+
+            return Convert.ToDouble(o);
+        }
+        #endregion
 
     }
 }

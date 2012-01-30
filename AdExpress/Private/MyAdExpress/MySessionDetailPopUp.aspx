@@ -149,7 +149,14 @@
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
 				            <% }%>
-				             <!-- Détail product -->
+<!--TODO: Vérifier fusion Dev=>Trunk-->
+				             	<%if(displayListOfVehicles){%>
+				 <TR height="5">
+					<TD class="txtViolet11 backGroundWhite" vAlign="top" align="center"><%=listOfVehicleText%></TD>
+				</TR>
+				 <TR height="10"><TD></TD></TR>
+				<%}%>
+                            <!-- Détail product -->
 				            <%if(displayDetailProduct){%>
 				            <TR height="5">
 					            <TD align="center" vAlign="top" class="txtViolet11 backGroundWhite"><%=productDetailText%></TD>

@@ -26,21 +26,23 @@ namespace TNS.AdExpress.Domain.XmlLoader {
         /// <param name="defaultCurrency">Default currency</param>
         /// <param name="defaultKCurrency">Default k currency</param>
         /// <returns>flag list</returns>
-        public static List<UnitInformation> Load(IDataSource source,out CustomerSessions.Unit defaultCurrency,out CustomerSessions.Unit defaultKCurrency) {
-            
+        public static List<UnitInformation> Load(IDataSource source, out CustomerSessions.Unit defaultCurrency, out CustomerSessions.Unit defaultKCurrency)
+        {
+
             #region Variables
             List<UnitInformation> list = new List<UnitInformation>();
             XmlTextReader reader = null;
             string id;
             Int64 webTextId;
             Int64 webTextSignId;
-            string baseId="";
+            string baseId="";          
             string databaseField="";
             string databaseMultimediaField="";
             string databaseTrendsField="";
             string cellType = "";
             string format = "";
             UnitInformation unit;
+            string assembly = "";
             #endregion
 
             try {
@@ -85,8 +87,9 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 else databaseTrendsField = reader.GetAttribute("trendsField");
                                 if (reader.GetAttribute("format") == null || reader.GetAttribute("format").Length == 0) format = "";
                                 else format = reader.GetAttribute("format");
-
-                                unit = new UnitInformation(id, format, webTextId, webTextSignId, baseId, cellType, databaseField, databaseMultimediaField, databaseTrendsField);
+                                if (reader.GetAttribute("assembly") == null || reader.GetAttribute("assembly").Length == 0) assembly = "";
+                                else assembly = reader.GetAttribute("assembly");
+                                unit = new UnitInformation(id, format, webTextId, webTextSignId, baseId, cellType, databaseField, databaseMultimediaField, databaseTrendsField, assembly);
                                 list.Add(unit);
                                 break;
                         }

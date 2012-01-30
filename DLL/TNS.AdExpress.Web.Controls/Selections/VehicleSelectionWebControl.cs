@@ -16,6 +16,9 @@ using TNS.AdExpress.Web.Core.Sessions;
 using RightConstantes=TNS.AdExpress.Constantes.Customer.Right;
 using TNS.AdExpress.Domain;
 using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpressI.Classification.DAL;
+using System.Reflection;
 
 namespace TNS.AdExpress.Web.Controls.Selections{
 	/// <summary>
@@ -51,10 +54,14 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <param name="e">Arguments</param>
 		protected override void OnPreRender(EventArgs e) {
 			if(webSession!=null){
-				VehicleListDataAccess vl=new VehicleListDataAccess(webSession);
-				this.DataSource = FilteringWithMediaAgencyFlag(vl.List);
-				this.DataTextField="vehicle";
-				this.DataValueField="idVehicle";
+                CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
+                if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
+                object[] param = new object[1];
+                param[0] = webSession;
+                IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                this.DataSource = FilteringWithMediaAgencyFlag(classficationDAL.GetMediaType().Tables[0]);
+                this.DataTextField = "mediaType";
+                this.DataValueField = "idMediaType";
 				this.DataBind();
 			}
 			else throw (new WebControlInitializationException("Impossible d'initialiser le composant, la session n'est pas définie"));
@@ -110,13 +117,13 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                     //ID Vehicle
                     dataColumn = new DataColumn();
                     dataColumn.DataType = Type.GetType("System.Int64");
-                    dataColumn.ColumnName = "idVehicle";
+                    dataColumn.ColumnName = "idMediaType";
                     dataTable.Columns.Add(dataColumn);
 
                     //Vehicle label
                     dataColumn = new DataColumn();
                     dataColumn.DataType = Type.GetType("System.String");
-                    dataColumn.ColumnName = "vehicle";
+                    dataColumn.ColumnName = "mediaType";
                     dataTable.Columns.Add(dataColumn);
 
                     if (dt != null && dt.Rows.Count > 0)
@@ -124,12 +131,12 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                         DataRow dr;
                         foreach (DataRow row in dt.Rows)
                         {
-                            Int64 idV = Convert.ToInt64(row["idVehicle"].ToString());
+                            Int64 idV = Convert.ToInt64(row["idMediaType"].ToString());
                             if (webSession.CustomerLogin.CustomerMediaAgencyFlagAccess(idV))
                             {
                                 dr = dataTable.NewRow();
-                                dr["idVehicle"] = idV;
-                                dr["vehicle"] = row["vehicle"].ToString();
+                                dr["idMediaType"] = idV;
+                                dr["mediaType"] = row["mediaType"].ToString();
                                 dataTable.Rows.Add(dr);
                             }
                         }

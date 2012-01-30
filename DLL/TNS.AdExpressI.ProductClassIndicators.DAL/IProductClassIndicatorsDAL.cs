@@ -119,5 +119,20 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL
         /// <param name="mediaLevel">Media Level to study</param>
         /// <returns>DataTable to build media Strategy Indicator</returns>
         DataSet GetMediaStrategyTopsData(CstResult.MotherRecap.ElementType classifLevel, CstComparisonCriterion totalType, CstResult.MediaStrategy.MediaLevel mediaLevel, bool isPluri);
+
+        /// <summary>
+        /// Define contract to access media strategy data 
+        /// <remarks>Use specially in Russia</remarks>
+        /// </summary>       
+        /// <returns>DataTable to build media Strategy Indicator</returns>
+        DataSet GetMediaStrategyData();
+
+         /// <summary>
+        /// Define contract to Get summary data
+        /// </summary>
+        /// <remarks>Use specially in Russia</remarks>
+        /// </summary>       
+        /// <returns>DataTable to build Summary Indicator</returns>
+        DataSet GetSummary();
     }
 }

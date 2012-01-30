@@ -31,28 +31,29 @@ namespace WebServiceCreativeView {
         protected void Application_Start(object sender, EventArgs e) {
             string pathConfCountry = string.Empty;
             try {
+                
                 string pathConf = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, CONFIGARION_DIRECTORY_NAME);
                 string countryName = WebParamtersXL.LoadDirectoryName(new XmlReaderDataSource(System.IO.Path.Combine(pathConf, TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME)));
                 pathConfCountry = System.IO.Path.Combine(pathConf, countryName);
-
+              
                 VehiclesCreativesInformation.Init(VehiclesCreativesInformationDataAccess.Load(new XmlReaderDataSource(System.IO.Path.Combine(pathConfCountry, "VehicleCreativesAccess.xml"))));
             }
             catch (System.Exception error) {
                 string body = "";
                 try {
                     BaseException err = (BaseException)error;
-                    body = "<html><b><u>" + Server.MachineName + ":</u></b><br>" + "<font color=#FF0000>L'initialisation du server a &eacute;chou&eacute;.</font><br>Erreur" + err.GetHtmlDetail() + "</font></html>";
+                    body = "<html><b><u>" + Server.MachineName + ":</u></b><br>" + "<font color=#FF0000>Server intialization failed.</font><br>Erreur" + err.GetHtmlDetail() + "</font></html>";
                 }
                 catch (System.Exception) {
                     try {
-                        body = "<html><b><u>" + Server.MachineName + ":</u></b><br>" + "<font color=#FF0000>L'initialisation du server a &eacute;chou&eacute;.</font><br>Erreur(" + error.GetType().FullName + "):" + error.Message + "<br><br><b><u>Source:</u></b><font color=#008000>" + error.StackTrace.Replace("at ", "<br>at ") + "</font></html>";
+                        body = "<html><b><u>" + Server.MachineName + ":</u></b><br>" + "<font color=#FF0000>Server intialization failed.</font><br>Erreur(" + error.GetType().FullName + "):" + error.Message + "<br><br><b><u>Source:</u></b><font color=#008000>" + error.StackTrace.Replace("at ", "<br>at ") + "</font></html>";
                     }
                     catch (System.Exception es) {
                         throw (es);
                     }
                 }
-                TNSMail.SmtpUtilities errorMail = new TNSMail.SmtpUtilities(pathConfCountry + TNS.AdExpress.Constantes.Web.ErrorManager.WEBSERVER_ERROR_MAIL_FILE);
-                errorMail.Send("Erreur d'initialisation du web service d'AdExpress " + (Server.MachineName), body, true, false);
+                TNSMail.SmtpUtilities errorMail = new TNSMail.SmtpUtilities(pathConfCountry +@"\"+ TNS.AdExpress.Constantes.Web.ErrorManager.WEBSERVER_ERROR_MAIL_FILE);
+                errorMail.Send("Initialization error of AdExpress creatives Web service" + (Server.MachineName), body, true, false);
                 throw (error);
             }
         }

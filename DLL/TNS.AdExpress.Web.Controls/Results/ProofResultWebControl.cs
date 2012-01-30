@@ -23,6 +23,7 @@ using TNS.FrameWork.Date;
 using TNS.AdExpress.Domain.Web;
 using TNS.FrameWork;
 using TNS.AdExpress.Domain.Units;
+using TNS.AdExpress.Web.Core.Utilities;
 
 namespace TNS.AdExpress.Web.Controls.Results
 {
@@ -311,12 +312,12 @@ namespace TNS.AdExpress.Web.Controls.Results
 					output.Write("\n<tr>");
 					if(File.Exists(pathCouv2)){
 						output.Write("\n<td colspan=\"2\" align=\"center\"><img src='"+pathCouv+"' border=\"0\" width=\"100\" height=\"141\"><br><font class=\"txtViolet14Bold\">"+ row["Media"] +"</font>");
-                        if (row["datePublication"] != System.DBNull.Value) output.Write("<br><font class=txtViolet11>" + DateString.dateTimeToDD_MM_YYYY((DateTime)row["datePublication"], _customerWebSession.SiteLanguage) + "</font>");
+                        if (row["datePublication"] != System.DBNull.Value) output.Write("<br><font class=txtViolet11>" + Dates.DateToString((DateTime)row["datePublication"], _customerWebSession.SiteLanguage) + "</font>");
                         if (row["number_page_media"] != System.DBNull.Value) output.Write("<br><font class=txtViolet11>" + row["number_page_media"].ToString() + "&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CstWeb.CustomerSessions.Unit.pages].WebTextId, _customerWebSession.SiteLanguage)) + "</font>");
 					}
 					else{
                         output.Write("\n<td colspan=\"2\" align=\"center\"><img src=\"/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif\"><br><font class=\"txtViolet14Bold\">" + row["Media"] + "</font>");
-                        if (row["datePublication"] != System.DBNull.Value) output.Write("<br><font class=txtViolet11>" + DateString.dateTimeToDD_MM_YYYY((DateTime)row["datePublication"], _customerWebSession.SiteLanguage) + "</font>");
+                        if (row["datePublication"] != System.DBNull.Value) output.Write("<br><font class=txtViolet11>" +  Dates.DateToString((DateTime)row["datePublication"], _customerWebSession.SiteLanguage) + "</font>");
                         if (row["number_page_media"] != System.DBNull.Value) output.Write("<br><font class=txtViolet11>" + row["number_page_media"].ToString() + "&nbsp;" + Convertion.ToHtmlString(GestionWeb.GetWebWord(UnitsInformation.List[CstWeb.CustomerSessions.Unit.pages].WebTextId, _customerWebSession.SiteLanguage)) + "</font>");
 
 					}

@@ -142,7 +142,7 @@ namespace TNS.AdExpress.Web.Controls.Selections
 
 				//Construction de la liste de checkbox
 				foreach(DataRow currentRow in dsListAdvertiser.Tables[0].Rows) {
-					this.Items.Add(new System.Web.UI.WebControls.ListItem(currentRow["advertiser"].ToString(),((Int64)currentRow["id_advertiser"]).ToString()));
+					this.Items.Add(new System.Web.UI.WebControls.ListItem(currentRow["advertiser"].ToString(),currentRow["id_advertiser"].ToString()));
 				}
 			//}
 		}

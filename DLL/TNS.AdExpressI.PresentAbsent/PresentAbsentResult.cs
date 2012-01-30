@@ -277,7 +277,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// Compute result "Strengths"
         /// </summary>
         /// <returns>Computed data</returns>
-        public ResultTable GetStrengths()
+        public virtual ResultTable GetStrengths()
         {
             this._result = CompetitorMarketShare.FORCES;
             return GetData();
@@ -287,7 +287,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// Compute result "Prospects"
         /// </summary>
         /// <returns>Computed data</returns>
-        public ResultTable GetProspects()
+        public virtual ResultTable GetProspects()
         {
             return GetResult(CompetitorMarketShare.POTENTIELS);
         }
@@ -297,7 +297,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// </summary>
         /// <param name="result">Type of result to compute</param>
         /// <returns>Computed data</returns>
-        public ResultTable GetResult(int result)
+        public virtual ResultTable GetResult(int result)
         {
             switch (result)
             {
@@ -320,7 +320,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// Compute result specified in user session
         /// </summary>
         /// <returns>Computed data</returns>
-        public ResultTable GetResult()
+        public virtual ResultTable GetResult()
         {
             return GetResult((int)_session.CurrentTab);
         }
@@ -329,7 +329,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         #region Result Computing Methods
 
         #region Get Data
-        protected ResultTable GetData()
+        protected virtual ResultTable GetData()
         {
             Dictionary<Int64, HeaderBase> universesSubTotal = null;
             Dictionary<string, HeaderBase> elementsHeader = null;
@@ -649,13 +649,13 @@ namespace TNS.AdExpressI.PresentAbsent{
 
             #region Initialisation des Nombres
             for (int i = 0; i < nbLine; i++) {
-				CellNumber cN = new CellNumber(0.0);
+				CellNumber cN = new CellNumber();
 				cN.StringFormat = unitFormat;
 				resultTable[i, presentNumberColumnIndex] = cN;
-				CellNumber cN1 = new CellNumber(0.0);
+				CellNumber cN1 = new CellNumber();
 				cN1.StringFormat = unitFormat;
                 resultTable[i, absentNumberColumnIndex] = cN1;
-				CellNumber cN2 = new CellNumber(0.0);
+				CellNumber cN2 = new CellNumber();
 				cN2.StringFormat = unitFormat;
                 resultTable[i, exclusiveNumberColumnIndex] = cN2;
             }
@@ -663,15 +663,15 @@ namespace TNS.AdExpressI.PresentAbsent{
             {
                 for (Int32 j = presentNumberColumnIndex + 1; j < absentNumberColumnIndex; j++)
                 {
-                    resultTable[i, j] = cellUnitFactory.Get(0);
+                    resultTable[i, j] = cellUnitFactory.Get(null);
                 }
                 for (Int32 j = absentNumberColumnIndex + 1; j < exclusiveNumberColumnIndex; j++)
                 {
-                    resultTable[i, j] = cellUnitFactory.Get(0);
+                    resultTable[i, j] = cellUnitFactory.Get(null);
                 }
                 for (Int32 j = exclusiveNumberColumnIndex + 1; j <= nbCol; j++)
                 {
-                    resultTable[i, j] = cellUnitFactory.Get(0);
+                    resultTable[i, j] = cellUnitFactory.Get(null);
                 }
             }
             #endregion
@@ -810,7 +810,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         #endregion
 
         #region Data Filtering
-        protected void FilterTable(ResultTable data, bool computeStrenghs, Dictionary<Int64, HeaderBase> universesSubTotal)
+        protected virtual void FilterTable(ResultTable data, bool computeStrenghs, Dictionary<Int64, HeaderBase> universesSubTotal)
         {
 
             if (data == null)
@@ -937,7 +937,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             Int64[] cIds = new Int64[levelNb];
             CellLevel[] levels = new CellLevel[nbline];
             Int32 cLine = 0;
-            for (int i = 0; i < levelNb; i++) { oldIds[i] = cIds[i] = -1; }
+            for (int i = 0; i < levelNb; i++) { oldIds[i] = cIds[i] = long.MinValue; }
             CellUnitFactory cellFactory = _session.GetCellUnitFactory();
             SetLineDelegate setLine;
             switch(_session.Unit){
@@ -955,7 +955,7 @@ namespace TNS.AdExpressI.PresentAbsent{
                     if (cIds[i] >= 0 && cIds[i] != oldIds[i])
                     {
                         oldIds[i] = cIds[i];
-                        for (int ii = i + 1; ii < levelNb; ii++) { oldIds[ii] = -1; }
+                        for (int ii = i + 1; ii < levelNb; ii++) { oldIds[ii] = long.MinValue; }
                         cLine = InitDoubleLine(tabData, row, cellFactory, i + 1, (i > 0) ? levels[i - 1] : null);
                         levels[i] = (CellLevel)tabData[cLine, 1];
                     }
@@ -978,13 +978,13 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// <param name="level">Current level</param>
         /// <param name="parent">Parent level</param>
         /// <returns>Index of current line</returns>
-        protected Int32 InitDoubleLine(ResultTable tab, DataRow row, CellUnitFactory cellFactory, Int32 level, CellLevel parent)
+        protected virtual Int32 InitDoubleLine(ResultTable tab, DataRow row, CellUnitFactory cellFactory, Int32 level, CellLevel parent)
         {
 
             Int32 cLine = InitLine(tab, row, level, parent);
             for (int i = 2; i <= tab.DataColumnsNumber; i++)
             {
-                tab[cLine, i] = cellFactory.Get(0.0);
+                tab[cLine, i] = cellFactory.Get(null);
             }
             return cLine;
 
@@ -997,7 +997,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// <param name="level">Current level</param>
         /// <param name="parent">Parent level</param>
         /// <returns>Index of current line</returns>
-        protected Int32 InitLine(ResultTable tab, DataRow row, Int32 level, CellLevel parent)
+        protected virtual Int32 InitLine(ResultTable tab, DataRow row, Int32 level, CellLevel parent)
         {
 
             Int32 cLine = -1;
@@ -1160,11 +1160,10 @@ namespace TNS.AdExpressI.PresentAbsent{
             //Dispatch elements in current univers
             List<Int64> idElements = new List<Int64>();
             StringBuilder sIdElments = new StringBuilder();
-            Int64 idElement = -1;
-            Int64 idMedia = -1;
+            Int64 idElement = long.MinValue;
+            Int64 idMedia = long.MinValue;
             foreach (DataRow row in dtMedia.Rows)
             {
-                //idElement = Convert.ToInt64(row["columnDetailLevel"]); 
                 idElement = Convert.ToInt64(row[columnDetailLevel.DataBaseIdField]); 
                 idMedia = Convert.ToInt64(row["id_media"]);
                 if (!idElements.Contains(idElement))
@@ -1244,7 +1243,8 @@ namespace TNS.AdExpressI.PresentAbsent{
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.sector) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.subSector) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.group) ||
-                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.segment)
+                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.segment) ||
+                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.subBrand)
                 )
                 && _session.CustomerLogin.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)!=null
                 )
@@ -1333,7 +1333,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         #endregion
 
         #region Format ResultTable
-        protected ResultTable GetResultTable(ResultTable grossTable, Int32 nbLine, Dictionary<Int64, HeaderBase> universesSubTotal, Dictionary<string, HeaderBase> elementsHeader, Dictionary<string, HeaderBase> elementsSubTotal)
+        protected virtual ResultTable GetResultTable(ResultTable grossTable, Int32 nbLine, Dictionary<Int64, HeaderBase> universesSubTotal, Dictionary<string, HeaderBase> elementsHeader, Dictionary<string, HeaderBase> elementsSubTotal)
         {
 
             #region Line Number
@@ -1401,7 +1401,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             #region Nombre parutions by media
             if (resNbParution != null && resNbParution.Count > 0)
             {
-                CellNumber cNb = new CellNumber(0.0);
+                CellNumber cNb = new CellNumber();
                 cNb.StringFormat = "{0:max0}";
                 CellUnitFactory nbFactory = new CellUnitFactory(cNb);
                 cLine = tab.AddNewLine(LineType.nbParution);
@@ -1410,10 +1410,10 @@ namespace TNS.AdExpressI.PresentAbsent{
                 if (_showCreative) tab[cLine, creaIndex] = new CellOneLevelCreativesLink(cLevelParution, _session, _session.GenericProductDetailLevel);
                 if (_showInsertions) tab[cLine, insertIndex] = new CellOneLevelInsertionsLink(cLevelParution, _session, _session.GenericProductDetailLevel);
                 if (_showMediaSchedule) tab[cLine, msIndex] = new CellMediaScheduleLink(cLevelParution, _session);
-                if (_showTotal) tab[cLine, totalIndex] = new CellNumber(0.0);
+                if (_showTotal) { tab[cLine, totalIndex] = new CellNumber(); ((CellNumber)tab[cLine, totalIndex]).StringFormat = "{0:max0}"; }
                 for (Int32 i = iFirstDataIndex; i <= tab.DataColumnsNumber; i++)
                 {
-                    tab[cLine, i] = nbFactory.Get(0.0);
+                    tab[cLine, i] = nbFactory.Get(null);
                 }
 
                 //Insert numbers of parutions
@@ -1456,7 +1456,7 @@ namespace TNS.AdExpressI.PresentAbsent{
 
         #region InitFinalLineValuesDelegate
         protected delegate Int32 InitFinalLineValuesDelegate(Int32 iFirstDataIndex, ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, bool isPDM);
-        protected Int32 InitFinalDoubleValuesLine(Int32 iFirstDataIndex, ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, bool isPDM)
+        protected virtual Int32 InitFinalDoubleValuesLine(Int32 iFirstDataIndex, ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, bool isPDM)
         {
 
             Int32 t = toTab.GetHeadersIndexInResultTable(TOTAL_HEADER_ID.ToString());
@@ -1465,11 +1465,12 @@ namespace TNS.AdExpressI.PresentAbsent{
             {
                 if (!isPDM)
                 {
-                    toTab[toLine, t] = cellFactory.Get(0.0);
+                    toTab[toLine, t] = cellFactory.Get(null);
                 }
                 else
                 {
-                    toTab[toLine, t] = cell = new CellPDM(0.0, null);
+                    toTab[toLine, t] = cell = GetCellPDM(null);
+                    ((CellUnit)toTab[toLine, t]).StringFormat = "{0:percentWOSign}";
                 }
                 t++;
             }
@@ -1482,14 +1483,26 @@ namespace TNS.AdExpressI.PresentAbsent{
             {
                 if (!isPDM)
                 {
-                    toTab[toLine, i] = cellFactory.Get(0.0);
+                    toTab[toLine, i] = cellFactory.Get(null);
                 }
                 else
                 {
-                    toTab[toLine, i] = new CellPDM(0.0,cell);
+                    toTab[toLine, i] = GetCellPDM(cell);
+                    ((CellUnit)toTab[toLine, i]).StringFormat = "{0:percentWOSign}";
                 }
             }
             return toLine;
+
+        }
+        /// <summary>
+        /// Get Cell PDM
+        /// </summary>
+        /// <param name="cell">Reference Cell</param>
+        /// <returns>CellPDM</returns>
+        protected virtual CellUnit GetCellPDM(CellUnit cell) {
+            
+            CellPDM cellPDM = new CellPDM(null, cell);
+            return cellPDM;
 
         }
         protected Int32 InitFinalListValuesLine(Int32 iFirstDataIndex, ResultTable toTab, Int32 toLine, CellUnitFactory cellFactory, bool isPDM)
@@ -1501,11 +1514,12 @@ namespace TNS.AdExpressI.PresentAbsent{
             {
                 if (!isPDM)
                 {
-                    toTab[toLine, t] = cellFactory.Get(0);
+                    toTab[toLine, t] = cellFactory.Get(null);
                 }
                 else
                 {
                     toTab[toLine, t] = cell = new CellVersionNbPDM(null);
+                    ((CellVersionNbPDM)toTab[toLine, t]).StringFormat = "{0:percentWOSign}";
                 }
                 t++;
             }
@@ -1518,17 +1532,18 @@ namespace TNS.AdExpressI.PresentAbsent{
             {
                 if (!isPDM)
                 {
-                    toTab[toLine, i] = cellFactory.Get(0);
+                    toTab[toLine, i] = cellFactory.Get(null);
                 }
                 else
                 {
                     toTab[toLine, i] = new CellVersionNbPDM(cell);
+                    ((CellVersionNbPDM)toTab[toLine, i]).StringFormat = "{0:percentWOSign}";
                 }
             }
             return toLine;
 
         }
-        protected Int32 InitFinalLine(ResultTable fromTab, ResultTable toTab, Int32 fromLine, CellLevel parent, Int32 creaIndex, Int32 insertIndex, Int32 msIndex)
+        protected virtual Int32 InitFinalLine(ResultTable fromTab, ResultTable toTab, Int32 fromLine, CellLevel parent, Int32 creaIndex, Int32 insertIndex, Int32 msIndex)
         {
             CellLevel cFromLevel = (CellLevel)fromTab[fromLine, 1];
             Int32 cLine = toTab.AddNewLine(fromTab.GetLineStart(fromLine).LineType);
@@ -1552,7 +1567,7 @@ namespace TNS.AdExpressI.PresentAbsent{
 
         #region SetLineDelegate
         protected delegate Int64 SetFinalLineDelegate(ResultTable fromTab, ResultTable toTab, Int32 fromLine, Int32 toLine, Dictionary<string, HeaderBase> elementsHeader, Dictionary<string, HeaderBase> elementsSubTotal);
-        protected Int64 SetFinalDoubleLine(ResultTable fromTab, ResultTable toTab, Int32 fromLine, Int32 toLine, Dictionary<string, HeaderBase> elementsHeader, Dictionary<string, HeaderBase> elementsSubTotal)
+        protected virtual Int64 SetFinalDoubleLine(ResultTable fromTab, ResultTable toTab, Int32 fromLine, Int32 toLine, Dictionary<string, HeaderBase> elementsHeader, Dictionary<string, HeaderBase> elementsSubTotal)
         {
 
             CellLevel level = (CellLevel)fromTab[fromLine, 1];
@@ -1561,24 +1576,27 @@ namespace TNS.AdExpressI.PresentAbsent{
             //elements
             HeaderBase cHeader = null;
             HeaderBase subTotalHeader = null;
-            double value = 0.0;
+            double? value = 0.0;
             foreach (string s in elementsHeader.Keys)
             {
                 cHeader = elementsHeader[s];
                 if (cHeader !=hTotal)
                 {
-                    value = ((CellUnit)fromTab[fromLine, cHeader.IndexInResultTable]).Get_value();
-                    toTab.AffectValueAndAddToHierarchy(1, toLine, cHeader.IndexInResultTable, value);
-                    //univers sub total
-                    subTotalHeader = elementsSubTotal[s];
-                    if (subTotalHeader != cHeader && subTotalHeader != hTotal)
+                    value = ((CellUnit)fromTab[fromLine, cHeader.IndexInResultTable]).GetNullableValue();
+                    if (value.HasValue)
                     {
-                        toTab.AffectValueAndAddToHierarchy(1, toLine, subTotalHeader.IndexInResultTable, value);
-                    }
-                    //line total
-                    if (hTotal != null)
-                    {
-                        toTab.AffectValueAndAddToHierarchy(1, toLine, hTotal.IndexInResultTable, value);
+                        toTab.AffectValueAndAddToHierarchy(1, toLine, cHeader.IndexInResultTable, value.Value);
+                        //univers sub total
+                        subTotalHeader = elementsSubTotal[s];
+                        if (subTotalHeader != cHeader && subTotalHeader != hTotal)
+                        {
+                            toTab.AffectValueAndAddToHierarchy(1, toLine, subTotalHeader.IndexInResultTable, value.Value);
+                        }
+                        //line total
+                        if (hTotal != null)
+                        {
+                            toTab.AffectValueAndAddToHierarchy(1, toLine, hTotal.IndexInResultTable, value.Value);
+                        }
                     }
 
                 }
@@ -1588,7 +1606,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             return toLine ;
 
         }
-        protected Int64 SetFinalListLine(ResultTable fromTab, ResultTable toTab, Int32 fromLine, Int32 toLine, Dictionary<string, HeaderBase> elementsHeader, Dictionary<string, HeaderBase> elementsSubTotal)
+        protected virtual Int64 SetFinalListLine(ResultTable fromTab, ResultTable toTab, Int32 fromLine, Int32 toLine, Dictionary<string, HeaderBase> elementsHeader, Dictionary<string, HeaderBase> elementsSubTotal)
         {
 
             CellLevel level = (CellLevel)fromTab[fromLine, 1];
@@ -1598,7 +1616,7 @@ namespace TNS.AdExpressI.PresentAbsent{
             HeaderBase cHeader = null;
             HeaderBase subTotalHeader = null;
             HybridList value = null ;
-            Int64 l = -1;
+            Int64 l = long.MinValue;
             Int64 len = 0;
             bool affectTotal = hTotal != null;
             foreach (string s in elementsHeader.Keys)
@@ -1643,7 +1661,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// </summary>
         /// <param name="tabData">Data</param>
         /// <returns>Number of lines</returns>
-        protected Int32 GetNbLine(DataTable dt)
+        protected virtual Int32 GetNbLine(DataTable dt)
         {
 
             Int32 nbLine = 0;
@@ -1659,19 +1677,19 @@ namespace TNS.AdExpressI.PresentAbsent{
                 cIdL1 = _session.GenericProductDetailLevel.GetIdValue(row, 1);
                 cIdL2 = _session.GenericProductDetailLevel.GetIdValue(row, 2);
                 cIdL3 = _session.GenericProductDetailLevel.GetIdValue(row, 3);
-                if (cIdL1 >= 0 && cIdL1 != oldIdL1)
+                if (cIdL1 > -1 && cIdL1 != oldIdL1)
                 {
                     oldIdL1 = cIdL1;
                     oldIdL2 = oldIdL3 = -1;
                     nbLine++;
                 }
-                if (cIdL2 >= 0 && cIdL2 != oldIdL2)
+                if (cIdL2 > -1 && cIdL2 != oldIdL2)
                 {
                     oldIdL2 = cIdL2;
                     oldIdL3 = -1;
                     nbLine++;
                 }
-                if (cIdL3 >= 0 && cIdL3 != oldIdL3)
+                if (cIdL3 > -1 && cIdL3 != oldIdL3)
                 {
                     oldIdL3 = cIdL3;
                     nbLine++;
@@ -1692,7 +1710,7 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// <param name="sort">sorting</param>
         /// <param name="referenceUniversMedia">Reference Media List</param>
         /// <param name="competitorUniversMedia">Competitor Media List</param>	
-        private void GetProductActivity(ResultTable tabResult, DataTable dt, Int32 indexLineProduct, string filterExpression, string sort, List<string> referenceUniversMedia, List<string> competitorUniversMedia, AddValue addValueDelegate, SetSynthesisTable setSynthesisDataDelegate, InitValue initValueDelegate)
+        protected virtual void GetProductActivity(ResultTable tabResult, DataTable dt, Int32 indexLineProduct, string filterExpression, string sort, List<string> referenceUniversMedia, List<string> competitorUniversMedia, AddValue addValueDelegate, SetSynthesisTable setSynthesisDataDelegate, InitValue initValueDelegate)
         {
             CellUnit unitReferenceMedia = initValueDelegate();
             CellUnit unitCompetitorMedia = initValueDelegate();
@@ -1782,13 +1800,13 @@ namespace TNS.AdExpressI.PresentAbsent{
         protected delegate void SetSynthesisTable(ResultTable tab, Int32 line, Int32 column, CellUnit value);
 
         #region InitValue
-        protected CellUnit InitDoubleValue()
+        protected virtual CellUnit InitDoubleValue()
         {
 
-            return new CellNumber(0.0);
+            return new CellNumber();
 
         }
-        protected CellUnit InitListValue()
+        protected virtual CellUnit InitListValue()
         {
 
             return new CellIdsNumber();
@@ -1797,13 +1815,13 @@ namespace TNS.AdExpressI.PresentAbsent{
         #endregion
 
         #region AddValue(CellUnit cell, object value)
-        protected void AddDoubleValue(CellUnit cell, object value)
+        protected virtual void AddDoubleValue(CellUnit cell, object value)
         {
 
             cell.Add(Convert.ToDouble(value));
 
         }
-        protected void AddListValue(CellUnit cell, object value)
+        protected virtual void AddListValue(CellUnit cell, object value)
         {
 
             string[] ids = value.ToString().Split(',');
@@ -1815,13 +1833,13 @@ namespace TNS.AdExpressI.PresentAbsent{
         #endregion
 
         #region SetSynthesisTable(ResultTable tab, Int32 line, Int32 column, CellUnit value)
-        protected void SetDoubleSynthesisTable(ResultTable tab, Int32 line, Int32 column, CellUnit value)
+        protected virtual void SetDoubleSynthesisTable(ResultTable tab, Int32 line, Int32 column, CellUnit value)
         {
 
             ((CellUnit)tab[line, column]).Add(((CellUnit)value).Value);
 
         }
-        protected void SetListSynthesisTable(ResultTable tab, Int32 line, Int32 column, CellUnit value)
+        protected virtual void SetListSynthesisTable(ResultTable tab, Int32 line, Int32 column, CellUnit value)
         {
             HybridList h = ((CellIdsNumber)value).List;
             CellIdsNumber c = (CellIdsNumber)tab[line, column];
@@ -1844,15 +1862,15 @@ namespace TNS.AdExpressI.PresentAbsent{
         /// </summary>
         /// <param name="webSession"> Client Session</param>
         /// <returns>Number of parution by media data</returns>
-        protected Dictionary<Int64, double> GetNbParutionsByMedia()
+        protected virtual Dictionary<Int64, double> GetNbParutionsByMedia()
         {
 
 			#region Variables
             Dictionary<Int64, double> res = new Dictionary<Int64, double>();
 			double nbParutionsCounter = 0;
 			bool start = true;
-			Int64 oldKey = -1;
-			Int64 cKey = -1;
+            Int64 oldKey = long.MinValue;
+            Int64 cKey = long.MinValue;
 			#endregion		
 
 			#region Chargement des données à partir de la base

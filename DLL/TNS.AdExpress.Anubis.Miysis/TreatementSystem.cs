@@ -273,7 +273,7 @@ namespace TNS.AdExpress.Anubis.Miysis
 
                 PluginInformation pluginInformation = PluginConfiguration.GetPluginInformation(PluginType.Miysis);
                 if (pluginInformation != null && pluginInformation.DeleteRowSuccess)
-                    _dataAccess.DeleteRow(_navSessionId);
+                 _dataAccess.DeleteRow(_navSessionId);
 				#endregion
 
                 OnStopWorkerJob(_navSessionId,"","",GetPluginName()+" finished for '"+_navSessionId+"'");

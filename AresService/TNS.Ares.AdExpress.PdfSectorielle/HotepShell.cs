@@ -19,6 +19,7 @@ using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
 using TNS.Classification.Universe;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
+using System.Reflection;
 
 namespace TNS.Ares.AdExpress.PdfSectorielle
 {
@@ -53,13 +54,15 @@ namespace TNS.Ares.AdExpress.PdfSectorielle
                     long staticNavSession = extractParameterId(task);
                     if (_oListRunningTasks.ContainsKey(staticNavSession) == false)
                         _oListRunningTasks.Add(staticNavSession, task);
-                        // Preparing treatment
-                        TreatementSystem t = new TreatementSystem();
-                        t.OnStartWork += new TNS.Ares.StartWork(t_OnStartWork);
-                        t.OnError += new TNS.Ares.Error(t_OnError);
-                        t.OnStopWorkerJob += new TNS.Ares.StopWorkerJob(t_OnStopWorkerJob);
-                        t.OnSendReport += new TNS.Ares.SendReport(t_OnSendReport);
-                        t.OnMessageAlert += new TNS.Ares.MessageAlert(t_OnMessage);
+                        // Preparing treatment                                    
+                        PluginInformation pInf = PluginConfiguration.GetPluginInformation(PluginType.Hotep);
+                        if (pInf.AssemblyName == null) throw (new ArgumentNullException("AssemblyName layer is null for the Indicator result"));
+                     TreatementSystem t = (TreatementSystem)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + pInf.AssemblyName, pInf.Class_, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
+                     t.EvtStartWork += t_OnStartWork;
+                        t.EvtError += t_OnError;
+                        t.EvtStopWorkerJob += t_OnStopWorkerJob;
+                        t.EvtSendReport += t_OnSendReport;
+                        t.EvtMessageAlert += t_OnMessage;
                         t.Treatement(this._confFile, this._source, staticNavSession);
                 }
                 else {

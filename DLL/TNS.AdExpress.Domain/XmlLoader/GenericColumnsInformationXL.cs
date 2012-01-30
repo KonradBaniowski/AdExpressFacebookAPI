@@ -46,17 +46,19 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 		///	</example>
 		/// <exception cref="XmlException">Thrown when the XmlTextReader read an invalid attribute for column</exception>
 		/// <exception cref="System.Exception">Thrown when is impossible to load the GenericColumn XML file</exception>
-        public static void Load(IDataSource source, Dictionary<Int64, List<GenericColumnItemInformation>> columnsSets, Dictionary<Int64, Dictionary<GenericColumnItemInformation.Columns, bool>> columnsVisibility, Dictionary<Int64, List<GenericColumnItemInformation>> columnsSetKeys, Dictionary<Int64, Dictionary<GenericColumnItemInformation.Columns, bool>> columnsFilter)
+        public static void Load(IDataSource source, Dictionary<Int64, List<GenericColumnItemInformation>> columnsSets, Dictionary<Int64, Dictionary<GenericColumnItemInformation.Columns, bool>> columnsVisibility, Dictionary<Int64, List<GenericColumnItemInformation>> columnsSetKeys, Dictionary<Int64, Dictionary<GenericColumnItemInformation.Columns, bool>> columnsFilter, Dictionary<Int64, Dictionary<GenericColumnItemInformation.Columns, bool>> columnsBasketList)
         {
 			List<GenericColumnItemInformation> columnIds = null;
             List<GenericColumnItemInformation> keys = null;
             Dictionary<GenericColumnItemInformation.Columns, bool> visibility = null;
             Dictionary<GenericColumnItemInformation.Columns, bool> filter = null;
+            Dictionary<GenericColumnItemInformation.Columns, bool> basketList = null;
             XmlTextReader reader=null;
 			GenericColumnItemInformation genericColumnItemInformation =null;
 			Int64 id=0;
             bool bVisible = true;
             bool bFilter = false;
+            bool inBasket = false;
 			try{
 				reader=(XmlTextReader)source.GetSource();
 				while(reader.Read()){
@@ -68,6 +70,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                     columnsVisibility.Add(id, visibility);
                                     columnsSetKeys.Add(id, keys);
                                     columnsFilter.Add(id, filter);
+                                    columnsBasketList.Add(id, basketList);
                                 }
 								id=0;
 								if ((reader.GetAttribute("id")!=null && reader.GetAttribute("id").Length>0)){
@@ -76,6 +79,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                     visibility = new Dictionary<GenericColumnItemInformation.Columns, bool>();
                                     filter = new Dictionary<GenericColumnItemInformation.Columns, bool>();
                                     keys = new List<GenericColumnItemInformation>();
+                                    basketList = new Dictionary<GenericColumnItemInformation.Columns, bool>();
 								}
 								else{
 									throw(new XmlException("Invalide Attribute for vehicle"));
@@ -98,6 +102,10 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                     else {
                                         bFilter = false;
                                     }
+                                    if ((reader.GetAttribute("inBasket") != null && reader.GetAttribute("inBasket").Length > 0))
+                                        inBasket = bool.Parse(reader.GetAttribute("inBasket"));
+                                    else
+                                        inBasket = false;
 									if ((reader.GetAttribute("idDetailLevelMatching")!=null && reader.GetAttribute("idDetailLevelMatching").Length>0))
 										genericColumnItemInformation.IdDetailLevelMatching = int.Parse(reader.GetAttribute("idDetailLevelMatching"));
                                     if ((reader.GetAttribute("isKey") != null && reader.GetAttribute("isKey").Length > 0)) {
@@ -108,6 +116,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 									columnIds.Add(genericColumnItemInformation);
                                     visibility.Add(genericColumnItemInformation.Id, bVisible);
                                     filter.Add(genericColumnItemInformation.Id, bFilter);
+                                    basketList.Add(genericColumnItemInformation.Id, inBasket);
 								}
 								else{
 									throw(new XmlException("Invalide Attribute for defaultColumn"));
@@ -122,6 +131,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                     columnsVisibility.Add(id, visibility);
                     columnsFilter.Add(id, filter);
                     columnsSetKeys.Add(id, keys);
+                    columnsBasketList.Add(id, basketList);
                 }
 				source.Close();
 			}

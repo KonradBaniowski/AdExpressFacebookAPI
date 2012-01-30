@@ -110,7 +110,7 @@ namespace TNS.AdExpress.Web.UI{
             string idAlert = HttpContext.Current.Request.QueryString["idAlert"];
             string idOcc = HttpContext.Current.Request.QueryString["idOcc"];
             string idSession = HttpContext.Current.Request.QueryString["idSession"];
-
+            string redirectUrl = "";
             if (idSession != null || (autoConnectCookie != null && idAlert != null && idOcc != null))
             {
 
@@ -138,11 +138,25 @@ namespace TNS.AdExpress.Web.UI{
                             _siteLanguage = _webSession.SiteLanguage;
                     }
                 }
-                catch (System.Exception) { }
+                catch (System.Exception) {
+                    redirectUrl = "/index.aspx";
+                    if (HttpContext.Current.Request.QueryString.Get("sitelanguage") != null)                        
+                    {
+                        try
+                        {
+                            redirectUrl += "?siteLanguage=" + int.Parse(HttpContext.Current.Request.QueryString.Get("sitelanguage"));
+                        }
+                        catch (System.Exception)
+                        {
+                            redirectUrl += "?siteLanguage=" + _siteLanguage;
+                        }
+                    }
+                    HttpContext.Current.Response.Redirect(redirectUrl);
+                }
             }
             else
             {
-                string redirectUrl = "/index.aspx?";
+                redirectUrl = "/index.aspx?";
                 if (idAlert != null)
                     redirectUrl += "idAlert=" + idAlert;
                 if (idOcc != null)
@@ -182,16 +196,16 @@ namespace TNS.AdExpress.Web.UI{
 			_webSession.UserAgent=Page.Request.UserAgent;
 			_webSession.LastWebPage=Page.Request.Url.ToString();
 			_webSession.ServerName=Page.Server.MachineName;
+            _webSession.DomainName = Page.Request.Url.Host;
 			#endregion
 
 			#region Connexion à la base de données
             try
             {
-                if (!WebApplicationParameters.UseRightDefaultConnection)
-                {
+             
                     //Pour reste APPM
                     OracleConnection connection = (OracleConnection)_webSession.Source.GetSource();
-                }
+                
             }
             catch (System.Exception err)
             {

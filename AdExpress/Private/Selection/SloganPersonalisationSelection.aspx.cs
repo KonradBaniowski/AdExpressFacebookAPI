@@ -90,7 +90,8 @@ namespace AdExpress.Private.Selection{
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){	
-
+              try
+        {
 			#region Textes et langage du site
 			//Modification de la langue pour les Textes AdExpress
 			//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[1].Controls,_webSession.SiteLanguage);			
@@ -130,7 +131,14 @@ namespace AdExpress.Private.Selection{
 			}	
 						
 			#endregion
-
+        }
+              catch (System.Exception exc)
+              {
+                  if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+                  {
+                      this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                  }
+              }
 		}
 		#endregion
 
@@ -203,8 +211,9 @@ namespace AdExpress.Private.Selection{
 		/// </summary>
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Arguments</param>
-		protected void validateButton_Click(object sender, System.EventArgs e) {	
-			
+		protected void validateButton_Click(object sender, System.EventArgs e) {
+            try
+            {
 			#region Variables locales
 			ArrayList sloganList = new ArrayList();
 			int nbSloganSelected=0;
@@ -246,7 +255,14 @@ namespace AdExpress.Private.Selection{
 
 				Response.Redirect(this._nextUrl + "?idSession=" + _webSession.IdSession + ((WithZoomDate(_zoom,0,_nextUrl)) ? "&zoomDate=" + _zoom : ""));
 			}
-
+            }
+        catch (System.Exception exc)
+        {
+            if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+            {
+                this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+            }
+        }
 		}
 		#endregion
 

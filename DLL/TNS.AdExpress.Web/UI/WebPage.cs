@@ -77,9 +77,17 @@ namespace TNS.AdExpress.Web.UI {
         /// <param name="e">Arguments</param>
         protected override void OnLoad(EventArgs e) {
             base.OnLoad(e);
-            Translate.SetAllTextLanguage(this,_siteLanguage);
+            Translate.SetAllTextLanguage(this, _siteLanguage);
+            AddScritps();
+        }
+        /// <summary>
+        /// Add javascripts
+        /// </summary>
+        protected virtual void AddScritps(){
+         
 
-            if (!Page.ClientScript.IsClientScriptBlockRegistered("CookiesJScript")) {
+            if (!Page.ClientScript.IsClientScriptBlockRegistered("CookiesJScript"))
+            {
                 Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "CookiesJScript", TNS.AdExpress.Web.Functions.Script.CookiesJScript());
             }
             Page.ClientScript.RegisterClientScriptInclude(this.GetType(), "activateActiveX", ResolveClientUrl("~/scripts/activateActiveX.js"));

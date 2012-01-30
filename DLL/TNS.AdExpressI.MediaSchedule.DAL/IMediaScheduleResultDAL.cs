@@ -28,6 +28,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL
     /// </summary>
     public interface IMediaScheduleResultDAL
     {
+       
 
         #region Properties
         /// <summary>

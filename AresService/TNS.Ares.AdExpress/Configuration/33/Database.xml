@@ -193,12 +193,10 @@
     <table enumId="169" description="Data: Press: Newspaper 4M" schemaEnumId="0" label="data_newspaper_4M" prefix="wp"/>
     <table enumId="170" description="Data: Press: Magazine" schemaEnumId="0" label="data_magazine" prefix="wp"/>
     <table enumId="171" description="Data: Press: Magazine 4M" schemaEnumId="0" label="data_magazine_4M" prefix="wp"/>
-
-    <table enumId="172" description="Recap Data: Newspaper" schemaEnumId="4" label="recap_newspaper" prefix="rcp"/>
-    <table enumId="173" description="Recap Data: Magazine" schemaEnumId="4" label="recap_magazine" prefix="rcp"/>
-    <table enumId="174" description="Recap Data: Newspaper Segment" schemaEnumId="4" label="recap_newspaper_segment" prefix="rcp"/>
-    <table enumId="175" description="Recap Data: Magazine Segment" schemaEnumId="4" label="recap_magazine_segment" prefix="rcp"/>
-
+    <table enumId="172" description="Recap Data: Newspaper" schemaEnumId="4" label="recap_newspaper" prefix="rcn"/>
+    <table enumId="173" description="Recap Data: Magazine" schemaEnumId="4" label="recap_magazine" prefix="rcm"/>
+    <table enumId="174" description="Recap Data: Newspaper Segment" schemaEnumId="4" label="recap_newspaper_segment" prefix="rcn"/>
+    <table enumId="175" description="Recap Data: Magazine Segment" schemaEnumId="4" label="recap_magazine_segment" prefix="rcm"/>
     <table enumId="176" description="Classif: Data location" schemaEnumId="0" label="data_location_magazine" prefix="dl"/>
     <table enumId="177" description="Classif: Data location" schemaEnumId="0" label="data_location_newspaper" prefix="dl"/>
 
@@ -209,7 +207,6 @@
     <table enumId="182" description="Classif: slogan" schemaEnumId="0" label="slogan" prefix="slo"/>
 
     <table enumId="183" description="Tracking: Connection number By Login Ip Time slot" schemaEnumId="5" label="connection_by_login_ip" prefix="cli"/>
-
     <table enumId="184" description="Data: Cinema Retailer"             schemaEnumId="0" label="data_cinema_retailer" prefix="wp"/>
     <table enumId="185" description="Data: Cinema Retailer 4M"          schemaEnumId="0" label="data_cinema_retailer_4M" prefix="wp"/>
     <table enumId="186" description="Data: Internet Retailer"           schemaEnumId="0" label="data_internet_retailer" prefix="wp"/>
@@ -228,6 +225,7 @@
     <table enumId="199" description="Data: TV Retailer 4M"              schemaEnumId="0" label="data_tv_retailer_4M" prefix="wp"/>
     <table enumId="201" description="Data: Month Retailer"              schemaEnumId="0" label="web_plan_media_month_ret" prefix="wp"/>
     <table enumId="202" description="Data: Week Retailer"               schemaEnumId="0" label="web_plan_media_week_ret" prefix="wp"/>
+
 
     <table enumId="203" description="Recap Data: Cinema Retailer"             schemaEnumId="4" label="recap_cinema_ret" prefix="rcp"/>
     <table enumId="204" description="Recap Data: Cinema Segment Retailer"     schemaEnumId="4" label="recap_cinema_ret_segment" prefix="rcp"/>
@@ -264,7 +262,8 @@
     <table enumId="232" description="Promo : Circuit "   schemaEnumId="11" label="circuit" prefix="cr"/>
     <table enumId="233" description="Promo : Data  "   schemaEnumId="11" label="data_promotion" prefix="wp"/>
     <table enumId="234" description="Promo : Product Segment"   schemaEnumId="11" label="segment" prefix="sg"/>
-
+    <table enumId="235" description="Customer Insertions levels: Group insertion save" schemaEnumId="5" label="group_insertion_save" prefix="dir"/>
+    <table enumId="236" description="Customer Insertions levels: insertion leves save" schemaEnumId="5" label="insertion_save" prefix="isl"/>
     <table enumId="237" description="Classif: Group Format Banners" schemaEnumId="0" label="group_format_banners" prefix="gfb"/>
     <table enumId="238" description="Right: Group Format Banners" schemaEnumId="2" label="ORDER_CLIENT_GROUP_FORMAT" prefix="ocgf"/>
 
@@ -272,9 +271,6 @@
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>
     <table enumId="302" description="Alert Schedule" schemaEnumId="10" label="alert_schedule" prefix="as"/>
     <table enumId="400" description="Static Nav Session" schemaEnumId="5" label="static_nav_session" prefix="snv"/>
-
-
-
   </tables>
   <views>
     <view enumId="0" description="Classif: all media" schemaEnumId="0" label="all_media_" prefix="allm"/>
@@ -286,3 +282,4 @@
     <view enumId="6" description="Classif: all Promo product" schemaEnumId="11" label="all_product" prefix="allpp"/>
   </views>
 </database>
+

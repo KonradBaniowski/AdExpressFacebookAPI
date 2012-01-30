@@ -83,6 +83,8 @@
   <ItemGroup>
     <Compile Include="Classification\VehiclesFormatInformation.cs" />
     <Compile Include="Classification\VehicleFormatInformation.cs" />
+    <Compile Include="CampaignTypes\CampaignTypeInformation.cs" />
+    <Compile Include="CampaignTypes\CampaignTypesInformation.cs" />
     <Compile Include="Classification\IBaalItemsList.cs" />
     <Compile Include="Classification\ListContener.cs" />
     <Compile Include="Classification\Media.cs" />
@@ -92,8 +94,8 @@
     <Compile Include="Classification\VehicleInformation.cs" />
     <Compile Include="Classification\VehiclesInformation.cs" />
     <Compile Include="DataBaseDescription\MatchingTable.cs" />
-    <Compile Include="Exceptions\RightMenuLinksXLException.cs" />
     <Compile Include="Exceptions\ModulesListXLException.cs" />
+    <Compile Include="Exceptions\RightMenuLinksXLException.cs" />
     <Compile Include="Exceptions\ResultPageInformationException.cs" />
     <Compile Include="Exceptions\TrendsXLException.cs" />
     <Compile Include="Exceptions\VehiclesInformationXLException.cs" />
@@ -110,16 +112,19 @@
     <Compile Include="Results\DundasConfiguration.cs" />
     <Compile Include="Results\InfoNews.cs" />
     <Compile Include="Results\InfoNewsItem.cs" />
+    <Compile Include="Results\InsertionOptions.cs" />
     <Compile Include="Results\MSCreativesDetails.cs" />
     <Compile Include="Results\VpDateConfiguration.cs" />
     <Compile Include="Units\AllowUnits.cs" />
     <Compile Include="Units\DefaultUnit.cs" />
     <Compile Include="Units\DefaultUnitList.cs" />
     <Compile Include="Web\CompanyNameTexts.cs" />
+    <Compile Include="Web\TextWrap.cs" />
     <Compile Include="Web\Navigation\ModuleAssignment.cs" />
     <Compile Include="Web\Navigation\RightMenuLinks.cs" />
     <Compile Include="Web\Navigation\RightMenuLinksItem.cs" />
     <Compile Include="Web\Rss.cs" />
+    <Compile Include="XmlLoader\CampaignTypesDescriptionXL.cs" />
     <Compile Include="XmlLoader\CoreLayersXL.cs" />
     <Compile Include="XmlLoader\DataHistoryXL.cs" />
     <Compile Include="XmlLoader\DundasConfigurationXL.cs" />
@@ -233,12 +238,6 @@
     <None Include="DataBaseDescription\DataBaseConfiguration.cd" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
-      <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
-      <Name>TNS.AdExpress.Constantes</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Resources\AdExpress.en-ru.xml" />
     <Content Include="Resources\AdExpress.en.xml" />
     <Content Include="Resources\AdExpress.fi.xml" />
@@ -247,6 +246,12 @@
     <Content Include="Resources\AdExpress.ru.xml" />
     <Content Include="Resources\AdExpress.sk.xml" />
     <Content Include="Resources\AdExpress.cz.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
+      <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
+      <Name>TNS.AdExpress.Constantes</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

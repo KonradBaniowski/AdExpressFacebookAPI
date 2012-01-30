@@ -33,7 +33,14 @@ namespace TNS.AdExpress.Anubis.Bastet.BusinessFacade {
 	public class BastetExcelSystem : BastetExcel {
 
 		#region Variables
+        /// <summary>
+        /// Data Source 
+        /// </summary>
 		private IDataSource _dataSource = null;
+        /// <summary>
+        /// Data Source Classification
+        /// </summary>
+        private IDataSource _dataSourceClassification = null;
 		/// <summary>
 		///Bastet Configuration 
 		/// </summary>
@@ -65,8 +72,9 @@ namespace TNS.AdExpress.Anubis.Bastet.BusinessFacade {
 		/// <summary>
 		/// Constructeur
 		/// </summary>
-		public BastetExcelSystem(IDataSource dataSource, BastetConfig config, DataRow rqDetails, Parameters parameters):base(){
+		public BastetExcelSystem(IDataSource dataSource, IDataSource dataSourceClassification, BastetConfig config, DataRow rqDetails, Parameters parameters):base(){
 			this._dataSource = dataSource;
+            this._dataSourceClassification = dataSourceClassification;
 			this._config = config;
 			this._rqDetails = rqDetails;
 			this._parameters = parameters;
@@ -85,98 +93,101 @@ namespace TNS.AdExpress.Anubis.Bastet.BusinessFacade {
 		/// Génère les statistiques AdExpress dans un fichier excel
 		/// </summary>
 		public void Fill(){
-			
 
             for (int i = 0; i < _config.ExcelTabs.Count; i++)
             {
-                Constantes.excelTabs val = _config.ExcelTabs[i];
-                switch (val)
+               TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs val = _config.ExcelTabs[i];
+               switch (val)
                 {
-                    case Constantes.excelTabs.customerSelelection:
+                    case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.customerSelelection :
                         //Rappel des paramètres
-                        CustomerSelelection(_parameters, _rqDetails["id_login"].ToString());
+                        this.CustomerSelelection(_parameters, this._rqDetails["id_login"].ToString());
                         break;
-                    case Constantes.excelTabs.iPAdresseByClient:
+                   case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.iPAdresseByClient:
                         //IP Adresse par client
-                        IPAdresseByClient(_excelFilePath, _parameters);
+                        this.IPAdresseByClient(_excelFilePath, this._parameters);
                         break;
-                    case Constantes.excelTabs.topTypeConnectedCustomer:
+                    case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.topTypeConnectedCustomer:
                         //Top type clients qui se connectent le plus
-                        TopTypeConnectedCustomer(_excelFilePath, _parameters);
+                        this.TopTypeConnectedCustomer(_excelFilePath, this._parameters);
                         break;
-                    case Constantes.excelTabs.topTypeConnectedCustomerByDay:
+                    case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.topTypeConnectedCustomerByDay :
                         //Top connections par type de clients et par jour nommé
-                        TopTypeConnectedCustomerByDay(_excelFilePath, _parameters);
+                        this.TopTypeConnectedCustomerByDay(_excelFilePath, this._parameters);
                         break;
-                    case Constantes.excelTabs.topTypeConnectedCustomerByMonth:
+                   case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.topTypeConnectedCustomerByMonth :
                         //Top connections par type de clients et par mois
-                        TopTypeConnectedCustomerByMonth(_excelFilePath, _parameters);
+                        this.TopTypeConnectedCustomerByMonth(_excelFilePath, this._parameters);
                         break;
-                    case Constantes.excelTabs.topConnectedCustomer:
+                   case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.topConnectedCustomer :
                         //Top clients qui se connectent le plus
-                        TopConnectedCustomer(_excelFilePath, _parameters);
+                        this.TopConnectedCustomer(_excelFilePath, this._parameters);		
                         break;
-                    case Constantes.excelTabs.topConnectedCustomerByMonth:
+                   case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.topConnectedCustomerByMonth :
                         //Top connections clients par mois
-                        TopConnectedCustomerByMonth(_excelFilePath, _parameters);
+                        this.TopConnectedCustomerByMonth(_excelFilePath, this._parameters);
                         break;
-                    case Constantes.excelTabs.topConnectedCustomerByDay:
+                   case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.topConnectedCustomerByDay :
                         //Top connections clients par jour nommé
-                        TopConnectedCustomerByDay(_excelFilePath, _parameters);
+                        this.TopConnectedCustomerByDay(_excelFilePath, this._parameters);
                         break;
-                    case Constantes.excelTabs.topConnectedCompany:
+                   case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.topConnectedCompany :
                         //Top sociétés qui se connectent le plus
-                        TopConnectedCompany(_excelFilePath, _parameters);
+                        this.TopConnectedCompany(_excelFilePath, this._parameters);
                         break;
-                    case Constantes.excelTabs.topConnectedCompanyByMonth:
+                   case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.topConnectedCompanyByMonth:
                         //Top sociétés qui se connectent le plus par mois
-                        TopConnectedCompanyByMonth(_excelFilePath, _parameters);
+                        this.TopConnectedCompanyByMonth(_excelFilePath, this._parameters);
                         break;
-                    case Constantes.excelTabs.topConnectedCompanyByDay:
+                   case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.topConnectedCompanyByDay :
                         //Top sociétés qui se connectent le plus par jour nommé
-                        TopConnectedCompanyByDay(_excelFilePath, _parameters);
+                        this.TopConnectedCompanyByDay(_excelFilePath, this._parameters);
                         break;
-                    case Constantes.excelTabs.connexionDurationAverage:
+                   case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.connexionDurationAverage:
                         //Durée moyenne des connections par clients
-                        ConnexionDurationAverage(_parameters);
+                        this.ConnexionDurationAverage(this._parameters);
                         break;
-                    case Constantes.excelTabs.topUsedModules:
+                   case  TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.topUsedModules:
                         //Top des modules et des groupes de modules 
-                        TopUsedModules(_parameters);
+                        this.TopUsedModules(this._parameters);
                         break;
-                    case Constantes.excelTabs.topVehicle:
+                   case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.topVehicle :
                         //Top médias utilisés
-                        TopVehicle(_parameters);
+                        this.TopVehicle(this._parameters, this._dataSourceClassification);
                         break;
-                    case Constantes.excelTabs.topVehicleByModule:
+                   case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.topVehicleByModule :
                         //Top médias utilisés par module
-                        TopVehicleByModule(_parameters);
+                        this.TopVehicleByModule(this._parameters, this._dataSourceClassification);
                         break;
-                    case Constantes.excelTabs.topFileUsing:
+                   case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.topFileUsing :
                         //Top utilisation du fichier GAD etAGM
-                        TopFileUsing(_parameters);
+                        this.TopFileUsing(_parameters);
                         break;
-                    case Constantes.excelTabs.topExport:
+                   case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.topExport:
                         //Top export de fichier
-                        TopExport(_parameters);
+                        this.TopExport(_parameters);
                         break;
-                    case Constantes.excelTabs.topUsedTab:
+                   case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.topUsedTab:
                         //Top des options utilisées
-                        TopUsedTab(_parameters);
+                        this.TopUsedTab(_parameters);
                         break;
-                    case Constantes.excelTabs.topUsedUnits:
+                   case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.topUsedUnits:
                         //Top des unités utilisées
-                        TopUsedUnits(_parameters);
+                        this.TopUsedUnits(_parameters);
                         break;
-                    case Constantes.excelTabs.topUsedPeriod:
+                   case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.topUsedPeriod:
                         //Top des période utilisées
-                        TopUsedPeriod(_parameters);
+                        this.TopUsedPeriod(_parameters);
                         break;
-                    case Constantes.excelTabs.topUsingSavedSession:
+                   case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.topUsingSavedSession:
                         //Top clients utilisant le plus les requêtes sauvegardées
-                        TopUsingSavedSession(_parameters);
-                        break;                   
-                    default: throw (new Exception("Impossible to identify the excel tab to compute : " + val.ToString()));
+                        this.TopUsingSavedSession(_parameters);
+                        break;
+                   case TNS.AdExpress.Anubis.Bastet.Constantes.excelTabs.topConnectedByIpTimeSlot:
+                        //Top connections Clients, IP, time slot
+                        this.TopConnectedByIpTimeSlot(_excelFilePath, _parameters);
+                        break;
+                   default: throw (new Exception("Impossible to identify the excel tab to compute : " + val.ToString()));
 
                 }
             }

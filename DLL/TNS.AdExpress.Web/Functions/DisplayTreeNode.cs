@@ -8,6 +8,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
@@ -19,6 +20,9 @@ using System.Collections.Generic;
 using TNS.FrameWork.WebResultUI.Constantes;
 using TNS.AdExpressI.Classification.DAL;
 using System.Reflection;
+using TNS.AdExpress.Domain.Level;
+
+
 
 namespace TNS.AdExpress.Web.Functions{
 	/// <summary>
@@ -44,8 +48,8 @@ namespace TNS.AdExpress.Web.Functions{
 		/// <param name="typetree">Type d'arbre ?</param>
 		/// <param name="div">Afficher les div true si c'est le cas</param>
 		/// <returns>tableau correspondant à l'arbre</returns>
-		public static string ToHtml(TreeNode root,bool write,bool displayArrow,bool displayCheckbox,int witdhTable,bool displayBorderTable,bool allSelection,int SiteLanguage,int typetree,int showHideContent,bool div){
-			return(ToHtml(root,write,displayArrow,displayCheckbox,witdhTable,displayBorderTable,allSelection,SiteLanguage,typetree,showHideContent,div,false));
+		public static string ToHtml(TreeNode root,bool write,bool displayArrow,bool displayCheckbox,int witdhTable,bool displayBorderTable,bool allSelection,int SiteLanguage,int typetree,int showHideContent,bool div, int dataLanguage, TNS.FrameWork.DB.Common.IDataSource source){
+			return(ToHtml(root,write,displayArrow,displayCheckbox,witdhTable,displayBorderTable,allSelection,SiteLanguage,typetree,showHideContent,div,false,dataLanguage,source));
 		}
         /// <summary>
         ///  Affichage d'un arbre au format HTML
@@ -84,8 +88,8 @@ namespace TNS.AdExpress.Web.Functions{
 		/// <param name="typetree">Type d'arbre ?</param>
 		/// <param name="div">Afficher les div true si c'est le cas</param>
 		/// <returns>tableau correspondant à l'arbre</returns>
-		public static string ToHtml(TreeNode root,bool write,bool displayArrow,bool displayCheckbox,string witdhTable,bool displayBorderTable,bool allSelection,int SiteLanguage,int typetree,int showHideContent,bool div){
-			return(ToHtml(root,write,displayArrow,displayCheckbox,int.Parse(witdhTable),displayBorderTable,allSelection,SiteLanguage,typetree,showHideContent,div,true));
+		public static string ToHtml(TreeNode root,bool write,bool displayArrow,bool displayCheckbox,string witdhTable,bool displayBorderTable,bool allSelection,int SiteLanguage,int typetree,int showHideContent,bool div, int dataLanguage, TNS.FrameWork.DB.Common.IDataSource source){
+            return (ToHtml(root, write, displayArrow, displayCheckbox, int.Parse(witdhTable), displayBorderTable, allSelection, SiteLanguage, typetree, showHideContent, div, true, dataLanguage, source));
 		}
 		#endregion
 
@@ -100,12 +104,12 @@ namespace TNS.AdExpress.Web.Functions{
 		/// <param name="root">Arbre</param>
         /// <param name="siteLanguage">Site language</param>
 		/// <returns>Code HTML</returns>
-		public static string ToExcel(TreeNode root, int siteLanguage){
+		public static string ToExcel(TreeNode root, int siteLanguage, string domainName){
 			int maxLevel=0;
 			GetNbLevels(root,1,ref maxLevel);
 			StringBuilder html = new StringBuilder();
 			int nbTD=1;
-			TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(root,ref html,0,maxLevel-1,ref nbTD, siteLanguage);
+			TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(root,ref html,0,maxLevel-1,ref nbTD, siteLanguage, domainName);
 			return(html.ToString());
 		}
 
@@ -157,19 +161,22 @@ namespace TNS.AdExpress.Web.Functions{
 		/// dans la méthode ci-après et ajouter les niveaux dans la méthode GetLevelCss(int level)
 		/// - Affichage sur 3 colonnes dans le dernier niveau
 		/// </remarks>
-		private static bool ToExcel(TreeNode root, ref StringBuilder html, int level, int maxLevel, ref int nbTD, int siteLanguage){
+		private static bool ToExcel(TreeNode root, ref StringBuilder html, int level, int maxLevel, ref int nbTD, int siteLanguage, string domainName){
 
 			#region Variables
 			string img="";
             string themeName = WebApplicationParameters.Themes[siteLanguage].Name;
+            string absolutePath = string.Empty;
 			#endregion
+
+            if (domainName.Length > 0) absolutePath = "http://" + domainName; 
 
 			#region Checkbox
 			// Non cocher
-			if(!root.Checked) img="<img src=/App_Themes/"+themeName+"/Images/Common/checkbox_not_checked.GIF>";
+            if (!root.Checked) img = "<img src=\"" + absolutePath + "/App_Themes/" + themeName + "/Images/Common/checkbox_not_checked.GIF\">";
 			// Cocher
             //else if(root.Checked) img="<img src=/Images/Common/checkbox.GIF>";
-            else if (root.Checked) img = "<img src=/App_Themes/"+themeName+"/Images/Common/checkbox.GIF>";
+            else if (root.Checked) img = "<img src=\"" + absolutePath + "/App_Themes/" + themeName + "/Images/Common/checkbox.GIF\">";
 			#endregion
 
 			// Si on est dans le dernier niveau de l'arbre
@@ -187,7 +194,7 @@ namespace TNS.AdExpress.Web.Functions{
 			// Boucle sur chaque noeud de l'arbre
 			foreach(TreeNode currentNode in root.Nodes){
 				// Si le niveau inférieur indique qu'il faut changer de ligne et que la demande n'a pas été faite par le dernier fils
-				if(ToExcel(currentNode,ref html,level+1,maxLevel,ref nbTD,siteLanguage) && currentNode!=root.LastNode){
+				if(ToExcel(currentNode,ref html,level+1,maxLevel,ref nbTD,siteLanguage, domainName) && currentNode!=root.LastNode){
 					html.Append("</tr><tr>");
 				}
 			}
@@ -228,7 +235,8 @@ namespace TNS.AdExpress.Web.Functions{
 		/// <param name="SiteLanguage">Langue</param>	
 		/// <param name="displayCheckbox">True si l'on souhaite afficher la checkbox</param>
 		/// <returns>tableau correspondant à l'arbre</returns>
-		public	static string ToExcel(TreeNode root,int SiteLanguage,bool displayCheckbox){
+        public static string ToExcel(TreeNode root, int SiteLanguage, bool displayCheckbox, string domainName, int dataLanguage, TNS.FrameWork.DB.Common.IDataSource source)
+        {
 
 			System.Text.StringBuilder t=new System.Text.StringBuilder(1000);
             string themeName = WebApplicationParameters.Themes[SiteLanguage].Name;
@@ -241,7 +249,68 @@ namespace TNS.AdExpress.Web.Functions{
 			string classCss="";
 			int nbrColumn=0;
 			const string violet="txtViolet11Bold";
+            string absolutePath = string.Empty;
 			classCss=violet;
+            Dictionary<TNS.AdExpress.Constantes.Customer.Right.type,List<long>> dic= null;
+            Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL> dicClassif = null;
+            TNS.AdExpress.Domain.Layers.CoreLayer cl = null;
+            TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = null;
+            TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL levelItems = null;
+            List<long> idList = null;
+            long id = -1;
+            TNS.AdExpress.Constantes.Customer.Right.type levelType = TNS.AdExpress.Constantes.Customer.Right.type.nothing;
+           
+            foreach (TreeNode currentNode in root.Nodes)
+            {
+                if (dic == null) dic = new Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, List<long>>();
+                id = ((LevelInformation)currentNode.Tag).ID;
+                levelType = ((LevelInformation)currentNode.Tag).Type;
+                if(dic.ContainsKey(levelType)){
+                    if (!dic[levelType].Contains(id)) dic[levelType].Add(id);
+                }else{
+                    idList = new List<long>();
+                    idList.Add(id);
+                    dic.Add(levelType, idList);
+                }
+               
+                i=0;
+				while(i<currentNode.Nodes.Count){
+                    id = ((LevelInformation)currentNode.Nodes[i].Tag).ID;
+                    levelType = ((LevelInformation)currentNode.Nodes[i].Tag).Type;
+                    if (dic.ContainsKey(levelType))
+                    {
+                        if (!dic[levelType].Contains(id)) dic[levelType].Add(id);
+                    }
+                    else
+                    {
+                        idList = new List<long>();
+                        idList.Add(id);
+                        dic.Add(levelType, idList);
+                    }
+                    i++;
+                }
+            }
+            if (dic != null && dic.Count>0)
+            {
+                cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classificationLevelList];
+                if (cl == null) throw (new NullReferenceException("Core layer is null for the Detail selection control"));
+                object[] param = new object[2];
+                param[0] = source;
+                param[1] = dataLanguage;
+                factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                
+                foreach(KeyValuePair<TNS.AdExpress.Constantes.Customer.Right.type,List<long>> kpv in dic){
+                    string[] intArrayStr = Array.ConvertAll<long, string>(kpv.Value.ToArray(), new Converter<long, string>(Convert.ToString));
+                    string temp = String.Join(",", intArrayStr);
+                    levelItems = factoryLevels.CreateClassificationLevelListDAL(kpv.Key, temp);
+                    if (levelItems != null && levelItems.IdListOrderByClassificationItem.Count > 0)
+                    {
+                        if(dicClassif==null )dicClassif = new Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, ClassificationLevelListDAL>();
+                        dicClassif.Add(kpv.Key, levelItems);
+                    }
+                }
+            }
+            if (domainName.Length > 0) absolutePath = "http://" + domainName;
 
 			foreach(TreeNode currentNode in root.Nodes){				
 				if(start==0){
@@ -252,17 +321,22 @@ namespace TNS.AdExpress.Web.Functions{
                     t.Append("<table class=\"detailSelectionH\" cellpadding=0 cellspacing=0 >");
 				}
 				t.Append("<tr>");
-				t.Append("<td align=\"left\" height=\"10\"  valign=\"middle\" nowrap>");		
-				
+				t.Append("<td align=\"left\" height=\"10\"  valign=\"middle\" nowrap>");
+
+                
 				//Non cocher
 				if(displayCheckbox && !currentNode.Checked){
-                    t.Append("<img src=/App_Themes/" + themeName + "/Images/Common/checkbox_not_checked.GIF>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                    t.Append("<img src=\"" + absolutePath + "/App_Themes/" + themeName + "/Images/Common/checkbox_not_checked.GIF\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 				}
 				//cocher
 				else if(displayCheckbox && currentNode.Checked){
-                    t.Append("<img src=/App_Themes/" + themeName + "/Images/Common/checkbox.GIF>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                    t.Append("<img src=\"" + absolutePath + "/App_Themes/" + themeName + "/Images/Common/checkbox.GIF\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 				}
-				t.Append(""+((LevelInformation)currentNode.Tag).Text+"");
+               
+                if(dicClassif!=null && dicClassif.ContainsKey(((LevelInformation)currentNode.Tag).Type) && dicClassif[((LevelInformation)currentNode.Tag).Type].IdListOrderByClassificationItem.Contains(((LevelInformation)currentNode.Tag).ID)){
+                     //t.Append(""+((LevelInformation)currentNode.Tag).Text+"");
+                    t.Append("" + dicClassif[((LevelInformation)currentNode.Tag).Type][((LevelInformation)currentNode.Tag).ID] + "");
+                }
 				t.Append("</td>");
 				
 				if(currentNode.Nodes.Count>0){
@@ -285,11 +359,18 @@ namespace TNS.AdExpress.Web.Functions{
 				while(i<currentNode.Nodes.Count){
 					//Non cocher
 					if(!currentNode.Nodes[i].Checked){
-                        tmp = "<img src=/App_Themes/" + themeName + "/Images/Common/checkbox_not_checked.GIF>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + ((LevelInformation)currentNode.Nodes[i].Tag).Text + "<br>";
+                         if(dicClassif!=null && dicClassif.ContainsKey(((LevelInformation)currentNode.Nodes[i].Tag).Type) && dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type].IdListOrderByClassificationItem.Contains(((LevelInformation)currentNode.Nodes[i].Tag).ID)){
+                        //tmp = "<img src=\"" + absolutePath + "/App_Themes/" + themeName + "/Images/Common/checkbox_not_checked.GIF\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + ((LevelInformation)currentNode.Nodes[i].Tag).Text + "<br>";
+                             tmp = "<img src=\"" + absolutePath + "/App_Themes/" + themeName + "/Images/Common/checkbox_not_checked.GIF\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type][((LevelInformation)currentNode.Nodes[i].Tag).ID] + "<br>";
+                         }
 					}
 					//En lecture et cocher
 					else if(currentNode.Nodes[i].Checked){
-                        tmp = "<img src=/App_Themes/" + themeName + "/Images/Common/checkbox.GIF>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + ((LevelInformation)currentNode.Nodes[i].Tag).Text + "<br>";
+                        if (dicClassif != null && dicClassif.ContainsKey(((LevelInformation)currentNode.Nodes[i].Tag).Type) && dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type].IdListOrderByClassificationItem.Contains(((LevelInformation)currentNode.Nodes[i].Tag).ID))
+                        {
+                            //tmp = "<img src=\"" + absolutePath + "/App_Themes/" + themeName + "/Images/Common/checkbox.GIF\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + ((LevelInformation)currentNode.Nodes[i].Tag).Text + "<br>";
+                            tmp = "<img src=\"" + absolutePath + "/App_Themes/" + themeName + "/Images/Common/checkbox.GIF\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type][((LevelInformation)currentNode.Nodes[i].Tag).ID] + "<br>";
+                        }
 							
 					}else {
 						tmp="";
@@ -445,7 +526,7 @@ namespace TNS.AdExpress.Web.Functions{
 		/// <param name="div">Afficher les div true si c'est le cas</param>
 		/// <param name="percentage">Pour indiquer si la valeur de witdhTable est en pourcentage ou pas</param>
 		/// <returns>tableau correspondant à l'arbre</returns>
-		private static string ToHtml(TreeNode root,bool write,bool displayArrow,bool displayCheckbox,int witdhTable,bool displayBorderTable,bool allSelection,int SiteLanguage,int typetree,int showHideContent,bool div,bool percentage){
+		private static string ToHtml(TreeNode root,bool write,bool displayArrow,bool displayCheckbox,int witdhTable,bool displayBorderTable,bool allSelection,int SiteLanguage,int typetree,int showHideContent,bool div,bool percentage, int dataLanguage, TNS.FrameWork.DB.Common.IDataSource source){
 		
 			System.Text.StringBuilder t=new System.Text.StringBuilder(1000);
             string themeName = WebApplicationParameters.Themes[SiteLanguage].Name;
@@ -458,9 +539,73 @@ namespace TNS.AdExpress.Web.Functions{
 			string disabled="";
 			string tmp="";
 			int j=0;
+            Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, List<long>> dic = null;
+            Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL> dicClassif = null;
+            TNS.AdExpress.Domain.Layers.CoreLayer cl = null;
+            TNS.AdExpressI.Classification.DAL.ClassificationLevelListDALFactory factoryLevels = null;
+            TNS.AdExpressI.Classification.DAL.ClassificationLevelListDAL levelItems = null;
+            List<long> idList = null;
+            long id = -1;
+            TNS.AdExpress.Constantes.Customer.Right.type levelType = TNS.AdExpress.Constantes.Customer.Right.type.nothing;
 
 			if(percentage)
 				percentageSymbol="%";
+
+            foreach (TreeNode currentNode in root.Nodes)
+            {
+                if (dic == null) dic = new Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, List<long>>();
+                id = ((LevelInformation)currentNode.Tag).ID;
+                levelType = ((LevelInformation)currentNode.Tag).Type;
+                if (dic.ContainsKey(levelType))
+                {
+                    if (!dic[levelType].Contains(id)) dic[levelType].Add(id);
+                }
+                else
+                {
+                    idList = new List<long>();
+                    idList.Add(id);
+                    dic.Add(levelType, idList);
+                }
+
+                i = 0;
+                while (i < currentNode.Nodes.Count)
+                {
+                    id = ((LevelInformation)currentNode.Nodes[i].Tag).ID;
+                    levelType = ((LevelInformation)currentNode.Nodes[i].Tag).Type;
+                    if (dic.ContainsKey(levelType))
+                    {
+                        if (!dic[levelType].Contains(id)) dic[levelType].Add(id);
+                    }
+                    else
+                    {
+                        idList = new List<long>();
+                        idList.Add(id);
+                        dic.Add(levelType, idList);
+                    }
+                    i++;
+                }
+            }
+            if (dic != null && dic.Count > 0)
+            {
+                cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classificationLevelList];
+                if (cl == null) throw (new NullReferenceException("Core layer is null for the Detail selection control"));
+                object[] param = new object[2];
+                param[0] = source;
+                param[1] = dataLanguage;
+                factoryLevels = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+
+                foreach (KeyValuePair<TNS.AdExpress.Constantes.Customer.Right.type, List<long>> kpv in dic)
+                {
+                    string[] intArrayStr = Array.ConvertAll<long, string>(kpv.Value.ToArray(), new Converter<long, string>(Convert.ToString));
+                    string temp = String.Join(",", intArrayStr);
+                    levelItems = factoryLevels.CreateClassificationLevelListDAL(kpv.Key, temp);
+                    if (levelItems != null && levelItems.IdListOrderByClassificationItem.Count > 0)
+                    {
+                        if (dicClassif == null) dicClassif = new Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, ClassificationLevelListDAL>();
+                        dicClassif.Add(kpv.Key, levelItems);
+                    }
+                }
+            }
 
 			foreach(TreeNode currentNode in root.Nodes){
 				if(start==0){
@@ -521,7 +666,11 @@ namespace TNS.AdExpress.Web.Functions{
 						disabled="";
 						buttonAutomaticChecked="";
 						if(typetree==2){
-							t.Append("<input type=\"checkbox\"  "+disabled+" "+buttonAutomaticChecked+"  ID=\""+((LevelInformation)currentNode.Tag).ID+"\" value=\"AUTOMATIC_"+((LevelInformation)currentNode.Tag).ID+"_"+((LevelInformation)currentNode.Tag).Text+"\" name=\"AUTOMATIC_"+((LevelInformation)currentNode.Tag).ID+"_"+((LevelInformation)currentNode.Tag).Text+"\">");
+                            if (dicClassif != null && dicClassif.ContainsKey(((LevelInformation)currentNode.Tag).Type) && dicClassif[((LevelInformation)currentNode.Tag).Type].IdListOrderByClassificationItem.Contains(((LevelInformation)currentNode.Tag).ID))
+                            {
+                                //t.Append("<input type=\"checkbox\"  " + disabled + " " + buttonAutomaticChecked + "  ID=\"" + ((LevelInformation)currentNode.Tag).ID + "\" value=\"AUTOMATIC_" + ((LevelInformation)currentNode.Tag).ID + "_" + ((LevelInformation)currentNode.Tag).Text + "\" name=\"AUTOMATIC_" + ((LevelInformation)currentNode.Tag).ID + "_" + ((LevelInformation)currentNode.Tag).Text + "\">");
+                                t.Append("<input type=\"checkbox\"  " + disabled + " " + buttonAutomaticChecked + "  ID=\"" + ((LevelInformation)currentNode.Tag).ID + "\" value=\"AUTOMATIC_" + ((LevelInformation)currentNode.Tag).ID + "_" + dicClassif[((LevelInformation)currentNode.Tag).Type][((LevelInformation)currentNode.Tag).ID] + "\" name=\"AUTOMATIC_" + ((LevelInformation)currentNode.Tag).ID + "_"  + dicClassif[((LevelInformation)currentNode.Tag).Type][((LevelInformation)currentNode.Tag).ID] + "\">");
+                            }
 						}
 						else if(typetree==3){
 							disabled="disabled";
@@ -538,7 +687,10 @@ namespace TNS.AdExpress.Web.Functions{
 						disabled="";
 						buttonAutomaticChecked="checked";
 						if(typetree==2){
-							t.Append("<input type=\"checkbox\"  "+disabled+" "+buttonAutomaticChecked+"  ID=\""+((LevelInformation)currentNode.Tag).ID+"\" value=\"AUTOMATIC_"+((LevelInformation)currentNode.Tag).ID+"_"+((LevelInformation)currentNode.Tag).Text+"\" name=\"AUTOMATIC_"+((LevelInformation)currentNode.Tag).ID+"_"+((LevelInformation)currentNode.Tag).Text+"\">");
+                            if (dicClassif != null && dicClassif.ContainsKey(((LevelInformation)currentNode.Tag).Type) && dicClassif[((LevelInformation)currentNode.Tag).Type].IdListOrderByClassificationItem.Contains(((LevelInformation)currentNode.Tag).ID))
+                            {
+                                t.Append("<input type=\"checkbox\"  " + disabled + " " + buttonAutomaticChecked + "  ID=\"" + ((LevelInformation)currentNode.Tag).ID + "\" value=\"AUTOMATIC_" + ((LevelInformation)currentNode.Tag).ID + "_" + dicClassif[((LevelInformation)currentNode.Tag).Type][((LevelInformation)currentNode.Tag).ID] + "\" name=\"AUTOMATIC_" + ((LevelInformation)currentNode.Tag).ID + "_" + dicClassif[((LevelInformation)currentNode.Tag).Type][((LevelInformation)currentNode.Tag).ID] + "\">");
+                            }
 						}
 						else if(typetree==3){
                             t.Append("<input type=\"checkbox\" " + disabled + " " + buttonAutomaticChecked + " ID=\"AdvertiserSelectionWebControl1_" + j + "\" name=\"AdvertiserSelectionWebControl1$" + j + "\"><label for=\"AdvertiserSelectionWebControl1_" + j + "\">");
@@ -552,7 +704,12 @@ namespace TNS.AdExpress.Web.Functions{
 				    t.Append("</label>");
 				}
 				else{t.Append("&nbsp;");}
-				t.Append(""+((LevelInformation)currentNode.Tag).Text+"");
+				
+                if (dicClassif != null && dicClassif.ContainsKey(((LevelInformation)currentNode.Tag).Type) && dicClassif[((LevelInformation)currentNode.Tag).Type].IdListOrderByClassificationItem.Contains(((LevelInformation)currentNode.Tag).ID))
+                {
+                    //t.Append("" + ((LevelInformation)currentNode.Tag).Text + "");
+                    t.Append("" + dicClassif[((LevelInformation)currentNode.Tag).Type][((LevelInformation)currentNode.Tag).ID] + "");
+                }
 				t.Append("</td>");
 				if(displayArrow && currentNode.Nodes.Count>0){
 					if(showHideContent==1){
@@ -645,11 +802,20 @@ namespace TNS.AdExpress.Web.Functions{
 							disabled="disabled";
 							buttonAutomaticChecked="";
 							if(typetree==2){
-								tmp="<input type=\"checkbox\" "+disabled+" "+buttonAutomaticChecked+" ID=\""+((LevelInformation)currentNode.Tag).ID+((LevelInformation)currentNode.Tag).Text+"\"  value=\""+((LevelInformation)currentNode.Nodes[i].Tag).ID+"_"+((LevelInformation)currentNode.Nodes[i].Tag).Text+"\" name=\"CKB_"+((LevelInformation)currentNode.Tag).ID+"_"+((LevelInformation)currentNode.Tag).Text+"\">"+((LevelInformation)currentNode.Nodes[i].Tag).Text+"<br>";
+                                if (dicClassif != null && dicClassif.ContainsKey(((LevelInformation)currentNode.Tag).Type) && dicClassif[((LevelInformation)currentNode.Tag).Type].IdListOrderByClassificationItem.Contains(((LevelInformation)currentNode.Tag).ID))
+                                {
+                                    //+ dicClassif[((LevelInformation)currentNode.Tag).Type][((LevelInformation)currentNode.Tag).ID] + 
+                                    //tmp = "<input type=\"checkbox\" " + disabled + " " + buttonAutomaticChecked + " ID=\"" + ((LevelInformation)currentNode.Tag).ID + ((LevelInformation)currentNode.Tag).Text + "\"  value=\"" + ((LevelInformation)currentNode.Nodes[i].Tag).ID + "_" + ((LevelInformation)currentNode.Nodes[i].Tag).Text + "\" name=\"CKB_" + ((LevelInformation)currentNode.Tag).ID + "_" + ((LevelInformation)currentNode.Tag).Text + "\">" + ((LevelInformation)currentNode.Nodes[i].Tag).Text + "<br>";
+                                    tmp = "<input type=\"checkbox\" " + disabled + " " + buttonAutomaticChecked + " ID=\"" + dicClassif[((LevelInformation)currentNode.Tag).Type][((LevelInformation)currentNode.Tag).ID] + "\"  value=\"" + ((LevelInformation)currentNode.Nodes[i].Tag).ID + "_" + dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type][((LevelInformation)currentNode.Nodes[i].Tag).ID] + "\" name=\"CKB_" + ((LevelInformation)currentNode.Tag).ID + "_" + dicClassif[((LevelInformation)currentNode.Tag).Type][((LevelInformation)currentNode.Tag).ID] + "\">" + dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type][((LevelInformation)currentNode.Nodes[i].Tag).ID] + "<br>";
+                                }
 							}
 							else{
-                                tmp = "<input type=\"checkbox\" " + disabled + " " + buttonAutomaticChecked + " value=" + ((LevelInformation)currentNode.Tag).ID + " ID=\"AdvertiserSelectionWebControl1_" + j + "\" name=\"AdvertiserSelectionWebControl1$" + j + "\"><label for=\"AdvertiserSelectionWebControl1_" + j + "\">" + ((LevelInformation)currentNode.Nodes[i].Tag).Text + "<br></label>";
-								j++;
+                                if (dicClassif != null && dicClassif.ContainsKey(((LevelInformation)currentNode.Nodes[i].Tag).Type) && dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type].IdListOrderByClassificationItem.Contains(((LevelInformation)currentNode.Nodes[i].Tag).ID))
+                                {
+                                    //tmp = "<input type=\"checkbox\" " + disabled + " " + buttonAutomaticChecked + " value=" + ((LevelInformation)currentNode.Tag).ID + " ID=\"AdvertiserSelectionWebControl1_" + j + "\" name=\"AdvertiserSelectionWebControl1$" + j + "\"><label for=\"AdvertiserSelectionWebControl1_" + j + "\">" + ((LevelInformation)currentNode.Nodes[i].Tag).Text + "<br></label>";
+                                    tmp = "<input type=\"checkbox\" " + disabled + " " + buttonAutomaticChecked + " value=" + ((LevelInformation)currentNode.Tag).ID + " ID=\"AdvertiserSelectionWebControl1_" + j + "\" name=\"AdvertiserSelectionWebControl1$" + j + "\"><label for=\"AdvertiserSelectionWebControl1_" + j + "\">" + dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type][((LevelInformation)currentNode.Nodes[i].Tag).ID] + "<br></label>";
+                                    j++;
+                                }
 							}
 						}
 							//En lecture et cocher
@@ -657,11 +823,20 @@ namespace TNS.AdExpress.Web.Functions{
 							disabled="disabled";
 							buttonAutomaticChecked="checked";
 							if(typetree==2){
-								tmp="<input type=\"checkbox\" "+disabled+" "+buttonAutomaticChecked+" ID=\""+((LevelInformation)currentNode.Tag).ID+((LevelInformation)currentNode.Tag).Text+"\"  value=\""+((LevelInformation)currentNode.Nodes[i].Tag).ID+"_"+((LevelInformation)currentNode.Nodes[i].Tag).Text+"\" name=\"CKB_"+((LevelInformation)currentNode.Tag).ID+"_"+((LevelInformation)currentNode.Tag).Text+"\">"+((LevelInformation)currentNode.Nodes[i].Tag).Text+"<br>";
+                                if (dicClassif != null && dicClassif.ContainsKey(((LevelInformation)currentNode.Nodes[i].Tag).Type) && dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type].IdListOrderByClassificationItem.Contains(((LevelInformation)currentNode.Nodes[i].Tag).ID))
+                                {
+                                    //tmp = "<input type=\"checkbox\" " + disabled + " " + buttonAutomaticChecked + " ID=\"" + ((LevelInformation)currentNode.Tag).ID + ((LevelInformation)currentNode.Tag).Text + "\"  value=\"" + ((LevelInformation)currentNode.Nodes[i].Tag).ID + "_" + ((LevelInformation)currentNode.Nodes[i].Tag).Text + "\" name=\"CKB_" + ((LevelInformation)currentNode.Tag).ID + "_" + ((LevelInformation)currentNode.Tag).Text + "\">" + ((LevelInformation)currentNode.Nodes[i].Tag).Text + "<br>";
+                                    tmp = "<input type=\"checkbox\" " + disabled + " " + buttonAutomaticChecked + " ID=\"" + ((LevelInformation)currentNode.Tag).ID + dicClassif[((LevelInformation)currentNode.Tag).Type][((LevelInformation)currentNode.Tag).ID] + "\"  value=\"" + ((LevelInformation)currentNode.Nodes[i].Tag).ID + "_" + dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type][((LevelInformation)currentNode.Nodes[i].Tag).ID] + "\" name=\"CKB_" + ((LevelInformation)currentNode.Tag).ID + "_" + ((LevelInformation)currentNode.Tag).ID + dicClassif[((LevelInformation)currentNode.Tag).Type][((LevelInformation)currentNode.Tag).ID] + "\">" + dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type][((LevelInformation)currentNode.Nodes[i].Tag).ID] + "<br>";
+                                }
 							}
 							else{
-								tmp="<input type=\"checkbox\" "+disabled+" "+buttonAutomaticChecked+" value="+((LevelInformation)currentNode.Tag).ID+" ID=\"AdvertiserSelectionWebControl1_"+j+"\" name=\"AdvertiserSelectionWebControl1$"+j+"\"><label for=\"AdvertiserSelectionWebControl1_"+j+"\">"+((LevelInformation)currentNode.Nodes[i].Tag).Text+"<br></label>";
-								j++;
+
+                                if (dicClassif != null && dicClassif.ContainsKey(((LevelInformation)currentNode.Nodes[i].Tag).Type) && dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type].IdListOrderByClassificationItem.Contains(((LevelInformation)currentNode.Nodes[i].Tag).ID))
+                                {
+                                    //tmp = "<input type=\"checkbox\" " + disabled + " " + buttonAutomaticChecked + " value=" + ((LevelInformation)currentNode.Tag).ID + " ID=\"AdvertiserSelectionWebControl1_" + j + "\" name=\"AdvertiserSelectionWebControl1$" + j + "\"><label for=\"AdvertiserSelectionWebControl1_" + j + "\">" + ((LevelInformation)currentNode.Nodes[i].Tag).Text + "<br></label>";
+                                    tmp = "<input type=\"checkbox\" " + disabled + " " + buttonAutomaticChecked + " value=" + ((LevelInformation)currentNode.Tag).ID + " ID=\"AdvertiserSelectionWebControl1_" + j + "\" name=\"AdvertiserSelectionWebControl1$" + j + "\"><label for=\"AdvertiserSelectionWebControl1_" + j + "\">" + dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type][((LevelInformation)currentNode.Nodes[i].Tag).ID] + "<br></label>";
+                                    j++;
+                                }
 							}
 						
 						}
@@ -670,16 +845,29 @@ namespace TNS.AdExpress.Web.Functions{
 							disabled="";
 							buttonAutomaticChecked="";
 							if(typetree==2){
-								tmp="<input type=\"checkbox\" "+disabled+" "+buttonAutomaticChecked+" ID=\""+((LevelInformation)currentNode.Tag).ID+((LevelInformation)currentNode.Tag).Text+"\"  value=\""+((LevelInformation)currentNode.Nodes[i].Tag).ID+"_"+((LevelInformation)currentNode.Nodes[i].Tag).Text+"\" name=\"CKB_"+((LevelInformation)currentNode.Tag).ID+"_"+((LevelInformation)currentNode.Tag).Text+"\">"+((LevelInformation)currentNode.Nodes[i].Tag).Text+"<br>";
+                                if (dicClassif != null && dicClassif.ContainsKey(((LevelInformation)currentNode.Tag).Type) && dicClassif[((LevelInformation)currentNode.Tag).Type].IdListOrderByClassificationItem.Contains(((LevelInformation)currentNode.Tag).ID))
+                                {
+                                   
+                                    //tmp = "<input type=\"checkbox\" " + disabled + " " + buttonAutomaticChecked + " ID=\"" + ((LevelInformation)currentNode.Tag).ID + ((LevelInformation)currentNode.Tag).Text + "\"  value=\"" + ((LevelInformation)currentNode.Nodes[i].Tag).ID + "_" + ((LevelInformation)currentNode.Nodes[i].Tag).Text + "\" name=\"CKB_" + ((LevelInformation)currentNode.Tag).ID + "_" + ((LevelInformation)currentNode.Tag).Text + "\">" + ((LevelInformation)currentNode.Nodes[i].Tag).Text + "<br>";
+                                    tmp = "<input type=\"checkbox\" " + disabled + " " + buttonAutomaticChecked + " ID=\"" + ((LevelInformation)currentNode.Tag).ID + dicClassif[((LevelInformation)currentNode.Tag).Type][((LevelInformation)currentNode.Tag).ID] + "\"  value=\"" + ((LevelInformation)currentNode.Nodes[i].Tag).ID + "_" + dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type][((LevelInformation)currentNode.Nodes[i].Tag).ID] +"\" name=\"CKB_" + ((LevelInformation)currentNode.Tag).ID + "_" + dicClassif[((LevelInformation)currentNode.Tag).Type][((LevelInformation)currentNode.Tag).ID] + "\">" + dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type][((LevelInformation)currentNode.Nodes[i].Tag).ID] + "<br>";
+                                }
 							}
 							else if(typetree==3){
 								disabled="disabled";
-								tmp="<input type=\"checkbox\" "+disabled+" "+buttonAutomaticChecked+" value="+((LevelInformation)currentNode.Tag).ID+" ID=\"AdvertiserSelectionWebControl1_"+j+"\" name=\"AdvertiserSelectionWebControl1$"+j+"\"><label for=\"AdvertiserSelectionWebControl1_"+j+"\">"+((LevelInformation)currentNode.Nodes[i].Tag).Text+"<br></label>";
-								j++;
+                                if (dicClassif != null && dicClassif.ContainsKey(((LevelInformation)currentNode.Nodes[i].Tag).Type) && dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type].IdListOrderByClassificationItem.Contains(((LevelInformation)currentNode.Nodes[i].Tag).ID))
+                                {
+                                    //tmp = "<input type=\"checkbox\" " + disabled + " " + buttonAutomaticChecked + " value=" + ((LevelInformation)currentNode.Tag).ID + " ID=\"AdvertiserSelectionWebControl1_" + j + "\" name=\"AdvertiserSelectionWebControl1$" + j + "\"><label for=\"AdvertiserSelectionWebControl1_" + j + "\">" + ((LevelInformation)currentNode.Nodes[i].Tag).Text + "<br></label>";
+                                    tmp = "<input type=\"checkbox\" " + disabled + " " + buttonAutomaticChecked + " value=" + ((LevelInformation)currentNode.Tag).ID + " ID=\"AdvertiserSelectionWebControl1_" + j + "\" name=\"AdvertiserSelectionWebControl1$" + j + "\"><label for=\"AdvertiserSelectionWebControl1_" + j + "\">" + dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type][((LevelInformation)currentNode.Nodes[i].Tag).ID] + "<br></label>";
+                                    j++;
+                                }
 							}
 							else{
-								tmp="<input type=\"checkbox\" "+disabled+" "+buttonAutomaticChecked+" value="+((LevelInformation)currentNode.Tag).ID+" ID=\"AdvertiserSelectionWebControl1_"+j+"\" name=\"AdvertiserSelectionWebControl1$"+j+"\"><label for=\"AdvertiserSelectionWebControl1_"+j+"\">"+((LevelInformation)currentNode.Nodes[i].Tag).Text+"<br></label>";
-								j++;
+                                if (dicClassif != null && dicClassif.ContainsKey(((LevelInformation)currentNode.Nodes[i].Tag).Type) && dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type].IdListOrderByClassificationItem.Contains(((LevelInformation)currentNode.Nodes[i].Tag).ID))
+                                {
+                                    //tmp="<input type=\"checkbox\" "+disabled+" "+buttonAutomaticChecked+" value="+((LevelInformation)currentNode.Tag).ID+" ID=\"AdvertiserSelectionWebControl1_"+j+"\" name=\"AdvertiserSelectionWebControl1$"+j+"\"><label for=\"AdvertiserSelectionWebControl1_"+j+"\">"+((LevelInformation)currentNode.Nodes[i].Tag).Text+"<br></label>";
+                                    tmp = "<input type=\"checkbox\" " + disabled + " " + buttonAutomaticChecked + " value=" + ((LevelInformation)currentNode.Tag).ID + " ID=\"AdvertiserSelectionWebControl1_" + j + "\" name=\"AdvertiserSelectionWebControl1$" + j + "\"><label for=\"AdvertiserSelectionWebControl1_" + j + "\">" + dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type][((LevelInformation)currentNode.Nodes[i].Tag).ID] + "<br></label>";
+                                    j++;
+                                }
 							}
 						
 						}
@@ -687,11 +875,20 @@ namespace TNS.AdExpress.Web.Functions{
 							disabled="";
 							buttonAutomaticChecked="checked";
 							if(typetree==2){
-								tmp="<input type=\"checkbox\" "+disabled+" "+buttonAutomaticChecked+" ID=\""+((LevelInformation)currentNode.Tag).ID+((LevelInformation)currentNode.Tag).Text+"\"  value=\""+((LevelInformation)currentNode.Nodes[i].Tag).ID+"_"+((LevelInformation)currentNode.Nodes[i].Tag).Text+"\" name=\"CKB_"+((LevelInformation)currentNode.Tag).ID+"_"+((LevelInformation)currentNode.Tag).Text+"\">"+((LevelInformation)currentNode.Nodes[i].Tag).Text+"<br>";
+                                if (dicClassif != null && dicClassif.ContainsKey(((LevelInformation)currentNode.Tag).Type) && dicClassif[((LevelInformation)currentNode.Tag).Type].IdListOrderByClassificationItem.Contains(((LevelInformation)currentNode.Tag).ID))
+                                {
+                                    //tmp = "<input type=\"checkbox\" " + disabled + " " + buttonAutomaticChecked + " ID=\"" + ((LevelInformation)currentNode.Tag).ID + ((LevelInformation)currentNode.Tag).Text + "\"  value=\"" + ((LevelInformation)currentNode.Nodes[i].Tag).ID + "_" + ((LevelInformation)currentNode.Nodes[i].Tag).Text + "\" name=\"CKB_" + ((LevelInformation)currentNode.Tag).ID + "_" + ((LevelInformation)currentNode.Tag).Text + "\">" + ((LevelInformation)currentNode.Nodes[i].Tag).Text + "<br>";
+                                    tmp = "<input type=\"checkbox\" " + disabled + " " + buttonAutomaticChecked + " ID=\"" + ((LevelInformation)currentNode.Tag).ID + dicClassif[((LevelInformation)currentNode.Tag).Type][((LevelInformation)currentNode.Tag).ID] + "\"  value=\"" + ((LevelInformation)currentNode.Nodes[i].Tag).ID + "_" + dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type][((LevelInformation)currentNode.Nodes[i].Tag).ID] + "\" name=\"CKB_" + ((LevelInformation)currentNode.Tag).ID + "_" + dicClassif[((LevelInformation)currentNode.Tag).Type][((LevelInformation)currentNode.Tag).ID] + "\">" + dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type][((LevelInformation)currentNode.Nodes[i].Tag).ID] + "<br>";
+                                }
 							}
 							else{
-								tmp="<input type=\"checkbox\" "+disabled+" "+buttonAutomaticChecked+" value="+((LevelInformation)currentNode.Tag).ID+" ID=\"AdvertiserSelectionWebControl1_"+j+"\" name=\"AdvertiserSelectionWebControl1$"+j+"\"><label for=\"AdvertiserSelectionWebControl1_"+j+"\">"+((LevelInformation)currentNode.Nodes[i].Tag).Text+"<br></label>";
-								j++;
+
+                                if (dicClassif != null && dicClassif.ContainsKey(((LevelInformation)currentNode.Nodes[i].Tag).Type) && dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type].IdListOrderByClassificationItem.Contains(((LevelInformation)currentNode.Nodes[i].Tag).ID))
+                                {
+                                    //tmp = "<input type=\"checkbox\" " + disabled + " " + buttonAutomaticChecked + " value=" + ((LevelInformation)currentNode.Tag).ID + " ID=\"AdvertiserSelectionWebControl1_" + j + "\" name=\"AdvertiserSelectionWebControl1$" + j + "\"><label for=\"AdvertiserSelectionWebControl1_" + j + "\">" + ((LevelInformation)currentNode.Nodes[i].Tag).Text + "<br></label>";
+                                    tmp = "<input type=\"checkbox\" " + disabled + " " + buttonAutomaticChecked + " value=" + ((LevelInformation)currentNode.Tag).ID + " ID=\"AdvertiserSelectionWebControl1_" + j + "\" name=\"AdvertiserSelectionWebControl1$" + j + "\"><label for=\"AdvertiserSelectionWebControl1_" + j + "\">" + dicClassif[((LevelInformation)currentNode.Nodes[i].Tag).Type][((LevelInformation)currentNode.Nodes[i].Tag).ID] + "<br></label>";
+                                    j++;
+                                }
 							}
 						}
 					}

@@ -21,7 +21,8 @@ using constEvent = TNS.AdExpress.Constantes.FrameWork.Selection;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 
-public partial class Private_Selection_Russia_SubMediaSelection : TNS.AdExpress.Web.UI.SelectionWebPage{
+public partial class Private_Selection_Russia_SubMediaSelection : TNS.AdExpress.Web.UI.SelectionWebPage
+{
 
     /// <summary>
     /// TextBox : mot clé
@@ -36,14 +37,14 @@ public partial class Private_Selection_Russia_SubMediaSelection : TNS.AdExpress.
     public string divClose = "";
 
     #region Constructor
-		/// <summary>
-		/// Constructeur
-		/// </summary>
+    /// <summary>
+    /// Constructeur
+    /// </summary>
     public Private_Selection_Russia_SubMediaSelection()
         : base()
     {
-		}
-	#endregion
+    }
+    #endregion
 
     #region  Page Load
     /// <summary>
@@ -54,14 +55,14 @@ public partial class Private_Selection_Russia_SubMediaSelection : TNS.AdExpress.
     protected void Page_Load(object sender, System.EventArgs e)
     {
         try
-        {          
+        {
 
-            #region Textes et langage du site           
+            #region Textes et langage du site
             ModuleTitleWebControl1.CustomerWebSession = _webSession;
             #endregion
 
             //Rollover des boutons            
-            validateButton.ToolTip = GestionWeb.GetWebWord(1536, _webSession.SiteLanguage);                      
+            validateButton.ToolTip = GestionWeb.GetWebWord(1536, _webSession.SiteLanguage);
 
             #region évènemment
             // Connaître le boutton qui a été cliquer 
@@ -71,18 +72,18 @@ public partial class Private_Selection_Russia_SubMediaSelection : TNS.AdExpress.
             if (Request.Form.Get("__EVENTTARGET") == "validateButton")
             {
                 eventButton = constEvent.eventSelection.VALID_EVENT;
-            }           
+            }
             // Controle Recall
             else if (Request.Form.Get("__EVENTTARGET") == "MenuWebControl2")
             {
                 eventButton = constEvent.eventSelection.VALID_EVENT;
             }
-           
+
             #endregion
 
             // Définition du contrôle SubMediaSelectionWebControl1
-            SubMediaSelectionWebControl1.WebSession = _webSession;                    
-            
+            SubMediaSelectionWebControl1.WebSession = _webSession;
+
 
             #region Script
             //Gestion de la sélection d'un radiobutton dans la liste des univers
@@ -101,7 +102,7 @@ public partial class Private_Selection_Russia_SubMediaSelection : TNS.AdExpress.
             {
                 Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "trapEnter", TNS.AdExpress.Web.Functions.Script.TrapEnter("OkImageButtonRollOverWebControl"));
             }
-           
+
             if (!Page.ClientScript.IsClientScriptBlockRegistered("ShowHideContent1"))
             {
                 Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "ShowHideContent1", TNS.AdExpress.Web.Functions.Script.ShowHideContent1(1));
@@ -129,12 +130,26 @@ public partial class Private_Selection_Russia_SubMediaSelection : TNS.AdExpress.
     protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode()
     {
         System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
-      
-        SubMediaSelectionWebControl1.WebSession = _webSession;      
-        MenuWebControl2.CustomerWebSession = _webSession;
-        _webSession.SelectionUniversMedia.FirstNode.Nodes.Clear();
-        return tmp;
 
+        try
+        {
+
+            SubMediaSelectionWebControl1.WebSession = _webSession;
+            MenuWebControl2.CustomerWebSession = _webSession;
+            MenuWebControl2.ForbidResultIcon = true;
+            MenuWebControl2.ForbidOptionPagesList = new ArrayList();
+            MenuWebControl2.ForbidOptionPagesList.Add(4);
+            _webSession.SelectionUniversMedia.FirstNode.Nodes.Clear();
+           
+        }
+        catch (System.Exception exc)
+        {
+            if (exc.GetType() != typeof(System.Threading.ThreadAbortException))
+            {
+                this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+            }
+        }
+        return tmp;
     }
     #endregion
 
@@ -160,7 +175,7 @@ public partial class Private_Selection_Russia_SubMediaSelection : TNS.AdExpress.
                     //_webSession.CurrentUniversMedia.Nodes.Add(tmpNode);
                     _webSession.SelectionUniversMedia.FirstNode.Nodes.Add(tmpNode);
                     break;//select only one sub media
-                }                
+                }
             }
             if (_webSession.SelectionUniversMedia.FirstNode != null && _webSession.SelectionUniversMedia.FirstNode.Nodes.Count > 0)
             {
@@ -172,13 +187,13 @@ public partial class Private_Selection_Russia_SubMediaSelection : TNS.AdExpress.
             {
 
                 // Erreur : Aucun élément n'est sélectionné
-					Response.Write("<script language=javascript>");
-					Response.Write("alert(\""+GestionWeb.GetWebWord(878,_webSession.SiteLanguage)+"\");");
-					Response.Write("history.go(-1);");
-					Response.Write("</script>");
-				
+                Response.Write("<script language=javascript>");
+                Response.Write("alert(\"" + GestionWeb.GetWebWord(878, _webSession.SiteLanguage) + "\");");
+                Response.Write("history.go(-1);");
+                Response.Write("</script>");
+
             }
-          
+
 
         }
         catch (System.Exception exc)

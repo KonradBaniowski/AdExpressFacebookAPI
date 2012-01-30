@@ -66,6 +66,7 @@ namespace AdExpress.Private.Universe{
 		protected  Int64 idUniverseClientDescription = 0;
 
 		string stringBranch = String.Empty;
+        int _filter = 0;
 		#endregion 
 
 		#region Constructeur
@@ -89,6 +90,9 @@ namespace AdExpress.Private.Universe{
 			try{
 				idUniverseClientDescription = Int64.Parse(Page.Request.QueryString.Get("idUniverseClientDescription"));
 				stringBranch = Page.Request.QueryString.Get("brancheType");
+                
+                if (Page.Request.QueryString.Get("filter") != null)
+                    _filter = int.Parse(Page.Request.QueryString.Get("filter"));
 
 				#region Langage
 				//Modification de la langue pour les Textes AdExpress
@@ -143,7 +147,7 @@ namespace AdExpress.Private.Universe{
 		}
 		#endregion	
 
-		#region Code généré par le Concepteur Web Form
+        #region Code généré par le Concepteur Web Form
 		/// <summary>
 		/// Initialisation
 		/// </summary>
@@ -190,7 +194,7 @@ namespace AdExpress.Private.Universe{
 					
 					if (universeName.Length == 0 && !idSelectedUniverse.Equals("0")) {
 						SetTreeNodeUniverse(branchType, alTreeNodeUniverse);
-						if ((branchType!= TNS.AdExpress.Constantes.Classification.Branch.type.product && UniversListDataAccess.UpdateUniverse(Int64.Parse(idSelectedUniverse), _webSession, idUniverseClientDescription, branchType.GetHashCode(), alTreeNodeUniverse))
+						if ((branchType!= TNS.AdExpress.Constantes.Classification.Branch.type.product && UniversListDataAccess.UpdateUniverse(Int64.Parse(idSelectedUniverse), _webSession, idUniverseClientDescription, branchType.GetHashCode(), alTreeNodeUniverse,_filter))
 							|| ((WebFunctions.Modules.IsDashBoardModule(_webSession) || WebFunctions.Modules.IsRecapModule(_webSession)) && _webSession.PrincipalProductUniverses.Count > 0 && UniversListDataAccess.UpdateUniverse(Int64.Parse(idSelectedUniverse), _webSession, idUniverseClientDescription, branchType.GetHashCode(), _webSession.PrincipalProductUniverses))
 							) {
 
@@ -209,7 +213,7 @@ namespace AdExpress.Private.Universe{
 							
 							SetTreeNodeUniverse(branchType, alTreeNodeUniverse);
 
-							if ((branchType != TNS.AdExpress.Constantes.Classification.Branch.type.product && idSelectedDirectory != null && idSelectedDirectory.Length > 0 && UniversListDataAccess.SaveUniverse(Int64.Parse(idSelectedDirectory), universeName, alTreeNodeUniverse, branchType, idUniverseClientDescription, _webSession))
+							if ((branchType != TNS.AdExpress.Constantes.Classification.Branch.type.product && idSelectedDirectory != null && idSelectedDirectory.Length > 0 && UniversListDataAccess.SaveUniverse(Int64.Parse(idSelectedDirectory), universeName, alTreeNodeUniverse, branchType, idUniverseClientDescription, _webSession, _filter))
 								|| ((WebFunctions.Modules.IsDashBoardModule(_webSession) || WebFunctions.Modules.IsRecapModule(_webSession)) && idSelectedDirectory != null && idSelectedDirectory.Length > 0 && _webSession.PrincipalProductUniverses.Count > 0 && UniversListDataAccess.SaveUniverse(Int64.Parse(idSelectedDirectory), universeName, _webSession.PrincipalProductUniverses, branchType, idUniverseClientDescription, _webSession))
 								){
 								// Validation : confirmation d'enregistrement de l'univers
@@ -377,9 +381,30 @@ namespace AdExpress.Private.Universe{
 			else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadio.ToString()) {
 				return TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadio;
 			}
+            else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadioGeneral.ToString()){
+                return TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadioGeneral;
+            }
+            else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadioMusic.ToString()){
+                return TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadioMusic;
+            }
+            else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadioSponsorship.ToString()){
+                return TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadioSponsorship;
+            }
 			else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.mediaTv.ToString()) {
 				return TNS.AdExpress.Constantes.Classification.Branch.type.mediaTv;
 			}
+            else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvGeneral.ToString()){
+                return TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvGeneral;
+            }            
+            else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvAnnounces.ToString()){
+                return TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvAnnounces;
+            }
+            else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvNonTerrestrials.ToString()){
+                return TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvNonTerrestrials;
+            }
+            else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvSponsorshipRu.ToString()){
+                return TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvSponsorshipRu;
+            }
             else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.mediaAdnettrack.ToString()) {
                 return TNS.AdExpress.Constantes.Classification.Branch.type.mediaAdnettrack;
             }
@@ -406,6 +431,10 @@ namespace AdExpress.Private.Universe{
 			}
             else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.advertisingAgency.ToString()) {
                 return TNS.AdExpress.Constantes.Classification.Branch.type.advertisingAgency;
+            }
+            else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.mediaEditorial.ToString())
+            {
+                return TNS.AdExpress.Constantes.Classification.Branch.type.mediaEditorial;
             }
 			else 
 			return 0;
@@ -441,12 +470,21 @@ namespace AdExpress.Private.Universe{
                 case TNS.AdExpress.Constantes.Classification.Branch.type.mediaMagazine:
 				case TNS.AdExpress.Constantes.Classification.Branch.type.mediaTv:
 				case TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvSponsorship:
+                case TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvSponsorshipRu:
+                case TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvNonTerrestrials:
+                case TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvGeneral:
+                case TNS.AdExpress.Constantes.Classification.Branch.type.mediaTvAnnounces:          
 				case TNS.AdExpress.Constantes.Classification.Branch.type.mediaOthers:
 				case TNS.AdExpress.Constantes.Classification.Branch.type.mediaOutdoor:
-				case TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadio:
+                case TNS.AdExpress.Constantes.Classification.Branch.type.mediaIndoor :
+				case TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadio :
+                case TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadioGeneral:
+                case TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadioMusic:
+                case TNS.AdExpress.Constantes.Classification.Branch.type.mediaRadioSponsorship:
 				case TNS.AdExpress.Constantes.Classification.Branch.type.mediaInternationalPress:
 				case TNS.AdExpress.Constantes.Classification.Branch.type.mediaInternet:
                 case TNS.AdExpress.Constantes.Classification.Branch.type.mediaAdnettrack:
+                case TNS.AdExpress.Constantes.Classification.Branch.type.mediaEditorial:
 					alTreeNodeUniverse.Add(_webSession.CurrentUniversMedia);
 					break;
 				case TNS.AdExpress.Constantes.Classification.Branch.type.programType:

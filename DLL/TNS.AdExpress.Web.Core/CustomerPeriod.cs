@@ -42,6 +42,10 @@ namespace TNS.AdExpress.Web.Core {
         /// <summary>
         /// Indique s'il s'agit d'une étude comparative
         /// </summary>
+        private bool _withComparativePeriodPersonnalized = false;
+        /// <summary>
+        /// Indique s'il s'agit d'une étude comparative
+        /// </summary>
         private bool _withComparativePeriod = false;
         /// <summary>
         /// Liste des dates de début pour les périodes en jours
@@ -107,6 +111,12 @@ namespace TNS.AdExpress.Web.Core {
         /// </summary>
         public bool WithComparativePeriod {
             get { return _withComparativePeriod; }
+        }
+        /// <summary>
+        /// Indique s'il s'agit d'une étude comparative personalized
+        /// </summary>
+        public bool WithComparativePeriodPersonnalized {
+            get { return _withComparativePeriodPersonnalized; }
         }
         /// <summary>
         /// Get le type de la période comparative
@@ -249,6 +259,38 @@ namespace TNS.AdExpress.Web.Core {
             }
 
         }
+
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="startDate">La date de début</param>
+        /// <param name="endDate">La date de fin</param>
+        /// <param name="comparativeEndDate"></param>
+        /// <param name="comparativeStartDate"></param>
+        public CustomerPeriod(string startDate, string endDate, string comparativeStartDate, string comparativeEndDate)
+            : this(startDate, endDate) {
+
+            #region Init
+            _comparativePeriodDayBegin = new ArrayList();
+            _comparativePeriodDayEnd = new ArrayList();
+            _comparativePeriodMonthBegin = new ArrayList();
+            _comparativePeriodMonthEnd = new ArrayList();
+            #endregion
+
+            DateTime date = new DateTime(int.Parse(startDate.Substring(0, 4)), int.Parse(startDate.Substring(4, 2)), int.Parse(startDate.Substring(6, 2)));
+
+            _comparativePeriodType = TNS.AdExpress.Constantes.Web.globalCalendar.comparativePeriodType.dateToDate;
+            _comparativeStartDate = comparativeStartDate;
+            _comparativeEndDate = comparativeEndDate;
+            _withComparativePeriodPersonnalized = _withComparativePeriod  = true;
+
+            if (date <= DateTime.Now) {
+                PeriodSplit(_comparativeStartDate, _comparativeEndDate, ref _comparativePeriodDayBegin, ref _comparativePeriodDayEnd, ref _comparativePeriodMonthBegin, ref _comparativePeriodMonthEnd);
+                if (!_is4M)
+                    PeriodSplit(_comparativeStartDate, _comparativeEndDate, ref _comparativePeriodDayBegin, ref _comparativePeriodDayEnd, ref _comparativePeriodMonthBegin, ref _comparativePeriodMonthEnd);
+            }
+
+        }
         /// <summary>
         /// Constructeur
         /// </summary>
@@ -256,28 +298,12 @@ namespace TNS.AdExpress.Web.Core {
         /// <param name="endDate">La date de fin</param>
         /// <param name="withComparativePeriod">Indique s'il s'agit d'une étude comparative</param>
         /// <param name="comparativePeriodType">Type de la période comparative</param>
-        public CustomerPeriod(string startDate, string endDate, bool withComparativePeriod, Constantes.Web.globalCalendar.comparativePeriodType comparativePeriodType, Constantes.Web.globalCalendar.periodDisponibilityType periodDisponibilityType) {
+        public CustomerPeriod(string startDate, string endDate, bool withComparativePeriod, Constantes.Web.globalCalendar.comparativePeriodType comparativePeriodType, Constantes.Web.globalCalendar.periodDisponibilityType periodDisponibilityType):this(startDate, endDate) {
 
-            #region Init
-            _periodDayBegin = new ArrayList();
-            _periodDayEnd = new ArrayList();
-            _periodMonthBegin = new ArrayList();
-            _periodMonthEnd = new ArrayList();
-            #endregion
-
-            DateTime date = new DateTime(int.Parse(startDate.Substring(0, 4)), int.Parse(startDate.Substring(4, 2)), int.Parse(startDate.Substring(6, 2)));
-
-            _startDate = startDate;
-            _endDate = endDate;
             _comparativePeriodType = comparativePeriodType;
             _periodDisponibilityType = periodDisponibilityType;
             _withComparativePeriod = withComparativePeriod;
-
-            if (date <= DateTime.Now) {
-                PeriodSplit(_startDate, _endDate, ref _periodDayBegin, ref _periodDayEnd, ref _periodMonthBegin, ref _periodMonthEnd);
-                if (!_is4M)
-                    PeriodTreatment(ref _periodDayBegin, ref _periodDayEnd, ref _periodMonthBegin, ref _periodMonthEnd);
-            }
+            DateTime date = new DateTime(int.Parse(startDate.Substring(0, 4)), int.Parse(startDate.Substring(4, 2)), int.Parse(startDate.Substring(6, 2)));
 
             if (_withComparativePeriod) {
 

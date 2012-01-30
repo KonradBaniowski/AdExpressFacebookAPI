@@ -25,6 +25,9 @@ using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web;
 using System.Collections.Generic;
+using TNS.AdExpress.Web.Controls.Selections;
+using TNS.AdExpress.Web.Core.DataAccess.ClassificationList;
+using System.Data;
 
 
 namespace TNS.AdExpress.Web.Controls.Headers
@@ -47,10 +50,6 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// </summary>
 		protected const string HELP_BUTTON_NAME="help";
 		/// <summary>
-		/// Largeur de la fenêtre cible
-		/// </summary>
-		protected const string TARGET_PAGE_WIDTH="710";
-		/// <summary>
 		/// Hauteur de la fenêtre cible
 		/// </summary>
 		protected const string TARGET_PAGE_HEIGHT="700";
@@ -65,8 +64,19 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		private string _zoomDate;
 		#endregion
 
-		#region Partie Colonnes
-		/// <summary>
+        #region Width
+        /// <summary>
+        /// Title Bar Width
+        /// </summary>
+        private string _titleBarWidth = string.Empty;
+        /// <summary>
+        /// Title Div Width
+        /// </summary>
+        private string _titleDivWidth = string.Empty;
+        #endregion
+
+        #region Partie Colonnes
+        /// <summary>
 		/// Nombre de colonnes personnalisées
 		/// </summary>
 		protected int _nbColumnItemList=0;
@@ -157,6 +167,17 @@ namespace TNS.AdExpress.Web.Controls.Headers
         private string _themeName = string.Empty;
         #endregion
 
+        #region Save customised levels
+        /// <summary>
+        /// Check if is loading saved levels
+        /// </summary>
+        bool _isLoadingSaveLevels = false;
+        /// <summary>
+        ///Saved Detail Item List 
+        /// </summary>
+        protected string _savedDetailItemList = "";
+        #endregion
+
         #endregion
 
         #region Variables MMI
@@ -176,6 +197,14 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// Valider la sélection
 		/// </summary>
 		public ImageButtonRollOverWebControl _buttonOk;
+        /// <summary>
+        /// Save levels
+        /// </summary>
+        public ImageButtonRollOverWebControl _buttonSave;
+        /// <summary>
+        /// Loadable Customised Levels WebControl
+        /// </summary>
+        protected LoadableCustomisedLevelsWebControl _loadableCustomisedLevelsWebControl = null;
 		#endregion
 
 		#region Constructeur
@@ -226,6 +255,26 @@ namespace TNS.AdExpress.Web.Controls.Headers
         public string ThemeName {
             get { return _themeName; }
             set { _themeName = value; }
+        }
+        /// <summary>
+        /// Get / Set Title Bar Width
+        /// </summary>
+        [Bindable(true)]
+        [Category("Appearance")]
+        [DefaultValue("990")]
+        public string TitleBarWidth{
+            get { return _titleBarWidth; }
+            set { _titleBarWidth = value; }
+        }
+        /// <summary>
+        /// Get / Set Title Div Width
+        /// </summary>
+        [Bindable(true)]
+        [Category("Appearance")]
+        [DefaultValue("986")]
+        public string TitleDivWidth{
+            get { return _titleDivWidth; }
+            set { _titleDivWidth = value; }
         }
         /// <summary>
         /// Get or Set le libellé de la liste des niveaux par défaut
@@ -325,6 +374,34 @@ namespace TNS.AdExpress.Web.Controls.Headers
 
 			return(script.ToString());
 		}
+
+        /// <summary>
+        /// Script permettant d'ouvrir la fenetre modale d'enregistrement des niveaux d'insertion
+        /// Elle est ouverte par la fenetre appelante mais se ferme independemment de cette derniere
+        /// Le script est destinée à être placé dans un lien ou un onClick, onLoad...
+        /// </summary>
+        /// <returns>Code JavaScript</returns>
+        private string SaveInsertionsLevels()
+        {
+            StringBuilder script = new StringBuilder(300);
+            script.Append("\n <SCRIPT language=JavaScript>");
+            script.Append("\n\t function SaveInsertionsLevels(idSession,idVehicle){\n");
+            script.Append("\n\t var detailLevels='';");
+            script.Append("\n\t var columsLevelsIds=document.getElementById('columnItemSelectedList').value;");
+            for (int i = 1; i <= _nbDetailLevelItemList; i++)
+            {
+                string detailLevelId = "'" + "l" + i.ToString() + "Detail_" + this.ID + "'";
+                script.Append("\n\t if(document.getElementById( " + detailLevelId + ") != null && document.getElementById( " + detailLevelId + ").options[document.getElementById( " + detailLevelId + ").selectedIndex].value != -1){");
+                script.Append("\n\t\t detailLevels= detailLevels + document.getElementById( " + detailLevelId + ").options[document.getElementById( " + detailLevelId + ").selectedIndex].value +','; ");
+                script.Append("\n\t } ");
+               
+            }
+            script.Append("\n\t if(detailLevels.length>0) detailLevels = detailLevels.substring(0,detailLevels.length-1); ");
+            script.Append("\n\t\t window.showModalDialog('/Private/MyAdExpress/InsertionLevelSave.aspx?idSession="+_customerWebSession.IdSession+"&idV=' + idVehicle+'&cl='+ columsLevelsIds+'&dl='+ detailLevels+'&atd=" + DateTime.Now.ToString("yyyyMMddhhmmss") + " ',null, 'dialogHeight:300px;dialogWidth:450px;help:no;resizable:no;scroll:no;status:no;');");
+            script.Append("\n\t }\n");
+            script.Append("</script>\n");
+            return script.ToString();
+        }
 		#endregion
 
 		#region Evènements
@@ -369,71 +446,165 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				#region Initialisation de la liste des niveaux de détail
 				_allowedDetailItemList = WebApplicationParameters.InsertionsDetail.GetAllowedMediaDetailLevelItems(_idVehicleFromTab);
                 _defaultDetailItemList = WebApplicationParameters.InsertionsDetail.GetDefaultMediaDetailLevels(_idVehicleFromTab);
-				#endregion
+                #endregion  
 
-				if (Page.IsPostBack && _columnSetId == _oldColumnSetId){
-			
-					#region La liste des colonnes sélectionnées
-					//récupération de la liste des id des colonnes sélectionnées
-					if(this.Page.Request.Form.GetValues("columnItemSelectedList")!=null){
-						columnItemSelectedList = this.Page.Request.Form.GetValues("columnItemSelectedList");
+                #region Load saved customised levels
+                List<int> allowedDetailLevelItems = (WebApplicationParameters.InsertionOptions.CanSaveLevels) ? GetAllowedDetailItemList():null;
+                string idMySavedLevels = "";
+                if (WebApplicationParameters.InsertionOptions.CanSaveLevels && Page.IsPostBack && Page.Request.Form.Get("__EVENTTARGET") == "loadImageButtonRollOverWebControl")
+                {
+                    //Load saved customised levels                    
+                    if (this.Page.Request.Form.GetValues("idMySavedLevels") != null)
+                    {
+                        idMySavedLevels = this.Page.Request.Form.GetValues("idMySavedLevels")[0];
+                        if (!string.IsNullOrEmpty(idMySavedLevels))
+                        {
+                            _columnItemSelectedList = new List<GenericColumnItemInformation>();
+                             _columnItemTrashList = new List<GenericColumnItemInformation>();
 
+                            DataSet ds = InsertionLevelDAL.GetInsertionSaveData(_customerWebSession, idMySavedLevels);
+                            if (ds != null &&  ds.Tables[0]!=null && ds.Tables[0].Rows.Count>0)
+                            {                             
+                                columnItemSelectedList = ds.Tables[0].Rows[0]["COLUMN_LIST"].ToString().Split(',');
+                                _savedDetailItemList = ds.Tables[0].Rows[0]["LEVE_LIST"].ToString();
+                                if (columnItemSelectedList != null && columnItemSelectedList.Length > 0 && !columnItemSelectedList[0].Equals(""))
+                                {
+                                    for (int i = 0; i < columnItemSelectedList.Length; i++)
+                                    {
+                                        if(WebApplicationParameters.GenericColumnItemsInformation.Contains(Int64.Parse(columnItemSelectedList[i]))){
+                                            _genericColumnItemInformation = WebApplicationParameters.GenericColumnItemsInformation.Get(Int64.Parse(columnItemSelectedList[i]));
+                                        _columnItemSelectedList.Add(_genericColumnItemInformation);
+                                        }
+                                    }
+                                    if (_columnItemSelectedList != null && _columnItemSelectedList.Count > 0)
+                                    {
+                                        #region La liste des colonnes de la corbeille
+                                        int verif = 0;
+                                        
+                                        foreach (GenericColumnItemInformation ColumnI in _columnItemList)
+                                        {
+                                            foreach (GenericColumnItemInformation ColumnJ in _columnItemSelectedList)
+                                            {
+                                                if (ColumnI.Id == ColumnJ.Id)
+                                                    verif = 1;
+                                            }
+                                            if (verif == 0)
+                                            {
+                                                _columnItemTrashList.Add(ColumnI);
+                                            }
+                                            verif = 0;
+                                        }
+                                        #endregion
+
+                                        genericColumnList = new List<Int64>();
+                                        foreach (GenericColumnItemInformation Column in _columnItemSelectedList)
+                                            genericColumnList.Add((int)Column.Id);
+
+                                    }
+                                }
+                                if (_columnItemSelectedList!=null && _columnItemSelectedList.Count > 0 && !string.IsNullOrEmpty(_savedDetailItemList))
+                                {
+                                    List<int> detailLevels = new List<string>(_savedDetailItemList.Split(',')).ConvertAll(i => int.Parse(i));
+                                    for (int j = 0; j < detailLevels.Count; j++)
+                                    {
+                                        if (allowedDetailLevelItems.Contains(detailLevels[j]))
+                                        levels.Add(detailLevels[j]);
+                                    }
+                                }
+                                if (_columnItemSelectedList != null && _columnItemSelectedList.Count > 0 && levels!=null && levels.Count > 0)
+                                {
+                                    _isLoadingSaveLevels = true;
+                                    _customerWebSession.GenericInsertionColumns = new GenericColumns(genericColumnList);
+                                    _customerWebSession.DetailLevel = new GenericDetailLevel(levels, WebConstantes.GenericDetailLevel.SelectedFrom.savedLevels);
+                                }
+                            }
+                        }
+                    }
+                }
+                #endregion
+
+                if (!_isLoadingSaveLevels)
+                {
+                    if (Page.IsPostBack && _columnSetId == _oldColumnSetId)
+                    {
+
+                        #region La liste des colonnes sélectionnées
+                        //récupération de la liste des id des colonnes sélectionnées
+                        if (this.Page.Request.Form.GetValues("columnItemSelectedList") != null)
+                        {
+                            columnItemSelectedList = this.Page.Request.Form.GetValues("columnItemSelectedList");
+
+                            _columnItemSelectedList = new List<GenericColumnItemInformation>();
+                            _columnItemTrashList = new List<GenericColumnItemInformation>();
+
+                            columnItemSelectedList = columnItemSelectedList[0].Split(',');
+
+                            if (!columnItemSelectedList[0].Equals(""))
+                            {
+                                if (columnItemSelectedList[0].Equals("-1"))
+                                    _columnItemTrashList = _columnItemList;
+                                else
+                                {
+                                    for (int i = 0; i < columnItemSelectedList.Length; i++)
+                                    {
+                                        _genericColumnItemInformation = WebApplicationParameters.GenericColumnItemsInformation.Get(Int64.Parse(columnItemSelectedList[i]));
+                                        _columnItemSelectedList.Add(_genericColumnItemInformation);
+                                    }
+
+                                    #region La liste des colonnes de la corbeille
+                                    int verif = 0;
+
+                                    foreach (GenericColumnItemInformation ColumnI in _columnItemList)
+                                    {
+                                        foreach (GenericColumnItemInformation ColumnJ in _columnItemSelectedList)
+                                        {
+                                            if (ColumnI.Id == ColumnJ.Id)
+                                                verif = 1;
+                                        }
+                                        if (verif == 0)
+                                            _columnItemTrashList.Add(ColumnI);
+                                        verif = 0;
+                                    }
+                                    #endregion
+                                }
+                            }
+                            else
+                            {
+                                _columnItemSelectedList = _columnItemList;
+                            }
+
+                            genericColumnList = new List<Int64>();
+                            foreach (GenericColumnItemInformation Column in _columnItemSelectedList)
+                                genericColumnList.Add((int)Column.Id);
+                            _customerWebSession.GenericInsertionColumns = new GenericColumns(genericColumnList);
+                        }
+                        #endregion
+
+                    }
+                    else
+                    {
+                        genericColumnList = new List<Int64>();
                         _columnItemSelectedList = new List<GenericColumnItemInformation>();
                         _columnItemTrashList = new List<GenericColumnItemInformation>();
-					
-						columnItemSelectedList = columnItemSelectedList[0].Split(',');
+                        foreach (GenericColumnItemInformation Column in _columnItemList)
+                        {
+                            if (WebApplicationParameters.GenericColumnsInformation.InBasket(_columnSetId, Column.Id))
+                                _columnItemTrashList.Add(Column);
+                            else
+                            {
+                                genericColumnList.Add((int)Column.Id);
+                                _columnItemSelectedList.Add(Column);
+                            }
+                        }
+                        _customerWebSession.GenericInsertionColumns = new GenericColumns(genericColumnList);
 
-						if (!columnItemSelectedList[0].Equals("")){
-							if (columnItemSelectedList[0].Equals("-1"))
-								_columnItemTrashList=_columnItemList;
-							else{
-								for ( int i=0; i<columnItemSelectedList.Length; i++){
-									_genericColumnItemInformation = WebApplicationParameters.GenericColumnItemsInformation.Get(Int64.Parse(columnItemSelectedList[i]));
-									_columnItemSelectedList.Add(_genericColumnItemInformation);
-								}
+                        foreach (GenericDetailLevel detailItem in _defaultDetailItemList)
+                            levels = detailItem.LevelIds;
 
-								#region La liste des colonnes de la corbeille
-								int verif=0;
-	
-								foreach(GenericColumnItemInformation ColumnI in _columnItemList){
-									foreach(GenericColumnItemInformation ColumnJ in _columnItemSelectedList){
-										if (ColumnI.Id == ColumnJ.Id)
-											verif=1;
-									}
-									if (verif==0)
-										_columnItemTrashList.Add(ColumnI);
-									verif=0;
-								}
-								#endregion
-							}
-						}
-						else{
-							_columnItemSelectedList=_columnItemList;
-						}
-
-						genericColumnList = new List<Int64>(); 
-						foreach(GenericColumnItemInformation Column in _columnItemSelectedList)
-							genericColumnList.Add((int)Column.Id);
-						_customerWebSession.GenericInsertionColumns= new GenericColumns(genericColumnList);
-					}
-					#endregion
-
-				}
-				else{
-					genericColumnList=new List<Int64>();
-                    foreach (GenericColumnItemInformation Column in _columnItemList)
-                    {
-                        genericColumnList.Add((int)Column.Id);
+                        _customerWebSession.DetailLevel = new GenericDetailLevel(levels, WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels);
+                        _customerWebSession.Save();
                     }
-					_customerWebSession.GenericInsertionColumns= new GenericColumns(genericColumnList);
-
-					foreach(GenericDetailLevel detailItem in _defaultDetailItemList)
-						levels=detailItem.LevelIds;		
-
-					_customerWebSession.DetailLevel=new GenericDetailLevel(levels,WebConstantes.GenericDetailLevel.SelectedFrom.defaultLevels);
-					_customerWebSession.Save();
-				}	
-				
+                }
 				#endregion
 
 				#region Niveau de détaille par défaut
@@ -459,6 +630,18 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				#endregion
 				#endregion
 
+                #region bouton Save
+                if (WebApplicationParameters.InsertionOptions.CanSaveLevels)
+                {
+                    _buttonSave = new ImageButtonRollOverWebControl();
+                    _buttonSave.ID = "saveImageButton";
+                    _buttonSave.ImageUrl = "/App_Themes/" + _themeName + "/Images/Common/Button/bt_save_up.gif";
+                    _buttonSave.RollOverImageUrl = "/App_Themes/" + _themeName + "/Images/Common/Button/bt_save_down.gif";
+                    _buttonSave.Attributes.Add("onclick","SaveInsertionsLevels(" + _customerWebSession.IdSession + "," + _idVehicleFromTab + ");return false;");                                      
+                    Controls.Add(_buttonSave);
+                }
+                #endregion
+
 				#region bouton OK
 				_buttonOk=new ImageButtonRollOverWebControl();
 				_buttonOk.ID="okImageButton";
@@ -467,7 +650,25 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				Controls.Add(_buttonOk);
 				#endregion
 
+           
 				if(!this.Page.ClientScript.IsClientScriptBlockRegistered("genericDetailSelectionControl"))this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"genericDetailSelectionControl",GetLevelJavaScript());
+                if (WebApplicationParameters.InsertionOptions.CanSaveLevels)
+                {                   
+                    _loadableCustomisedLevelsWebControl = new LoadableCustomisedLevelsWebControl();
+                    _loadableCustomisedLevelsWebControl.AllowedDetailItemList = allowedDetailLevelItems;
+                    List<int> colList = new List<int>();
+                    foreach (GenericColumnItemInformation Column in _columnItemList)
+                        colList.Add((int)Column.Id);
+                    _loadableCustomisedLevelsWebControl.ColumnItemList = colList;
+                    _loadableCustomisedLevelsWebControl.CustomerWebSession = _customerWebSession;
+                    _loadableCustomisedLevelsWebControl.IdVehicle = _idVehicleFromTab;
+                    if (!string.IsNullOrEmpty(idMySavedLevels) && _isLoadingSaveLevels) _loadableCustomisedLevelsWebControl.IdInsertionSave = Convert.ToInt64(idMySavedLevels);
+                    _loadableCustomisedLevelsWebControl.ThemeName = _themeName;
+                    _loadableCustomisedLevelsWebControl._buttonOk.ID = "loadImageButtonRollOverWebControl";
+                    Controls.Add(_loadableCustomisedLevelsWebControl);
+                    if (!this.Page.ClientScript.IsClientScriptBlockRegistered("SaveInsertionsLevels")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "SaveInsertionsLevels", SaveInsertionsLevels());
+                    
+                }
 			}
 		}
 		#endregion
@@ -489,6 +690,25 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				if (Page.IsPostBack){
 					#region Gestion de la sélection niveau détail
                     int levelId = -1;
+
+                    if (_isLoadingSaveLevels)
+                    {
+                        if (_customerWebSession.DetailLevel.LevelIds.Count >= 1)
+                        {
+                            _l1Detail.SelectedValue = ((DetailLevelItemInformation.Levels)_customerWebSession.DetailLevel.LevelIds[0]).GetHashCode().ToString();
+                        }
+                        else _l1Detail.SelectedValue = "-1";
+                        if (_customerWebSession.DetailLevel.LevelIds.Count >= 2)
+                        {
+                            _l2Detail.SelectedValue = ((DetailLevelItemInformation.Levels)_customerWebSession.DetailLevel.LevelIds[1]).GetHashCode().ToString();
+                        }
+                        else _l2Detail.SelectedValue = "-1";
+                        if (_customerWebSession.DetailLevel.LevelIds.Count >= 3)
+                        {
+                            _l3Detail.SelectedValue = ((DetailLevelItemInformation.Levels)_customerWebSession.DetailLevel.LevelIds[2]).GetHashCode().ToString();
+                        }
+                        else _l3Detail.SelectedValue = "-1";
+                    }
 					if(_nbDetailLevelItemList>=1 && (levelId = int.Parse(_l1Detail.SelectedValue))>=0 && CanAddDetailLevelItem(DetailLevelItemsInformation.Get(levelId))){
                         levels.Add(levelId);
 					}
@@ -532,10 +752,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			if ((!_idVehicleFromTab.Equals(null))&&(_idVehicleFromTab!=0)){
 				//La generation du script qui permet la gestion de drag and drop
 				if(!this.Page.ClientScript.IsClientScriptBlockRegistered("GenericDetailSelectionScript"))
-					if (Page.IsPostBack && _columnSetId==_oldColumnSetId)
-						this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"GenericDetailSelectionScript",TNS.AdExpress.Web.Functions.DetailSelectionScript.GenericDetailSelectionScript(_nbColumnItemList, _nbColumnItemList-_columnItemTrashList.Count));
-					else
-						this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"GenericDetailSelectionScript",TNS.AdExpress.Web.Functions.DetailSelectionScript.GenericDetailSelectionScript(_nbColumnItemList, _nbColumnItemList));
+                    this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "GenericDetailSelectionScript", TNS.AdExpress.Web.Functions.DetailSelectionScript.GenericDetailSelectionScript(_nbColumnItemList, ((_columnItemTrashList==null) ? 0 : _nbColumnItemList - _columnItemTrashList.Count)));
 			}
 			base.OnPreRender (e);
 		}
@@ -546,7 +763,10 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// Génère ce contrôle dans le paramètre de sortie spécifié.
 		/// </summary>
 		/// <param name="output"> Le writer HTML vers lequel écrire </param>
-		protected override void Render(HtmlTextWriter output){
+		protected override void Render(HtmlTextWriter output)
+        {
+
+           
 
 			#region Début du tableau (support et dates)
             output.Write("<table width=\"500\" class=\"backGroundWhite\" style=\"MARGIN-LEFT: 5px; MARGIN-RIGHT: 0px;BORDER:SOLID 0px;\"");
@@ -556,47 +776,51 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			if ((!_idVehicleFromTab.Equals(null))&&(_idVehicleFromTab!=0))
 			{
 
+               
+                #region Saved levels
+                if (WebApplicationParameters.InsertionOptions.CanSaveLevels)
+                {
+                    output.Write("<tr>");
+                    output.Write("<td>");
+                    _loadableCustomisedLevelsWebControl.RenderControl(output);
+                    output.Write("<br/></td>");
+                    output.Write("</tr>");
+                }
+                #endregion
+
 				output.Write("<tr>");
 				output.Write("<td>");
                 #region Title Bar
-                    output.Write("<table class=\"backGroundWhite violetBorder\" style=\"MARGIN-LEFT: 0px;\" cellSpacing=\"0\" cellPadding=\"0\" width=\"990px\" border=\"0\">");
+                    output.Write("<table class=\"backGroundWhite violetBorder\" style=\"MARGIN-LEFT: 0px;\" cellSpacing=\"0\" cellPadding=\"0\" width=\""+_titleBarWidth+"px\" border=\"0\">");
                         output.Write("<tr onclick=\"DivDisplayer('detailledLevelContent');\" style=\"CURSOR: pointer\">");
                             output.Write("<td class=\"txtViolet11Bold\">&nbsp;" + GestionWeb.GetWebWord(1896, _customerWebSession.SiteLanguage) + "&nbsp;</td>");
                             output.Write("<td align=\"right\" class=\"arrowBackGround\"></td>");
                         output.Write("</tr>");
                     output.Write("</table>");
                 #endregion
-                    output.Write("\n<div id=\"detailledLevelContent\" style=\"MARGIN-LEFT: 0px; DISPLAY: none; WIDTH: 986px; padding-left:2px; vertical-align:top;\" class=\"detailledLevelCss\">");
-				        output.Write("<table width=\"986px\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" ID=\"Section\">");
+                    output.Write("\n<div id=\"detailledLevelContent\" style=\"MARGIN-LEFT: 0px; DISPLAY: none; WIDTH: " + _titleDivWidth + "px; padding-left:2px; vertical-align:top;\" class=\"detailledLevelCss\">");
+                    output.Write("<table width=\"" + _titleDivWidth + "px\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" ID=\"Section\">");
 				            output.Write("<tr>");
 				                output.Write("<td>");
                                     #region Div columns
-				                    output.Write("<table id=\"Table2\" height=\"32\" width=\"986\" border=\"0\">");
+				                    output.Write("<table id=\"Table2\" height=\"32\" width=\""+_titleDivWidth+"\" border=\"0\">");
 
 				                        //output.Write("<tr style=\"DISPLAY: block; FLOAT: left; LIST-STYLE-TYPE: none\">");
                                     output.Write("<tr>");
-                                        if (Page.IsPostBack && _columnSetId==_oldColumnSetId){
-					                        foreach(GenericColumnItemInformation Column in _columnItemSelectedList){
-                                                output.Write("\n<td id=\"zone" + (int)Column.Id + "\" width=\"45px\" height=\"27\" class=\"simpleDroptd\" noWrap align=\"left\">");
-    						                        output.Write("\n<div class=\"simpleColumn\" id=\""+(int)Column.Id+"\">");
-						                                output.Write("\n"+GestionWeb.GetWebWord(Column.WebTextId,_customerWebSession.SiteLanguage)+"");
-						                            output.Write("\n</div>");
-						                        output.Write("\n</td>");
-					                        }
-					                        foreach(GenericColumnItemInformation Column in _columnItemTrashList){
-						                        output.Write("\n<td id=\"zone"+(int)Column.Id+"\" width=\"45px\" height=\"27\" class=\"simpleDroptd\" noWrap align=\"left\">");
-						                        output.Write("\n</td>");
-					                        }
+				                        foreach(GenericColumnItemInformation Column in _columnItemSelectedList){
+                                            output.Write("\n<td id=\"zone" + (int)Column.Id + "\" width=\"45px\" height=\"27\" class=\"simpleDroptd\" noWrap align=\"left\">");
+						                        output.Write("\n<div class=\"simpleColumn\" id=\""+(int)Column.Id+"\">");
+					                                output.Write("\n"+GestionWeb.GetWebWord(Column.WebTextId,_customerWebSession.SiteLanguage)+"");
+					                            output.Write("\n</div>");
+					                        output.Write("\n</td>");
 				                        }
-				                        else
-				                        {
-					                        foreach(GenericColumnItemInformation Column in _columnItemList){
-						                        output.Write("\n<td id=\"zone"+(int)Column.Id+"\" width=\"45px\" height=\"27\" class=\"simpleDroptd\" noWrap align=\"left\">");
-						                            output.Write("\n<div class=\"simpleColumn\" id=\""+(int)Column.Id+"\">");
-						                            output.Write("\n"+GestionWeb.GetWebWord(Column.WebTextId,_customerWebSession.SiteLanguage)+"");
-						                            output.Write("\n</div>");
-						                        output.Write("\n</td>");
-					                        }
+                                        if (_columnItemTrashList != null)
+                                        {
+                                            foreach (GenericColumnItemInformation Column in _columnItemTrashList)
+                                            {
+                                                output.Write("\n<td id=\"zone" + (int)Column.Id + "\" width=\"45px\" height=\"27\" class=\"simpleDroptd\" noWrap align=\"left\">");
+                                                output.Write("\n</td>");
+                                            }
                                         }
                                         output.Write("</tr>");
 				                        output.Write("</table>");
@@ -619,7 +843,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				    output.Write("<TR>");
 
                     #region Niveau de détail
-                    output.Write("<TD  valign=top width=\"986\">");
+                    output.Write("<TD  valign=top width=\"" + _titleDivWidth + "\">");
                     output.Write("<TABLE id=\"Section\" cellSpacing=\"2\" cellPadding=\"2\" border=\"0\" class=\"dimgrayBorder\">");
 				    output.Write("<TR>");
 				    output.Write("<TD>");
@@ -661,28 +885,18 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				    output.Write("<table id=Table4 align=left>");            
 				    output.Write("<tr>");		
 				    
-
-				    if (Page.IsPostBack && _columnSetId==_oldColumnSetId){
-					    output.Write("<TD>");
-                        output.Write("<DIV class=\"simpleDropPanel\" id=\"droponme\">");
-						output.Write("<DIV class=\"title\">" + GestionWeb.GetWebWord(1950, _customerWebSession.SiteLanguage) + "</DIV>");
-    				
-					    foreach(GenericColumnItemInformation Column in _columnItemTrashList){
-						    output.Write("\n<DIV id=\""+(int)Column.Id+"\">");
-						    output.Write("\n<A>"+GestionWeb.GetWebWord(Column.WebTextId,_customerWebSession.SiteLanguage)+"</A>");
-						    output.Write("\n</DIV>");
-					    }
-    				
-					    output.Write("</DIV>");
-					    output.Write("</TD>");
+				    output.Write("<TD>");
+                    output.Write("<DIV class=\"simpleDropPanel\" id=\"droponme\">");
+					output.Write("<DIV class=\"title\">" + GestionWeb.GetWebWord(1950, _customerWebSession.SiteLanguage) + "</DIV>");
+				
+				    foreach(GenericColumnItemInformation Column in _columnItemTrashList){
+					    output.Write("\n<DIV id=\""+(int)Column.Id+"\">");
+					    output.Write("\n<A>"+GestionWeb.GetWebWord(Column.WebTextId,_customerWebSession.SiteLanguage)+"</A>");
+					    output.Write("\n</DIV>");
 				    }
-				    else{
-					    output.Write("<TD>");
-                        output.Write("<DIV class=\"simpleDropPanel\" id=\"droponme\">");
-					    output.Write("<DIV class=\"title\">" + GestionWeb.GetWebWord(1950, _customerWebSession.SiteLanguage) + "</DIV>");
-					    output.Write("</DIV>");
-					    output.Write("</TD>");
-				    }
+				
+				    output.Write("</DIV>");
+				    output.Write("</TD>");
 
 				    
                     output.Write("</tr>");
@@ -698,6 +912,11 @@ namespace TNS.AdExpress.Web.Controls.Headers
 
                 #region initialisation du bouton
                 output.Write("<div style=\"MARGIN-LEFT: 0px;\"><table width=\"100%\"><tr><td align=\"right\">");
+                if (WebApplicationParameters.InsertionOptions.CanSaveLevels)
+                {                   
+                    _buttonSave.RenderControl(output);
+                    output.Write("&nbsp;");
+                }              
                 _buttonOk.RenderControl(output);
                 output.Write("</td></tr></table></div>");
                 #endregion
@@ -710,7 +929,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				output.Write("</TD>");
 				output.Write("</TR>");
 
-                if (VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab) == DBClassificationConstantes.Vehicles.names.radio) {
+                if (VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab) == DBClassificationConstantes.Vehicles.names.radio                   
+                    ) {
                     output.Write("<tr><td align=\"right\">");
                     output.Write("<FONT face=Arial size=1 class=\"txtViolet\">" + GestionWeb.GetWebWord(1949, _customerWebSession.SiteLanguage) + "</FONT>");
                     output.Write("</td></tr>");
@@ -725,10 +945,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 
                 output.Write("</table>");
 
-				if (Page.IsPostBack && _columnSetId==_oldColumnSetId)
-					output.Write(WebFunctions.DetailSelectionScript.DragAndDropPostBackScript(_columnItemSelectedList, _columnItemTrashList, _nbColumnItemList));
-				else
-					output.Write(WebFunctions.DetailSelectionScript.DragAndDropScript(_columnItemList));
+                output.Write(WebFunctions.DetailSelectionScript.DragAndDropPostBackScript(_columnItemSelectedList, _columnItemTrashList, _nbColumnItemList));
 
 			}
 		}
@@ -746,7 +963,6 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			string onChange;
 			dropDownList.Width = new System.Web.UI.WebControls.Unit(180.00-23);
 			dropDownList.ID="l"+level.ToString()+"Detail_"+this.ID;
-			//_defaultMediaDetail.Attributes["onchage"]="javascript:setLevel('"++"','"++"');";
 			dropDownList.AutoPostBack=false;
 			dropDownList.CssClass=_cssListBox;
 			dropDownList.Items.Add(new ListItem("-------","-1"));
@@ -787,6 +1003,22 @@ namespace TNS.AdExpress.Web.Controls.Headers
 
 			Controls.Add(dropDownList);
 		}
+        /// <summary>
+        /// Get Allowed Detail Item List
+        /// </summary>
+        /// <returns>ID of Allowed Detail Item List</returns>
+        protected List<int> GetAllowedDetailItemList()
+        {
+            List<int> list = new List<int>();
+            foreach (DetailLevelItemInformation currentDetailLevelItem in _allowedDetailItemList)
+            {
+                if (CanAddDetailLevelItem(currentDetailLevelItem))
+                {
+                    list.Add(currentDetailLevelItem.Id.GetHashCode());
+                }
+            }
+            return list;
+        }
 		///<summary>
 		/// Test si un niveau de détail peut être montré
 		/// </summary>
@@ -870,7 +1102,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			bool isFirst=true;
 
 			if (!Page.IsPostBack || _columnSetId!=_oldColumnSetId){
-				foreach(GenericColumnItemInformation Column in _columnItemList){
+                foreach (GenericColumnItemInformation Column in _columnItemSelectedList){
 					if(isFirst){
 						_formColumnItemSelectedList+=(int)Column.Id;
 						isFirst=false;

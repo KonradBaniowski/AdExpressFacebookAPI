@@ -35,6 +35,7 @@ using TNS.AdExpressI.Portofolio.DAL;
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpressI.Portofolio.VehicleView;
 
 namespace TNS.AdExpressI.Portofolio {
     /// <summary>
@@ -95,11 +96,26 @@ namespace TNS.AdExpressI.Portofolio {
 		/// <summary>
 		/// Table type
 		/// </summary>
-		TNS.AdExpress.Constantes.DB.TableType.Type _tableType;
+        protected TNS.AdExpress.Constantes.DB.TableType.Type _tableType;
 		/// <summary>
 		/// List of media to test for creative acces (press specific)
 		/// </summary>
 		protected List<long> _mediaList = null;
+        /// <summary>
+        /// result type
+        /// </summary>
+        protected int _resultType = 0;
+        #endregion
+
+        #region Accessors
+        /// <summary>
+        /// Get / Set Result type
+        /// </summary>
+        public int ResultType
+        {
+            get { return (_resultType); }
+            set { _resultType = value; }
+        }
         #endregion
 
         #region Constructor
@@ -161,6 +177,22 @@ namespace TNS.AdExpressI.Portofolio {
 				throw (new PortofolioException("Impossible to set parameters", err));
 			}
 		}
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="webSession">Customer Session</param>		
+        /// <param name="resultType">resultType</param>
+        public PortofolioResults(WebSession webSession, int resultType)
+        {
+            if (webSession == null) throw (new ArgumentNullException("Customer session is null"));
+            _webSession = webSession;
+            _resultType = resultType;
+            // Set Vehicle
+            _vehicleInformation = GetVehicleInformation();
+            // Module
+            _module = ModulesList.GetModule(webSession.CurrentModule);
+        }
         #endregion
 
 		#region Implementation of abstract methods
@@ -202,9 +234,9 @@ namespace TNS.AdExpressI.Portofolio {
         /// <param name="dtVisuel">Visuel information</param>
         /// <param name="htValue">investment values</param>
         /// <returns>Media name</returns>
-        virtual public string GetVehicleViewData(out DataTable dtVisuel, out Hashtable htValue){
+        virtual public void GetVehicleViewData(out DataTable dtVisuel, out Hashtable htValue){
             Engines.Engine result = new Engines.SynthesisEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd);
-            return result.GetVehicleViewData(out dtVisuel, out htValue);
+             result.GetVehicleViewData(out dtVisuel, out htValue);
         }
 		
 
@@ -225,8 +257,15 @@ namespace TNS.AdExpressI.Portofolio {
 					result = new TNS.AdExpressI.Portofolio.Engines.StructureEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, ventilationTypeList,excel);
 					break;
 				case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
 					Dictionary<string, double> hourBeginningList = new Dictionary<string,double>();
 					Dictionary<string, double> hourEndList = new Dictionary<string, double>();
 					GetHourIntevalList(hourBeginningList, hourEndList);
@@ -255,8 +294,15 @@ namespace TNS.AdExpressI.Portofolio {
 					result = new TNS.AdExpressI.Portofolio.Engines.StructureEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, ventilationTypeList, false);
 					break;
 				case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
 					Dictionary<string, double> hourBeginningList = new Dictionary<string, double>();
 					Dictionary<string, double> hourEndList = new Dictionary<string, double>();
 					GetHourIntevalList(hourBeginningList, hourEndList);
@@ -288,8 +334,15 @@ namespace TNS.AdExpressI.Portofolio {
 					result.GetAllPeriodInsertions(t, GestionWeb.GetWebWord(1837, _webSession.SiteLanguage));
 					return t.ToString();
 				case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
 					result = new Engines.MediaDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, excel);
 					return result.GetHtmlResult();
 				default:
@@ -303,8 +356,8 @@ namespace TNS.AdExpressI.Portofolio {
 		/// Get media insertion detail
 		/// </summary>
 		/// <returns></returns>
-		public virtual ResultTable GetInsertionDetailResultTable() {
-			Engines.InsertionDetailEngine result = new Engines.InsertionDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, _adBreak, _dayOfWeek);
+		public virtual ResultTable GetInsertionDetailResultTable(bool excel) {
+			Engines.InsertionDetailEngine result = new Engines.InsertionDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, _adBreak, _dayOfWeek, excel);
 			return result.GetResultTable();
 		}
 		#endregion		
@@ -350,6 +403,119 @@ namespace TNS.AdExpressI.Portofolio {
 			return dic;
 		}
 		#endregion
+
+        /// <summary>
+        /// Get vehicle cover items
+        /// </summary>
+        /// <returns>cover items</returns>
+        public virtual List<VehicleItem> GetVehicleItems()
+        {
+            #region Variables
+            string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
+            StringBuilder sb = new StringBuilder(5000);
+            string pathWeb = "";
+            CoverItem coverItem = null;
+            CoverLinkItem coverLinkItem = null;
+            CoverLinkItemSynthesis coverLinkItemSynthesis = null;
+            VehicleItem vehicleItem = null;
+            List<VehicleItem> itemsCollection = new List<VehicleItem>();
+            DataTable dtVisuel = null;
+            Hashtable htValue = null;
+            #endregion
+
+            // Vérifie si le client a le droit aux créations
+            if (_webSession.CustomerLogin.ShowCreatives(_vehicleInformation.Id))
+            {
+
+                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
+                    || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
+                    )
+                {
+
+
+                    object[] parameters = new object[1];
+                    parameters[0] = _webSession;
+                    IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryRulesLayer.AssemblyName, _module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+                    portofolioResult.GetVehicleViewData(out dtVisuel, out htValue);
+
+
+                    CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
+                    if (_mediaList == null)
+                    {
+                        try
+                        {
+                            string[] mediaList = Media.GetItemsList(WebCst.AdExpressUniverse.CREATIVES_KIOSQUE_LIST_ID).MediaList.Split(',');
+                            if (mediaList != null && mediaList.Length > 0)
+                                _mediaList = new List<Int64>(Array.ConvertAll<string, Int64>(mediaList, (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); }));
+                        }
+                        catch { }
+                    }
+                    for (int i = 0; i < dtVisuel.Rows.Count; i++)
+                    {
+                        //date_media_num
+
+                        if (dtVisuel.Rows[i]["disponibility_visual"] != System.DBNull.Value && int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10)
+                        {
+                            if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
+                                pathWeb = WebCst.CreationServerPathes.IMAGES + "/" + _idMedia.ToString() + "/" + dtVisuel.Rows[i]["date_media_num"].ToString() + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "";
+                            else pathWeb = WebCst.CreationServerPathes.IMAGES + "/" + _idMedia.ToString() + "/" + dtVisuel.Rows[i]["date_cover_num"].ToString() + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "";
+                        }
+                        else
+                        {
+                            pathWeb = "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif";
+                        }
+                        DateTime dayDT = new DateTime(int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(0, 4)), int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(4, 2)), int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(6, 2)));
+
+                        if (dtVisuel.Rows[i]["disponibility_visual"] != System.DBNull.Value && int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10)
+                        {
+
+                            if (_resultType == FrameWorkResultConstantes.Portofolio.SYNTHESIS)
+                            {
+                                if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
+                                    coverLinkItemSynthesis = new CoverLinkItemSynthesis(dtVisuel.Rows[i]["media"].ToString(), dtVisuel.Rows[i]["number_page_media"].ToString(), _webSession.IdSession, _idMedia, dtVisuel.Rows[i]["date_media_num"].ToString(), dtVisuel.Rows[i]["date_media_num"].ToString());
+                                else
+                                    coverLinkItemSynthesis = new CoverLinkItemSynthesis(dtVisuel.Rows[i]["media"].ToString(), dtVisuel.Rows[i]["number_page_media"].ToString(), _webSession.IdSession, _idMedia, dtVisuel.Rows[i]["date_media_num"].ToString(), dtVisuel.Rows[i]["date_cover_num"].ToString());
+                                coverItem = new CoverItem(i + 1, GestionWeb.GetWebWord(1409, _webSession.SiteLanguage), pathWeb, coverLinkItemSynthesis);
+                            }
+                            else if (_resultType == FrameWorkResultConstantes.Portofolio.DETAIL_MEDIA)
+                            {
+                                coverLinkItem = new CoverLinkItem(_webSession.IdSession, _idMedia, dtVisuel.Rows[i]["date_media_num"].ToString(), "");
+                                coverItem = new CoverItem(i + 1, "", pathWeb, coverLinkItem);
+                            }
+                        }
+                        else
+                            if (_resultType == FrameWorkResultConstantes.Portofolio.SYNTHESIS)
+                                coverItem = new CoverItem(i + 1, GestionWeb.GetWebWord(1409, _webSession.SiteLanguage), pathWeb, null);
+                            else if (_resultType == FrameWorkResultConstantes.Portofolio.DETAIL_MEDIA)
+                                coverItem = new CoverItem(i + 1, "", pathWeb, null);
+
+
+                        if (htValue.Count > 0)
+                        {
+                            if (htValue.ContainsKey(dtVisuel.Rows[i]["date_cover_num"]))
+                            {
+                                vehicleItem = new VehicleItem(dayDT, ((string[])htValue[dtVisuel.Rows[i]["date_cover_num"]])[1], int.Parse(((string[])htValue[dtVisuel.Rows[i]["date_cover_num"]])[0]).ToString("### ### ### ###"), _webSession.SiteLanguage, coverItem);
+                            }
+                            else
+                            {
+                                vehicleItem = new VehicleItem(dayDT, "0", "0", _webSession.SiteLanguage, coverItem);
+
+                            }
+                        }
+
+                        itemsCollection.Add(vehicleItem);
+
+                    }
+
+
+                }
+
+            }
+
+            return itemsCollection;
+        }
 
 		#endregion
 
@@ -486,7 +652,10 @@ namespace TNS.AdExpressI.Portofolio {
 			if (hourEndList == null) hourEndList = new Dictionary<string, double>();
 
 			switch (_vehicleInformation.Id) {				
-				case DBClassificationConstantes.Vehicles.names.radio:					
+				case DBClassificationConstantes.Vehicles.names.radio:
+                case DBClassificationConstantes.Vehicles.names.radioGeneral:
+                case DBClassificationConstantes.Vehicles.names.radioSponsorship:
+                case DBClassificationConstantes.Vehicles.names.radioMusic:
 					hourBeginningList.Add("0507", 50000); hourEndList.Add("0507", 70000);
 					hourBeginningList.Add("0709", 70000); hourEndList.Add("0709", 90000);
 					hourBeginningList.Add("0913", 90000); hourEndList.Add("0913", 130000);
@@ -495,6 +664,10 @@ namespace TNS.AdExpressI.Portofolio {
 					break;
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
+                case DBClassificationConstantes.Vehicles.names.tvGeneral:
+                case DBClassificationConstantes.Vehicles.names.tvSponsorship:
+                case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
+                case DBClassificationConstantes.Vehicles.names.tvAnnounces:
 					hourBeginningList.Add("0007",0); hourEndList.Add("0007", 70000);
 					hourBeginningList.Add("0712", 70000); hourEndList.Add("0712", 120000);
 					hourBeginningList.Add("1214", 120000); hourEndList.Add("1214", 140000);

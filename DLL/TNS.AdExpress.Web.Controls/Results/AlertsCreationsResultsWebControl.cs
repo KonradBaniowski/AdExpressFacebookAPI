@@ -746,9 +746,17 @@ namespace TNS.AdExpress.Web.Controls.Results
                 #region Construction du txt HTLM
                 switch (VehiclesInformation.DatabaseIdToEnum(idVehicle))
                 {
+
                     case CstClassification.DB.Vehicles.names.radio:
+                    case CstClassification.DB.Vehicles.names.radioGeneral:
+                    case CstClassification.DB.Vehicles.names.radioSponsorship:
+                    case CstClassification.DB.Vehicles.names.radioMusic:
                         return GetUIRadio(tab, siteLanguage, idMedia, idProduct, dateBegin, dateEnd, idVehicle, key);
                     case CstClassification.DB.Vehicles.names.tv:
+                    case CstClassification.DB.Vehicles.names.tvGeneral:
+                    case CstClassification.DB.Vehicles.names.tvSponsorship:
+                    case CstClassification.DB.Vehicles.names.tvAnnounces:
+                    case CstClassification.DB.Vehicles.names.tvNonTerrestrials:
                     case CstClassification.DB.Vehicles.names.others:
                         return GetUITV(tab, siteLanguage, idMedia, idProduct, dateBegin, dateEnd, idVehicle, key);
 

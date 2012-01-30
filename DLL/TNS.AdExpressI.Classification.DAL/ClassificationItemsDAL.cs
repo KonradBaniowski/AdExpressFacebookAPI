@@ -123,14 +123,14 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <returns>Data set with data table[id_item,item] : identifer and label of a level of brand classification</returns>
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">Throw exception when error occurs during 
         /// execution or building of the query</exception>
-        public virtual DataSet GetItems(int classificationLevelId, string wordToSearch)
+        public virtual DataSet GetItems(string classificationLevelLabel, string wordToSearch)
         {
 
 			#region Tables initilization
 			View oView = null;
 			string classificationRight = "";
 			bool useView = true;
-            string classificationLevelLabel = UniverseLevels.Get(classificationLevelId).TableName;
+          
 
 			try {
                 /* The search of classification items is done on a View of product or vehicle classification.
@@ -185,7 +185,7 @@ namespace TNS.AdExpressI.Classification.DAL {
 
             foreach (int filterId in Filters.Keys)
             {
-                if (filterId == classificationLevelId)
+                if (UniverseLevels.Get(filterId).TableName.ToUpper() == classificationLevelLabel.ToUpper())
                 {
                     sql.AppendFormat(" and wp.id_{0} not in ( {1} ) ", classificationLevelLabel, Filters[filterId]);
                 }
@@ -280,15 +280,14 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <returns>Data set with data table[id_item,item] : identifer and label of a level of brand classification</returns>
         /// <exception cref="TNS.AdExpressI.Classification.DAL.Exceptions.ClassificationItemsDALException">Throw exception when error occurs during 
         /// execution or building of the query</exception>
-        public virtual DataSet GetItems(int classificationLevelId, string selectedClassificationLevelIds, string selectedItemTableName)
+         public virtual DataSet GetItems(string classificationLevelLabel, string selectedClassificationLevelIds, string selectedItemTableName)
         {
 
 			#region Tables initilization
 			View oView = null;
 			string classificationRight = "";
 			StringBuilder sql = new StringBuilder(1000);
-            string classificationLevelLabel = UniverseLevels.Get(classificationLevelId).TableName;
-
+         
 			try {
                 /* The search of classification items is done on a View of product or vehicle classification.
                  * In fact, if the dimension (classification brand) is product, the search will be done on a view called "ADEXPR03.ALL_PRODUCT_33".
@@ -318,15 +317,16 @@ namespace TNS.AdExpressI.Classification.DAL {
 
              /*Query conditions */ 
             /* Restriction on the classification items selected by the customer*/
-             sql.AppendFormat(" where wp.id_{0} in ( {1} ) ", selectedItemTableName, selectedClassificationLevelIds);
-
-			//Defines customer classification's rihts
+             //sql.AppendFormat(" where wp.id_{0} in ( {1} ) ", selectedItemTableName, selectedClassificationLevelIds);
+            sql.Append( " where " + TNS.AdExpress.Web.Core.Utilities.SQLGenerator.GetInClauseMagicMethod("wp.id_" + selectedItemTableName, selectedClassificationLevelIds));
+			
+                 //Defines customer classification's rihts
 			if (classificationRight != null && classificationRight.Length > 0) {
 				sql.Append(classificationRight);
 			}
 
             foreach (int filterId in Filters.Keys) {
-                if (filterId == classificationLevelId) {
+               if (UniverseLevels.Get(filterId).TableName.ToUpper() == classificationLevelLabel.ToUpper()){
                     sql.AppendFormat(" and wp.id_{0} not in ( {1} ) ", classificationLevelLabel, Filters[filterId]);
                 }
             }
@@ -459,7 +459,8 @@ namespace TNS.AdExpressI.Classification.DAL {
 
             /*Query conditions */
             /* Restriction on the classification items selected by the customer*/
-            sql.AppendFormat(" where wp.id_{0} in ({1})", classificationLevelLabel, idList);
+           // sql.AppendFormat(" where wp.id_{0} in ({1})", classificationLevelLabel, idList);
+            sql.Append(" where " + TNS.AdExpress.Web.Core.Utilities.SQLGenerator.GetInClauseMagicMethod("wp.id_" + classificationLevelLabel, idList));
 
             /*Query tables joins */
             GetJointClause(sql, oView, classificationLevelLabel, _dimension, classificationRight, useView);
@@ -693,7 +694,7 @@ namespace TNS.AdExpressI.Classification.DAL {
 					return WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis, WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].NlsSort);
 				default:
                      /*obtains the data source for the others modules*/
-					return _session.Source;
+                    return _dataSource;
 			}
 		}
 		#endregion

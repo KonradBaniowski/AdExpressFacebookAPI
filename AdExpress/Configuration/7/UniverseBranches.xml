@@ -4,7 +4,7 @@
     <level id="1" name="sector"/>
     <level id="2" name="subsector"/>
     <level id="3" name="group_"/>
-    <level id="4" name="segment"/>
+    <!--<level id="4" name="segment"/>-->
   </branch>
   <branch id="2"  name="advertiser" labelId="857">
     <level id="7" name ="holding_company"/>
@@ -23,8 +23,9 @@
     <level id="1" name ="sector"/>
   </branch>
   <branch id="6"  name="sector" labelId="2271">
+    <level id="2" name="subsector"/>
     <level id="3" name="group_"/>
-    <level id="4" name="segment"/>
+    <!--<level id="4" name="segment"/>-->
   </branch>
   <branch id="7"  name="category" labelId="1382">
     <level id="11" name="vehicle"/>
@@ -38,5 +39,26 @@
   </branch>
   <branch id="9"  name="advertiser" labelId="857">
     <level id="6" name ="advertiser"/>
+  </branch>
+  <branch id="10"  name="advertiser/brand" labelId="2664">
+    <level id="6" name ="advertiser"/>
+    <level id="8" name ="brand"/>
+    <level id="16" name ="sub_brand"/>
+    <level id="5" name ="product"/>
+  </branch>
+  <branch id="11"  name="vehicle" labelId="2731">
+    <level id="11" name="vehicle"/>
+    <level id="17" name="region"/>
+    <level id="14" name="media"/>
+  </branch>
+  <branch id="12"  name="Advertisement Type" labelId="2673">
+    <level id="18" name="Advertisement Type"/>
+  </branch>
+  <branch id="13"  name="vehicle/region" labelId="2652">
+    <level id="11" name="vehicle"/>
+    <level id="17" name="region"/>
+  </branch>
+  <branch id="14"  name="region" labelId="2652">    
+    <level id="17" name="region"/>
   </branch>
 </universeBranches>

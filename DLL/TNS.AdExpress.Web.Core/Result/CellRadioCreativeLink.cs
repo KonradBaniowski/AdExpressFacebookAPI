@@ -26,18 +26,24 @@ namespace TNS.AdExpress.Web.Core.Result {
         /// Id solgan
         /// </summary>
         protected string _creative;
+        /// <summary>
+        /// Media type ID
+        /// </summary>
+        protected long _vehicleId;
         #endregion
 
         #region Constructeur
         /// <summary>
         /// Constructor
         /// </summary>
-        public CellRadioCreativeLink(string creative, WebSession webSession) {
+        public CellRadioCreativeLink(string creative, WebSession webSession, long vehicleId)
+        {
             if (webSession == null) throw (new ArgumentNullException("L'objet WebSession est null"));
             _link = "javascript:openDownload('{0}','{1}','{2}');";
             _creative = creative;
             _webSession = webSession;
             _imagePath = "/App_Themes/"+WebApplicationParameters.Themes[webSession.SiteLanguage].Name+"/Images/Common/Picto_Radio.gif";
+            _vehicleId = vehicleId;
         }
         #endregion
 
@@ -48,7 +54,9 @@ namespace TNS.AdExpress.Web.Core.Result {
         /// <returns>Adresse du lien</returns>
         public override string GetLink() {
             if (_creative.Length > 0)
-                return (string.Format(_link, _creative, _webSession.IdSession, VehiclesInformation.EnumToDatabaseId(Vehicles.names.radio)));
+            {
+                return (string.Format(_link, _creative, _webSession.IdSession, _vehicleId));
+            }
             else
                 return "";
         }

@@ -56,7 +56,16 @@ namespace AdExpress.Private.Results.RawExcel{
 
         #region DeterminePostBackMode
         protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
-			_resultWebControl.CustomerWebSession = _webSession;
+            try
+            {
+            _resultWebControl.CustomerWebSession = _webSession;
+
+            }		
+			catch(System.Exception exc){
+				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
+					this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this,exc,_webSession));
+				}
+			}
 			return base.DeterminePostBackMode ();
 		}
 		#endregion

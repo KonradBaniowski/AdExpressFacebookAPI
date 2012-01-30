@@ -338,8 +338,11 @@ namespace TNS.AdExpress.Web.Controls.Headers {
             ArrayList allowedColumnDetailLevelList = _currentModule.AllowedColumnDetailLevelItems;
             ArrayList list = new ArrayList();
 
+            List<DetailLevelItemInformation.Levels> vehicleAllowedColumnLevelList = GetVehicleAllowedColumnsLevelItems();
+
             foreach (DetailLevelItemInformation currentLevel in allowedColumnDetailLevelList)
-                if (vehicleAllowedDetailLevelList.Contains(currentLevel.Id))
+                if (vehicleAllowedDetailLevelList.Contains(currentLevel.Id)
+                    && vehicleAllowedColumnLevelList.Contains(currentLevel.Id))
                     list.Add(currentLevel);
 
             return list;
@@ -362,9 +365,32 @@ namespace TNS.AdExpress.Web.Controls.Headers {
                 //When a vehicle is not checked but one or more category, this get the vehicle correspondly
                 string Vehicle = ((LevelInformation)_customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
                 vehicleList.Add(Convert.ToInt64(Vehicle));
-            }
-
+            }           
             return VehiclesInformation.GetCommunDetailLevelList(vehicleList);
+        }
+
+        /// <summary>
+        /// Return allowed column detail level list for vehicle list seleceted
+        /// </summary>
+        /// <returns>Detail level list</returns>
+        private List<DetailLevelItemInformation.Levels> GetVehicleAllowedColumnsLevelItems()
+        {
+
+            List<Int64> vehicleList = new List<Int64>();
+            string listStr = _customerWebSession.GetSelection(_customerWebSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
+            if (listStr != null && listStr.Length > 0)
+            {
+                string[] list = listStr.Split(',');
+                for (int i = 0; i < list.Length; i++)
+                    vehicleList.Add(Convert.ToInt64(list[i]));
+            }
+            else
+            {
+                //When a vehicle is not checked but one or more category, this get the vehicle correspondly
+                string Vehicle = ((LevelInformation)_customerWebSession.SelectionUniversMedia.FirstNode.Tag).ID.ToString();
+                vehicleList.Add(Convert.ToInt64(Vehicle));
+            }
+            return VehiclesInformation.GetColumnsDetailLevelList(vehicleList);
         }
         #endregion
 

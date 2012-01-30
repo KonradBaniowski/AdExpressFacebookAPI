@@ -35,6 +35,9 @@ using TNS.FrameWork.DB.Common;
 using TNS.AdExpressI.ProductClassReports.DAL.Exceptions;
 using TNS.Classification.Universe;
 using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpressI.Date.DAL;
+using System.Reflection;
 
 
 namespace TNS.AdExpressI.ProductClassReports.DAL
@@ -67,6 +70,10 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
         /// Type of report
         /// </summary>
         protected CstFormat.PreformatedTables _reportFormat;
+        /// <summary>
+        /// Key word for searching advertisers
+        /// </summary>
+        protected string _keyWord = "";
 
         #region Tables
         Table _recapVehicle = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.recapVehicle);
@@ -184,13 +191,16 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
         #endregion
 
         #region IProductClassReportsDAL : GetUniversAdvertisers
-        /// <summary>
+         /// <summary>
         /// Get Advertisers which are part of the selected univers
         /// </summary>
         /// <param name="exclude">List of Advertiser Ids to exclude from the result</param>
+        /// <param name="keyWord">Key word for advertisers to search</param>
         /// <returns>DataSet with (id_advertiser, advertiser) records</returns>
-        public DataSet GetUniversAdvertisers(string exclude)
+        public virtual DataSet GetUniversAdvertisers(string exclude,string keyWord)
         {
+            _keyWord = keyWord;
+
             _vehicle = VehiclesInformation.DatabaseIdToEnum(((LevelInformation)_session.SelectionUniversMedia.FirstNode.Tag).ID);
             StringBuilder sql = new StringBuilder(2000);
 
@@ -210,10 +220,14 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                         sql.AppendFormat(" and {0} ", magicList);
                     }
                 }
+                //Searching advertisers
+                if(!string.IsNullOrEmpty(_keyWord))
+                    sql.AppendFormat(" and upper({0}.advertiser) like upper('%{1}%')", _recapAdvertiser.Prefix, _keyWord);
+
                 AppendRightClause(sql);
                 AppendActivationLanguageClause(sql);
                 sql.AppendFormat(" order by {0}.advertiser, {1}.id_advertiser", _recapAdvertiser.Prefix, _dataTable.Prefix);
-                
+
             }
             catch (NoDataException e1) { throw e1; }
             catch (DeliveryFrequencyException e3) { throw e3; }
@@ -231,6 +245,16 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                 throw (new ProductClassReportsDALException("Unable to load data for report: " + sql.ToString(), err));
             }
             #endregion
+        }
+        /// <summary>
+        /// Get Advertisers which are part of the selected univers
+        /// </summary>
+        /// <param name="exclude">List of Advertiser Ids to exclude from the result</param>
+        /// <returns>DataSet with (id_advertiser, advertiser) records</returns>
+        public virtual DataSet GetUniversAdvertisers(string exclude)
+        {
+            _keyWord = null;
+            return GetUniversAdvertisers(exclude, _keyWord);
 
         }
         #endregion
@@ -262,7 +286,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
         /// Thrown when errors while connecting to database, runiing request, closing database
         /// </exception>
         /// <returns>DAL result</returns>
-        protected DataSet GetDataSet()
+        protected virtual DataSet GetDataSet()
         {
             StringBuilder sql = new StringBuilder(2000);
 
@@ -400,6 +424,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                 && detail != CstFormat.PreformatedProductDetails.advertiserBrand
                 && detail != CstFormat.PreformatedProductDetails.advertiserProduct
                 && detail != CstFormat.PreformatedProductDetails.brand
+                && detail != CstFormat.PreformatedProductDetails.brandProduct
                 && detail != CstFormat.PreformatedProductDetails.segmentAdvertiser
                 && detail != CstFormat.PreformatedProductDetails.segmentBrand
                 && detail != CstFormat.PreformatedProductDetails.segmentProduct
@@ -534,6 +559,11 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
                         brandPerso = string.Format("{0}.id_brand", _dataTable.Prefix);
                         sqlStr = string.Format(" {0}.id_brand as id_p1, brand as p1", _dataTable.Prefix);
                         break;
+                    case CstFormat.PreformatedProductDetails.brandProduct:
+                        annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
+                        brandPerso = string.Format("{0}.id_brand", _dataTable.Prefix);
+                        sqlStr = string.Format(" {0}.id_brand as id_p1, brand as p1, {0}.id_product as id_p2, product as p2", _dataTable.Prefix);
+                        break;
                     case CstFormat.PreformatedProductDetails.product:
                         annonceurPerso = string.Format("{0}.id_advertiser", _dataTable.Prefix);
                         sqlStr = string.Format(" {0}.id_product as id_p1, product as p1", _dataTable.Prefix);
@@ -598,7 +628,13 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             //Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
             //du dernier mois dispo en BDD
             //traitement de la notion de fréquence
-            string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(_session, _session.PeriodEndDate);
+
+            CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+            object[] param = new object[1];
+            param[0] = _session;
+            IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            string absolutEndPeriod = dateDAL.CheckPeriodValidity(_session, _session.PeriodEndDate);
+
             if (int.Parse(absolutEndPeriod) < int.Parse(_session.PeriodBeginningDate))
                 throw new NoDataException();
 
@@ -1116,7 +1152,8 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 					case CstFormat.PreformatedProductDetails.advertiser:						
 					case CstFormat.PreformatedProductDetails.advertiserBrand:						
 					case CstFormat.PreformatedProductDetails.advertiserProduct:						
-					case CstFormat.PreformatedProductDetails.brand:						
+					case CstFormat.PreformatedProductDetails.brand:
+                    case CstFormat.PreformatedProductDetails.brandProduct:
 					case CstFormat.PreformatedProductDetails.product:					
 					case CstFormat.PreformatedProductDetails.segmentAdvertiser:						
 					case CstFormat.PreformatedProductDetails.segmentProduct:						
@@ -1139,7 +1176,13 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
 				//Détermination du dernier mois accessible en fonction de la fréquence de livraison du client et
 				//du dernier mois dispo en BDD
 				//traitement de la notion de fréquence
-				string absolutEndPeriod = FctUtilities.Dates.CheckPeriodValidity(_session, _session.PeriodEndDate);
+
+                CoreLayer cl = WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.dateDAL];
+                object[] param = new object[1];
+                param[0] = _session;
+                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                string absolutEndPeriod = dateDAL.CheckPeriodValidity(_session, _session.PeriodEndDate);
+
 				if (int.Parse(absolutEndPeriod) < int.Parse(_session.PeriodBeginningDate))
 					throw new NoDataException();
 

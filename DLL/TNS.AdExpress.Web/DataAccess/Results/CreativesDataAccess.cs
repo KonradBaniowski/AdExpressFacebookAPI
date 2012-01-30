@@ -319,8 +319,15 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                     break;
 
                 case DBClassifCst.Vehicles.names.radio:
+                case DBClassifCst.Vehicles.names.radioGeneral:
+                case DBClassifCst.Vehicles.names.radioSponsorship:
+                case DBClassifCst.Vehicles.names.radioMusic:
                 case DBClassifCst.Vehicles.names.tv:
-                case DBClassifCst.Vehicles.names.others:
+                case DBClassifCst.Vehicles.names.tvGeneral:
+                case DBClassifCst.Vehicles.names.tvSponsorship:
+                case DBClassifCst.Vehicles.names.tvAnnounces:
+                case DBClassifCst.Vehicles.names.tvNonTerrestrials:
+                case DBClassifCst.Vehicles.names.others:		
                     if (withOutPrefix)
                         sql.AppendFormat(", version,  {0},  {1},  nbsupport,  visuel "
                             , UnitsInformation.List[WebCst.CustomerSessions.Unit.duration].Id.ToString()
@@ -336,6 +343,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
 
                 case DBClassifCst.Vehicles.names.outdoor:
                 case DBClassifCst.Vehicles.names.instore:
+                case DBClassifCst.Vehicles.names.indoor:
                     if (withOutPrefix)
                         sql.AppendFormat(", version,  {0},  nbsupport,  visuel ", UnitsInformation.List[WebCst.CustomerSessions.Unit.numberBoard].Id.ToString());
                     else 
@@ -689,15 +697,23 @@ namespace TNS.AdExpress.Web.DataAccess.Results {
                     break;
 
                 case DBClassifCst.Vehicles.names.radio:
+                case DBClassifCst.Vehicles.names.radioGeneral:
+                case DBClassifCst.Vehicles.names.radioSponsorship:
+                case DBClassifCst.Vehicles.names.radioMusic:
                     sql.AppendFormat(", {0}id_slogan ", prefix);
                     break;
                 case DBClassifCst.Vehicles.names.tv:
-                case DBClassifCst.Vehicles.names.others:
+                case DBClassifCst.Vehicles.names.tvGeneral:
+                case DBClassifCst.Vehicles.names.tvSponsorship:
+                case DBClassifCst.Vehicles.names.tvAnnounces:
+                case DBClassifCst.Vehicles.names.tvNonTerrestrials:
+                case DBClassifCst.Vehicles.names.others:	
                     sql.AppendFormat(", {0}id_slogan ", prefix);
                     break;
 
                 case DBClassifCst.Vehicles.names.outdoor:
                 case DBClassifCst.Vehicles.names.instore:
+                case DBClassifCst.Vehicles.names.indoor:
                     sql.AppendFormat(", {0}id_slogan ", prefix);
                     break;
 

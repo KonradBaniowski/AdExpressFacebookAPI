@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<vehicleCreativesAccess>
+  <!-- PRESS -->
+  <vehicle dataBaseId="300">
+    <creativeAccess path="\\storage\multimedia\press\" />
+  </vehicle>
+  <!-- OUTDOOR -->
+  <vehicle dataBaseId="400">
+    <creativeAccess path="\\storage\multimedia\outdoor_id\" />
+  </vehicle>
+  <!-- EDITORIAL -->
+  <vehicle dataBaseId="800">
+    <creativeAccess path="\\storage\multimedia\scan\" />
+  </vehicle>
+  <!-- TV GENERAL -->
+  <vehicle dataBaseId="100">
+    <creativeAccess path="\\storage\multimedia\tv\" />
+  </vehicle>
+  <!-- TV SPONSORSHIP -->
+  <vehicle dataBaseId="101">
+    <creativeAccess path="\\storage\multimedia\tv\"/>
+  </vehicle>
+  <!-- TV ANNOUNCES -->
+  <vehicle dataBaseId="102">
+    <creativeAccess path="\\storage\multimedia\tv\" />
+  </vehicle>
+  <!-- TV NICHE CHANNELS -->
+  <vehicle dataBaseId="103">
+    <creativeAccess path="\\storage\multimedia\tv\" />
+  </vehicle>
+  <!-- RADION GENERAL -->
+  <vehicle dataBaseId="200">
+    <creativeAccess path="\\storage\multimedia\radio_id\" />
+  </vehicle>
+  <!-- RADION SPONSORSHIP -->
+  <vehicle dataBaseId="201">
+    <creativeAccess path="\\storage\multimedia\radio_id\"/>
+  </vehicle>
+  <!-- RADION MUSIC -->
+  <vehicle dataBaseId="202">
+    <creativeAccess path="\\storage\multimedia\radio_id\" />
+  </vehicle>
+  <!-- INTERNET -->
+  <vehicle dataBaseId="600">
+    <creativeAccess path="\\storage\multimedia\internet_id\"/>
+  </vehicle>
+</vehicleCreativesAccess>
+

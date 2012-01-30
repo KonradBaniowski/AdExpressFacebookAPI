@@ -145,7 +145,7 @@ namespace TNS.AdExpress {
 			try {
 				
 				_loginId = RightDAL.GetLoginId(Source, _login, _password);
-			}
+			}   
 			catch (System.Exception err) {
 				throw (new RightException("Impossible to access to the Database", err));
 			}
@@ -153,6 +153,17 @@ namespace TNS.AdExpress {
         #endregion
 
         #region Accessors
+        /// <summary>
+        /// Gte if use default connection
+        /// <remarks>User particularly for Russia customer</remarks>
+        /// </summary>
+        public bool UseDefaultConnection
+        {
+            get
+            {
+                return WebApplicationParameters.UseRightDefaultConnection;
+            }
+        }
         /// <summary>
         /// Get Customer Data Source
         /// </summary>
@@ -163,7 +174,9 @@ namespace TNS.AdExpress {
 					if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(_siteLanguage.ToString()))) {
 						nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(_siteLanguage.ToString())].NlsSort;
 					}
-					_source = WebApplicationParameters.DataBaseDescription.GetCustomerConnection(_login, _password, nlsSort,CustomerConnectionIds.adexpr03);
+                    if(UseDefaultConnection)
+                        _source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rights);
+                    else _source = WebApplicationParameters.DataBaseDescription.GetCustomerConnection(_login, _password, nlsSort, CustomerConnectionIds.adexpr03);
                 }
                 return (_source);
             }
@@ -287,6 +300,8 @@ namespace TNS.AdExpress {
             string vehicleException="";
             string categoryAccess="";
             string categoryException="";
+            string regionAccess = "";
+            string regionException = "";
             string mediaAccess="";
             string mediaException="";
             string listVehicleForRecap="";
@@ -346,6 +361,17 @@ namespace TNS.AdExpress {
                             //advertiser en exception
                             if((Int64)row[2]==MediaProductIdType.ID_ADVERTISER_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_EXCEPTION) {
                                 _rights.Add(CustomerCst.Right.type.advertiserException,row[0].ToString().Split(','));
+                            }
+
+                            //marque en accès
+                            if ((Int64)row[2] == MediaProductIdType.ID_BRAND_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
+                            {
+                                _rights.Add(CustomerCst.Right.type.brandAccess, row[0].ToString().Split(','));
+                            }
+                            //marque en exception
+                            if ((Int64)row[2] == MediaProductIdType.ID_BRAND_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
+                            {
+                                _rights.Add(CustomerCst.Right.type.brandException, row[0].ToString().Split(','));
                             }
                         }
                     }
@@ -446,6 +472,24 @@ namespace TNS.AdExpress {
                             }
                             else _rights[CustomerCst.Right.type.advertiserException]=listValue(_rights[CustomerCst.Right.type.advertiserException],row[0].ToString().Split(',')).Split(',');
                         }
+                        //marque en accès
+                        if ((Int64)row[2] == MediaProductIdType.ID_BRAND_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
+                        {
+                            if (!_rights.ContainsKey(CustomerCst.Right.type.brandAccess))
+                            {
+                                _rights.Add(CustomerCst.Right.type.brandAccess, row[0].ToString().Split(','));
+                            }
+                            else _rights[CustomerCst.Right.type.brandAccess] = listValue(_rights[CustomerCst.Right.type.brandAccess], row[0].ToString().Split(',')).Split(',');
+                        }
+                        //marque en exception
+                        if ((Int64)row[2] == MediaProductIdType.ID_BRAND_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
+                        {
+                            if (!_rights.ContainsKey(CustomerCst.Right.type.brandException))
+                            {
+                                _rights.Add(CustomerCst.Right.type.brandException, row[0].ToString().Split(','));
+                            }
+                            else _rights[CustomerCst.Right.type.brandException] = listValue(_rights[CustomerCst.Right.type.brandException], row[0].ToString().Split(',')).Split(',');
+                        }
                     }
                 }
             }
@@ -481,6 +525,18 @@ namespace TNS.AdExpress {
                             if((Int64)row[2]==MediaProductIdType.ID_CATEGORY_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_EXCEPTION) {
                                 _rights.Add(CustomerCst.Right.type.categoryException,row[0].ToString().Split(','));
                                 categoryException=row[0].ToString();
+                            }
+                            //Region en accès
+                            if ((Int64)row[2] == MediaProductIdType.ID_REGION_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
+                            {
+                                _rights.Add(CustomerCst.Right.type.regionAccess, row[0].ToString().Split(','));
+                                regionAccess = row[0].ToString();
+                            }
+                            //Region en exception
+                            if ((Int64)row[2] == MediaProductIdType.ID_REGION_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
+                            {
+                                _rights.Add(CustomerCst.Right.type.regionException, row[0].ToString().Split(','));
+                                regionException = row[0].ToString();
                             }
                             //média en accès
                             if((Int64)row[2]==MediaProductIdType.ID_MEDIA_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_NOT_EXCEPTION) {
@@ -544,6 +600,28 @@ namespace TNS.AdExpress {
                             if(categoryException.Length>0) categoryException+=","+row[0].ToString();
                             else categoryException=row[0].ToString();
                         }
+                        //Region en accès
+                        if ((Int64)row[2] == MediaProductIdType.ID_REGION_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_NOT_EXCEPTION)
+                        {
+                            if (!_rights.ContainsKey(CustomerCst.Right.type.regionAccess))
+                            {
+                                _rights.Add(CustomerCst.Right.type.regionAccess, row[0].ToString().Split(','));
+                            }
+                            else _rights[CustomerCst.Right.type.regionAccess] = listValue((string[])_rights[CustomerCst.Right.type.regionAccess], row[0].ToString().Split(',')).Split(',');
+                            if (regionAccess.Length > 0) regionAccess += "," + row[0].ToString();
+                            else regionAccess = row[0].ToString();
+                        }
+                        //Region en exception
+                        if ((Int64)row[2] == MediaProductIdType.ID_REGION_TYPE && Convert.ToInt32(row[1]) == ExceptionValues.IS_EXCEPTION)
+                        {
+                            if (!_rights.ContainsKey(CustomerCst.Right.type.regionException))
+                            {
+                                _rights.Add(CustomerCst.Right.type.regionException, row[0].ToString().Split(','));
+                            }
+                            else _rights[CustomerCst.Right.type.regionException] = listValue((string[])_rights[CustomerCst.Right.type.regionException], row[0].ToString().Split(',')).Split(',');
+                            if (regionException.Length > 0) regionException += "," + row[0].ToString();
+                            else regionException = row[0].ToString();
+                        }
                         //média en accès
                         if((Int64)row[2]==MediaProductIdType.ID_MEDIA_TYPE && Convert.ToInt32(row[1])==ExceptionValues.IS_NOT_EXCEPTION) {
                             if(!_rights.ContainsKey(CustomerCst.Right.type.mediaAccess)) {
@@ -572,18 +650,29 @@ namespace TNS.AdExpress {
             #endregion
 
             #region Recap
-            try {
-                IDataSource recapSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis);
-                ds = RightDAL.GetProductClassAnalysisRights(recapSource, _rights);
-                if (ds != null && ds.Tables != null && ds.Tables[0] != null && ds.Tables[0].Rows != null) {
-                    foreach (DataRow row in ds.Tables[0].Rows) listVehicleForRecap += row[0] + ",";
-                    if (listVehicleForRecap.Length > 0) {
-                        _rights.Add(CustomerCst.Right.type.vehicleAccessForRecap, listVehicleForRecap.Substring(0, listVehicleForRecap.Length - 1).Split(','));
+            if (!WebApplicationParameters.UseRightDefaultConnection)
+            {
+                if (this.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR) != null
+                    || this.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE) != null)
+                {
+                    try
+                    {
+                        IDataSource recapSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.productClassAnalysis);
+                        ds = RightDAL.GetProductClassAnalysisRights(recapSource, _rights);
+                        if (ds != null && ds.Tables != null && ds.Tables[0] != null && ds.Tables[0].Rows != null)
+                        {
+                            foreach (DataRow row in ds.Tables[0].Rows) listVehicleForRecap += row[0] + ",";
+                            if (listVehicleForRecap.Length > 0)
+                            {
+                                _rights.Add(CustomerCst.Right.type.vehicleAccessForRecap, listVehicleForRecap.Substring(0, listVehicleForRecap.Length - 1).Split(','));
+                            }
+                        }
+                    }
+                    catch (System.Exception err)
+                    {
+                        throw (new RightException("Impossible to load recap right", err));
                     }
                 }
-            }
-            catch (System.Exception err) {
-                throw (new RightException("Impossible to load recap right", err));
             }
             #endregion
 
@@ -950,9 +1039,16 @@ namespace TNS.AdExpress {
 					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_PRESS_CREATION_ACCESS_FLAG)) return true;
 					return (_flagsRights.ContainsKey(Flags.ID_PRESS_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_PRESS_CREATION_ACCESS_FLAG] != null);
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radioGeneral:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radioSponsorship:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radioMusic:
 					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_RADIO_CREATION_ACCESS_FLAG)) return true;
 					return (_flagsRights.ContainsKey(Flags.ID_RADIO_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_RADIO_CREATION_ACCESS_FLAG] != null);
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvGeneral:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvSponsorship:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvNonTerrestrials:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvAnnounces:
 					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_TV_CREATION_ACCESS_FLAG)) return true;
 					return (_flagsRights.ContainsKey(Flags.ID_TV_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_TV_CREATION_ACCESS_FLAG] != null);
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
@@ -979,6 +1075,8 @@ namespace TNS.AdExpress {
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
                     if (!Domain.AllowedFlags.ContainFlag(Flags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG)) return true;
                     return (_flagsRights.ContainsKey(Flags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG) && _flagsRights[Flags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG] != null);
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.editorial:
+                    return true; //TODO: FLAG ACCESS EDITORIAL RUSSIE?
                 default:
 					return (false);
 			}

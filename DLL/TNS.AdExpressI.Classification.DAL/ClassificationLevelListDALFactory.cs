@@ -14,6 +14,7 @@ using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpressI.Classification.DAL.Exceptions;
 using TNS.AdExpress.Domain.Level;
+using TNS.Classification.Universe;
 
 namespace TNS.AdExpressI.Classification.DAL {
 	/// <summary>
@@ -52,7 +53,7 @@ namespace TNS.AdExpressI.Classification.DAL {
 		/// <summary>
 		/// Data Source
 		/// </summary>
-		IDataSource _source = null;
+        protected IDataSource _source = null;
         /// <summary>
         /// Get if data items shiould be in lower case
         /// </summary>
@@ -86,10 +87,15 @@ namespace TNS.AdExpressI.Classification.DAL {
 				//Create a list of advertiser items				
 				case DetailLevelItemInformation.Levels.advertiser :
 					return new ProductBrand.AdvertiserLevelListDAL(idList,_language, _source);
-
+                //Create a list of advertisementType items				
+                case DetailLevelItemInformation.Levels.advertisementType:
+                    return new ProductBrand.AdvertisementTypeLevelListDAL(idList, _language, _source);
 				//Create a list of brand level's items		
 				case DetailLevelItemInformation.Levels.brand :
 					return new ProductBrand.BrandLevelListDAL(idList, _language, _source);
+                //Create a list of sub brand level's items		
+                case DetailLevelItemInformation.Levels.subBrand :
+                    return new ProductBrand.SubBrandLevelListDAL(idList, _language, _source);
 				//Create a list of sub media level's items		
 				case DetailLevelItemInformation.Levels.category :
 					return new MediaBrand.CategoryLevelListDAL(idList, _language, _source);
@@ -138,6 +144,9 @@ namespace TNS.AdExpressI.Classification.DAL {
                 case DetailLevelItemInformation.Levels.vpBrand:
                     return new MediaBrand.VpBrandLevelListDAL(idList, _language, _source);
                 
+                //Create a list of region level 's  items		
+                case DetailLevelItemInformation.Levels.region:
+                    return new MediaBrand.RegionLevelListDAL(idList, _language, _source);				
 				default :
 					throw new Exceptions.ClassificationDALException(" Unknow Detail level information Identifier ");
 			}
@@ -295,10 +304,11 @@ namespace TNS.AdExpressI.Classification.DAL {
 		}
 		/// Get partial items list of a classification's level
 		/// </summary>
-		/// <param name="table">Target table used to build the list</param>
+        /// <param name="level">Cuurent universe classification level ex. product or group or media type</param>
 		/// <param name="idList">classification items' identifier list</param>
-		public virtual ClassificationLevelListDAL CreateDefaultClassificationLevelListDAL(string table, string idList) {
-			return new ClassificationLevelListDAL(table, idList, _language, _source);
+		public virtual ClassificationLevelListDAL CreateDefaultClassificationLevelListDAL(UniverseLevel level, string idList) {
+            string table = level.TableName; 
+            return new ClassificationLevelListDAL(table, idList, _language, _source);
 		}
 
         /// <summary>
@@ -312,6 +322,79 @@ namespace TNS.AdExpressI.Classification.DAL {
             }
         }
 		#endregion
+
+        protected virtual DetailLevelItemInformation GetDetailLevelItemInformation(TNS.AdExpress.Constantes.Customer.Right.type levelType)
+        {
+            
+            switch (levelType)
+            {
+
+                //Create a list of advertiser items				
+                case TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.advertiserException:
+                    return DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.advertiser);
+                //Create a list of brand level's items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.brandAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.brandException:
+                    return DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.brand);
+                //Create a list of sub brand level's items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.subBrandAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.subBrandException:
+                    return DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.subBrand);
+                //Create a list of sub media level's items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.categoryAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.categoryException:
+                    return  DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.category);
+                //Create a list of group level's items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.groupAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.groupException:
+                    return  DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.group);
+                //Create a list of Parent level's items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException:
+                    return  DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.holding);
+                //Create a list of Media genre level's items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.interestCenterAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.interestCenterException:
+                    return  DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.interestCenter);
+                //Create a list of Vehicle level's items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.mediaAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.mediaException:
+                    return DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.media);
+                //Create a list of Category level's items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.sectorException:
+                    return  DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.sector);
+                //Create a list of Sub group's level items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.segmentAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.segmentException:
+                    return  DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.segment);
+                //Create a list of Sub Category level's items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.subSectorException:
+                    return DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.subSector);
+                //Create a list of Media Type level 's  items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.vehicleException:
+                case TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccessForRecap:
+                    return DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.vehicle);
+                //Create a list of Product level's items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.productAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.productException:
+                    return DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.product);
+                //Create a list of region level's items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.regionAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.regionException:
+                    return DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.region);
+                    
+                default:
+                    throw new Exceptions.ClassificationDALException(" Unknow level type Identifier ");
+            }
+        }
+
+
+       
+	
 
 	}
 }

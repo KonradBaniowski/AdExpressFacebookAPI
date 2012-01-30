@@ -38,6 +38,16 @@ namespace TNS.AdExpress.Domain.Level
 		#endregion
 
 		#region Méthodes publiques
+
+        /// <summary>
+        /// Check if contains column level with current ID
+        /// </summary>
+        /// <param name="id">ID column level</param>
+        /// <returns>True if contains column</returns>
+        public bool Contains(Int64 id)
+        {
+            return _list.ContainsKey(id);
+        }
 		/// <summary>
 		/// Accès à la description d'un élément de la colonne par son identifiant
 		/// </summary>

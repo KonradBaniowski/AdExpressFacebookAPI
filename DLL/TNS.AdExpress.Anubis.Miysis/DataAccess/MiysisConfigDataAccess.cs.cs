@@ -13,6 +13,7 @@ using System.Xml;
 using TNS.AdExpress.Anubis.Miysis.Common;
 using TNS.AdExpress.Anubis.Miysis.Exceptions;
 using TNS.FrameWork.DB.Common;
+using PDFCreatorPilotLib;
 
 namespace TNS.AdExpress.Anubis.Miysis.DataAccess{
 	/// <summary>
@@ -93,6 +94,11 @@ namespace TNS.AdExpress.Anubis.Miysis.DataAccess{
 								Value=Reader.GetAttribute("keywords");
 								if (Value!=null) cfg.PdfKeyWords = Value;
 								break;
+                            case "TxFontCharset":
+                                Value = Reader.GetAttribute("id");
+                                if (string.IsNullOrEmpty(Value)) throw new ArgumentNullException(" parameter id is invalid");
+                                cfg.PdfCreatorPilotCharsets.Add(Value, (TxFontCharset)Enum.Parse(typeof(TxFontCharset), Reader.GetAttribute("charset")));
+                                break;
 						}
 					}
 				}

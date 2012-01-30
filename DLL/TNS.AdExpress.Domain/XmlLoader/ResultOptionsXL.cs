@@ -48,6 +48,11 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             List<VpDateConfiguration> vpDateConfigurationList = null;
             TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type defaultVpDateType = CustomerSessions.Period.Type.currentMonth;
             DetailLevelItemInformation.Levels defaultPersoLevel = DetailLevelItemInformation.Levels.vpBrand;
+            bool useComparativeLostWon = false;
+            bool useDiponibilityLostWon = true;
+            bool useTypeLostWon = true;
+            bool isAllPeriodIsRestrictTo4Month = true;
+            bool canSaveLevels = false;
             #endregion
 
             try {
@@ -177,6 +182,28 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                     }
                                     vpConfigurationDetail = new VpConfigurationDetail(resultControlLayerList, selectionControlLayerList, defaultPersoLevel);
                                 }
+                                break;							
+                            case "campaignType":
+                                if (reader.GetAttribute("available") != null && reader.GetAttribute("available").Length > 0)
+                                {
+                                    WebApplicationParameters.AllowCampaignTypeOption = Convert.ToBoolean(reader.GetAttribute("available"));
+                                }
+                                break;
+                            case "refineUniverse":
+                                if (reader.GetAttribute("keepSelection") != null && reader.GetAttribute("keepSelection").Length > 0)
+                                {
+                                    WebApplicationParameters.KeepRefineUniverseSelection = Convert.ToBoolean(reader.GetAttribute("keepSelection"));
+                                }
+                                break;
+                            case "lostWon":
+                                useComparativeLostWon = bool.Parse(reader.GetAttribute("useComparative"));
+                                useDiponibilityLostWon = bool.Parse(reader.GetAttribute("useDiponibility"));
+                                useTypeLostWon = bool.Parse(reader.GetAttribute("useType"));
+                                break;
+                            case "insertionReport":
+                                isAllPeriodIsRestrictTo4Month = bool.Parse(reader.GetAttribute("isAllPeriodIsRestrictTo4Month"));
+                                canSaveLevels = bool.Parse(reader.GetAttribute("canSaveLevels"));
+                               
                                 break;
                         }
                     }
@@ -186,7 +213,13 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                 WebApplicationParameters.UseRetailer = useRetailer;
                 WebApplicationParameters.MatchingRetailerTableList = matchingTableList;
                 WebApplicationParameters.VpConfigurationDetail = vpConfigurationDetail;
-                WebApplicationParameters.VpDateConfigurations = new VpDateConfigurations(defaultVpDateType, vpDateConfigurationList);
+                WebApplicationParameters.VpDateConfigurations = new VpDateConfigurations(defaultVpDateType, vpDateConfigurationList);		
+                WebApplicationParameters.UseComparativeLostWon = useComparativeLostWon;
+                WebApplicationParameters.UseDiponibilityOptionPeriodLostWon = useDiponibilityLostWon;
+                WebApplicationParameters.UseTypeOptionPeriodLostWon = useTypeLostWon;
+                //WebApplicationParameters.IsAllPeriodIsRestrictTo4MonthInInsertionReport = isAllPeriodIsRestrictTo4Month;
+                WebApplicationParameters.InsertionOptions = new InsertionOptions(isAllPeriodIsRestrictTo4Month, canSaveLevels); 
+              
             }
 
             #region Error Management
