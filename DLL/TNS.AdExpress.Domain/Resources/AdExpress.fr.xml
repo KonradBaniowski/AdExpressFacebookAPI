@@ -2165,5 +2165,7 @@
     <item mnemonic="w2931" type="System.String">Vous avez la possibilité d’effectuer un filtre par format Evaliant  à l’aide des cases à cocher ci-dessous pour visualiser uniquement les formats souhaités. Par défaut, tous les formats en accès sont sélectionnés. Il vous  suffit de décocher les formats que vous ne souhaitez plus voir dans vos résultats et valider votre sélection à l’aide de la touche</item>
     <!--Add text for export Internet Evaliant Visuals-->
     <item mnemonic="w2932" type="System.String">Exporter les versions</item>
+    <item mnemonic="w2933" type="System.String">Supports</item>
+    <item mnemonic="w2934" type="System.String">Regrouper par</item>
   </items>
 </localization>
