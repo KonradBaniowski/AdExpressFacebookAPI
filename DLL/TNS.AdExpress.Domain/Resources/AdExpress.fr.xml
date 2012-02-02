@@ -2167,5 +2167,8 @@
     <item mnemonic="w2932" type="System.String">Exporter les versions</item>
     <item mnemonic="w2933" type="System.String">Supports</item>
     <item mnemonic="w2934" type="System.String">Regrouper par</item>
+    <item mnemonic="w2935" type="System.String">AdExpress -- Fichier Export des versions</item>
+    <item mnemonic="w2936" type="System.String">Le fichier ZIP</item>
+    <item mnemonic="w2937" type="System.String">ZIP Export des versions</item>
   </items>
 </localization>
