@@ -2170,5 +2170,6 @@
     <item mnemonic="w2935" type="System.String">AdExpress -- Fichier Export des versions</item>
     <item mnemonic="w2936" type="System.String">Le fichier ZIP</item>
     <item mnemonic="w2937" type="System.String">ZIP Export des versions</item>
+    <item mnemonic="w2938" type="System.String">Aucune version disponible pour votre sélection</item>
   </items>
 </localization>
