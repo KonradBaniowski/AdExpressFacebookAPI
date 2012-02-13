@@ -170,7 +170,7 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
 
                         if (cells[line, columnVisualsCondition].Value != null)
                             conditionVisual =
-                                (new List<string>(((string) cells[line, columnVisualsCondition].Value).Split(';'))).
+                                (new List<string>(((string) cells[line, columnVisualsCondition].Value).Split(new[]{';',','}))).
                                     ConvertAll<string>(
                                         file =>
                                         System.IO.Path.GetFullPath(
@@ -220,7 +220,7 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
 
                         if (cells[line, columnVisualsPromo].Value != null)
                             promotionVisual =
-                                new List<string>(((string) cells[line, columnVisualsPromo].Value).Split(';')).ConvertAll
+                                new List<string>(((string)cells[line, columnVisualsPromo].Value).Split(new[] { ';', ',' })).ConvertAll
                                     <string>(
                                         file =>
                                         System.IO.Path.GetFullPath(
