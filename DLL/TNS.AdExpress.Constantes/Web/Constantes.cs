@@ -285,7 +285,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Date de fin d'une étude comparative
             /// </summary>
-            endDateComparative = 65
+            endDateComparative = 65,
+            /// <summary>
+            /// Creatives Export Options
+            /// </summary>
+            creativesExportOptions =66
 		}
 	
 	}

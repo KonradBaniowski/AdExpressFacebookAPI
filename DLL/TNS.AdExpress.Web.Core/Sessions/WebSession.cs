@@ -2786,6 +2786,29 @@ namespace TNS.AdExpress.Web.Core.Sessions {
         }
         #endregion
 
+        #region Export creatives options
+         /// <summary>
+        /// Get \Set Campaign Type 
+        /// </summary>
+        public List<int> CreativesExportOptions
+        {
+            get
+            {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.creativesExportOptions))
+                {
+                    return (List<int>)userParameters[CoreConstantes.SessionParamters.creativesExportOptions];
+                }
+
+                return new List<int>();
+            }
+            set
+            {
+                userParameters[CoreConstantes.SessionParamters.creativesExportOptions] = value;
+                modificationDate = DateTime.Now;
+            }
+        }
+        #endregion
+
         public void CopyFrom(WebSession session)
         {
             if (session != null)

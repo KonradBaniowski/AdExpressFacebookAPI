@@ -55,6 +55,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <asp:image runat="server" ImageUrl="Images/Common/Menu/createAlertMenuIcon.gif" SkinID="createAlert" />
 <asp:image runat="server" ImageUrl="Images/Common/Menu/updateDateMenuIcon.gif" SkinID="updateDate" />
 <asp:image runat="server" ImageUrl="Images/Common/Menu/kantarWebsiteMenuIcon.gif" SkinID="website" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/exportCreativesMenuIcon.gif" SkinID="creativeExport" />
 
 <%-- Alert--%>
 <asp:image runat="server" ImageUrl="Images/Common/flagPending.gif" SkinID="alertFlagPending" />

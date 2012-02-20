@@ -92,7 +92,11 @@ namespace TNS.AdExpress.Anubis.Constantes{
             /// <summary>
             /// Export pdf veille promo calendar schedule
             /// </summary>
-            thoueris = 23
+            thoueris = 23,
+             /// <summary>
+            /// Export des visuels Evaliant (Plug-in Dedoum)
+            /// </summary>
+            dedoum = 24
 		}
 
 		/// <summary>

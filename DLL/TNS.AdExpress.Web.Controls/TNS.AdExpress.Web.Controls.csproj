@@ -337,6 +337,7 @@
     <Compile Include="Results\Appm\SectorDataWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Results\AskRemoteExportWebControl.cs" />
     <Compile Include="Results\VehicleView\CoverItemWebControl.cs" />
     <Compile Include="Results\VehicleView\CoverLinkItemSynthesisWebControl.cs" />
     <Compile Include="Results\VehicleView\CoverLinkItemWebControl.cs" />

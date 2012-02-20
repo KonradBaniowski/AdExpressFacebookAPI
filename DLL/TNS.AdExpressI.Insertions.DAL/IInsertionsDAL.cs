@@ -64,6 +64,17 @@ namespace TNS.AdExpressI.Insertions.DAL
         DataSet GetCreativesData(VehicleInformation vehicle, int fromDate, int toDate, int universId, string filters);
 
         /// <summary>
+        /// Extract advertising detail for creatives details 
+        /// </summary>
+        /// <param name="vehicle">Vehicle Information (differents informations about a media type like databaseId, showInsertions..., this object is more detailed above)</param>
+        /// <param name="fromDate">Beginning of the period</param>
+        /// <param name="toDate">End of the period</param>
+        /// <param name="columns">columns</param>
+        /// <returns>Advertising detail Data</returns>		
+        DataSet GetCreativesData(VehicleInformation vehicle, int fromDate, int toDate,
+                                 List<GenericColumnItemInformation> columns);
+
+        /// <summary>
         /// Extract advertising detail for media schedule creatives details 
         /// </summary>
         /// <param name="vehicle">Vehicle Information (differents informations about a media type like databaseId, showInsertions..., this object is more detailed above)</param>

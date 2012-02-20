@@ -67,6 +67,10 @@ namespace TNS.Ares.Domain.LS {
         /// </summary>
         Thoueris = 23,
         /// <summary>
+        /// Dedoum Plugin
+        /// </summary>
+        Dedoum = 24,
+        /// <summary>
         /// easyMusicExcel Plugin
         /// </summary>
         easyMusicExcel = 30,

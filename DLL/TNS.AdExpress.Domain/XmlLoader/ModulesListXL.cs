@@ -59,7 +59,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 				string printExcelUrlValue="";
 				string printBisExcelUrlValue="";
 				string exportJpegUrlValue="";
-				string remotePdfUrlValue="";
+                string remotePdfUrlValue = "", remoteCreativeExportUrlValue="";
 				string remoteResultPdfUrlValue="";
 				string remoteTextUrlValue="";
 				string remoteExcelUrlValue="";
@@ -84,7 +84,7 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 					printExcelUrlValue="";
 					printBisExcelUrlValue="";
 					exportJpegUrlValue="";
-					remotePdfUrlValue="";
+				    remotePdfUrlValue = ""; remoteCreativeExportUrlValue = "";
 					remoteResultPdfUrlValue="";
 					remoteTextUrlValue="";
 					remoteExcelUrlValue="";
@@ -176,9 +176,10 @@ namespace TNS.AdExpress.Domain.XmlLoader{
 								if(reader.GetAttribute("valueExcelUrl")!=null) valueExcelUrlValue=reader.GetAttribute("valueExcelUrl");
                                 if (reader.GetAttribute("helpUrl") != null) helpUrlValue = reader.GetAttribute("helpUrl");
                                 if (reader.GetAttribute("createAlertUrl") != null) createAlertUrlValue = reader.GetAttribute("createAlertUrl");
+                                if (reader.GetAttribute("remoteCreativeExportUrl") != null) remoteCreativeExportUrlValue = reader.GetAttribute("remoteCreativeExportUrl");
 
 								if(reader.GetAttribute("id")!=null && reader.GetAttribute("resultid")!=null && reader.GetAttribute("traductioncode")!=null && reader.GetAttribute("url")!=null && reader.GetAttribute("menuTextId")!=null && module!=0){
-									currentResultPageInformation=new ResultPageInformation(int.Parse(reader.GetAttribute("id")),Int64.Parse(reader.GetAttribute("resultid")), reader.GetAttribute("url"),Int64.Parse(reader.GetAttribute("traductioncode")),rawExcelUrlValue,printExcelUrlValue,printBisExcelUrlValue,exportJpegUrlValue,remotePdfUrlValue,remoteResultPdfUrlValue,valueExcelUrlValue,remoteTextUrlValue,remoteExcelUrlValue,reader.GetAttribute("helpUrl"),Int64.Parse(reader.GetAttribute("menuTextId")), createAlertUrlValue);
+									currentResultPageInformation=new ResultPageInformation(int.Parse(reader.GetAttribute("id")),Int64.Parse(reader.GetAttribute("resultid")), reader.GetAttribute("url"),Int64.Parse(reader.GetAttribute("traductioncode")),rawExcelUrlValue,printExcelUrlValue,printBisExcelUrlValue,exportJpegUrlValue,remotePdfUrlValue,remoteResultPdfUrlValue,valueExcelUrlValue,remoteTextUrlValue,remoteExcelUrlValue,reader.GetAttribute("helpUrl"),Int64.Parse(reader.GetAttribute("menuTextId")), createAlertUrlValue,remoteCreativeExportUrlValue);
                                     currentResultPageInformation.ParentModule=(Module)htModule[module];
                                     subtree2 = (XmlReader)reader.ReadSubtree();
 

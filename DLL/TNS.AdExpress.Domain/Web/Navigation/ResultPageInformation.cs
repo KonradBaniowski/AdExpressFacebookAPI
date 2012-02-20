@@ -67,6 +67,10 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		/// Lien vers la pop-up de sauvegarde d'un fichier excel via Anubis
 		/// </summary>
 		protected string _remoteExcelUrl="";
+        /// <summary>
+        /// Lien vers la pop-up d'export des créations via Anubis
+        /// </summary>
+        protected string _remoteCreativeExportUrl = "";
 		/// <summary>
 		/// Liste des types de détail sélection à afficher dans les rappels de la sélection
 		/// </summary>
@@ -154,7 +158,7 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 			if(valueExcel!=null)_valueExcelUrl = valueExcel;
 		}
 
-        public ResultPageInformation(int id, Int64 resultId, string url, Int64 idWebText, string rawExcelUrl, string printExcelUrl, string printBisExcelUrl, string exportJpegUrl, string remotePdfUrl, string remoteResultPdfUrl, string valueExcel, string remoteTextUrl, string remoteExcelUrl, string helpUrl, Int64 menuTextId, string createAlertUrl)
+        public ResultPageInformation(int id, Int64 resultId, string url, Int64 idWebText, string rawExcelUrl, string printExcelUrl, string printBisExcelUrl, string exportJpegUrl, string remotePdfUrl, string remoteResultPdfUrl, string valueExcel, string remoteTextUrl, string remoteExcelUrl, string helpUrl, Int64 menuTextId, string createAlertUrl,string remoteCreativeExportUrl)
             : this(id, resultId, url, idWebText, helpUrl, menuTextId)
         {
             if (rawExcelUrl != null) _rawExcelUrl = rawExcelUrl;
@@ -167,6 +171,7 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
             if (remoteExcelUrl != null) _remoteExcelUrl = remoteExcelUrl;
             if (valueExcel != null) _valueExcelUrl = valueExcel;
             if (createAlertUrl != null) _createAlertUrl = createAlertUrl;
+            if (!string.IsNullOrEmpty(remoteCreativeExportUrl)) _remoteCreativeExportUrl = remoteCreativeExportUrl;
         }
 		#endregion
 
@@ -277,8 +282,15 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 		public string RemoteExceltUrl {
 			get{return _remoteExcelUrl;}
 		}
+        /// <summary>
+        /// Obtient l'url de la page de génération d'un dossier visuels zippé de  via Anubis
+        /// </summary>
+        public string RemoteCreativeExportUrl
+        {
+            get { return _remoteCreativeExportUrl; }
+        }
 
-
+        
 		/// <summary>
 		/// Obtient et défini la liste des types d'éléments à montrer dans le rappel de la sélection
 		/// </summary>
@@ -419,7 +431,15 @@ namespace TNS.AdExpress.Domain.Web.Navigation {
 			if(_remoteExcelUrl.Length==0) return (false);
 			return (true);
 		}
-
+        /// <summary>
+        /// Il existe ou pas un lien vers  la page de génération d'un dossier de viuels zippé via Anubis
+        /// </summary>
+        /// <returns>True si la fonctionnalité doit être montrée, false sinon</returns>
+        public bool CanDisplayRemoteCreativeExportUrl()
+        {
+            if (_remoteCreativeExportUrl.Length == 0) return (false);
+            return (true);
+        }
         /// <summary>
         ///Get /Set if can display option campaign type
         /// </summary>

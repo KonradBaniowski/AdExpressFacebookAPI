@@ -1762,7 +1762,13 @@ namespace TNS.AdExpress.Constantes.DB{
         /// <summary>
         /// Identifier of CAtegory Application mobile creative flag
         /// </summary>
-        public const Int64 ID_APPLICATION_MOBILE_CREATIVE_FLAG = 323;  
+        public const Int64 ID_APPLICATION_MOBILE_CREATIVE_FLAG = 323;
+        /// <summary>
+        /// Identifier of export evaliant creatives flag
+        /// </summary>
+        public const Int64 ID_EXPORT_INTERNET_EVALIANT_CREATIVE_FLAG = 328;  
+  
+
   
 
     }

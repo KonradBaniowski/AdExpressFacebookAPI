@@ -283,6 +283,14 @@ height and width of the icon image.
 	position: absolute;
 	width: 20px;
 }
+.exportCreativesMenuIcon {
+	background-image: url(/App_Themes/KMAE-Fr/Images/Common/Menu/exportCreativesMenuIcon.gif);
+	background-repeat: no-repeat;
+	height: 20px;
+	left: 2px;
+	position: absolute;
+	width: 20px;
+}
 .printColMenuIcon {
 	background-image: url(/App_Themes/KMAE-Uk/Images/Common/Menu/printColMenuIcon.gif);
 	background-repeat: no-repeat;

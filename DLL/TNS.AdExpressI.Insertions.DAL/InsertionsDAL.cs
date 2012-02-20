@@ -257,7 +257,7 @@ namespace TNS.AdExpressI.Insertions.DAL {
                     /* Apply the differents univers filters : univers selected and rights
                      * this method is more detailed below
                      * */
-                    AppendUniversFilters(sql, dataTable, fromDate, toDate, v, universId, filters);
+                    AppendUniversFilters(sql, dataTable, fromDate, toDate, v,universId,filters);
                     sql.AppendFormat(" and rownum < 2 ");
                 }
 
@@ -433,6 +433,22 @@ namespace TNS.AdExpressI.Insertions.DAL {
             _creaConfig = true;
             return GetData(vehicle, fromDate, toDate, universId, filters);
         }
+        /// <summary>
+        /// Extract advertising detail for creatives details 
+        /// </summary>
+        /// <param name="vehicle">Vehicle Information (differents informations about a media type like databaseId, showInsertions..., this object is more detailed above)</param>
+        /// <param name="fromDate">Beginning of the period</param>
+        /// <param name="toDate">End of the period</param>
+        /// <param name="columns">columns</param>
+        /// <returns>Advertising detail Data</returns>		
+        public virtual DataSet GetCreativesData(VehicleInformation vehicle, int fromDate, int toDate, List<GenericColumnItemInformation> columns)
+        {
+            /* (True if we're using InsertionDAL to get informations about versions)
+             * */
+            _creaConfig = true;
+            return GetData(vehicle, fromDate, toDate,columns);
+        }
+
         #endregion
 
         #region MS Creatives
@@ -464,12 +480,94 @@ namespace TNS.AdExpressI.Insertions.DAL {
         /// <param name="vehicle">Vehicle Information</param>
         /// <param name="fromDate">Beginning of the period</param>
         /// <param name="toDate">End of the period</param>
+        /// Note that if the value of the level is long.MinValue  (-9223372036854775808), it's mean that the level was not selected.
+        /// 
+        /// <param name="columns">column list </param>
+        /// <returns>Advertising detail Data</returns>		
+        protected virtual DataSet GetData(VehicleInformation vehicle, int fromDate, int toDate, List<GenericColumnItemInformation> columns)
+        {
+
+            StringBuilder sql = new StringBuilder(5000);
+            /* Get the table name for a specific vehicle and depending on the module type
+             * Example : data_press, data_tv, data_radio ...
+             * */
+            Table tData = GetDataTable(vehicle, _module.ModuleType);
+            /* Get the data base shema
+             * */
+            Schema sAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
+            string tmp = string.Empty;
+            /* Get the list of columns that are going to be used to describe the version or the insertion.
+             * Example : Media, Category, Sub category, advertiser, product, time aired, duration, position ...
+             * The list of columns description is defined in the XML file : GenericColumn.xml, 
+             * and we can also find in this file, several customized columns lists like : 
+             *  Page\Visuel\Annonceur\Groupe\Produit\Version\Centre d'interet\Régie\Format\Surface\Couleur\Prix\Descriptif
+             *  or Spot\Annonceur\Produit\Version\Centre d'interet\Régie\Groupe\Top de diffusion\Durée\Position\Durée écran\Nombre Spots écran\Position hap\Durée écran hap\Nombre spots hap\Prix\Descriptif
+             * We use three others configuration files, the first for insertions , the second for versions and the third for versions exports (versions used in export results like PDf or Excel), following the description of the three files :
+             * MediaPlanInsertionConfiguration.xml : contains for every vehicle a customized columns list (in this file we use detailColumn Id that match the one defined in the GenericColumn.xml file).
+             * CreativesConfiguration.xml          : contains for every vehicle a customized columns list (in this file we use detailColumn Id that match the one defined in the GenericColumn.xml file).
+             * MSCreativesDetails.xml              : contains for every vehicle a customized columns list (in this file we use detailColumn Id that match the one defined in the GenericColumn.xml file).
+             * */
+                       
+            try {
+
+                // Select
+                sql.Append(" select distinct ");
+                // Append data fields
+                AppendInsertionsSqlFields(tData, vehicle, sql, columns);
+                sql.Length -= 1;
+
+                // Append data tables
+                AppendSqlTables(sAdExpr03, tData, sql, columns);
+
+                sql.Append(" Where ");
+
+                // Append filters
+                AppendUniversFilters(sql, tData, fromDate, toDate, vehicle);
+
+                // Append Joins
+                tmp = GenericColumns.GetSqlJoins(_session.DataLanguage, tData.Prefix, columns, null);
+                if (tmp.Length > 0) {
+                    sql.AppendFormat(" {0} ", tmp);
+                }
+               
+                sql.AppendFormat(" {0} ", GenericColumns.GetSqlContraintJoins(columns));
+
+                // Append Group by
+                AppendSqlGroupByFields(sql, tData, vehicle, columns);
+
+                // Append Order by 
+                AppendSqlOrderFields(tData, sql, vehicle, columns);
+
+            }
+            catch (System.Exception err) {
+                throw new InsertionsDALException(string.Format("Unable to build request to get insertions details. {0}", sql.ToString()), err);
+            }
+
+
+            #region Execution de la requête
+            try {
+                return _session.Source.Fill(sql.ToString());
+            }
+            catch (System.Exception err) {
+                throw new InsertionsDALException(string.Format("Unable to load data for insertions details: {0}", sql.ToString()), err);
+            }
+            #endregion
+
+        }
+
+        /// <summary>
+        /// Extract advertising detail for creatives or insertions details 
+        /// </summary>
+        /// <param name="vehicle">Vehicle Information</param>
+        /// <param name="fromDate">Beginning of the period</param>
+        /// <param name="toDate">End of the period</param>
         /// <param name="universId">The univers identifier used for the study, in the Present/Absent module it equal to -1 because we don't need this information</param>
         /// <param name="filters">Each parameter of the filters list represents a value for a classification level, the first one correspond to the Level1 the seconed to Level2
         /// Note that if the value of the level is long.MinValue  (-9223372036854775808), it's mean that the level was not selected.
         /// </param>
         /// <returns>Advertising detail Data</returns>		
-        protected virtual DataSet GetData(VehicleInformation vehicle, int fromDate, int toDate, int universId, string filters) {
+        protected virtual DataSet GetData(VehicleInformation vehicle, int fromDate, int toDate, int universId, string filters)
+        {
 
             StringBuilder sql = new StringBuilder(5000);
             ArrayList detailLevelsIds = new ArrayList();
@@ -498,12 +596,13 @@ namespace TNS.AdExpressI.Insertions.DAL {
              * */
             if (_msCreaConfig)
                 columns = WebApplicationParameters.MsCreativesDetail.GetDetailColumns(vehicle.DatabaseId);
-            else if(_creaConfig)
+            else if (_creaConfig)
                 columns = WebApplicationParameters.CreativesDetail.GetDetailColumns(vehicle.DatabaseId, _module.Id);
             else
                 columns = WebApplicationParameters.InsertionsDetail.GetDetailColumns(vehicle.DatabaseId, _module.Id);
-            
-            try {
+
+            try
+            {
 
                 // Select
                 sql.Append(" select distinct ");
@@ -521,10 +620,12 @@ namespace TNS.AdExpressI.Insertions.DAL {
 
                 // Append Joins
                 tmp = GenericColumns.GetSqlJoins(_session.DataLanguage, tData.Prefix, columns, detailLevelsIds);
-                if (tmp.Length > 0) {
+                if (tmp.Length > 0)
+                {
                     sql.AppendFormat(" {0} ", tmp);
                 }
-                if (!_msCreaConfig && _session.DetailLevel != null) {
+                if (!_msCreaConfig && _session.DetailLevel != null)
+                {
                     sql.AppendFormat(" {0} ", _session.DetailLevel.GetSqlJoins(_session.DataLanguage, tData.Prefix));
                 }
                 sql.AppendFormat(" {0} ", GenericColumns.GetSqlContraintJoins(columns));
@@ -536,16 +637,19 @@ namespace TNS.AdExpressI.Insertions.DAL {
                 AppendSqlOrderFields(tData, sql, vehicle, detailLevelsIds, columns);
 
             }
-            catch (System.Exception err) {
+            catch (System.Exception err)
+            {
                 throw new InsertionsDALException(string.Format("Unable to build request to get insertions details. {0}", sql.ToString()), err);
             }
 
 
             #region Execution de la requête
-            try {
+            try
+            {
                 return _session.Source.Fill(sql.ToString());
             }
-            catch (System.Exception err) {
+            catch (System.Exception err)
+            {
                 throw new InsertionsDALException(string.Format("Unable to load data for insertions details: {0}", sql.ToString()), err);
             }
             #endregion
@@ -665,6 +769,60 @@ namespace TNS.AdExpressI.Insertions.DAL {
         #region Sub Methods
 
         #region AppendInsertionsSqlFields
+        /// <summary>
+        /// Append data fields
+        /// The list of data fields used in the SQL query will be generated as following :
+        ///     + Three detail Levels : Level1_Id, Level1_Label, Level2_Id, Level2_Label, Level3_Id, Level3_Label. 
+        ///       We can get this levels from _session.DetailLevel.Levels.
+        ///     + A list of detail columns that we have initialize above according to column configuration files, we have two differents type of columns :
+        ///         - The first one corresponds to a classification level, like Advertiser for example, in this case we need : Level_id and Level_label
+        ///         - The second one corresponds to a feature of the insertion or the version, like page or format for example, in this case we need : column_value (page = 119, format = 1 PAGE)
+        /// </summary>
+        /// <param name="tData">Data base table description</param>
+        /// <param name="vehicle">Vehicle Information</param>
+        /// <param name="sql">Sql request container</param>
+        /// <param name="columns">List of detail columns</param>
+        /// <returns>True if there is detail levels selected</returns>
+        protected virtual bool AppendInsertionsSqlFields(Table tData, VehicleInformation vehicle, StringBuilder sql, List<GenericColumnItemInformation> columns)
+        {
+
+            string tmp = string.Empty;
+            bool detailLevelSelected = false;
+           
+            //Insertions fields
+            /* Get the SQL code of the fields corresponding to columns (from the XML configuration files) except the ones that mutched with
+             * the detail level list
+             * */
+            tmp = GenericColumns.GetSqlFields(columns,null);
+            if (tmp.Length > 0)
+            {
+                sql.AppendFormat(" {0},", tmp);
+            }
+
+            //Constraints fields
+            /* For some columns, we not only need information about the column but we need information about others fileds related to the column
+             * example : 
+             * <column id="35" name="Visuel" webTextId="1909"  dbLabel="visual">
+             *  <constraints>
+             *      <dbConstraints>
+             *          <dbFieldConstraints>
+             *              <dbFieldConstraint id="1" name="Visuel Disponibility" dbField="disponibility_visual" dbTablePrefixe="appliMd"/>
+             *              <dbFieldConstraint id="2" name="Visuel Activation" dbField="activation" dbTablePrefixe="appliMd"/>
+             *          </dbFieldConstraints>
+             *      </dbConstraints>
+             *  </constraints>
+             * </column>
+             * so we define in the Xml configuration file all the fields related to one column (like above), 
+             * and we can get this fileds by using the method GenericColumns.GetSqlConstraintFields(columns)
+             * */
+            tmp = GenericColumns.GetSqlConstraintFields(columns);
+            if (tmp.Length > 0)
+            {
+                sql.AppendFormat(" {0},", tmp);//Rules constraints management
+            }          
+
+            return detailLevelSelected;
+        }
         /// <summary>
 		/// Append data fields
         /// The list of data fields used in the SQL query will be generated as following :
@@ -794,7 +952,40 @@ namespace TNS.AdExpressI.Insertions.DAL {
         /// </summary>
         /// <param name="tData">Data table</param>
         /// <param name="sql">Sql request container</param>
-        /// <param name="detailLevels">Level details</param>
+        protected virtual void AppendSqlTables(Schema sAdExpr03, Table tData, StringBuilder sql, List<GenericColumnItemInformation> columns)
+        {
+
+            string tmp = string.Empty;
+
+            sql.AppendFormat(" from {0} ", tData.SqlWithPrefix);           
+            /* Get tables that corresponds to the classification columns
+             * */
+            tmp = GenericColumns.GetSqlTables(sAdExpr03.Label, columns, null);
+            if (tmp.Length > 0)
+            {
+                sql.AppendFormat(", {0} ", tmp);
+            }
+            /* Get tables that corresponds to specific columns
+             * */
+            tmp = GenericColumns.GetSqlConstraintTables(sAdExpr03.Label, columns);
+            if (tmp.Length > 0)
+            {
+                sql.AppendFormat(", {0} ", tmp);//Rules constraints management
+            }
+        }
+        /// <summary>
+        /// Get from clause
+        /// The list of tables used in the query will be generated as following :
+        ///     + Tables that correspond to the detail levels : Level1Table, Level2Table, Level3Table.
+        ///       We can get this tables using _session.DetailLevel.GetSqlTables(sAdExpr03.Label)
+        ///     + Tables that correspond to the list of columns, we can get this tables using GenericColumns.GetSqlTables(sAdExpr03.Label, columns, detailLevelsIds)
+        ///     + Specific tables : for some columns we need to get informations not only from the column table but from others tables.
+        ///       So, to do that we define in the Xml configuration file a list of tables related to a column 
+        ///       and we can get this list by using GenericColumns.GetSqlConstraintTables(sAdExpr03.Label, columns)
+        /// </summary>
+        /// <param name="tData">Data table</param>
+        /// <param name="sql">Sql request container</param>
+        /// <param name="detailLevelsIds">Level details</param>
         protected virtual void AppendSqlTables(Schema sAdExpr03, Table tData, StringBuilder sql, List<GenericColumnItemInformation> columns, ArrayList detailLevelsIds)
         {
 
@@ -825,6 +1016,162 @@ namespace TNS.AdExpressI.Insertions.DAL {
         #endregion
 
         #region AppendUniversFilters
+        /// <summary>
+        /// Append Filters depending on client univers selection and rights
+        /// </summary>
+        /// <param name="sql">Sql request container</param>
+        /// <param name="tData">Data Table Description</param>
+        /// <param name="fromDate">Beginning of the period</param>
+        /// <param name="toDate">End of the period</param>
+        /// <param name="vehicle">Vehicle information</param>
+        protected virtual void AppendUniversFilters(StringBuilder sql, Table tData, int fromDate, int toDate, VehicleInformation vehicle)
+        {
+
+            #region Period
+          
+                sql.AppendFormat(" {1}.date_media_num >= {0}", fromDate, tData.Prefix);
+                sql.AppendFormat(" and {1}.date_media_num <= {0}", toDate, tData.Prefix);
+                          
+            #endregion
+
+            #region Advertiser modules
+            /* Versions filter
+             * If the customer has filtred the number of the original slogan, we can find this list in the SloganIdList variable.
+             * in this case we add an id_slogan filter, like below
+             * */
+            if (_module.Id == CstWeb.Module.Name.ALERTE_PLAN_MEDIA && !string.IsNullOrEmpty(_session.SloganIdList))
+            {
+                sql.AppendFormat(" and {1}.id_slogan in ( {0} ) ", _session.SloganIdList, tData.Prefix);
+            }
+            // Product classification selection           
+            if (_session.PrincipalProductUniverses != null && _session.PrincipalProductUniverses.Count > 0)
+                sql.Append(_session.PrincipalProductUniverses[0].GetSqlConditions(tData.Prefix, true));
+
+            #endregion
+
+            #region Media selection
+            /* Get the list of medias selected
+             * There are several treenodes to save the univers media, so according to the module we can get the media list
+             * */
+            //Medias selection
+            int positionUnivers = 1;
+            string mediaList = "";
+            while (_session.CompetitorUniversMedia[positionUnivers] != null)
+            {
+                mediaList += _session.GetSelection((TreeNode)_session.CompetitorUniversMedia[positionUnivers], CstCustomer.Right.type.mediaAccess) + ",";
+                positionUnivers++;
+            }
+            if (mediaList.Length > 0)
+                sql.AppendFormat(" and {0}.id_media in ({1})",
+                   tData.Prefix,
+                    mediaList.Substring(0, mediaList.Length - 1)
+                );
+
+            #endregion
+
+            #region Rights
+            /* Get product classification rights
+             * */
+            if (_module == null) throw (new InsertionsDALException("_module parameter cannot be NULL"));
+            sql.Append(FctWeb.SQLGenerator.GetClassificationCustomerProductRight(_session, tData.Prefix, true, _module.ProductRightBranches));
+
+
+            /* Get media classification rights
+             * */
+            if (vehicle.Id == CstDBClassif.Vehicles.names.internet)
+            {
+                sql.Append(SQLGenerator.GetAdNetTrackMediaRight(_session, tData.Prefix, true));
+            }
+            else
+            {
+                sql.Append(SQLGenerator.getAnalyseCustomerMediaRight(_session, tData.Prefix, true));
+            }
+
+            // Autopromo Evaliant
+            if ((vehicle.Id == CstDBClassif.Vehicles.names.adnettrack || vehicle.Id == CstDBClassif.Vehicles.names.evaliantMobile) && _session.AutopromoEvaliant)
+            {
+                sql.AppendFormat(" and {0}.auto_promotion = 0 ", tData.Prefix);
+            }
+
+            #endregion
+
+            #region Global rules
+           
+
+            /* Get radio rules
+             * */
+            if (_module.ModuleType == CstWeb.Module.Type.tvSponsorship)
+            {
+                sql.Append(SQLGenerator.getAdExpressUniverseCondition(CstWeb.AdExpressUniverse.TV_SPONSORINGSHIP_MEDIA_LIST_ID, tData.Prefix, tData.Prefix, tData.Prefix, true));
+            }
+            else
+            {
+                sql.Append(SQLGenerator.GetAdExpressProductUniverseCondition(CstWeb.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, tData.Prefix, true, false));
+            }
+            /* This test is specific to the French version of the site
+             * */
+            string idCategoryThematic = TNS.AdExpress.Domain.Lists.GetIdList(CstWeb.GroupList.ID.category, CstWeb.GroupList.Type.thematicTv);
+            if (!string.IsNullOrEmpty(idCategoryThematic))
+            {
+                sql.AppendFormat("  and  {0}.id_category not in ( {1}) ", tData.Prefix, idCategoryThematic);
+            }
+            #endregion
+
+            #region Banners Format Filter
+            List<Int64> formatIdList = null;
+            VehicleInformation cVehicleInfo = null;
+            if (vehicle.Id == CstDBClassif.Vehicles.names.internet)
+                cVehicleInfo = VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack);
+            else
+                cVehicleInfo = vehicle;
+            formatIdList = _session.GetValidFormatSelectedList(new List<VehicleInformation>(new[] { cVehicleInfo }));
+            if (formatIdList.Count > 0)
+                sql.Append(" and " + tData.Prefix + ".ID_" + WebApplicationParameters.DataBaseDescription.GetTable(WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList[cVehicleInfo.DatabaseId].FormatTableName).Label + " in (" + string.Join(",", formatIdList.ConvertAll(p => p.ToString()).ToArray()) + ") ");
+            #endregion
+
+            #region Filtres
+           
+            if (_session.SloganIdZoom > -1)
+            {//For Russia : _session.SloganIdZoom > long.MinValue (correspond to the absence of ID for the version)
+                sql.AppendFormat(" and wp.id_slogan={0}", _session.SloganIdZoom);
+            }
+            if ((_msCreaConfig || _creaConfig) && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack && vehicle.Id != CstDBClassif.Vehicles.names.internet && vehicle.Id != CstDBClassif.Vehicles.names.evaliantMobile)
+            {
+                sql.AppendFormat(" and {0}.id_slogan is not null", tData.Prefix);
+            }
+
+            /* Version selection
+             * */
+            string slogans = _session.SloganIdList;
+
+            /* Refine vesions
+             * */
+            if (slogans.Length > 0)
+            {
+                sql.AppendFormat(" and {0}.id_slogan in({1}) ", tData.Prefix, slogans);
+            }
+            #endregion
+
+            /* For the media type press and international press we can do studies according to the inset option (total, inset excluding, inset)
+             * so to get the corresponding filter we use GetJointForInsertDetail method
+             * */
+            if (vehicle.Id == CstDBClassif.Vehicles.names.press || vehicle.Id == CstDBClassif.Vehicles.names.internationalPress || vehicle.Id == CstDBClassif.Vehicles.names.newspaper
+                || vehicle.Id == CstDBClassif.Vehicles.names.magazine)
+            {
+                sql.Append(FctWeb.SQLGenerator.GetJointForInsertDetail(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+            }
+
+            switch (vehicle.Id)
+            {
+                case CstDBClassif.Vehicles.names.internet:
+                    sql.AppendFormat(" and {1}.id_vehicle={0} ", VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack).DatabaseId, tData.Prefix);
+                    break;
+                default:
+                    sql.AppendFormat(" and {1}.id_vehicle={0} ", vehicle.DatabaseId, tData.Prefix);
+                    break;
+            }
+        }
+
         /// <summary>
         /// Append Filters depending on client univers selection and rights
         /// </summary>
@@ -1086,6 +1433,56 @@ namespace TNS.AdExpressI.Insertions.DAL {
         #endregion
 
         #region AppendSqlGroupByFields
+
+        /// <summary>
+        /// Append Group by clause
+        /// The list of fields used in the group by clause will be genrated as following :
+        ///     + Fields that correspond to the detail levels : Level1_Id, Level1_Label, Level2_Id, Level2_Label, Level3_Id, Level3_Label.
+        ///       we can get this fields by using : _session.DetailLevel.GetSqlGroupByFields()
+        ///     + Fields that correspond to the detail columns, we can get the columns list by using GenericColumns.GetSqlGroupByFields(columns, detailLevelIds)
+        ///     + Specific fields : for some column we not only need the field corresponding to the column but we need others fields related to the column
+        ///       for example for the visual column we need disponibility_visual and activation fields. We can get this by using GenericColumns.GetSqlConstraintGroupByFields(columns)
+        /// </summary>
+        /// <param name="tData">Data Table Description</param>
+        /// <param name="sql">Sql request container</param>
+        /// <param name="vehicle">Vehicle Information</param>
+        /// <param name="columns">Classification columns list</param>
+        protected virtual void AppendSqlGroupByFields(StringBuilder sql, Table tData, VehicleInformation vehicle, List<GenericColumnItemInformation> columns)
+        {
+
+            string tmp = string.Empty;
+            bool first = true;
+
+            sql.Append(" group by");
+
+         
+            /* Get SQL group by fields for the classification columns defined in the Xml configuration file
+             * */
+            tmp = GenericColumns.GetSqlGroupByFields(columns, null);
+            if (tmp.Length > 0)
+            {
+                sql.AppendFormat(" {0}", tmp);
+                first = false;
+            }
+
+            /* Get SQL group by fields for classification column that need others columns information
+             * */
+            if (columns != null)
+            {
+                tmp = GenericColumns.GetSqlConstraintGroupByFields(columns);
+                if (!string.IsNullOrEmpty(tmp))
+                {
+                    if (!first) sql.Append(",");
+                    first = false;
+                    sql.AppendFormat(" {0}", tmp);
+                }
+            }
+
+      
+           
+        }
+
+
         /// <summary>
         /// Append Group by clause
         /// The list of fields used in the group by clause will be genrated as following :
@@ -1162,6 +1559,56 @@ namespace TNS.AdExpressI.Insertions.DAL {
         #endregion
 
         #region AppendSqlOrderFields
+        /// <summary>
+        /// Append request "Order by" clause
+        /// The list of fields used in the order by clause will be genrated as following :
+        ///     + Fields that correspond to the detail levels : Level1_Id, Level1_Label, Level2_Id, Level2_Label, Level3_Id, Level3_Label.
+        ///       we can get this fields by using : _session.DetailLevel.GetSqlOrderFields()
+        ///     + Fields that correspond to the detail columns, we can get the columns list by using GenericColumns.GetSqlOrderFields(columns, detailLevelIds)
+        ///     + Specific fields : for some column we not only need the field corresponding to the column but we need others fields related to the column
+        ///       for example for the visual column we need disponibility_visual and activation fields. We can get this by using GenericColumns.GetSqlConstraintOrderFields(columns)
+        /// </summary>
+        /// <param name="tData">Data Table Description</param>
+        /// <param name="sql">Sql request container</param>
+        /// <param name="vehicle">Vehicle Information</param>
+        /// <param name="columns">Classification columns list</param>
+        protected virtual void AppendSqlOrderFields(Table tData, StringBuilder sql, VehicleInformation vehicle, List<GenericColumnItemInformation> columns)
+        {
+            string tmp = string.Empty;
+            bool first = true;
+
+            sql.Append(" order by ");
+
+           
+
+            /* Get SQL order by fields for the classification columns defined in the Xml configuration file
+             * */
+            tmp = GenericColumns.GetSqlOrderFields(columns, null);
+            if (tmp.Length > 0)
+            {
+                if (!first) sql.Append(",");
+                sql.AppendFormat(" {0}", tmp);
+                first = false;
+            }
+
+            /* Get SQL order by fields for classification column that need others columns information
+             * */
+            if (columns != null)
+            {
+                tmp = GenericColumns.GetSqlConstraintOrderFields(columns);
+                if (!string.IsNullOrEmpty(tmp))
+                {
+                    if (!first) sql.Append(",");
+                    first = false;
+                    sql.AppendFormat(" {0}", tmp);
+                }
+            }
+
+            if (!_msCreaConfig)
+                AppendSloganField(sql, tData, vehicle, columns);
+
+        }
+
         /// <summary>
         /// Append request "Order by" clause
         /// The list of fields used in the order by clause will be genrated as following :
