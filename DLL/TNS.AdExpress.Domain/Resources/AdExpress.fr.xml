@@ -2172,5 +2172,6 @@
     <item mnemonic="w2937" type="System.String">ZIP Export des versions</item>
     <item mnemonic="w2938" type="System.String">Aucune version disponible pour votre sélection</item>
     <item mnemonic="w2939" type="System.String">Votre demande concerne plus de 5000 lignes. Veuillez la modifier.</item>
+    <item mnemonic="w2940" type="System.String">Vérification du nombre de lignes à traiter...</item>
   </items>
 </localization>
