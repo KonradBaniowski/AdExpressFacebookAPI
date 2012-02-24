@@ -2173,5 +2173,8 @@
     <item mnemonic="w2938" type="System.String">Aucune version disponible pour votre sélection</item>
     <item mnemonic="w2939" type="System.String">Votre demande concerne plus de 5000 lignes. Veuillez la modifier.</item>
     <item mnemonic="w2940" type="System.String">Vérification du nombre de lignes à traiter...</item>
+    <!--Add text for export popcorn-->
+    <item mnemonic="w2941" type="System.String">Vous devez sélectionner un niveau de détail.</item>
+    <item mnemonic="w2942" type="System.String">Export des spots</item>
   </items>
 </localization>

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using AjaxPro;
 using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Level;
@@ -38,63 +38,104 @@ namespace TNS.AdExpress.Web.Controls.Results
         /// Specify if the ajax scripts have been rendered;
         /// </summary>
         protected bool _ajaxRendered = false;
+        /// <summary>
+        /// Check if can group creative export by classification level
+        /// </summary>
         protected bool _canGroupCreativesExport = false;
-
-        protected string _idValidationButton = "validateRollOverWebControl";
+        /// <summary>
+        ///  Max rows for creative export 
+        /// </summary>
         protected int _nbMaxRowsAllowed = 5000;
+        /// <summary>
+        /// result type identifier
+        /// </summary>
         private string _resultType = "";
+        /// <summary>
+        /// Button close control
+        /// </summary>
         ImageButtonRollOverWebControl closeRollOverWebControl;
+        /// <summary>
+        /// file name 's text box 
+        /// </summary>
         TextBox tbxFileName;
+        /// <summary>
+        /// mail 's text box  
+        /// </summary>
         TextBox tbxMail;
+        /// <summary>
+        /// List of option to group creative export
+        /// </summary>
         CheckBoxList groupAdByCheckBoxList;
-        CheckBox cbxRegisterMail;
+        /// <summary>
+        /// List of detai level item
+        /// </summary>
+        RadioButtonList levelsRadioButtonList;
+        /// <summary>
+        /// option register email
+        /// </summary>
+        CheckBox cbxRegisterMail;       
+        #endregion
 
+        #region Accessors
+        /// <summary>
+        ///GET /SET  option register email
+        /// </summary>
         public CheckBox CbxRegisterMail
         {
             get { return cbxRegisterMail; }
             set { cbxRegisterMail = value; }
         }
-
+        /// <summary>
+        ///GET /SET  List of option to group creative export
+        /// </summary>
         public CheckBoxList GroupAdByCheckBoxList
         {
             get { return groupAdByCheckBoxList; }
             set { groupAdByCheckBoxList = value; }
         }
-
+        /// <summary>
+        ///GET /SET  mail 's text box 
+        /// </summary>
         public TextBox TbxMail
         {
             get { return tbxMail; }
             set { tbxMail = value; }
         }
+        /// <summary>
+        ///GET /SET  file name 's text box 
+        /// </summary>
         public TextBox TbxFileName
         {
             get { return tbxFileName; }
             set { tbxFileName = value; }
         }
-
+        /// <summary>
+        ///GET /SET  option register email
+        /// </summary>
         public ImageButtonRollOverWebControl CloseRollOverWebControl
         {
             get { return closeRollOverWebControl; }
             set { closeRollOverWebControl = value; }
         }
-        #endregion
-
-        #region Accessors
-
+        /// <summary>
+        ///GET /SET  result type identifier
+        /// </summary>
         public string ResultType
         {
             get { return _resultType; }
             set { _resultType = value; }
         }
+        /// <summary>
+        ///GET /SET  option register email
+        /// </summary>
         public bool CanGroupCreativesExport
         {
             get { return _canGroupCreativesExport; }
             set { _canGroupCreativesExport = value; }
 
         }
-        #region Web Session
         /// <summary>
-        /// Obtient ou définit la Sesion du client
+        ///  GET /SET  Session 
         /// </summary>
         [Bindable(false)]
         public WebSession CustomerWebSession
@@ -102,7 +143,15 @@ namespace TNS.AdExpress.Web.Controls.Results
             get { return (_webSession); }
             set { _webSession = value; }
         }
-        #endregion
+        /// <summary>
+        /// Get /set List of detai level item
+        /// </summary>
+        public RadioButtonList LevelsRadioButtonList
+        {
+            get { return levelsRadioButtonList; }
+            set { levelsRadioButtonList = value; }
+        }
+      
         #endregion
 
         #region JavaScript
@@ -126,6 +175,7 @@ namespace TNS.AdExpress.Web.Controls.Results
         /// <returns></returns>
         protected virtual string AjaxEventScript()
         {
+
             const int maxRows = 0;
             StringBuilder js = new StringBuilder(1000);
             js.Append("\r\n<SCRIPT language=javascript>\r\n<!--");
@@ -146,11 +196,19 @@ namespace TNS.AdExpress.Web.Controls.Results
 
                 js.Append("\r\nfunction get_" + this.ID + "_callback(res){");
                 js.Append("\r\n\tvar oN=document.getElementById('res_rowsLimit');");
+                js.Append("\r\n\tvar oN1=document.getElementById('res_wait');");
+                js.Append("\r\n\t if(oN1!=null){ \r\n");
+                js.Append("\r\n\t oN1.style.display='none'; \r\n");
+                js.Append("\r\n\t}\r\n");
                 js.Append("\r\n\tif(res.value>" + _nbMaxRowsAllowed + ") {");
-                js.Append("\r\n\toN.innerHTML='<div align=\"center\" id=\"res_rowsLimit\"><tr ><td  class=\"txtViolet11Bold\" colSpan=\"2\">" + GestionWeb.GetWebWord(2939, _webSession.SiteLanguage) + "</td></tr></div>';");//style=\"border-right: #FF0000 1px solid; border-top: #FF0000 1px solid; border-left: #FF0000 1px solid; border-bottom: #FF0000 1px solid; border-color:red; color:red;\"
+                js.Append("\r\n\toN.innerHTML='<div align=\"center\" id=\"res_rowsLimit\"><tr><td  class=\"txtViolet11Bold\" colSpan=\"2\">" + GestionWeb.GetWebWord(2939, _webSession.SiteLanguage) + "</td></tr></div>';");//style=\"border-right: #FF0000 1px solid; border-top: #FF0000 1px solid; border-left: #FF0000 1px solid; border-bottom: #FF0000 1px solid; border-color:red; color:red;\"
                 js.Append("\r\n\t}\r\n");
                 js.Append("\r\n\t else{\r\n");
                 js.Append("\r\n\toN.innerHTML='';");
+                js.Append("\r\n\tvar oN3=document.getElementById('res_Content');");
+                js.Append("\r\n\t if(oN3!=null){ \r\n");
+                js.Append("\r\n\t oN3.style.display=''; \r\n");
+                js.Append("\r\n\t }\r\n");
                 js.Append("\r\n\t var oN2=document.getElementById('validationDiv');");
                 js.Append("\r\n\t if(oN2!=null){ \r\n");
                 js.Append("\r\n\t oN2.innerHTML='<a id=\"validateRollOverWebControl\"  onmouseover=\"rolloverServerControl_display('+validatButtonName_img+',validateRollOverWebControl_img_over);\" onmouseout=\"rolloverServerControl_display('+validatButtonName_img+',validateRollOverWebControl_img_out);\" href=\"javascript:__doPostBack('+'&quot;validateRollOverWebControl&quot;'+','+'&quot;&quot;'+')\"><img name=\"validateRollOverWebControl_img\" src=\"/App_Themes/KMAE-Fr/Images/Culture/button/valider_up.gif\" style=\"border-width:0px;\"/></a>&nbsp;';");
@@ -166,7 +224,7 @@ namespace TNS.AdExpress.Web.Controls.Results
                 js.Append("\r\n\t if(oN2!=null){ \r\n");
                 js.Append("\r\n\t oN2.innerHTML='<a id=\"validateRollOverWebControl\"  onmouseover=\"rolloverServerControl_display('+validatButtonName_img+',validateRollOverWebControl_img_over);\" onmouseout=\"rolloverServerControl_display('+validatButtonName_img+',validateRollOverWebControl_img_out);\" href=\"javascript:__doPostBack('+'&quot;validateRollOverWebControl&quot;'+','+'&quot;&quot;'+')\"><img name=\"validateRollOverWebControl_img\" src=\"/App_Themes/KMAE-Fr/Images/Culture/button/valider_up.gif\" style=\"border-width:0px;\"/></a>&nbsp;';");
                 js.Append("\r\n\t }\r\n");
-                js.Append("\r\n}\r\n");                
+                js.Append("\r\n}\r\n");
                 js.Append("\r\naddEvent(window, \"load\", getButtonValidate);");
             }
             js.Append("\r\n-->\r\n</SCRIPT>");
@@ -182,8 +240,6 @@ namespace TNS.AdExpress.Web.Controls.Results
         protected override void OnInit(EventArgs e)
         {
             _resultType = Page.Request.QueryString.Get("resultType");
-
-         
             tbxFileName = new TextBox();
             tbxFileName.ID = "tbxFileName";
             tbxFileName.EnableViewState = true;
@@ -233,6 +289,22 @@ namespace TNS.AdExpress.Web.Controls.Results
                 groupAdByCheckBoxList.EnableViewState = true;
                 Controls.Add(groupAdByCheckBoxList);
             }
+
+            if (Module.Name.ANALYSE_DES_DISPOSITIFS == _webSession.CurrentModule)
+            {
+                levelsRadioButtonList= new RadioButtonList();
+                levelsRadioButtonList.CssClass = "txtViolet11";
+                levelsRadioButtonList.ID = this.ID+"_levelsRadioButtonList";
+                var module = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
+                //var detailLevel = DetailLevelsInformation.Get(module.AsyncExportDetailLevel);
+                //for(int v=1; v<=detailLevel.GetNbLevels; v++)
+                //{
+                //    var di = detailLevel[v];
+                //    levelsRadioButtonList.Items.Add(new ListItem(GestionWeb.GetWebWord(di.WebTextId, _webSession.SiteLanguage),di.Id.GetHashCode().ToString()));
+                //}
+                levelsRadioButtonList.EnableViewState = true;
+                Controls.Add(levelsRadioButtonList);
+            }
             #endregion
             base.OnInit(e);
         }
@@ -254,10 +326,11 @@ namespace TNS.AdExpress.Web.Controls.Results
         #region RenderContents
         protected override void Render(HtmlTextWriter output)
         {
+
             StringBuilder html = new StringBuilder(1000);
             if (!string.IsNullOrEmpty(_resultType) && Convert.ToInt32(_resultType) == TNS.AdExpress.Anubis.Constantes.Result.type.dedoum.GetHashCode())
-            {              
-                html.Append(AjaxProTimeOutScript());              
+            {
+                html.Append(AjaxProTimeOutScript());
             }
             html.Append(AjaxEventScript());
             output.Write(html.ToString());
@@ -280,11 +353,19 @@ namespace TNS.AdExpress.Web.Controls.Results
             output.Write(" <tr> <td style=\"height:100%;background-color:#FFF;padding:10;\" valign=\"top\"> <table id=\"SaveData\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" border=\"0\">");//class=\"redBackGround\" 
             if (!string.IsNullOrEmpty(_resultType) && Convert.ToInt32(_resultType) == TNS.AdExpress.Anubis.Constantes.Result.type.dedoum.GetHashCode())
             {
+                output.Write("<tr class=\"backGroundWhite\">");
+                output.Write("	<td class=\"txtViolet11Bold\">");
+                output.Write(" <div align=\"center\" id=\"res_wait\">"+GestionWeb.GetWebWord(2940,_webSession.SiteLanguage)+"</div>");
+                output.Write("</td>");
+                output.Write("</tr>");
                 output.Write(
-                    "<div align=\"center\" id=\"res_rowsLimit\"><tr ><td style=\"border-right: #FF0000 1px solid; border-top: #FF0000 1px solid; border-left: #FF0000 1px solid; border-bottom: #FF0000 1px solid; border-color:red; color:red;\" class=\"txtViolet11Bold\" colSpan=\"2\"><img src=\"/App_Themes/" +
-                    Page.Theme + "/Images/Common/waitAjax.gif\"></td></tr></div>");
+                    "<tr><td style=\"border-right: #FF0000 1px solid; border-top: #FF0000 1px solid; border-left: #FF0000 1px solid; border-bottom: #FF0000 1px solid; border-color:red; color:red;\" class=\"txtViolet11Bold\" colSpan=\"2\"><div align=\"center\" id=\"res_rowsLimit\"><img src=\"/App_Themes/" +
+                    Page.Theme + "/Images/Common/waitAjax.gif\"></div></td></tr>");
+
+                output.Write("<tr><td><div id=\"res_Content\" style=\"display:none;\"><table>");//Debut div content
             }
-            output.Write("<tr height=\"35\" class=\"backGroundWhite\">");
+
+            output.Write("<tr height=\"30\" class=\"backGroundWhite\">");
             output.Write("	<td class=\"txtViolet11Bold\" width=\"150\">");
             AdExpressText FileNameLabel = new AdExpressText();
             FileNameLabel.Code = 1746;
@@ -324,6 +405,19 @@ namespace TNS.AdExpress.Web.Controls.Results
                 groupAdByCheckBoxList.RenderControl(output);
                 output.Write("</td></tr>");
             }
+            if (Module.Name.ANALYSE_DES_DISPOSITIFS == _webSession.CurrentModule)
+            {
+                output.Write("<tr class=\"backGroundWhite\"><td colSpan=\"2\">&nbsp;</td></tr>");
+                output.Write("<tr class=\"backGroundWhite\"><td class=\"txtViolet11Bold\" colSpan=\"2\">");
+                AdExpressText Adexpresstext3 = new AdExpressText();
+                Adexpresstext3.Code = 1886;
+                Adexpresstext3.ID = "Adexpresstext3";
+                Adexpresstext3.Language = _webSession.SiteLanguage;
+                Adexpresstext3.RenderControl(output);
+                output.Write("</td></tr><tr class=\"backGroundWhite\"><td colSpan=\"2\">");
+                levelsRadioButtonList.RenderControl(output);
+                output.Write("</td></tr>");
+            }
             output.Write("<tr class=\"backGroundWhite\"><td colSpan=\"2\">&nbsp;</td></tr>");
             output.Write("<tr class=\"backGroundWhite\"><td class=\"txtViolet11Bold\" colspan=\"2\">");
 
@@ -333,6 +427,12 @@ namespace TNS.AdExpress.Web.Controls.Results
             output.Write("</td></tr>");
             output.Write("</table>");
             output.Write("</td></tr>");
+
+            if (!string.IsNullOrEmpty(_resultType) && Convert.ToInt32(_resultType) == TNS.AdExpress.Anubis.Constantes.Result.type.dedoum.GetHashCode())
+            {
+                output.Write("</table></div></td></tr>");//Fin div content
+            }
+
             output.Write("  <!-- Footer -->");
 
             //output.Write(" <tr><td class=\"popUpFooterBackground\" align=\"right\"><table><tr><td>  <div id=\"validationDiv\"></div></td><td>");
@@ -348,9 +448,9 @@ namespace TNS.AdExpress.Web.Controls.Results
 
         #region   CountDataRows
         [AjaxMethod]
-        public int CountDataRows(string idSession)
+        public long CountDataRows(string idSession)
         {
-            const int nb = 0;
+             long nb = 0;
 
             #region Get NB Rows
             _webSession = (WebSession)WebSession.Load(idSession);
@@ -381,9 +481,8 @@ namespace TNS.AdExpress.Web.Controls.Results
             if (cl == null) throw (new NullReferenceException("Core layer is null for the insertions DAL"));
             _dalLayer = (IInsertionsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null, null);
 
-            DataSet ds = _dalLayer.GetCreativesData(vehicleInformation, Convert.ToInt32(fromDate),
+            nb = _dalLayer.CountCreativeData(vehicleInformation, Convert.ToInt32(fromDate),
                                                     Convert.ToInt32(toDate), cols);
-            if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) return ds.Tables[0].Rows.Count;
             #endregion
             return nb;
 

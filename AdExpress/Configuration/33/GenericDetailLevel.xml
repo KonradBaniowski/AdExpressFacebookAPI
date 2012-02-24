@@ -39,7 +39,7 @@
     <level id="36" name="Periodic" webTextId="2658" dbId="id_periodic" dbLabel="periodic" dbTable="periodic" dbTablePrefixe="pe"/>
     <level id="37" name="Edition type" webTextId="2659" dbId="id_edition_type" dbLabel="edition_type" dbTable="edition_type" dbTablePrefixe="et"/>
     <level id="38" name="Advertisement Type" webTextId="2663" dbId="id_advertisement_type" dbLabel="advertisement_type" dbTable="advertisement_type" dbTablePrefixe="avt"/>
-    <!--Start New columns for Russia-->
+    <!--Start New levels for Russia-->
     <level id="39" name="National Channel" webTextId="2683" dbId="id_network" dbLabel="network" dbTable="network" dbTablePrefixe="nch"/>
     <level id="40" name="TV Channel" webTextId="2684" dbId="id_channel" dbLabel="channel" dbTable="channel" dbTablePrefixe="tch"/>
     <level id="41" name="Advertisment" webTextId="2687" dbId="ad_name" dbIdAlias="id_ad_name" dbLabel="ad_name" dbTable="ad_name" dbTablePrefixe="adn"/>
@@ -66,7 +66,7 @@
     <level id="61" name="Advertisment St format" webTextId="2777" dbId="id_st_format" dbLabel="st_format" dbTable="st_format" dbTablePrefixe="sfo"/>
     <level id="62" name="Type of publication" webTextId="2803" dbId="id_publication_type" dbLabel="publication_type" dbTable="publication_type" dbTablePrefixe="put"/>
 
-    <!--End New columns for Russia-->
+    <!--End New levels for Russia-->
 
     <level id="63" name="Circuit VP"      webTextId="2879" dbId="id_circuit"  dbLabel="circuit"   dbTable="circuit"   dbTablePrefixe="cr"/>
     <level id="64" name="Segment VP"      webTextId="2877" dbId="id_segment"  dbLabel="segment"   dbTable="segment"   dbTablePrefixe="se"/>
@@ -233,6 +233,93 @@
     <detailLevel id="38" name="Circuit VP\Brand VP">
       <levelItem id="63" name="Circuit VP"/>
       <levelItem id="66" name="Brand VP"/>
+    </detailLevel>
+    <!--Debut Niveau Détail rajouté en Russie-->
+    <detailLevel id="39" name="Annonceur\Groupe\Marque">
+      <levelItem id="8" name="Annonceur"/>
+      <levelItem id="13" name="Groupe"/>
+      <levelItem id="9" name="Marque"/>
+    </detailLevel>
+    <!--<detailLevel id="40" name="Classe\Groupe\Variété">
+    <levelItem id="12" name="Classe"/>
+    <levelItem id="13" name="Groupe"/>
+    <levelItem id="14" name="Variété"/>
+  </detailLevel>-->
+    <detailLevel id="41" name="Classe\Groupe">
+      <levelItem id="12" name="Classe"/>
+      <levelItem id="13" name="Groupe"/>
+    </detailLevel>
+    <detailLevel id="42" name="Marque\Produit">
+      <levelItem id="9" name="Marque"/>
+      <levelItem id="10" name="Produit"/>
+    </detailLevel>
+    <detailLevel id="43" name="Marque">
+      <levelItem id="9" name="Marque"/>
+    </detailLevel>
+    <!--<detailLevel id="44" name="Region\TV Company\Date">
+      <levelItem id="30" name="Region"/>
+      <levelItem id="31" name="TV Company"/>
+      <levelItem id="18" name="Date"/>
+    </detailLevel>
+    <detailLevel id="45" name="Region\Station\Date">
+      <levelItem id="30" name="Region"/>
+      <levelItem id="33" name="Station"/>
+      <levelItem id="18" name="Date"/>
+    </detailLevel>
+    <detailLevel id="46" name="Region\Edition\Date">
+      <levelItem id="30" name="Region"/>
+      <levelItem id="44" name="Edition"/>
+      <levelItem id="18" name="Date"/>
+    </detailLevel>
+    <detailLevel id="47" name="Region\Carrier type\Date">
+      <levelItem id="30" name="Region"/>
+      <levelItem id="48" name="Carrier type"/>
+      <levelItem id="18" name="Date"/>
+    </detailLevel>
+    <detailLevel id="48" name="media\support">
+      <levelItem id="1" name="Media"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+   <detailLevel id="49" name="region\media\support">
+      <levelItem id="30" name="Region"/>
+      <levelItem id="1" name="Media"/>
+      <levelItem id="3" name="Support"/>
+    </detailLevel>
+    <detailLevel id="50" name="region\media">
+      <levelItem id="30" name="Region"/>
+      <levelItem id="1" name="Media"/>
+    </detailLevel>
+    <detailLevel id="51" name="region\site section\Date">
+      <levelItem id="30" name="Region"/>
+      <levelItem id="54" name="Site section"/>
+      <levelItem id="18" name="Date"/>
+    </detailLevel>
+    <detailLevel id="52" name="Brand\Product\Publiction type">
+      <levelItem id="9" name="Brand"/>
+      <levelItem id="10" name="Product"/>
+      <levelItem id="62" name="Publiction type"/>
+    </detailLevel>
+    <detailLevel id="53" name="site section\Media vehicle">
+      <levelItem id="54" name="Site section"/>
+      <levelItem id="3" name="Media Vehicle"/>
+    </detailLevel>
+    <detailLevel id="54" name="site\Media vehicle">
+      <levelItem id="53" name="Site"/>
+      <levelItem id="3" name="Media Vehicle"/>
+    </detailLevel>
+    <detailLevel id="55" name="Classe">
+      <levelItem id="12" name="Classe"/>
+    </detailLevel>-->
+    <!--Fin Niveau Détail rajouté en Russie-->
+    <detailLevel id="56" name="Advertiser\Brand\Product">
+      <levelItem id="8" name="Advertiser"/>
+      <levelItem id="9" name="Brand"/>
+      <levelItem id="10" name="Product"/>
+    </detailLevel>
+    <detailLevel id="57" name="Vehicle\Advertiser\Product">
+      <levelItem id="3" name="Vehicle"/>
+      <levelItem id="8" name="Advertiser"/>
+      <levelItem id="10" name="Product"/>
     </detailLevel>
 	</detailLevels>  
 </genericDetailLevel>

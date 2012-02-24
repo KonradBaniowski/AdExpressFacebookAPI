@@ -387,6 +387,13 @@ namespace TNS.AdExpress.Domain.XmlLoader{
                                     ((Module)htModule[module]).ProductRightBranches = reader.GetAttribute("branches").Trim();
                                 }
                                 break;
+                            //case "AsyncExportDetailLevel":
+                            //    if (!string.IsNullOrEmpty(reader.GetAttribute("id")))
+                            //        ((Module) htModule[module]).AsyncExportDetailLevel =
+                            //            Convert.ToInt32(reader.GetAttribute("id"));
+                            //    break;
+
+                            
 						}					
 					}				
 				}

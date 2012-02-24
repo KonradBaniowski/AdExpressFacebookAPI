@@ -75,6 +75,7 @@ namespace TNS.AdExpress.Web.Rules.Results {
 								switch((TNS.AdExpress.Anubis.Constantes.Result.type)type)
 								{
 									case TNS.AdExpress.Anubis.Constantes.Result.type.appmInsertionDetail :
+                                    case TNS.AdExpress.Anubis.Constantes.Result.type.pachet:
 										linkTemp =linkFile+current["ID_LOGIN"].ToString()+"/"+current["pdf_name"].ToString()+".txt";break;
 									case TNS.AdExpress.Anubis.Constantes.Result.type.amset :
 									case TNS.AdExpress.Anubis.Constantes.Result.type.appmExcel :
@@ -145,6 +146,7 @@ namespace TNS.AdExpress.Web.Rules.Results {
                     case (TNS.AdExpress.Anubis.Constantes.Result.type.selket): return (GestionWeb.GetWebWord(2895, webSession.SiteLanguage));
                     case (TNS.AdExpress.Anubis.Constantes.Result.type.thoueris): return (GestionWeb.GetWebWord(2896, webSession.SiteLanguage));
                     case (TNS.AdExpress.Anubis.Constantes.Result.type.dedoum): return (GestionWeb.GetWebWord(2937, webSession.SiteLanguage));
+                    case (TNS.AdExpress.Anubis.Constantes.Result.type.pachet): return (GestionWeb.GetWebWord(2942, webSession.SiteLanguage));
 					default:return("");	
 				}	
 			}

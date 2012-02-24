@@ -73,6 +73,7 @@ namespace TNS.AdExpress.Web.UI.Results{
 								switch(currentName.Type){
 									
 									case TNS.AdExpress.Anubis.Constantes.Result.type.appmInsertionDetail:
+                                    case TNS.AdExpress.Anubis.Constantes.Result.type.pachet:
                                         t.Append("\n<tr><td width=50%><a href=\"" + currentName.List[1, i].ToString() + "\" target=\"_blank\"><img src=\"/App_Themes/" + themeName + "/Images/Common/file_text.gif\" border=\"0\" alt=\"" + currentName.List[0, i].ToString() + "\"></a>&nbsp;<a href=\"" + currentName.List[1, i].ToString() + "\" class=\"roll02\" target=\"_blank\">" + currentName.List[0, i].ToString() + "</a></td>");
 										break;
 									case TNS.AdExpress.Anubis.Constantes.Result.type.appmExcel:
@@ -100,6 +101,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 								switch(currentName.Type){ 
 									
 									case TNS.AdExpress.Anubis.Constantes.Result.type.appmInsertionDetail:
+                                    case TNS.AdExpress.Anubis.Constantes.Result.type.pachet:
+
                                         t.Append("\n<td width=50%><a href=\"" + currentName.List[1, i].ToString() + "\" target=\"_blank\"><img src=\"/App_Themes/" + themeName + "/Images/Common/file_text.gif\" border=0 alt=\"" + currentName.List[0, i].ToString() + "\"></a>&nbsp;<a href=\"" + currentName.List[1, i].ToString() + "\" class=\"roll02\" target=\"_blank\">" + currentName.List[0, i].ToString() + "</a></td></tr>");
 										break;
 									case TNS.AdExpress.Anubis.Constantes.Result.type.appmExcel:

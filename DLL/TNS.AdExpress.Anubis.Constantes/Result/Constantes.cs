@@ -96,7 +96,10 @@ namespace TNS.AdExpress.Anubis.Constantes{
              /// <summary>
             /// Export des visuels Evaliant (Plug-in Dedoum)
             /// </summary>
-            dedoum = 24
+            dedoum = 24,
+            /// Export texte parrainage TV
+            /// </summary>
+            pachet = 25
 		}
 
 		/// <summary>

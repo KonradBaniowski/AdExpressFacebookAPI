@@ -74,6 +74,9 @@ namespace TNS.AdExpressI.Insertions.DAL
         DataSet GetCreativesData(VehicleInformation vehicle, int fromDate, int toDate,
                                  List<GenericColumnItemInformation> columns);
 
+        long CountCreativeData(VehicleInformation vehicle, int fromDate, int toDate,
+                                 List<GenericColumnItemInformation> columns);
+
         /// <summary>
         /// Extract advertising detail for media schedule creatives details 
         /// </summary>

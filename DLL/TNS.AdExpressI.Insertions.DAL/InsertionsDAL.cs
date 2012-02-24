@@ -473,6 +473,94 @@ namespace TNS.AdExpressI.Insertions.DAL {
         }
         #endregion
 
+
+        #region CountCreativeData
+        /// <summary>
+        /// Count creative data
+        /// </summary>
+        /// <param name="vehicle">Vehicle Information</param>
+        /// <param name="fromDate">Beginning of the period</param>
+        /// <param name="toDate">End of the period</param>
+        /// Note that if the value of the level is long.MinValue  (-9223372036854775808), it's mean that the level was not selected.
+        /// 
+        /// <param name="columns">column list </param>
+        /// <returns>Advertising detail Data</returns>		
+        public virtual long CountCreativeData(VehicleInformation vehicle, int fromDate, int toDate, List<GenericColumnItemInformation> columns)
+        {
+            _creaConfig = true;
+            StringBuilder sql = new StringBuilder(5000);
+            /* Get the table name for a specific vehicle and depending on the module type
+             * Example : data_press, data_tv, data_radio ...
+             * */
+            Table tData = GetDataTable(vehicle, _module.ModuleType);
+            /* Get the data base shema
+             * */
+            Schema sAdExpr03 = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03);
+            string tmp = string.Empty;
+            /* Get the list of columns that are going to be used to describe the version or the insertion.
+             * Example : Media, Category, Sub category, advertiser, product, time aired, duration, position ...
+             * The list of columns description is defined in the XML file : GenericColumn.xml, 
+             * and we can also find in this file, several customized columns lists like : 
+             *  Page\Visuel\Annonceur\Groupe\Produit\Version\Centre d'interet\Régie\Format\Surface\Couleur\Prix\Descriptif
+             *  or Spot\Annonceur\Produit\Version\Centre d'interet\Régie\Groupe\Top de diffusion\Durée\Position\Durée écran\Nombre Spots écran\Position hap\Durée écran hap\Nombre spots hap\Prix\Descriptif
+             * We use three others configuration files, the first for insertions , the second for versions and the third for versions exports (versions used in export results like PDf or Excel), following the description of the three files :
+             * MediaPlanInsertionConfiguration.xml : contains for every vehicle a customized columns list (in this file we use detailColumn Id that match the one defined in the GenericColumn.xml file).
+             * CreativesConfiguration.xml          : contains for every vehicle a customized columns list (in this file we use detailColumn Id that match the one defined in the GenericColumn.xml file).
+             * MSCreativesDetails.xml              : contains for every vehicle a customized columns list (in this file we use detailColumn Id that match the one defined in the GenericColumn.xml file).
+             * */
+
+            try
+            {
+
+                // Select
+                sql.Append(" select count(*) from (");
+                sql.Append(" select distinct ");
+                // Append data fields
+                AppendInsertionsSqlFields(tData, vehicle, sql, columns);
+                sql.Length -= 1;
+
+                // Append data tables
+                AppendSqlTables(sAdExpr03, tData, sql, columns);
+
+                sql.Append(" Where ");
+
+                // Append filters
+                AppendUniversFilters(sql, tData, fromDate, toDate, vehicle);
+
+                // Append Joins
+                tmp = GenericColumns.GetSqlJoins(_session.DataLanguage, tData.Prefix, columns, null);
+                if (tmp.Length > 0)
+                {
+                    sql.AppendFormat(" {0} ", tmp);
+                }
+
+                sql.AppendFormat(" {0} ", GenericColumns.GetSqlContraintJoins(columns));
+               
+                sql.Append(" )");
+            }
+            catch (System.Exception err)
+            {
+                throw new InsertionsDALException(string.Format("Unable to build request to count version number : {0}", sql.ToString()), err);
+            }
+
+
+            #region Execution de la requête
+            try
+            {
+                
+                DataSet ds = _session.Source.Fill(sql.ToString());
+                if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count == 1) return (Int64.Parse(ds.Tables[0].Rows[0][0].ToString()));
+                throw new InsertionsDALException(string.Format("Unable to build request to count version number: {0}", sql.ToString()));
+            }
+            catch (System.Exception err)
+            {
+                throw new InsertionsDALException(string.Format("Unable to load data for insertions details: {0}", sql.ToString()), err);
+            }
+            #endregion
+
+        }
+        #endregion
+
         #region GetData
         /// <summary>
         /// Extract advertising detail for creatives or insertions details 

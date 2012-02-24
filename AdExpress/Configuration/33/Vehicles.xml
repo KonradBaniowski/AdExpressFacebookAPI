@@ -441,6 +441,7 @@
         <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
       </allowedColumnDetailLevelItems>
     </ColumnDetailLevel>
+    <AsyncExportDetailLevel id="57" name="Vehicle\Advertiser\Product"/>
   </vehicle>
   <!-- INTERNET -->
   <vehicle id="internet" databaseId="7" showInsertions="false" showCreations="true" showActiveMedia="true" mediaAgencyFlag="302">

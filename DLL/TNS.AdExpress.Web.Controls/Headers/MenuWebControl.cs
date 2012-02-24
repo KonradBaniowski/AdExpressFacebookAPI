@@ -139,6 +139,10 @@ namespace TNS.AdExpress.Web.Controls.Headers
         /// Parameters to concatenate to the URL
         /// </summary>
         protected string _urlParameters = string.Empty;
+        /// <summary>
+        /// ID label export text
+        /// </summary>
+        private int _textExportWebtextId = 1913;
         #endregion
 
         #region Accesseurs
@@ -275,6 +279,14 @@ namespace TNS.AdExpress.Web.Controls.Headers
         {
             get { return _urlParameters; }
             set { _urlParameters = value; }
+        }
+
+        /// <summary>
+        /// ID label export text
+        /// </summary>
+        public int TextExportWebtextId
+        {
+            set { _textExportWebtextId = value; }
         }
 
         #endregion
@@ -856,7 +868,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 
             if (pInfo.CanDisplayRemoteTextPage())
             {
-                js.Append(this.GetExportSubMenu("textExportItem", GestionWeb.GetWebWord(1913, _webSession.SiteLanguage), EXCEL_MENU, "javascript:popupOpenBis('" + pInfo.RemoteTextUrl + "?idSession=" + _webSession.IdSession + ((_urlParameters.Length > 0) ? "&" + _urlParameters : "") + "','470','210','yes');", "textExportMenuIcon"));
+                js.Append(this.GetExportSubMenu("textExportItem", GestionWeb.GetWebWord(_textExportWebtextId, _webSession.SiteLanguage), EXCEL_MENU, "javascript:popupOpenBis('" + pInfo.RemoteTextUrl + "?idSession=" + _webSession.IdSession + ((_urlParameters.Length > 0) ? "&" + _urlParameters : "") + "','470','300','yes');", "textExportMenuIcon"));
             }
 
             if (pInfo.CanDisplayRemoteExcelPage())

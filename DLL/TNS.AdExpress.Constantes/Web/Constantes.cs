@@ -289,7 +289,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Creatives Export Options
             /// </summary>
-            creativesExportOptions =66
+            creativesExportOptions =66,
+            /// <summary>
+            /// Get level items identifiers
+            /// </summary>
+            detailLevelItemInformationIds=67
 		}
 	
 	}

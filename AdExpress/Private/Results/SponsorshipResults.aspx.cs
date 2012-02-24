@@ -140,6 +140,7 @@ namespace AdExpress.Private.Results
 		protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode() {
 			System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
 			MenuWebControl2.CustomerWebSession = _webSession;
+            MenuWebControl2.TextExportWebtextId = 2942;
 			resultwebcontrol1.CustomerWebSession = _webSession;
             ResultsOptionsWebControl1.CustomerWebSession = _webSession;
             return tmp;

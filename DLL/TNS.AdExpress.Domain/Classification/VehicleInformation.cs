@@ -121,6 +121,10 @@ namespace TNS.AdExpress.Domain.Classification {
         ///  <associates>TNS.AdExpress.Web.Core.DetailLevelItemInformation</associates>
         ///  <label>_allowedColumnDetailLevelItems</label>
         protected List<DetailLevelItemInformation> _allowedColumnDetailLevelItems = new List<DetailLevelItemInformation>();
+        /// <summary>
+        /// Asynchonymous export detail level option
+        /// </summary>
+        protected long _asyncExportDetailLevel;
         #endregion
 
         #region Constructor
@@ -415,6 +419,14 @@ namespace TNS.AdExpress.Domain.Classification {
         {
             get { return _mediaAgencyFlag; }
             set { _mediaAgencyFlag = value; }
+        }
+        /// <summary>
+        ///Get /Set Asynchonymous export detail level option
+        /// </summary>
+        public long AsyncExportDetailLevel
+        {
+            get { return (_asyncExportDetailLevel); }
+            set { _asyncExportDetailLevel = value; }
         }
         #endregion
 

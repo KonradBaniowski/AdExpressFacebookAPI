@@ -170,8 +170,12 @@ namespace AdExpress.Private.MyAdExpress
                 {
                     saveTitle.Code = 2932;
                    
+                }else if (_webSession.CurrentModule==Module.Name.ANALYSE_DES_DISPOSITIFS)
+                {
+                    saveTitle.Code = 2942;
                 }
                 else saveTitle.Code = 1747;
+
                 #region Gestion des cookies
 
                 #region Cookies enregistrement des préférences
@@ -252,8 +256,12 @@ namespace AdExpress.Private.MyAdExpress
             #region Validation
             string fileName = askremoteexportwebControl1.TbxFileName.Text; //tbxFileName.Text;
             string mail = askremoteexportwebControl1.TbxMail.Text; //tbxMail.Text;
+            List<int> sel = null;
+            Int64 idStaticNavSession = 0;
             try
             {
+                idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.pachet);   
+
                 if (fileName == null || mail == null || fileName.Length == 0 || mail.Length == 0)
                 {
                     this.ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", WebFunctions.Script.Alert(GestionWeb.GetWebWord(1748, _siteLanguage)));
@@ -261,6 +269,10 @@ namespace AdExpress.Private.MyAdExpress
                 else if (!WebFunctions.CheckedText.CheckedMailText(mail))
                 {
                     this.ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", WebFunctions.Script.Alert(GestionWeb.GetWebWord(2041, _siteLanguage)));
+                }
+                else if (Module.Name.ANALYSE_DES_DISPOSITIFS == _webSession.CurrentModule && askremoteexportwebControl1.LevelsRadioButtonList.SelectedItem == null)
+                {                   
+                     this.ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", WebFunctions.Script.Alert(GestionWeb.GetWebWord(2941, _siteLanguage)));                    
                 }
                 else
                 {
@@ -282,7 +294,8 @@ namespace AdExpress.Private.MyAdExpress
                     string[] mails = new string[1];
                     mails[0] = mail;
                     _webSession.EmailRecipient = mails;
-                    Int64 idStaticNavSession = 0;
+                    
+                   
 
                     switch (_webSession.CurrentModule)
                     {
@@ -295,16 +308,14 @@ namespace AdExpress.Private.MyAdExpress
                         case Module.Name.ANALYSE_DYNAMIQUE:
                         case Module.Name.ANALYSE_PLAN_MEDIA:
                         case Module.Name.ANALYSE_PORTEFEUILLE:
-                        case Module.Name.ANALYSE_DES_DISPOSITIFS:
                         case Module.Name.ANALYSE_DES_PROGRAMMES:
                         case Module.Name.ALERTE_PORTEFEUILLE:
-
-
+                        case  Module.Name.ANALYSE_DES_DISPOSITIFS:
 
                             if (Module.Name.ANALYSE_CONCURENTIELLE == _webSession.CurrentModule && !string.IsNullOrEmpty(_resultType) && Convert.ToInt32(_resultType) == TNS.AdExpress.Anubis.Constantes.Result.type.dedoum.GetHashCode())
                             {
 
-                                List<int> sel = new List<int>();
+                                 sel = new List<int>();
                                 CheckBoxList groupAdByCheckBoxList = askremoteexportwebControl1.GroupAdByCheckBoxList;
                                 foreach (ListItem it in groupAdByCheckBoxList.Items)
                                 {
@@ -381,9 +392,18 @@ namespace AdExpress.Private.MyAdExpress
                                 _webSession.CustomerPeriodSelected = new CustomerPeriod(_webSession.PeriodBeginningDate, _webSession.PeriodEndDate);
                                 #endregion
 
-                                idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.miysis);
+                                if(  Module.Name.ANALYSE_DES_DISPOSITIFS == _webSession.CurrentModule)
+                                {
+                                //    sel = new List<int>();
+                                //    sel.Add(Convert.ToInt32(askremoteexportwebControl1.LevelsRadioButtonList.SelectedValue));
+                                //    _webSession.DetailLevelItemInformationIds = sel;
+                                    idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.pachet);                                                          
+                                }                       
+                                else idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.miysis);
                             }
                             break;
+                       
+                            
                         case Module.Name.INDICATEUR:
                             idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.hotep);
                             break;
