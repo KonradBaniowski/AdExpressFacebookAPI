@@ -79,13 +79,13 @@ namespace TNS.AdExpress.Anubis.Pachet.UI
                     writer = new StreamWriter(textFilePath);
 
                     //Addin creation date
-                    Console.WriteLine(star + DateTime.Now.ToString("G", WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo));
+                    writer.WriteLine(star + DateTime.Now.ToString("G", WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo));
 
                     //Adding Export name
-                    Console.WriteLine(star + webSession.ExportedPDFFileName);
+                    writer.WriteLine(star + webSession.ExportedPDFFileName);
 
                     //Adding source
-                    Console.WriteLine(star + GestionWeb.GetWebWord(2943, webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(758, webSession.SiteLanguage));
+                    writer.WriteLine(star + GestionWeb.GetWebWord(2943, webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(758, webSession.SiteLanguage));
 
                     //int nbLevels = gn.GetNbLevels;
                     string dataBaseIdField1 = gn[1].DataBaseIdField;
@@ -93,7 +93,7 @@ namespace TNS.AdExpress.Anubis.Pachet.UI
                     string dataBaseIdField2 = gn[2].DataBaseIdField;
                     string dataBaseField2 = gn[2].DataBaseField;
                     string reservedCol1_6 = "      ", reservedCol26_29 = "    ";
-                    string idMedia = "", dateMediaNum="";
+                    string idMedia = "", dateMediaNum="", dayOfWeek ="",screenCode="", duration="", position="";
 
 
                     foreach (DataRow dr in ds.Tables[0].Rows)
@@ -103,7 +103,7 @@ namespace TNS.AdExpress.Anubis.Pachet.UI
                         {
                             builder = new StringBuilder();
                             builder.AppendFormat("{0} {1}", sharp1, dr[dataBaseField1].ToString());
-                            Console.Write(builder.ToString());
+                            writer.WriteLine(builder.ToString());
                         }
 
                         //Add Level 2
@@ -111,7 +111,7 @@ namespace TNS.AdExpress.Anubis.Pachet.UI
                         {
                             builder = new StringBuilder();
                             builder.AppendFormat("{0} {1}", sharp2, dr[dataBaseField2].ToString());
-                            Console.Write(builder.ToString());
+                            writer.WriteLine(builder.ToString());
                         }
 
                         /**********Sart Add spot row*****************************/
@@ -126,15 +126,26 @@ namespace TNS.AdExpress.Anubis.Pachet.UI
                         dateMediaNum = dr["date_media_num"].ToString().Trim();
 
                         //Adding day week
+                        DateTime dt = new DateTime(Convert.ToInt32(dr["date_media_num"].ToString().Substring(0, 4)), Convert.ToInt32(dr["date_media_num"].ToString().Substring(4, 2)), Convert.ToInt32(dr["date_media_num"].ToString().Substring(6, 2)));
+                         dayOfWeek = (dt.DayOfWeek == DayOfWeek.Sunday) ? "7" : dt.DayOfWeek.GetHashCode().ToString();
 
+                         //Adding Screen_code
+                         screenCode = AjustStringLength(dr["screen_code"].ToString(), 4, sepChar);
 
+                         //Adding Duration
+                         duration = AjustStringLength(dr["duration"].ToString(), 3, sepChar);
 
+                        //Adding Position
+                         position = (Convert.ToInt32(dr["position"].ToString()) != 1 && Convert.ToInt32(dr["position"].ToString()) != 2 && Convert.ToInt32(dr["position"].ToString()) != 3) ? "4" : dr["position"].ToString();
+                         position = AjustStringLength(position, 2, sepChar);
+
+                         builder = new StringBuilder();
+                         builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", reservedCol1_6, idMedia, dateMediaNum, dayOfWeek, screenCode, reservedCol26_29,duration, position);
+                         writer.WriteLine(builder.ToString());
                         /**********End Add spot row*****************************/
-
-
+                      
                         oldIdL1 = Convert.ToInt64(dr[dataBaseIdField1]);
                         oldIdL2 = Convert.ToInt64(dr[dataBaseIdField2]);
-
                     }
                     hasData = true;
                 }
