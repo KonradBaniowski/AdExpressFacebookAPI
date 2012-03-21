@@ -39,10 +39,14 @@ namespace TNS.AdExpress.Anubis.Pachet.UI
             try
             {
                 string sepChar = " ", filters = long.MinValue.ToString() + "," + long.MinValue.ToString() + "," + long.MinValue.ToString() + "," + long.MinValue.ToString();
-                const string star = "*", sharp1 = "#", sharp2 = "##";
+                const string star = "*", sharp1 = "##", sharp2 = "#";
                 long oldIdL1 = long.MinValue, oldIdL2 = long.MinValue;
 
                 #region Get Data
+                //Get detail information Levels id
+                var gn = DetailLevelsInformation.Get(config.DetailLevel);
+                webSession.DetailLevel = gn;
+
                 object[] param = new object[2];
                 param[0] = webSession;
                 param[1] = webSession.CurrentModule;
@@ -57,10 +61,7 @@ namespace TNS.AdExpress.Anubis.Pachet.UI
                 string fromDate = Utils.Dates.getPeriodBeginningDate(webSession.PeriodBeginningDate, webSession.PeriodType).ToString("yyyyMMdd");
                 string toDate = Utils.Dates.getPeriodEndDate(webSession.PeriodEndDate, webSession.PeriodType).ToString("yyyyMMdd");
 
-                //Get detail information Levels id
-                var gn = DetailLevelsInformation.Get(config.DetailLevel);
-                webSession.DetailLevel = gn;
-
+               
 
                 //Get data
                 CoreLayer cl = WebApplicationParameters.CoreLayers[Constantes.Web.Layers.Id.insertionsDAL];
@@ -76,7 +77,7 @@ namespace TNS.AdExpress.Anubis.Pachet.UI
                 if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                 {
                     // file  Stream Writer
-                    writer = new StreamWriter(textFilePath);
+                    writer = new StreamWriter(textFilePath,false, Encoding.ASCII);
 
                     //Addin creation date
                     writer.WriteLine(star + DateTime.Now.ToString("G", WebApplicationParameters.AllowedLanguages[webSession.SiteLanguage].CultureInfo));
@@ -86,6 +87,8 @@ namespace TNS.AdExpress.Anubis.Pachet.UI
 
                     //Adding source
                     writer.WriteLine(star + GestionWeb.GetWebWord(2943, webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(758, webSession.SiteLanguage));
+                    //Adding country
+                    writer.WriteLine(star + GestionWeb.GetWebWord(2947, webSession.SiteLanguage));
 
                     //int nbLevels = gn.GetNbLevels;
                     string dataBaseIdField1 = gn[1].DataBaseIdField;
@@ -116,27 +119,26 @@ namespace TNS.AdExpress.Anubis.Pachet.UI
 
                         /**********Sart Add spot row*****************************/
                         builder = new StringBuilder();
-                        builder.AppendFormat("{0}{1}", reservedCol1_6, reservedCol26_29);
 
                         //Add ID Media
                         idMedia = dr["id_media"].ToString();
-                        idMedia = AjustStringLength(idMedia, 6, sepChar).Trim();
+                        idMedia = AjustStringLength(idMedia, 6, sepChar);
 
                         //Add date
                         dateMediaNum = dr["date_media_num"].ToString().Trim();
 
                         //Adding day week
-                        DateTime dt = new DateTime(Convert.ToInt32(dr["date_media_num"].ToString().Substring(0, 4)), Convert.ToInt32(dr["date_media_num"].ToString().Substring(4, 2)), Convert.ToInt32(dr["date_media_num"].ToString().Substring(6, 2)));
+                        DateTime dt = new DateTime(Convert.ToInt32(dr["day_of_week"].ToString().Substring(0, 4)), Convert.ToInt32(dr["day_of_week"].ToString().Substring(4, 2)), Convert.ToInt32(dr["day_of_week"].ToString().Substring(6, 2)));
                          dayOfWeek = (dt.DayOfWeek == DayOfWeek.Sunday) ? "7" : dt.DayOfWeek.GetHashCode().ToString();
 
                          //Adding Screen_code
-                         screenCode = AjustStringLength(dr["screen_code"].ToString(), 4, sepChar);
+                         screenCode = AjustStringLength(dr["id_commercial_break"].ToString(), 4, sepChar);
 
                          //Adding Duration
-                         duration = AjustStringLength(dr["duration"].ToString(), 3, sepChar);
+                         duration = (dr["duration"] != System.DBNull.Value) ? AjustStringLength(dr["duration"].ToString(), 3, sepChar) : "   ";
 
                         //Adding Position
-                         position = (Convert.ToInt32(dr["position"].ToString()) != 1 && Convert.ToInt32(dr["position"].ToString()) != 2 && Convert.ToInt32(dr["position"].ToString()) != 3) ? "4" : dr["position"].ToString();
+                         position = (Convert.ToInt32(dr["id_rank"].ToString()) != 1 && Convert.ToInt32(dr["id_rank"].ToString()) != 2 && Convert.ToInt32(dr["id_rank"].ToString()) != 3) ? "4" : dr["id_rank"].ToString().Trim();
                          position = AjustStringLength(position, 2, sepChar);
 
                          builder = new StringBuilder();
@@ -178,7 +180,7 @@ namespace TNS.AdExpress.Anubis.Pachet.UI
             {
                 string temp = input;
                 int dif = finalLength - temp.Length;
-                for (int i = 1; i <= input.Length; i++) input = string.Format("{0}{1}", sepChar, input);
+                for (int i = 1; i <= dif; i++) input = string.Format("{0}{1}", sepChar, input);
             }
             return input;
         }

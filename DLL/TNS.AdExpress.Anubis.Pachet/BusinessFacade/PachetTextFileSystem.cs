@@ -6,6 +6,8 @@ using System.Text.RegularExpressions;
 using TNS.AdExpress.Anubis.Pachet.UI;
 using System.Collections;
 using TNS.AdExpress.Anubis.Pachet.Exceptions;
+using TNS.AdExpress.Domain.Translation;
+using TNS.AdExpress.Domain.Web;
 using TNS.FrameWork.Net.Mail;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Anubis.Pachet.Common;
@@ -144,39 +146,63 @@ namespace TNS.AdExpress.Anubis.Pachet.BusinessFacade
 		/// </summary>
 		public bool  Fill(){
 			string sepChar=" ";
-           return InsertionsDetail.CreatePachetTextFile(_dataSource, _config, _webSession, _textFilePath, sepChar);
+            return InsertionsDetail.CreatePachetTextFile(_dataSource, _config, _webSession, _textFilePath);
 		}
 		#endregion
 
-		#region Send
-		/// <summary>
-		/// Envoie le mail à l'utilisateur avec le fichier excel attaché
-		/// </summary>
-		/// <param name="fileName"></param>
-		internal void Send(){
-            try {
-                ArrayList to = new ArrayList();
-                foreach (string s in _webSession.EmailRecipient) {
+        #region Send
+        /// <summary>
+        /// Sned email to customer
+        /// </summary>
+        /// <param name="res">result</param>
+        internal void Send( bool res)
+        {
+
+
+            try
+            {
+                var to = new ArrayList();
+                foreach (string s in _webSession.EmailRecipient)
+                {
                     to.Add(s);
                 }
-                //			to.Add("dede.mussuma@tnsmi.fr");//test
-                SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
-                    Text.SuppressAccent(GestionWeb.GetWebWord(1917, _webSession.SiteLanguage)),
-                    Text.SuppressAccent(GestionWeb.GetWebWord(1918, _webSession.SiteLanguage) + "\" " + _webSession.ExportedPDFFileName
-                    + "\"" + String.Format(GestionWeb.GetWebWord(1751, _webSession.SiteLanguage), _config.WebServer)
-                    + "<br><br>"
-                    + GestionWeb.GetWebWord(1776, _webSession.SiteLanguage)),
-                    true, _config.CustomerMailServer, _config.CustomerMailPort);
+                string body = (res) ? GestionWeb.GetWebWord(2945, _webSession.SiteLanguage) + "\" " + _webSession.ExportedPDFFileName
+                              + "\"" + String.Format(GestionWeb.GetWebWord(1751, _webSession.SiteLanguage), _config.WebServer) : GestionWeb.GetWebWord(2106, _webSession.SiteLanguage);
 
+                var mail = new SmtpUtilities(_config.CustomerMailFrom, to,
+                    GestionWeb.GetWebWord(2944, _webSession.SiteLanguage),
+                    body
+                    + "<br><br>"
+                    + GestionWeb.GetWebWord(1776, _webSession.SiteLanguage),
+                    true, _config.CustomerMailServer, _config.CustomerMailPort);
+                try
+                {
+                    mail.SubjectEncoding = Encoding.GetEncoding(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].ContentEncoding);
+                    mail.BodyEncoding = Encoding.GetEncoding(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].ContentEncoding);
+                    string charset = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset;
+                    if (!string.IsNullOrEmpty(charset))
+                    {
+                        mail.CharsetTextHtml = charset;
+                        mail.CharsetTextPlain = charset;
+                    }
+                }
+                catch (Exception) { }
                 mail.mailKoHandler += new TNS.FrameWork.Net.Mail.SmtpUtilities.mailKoEventHandler(mail_mailKoHandler);
-                //			mail.Attach(_textFilePath,SmtpUtilities.AttachmentType.ATTACH_TEXT);// Attache le fichier texte
                 mail.SendWithoutThread(false);
+
+
             }
-            catch (Exception e) {
-                throw new PachetTextFileSystemException("Mail Send to client Error in Send()", e);
+            catch (System.Exception e)
+            {
+                throw new PachetTextFileSystemException("Error to Send mail to client in Send(string fileName)", e);
             }
-		}
-		#endregion
+
+
+        }
+
+
+
+        #endregion
 
 		#region Evenement Envoi mail client
 		/// <summary>

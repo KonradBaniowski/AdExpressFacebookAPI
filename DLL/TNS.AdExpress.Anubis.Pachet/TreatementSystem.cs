@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using TNS.AdExpress.Anubis.Pachet.Common;
 using TNS.AdExpress.Anubis.Pachet.Exceptions;
+using TNS.AdExpress.Domain.Layers;
+using TNS.AdExpress.Domain.Web;
+using TNS.Ares.Domain.LS;
 using TNS.FrameWork.DB.Common;
 using System.Threading;
 using TNS.AdExpress.Anubis.Pachet.BusinessFacade;
@@ -12,7 +15,7 @@ using System.Collections;
 using System.Reflection;
 using TNS.Ares.StaticNavSession.DAL;
 using TNS.AdExpress.Web.Core.Sessions;
-
+using CstWeb = TNS.AdExpress.Constantes.Web;
 namespace TNS.AdExpress.Anubis.Pachet
 {
     /// <summary>
@@ -232,7 +235,6 @@ namespace TNS.AdExpress.Anubis.Pachet
         /// </summary>
         private void ComputeTreatement()
         {
-            PachetTextFileSystem csv = null;
             try
             {
                 OnStartWork(_navSessionId, this.GetPluginName() + " started for " + _navSessionId);
@@ -243,17 +245,16 @@ namespace TNS.AdExpress.Anubis.Pachet
 
                 #region csv management
 
-                csv = new PachetTextFileSystem(_dataSource, _pachetConfig, rqDetails, _webSession);
-                string fileName = csv.Init();
-                //TODO update Database for physical file name
-                bool res = csv.Fill();
+                PachetTextFileSystem fileSyst = new PachetTextFileSystem(_dataSource, _pachetConfig, rqDetails, _webSession);
+                string fileName = fileSyst.Init();
+                bool res = fileSyst.Fill();
                 _dataAccess.RegisterFile(_navSessionId, fileName);
-                csv.Send();
+                fileSyst.Send(res);
                 _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.sent.GetHashCode());
 
                 PluginInformation pluginInformation = PluginConfiguration.GetPluginInformation(PluginType.Pachet);
-                if (pluginInformation != null && pluginInformation.DeleteRowSuccess)
-                    _dataAccess.DeleteRow(_navSessionId);
+                //if (pluginInformation != null && pluginInformation.DeleteRowSuccess)
+                //    _dataAccess.DeleteRow(_navSessionId);
                 #endregion
 
                 OnStopWorkerJob(_navSessionId, "", "", this.GetPluginName() + " finished for " + _navSessionId);
