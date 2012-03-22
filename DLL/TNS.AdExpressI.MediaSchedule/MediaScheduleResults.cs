@@ -509,10 +509,9 @@ namespace TNS.AdExpressI.MediaSchedule {
             object[,] oTab = null;
             GenericDetailLevel detailLevel = GetDetailsLevelSelected();;
 
-           
-
             #region Data
             DataSet ds = null;
+            DataSet dsComp = null;
             DataTable dt = null;
             DataTable dtComp = null;
             DataTable dtLevels = null;
@@ -531,7 +530,6 @@ namespace TNS.AdExpressI.MediaSchedule {
             }
             else
             {
-                DataSet dsComp;
                 param = new object[2];
                 param[0] = _session;
                 param[1] = _period;
@@ -543,167 +541,192 @@ namespace TNS.AdExpressI.MediaSchedule {
                     mediaScheduleDAL.PeriodComparative = _period.GetMediaSchedulePeriodComparative();
                     dsComp = mediaScheduleDAL.GetMediaScheduleData(true);
                     dtComp = dsComp.Tables[0];
-                }            
-            }
-
-            if(ds == null || ds.Tables.Count == 0 || ds.Tables[0] == null) {
-                return (new object[0, 0]);
-            }
-            dt = ds.Tables[0];
-            #endregion            
-
-            dtLevels = GetDataLevels(mediaScheduleDAL, detailLevel, dt);
-
-            #region Count nb of elements for each classification level
-            int nbLevels = detailLevel.GetNbLevels;
-            Int64 oldIdL1 = long.MinValue;
-            Int64 oldIdL2 = long.MinValue;
-            Int64 oldIdL3 = long.MinValue;
-            Int64 oldIdL4 = long.MinValue;
-            int nbL1 = 0;
-            int nbL2 = 0;
-            int nbL3 = 0;
-            int nbL4 = 0;
-            bool newL2 = false;
-            bool newL3 = false;
-            bool newL4 = false;
-            foreach(DataRow currentRow in dtLevels.Rows) {
-                if(nbLevels >= 1 && oldIdL1 != GetLevelId(currentRow, 1, detailLevel)) {
-                    newL2 = true;
-                    nbL1++;
-                    oldIdL1 = GetLevelId(currentRow, 1, detailLevel);
                 }
-                if(nbLevels >= 2 && (oldIdL2 != GetLevelId(currentRow, 2, detailLevel) || newL2)) {
-                    newL3 = true;
-                    newL2 = false;
-                    nbL2++;
-                    oldIdL2 = GetLevelId(currentRow, 2, detailLevel);
-                }
-                if(nbLevels >= 3 && (oldIdL3 != GetLevelId(currentRow, 3, detailLevel) || newL3)) {
-                    newL4 = true;
-                    newL3 = false;
-                    nbL3++;
-                    oldIdL3 = GetLevelId(currentRow, 3, detailLevel);
-                }
-                if(nbLevels >= 4 && (oldIdL4 != GetLevelId(currentRow, 4, detailLevel) || newL4)) {
-                    newL4 = false;
-                    nbL4++;
-                    oldIdL4 = GetLevelId(currentRow, 4, detailLevel);
-                }
-            }
-            newL2 = newL3 = newL4 = false;
-            oldIdL1 = oldIdL2 = oldIdL3 = oldIdL4 = long.MinValue;
-            #endregion
-
-            //No Data
-            if(nbL1 == 0) {
-                return (new object[0, 0]);
-            }
-
-            #region Create periods table
-            List<Int64> periodItemsList = new List<Int64>();
-            Dictionary<int, int> years_index = new Dictionary<int, int>();
-            int currentDate = _period.Begin.Year;
-            int oldCurrentDate = _period.End.Year;
-
-            int firstPeriodIndex = 0;
-            if (WebApplicationParameters.UseComparativeMediaSchedule) {
-                if (_session.ComparativeStudy) {
-                    firstPeriodIndex = EVOL_COLUMN_INDEX + 1;
-                }
-                else {
-                    firstPeriodIndex = L4_ID_COLUMN_INDEX + 1;
-                }
-            }
-            else {
-                firstPeriodIndex = L4_ID_COLUMN_INDEX + 1;
-            }
-
-            switch(_period.PeriodDetailLEvel) {
-                case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:
-                    AtomicPeriodWeek currentWeek = new AtomicPeriodWeek(_period.Begin);
-                    AtomicPeriodWeek endWeek = new AtomicPeriodWeek(_period.End);
-                    currentDate = currentWeek.Year;
-                    oldCurrentDate = endWeek.Year;
-                    endWeek.Increment();
-                    while(!(currentWeek.Week == endWeek.Week && currentWeek.Year == endWeek.Year)) {
-                        periodItemsList.Add(currentWeek.Year * 100 + currentWeek.Week);
-                        currentWeek.Increment();
-                    }
-                    break;
-                case CstWeb.CustomerSessions.Period.DisplayLevel.monthly:
-                    DateTime dateCurrent = _period.Begin;
-                    DateTime dateEnd = _period.End;
-                    dateEnd = dateEnd.AddMonths(1);
-                    while(!(dateCurrent.Month == dateEnd.Month && dateCurrent.Year == dateEnd.Year)) {
-                        periodItemsList.Add(Int64.Parse(dateCurrent.ToString("yyyyMM")));
-                        dateCurrent = dateCurrent.AddMonths(1);
-                    }
-                    break;
-                case CstWeb.CustomerSessions.Period.DisplayLevel.dayly:
-                    DateTime currentDateTime = _period.Begin;
-                    DateTime endDate = _period.End;
-                    while(currentDateTime <= endDate) {
-                        periodItemsList.Add(Int64.Parse(DateString.DateTimeToYYYYMMDD(currentDateTime)));
-                        currentDateTime = currentDateTime.AddDays(1);
-                    }
-                    break;
-                default:
-                    throw (new MediaScheduleException("Unable to build periods table."));
-            }
-            if(currentDate != oldCurrentDate) {
-                for(int k = currentDate; k <= oldCurrentDate; k++) {
-                    years_index.Add(k, firstPeriodIndex);
-                    firstPeriodIndex++;
-                }
-            }
-            currentDate = 0;
-            oldCurrentDate = 0;
-            #endregion
-
-            #region Indexes tables
-            // Column number
-            int nbCol = periodItemsList.Count + firstPeriodIndex;
-            // Line number
-            int nbline = nbL1 + nbL2 + nbL3 + nbL4 + 3 + 1;
-            // Result table
-            oTab = new object[nbline, nbCol];
-            // L3 elements indexes
-            Int64[] tabL3Index = new Int64[nbL3 + 1];
-            // L2 elements indexes
-            Int64[] tabL2Index = new Int64[nbL2 + 1];
-            // L1 elements indexes
-            Int64[] tabL1Index = new Int64[nbL1 + 1];
-            #endregion
-
-            #region Column Labels
-            currentDate = 0;
-            while(currentDate < periodItemsList.Count) {
-                oTab[0, currentDate + firstPeriodIndex] = periodItemsList[currentDate].ToString(); ;
-                currentDate++;
-            }
-            foreach(int i in years_index.Keys) {
-                oTab[0, years_index[i]] = i;
             }
             #endregion
 
-            #region Init totals
-            Int64 currentTotalIndex = 1;
-            Int64 currentLineIndex = 1;
-            oTab[currentTotalIndex, 0] = TOTAL_STRING;
-
-            if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
-                    oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX] = null;            }
-            
-            foreach(int i in years_index.Keys) {
-                if(_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
-                    oTab[currentLineIndex, int.Parse(years_index[i].ToString())] = new CellIdsNumber();
-                else
-                    oTab[currentLineIndex, int.Parse(years_index[i].ToString())] = (double)0.0;
-            }
-            #endregion
+            #region Build Tab
             try
             {
+
+                if (ds == null || ds.Tables.Count == 0 || ds.Tables[0] == null)
+                {
+                    return (new object[0, 0]);
+                }
+                dt = ds.Tables[0];
+
+                dtLevels = GetDataLevels(mediaScheduleDAL, detailLevel, dt);
+
+                #region Count nb of elements for each classification level
+                int nbLevels = detailLevel.GetNbLevels;
+                Int64 oldIdL1 = long.MinValue;
+                Int64 oldIdL2 = long.MinValue;
+                Int64 oldIdL3 = long.MinValue;
+                Int64 oldIdL4 = long.MinValue;
+                int nbL1 = 0;
+                int nbL2 = 0;
+                int nbL3 = 0;
+                int nbL4 = 0;
+                bool newL2 = false;
+                bool newL3 = false;
+                bool newL4 = false;
+                foreach (DataRow currentRow in dtLevels.Rows)
+                {
+                    if (nbLevels >= 1 && oldIdL1 != GetLevelId(currentRow, 1, detailLevel))
+                    {
+                        newL2 = true;
+                        nbL1++;
+                        oldIdL1 = GetLevelId(currentRow, 1, detailLevel);
+                    }
+                    if (nbLevels >= 2 && (oldIdL2 != GetLevelId(currentRow, 2, detailLevel) || newL2))
+                    {
+                        newL3 = true;
+                        newL2 = false;
+                        nbL2++;
+                        oldIdL2 = GetLevelId(currentRow, 2, detailLevel);
+                    }
+                    if (nbLevels >= 3 && (oldIdL3 != GetLevelId(currentRow, 3, detailLevel) || newL3))
+                    {
+                        newL4 = true;
+                        newL3 = false;
+                        nbL3++;
+                        oldIdL3 = GetLevelId(currentRow, 3, detailLevel);
+                    }
+                    if (nbLevels >= 4 && (oldIdL4 != GetLevelId(currentRow, 4, detailLevel) || newL4))
+                    {
+                        newL4 = false;
+                        nbL4++;
+                        oldIdL4 = GetLevelId(currentRow, 4, detailLevel);
+                    }
+                }
+                newL2 = newL3 = newL4 = false;
+                oldIdL1 = oldIdL2 = oldIdL3 = oldIdL4 = long.MinValue;
+                #endregion
+
+                //No Data
+                if (nbL1 == 0)
+                {
+                    return (new object[0, 0]);
+                }
+
+                #region Create periods table
+                List<Int64> periodItemsList = new List<Int64>();
+                Dictionary<int, int> years_index = new Dictionary<int, int>();
+                int currentDate = _period.Begin.Year;
+                int oldCurrentDate = _period.End.Year;
+
+                int firstPeriodIndex = 0;
+                if (WebApplicationParameters.UseComparativeMediaSchedule)
+                {
+                    if (_session.ComparativeStudy)
+                    {
+                        firstPeriodIndex = EVOL_COLUMN_INDEX + 1;
+                    }
+                    else
+                    {
+                        firstPeriodIndex = L4_ID_COLUMN_INDEX + 1;
+                    }
+                }
+                else
+                {
+                    firstPeriodIndex = L4_ID_COLUMN_INDEX + 1;
+                }
+
+                switch (_period.PeriodDetailLEvel)
+                {
+                    case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:
+                        AtomicPeriodWeek currentWeek = new AtomicPeriodWeek(_period.Begin);
+                        AtomicPeriodWeek endWeek = new AtomicPeriodWeek(_period.End);
+                        currentDate = currentWeek.Year;
+                        oldCurrentDate = endWeek.Year;
+                        endWeek.Increment();
+                        while (!(currentWeek.Week == endWeek.Week && currentWeek.Year == endWeek.Year))
+                        {
+                            periodItemsList.Add(currentWeek.Year * 100 + currentWeek.Week);
+                            currentWeek.Increment();
+                        }
+                        break;
+                    case CstWeb.CustomerSessions.Period.DisplayLevel.monthly:
+                        DateTime dateCurrent = _period.Begin;
+                        DateTime dateEnd = _period.End;
+                        dateEnd = dateEnd.AddMonths(1);
+                        while (!(dateCurrent.Month == dateEnd.Month && dateCurrent.Year == dateEnd.Year))
+                        {
+                            periodItemsList.Add(Int64.Parse(dateCurrent.ToString("yyyyMM")));
+                            dateCurrent = dateCurrent.AddMonths(1);
+                        }
+                        break;
+                    case CstWeb.CustomerSessions.Period.DisplayLevel.dayly:
+                        DateTime currentDateTime = _period.Begin;
+                        DateTime endDate = _period.End;
+                        while (currentDateTime <= endDate)
+                        {
+                            periodItemsList.Add(Int64.Parse(DateString.DateTimeToYYYYMMDD(currentDateTime)));
+                            currentDateTime = currentDateTime.AddDays(1);
+                        }
+                        break;
+                    default:
+                        throw (new MediaScheduleException("Unable to build periods table."));
+                }
+                if (currentDate != oldCurrentDate)
+                {
+                    for (int k = currentDate; k <= oldCurrentDate; k++)
+                    {
+                        years_index.Add(k, firstPeriodIndex);
+                        firstPeriodIndex++;
+                    }
+                }
+                currentDate = 0;
+                oldCurrentDate = 0;
+                #endregion
+
+                #region Indexes tables
+                // Column number
+                int nbCol = periodItemsList.Count + firstPeriodIndex;
+                // Line number
+                int nbline = nbL1 + nbL2 + nbL3 + nbL4 + 3 + 1;
+                // Result table
+                oTab = new object[nbline, nbCol];
+                // L3 elements indexes
+                Int64[] tabL3Index = new Int64[nbL3 + 1];
+                // L2 elements indexes
+                Int64[] tabL2Index = new Int64[nbL2 + 1];
+                // L1 elements indexes
+                Int64[] tabL1Index = new Int64[nbL1 + 1];
+                #endregion
+
+                #region Column Labels
+                currentDate = 0;
+                while (currentDate < periodItemsList.Count)
+                {
+                    oTab[0, currentDate + firstPeriodIndex] = periodItemsList[currentDate].ToString(); ;
+                    currentDate++;
+                }
+                foreach (int i in years_index.Keys)
+                {
+                    oTab[0, years_index[i]] = i;
+                }
+                #endregion
+
+                #region Init totals
+                Int64 currentTotalIndex = 1;
+                Int64 currentLineIndex = 1;
+                oTab[currentTotalIndex, 0] = TOTAL_STRING;
+
+                if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
+                {
+                    oTab[currentTotalIndex, TOTAL_COMPARATIVE_COLUMN_INDEX] = null;
+                }
+
+                foreach (int i in years_index.Keys)
+                {
+                    if (_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
+                        oTab[currentLineIndex, int.Parse(years_index[i].ToString())] = new CellIdsNumber();
+                    else
+                        oTab[currentLineIndex, int.Parse(years_index[i].ToString())] = (double)0.0;
+                }
+                #endregion
+
                 #region Build result table
 
                 #region Create MediaPlanItem for total
@@ -789,6 +812,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         }
                                     }
                                 }
+
                                 tabL2Index = new Int64[nbL2 + 1];
                                 currentL2PDMIndex = 0;
                             }
@@ -876,6 +900,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         }
                                     }
                                 }
+
                                 tabL3Index = new Int64[nbL3 + 1];
                                 currentL3PDMIndex = 0;
 
@@ -1611,25 +1636,30 @@ namespace TNS.AdExpressI.MediaSchedule {
                     oTab[currentLineIndex + 1, 0] = new MemoryArrayEnd();
                 #endregion
 
-                ds.Dispose();
+            }
+            finally
+            {
+                if(ds!=null) 
+                    ds.Dispose();
 
-                #region Debug: Voir le tableau
+                if (dsComp != null)
+                    dsComp.Dispose();
+            }
+            #endregion
+
+            #region Debug: Voir le tableau
 #if(DEBUG)
-                //string HTML1 = "<html><table><tr>";
-                //for(int z = 0; z <= currentLineIndex; z++) {
-                //    for(int r = 0; r < nbCol; r++) {
-                //        if(tab[z, r] != null) HTML1 += "<td>" + tab[z, r].ToString() + "</td>";
-                //        else HTML1 += "<td>&nbsp;</td>";
-                //    }
-                //    HTML1 += "</tr><tr>";
-                //}
-                //HTML1 += "</tr></table></html>";
+            //string HTML1 = "<html><table><tr>";
+            //for(int z = 0; z <= currentLineIndex; z++) {
+            //    for(int r = 0; r < nbCol; r++) {
+            //        if(tab[z, r] != null) HTML1 += "<td>" + tab[z, r].ToString() + "</td>";
+            //        else HTML1 += "<td>&nbsp;</td>";
+            //    }
+            //    HTML1 += "</tr><tr>";
+            //}
+            //HTML1 += "</tr></table></html>";
 #endif
-                #endregion
-            }
-            catch (System.Exception err) { 
-                string e = err.Message;
-            }
+            #endregion
 
             return oTab;
         }
@@ -1667,21 +1697,25 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// <param name="data">Preformated Data</param>
         /// <returns>HTML code</returns>
         protected virtual MediaScheduleData ComputeDesign(object[,] data) {
+
+            StringBuilder t = new System.Text.StringBuilder();
+
+
             MediaScheduleData oMediaScheduleData = new MediaScheduleData();
-            StringBuilder t = new System.Text.StringBuilder(); 
             CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
-            IFormatProvider fp = 
-                (!_isExcelReport||_isCreativeDivisionMS) ? WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo
+            IFormatProvider fp =
+                (!_isExcelReport || _isCreativeDivisionMS) ? WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo
                 : WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfoExcel;
 
-         
+
 
             #region Theme Name
             string themeName = WebApplicationParameters.Themes[_session.SiteLanguage].Name;
             #endregion
 
             #region No data
-            if(data.GetLength(0) == 0) {
+            if (data.GetLength(0) == 0)
+            {
                 oMediaScheduleData.HTMLCode = string.Empty;
                 return (oMediaScheduleData);
             }
@@ -1690,23 +1724,28 @@ namespace TNS.AdExpressI.MediaSchedule {
             #region Init Variables
             int yearBegin = _period.Begin.Year;
             int yearEnd = _period.End.Year;
-            if(_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.weekly) {
+            if (_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.weekly)
+            {
                 yearBegin = new AtomicPeriodWeek(_period.Begin).Year;
                 yearEnd = new AtomicPeriodWeek(_period.End).Year;
             }
             int nbColYear = yearEnd - yearBegin;
-            if(nbColYear > 0) nbColYear++;
+            if (nbColYear > 0) nbColYear++;
             int firstPeriodIndex = 0;
 
-            if (WebApplicationParameters.UseComparativeMediaSchedule) {
-                if (_session.ComparativeStudy) {
+            if (WebApplicationParameters.UseComparativeMediaSchedule)
+            {
+                if (_session.ComparativeStudy)
+                {
                     firstPeriodIndex = EVOL_COLUMN_INDEX + 1;
                 }
-                else {
+                else
+                {
                     firstPeriodIndex = L4_ID_COLUMN_INDEX + 1;
                 }
             }
-            else {
+            else
+            {
                 firstPeriodIndex = L4_ID_COLUMN_INDEX + 1;
             }
 
@@ -1717,7 +1756,7 @@ namespace TNS.AdExpressI.MediaSchedule {
             int nbline = data.GetLength(0);
 
             try { _session.SloganColors.Add((Int64)0, _style.VersionCell0); }
-            catch(System.Exception) { }
+            catch (System.Exception) { }
             oMediaScheduleData.PeriodNb = (Int64)Math.Round((double)(nbColTab - firstPeriodIndex) / 7);
 
             bool isExport = _isExcelReport || _isPDFReport;
@@ -1726,8 +1765,10 @@ namespace TNS.AdExpressI.MediaSchedule {
             #endregion
 
             #region Rappel de sélection
-            if(_isExcelReport) {
-                if(_isCreativeDivisionMS) {
+            if (_isExcelReport)
+            {
+                if (_isCreativeDivisionMS)
+                {
                     t.Append(FctExcel.GetExcelHeaderForCreativeMediaPlan(_session));
                 }
                 else
@@ -1748,7 +1789,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                             catch (Exception)
                             {
                                 t.Append(FctExcel.GetExcelHeaderForMediaPlanPopUp(_session, false, "", "", Zoom, (int)_session.DetailPeriod));
-                            } 
+                            }
                         }
                     }
                     else
@@ -1764,7 +1805,8 @@ namespace TNS.AdExpressI.MediaSchedule {
 
             #region basic columns (product, total, PDM, version, insertion, years totals)
             int rowSpanNb = 3;
-            if(_period.PeriodDetailLEvel != CstWeb.CustomerSessions.Period.DisplayLevel.dayly) {
+            if (_period.PeriodDetailLEvel != CstWeb.CustomerSessions.Period.DisplayLevel.dayly)
+            {
                 rowSpanNb = 2;
             }
             t.Append("<table id=\"calendartable\" border=0 cellpadding=0 cellspacing=0>\r\n\t<tr>");
@@ -1775,8 +1817,10 @@ namespace TNS.AdExpressI.MediaSchedule {
                 , (!isExport) ? string.Empty : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
                 , rowSpanNb
                 , labColSpan);
-            if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy) {
-                if (_allowTotal) {
+            if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy)
+            {
+                if (_allowTotal)
+                {
                     MediaSchedulePeriod compPeriod = _period.GetMediaSchedulePeriodComparative();
                     t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.Begin, _session.SiteLanguage, Dates.Pattern.shortDatePattern) + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(compPeriod.End, _session.SiteLanguage, Dates.Pattern.shortDatePattern), rowSpanNb);
 
@@ -1784,7 +1828,8 @@ namespace TNS.AdExpressI.MediaSchedule {
                     int nbtot;
                     if (_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
                         nbtot = FctWeb.Units.ConvertUnitValueToString(((CellIdsNumber)data[1, TOTAL_COMPARATIVE_COLUMN_INDEX]).Value, _session.Unit, fp).Length;
-                    else if (_isCreativeDivisionMS || !IsExcelReport || unit.Id != CstWeb.CustomerSessions.Unit.duration) {
+                    else if (_isCreativeDivisionMS || !IsExcelReport || unit.Id != CstWeb.CustomerSessions.Unit.duration)
+                    {
                         nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COMPARATIVE_COLUMN_INDEX], _session.Unit, fp).Length;
                     }
                     else
@@ -1793,65 +1838,75 @@ namespace TNS.AdExpressI.MediaSchedule {
                     int nbSpace = (nbtot - 1) / 3;
                     int nbCharTotal = nbtot + nbSpace - 5;
                     if (nbCharTotal < 5) nbCharTotal = 0;
-                    for (int h = 0; h < nbCharTotal; h++) {
+                    for (int h = 0; h < nbCharTotal; h++)
+                    {
                         t.Append("&nbsp;");
                     }
                     t.Append("</td>");
                 }
                 //PDM
-                if (_allowPdm) {
+                if (_allowPdm)
+                {
                     t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, GestionWeb.GetWebWord(806, _session.SiteLanguage), rowSpanNb);
                 }
             }
 
 
             // Total Column
-            if(_allowTotal) {
+            if (_allowTotal)
+            {
                 if (WebApplicationParameters.UseComparativeMediaSchedule && _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
                     t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.Begin, _session.SiteLanguage, Dates.Pattern.shortDatePattern) + " - <br/>" + TNS.AdExpress.Web.Core.Utilities.Dates.DateToString(_period.End, _session.SiteLanguage, Dates.Pattern.shortDatePattern), rowSpanNb);
                 else
                     t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, GestionWeb.GetWebWord(805, _session.SiteLanguage), rowSpanNb);
-                
+
                 //int nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX].ToString(), _session.Unit).Length;
                 int nbtot;
-                if(_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
-                    nbtot = FctWeb.Units.ConvertUnitValueToString( ((CellIdsNumber)data[1, TOTAL_COLUMN_INDEX]).Value, _session.Unit, fp).Length;
+                if (_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
+                    nbtot = FctWeb.Units.ConvertUnitValueToString(((CellIdsNumber)data[1, TOTAL_COLUMN_INDEX]).Value, _session.Unit, fp).Length;
                 else if (_isCreativeDivisionMS || !IsExcelReport || unit.Id != CstWeb.CustomerSessions.Unit.duration)
                 {
                     nbtot = FctWeb.Units.ConvertUnitValueToString(data[1, TOTAL_COLUMN_INDEX], _session.Unit, fp).Length;
                 }
                 else
                     nbtot = string.Format(fp, unit.StringFormat, Convert.ToDouble(data[1, TOTAL_COLUMN_INDEX])).Length;
-                
+
                 int nbSpace = (nbtot - 1) / 3;
                 int nbCharTotal = nbtot + nbSpace - 5;
-                if(nbCharTotal < 5) nbCharTotal = 0;
-                for(int h = 0; h < nbCharTotal; h++) {
+                if (nbCharTotal < 5) nbCharTotal = 0;
+                for (int h = 0; h < nbCharTotal; h++)
+                {
                     t.Append("&nbsp;");
                 }
                 t.Append("</td>");
             }
             //PDM
-            if(_allowPdm) {
+            if (_allowPdm)
+            {
                 t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, GestionWeb.GetWebWord(806, _session.SiteLanguage), rowSpanNb);
             }
-            if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal) {
+            if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal)
+            {
                 //Evol
                 //if (_allowPdm) {
                 t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, GestionWeb.GetWebWord(1212, _session.SiteLanguage), rowSpanNb);
                 //}
             }
             //Version
-            if(_allowVersion) {
+            if (_allowVersion)
+            {
                 t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, GestionWeb.GetWebWord(1994, _session.SiteLanguage), rowSpanNb);
             }
             // Insertions
-            if(_allowInsertions) {
+            if (_allowInsertions)
+            {
                 t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, GestionWeb.GetWebWord(UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].WebTextId, _session.SiteLanguage), rowSpanNb);
             }
-            if (!WebApplicationParameters.UseComparativeMediaSchedule) {
+            if (!WebApplicationParameters.UseComparativeMediaSchedule)
+            {
                 // Years necessary if the period consists of several years
-                for (int k = firstPeriodIndex - nbColYear; k < firstPeriodIndex && _allowTotal; k++) {
+                for (int k = firstPeriodIndex - nbColYear; k < firstPeriodIndex && _allowTotal; k++)
+                {
                     t.AppendFormat("\r\n\t\t<td rowspan=\"{2}\" class=\"{0}\">{1}</td>", _style.CellTitle, data[0, k], rowSpanNb);
                 }
             }
@@ -1867,13 +1922,16 @@ namespace TNS.AdExpressI.MediaSchedule {
             System.Uri uri = new Uri(_session.LastWebPage);
             link = uri.AbsolutePath;
 
-            switch(_period.PeriodDetailLEvel) {
+            switch (_period.PeriodDetailLEvel)
+            {
                 case CstWeb.CustomerSessions.Period.DisplayLevel.monthly:
                 case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:
                     prevPeriod = int.Parse(data[0, firstPeriodIndex].ToString().Substring(0, 4));
-                    for(int j = firstPeriodIndex; j < nbColTab; j++) {
-                        if(prevPeriod != int.Parse(data[0, j].ToString().Substring(0, 4))) {
-                            if(nbPeriod < 3)
+                    for (int j = firstPeriodIndex; j < nbColTab; j++)
+                    {
+                        if (prevPeriod != int.Parse(data[0, j].ToString().Substring(0, 4)))
+                        {
+                            if (nbPeriod < 3)
                                 headers.AppendFormat("<td colspan={0} class=\"{1}\">&nbsp;</td>", nbPeriod, _style.CellYear1);
                             else
                                 headers.AppendFormat("<td colspan={0} class=\"{1}\">{2}</td>", nbPeriod, _style.CellYear1, prevPeriod);
@@ -1881,19 +1939,22 @@ namespace TNS.AdExpressI.MediaSchedule {
                             prevPeriod = int.Parse(data[0, j].ToString().Substring(0, 4));
                         }
 
-                        switch(_period.PeriodDetailLEvel) {
+                        switch (_period.PeriodDetailLEvel)
+                        {
                             case CstWeb.CustomerSessions.Period.DisplayLevel.monthly:
 
                                 #region Period Color Management
                                 // First Period or last period is incomplete
                                 periodClass = _style.CellPeriod;
-                                if((j == firstPeriodIndex && _period.Begin.Day != 1)
-                                   || (j == (nbColTab - 1) && _period.End.Day != _period.End.AddDays(1 - _period.End.Day).AddMonths(1).AddDays(-1).Day)) {
+                                if ((j == firstPeriodIndex && _period.Begin.Day != 1)
+                                   || (j == (nbColTab - 1) && _period.End.Day != _period.End.AddDays(1 - _period.End.Day).AddMonths(1).AddDays(-1).Day))
+                                {
                                     periodClass = _style.CellPeriodIncomplete;
                                 }
                                 #endregion
 
-                                if(!isExport) {
+                                if (!isExport)
+                                {
                                     periods.AppendFormat("<td class=\"{0}\" width=\"17px\"><a class=\"{1}\" href=\"{2}?idSession={3}&zoomDate={4}\">&nbsp;{5}&nbsp;</td>"
                                         , periodClass
                                         , _style.CellPeriod
@@ -1902,7 +1963,8 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         , data[0, j]
                                         , MonthString.GetCharacters(int.Parse(data[0, j].ToString().Substring(4, 2)), cultureInfo, 1));
                                 }
-                                else {
+                                else
+                                {
                                     periods.AppendFormat("<td class=\"{0}\">&nbsp;{1}&nbsp;</td>"
                                         , periodClass
                                         , MonthString.GetCharacters(int.Parse(data[0, j].ToString().Substring(4, 2)), cultureInfo, 1));
@@ -1912,13 +1974,15 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                                 #region Period Color Management
                                 periodClass = _style.CellPeriod;
-                                if((j == firstPeriodIndex && _period.Begin.DayOfWeek != DayOfWeek.Monday)
-                                   || (j == (nbColTab - 1) && _period.End.DayOfWeek != DayOfWeek.Sunday)) {
+                                if ((j == firstPeriodIndex && _period.Begin.DayOfWeek != DayOfWeek.Monday)
+                                   || (j == (nbColTab - 1) && _period.End.DayOfWeek != DayOfWeek.Sunday))
+                                {
                                     periodClass = _style.CellPeriodIncomplete;
                                 }
                                 #endregion
 
-                                if(!isExport && !IsCreativeDivisionMS) {
+                                if (!isExport && !IsCreativeDivisionMS)
+                                {
 
                                     periods.AppendFormat("<td class=\"{0}\" width=\"17px\"><a class=\"{1}\" href=\"{2}?idSession={3}&zoomDate={4}\">&nbsp;{5}&nbsp;</a></td>"
                                         , periodClass
@@ -1928,7 +1992,8 @@ namespace TNS.AdExpressI.MediaSchedule {
                                         , data[0, j]
                                         , data[0, j].ToString().Substring(4, 2));
                                 }
-                                else {
+                                else
+                                {
                                     periods.AppendFormat("<td class=\"{0}\">&nbsp;{1}&nbsp;</td>"
                                         , periodClass
                                         , data[0, j].ToString().Substring(4, 2));
@@ -1939,7 +2004,7 @@ namespace TNS.AdExpressI.MediaSchedule {
                         nbPeriod++;
                     }
                     // Compute last date
-                    if(nbPeriod < 3)
+                    if (nbPeriod < 3)
                         headers.AppendFormat("<td colspan={0} class=\"{1}\">&nbsp;</td>", nbPeriod, _style.CellYear);
                     else
                         headers.AppendFormat("<td colspan={0} class=\"{1}\">{2}</td>", nbPeriod, _style.CellYear, prevPeriod);
@@ -1960,10 +2025,12 @@ namespace TNS.AdExpressI.MediaSchedule {
                     DateTime currentDay = DateString.YYYYMMDDToDateTime((string)data[0, firstPeriodIndex]);
                     prevPeriod = currentDay.Month;
                     currentDay = currentDay.AddDays(-1);
-                    for(int j = firstPeriodIndex; j < nbColTab; j++) {
+                    for (int j = firstPeriodIndex; j < nbColTab; j++)
+                    {
                         currentDay = currentDay.AddDays(1);
-                        if(currentDay.Month != prevPeriod) {
-                            if(nbPeriod >= 8)
+                        if (currentDay.Month != prevPeriod)
+                        {
+                            if (nbPeriod >= 8)
                                 headers.AppendFormat("<td colspan=\"{0}\" class=\"{1}\" align=center>{2}</td>", nbPeriod, _style.CellTitle, FctWeb.Dates.getPeriodTxt(_session, currentDay.AddDays(-1).ToString("yyyyMM")));
                             else
                                 headers.AppendFormat("<td colspan=\"{0}\" class=\"{1}\" align=center>&nbsp;</td>", nbPeriod, _style.CellTitle);
@@ -1974,13 +2041,13 @@ namespace TNS.AdExpressI.MediaSchedule {
                         //Period Number
                         periods.AppendFormat("<td class=\"{0}\" nowrap>&nbsp;{1}&nbsp;</td>", _style.CellPeriod, currentDay.ToString("dd"));
                         //Period day
-                        if(currentDay.DayOfWeek == DayOfWeek.Saturday || currentDay.DayOfWeek == DayOfWeek.Sunday)
+                        if (currentDay.DayOfWeek == DayOfWeek.Saturday || currentDay.DayOfWeek == DayOfWeek.Sunday)
                             days.AppendFormat("<td class=\"{0}\">{1}</td>", _style.CellDayWE, DayString.GetCharacters(currentDay, cultureInfo, 1));
                         else
                             days.AppendFormat("<td class=\"{0}\">{1}</td>", _style.CellDay, DayString.GetCharacters(currentDay, cultureInfo, 1));
 
                     }
-                    if(nbPeriod >= 8)
+                    if (nbPeriod >= 8)
                         headers.AppendFormat("<td colspan=\"{0}\" class=\"{1}\" align=center>{2}</td>", nbPeriod, _style.CellTitle, TNS.FrameWork.Convertion.ToHtmlString(FctWeb.Dates.getPeriodTxt(_session, currentDay.ToString("yyyyMM"))));
                     else
                         headers.AppendFormat("<td colspan=\"{0}\" class=\"{1}\" align=center>&nbsp;</td>", nbPeriod, _style.CellTitle);
@@ -2002,7 +2069,8 @@ namespace TNS.AdExpressI.MediaSchedule {
 
             #region Media Schedule
             int i = -1;
-            try {
+            try
+            {
                 int colorItemIndex = 1;
                 int colorNumberToUse = 0;
                 int sloganIndex = GetSloganIdIndex();
@@ -2016,24 +2084,29 @@ namespace TNS.AdExpressI.MediaSchedule {
                 detailLevel = GetDetailsLevelSelected();
 
 
-                for(i = 1; i < nbline; i++) {
+                for (i = 1; i < nbline; i++)
+                {
 
                     #region Color Management
-                    if(sloganIndex != -1 && data[i, sloganIndex] != null &&
+                    if (sloganIndex != -1 && data[i, sloganIndex] != null &&
                         ((detailLevel.GetLevelRankDetailLevelItem(DetailLevelItemInformation.Levels.slogan) == detailLevel.GetNbLevels) ||
                         (detailLevel.GetLevelRankDetailLevelItem(DetailLevelItemInformation.Levels.slogan) < detailLevel.GetNbLevels && data[i, sloganIndex + 1] == null)))
                     {
                         sloganId = Convert.ToInt64(data[i, sloganIndex]);
-                        if(!_session.SloganColors.ContainsKey(sloganId)) {
+                        if (!_session.SloganColors.ContainsKey(sloganId))
+                        {
                             colorNumberToUse = (colorItemIndex % _style.CellVersions.Count) + 1;
                             cssClasse = _style.CellVersions[colorNumberToUse];
                             cssClasseNb = _style.CellVersions[colorNumberToUse];
                             _session.SloganColors.Add(sloganId, _style.CellVersions[colorNumberToUse]);
-                            if(_allowVersion) {
+                            if (_allowVersion)
+                            {
                                 oMediaScheduleData.VersionsDetail.Add(sloganId, new VersionItem(sloganId, cssClasse));
                             }
-							else if (_isPDFReport && VehiclesInformation.Contains(_vehicleId)) {
-                                switch(VehiclesInformation.DatabaseIdToEnum(_vehicleId)) {
+                            else if (_isPDFReport && VehiclesInformation.Contains(_vehicleId))
+                            {
+                                switch (VehiclesInformation.DatabaseIdToEnum(_vehicleId))
+                                {
                                     case CstDBClassif.Vehicles.names.directMarketing:
                                         oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, cssClasse));
                                         break;
@@ -2052,12 +2125,16 @@ namespace TNS.AdExpressI.MediaSchedule {
                             }
                             colorItemIndex++;
                         }
-                        if(sloganId != 0 && !oMediaScheduleData.VersionsDetail.ContainsKey(sloganId)) {
-                            if(_allowVersion) {
+                        if (sloganId != 0 && !oMediaScheduleData.VersionsDetail.ContainsKey(sloganId))
+                        {
+                            if (_allowVersion)
+                            {
                                 oMediaScheduleData.VersionsDetail.Add(sloganId, new VersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
                             }
-                            else if(_isPDFReport && VehiclesInformation.Contains(_vehicleId)) {
-                                switch(VehiclesInformation.DatabaseIdToEnum(_vehicleId)) {
+                            else if (_isPDFReport && VehiclesInformation.Contains(_vehicleId))
+                            {
+                                switch (VehiclesInformation.DatabaseIdToEnum(_vehicleId))
+                                {
                                     case CstDBClassif.Vehicles.names.directMarketing:
                                         oMediaScheduleData.VersionsDetail.Add(sloganId, new ExportMDVersionItem(sloganId, _session.SloganColors[sloganId].ToString()));
                                         break;
@@ -2079,7 +2156,8 @@ namespace TNS.AdExpressI.MediaSchedule {
                         cssExtendedClass = _session.SloganColors[sloganId].ToString();
                         stringItem = "x";
                     }
-                    else {
+                    else
+                    {
                         cssPresentClass = _style.CellPresent;
                         cssExtendedClass = _style.CellExtended;
                         stringItem = "&nbsp;";
@@ -2087,46 +2165,60 @@ namespace TNS.AdExpressI.MediaSchedule {
                     #endregion
 
                     #region Line Treatement
-                    for(int j = 0; j < nbColTab; j++) {
-                        switch(j) {
+                    for (int j = 0; j < nbColTab; j++)
+                    {
+                        switch (j)
+                        {
 
                             #region Level 1
                             case L1_COLUMN_INDEX:
-                                if(data[i, j] != null) {
-                                    if(i == TOTAL_LINE_INDEX) {
+                                if (data[i, j] != null)
+                                {
+                                    if (i == TOTAL_LINE_INDEX)
+                                    {
                                         cssClasse = _style.CellLevelTotal;
                                         cssClasseNb = _style.CellLevelTotalNb;
                                     }
-                                    else {
+                                    else
+                                    {
                                         cssClasse = _style.CellLevelL1;
                                         cssClasseNb = _style.CellLevelL1Nb;
                                     }
-                                    if(data[i, j].GetType() == typeof(MemoryArrayEnd)) {
+                                    if (data[i, j].GetType() == typeof(MemoryArrayEnd))
+                                    {
                                         i = int.MaxValue - 2;
                                         j = int.MaxValue - 2;
                                         break;
                                     }
                                     AppenLabelTotalPDM(data, t, i, cssClasse, cssClasseNb, j, string.Empty, labColSpan, fp, unit);
-                                    if (_allowVersion) {
-                                        if (i != TOTAL_LINE_INDEX && !IsAgencyLevelType(L1_COLUMN_INDEX)) {
+                                    if (_allowVersion)
+                                    {
+                                        if (i != TOTAL_LINE_INDEX && !IsAgencyLevelType(L1_COLUMN_INDEX))
+                                        {
                                             AppendCreativeLink(data, t, themeName, i, cssClasse, j);
                                         }
-                                        else {
+                                        else
+                                        {
                                             t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", cssClasse);
                                         }
 
                                     }
-                                    if(_allowInsertions) {
-                                        if (i != TOTAL_LINE_INDEX && !IsAgencyLevelType(L1_COLUMN_INDEX)) {
+                                    if (_allowInsertions)
+                                    {
+                                        if (i != TOTAL_LINE_INDEX && !IsAgencyLevelType(L1_COLUMN_INDEX))
+                                        {
                                             AppendInsertionLink(data, t, themeName, i, cssClasse, j);
                                         }
-                                        else {
+                                        else
+                                        {
                                             t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", cssClasse);
                                         }
                                     }
                                     //Totals
-                                    if (!WebApplicationParameters.UseComparativeMediaSchedule) {
-                                        for (int k = 1; k <= nbColYear; k++) {
+                                    if (!WebApplicationParameters.UseComparativeMediaSchedule)
+                                    {
+                                        for (int k = 1; k <= nbColYear; k++)
+                                        {
                                             AppendYearsTotal(data, t, i, cssClasseNb, (j + firstPeriodIndex - nbColYear - 1) + k, fp, unit);
                                         }
                                     }
@@ -2137,18 +2229,23 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                             #region Level 2
                             case L2_COLUMN_INDEX:
-                                if(data[i, j] != null) {
+                                if (data[i, j] != null)
+                                {
                                     AppenLabelTotalPDM(data, t, i, _style.CellLevelL2, _style.CellLevelL2Nb, j, "&nbsp;", labColSpan, fp, unit);
-                                    if(_allowVersion) {
-                                        if(!IsAgencyLevelType(L2_COLUMN_INDEX))AppendCreativeLink(data, t, themeName, i, _style.CellLevelL2, j);
+                                    if (_allowVersion)
+                                    {
+                                        if (!IsAgencyLevelType(L2_COLUMN_INDEX)) AppendCreativeLink(data, t, themeName, i, _style.CellLevelL2, j);
                                         else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL2);
                                     }
-                                    if(_allowInsertions) {
-                                        if (!IsAgencyLevelType(L2_COLUMN_INDEX))AppendInsertionLink(data, t, themeName, i, _style.CellLevelL2, j);
+                                    if (_allowInsertions)
+                                    {
+                                        if (!IsAgencyLevelType(L2_COLUMN_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL2, j);
                                         else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL2);
                                     }
-                                    if (!WebApplicationParameters.UseComparativeMediaSchedule) {
-                                        for (int k = 1; k <= nbColYear; k++) {
+                                    if (!WebApplicationParameters.UseComparativeMediaSchedule)
+                                    {
+                                        for (int k = 1; k <= nbColYear; k++)
+                                        {
                                             AppendYearsTotal(data, t, i, _style.CellLevelL2Nb, j + (firstPeriodIndex - nbColYear - 2) + k, fp, unit);
                                         }
                                     }
@@ -2159,18 +2256,23 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                             #region Level 3
                             case L3_COLUMN_INDEX:
-                                if(data[i, j] != null) {
+                                if (data[i, j] != null)
+                                {
                                     AppenLabelTotalPDM(data, t, i, _style.CellLevelL3, _style.CellLevelL3Nb, j, "&nbsp;&nbsp;", labColSpan, fp, unit);
-                                    if(_allowVersion) {
+                                    if (_allowVersion)
+                                    {
                                         if (!IsAgencyLevelType(L3_COLUMN_INDEX)) AppendCreativeLink(data, t, themeName, i, _style.CellLevelL3, j);
                                         else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL3);
                                     }
-                                    if(_allowInsertions) {
+                                    if (_allowInsertions)
+                                    {
                                         if (!IsAgencyLevelType(L3_COLUMN_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL3, j);
                                         else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL3);
                                     }
-                                    if (!WebApplicationParameters.UseComparativeMediaSchedule) {
-                                        for (int k = 1; k <= nbColYear; k++) {
+                                    if (!WebApplicationParameters.UseComparativeMediaSchedule)
+                                    {
+                                        for (int k = 1; k <= nbColYear; k++)
+                                        {
                                             AppendYearsTotal(data, t, i, _style.CellLevelL3Nb, j + (firstPeriodIndex - nbColYear - 3) + k, fp, unit);
                                         }
                                     }
@@ -2182,16 +2284,20 @@ namespace TNS.AdExpressI.MediaSchedule {
                             #region Level 4
                             case L4_COLUMN_INDEX:
                                 AppenLabelTotalPDM(data, t, i, _style.CellLevelL4, _style.CellLevelL4Nb, j, "&nbsp;&nbsp;&nbsp;", labColSpan, fp, unit);
-                                if(_allowVersion) {
+                                if (_allowVersion)
+                                {
                                     if (!IsAgencyLevelType(L4_COLUMN_INDEX)) AppendCreativeLink(data, t, themeName, i, _style.CellLevelL4, j);
                                     else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL4);
                                 }
-                                if(_allowInsertions) {
+                                if (_allowInsertions)
+                                {
                                     if (!IsAgencyLevelType(L4_COLUMN_INDEX)) AppendInsertionLink(data, t, themeName, i, _style.CellLevelL4, j);
                                     else t.AppendFormat("<td align=\"center\" class=\"{0}\"></td>", _style.CellLevelL4);
                                 }
-                                if (!WebApplicationParameters.UseComparativeMediaSchedule) {
-                                    for (int k = 1; k <= nbColYear; k++) {
+                                if (!WebApplicationParameters.UseComparativeMediaSchedule)
+                                {
+                                    for (int k = 1; k <= nbColYear; k++)
+                                    {
                                         AppendYearsTotal(data, t, i, _style.CellLevelL4Nb, j + (firstPeriodIndex - nbColYear - 4) + k, fp, unit);
                                     }
                                 }
@@ -2201,23 +2307,28 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                             #region Other
                             default:
-                                if(data[i, j] == null) {
+                                if (data[i, j] == null)
+                                {
                                     t.AppendFormat("<td class=\"{0}\">&nbsp;</td>", _style.CellNotPresent);
                                     break;
                                 }
-                                if(data[i, j] is MediaPlanItem){
-                                //if(data[i, j].GetType() == typeof(MediaPlanItem) || data[i, j].GetType() == typeof(MediaPlanItemIds)) {
-                                    switch(((MediaPlanItem)data[i, j]).GraphicItemType) {
+                                if (data[i, j] is MediaPlanItem)
+                                {
+                                    //if(data[i, j].GetType() == typeof(MediaPlanItem) || data[i, j].GetType() == typeof(MediaPlanItemIds)) {
+                                    switch (((MediaPlanItem)data[i, j]).GraphicItemType)
+                                    {
                                         case DetailledMediaPlan.graphicItemType.present:
-                                            if(_showValues) {
-                                                if(_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
+                                            if (_showValues)
+                                            {
+                                                if (_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
                                                     t.AppendFormat("<td class=\"{0}\">{1}</td>", cssPresentClass, FctWeb.Units.ConvertUnitValueToString(((MediaPlanItemIds)data[i, j]).IdsNumber.Value, _session.Unit, fp));
                                                 else if (_isCreativeDivisionMS || !IsExcelReport || unit.Id != CstWeb.CustomerSessions.Unit.duration)
                                                     t.AppendFormat("<td class=\"{0}\">{1}</td>", cssPresentClass, FctWeb.Units.ConvertUnitValueToString(((MediaPlanItem)data[i, j]).Unit, _session.Unit, fp));
                                                 else
                                                     t.AppendFormat("<td class=\"{0}\">{1}</td>", cssPresentClass, string.Format(fp, unit.StringFormat, ((MediaPlanItem)data[i, j]).Unit));
                                             }
-                                            else {
+                                            else
+                                            {
                                                 t.AppendFormat("<td class=\"{0}\">{1}</td>", cssPresentClass, stringItem);
                                             }
                                             break;
@@ -2239,8 +2350,9 @@ namespace TNS.AdExpressI.MediaSchedule {
 
                 }
             }
-            catch(System.Exception err) {
-                throw (new MediaScheduleException("Error i=" + i,err));
+            catch (System.Exception err)
+            {
+                throw (new MediaScheduleException("Error i=" + i, err));
             }
             t.Append("</table>");
             #endregion
@@ -2248,12 +2360,14 @@ namespace TNS.AdExpressI.MediaSchedule {
             // Release table
             data = null;
 
-            if(_isExcelReport && !_isCreativeDivisionMS) {
+            if (_isExcelReport && !_isCreativeDivisionMS)
+            {
                 t.Append(FctExcel.GetFooter(_session));
             }
 
             oMediaScheduleData.HTMLCode = t.ToString();
             return oMediaScheduleData;
+
         }
 
         #region Table Building Functions
@@ -2388,10 +2502,12 @@ namespace TNS.AdExpressI.MediaSchedule {
                         , cssClasseNb
                         , s);
                 }
-                if(_allowPdm) {
+                if (_allowPdm)
+                {
                     t.AppendFormat("<td class=\"{0}\">{1}</td>"
                         , cssClasseNb
                         , string.Format(fp, "{0:pdm}", data[line, PDM_COLUMN_INDEX]));
+                    
                 }
             }
             if (WebApplicationParameters.UseComparativeMediaSchedule && _session.ComparativeStudy && _allowTotal) {
@@ -3265,6 +3381,11 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// <returns>Data Levels</returns>
         protected virtual DataTable GetDataLevels(IMediaScheduleResultDAL mediaScheduleResultDAL, GenericDetailLevel detailLevel, DataTable dt) {
 
+#if DEBUG
+            System.Diagnostics.Debug.WriteLine("Builds dataLevels distinct for " + dt.Rows.Count + " rows");
+            var stopWatch = new System.Diagnostics.Stopwatch();
+            stopWatch.Start();
+#endif
             DataTable dtLevels = null;
 
             if (_session.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule) {
@@ -3273,19 +3394,64 @@ namespace TNS.AdExpressI.MediaSchedule {
                 else dtLevels = null;
             }
             else {
+                
                 List<string> columnsLevels = new List<string>();
-                for (int iLevel = 1; iLevel <= detailLevel.GetNbLevels; iLevel++) {
+                for (int iLevel = 1; iLevel <= detailLevel.GetNbLevels; iLevel++)
+                {
                     columnsLevels.Add(detailLevel.GetColumnNameLevelId(iLevel));
                     columnsLevels.Add(detailLevel.GetColumnNameLevelLabel(iLevel));
                 }
-                dtLevels = dt.DefaultView.ToTable(true, columnsLevels.ToArray());
+
+
+                #region Create datatable with distinct levels
+                dtLevels = new DataTable();
+
+                //Create Columns
+                foreach (string columnLevel in columnsLevels)
+                    dtLevels.Columns.Add(dt.Columns[columnLevel].ColumnName, dt.Columns[columnLevel].DataType);
+
+                //Fill DataTable
+                Dictionary<string, bool> rowsAddKey = new Dictionary<string, bool>();
+                foreach (DataRow row in dt.Rows)
+                {
+                    List<Int64> columnsIds = new List<Int64>();
+                    List<object> columnsValues = new List<object>();
+
+                    //Add Values for current row in local variables
+                    for (int i = 0; i < columnsLevels.Count; i++ )
+                    {
+                        if(i%2==0) columnsIds.Add(Int64.Parse(row[columnsLevels[i]].ToString()));
+                        columnsValues.Add(row[columnsLevels[i]]);
+                    }
+
+                    //Dertermine if values is already Add
+                    string currentRowKey = string.Join(";", columnsIds.ConvertAll<string>(p=>p.ToString()).ToArray());
+                    if (!rowsAddKey.ContainsKey(currentRowKey))
+                    {
+                        rowsAddKey.Add(currentRowKey, true);
+                        dtLevels.Rows.Add(columnsValues.ToArray());
+                    }
+                }
+                #endregion
 
                 List<DataColumn> dataColumnList = new List<DataColumn>();
-                foreach (DataColumn cColumn in dtLevels.Columns) {
+                foreach (DataColumn cColumn in dtLevels.Columns)
+                {
                     dataColumnList.Add(cColumn);
                 }
                 dtLevels.PrimaryKey = dataColumnList.ToArray();
+
             }
+
+
+#if DEBUG
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            System.Diagnostics.Debug.WriteLine("Builds dataLevels distinct ("+dtLevels.Rows.Count+" rows) in :" + String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+                ts.Hours, ts.Minutes, ts.Seconds,
+                ts.Milliseconds / 10));
+#endif
+
             return dtLevels;
         }
         #endregion
