@@ -43,7 +43,7 @@ namespace WebServiceCreativeView
         /// <param name="isBlur">Return creative real (if false) or blur (if true)</param>
         /// <returns>Binaries of the creative</returns>
         [WebMethod]
-        public byte[] GetBinaries(string relativePath, Int64 idVehicle, bool isBlur)
+        public byte[] GetBinaries(string relativePath, Int64 idVehicle, bool isBlur,bool isCover)
         {
             VehicleCreativesInformation vehicleCreativesInformation = null;
 
@@ -54,79 +54,10 @@ namespace WebServiceCreativeView
                 if (vehicleCreativesInformation != null)
                 {
                     vehicleCreativesInformation.Open();
-                    if (File.Exists(Path.Combine(vehicleCreativesInformation.CreativeInfo.Path, relativePath)))
+                    var creativeInfoPath = isCover ? vehicleCreativesInformation.CreativeInfo.CoverPath : vehicleCreativesInformation.CreativeInfo.Path;
+                    if (File.Exists(Path.Combine(creativeInfoPath, relativePath)))
                     {
-                        return GetCreativeByte(vehicleCreativesInformation, vehicleCreativesInformation.CreativeInfo.Path, relativePath, idVehicle, isBlur);
-                    }
-                }
-
-            }
-            catch (Exception exc)
-            {
-                string body = "";
-                string pathConf = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, CONFIGARION_DIRECTORY_NAME);
-                string countryName = WebParamtersXL.LoadDirectoryName(new XmlReaderDataSource(System.IO.Path.Combine(pathConf, TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME)));
-                string pathConfCountry = System.IO.Path.Combine(pathConf, countryName);
-
-
-                try
-                {
-                    var err = (BaseException)exc;
-                    body = "<html><b><u>" + Server.MachineName + ":</u></b><br>" + "<font color=#FF0000>A error occure in the AdExpress creative webservice.</font><br>Error" + err.GetHtmlDetail() + "</font>";
-                    if (!string.IsNullOrEmpty(relativePath)) body += "<br><b><u>File path:</u></b><font color=#008000>" + relativePath + "</font>";
-                    body += "<br><b><u>Id Media Type :</u></b><font color=#008000>" + idVehicle + "</font>";
-                    body += "</html>";
-                }
-                catch (System.Exception)
-                {
-                    try
-                    {
-                        body = "<html><b><u>" + Server.MachineName + ":</u></b><br>" + "<font color=#FF0000>A error occure in the AdExpress creative webservice.</font><br>Erreur(" + exc.GetType().FullName + "):" + exc.Message + "<br><br><b><u>Source:</u></b><font color=#008000>" + exc.StackTrace.Replace("at ", "<br>at ") + "</font>";
-                        if (!string.IsNullOrEmpty(relativePath)) body += "<br><b><u>File path:</u></b><font color=#008000>" + relativePath + "</font>";
-                        body += "<br><b><u>Id Media Type :</u></b><font color=#008000>" + idVehicle + "</font>";
-                        body += "</html>";
-                    }
-                    catch (System.Exception)
-                    {
-                        body = "Undefined Exception";
-                    }
-                }
-                var errorMail = new TNSMail.SmtpUtilities(pathConfCountry + @"\" + TNS.AdExpress.Constantes.Web.ErrorManager.WEBSERVER_ERROR_MAIL_FILE);
-                errorMail.SendWithoutThread("Error AdExpress Creative WebService  " + (Server.MachineName), body, true, false);
-                return null;
-            }
-            finally
-            {
-                if (vehicleCreativesInformation != null)
-                    vehicleCreativesInformation.Close();
-            }
-            return null;
-        }
-        #endregion
-
-        #region Get Cover Binaries
-        /// <summary>
-        /// Get CoverBinaries of the creative
-        /// </summary>
-        /// <param name="relativePath">Relative path file</param>
-        /// <param name="idVehicle">Vehicle identifier</param>
-        /// <param name="isBlur">Return creative real (if false) or blur (if true)</param>
-        /// <returns>Binaries of the creative</returns>
-        [WebMethod]
-        public byte[] GetCoverBinaries(string relativePath, Int64 idVehicle, bool isBlur)
-        {
-            VehicleCreativesInformation vehicleCreativesInformation = null;
-
-            try
-            {
-                vehicleCreativesInformation = VehiclesCreativesInformation.GetVehicleCreativesInformation(idVehicle);
-
-                if (vehicleCreativesInformation != null)
-                {
-                    vehicleCreativesInformation.Open();
-                    if (File.Exists(Path.Combine(vehicleCreativesInformation.CreativeInfo.CoverPath, relativePath)))
-                    {
-                        return GetCreativeByte(vehicleCreativesInformation, vehicleCreativesInformation.CreativeInfo.CoverPath, relativePath, idVehicle, isBlur);
+                        return GetCreativeByte(vehicleCreativesInformation, creativeInfoPath, relativePath, idVehicle, isBlur);
                     }
                 }
 
