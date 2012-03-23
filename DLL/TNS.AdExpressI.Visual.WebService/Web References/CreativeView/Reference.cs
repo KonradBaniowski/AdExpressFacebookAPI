@@ -31,8 +31,6 @@ namespace TNS.AdExpressI.Visual.WebService.CreativeView {
         
         private System.Threading.SendOrPostCallback GetBinariesOperationCompleted;
         
-        private System.Threading.SendOrPostCallback GetCoverBinariesOperationCompleted;
-        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -75,73 +73,38 @@ namespace TNS.AdExpressI.Visual.WebService.CreativeView {
         public event GetBinariesCompletedEventHandler GetBinariesCompleted;
         
         /// <remarks/>
-        public event GetCoverBinariesCompletedEventHandler GetCoverBinariesCompleted;
-        
-        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetBinaries", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")]
-        public byte[] GetBinaries(string relativePath, long idVehicle, bool isBlur) {
+        public byte[] GetBinaries(string relativePath, long idVehicle, bool isBlur, bool isCover) {
             object[] results = this.Invoke("GetBinaries", new object[] {
                         relativePath,
                         idVehicle,
-                        isBlur});
+                        isBlur,
+                        isCover});
             return ((byte[])(results[0]));
         }
         
         /// <remarks/>
-        public void GetBinariesAsync(string relativePath, long idVehicle, bool isBlur) {
-            this.GetBinariesAsync(relativePath, idVehicle, isBlur, null);
+        public void GetBinariesAsync(string relativePath, long idVehicle, bool isBlur, bool isCover) {
+            this.GetBinariesAsync(relativePath, idVehicle, isBlur, isCover, null);
         }
         
         /// <remarks/>
-        public void GetBinariesAsync(string relativePath, long idVehicle, bool isBlur, object userState) {
+        public void GetBinariesAsync(string relativePath, long idVehicle, bool isBlur, bool isCover, object userState) {
             if ((this.GetBinariesOperationCompleted == null)) {
                 this.GetBinariesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetBinariesOperationCompleted);
             }
             this.InvokeAsync("GetBinaries", new object[] {
                         relativePath,
                         idVehicle,
-                        isBlur}, this.GetBinariesOperationCompleted, userState);
+                        isBlur,
+                        isCover}, this.GetBinariesOperationCompleted, userState);
         }
         
         private void OnGetBinariesOperationCompleted(object arg) {
             if ((this.GetBinariesCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.GetBinariesCompleted(this, new GetBinariesCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetCoverBinaries", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        [return: System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")]
-        public byte[] GetCoverBinaries(string relativePath, long idVehicle, bool isBlur) {
-            object[] results = this.Invoke("GetCoverBinaries", new object[] {
-                        relativePath,
-                        idVehicle,
-                        isBlur});
-            return ((byte[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void GetCoverBinariesAsync(string relativePath, long idVehicle, bool isBlur) {
-            this.GetCoverBinariesAsync(relativePath, idVehicle, isBlur, null);
-        }
-        
-        /// <remarks/>
-        public void GetCoverBinariesAsync(string relativePath, long idVehicle, bool isBlur, object userState) {
-            if ((this.GetCoverBinariesOperationCompleted == null)) {
-                this.GetCoverBinariesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetCoverBinariesOperationCompleted);
-            }
-            this.InvokeAsync("GetCoverBinaries", new object[] {
-                        relativePath,
-                        idVehicle,
-                        isBlur}, this.GetCoverBinariesOperationCompleted, userState);
-        }
-        
-        private void OnGetCoverBinariesOperationCompleted(object arg) {
-            if ((this.GetCoverBinariesCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetCoverBinariesCompleted(this, new GetCoverBinariesCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -177,32 +140,6 @@ namespace TNS.AdExpressI.Visual.WebService.CreativeView {
         private object[] results;
         
         internal GetBinariesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public byte[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((byte[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.5420")]
-    public delegate void GetCoverBinariesCompletedEventHandler(object sender, GetCoverBinariesCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.5420")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetCoverBinariesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal GetCoverBinariesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
