@@ -18,6 +18,22 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="GetCoverBinaries">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="relativePath" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="idVehicle" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="isBlur" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCoverBinariesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCoverBinariesResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="GetBinariesSoapIn">
@@ -26,10 +42,20 @@
   <wsdl:message name="GetBinariesSoapOut">
     <wsdl:part name="parameters" element="tns:GetBinariesResponse" />
   </wsdl:message>
+  <wsdl:message name="GetCoverBinariesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCoverBinaries" />
+  </wsdl:message>
+  <wsdl:message name="GetCoverBinariesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCoverBinariesResponse" />
+  </wsdl:message>
   <wsdl:portType name="CreativeViewSoap">
     <wsdl:operation name="GetBinaries">
       <wsdl:input message="tns:GetBinariesSoapIn" />
       <wsdl:output message="tns:GetBinariesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCoverBinaries">
+      <wsdl:input message="tns:GetCoverBinariesSoapIn" />
+      <wsdl:output message="tns:GetCoverBinariesSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="CreativeViewSoap" type="tns:CreativeViewSoap">
@@ -43,11 +69,29 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetCoverBinaries">
+      <soap:operation soapAction="http://tempuri.org/GetCoverBinaries" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="CreativeViewSoap12" type="tns:CreativeViewSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="GetBinaries">
       <soap12:operation soapAction="http://tempuri.org/GetBinaries" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCoverBinaries">
+      <soap12:operation soapAction="http://tempuri.org/GetCoverBinaries" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
