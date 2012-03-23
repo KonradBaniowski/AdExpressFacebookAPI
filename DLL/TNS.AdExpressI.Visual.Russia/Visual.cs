@@ -12,6 +12,7 @@ using System;
 using System.Text;
 using System.Reflection;
 using System.Collections.Generic;
+using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Constantes.Classification.DB;
 using WebCst = TNS.AdExpress.Constantes.Web;
@@ -43,6 +44,19 @@ namespace TNS.AdExpressI.Visual.Russia
         /// <param name="isEncrypted">true if is encrypted</param>
         public Visual(Int64 idVehicle, string relativePath, string idSession, bool isEncrypted)
             : base(idVehicle, relativePath, idSession, isEncrypted)
+        {
+
+        }
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="idVehicle">Vehicle identifier</param>
+        /// <param name="relativePath">Relative Path</param>
+        /// <param name="idSession">ID Session</param>
+        /// <param name="isCover">Is cover</param>
+        /// <param name="isEncrypted">true if is encrypted</param>
+        public Visual(Int64 idVehicle, string relativePath, string idSession, bool isEncrypted,bool isCover)
+            : base(idVehicle, relativePath, idSession, isEncrypted,isCover)
         {
 
         }
@@ -98,8 +112,17 @@ namespace TNS.AdExpressI.Visual.Russia
                             _relativePath = TNS.AdExpress.Web.Functions.QueryStringEncryption.DecryptQueryString(_relativePath);
                             _isEncrypted = false;
                         }
-                        localPath = WebCst.CreationServerPathes.LOCAL_PATH_IMAGE;
-                        tempRelative = _relativePath.Replace(WebCst.CreationServerPathes.IMAGES + "/", "");
+                        if(_isCover)
+                        {
+
+                            localPath = WebCst.CreationServerPathes.LOCAL_PATH_IMAGES_COVER;
+                            tempRelative = _relativePath.Replace(WebCst.CreationServerPathes.IMAGES_PRESS_COVER + "/", "");
+                        }
+                        else {
+                            localPath = CreationServerPathes.LOCAL_PATH_IMAGE;
+                            tempRelative = _relativePath.Replace(CreationServerPathes.IMAGES + "/", "");
+                        }
+
                         tempRelative = tempRelative.Replace("/", @"\");
                         localPath = localPath + tempRelative;
                         break;

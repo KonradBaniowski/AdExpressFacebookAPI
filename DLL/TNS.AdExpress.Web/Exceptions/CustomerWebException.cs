@@ -388,9 +388,32 @@ namespace TNS.AdExpress.Web.Exceptions{
 				}
 				#endregion
 
-				#region Univers produit
-													
-				AdExpressUniverse adExpressUniverse = null;
+                #region Principal Media Universes
+              
+                if (webSession.IsPrincipalMediaUniversesSelected())
+                {
+                    int mediaCode = 2540;
+                    //Selection media principale
+                    if (webSession.PrincipalProductUniverses.Count == 1)
+                    {
+                        if (webSession.PrincipalMediaUniverses[0].ContainsLevel(TNSClassificationLevels.REGION, AccessType.includes))mediaCode = 2680;
+                        body += "<u>" + GestionWeb.GetWebWord(mediaCode, webSession.SiteLanguage) + "</u><br>";
+                        body += TNS.AdExpress.Web.Functions.DisplayUniverse.ToHtml(webSession.PrincipalMediaUniverses[0], webSession.SiteLanguage, webSession.DataLanguage, dataSource, 600);                     
+                    }
+                    else if (webSession.PrincipalMediaUniverses.Count > 1)
+                    {
+                        for (int k = 0; k < webSession.PrincipalMediaUniverses.Count; k++)
+                        {
+                            body += "<u>" + GestionWeb.GetWebWord(mediaCode, webSession.SiteLanguage) + "</u><br>";
+                            body += TNS.AdExpress.Web.Functions.DisplayUniverse.ToHtml(webSession.PrincipalMediaUniverses[k], webSession.SiteLanguage, webSession.DataLanguage, dataSource, 600);
+                        }
+                    }
+                }
+                #endregion
+
+                #region Univers produit
+
+                AdExpressUniverse adExpressUniverse = null;
 				int universeCodeTitle = 1759;
 				if (webSession.isAdvertisersSelected()) {
 					
@@ -411,12 +434,12 @@ namespace TNS.AdExpress.Web.Exceptions{
 								}
 							}
 							body += "<u>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + "</u><br>";
-                            body += TNS.AdExpress.Web.Functions.DisplayUniverse.ToHtml(webSession.PrincipalProductUniverses[0], webSession.SiteLanguage, webSession.DataLanguage, dataSource, 600);
+                            body += TNS.AdExpress.Web.Functions.DisplayUniverse.ToHtml(webSession.PrincipalProductUniverses[k], webSession.SiteLanguage, webSession.DataLanguage, dataSource, 600);
 						}
 					}
 				}
 
-
+    
                 if (webSession.isReferenceAdvertisersSelected())
                 {
                     adExpressUniverse = null;

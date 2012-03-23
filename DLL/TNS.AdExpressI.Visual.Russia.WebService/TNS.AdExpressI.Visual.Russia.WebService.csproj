@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -49,11 +50,6 @@
     </Compile>
     <Compile Include="Visual.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Web References\CreativeView\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.map</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
@@ -72,9 +68,9 @@
       <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
       <Name>TNS.AdExpress.Web</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TNS.AdExpressI.Visual.Russia\TNS.AdExpressI.Visual.Russia.csproj">
-      <Project>{1A9DAA32-DC66-4E16-8F21-7D1351C93A11}</Project>
-      <Name>TNS.AdExpressI.Visual.Russia</Name>
+    <ProjectReference Include="..\TNS.AdExpressI.Visual.WebService\TNS.AdExpressI.Visual.WebService.csproj">
+      <Project>{1F1AE0CB-DC0E-4D86-9A6A-C31B39E95EBC}</Project>
+      <Name>TNS.AdExpressI.Visual.WebService</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.Visual\TNS.AdExpressI.Visual.csproj">
       <Project>{79A0173F-A728-4739-A110-D4FD9166A8CC}</Project>
@@ -86,34 +82,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <WebReferences Include="Web References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferenceUrl Include="http://localhost:33801/CreativeView.asmx">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\CreativeView\</RelPath>
-      <UpdateFromURL>http://localhost:33801/CreativeView.asmx</UpdateFromURL>
-      <ServiceLocationURL>
-      </ServiceLocationURL>
-      <CachedDynamicPropName>
-      </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>TNS_AdExpressI_Visual_Russia_WebService_CreativeView_CreativeView</CachedSettingsPropName>
-    </WebReferenceUrl>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Web References\CreativeView\CreativeView.wsdl" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Web References\CreativeView\CreativeView.disco" />
-    <None Include="Web References\CreativeView\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

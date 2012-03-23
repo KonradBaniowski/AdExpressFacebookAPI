@@ -623,6 +623,18 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView
         }
         #endregion
 
+        #region OnLoad
+        /// <summary>
+        /// OnLoad Evzent Handling
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnLoad(EventArgs e)
+        {
+            if (!this.Page.ClientScript.IsClientScriptBlockRegistered("OpenWindow")) this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "OpenWindow", Web.Functions.Script.OpenWindow());
+            base.OnLoad(e);
+        }
+        #endregion
+
         #region Render(HtmlTextWriter output)
         /// <summary>
         /// Render

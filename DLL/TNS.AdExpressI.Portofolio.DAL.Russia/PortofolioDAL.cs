@@ -547,8 +547,24 @@ namespace TNS.AdExpressI.Portofolio.DAL.Russia
 
         #region Get dates list
         /// <summary>
-        /// Get dates list
+        /// Get vehicle publication date ( as YYYYMMDD) and cover file name (e.g dates list 367942.jpg).
+        /// The result data will have the following column :
+        /// [date_media_num] [visual]
         /// </summary>
+        /// <example>
+        /// --SLQ QUERY
+        /// select distinct date_media_num, visual from PRESS_TABLE
+        /// where idMedia = 300010590
+        /// and id_language = 7
+        /// and beginingDate = 20111205
+        /// and endDate = _endDate
+        /// order by date_media_num
+        /// 
+        /// --RESULT EXAMPLE
+        /// [20111205][367942.jpg]
+        /// [20111212][368426.jpg]
+        /// [20111219][368827.jpg]
+        /// </example>
         /// <param name="conditionEndDate">Add condition end date</param>
         /// <returns>DataSet</returns>
         public override DataSet GetListDate(bool conditionEndDate, DBConstantes.TableType.Type tableType)
@@ -556,7 +572,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Russia
 
             DataSet ds = new DataSet();
 
-            //TODO : Implement here query in Russia
+            //Filter sql statement with parameters:
+            // _idMedia : represents vehicle Identifier selected by customer
+            //_webSession.DataLanguage : represents data language Identifier
+            // _beginingDate  : represents period beginning date (YYYYMMDD)
+            // _endDate  : represents period end date (YYYYMMDD)
+
+            //TODO : Implement Russian sql query 
 
             return ds;
         }

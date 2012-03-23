@@ -7,7 +7,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using AjaxPro;
 using TNS.AdExpress.Constantes.Classification.DB;
-using TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Domain.Level;
@@ -66,10 +65,7 @@ namespace TNS.AdExpress.Web.Controls.Results
         /// List of option to group creative export
         /// </summary>
         CheckBoxList groupAdByCheckBoxList;
-        /// <summary>
-        /// List of detai level item
-        /// </summary>
-        RadioButtonList levelsRadioButtonList;
+      
         /// <summary>
         /// option register email
         /// </summary>
@@ -143,14 +139,7 @@ namespace TNS.AdExpress.Web.Controls.Results
             get { return (_webSession); }
             set { _webSession = value; }
         }
-        /// <summary>
-        /// Get /set List of detai level item
-        /// </summary>
-        public RadioButtonList LevelsRadioButtonList
-        {
-            get { return levelsRadioButtonList; }
-            set { levelsRadioButtonList = value; }
-        }
+       
       
         #endregion
 
@@ -290,21 +279,7 @@ namespace TNS.AdExpress.Web.Controls.Results
                 Controls.Add(groupAdByCheckBoxList);
             }
 
-            if (Module.Name.ANALYSE_DES_DISPOSITIFS == _webSession.CurrentModule)
-            {
-                levelsRadioButtonList= new RadioButtonList();
-                levelsRadioButtonList.CssClass = "txtViolet11";
-                levelsRadioButtonList.ID = this.ID+"_levelsRadioButtonList";
-                var module = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
-                //var detailLevel = DetailLevelsInformation.Get(module.AsyncExportDetailLevel);
-                //for(int v=1; v<=detailLevel.GetNbLevels; v++)
-                //{
-                //    var di = detailLevel[v];
-                //    levelsRadioButtonList.Items.Add(new ListItem(GestionWeb.GetWebWord(di.WebTextId, _webSession.SiteLanguage),di.Id.GetHashCode().ToString()));
-                //}
-                levelsRadioButtonList.EnableViewState = true;
-                Controls.Add(levelsRadioButtonList);
-            }
+           
             #endregion
             base.OnInit(e);
         }
@@ -315,8 +290,6 @@ namespace TNS.AdExpress.Web.Controls.Results
         /// <param name="e">Arguments</param>
         protected override void OnLoad(EventArgs e)
         {
-
-
 
             AjaxPro.Utility.RegisterTypeForAjax(this.GetType());
             base.OnLoad(e);
@@ -405,25 +378,13 @@ namespace TNS.AdExpress.Web.Controls.Results
                 groupAdByCheckBoxList.RenderControl(output);
                 output.Write("</td></tr>");
             }
-            if (Module.Name.ANALYSE_DES_DISPOSITIFS == _webSession.CurrentModule)
-            {
-                output.Write("<tr class=\"backGroundWhite\"><td colSpan=\"2\">&nbsp;</td></tr>");
-                output.Write("<tr class=\"backGroundWhite\"><td class=\"txtViolet11Bold\" colSpan=\"2\">");
-                AdExpressText Adexpresstext3 = new AdExpressText();
-                Adexpresstext3.Code = 1886;
-                Adexpresstext3.ID = "Adexpresstext3";
-                Adexpresstext3.Language = _webSession.SiteLanguage;
-                Adexpresstext3.RenderControl(output);
-                output.Write("</td></tr><tr class=\"backGroundWhite\"><td colSpan=\"2\">");
-                levelsRadioButtonList.RenderControl(output);
-                output.Write("</td></tr>");
-            }
+         
             output.Write("<tr class=\"backGroundWhite\"><td colSpan=\"2\">&nbsp;</td></tr>");
             output.Write("<tr class=\"backGroundWhite\"><td class=\"txtViolet11Bold\" colspan=\"2\">");
 
 
             cbxRegisterMail.RenderControl(output);
-        #endregion
+     
             output.Write("</td></tr>");
             output.Write("</table>");
             output.Write("</td></tr>");
@@ -445,7 +406,7 @@ namespace TNS.AdExpress.Web.Controls.Results
         }
         #endregion
 
-
+        #endregion
         #region   CountDataRows
         [AjaxMethod]
         public long CountDataRows(string idSession)

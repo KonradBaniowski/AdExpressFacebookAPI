@@ -44,6 +44,18 @@ namespace TNS.AdExpressI.Visual.WebService
             : base(idVehicle, relativePath, idSession, isEncrypted)
         {
         }
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="idVehicle">Vehicle identifier</param>
+        /// <param name="relativePath">Relative Path</param>
+        /// <param name="idSession">ID Session</param>
+        /// <param name="isCover">Is cover</param>
+        /// <param name="isEncrypted">true if is encrypted</param>
+        public Visual(Int64 idVehicle, string relativePath, string idSession, bool isEncrypted, bool isCover)
+            : base(idVehicle, relativePath, idSession, isEncrypted, isCover)
+        {
+        }
         #endregion
 
         #region IVisual Members
@@ -72,10 +84,24 @@ namespace TNS.AdExpressI.Visual.WebService
         /// </summary>
         /// <param name="isBlur">Is Blur or not</param>
         /// <returns>Binaries visual</returns>
-        public override byte[] GetBinaries(bool isBlur) {
-            CreativeView.CreativeView a = new TNS.AdExpressI.Visual.WebService.CreativeView.CreativeView();
-            return a.GetBinaries(_relativePath, _idVehicle, isBlur);
+        public override byte[] GetBinaries(bool isBlur)
+        {
+            CreativeView.CreativeView a = GetWebService();
+            return a.GetBinaries(_relativePath, _idVehicle, isBlur,_isCover);
         }
+        #endregion
+
+        #region Protected Methods
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        protected CreativeView.CreativeView GetWebService()
+        {
+            return new CreativeView.CreativeView();
+        }
+
         #endregion
 
     }

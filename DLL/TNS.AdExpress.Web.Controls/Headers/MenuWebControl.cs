@@ -868,7 +868,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 
             if (pInfo.CanDisplayRemoteTextPage())
             {
-                js.Append(this.GetExportSubMenu("textExportItem", GestionWeb.GetWebWord(_textExportWebtextId, _webSession.SiteLanguage), EXCEL_MENU, "javascript:popupOpenBis('" + pInfo.RemoteTextUrl + "?idSession=" + _webSession.IdSession + ((_urlParameters.Length > 0) ? "&" + _urlParameters : "") + "','470','300','yes');", "textExportMenuIcon"));
+                js.Append(this.GetExportSubMenu("textExportItem", GestionWeb.GetWebWord(_textExportWebtextId, _webSession.SiteLanguage), EXCEL_MENU, "javascript:popupOpenBis('" + pInfo.RemoteTextUrl + "?idSession=" + _webSession.IdSession + ((_urlParameters.Length > 0) ? "&" + _urlParameters : "") + "','470','210','yes');", "textExportMenuIcon"));
             }
 
             if (pInfo.CanDisplayRemoteExcelPage())

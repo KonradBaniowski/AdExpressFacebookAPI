@@ -879,7 +879,7 @@ namespace TNS.AdExpress.Web.UI
             AdExpressUniverse adExpressUniverse = null;
 
             #region Principal Advertising Agency Selected
-            if (webSession.PrincipalAdvertisingAgnecyUniverses.Count == 1)
+            if (webSession.PrincipalAdvertisingAgnecyUniverses!=null && webSession.PrincipalAdvertisingAgnecyUniverses.Count == 1)
             {
                 advertisingAgencySelection += GetBlankLine();
                 advertisingAgencySelection += "<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";

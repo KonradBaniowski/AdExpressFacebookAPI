@@ -43,6 +43,10 @@ namespace TNS.AdExpressI.Visual
         /// Theme
         /// </summary>
         protected string _theme = null;
+        /// <summary>
+        /// Is creative's cover
+        /// </summary>
+        protected bool _isCover = false;
         #endregion
 
         #region Constructor
@@ -63,11 +67,24 @@ namespace TNS.AdExpressI.Visual
         /// <param name="idSession">ID Session</param>
         /// <param name="isEncrypted">true if is encrypted</param>
         public Visual(Int64 idVehicle, string relativePath,string idSession, bool isEncrypted)
-        {
-            _idVehicle = idVehicle;
-            _relativePath = relativePath;
+            :this(idVehicle,relativePath)
+        {          
             _idSession = idSession;           
             _isEncrypted = isEncrypted;           
+
+        }
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="idVehicle">Vehicle identifier</param>
+        /// <param name="relativePath">Relative Path</param>
+        /// <param name="idSession">ID Session</param>
+        /// <param name="isEncrypted">true if is encrypted</param>
+        /// <param name="isCover">Is cover</param>
+        public Visual(Int64 idVehicle, string relativePath, string idSession, bool isEncrypted,bool isCover)
+            :this(idVehicle,relativePath,idSession,isEncrypted)
+        {       
+            _isCover = isCover;
 
         }
         #endregion

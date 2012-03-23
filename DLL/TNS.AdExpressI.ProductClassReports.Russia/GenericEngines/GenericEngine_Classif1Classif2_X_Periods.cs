@@ -244,8 +244,7 @@ namespace TNS.AdExpressI.ProductClassReports.Russia.GenericEngines
             Int32 cLine = -1;
             List<Int64> mainLevelIds = new List<Int64>();
             List<Int64> scdLevelIds = new List<Int64>();
-            Double dYearN = 0.0;
-            Double dYearN1 = 0.0;
+            
             string C1_ID_NAME = (C1_TYPE == TNS.AdExpress.Constantes.Classification.Branch.type.media) ? "ID_M" : "ID_P";
             string C2_ID_NAME = (C2_TYPE == TNS.AdExpress.Constantes.Classification.Branch.type.product) ? "ID_P" : "ID_M";
             string C1_LABEL_NAME = (C1_TYPE == TNS.AdExpress.Constantes.Classification.Branch.type.media) ? "M" : "P";
@@ -260,13 +259,7 @@ namespace TNS.AdExpressI.ProductClassReports.Russia.GenericEngines
 
             foreach (DataRow row in dtData.Rows){
 
-                dYearN = Convert.ToDouble(row["N"]);
-                if (RES_YEAR_N1_INDEX > -1)
-                {
-                    dYearN1 = Convert.ToDouble(row["N1"]);
-                }
-                if (dYearN + dYearN1 > 0)
-                {
+               
 
                     #region Main classification init
                     for (int i = 0; i < C1_IDS.Count; i++)
@@ -654,7 +647,7 @@ namespace TNS.AdExpressI.ProductClassReports.Russia.GenericEngines
                     
                     dMonthes.Clear();
             
-                }
+                
 
             }
             #endregion

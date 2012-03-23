@@ -1,16 +1,18 @@
-﻿using System;
+﻿
+using System;
 using System.Text;
 using System.Reflection;
 using System.Collections.Generic;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Constantes.Classification.DB;
+using TNS.AdExpressI.Visual.WebService.CreativeView;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using System.IO;
 using TNS.AdExpress.Web.Core.Sessions;
 
 namespace TNS.AdExpressI.Visual.Russia.WebService
 {
-    public class Visual : TNS.AdExpressI.Visual.Russia.Visual
+    public class Visual : AdExpressI.Visual.WebService.Visual
     {
 
         #region Constructor
@@ -33,7 +35,18 @@ namespace TNS.AdExpressI.Visual.Russia.WebService
         public Visual(Int64 idVehicle, string relativePath, string idSession, bool isEncrypted)
             : base(idVehicle, relativePath, idSession, isEncrypted)
         {
-
+        }
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        /// <param name="idVehicle">Vehicle identifier</param>
+        /// <param name="relativePath">Relative Path</param>
+        /// <param name="idSession">ID Session</param>
+        /// <param name="isCover">Is cover</param>
+        /// <param name="isEncrypted">true if is encrypted</param>
+        public Visual(Int64 idVehicle, string relativePath, string idSession, bool isEncrypted, bool isCover)
+            : base(idVehicle, relativePath, idSession, isEncrypted, isCover)
+        {
         }
         #endregion
 
@@ -70,61 +83,24 @@ namespace TNS.AdExpressI.Visual.Russia.WebService
         /// <returns>Binaries visual</returns>
         public override byte[] GetBinaries(bool isBlur)
         {
-            string localPath = string.Empty, tempRelative = string.Empty;
-            int advertismentId = -1;
-            string baseDirectory = string.Empty;
-
             if (!string.IsNullOrEmpty(_idSession) && !string.IsNullOrEmpty(_relativePath) && _idSession.Substring(0, 8) == DateTime.Now.ToString("yyyyMMdd"))
             {
+                string tempRelative;
                 switch (VehiclesInformation.Get(_idVehicle).Id)
                 {
                     case Vehicles.names.press:
-                        if (_isEncrypted)
-                        {
-                            //Decrypt path parameter if required
-                            _relativePath = TNS.AdExpress.Web.Functions.QueryStringEncryption.DecryptQueryString(_relativePath);
-                            _isEncrypted = false;
-                        }
-                        localPath = WebCst.CreationServerPathes.LOCAL_PATH_IMAGE;
-                        tempRelative = _relativePath.Replace(WebCst.CreationServerPathes.IMAGES + "/", "");
-                        tempRelative = tempRelative.Replace("/", @"\");
-                        localPath = localPath + tempRelative;
+                        tempRelative = _isCover
+                                           ? GetPath(WebCst.CreationServerPathes.IMAGES_PRESS_COVER)
+                                           : GetPath(WebCst.CreationServerPathes.IMAGES);
                         break;
                     case Vehicles.names.outdoor:
-                        if (_isEncrypted)
-                        {
-                            //Decrypt path parameter if required
-                            _relativePath = TNS.AdExpress.Web.Functions.QueryStringEncryption.DecryptQueryString(_relativePath);
-                            _isEncrypted = false;
-                        }
-                        localPath = WebCst.CreationServerPathes.LOCAL_PATH_OUTDOOR;
-                        tempRelative = _relativePath.Replace(WebCst.CreationServerPathes.IMAGES_OUTDOOR + "/", "");
-                        tempRelative = tempRelative.Replace("/", @"\");
-                        localPath = localPath + tempRelative; break;
-
+                        tempRelative = GetPath(WebCst.CreationServerPathes.IMAGES_OUTDOOR);
+                        break;
                     case Vehicles.names.internet:
-                        localPath = WebCst.CreationServerPathes.LOCAL_PATH_INTERNET;
-                        if (_isEncrypted)
-                        {
-                            //Decrypt path parameter if required
-                            _relativePath = TNS.AdExpress.Web.Functions.QueryStringEncryption.DecryptQueryString(_relativePath);
-                            _isEncrypted = false;
-                        }
-                        tempRelative = _relativePath.Replace(WebCst.CreationServerPathes.CREA_ADNETTRACK + "/", "");
-                        tempRelative = tempRelative.Replace("/", @"\");
-                        localPath = localPath + tempRelative;
+                        tempRelative = GetPath(WebCst.CreationServerPathes.CREA_ADNETTRACK);
                         break;
                     case Vehicles.names.editorial:
-                        if (_isEncrypted)
-                        {
-                            //Decrypt path parameter if required
-                            _relativePath = TNS.AdExpress.Web.Functions.QueryStringEncryption.DecryptQueryString(_relativePath);
-                            _isEncrypted = false;
-                        }
-                        localPath = WebCst.CreationServerPathes.LOCAL_PATH_EDITORIAL;
-                        tempRelative = _relativePath.Replace(WebCst.CreationServerPathes.IMAGES_EDITORIAL + "/", "");
-                        tempRelative = tempRelative.Replace("/", @"\");
-                        localPath = localPath + tempRelative;
+                        tempRelative = GetPath(WebCst.CreationServerPathes.IMAGES_EDITORIAL);
                         break;
                     case Vehicles.names.tv:
                     case Vehicles.names.tvGeneral:
@@ -135,23 +111,13 @@ namespace TNS.AdExpressI.Visual.Russia.WebService
                     case Vehicles.names.radioGeneral:
                     case Vehicles.names.radioMusic:
                     case Vehicles.names.radioSponsorship:
-                        if (_isEncrypted)
-                        {
-                            //Decrypt path parameter if required
-                            tempRelative = TNS.AdExpress.Web.Functions.QueryStringEncryption.DecryptQueryString(_relativePath);
-                            _isEncrypted = false;
-                        }
-                        else
-                            tempRelative = _relativePath;
-                        advertismentId = int.Parse((_relativePath.Split('.'))[0]);
-                        baseDirectory = ((advertismentId / 10000) * 10000).ToString();
-                        tempRelative = baseDirectory + @"\" + tempRelative;
+                        tempRelative = GetPath();
                         break;
                     default:
                         return null;
                 }
-                CreativeView.CreativeView a = new TNS.AdExpressI.Visual.Russia.WebService.CreativeView.CreativeView();
-                byte[] res = a.GetBinaries(tempRelative, _idVehicle, isBlur);
+                var a = GetWebService();
+                var res = a.GetBinaries(tempRelative, _idVehicle, isBlur, _isCover);
                 if (res != null)
                 {
                     return res;
@@ -170,5 +136,44 @@ namespace TNS.AdExpressI.Visual.Russia.WebService
             return null;
         }
         #endregion
+
+        /// <summary>
+        /// Get path
+        /// </summary>
+        /// <param name="serverPath">server Path</param>
+        /// <returns>path</returns>
+        protected string GetPath(string serverPath)
+        {
+            if (_isEncrypted)
+            {
+                //Decrypt path parameter if required
+                _relativePath = AdExpress.Web.Functions.QueryStringEncryption.DecryptQueryString(_relativePath);
+                _isEncrypted = false;
+            }
+
+            var tempRelative = _relativePath.Replace(serverPath + "/", "");
+            tempRelative = tempRelative.Replace("/", @"\");
+            return tempRelative;
+        }
+        /// <summary>
+        /// Get path
+        /// </summary>
+        /// <returns>path</returns>
+        protected string GetPath()
+        {
+            string tempRelative;
+            if (_isEncrypted)
+            {
+                //Decrypt path parameter if required
+                tempRelative = AdExpress.Web.Functions.QueryStringEncryption.DecryptQueryString(_relativePath);
+                _isEncrypted = false;
+            }
+            else
+                tempRelative = _relativePath;
+            int advertismentId = int.Parse((_relativePath.Split('.'))[0]);
+            var baseDirectory = ((advertismentId / 10000) * 10000).ToString();
+            tempRelative = baseDirectory + @"\" + tempRelative;
+            return tempRelative;
+        }
     }
 }
