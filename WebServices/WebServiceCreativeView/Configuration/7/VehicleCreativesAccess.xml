@@ -2,7 +2,8 @@
 <vehicleCreativesAccess>
   <!-- PRESS -->
   <vehicle dataBaseId="300">
-    <creativeAccess path="\\storage\multimedia\press\" coverPath="\\storage\multimedia\press_cover\"/>
+    <!--<creativeAccess path="\\storage\multimedia\press\" coverPath="\\storage\multimedia\press_cover\"/>-->
+    <creativeAccess path="\\storage\multimedia\press\" coverPath="F:\Documents\Developpement\AdExpress\Russie\Russia_creatives\multimedia\press _cover"/>
   </vehicle>
   <!-- OUTDOOR -->
   <vehicle dataBaseId="400">

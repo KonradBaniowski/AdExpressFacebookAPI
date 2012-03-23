@@ -41,6 +41,7 @@ namespace WebServiceCreativeView
         /// <param name="relativePath">Relative path file</param>
         /// <param name="idVehicle">Vehicle identifier</param>
         /// <param name="isBlur">Return creative real (if false) or blur (if true)</param>
+        /// <param name="isCover">true if creative is a cover</param>
         /// <returns>Binaries of the creative</returns>
         [WebMethod]
         public byte[] GetBinaries(string relativePath, Int64 idVehicle, bool isBlur,bool isCover)
