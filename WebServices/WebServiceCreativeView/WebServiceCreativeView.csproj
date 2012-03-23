@@ -75,6 +75,8 @@
   <ItemGroup>
     <Content Include="Configuration\33\CustomerErrorMail.xml" />
     <Content Include="Configuration\33\VehicleCreativesAccess.xml" />
+    <Content Include="Configuration\7\CustomerErrorMail.xml" />
+    <Content Include="Configuration\7\VehicleCreativesAccess.xml" />
     <Content Include="Configuration\WebParameters.xml" />
     <Content Include="CreativeView.asmx" />
     <Content Include="Global.asax" />
@@ -121,8 +123,8 @@
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>33801</DevelopmentServerPort>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>17634</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

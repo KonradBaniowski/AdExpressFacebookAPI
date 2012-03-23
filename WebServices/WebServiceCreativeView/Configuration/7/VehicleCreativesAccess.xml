@@ -2,7 +2,7 @@
 <vehicleCreativesAccess>
   <!-- PRESS -->
   <vehicle dataBaseId="300">
-    <creativeAccess path="\\storage\multimedia\press\" />
+    <creativeAccess path="\\storage\multimedia\press\" coverPath="\\storage\multimedia\press_cover\"/>
   </vehicle>
   <!-- OUTDOOR -->
   <vehicle dataBaseId="400">
