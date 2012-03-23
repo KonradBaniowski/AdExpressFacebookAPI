@@ -59,6 +59,8 @@ namespace TNS.AdExpress.WebService.Domain.XmlLoader
                                                             case "creativeAccess":
                                                                 if (subSubReader.GetAttribute("user") != null && subSubReader.GetAttribute("domain") != null && subSubReader.GetAttribute("password") != null)
                                                                     vehicleCreativesList.Add(cVehicleId, new VehicleCreativesInformation(cVehicleId, new CreativeInformation(subSubReader.GetAttribute("path"), new ImpersonateInformation(subSubReader.GetAttribute("user"), subSubReader.GetAttribute("domain"), subSubReader.GetAttribute("password")))));
+                                                                else if (subSubReader.GetAttribute("coverPath") != null)
+                                                                    vehicleCreativesList.Add(cVehicleId, new VehicleCreativesInformation(cVehicleId, new CreativeInformation(subSubReader.GetAttribute("path"), subSubReader.GetAttribute("coverPath"))));
                                                                 else
                                                                     vehicleCreativesList.Add(cVehicleId, new VehicleCreativesInformation(cVehicleId, new CreativeInformation(subSubReader.GetAttribute("path"))));
                                                                 break;

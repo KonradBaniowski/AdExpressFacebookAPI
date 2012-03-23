@@ -189,11 +189,7 @@ namespace TNS.AdExpress.Domain.XmlLoader {
 								if (reader.GetAttribute("id") == null || reader.GetAttribute("id").Length == 0) throw (new InvalidXmlValueException("Invalid allowedUniverseLevel parameter"));
 								allowedUniverseLevels.Add(int.Parse(reader.GetAttribute("id")));
 								break;
-                            case "AsyncExportDetailLevel":
-                                if (!string.IsNullOrEmpty(reader.GetAttribute("id")))
-                                    vhInfo.AsyncExportDetailLevel =
-                                        Convert.ToInt32(reader.GetAttribute("id"));
-                                break;
+                          
 
                                                         
                         }

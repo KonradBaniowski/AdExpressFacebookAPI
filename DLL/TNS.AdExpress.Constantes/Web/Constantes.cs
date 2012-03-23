@@ -290,10 +290,7 @@ namespace TNS.AdExpress.Constantes.Web{
             /// Creatives Export Options
             /// </summary>
             creativesExportOptions =66,
-            /// <summary>
-            /// Get level items identifiers
-            /// </summary>
-            detailLevelItemInformationIds=67
+          
 		}
 	
 	}
@@ -2373,6 +2370,14 @@ namespace TNS.AdExpress.Constantes.Web{
         /// </summary>
         public static string IMAGES = string.Empty;
         /// <summary>
+        /// Répertoire virtuel des couvertures presse
+        /// </summary>
+        public static string IMAGES_PRESS_COVER = string.Empty;
+        /// <summary>
+        /// Répertoire virtuel des couvertures presse
+        /// </summary>
+        public static string IMAGES_PRESS_COVER_LOW = string.Empty;
+        /// <summary>
         /// Répertoire virtuel des créations adnettrack
         /// </summary>
         public static string CREA_ADNETTRACK = string.Empty;
@@ -2505,6 +2510,10 @@ namespace TNS.AdExpress.Constantes.Web{
         /// Répertoire contenant les visuels Editorial (Russie)
         /// </summary>
         public static string LOCAL_PATH_EDITORIAL = string.Empty;
+        /// <summary>
+        /// Press cover's directory
+        /// </summary>
+        public static string LOCAL_PATH_IMAGES_COVER = string.Empty;
     }
     #endregion
 

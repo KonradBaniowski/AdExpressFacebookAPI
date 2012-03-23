@@ -172,6 +172,13 @@ namespace TNS.AdExpress.Domain.XmlLoader
                                     case "LOCAL_PATH_INTERNET":
                                         CreationServerPathes.LOCAL_PATH_INTERNET = value;
                                         break;
+                                        break;
+                                    case "IMAGES_PRESS_COVER":
+                                        CreationServerPathes.IMAGES_PRESS_COVER = value;
+                                        break;
+                                    case "LOCAL_PATH_IMAGES_COVER":
+                                        CreationServerPathes.LOCAL_PATH_IMAGES_COVER = value;
+                                        break;
                                 }
                                 break;
                         }

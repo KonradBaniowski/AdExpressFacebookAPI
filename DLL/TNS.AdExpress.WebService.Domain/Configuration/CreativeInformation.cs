@@ -20,6 +20,10 @@ namespace TNS.AdExpress.WebService.Domain.Configuration {
         /// </summary>
         private string _path;
         /// <summary>
+        /// Cover Path
+        /// </summary>
+        private string _coverPath;
+        /// <summary>
         /// Impersonate Information
         /// </summary>
         private ImpersonateInformation _impersonateInformation = null;
@@ -36,6 +40,17 @@ namespace TNS.AdExpress.WebService.Domain.Configuration {
         /// <param name="path">Path</param>
         public CreativeInformation(string path) {
             _path = path;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="path">Path</param>
+        /// <param name="coverPath">Cover path </param>
+        public CreativeInformation(string path,string coverPath)
+        {
+            _path = path;
+            _coverPath = coverPath;
         }
         /// <summary>
         /// Constructor
@@ -59,6 +74,15 @@ namespace TNS.AdExpress.WebService.Domain.Configuration {
         public ImpersonateInformation ImpersonateInfo {
             get { return _impersonateInformation; }
         }
+
+        /// <summary>
+        /// Cover Path
+        /// </summary>
+        public string CoverPath
+        {
+            get { return _coverPath; }
+        }
+
         #endregion
 
         #region Public Methods

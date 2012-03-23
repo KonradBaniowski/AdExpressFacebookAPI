@@ -2176,5 +2176,10 @@
     <!--Add text for export popcorn-->
     <item mnemonic="w2941" type="System.String">Vous devez sélectionner un niveau de détail.</item>
     <item mnemonic="w2942" type="System.String">Export des spots</item>
+    <item mnemonic="w2943" type="System.String">Source</item>
+    <item mnemonic="w2944" type="System.String">AdExpress -- Fichier Export au format POPCORN</item>
+    <item mnemonic="w2945" type="System.String">Le fichier texte</item>
+    <item mnemonic="w2946" type="System.String">Le nom du fichier ne doit pas faire plus de {0} caractères</item>
+    <item mnemonic="w2947" type="System.String">France France</item>
   </items>
 </localization>
