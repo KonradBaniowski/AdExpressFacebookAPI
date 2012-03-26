@@ -2181,7 +2181,7 @@
     <item mnemonic="w2945" type="System.String">Le fichier texte</item>
     <item mnemonic="w2946" type="System.String">Le nom du fichier ne doit pas faire plus de {0} caractères</item>
     <item mnemonic="w2947" type="System.String">France France</item>
-
+    <!--Add text for FR : evaliant new crea -->
     <item mnemonic="w2948" type="System.String">Le tableau final par défaut est un tableau toute famille confondu. Grâce au menu déroulant « Familles » vous avez la possibilité de travailler sur un tableau par famille.</item>
   </items>
 </localization>
