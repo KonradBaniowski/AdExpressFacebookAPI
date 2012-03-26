@@ -311,12 +311,7 @@
       <levelItem id="12" name="Classe"/>
     </detailLevel>-->
     <!--Fin Niveau Détail rajouté en Russie-->
-    <detailLevel id="56" name="Advertiser\Brand\Product">
-      <levelItem id="8" name="Advertiser"/>
-      <levelItem id="9" name="Brand"/>
-      <levelItem id="10" name="Product"/>
-    </detailLevel>
-    <detailLevel id="57" name="Vehicle\Advertiser\Product">
+    <detailLevel id="56" name="Vehicle\Advertiser\Product">
       <levelItem id="3" name="Vehicle"/>
       <levelItem id="8" name="Advertiser"/>
       <levelItem id="10" name="Product"/>

@@ -68,18 +68,20 @@ namespace AdExpress.Private
                 string encrypt = HttpContext.Current.Request.QueryString.Get("crypt");
                 string idSession = HttpContext.Current.Request.QueryString.Get("idSession");
                 string save = HttpContext.Current.Request.QueryString.Get("cd");
+                string isCover = HttpContext.Current.Request.QueryString.Get("cv");
 
-                
+
 
                 #endregion
                 object[] parameters = null;
-                if (!string.IsNullOrEmpty(idSession) || !string.IsNullOrEmpty(encrypt))
+                if (!string.IsNullOrEmpty(idSession) || !string.IsNullOrEmpty(encrypt) || !string.IsNullOrEmpty(isCover))
                 {
-                    parameters = new object[4];
+                    parameters = new object[5];
                     parameters[0] = vehicleId;
                     parameters[1] = path;
                     parameters[2] = idSession;
                     parameters[3] = (!string.IsNullOrEmpty(encrypt) && encrypt == "1");
+                    parameters[4] = (!string.IsNullOrEmpty(isCover) && isCover == "1");
                 }
                 else
                 {
@@ -100,16 +102,16 @@ namespace AdExpress.Private
                 string headerDsipostion = visual.AddHeader();
                 if (!string.IsNullOrEmpty(save) && save.Equals("sv") && !string.IsNullOrEmpty(headerDsipostion))
                     Page.Response.AddHeader("Content-Disposition", headerDsipostion);
-                Page.Response.BinaryWrite(visual.GetBinaries(isBlur));              
+                Page.Response.BinaryWrite(visual.GetBinaries(isBlur));
 
             }
             catch (Exception exc)
             {
 
             }
-		
-		}
-		#endregion   
+
+        }
+        #endregion
 
         #endregion
 

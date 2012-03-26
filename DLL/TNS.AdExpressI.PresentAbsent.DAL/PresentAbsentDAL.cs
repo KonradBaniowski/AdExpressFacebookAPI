@@ -1037,7 +1037,8 @@ namespace TNS.AdExpressI.PresentAbsent.DAL{
                     sql.AppendFormat(" and {0}.id_category ={1}", tblCategory.Prefix, idSubMedia);
 
 			}
-
+		    sql.AppendFormat(" and {0}.activation<{1}", mediaDetailLevelItemInformation.DataBaseTableNamePrefix,
+		               TNS.AdExpress.Constantes.DB.ActivationValues.UNACTIVATED);
 			#endregion
 
 

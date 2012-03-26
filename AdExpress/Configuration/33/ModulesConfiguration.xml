@@ -1613,8 +1613,7 @@
             <allowedMediaLevelItem id="8" name="Annonceur"/>
             <allowedMediaLevelItem id="7" name="Groupe de société"/>
           </allowedMediaLevelItems>
-        </MediaDetailLevel>
-        <AsyncExportDetailLevel id="56" name="Advertiser\Brand\Product"/>
+        </MediaDetailLevel>       
         <selections>
           <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
             <allowedUniverseLevels>

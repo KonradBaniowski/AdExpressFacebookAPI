@@ -160,9 +160,7 @@ namespace AdExpress.Private.MyAdExpress
                 _idDataPromotion = Page.Request.QueryString.Get("idDataPromotion");
 
                 _resultType = Page.Request.QueryString.Get("resultType");
-                #region Mes variables
-
-                #endregion
+              
 
                 askremoteexportwebControl1.ResultType = _resultType;
 
@@ -258,22 +256,22 @@ namespace AdExpress.Private.MyAdExpress
             string mail = askremoteexportwebControl1.TbxMail.Text; //tbxMail.Text;
             List<int> sel = null;
             Int64 idStaticNavSession = 0;
+            int maxChar = 80;
             try
             {
-                idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.pachet);   
 
                 if (fileName == null || mail == null || fileName.Length == 0 || mail.Length == 0)
                 {
                     this.ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", WebFunctions.Script.Alert(GestionWeb.GetWebWord(1748, _siteLanguage)));
                 }
+                else if (_webSession.CurrentModule== Module.Name.ANALYSE_DES_DISPOSITIFS && !string.IsNullOrEmpty(fileName) && fileName.Length > maxChar)
+                {
+                    this.ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", WebFunctions.Script.Alert(string.Format(GestionWeb.GetWebWord(2946, _siteLanguage),maxChar.ToString())));
+                }
                 else if (!WebFunctions.CheckedText.CheckedMailText(mail))
                 {
                     this.ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", WebFunctions.Script.Alert(GestionWeb.GetWebWord(2041, _siteLanguage)));
-                }
-                else if (Module.Name.ANALYSE_DES_DISPOSITIFS == _webSession.CurrentModule && askremoteexportwebControl1.LevelsRadioButtonList.SelectedItem == null)
-                {                   
-                     this.ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", WebFunctions.Script.Alert(GestionWeb.GetWebWord(2941, _siteLanguage)));                    
-                }
+                }               
                 else
                 {
 
@@ -310,7 +308,7 @@ namespace AdExpress.Private.MyAdExpress
                         case Module.Name.ANALYSE_PORTEFEUILLE:
                         case Module.Name.ANALYSE_DES_PROGRAMMES:
                         case Module.Name.ALERTE_PORTEFEUILLE:
-                        case  Module.Name.ANALYSE_DES_DISPOSITIFS:
+                    
 
                             if (Module.Name.ANALYSE_CONCURENTIELLE == _webSession.CurrentModule && !string.IsNullOrEmpty(_resultType) && Convert.ToInt32(_resultType) == TNS.AdExpress.Anubis.Constantes.Result.type.dedoum.GetHashCode())
                             {
@@ -391,19 +389,14 @@ namespace AdExpress.Private.MyAdExpress
                                 }
                                 _webSession.CustomerPeriodSelected = new CustomerPeriod(_webSession.PeriodBeginningDate, _webSession.PeriodEndDate);
                                 #endregion
-
-                                if(  Module.Name.ANALYSE_DES_DISPOSITIFS == _webSession.CurrentModule)
-                                {
-                                //    sel = new List<int>();
-                                //    sel.Add(Convert.ToInt32(askremoteexportwebControl1.LevelsRadioButtonList.SelectedValue));
-                                //    _webSession.DetailLevelItemInformationIds = sel;
-                                    idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.pachet);                                                          
-                                }                       
-                                else idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.miysis);
+                             
+                                idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.miysis);
                             }
                             break;
-                       
-                            
+
+                        case Module.Name.ANALYSE_DES_DISPOSITIFS:
+                            idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.pachet);                                                          
+                            break;
                         case Module.Name.INDICATEUR:
                             idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.hotep);
                             break;

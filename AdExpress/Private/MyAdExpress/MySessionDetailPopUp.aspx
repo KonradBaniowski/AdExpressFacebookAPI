@@ -125,7 +125,7 @@
 				              <!--display Generic Media Detail Level-->
 				            <%if(displayGenericMediaDetailLevel){%>
 				            <TR>
-					            <TD class="txtViolet11Bold backGroundWhite">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText7" runat="server" Code="2871"></cc1:adexpresstext></TD>
+					            <TD class="txtViolet11Bold backGroundWhite">&nbsp;<cc1:adexpresstext language="33" id="AdExpressText7" runat="server" Code="1886"></cc1:adexpresstext></TD>
 				            </TR>
 				            <TR height="20">
 					            <TD class="txtViolet11 backGroundWhite" vAlign="top">&nbsp;<asp:label id="genericMediaDetailLevelLabel1" runat="server"></asp:label></TD>
@@ -182,6 +182,16 @@
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
 				               <%}%>
+				              
+				             <%if(displayCampaignTypeSelection){%>
+				            <TR>
+					            <TD class="txtViolet11Bold backGroundWhite">&nbsp;<cc1:adexpresstext language="33" id="AdExpressTextCampaintypeLabel" runat="server" Code="2671"></cc1:adexpresstext></TD>
+				            </TR>
+				            <TR height="20">
+					            <TD class="txtViolet11 backGroundWhite" vAlign="top">&nbsp;<asp:Label id="AdExpressTextCampaintypeValue" runat="server"></asp:Label></TD>
+				            </TR>
+				            <TR height="10"><TD></TD></TR>
+				               <%}%>
 				            <!--Produits-->
 				            <%if(displayProduct){%>
 				            <TR>
@@ -221,6 +231,15 @@
 				            </TR>
 				            <TR height="20">
 					            <TD align="center" vAlign="top" class="backGroundWhite"><%=referenceAdvertiserText%></TD>
+				            </TR>
+				            <TR height="10"><TD></TD></TR>
+				            <%}%>
+				             <%if(displayMediaSelection){%>
+				            <TR>
+					            <TD class="txtViolet11Bold backGroundWhite" style="HEIGHT: 18px">&nbsp;<cc1:adexpresstext language="33" id="mediaSelectiondWebText" runat="server" Code="0"></cc1:adexpresstext></TD>
+				            </TR>
+				            <TR height="20">
+					            <TD align="center" vAlign="top" class="backGroundWhite"><%=mediaSelectiondText%></TD>
 				            </TR>
 				            <TR height="10"><TD></TD></TR>
 				            <%}%>

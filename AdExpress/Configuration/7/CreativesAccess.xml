@@ -7,6 +7,7 @@
     <VirtualPath id="CREA_ADNETTRACK" name="Répertoire virtuel des créations d evaliant" value="/InternetCreatives"/>
     <VirtualPath id="DOWNLOAD_RADIO_SERVER" name="Répertoire des spots radio" value="/RadioSpots"/>
     <VirtualPath id="DOWNLOAD_TV_SERVER" name="Répertoire des spots tv" value="/TvSpots"/>
+    <VirtualPath id="IMAGES_PRESS_COVER" name="Virtual Directory of press covers" value="/PressCover"/>
   </VirtualPaths>
   <Networks>
     <Network id="LOCAL_PATH_RADIO" name="Répertoire pour télécharger les spots radio" value="\\storage\multimedia\radio_id\"/>
@@ -15,5 +16,6 @@
     <Network id="LOCAL_PATH_OUTDOOR" name="Répertoire contenant les logos de la publicité extérieur" value="\\storage\multimedia\outdoor_id\"/>
     <Network id="LOCAL_PATH_EDITORIAL" name="Répertoire contenant les logos de Editorial" value="\\storage\multimedia\scan\"/>    
     <Network id="LOCAL_PATH_INTERNET" name="Répertoire contenant les visuels internet" value="\\storage\multimedia\internet_id\"/>
+    <Network id="LOCAL_PATH_IMAGES_COVER" name="Physical Directory of PRESS covers" value="\\storage\multimedia\press_cover\"/>
   </Networks>
 </CreativesAccess>
