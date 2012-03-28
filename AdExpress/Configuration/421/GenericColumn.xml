@@ -277,7 +277,7 @@
       <!--<columnItem id="56" name="Id_data_outdoor" visible="false" isKey="true"/>-->
       <columnItem id="41" name="Affiche" notInExcelExport="true"/>
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
-      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
+      <columnItem id="9" name="Produit" idDetailLevelMatching="10" isKey="true"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>
       <columnItem id="5" name="Régie"/>

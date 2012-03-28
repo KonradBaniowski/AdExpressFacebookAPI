@@ -695,7 +695,11 @@ namespace TNS.AdExpress.Domain.Level
             /// <summary>
             /// Banner Height
             /// </summary>
-            bannerHeight = 168
+            bannerHeight = 168,
+            /// <summary>
+            /// Cinema type advertisement (CZ)
+            /// </summary>
+            typeAdvertisement=169
         }
 		#endregion
 

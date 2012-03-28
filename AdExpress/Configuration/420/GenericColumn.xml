@@ -203,6 +203,7 @@
         </dbConstraints>
       </constraints>
     </column>
+    <column id="169" name="Cinema type advertisement" webTextId="2663" dbId="id_type_advertisement" dbLabel="type_advertisement" dbTable="type_advertisement" dbTablePrefixe="tad" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
   </columnItems>
 
   <detailColumns>
@@ -255,12 +256,12 @@
       <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
       <columnItem id="10" name="Spot" notInExcelExport="true"/>
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
-      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
+      <columnItem id="9" name="Produit" idDetailLevelMatching="10" isKey="true"/>
       <columnItem id="6" name="Version" idDetailLevelMatching="6"/>
       <columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>
       <columnItem id="5" name="Régie" idDetailLevelMatching="5"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
-      <columnItem id="17" name="Top de diffusion"/>
+      <columnItem id="17" name="Top de diffusion" isKey="true"/>
      <!-- <columnItem id="27" name="Code écran" idDetailLevelMatching="21" isKey="true"/>-->
       <columnItem id="18" name="Durée" idDetailLevelMatching="19"/>
       <columnItem id="20" name="Position" isKey="true"/>
@@ -269,21 +270,36 @@
       <columnItem id="14" name="Prix"/>
       <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
     </detailColumn>
+
+    <!--Cinema-->
+    <detailColumn id="30" name="Spot\Annonceur\Produit\Version\Centre d'interet\Régie\Groupe\Top de diffusion\Code écran\Durée\Position\Durée écran\Nombre Spots écran\Prix">
+      <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
+      <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
+      <columnItem id="169" name="advertisement type"  isKey="true"/>
+      <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
+      <columnItem id="9" name="Produit" idDetailLevelMatching="10" isKey="true"/>
+      <columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>
+      <columnItem id="5" name="Régie" idDetailLevelMatching="5"/>
+      <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
+      <columnItem id="18" name="Durée" idDetailLevelMatching="19" isKey="true"/>
+      <columnItem id="14" name="Prix"/>
+    </detailColumn>
+    
     <!--Outdoor-->
     <detailColumn id="4" name="Affiche\Annonceur\Produit\Groupe\Centre d'interet\Régie\Nombre de panneaux\Format du panneau\Type de réseau\Réseau afficheur\Agglomeration\Prix">
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
-      <columnItem id="56" name="Id_data_outdoor" visible="false" isKey="true"/>
-      <columnItem id="41" name="Affiche" notInExcelExport="true"/>
+      <!--<columnItem id="56" name="Id_data_outdoor" visible="false" isKey="true"/>-->
+      <!--<columnItem id="41" name="Affiche" notInExcelExport="true"/>-->
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
-      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
+      <columnItem id="9" name="Produit" idDetailLevelMatching="10" isKey="true"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>
       <columnItem id="5" name="Régie"/>
       <columnItem id="28" name="Nombre de panneaux"/>
       <columnItem id="29" name="Format du panneau" idDetailLevelMatching="22"/>
-      <columnItem id="30" name="Type de réseau"/>
-      <columnItem id="31" name="Réseau afficheur"/>
+      <!--<columnItem id="30" name="Type de réseau"/>
+      <columnItem id="31" name="Réseau afficheur"/>-->
       <columnItem id="32" name="Agglomeration"/>
       <columnItem id="14" name="Prix"/>
     </detailColumn>
@@ -713,5 +729,6 @@
       <columnItem id="47" name="Rang groupe"/>
       <columnItem id="48" name="Rang support"/>
     </detailColumn>
+
   </detailColumns>
 </genericColumn>

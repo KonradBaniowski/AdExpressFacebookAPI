@@ -123,12 +123,6 @@
             <allowedModule name="perdu/gagné" privilegecode="197"/>
           </allowedModules>
         </detailColumn>
-        <detailColumn id="5">
-          <allowedModules>
-            <allowedModule name="Analyse des dispositifs" privilegecode="1780"/>
-            <allowedModule  name="Analyse des programmes" privilegecode="1781"/>
-          </allowedModules>
-        </detailColumn>
         <detailColumn id="22">
           <allowedModules>
             <allowedModule name="Présent/absent" privilegecode="278"/>
@@ -160,16 +154,12 @@
         </allowedMediaLevelItems>
       </MediaDetailLevel>
     </vehicle>
-    <!--<vehicle id="5"   name="Autres" >
+    <vehicle id="7"   name="cinema" >
       <detailColumns>
-        <detailColumn id="3">
+        <detailColumn id="30">
           <allowedModules>
             <allowedModule name="Analyse Plan Média" privilegecode="196"/>
-            <allowedModule name="Perdu/gagné" privilegecode="197"/>
-          </allowedModules>
-        </detailColumn>
-        <detailColumn id="22">
-          <allowedModules>
+            <allowedModule name="perdu/gagné" privilegecode="197"/>
             <allowedModule name="Présent/absent" privilegecode="278"/>
             <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
           </allowedModules>
@@ -184,7 +174,6 @@
           <allowedMediaLevelItem id="3" name="Support"/>
           <allowedMediaLevelItem id="4" name="Centre d'interet"/>
           <allowedMediaLevelItem id="5" name="Régie"/>
-          <allowedMediaLevelItem id="6" name="Version"/>
           <allowedMediaLevelItem id="7" name="Groupe de société"/>
           <allowedMediaLevelItem id="8" name="Annonceur"/>
           <allowedMediaLevelItem id="9" name="Marque"/>
@@ -195,11 +184,10 @@
           <allowedMediaLevelItem id="14" name="Variété"/>
           <allowedMediaLevelItem id="18" name="Date"/>
           <allowedMediaLevelItem id="19" name="Durée"/>
-          <allowedMediaLevelItem id="21" name="Code écran"/>
         </allowedMediaLevelItems>
       </MediaDetailLevel>
-    </vehicle>-->
-    <vehicle id="8"   name="Publicité Extérieure" >
+    </vehicle>
+    <vehicle id="6"   name="Outdoor" >
       <detailColumns>
         <detailColumn id="4">
           <allowedModules>
@@ -235,13 +223,15 @@
         </allowedMediaLevelItems>
       </MediaDetailLevel>
     </vehicle>
-    <vehicle id="10"  name="VMC" >
+    <vehicle id="8"   name="Instore" >
       <detailColumns>
-        <detailColumn id="10">
+        <detailColumn id="4">
           <allowedModules>
             <allowedModule name="Analyse Plan Média" privilegecode="196"/>
-            <allowedModule name="present/absent" privilegecode="278"/>
             <allowedModule name="lost/won" privilegecode="197"/>
+          </allowedModules>
+          <allowedModules>
+            <allowedModule name="present/absent" privilegecode="278"/>
             <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
           </allowedModules>
         </detailColumn>
@@ -253,7 +243,10 @@
         <allowedMediaLevelItems>
           <allowedMediaLevelItem id="2" name="Categorie"/>
           <allowedMediaLevelItem id="3" name="Support"/>
+          <allowedMediaLevelItem id="4" name="Centre d'interet"/>
+          <allowedMediaLevelItem id="5" name="Régie"/>
           <allowedMediaLevelItem id="6" name="Version"/>
+          <allowedMediaLevelItem id="7" name="Groupe de société"/>
           <allowedMediaLevelItem id="8" name="Annonceur"/>
           <allowedMediaLevelItem id="9" name="Marque"/>
           <allowedMediaLevelItem id="10" name="Produit"/>
@@ -262,6 +255,7 @@
           <allowedMediaLevelItem id="13" name="Groupe"/>
           <allowedMediaLevelItem id="14" name="Variété"/>
           <allowedMediaLevelItem id="18" name="Date"/>
+          <allowedMediaLevelItem id="22" name="Format"/>
         </allowedMediaLevelItems>
       </MediaDetailLevel>
     </vehicle>
