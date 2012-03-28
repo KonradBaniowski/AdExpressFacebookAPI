@@ -11,7 +11,7 @@
   </vehicle>
   <!-- EDITORIAL -->
   <vehicle dataBaseId="800">
-    <creativeAccess path="\\storage\multimedia\scan\" />
+    <creativeAccess path="\\pressstore\images\scan\" />
   </vehicle>
   <!-- TV GENERAL -->
   <vehicle dataBaseId="100">
