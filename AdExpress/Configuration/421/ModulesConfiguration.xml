@@ -791,7 +791,7 @@
               <allowedUniverseLevel id="4" name="segment"/>
               <allowedUniverseLevel id="6" name="advertiser"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="1" forceBranchId="9">
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
               <allowedUniverseBranch id="9" name="advertiser"/>
             </allowedUniverseBranches>
@@ -845,7 +845,7 @@
               <allowedUniverseLevel id="4" name="segment"/>
               <allowedUniverseLevel id="6" name="advertiser"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="1" forceBranchId="9">
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
               <allowedUniverseBranch id="9" name="advertiser"/>
             </allowedUniverseBranches>
