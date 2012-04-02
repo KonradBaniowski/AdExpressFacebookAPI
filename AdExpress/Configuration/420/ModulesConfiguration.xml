@@ -19,7 +19,7 @@
         <!--<ModuleAllowedMediaUniverse initFromBaal="false" baalId="331">-->
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <!--<ModuleVehicles list="1,2,3,5"/>-->
-          <ModuleVehicles list="1,2,5,3,6,7,8"/>
+          <ModuleVehicles list="1,2,5,3,6,7,8,9"/>
         </ModuleAllowedMediaUniverse>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
