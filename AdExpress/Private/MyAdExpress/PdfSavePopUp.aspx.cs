@@ -288,7 +288,7 @@ namespace AdExpress.Private.MyAdExpress
 
                     #endregion
 
-                    _webSession.ExportedPDFFileName = fileName;
+                    _webSession.ExportedPDFFileName = WebFunctions.CheckedText.CheckedAccentText(fileName);
                     string[] mails = new string[1];
                     mails[0] = mail;
                     _webSession.EmailRecipient = mails;
