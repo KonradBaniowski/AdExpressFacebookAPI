@@ -15,6 +15,10 @@
     <plugin enumId="Aton" name="Aton" resultType="11" longevity="10" deleteExpired="true" extension=".pdf" />
     <plugin enumId="Bastet" name="Bastet" resultType="2" longevity="10" deleteExpired="true" extension=".pdf"  />
     <plugin enumId="Shou" name="Shou" resultType="9" longevity="10" deleteExpired="true" extension=".pdf"  />
+    <plugin enumId="Tefnout" name="Tefnout" resultType="21" longevity="10" deleteExpired="true" extension=".xls"  />
+    <plugin enumId="Selket" name="Selket" resultType="22" longevity="10" deleteExpired="true" extension=".pdf"  />
+    <plugin enumId="Thoueris" name="Thoueris" resultType="23" longevity="10" deleteExpired="true" extension=".pdf"  />
+    <plugin enumId="Dedoum" name="Dedoum" resultType="24" longevity="2" deleteExpired="true" extension=".zip"  />
     <plugin enumId="Alertes" name="Alertes" resultType="20" longevity="120" deleteExpired="true" useExec="true" deleteRowSuccess="true">
       <exec dayOfWeekFrom="Saturday"  dayOfWeekTo="Monday"  dayOfWeekHourTo="08:00:00"/>
       <exec dayOfWeekFrom="Sunday"    dayOfWeekTo="Monday"  dayOfWeekHourTo="08:00:00"/>
