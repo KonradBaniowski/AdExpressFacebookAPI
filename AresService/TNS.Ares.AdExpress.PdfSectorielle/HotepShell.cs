@@ -1,24 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.IO;
 using TNS.LinkSystem.LinkKernel;
 using TNS.AdExpress.Anubis.Hotep;
-using System.Collections;
-using TNS.FrameWork.DB.Common;
-using TNS.FrameWorks.LSConnectivity;
-using TNS.Ares;
-using TNS.AdExpress.Domain.Web;
-using TNS.Ares.Domain.DataBase;
 using TNS.Ares.Domain.LS;
-using TNS.Ares.Constantes;
-using TNS.FrameWork.Exceptions;
-using TNS.FrameWork.Net.Mail;
-using TNS.FrameWork;
-using TNS.AdExpress.Domain.Web.Navigation;
-using TNS.AdExpress.Domain.Classification;
-using TNS.AdExpress.Domain.Units;
-using TNS.Classification.Universe;
-using WebConstantes = TNS.AdExpress.Constantes.Web;
 using System.Reflection;
 
 namespace TNS.Ares.AdExpress.PdfSectorielle
@@ -29,10 +13,8 @@ namespace TNS.Ares.AdExpress.PdfSectorielle
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="productName">Product Name</param>
-        /// <param name="familyId">Family Id</param>
-        /// <param name="source">DataSource</param>
-        /// <param name="confFile">Path Configuration File</param>
+        /// <param name="lsClientConfiguration">Ls ClientConfiguration</param>
+        /// <param name="directoryName">Directory Name</param>
         public HotepShell(LsClientConfiguration lsClientConfiguration, string directoryName) :
             base(lsClientConfiguration, directoryName)
         {
@@ -57,21 +39,21 @@ namespace TNS.Ares.AdExpress.PdfSectorielle
                         // Preparing treatment                                    
                         PluginInformation pInf = PluginConfiguration.GetPluginInformation(PluginType.Hotep);
                         if (pInf.AssemblyName == null) throw (new ArgumentNullException("AssemblyName layer is null for the Indicator result"));
-                     TreatementSystem t = (TreatementSystem)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + pInf.AssemblyName, pInf.Class_, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
+                     TreatementSystem t = (TreatementSystem)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, pInf.AssemblyName), pInf.Class_, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
                      t.EvtStartWork += t_OnStartWork;
                         t.EvtError += t_OnError;
                         t.EvtStopWorkerJob += t_OnStopWorkerJob;
                         t.EvtSendReport += t_OnSendReport;
                         t.EvtMessageAlert += t_OnMessage;
-                        t.Treatement(this._confFile, this._source, staticNavSession);
+                        t.Treatement(_confFile, _source, staticNavSession);
                 }
                 else {
-                    this._oLinkClient.ReleaseTaskInError(task, new LogLine("TaskExecution object is null", eLogCategories.Problem));
+                    _oLinkClient.ReleaseTaskInError(task, new LogLine("TaskExecution object is null", eLogCategories.Problem));
                 }
             }
             catch (Exception e) {
-                this.sendEmailError("Build Task Error in Shell in DoTask(object oObj)", e);
-                this._oLinkClient.ReleaseTaskInError(task, new LogLine("Build Task Error in Shell in DoTask(object oObj)"));
+                sendEmailError("Build Task Error in Shell in DoTask(object oObj)", e);
+                _oLinkClient.ReleaseTaskInError(task, new LogLine("Build Task Error in Shell in DoTask(object oObj)"));
             }
 
         }
