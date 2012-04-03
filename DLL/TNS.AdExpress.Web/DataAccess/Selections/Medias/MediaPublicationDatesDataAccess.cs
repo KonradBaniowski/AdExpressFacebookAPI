@@ -143,6 +143,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
 
             switch (VehiclesInformation.DatabaseIdToEnum(idVehicle)) {
                 case DBClassificationConstantes.Vehicles.names.internet:
+                case DBClassificationConstantes.Vehicles.names.czinternet:
                     tableName = WebApplicationParameters.GetDataTable(TableIds.dataInternet, webSession.IsSelectRetailerDisplay).Sql;
                     break;
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
@@ -211,6 +212,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
                 case DBClassificationConstantes.Vehicles.names.cinema:
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
+                case DBClassificationConstantes.Vehicles.names.czinternet:
                     sql += " select min(last_date) as last_date ";
                     sql += " from (";
 

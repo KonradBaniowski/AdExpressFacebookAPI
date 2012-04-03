@@ -2366,6 +2366,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                             case ClassificationCst.DB.Vehicles.names.magazine:
                             case ClassificationCst.DB.Vehicles.names.internationalPress:
                             case ClassificationCst.DB.Vehicles.names.internet:
+                            case ClassificationCst.DB.Vehicles.names.czinternet:
                             case ClassificationCst.DB.Vehicles.names.mobileTelephony:
                             case ClassificationCst.DB.Vehicles.names.emailing:
                             case ClassificationCst.DB.Vehicles.names.plurimedia:
@@ -2440,6 +2441,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                         case ClassificationCst.DB.Vehicles.names.magazine:
                         case ClassificationCst.DB.Vehicles.names.internationalPress:
                         case ClassificationCst.DB.Vehicles.names.internet:
+                        case ClassificationCst.DB.Vehicles.names.czinternet:
                         case ClassificationCst.DB.Vehicles.names.mobileTelephony:
                         case ClassificationCst.DB.Vehicles.names.emailing:
                             mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
@@ -3393,6 +3395,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
             {
                 case ClassificationCst.DB.Vehicles.names.directMarketing:
                 case ClassificationCst.DB.Vehicles.names.internet:
+                case ClassificationCst.DB.Vehicles.names.czinternet:
                     return ((current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO));
                 case ClassificationCst.DB.Vehicles.names.outdoor:
                 case ClassificationCst.DB.Vehicles.names.instore:

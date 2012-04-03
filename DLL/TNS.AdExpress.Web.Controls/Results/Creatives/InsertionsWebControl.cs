@@ -610,7 +610,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             IInsertionsResult result = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null, null);
 
 
-            if (!this._isCreativeConfig && vehicle.Id == CstDBClassif.Vehicles.names.internet && !result.CanShowInsertion(vehicle))
+            if (!this._isCreativeConfig && (vehicle.Id == CstDBClassif.Vehicles.names.internet || vehicle.Id == CstDBClassif.Vehicles.names.czinternet)&& !result.CanShowInsertion(vehicle))
             {
                 message = GestionWeb.GetWebWord(2244, _customerWebSession.SiteLanguage);
             }
@@ -743,6 +743,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                         case CstDBClassif.Vehicles.names.indoor:
                         case CstDBClassif.Vehicles.names.directMarketing:
                         case CstDBClassif.Vehicles.names.internet:
+                        case CstDBClassif.Vehicles.names.czinternet:
                             this._cssLHeader = string.Empty;
                             this._cssL4 = _cssCellInfo;
                             this._highlightBackgroundColorL1 = string.Empty;

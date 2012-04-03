@@ -363,6 +363,7 @@ namespace AdExpress.Private.Results
                             case CstDBClassif.Vehicles.names.newspaper:
                             case CstDBClassif.Vehicles.names.magazine:
                             case CstDBClassif.Vehicles.names.internet:
+                            case CstDBClassif.Vehicles.names.czinternet:
                                 ResultsOptionsWebControl1.mediaDetail.Items.Remove(ResultsOptionsWebControl1.mediaDetail.Items.FindByText(GestionWeb.GetWebWord(1141, _webSession.SiteLanguage)));
                                 break;
                             case CstDBClassif.Vehicles.names.cinema:

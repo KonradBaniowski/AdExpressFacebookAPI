@@ -470,6 +470,10 @@ namespace AdExpress.Private.Selection{
 			else if(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID==(long)DBClassificationConstantes.Vehicles.names.internet.GetHashCode()){
 				branchType=TNS.AdExpress.Constantes.Classification.Branch.type.mediaInternet;
 			}
+            else if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == (long)DBClassificationConstantes.Vehicles.names.czinternet.GetHashCode())
+            {
+                branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaInternet;
+            }
             else if (((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID == (long)DBClassificationConstantes.Vehicles.names.cinema.GetHashCode()){
                 branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaCinema;
             }

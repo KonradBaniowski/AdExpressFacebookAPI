@@ -2872,7 +2872,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return WebApplicationParameters.GetDataTable(TableIds.recapOutDoor, isRetailerSelected).Sql;
                 case ClassificationConstantes.DB.Vehicles.names.instore:
                     return WebApplicationParameters.GetDataTable(TableIds.recapInStore, isRetailerSelected).Sql;
-				case ClassificationConstantes.DB.Vehicles.names.internet:
+                case DBClassificationConstantes.Vehicles.names.czinternet:
+                case ClassificationConstantes.DB.Vehicles.names.internet:
                     return WebApplicationParameters.GetDataTable(TableIds.recapInternet, isRetailerSelected).Sql;
 				case ClassificationConstantes.DB.Vehicles.names.plurimedia:
                     return WebApplicationParameters.GetDataTable(TableIds.recapPluri, isRetailerSelected).Sql;
@@ -2913,7 +2914,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                 case ClassificationConstantes.DB.Vehicles.names.outdoor:
                     return WebApplicationParameters.GetDataTable(TableIds.recapOutDoorSegment, isRetailerSelected).Sql;
                 case ClassificationConstantes.DB.Vehicles.names.instore:
-                    return WebApplicationParameters.GetDataTable(TableIds.recapInStoreSegment, isRetailerSelected).Sql; 
+                    return WebApplicationParameters.GetDataTable(TableIds.recapInStoreSegment, isRetailerSelected).Sql;
+                case DBClassificationConstantes.Vehicles.names.czinternet:
                 case ClassificationConstantes.DB.Vehicles.names.internet:
                     return WebApplicationParameters.GetDataTable(TableIds.recapInternetSegment, isRetailerSelected).Sql;                    
                 case ClassificationConstantes.DB.Vehicles.names.plurimedia:
@@ -3477,6 +3479,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.GetDataTable(TableIds.dataInStore, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrack, isRetailerSelected).SqlWithPrefix);
+                case DBClassificationConstantes.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.internet:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataInternet, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
@@ -3532,6 +3535,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.GetDataTable(TableIds.dataInStoreAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrack, isRetailerSelected).SqlWithPrefix);
+                case DBClassificationConstantes.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.internet:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataInternetAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
@@ -3608,6 +3612,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.GetDataTable(TableIds.dataInStore, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrack, isRetailerSelected).Label);
+                case DBClassificationConstantes.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.internet:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataInternet, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
@@ -3663,6 +3668,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.GetDataTable(TableIds.dataInStoreAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrack, isRetailerSelected).Label);
+                case DBClassificationConstantes.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.internet:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataInternetAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
@@ -3713,6 +3719,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                             return WebApplicationParameters.GetDataTable(TableIds.dataInStoreAlert, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.adnettrack:
                             return WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrackAlert, isRetailerSelected).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.czinternet:
                         case DBClassificationConstantes.Vehicles.names.internet:
                             return WebApplicationParameters.GetDataTable(TableIds.dataInternetAlert, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.directMarketing:
@@ -3749,6 +3756,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                             return WebApplicationParameters.GetDataTable(TableIds.dataInStore, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.adnettrack:
                             return WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrack, isRetailerSelected).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.czinternet:
                         case DBClassificationConstantes.Vehicles.names.internet:
                             return WebApplicationParameters.GetDataTable(TableIds.dataInternet, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.directMarketing:
@@ -4386,6 +4394,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return WebApplicationParameters.GetDataTable(TableIds.dataInStore, isRetailerSelected);
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                     return WebApplicationParameters.GetDataTable(TableIds.dataAdNetTrack, isRetailerSelected);
+                case DBClassificationConstantes.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.internet:
                     return WebApplicationParameters.GetDataTable(TableIds.dataInternet, isRetailerSelected);
                 case DBClassificationConstantes.Vehicles.names.directMarketing:

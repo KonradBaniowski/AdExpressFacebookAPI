@@ -552,6 +552,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
                 case DBClassificationConstantes.Vehicles.names.press:
                 case DBClassificationConstantes.Vehicles.names.newspaper:
                 case DBClassificationConstantes.Vehicles.names.magazine:
+                case DBClassificationConstantes.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.internet:
                     return "";
                 case DBClassificationConstantes.Vehicles.names.radio:

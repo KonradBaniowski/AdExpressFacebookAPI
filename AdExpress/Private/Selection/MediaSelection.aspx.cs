@@ -437,7 +437,7 @@ public partial class Private_Selection_MediaSelection :  TNS.AdExpress.Web.UI.Se
             {
                 branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaInternationalPress;
             }
-            else if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internet)
+            else if (vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internet || vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.czinternet)
             {
                 branchType = TNS.AdExpress.Constantes.Classification.Branch.type.mediaInternet;
             }

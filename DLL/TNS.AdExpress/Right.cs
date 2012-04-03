@@ -1052,6 +1052,7 @@ namespace TNS.AdExpress {
 					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_TV_CREATION_ACCESS_FLAG)) return true;
 					return (_flagsRights.ContainsKey(Flags.ID_TV_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_TV_CREATION_ACCESS_FLAG] != null);
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.czinternet:
 					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_DETAIL_INTERNET_ACCESS_FLAG)) return true;
 					return (_flagsRights.ContainsKey(Flags.ID_DETAIL_INTERNET_ACCESS_FLAG) && _flagsRights[Flags.ID_DETAIL_INTERNET_ACCESS_FLAG] != null);
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:

@@ -696,6 +696,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                     if (days >= 1) return true;
                     break;
                 case Vehicles.names.internet:
+                case Vehicles.names.czinternet:
                     days = _firstDayNotEnable.Subtract(currentDay).Days;
                     if (days >= 1) return true;
                     break;
@@ -744,6 +745,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                     firstDayOfWeek = publicationDate.AddDays(7);
                     return firstDayOfWeek;
                 case Vehicles.names.internet:
+                case Vehicles.names.czinternet:
 					lastDate = TNS.AdExpress.Web.DataAccess.Selections.Medias.MediaPublicationDatesDataAccess.GetLatestPublication(_customerWebSession, _selectedVehicle, _customerWebSession.Source);
                     publicationDate = new DateTime(Convert.ToInt32(lastDate.Substring(0, 4)), Convert.ToInt32(lastDate.Substring(4, 2)), Convert.ToInt32(lastDate.Substring(6, 2)));
                     publicationDate = publicationDate.AddMonths(1);

@@ -2410,6 +2410,7 @@ namespace TNS.AdExpress.Web.UI
 							mediaNames+=GestionWeb.GetWebWord(1594,webSession.SiteLanguage);
 							break;
 						case ClassificationConstant.Vehicles.names.internet:
+                        case ClassificationConstant.Vehicles.names.czinternet:
 							mediaNames+=GestionWeb.GetWebWord(1301,webSession.SiteLanguage);
 							break;
 						case ClassificationConstant.Vehicles.names.outdoor:

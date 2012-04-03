@@ -489,6 +489,7 @@ namespace AdExpress.Private.Results{
 					break;
 				case ClassificationCst.DB.Vehicles.names.directMarketing:
 				case ClassificationCst.DB.Vehicles.names.internet:
+                case ClassificationCst.DB.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
 					if ((_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR)) {

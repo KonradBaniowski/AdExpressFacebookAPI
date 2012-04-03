@@ -405,6 +405,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                             return ConstantesDB.Schema.ADEXPRESS_SCHEMA + "." + ConstantesDB.Tables.ALERT_DATA_OUTDOOR;
                         case ConstantesDBClassif.Vehicles.names.adnettrack:
                             return ConstantesDB.Schema.ADEXPRESS_SCHEMA + "." + ConstantesDB.Tables.ALERT_DATA_ADNETTRACK;
+                        case ConstantesDBClassif.Vehicles.names.czinternet:
                         case ConstantesDBClassif.Vehicles.names.internet:
                             return ConstantesDB.Schema.ADEXPRESS_SCHEMA + "." + ConstantesDB.Tables.ALERT_DATA_INTERNET;
                         case ConstantesDBClassif.Vehicles.names.directMarketing:
@@ -437,6 +438,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                             return ConstantesDB.Schema.ADEXPRESS_SCHEMA + "." + ConstantesDB.Tables.DATA_INSTORE;
                         case ConstantesDBClassif.Vehicles.names.adnettrack:
                             return ConstantesDB.Schema.ADEXPRESS_SCHEMA + "." + ConstantesDB.Tables.DATA_ADNETTRACK;
+                        case ConstantesDBClassif.Vehicles.names.czinternet:
                         case ConstantesDBClassif.Vehicles.names.internet:
                             return ConstantesDB.Schema.ADEXPRESS_SCHEMA + "." + ConstantesDB.Tables.DATA_INTERNET;
                         case ConstantesDBClassif.Vehicles.names.directMarketing:
@@ -529,6 +531,7 @@ namespace TNS.AdExpress.Web.DataAccess.Results
                         case ConstantesDBClassif.Vehicles.names.tvNonTerrestrials:
                         case ConstantesDBClassif.Vehicles.names.others:
                         case ConstantesDBClassif.Vehicles.names.internet:
+                        case ConstantesDBClassif.Vehicles.names.czinternet:
                         case ConstantesDBClassif.Vehicles.names.adnettrack:
                             return (" 1 as period_count ");
                         case ConstantesDBClassif.Vehicles.names.directMarketing:

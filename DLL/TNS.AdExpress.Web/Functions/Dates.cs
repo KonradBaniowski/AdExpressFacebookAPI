@@ -613,6 +613,7 @@ namespace TNS.AdExpress.Web.Functions{
                     publicationDate = new DateTime(Convert.ToInt32(lastDate.Substring(0, 4)), Convert.ToInt32(lastDate.Substring(4, 2)), Convert.ToInt32(lastDate.Substring(6, 2)));
                     firstDayOfWeek = publicationDate.AddDays(7);
                     return firstDayOfWeek;
+                case DBClassificationConstantes.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.internet:
                     lastDate = TNS.AdExpress.Web.DataAccess.Selections.Medias.MediaPublicationDatesDataAccess.GetLatestPublication(webSession, selectedVehicle,dataSource);
                     startYear--;

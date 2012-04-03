@@ -54,7 +54,8 @@ namespace TNS.AdExpress.Web.UI.Results{
 		public static string GetAlertCompetitorCreationsResultsUI(WebSession webSession,int periodBegin, int periodEnd, string idVehicle,Int64 idElement,int level ,Page page) {
 
             #region cas du média Internet
-            if (VehiclesInformation.DatabaseIdToEnum(Int64.Parse(idVehicle)) == CstClassification.DB.Vehicles.names.internet)
+            if ((VehiclesInformation.DatabaseIdToEnum(Int64.Parse(idVehicle)) == CstClassification.DB.Vehicles.names.internet)
+                ||(VehiclesInformation.DatabaseIdToEnum(Int64.Parse(idVehicle)) == CstClassification.DB.Vehicles.names.internet))
                 return GetUIInternet(webSession.SiteLanguage);
             #endregion
 

@@ -220,7 +220,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
 				sql.Append(" id_vehicle=" + ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID + "");
 
                 //Liste des supports actifs pour Internet
-                if(VehiclesInformation.Contains(Vehicles.names.internet) && ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(VehicleClassificationCst.internet)) {
+                if (VehiclesInformation.Contains(Vehicles.names.internet) && ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(VehicleClassificationCst.internet)) {
                     activeMediaList = TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
                     string inClauseSQLCode = TNS.AdExpress.Web.Core.Utilities.SQLGenerator.GetInClauseMagicMethod("id_media",activeMediaList);
                     if(inClauseSQLCode.Length > 0) {
@@ -387,7 +387,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
             sql.Append(" and id_vehicle=" + ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID + "");
 
             //Liste des supports actifs pour Internet
-            if(VehiclesInformation.Contains(Vehicles.names.internet) && ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(Vehicles.names.internet)) {
+            if (VehiclesInformation.Contains(Vehicles.names.internet) && ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(Vehicles.names.internet)) {
                 activeMediaList = TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
                 if(activeMediaList.Length>0)
                     sql.Append(" and id_media in (" + activeMediaList + ")");
@@ -545,7 +545,7 @@ namespace TNS.AdExpress.Web.Core.DataAccess {
 			sql.Append(" and id_vehicle=" + ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID + "");
 
             //Liste des supports actifs pour Internet
-            if(VehiclesInformation.Contains(Vehicles.names.internet) && ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(VehicleClassificationCst.internet)) {
+            if (VehiclesInformation.Contains(Vehicles.names.internet) && ((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID == VehiclesInformation.EnumToDatabaseId(VehicleClassificationCst.internet)) {
                 activeMediaList = TNS.AdExpress.Web.Core.ActiveMediaList.GetActiveMediaList(((LevelInformation)webSession.SelectionUniversMedia.FirstNode.Tag).ID);
                 string inClauseSQLCode = TNS.AdExpress.Web.Core.Utilities.SQLGenerator.GetInClauseMagicMethod("id_media",activeMediaList);
                 if(inClauseSQLCode.Length > 0) {

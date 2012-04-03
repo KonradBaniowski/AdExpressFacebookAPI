@@ -207,7 +207,11 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
             /// <summary>
             /// Editorial
 			/// </summary>
-			editorial=28
+			editorial=28,
+            /// <summary>
+            /// CZ Internet Media
+            /// </summary>
+            czinternet=29
 		}
 	}
 	#endregion

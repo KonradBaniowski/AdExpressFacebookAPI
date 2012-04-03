@@ -494,6 +494,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 case DBClassificationConstantes.Vehicles.names.press:
                 case DBClassificationConstantes.Vehicles.names.newspaper:
                 case DBClassificationConstantes.Vehicles.names.magazine:
+                case DBClassificationConstantes.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.internet:
                     return "";
                 case DBClassificationConstantes.Vehicles.names.radio:
@@ -611,6 +612,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 case DBClassificationConstantes.Vehicles.names.press:
                 case DBClassificationConstantes.Vehicles.names.newspaper:
                 case DBClassificationConstantes.Vehicles.names.magazine:
+                case DBClassificationConstantes.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.internet:
                     return "";
                 case DBClassificationConstantes.Vehicles.names.radio:
@@ -718,14 +720,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 					sql += "," + WebApplicationParameters.DataBaseDescription.GetSqlTableLabelWithPrefix(TableIds.periodicity);
 					return sql;
 				case DBClassificationConstantes.Vehicles.names.radio:
-					return sql;
 				case DBClassificationConstantes.Vehicles.names.tv:
 				case DBClassificationConstantes.Vehicles.names.others:
 				case DBClassificationConstantes.Vehicles.names.outdoor:
                 case DBClassificationConstantes.Vehicles.names.instore:
                 case DBClassificationConstantes.Vehicles.names.indoor:
-				case DBClassificationConstantes.Vehicles.names.internet:
-					return sql;
+                case DBClassificationConstantes.Vehicles.names.czinternet:
+                case DBClassificationConstantes.Vehicles.names.internet:
 				case DBClassificationConstantes.Vehicles.names.directMarketing:
 					return sql;
 				default:
@@ -763,6 +764,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataInStoreAlert : TableIds.dataInStore, _webSession.IsSelectRetailerDisplay).Label;
 				case DBClassificationConstantes.Vehicles.names.directMarketing:
                     return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataMarketingDirectAlert : TableIds.dataMarketingDirect, _webSession.IsSelectRetailerDisplay).Label;
+                case DBClassificationConstantes.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.internet:
                     return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataInternetAlert : TableIds.dataInternet, _webSession.IsSelectRetailerDisplay).Label;
                 case DBClassificationConstantes.Vehicles.names.cinema:

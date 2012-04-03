@@ -1084,6 +1084,8 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Right Group Format
         /// </summary>
         rightGroupFormat = 238,
+
+
         /// <summary>
         /// Alert description
         /// </summary>

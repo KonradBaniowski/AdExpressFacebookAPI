@@ -182,7 +182,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             dtFirstDate = DateTime.Today;
             dtLastDate = DateTime.Today;
 
-            if (isAlertModule && (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet)) {
+            if (isAlertModule && (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing 
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.czinternet
+                )) {
                 if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.indoor
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore) {
@@ -301,7 +304,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             lastDate = string.Empty;
             if (isAlertModule
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
-                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet) {
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.czinternet
+                ) {
                 DataSet ds = _portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.periodSelected);
                 DataTable dt = ds.Tables[0];
                 if (dt.Columns.Contains("first_date")) firstDate = dt.Rows[0]["first_date"].ToString();
@@ -360,6 +365,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.pages)
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.czinternet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) {
                 DataSet ds = _portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.pageNumber);
@@ -397,6 +403,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.instore
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.indoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.czinternet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema)
@@ -419,6 +426,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.instore
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.indoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.czinternet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema)
@@ -505,6 +513,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             if (!isAlertModule
                 || (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.directMarketing && _webSession.CustomerPeriodSelected.IsSliding4M)
                 || (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internet && _webSession.CustomerPeriodSelected.IsSliding4M)
+                || (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.czinternet && _webSession.CustomerPeriodSelected.IsSliding4M)
                 || (firstDate.Length > 0 && lastDate.Length > 0 && isAlertModule)) {
 
                 // Date begin and date end for outdooor
@@ -1231,6 +1240,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.indoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.czinternet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema)
@@ -1268,6 +1278,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.indoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.czinternet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.cinema)

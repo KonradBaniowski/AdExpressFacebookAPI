@@ -163,6 +163,7 @@ namespace TNS.AdExpressI.Insertions
 if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.others)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.others));
 if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.directMarketing)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.directMarketing));
 if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.internet)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet));
+if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.czinternet)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.czinternet));
 if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.adnettrack)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack));
 if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.evaliantMobile)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.evaliantMobile));
 if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.press)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.press));
@@ -476,6 +477,7 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
             {
                 case CstDBClassif.Vehicles.names.adnettrack:
                 case CstDBClassif.Vehicles.names.internet:
+                case CstDBClassif.Vehicles.names.czinternet:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_INTERNET_ACCESS_FLAG);
                     break;
                 case CstDBClassif.Vehicles.names.evaliantMobile:
@@ -1176,6 +1178,7 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
                         case CstDBClassif.Vehicles.names.adnettrack:
                         case CstDBClassif.Vehicles.names.evaliantMobile:
                         case CstDBClassif.Vehicles.names.internet:
+                        case CstDBClassif.Vehicles.names.czinternet:
                         case CstDBClassif.Vehicles.names.internationalPress:
                         case CstDBClassif.Vehicles.names.outdoor:
                         case CstDBClassif.Vehicles.names.instore:
@@ -1402,6 +1405,7 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
                     }
                     break;
                 case CstDBClassif.Vehicles.names.adnettrack:
+                case CstDBClassif.Vehicles.names.czinternet:
                 case CstDBClassif.Vehicles.names.internet:
                     if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_INTERNET_ACCESS_FLAG))
                     {

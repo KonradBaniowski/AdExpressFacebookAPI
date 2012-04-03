@@ -125,6 +125,7 @@ namespace TNS.AdExpressI.Date.DAL {
                 case DBClassificationConstantes.Vehicles.names.cinema:
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
+                case DBClassificationConstantes.Vehicles.names.czinternet:
                     firstDayOfWeek = publicationDate.AddDays(1);
                     return firstDayOfWeek;
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
@@ -213,6 +214,7 @@ namespace TNS.AdExpressI.Date.DAL {
             /* Get the data table name, example : DATA_PRESS, DATA_TV, DATA_RADIO ... 
              * */
             switch (VehiclesInformation.DatabaseIdToEnum(idVehicle)) {
+                case DBClassificationConstantes.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.internet:
                     tableName = WebApplicationParameters.GetDataTable(TableIds.dataInternet, _session.IsSelectRetailerDisplay).Sql;
                     break;
@@ -268,6 +270,7 @@ namespace TNS.AdExpressI.Date.DAL {
                     break;
                 /* For the media types below, we select the max date for every vehicle and after that we select the min date from the list of max date
                  * */
+                case DBClassificationConstantes.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.press:
                 case DBClassificationConstantes.Vehicles.names.newspaper:
                 case DBClassificationConstantes.Vehicles.names.magazine:

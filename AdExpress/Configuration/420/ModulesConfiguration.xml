@@ -111,7 +111,7 @@
         <ProductRights branches="product"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <!--<ModuleVehicles list="1,2,3,5"/>-->
-          <ModuleVehicles list="1,2,5,3,6,7,8"/>
+          <ModuleVehicles list="1,2,5,3,6,7,8,9"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -359,7 +359,7 @@
         <DataAccessLayer name="Default Lost Won data access layers" assemblyName="TNS.AdExpressI.LostWon.DAL.Default.dll" class="TNS.AdExpressI.LostWon.DAL.Default.LostWonResultDAL"/>
         <ProductRights branches="product"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="1,2,5,3,6,7,8"/>
+          <ModuleVehicles list="1,2,5,3,6,7,8,9"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -628,7 +628,7 @@
         <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.Default.dll" class="TNS.AdExpressI.Portofolio.DAL.Default.PortofolioDAL"/>
         <ProductRights branches="product"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">          
-          <ModuleVehicles list="1,2,5,3,6,7,8"/>
+          <ModuleVehicles list="1,2,5,3,6,7,8,9"/>
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>
@@ -771,7 +771,7 @@
         <RulesLayer name="Default Product Class Rules Layers" assemblyName="TNS.AdExpressI.ProductClassReports.Default.dll" class="TNS.AdExpressI.ProductClassReports.Default.ProductClassReports"/>
         <DataAccessLayer name="Default Product Class Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassReports.DAL.Default.dll" class="TNS.AdExpressI.ProductClassReports.DAL.Default.ProductClassReportDAL"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="341">
-          <ModuleVehicles list="1,2,5,3,6,7,8,50"/>
+          <ModuleVehicles list="1,2,5,3,6,7,8,9,50"/>
         </ModuleAllowedMediaUniverse>
         <ResultLimitation size="25000"/>
         <selections>
@@ -824,7 +824,7 @@
         <RulesLayer name="Default Product Class Indicators Rules Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.Default.ProductClassIndicators"/>
         <DataAccessLayer name="Default Product Class Indicators Data Access Layers" assemblyName="TNS.AdExpressI.ProductClassIndicators.DAL.Default.dll" class="TNS.AdExpressI.ProductClassIndicators.DAL.Default.ProductClassIndicatorsDAL"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="341">
-          <ModuleVehicles list="1,2,5,3,6,7,8,50"/>
+          <ModuleVehicles list="1,2,5,3,6,7,8,9,50"/>
         </ModuleAllowedMediaUniverse>
         <selections>
           <selection id="2" name="Product" traductioncode="1092" url="/Private/Selection/RecapUniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/ASProductSelectionHelp.aspx" validationMethod="isSelectionProductSelected">

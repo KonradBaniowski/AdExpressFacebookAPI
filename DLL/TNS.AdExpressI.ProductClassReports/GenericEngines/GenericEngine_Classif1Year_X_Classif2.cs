@@ -213,6 +213,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                     //headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1304, _session.SiteLanguage).ToUpper(), ID_TOTAL));
                     headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
+                case CstDBClassif.Vehicles.names.czinternet:
                 case CstDBClassif.Vehicles.names.internet:
                     //headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1301, _session.SiteLanguage).ToUpper(), ID_TOTAL));
                     headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));

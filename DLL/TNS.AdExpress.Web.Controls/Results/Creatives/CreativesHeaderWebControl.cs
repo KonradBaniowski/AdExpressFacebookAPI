@@ -311,6 +311,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                         vehicle = GestionWeb.GetWebWord(2219, _webSession.SiteLanguage); 
                         break;
                     case DBClassifCst.Vehicles.names.internet:
+                    case DBClassifCst.Vehicles.names.czinternet:
                         vehicle = GestionWeb.GetWebWord(1301, _webSession.SiteLanguage); 
                         break;
 					case DBClassifCst.Vehicles.names.evaliantMobile:

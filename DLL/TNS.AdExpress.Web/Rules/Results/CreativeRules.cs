@@ -71,6 +71,7 @@ namespace TNS.AdExpress.Web.Rules.Results {
             switch (vehicle) {
                 case DBClassifCst.Vehicles.names.adnettrack:
                 case DBClassifCst.Vehicles.names.internet:
+                case DBClassifCst.Vehicles.names.czinternet: //CZ?
                     CreativeAdNetTrack itemAdNet = new CreativeAdNetTrack(-1);
                     itemAdNet.UrlParameters = filters;
                     itemAdNet.ZoomDate = zoom;
@@ -213,6 +214,7 @@ namespace TNS.AdExpress.Web.Rules.Results {
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.others));
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.directMarketing));
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.internet));
+                vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.czinternet));
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.adnettrack));
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.press));
                 vehicles.Add(VehiclesInformation.EnumToDatabaseId(DBClassifCst.Vehicles.names.newspaper));

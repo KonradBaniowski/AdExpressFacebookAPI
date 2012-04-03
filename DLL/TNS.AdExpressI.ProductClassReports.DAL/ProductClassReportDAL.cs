@@ -350,6 +350,7 @@ namespace TNS.AdExpressI.ProductClassReports.DAL
             {
                 case CstDBClassif.Vehicles.names.cinema:
                     return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.GetDataTable(TableIds.recapCinema, _session.IsSelectRetailerDisplay) : WebApplicationParameters.GetDataTable(TableIds.recapCinemaSegment, _session.IsSelectRetailerDisplay);
+                case CstDBClassif.Vehicles.names.czinternet:
                 case CstDBClassif.Vehicles.names.internet:
                     return (productRequired || useTableWithLowestLevel) ? WebApplicationParameters.GetDataTable(TableIds.recapInternet, _session.IsSelectRetailerDisplay) : WebApplicationParameters.GetDataTable(TableIds.recapInternetSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.outdoor:

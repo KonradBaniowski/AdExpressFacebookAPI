@@ -296,6 +296,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.cinema:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.czinternet:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
 
                     foreach (UnitInformation currentUnit in _webSession.GetValidUnitForResult()) {

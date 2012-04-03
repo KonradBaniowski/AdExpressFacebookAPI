@@ -245,7 +245,8 @@ namespace AdExpress.Private.Selection {
                         _webSession.PeriodLength = 1;
 
                         //Dates de chargement des données pour Internet
-                        if (_selectedVehicle == DBClassificationConstantes.Vehicles.names.internet.GetHashCode()) {
+                        if (_selectedVehicle == DBClassificationConstantes.Vehicles.names.internet.GetHashCode())
+                        {//CZ?
                             if (_lastCompleteMonth != null && _lastCompleteMonth.Length > 0 && int.Parse(_lastCompleteMonth.Substring(0, 4)) == DateTime.Now.Year) {
                                 _webSession.PeriodBeginningDate = DateTime.Now.ToString("yyyy01");
                                 _webSession.PeriodEndDate = _lastCompleteMonth;
@@ -273,7 +274,8 @@ namespace AdExpress.Private.Selection {
                             _webSession.PeriodLength = int.Parse(monthDateList.SelectedValue);
 
                             //Dates de chargement des données pour Internet
-                            if (_selectedVehicle == DBClassificationConstantes.Vehicles.names.internet.GetHashCode()) {
+                            if (_selectedVehicle == DBClassificationConstantes.Vehicles.names.internet.GetHashCode())
+                            {//CZ?
                                 if (_lastCompleteMonth != null && _lastCompleteMonth.Length > 0) {
                                     _webSession.PeriodEndDate = _lastCompleteMonth;
                                     monthPeriod = new DateTime(int.Parse(_lastCompleteMonth.Substring(0, 4)), int.Parse(_lastCompleteMonth.Substring(4, 2)), 01);
@@ -320,7 +322,8 @@ namespace AdExpress.Private.Selection {
                         _webSession.PeriodLength = 1;
 
                         //Dates de chargement des données pour Internet
-                        if (_selectedVehicle == DBClassificationConstantes.Vehicles.names.internet.GetHashCode()) {
+                        if (_selectedVehicle == DBClassificationConstantes.Vehicles.names.internet.GetHashCode())
+                        {//CZ?
                             if (_lastCompleteMonth != null && _lastCompleteMonth.Length > 0 && int.Parse(_lastCompleteMonth.Substring(0, 4)) > DateTime.Now.AddYears(-2).Year) {
                                 _webSession.PeriodBeginningDate = DateTime.Now.AddYears(-1).ToString("yyyy01");
                                 _webSession.PeriodEndDate = (int.Parse(_lastCompleteMonth.Substring(0, 4)) == DateTime.Now.Year) ? DateTime.Now.AddYears(-1).ToString("yyyy12") : _lastCompleteMonth;
@@ -339,7 +342,7 @@ namespace AdExpress.Private.Selection {
                     //Mois précédent
                     case 4:
                         //Dates de chargement des données pour Internet
-                        if (_selectedVehicle == DBClassificationConstantes.Vehicles.names.internet.GetHashCode()) {
+                        if (_selectedVehicle == DBClassificationConstantes.Vehicles.names.internet.GetHashCode()) {//CZ?
                             if (_lastCompleteMonth != null && _lastCompleteMonth.Length > 0 && int.Parse(_lastCompleteMonth) >= int.Parse(DateTime.Now.AddMonths(-1).ToString("yyyyMM")))
                                 _webSession.PeriodEndDate = _webSession.PeriodBeginningDate = DateTime.Now.AddMonths(-1).ToString("yyyyMM");
 							else throw new TNS.AdExpress.Domain.Exceptions.NoDataException(GestionWeb.GetWebWord(2157, _webSession.SiteLanguage));
@@ -445,6 +448,7 @@ namespace AdExpress.Private.Selection {
                     firstDayOfWeek = publicationDate.AddDays(7);
                     return firstDayOfWeek;
                 case DBClassificationConstantes.Vehicles.names.internet:
+                case DBClassificationConstantes.Vehicles.names.czinternet:
                     lastDate = TNS.AdExpress.Web.DataAccess.Selections.Medias.MediaPublicationDatesDataAccess.GetLatestPublication(_webSession, selectedVehicle,_webSession.Source);
                     publicationDate = new DateTime(Convert.ToInt32(lastDate.Substring(0, 4)), Convert.ToInt32(lastDate.Substring(4, 2)), Convert.ToInt32(lastDate.Substring(6, 2)));
                     publicationDate = publicationDate.AddMonths(1);
