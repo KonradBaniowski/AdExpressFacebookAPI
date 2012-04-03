@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!--<configuration directoryName="33" countryName="France"/>-->
+<configurations>
+  <!--<configuration directoryName="33" countryName="France"/>-->
   <!--<configuration directoryName="333" countryName="France"/>-->
-<!--<configuration directoryName="35" countryName="Finland"/>-->
-  <!--<configuration directoryName="421" countryName="Slovaquie"/>-->
-<!--<configuration directoryName="48" countryName="Poland"/>-->
-<configuration directoryName="7" countryName="Russia"/>
+<configuration directoryName="420" countryName="Czech Republic"/>
+  <!--<configuration directoryName="48" countryName="Poland"/>-->  
+  <!--<configuration directoryName="35" countryName="Finland"/>-->
+  <!--<configuration directoryName="421" countryName="Slovakia"/>-->
+  <!--<configuration directoryName="4211" countryName="Slovakia"/>-->
+  <!--<configuration directoryName="7" countryName="Russia"/>-->  
+</configurations>
 

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using TNS.AdExpress.Web.Core;
 using TNS.LinkSystem.LinkKernel;
 using System.Collections;
 using TNS.FrameWork.DB.Common;
 using TNS.FrameWorks.LSConnectivity;
-using TNS.Ares;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
@@ -16,10 +13,6 @@ using TNS.Ares.Domain.DataBase;
 using TNS.Ares.Domain.LS;
 using TNS.Ares.Constantes;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
-using TNS.FrameWork.Net.Mail;
-using TNS.FrameWork;
-using TNS.FrameWork.Exceptions;
-using System.IO;
 using TNS.Ares.AdExpress.Exceptions;
 using TNS.Ares.Domain.Mail;
 using TNS.AdExpress.Domain.XmlLoader;
@@ -44,10 +37,8 @@ namespace TNS.Ares.AdExpress
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="productName">Product Name</param>
-        /// <param name="familyId">Family Id</param>
-        /// <param name="source">DataSource</param>
-        /// <param name="confFile">Path Configuration File</param>
+        /// <param name="lsClientConfiguration">LS ClientConfiguration</param>
+        /// <param name="directoryName">Directory Name</param>
         public AdExpressShell(LsClientConfiguration lsClientConfiguration, string directoryName) :
             base(lsClientConfiguration.ProductName, lsClientConfiguration.FamilyId, lsClientConfiguration.FamilyName, directoryName, lsClientConfiguration.ModuleDescriptionList)
         {
@@ -178,7 +169,7 @@ namespace TNS.Ares.AdExpress
 
                 #region Get Source
                 try {
-                    this._source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(TNS.AdExpress.Domain.DataBaseDescription.DefaultConnectionIds.webAdministration);
+                    _source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(TNS.AdExpress.Domain.DataBaseDescription.DefaultConnectionIds.webAdministration);
                 }
                 catch (Exception e) {
                     throw new ShellInitializationException("Impossible to Get dataSource", e);
@@ -204,7 +195,7 @@ namespace TNS.Ares.AdExpress
                 }
                 #endregion
 
-                this._confFile = WebApplicationParameters.ConfigurationDirectoryRoot + pathConfiguration;
+                _confFile = WebApplicationParameters.ConfigurationDirectoryRoot + pathConfiguration;
 
                 //Campaign  types
                 CampaignTypesInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.CAMPAIGN_TYPES_CONFIGURATION_FILENAME));
@@ -212,7 +203,7 @@ namespace TNS.Ares.AdExpress
                 base.InitializeShell(pathConfiguration);
             }
             catch (Exception e) {
-                this.sendEmailError("Initialization Error in Shell in Initialize(string directoryName)", e);
+                sendEmailError("Initialization Error in Shell in Initialize(string directoryName)", e);
                 throw new ShellException("Initialization Error in Shell in Initialize(string directoryName)", e);
             }
         }
@@ -239,9 +230,9 @@ namespace TNS.Ares.AdExpress
             {
                 reportingSystem.SendReport(reportingSystem.SetReport());
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                this._oLinkClient.ReleaseTaskInError(_oListRunningTasks[navSessionId], new LogLine(ex.Message, ex, eLogCategories.Warning));
+                _oLinkClient.ReleaseTaskInError(_oListRunningTasks[navSessionId], new LogLine(ex.Message, ex, eLogCategories.Warning));
             }
         }
 

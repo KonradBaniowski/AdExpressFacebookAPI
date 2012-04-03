@@ -108,6 +108,10 @@
       <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
       <Name>TNS.AdExpress.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Web.Core.Default\TNS.AdExpress.Web.Core.Default.csproj">
+      <Project>{2BF58ECA-F114-4F1E-93A4-D15342FA8751}</Project>
+      <Name>TNS.AdExpress.Web.Core.Default</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.AdExpress.Web.Core\TNS.AdExpress.Web.Core.csproj">
       <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
@@ -218,7 +222,9 @@ copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.Appm.dll" "$(TargetDir)Bin\TNS.Ad
 copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.DAL.Appm.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.DAL.Appm.dll" /Y
 copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.DAL.Default.dll" /Y
 copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.DAL.Finland.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.DAL.Finland.dll" /Y
-copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.Default.dll" /Y</PostBuildEvent>
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpress.Web.Core.Default.dll" "$(TargetDir)Bin\TNS.AdExpress.Web.Core.Default.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Classification.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Classification.DAL.Default.dll" /Y</PostBuildEvent>
     <PreBuildEvent>echo ----------------------------------------------
 echo -                      Pre buid
 echo ----------------------------------------------

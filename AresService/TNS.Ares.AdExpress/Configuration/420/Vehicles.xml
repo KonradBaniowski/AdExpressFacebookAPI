@@ -755,11 +755,12 @@
     </ColumnDetailLevel>
   </vehicle>
   <!-- INTERNET -->
-  <vehicle id="internet" databaseId="9" showInsertions="false" showCreations="false">
+  <vehicle id="czinternet" databaseId="9" showInsertions="true" showCreations="false">
     <!-- Units-->
     <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
+      <allowedUnit>insertion</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results-->
     <allowedMediaDetailLevels>
