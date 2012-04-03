@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="a69110ac-249e-4889-a782-f7b555311782" Name="Kantar AdExpress: PdfSectorielleSrv Hotep Cz" Language="1033" Version="1.0.0.0" Manufacturer="Kantar_AdExpress_PdfSectorielleSrvCz" UpgradeCode="2343d494-0eaa-488d-8c5f-210135ced082">
+    <Package InstallerVersion="200" Compressed="yes" />
+
+    <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+    <!-- UI Initialisation-->
+    <Property Id="SRVWIXUI_INSTALLDIR" Value="INSTALLDIR" />
+    <UIRef Id="SrvWixUI_InstallDir" />
+    <!-- Add PdfSectorielleFiles.wxs directories -->
+    <DirectoryRef Id="INSTALLDIR" FileSource="PdfSectorielleFiles.wxs"/>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLDIR" Name="Pdf Sectorielle Srv Hotep Cz">
+          <Component Id="ProductComponent" Guid="abc5c96a-486a-43cf-83e6-99e52c2eeb53">
+            <File Id="HotepPrgFile" Name="$(var.TNS.Ares.AdExpress.PdfSectorielleSrvCz.TargetFileName)" Source="$(var.TNS.Ares.AdExpress.PdfSectorielleSrvCz.TargetPath)" DiskId="1" KeyPath="yes" />
+            <!-- Service Installation -->
+            <ServiceInstall Id="MyServiceInstall" DisplayName="Ares Pdf Sectorielle Srv Hotep Cz" Name="$(var.TNS.Ares.AdExpress.PdfSectorielleSrvCz.TargetFileName)" ErrorControl="normal" Start="demand" Type="ownProcess" Vital="yes" />
+            <ServiceControl Id="MyServiceControl" Name="$(var.TNS.Ares.AdExpress.PdfSectorielleSrvCz.TargetFileName)" Start="install" Stop="uninstall" Remove="uninstall" />
+            <!-- FIN Service Installation -->
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="ProductFeature" Title="Pdf Sectorielle Srv Hotep Cz" Level="1">
+      <ComponentRef Id="ProductComponent" />
+      <!-- link to AlertQuotaFiles.wxs component-->
+      <ComponentGroupRef Id="HotepPRG1"/>
+    </Feature>
+  </Product>
+</Wix>
