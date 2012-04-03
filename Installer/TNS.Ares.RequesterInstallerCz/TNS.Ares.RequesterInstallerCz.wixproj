@@ -1,11 +1,11 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>3.5</ProductVersion>
-    <ProjectGuid>{10b85ccc-befd-4f5d-ba68-211295294dec}</ProjectGuid>
+    <ProjectGuid>{bedfc391-4bc0-46b4-bf47-cdf39d11cef5}</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>TNS.Ares.RequesterInstaller</OutputName>
+    <OutputName>TNS.Ares.RequesterInstallerCz</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
@@ -30,17 +30,20 @@
     <Compile Include="SrvWixUI_InstallDir.wxs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\AresService\TNS.Ares.RequesterSrvCz\TNS.Ares.RequesterSrvCz.csproj">
+      <Name>TNS.Ares.RequesterSrvCz</Name>
+      <Project>{f08e00d6-989b-4380-8bcb-02b2c58a03ef}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLLOCATION</RefTargetDir>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <WixExtension Include="WixUIExtension">
       <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
       <Name>WixUIExtension</Name>
     </WixExtension>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\AresService\TNS.Ares.RequesterSrv\TNS.Ares.RequesterSrv.csproj">
-      <Name>TNS.Ares.RequesterSrv</Name>
-      <Project>{117bc878-7920-49d3-bb58-e74960045f0e}</Project>
-      <Private>True</Private>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--

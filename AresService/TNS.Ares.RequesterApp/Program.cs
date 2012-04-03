@@ -18,6 +18,7 @@ using System.Text.RegularExpressions;
 using ConfigurationFile = TNS.Ares.Constantes.ConfigurationFile;
 using TNS.FrameWorks.LSConnectivity;
 using TNS.Alert.Domain;
+using System.Diagnostics;
 
 namespace TNS.Ares.Requester.App
 {
@@ -32,44 +33,53 @@ namespace TNS.Ares.Requester.App
 
         static void Main(string[] args)
         {
-            if (args.Length == 2 && args[0] == "-p" && args[1].Length > 0) {
-
-                LsClientName lsClientName = (LsClientName)Enum.Parse(typeof(LsClientName), args[1]);
-
-                string configurationDirectoryRoot = AppDomain.CurrentDomain.BaseDirectory + CONFIGARION_DIRECTORY_NAME + @"\";
-
-                // Loading Requester Configurations
-                RequesterConfigurations.Load(new XmlReaderDataSource(configurationDirectoryRoot + ConfigurationFile.REQUESTER_CONFIGURATION_FILENAME));
-                RequesterConfiguration currentResquesterConfiguration = RequesterConfigurations.GetAresConfiguration(lsClientName);
-
-                configurationDirectoryRoot = configurationDirectoryRoot + "\\" + currentResquesterConfiguration.DirectoryName + "\\";
-
-                // Creating datasource
-                IDataSource src = null;
-
-                if (lsClientName != LsClientName.PixPalaceRequester)
+            try
+            {
+                if (args.Length == 2 && args[0] == "-p" && args[1].Length > 0)
                 {
-                    // Loading Plugin configuration
-                    PluginConfiguration.Load(new XmlReaderDataSource(configurationDirectoryRoot + ConfigurationFile.PLUGIN_CONFIGURATION_FILENAME));
 
-                    //Loading Alert Configuration
-                    if(File.Exists(configurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.ALERTE_CONFIGURATION))
-                        AlertConfiguration.Load(new XmlReaderDataSource(configurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.ALERTE_CONFIGURATION));
+                    LsClientName lsClientName = (LsClientName) Enum.Parse(typeof (LsClientName), args[1]);
 
-                    // Loading DataBase configuration
-                    DataBaseConfiguration.Load(new XmlReaderDataSource(configurationDirectoryRoot + ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
+                    string configurationDirectoryRoot = AppDomain.CurrentDomain.BaseDirectory + CONFIGARION_DIRECTORY_NAME + @"\";
+
+                    // Loading Requester Configurations
+                    RequesterConfigurations.Load(new XmlReaderDataSource(configurationDirectoryRoot + ConfigurationFile.REQUESTER_CONFIGURATION_FILENAME));
+                    RequesterConfiguration currentResquesterConfiguration = RequesterConfigurations.GetAresConfiguration(lsClientName);
+
+                    configurationDirectoryRoot = configurationDirectoryRoot + "\\" + currentResquesterConfiguration.DirectoryName + "\\";
 
                     // Creating datasource
-                    src = (IDataSource)DataBaseConfiguration.DataBase.GetDefaultConnection(PluginConfiguration.DefaultConnectionId);
+                    IDataSource src = null;
+
+                    if (lsClientName != LsClientName.PixPalaceRequester)
+                    {
+                        // Loading Plugin configuration
+                        PluginConfiguration.Load(new XmlReaderDataSource(configurationDirectoryRoot + ConfigurationFile.PLUGIN_CONFIGURATION_FILENAME));
+
+                        //Loading Alert Configuration
+                        if (File.Exists(configurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.ALERTE_CONFIGURATION))
+                            AlertConfiguration.Load(new XmlReaderDataSource(configurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.ALERTE_CONFIGURATION));
+
+                        // Loading DataBase configuration
+                        DataBaseConfiguration.Load(new XmlReaderDataSource(configurationDirectoryRoot + ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
+
+                        // Creating datasource
+                        src = (IDataSource) DataBaseConfiguration.DataBase.GetDefaultConnection(PluginConfiguration.DefaultConnectionId);
+                    }
+
+                    SrvShell srv = new SrvShell(lsClientName, currentResquesterConfiguration, src);
+
+                    srv.StartMonitorServer(currentResquesterConfiguration.MonitorPort);
+
+                    Console.WriteLine(currentResquesterConfiguration.ProductName);
+                    Console.ReadLine();
+                    srv.Dispose();
                 }
-
-                SrvShell srv = new SrvShell(lsClientName, currentResquesterConfiguration, src);
-
-                srv.StartMonitorServer(currentResquesterConfiguration.MonitorPort);
-
-                Console.WriteLine(currentResquesterConfiguration.ProductName);
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
                 Console.ReadLine();
-                srv.Dispose();
             }
         }
     }
