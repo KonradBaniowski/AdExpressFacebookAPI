@@ -95,7 +95,6 @@ namespace WebServiceCreativeView
                 }
                 var errorMail = new TNSMail.SmtpUtilities(pathConfCountry + @"\" + TNS.AdExpress.Constantes.Web.ErrorManager.WEBSERVER_ERROR_MAIL_FILE);
                 errorMail.SendWithoutThread("Error AdExpress Creative WebService  " + (Server.MachineName), body, true, false);
-                return null;
             }
             finally
             {
@@ -103,6 +102,73 @@ namespace WebServiceCreativeView
                     vehicleCreativesInformation.Close();
             }
             return null;
+        }
+        #endregion
+
+        #region Get Binaries
+        /// <summary>
+        /// Get Binaries of the creative
+        /// </summary>
+        /// <param name="relativePath">Relative path file</param>
+        /// <param name="idVehicle">Vehicle identifier</param>
+        /// <param name="isCover">true if creative is a cover</param>
+        /// <returns>Binaries of the creative</returns>
+        [WebMethod]
+        public bool GetIsExist(string relativePath, Int64 idVehicle, bool isCover)
+        {
+            VehicleCreativesInformation vehicleCreativesInformation = null;
+
+            try
+            {
+
+                vehicleCreativesInformation = VehiclesCreativesInformation.GetVehicleCreativesInformation(idVehicle);
+                if (vehicleCreativesInformation != null)
+                {
+                    vehicleCreativesInformation.Open();
+                    var creativeInfoPath = isCover ? vehicleCreativesInformation.CreativeInfo.CoverPath : vehicleCreativesInformation.CreativeInfo.Path;
+                    return (File.Exists(Path.Combine(creativeInfoPath, relativePath)));
+                }
+
+            }
+            catch (Exception exc)
+            {
+                string body = "";
+                string pathConf = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, CONFIGARION_DIRECTORY_NAME);
+                string countryName = WebParamtersXL.LoadDirectoryName(new XmlReaderDataSource(System.IO.Path.Combine(pathConf, TNS.AdExpress.Constantes.Web.ConfigurationFile.WEBPARAMETERS_CONFIGURATION_FILENAME)));
+                string pathConfCountry = System.IO.Path.Combine(pathConf, countryName);
+
+
+                try
+                {
+                    var err = (BaseException)exc;
+                    body = "<html><b><u>" + Server.MachineName + ":</u></b><br>" + "<font color=#FF0000>A error occure in the AdExpress creative webservice.</font><br>Error" + err.GetHtmlDetail() + "</font>";
+                    if (!string.IsNullOrEmpty(relativePath)) body += "<br><b><u>File path:</u></b><font color=#008000>" + relativePath + "</font>";
+                    body += "<br><b><u>Id Media Type :</u></b><font color=#008000>" + idVehicle + "</font>";
+                    body += "</html>";
+                }
+                catch (System.Exception)
+                {
+                    try
+                    {
+                        body = "<html><b><u>" + Server.MachineName + ":</u></b><br>" + "<font color=#FF0000>A error occure in the AdExpress creative webservice.</font><br>Erreur(" + exc.GetType().FullName + "):" + exc.Message + "<br><br><b><u>Source:</u></b><font color=#008000>" + exc.StackTrace.Replace("at ", "<br>at ") + "</font>";
+                        if (!string.IsNullOrEmpty(relativePath)) body += "<br><b><u>File path:</u></b><font color=#008000>" + relativePath + "</font>";
+                        body += "<br><b><u>Id Media Type :</u></b><font color=#008000>" + idVehicle + "</font>";
+                        body += "</html>";
+                    }
+                    catch (System.Exception)
+                    {
+                        body = "Undefined Exception";
+                    }
+                }
+                var errorMail = new TNSMail.SmtpUtilities(pathConfCountry + @"\" + TNS.AdExpress.Constantes.Web.ErrorManager.WEBSERVER_ERROR_MAIL_FILE);
+                errorMail.SendWithoutThread("Error AdExpress Creative WebService  " + (Server.MachineName), body, true, false);
+            }
+            finally
+            {
+                if (vehicleCreativesInformation != null)
+                    vehicleCreativesInformation.Close();
+            }
+            return false;
         }
         #endregion
 
