@@ -31,6 +31,8 @@ namespace TNS.AdExpressI.Visual.WebService.CreativeView {
         
         private System.Threading.SendOrPostCallback GetBinariesOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetIsExistOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -73,6 +75,9 @@ namespace TNS.AdExpressI.Visual.WebService.CreativeView {
         public event GetBinariesCompletedEventHandler GetBinariesCompleted;
         
         /// <remarks/>
+        public event GetIsExistCompletedEventHandler GetIsExistCompleted;
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetBinaries", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")]
         public byte[] GetBinaries(string relativePath, long idVehicle, bool isBlur, bool isCover) {
@@ -105,6 +110,39 @@ namespace TNS.AdExpressI.Visual.WebService.CreativeView {
             if ((this.GetBinariesCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.GetBinariesCompleted(this, new GetBinariesCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetIsExist", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool GetIsExist(string relativePath, long idVehicle, bool isCover) {
+            object[] results = this.Invoke("GetIsExist", new object[] {
+                        relativePath,
+                        idVehicle,
+                        isCover});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetIsExistAsync(string relativePath, long idVehicle, bool isCover) {
+            this.GetIsExistAsync(relativePath, idVehicle, isCover, null);
+        }
+        
+        /// <remarks/>
+        public void GetIsExistAsync(string relativePath, long idVehicle, bool isCover, object userState) {
+            if ((this.GetIsExistOperationCompleted == null)) {
+                this.GetIsExistOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetIsExistOperationCompleted);
+            }
+            this.InvokeAsync("GetIsExist", new object[] {
+                        relativePath,
+                        idVehicle,
+                        isCover}, this.GetIsExistOperationCompleted, userState);
+        }
+        
+        private void OnGetIsExistOperationCompleted(object arg) {
+            if ((this.GetIsExistCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetIsExistCompleted(this, new GetIsExistCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -149,6 +187,32 @@ namespace TNS.AdExpressI.Visual.WebService.CreativeView {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((byte[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.5420")]
+    public delegate void GetIsExistCompletedEventHandler(object sender, GetIsExistCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "2.0.50727.5420")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetIsExistCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetIsExistCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
             }
         }
     }
