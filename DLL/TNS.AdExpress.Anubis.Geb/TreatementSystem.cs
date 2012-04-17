@@ -192,7 +192,6 @@ namespace TNS.AdExpress.Anubis.Geb{
 				ParameterSystem.DeleteRequest(_dataSource,_navSessionId);
 				#endregion
 
-				//OnStopWorkerJob(_navSessionId,"","",this.GetPluginName()+" finished for "+_navSessionId);
 				OnStopWorkerJob(_navSessionId,"","",this.GetPluginName()+" finished for "+_navSessionId+" > Alert : "+alertConfiguration.AlertName.ToString()+" ("+alertConfiguration.AlertId.ToString()+") / Media : "+alertConfiguration.MediaName.ToString()+" ("+alertConfiguration.MediaId.ToString()+")");
 			}
 			catch(System.Exception err){
@@ -203,11 +202,8 @@ namespace TNS.AdExpress.Anubis.Geb{
 			}
 			finally{
 				try{
-					if(File.Exists(_excel.ExcelFilePath)){
+					if(File.Exists(_excel.ExcelFilePath))
 						File.Delete(_excel.ExcelFilePath);
-//						if(Directory.Exists(_excel.ExcelDirectoryPath))
-//							Directory.Delete(_excel.ExcelDirectoryPath);
-					}
 				}
 				catch(System.Exception){}
 			}

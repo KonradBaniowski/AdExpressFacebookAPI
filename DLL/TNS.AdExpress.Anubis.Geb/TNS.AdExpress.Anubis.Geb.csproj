@@ -48,7 +48,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\Anubis\bin\Debug\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
@@ -71,7 +71,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\Anubis\bin\Release\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
@@ -170,6 +170,10 @@
       <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
       <Name>TNS.AdExpress.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpress.Geb\TNS.AdExpress.Geb.csproj">
+      <Project>{88357FB7-8967-4B23-A005-B6A339D9B2B5}</Project>
+      <Name>TNS.AdExpress.Geb</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.ADEXPRESS.WEB\TNS.AdExpress.Web.csproj">
       <Name>TNS.AdExpress.Web</Name>
       <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
@@ -218,6 +222,7 @@
     </Compile>
     <Content Include="Images\logoTNSMedia.gif" />
     <Content Include="_Config\geb.xml" />
+    <None Include="Aspose.Cells.lic" />
     <None Include="ModelSupport\default.txaPackage" />
   </ItemGroup>
   <ItemGroup>

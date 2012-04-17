@@ -1,0 +1,195 @@
+﻿/*Debut Styles Arbre de niveaux des univers*/
+table.treeIncludeFrameCss{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;	    
+	font-weight: bold;
+	border:solid 1px #646262;
+	height:250px;
+	padding:0px 0px 0px 0px;	   	    
+}
+tr.treeIncludeFrameHeaderCss{
+	background-color:#646262;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;	    
+	font-weight: bold;
+	border:solid 1px #646262;
+	color:#FFFFFF;
+	height:10%;
+	padding:0px 0px 0px 0px;	   	    
+}
+tr.treeIncludeFrameBodyCss{
+	height:89%;
+}
+table.treeExcludeFrameCss{	   
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;	    
+    font-weight: bold;
+    border:solid 1px #DC121B;
+	height:250px;
+    padding:0px 0px 0px 0px;	   	    
+}
+tr.treeExcludeFrameHeaderCss{
+    background-color:#DC121B;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;	    
+    font-weight: bold;
+    border:solid 1px #DC121B;
+    color:#FFFFFF;
+    height:10%;
+    padding:0px 0px 0px 0px;	   	    
+}
+tr.treeExcludeFrameBodyCss{
+	height:89%;
+}
+.txtParentNodeChildExcludeCss{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #DC121B;
+    font-weight: bold;
+}
+.txtParentNodeChildIncludeCss{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #646262;
+    font-weight: bold;
+}
+td.txtChildNodeExcludeCss{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #DC121B;
+    font-weight: normal;
+   text-transform : capitalize;
+}
+td.txtChildNodeIncludeCss{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #646262;
+    font-weight: normal;
+    text-transform : capitalize;
+}
+tr.txtChildNodeExcludeCss{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #DC121B;
+    font-weight: normal;
+    text-transform : capitalize;
+}
+tr.txtChildNodeIncludeCss{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #646262;
+    font-weight: normal;
+    text-transform : capitalize;
+}
+div.txtChildNodeExcludeCss{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #DC121B;
+    font-weight: normal;
+     text-transform : capitalize;  
+    width:150px;
+}
+div.txtChildNodeIncludeCss{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #646262;
+    font-weight: normal;
+     text-transform : capitalize;
+    width:150px;     
+}
+/*Fin Styles Arbre de niveaux des univers*/
+.listBoxCss{
+    background-color:#646262;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #ffffff;
+    font-weight: bold;
+    border:solid 1px #646262;	   
+    padding:0px;
+    border-spacing:0px;
+    border-collapse:collapse;
+    height:196px;
+}
+select.customSelectCss{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+    color: #646262;
+    font-weight: normal;
+      text-transform : capitalize;
+}
+.optionItemDefault{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9px;
+    color: #646262;
+    font-weight: normal;
+     text-transform : capitalize;	
+}
+.optionItemHierarchy{
+    color: #646262;
+    background-color:#FFDBBF;
+   text-transform : capitalize;
+}
+tr.labelNbelements{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color : #999999;
+	font-weight: bold;
+	text-decoration : none;
+	background-color: #FFFFFF;
+	padding:0px;
+	border-spacing:0px;
+	text-align:center;
+	height:25px; 
+	border: 0px #646262;
+}
+a.trashNodeCss,a.trashNodeCss:active, a.trashNodeCss:visited,a.trashNodeCss:hover,a.trashNodeCss:Link{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #999999;
+	font-weight: normal;
+	text-decoration:none;
+}
+/*Autres*/	
+tr.listBoxHeaderCss{
+	height:19px;
+    text-align:left;
+}
+tr.listBoxBodyCss{
+	height : 177px;
+    background-color:#ffffff;
+    text-align:center;
+}
+.levelInRed{
+	color: #646262;
+	background-color:#FFD7D7;
+}
+.levelInLightRed{
+	color: #646262;
+	background-color:#FFEAEA;
+}
+.levelInLightLightRed{
+	color: #646262;
+	background-color:#FFF0F0;
+}
+.SearchRulesTextCss{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #646262;
+	font-weight: normal;
+	width :480px;
+}
+div.scrollable 
+{
+	text-align:left;
+	margin:0px;
+	padding:0px;
+	position:absolute;
+ } 
+ 
+ div.scrollableContainer
+ {
+	overflow:auto; 
+	height:177px;
+	position:relative;
+	text-align:left;
+ }

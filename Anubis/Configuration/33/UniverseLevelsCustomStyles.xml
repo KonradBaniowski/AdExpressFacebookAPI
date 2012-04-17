@@ -36,4 +36,19 @@
   <level id="15" name="interest_center">
     <style width="170"></style>
   </level>
+  <level id="16" name="sub_brand">
+    <style width="170"></style>
+  </level>
+  <level id="17" name="region">
+    <style width="170"></style>
+  </level>
+  <level id="18" name="advertisement_type">
+    <style width="170"></style>
+  </level>
+  <level id="20" name="group_media_agency">
+    <style width="170"></style>
+  </level>
+  <level id="19" name="media_agency">
+    <style width="170"></style>
+  </level>
 </levelsCustomStyles>

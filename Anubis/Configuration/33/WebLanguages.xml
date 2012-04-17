@@ -1,47 +1,55 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
   <languages default="33" defaultDataLanguage="33">
-    <language id="33" name="Français" imageSourceText="/Images/Common/france.gif"  localization="fr-FR" classificationLanguageId="33" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="utf-8" pdfContentEncoding="utf-8" nlsSort="FRENCH" NumberDecimalSeparator="," NumberGroupSeparator=" ">
-      <rss display="true" filePath="\\thebes\AdExpressC2\Rss\33\AdExpressFeed.xml" link="http://www.tnsadexpress.com/Rss/33/AdExpressFeed.xml"/>
+    <language id="33" name="Français" imageSourceText="/Images/Common/france.gif"  localization="fr-FR" classificationLanguageId="33" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="utf-8" pdfContentEncoding="utf-8" nlsSort="FRENCH" NumberDecimalSeparator="," NumberGroupSeparator=" "  PercentDecimalSeparator=",">
+      <rss display="true" filePath="\\frmitpu-ws000\Web\France\AdExpress\Rss\33\AdExpressFeed.xml" link="http://www.tnsadexpress.com/Rss/33/AdExpressFeed.xml"/>
       <unitformats>
-        <unitformat name="max0"               format="#,##0;-#,##0"           excelFormat="# ### ### ##0;-# ### ### ##0"/>
-        <unitformat name="max1"               format="#,##0.#;-#,##0.#"       excelFormat="#,##0.0;-#,##0.0"/>
-        <unitformat name="max2"               format="#,##0.##;-#,##0.##"     excelFormat="#,##0.0#;-#,##0.0#"/>
-        <unitformat name="max3"               format="#,##0.###;-#,##0.###"   excelFormat="#,##0.0##;-#,##0.0##"/>
-        <unitformat name="percentage"         format="#,##0.00\%;-#,##0.00\%" excelFormat="#,##0.00\%;-#,##0.00\%"/>
-        <unitformat name="percentWOSign"      format="#,##0.00;-#,##0.00"     excelFormat="#,##0.00;-#,##0.00"/>
-        <unitformat name="duration"           format="00 H 00 M 00 S"         excelFormat="#,##0;-#,##0"/>
-        <unitformat name="durationminu"       format="00 h 00 m 00 S"         excelFormat="#,##0;-#,##0"/>
-        <unitformat name="shortduration"      format="0 m 00 s"               excelFormat="#,##0;-#,##0"/>
-        <unitformat name="airtime"            format="#0:00:00"               excelFormat="#0:00:00"/>
-        <unitformat name="currency"           format="#,##0 €;-#,##0 €"       excelFormat="# ### ### ##0;-# ### ### ##0"/>
-        <unitformat name="codeEcran"          format="################"       excelFormat="################"/>
+        <unitformat name="max0"               format="#,##0;-#,##0;&amp;nbsp\;"                       excelFormat="# ### ### ##0;-# ### ### ##0;&amp;nbsp\;"/>
+        <unitformat name="max1"               format="#,##0.#;-#,##0.#;&amp;nbsp\;"                   excelFormat="#,##0.0;-#,##0.0;&amp;nbsp\;"/>
+        <unitformat name="max2"               format="#,##0.##;-#,##0.##;&amp;nbsp\;"                 excelFormat="#,##0.0#;-#,##0.0#;&amp;nbsp\;"/>
+        <unitformat name="max3"               format="#,##0.###;-#,##0.###;&amp;nbsp\;"               excelFormat="#,##0.0##;-#,##0.0##;&amp;nbsp\;"/>
+        <unitformat name="max4"               format="#,##0;-#,##0"                                   excelFormat="# ### ### ##0;-# ### ### ##0"/>
+        <unitformat name="percentage"         format="#,##0.00\%;-#,##0.00\%"                         excelFormat="#,##0.00\%;-#,##0.00\%"/>
+        <unitformat name="percentWOSign"      format="#,##0.00;-#,##0.00"                             excelFormat="#,##0.00;-#,##0.00"/>
+        <unitformat name="duration"           format="00 H 00 M 00 S;00 H 00 M 00 S;&amp;nbsp\;"      excelFormat="#,##0;-#,##0;&amp;nbsp\;"/>
+        <unitformat name="durationminu"       format="00 h 00 m 00 S"                                 excelFormat="#,##0;-#,##0"/>
+        <unitformat name="shortduration"      format="0 m 00 s"                                       excelFormat="#,##0;-#,##0"/>
+        <unitformat name="alertSchedule"      format="HH \h mm"                                       excelFormat="#,##0;-#,##0"/>
+        <unitformat name="airtime"            format="#0:00:00;#0:00:00;&amp;nbsp\;"                  excelFormat="#0:00:00;#0:00:00;&amp;nbsp\;"/>
+        <unitformat name="currency"           format="#,##0 €;-#,##0 €;&amp;nbsp\;"                   excelFormat="# ### ### ##0;-# ### ### ##0;&amp;nbsp\;"/>
+        <unitformat name="codeEcran"          format="################;################;&amp;nbsp\;"  excelFormat="################################;&amp;nbsp\;"/>
+        <unitformat name="pdm"                format="#,##0.00;-#,##0.00"                             excelFormat="#,##0.00;-#,##0.00"/>
       </unitformats>
       <dateFormats>
         <dateFormat name="shortdatepattern"   format="dd/MM/yyyy"             excelFormat="dd/MM/yyyy"/>
         <dateFormat name="customdatepattern"  format="ddd dd MMM yyyy"        excelFormat="ddd dd MMM yyyy"/>
       </dateFormats>
+      <companyNameTexts companyName="758" companyShortName="2843"/>
     </language>
-    <language id="44" name="English"  imageSourceText="/Images/Common/angleterre.gif"  localization="en-GB" classificationLanguageId="44" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="utf-8" pdfContentEncoding="utf-8" nlsSort="BINARY" NumberDecimalSeparator="." NumberGroupSeparator=",">
-      <rss display="true" filePath="\\thebes\AdExpressC2\Rss\44\AdExpressFeed.xml" link="http://www.tnsadexpress.com/Rss/44/AdExpressFeed.xml"/>
+    <language id="44" name="English"  imageSourceText="/Images/Common/angleterre.gif"  localization="en-GB" classificationLanguageId="44" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="utf-8" pdfContentEncoding="utf-8" nlsSort="BINARY" NumberDecimalSeparator="." NumberGroupSeparator="," PercentDecimalSeparator=".">
+      <rss display="false" filePath="\\thebes\AdExpressC2\Rss\44\AdExpressFeed.xml" link="http://www.tnsadexpress.com/Rss/44/AdExpressFeed.xml"/>
       <unitformats>
-        <unitformat name="max0"               format="#,##0;-#,##0"             excelFormat="#,###,###,###,##0.0;-#,###,###,###,##0.0"/>
-        <unitformat name="max1"               format="#,##0.#;-#,##0.#"         excelFormat="#,##0.0;-#,##0.0"/>
-        <unitformat name="max2"               format="#,##0.##;-#,##0.##"       excelFormat="#,##0.0#;-#,##0.0#"/>
-        <unitformat name="max3"               format="#,##0.###;-#,##0.###"     excelFormat="#,##0.0##;-#,##0.0##"/>
-        <unitformat name="percentage"         format="#,##0.00 \%;-#,##0.00 \%" excelFormat="#,##0.00 \%;-#,##0.00 \%"/>
-        <unitformat name="percentWOSign"      format="#,##0.00;-#,##0.00"       excelFormat="#,##0.00;-#,##0.00"/>
-        <unitformat name="duration"           format="00 H 00 M 00 S"           excelFormat="#,##0.0;-#,##0.0"/>
-        <unitformat name="durationminu"       format="00 h 00 m 00 S"           excelFormat="#,##0.0;-#,##0.0"/>
-        <unitformat name="shortduration"      format="0 m 00 s"                 excelFormat="#,##0.0;-#,##0.0"/>
-        <unitformat name="airtime"            format="#0:00:00"                 excelFormat="#0:00:00"/>
-        <unitformat name="currency"           format="#,##0 €;-#,##0 €"         excelFormat="#,###,###,##0.0;-#,###,###,##0.0"/>
-        <unitformat name="codeEcran"          format="################"         excelFormat="################"/>
+        <unitformat name="max0"               format="#,##0;-#,##0;&amp;nbsp\;"                         excelFormat="#,###,###,###,##0.0;-#,###,###,###,##0.0;&amp;nbsp\;"/>
+        <unitformat name="max1"               format="#,##0.#;-#,##0.#;&amp;nbsp\;"                     excelFormat="#,##0.0;-#,##0.0;&amp;nbsp\;"/>
+        <unitformat name="max2"               format="#,##0.##;-#,##0.##;&amp;nbsp\;"                   excelFormat="#,##0.0#;-#,##0.0#;&amp;nbsp\;"/>
+        <unitformat name="max3"               format="#,##0.###;-#,##0.###;&amp;nbsp\;"                 excelFormat="#,##0.0##;-#,##0.0##;&amp;nbsp\;"/>
+        <unitformat name="max4"               format="#,##0;-#,##0"                                     excelFormat="#,###,###,###,##0.0;-#,###,###,###,##0.0"/>
+        <unitformat name="percentage"         format="#,##0.00 \%;-#,##0.00 \%"                         excelFormat="#,##0.00 \%;-#,##0.00 \%"/>
+        <unitformat name="percentWOSign"      format="#,##0.00;-#,##0.00"                               excelFormat="#,##0.00;-#,##0.00"/>
+        <unitformat name="duration"           format="00 H 00 M 00 S;00 H 00 M 00 S;&amp;nbsp\;"        excelFormat="#,##0.0;-#,##0.0;#,##0.0;-#,##0.0;&amp;nbsp\;"/>
+        <unitformat name="durationminu"       format="00 h 00 m 00 S"                                   excelFormat="#,##0.0;-#,##0.0"/>
+        <unitformat name="alertSchedule"      format="HH \h mm"                                         excelFormat="#,##0;-#,##0"/>
+        <unitformat name="shortduration"      format="0 m 00 s"                                         excelFormat="#,##0.0;-#,##0.0"/>
+        <unitformat name="airtime"            format="#0:00:00;#0:00:00;&amp;nbsp\;"                    excelFormat="#0:00:00;#0:00:00;&amp;nbsp\;"/>
+        <unitformat name="currency"           format="#,##0 €;-#,##0 €;&amp;nbsp\;"                     excelFormat="#,###,###,##0.0;-#,###,###,##0.0;&amp;nbsp\;"/>
+        <unitformat name="codeEcran"          format="################;################;&amp;nbsp\;"    excelFormat="################;################;&amp;nbsp\;"/>
+        <unitformat name="pdm"                format="#,##0.00;-#,##0.00"                               excelFormat="#,##0.00;-#,##0.00"/>
       </unitformats>
       <dateFormats>
         <dateFormat name="shortdatepattern"   format="MM/dd/yyyy"               excelFormat="MM/dd/yyyy"/>
         <dateFormat name="customdatepattern"  format="ddd, MMM dd, yyyy"        excelFormat="ddd, MMM dd, yyyy"/>
       </dateFormats>
+      <companyNameTexts companyName="758" companyShortName="2843"/>
     </language>
   </languages>
 </configuration>

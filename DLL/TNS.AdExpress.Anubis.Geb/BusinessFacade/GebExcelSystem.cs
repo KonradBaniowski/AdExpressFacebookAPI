@@ -226,10 +226,10 @@ namespace TNS.AdExpress.Anubis.Geb.BusinessFacade{
             t.Append("<style type=\"text/css\">");
             t.Append("<!--");
             t.Append("body{font-family:Arial,Helvetica,sans-serif;font-size:12px;}");
-            t.Append("a:link {font-size: 12px;text-decoration: none;color: #FF0099;}");
-            t.Append("a:visited {font-size: 12px;text-decoration: none;color: #FF0099;}");
-            t.Append("a:hover {font-size: 12px;text-decoration: underline;color: #FF0099;}");
-            t.Append("a:active {font-size: 12px;text-decoration: none;color: #FF0099;}");
+            t.Append("a:link {font-size: 12px;text-decoration: none;color: #FF5800;}");
+            t.Append("a:visited {font-size: 12px;text-decoration: none;color: #FF5800;}");
+            t.Append("a:hover {font-size: 12px;text-decoration: underline;color: #FF5800;}");
+            t.Append("a:active {font-size: 12px;text-decoration: none;color: #FF5800;}");
             t.Append("-->");
             t.Append("</style>");
             #endregion
@@ -241,7 +241,7 @@ namespace TNS.AdExpress.Anubis.Geb.BusinessFacade{
             if(File.Exists(couvPath))
                 t.Append("<img src=\"cid:123456789@GEG\" border=0>");
 
-            t.Append("</p><p align=\"center\"><a href=\"http://www.tnsmediaintelligence.fr\">www.tnsmediaintelligence.fr</a></p>");
+            t.Append("</p><p align=\"center\"><a href=\"http://www.kantarmedia.fr\">www.kantarmedia.fr</a></p>");
             t.Append("</body>");
             #endregion
 

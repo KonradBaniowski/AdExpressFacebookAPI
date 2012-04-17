@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rightOptions>
+  <rightOption useDefaultConnection="false"/>
+  <campaignType available="true" description="Specify if the option campaign Type is available overall the website"/>
+</rightOptions>

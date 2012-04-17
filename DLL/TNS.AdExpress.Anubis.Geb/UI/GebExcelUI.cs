@@ -10,7 +10,7 @@ using System.IO;
 using Aspose.Cells;
 using System.Drawing;
 using System.Data;
-
+using Aspose.Cells.Drawing;
 using Oracle.DataAccess.Client;
 
 using TNS.AdExpress.Constantes.DB;
@@ -91,7 +91,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 			_license = new License();
 			_license.SetLicense("Aspose.Cells.lic");
 			//Ajout de couleur			
-			AddColor(Color.FromArgb(128,128,192));
+            AddColor(Color.FromArgb(206, 107, 10));
 		}
 		#endregion
 
@@ -156,9 +156,6 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 						// Lien du chemin de Fer
 						cells.Merge(INDEX_START_LINE-1,INDEX_START_COLUMN+6,1,2);
 
-                        // Ancienne version
-                        //sheet.Hyperlinks.Add(INDEX_START_LINE-1,INDEX_START_COLUMN+6,1,1,"http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia="+alertParameters.MediaId+"&date="+alertParametersBlob.DateMediaNum+"&nameMedia="+alertParameters.MediaName);
-                        
                         // Nouvelle version avec changement des noms de variable dans l'url
                         if(_mediaAntidated)
                             sheet.Hyperlinks.Add(INDEX_START_LINE - 1,INDEX_START_COLUMN + 6,1,1,"http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia=" + alertParameters.MediaId + "&dateCoverNum=" + dt.Rows[0]["date_media_num"].ToString() + "&dateMediaNum=" + dt.Rows[0]["date_media_num"].ToString() + "&nameMedia=" + alertParameters.MediaName);
@@ -166,7 +163,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
                             sheet.Hyperlinks.Add(INDEX_START_LINE - 1,INDEX_START_COLUMN + 6,1,1,"http://www.tnsadexpress.com/Public/PortofolioCreationMedia.aspx?idMedia=" + alertParameters.MediaId + "&dateCoverNum=" + dt.Rows[0]["date_cover_num"].ToString() + "&dateMediaNum=" + dt.Rows[0]["date_media_num"].ToString() + "&nameMedia=" + alertParameters.MediaName);
 						
 						cells[INDEX_START_LINE-1,INDEX_START_COLUMN+6].PutValue(GestionWeb.GetWebWord(1397, alertParameters.LanguageId));
-						cells[INDEX_START_LINE-1,INDEX_START_COLUMN+6].Style.Font.Color = Color.FromArgb(128,128,192);
+                        cells[INDEX_START_LINE - 1, INDEX_START_COLUMN + 6].Style.Font.Color = Color.FromArgb(206, 107, 10);
 						cells[INDEX_START_LINE-1,INDEX_START_COLUMN+6].Style.Font.Underline = FontUnderlineType.Single;
 						cells[INDEX_START_LINE-1,INDEX_START_COLUMN+6].Style.HorizontalAlignment=TextAlignmentType.Center;
 
@@ -264,7 +261,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
                                     // Cellule avec lien hypertext si des visuels existent
                                     urlStart = @"http://www.tnsadexpress.com/Private/Results/ZoomCreationPopUp.aspx?creation=";
                                     url = urlStart + url.Substring(0,url.Length-1);
-                                    PutCellValue(sheet,cells,GestionWeb.GetWebWord(1928,alertParameters.LanguageId),cellRow-1,0,false,Color.FromArgb(128,128,192),true,url);
+                                    PutCellValue(sheet, cells, GestionWeb.GetWebWord(1928, alertParameters.LanguageId), cellRow - 1, 0, false, Color.FromArgb(206, 107, 10), true, url);
                                 }
 								else{
 									// Cellule sans lien hypertext
@@ -579,7 +576,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 		/// <param name="url">Lien URL</param>
 		internal static void PutCellImage(Worksheet sheet,Aspose.Cells.Cells cells,int row,int column,string imgPath,bool displayBorders,int paddingLeft,int paddingRight,int paddingTop,int paddingBottom, string url){
 			// Ajout de l'image dans la cellule
-			Pictures pics = sheet.Pictures;
+			var pics = sheet.Pictures;
 			string pictFileName = System.IO.Path.GetFullPath(imgPath);
 			int pos = sheet.Pictures.Add(row,column,pictFileName);
 			Picture pic = sheet.Pictures[pos];
@@ -623,7 +620,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 				cells[row,i].Style.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
 				cells[row,i].Style.Font.Color = color;
 				cells[row,i].Style.Font.IsBold = isBold;
-                cells[row,i].Style.ForegroundColor = Color.FromArgb(128,128,192);
+                cells[row, i].Style.ForegroundColor = Color.FromArgb(206, 107, 10);
                 cells[row,i].Style.Pattern = BackgroundType.Solid;
 			}			
 		}
@@ -673,7 +670,7 @@ namespace TNS.AdExpress.Anubis.Geb.UI{
 			pageSetup.PrintTitleRows="$"+headerRowIndex.ToString()+":$"+headerRowIndex.ToString();
 
 			// Ajout image du logo TNS
-			Pictures pics = sheet.Pictures;
+			var pics = sheet.Pictures;
 			string tnsLogoPath=@"Images\logoTNSMedia.gif";	
 			string logoPath = System.IO.Path.GetFullPath(tnsLogoPath);
 			pics.Add(0, 0,logoPath);

@@ -1,0 +1,266 @@
+﻿/* Alert creation theme (pop up) */
+
+div.periodicity-type, div.periodicity-type-day
+{
+	color: #646262;
+	font-weight: bold;
+	border: solid 1px #646262;
+	float: left;
+	background-color: White;
+}
+
+
+table.periodicity-type, table.periodicity-type-day
+{
+	color: #646262;
+	font-weight: bold;
+	border: solid 1px #646262;
+	background-color: White;
+	text-align:center;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+
+table.periodicity-type-day table,
+table.periodicity-type-day table tr,
+table.periodicity-type-day table tr td,
+table.periodicity-type table,
+table.periodicity-type table tr,
+table.periodicity-type table tr td
+{
+	margin:0px 0px 0px 0px;
+	padding:0px 0px 0px 0px;
+	font-size:1px;
+}
+
+table.periodicity-type-day table tr,
+table.periodicity-type table tr
+{
+	text-align:left;
+}
+
+table.periodicity-type-day table,
+table.periodicity-type table
+{
+	border-bottom:solid 0px white;
+	border-right:solid 0px white;
+	border-left:solid 2px white;
+	border-top:solid 2px white;
+}
+
+table.periodicity-type-day table tr td img,
+table.periodicity-type table tr td img
+{
+	vertical-align:top;
+}
+
+table.periodicity-type-day table tr td,
+table.periodicity-type table tr td
+{
+	border-bottom:solid 2px white;
+	border-right:solid 2px white;
+	border-left:solid 0px white;
+	border-top:solid 0px white;
+}
+
+
+div.periodicity-type a, 
+a.alert-periodicity-type-day
+{
+	color: #646262;
+}
+
+div.periodicity-type a, 
+a.alert-periodicity-type-day,
+a.alert-periodicity-type-day-warning
+{
+	/*padding: 4px 2px 4px 2px;*/
+	cursor: pointer;
+	display: inline-block;
+	width: 12px;
+	font-weight: normal;
+	outline: none;
+	text-align: center;
+	font-family:Arial;
+	font-size:10px;
+}
+
+a.periodicity-param-selected
+{
+	background-color: #E9E9E9;
+	color: White;
+}
+
+a.alert-periodicity-type-day,
+a.alert-periodicity-type-day-warning
+{
+	width:auto;
+}
+
+a.alert-periodicity-type-day-warning
+{
+	font-family:Arial;
+	color: Orange;
+}
+
+/* Alert consultation page */
+
+div.block-valid-alert
+{
+	font-size: 11px;	
+	border: solid 1px #646262;
+	border-bottom: 0px;
+	padding: 3px 0 0 0;
+	margin: 0 0 0 15px;
+	font-family:Arial,Helvetica,sans-serif;
+}
+
+div.block-valid-alert-last
+{
+	border-top: solid 1px #646262;
+	padding: 3px 0 0 0;
+	margin: 0 0 0 15px;
+}
+
+div.block-valid-alert h2
+{
+	color: #646262;
+	cursor: pointer;
+	margin: 0px;
+	margin-left: 30px;
+	font-size:11px;
+	font-weight:bold;
+}
+
+div.block-valid-alert a
+{
+	color: #FF7100;
+}
+
+div.block-valid-alert ul
+{
+	margin: 0px;
+	padding: 1% 0px 1% 50px;	
+	float: left;
+	background-color: #E9E9E9;
+}
+
+div.block-alert-details
+{
+	float: left;
+	padding-top: 5px;
+	padding-right:5%;
+	background-color: #E9E9E9;
+}
+
+div.block-alert-details div
+{
+	min-width:10px;
+	float:left;
+	padding-left:50px;
+	text-align:left;
+}
+
+div.block-alert-details div u
+{
+	text-align:left;
+}
+
+div.block-alert-details div 
+{
+	text-align:left;
+}
+
+div.block-alert-details div table
+{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+}
+
+div.block-alert-details div table tr th
+{
+	text-align:left;
+}
+
+div.block-alert-details div table tr td
+{
+	padding-left:10px;
+}
+
+div.block-alert-details,
+div.block-alert-details div  table
+{
+	color: #646262;
+}
+
+div.block-valid-alert div
+{
+	margin: 0px;
+}
+
+div.alert-content
+{
+	background-color: #E9E9E9;
+	border-top: solid 1px #646262;
+	width: 100%;
+}
+.alert-dayofweek-selection-title
+{
+	background-color: #646262;
+	font-size: 11px;
+	color: White;
+	font-family: Arial;
+	text-align:center;
+}
+.alert-dayofmonth-selection-title
+{
+	background-color: #646262;
+	font-size: 11px;
+	color: White;
+	font-family: Arial;
+	text-align:center;
+	width:130px;
+	margin-left: auto; 
+	margin-right: auto; 
+}
+
+.alert-dayofmonth-selection-table,
+.alert-dayofmonth-selection-table td.alert-dayofmonth-selection-table-warning
+{
+	/*width: 140px;*/
+	background-color: White;
+}
+
+.alert-dayofmonth-selection-table td.alert-dayofmonth-selection-table-warning a
+{
+	font-family:Arial;
+	color: Orange;
+}
+
+p.alert-dayofmonth-selection-table-warning
+{
+	color: #646262;
+	font-weight: normal;
+	font-size:11px;
+	font-family:Arial;
+	text-align:justify;
+}
+
+
+.alert-dayofmonth-selection-table td
+{
+	/*width: 21px;	*/
+	text-align: center;
+}
+
+.alert-dayofmonth-selection-table a
+{
+	text-decoration: none;	
+}
+
+
+.imageCursor
+{
+	cursor:pointer;
+}

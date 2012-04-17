@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <vehicles>
   <!-- PRESS -->
-  <vehicle id="press" databaseId="1" showInsertions="true" showCreations="true">
+  <vehicle id="press" databaseId="1" showInsertions="true" showCreations="true" mediaAgencyFlag="298">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="pages">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>insertion</allowedUnit>
@@ -62,7 +62,7 @@
     </MediaSelectionParents>
     <!--Media detail level in selection-->
     <MediaSelectionDetailLevel>
-      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22" trendsDefaultMediaSelectionDetailLevel="28">
         <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
         <defaultMediaSelectionDetailLevel id="23" name="regie\support" />
         <defaultMediaSelectionDetailLevel id="24" name="titre\support" />
@@ -106,11 +106,21 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
+    <!--Media Agency Flag-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <allowedColumnDetailLevelItem id="17" name="Titre"/>
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
   <!-- RADIO -->
-  <vehicle id="radio" databaseId="2" showInsertions="true" showCreations="true">
+  <vehicle id="radio" databaseId="2" showInsertions="true" showCreations="true"  mediaAgencyFlag="299">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>duration</allowedUnit>
@@ -168,7 +178,7 @@
     </MediaSelectionParents>
     <!--Media detail level in selection-->
     <MediaSelectionDetailLevel>
-      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22" trendsDefaultMediaSelectionDetailLevel="2">
         <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
         <defaultMediaSelectionDetailLevel id="23" name="regie\support" />
         <defaultMediaSelectionDetailLevel id="24" name="titre\support" />
@@ -212,11 +222,20 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <allowedColumnDetailLevelItem id="17" name="Titre"/>
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
   <!-- TV -->
-  <vehicle id="tv" databaseId="3" showInsertions="true" showCreations="true">
+  <vehicle id="tv" databaseId="3" showInsertions="true" showCreations="true"  mediaAgencyFlag="300">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>duration</allowedUnit>
@@ -280,7 +299,7 @@
     </MediaSelectionParents>
     <!--Media detail level in selection-->
     <MediaSelectionDetailLevel>
-      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22" trendsDefaultMediaSelectionDetailLevel="2">
         <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
         <defaultMediaSelectionDetailLevel id="23" name="regie\support" />
         <defaultMediaSelectionDetailLevel id="24" name="titre\support" />
@@ -326,11 +345,21 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
+    <!--Allowed column broken down-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <allowedColumnDetailLevelItem id="17" name="Titre"/>
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
   <!-- MEDIA TACTIQUE -->
   <vehicle id="mediasTactics" databaseId="4" showInsertions="false" showCreations="false">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
     <allowedRecapMediaDetailLevels>
@@ -360,9 +389,9 @@
     </allowedUniverseLevels>
   </vehicle>
   <!-- OTHERS -->
-  <vehicle id="others" databaseId="5" showInsertions="true" showCreations="true">
+  <vehicle id="others" databaseId="5" showInsertions="true" showCreations="true" mediaAgencyFlag="304">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>duration</allowedUnit>
@@ -420,7 +449,7 @@
     </MediaSelectionParents>
     <!--Media detail level in selection-->
     <MediaSelectionDetailLevel>
-      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22" trendsDefaultMediaSelectionDetailLevel="2">
         <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
         <defaultMediaSelectionDetailLevel id="23" name="regie\support" />
         <defaultMediaSelectionDetailLevel id="24" name="titre\support" />
@@ -453,11 +482,21 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
+    <!--Allowed column broken down-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <allowedColumnDetailLevelItem id="17" name="Titre"/>
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
   <!-- Evaliant -->
-  <vehicle id="adnettrack" databaseId="6" showInsertions="false" showCreations="true">
+  <vehicle id="adnettrack" databaseId="6" showInsertions="false" showCreations="true" autopromo="true">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="versionNb">
       <allowedUnit>occurence</allowedUnit>
       <allowedUnit>versionNb</allowedUnit>
     </allowedUnits>
@@ -524,11 +563,22 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
+    <!--Allowed column broken down-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <allowedColumnDetailLevelItem id="17" name="Titre"/>
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
+    <AsyncExportDetailLevel id="57" name="Vehicle\Advertiser\Product"/>
   </vehicle>
   <!-- INTERNET -->
-  <vehicle id="internet" databaseId="7" showInsertions="false" showCreations="true" showActiveMedia="true">
+  <vehicle id="internet" databaseId="7" showInsertions="false" showCreations="true" showActiveMedia="true" mediaAgencyFlag="302">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
     </allowedUnits>
@@ -624,11 +674,21 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
+    <!--Allowed column broken down-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <allowedColumnDetailLevelItem id="17" name="Titre"/>
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
   <!-- OUTDOOR -->
-  <vehicle id="outdoor" databaseId="8" showInsertions="true" showCreations="true">
+  <vehicle id="outdoor" databaseId="8" showInsertions="true" showCreations="true" mediaAgencyFlag="301">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>numberBoard</allowedUnit>
@@ -727,13 +787,91 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
+    <!--Allowed column broken down-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <allowedColumnDetailLevelItem id="17" name="Titre"/>
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
   <!-- CINEMA -->
-  <vehicle id="cinema" databaseId="9" showInsertions="false" showCreations="false">
+  <vehicle id="cinema" databaseId="9" showInsertions="false" showCreations="false" mediaAgencyFlag="309">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
+    <!-- Media detail level in results -->
+    <allowedMediaDetailLevels>
+      <allowedMediaLevelItems>
+        <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>
+        <!-- Media -->
+        <allowedMediaLevelItem>category</allowedMediaLevelItem>
+        <!-- Categorie -->
+        <allowedMediaLevelItem>media</allowedMediaLevelItem>
+        <!-- Support -->
+        <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>
+        <!-- Centre d'interet -->
+        <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>
+        <!-- Régie -->
+        <allowedMediaLevelItem>slogan</allowedMediaLevelItem>
+        <!-- Version -->
+        <allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>
+        <!-- Groupe de société -->
+        <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>
+        <!-- Annonceur -->
+        <allowedMediaLevelItem>brand</allowedMediaLevelItem>
+        <!-- Marque -->
+        <allowedMediaLevelItem>product</allowedMediaLevelItem>
+        <!-- Produit -->
+        <allowedMediaLevelItem>sector</allowedMediaLevelItem>
+        <!-- Famille -->
+        <allowedMediaLevelItem>subSector</allowedMediaLevelItem>
+        <!-- Classe -->
+        <allowedMediaLevelItem>group</allowedMediaLevelItem>
+        <!-- Groupe -->
+        <allowedMediaLevelItem>segment</allowedMediaLevelItem>
+        <!-- Variété -->
+        <allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>
+        <!-- Groupe d'agences -->
+        <allowedMediaLevelItem>agency</allowedMediaLevelItem>
+        <!-- Agence -->
+        <allowedMediaLevelItem>title</allowedMediaLevelItem>
+        <!-- Titre -->
+        <allowedMediaLevelItem>country</allowedMediaLevelItem>
+        <!-- Pays -->
+      </allowedMediaLevelItems>
+    </allowedMediaDetailLevels>
+    <!-- Selection hierarchy-->
+    <MediaSelectionParents DefaultMediaSelectionParent="interestCenter">
+      <MediaSelectionParent>interestCenter</MediaSelectionParent>
+      <!-- Centre d 'interet -->
+      <MediaSelectionParent>mediaSeller</MediaSelectionParent>
+      <!-- Régie -->
+      <MediaSelectionParent>title</MediaSelectionParent>
+      <!-- Titre -->
+    </MediaSelectionParents>
+    <!--Media detail level in selection-->
+    <MediaSelectionDetailLevel>
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+        <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
+        <!--<defaultMediaSelectionDetailLevel id="23" name="regie\support" />-->
+        <!--<defaultMediaSelectionDetailLevel id="24" name="titre\support" />-->
+      </defaultMediaSelectionDetailLevels>
+      <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="3"/>
+        <!-- Support -->
+        <allowedMediaSelectionLevelItem id="4"/>
+        <!-- Centre d 'interet -->
+        <!--<allowedMediaSelectionLevelItem id="5"/>-->
+        <!-- Régie -->
+        <!--<allowedMediaSelectionLevelItem id="17"/>-->
+        <!-- Titre -->
+      </allowedMediaSelectionLevelItemsList>
+    </MediaSelectionDetailLevel>
     <allowedRecapMediaDetailLevels>
       <allowedRecapMediaLevelItems>
         <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>
@@ -755,11 +893,21 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
+    <!--Allowed column broken down-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <allowedColumnDetailLevelItem id="17" name="Titre"/>
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
   <!-- DIRECT_MARKETING -->
-  <vehicle id="directMarketing" databaseId="10" showInsertions="true" showCreations="true">
+  <vehicle id="directMarketing" databaseId="10" showInsertions="true" showCreations="true" mediaAgencyFlag="305">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>volume</allowedUnit>
@@ -833,6 +981,7 @@
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
     <!--Media detail level allowed in recap's modules-->
+    <!--Media detail level allowed in recap's modules-->
     <allowedRecapMediaDetailLevels>
       <allowedRecapMediaLevelItems>
         <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>
@@ -856,11 +1005,21 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
+    <!--Allowed column broken down-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <allowedColumnDetailLevelItem id="17" name="Titre"/>
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
   <!-- INTERNATIONAL_PRESS -->
-  <vehicle id="internationalPress" databaseId="11" showInsertions="true" showCreations="true">
+  <vehicle id="internationalPress" databaseId="11" showInsertions="true" showCreations="true" mediaAgencyFlag="303">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="pages">
       <allowedUnit>euro</allowedUnit>
       <allowedUnit>kEuro</allowedUnit>
       <allowedUnit>insertion</allowedUnit>
@@ -921,7 +1080,7 @@
     </MediaSelectionParents>
     <!--Media detail level in selection-->
     <MediaSelectionDetailLevel>
-      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22">
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="22" trendsDefaultMediaSelectionDetailLevel="28">
         <defaultMediaSelectionDetailLevel id="22" name="centre d'interet\support" />
         <defaultMediaSelectionDetailLevel id="23" name="regie\support" />
         <defaultMediaSelectionDetailLevel id="24" name="titre\support" />
@@ -968,11 +1127,21 @@
       <allowedUniverseLevel id="14" name="media"/>
       <allowedUniverseLevel id="15" name="interest_center"/>
     </allowedUniverseLevels>
+    <!--Allowed column broken down-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="5" name="Régie"/>
+        <allowedColumnDetailLevelItem id="17" name="Titre"/>
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
   <!-- PLURIMEDIA -->
   <vehicle id="plurimedia" databaseId="50" showInsertions="false" showCreations="false">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
     <allowedRecapMediaDetailLevels>
@@ -988,12 +1157,13 @@
       <allowedUniverseLevel id="3" name="group_"/>
       <allowedUniverseLevel id="4" name="segment"/>
       <allowedUniverseLevel id="6" name="advertiser"/>
+      <allowedUniverseLevel id="8" name="brand"/>
     </allowedUniverseLevels>
   </vehicle>
   <!-- EMAILING -->
   <vehicle id="emailing" databaseId="13" showInsertions="false" showCreations="false">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
     <!--Media detail level allowed in recap's modules-->
@@ -1024,7 +1194,7 @@
   <!--TELEPHONIE MOBILE-->
   <vehicle id="mobileTelephony" databaseId="12" showInsertions="false" showCreations="false">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="euro">
       <allowedUnit>euro</allowedUnit>
     </allowedUnits>
     <!--Media detail level allowed in recap's modules-->
@@ -1053,9 +1223,9 @@
     </allowedUniverseLevels>
   </vehicle>
   <!-- Evaliant mobile-->
-  <vehicle id="evaliantMobile" databaseId="15" showInsertions="false" showCreations="true">
+  <vehicle id="evaliantMobile" databaseId="15" showInsertions="false" showCreations="true" autopromo="false">
     <!-- Units-->
-    <allowedUnits>
+    <allowedUnits defaultUnit="versionNb">
       <allowedUnit>occurence</allowedUnit>
       <allowedUnit>versionNb</allowedUnit>
     </allowedUnits>
@@ -1107,5 +1277,28 @@
         <!-- Centre d 'interet -->
       </allowedMediaSelectionLevelItemsList>
     </MediaSelectionDetailLevel>
+    <!--Allowed universe levels-->
+    <allowedUniverseLevels>
+      <allowedUniverseLevel id="1" name="sector"/>
+      <allowedUniverseLevel id="2" name="subsector"/>
+      <allowedUniverseLevel id="3" name="group_"/>
+      <allowedUniverseLevel id="4" name="segment"/>
+      <allowedUniverseLevel id="7" name="holding_company"/>
+      <allowedUniverseLevel id="6" name="advertiser"/>
+      <allowedUniverseLevel id="8" name="brand"/>
+      <allowedUniverseLevel id="5" name="product"/>
+      <allowedUniverseLevel id="11" name="vehicle"/>
+      <allowedUniverseLevel id="12" name="category"/>
+      <allowedUniverseLevel id="14" name="media"/>
+      <allowedUniverseLevel id="15" name="interest_center"/>
+    </allowedUniverseLevels>
+    <!--Allowed column broken down-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
+        <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
   </vehicle>
 </vehicles>
