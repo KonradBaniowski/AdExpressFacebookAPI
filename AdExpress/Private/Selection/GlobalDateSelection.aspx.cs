@@ -146,7 +146,8 @@ namespace AdExpress.Private.Selection
                 IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
 
                 if (_webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA
-                    && _webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_MANDATAIRES){
+                    && _webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_MANDATAIRES
+                    && _webSession.CurrentModule != WebConstantes.Module.Name.CELEBRITIES) {
 
                     if (_webSession.CurrentModule != WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
                         || (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_DYNAMIQUE
