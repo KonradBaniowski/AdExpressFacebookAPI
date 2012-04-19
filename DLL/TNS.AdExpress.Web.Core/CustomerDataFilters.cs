@@ -695,6 +695,7 @@ namespace TNS.AdExpress.Web.Core
                     if (!string.IsNullOrEmpty(mediaList)) selection.Add(CstCustomer.Right.type.mediaAccess, mediaList);
                     break;
                 case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
+                case CstWeb.Module.Name.CELEBRITIES:
                     break;
                 default:
                     throw (new CustomerDataFiltersException("Impossible to identify the current module "));

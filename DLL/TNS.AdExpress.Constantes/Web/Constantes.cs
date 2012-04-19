@@ -1748,6 +1748,10 @@ namespace TNS.AdExpress.Constantes.Web{
             /// Veille Promotionnelle
             /// </summary>
             public const int VP = 7854;
+            /// <summary>
+            /// Identifiant Celebrities
+            /// </summary>
+            public const int CELEBRITIES = 8675;
 		}
 		#endregion
 
