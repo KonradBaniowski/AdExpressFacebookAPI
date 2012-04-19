@@ -167,8 +167,8 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia {
 				#endregion
 
 				if (nbLevels > 0) {
-					
-                    if (nbLevels == 1) t.Append("<table class=\"violetBorder violetBackGround violetBackGroundV3\"  cellpadding=0 cellspacing=0 width=\"800\">");
+
+                    if (nbLevels == 1) t.Append("<table class=\"violetBorder mediumPurple1\"  cellpadding=0 cellspacing=0 width=\"800\">");
 
 					foreach (DataRow currentRow in _dsListMedia.Tables[0].Rows) {
                         
@@ -258,7 +258,8 @@ namespace TNS.AdExpress.Web.Controls.Selections.Russia {
 							t.Append("<td align=\"right\" class=\"arrowBackGround\"></td></tr>");
 							t.Append("<tr><td colspan=\"2\"><div style=\"MARGIN-LEFT: 0px; DISPLAY:none;\"");
                             displayIndex = t.Length;
-							if (nbLevels == 2) cssL1 = "mediumPurple1";
+							//if (nbLevels == 2) 
+                                cssL1 = "mediumPurple1";
 							t.Append(" class=\"" + cssL1 + "\"  id=\"1_" + idL1 + "\">");
 							t.Append("<table cellpadding=0 cellspacing=0 border=\"0\" width=\"100%\">");
 							//link for select all items

@@ -53,7 +53,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdTypeClassification.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="CommonDAL.cs" />
     <Compile Include="DetailLevel.cs" />
     <Compile Include="MediaClassification.cs" />

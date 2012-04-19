@@ -67,7 +67,7 @@ namespace TNS.AdExpressI.Insertions.Russia.Cells
             bool hasVisual = false;
             str.Append("<td valign=\"top\">");
 
-            string pathes = String.Join(",", _visuals.ToArray()).Replace("/editorial_id_low", string.Empty);
+            string pathes = String.Join(",", _visuals.ToArray()).Replace("/scan_low", string.Empty);
             string encryptedParams = (!string.IsNullOrEmpty(pathes)) ? TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(pathes):"";
 
             foreach (string s in _visuals)

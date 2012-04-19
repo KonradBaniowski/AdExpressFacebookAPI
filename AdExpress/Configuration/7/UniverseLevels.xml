@@ -14,5 +14,11 @@
   <level id="15" name="interest_center" labelId="1384" dbId="id_interest_center" dbTable="interest_center"/>
   <level id="16" name="sub_brand" labelId="2650" dbId="id_sub_brand" dbTable="sub_brand"/>
   <level id="17" name="region" labelId="2652" dbId="id_region" dbTable="region"/>
-  <level id="18" name="advertisement_type" labelId="2673" dbId="id_advertisement_type" dbTable="advertisement_type"/>
+  <level id="18" name="advertisement_type" labelId="2673" dbId="id_advertisement_type" dbTable="advertisement_type"/>  
+  <level id="21" name="profession" labelId="2952" dbId="id_profession" dbTable="profession"/>
+  <level id="22" name="rubric" labelId="2960" dbId="id_rubric" dbTable="rubric"/>
+  <level id="23" name="programme" labelId="2682" dbId="id_programme" dbTable="programme"/>
+  <level id="24" name="programme_genre" labelId="2658" dbId="id_programme_genre" dbTable="programme_genre"/>
+  <level id="25" name="name" labelId="67" dbId="id_name" dbTable="name"/>
+  <level id="26" name="presence Type" labelId="2657" dbId="id_presence_type" dbTable="presence_type"/>
 </universeLevels>

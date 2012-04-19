@@ -316,5 +316,32 @@
       <levelItem id="8" name="Advertiser"/>
       <levelItem id="10" name="Product"/>
     </detailLevel>
+    <!--Debut Niveau Détail rajouté en Russie-->
+    <!--<detailLevel id="57" name="name\profession">
+      <levelItem id="69" name="Name"/>
+      <levelItem id="68" name="Profession"/>
+    </detailLevel>
+    <detailLevel id="58" name="media\name">
+      <levelItem id="1" name="Media"/>
+      <levelItem id="69" name="Name"/>
+    </detailLevel>
+    <detailLevel id="59" name="media\profession">
+      <levelItem id="1" name="Media"/>
+      <levelItem id="68" name="Profession"/>
+    </detailLevel>
+    <detailLevel id="60" name="sector\name">
+      <levelItem id="11" name="sector"/>
+      <levelItem id="69" name="Name"/>
+    </detailLevel>
+    <detailLevel id="61" name="advertiser\name">
+      <levelItem id="8" name="Advertiser"/>
+      <levelItem id="69" name="Name"/>
+    </detailLevel>
+    <detailLevel id="62" name="name\advertiser\brand">
+      <levelItem id="69" name="Name"/>
+      <levelItem id="8" name="Advertiser"/>
+      <levelItem id="9" name="Brand"/>
+    </detailLevel>-->
+    <!--Fin Niveau Détail rajouté en Russie-->
 	</detailLevels>  
 </genericDetailLevel>

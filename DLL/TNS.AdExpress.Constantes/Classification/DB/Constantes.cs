@@ -211,7 +211,15 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
             /// <summary>
             /// CZ Internet Media
             /// </summary>
-            czinternet=29
+            czinternet=29,
+            /// <summary>
+            /// TV Clipping
+            /// </summary>
+            tvClipping =30,
+            /// <summary>
+            /// Press Clipping
+            /// </summary>
+            pressClipping = 31
 		}
 	}
 	#endregion

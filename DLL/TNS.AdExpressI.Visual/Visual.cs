@@ -129,6 +129,15 @@ namespace TNS.AdExpressI.Visual
         }
 
         /// <summary>
+        /// Get Is File Exist or not
+        /// </summary>
+        /// <returns>Is file Exist or not</returns>
+        public virtual bool IsExist()
+        {
+            return (File.Exists(Path.Combine(WebCst.CreationServerPathes.LOCAL_PATH_IMAGE, _relativePath)));
+        }
+
+        /// <summary>
         /// Get Content Type
         /// </summary>
         /// <returns>Content Type string </returns>

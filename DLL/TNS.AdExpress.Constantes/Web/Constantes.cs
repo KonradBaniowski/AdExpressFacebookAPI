@@ -584,7 +584,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// screens
             /// </summary>
-            screens = 23
+            screens = 23,
+            /// <summary>
+            /// Audience
+            /// </summary>
+            audience =24
 
 		}
 		#endregion

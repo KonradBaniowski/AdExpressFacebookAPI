@@ -85,37 +85,7 @@ namespace TNS.AdExpressI.Visual.Russia.WebService
         {
             if (!string.IsNullOrEmpty(_idSession) && !string.IsNullOrEmpty(_relativePath) && _idSession.Substring(0, 8) == DateTime.Now.ToString("yyyyMMdd"))
             {
-                string tempRelative;
-                switch (VehiclesInformation.Get(_idVehicle).Id)
-                {
-                    case Vehicles.names.press:
-                        tempRelative = _isCover
-                                           ? GetPath(WebCst.CreationServerPathes.IMAGES_PRESS_COVER)
-                                           : GetPath(WebCst.CreationServerPathes.IMAGES);
-                        break;
-                    case Vehicles.names.outdoor:
-                        tempRelative = GetPath(WebCst.CreationServerPathes.IMAGES_OUTDOOR);
-                        break;
-                    case Vehicles.names.internet:
-                        tempRelative = GetPath(WebCst.CreationServerPathes.CREA_ADNETTRACK);
-                        break;
-                    case Vehicles.names.editorial:
-                        tempRelative = GetPath(WebCst.CreationServerPathes.IMAGES_EDITORIAL);
-                        break;
-                    case Vehicles.names.tv:
-                    case Vehicles.names.tvGeneral:
-                    case Vehicles.names.tvSponsorship:
-                    case Vehicles.names.tvAnnounces:
-                    case Vehicles.names.tvNonTerrestrials:
-                    case Vehicles.names.radio:
-                    case Vehicles.names.radioGeneral:
-                    case Vehicles.names.radioMusic:
-                    case Vehicles.names.radioSponsorship:
-                        tempRelative = GetPath();
-                        break;
-                    default:
-                        return null;
-                }
+                var tempRelative = GetRelativePath();
                 var a = GetWebService();
                 var res = a.GetBinaries(tempRelative, _idVehicle, isBlur, _isCover);
                 if (res != null)
@@ -135,14 +105,104 @@ namespace TNS.AdExpressI.Visual.Russia.WebService
             }
             return null;
         }
+
+        /// <summary>
+        /// Get Content Type
+        /// </summary>
+        /// <returns>Content Type string </returns>
+        public override string GetContentType()
+        {
+            if (_isEncrypted)
+            {
+                //Decrypt path parameter if required
+                _relativePath = TNS.AdExpress.Web.Functions.QueryStringEncryption.DecryptQueryString(_relativePath);
+                _isEncrypted = false;
+            }
+            string extension = Path.GetExtension(_relativePath).ToUpper();
+            switch (extension)
+            {
+                case ".JPEG":
+                case ".JPG": return "image/jpeg";
+                case ".GIF": return "image/gif";
+                case ".SWF": return "application/x-shockwave-flash";
+                case ".PNG": return "image/png";
+                case ".AVI": return "video/x-msvideo";
+                case ".WAV": return "audio/x-wav";
+                default: return "image/gif";
+            }
+
+        }
+
+        /// <summary>
+        ///Add Header
+        /// </summary>
+        /// <returns>Content header string </returns>
+        public override string AddHeader()
+        {
+            string extension = Path.GetExtension(_relativePath);
+            return "attachment; filename=CreativeView" + extension;
+        }
+        /// <summary>
+        /// Get Is File Exist or not
+        /// </summary>
+        /// <returns>Is file Exist or not</returns>
+        public override bool IsExist()
+        {
+            if (!string.IsNullOrEmpty(_idSession) && !string.IsNullOrEmpty(_relativePath) && _idSession.Substring(0, 8) == DateTime.Now.ToString("yyyyMMdd"))
+            {
+                var tempRelative = GetRelativePath();
+                var a = GetWebService();
+                return a.GetIsExist(tempRelative, _idVehicle, _isCover);
+            }
+            return false;
+        }
+
         #endregion
+
+
+        protected string GetRelativePath()
+        {
+            string tempRelative;
+            switch (VehiclesInformation.Get(_idVehicle).Id)
+            {
+                case Vehicles.names.press:
+                    tempRelative = _isCover
+                                       ? GetPathOtherVehicle(WebCst.CreationServerPathes.IMAGES_PRESS_COVER)
+                                       : GetPathOtherVehicle(WebCst.CreationServerPathes.IMAGES);
+                    break;
+                case Vehicles.names.outdoor:
+                    tempRelative = GetPathOtherVehicle(WebCst.CreationServerPathes.IMAGES_OUTDOOR);
+                    break;
+                case Vehicles.names.internet:
+                    tempRelative = GetPathOtherVehicle(WebCst.CreationServerPathes.CREA_ADNETTRACK);
+                    break;
+                case Vehicles.names.editorial:
+                    tempRelative = GetPathOtherVehicle(WebCst.CreationServerPathes.IMAGES_EDITORIAL);
+                    break;
+                case Vehicles.names.tv:
+                case Vehicles.names.tvGeneral:
+                case Vehicles.names.tvSponsorship:
+                case Vehicles.names.tvAnnounces:
+                case Vehicles.names.tvNonTerrestrials:
+                case Vehicles.names.radio:
+                case Vehicles.names.radioGeneral:
+                case Vehicles.names.radioMusic:
+                case Vehicles.names.radioSponsorship:
+                    tempRelative = GetPathForTvOrRadio();
+                    break;
+                default:
+                    return null;
+            }
+
+            return tempRelative;
+        }
 
         /// <summary>
         /// Get path
         /// </summary>
         /// <param name="serverPath">server Path</param>
         /// <returns>path</returns>
-        protected string GetPath(string serverPath)
+        protected string GetPathOtherVehicle(string serverPath)
         {
             if (_isEncrypted)
             {
@@ -159,7 +219,7 @@ namespace TNS.AdExpressI.Visual.Russia.WebService
         /// Get path
         /// </summary>
         /// <returns>path</returns>
-        protected string GetPath()
+        protected string GetPathForTvOrRadio()
         {
             string tempRelative;
             if (_isEncrypted)

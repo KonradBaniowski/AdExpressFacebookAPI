@@ -64,6 +64,12 @@
     <level id="60" name="Distribution type" webTextId="2781"  dbId="distr_type"  dbIdAlias="id_distr_type" dbLabel="distr_type" dbTable="distr_type" dbTablePrefixe="dst"/>
     <level id="61" name="Advertisment St format" webTextId="2777" dbId="id_st_format" dbLabel="st_format" dbTable="st_format" dbTablePrefixe="sfo"/>
     <level id="62" name="Type of publication" webTextId="2803" dbId="id_publication_type" dbLabel="publication_type" dbTable="publication_type" dbTablePrefixe="put"/>
+    <level id="68" name="profession" webTextId="2952" dbId="id_profession" dbLabel="profession" dbTable="profession" dbTablePrefixe="pro"/>
+    <level id="69" name="name" webTextId="67" dbId="id_name" dbLabel="name" dbTable="name" dbTablePrefixe="nm"/>
+    <level id="70" name="programme" webTextId="2682" dbId="id_programme" dbLabel="programme" dbTable="programme" dbTablePrefixe="prg"/>
+    <level id="71" name="programmeGenre" webTextId="2658" dbId="id_programme_genre" dbLabel="programme_genre" dbTable="programme_genre" dbTablePrefixe="pgg"/>
+    <level id="72" name="presenceType" webTextId="2657" dbId="id_presence_type" dbLabel="presence_type" dbTable="presence_type" dbTablePrefixe="prt"/>
+    <level id="73" name="rubric" webTextId="2960" dbId="id_rubric" dbLabel="rubric" dbTable="rubric" dbTablePrefixe="rbr"/>
     <!--End New columns for Russia-->
     
   </detaillevelItems>
@@ -299,6 +305,31 @@
     </detailLevel>
     <detailLevel id="55" name="Classe">
       <levelItem id="12" name="Classe"/>
+    </detailLevel>
+    <detailLevel id="57" name="name\profession">
+      <levelItem id="69" name="Name"/>
+      <levelItem id="68" name="Profession"/>
+    </detailLevel>
+    <detailLevel id="58" name="media\name">
+      <levelItem id="1" name="Media"/>
+      <levelItem id="69" name="Name"/>      
+    </detailLevel>
+    <detailLevel id="59" name="media\profession">
+      <levelItem id="1" name="Media"/>
+      <levelItem id="68" name="Profession"/>
+    </detailLevel>
+    <detailLevel id="60" name="sector\name">
+      <levelItem id="11" name="sector"/>
+      <levelItem id="69" name="Name"/>
+    </detailLevel>
+    <detailLevel id="61" name="advertiser\name">
+      <levelItem id="8" name="Advertiser"/>
+      <levelItem id="69" name="Name"/>
+    </detailLevel>
+    <detailLevel id="62" name="name\advertiser\brand">
+      <levelItem id="69" name="Name"/>
+      <levelItem id="8" name="Advertiser"/>
+      <levelItem id="9" name="Brand"/>
     </detailLevel>
   </detailLevels>
 </genericDetailLevel>

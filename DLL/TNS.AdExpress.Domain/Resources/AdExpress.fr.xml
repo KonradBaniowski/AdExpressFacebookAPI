@@ -2183,5 +2183,23 @@
     <item mnemonic="w2947" type="System.String">France France</item>
     <!--Add text for FR : evaliant new crea -->
     <item mnemonic="w2948" type="System.String">Le tableau final par défaut est un tableau toute famille confondu. Grâce au menu déroulant « Familles » vous avez la possibilité de travailler sur un tableau par famille.</item>
+    <!--Add text for RU : Module Celebrities-->
+    <item mnemonic="w2949" type="System.String">Celebrités</item>
+    <item mnemonic="w2950" type="System.String">!</item>
+    <item mnemonic="w2951" type="System.String">!</item>
+    <item mnemonic="w2952" type="System.String">Profession</item>
+    <item mnemonic="w2953" type="System.String">Profession/Nom</item>
+    <item mnemonic="w2954" type="System.String">Profession et Nom</item>
+    <item mnemonic="w2955" type="System.String">Revue de Presse</item>
+    <item mnemonic="w2956" type="System.String">!</item>
+    <item mnemonic="w2957" type="System.String">Type de présence</item>
+    <item mnemonic="w2958" type="System.String">!</item>
+    <item mnemonic="w2959" type="System.String">!</item>
+    <item mnemonic="w2960" type="System.String">Rubrique</item>
+    <item mnemonic="w2961" type="System.String">Affiner Rubrique</item>
+    <item mnemonic="w2962" type="System.String">!</item>
+    <item mnemonic="w2963" type="System.String">Audience</item>
+    <item mnemonic="w2964" type="System.String">!</item>
+    <!-- ********************************* -->
   </items>
 </localization>

@@ -212,41 +212,8 @@ namespace TNS.AdExpressI.Visual.Russia
                 return null;
         }
 
-        /// <summary>
-        /// Get Content Type
-        /// </summary>
-        /// <returns>Content Type string </returns>
-        public override string GetContentType()
-        {
-            if (_isEncrypted)
-            {
-                //Decrypt path parameter if required
-                _relativePath = TNS.AdExpress.Web.Functions.QueryStringEncryption.DecryptQueryString(_relativePath);
-                _isEncrypted = false;
-            }
-            string extension = Path.GetExtension(_relativePath).ToUpper();
-            switch (extension)
-            {
-                case ".JPEG":
-                case ".JPG": return "image/jpeg";
-                case ".GIF": return "image/gif";
-                case ".SWF": return "application/x-shockwave-flash";
-                case ".PNG": return "image/png";
-                case ".AVI": return "video/x-msvideo";
-                case ".WAV": return "audio/x-wav";
-                default: return "image/gif";
-            }
-
-        }
-        /// <summary>
-        ///Add Header
-        /// </summary>
-        /// <returns>Content header string </returns>
-        public override string AddHeader()
-        {
-            string extension = Path.GetExtension(_relativePath);
-            return "attachment; filename=CreativeView" + extension;
-        }
+       
+      
         #endregion
 
     }

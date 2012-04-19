@@ -1,10 +1,11 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using System.IO;
 using System.Web.UI;
-
+using TNS.AdExpressI.Visual;
 using CstClassificationVehicle = TNS.AdExpress.Constantes.Classification.DB.Vehicles;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Core.Sessions;
@@ -21,10 +22,6 @@ namespace TNS.AdExpressI.Insertions.Russia.CreativeResult{
     /// Class used to display tv and radio creatives in reading and streamin mode
     /// </summary>
     public class CreativePopUp : TNS.AdExpressI.Insertions.CreativeResult.CreativePopUp{
-        /// <summary>
-        /// Id advertisment
-        /// </summary>
-        protected int _advertismentId = int.MinValue;
         /// <summary>
         ///File name decrypted
         /// </summary>
@@ -55,47 +52,21 @@ namespace TNS.AdExpressI.Insertions.Russia.CreativeResult{
             #region Construction et vérification des chemins d'accès aux fichiers real ou wm
             //Vérification de l'existence des fichiers et construction des chemins d'accès suivant la volonté de 
             //lire ou de télécharger le fichier
-            bool windowsFormatFound = true;
-            string baseDirectory = "";
 
-            switch (_vehicle){
+            _fileDecrypted = TNS.AdExpress.Web.Functions.QueryStringEncryption.DecryptQueryString(_file);
 
-                case CstClassification.DB.Vehicles.names.radio:
-                case CstClassification.DB.Vehicles.names.radioGeneral:
-                case CstClassification.DB.Vehicles.names.radioMusic:
-                case CstClassification.DB.Vehicles.names.radioSponsorship:
-                    _fileDecrypted = TNS.AdExpress.Web.Functions.QueryStringEncryption.DecryptQueryString(_file);
-                    _advertismentId = int.Parse((_fileDecrypted.Split('.'))[0]);
-                      baseDirectory = ((_advertismentId / 10000) * 10000).ToString();
-                    
-                    //Vérification de l'existence du fichier wm
-                      if (File.Exists(CstWeb.CreationServerPathes.LOCAL_PATH_RADIO + baseDirectory + "\\" + _fileDecrypted))
-                     {
-                        windowsFormatFound = true;
-                    }
-                    else windowsFormatFound = false;                  
-                    break;
+            var parameters = new object[5];
+            parameters[0] = VehiclesInformation.Get(_vehicle).DatabaseId;
+            parameters[1] = _fileDecrypted;
+            parameters[2] = _webSession.IdSession;
+            parameters[3] = false;
+            parameters[4] = false;
 
-                case CstClassification.DB.Vehicles.names.tv:
-                case CstClassification.DB.Vehicles.names.tvGeneral:
-                case CstClassification.DB.Vehicles.names.tvSponsorship:
-                case CstClassification.DB.Vehicles.names.tvAnnounces:
-                case CstClassification.DB.Vehicles.names.tvNonTerrestrials:
-                    _fileDecrypted = TNS.AdExpress.Web.Functions.QueryStringEncryption.DecryptQueryString(_file);
-                    _advertismentId = int.Parse((_fileDecrypted.Split('.'))[0]);
-                    baseDirectory = ((_advertismentId / 10000) * 10000).ToString();
-                    if (File.Exists(CstWeb.CreationServerPathes.LOCAL_PATH_VIDEO + baseDirectory + "\\" + _fileDecrypted))
-                    {
-                        windowsFormatFound = true;
-                    }
-                    else windowsFormatFound = false;
-                    
-                    break;
-                default:
-                    _webSession.Source.Close();
-                    _popUp.Response.Redirect("/Public/Message.aspx?msgTxt=" + GestionWeb.GetWebWord(890, _webSession.SiteLanguage) + "&title=" + GestionWeb.GetWebWord(887, _webSession.SiteLanguage));
-                    break;
-            }
+
+            var visual = (IVisual)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.visual].AssemblyName, WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.visual].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+
+            bool windowsFormatFound = visual.IsExist();      
+
             #endregion
 
             #region Design Tableau d'images real ou wm suivant la disponibilité des fichiers

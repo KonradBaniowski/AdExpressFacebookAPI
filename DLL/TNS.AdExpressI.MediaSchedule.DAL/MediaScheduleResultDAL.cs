@@ -13,6 +13,7 @@
 using System;
 using System.Data;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 using CstFmk = TNS.AdExpress.Constantes.FrameWork;
@@ -250,7 +251,16 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 
             #region Execution de la requête
             try {
-                return _session.Source.Fill(sql.ToString());
+                var stopWatch = new Stopwatch();
+                stopWatch.Start();
+                DataSet ds1 = _session.Source.Fill(sql.ToString());
+
+                stopWatch.Stop();
+                // Get the elapsed time as a TimeSpan value.
+               TimeSpan _duration = stopWatch.Elapsed;
+
+                Console.WriteLine(" Durée : Heure :"+ _duration.Hours+" Minute : "+_duration.Minutes + " Seconde "+_duration.Seconds+" Millisecondes"+_duration.Milliseconds);
+                return ds1;
             }
             catch(System.Exception err) {
                 throw (new MediaScheduleDALException("Unable to load Media Schedule Data : " + sql, err));
@@ -1013,7 +1023,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                         case CstDBClassif.Vehicles.names.cinema: // A Changer quand les durées seront bonnes
                             return (" 1 as period_count ");
                         case CstDBClassif.Vehicles.names.directMarketing:
-                            return (" 7 as period_count ");
+                            return (" 1 as period_count ");
                         default:
                             throw (new MediaScheduleDALException("Unable to determine the media periodicity"));
                     }

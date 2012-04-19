@@ -16,4 +16,7 @@
   <flag id="244" description="Accéder aux creations Pub Extérieure"/>
   <flag id="245" description="Accéder aux créations Autres"/>
   <flag id="246" description="Accéder aux créations Presse Internationale"/>
+  <flag id="334" description="Access to TV CLIPPING 's creative"/>
+  <flag id="335" description="Access to PRESS CLIPPING 's creative"/>
+  <flag id="336" description="Access to EDITORIAL's creative"/>  
 </flags>

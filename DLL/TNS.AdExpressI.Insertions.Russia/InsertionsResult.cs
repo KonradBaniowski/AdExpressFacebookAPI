@@ -842,6 +842,9 @@ namespace TNS.AdExpressI.Insertions.Russia
                     case CstDBClassif.Vehicles.names.outdoor:
                         tab[cLine, 1] = c = new CellCreativesOutdoorInformation(_session, vehicle, columns, columnsName, cells, _module);
                         break;
+                    case CstDBClassif.Vehicles.names.editorial:
+                        tab[cLine, 1] = c = new CellCreativesEditorialInformation(_session, vehicle, columns, columnsName, cells, _module);
+                        break;
                     default:
                         tab[cLine, 1] = c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module);
                         break;
@@ -1237,7 +1240,7 @@ namespace TNS.AdExpressI.Insertions.Russia
                         files = row["associated_file"].ToString().Split(',');
                         foreach (string s in files)
                         {
-                            visuals.Add(this.GetCreativePathVisual(CstWeb.CreationServerPathes.IMAGES_EDITORIAL, s, advertisementId, false, "editorial_id_low/"));
+                            visuals.Add(this.GetCreativePathVisual(CstWeb.CreationServerPathes.IMAGES_EDITORIAL, s, advertisementId, false, "scan_low/"));
                         }
                     }
                     break;
@@ -1349,7 +1352,7 @@ namespace TNS.AdExpressI.Insertions.Russia
                 case CstDBClassif.Vehicles.names.outdoor:
                     return "outdoor_id_low/";
                 case CstDBClassif.Vehicles.names.editorial:
-                    return "editorial_id_low/";
+                    return "scan_low/";
                 default:
                     throw (new Exceptions.InsertionsException("Unable to determine vehicle ID"));
             }

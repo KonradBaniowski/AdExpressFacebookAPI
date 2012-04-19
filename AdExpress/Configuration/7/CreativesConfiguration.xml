@@ -70,9 +70,7 @@
             <allowedModule name="Analyse Plan Média" privilegecode="196"/>
             <allowedModule name="present/absent" privilegecode="278"/>
             <allowedModule name="lost/won" privilegecode="197"/>
-            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
-            <allowedModule name="Analyse des dispositifs" privilegecode="1780"/>
-            <allowedModule  name="Analyse des programmes" privilegecode="1781"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>         
           </allowedModules>
         </detailColumn>
       </detailColumns>
@@ -84,9 +82,7 @@
             <allowedModule name="Analyse Plan Média" privilegecode="196"/>
             <allowedModule name="present/absent" privilegecode="278"/>
             <allowedModule name="lost/won" privilegecode="197"/>
-            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
-            <allowedModule name="Analyse des dispositifs" privilegecode="1780"/>
-            <allowedModule  name="Analyse des programmes" privilegecode="1781"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>           
           </allowedModules>
         </detailColumn>
       </detailColumns>
@@ -98,9 +94,7 @@
             <allowedModule name="Analyse Plan Média" privilegecode="196"/>
             <allowedModule name="present/absent" privilegecode="278"/>
             <allowedModule name="lost/won" privilegecode="197"/>
-            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
-            <allowedModule name="Analyse des dispositifs" privilegecode="1780"/>
-            <allowedModule  name="Analyse des programmes" privilegecode="1781"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>         
           </allowedModules>
         </detailColumn>
       </detailColumns>
@@ -141,7 +135,18 @@
         </detailColumn>
       </detailColumns>
     </vehicle>
-  </vehicleGroups>
-
+    <vehicle id="800"   name="editorial">
+      <detailColumns>
+        <detailColumn id="35">
+          <allowedModules>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>
+            <allowedModule name="Present/Absent" privilegecode="278"/>
+            <allowedModule name="Lost/Won" privilegecode="197"/>
+            <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+    </vehicle>
+  </vehicleGroups>  
 </configuration>
 

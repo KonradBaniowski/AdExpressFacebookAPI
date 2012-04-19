@@ -667,7 +667,7 @@ namespace TNS.AdExpressI.LostWon {
                 parameters[0] = _session;
                 ILostWonResultDAL lostwonDAL = (ILostWonResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
                 DataSet ds = lostwonDAL.GetData();
-                dt = (ds!=null) ? lostwonDAL.GetData().Tables[0]:null;
+                dt = (ds!=null) ? ds.Tables[0]:null;
                 dsMedia = lostwonDAL.GetColumnDetails();
 
             }

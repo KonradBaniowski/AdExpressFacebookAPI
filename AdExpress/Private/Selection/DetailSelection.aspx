@@ -226,7 +226,7 @@
                             </tr>
                             <TR height="10"><TD></TD></TR>
                             <%} %>
-<!--TODO : Tester fusion dev trunk-->
+
                              <!--Campaign type-->
                 <%if (displayCampaignTypeSelection){ %>
                 <tr>                   

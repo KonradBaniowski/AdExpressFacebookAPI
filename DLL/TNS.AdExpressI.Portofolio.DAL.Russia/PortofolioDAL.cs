@@ -30,13 +30,13 @@ namespace TNS.AdExpressI.Portofolio.DAL.Russia
     /// </summary>
     public class PortofolioDAL : TNS.AdExpressI.Portofolio.DAL.PortofolioDAL
     {
-
         CommonDAL common;
 
         public CommonDAL Common
         {
             get { return common; }
         }
+
         #region Special methods and data
 
         /// <summary>
@@ -66,6 +66,11 @@ namespace TNS.AdExpressI.Portofolio.DAL.Russia
         private const string GetInsertionDataProcedureName = "[dbo].[rp_ax_vportfolio_insertion_get]";
 
         /// <summary>
+        /// rp_ax_vportfolio_prvisual_get
+        /// </summary>
+        private const string GetPressVisualDataProcedureName = "[dbo].[rp_ax_vportfolio_prvisual_get]";
+
+        /// <summary>
         /// rp_ax_vportfolio_prissue_get
         /// </summary>
         private const string GetPressIssueDataProcedureName = "[dbo].[rp_ax_vportfolio_prissue_get]";
@@ -82,111 +87,6 @@ namespace TNS.AdExpressI.Portofolio.DAL.Russia
             TNS.AdExpress.Web.Core.ISourceProvider sourceProvider = (TNS.AdExpress.Web.Core.SourceProvider)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
             return sourceProvider.GetSource();
         }
-
-        //public string GetCustomerRightTypeValue(Dictionary<CustomerRightType, string> rights, CustomerRightType type)
-        //{
-        //    if (rights.ContainsKey(type) && rights[type].Length > 0)
-        //    {
-        //        return rights[type];
-        //    }
-
-        //    return string.Empty;
-        //}
-
-        //public MediaRight GetMediaRights()
-        //{
-        //    MediaRight result = new MediaRight();
-        //    Dictionary<CustomerRightType, string> mediaRights = _webSession.CustomerDataFilters.MediaRights;
-
-        //    result.MediaRightMediaAccess = GetCustomerRightTypeValue(mediaRights, CustomerRightType.vehicleAccess);
-        //    result.MediaRightMediaExcept = GetCustomerRightTypeValue(mediaRights, CustomerRightType.vehicleException);
-        //    result.MediaRightVehicleAccess = GetCustomerRightTypeValue(mediaRights, CustomerRightType.mediaAccess);
-        //    result.MediaRightVehicleExcept = GetCustomerRightTypeValue(mediaRights, CustomerRightType.mediaException);
-
-        //    return result;
-        //}
-
-
-        //public ProductRight GetProductRight()
-        //{
-        //    ProductRight result = new ProductRight();
-        //    Dictionary<CustomerRightType, string> productRights = _webSession.CustomerDataFilters.ProductsRights;
-
-        //    result.ProductRightAdvertiserAccess = GetCustomerRightTypeValue(productRights, CustomerRightType.advertiserAccess);
-        //    result.ProductRightAdvertiserExcept = GetCustomerRightTypeValue(productRights, CustomerRightType.advertiserException);
-
-        //    result.ProductRightCategory1Access = GetCustomerRightTypeValue(productRights, CustomerRightType.sectorAccess);
-        //    result.ProductRightCategory1Except = GetCustomerRightTypeValue(productRights, CustomerRightType.sectorException);
-        //    result.ProductRightCategory2Access = GetCustomerRightTypeValue(productRights, CustomerRightType.subSectorAccess);
-        //    result.ProductRightCategory2Except = GetCustomerRightTypeValue(productRights, CustomerRightType.subSectorException);
-        //    result.ProductRightCategory3Access = GetCustomerRightTypeValue(productRights, CustomerRightType.groupAccess);
-        //    result.ProductRightCategory3Except = GetCustomerRightTypeValue(productRights, CustomerRightType.groupException);
-        //    result.ProductRightCategory4Access = GetCustomerRightTypeValue(productRights, CustomerRightType.segmentAccess);
-        //    result.ProductRightCategory4Except = GetCustomerRightTypeValue(productRights, CustomerRightType.segmentException);
-
-        //    return result;
-        //}
-
-        //public ProductClassification GetProductClassification()
-        //{
-        //    ProductClassification result = new ProductClassification();
-
-        //    //Get product classification selections
-        //    Dictionary<UniverseAccessType, List<Dictionary<CustomerRightType, string>>> selections = _webSession.CustomerDataFilters.PrincipalProductUniverses;
-
-        //    // First list of the current classiifcation items to include
-        //    if (selections != null && selections.ContainsKey(UniverseAccessType.includes) && selections[UniverseAccessType.includes].Count > 0)
-        //    {
-        //        Dictionary<CustomerRightType, string> items = selections[UniverseAccessType.includes][0];
-        //        if (items != null && items.Count > 0)
-        //        {
-        //            result.AdvertiserAccess1 = GetCustomerRightTypeValue(items, CustomerRightType.advertiserAccess);
-        //            result.BrandAccess1 = GetCustomerRightTypeValue(items, CustomerRightType.brandAccess);
-        //            result.SubBrandAccess1 = GetCustomerRightTypeValue(items, CustomerRightType.subBrandAccess);
-        //            result.ProductAccess1 = GetCustomerRightTypeValue(items, CustomerRightType.productAccess);
-        //            result.Category1Access1 = GetCustomerRightTypeValue(items, CustomerRightType.sectorAccess);
-        //            result.Category2Access1 = GetCustomerRightTypeValue(items, CustomerRightType.subSectorAccess);
-        //            result.Category3Access1 = GetCustomerRightTypeValue(items, CustomerRightType.groupAccess);
-        //            result.Category4Access1 = GetCustomerRightTypeValue(items, CustomerRightType.segmentAccess);
-        //        }
-        //    }
-
-        //    // Second list of the current classiifcation items to include
-        //    if (selections != null && selections.ContainsKey(UniverseAccessType.includes) && selections[UniverseAccessType.includes].Count > 1)
-        //    {
-        //        Dictionary<CustomerRightType, string> items = selections[UniverseAccessType.includes][1];
-        //        if (items != null && items.Count > 0)
-        //        {
-        //            result.AdvertiserAccess2 = GetCustomerRightTypeValue(items, CustomerRightType.advertiserAccess);
-        //            result.BrandAccess2 = GetCustomerRightTypeValue(items, CustomerRightType.brandAccess);
-        //            result.SubBrandAccess2 = GetCustomerRightTypeValue(items, CustomerRightType.subBrandAccess);
-        //            result.ProductAccess2 = GetCustomerRightTypeValue(items, CustomerRightType.productAccess);
-        //            result.Category1Access2 = GetCustomerRightTypeValue(items, CustomerRightType.sectorAccess);
-        //            result.Category2Access2 = GetCustomerRightTypeValue(items, CustomerRightType.subSectorAccess);
-        //            result.Category3Access2 = GetCustomerRightTypeValue(items, CustomerRightType.groupAccess);
-        //            result.Category4Access2 = GetCustomerRightTypeValue(items, CustomerRightType.segmentAccess);
-        //        }
-        //    }
-
-        //    // List of the current classiifcation items to exclude
-        //    if (_webSession.CustomerDataFilters.PrincipalProductUniverses.ContainsKey(UniverseAccessType.excludes) && _webSession.CustomerDataFilters.PrincipalProductUniverses[UniverseAccessType.excludes].Count > 0)
-        //    {
-        //        Dictionary<CustomerRightType, string> items = _webSession.CustomerDataFilters.PrincipalProductUniverses[UniverseAccessType.excludes][0];
-        //        if (items != null && items.Count > 0)
-        //        {
-        //            result.AdvertiserExcept = GetCustomerRightTypeValue(items, CustomerRightType.advertiserException);
-        //            result.BrandExcept = GetCustomerRightTypeValue(items, CustomerRightType.brandException);
-        //            result.SubBrandExcept = GetCustomerRightTypeValue(items, CustomerRightType.subBrandException);
-        //            result.ProductExcept = GetCustomerRightTypeValue(items, CustomerRightType.productException);
-        //            result.Category1Except = GetCustomerRightTypeValue(items, CustomerRightType.sectorException);
-        //            result.Category2Except = GetCustomerRightTypeValue(items, CustomerRightType.subSectorException);
-        //            result.Category3Except = GetCustomerRightTypeValue(items, CustomerRightType.groupException);
-        //            result.Category4Except = GetCustomerRightTypeValue(items, CustomerRightType.segmentException);
-        //        }
-        //    }
-
-        //    return result;
-        //}
 
         public void GetRightSelectParams(ref SqlCommand cmd)
         {
@@ -235,44 +135,6 @@ namespace TNS.AdExpressI.Portofolio.DAL.Russia
             return;
         }
 
-
-        //public AdTypeClassification GetAdTypeClassification()
-        //{
-        //    AdTypeClassification result = new AdTypeClassification();
-
-        //    Dictionary<UniverseAccessType, List<Dictionary<CustomerRightType, string>>> selections = _webSession.CustomerDataFilters.AdvertisementTypeUniverses;
-
-        //    // Lists of the current classiifcation items to include
-        //    if (selections != null && selections.ContainsKey(UniverseAccessType.includes) && selections[UniverseAccessType.includes].Count > 0)
-        //    {
-        //        Dictionary<CustomerRightType, string> items = selections[UniverseAccessType.includes][0];
-        //        if (items != null && items.Count > 0)
-        //        {
-        //            result.AdTypeAccess1 = GetCustomerRightTypeValue(items, CustomerRightType.advertisementTypeAccess);
-        //        }
-        //    }
-
-        //    if (selections != null && selections.ContainsKey(UniverseAccessType.includes) && selections[UniverseAccessType.includes].Count > 1)
-        //    {
-        //        Dictionary<CustomerRightType, string> items = selections[UniverseAccessType.includes][1];
-        //        if (items != null && items.Count > 0)
-        //        {
-        //            result.AdTypeAccess2 = GetCustomerRightTypeValue(items, CustomerRightType.advertisementTypeAccess);
-        //        }
-        //    }
-
-        //    // List of the current classiifcation items to exclude
-        //    if (selections != null && selections.ContainsKey(UniverseAccessType.excludes) && selections[UniverseAccessType.excludes].Count > 0)
-        //    {
-        //        Dictionary<CustomerRightType, string> items = selections[UniverseAccessType.excludes][0];
-        //        if (items != null && items.Count > 0)
-        //        {
-        //            result.AdTypeExcept = GetCustomerRightTypeValue(items, CustomerRightType.advertisementTypeException);
-        //        }
-        //    }
-
-        //    return result;
-        //}
         #endregion
 
         #region Constructor
@@ -569,18 +431,58 @@ namespace TNS.AdExpressI.Portofolio.DAL.Russia
         /// <returns>DataSet</returns>
         public override DataSet GetListDate(bool conditionEndDate, DBConstantes.TableType.Type tableType)
         {
+            try
+            {
+                DataSet ds = new DataSet();
 
-            DataSet ds = new DataSet();
+                //Filter sql statement with parameters:
+                // _idMedia : represents vehicle Identifier selected by customer
+                //_webSession.DataLanguage : represents data language Identifier
+                // _beginingDate  : represents period beginning date (YYYYMMDD)
+                // _endDate  : represents period end date (YYYYMMDD)
 
-            //Filter sql statement with parameters:
-            // _idMedia : represents vehicle Identifier selected by customer
-            //_webSession.DataLanguage : represents data language Identifier
-            // _beginingDate  : represents period beginning date (YYYYMMDD)
-            // _endDate  : represents period end date (YYYYMMDD)
+                //TODO : Implement Russian sql query 
 
-            //TODO : Implement Russian sql query 
+                using (SqlConnection conn = (SqlConnection)GetDataSource().GetSource())
+                {
+                    SqlCommand cmd = conn.CreateCommand();
+                    conn.Open();
 
-            return ds;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 300;
+                    cmd.CommandText = GetPressVisualDataProcedureName;
+
+                    cmd.Parameters.Add("@id_language", SqlDbType.SmallInt);
+                    cmd.Parameters.Add("@id_media", SqlDbType.SmallInt);
+                    cmd.Parameters.Add("@id_vehicle", SqlDbType.Int);
+                    cmd.Parameters.Add("@start", SqlDbType.NVarChar);
+                    cmd.Parameters.Add("@stop", SqlDbType.NVarChar);
+                    cmd.Parameters.Add("@cmpn_type", SqlDbType.NVarChar);
+
+                    // SP set Parameters
+                    cmd.Parameters["@id_language"].Value = Convert.ToInt16(_webSession.DataLanguage);
+                    cmd.Parameters["@id_media"].Value = Convert.ToInt16(_vehicleInformation.DatabaseId);
+                    cmd.Parameters["@id_vehicle"].Value = Convert.ToInt32(_idMedia);
+                    cmd.Parameters["@start"].Value = _beginingDate;
+                    cmd.Parameters["@stop"].Value = _endDate;
+                    cmd.Parameters["@cmpn_type"].Value = _webSession.CampaignType.ToString();
+
+                    GetRightSelectParams(ref cmd);
+
+                    // SP Execute
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        ds.Load(dr, LoadOption.OverwriteChanges, "result");
+                        conn.Close();
+                    }
+                }
+
+                return ds;
+            }
+            catch (Exception err)
+            {
+                throw (new PortofolioDALException("GetListDate. Unable to load the results:", err));
+            }
         }
         #endregion
 
@@ -640,7 +542,6 @@ namespace TNS.AdExpressI.Portofolio.DAL.Russia
         #endregion
 
         #endregion
-
 
         #region Protected Methods
 
@@ -961,6 +862,5 @@ namespace TNS.AdExpressI.Portofolio.DAL.Russia
         #endregion
 
         #endregion
-
     }
 }

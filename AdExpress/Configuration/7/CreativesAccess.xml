@@ -11,10 +11,10 @@
   </VirtualPaths>
   <Networks>
     <Network id="LOCAL_PATH_RADIO" name="Répertoire pour télécharger les spots radio" value="\\storage\multimedia\radio_id\"/>
-    <Network id="LOCAL_PATH_VIDEO" name="Répertoire pour télécharger les spots tv" value="\\storage\multimedia\tv\"/>
+    <Network id="LOCAL_PATH_VIDEO" name="Répertoire pour télécharger les spots tv" value="\\storage\multimedia\tv\"/>        
     <Network id="LOCAL_PATH_IMAGE" name="Répertoire contenant les visuels de la presse" value="\\storage\multimedia\press\"/>
     <Network id="LOCAL_PATH_OUTDOOR" name="Répertoire contenant les logos de la publicité extérieur" value="\\storage\multimedia\outdoor_id\"/>
-    <Network id="LOCAL_PATH_EDITORIAL" name="Répertoire contenant les logos de Editorial" value="\\pressstore\images\scan\"/>    
+    <Network id="LOCAL_PATH_EDITORIAL" name="Répertoire contenant les logos de Editorial" value="\\pressstore\images\scan\"/>
     <Network id="LOCAL_PATH_INTERNET" name="Répertoire contenant les visuels internet" value="\\storage\multimedia\internet_id\"/>
     <Network id="LOCAL_PATH_IMAGES_COVER" name="Physical Directory of PRESS covers" value="\\storage\multimedia\press_cover\"/>
   </Networks>

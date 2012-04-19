@@ -671,122 +671,21 @@
       <columnItem id="18" name="Cinema - Duration"/>
       <columnItem id="70" name="Nombre de supports"/>
     </detailColumn>
-
-    <!--/Détail versions-->
-
-    <!--MS Détail versions-->
-    <!-- PRESS -->
-    <detailColumn id="18" name="Version\Visuel\Annonceur\Groupe\Produi\Date de parutiont\Insertions\Nb supports\Budget\Date de couverture\Date kiosque">
-      <columnItem id="7" name="Annonceur"/>
-      <columnItem id="8" name="Groupe"/>
-      <columnItem id="9" name="Produit"/>
-      <columnItem id="6" name="Version" isKey="true" visible="false"/>
-      <columnItem id="86" name="Date de parution"/>
-      <columnItem id="72" name="insertion"/>
-      <columnItem id="71" name="Nb supports"/>
-      <columnItem id="85" name="Budget"/>
-      <columnItem id="57" name="Date de couverture" visible="false"/>
-      <columnItem id="73" name="Date kiosque" visible="false"/>
-      <columnItem id="35" name="Visuel"/>
+    <!--Editorial (Versions)-->
+    <detailColumn id="35" name="Visual\Advertisment ID\Product\Advertiser...">
+      <columnItem id="35" name="Visual"/>
+      <columnItem id="6" name="Advertisment ID"  isKey="true"/>
+      <columnItem id="9" name="Product" />     
+      <columnItem id="120" name="Edition"/>
+      <columnItem id="8" name="Category level 3"/>
+      <columnItem id="101" name="Brand"/>
+      <columnItem id="162" name="Type of publication"/>
+      <columnItem id="108" name="First issue date"/>
+      <columnItem id="139" name="Budget USD"/>
+      <columnItem id="140" name="Budget RUB"/>
+      <columnItem id="163" name="Square"/>
+      <columnItem id="164" name="Mentions"/>
+      <columnItem id="70" name="Number of active vehicles"/>
     </detailColumn>
-    <!--Radio-->
-    <!--TV-->
-    <detailColumn id="19" name="Version\Spot\Annonceur\Groupe\Produit\Date de parution\Nb spots\nb Support\Budget">
-      <columnItem id="7" name="Annonceur"/>
-      <columnItem id="8" name="Groupe"/>
-      <columnItem id="9" name="Produit"/>
-      <columnItem id="6" name="Version" isKey="true" visible="false"/>
-      <columnItem id="86" name="Date de parution"/>
-      <columnItem id="74" name="Nb spots"/>
-      <columnItem id="70" name="nb Support"/>
-      <columnItem id="85" name="Budget"/>
-      <columnItem id="75" name="Spot"/>
-    </detailColumn>
-    <!--Outdoor-->
-    <detailColumn id="20" name="Annonceur\Groupe\Produit\Version\budget\Nb panneaux\Nb supports">
-      <columnItem id="7" name="Annonceur"/>
-      <columnItem id="8" name="Groupe"/>
-      <columnItem id="9" name="Produit"/>
-      <columnItem id="6" name="Version" isKey="true"/>
-      <columnItem id="85" name="Budget"/>
-      <columnItem id="76" name="Nb panneaux"/>
-      <columnItem id="70" name=" Nb Supports"/>
-      <columnItem id="41" name="Affiche"/>
-    </detailColumn>
-    <!-- VMC-->
-    <detailColumn id="21" name="slogan\Visuel\Annonceur\Groupe\Produit\Poid\Budget\Volume\Format\Format enveloppe\Type enveloppe\Type de doc\Contenu">
-      <columnItem id="7" name="Annonceur"/>
-      <columnItem id="8" name="Groupe"/>
-      <columnItem id="9" name="Produit"/>
-      <columnItem id="6" name="slogan" isKey="true" visible="false"/>
-      <columnItem id="3" name="Support" visible="false"/>
-      <columnItem id="62" name="Poid"/>
-      <columnItem id="85" name="Budget"/>
-      <columnItem id="61" name="Volume"/>
-      <columnItem id="11" name="Format"/>
-      <columnItem id="63" name="Item"/>
-      <columnItem id="64" name="Format enveloppe"/>
-      <columnItem id="66" name="Type enveloppe"/>
-      <columnItem id="60" name="Type de doc"/>
-      <columnItem id="59" name="rapidity"/>
-      <columnItem id="65" name="Contenu"/>
-      <columnItem id="41" name="Visuel"/>
-    </detailColumn>
-    <!--/MS Détail versions-->
-
-    <!--insertions TV portefeuille-->
-    <detailColumn id="22" name="Spot\Annonceur\Produit\Groupe\Top de diffusion\Code écran\Durée\Position\Durée écran\Nombre Spots écran\Prix">
-      <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
-      <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
-      <columnItem id="10" name="Spot" notInExcelExport="true"/>
-      <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
-      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
-      <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
-      <columnItem id="17" name="Top de diffusion"/>
-      <columnItem id="27" name="Code écran" idDetailLevelMatching="21" isKey="true"/>
-      <columnItem id="18" name="Durée" idDetailLevelMatching="19"/>
-      <columnItem id="20" name="Position" isKey="true"/>
-      <columnItem id="21" name="Durée écran"/>
-      <columnItem id="22" name="Nombre Spots écran"/>
-      <columnItem id="14" name="Prix"/>
-      <columnItem id="89" name="Id Category" visible="false" isKey="true"/>
-    </detailColumn>
-    <!--Radio-->
-    <detailColumn id="23" name="Spot\Annonceur\Produit\Groupe\Top de diffusion\Durée\Position\Durée écran\Nombre Spots écran\Position hap\Durée écran hap\Nombre spots hap\Prix\Descriptif">
-      <columnItem id="10" name="Spot" notInExcelExport="true"/>
-      <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
-      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
-      <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
-      <columnItem id="16" name="Top de diffusion" isKey="true"/>
-      <columnItem id="18" name="Durée" idDetailLevelMatching="19"/>
-      <columnItem id="19" name="Position"/>
-      <columnItem id="21" name="Durée écran"/>
-      <columnItem id="23" name="Nombre Spots écran"/>
-      <columnItem id="24" name="Position hap"/>
-      <columnItem id="25" name="Durée écran hap"/>
-      <columnItem id="26" name="Nombre spots hap"/>
-      <columnItem id="14" name="Prix"/>
-      <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
-      <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
-      <columnItem id="55" name="Id Cobranding" visible="false" isKey="true"/>
-    </detailColumn>
-    <!--Outdoor-->
-    <detailColumn id="24" name="Affiche\Annonceur\Produit\Groupe\Centre d'interet\Régie\Nombre de panneaux\Format du panneau\Type de réseau\Réseau afficheur\Agglomeration\Prix">
-      <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
-      <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
-      <columnItem id="56" name="Id_data_outdoor" visible="false" isKey="true"/>
-      <columnItem id="41" name="Affiche" notInExcelExport="true"/>
-      <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
-      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
-      <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
-      <columnItem id="28" name="Nombre de panneaux"/>
-      <columnItem id="29" name="Format du panneau" idDetailLevelMatching="22"/>
-      <columnItem id="30" name="Type de réseau"/>
-      <columnItem id="31" name="Réseau afficheur"/>
-      <columnItem id="32" name="Agglomeration"/>
-      <columnItem id="14" name="Prix"/>
-    </detailColumn>
-    <!--/MS Détail versions-->
-
   </detailColumns>
 </genericColumn>

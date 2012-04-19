@@ -35,6 +35,11 @@ namespace TNS.AdExpressI.Visual
         /// <returns>Binaries visual</returns>
         byte[] GetBinaries(bool isBlur);
         /// <summary>
+        /// Get Is File Exist or not
+        /// </summary>
+        /// <returns>Is file Exist or not</returns>
+        bool IsExist();
+        /// <summary>
         /// Get Content Type
         /// </summary>
         /// <returns>Content Type string </returns>

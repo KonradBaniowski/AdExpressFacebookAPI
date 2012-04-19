@@ -289,7 +289,31 @@ namespace TNS.AdExpress.Domain.Level{
             /// <summary>
             /// Product VP
             /// </summary>
-            vpProduct = 67
+            vpProduct = 67,
+            /// <summary>
+            /// Profession
+            /// </summary>
+            profession = 68,
+            /// <summary>
+            /// Name
+            /// </summary>
+            name = 69,
+            /// <summary>
+            /// Programme
+            /// </summary>
+            programme = 70,
+            /// <summary>
+            /// Programme genre
+            /// </summary>
+            programmeGenre = 71,
+             /// <summary>
+             /// Type of presence
+             /// </summary>
+            presenceType =72,
+            /// <summary>
+            /// Rubric
+            /// </summary>
+            rubric = 73
         }
 		#endregion
 

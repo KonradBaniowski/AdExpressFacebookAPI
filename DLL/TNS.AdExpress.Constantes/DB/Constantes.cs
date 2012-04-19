@@ -1766,9 +1766,19 @@ namespace TNS.AdExpress.Constantes.DB{
         /// <summary>
         /// Identifier of export evaliant creatives flag
         /// </summary>
-        public const Int64 ID_EXPORT_INTERNET_EVALIANT_CREATIVE_FLAG = 328;  
-  
-
+        public const Int64 ID_EXPORT_INTERNET_EVALIANT_CREATIVE_FLAG = 328;
+        /// <summary>
+        /// Identifier of TV CLIPPING creatives flag
+        /// </summary>
+        public const Int64 ID_TV_CLIPPING_CREATION_ACCESS_FLAG = 334;
+       /// <summary>
+        /// Identifier of  PRESS CLIPPING creatives flag
+        /// </summary>
+        public const Int64 ID_PRESS_CLIPPING_CREATION_ACCESS_FLAG = 335;
+        /// <summary>
+        /// Identifier of  EDITORIAL creatives flag
+        /// </summary>
+        public const Int64 ID_EDITORIAL_CREATION_ACCESS_FLAG = 336;  
   
 
     }

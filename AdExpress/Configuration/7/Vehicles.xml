@@ -12,6 +12,7 @@
       <allowedUnit>pagesA2</allowedUnit>
       <allowedUnit>pages</allowedUnit>
       <allowedUnit>quantity</allowedUnit>
+      <allowedUnit>audience</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results -->
     <allowedMediaDetailLevels>
@@ -115,6 +116,7 @@
       <allowedUnit>duration</allowedUnit>
       <allowedUnit>spot</allowedUnit>
       <allowedUnit>quantity</allowedUnit>
+      <allowedUnit>audience</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results-->
     <allowedMediaDetailLevels>
@@ -402,6 +404,7 @@
       <allowedUnit>duration</allowedUnit>
       <allowedUnit>spot</allowedUnit>
       <allowedUnit>quantity</allowedUnit>
+      <allowedUnit>audience</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results-->
     <allowedMediaDetailLevels>
@@ -795,6 +798,7 @@
       <allowedUnit>kusd</allowedUnit>
       <allowedUnit>quantity</allowedUnit>    
       <allowedUnit>screens</allowedUnit>
+      <allowedUnit>audience</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results-->
     <allowedMediaDetailLevels>
@@ -905,6 +909,7 @@
       <allowedUnit>numberBoard</allowedUnit>
       <allowedUnit>quantity</allowedUnit>
       <allowedUnit>square</allowedUnit>
+      <allowedUnit>audience</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results-->
     <allowedMediaDetailLevels>
@@ -1204,7 +1209,7 @@
     </ColumnDetailLevel>
   </vehicle>
   <!-- Editorial -->
-  <vehicle id="editorial" databaseId="800" showInsertions="true" showCreations="false">
+  <vehicle id="editorial" databaseId="800" showInsertions="true" showCreations="true">
     <!-- Units-->
     <allowedUnits defaultUnit="mentions">
       <allowedUnit>square</allowedUnit>

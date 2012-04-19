@@ -15,7 +15,7 @@
 <body class="popUpBackGround">
     <form id="form1" method="post" runat="server">
     <div>
-        <table border="0" align="center" cellpadding="3" cellspacing="0" class="whiteBackGround">
+        <table border="0" align="center" cellpadding="3" cellspacing="0" class="backGroundWhite">
             <tr>
                 <td class="txtViolet14Bold">
                     <asp:Label ID="_tableData" runat="server" Text="_tableData" />
@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <td>
-                    <table width="935" border="0" cellpadding="1" cellspacing="0" class="whiteBackGround txtViolet11">
+                    <table width="935" border="0" cellpadding="1" cellspacing="0" class="backGroundWhite txtViolet11">
                         <!-- HEADER -->
                         <tr align="center" class="txtBlanc11Bold">
                             <td width="70%" class="violetBackGround ColumnHeaderLeft">
@@ -174,7 +174,7 @@
             </tr>
             <tr>
                 <td>
-                    <table width="935" border="0" cellpadding="1" cellspacing="0" class="whiteBackGround txtViolet11">
+                    <table width="935" border="0" cellpadding="1" cellspacing="0" class="backGroundWhite txtViolet11">
                         <!-- HEADER -->
                         <tr align="center" class="txtBlanc11Bold">
                             <td width="15%" class="violetBackGround ColumnHeaderLeft">
@@ -413,7 +413,7 @@
             </tr>
             <tr>
                 <td>
-                    <table width="935" border="0" cellpadding="1" cellspacing="0" class="whiteBackGround txtViolet11">
+                    <table width="935" border="0" cellpadding="1" cellspacing="0" class="backGroundWhite txtViolet11">
                         <!-- HEADER -->
                         <tr align="center" class="txtBlanc11Bold">
                             <td width="15%" class="violetBackGround ColumnHeaderLeft">
