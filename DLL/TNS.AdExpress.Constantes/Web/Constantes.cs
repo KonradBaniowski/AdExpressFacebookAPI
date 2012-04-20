@@ -290,6 +290,10 @@ namespace TNS.AdExpress.Constantes.Web{
             /// Creatives Export Options
             /// </summary>
             creativesExportOptions =66,
+            /// <summary>
+            /// principal Profession Universes
+            /// </summary>
+            principalProfessionUniverses =67
           
 		}
 	

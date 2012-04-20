@@ -146,7 +146,11 @@ namespace TNS.AdExpress.Constantes.Classification{
             /// <summary>
             /// Type NewsPaper
             /// </summary>
-            mediaNewsPaper = 31
+            mediaNewsPaper = 31,
+            /// <summary>
+            /// Profession
+            /// </summary>
+            profession =32
 		}
 		#endregion
 

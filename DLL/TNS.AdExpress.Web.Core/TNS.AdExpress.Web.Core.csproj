@@ -137,6 +137,7 @@
   <ItemGroup>
     <Compile Include="Exceptions\BannersFormatException.cs" />
     <Compile Include="Exceptions\VehicleException.cs" />
+    <Compile Include="Utilities\Converters.cs" />
     <Compile Include="VehicleFormatList.cs" />
     <Compile Include="VehiclesFormatList.cs" />
     <Compile Include="ActiveMediaList.cs" />

@@ -209,6 +209,13 @@
     <column id="167" name="Banner width" webTextId="2776" dbLabel="banner_width" dbTable="banner_width" dbTablePrefixe="bwd" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="168" name="Banner height" webTextId="2776" dbLabel="banner_height" dbTable="banner_height" dbTablePrefixe="bht" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="169" name="St Position" webTextId="2904"  dbId="id_position" dbLabel="position" dbTablePrefixe="pos" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+
+    <column id="170" name="profession" webTextId="2952" dbId="id_profession" dbLabel="profession" dbTable="profession" dbTablePrefixe="pro" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="171" name="name" webTextId="67" dbId="id_name" dbLabel="name" dbTable="name" dbTablePrefixe="nm" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="172" name="rubric" webTextId="2960" dbId="id_rubric" dbLabel="rubric" dbTable="rubric" dbTablePrefixe="rbr" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="173" name="presenceType" webTextId="2657" dbId="id_presence_type" dbLabel="presence_type" dbTable="presence_type" dbTablePrefixe="prt" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="174" name="audience" webTextId="2657" dbId="id_audience" dbLabel="audience" dbTable="audience" dbTablePrefixe="aud" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
+
     <!--End New columns for Russia-->
 
   </columnItems>
@@ -422,7 +429,7 @@
       <columnItem id="144" name="Price RUB"/>
       <columnItem id="86" name="Date of issue"/>
       <columnItem id="6" name="Advertisment ID" notInExcelExport="true" visible="false"/>
-    </detailColumn>
+    </detailColumn>   
     <!--Radio (Media Insertions columns)-->
     <detailColumn id="7" name="Spot\Date de diffusion\Advertiser\Plan Media\Vehicle\Product\Category level 4\Category level 3\Time aired\Duration\Ad break\Position\Adbreak duration\spots adbreak\Price USD\Price RUB">
       <columnItem id="10" name="Spot" notInExcelExport="true"/>
@@ -533,6 +540,21 @@
       <columnItem id="72" name="Number of insertions"/>
       <columnItem id="141" name="Press - PagesA2"/>
       <columnItem id="70" name="Nombre de supports"/>
+    </detailColumn>
+    <!--Press Clipping (versions)-->
+    <detailColumn id="36" name="Visual\Advertisment ID\...">
+      <columnItem id="35" name="Visual"/>
+      <columnItem id="6" name="Advertisment ID" isKey="true" visible="false"/>
+      <columnItem id="171" name="Name"/>
+      <columnItem id="170" name="profession"/>
+      <columnItem id="34" name="Page"/>
+      <columnItem id="172" name="rubric"/>
+      <columnItem id="173" name="Type of presence"/>
+      <columnItem id="108" name="First issue date"/>
+      <columnItem id="163" name="Square"/>
+      <columnItem id="164" name="Mentions"/>
+      <columnItem id="174" name="Audience"/>
+      <columnItem id="70" name="Number of active vehicles"/>
     </detailColumn>
     <!--Radio (versions)-->
     <detailColumn id="12" name="Spot\Advertisment ID\...">
@@ -674,9 +696,10 @@
     <!--Editorial (Versions)-->
     <detailColumn id="35" name="Visual\Advertisment ID\Product\Advertiser...">
       <columnItem id="35" name="Visual"/>
-      <columnItem id="6" name="Advertisment ID"  isKey="true"/>
-      <columnItem id="9" name="Product" />     
       <columnItem id="120" name="Edition"/>
+      <columnItem id="6" name="Advertisment ID"  isKey="true" visible="false"/>
+      <columnItem id="34" name="Page"/>       
+      <columnItem id="161" name="Column"/>
       <columnItem id="8" name="Category level 3"/>
       <columnItem id="101" name="Brand"/>
       <columnItem id="162" name="Type of publication"/>

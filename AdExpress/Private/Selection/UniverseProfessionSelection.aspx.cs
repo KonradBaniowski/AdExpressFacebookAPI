@@ -134,14 +134,7 @@ public partial class Private_Selection_UniverseProfessionSelection : TNS.AdExpre
                 SelectItemsInClassificationWebControl1.EventTarget_ = FrameWorkSelection.eventSelection.SAVE_EVENT;
             }
             #endregion
-
-            //Annuler l'univers de version
-            if (_webSession.CurrentModule == WebConstantes.Module.Name.ALERTE_PLAN_MEDIA
-                || _webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA
-                || _webSession.CurrentModule == WebConstantes.Module.Name.JUSTIFICATIFS_PRESSE) {
-                _webSession.IdSlogans = new ArrayList();
-                _webSession.SloganIdZoom = long.MinValue;
-            }
+          
             _webSession.Save();
         }
         catch (System.Exception exc) {
@@ -215,7 +208,7 @@ public partial class Private_Selection_UniverseProfessionSelection : TNS.AdExpre
                 if ((MustSelectIncludeItems() && nGroups != null && nGroups.Count > 0) || !MustSelectIncludeItems()) {
                     Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universeDictionary = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
                     universeDictionary.Add(universeDictionary.Count, universe);
-                    _webSession.PrincipalProductUniverses = universeDictionary;
+                    _webSession.PrincipalProfessionUniverses = universeDictionary;
                     _webSession.Save();
                     _webSession.Source.Close();
                     Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession + "");
@@ -229,7 +222,7 @@ public partial class Private_Selection_UniverseProfessionSelection : TNS.AdExpre
                 }
             }
             else if (!_isSelectionPage) {
-                _webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                _webSession.PrincipalProfessionUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
                 _webSession.Save();
                 _webSession.Source.Close();
                 Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession + "");
@@ -241,15 +234,15 @@ public partial class Private_Selection_UniverseProfessionSelection : TNS.AdExpre
             }
         }
         catch (TNS.Classification.Universe.SecurityException) {
-            _webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+            _webSession.PrincipalProfessionUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
             _webSession.Save();
             SelectItemsInClassificationWebControl1.ErrorCode = FrameWorkSelection.error.SECURITY_EXCEPTION;
             Response.Write("<script language=javascript>");
-            Response.Write("	alert(\"" + GestionWeb.GetWebWord(2285, _webSession.SiteLanguage) + "\");");//TODO:texte a definir
+            Response.Write("	alert(\"" + GestionWeb.GetWebWord(2285, _webSession.SiteLanguage) + "\");");
             Response.Write("</script>");
         }
         catch (TNS.Classification.Universe.CapacityException) {
-            _webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+            _webSession.PrincipalProfessionUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
             _webSession.Save();
             SelectItemsInClassificationWebControl1.ErrorCode = FrameWorkSelection.error.MAX_ELEMENTS;
             Response.Write("<script language=javascript>");
@@ -272,7 +265,7 @@ public partial class Private_Selection_UniverseProfessionSelection : TNS.AdExpre
     /// <param name="e">Event args</param>
     protected void saveUniverseImageButtonRollOverWebControl_Click(object sender, EventArgs e) {
         Int64 idUniverseClientDescription = -1;
-        TNS.AdExpress.Constantes.Classification.Branch.type branchType = TNS.AdExpress.Constantes.Classification.Branch.type.product;
+        TNS.AdExpress.Constantes.Classification.Branch.type branchType = TNS.AdExpress.Constantes.Classification.Branch.type.profession;
         idUniverseClientDescription = WebConstantes.LoadableUnivers.GENERIC_UNIVERSE;
         
         try {
@@ -281,7 +274,7 @@ public partial class Private_Selection_UniverseProfessionSelection : TNS.AdExpre
             if (universe != null && universe.Count() > 0) {
                 Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> universeDictionary = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
                 universeDictionary.Add(universeDictionary.Count, universe);
-                _webSession.PrincipalProductUniverses = universeDictionary;
+                _webSession.PrincipalProfessionUniverses = universeDictionary;
                 _webSession.Save();
                 _webSession.Source.Close();
                 saveScript = "window.showModalDialog('/Private/Universe/RegisterUniverse.aspx?idSession=" + _webSession.IdSession + "&brancheType=" + branchType
@@ -294,7 +287,7 @@ public partial class Private_Selection_UniverseProfessionSelection : TNS.AdExpre
             }
         }
         catch (TNS.Classification.Universe.SecurityException) {
-            _webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+            _webSession.PrincipalProfessionUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
             _webSession.Save();
             SelectItemsInClassificationWebControl1.ErrorCode = FrameWorkSelection.error.SECURITY_EXCEPTION;
             Response.Write("<script language=javascript>");
@@ -302,7 +295,7 @@ public partial class Private_Selection_UniverseProfessionSelection : TNS.AdExpre
             Response.Write("</script>");
         }
         catch (TNS.Classification.Universe.CapacityException) {
-            _webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+            _webSession.PrincipalProfessionUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
             _webSession.Save();
             SelectItemsInClassificationWebControl1.ErrorCode = FrameWorkSelection.error.MAX_ELEMENTS;
             Response.Write("<script language=javascript>");
@@ -339,7 +332,7 @@ public partial class Private_Selection_UniverseProfessionSelection : TNS.AdExpre
             }
 
             Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> Universes = (Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>)TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetObjectUniverses(idUniverse, _webSession);
-            _webSession.PrincipalProductUniverses = Universes;
+            _webSession.PrincipalProfessionUniverses = Universes;
             _webSession.Save();
             selectionnedUnivers = true;
 
@@ -372,17 +365,7 @@ public partial class Private_Selection_UniverseProfessionSelection : TNS.AdExpre
     private void ComponentsInitOptions() {
 
         string dbSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
-
-        switch (_webSession.CurrentModule) {
-            case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES:
-            case WebConstantes.Module.Name.ANALYSE_PORTEFEUILLE:
-            case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
-            case WebConstantes.Module.Name.ANALYSE_DYNAMIQUE:
-            case WebConstantes.Module.Name.ALERTE_PORTEFEUILLE:
-            case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
-                _isSelectionPage = false;
-                break;
-        }
+        _isSelectionPage = true;       
         ReInitializeSelection(_isSelectionPage);
         MenuWebControl2.CustomerWebSession = _webSession;
         SelectItemsInClassificationWebControl1.DBSchema = dbSchema;
@@ -419,29 +402,14 @@ public partial class Private_Selection_UniverseProfessionSelection : TNS.AdExpre
     /// </summary>
     /// <returns></returns>
     private bool MustSelectIncludeItems() {
-
-        switch (_webSession.CurrentModule) {
-            case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
-            case WebConstantes.Module.Name.ALERTE_PLAN_MEDIA:
-            case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA_CONCURENTIELLE:
-            case WebConstantes.Module.Name.ALERTE_PLAN_MEDIA_CONCURENTIELLE:
-            case WebConstantes.Module.Name.JUSTIFICATIFS_PRESSE:
-            case WebConstantes.Module.Name.BILAN_CAMPAGNE:
-            case WebConstantes.Module.Name.DONNEES_DE_CADRAGE:
-            case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
-            case WebConstantes.Module.Name.INDICATEUR:
-            case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
-                return true;
-            default: return false;
-        }
+        return true;
     }
 
     private void ReInitializeSelection(bool isSelectionPage) {
-        _keepRefineUniverseSelection = !isSelectionPage && WebApplicationParameters.KeepRefineUniverseSelection;
-        if (!_keepRefineUniverseSelection) {
+       
             if (!Page.IsPostBack && _webSession.LastWebPage.IndexOf(this.Page.Request.Url.AbsolutePath) < 0)
-                _webSession.PrincipalProductUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
-        }
+                _webSession.PrincipalProfessionUniverses = new Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+        
 
     }
     #endregion

@@ -23,6 +23,7 @@ using Oracle.DataAccess.Types;
 
 
 using TNS.AdExpress.Constantes.DB;
+using TNS.Classification.Universe;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Constantes.Classification.DB;
 using AccessCstAlias = TNS.AdExpress.Constantes.Customer.Right.type;
@@ -1421,7 +1422,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
 
         #region Nouveaux univers produits et medias
         /// <summary>
-        ///Get/Set Pricinpal dictionary of  universe product selection
+        ///Get/Set Principal dictionary of  universe product selection
         /// </summary>
         public Dictionary<int, AdExpressUniverse> PrincipalProductUniverses
         {
@@ -1453,7 +1454,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
         }
 
         /// <summary>
-        ///Get/Set Pricinpal dictionary of  universe media selection
+        ///Get/Set Principal dictionary of  universe media selection
         /// </summary>
         public Dictionary<int, AdExpressUniverse> PrincipalMediaUniverses
         {
@@ -1485,7 +1486,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
         }
 
         /// <summary>
-        ///Get/Set Pricinpal dictionary of  universe advertising agnecy selection
+        ///Get/Set Principal dictionary of  universe advertising agnecy selection
         /// </summary>
         public Dictionary<int, AdExpressUniverse> PrincipalAdvertisingAgnecyUniverses
         {
@@ -1515,6 +1516,29 @@ namespace TNS.AdExpress.Web.Core.Sessions
                 modificationDate = DateTime.Now;
             }
         }
+        /// <summary>
+        ///Get/Set Principal dictionary of  universe profession selection
+        /// </summary>
+        public Dictionary<int, AdExpressUniverse> PrincipalProfessionUniverses
+        {
+            get
+            {
+              if(userParameters.ContainsKey(CoreConstantes.SessionParamters.principalProfessionUniverses))
+              {
+                  return Utilities.Converters.ConvertToUniverseDictionary(Dimension.profession, Convert.ToString(userParameters[CoreConstantes.SessionParamters.principalProfessionUniverses]));
+              }
+              return new Dictionary<int, AdExpressUniverse>();
+            }
+            set
+            {
+               if(value!=null && value.Count>0)
+               {
+                   userParameters.Add(CoreConstantes.SessionParamters.principalProfessionUniverses,Utilities.Converters.ConvertUniverseToString(value));
+                   modificationDate = DateTime.Now;
+               }else if(userParameters.ContainsKey(CoreConstantes.SessionParamters.principalProfessionUniverses))
+                   userParameters.Remove(CoreConstantes.SessionParamters.principalProfessionUniverses);
+            }
+        }
         #endregion
 
         /// <summary>
@@ -1523,7 +1547,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
         public Dictionary<int, AdExpressUniverse> AdvertisementTypeUniverses
         {
             get
-            {
+            { 
                 Dictionary<int, AdExpressUniverse> list = new Dictionary<int, AdExpressUniverse>();
                 AdExpressUniverse adexUniverse = new AdExpressUniverse(TNS.Classification.Universe.Dimension.advertisementType);
                 TNS.Classification.Universe.NomenclatureElementsGroup group = null;
@@ -1554,8 +1578,10 @@ namespace TNS.AdExpress.Web.Core.Sessions
                 {
                     list.Add(list.Count, adexUniverse);
                 }
-
+                
                 return (list);
+
+                
             }
             set
             {
@@ -3667,18 +3693,25 @@ namespace TNS.AdExpress.Web.Core.Sessions
             catch (System.Exception) { return (false); }
         }
 
+        /// <summary>
+        /// Indicate if Profesion has been selected
+        /// </summary>
+        /// <returns>True Profesion has been selected</returns>
+        public bool IsProfessionSelected()
+        {
+           
+            if (PrincipalProfessionUniverses.Count > 0) return (true);
+            return (false);
+        }
+
         #region Annonceurs
         /// <summary>
         /// Indique si des annonceurs ont été sélectionnés
         /// </summary>
         /// <returns>True si des annonceurs ont été enregistrées, false sinon</returns>
         public bool isAdvertisersSelected()
-        {
-            #region Ancinne version
-            //if (this.selectionUniversAdvertiser.Nodes.Count > 0) return (true);
-            //else return (false);
-            #endregion
-            if (this.PrincipalProductUniverses.Count > 0) return (true);
+        {           
+            if (PrincipalProductUniverses.Count > 0) return (true);
             return (false);
         }
 
@@ -3693,7 +3726,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
             //else return (false);
             #endregion
 
-            if (this.PrincipalProductUniverses.Count > 0) return (true);
+            if (PrincipalProductUniverses.Count > 0) return (true);
             return (false);
         }
 
@@ -3708,7 +3741,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
             //else return (false);
             #endregion
 
-            if (this.SecondaryProductUniverses.Count > 0) return (true);
+            if (SecondaryProductUniverses.Count > 0) return (true);
             else return (false);
         }
 
@@ -3723,7 +3756,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
             //else return (false);
             #endregion
 
-            if (this.PrincipalProductUniverses.Count > 1) return (true);
+            if (PrincipalProductUniverses.Count > 1) return (true);
             return (false);
 
         }
@@ -3733,17 +3766,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// </summary>
         /// <returns></returns>
         public int advertiserUniversNumber()
-        {
-
-            #region Ancienne version
-            //int advertiserNumber = 0;
-            //if (this.ReferenceUniversAdvertiser.Nodes.Count > 0) {
-            //    advertiserNumber++;
-            //}
-            //advertiserNumber += this.CompetitorUniversAdvertiser.Count;
-            //return (advertiserNumber);
-            #endregion
-
+        {         
             int advertiserNumber = 0;
             if (this.SecondaryProductUniverses.Count > 0)
             {
@@ -3989,17 +4012,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
         public void OnSetVehicle(Int64 vehicleId)
         {
             try
-            {
-                //if (WebApplicationParameters.UseRightDefaultConnection)
-                //{
-                //    string nlsSort = "";
-                //    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
-                //    {
-                //        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
-                //    }
-                //    DATracking.SetVehicle(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(IdSession), CustomerLogin.IdLogin, CurrentModule, vehicleId);
-                //}
-                //else
+            {               
                 DATracking.SetVehicle(Source, Int64.Parse(IdSession), CustomerLogin.IdLogin, CurrentModule, vehicleId);
             }
             catch (System.Exception) { }
@@ -4118,18 +4131,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
             {
                 //customerLogin.ModuleList();
                 Module moduleSelected = customerLogin.GetModule(currentModule);
-                Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
-                //customerLogin.HtModulesList.Clear();
-                //if (WebApplicationParameters.UseRightDefaultConnection)
-                //{
-                //    string nlsSort = "";
-                //    if (WebApplicationParameters.AllowedLanguages.ContainsKey(long.Parse(siteLanguage.ToString())))
-                //    {
-                //        nlsSort = WebApplicationParameters.AllowedLanguages[long.Parse(siteLanguage.ToString())].NlsSort;
-                //    }
-                //    DATracking.UseFileExport(WebApplicationParameters.DataBaseDescription.GetCustomerConnection(this.customerLogin.Login, this.customerLogin.PassWord, nlsSort,CustomerConnectionIds.adexpr03), Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
-                //}
-                //else
+                Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));             
                 DATracking.UseFileExport(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
             }
             catch (System.Exception) { }

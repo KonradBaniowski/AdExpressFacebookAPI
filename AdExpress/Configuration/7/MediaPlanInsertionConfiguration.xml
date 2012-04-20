@@ -39,6 +39,36 @@
         </allowedMediaLevelItems>
       </MediaDetailLevel>
     </vehicle>
+    <vehicle id="310"   name="pressClipping">
+      <detailColumns>
+        <detailColumn id="36">
+          <allowedModules>
+            <allowedModule name="Analyse Plan Média" privilegecode="196"/>        
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+      <MediaDetailLevel>
+        <defaultMediaDetailLevels>
+          <defaultMediaDetailLevel id="57" name="name\profession"/>
+        </defaultMediaDetailLevels>
+        <allowedMediaLevelItems>     
+          <allowedMediaLevelItem id="18" name="Date"/>
+          <allowedMediaLevelItem id="8" name="Advertiser"/>
+          <allowedMediaLevelItem id="9" name="Brand"/>
+          <allowedMediaLevelItem id="28" name="Sub Brand"/>
+          <allowedMediaLevelItem id="10" name="Product" />
+          <allowedMediaLevelItem id="11" name="Category Level 1"/>
+          <allowedMediaLevelItem id="12" name="Category Level 2"/>
+          <allowedMediaLevelItem id="13" name="Category Level 3"/>
+          <allowedMediaLevelItem id="6" name="Advertisment ID"/>
+          <allowedMediaLevelItem id="72" name="Type of presence"/>
+          <allowedMediaLevelItem id="69" name="Name"/>
+          <allowedMediaLevelItem id="68" name="Profession"/>
+          <allowedMediaLevelItem id="26" name="Country"/>
+          <allowedMediaLevelItem id="73" name="Rubric"/>
+        </allowedMediaLevelItems>
+      </MediaDetailLevel>
+    </vehicle>
     <vehicle id="200"   name="radioGeneral" >
       <detailColumns>
         <detailColumn id="2">

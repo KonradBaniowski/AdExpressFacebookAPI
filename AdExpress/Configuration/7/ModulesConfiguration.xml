@@ -1420,7 +1420,7 @@
       </module>
 
       <!-- *****************************************      Celebrities                  *****************************************-->
-      <module name="Celebrities" privilegecode="8675" traductioncode="2949" moduleCategoryId="14" displayIncompleteDateInCalendar="True" urlNextPage="/Private/Selection/UniverseProductSelection.aspx" descriptionWebTextId="2951" descriptionImageName="/Images/Common/Infobulle/PlanMedia.png">
+      <module name="Celebrities" privilegecode="8675" traductioncode="2949" moduleCategoryId="14" displayIncompleteDateInCalendar="True" urlNextPage="/Private/Selection/UniverseProductSelection.aspx" descriptionWebTextId="2951" descriptionImageName="/Images/Common/Infobulle/Celebrities.png">
         <RulesLayer name="Celebrities rules layers" assemblyName="TNS.AdExpressI.Celebrities.Russia.dll" class="TNS.AdExpressI.Celebrities.Russia.CelebritiesResult"/>
         <DataAccessLayer name="Celebrities data access layers" assemblyName="TNS.AdExpressI.Celebrities.DAL.Russia.dll" class="TNS.AdExpressI.Celebrities.DAL.Russia.CelebritiesDAL"/>
         <!--<ProductRights branches="product|advertiser"/>-->
@@ -1435,7 +1435,7 @@
           <allowedUnit>audience</allowedUnit>
         </allowedUnits>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
-          <ModuleVehicles list="100,200,300,400,600"/>
+          <ModuleVehicles list="100,110,200,300,310,400,600"/>
         </ModuleAllowedMediaUniverse>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
@@ -1478,6 +1478,15 @@
             <allowedUniverseBranches defaultBranchId="1">
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
               <allowedUniverseBranch id="10"  name="advertiser\brand"/>
+            </allowedUniverseBranches>
+          </selection>
+          <selection id="5" name="Profession" traductioncode="798" url="/Private/Selection/UniverseProfessionSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="IsProfessionSelected">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="21" name="Profession"/>
+              <allowedUniverseLevel id="25" name="Name"/>              
+            </allowedUniverseLevels>
+            <allowedUniverseBranches defaultBranchId="15">
+              <allowedUniverseBranch id="15" name="Profession\Name"/>
             </allowedUniverseBranches>
           </selection>
           <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/VehicleSelectionHelp.aspx" validationMethod="isMediaSelected" />        

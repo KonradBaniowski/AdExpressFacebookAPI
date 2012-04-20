@@ -436,6 +436,10 @@ namespace AdExpress.Private.Universe{
             {
                 return TNS.AdExpress.Constantes.Classification.Branch.type.mediaEditorial;
             }
+            else if (stringBranch == TNS.AdExpress.Constantes.Classification.Branch.type.profession.ToString())
+            {
+                return TNS.AdExpress.Constantes.Classification.Branch.type.profession;
+            }
 			else 
 			return 0;
 
@@ -485,6 +489,7 @@ namespace AdExpress.Private.Universe{
 				case TNS.AdExpress.Constantes.Classification.Branch.type.mediaInternet:
                 case TNS.AdExpress.Constantes.Classification.Branch.type.mediaAdnettrack:
                 case TNS.AdExpress.Constantes.Classification.Branch.type.mediaEditorial:
+                case TNS.AdExpress.Constantes.Classification.Branch.type.profession:
 					alTreeNodeUniverse.Add(_webSession.CurrentUniversMedia);
 					break;
 				case TNS.AdExpress.Constantes.Classification.Branch.type.programType:
