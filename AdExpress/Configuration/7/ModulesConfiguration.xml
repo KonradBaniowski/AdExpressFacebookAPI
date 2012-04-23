@@ -1420,10 +1420,10 @@
       </module>
 
       <!-- *****************************************      Celebrities                  *****************************************-->
-      <module name="Celebrities" privilegecode="8675" traductioncode="2949" moduleCategoryId="14" displayIncompleteDateInCalendar="True" urlNextPage="/Private/Selection/UniverseProductSelection.aspx" descriptionWebTextId="2951" descriptionImageName="/Images/Common/Infobulle/Celebrities.png">
-        <RulesLayer name="Celebrities rules layers" assemblyName="TNS.AdExpressI.Celebrities.Russia.dll" class="TNS.AdExpressI.Celebrities.Russia.CelebritiesResult"/>
-        <DataAccessLayer name="Celebrities data access layers" assemblyName="TNS.AdExpressI.Celebrities.DAL.Russia.dll" class="TNS.AdExpressI.Celebrities.DAL.Russia.CelebritiesDAL"/>
-        <!--<ProductRights branches="product|advertiser"/>-->
+      <module name="Celebrities" privilegecode="20000" traductioncode="2949" moduleCategoryId="14" displayIncompleteDateInCalendar="True" urlNextPage="/Private/Selection/UniverseProductSelection.aspx" descriptionWebTextId="2951" descriptionImageName="/Images/Common/Infobulle/Celebrities.png">
+        <RulesLayer name="Celebrities rules layers" assemblyName="TNS.AdExpressI.MediaSchedule.Celebrities.dll" class="TNS.AdExpressI.MediaSchedule.Celebrities.MediaScheduleResults"/>
+        <DataAccessLayer name="Celebrities data access layers" assemblyName="TNS.AdExpressI.MediaSchedule.DAL.Celebrities.dll" class="TNS.AdExpressI.MediaSchedule.DAL.Celebrities.MediaScheduleResultDAL"/>
+        <ProductRights branches="product|advertiser"/>
         <allowedUnits>
           <allowedUnit>rubles</allowedUnit>
           <allowedUnit>kRubles</allowedUnit>
@@ -1505,7 +1505,7 @@
           </optionalSelection>           
         </optionalSelections>
         <results>
-          <page id="0" resultid="16" name="Résultats" traductioncode="1474" url="/Private/Results/MediaPlanResults.aspx" printExcelUrl="/Private/Results/Excel/MediaPlanResults.aspx" valueExcelUrl="/Private/Results/ValueExcel/MediaPlanResults.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPlanAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+          <page id="0" resultid="16" name="Résultats" traductioncode="1474" url="/Private/Results/CelebritiesResults.aspx" printExcelUrl="/Private/Results/Excel/MediaPlanResults.aspx" valueExcelUrl="/Private/Results/ValueExcel/MediaPlanResults.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPlanAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <campaignTypes default="none">
               <campaignType>none</campaignType>
               <campaignType>national</campaignType>

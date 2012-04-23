@@ -2367,13 +2367,7 @@ namespace TNS.AdExpressI.MediaSchedule.Russia
                 case CstWeb.CustomerSessions.Unit.duration:
                     return string.Format(fp, f, FctWeb.Units.ConvertToDuration(value));
                 case CstWeb.CustomerSessions.Unit.kEuro:              
-                    return string.Format(fp, f, FctWeb.Units.ConvertToKEuro(value));
-                case CstWeb.CustomerSessions.Unit.euro:
-                case CstWeb.CustomerSessions.Unit.grp:
-                case CstWeb.CustomerSessions.Unit.spot:
-                case CstWeb.CustomerSessions.Unit.insertion:
-                case CstWeb.CustomerSessions.Unit.versionNb:
-                case CstWeb.CustomerSessions.Unit.mmPerCol:
+                    return string.Format(fp, f, FctWeb.Units.ConvertToKEuro(value));            
                 default:
                     return string.Format(fp, f, Convert.ToDouble(value.ToString()));
             }

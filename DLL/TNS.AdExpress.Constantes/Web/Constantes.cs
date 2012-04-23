@@ -1755,7 +1755,7 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Identifiant Celebrities
             /// </summary>
-            public const int CELEBRITIES = 8675;
+            public const int CELEBRITIES = 20000;
 		}
 		#endregion
 

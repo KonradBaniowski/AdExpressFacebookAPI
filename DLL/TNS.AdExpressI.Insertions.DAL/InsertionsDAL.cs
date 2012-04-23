@@ -1547,6 +1547,8 @@ namespace TNS.AdExpressI.Insertions.DAL {
             /* Get SQL group by fields for the classification columns defined in the Xml configuration file
              * */
             tmp = GenericColumns.GetSqlGroupByFields(columns, null);
+            tmp = tmp.Replace("id_slogan", "wp.id_slogan");
+            tmp = tmp.Replace("wp.wp.id_slogan", "wp.id_slogan");
             if (tmp.Length > 0)
             {
                 sql.AppendFormat(" {0}", tmp);
@@ -1606,6 +1608,8 @@ namespace TNS.AdExpressI.Insertions.DAL {
             /* Get SQL group by fields for the classification columns defined in the Xml configuration file
              * */
             tmp = GenericColumns.GetSqlGroupByFields(columns, detailLevelIds);
+            tmp = tmp.Replace("id_slogan", "wp.id_slogan");
+            tmp = tmp.Replace("wp.wp.id_slogan", "wp.id_slogan");
             if (tmp.Length > 0) {
                 if (!first) sql.Append(",");
                 sql.AppendFormat(" {0}", tmp);
@@ -1672,6 +1676,8 @@ namespace TNS.AdExpressI.Insertions.DAL {
             /* Get SQL order by fields for the classification columns defined in the Xml configuration file
              * */
             tmp = GenericColumns.GetSqlOrderFields(columns, null);
+            tmp = tmp.Replace("id_slogan", "wp.id_slogan");
+            tmp = tmp.Replace("wp.wp.id_slogan", "wp.id_slogan");
             if (tmp.Length > 0)
             {
                 if (!first) sql.Append(",");

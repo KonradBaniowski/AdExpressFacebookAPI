@@ -13,7 +13,7 @@
 using System;
 using System.Data;
 using System.Collections.Generic;
-using System.Diagnostics;
+
 using System.Text;
 
 using CstFmk = TNS.AdExpress.Constantes.FrameWork;
@@ -251,16 +251,10 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 
             #region Execution de la requête
             try {
-                var stopWatch = new Stopwatch();
-                stopWatch.Start();
-                DataSet ds1 = _session.Source.Fill(sql.ToString());
+               
+                return _session.Source.Fill(sql.ToString());
 
-                stopWatch.Stop();
-                // Get the elapsed time as a TimeSpan value.
-               TimeSpan _duration = stopWatch.Elapsed;
-
-                Console.WriteLine(" Durée : Heure :"+ _duration.Hours+" Minute : "+_duration.Minutes + " Seconde "+_duration.Seconds+" Millisecondes"+_duration.Milliseconds);
-                return ds1;
+               
             }
             catch(System.Exception err) {
                 throw (new MediaScheduleDALException("Unable to load Media Schedule Data : " + sql, err));
