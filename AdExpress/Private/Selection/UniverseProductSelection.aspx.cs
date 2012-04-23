@@ -155,7 +155,8 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
             //Annuler l'univers de version
             if (_webSession.CurrentModule == WebConstantes.Module.Name.ALERTE_PLAN_MEDIA
                 || _webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA
-                || _webSession.CurrentModule == WebConstantes.Module.Name.JUSTIFICATIFS_PRESSE)
+                || _webSession.CurrentModule == WebConstantes.Module.Name.JUSTIFICATIFS_PRESSE
+                || _webSession.CurrentModule == WebConstantes.Module.Name.CELEBRITIES)
             {
                 _webSession.IdSlogans = new ArrayList();
                 _webSession.SloganIdZoom = long.MinValue;
@@ -491,6 +492,7 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
             case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
             case WebConstantes.Module.Name.INDICATEUR:
             case WebConstantes.Module.Name.TABLEAU_DYNAMIQUE:
+            case WebConstantes.Module.Name.CELEBRITIES:
                 return true;
             default: return false;
         }

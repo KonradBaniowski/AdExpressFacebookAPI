@@ -295,6 +295,7 @@ namespace TNS.AdExpress.Web.Core
                 {
                     case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
                     case CstWeb.Module.Name.BILAN_CAMPAGNE:
+                    case CstWeb.Module.Name.CELEBRITIES:
                         return _customerSession.GetSelection(_customerSession.SelectionUniversMedia, TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess);
                     case CstWeb.Module.Name.INDICATEUR:
                     case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:

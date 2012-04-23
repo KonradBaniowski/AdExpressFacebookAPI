@@ -740,6 +740,7 @@ namespace TNS.AdExpressI.Classification.DAL {
 				switch (_session.CurrentModule) {
                     //For module Media Schedule the data will be filter on selected media (ex. Identifer of media TELEVISION)
 					case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA:
+                    case TNS.AdExpress.Constantes.Web.Module.Name.CELEBRITIES:
 						if (dimension == Dimension.media)
 							sql.AppendFormat(" and wp.id_vehicle in ({0}) ", _session.GetSelection(_session.SelectionUniversMedia, CustomerRightConstante.type.vehicleAccess));
 						break;
