@@ -62,7 +62,7 @@
                 <allowedUniverseLevel id="8" name="brand"/>
                 <allowedUniverseLevel id="5" name="product"/>
               </allowedUniverseLevels>
-              <allowedUniverseBranches>
+              <allowedUniverseBranches defaultBranchId="1">
                 <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
                 <allowedUniverseBranch id="2"  name="holding_company\advertiser\product"/>
                 <allowedUniverseBranch id="3" name="brand\product"/>
@@ -79,7 +79,7 @@
               <allowedUniverseLevel id="14" name="media"/>
               <allowedUniverseLevel id="15" name="interest_center"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="7">
               <allowedUniverseBranch id="7" name="vehicle\category\media"/>
               <allowedUniverseBranch id="8" name="vehicle\interest_center\media"/>
             </allowedUniverseBranches>
@@ -164,7 +164,7 @@
               <allowedUniverseLevel id="3" name="group_"/>
               <allowedUniverseLevel id="4" name="segment"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="1">
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
             </allowedUniverseBranches>
           </optionalSelection>         
@@ -337,7 +337,7 @@
               <allowedUniverseLevel id="3" name="group_"/>
               <allowedUniverseLevel id="4" name="segment"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="1">
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
             </allowedUniverseBranches>
           </optionalSelection>
@@ -518,7 +518,7 @@
               <allowedUniverseLevel id="3" name="group_"/>
               <allowedUniverseLevel id="4" name="segment"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="1">
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
             </allowedUniverseBranches>
           </optionalSelection>
@@ -608,7 +608,7 @@
               <allowedUniverseLevel id="4" name="segment"/>
               <allowedUniverseLevel id="6" name="advertiser"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="1">
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
               <allowedUniverseBranch id="9" name="advertiser"/>
             </allowedUniverseBranches>
@@ -659,7 +659,7 @@
               <allowedUniverseLevel id="4" name="segment"/>
               <allowedUniverseLevel id="6" name="advertiser"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="1">
               <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
               <allowedUniverseBranch id="9" name="advertiser"/>
             </allowedUniverseBranches>
@@ -791,7 +791,7 @@
             <allowedUniverseLevels>
               <allowedUniverseLevel id="1" name="sector"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches>
+            <allowedUniverseBranches defaultBranchId="5">
               <allowedUniverseBranch id="5" name="sector"/>
             </allowedUniverseBranches>
           </selection>
