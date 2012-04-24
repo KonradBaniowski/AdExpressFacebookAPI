@@ -888,6 +888,8 @@ namespace TNS.AdExpress.Web.Core
                 case CstWeb.Module.Name.INDICATEUR:
                 //Get selected products the module " Product class analysis: reports"
                 case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
+                //Get selected products the module " Celebrities"
+                case CstWeb.Module.Name.CELEBRITIES:
                     if (_customerSession.PrincipalProductUniverses != null && _customerSession.PrincipalProductUniverses.Count > 0)
                     {
                         return _customerSession.PrincipalProductUniverses[universeId];
@@ -916,6 +918,7 @@ namespace TNS.AdExpress.Web.Core
                 //Get selected media t
                 case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA_CONCURENTIELLE:
                 case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
+                case CstWeb.Module.Name.CELEBRITIES:
                     if (_customerSession.SecondaryMediaUniverses != null && _customerSession.SecondaryMediaUniverses.Count > 0)
                     {
                         return _customerSession.SecondaryMediaUniverses[0];
@@ -1105,7 +1108,8 @@ namespace TNS.AdExpress.Web.Core
 
             if (_currentModule.Id == TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR
               || _currentModule.Id == TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE
-              || _currentModule.Id == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+              || _currentModule.Id == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA
+                 || _currentModule.Id == TNS.AdExpress.Constantes.Web.Module.Name.CELEBRITIES)
             {
                 //Get products rights in access
                 // Advertiser in access		
