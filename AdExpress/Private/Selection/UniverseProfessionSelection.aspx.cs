@@ -373,8 +373,8 @@ public partial class Private_Selection_UniverseProfessionSelection : TNS.AdExpre
         SelectItemsInClassificationWebControl1.SearchRulesTextCode = 2287;
         SelectItemsInClassificationWebControl1.SearchRulesTextCss = "SearchRulesTextCss";
         LoadableUniversWebControl1.CustomerWebSession = _webSession;
-        LoadableUniversWebControl1.ListBranchType = TNS.AdExpress.Constantes.Classification.Branch.type.product.GetHashCode().ToString();
-        LoadableUniversWebControl1.Dimension_ = TNS.Classification.Universe.Dimension.product;
+        LoadableUniversWebControl1.ListBranchType = TNS.AdExpress.Constantes.Classification.Branch.type.profession.GetHashCode().ToString();
+        LoadableUniversWebControl1.Dimension_ = TNS.Classification.Universe.Dimension.profession;
         LoadableUniversWebControl1.ForGenericUniverse = true;
         LoadableUniversWebControl1.SelectionPage = _isSelectionPage;
         SelectItemsInClassificationWebControl1.ForSelectionPage = _isSelectionPage;

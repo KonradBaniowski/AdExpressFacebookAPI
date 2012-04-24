@@ -29,17 +29,11 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     var univ = kpv.Value;
                     foreach (var kpv2 in univ.ElementsGroupDictionary)
                     {
-                        for (int j = 0; j < kpv2.Value.Count(); j++)
+                        var group = kpv2.Value;
+                        var listLevel = group.GetLevelIdsList();
+                        for (int m = 0; m < listLevel.Count; m++)
                         {
-                            for (int k = 0; k < kpv2.Value.Count(); k++)
-                            {
-                                var group = kpv2.Value;
-                                var listLevel = group.GetLevelIdsList();
-                                for (int m = 0; m < listLevel.Count; m++)
-                                {
-                                    builder.AppendFormat("{0}:{1}:{2}:{3}:{4}|", kpv.Key, kpv2.Key, group.AccessType.GetHashCode(), listLevel[m], group.GetAsString(listLevel[m]));
-                                }
-                            }
+                            builder.AppendFormat("{0}:{1}:{2}:{3}:{4}|", kpv.Key, kpv2.Key, group.AccessType.GetHashCode(), listLevel[m], group.GetAsString(listLevel[m]));
                         }
                     }
                 }
@@ -78,10 +72,11 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     if (idOldUniv != idUniv || idGroup != idOldGroup)
                         group = new NomenclatureElementsGroup(idGroup, (AccessType)Convert.ToInt32(arr[i + 2]));
                     group.AddItems(Convert.ToInt64(arr[i + 3]), arr[i + 4]);
-                    univ.AddGroup(idGroup, group);
+                    if(!univ.Contains(idGroup))
+                        univ.AddGroup(idGroup, group);
 
                     idOldUniv = Convert.ToInt64(arr[i]);
-                    idOldGroup = Convert.ToInt64(arr[i]);
+                    idOldGroup = Convert.ToInt64(arr[i + 1]);
                     first = false;
                 }
                 universes.Add(universes.Count, univ);

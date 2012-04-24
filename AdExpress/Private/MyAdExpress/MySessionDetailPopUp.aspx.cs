@@ -130,9 +130,17 @@ namespace AdExpress.Private.MyAdExpress
         public bool displayProduct = false;
         public bool displayDetailProduct = false;
         /// <summary>
+        /// Affiche liste des professions
+        /// </summary>
+        public bool displayProfessions = false;
+        /// <summary>
         /// Affiche les produits
         /// </summary>
         public string productText = "";
+        /// <summary>
+        /// Texte
+        /// </summary>
+        public string professionText = "";
         /// <summary>
         /// Etude comparative
         /// </summary>
@@ -927,6 +935,36 @@ namespace AdExpress.Private.MyAdExpress
                 }
                 #endregion
 
+                #region Univers profession principal sélectionné
+                if (_webSession.PrincipalProfessionUniverses != null && _webSession.PrincipalProfessionUniverses.Count > 0) {
+
+                    displayProfessions = true;
+                    professionAdExpressText.Code = 2965;
+
+                    TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl selectItemsInClassificationWebControl = new TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl();
+                    selectItemsInClassificationWebControl.TreeViewIcons = "/App_Themes/" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + "/Styles/TreeView/Icons";
+                    selectItemsInClassificationWebControl.TreeViewScripts = "/App_Themes/" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + "/Styles/TreeView/Scripts";
+                    selectItemsInClassificationWebControl.TreeViewStyles = "/App_Themes/" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + "/Styles/TreeView/Css";
+                    selectItemsInClassificationWebControl.ChildNodeExcludeCss = "txtChildNodeExcludeCss";
+                    selectItemsInClassificationWebControl.ChildNodeIncludeCss = "txtChildNodeIncludeCss";
+                    selectItemsInClassificationWebControl.ParentNodeChildExcludeCss = "txtParentNodeChildExcludeCss";
+                    selectItemsInClassificationWebControl.ParentNodeChildIncludeCss = "txtParentNodeChildIncludeCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameBodyCss = "treeExcludeFrameBodyCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameCss = "treeExcludeFrameCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameHeaderCss = "treeExcludeFrameHeaderCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameBodyCss = "treeIncludeFrameBodyCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameCss = "treeIncludeFrameCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameHeaderCss = "treeIncludeFrameHeaderCss";
+                    selectItemsInClassificationWebControl.SiteLanguage = _webSession.SiteLanguage;
+                    selectItemsInClassificationWebControl.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
+
+                    for (int k = 0; k < _webSession.PrincipalProfessionUniverses.Count; k++) {
+                        if (_webSession.PrincipalProfessionUniverses.ContainsKey(k)) {
+                            professionText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProfessionUniverses[k], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession));
+                        }
+                    }
+                }
+                #endregion
 
                 #region Medias concurrents
                 if (webSessionSave.isCompetitorMediaSelected())

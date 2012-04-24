@@ -527,6 +527,23 @@ namespace TNS.AdExpress.Web.Core
             }
         }
         /// <summary>
+        /// Get universes profession selected by the client. 
+        /// The profession classification selected are grouped on max of 3 dictionary.
+        /// The items to exclude are contains in the dictionary which can be obtained with key : TNS.Classification.Universe.AccessType.excludes as follows :
+        /// <code>Dictionary[TNS.AdExpress.Constantes.Customer.Right.type, string] dic = SecondaryMediaUniverses[TNS.Classification.Universe.AccessType.excludes][0];</code> 
+        /// 
+        /// The items to excludes are contained on max 2 dictionary. Note that if the are two dictionary, the items to include will correspond to the intersection of these two dictionaries.
+        /// To get the items to includes, do as follows :
+        /// <code>List<Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, string>> list = SecondaryMediaUniverses[TNS.Classification.Universe.AccessType.includes];</code> 
+        /// </summary>
+        public Dictionary<TNS.Classification.Universe.AccessType, List<Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, string>>> PrincipalProfessionUniverses {
+            get {
+                //Get product classification selected universe
+                TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = _customerSession.PrincipalProfessionUniverses[0];
+                return GetUniverses(adExpressUniverse);
+            }
+        }
+        /// <summary>
         /// Get Data Source
         /// </summary>
         /// <returns>Data source</returns>
@@ -1429,7 +1446,7 @@ namespace TNS.AdExpress.Web.Core
         }
         #endregion
 
-        #region  Get PrincipalProductUniverses
+        #region  Get Universes
         protected Dictionary<TNS.Classification.Universe.AccessType, List<Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, string>>> GetUniverses(TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse)
         {
 

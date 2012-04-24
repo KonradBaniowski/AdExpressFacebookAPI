@@ -386,15 +386,17 @@ namespace TNS.AdExpressI.Classification.DAL {
                 case TNS.AdExpress.Constantes.Customer.Right.type.regionAccess:
                 case TNS.AdExpress.Constantes.Customer.Right.type.regionException:
                     return DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.region);
-                    
+                //Create a list of profression level's items
+                case TNS.AdExpress.Constantes.Customer.Right.type.professionAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.professionException:
+                    return DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.profession);
+                //Create a list of name level's items
+                case TNS.AdExpress.Constantes.Customer.Right.type.nameAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.nameException:
+                    return DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.name);
                 default:
                     throw new Exceptions.ClassificationDALException(" Unknow level type Identifier ");
             }
         }
-
-
-       
-	
-
 	}
 }

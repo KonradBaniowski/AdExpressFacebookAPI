@@ -80,6 +80,7 @@ namespace TNS.AdExpress.Web.Core.Selection {
 					break;
 				case TNS.Classification.Universe.Dimension.media:
                 case TNS.Classification.Universe.Dimension.advertisementType:
+                case TNS.Classification.Universe.Dimension.profession:
 					return _branchesIds;
 			}
 			return tempList;

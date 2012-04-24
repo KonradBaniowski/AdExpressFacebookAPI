@@ -164,6 +164,10 @@ namespace AdExpress.Private.Selection{
         /// Affiche liste des médias
         /// </summary>
         public bool displayListOfVehicles = false;
+        /// <summary>
+        /// Affiche liste des professions
+        /// </summary>
+        public bool displayProfessions = false;
 		/// <summary>
 		/// Code html pour afficher les annonceurs de références séléctionnée
 		/// </summary>
@@ -176,6 +180,10 @@ namespace AdExpress.Private.Selection{
 		/// Texte
 		/// </summary>
 		public string productText="";
+        /// <summary>
+        /// Texte
+        /// </summary>
+        public string professionText = "";
 		/// <summary>
 		/// Etude comparative
 		/// </summary>
@@ -698,6 +706,38 @@ namespace AdExpress.Private.Selection{
                 }
                 #endregion
 
+                #region Univers profession principal sélectionné
+                if (_webSession.PrincipalProfessionUniverses != null && _webSession.PrincipalProfessionUniverses.Count > 0) {
+                    
+                    System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
+                    displayProfessions = true;
+                    professionAdExpressText.Code = 2965;
+
+                    TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl selectItemsInClassificationWebControl = new TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl();
+                    selectItemsInClassificationWebControl.TreeViewIcons = "/App_Themes/" + themeName + "/Styles/TreeView/Icons";
+                    selectItemsInClassificationWebControl.TreeViewScripts = "/App_Themes/" + themeName + "/Styles/TreeView/Scripts";
+                    selectItemsInClassificationWebControl.TreeViewStyles = "/App_Themes/" + themeName + "/Styles/TreeView/Css";
+                    selectItemsInClassificationWebControl.ChildNodeExcludeCss = "txtChildNodeExcludeCss";
+                    selectItemsInClassificationWebControl.ChildNodeIncludeCss = "txtChildNodeIncludeCss";
+                    selectItemsInClassificationWebControl.ParentNodeChildExcludeCss = "txtParentNodeChildExcludeCss";
+                    selectItemsInClassificationWebControl.ParentNodeChildIncludeCss = "txtParentNodeChildIncludeCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameBodyCss = "treeExcludeFrameBodyCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameCss = "treeExcludeFrameCss";
+                    selectItemsInClassificationWebControl.TreeExcludeFrameHeaderCss = "treeExcludeFrameHeaderCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameBodyCss = "treeIncludeFrameBodyCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameCss = "treeIncludeFrameCss";
+                    selectItemsInClassificationWebControl.TreeIncludeFrameHeaderCss = "treeIncludeFrameHeaderCss";
+                    selectItemsInClassificationWebControl.SiteLanguage = _webSession.SiteLanguage;
+                    selectItemsInClassificationWebControl.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
+                    
+                    for (int k = 0; k < _webSession.PrincipalProfessionUniverses.Count; k++) {
+                        if (_webSession.PrincipalProfessionUniverses.ContainsKey(k)) {
+                            professionText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProfessionUniverses[k], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession));
+                        }
+                    }
+                }
+                #endregion
+
                 #region Période
                 if (_zoomDate == null) _zoomDate = "";
                 if (_zoomDate.Length > 0) {
@@ -811,8 +851,6 @@ namespace AdExpress.Private.Selection{
                 #region Niveaux de détail colonne générique
                 WebFunctions.MediaDetailLevel.GetGenericLevelDetailColumn(_webSession, ref displayGenericlevelDetailColumnLabel, genericlevelDetailColumnLabel, false);
                 #endregion
-
-               
 
                 #region Inset
                 if (detailSelections.Contains(CstWeb.DetailSelection.Type.insetSelected.GetHashCode()))

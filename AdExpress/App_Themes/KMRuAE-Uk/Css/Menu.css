@@ -204,6 +204,14 @@ height and width of the icon image.
 	position: absolute; /* Do not alter this line! */
 	width: 20px;
 }
+.professionMenuIcon {
+	background-image: url(/App_Themes/KMRuAE-Uk/Images/Common/Menu/professionMenuIcon.gif);
+	background-repeat: no-repeat; /* Do not alter this line! */
+	height: 20px;
+	left: 2px;
+	position: absolute; /* Do not alter this line! */
+	width: 20px;
+}
 .excelColMenuIcon {
 	background-image: url(/App_Themes/KMAE-Uk/Images/Common/Menu/excelColMenuIcon.gif);
 	background-repeat: no-repeat;

@@ -653,8 +653,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                                 universes = _webSession.AdvertisementTypeUniverses;
                                 break;
 							case TNS.Classification.Universe.Dimension.product:
-                                if ((_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA
-                                    || _webSession.CurrentModule == WebConstantes.Module.Name.CELEBRITIES)
+                                if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA
                                     && !_forSelectionPage)
                                     universes = _webSession.SecondaryProductUniverses;
 								else universes = _webSession.PrincipalProductUniverses;
@@ -663,11 +662,18 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                                 universes = _webSession.PrincipalAdvertisingAgnecyUniverses;
                                 break;
                             case TNS.Classification.Universe.Dimension.media:
-                                if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES || ((_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA || _webSession.CurrentModule == WebConstantes.Module.Name.CELEBRITIES) && !_forSelectionPage))
+                                if (_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_MANDATAIRES 
+                                    || ((_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA
+                                        || _webSession.CurrentModule == WebConstantes.Module.Name.CELEBRITIES) 
+                                        && !_forSelectionPage))
                                     universes = _webSession.SecondaryMediaUniverses;
                                 else
                                     universes = _webSession.PrincipalMediaUniverses;
                                 break;
+                            case TNS.Classification.Universe.Dimension.profession:
+                                 if (_webSession.CurrentModule == WebConstantes.Module.Name.CELEBRITIES && _forSelectionPage)
+                                     universes = _webSession.PrincipalProfessionUniverses;
+                                 break;
 							default: break;
 						}
 
@@ -1280,7 +1286,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                 classficationDAL.DBSchema = _dBSchema;
                 _lowerCase = classficationDAL.ToLowerCase;
                 classficationDAL.Filters = _filters;
-                classficationDAL.FilterWithProductSelection = FilterWithProductSelection();				              
+                classficationDAL.FilterWithProductSelection = FilterWithProductSelection();		
                 return classficationDAL.GetItems(universeLevelId, selectedItemIds, universeLevelOfSelectedItem).Tables[0];
 			}
 			catch (Exception err) {
@@ -1307,7 +1313,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                 classficationDAL.DBSchema = _dBSchema;
                 _lowerCase = classficationDAL.ToLowerCase;             
                 classficationDAL.FilterWithProductSelection = FilterWithProductSelection();
-                classficationDAL.Filters = _filters;                                
+                classficationDAL.Filters = _filters;        
                 return classficationDAL.GetItems(universeLevelId, wordToSearch).Tables[0];
 			}
 			catch (Exception err) {
@@ -1384,15 +1390,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
         }
         #endregion
 
-        protected override string NewText(string text)
-        {
+        protected override string NewText(string text) {
             return text;
         }
-        
-
-        
-     
-
-		
-	}
+    }
 }

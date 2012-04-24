@@ -233,10 +233,21 @@ namespace TNS.AdExpress.Constantes.Customer{
             /// <summary>
             /// VP product in exception
             /// </summary>
-            vpProductException
-
-
-
+            vpProductException,
+            /// Profession in Access
+            /// </summary>
+            professionAccess,
+            /// <summary>
+            /// Profession in exception
+            /// </summary>
+            professionException,
+            /// Name in Access
+            /// </summary>
+            nameAccess,
+            /// <summary>
+            /// Name in exception
+            /// </summary>
+            nameException
 		}
 		#endregion
 	}

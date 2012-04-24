@@ -45,4 +45,10 @@
   <level id="18" name="advertisement_type">
     <style width="170"></style>
   </level>
+  <level id="21" name="profession">
+    <style width="170"></style>
+  </level>
+  <level id="25" name="name">
+    <style width="170"></style>
+  </level>
 </levelsCustomStyles>

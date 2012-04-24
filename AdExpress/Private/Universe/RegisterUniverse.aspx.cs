@@ -223,6 +223,10 @@ public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.Pr
         {
             return TNS.AdExpress.Constantes.Classification.Branch.type.advertisementType;
         }
+        else if (stringBranch.Equals(TNS.AdExpress.Constantes.Classification.Branch.type.profession.GetHashCode().ToString()))
+        {
+            return TNS.AdExpress.Constantes.Classification.Branch.type.profession;
+        }
 		else
 			return 0;
 	}
@@ -401,6 +405,9 @@ public partial class Private_Universe_RegisterUniverse : TNS.AdExpress.Web.UI.Pr
                         break;
                     case TNS.AdExpress.Constantes.Classification.Branch.type.advertisementType:
                         adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(Dimension.advertisementType);
+                        break;
+                    case TNS.AdExpress.Constantes.Classification.Branch.type.profession:
+                        adExpressUniverse = new TNS.AdExpress.Classification.AdExpressUniverse(Dimension.profession);
                         break;
 					default: return null;
 				}
