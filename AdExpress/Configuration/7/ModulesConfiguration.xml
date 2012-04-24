@@ -1480,7 +1480,7 @@
               <allowedUniverseBranch id="10"  name="advertiser\brand"/>
             </allowedUniverseBranches>
           </selection>
-          <!--<selection id="5" name="Profession" traductioncode="798" url="/Private/Selection/UniverseProfessionSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="IsProfessionSelected">
+          <selection id="5" name="Profession" traductioncode="798" url="/Private/Selection/UniverseProfessionSelection.aspx" icone="profession" menuTextId="2954" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="IsProfessionSelected">
             <allowedUniverseLevels>
               <allowedUniverseLevel id="21" name="Profession"/>
               <allowedUniverseLevel id="25" name="Name"/>              
@@ -1488,16 +1488,16 @@
             <allowedUniverseBranches defaultBranchId="15">
               <allowedUniverseBranch id="15" name="Profession\Name"/>
             </allowedUniverseBranches>
-          </selection>-->
+          </selection>
           <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/VehicleSelectionHelp.aspx" validationMethod="isMediaSelected" />
-          <selection id="9" name="media" traductioncode="2539" url="/Private/Selection/RegionSelection.aspx" icone="region" menuTextId="2652" helpUrl="/Private/Helps/Default.aspx" validationMethod="IsPrincipalMediaUniversesSelected">
+          <!--<selection id="9" name="media" traductioncode="2539" url="/Private/Selection/RegionSelection.aspx" icone="region" menuTextId="2652" helpUrl="/Private/Helps/Default.aspx" validationMethod="IsPrincipalMediaUniversesSelected">
             <allowedUniverseLevels>
               <allowedUniverseLevel id="17" name="region"/>
             </allowedUniverseLevels>
             <allowedUniverseBranches defaultBranchId="14">
               <allowedUniverseBranch id="14" name="region"/>
             </allowedUniverseBranches>
-          </selection>
+          </selection>-->
           <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
         </selections>
         <optionalSelections>
