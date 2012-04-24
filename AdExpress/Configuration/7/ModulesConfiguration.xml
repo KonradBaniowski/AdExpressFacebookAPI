@@ -1480,7 +1480,7 @@
               <allowedUniverseBranch id="10"  name="advertiser\brand"/>
             </allowedUniverseBranches>
           </selection>
-          <selection id="5" name="Profession" traductioncode="798" url="/Private/Selection/UniverseProfessionSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="IsProfessionSelected">
+          <!--<selection id="5" name="Profession" traductioncode="798" url="/Private/Selection/UniverseProfessionSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="IsProfessionSelected">
             <allowedUniverseLevels>
               <allowedUniverseLevel id="21" name="Profession"/>
               <allowedUniverseLevel id="25" name="Name"/>              
@@ -1488,8 +1488,16 @@
             <allowedUniverseBranches defaultBranchId="15">
               <allowedUniverseBranch id="15" name="Profession\Name"/>
             </allowedUniverseBranches>
+          </selection>-->
+          <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/VehicleSelectionHelp.aspx" validationMethod="isMediaSelected" />
+          <selection id="9" name="media" traductioncode="2539" url="/Private/Selection/RegionSelection.aspx" icone="region" menuTextId="2652" helpUrl="/Private/Helps/Default.aspx" validationMethod="IsPrincipalMediaUniversesSelected">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="17" name="region"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches defaultBranchId="14">
+              <allowedUniverseBranch id="14" name="region"/>
+            </allowedUniverseBranches>
           </selection>
-          <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/VehicleSelectionHelp.aspx" validationMethod="isMediaSelected" />        
           <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
         </selections>
         <optionalSelections>
@@ -1505,14 +1513,7 @@
           </optionalSelection>           
         </optionalSelections>
         <results>
-          <page id="0" resultid="16" name="Résultats" traductioncode="1474" url="/Private/Results/CelebritiesResults.aspx" printExcelUrl="/Private/Results/Excel/MediaPlanResults.aspx" valueExcelUrl="/Private/Results/ValueExcel/MediaPlanResults.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPlanAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
-            <campaignTypes default="none">
-              <campaignType>none</campaignType>
-              <campaignType>national</campaignType>
-              <campaignType>nationalMoscow</campaignType>
-              <campaignType>nationalLocal</campaignType>
-              <campaignType>local</campaignType>
-            </campaignTypes>
+          <page id="0" resultid="16" name="Résultats" traductioncode="1474" url="/Private/Results/CelebritiesResults.aspx" printExcelUrl="/Private/Results/Excel/CelebritiesResults.aspx" valueExcelUrl="/Private/Results/ValueExcel/CelebritiesResults.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPlanAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">            
             <allowedUnits>
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
@@ -1530,11 +1531,8 @@
               <detailSelection id="5" name="Vehicle Selected"/>
               <detailSelection id="6" name="Product Selected"/>
               <detailSelection id="4" name="Unit"/>
-              <detailSelection id="18" name="Generic Media Level Detail"/>
-              <detailSelection id="19" name="Slogan Selected"/>
-              <detailSelection id="29" name="Media Personnalized"/>
-              <detailSelection id="32" name="Campaign type selected"/>
-              <detailSelection id="33" name="Advertisement type selected"/>
+              <detailSelection id="18" name="Generic Media Level Detail"/>              
+              <detailSelection id="29" name="Media Personnalized"/>  
               <detailSelection id="35" name="region Selected"/>
             </detailSelections>
           </page>
