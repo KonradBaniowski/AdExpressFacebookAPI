@@ -905,7 +905,7 @@ namespace TNS.AdExpress.Web.Core
                 case CstWeb.Module.Name.INDICATEUR:
                 //Get selected products the module " Product class analysis: reports"
                 case CstWeb.Module.Name.TABLEAU_DYNAMIQUE:
-                //Get selected products the module " Celebrities"
+                //Get selected products the module Celebrities
                 case CstWeb.Module.Name.CELEBRITIES:
                     if (_customerSession.PrincipalProductUniverses != null && _customerSession.PrincipalProductUniverses.Count > 0)
                     {
@@ -1286,6 +1286,16 @@ namespace TNS.AdExpress.Web.Core
                                         AddLevelListId(selection, CstCustomer.Right.type.advertisementTypeAccess, listIds);
                                     else AddLevelListId(selection, CstCustomer.Right.type.advertisementTypeException, listIds);
                                     break;
+                                case TNS.Classification.Universe.TNSClassificationLevels.PROFESSION:
+                                    if (accessType == AccessType.includes)
+                                        AddLevelListId(selection, CstCustomer.Right.type.professionAccess, listIds);
+                                    else AddLevelListId(selection, CstCustomer.Right.type.professionException, listIds);
+                                    break;
+                                case TNS.Classification.Universe.TNSClassificationLevels.NAME:
+                                    if (accessType == AccessType.includes)
+                                        AddLevelListId(selection, CstCustomer.Right.type.nameAccess, listIds);
+                                    else AddLevelListId(selection, CstCustomer.Right.type.nameException, listIds);
+                                    break;
                                 default:
                                     throw (new CustomerDataFiltersException("Impossible to identify the level of the universe."));
 
@@ -1413,6 +1423,16 @@ namespace TNS.AdExpress.Web.Core
                                 if (accessType == AccessType.includes)
                                     AddLevelListId(selection, CstCustomer.Right.type.advertisementTypeAccess, listIds);
                                 else AddLevelListId(selection, CstCustomer.Right.type.advertisementTypeException, listIds);
+                                break;
+                            case TNS.Classification.Universe.TNSClassificationLevels.PROFESSION:
+                                if (accessType == AccessType.includes)
+                                    AddLevelListId(selection, CstCustomer.Right.type.professionAccess, listIds);
+                                else AddLevelListId(selection, CstCustomer.Right.type.professionException, listIds);
+                                break;
+                            case TNS.Classification.Universe.TNSClassificationLevels.NAME:
+                                if (accessType == AccessType.includes)
+                                    AddLevelListId(selection, CstCustomer.Right.type.nameAccess, listIds);
+                                else AddLevelListId(selection, CstCustomer.Right.type.nameException, listIds);
                                 break;
                             default:
                                 throw (new CustomerDataFiltersException("Impossible to identify the level of the universe."));
