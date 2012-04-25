@@ -140,7 +140,8 @@ public partial class Private_Selection_UniverseMediaSelection : TNS.AdExpress.We
         #endregion
 
         //Annuler l'univers de version
-        if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA) {
+        if(_webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA
+            || _webSession.CurrentModule == WebConstantes.Module.Name.CELEBRITIES) {
             _webSession.IdSlogans = new ArrayList();
             _webSession.SloganIdZoom = long.MinValue;
             _webSession.Save();
@@ -375,7 +376,8 @@ public partial class Private_Selection_UniverseMediaSelection : TNS.AdExpress.We
         switch (_webSession.CurrentModule)
         {
             case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA: 
-              case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:              
+              case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
+                case WebConstantes.Module.Name.CELEBRITIES:
                 _isSelectionPage = false;
                 break;
         }
@@ -421,6 +423,7 @@ public partial class Private_Selection_UniverseMediaSelection : TNS.AdExpress.We
         switch(_webSession.CurrentModule) {
             case WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA:
             case WebConstantes.Module.Name.ANALYSE_MANDATAIRES:
+            case WebConstantes.Module.Name.CELEBRITIES:
                 return true;
             default: return false;
         }
