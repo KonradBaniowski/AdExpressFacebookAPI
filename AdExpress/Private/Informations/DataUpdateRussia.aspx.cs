@@ -28,148 +28,94 @@ namespace AdExpress.Private.Informations
 
             #region Media date
 
-            _columnHeader13.Text = (_webSession.DataLanguage == 7) ? "Тип медиа" : "Medium";
-            _columnHeader14.Text = (_webSession.DataLanguage == 7) ? "Дата поставки" : "Date";
+            _updateColumnHeader1.Text = (_webSession.DataLanguage == 7) ? "Тип медиа" : "Medium";
+            _updateColumnHeader2.Text = (_webSession.DataLanguage == 7) ? "Дата поставки" : "Date";
 
-            _mediaColumn1.Text = (_webSession.DataLanguage == 7) ? "ТВ Национальная реклама и Москва" : "TV National advertising & Moscow";
-            _mediaColumn2.Text = (_webSession.DataLanguage == 7) ? "ТВ Регионы" : "TV Regions";
-            _mediaColumn3.Text = (_webSession.DataLanguage == 7) ? "ТВ Спонсорство" : "TV Sponsorship";
-            _mediaColumn4.Text = (_webSession.DataLanguage == 7) ? "ТВ Анонсы" : "TV Announces";
-            _mediaColumn5.Text = (_webSession.DataLanguage == 7) ? "ТВ Нишевые каналы" : "TV Niche channels";
-            _mediaColumn6.Text = (_webSession.DataLanguage == 7) ? "Радио Москва" : "Radio Moscow";
-            _mediaColumn7.Text = (_webSession.DataLanguage == 7) ? "Радио Регионы" : "Radio Regions";
-            _mediaColumn8.Text = (_webSession.DataLanguage == 7) ? "Радио Спонсорство" : "Radio Sponsorship";
-            _mediaColumn9.Text = (_webSession.DataLanguage == 7) ? "Радио Музыка" : "Radio Music";
-            _mediaColumn10.Text = (_webSession.DataLanguage == 7) ? "Пресса" : "Press";
-            _mediaColumn11.Text = (_webSession.DataLanguage == 7) ? "Наружная реклама" : "Outdoor";
-            _mediaColumn12.Text = (_webSession.DataLanguage == 7) ? "Кинотеатры" : "Cinema";
-            _mediaColumn13.Text = (_webSession.DataLanguage == 7) ? "Интернет" : "Internet";
-            _mediaColumn14.Text = (_webSession.DataLanguage == 7) ? "Магазины" : "Indoor";
-            _mediaColumn15.Text = (_webSession.DataLanguage == 7) ? "Редакционная поддержка" : "Editorial";
-
-            #endregion
+            _mediaTvNationalColumn.Text = (_webSession.DataLanguage == 7) ? "ТВ Национальная реклама и Москва" : "TV National advertising & Moscow";
+            _mediaTvRegionColumn.Text = (_webSession.DataLanguage == 7) ? "ТВ Регионы" : "TV Regions";
+            _mediaTvSponsorshipColumn.Text = (_webSession.DataLanguage == 7) ? "ТВ Спонсорство" : "TV Sponsorship";
+            _mediaTvNicheChannelsColumn.Text = (_webSession.DataLanguage == 7) ? "ТВ Нишевые каналы" : "TV Niche channels";
+            _mediaPressColumn.Text = (_webSession.DataLanguage == 7) ? "Пресса" : "Press";
+            _mediaEditorialColumn.Text = (_webSession.DataLanguage == 7) ? "Редакционная поддержка" : "Editorial";
+            _mediaRadioMoscowColumn.Text = (_webSession.DataLanguage == 7) ? "Радио Москва" : "Radio Moscow";
+            _mediaRadioRegionColumn.Text = (_webSession.DataLanguage == 7) ? "Радио Регионы" : "Radio Regions";
+            _mediaRadioSponsorshipColumn.Text = (_webSession.DataLanguage == 7) ? "Радио Спонсорство" : "Radio Sponsorship";
+            _mediaRadioMusicColumn.Text = (_webSession.DataLanguage == 7) ? "Радио Музыка" : "Radio Music";
+            _mediaOutdoorColumn.Text = (_webSession.DataLanguage == 7) ? "Наружная реклама" : "Outdoor";
+            _mediaInternetColumn.Text = (_webSession.DataLanguage == 7) ? "Интернет" : "Internet";
 
             DataTable table = GetUpdateInfo();
 
-            _dateColumn1.Text = GetSubMediaLastDate(table, 10);
-            _dateColumn2.Text = GetSubMediaLastDate(table, 12);
-            _dateColumn3.Text = GetSubMediaLastDate(table, 13);
-            _dateColumn4.Text = GetSubMediaLastDate(table, 14);
-            _dateColumn5.Text = GetSubMediaLastDate(table, 15);
-            _dateColumn6.Text = GetSubMediaLastDate(table, 20);
-            _dateColumn7.Text = GetSubMediaLastDate(table, 21);
-            _dateColumn8.Text = GetSubMediaLastDate(table, 22);
-            _dateColumn9.Text = GetSubMediaLastDate(table, 23);
-            _dateColumn10.Text = GetSubMediaLastDate(table, 30);
-            _dateColumn11.Text = GetSubMediaLastDate(table, 40);
-            _dateColumn12.Text = GetSubMediaLastDate(table, 50);
-            _dateColumn13.Text = GetSubMediaLastDate(table, 60);
-            _dateColumn14.Text = GetSubMediaLastDate(table, 70);
-            _dateColumn15.Text = GetSubMediaLastDate(table, 80);
-
-            _tableShedule.Text = (_webSession.DataLanguage == 7) ? "График прогрузки данных:" : "Shedule of update:";
-
-            #region Competative analysis & audit report
-
-            _columnHeader1.Text = (_webSession.DataLanguage == 7) ? "Модуль" : "Report";
-            _columnHeader2.Text = (_webSession.DataLanguage == 7) ? "Тип медиа" : "Medium";
-            _columnHeader3.Text = (_webSession.DataLanguage == 7) ? "География" : "Geography";
-            _columnHeader4.Text = (_webSession.DataLanguage == 7) ? "Ежедневно" : "Daily";
-            _columnHeader5.Text = (_webSession.DataLanguage == 7) ? "Еженедельно" : "Weekly";
-            _columnHeader6.Text = (_webSession.DataLanguage == 7) ? "Ежемесячно" : "Monthly";
-
-            _reportColumn1.Text = (_webSession.DataLanguage == 7) ? "Конкурентный анализ и аудит" : "Competative analysis & audit report";
-
-            _mediumColumn1.Text = (_webSession.DataLanguage == 7) ? "ТВ" : "TV";
-            _marketColumn1.Text = (_webSession.DataLanguage == 7) ? "Национальная реклама+Москва" : "National advertising+Moscow";
-            _dailyColumn1.Text = (_webSession.DataLanguage == 7) ? "минус 1 день" : "1 day minus";
-            _marketColumn2.Text = (_webSession.DataLanguage == 7) ? "Регионы" : "Regions";
-            _dailyColumn2.Text = (_webSession.DataLanguage == 7) ? "минус 4 дня" : "4 day minus";
-
-            _mediumColumn3.Text = (_webSession.DataLanguage == 7) ? "ТВ Спонсорство" : "TV Sponsorship";
-            _marketColumn3.Text = (_webSession.DataLanguage == 7) ? "Москва" : "Moscow";
-            _weeklyColumn3.Text = (_webSession.DataLanguage == 7) ? "по средам за предыдущую неделю" : "on Wednesday for the last week";
-
-            _mediumColumn4.Text = (_webSession.DataLanguage == 7) ? "ТВ Нишевые каналы" : "TV Niche channels";
-            _marketColumn4.Text = (_webSession.DataLanguage == 7) ? "Национальная реклама" : "National advertising";
-            _dailyColumn4.Text = (_webSession.DataLanguage == 7) ? "минус 1 день" : "1 day minus";
-
-            _mediumColumn5.Text = (_webSession.DataLanguage == 7) ? "Радио" : "Radio";
-            _marketColumn5.Text = (_webSession.DataLanguage == 7) ? "Москва" : "Moscow";
-            _dailyColumn5.Text = (_webSession.DataLanguage == 7) ? "минус 2 дня" : "2 day minus";
-            _marketColumn6.Text = (_webSession.DataLanguage == 7) ? "Регионы" : "Regions";
-            _dailyColumn6.Text = (_webSession.DataLanguage == 7) ? "минус 3 дня" : "3 day minus";
-
-            _mediumColumn7.Text = (_webSession.DataLanguage == 7) ? "Радио Спонсорство" : "Radio Sponsorship";
-            _marketColumn7.Text = (_webSession.DataLanguage == 7) ? "Москва" : "Moscow";
-            _weeklyColumn7.Text = (_webSession.DataLanguage == 7) ? "по средам за предыдущую неделю" : "on Wednesday for the last week";
-
-            _mediumColumn8.Text = (_webSession.DataLanguage == 7) ? "Радио Музыка" : "Radio Music";
-            _marketColumn8.Text = (_webSession.DataLanguage == 7) ? "Москва" : "Moscow";
-            _weeklyColumn8.Text = (_webSession.DataLanguage == 7) ? "по понедельникаи - по пт предыдущей недели, по средам - по вс предыдущей недели" : "On Monday - till Friday of the last week, on Wednesday - till Sunday of the last week";
-
-            _mediumColumn9.Text = (_webSession.DataLanguage == 7) ? "Пресса" : "Press";
-            _marketColumn9.Text = (_webSession.DataLanguage == 7) ? "Национальная и локальная реклама" : "National & Local advertising";
-            _monthlyColumn9.Text = (_webSession.DataLanguage == 7) ? "до 20 числа за предыдущий месяц" : "before 20 date for the last month";
-
-            _mediumColumn10.Text = (_webSession.DataLanguage == 7) ? "ТВ анонсы" : "TV Announces";
-            _marketColumn10.Text = (_webSession.DataLanguage == 7) ? "Москва" : "Moscow";
-            _weeklyColumn10.Text = (_webSession.DataLanguage == 7) ? "по вторникам по пнд" : "On Tuesday  - till Monday";
-
-            _mediumColumn11.Text = (_webSession.DataLanguage == 7) ? "Интернет" : "Internet";
-            _marketColumn11.Text = (_webSession.DataLanguage == 7) ? "Москва+Санкт-Петербург" : "Moscow+Saint-Petersburg";
-            _weeklyColumn11.Text = (_webSession.DataLanguage == 7) ? "по пятницам за предыдущую неделю" : "on Friday for the last week";
-
-            _mediumColumn22.Text = (_webSession.DataLanguage == 7) ? "Редакционная поддержка" : "Editorial";
-            _marketColumn22.Text = (_webSession.DataLanguage == 7) ? "Москва" : "Moscow";
-            _monthlyColumn22.Text = (_webSession.DataLanguage == 7) ? "до 10 числа за предыдущий месяц" : "before 10 date for the last month";
+            _dateTvNationalColumn.Text = GetSubMediaLastDate(table, 10);
+            _dateTvRegionColumn.Text = GetSubMediaLastDate(table, 12);
+            _dateTvSponsorshipColumn.Text = GetSubMediaLastDate(table, 13);
+            _dateTvNicheChannelsColumn.Text = GetSubMediaLastDate(table, 15);
+            _datePressColumn.Text = GetSubMediaLastDate(table, 30);
+            _dateEditorialColumn.Text = GetSubMediaLastDate(table, 80);
+            _dateRadioMoscowColumn.Text = GetSubMediaLastDate(table, 20);
+            _dateRadioRegionColumn.Text = GetSubMediaLastDate(table, 21);
+            _dateRadioSponsorshipColumn.Text = GetSubMediaLastDate(table, 22);
+            _dateRadioMusicColumn.Text = GetSubMediaLastDate(table, 23);
+            _dateOutdoorColumn.Text = GetSubMediaLastDate(table, 40);
+            _dateInternetColumn.Text = GetSubMediaLastDate(table, 60);
 
             #endregion
 
-            #region Advertising reports
+            _tableShedule.Text = (_webSession.DataLanguage == 7) ? "График прогрузки данных:" : "Schedule of update:";
 
-            _columnHeader7.Text = (_webSession.DataLanguage == 7) ? "Модуль" : "Report";
-            _columnHeader8.Text = (_webSession.DataLanguage == 7) ? "Тип медиа" : "Medium";
-            _columnHeader9.Text = (_webSession.DataLanguage == 7) ? "География" : "Geography";
-            _columnHeader10.Text = (_webSession.DataLanguage == 7) ? "Ежедневно" : "Daily";
-            _columnHeader11.Text = (_webSession.DataLanguage == 7) ? "Еженедельно" : "Weekly";
-            _columnHeader12.Text = (_webSession.DataLanguage == 7) ? "Ежемесячно" : "Monthly";
+            #region Schedule of update
 
-            _reportColumn2.Text = (_webSession.DataLanguage == 7) ? "Отчеты для рекламодателей" : "Advertising reports";
+            _scheduleColumnHeader1.Text = (_webSession.DataLanguage == 7) ? "Тип медиа" : "Medium";
+            _scheduleColumnHeader2.Text = (_webSession.DataLanguage == 7) ? "География" : "Geography";
+            _scheduleColumnHeader3.Text = (_webSession.DataLanguage == 7) ? "Ежедневно" : "Daily";
+            _scheduleColumnHeader4.Text = (_webSession.DataLanguage == 7) ? "Еженедельно" : "Weekly";
+            _scheduleColumnHeader5.Text = (_webSession.DataLanguage == 7) ? "Ежемесячно" : "Monthly";
 
-            _mediumColumn12.Text = (_webSession.DataLanguage == 7) ? "ТВ" : "TV";
-            _marketColumn12.Text = (_webSession.DataLanguage == 7) ? "Национальная реклама+Москва" : "National advertising+Moscow";
-            _dailyColumn12.Text = (_webSession.DataLanguage == 7) ? "минус 1 день" : "1 day minus";
-            _marketColumn13.Text = (_webSession.DataLanguage == 7) ? "Регионы" : "Regions";
-            _dailyColumn13.Text = (_webSession.DataLanguage == 7) ? "минус 4 дня" : "4 day minus";
+            _mediumTvColumn.Text = (_webSession.DataLanguage == 7) ? "ТВ" : "TV";
+            _marketTvNationalColumn.Text = (_webSession.DataLanguage == 7) ? "Национальная реклама+Москва" : "National advertising+Moscow";
+            _dailyTvNationalColumn.Text = (_webSession.DataLanguage == 7) ? "минус 1 день" : "1 day minus";
+            _marketTvRegionColumn.Text = (_webSession.DataLanguage == 7) ? "Регионы" : "Regions";
+            _dailyTvRegionColumn.Text = (_webSession.DataLanguage == 7) ? "минус 4 дня" : "4 day minus";
 
-            _mediumColumn14.Text = (_webSession.DataLanguage == 7) ? "ТВ Нишевые каналы" : "TV Niche channels";
-            _marketColumn14.Text = (_webSession.DataLanguage == 7) ? "Национальная реклама" : "National advertising";
-            _dailyColumn14.Text = (_webSession.DataLanguage == 7) ? "минус 1 день" : "1 day minus";
+            _mediumTvSponsorshipColumn.Text = (_webSession.DataLanguage == 7) ? "ТВ Спонсорство" : "TV Sponsorship";
+            _marketTvSponsorshipColumn.Text = (_webSession.DataLanguage == 7) ? "Москва" : "Moscow";
+            _weeklyTvSponsorshipColumn.Text = (_webSession.DataLanguage == 7) ? "по средам за предыдущую неделю" : "on Wednesday for the last week";
 
-            _mediumColumn15.Text = (_webSession.DataLanguage == 7) ? "Радио" : "Radio";
-            _marketColumn15.Text = (_webSession.DataLanguage == 7) ? "Москва" : "Moscow";
-            _dailyColumn15.Text = (_webSession.DataLanguage == 7) ? "минус 2 дня" : "2 day minus";
-            _marketColumn16.Text = (_webSession.DataLanguage == 7) ? "Регионы" : "Regions";
-            _dailyColumn16.Text = (_webSession.DataLanguage == 7) ? "минус 3 дня" : "3 day minus";
+            _mediumTvNicheChannelsColumn.Text = (_webSession.DataLanguage == 7) ? "ТВ Нишевые каналы" : "TV Niche channels";
+            _marketTvNicheChannelsColumn.Text = (_webSession.DataLanguage == 7) ? "Национальная реклама" : "National advertising";
+            _dailyTvNicheChannelsColumn.Text = (_webSession.DataLanguage == 7) ? "минус 1 день" : "1 day minus";
 
-            _mediumColumn17.Text = (_webSession.DataLanguage == 7) ? "Пресса" : "Press";
-            _marketColumn17.Text = (_webSession.DataLanguage == 7) ? "Национальная и локальная реклама" : "National & Local advertising";
-            _monthlyColumn17.Text = (_webSession.DataLanguage == 7) ? "до 20 числа за предыдущий месяц" : "before 20 date for the last month";
+            _mediumPressColumn.Text = (_webSession.DataLanguage == 7) ? "Пресса" : "Press";
+            _marketPressColumn.Text = (_webSession.DataLanguage == 7) ? "Национальная и локальная реклама" : "National & Local advertising";
+            _monthlyPressColumn.Text = (_webSession.DataLanguage == 7) ? "до 20 числа за предыдущий месяц" : "before 20 date for the last month";
 
-            _mediumColumn18.Text = (_webSession.DataLanguage == 7) ? "Интернет" : "Internet";
-            _marketColumn18.Text = (_webSession.DataLanguage == 7) ? "Москва+Санкт-Петербург" : "Moscow+Saint-Petersburg";
-            _weeklyColumn18.Text = (_webSession.DataLanguage == 7) ? "по пятницам за предыдущую неделю" : "on Friday for the last week";
+            _mediumEditorialColumn.Text = (_webSession.DataLanguage == 7) ? "Редакционная поддержка" : "Editorial";
+            _marketEditorialColumn.Text = (_webSession.DataLanguage == 7) ? "Москва" : "Moscow";
+            _monthlyEditorialColumn.Text = (_webSession.DataLanguage == 7) ? "до 10 числа за предыдущий месяц" : "before 10 date for the last month";
 
-            _mediumColumn19.Text = (_webSession.DataLanguage == 7) ? "Наружная реклама" : "Outdoor";
-            _marketColumn19.Text = (_webSession.DataLanguage == 7) ? "Москва" : "Moscow";
-            _monthlyColumn19.Text = (_webSession.DataLanguage == 7) ? "до 20 числа за предыдущий месяц" : "before 20 date for the last month";
-            _marketColumn20.Text = (_webSession.DataLanguage == 7) ? "Регионы" : "Regions";
-            _monthlyColumn20.Text = (_webSession.DataLanguage == 7) ? "до 25 числа за предыдущий месяц" : "before 25 date for the last month";
+            _mediumRadioColumn.Text = (_webSession.DataLanguage == 7) ? "Радио" : "Radio";
+            _marketRadioMoscowColumn.Text = (_webSession.DataLanguage == 7) ? "Москва" : "Moscow";
+            _dailyRadioMoscowColumn.Text = (_webSession.DataLanguage == 7) ? "минус 2 дня" : "2 day minus";
+            _marketRadioRegionColumn.Text = (_webSession.DataLanguage == 7) ? "Регионы" : "Regions";
+            _dailyRadioRegionColumn.Text = (_webSession.DataLanguage == 7) ? "минус 3 дня" : "3 day minus";
 
-            _mediumColumn21.Text = (_webSession.DataLanguage == 7) ? "Кинотеатры" : "Cinema";
-            _marketColumn21.Text = (_webSession.DataLanguage == 7) ? "Москва" : "Moscow";
-            _monthlyColumn21.Text = (_webSession.DataLanguage == 7) ? "до 20 числа за предыдущий месяц" : "before 20 date for the last month";
+            _mediumRadioSponsorshipColumn.Text = (_webSession.DataLanguage == 7) ? "Радио Спонсорство" : "Radio Sponsorship";
+            _marketRadioSponsorshipColumn.Text = (_webSession.DataLanguage == 7) ? "Москва" : "Moscow";
+            _weeklyRadioSponsorshipColumn.Text = (_webSession.DataLanguage == 7) ? "по средам за предыдущую неделю" : "on Wednesday for the last week";
+
+            _mediumRadioMusicColumn.Text = (_webSession.DataLanguage == 7) ? "Радио Музыка" : "Radio Music";
+            _marketRadioMusicColumn.Text = (_webSession.DataLanguage == 7) ? "Москва" : "Moscow";
+            _weeklyRadioMusicColumn.Text = (_webSession.DataLanguage == 7) ? "по средам за предыдущую неделю" : "on Wednesday for the last week";
+
+            _mediumOutdoorColumn.Text = (_webSession.DataLanguage == 7) ? "Наружная реклама" : "Outdoor";
+            _marketOutdoorMoscowColumn.Text = (_webSession.DataLanguage == 7) ? "Москва" : "Moscow";
+            _monthlyOutdoorMoscowColumn.Text = (_webSession.DataLanguage == 7) ? "до 20 числа за предыдущий месяц" : "before 20 date for the last month";
+            _marketOutdoorRegionColumn.Text = (_webSession.DataLanguage == 7) ? "Регионы" : "Regions";
+            _monthlyOutdoorRegionColumn.Text = (_webSession.DataLanguage == 7) ? "до 25 числа за предыдущий месяц" : "before 25 date for the last month";
+
+            _mediumInternetColumn.Text = (_webSession.DataLanguage == 7) ? "Интернет" : "Internet";
+            _marketInternetColumn.Text = (_webSession.DataLanguage == 7) ? "Национальная и локальная реклама" : "National & Local advertising";
+            _weeklyInternetColumn.Text = (_webSession.DataLanguage == 7) ? "по пятницам за предыдущую неделю" : "on Friday for the last week";
 
             #endregion
         }

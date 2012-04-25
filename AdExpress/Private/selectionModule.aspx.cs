@@ -132,8 +132,7 @@ namespace AdExpress{
                     if (clProductU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
                     TNS.AdExpress.Web.Core.Utilities.ProductDetailLevel productDetailLevelUtilities = (TNS.AdExpress.Web.Core.Utilities.ProductDetailLevel)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + clProductU.AssemblyName, clProductU.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
                     _webSession.PreformatedProductDetail = productDetailLevelUtilities.GetDefaultPreformatedProductDetails(_webSession);
-
-                    //_webSession.PreformatedProductDetail=WebFunctions.ProductDetailLevel.GetDefault(_webSession);
+                  
 
 					_webSession.LastReachedResultUrl="";
 					_webSession.Percentage=false;
@@ -274,6 +273,8 @@ namespace AdExpress{
                     //New advertising agency univers
                     _webSession.PrincipalAdvertisingAgnecyUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
                     _webSession.SecondaryAdvertisingAgnecyUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                    //Profession universes
+                    _webSession.PrincipalProfessionUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 
                     if(WebApplicationParameters.VpConfigurationDetail != null)
                         _webSession.PersonnalizedLevel = WebApplicationParameters.VpConfigurationDetail.DefaultPersoLevel;

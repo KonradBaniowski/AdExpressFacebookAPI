@@ -2526,6 +2526,14 @@ namespace TNS.AdExpress.Constantes.Web{
         /// Press cover's directory
         /// </summary>
         public static string LOCAL_PATH_IMAGES_COVER = string.Empty;
+        /// <summary>
+        /// Press clipping creative's physical directory
+        /// </summary>
+        public static string LOCAL_PATH_IMAGES_PRESS_CLIPPING = string.Empty;
+        /// <summary>
+        /// Press clipping creative's virtual directory
+        /// </summary>
+        public static string IMAGES_PRESS_CLIPPING = string.Empty;
     }
     #endregion
 

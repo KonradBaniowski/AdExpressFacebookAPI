@@ -21,6 +21,7 @@
     <defaultConnection enumId="12" description="Veille Promo" dataBaseEnumId="2" login="PROMO03" password="waltari2"    dataSource="adexpress_web_test" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>    
   </defaultConnections>
   <schemas>
+    
     <schema enumId="0" description="AdExpress Data (AdExpr03)" label="adexpr03"/>
     <schema enumId="1" description="APPM (Chronopress)" label="appm01"/>
     <schema enumId="2" description="Right" label="mau01"/>

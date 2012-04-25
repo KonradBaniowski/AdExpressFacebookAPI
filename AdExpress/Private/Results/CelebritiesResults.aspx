@@ -65,10 +65,10 @@
                                                     GenericMediaLevelDetailSelectionOptions="True" NbDetailLevelItemList="4" 
                                                     RemoveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelRemove.aspx" 
                                                     SaveASPXFilePath="/Private/MyAdExpress/GenericDetailLevelSave.aspx" 
-                                                    InializeSlogansOption="True" InializeMediaOption="True" 
+                                                    InializeSlogansOption="False" InializeMediaOption="True" 
                                                     PeriodDetailOptions="True"
-                                                    ComparativeStudyOption="True"
-                                                    comparativeStudyDateTypeOption="True"></cc2:resultsoptionswebcontrol></td>
+                                                    ComparativeStudyOption="False"
+                                                    comparativeStudyDateTypeOption="False" CampaignTypeOption="False"></cc2:resultsoptionswebcontrol></td>
 										</tr>
 										<tr class="backGroundOptions">
 											<td style="padding:0px 5px 5px 0px;" align="right"><cc1:imagebuttonrolloverwebcontrol id="okImageButton" runat="server" SkinID="validButton"></cc1:imagebuttonrolloverwebcontrol></td>

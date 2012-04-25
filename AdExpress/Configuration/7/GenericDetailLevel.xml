@@ -67,8 +67,8 @@
     <level id="68" name="profession" webTextId="2952" dbId="id_profession" dbLabel="profession" dbTable="profession" dbTablePrefixe="pro"/>
     <level id="69" name="name" webTextId="67" dbId="id_name" dbLabel="name" dbTable="name" dbTablePrefixe="nm"/>
     <level id="70" name="programme" webTextId="2682" dbId="id_programme" dbLabel="programme" dbTable="programme" dbTablePrefixe="prg"/>
-    <level id="71" name="programmeGenre" webTextId="2658" dbId="id_programme_genre" dbLabel="programme_genre" dbTable="programme_genre" dbTablePrefixe="pgg"/>
-    <level id="72" name="presenceType" webTextId="2657" dbId="id_presence_type" dbLabel="presence_type" dbTable="presence_type" dbTablePrefixe="prt"/>
+    <level id="71" name="programmeGenre" webTextId="2958" dbId="id_programme_genre" dbLabel="programme_genre" dbTable="programme_genre" dbTablePrefixe="pgg"/>
+    <level id="72" name="presenceType" webTextId="2957" dbId="id_presence_type" dbLabel="presence_type" dbTable="presence_type" dbTablePrefixe="prt"/>
     <level id="73" name="rubric" webTextId="2960" dbId="id_rubric" dbLabel="rubric" dbTable="rubric" dbTablePrefixe="rbr"/>
     <!--End New columns for Russia-->
     
@@ -330,6 +330,10 @@
       <levelItem id="69" name="Name"/>
       <levelItem id="8" name="Advertiser"/>
       <levelItem id="9" name="Brand"/>
+    </detailLevel>
+    <detailLevel id="63" name="Media\Type of presence">
+      <levelItem id="1" name="Media"/>
+      <levelItem id="72" name="Type of presence"/>
     </detailLevel>
   </detailLevels>
 </genericDetailLevel>

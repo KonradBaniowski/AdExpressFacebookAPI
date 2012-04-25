@@ -39,6 +39,10 @@
         <allowedMediaLevelItem>region</allowedMediaLevelItem>          <!-- region -->
         <allowedMediaLevelItem>advertisementType</allowedMediaLevelItem> <!-- advertisement Type -->
         <allowedMediaLevelItem>advertisment</allowedMediaLevelItem>  <!-- advertisement -->
+        <allowedMediaLevelItem>profession</allowedMediaLevelItem> <!-- profession -->
+        <allowedMediaLevelItem>name</allowedMediaLevelItem><!-- name -->
+        <allowedMediaLevelItem>presenceType</allowedMediaLevelItem>
+        <!-- type of presence -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -144,7 +148,12 @@
         <!-- rubric -->    
         <allowedMediaLevelItem>country</allowedMediaLevelItem>
         <!-- country -->
+        <allowedMediaLevelItem>profession</allowedMediaLevelItem>
+        <!-- profession -->
         <allowedMediaLevelItem>name</allowedMediaLevelItem>
+        <!-- name -->
+        <allowedMediaLevelItem>presenceType</allowedMediaLevelItem>
+        <!-- type of presence -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -241,6 +250,12 @@
         <!-- advertisement Type -->
         <allowedMediaLevelItem>advertisment</allowedMediaLevelItem>
         <!-- advertisement -->
+        <allowedMediaLevelItem>profession</allowedMediaLevelItem>
+        <!-- profession -->
+        <allowedMediaLevelItem>name</allowedMediaLevelItem>
+        <!-- name -->
+        <allowedMediaLevelItem>presenceType</allowedMediaLevelItem>
+        <!-- type of presence -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -531,6 +546,12 @@
         <!-- advertisement Type -->
         <allowedMediaLevelItem>advertisment</allowedMediaLevelItem>
         <!-- advertisement -->
+        <allowedMediaLevelItem>profession</allowedMediaLevelItem>
+        <!-- profession -->
+        <allowedMediaLevelItem>name</allowedMediaLevelItem>
+        <!-- name -->
+        <allowedMediaLevelItem>presenceType</allowedMediaLevelItem>
+        <!-- type of presence -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -633,6 +654,10 @@
         <!-- Classe -->
         <allowedMediaLevelItem>group</allowedMediaLevelItem>
         <!-- group -->
+        <allowedMediaLevelItem>profession</allowedMediaLevelItem>
+        <!-- profession -->
+        <allowedMediaLevelItem>name</allowedMediaLevelItem>
+        <!-- name -->
         <allowedMediaLevelItem>programme</allowedMediaLevelItem>
         <!-- programme -->
         <allowedMediaLevelItem>programmeGenre</allowedMediaLevelItem>
@@ -1024,6 +1049,12 @@
         <!-- advertisement Type -->
         <allowedMediaLevelItem>advertisment</allowedMediaLevelItem>
         <!-- advertisement -->
+        <allowedMediaLevelItem>profession</allowedMediaLevelItem>
+        <!-- profession -->
+        <allowedMediaLevelItem>name</allowedMediaLevelItem>
+        <!-- name -->
+        <allowedMediaLevelItem>presenceType</allowedMediaLevelItem>
+        <!-- type of presence -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -1133,6 +1164,12 @@
         <!-- advertisement Type -->
         <allowedMediaLevelItem>advertisment</allowedMediaLevelItem>
         <!-- advertisement -->
+        <allowedMediaLevelItem>profession</allowedMediaLevelItem>
+        <!-- profession -->
+        <allowedMediaLevelItem>name</allowedMediaLevelItem>
+        <!-- name -->
+        <allowedMediaLevelItem>presenceType</allowedMediaLevelItem>
+        <!-- type of presence -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->

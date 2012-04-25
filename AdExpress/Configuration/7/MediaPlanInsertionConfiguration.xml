@@ -10,7 +10,12 @@
             <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
             <allowedModule name="Present/absent" privilegecode="278"/>
           </allowedModules>
-        </detailColumn>       
+        </detailColumn>
+        <detailColumn id="38">
+          <allowedModules>
+            <allowedModule name="celebrities" privilegecode="20000"/>          
+          </allowedModules>
+        </detailColumn>
       </detailColumns>
       <MediaDetailLevel>
         <defaultMediaDetailLevels>
@@ -30,7 +35,6 @@
           <allowedMediaLevelItem id="11" name="Category Level 1"/>
           <allowedMediaLevelItem id="12" name="Category Level 2"/>
           <allowedMediaLevelItem id="13" name="Category Level 3"/>
-          <!--<allowedMediaLevelItem id="14" name="Category Level 4"/>-->
           <allowedMediaLevelItem id="6" name="Advertisment ID"/>
           <allowedMediaLevelItem id="38" name="Advertisement Type"/>
           <allowedMediaLevelItem id="45" name="Position" />
@@ -43,7 +47,7 @@
       <detailColumns>
         <detailColumn id="36">
           <allowedModules>
-            <allowedModule name="Analyse Plan Média" privilegecode="196"/>        
+            <allowedModule name="Celebrities" privilegecode="20000"/>        
           </allowedModules>
         </detailColumn>
       </detailColumns>
@@ -77,6 +81,11 @@
             <allowedModule name="Lost/Won" privilegecode="197"/>
             <allowedModule name="Present/Absent" privilegecode="278"/>
             <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+        <detailColumn id="37">
+          <allowedModules>
+            <allowedModule name="Celebrities" privilegecode="20000"/>
           </allowedModules>
         </detailColumn>
       </detailColumns>
@@ -182,8 +191,13 @@
             <allowedModule name="perdu/gagné" privilegecode="197"/>
             <allowedModule name="Présent/absent" privilegecode="278"/>
             <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>         
+        </detailColumn>
+        <detailColumn id="37">
+          <allowedModules>
+            <allowedModule name="Celebrities" privilegecode="20000"/>
           </allowedModules>
-        </detailColumn>        
+        </detailColumn>
       </detailColumns>
       <MediaDetailLevel>
         <defaultMediaDetailLevels>
@@ -328,6 +342,11 @@
             <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
           </allowedModules>        
         </detailColumn>
+        <detailColumn id="39">
+          <allowedModules>
+            <allowedModule name="Celebrities" privilegecode="20000"/>          
+          </allowedModules>
+        </detailColumn>
       </detailColumns>
       <MediaDetailLevel>
         <defaultMediaDetailLevels>
@@ -361,6 +380,11 @@
             <allowedModule name="lost/won" privilegecode="197"/>
             <allowedModule name="present/absent" privilegecode="278"/>
             <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+        <detailColumn id="40">
+          <allowedModules>
+            <allowedModule name="Celebrities" privilegecode="20000"/>           
           </allowedModules>
         </detailColumn>
       </detailColumns>

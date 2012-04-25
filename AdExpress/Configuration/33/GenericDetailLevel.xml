@@ -341,7 +341,12 @@
       <levelItem id="69" name="Name"/>
       <levelItem id="8" name="Advertiser"/>
       <levelItem id="9" name="Brand"/>
-    </detailLevel>-->
+    </detailLevel>
+     <detailLevel id="63" name="Media\Type of presence">
+      <levelItem id="1" name="Media"/>
+      <levelItem id="72" name="Type of presence"/>
+    </detailLevel>
+    -->
     <!--Fin Niveau Détail rajouté en Russie-->
 	</detailLevels>  
 </genericDetailLevel>

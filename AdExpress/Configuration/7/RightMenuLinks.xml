@@ -3,7 +3,7 @@
   <link name="Date de mises à jour" idWebText="1253"
         cssIconName="updateDateMenuIcon"
         href="/Private/Informations/DataUpdateRussia.aspx"
-        language="false" idSession="true"
+        language="true" idSession="true"
         displayInPopUp="true" javascriptFunctionName="popupOpenBis" width="975" height="600"
         />
   <link name="Site kantar Media" idWebText="2841"

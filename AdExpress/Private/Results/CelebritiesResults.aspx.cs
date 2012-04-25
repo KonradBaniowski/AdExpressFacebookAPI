@@ -302,6 +302,18 @@ public partial class CelebritiesResults : TNS.AdExpress.Web.UI.BaseResultWebPage
     }
     #endregion
 
+
+    #region Abstract Methods
+    /// <summary>
+    /// Get next Url from contextual menu
+    /// </summary>
+    /// <returns></returns>
+    protected override string GetNextUrlFromMenu()
+    {
+        return MenuWebControl2.NextUrl;
+    }
+    #endregion
+
     #endregion
 }
 }

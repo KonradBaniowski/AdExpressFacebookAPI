@@ -53,7 +53,7 @@ namespace TNS.AdExpress.Domain.XmlLoader
                             case "Network":
                                 id = reader.GetAttribute("id");
                                 value = reader.GetAttribute("value");
-                                if (id == null || id.Length == 0 || value == null || value.Length == 0)
+                                if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(value))
                                     throw new XmlException("Invalid parameter");
                                 switch (id)
                                 {
@@ -161,8 +161,7 @@ namespace TNS.AdExpress.Domain.XmlLoader
                                         break;
                                     case "LOCAL_PATH_VP":
                                         CreationServerPathes.LOCAL_PATH_VP = value;
-                                        break;
-                                    
+                                        break;                                    
                                     case "IMAGES_EDITORIAL":
                                         CreationServerPathes.IMAGES_EDITORIAL = value;
                                         break;
@@ -178,6 +177,12 @@ namespace TNS.AdExpress.Domain.XmlLoader
                                         break;
                                     case "LOCAL_PATH_IMAGES_COVER":
                                         CreationServerPathes.LOCAL_PATH_IMAGES_COVER = value;
+                                        break;
+                                    case "LOCAL_PATH_IMAGES_PRESS_CLIPPING":
+                                        CreationServerPathes.LOCAL_PATH_IMAGES_PRESS_CLIPPING = value;
+                                        break;
+                                    case "IMAGES_PRESS_CLIPPING":
+                                        CreationServerPathes.IMAGES_PRESS_CLIPPING = value;
                                         break;
                                 }
                                 break;

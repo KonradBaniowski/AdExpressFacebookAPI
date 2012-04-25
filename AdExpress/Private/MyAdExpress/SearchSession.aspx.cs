@@ -612,7 +612,9 @@ namespace AdExpress.Private.MyAdExpress{
                         || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE
                         || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA
                         || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES
-                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES) {
+                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES
+                          || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.CELEBRITIES)
+                    {
 
                         int oldYear = 2000;
                         long selectedVehicle = ((LevelInformation)webSessionSave.SelectionUniversMedia.FirstNode.Tag).ID;
@@ -751,7 +753,9 @@ namespace AdExpress.Private.MyAdExpress{
                         || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PORTEFEUILLE
                         || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA
                         || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES
-                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES) {
+                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES
+                        || webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.CELEBRITIES)
+                    {
                         if(!verifCustomerPeriod)
                             UpdateGlobalDates(webSessionSave.PeriodType, webSessionSave, FirstDayNotEnable);
                     }
@@ -993,6 +997,8 @@ namespace AdExpress.Private.MyAdExpress{
                     //New univers Advertising Agency
                     _webSession.PrincipalAdvertisingAgnecyUniverses = webSessionSave.PrincipalAdvertisingAgnecyUniverses;
                     _webSession.SecondaryAdvertisingAgnecyUniverses = webSessionSave.SecondaryAdvertisingAgnecyUniverses;
+                     //Profession universes
+				    _webSession.PrincipalProfessionUniverses = webSessionSave.PrincipalProfessionUniverses;
 
 					if(notValidPeriod){
 						//Erreur : période non disponible

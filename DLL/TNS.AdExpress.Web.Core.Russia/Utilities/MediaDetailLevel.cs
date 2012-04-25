@@ -78,7 +78,7 @@ namespace TNS.AdExpress.Web.Core.Russia.Utilities
         public override ArrayList GetDefaultGenericDetailLevelIds(long currentModule)
         {
             #region Niveau de détail media (Generic)
-            ArrayList levels = new ArrayList();
+            var levels = new ArrayList();
             switch (currentModule)
             {
                 case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS:
@@ -91,6 +91,11 @@ namespace TNS.AdExpress.Web.Core.Russia.Utilities
                 case TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES:
                     // Famille
                     levels.Add(11);
+                    break;
+                case TNS.AdExpress.Constantes.Web.Module.Name.CELEBRITIES:
+                    // Name/Profession
+                    levels.Add(69);
+                    levels.Add(68);
                     break;
                 default:
                     // Media/Support
@@ -394,6 +399,54 @@ namespace TNS.AdExpress.Web.Core.Russia.Utilities
                             return (true);
                     }
 
+                case WebConstantes.Module.Name.CELEBRITIES:
+                    switch (currentDetailLevelItem.Id)
+                    {
+                        #region Annonceur
+                        case DetailLevelItemInformation.Levels.advertiser:
+                            if ( // Droit sur les niveaux de détail produit
+                                CheckProductDetailLevelAccess()
+                                )
+                                return (true);
+                            return (false);
+                        #endregion
+
+                        #region Product
+                        case DetailLevelItemInformation.Levels.product:
+                            if (
+                                // Droit sur les niveaux de détail produit
+                                CheckProductDetailLevelAccess() &&
+                                // Products rights
+                                _customerWebSession.CustomerLogin.CustormerFlagAccess(TNS.AdExpress.Constantes.DB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)
+                                )
+                                return (true);
+                            return (false);
+                        #endregion
+
+                        #region Marques
+                        case DetailLevelItemInformation.Levels.brand:
+
+                            if (
+                                CheckProductDetailLevelAccess() &&
+                                // Droit sur les groupe de société
+                                _customerWebSession.CustomerLogin.CustormerFlagAccess((long)TNS.AdExpress.Constantes.DB.Flags.ID_MARQUE)
+                                )
+                                return (true);
+                            return (false);
+                        #endregion
+
+                        #region Famille, classe, groupe, variété
+                        case DetailLevelItemInformation.Levels.sector:
+                        case DetailLevelItemInformation.Levels.subSector:
+                        case DetailLevelItemInformation.Levels.group:
+                        case DetailLevelItemInformation.Levels.segment:
+                            if (CheckProductDetailLevelAccess()) return (true);
+                            return (false);
+                        #endregion
+                                                                        
+                        default:
+                            return (true);
+                    }
 
 
                 case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:

@@ -1283,7 +1283,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
             {
                 bannersFormatOption = true;
             }
-            _campaignTypeOption = WebApplicationParameters.AllowCampaignTypeOption;
+            _campaignTypeOption = customerWebSession.CurrentModule !=Constantes.Web.Module.Name.CELEBRITIES && WebApplicationParameters.AllowCampaignTypeOption;
 
             #region IsPostBack
             if (Page.IsPostBack)

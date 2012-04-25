@@ -11,6 +11,20 @@
             <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
           </allowedModules>
         </detailColumn>
+        <detailColumn id="38">
+          <allowedModules>
+            <allowedModule name="Celebrities" privilegecode="20000"/>
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+    </vehicle>
+    <vehicle id="310"   name="pressClipping">
+      <detailColumns>        
+        <detailColumn id="38">
+          <allowedModules>
+            <allowedModule name="Celebrities" privilegecode="20000"/>
+          </allowedModules>
+        </detailColumn>
       </detailColumns>
     </vehicle>
     <vehicle id="200"   name="radioGeneral" >
@@ -21,6 +35,11 @@
             <allowedModule name="Present/Absent" privilegecode="278"/>
             <allowedModule name="Lost/Won" privilegecode="197"/>
             <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+        <detailColumn id="37">
+          <allowedModules>
+            <allowedModule name="Celebrities" privilegecode="20000"/>
           </allowedModules>
         </detailColumn>
       </detailColumns>
@@ -59,6 +78,20 @@
             <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
             <allowedModule name="Analyse des dispositifs" privilegecode="1780"/>
             <allowedModule  name="Analyse des programmes" privilegecode="1781"/>
+          </allowedModules>
+        </detailColumn>
+        <detailColumn id="37">
+          <allowedModules>
+            <allowedModule name="Celebrities" privilegecode="20000"/>           
+          </allowedModules>
+        </detailColumn>
+      </detailColumns>
+    </vehicle>
+    <vehicle id="110"   name="tvClipping" >
+      <detailColumns>    
+        <detailColumn id="37">
+          <allowedModules>
+            <allowedModule name="Celebrities" privilegecode="20000"/>
           </allowedModules>
         </detailColumn>
       </detailColumns>
@@ -109,6 +142,11 @@
             <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
           </allowedModules>
         </detailColumn>
+        <detailColumn id="39">
+          <allowedModules>
+            <allowedModule name="Celebrities" privilegecode="20000"/>
+          </allowedModules>
+        </detailColumn>
       </detailColumns>
     </vehicle>
     <vehicle id="700"   name="indoor" >
@@ -131,6 +169,11 @@
             <allowedModule name="Present/Absent" privilegecode="278"/>
             <allowedModule name="Lost/Won" privilegecode="197"/>
             <allowedModule name="Portefeuille d'un support" privilegecode="283"/>
+          </allowedModules>
+        </detailColumn>
+        <detailColumn id="40">
+          <allowedModules>
+            <allowedModule name="Celebrities" privilegecode="20000"/>
           </allowedModules>
         </detailColumn>
       </detailColumns>

@@ -213,8 +213,8 @@
     <column id="170" name="profession" webTextId="2952" dbId="id_profession" dbLabel="profession" dbTable="profession" dbTablePrefixe="pro" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="171" name="name" webTextId="67" dbId="id_name" dbLabel="name" dbTable="name" dbTablePrefixe="nm" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="172" name="rubric" webTextId="2960" dbId="id_rubric" dbLabel="rubric" dbTable="rubric" dbTablePrefixe="rbr" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="173" name="presenceType" webTextId="2657" dbId="id_presence_type" dbLabel="presence_type" dbTable="presence_type" dbTablePrefixe="prt" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="174" name="audience" webTextId="2657" dbId="id_audience" dbLabel="audience" dbTable="audience" dbTablePrefixe="aud" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
+    <column id="173" name="presenceType" webTextId="2957" dbId="id_presence_type" dbLabel="presence_type" dbTable="presence_type" dbTablePrefixe="prt" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="174" name="audience" webTextId="2963" dbId="id_audience" dbLabel="audience" dbTable="audience" dbTablePrefixe="aud" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
 
     <!--End New columns for Russia-->
 
@@ -541,6 +541,24 @@
       <columnItem id="141" name="Press - PagesA2"/>
       <columnItem id="70" name="Nombre de supports"/>
     </detailColumn>
+    <!--Press (versions) - Module Celebrities-->
+    <detailColumn id="38" name="Visual\Advertisment ID\...">
+      <columnItem id="35" name="Visual"/>
+      <columnItem id="6" name="Advertisment ID" isKey="true"/>
+      <columnItem id="171" name="Name"/>
+      <columnItem id="170" name="profession"/>
+      <columnItem id="7" name="Advertiser"/>
+      <columnItem id="101" name="Brand"/>
+      <columnItem id="8" name="Category level 3"/>
+      <columnItem id="173" name="Type of presence"/>
+      <columnItem id="108" name="First issue date"/>
+      <columnItem id="139" name="Budget USD"/>
+      <columnItem id="140" name="Budget RUB"/>
+      <columnItem id="174" name="Audience"/>
+      <columnItem id="72" name="Number of insertions"/>
+      <columnItem id="141" name="Press - PagesA2"/>
+      <columnItem id="70" name="Nombre de supports"/>
+    </detailColumn>
     <!--Press Clipping (versions)-->
     <detailColumn id="36" name="Visual\Advertisment ID\...">
       <columnItem id="35" name="Visual"/>
@@ -607,6 +625,25 @@
       <columnItem id="18" name="TV - Duration"/>
       <columnItem id="70" name="Nombre de supports"/>
     </detailColumn>
+    <!--TV & Radio (versions) - Module Celebrity-->
+    <detailColumn id="37" name="Spot\Annonceur\Groupe\Produit\Version\budget\Nombre Spots\Durée\Nb supports">
+      <columnItem id="10" name="spot"/>
+      <columnItem id="6" name="Advertisment ID"  isKey="true"/>
+      <columnItem id="171" name="Name"/>
+      <columnItem id="170" name="Profession"/>
+      <columnItem id="7" name="Advertiser"/>
+      <columnItem id="101" name="Brand"/>
+      <columnItem id="8" name="Category level 3"/>
+      <columnItem id="173" name="Type of presence"/>
+      <columnItem id="108" name="First issue date"/>
+      <columnItem id="138" name="Clip expected duration"/>
+      <columnItem id="139" name="Budget USD"/>
+      <columnItem id="140" name="Budget RUB"/>
+      <columnItem id="174" name="Audience"/>
+      <columnItem id="72" name="Number of insertions"/>
+      <columnItem id="18" name="TV - Duration"/>
+      <columnItem id="70" name="Nombre of vehicles"/>
+    </detailColumn>
     <!--TV Niche Channels (versions)-->
     <detailColumn id="33" name="Spot\Annonceur\Groupe\Produit\Version\Nombre Spots\Durée\Nb supports">
       <columnItem id="10" name="spot"/>
@@ -638,6 +675,23 @@
       <columnItem id="140" name="Budget RUB"/>
       <columnItem id="72" name="Number of insertions"/>
       <columnItem id="142" name="Outdoor - Square"/>
+      <columnItem id="70" name="Nombre de supports"/>
+    </detailColumn>
+    <!--Outdoor - Module celebrities(versions)-->
+    <detailColumn id="39" name="Visual\Advertisment ID\...">
+      <columnItem id="35" name="Visual"/>
+      <columnItem id="6" name="Advertisment ID"  isKey="true"/>
+      <columnItem id="171" name="Name"/>
+      <columnItem id="170" name="profession"/>
+      <columnItem id="7" name="Advertiser"/>
+      <columnItem id="101" name="Brand"/>
+      <columnItem id="8" name="Category level 3"/>
+      <columnItem id="173" name="Type of presence"/>
+      <columnItem id="108" name="First issue date"/>
+      <columnItem id="139" name="Budget USD"/>
+      <columnItem id="140" name="Budget RUB"/>
+      <columnItem id="142" name="Outdoor - Square"/>
+      <columnItem id="72" name="Number of insertions"/>
       <columnItem id="70" name="Nombre de supports"/>
     </detailColumn>
     <!--Indoor (versions)-->
@@ -675,6 +729,24 @@
       <columnItem id="70" name="Number of active vehicles"/>
       <columnItem id="167" name="Banner width" visible="false"/>
       <columnItem id="168" name="Banner heightB" visible="false"/>
+    </detailColumn>
+    <!--Internet - Module celebrities(versions)-->
+    <detailColumn id="40" name="Visual\Advertisment ID\...">
+      <columnItem id="35" name="Visual"/>
+      <columnItem id="6" name="Advertisment ID"  isKey="true"/>
+      <columnItem id="171" name="Name"/>
+      <columnItem id="170" name="profession"/>
+      <columnItem id="7" name="Advertiser"/>
+      <columnItem id="101" name="Brand"/>
+      <columnItem id="8" name="Category level 3"/>
+      <columnItem id="173" name="Type of presence"/>
+      <columnItem id="108" name="First issue date"/>
+      <columnItem id="139" name="Budget USD"/>
+      <columnItem id="140" name="Budget RUB"/>
+      <columnItem id="174" name="Audience"/>
+      <columnItem id="72" name="Number of insertions"/>
+      <columnItem id="142" name="Outdoor - Square"/>
+      <columnItem id="70" name="Nombre of vehicles"/>
     </detailColumn>
     <!--Cinema (Versions)-->
     <detailColumn id="17" name="Spot\Advertisment ID\...">

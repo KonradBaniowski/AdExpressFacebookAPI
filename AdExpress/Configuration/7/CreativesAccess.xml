@@ -8,6 +8,7 @@
     <VirtualPath id="DOWNLOAD_RADIO_SERVER" name="Répertoire des spots radio" value="/RadioSpots"/>
     <VirtualPath id="DOWNLOAD_TV_SERVER" name="Répertoire des spots tv" value="/TvSpots"/>
     <VirtualPath id="IMAGES_PRESS_COVER" name="Virtual Directory of press covers" value="/PressCover"/>
+    <VirtualPath id="IMAGES_PRESS_CLIPPING" name="Virtual Directory of press covers" value="/PressClipping"/>
   </VirtualPaths>
   <Networks>
     <Network id="LOCAL_PATH_RADIO" name="Répertoire pour télécharger les spots radio" value="\\storage\multimedia\radio_id\"/>
@@ -17,5 +18,6 @@
     <Network id="LOCAL_PATH_EDITORIAL" name="Répertoire contenant les logos de Editorial" value="\\pressstore\images\scan\"/>
     <Network id="LOCAL_PATH_INTERNET" name="Répertoire contenant les visuels internet" value="\\storage\multimedia\internet_id\"/>
     <Network id="LOCAL_PATH_IMAGES_COVER" name="Physical Directory of PRESS covers" value="\\storage\multimedia\press_cover\"/>
+    <Network id="LOCAL_PATH_IMAGES_PRESS_CLIPPING" name="Physical Directory of PRESS CLIPPING creative" value="\\pressstore\images\scan\"/>
   </Networks>
 </CreativesAccess>
