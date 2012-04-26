@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TNS.AdExpress.Anubis.Miysis.BusinessFacade;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Anubis.Miysis.Common;
 using System.Data;
@@ -10,17 +7,17 @@ using TNS.FrameWork.WebTheme;
 using TNS.AdExpress.Anubis.Miysis.Exceptions;
 using TNS.AdExpress.Domain.Translation;
 
-namespace TNS.AdExpress.Anubis.Celebrities.BusinessFacade {
+namespace TNS.AdExpress.Anubis.Apis.BusinessFacade {
     /// <summary>
     /// 
     /// </summary>
-    public class CelebritiesPdfSystem : Miysis.BusinessFacade.MiysisPdfSystem {
+    public class ApisPdfSystem : Miysis.BusinessFacade.MiysisPdfSystem {
 
         #region Constructeur
         /// <summary>
         /// Constructeur
         /// </summary>
-        public CelebritiesPdfSystem(IDataSource dataSource, MiysisConfig config, DataRow rqDetails, WebSession webSession, Theme theme)
+        public ApisPdfSystem(IDataSource dataSource, MiysisConfig config, DataRow rqDetails, WebSession webSession, Theme theme)
             : base(dataSource, config, rqDetails, webSession, theme) {
             
             try {

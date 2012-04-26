@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using TNS.AdExpress.Anubis.Miysis;
-using TNS.AdExpress.Anubis.Celebrities.BusinessFacade;
 using System.Data;
+using TNS.AdExpress.Anubis.Apis.BusinessFacade;
 using TNS.Ares.Domain.LS;
 
-namespace TNS.AdExpress.Anubis.Celebrities{
+namespace TNS.AdExpress.Anubis.Apis{
     /// <summary>
     /// Description résumée de TreatementSystem.
     /// </summary>
@@ -33,8 +31,8 @@ namespace TNS.AdExpress.Anubis.Celebrities{
         /// <summary>
         /// Generate the PDF for Miysis plug-in
         /// </summary>
-        protected virtual void ComputeTreatement() {
-            CelebritiesPdfSystem pdf;
+        protected override void ComputeTreatement() {
+            ApisPdfSystem pdf;
             try {
                 OnStartWork(_navSessionId, GetPluginName() + " started for " + _navSessionId);
 
@@ -44,10 +42,9 @@ namespace TNS.AdExpress.Anubis.Celebrities{
 
                 #region PDF management
 
-                pdf = new CelebritiesPdfSystem(_dataSource, _miysisConfig, rqDetails, _webSession, _theme);
+                pdf = new ApisPdfSystem(_dataSource, _miysisConfig, rqDetails, _webSession, _theme);
                 string fileName = pdf.Init();
-                pdf.AutoLaunch = false;
-                //TODO update Database for physical file name
+                pdf.AutoLaunch = false;             
                 pdf.Fill();
                 pdf.EndDoc();
                 _dataAccess.RegisterFile(_navSessionId, fileName);

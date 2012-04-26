@@ -8,8 +8,8 @@
     <ProjectGuid>{E7437554-D70E-4180-8B03-00EEEC2AD2C9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TNS.AdExpress.Anubis.Celebrities</RootNamespace>
-    <AssemblyName>TNS.AdExpress.Anubis.Celebrities</AssemblyName>
+    <RootNamespace>TNS.AdExpress.Anubis.Apis</RootNamespace>
+    <AssemblyName>TNS.AdExpress.Anubis.Apis</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkSubset>
@@ -58,7 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessFacade\CelebritiesPdfSystem.cs" />
+    <Compile Include="BusinessFacade\ApisPdfSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TreatementSystem.cs" />
   </ItemGroup>
@@ -95,9 +95,6 @@
       <Project>{614B37CF-80A5-4252-AC63-F1811B073F5D}</Project>
       <Name>TNS.Ares</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
