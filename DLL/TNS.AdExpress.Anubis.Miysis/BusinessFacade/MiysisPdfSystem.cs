@@ -161,7 +161,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         #endregion
 
         #region Init
-        internal string Init()
+        public string Init()
         {
             try
             {
@@ -187,7 +187,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         #endregion
 
         #region Fill
-        internal void Fill()
+        public void Fill()
         {
 
             try
@@ -224,7 +224,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         #endregion
 
         #region Send
-        internal void Send(string fileName)
+        public void Send(string fileName)
         {           
 
             try

@@ -100,31 +100,31 @@ namespace TNS.AdExpress.Anubis.Miysis
 		/// <summary>
 		/// Thread qui traite l'alerte
 		/// </summary>
-		private Thread _myThread;
+		public Thread _myThread;
 		/// <summary>
 		/// Identifiant du résultat à traiter
 		/// </summary>
-		private Int64 _navSessionId;
+        public Int64 _navSessionId;
 		/// <summary>
 		/// Source de données pour charger la session du résultat
 		/// </summary>
-		private IDataSource _dataSource;
+        public IDataSource _dataSource;
 		/// <summary>
 		/// Configuration du plug-in
 		/// </summary>
-		private MiysisConfig _miysisConfig;
+        public MiysisConfig _miysisConfig;
         /// <summary>
         /// Theme
         /// </summary>
-        private Theme _theme;
+        public Theme _theme;
         /// <summary>
         /// Data Access Layer
         /// </summary>
-        private IStaticNavSessionDAL _dataAccess;
+        public IStaticNavSessionDAL _dataAccess;
         /// <summary>
         /// WebSession
         /// </summary>
-        private WebSession _webSession;
+        protected WebSession _webSession;
 		#endregion
 
 		#region Nom du Plug-in
@@ -250,7 +250,7 @@ namespace TNS.AdExpress.Anubis.Miysis
 		/// <summary>
 		/// Generate the PDF for Miysis plug-in
 		/// </summary>
-		private void ComputeTreatement(){
+		protected virtual void ComputeTreatement(){
 			MiysisPdfSystem pdf;
 			try{
 				OnStartWork(_navSessionId,GetPluginName()+" started for "+_navSessionId);
