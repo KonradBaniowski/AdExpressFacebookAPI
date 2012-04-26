@@ -79,19 +79,19 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
     {
 
         #region Variables
-        private IDataSource _dataSource = null;
+        protected IDataSource _dataSource = null;
         /// <summary>
         /// Appm Configuration (usefull for PDF layout)
         /// </summary>
-        private MiysisConfig _config = null;
+        protected MiysisConfig _config = null;
         /// <summary>
         /// Customer Client request
         /// </summary>
-        private DataRow _rqDetails = null;
+        protected DataRow _rqDetails = null;
         /// <summary>
         /// WebSession to process
         /// </summary>
-        private WebSession _webSession = null;
+        protected WebSession _webSession = null;
         /// <summary>
         /// Position des visuels dans le pdf dans le cas de 4 visuels par page
         /// </summary>
@@ -174,7 +174,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                 base.Init(true, fName, _config.PdfCreatorPilotLogin, _config.PdfCreatorPilotPass);
                 this.DocumentInfo_Creator = this.DocumentInfo_Author = _config.PdfAuthor;
                 this.DocumentInfo_Subject = _config.PdfSubject;
-                this.DocumentInfo_Title = GestionWeb.GetWebWord(751, _webSession.SiteLanguage);
+                this.DocumentInfo_Title = GetTitle();
                 this.DocumentInfo_Producer = _config.PdfProducer;
                 this.DocumentInfo_Keywords = _config.PdfKeyWords;
                 return shortFName;
@@ -211,7 +211,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                 this.AddHeadersAndFooters(
                 _webSession,
                 imagePosition.leftImage,
-                GestionWeb.GetWebWord(751, _webSession.SiteLanguage) + " - " + dateString,
+                GetTitle() + " - " + dateString,
                 0, -1, true);
                 #endregion
 
@@ -235,7 +235,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                     to.Add(s);
                 }
                 SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
-                    GestionWeb.GetWebWord(2006, _webSession.SiteLanguage),
+                    GetMailContent(),
                     GestionWeb.GetWebWord(1750, _webSession.SiteLanguage) + "\"" + _webSession.ExportedPDFFileName
                     + "\"" + String.Format(GestionWeb.GetWebWord(1751, _webSession.SiteLanguage), _config.WebServer)
                     + "<br><br>"
@@ -364,8 +364,8 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
             Style.GetTag("bigTitle").SetStylePdf(this, GetTxFontCharset());
             string str = "";
 
-            this.PDFPAGE_UnicodeTextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(GestionWeb.GetWebWord(751, _webSession.SiteLanguage))) / 2,
-                    (this.PDFPAGE_Height) / 4, 0, GestionWeb.GetWebWord(751, _webSession.SiteLanguage));
+            this.PDFPAGE_UnicodeTextOut((this.PDFPAGE_Width - this.PDFPAGE_GetTextWidth(GetTitle())) / 2,
+                    (this.PDFPAGE_Height) / 4, 0, GetTitle());
 
         
             str = GestionWeb.GetWebWord(1922, _webSession.SiteLanguage) + " " + Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
@@ -441,8 +441,6 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
             html.Append("</TR>");
             #endregion
             
-            
-
             #region Unité
             //TODO Unité
             html.Append("<TR height=\"7\">");
@@ -1304,6 +1302,26 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         }
         #endregion
 
+        #region Get Title
+        /// <summary>
+        /// Get Title
+        /// </summary>
+        /// <returns>Title</returns>
+        protected virtual string GetTitle() {
+            return GestionWeb.GetWebWord(751, _webSession.SiteLanguage);
+        }
+        #endregion
+
+        #region Get Mail Content
+        /// <summary>
+        /// Get Mail Content
+        /// </summary>
+        /// <returns>Mail content</returns>
+        protected virtual string GetMailContent() {
+            return GestionWeb.GetWebWord(2006, _webSession.SiteLanguage);
+        }
+        #endregion
+
         #endregion
 
         #region Methode Override
@@ -1354,7 +1372,6 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 
             ;
         }
-
 
         #region GetTxFontCharset
         /// <summary>
@@ -1455,6 +1472,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
             return (html.ToString());
         }
         #endregion
+
         #endregion
 
     }

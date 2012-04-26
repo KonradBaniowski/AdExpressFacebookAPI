@@ -132,7 +132,7 @@ namespace TNS.AdExpress.Anubis.Miysis
 		/// Obtient le nom du plug-in
 		/// </summary>
 		/// <returns>Le nom du plug-in</returns>
-		public string GetPluginName(){
+		public virtual string GetPluginName(){
 			return("Miysis PDF Generator");
 		
 		}
@@ -233,7 +233,7 @@ namespace TNS.AdExpress.Anubis.Miysis
 			
 			ThreadStart myThreadStart = ComputeTreatement;
 			_myThread=new Thread(myThreadStart);
-			_myThread.Name="Miysis PDF Generator";
+            _myThread.Name = GetPluginName();
 			_myThread.Start();
 		}
 
