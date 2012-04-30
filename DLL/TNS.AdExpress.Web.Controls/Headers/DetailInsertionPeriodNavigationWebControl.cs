@@ -189,6 +189,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
             switch (VehiclesInformation.DatabaseIdToEnum(_idVehicle))
             {
                 case DBClassificationConstantes.Vehicles.names.press: vehicle = GestionWeb.GetWebWord(1298, _customerWebSession.SiteLanguage).ToUpper(); break;
+                case DBClassificationConstantes.Vehicles.names.pressClipping: vehicle = GestionWeb.GetWebWord(2955, _customerWebSession.SiteLanguage).ToUpper(); break;
                 case DBClassificationConstantes.Vehicles.names.newspaper: vehicle = GestionWeb.GetWebWord(2620, _customerWebSession.SiteLanguage).ToUpper(); break;
                 case DBClassificationConstantes.Vehicles.names.magazine: vehicle = GestionWeb.GetWebWord(2621, _customerWebSession.SiteLanguage).ToUpper(); break;
                 case DBClassificationConstantes.Vehicles.names.radio: vehicle = GestionWeb.GetWebWord(205, _customerWebSession.SiteLanguage); break;
@@ -196,6 +197,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 case DBClassificationConstantes.Vehicles.names.radioSponsorship: vehicle = GestionWeb.GetWebWord(2632, _customerWebSession.SiteLanguage).ToUpper(); break;
                 case DBClassificationConstantes.Vehicles.names.radioMusic: vehicle = GestionWeb.GetWebWord(2631, _customerWebSession.SiteLanguage).ToUpper(); break;
                 case DBClassificationConstantes.Vehicles.names.tv: vehicle = GestionWeb.GetWebWord(206, _customerWebSession.SiteLanguage); break;
+                case DBClassificationConstantes.Vehicles.names.tvClipping: vehicle = GestionWeb.GetWebWord(2956, _customerWebSession.SiteLanguage); break;
                 case DBClassificationConstantes.Vehicles.names.tvGeneral: vehicle = GestionWeb.GetWebWord(2633, _customerWebSession.SiteLanguage).ToUpper(); break;
                 case DBClassificationConstantes.Vehicles.names.tvSponsorship: vehicle = GestionWeb.GetWebWord(2634, _customerWebSession.SiteLanguage).ToUpper(); break;
                 case DBClassificationConstantes.Vehicles.names.tvAnnounces: vehicle = GestionWeb.GetWebWord(2635, _customerWebSession.SiteLanguage).ToUpper(); break;

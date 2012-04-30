@@ -262,6 +262,9 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                     case DBClassifCst.Vehicles.names.press: 
                         vehicle = GestionWeb.GetWebWord(1298, _webSession.SiteLanguage); 
                         break;
+                    case DBClassifCst.Vehicles.names.pressClipping:
+                        vehicle = GestionWeb.GetWebWord(2955, _webSession.SiteLanguage);
+                        break;
                     case DBClassifCst.Vehicles.names.internationalPress:
                         vehicle = GestionWeb.GetWebWord(646, _webSession.SiteLanguage); 
                         break;
@@ -282,6 +285,9 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                         break;
                     case DBClassifCst.Vehicles.names.tvGeneral:
                         vehicle = GestionWeb.GetWebWord(2633, _webSession.SiteLanguage);
+                        break;
+                    case DBClassifCst.Vehicles.names.tvClipping:
+                        vehicle = GestionWeb.GetWebWord(2956, _webSession.SiteLanguage);
                         break;
                     case DBClassifCst.Vehicles.names.tvSponsorship:
                         vehicle = GestionWeb.GetWebWord(2634, _webSession.SiteLanguage);

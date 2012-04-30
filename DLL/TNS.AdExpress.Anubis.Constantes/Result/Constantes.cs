@@ -99,7 +99,10 @@ namespace TNS.AdExpress.Anubis.Constantes{
             dedoum = 24,
             /// Export texte parrainage TV
             /// </summary>
-            pachet = 25
+            pachet = 25,
+            /// Export PDF Celebrities
+            /// </summary>
+            apis = 26
 
             
 		}

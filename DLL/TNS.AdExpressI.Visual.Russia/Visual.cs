@@ -55,8 +55,8 @@ namespace TNS.AdExpressI.Visual.Russia
         /// <param name="idSession">ID Session</param>
         /// <param name="isCover">Is cover</param>
         /// <param name="isEncrypted">true if is encrypted</param>
-        public Visual(Int64 idVehicle, string relativePath, string idSession, bool isEncrypted,bool isCover)
-            : base(idVehicle, relativePath, idSession, isEncrypted,isCover)
+        public Visual(Int64 idVehicle, string relativePath, string idSession, bool isEncrypted, bool isCover)
+            : base(idVehicle, relativePath, idSession, isEncrypted, isCover)
         {
 
         }
@@ -75,6 +75,7 @@ namespace TNS.AdExpressI.Visual.Russia
             switch (VehiclesInformation.Get(_idVehicle).Id)
             {
                 case Vehicles.names.press:
+                case Vehicles.names.pressClipping:
                 case Vehicles.names.internationalPress:
                 case Vehicles.names.outdoor:
                 case Vehicles.names.internet:
@@ -112,17 +113,31 @@ namespace TNS.AdExpressI.Visual.Russia
                             _relativePath = TNS.AdExpress.Web.Functions.QueryStringEncryption.DecryptQueryString(_relativePath);
                             _isEncrypted = false;
                         }
-                        if(_isCover)
+                        if (_isCover)
                         {
 
                             localPath = WebCst.CreationServerPathes.LOCAL_PATH_IMAGES_COVER;
                             tempRelative = _relativePath.Replace(WebCst.CreationServerPathes.IMAGES_PRESS_COVER + "/", "");
                         }
-                        else {
+                        else
+                        {
                             localPath = CreationServerPathes.LOCAL_PATH_IMAGE;
                             tempRelative = _relativePath.Replace(CreationServerPathes.IMAGES + "/", "");
                         }
 
+                        tempRelative = tempRelative.Replace("/", @"\");
+                        localPath = localPath + tempRelative;
+                        break;
+                    case Vehicles.names.pressClipping:
+                        if (_isEncrypted)
+                        {
+                            //Decrypt path parameter if required
+                            _relativePath = TNS.AdExpress.Web.Functions.QueryStringEncryption.DecryptQueryString(_relativePath);
+                            _isEncrypted = false;
+                        }
+
+                        localPath = CreationServerPathes.LOCAL_PATH_IMAGES_PRESS_CLIPPING;
+                        tempRelative = _relativePath.Replace(CreationServerPathes.IMAGES_PRESS_CLIPPING + "/", "");
                         tempRelative = tempRelative.Replace("/", @"\");
                         localPath = localPath + tempRelative;
                         break;
@@ -167,7 +182,7 @@ namespace TNS.AdExpressI.Visual.Russia
                     case Vehicles.names.tvSponsorship:
                     case Vehicles.names.tvAnnounces:
                     case Vehicles.names.tvNonTerrestrials:
-                       
+
                         if (_isEncrypted)
                         {
                             //Decrypt path parameter if required
@@ -175,11 +190,11 @@ namespace TNS.AdExpressI.Visual.Russia
                             _isEncrypted = false;
                         }
                         advertismentId = int.Parse((_relativePath.Split('.'))[0]);
-                        baseDirectory = ((advertismentId / 10000) * 10000).ToString();  
+                        baseDirectory = ((advertismentId / 10000) * 10000).ToString();
                         localPath = WebCst.CreationServerPathes.LOCAL_PATH_VIDEO;
                         tempRelative = _relativePath.Replace(WebCst.CreationServerPathes.DOWNLOAD_TV_SERVER + "/", "");
                         tempRelative = tempRelative.Replace("/", @"\");
-                        localPath = localPath + baseDirectory+@"\"+ tempRelative;
+                        localPath = localPath + baseDirectory + @"\" + tempRelative;
                         break;
                     case Vehicles.names.radio:
                     case Vehicles.names.radioGeneral:
@@ -192,7 +207,7 @@ namespace TNS.AdExpressI.Visual.Russia
                             _isEncrypted = false;
                         }
                         advertismentId = int.Parse((_relativePath.Split('.'))[0]);
-                        baseDirectory = ((advertismentId / 10000) * 10000).ToString();  
+                        baseDirectory = ((advertismentId / 10000) * 10000).ToString();
                         localPath = WebCst.CreationServerPathes.LOCAL_PATH_RADIO;
                         tempRelative = _relativePath.Replace(WebCst.CreationServerPathes.DOWNLOAD_RADIO_SERVER + "/", "");
                         tempRelative = tempRelative.Replace("/", @"\");
@@ -212,8 +227,8 @@ namespace TNS.AdExpressI.Visual.Russia
                 return null;
         }
 
-       
-      
+
+
         #endregion
 
     }

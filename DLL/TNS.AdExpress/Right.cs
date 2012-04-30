@@ -1078,13 +1078,10 @@ namespace TNS.AdExpress {
                     return (_flagsRights.ContainsKey(Flags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG) && _flagsRights[Flags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG] != null);
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.editorial:
                     if (!Domain.AllowedFlags.ContainFlag(Flags.ID_EDITORIAL_CREATION_ACCESS_FLAG)) return true;
-                    return (_flagsRights.ContainsKey(Flags.ID_EDITORIAL_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_EDITORIAL_CREATION_ACCESS_FLAG] != null);
-                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvClipping:
+                    return (_flagsRights.ContainsKey(Flags.ID_EDITORIAL_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_EDITORIAL_CREATION_ACCESS_FLAG] != null);               
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.pressClipping:
                     if (!Domain.AllowedFlags.ContainFlag(Flags.ID_PRESS_CLIPPING_CREATION_ACCESS_FLAG)) return true;
                     return (_flagsRights.ContainsKey(Flags.ID_PRESS_CLIPPING_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_PRESS_CLIPPING_CREATION_ACCESS_FLAG] != null);
-                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.pressClipping:
-                    if (!Domain.AllowedFlags.ContainFlag(Flags.ID_TV_CLIPPING_CREATION_ACCESS_FLAG)) return true;
-                    return (_flagsRights.ContainsKey(Flags.ID_TV_CLIPPING_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_TV_CLIPPING_CREATION_ACCESS_FLAG] != null);
                 default:
 					return (false);
 			}

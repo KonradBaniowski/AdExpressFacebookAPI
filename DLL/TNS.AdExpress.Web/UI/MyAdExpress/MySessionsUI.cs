@@ -140,7 +140,7 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 		/// <param name="branch">advertiser, média, product, nothing</param>
 		/// <param name="width">Taille de la table</param>
 		public MySessionsUI(WebSession webSession,string branch,int width ):this(){
-			_request=MySessionsUI.type.universe;
+			_request=type.universe;
 			_branch=branch;
 			_webSession=webSession;
 			_width=width;
@@ -155,7 +155,7 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 		/// <param name="allowedLevels">Allowed universe levels</param>
 		public MySessionsUI(WebSession webSession, string branch, int width,List<Int64> allowedLevels )
 			: this() {
-			_request = MySessionsUI.type.universe;
+			_request = type.universe;
 			_branch = branch;
 			_webSession = webSession;
 			_width = width;
@@ -179,9 +179,9 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 				dsListRepertory= MySessionsDataAccess.GetData(_webSession);
 			}
 			else if(_request==type.universe){
-				dsListRepertory= TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetData(_webSession,_branch,ListUniverseClientDescription);
+				dsListRepertory= Core.DataAccess.ClassificationList.UniversListDataAccess.GetData(_webSession,_branch,ListUniverseClientDescription);
 			}
-			System.Text.StringBuilder t=new System.Text.StringBuilder(1000);
+			var t=new System.Text.StringBuilder(1000);
 			Int64 idParent;			
 			Int64 idParentOld=-1;
 			string textParent;
@@ -209,9 +209,7 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 						t.Append("</table>");
 						t.Append("<div id=\""+idParent+"Content"+valueTable+"\" style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\" >");
                         t.Append("<table class=\"violetBorderWithoutTop paleVioletBackGround\" width=" + _width + ">");
-					//	t.Append("<tr><td>");
-					//	t.Append("<label style=\"cursor : hand\" onclick=\"allSelection2('"+idParent+textParent+"')\" ID=\""+currentRow[0]+"\">");
-					//	t.Append("</td></tr>");			
+							
 
 
 						idParentOld=idParent;
@@ -235,9 +233,7 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 						t.Append("</table>");
 						t.Append("<div id=\""+idParent+"Content"+valueTable+"\"  style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\">");
                         t.Append("<table class=\"violetBorderWithoutTop paleVioletBackGround\" width=" + _width + ">");
-					//	t.Append("<tr><td>");
-					//	t.Append("<label style=\"cursor : hand\" onclick=\"allSelection2('"+idParent+textParent+"')\" ID=\""+currentRow[0]+"\">");
-					//	t.Append("</td></tr>");	
+					
 
 
 						idParentOld=idParent;
@@ -245,10 +241,9 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 						compteur=0;
 					}
 				
-					if(currentRow[2]!=System.DBNull.Value){
+					if(currentRow[2]!=DBNull.Value){
 						if(compteur==0){
                             t.Append("<tr><td class=\"txtViolet10\" width=50% style=\"text-align:left;\">");
-							//	t.Append("<input type=\"radio\" ID=\""+currentRow[2]+currentRow[3]+"\"  value=\""+currentRow[2]+"_"+currentRow[3].ToString()+"\" name=\"CKB_"+currentRow[0]+"_"+currentRow[2]+"\">"+currentRow[3].ToString()+"<br>");
 							t.Append("<input type=\"radio\" ID=\""+currentRow[2]+currentRow[3]+valueTable+"\" onClick=\"insertIdMySession"+valueTable+"('"+currentRow[2]+"','"+currentRow[0]+"');\" value=\""+currentRow[2]+"\" name=\"Session\">"+currentRow[3].ToString()+"<br>");
 							t.Append("</td>");
 							compteur=1;
@@ -293,11 +288,11 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
             }
             else if (_request == type.universe){
                 if(filter != null)
-                    dsListRepertory = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetData(_webSession, _branch, ListUniverseClientDescription,filter);   
+                    dsListRepertory = Core.DataAccess.ClassificationList.UniversListDataAccess.GetData(_webSession, _branch, ListUniverseClientDescription,filter);   
                 else
-                    dsListRepertory = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetData(_webSession, _branch, ListUniverseClientDescription);   
+                    dsListRepertory = Core.DataAccess.ClassificationList.UniversListDataAccess.GetData(_webSession, _branch, ListUniverseClientDescription);   
             }
-            System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
+            var t = new System.Text.StringBuilder(1000);
             Int64 idParent;
             Int64 idParentOld = -1;
             string textParent;
@@ -325,9 +320,7 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
                         t.Append("</table>");
                         t.Append("<div id=\"" + idParent + "Content" + valueTable + "\" style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\" >");
                         t.Append("<table class=\"violetBorderWithoutTop paleVioletBackGround\" width=" + _width + ">");
-                        //	t.Append("<tr><td>");
-                        //	t.Append("<label style=\"cursor : hand\" onclick=\"allSelection2('"+idParent+textParent+"')\" ID=\""+currentRow[0]+"\">");
-                        //	t.Append("</td></tr>");			
+                      			
 
 
                         idParentOld = idParent;
@@ -351,20 +344,16 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
                         t.Append("</table>");
                         t.Append("<div id=\"" + idParent + "Content" + valueTable + "\"  style=\"BORDER-BOTTOM: #ffffff 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-RIGHT: #ffffff 0px solid; DISPLAY: none; WIDTH: 100%\">");
                         t.Append("<table class=\"violetBorderWithoutTop paleVioletBackGround\" width=" + _width + ">");
-                        //	t.Append("<tr><td>");
-                        //	t.Append("<label style=\"cursor : hand\" onclick=\"allSelection2('"+idParent+textParent+"')\" ID=\""+currentRow[0]+"\">");
-                        //	t.Append("</td></tr>");	
-
+                     
 
                         idParentOld = idParent;
                         textParentOld = textParent;
                         compteur = 0;
                     }
 
-                    if (currentRow[2] != System.DBNull.Value){
+                    if (currentRow[2] != DBNull.Value){
                         if (compteur == 0){
                             t.Append("<tr><td class=\"txtViolet10\" width=50%>");
-                            //	t.Append("<input type=\"radio\" ID=\""+currentRow[2]+currentRow[3]+"\"  value=\""+currentRow[2]+"_"+currentRow[3].ToString()+"\" name=\"CKB_"+currentRow[0]+"_"+currentRow[2]+"\">"+currentRow[3].ToString()+"<br>");
                             t.Append("<input type=\"radio\" ID=\"" + currentRow[2] + currentRow[3] + valueTable + "\" onClick=\"insertIdMySession" + valueTable + "('" + currentRow[2] + "','" + currentRow[0] + "');\" value=\"" + currentRow[2] + "\" name=\"Session\">" + currentRow[3].ToString() + "<br>");
                             t.Append("</td>");
                             compteur = 1;
@@ -414,9 +403,9 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 			}
 			else if (_request == type.universe) {
                 if(filter != null)
-				    dt = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetData(_webSession, _branch, ListUniverseClientDescription,allowedLevels,filter);
+				    dt = Core.DataAccess.ClassificationList.UniversListDataAccess.GetData(_webSession, _branch, ListUniverseClientDescription,allowedLevels,filter);
                 else
-                    dt = TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetData(_webSession, _branch, ListUniverseClientDescription, allowedLevels);
+                    dt = Core.DataAccess.ClassificationList.UniversListDataAccess.GetData(_webSession, _branch, ListUniverseClientDescription, allowedLevels);
 			}
 			System.Text.StringBuilder t = new System.Text.StringBuilder(1000);
 			Int64 idParent;
@@ -475,7 +464,7 @@ namespace TNS.AdExpress.Web.UI.MyAdExpress{
 						compteur = 0;
 					}
 
-					if (currentRow[2] != System.DBNull.Value) {
+					if (currentRow[2] != DBNull.Value) {
 						if (compteur == 0) {
                             t.Append("<tr><td class=\"txtViolet10\" width=50% style=\"text-align:left;\">");
 							t.Append("<input type=\"radio\" ID=\"" + currentRow[2] + currentRow[3] + valueTable + "\" onClick=\"insertIdMySession" + valueTable + "('" + currentRow[2] + "','" + currentRow[0] + "');\" value=\"" + currentRow[2] + "\" name=\"Session\">" + currentRow[3].ToString() + "<br>");

@@ -62,6 +62,7 @@ namespace TNS.AdExpressI.Visual.Russia.WebService
             switch (VehiclesInformation.Get(_idVehicle).Id)
             {
                 case Vehicles.names.press:
+                case Vehicles.names.pressClipping:
                 case Vehicles.names.internationalPress:
                 case Vehicles.names.outdoor:
                 case Vehicles.names.internet:
@@ -170,6 +171,9 @@ namespace TNS.AdExpressI.Visual.Russia.WebService
                                        ? GetPathOtherVehicle(WebCst.CreationServerPathes.IMAGES_PRESS_COVER)
                                        : GetPathOtherVehicle(WebCst.CreationServerPathes.IMAGES);
                     break;
+                case Vehicles.names.pressClipping:
+                    tempRelative = GetPathOtherVehicle(WebCst.CreationServerPathes.IMAGES_PRESS_CLIPPING);
+                    break;
                 case Vehicles.names.outdoor:
                     tempRelative = GetPathOtherVehicle(WebCst.CreationServerPathes.IMAGES_OUTDOOR);
                     break;
@@ -178,7 +182,7 @@ namespace TNS.AdExpressI.Visual.Russia.WebService
                     break;
                 case Vehicles.names.editorial:
                     tempRelative = GetPathOtherVehicle(WebCst.CreationServerPathes.IMAGES_EDITORIAL);
-                    break;
+                    break;            
                 case Vehicles.names.tv:
                 case Vehicles.names.tvGeneral:
                 case Vehicles.names.tvSponsorship:

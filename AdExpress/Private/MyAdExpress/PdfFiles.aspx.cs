@@ -4,33 +4,8 @@
 #endregion
 
 using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using TradCst = TNS.AdExpress.Constantes.DB.Language;
-using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Web.DataAccess;
-using Oracle.DataAccess.Client;
+using TNS.AdExpress.Web.UI.MyAdExpress;
 using CstWeb = TNS.AdExpress.Constantes.Web;
-using CstCustomerSession=TNS.AdExpress.Constantes.Web.CustomerSessions;
-using TNS.AdExpress.Web.DataAccess.MyAdExpress;
-using TNS.AdExpress.Domain.Translation;
-using TNS.FrameWork.Date;
-using TNS.AdExpress.Web.Core;
-using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
-using WebModule=TNS.AdExpress.Constantes.Web.Module;
-using WebRules=TNS.AdExpress.Web.Rules;
-using WebFunctions=TNS.AdExpress.Web.Functions;
-using DBConstantes=TNS.AdExpress.Constantes.DB;
-using WebCst = TNS.AdExpress.Constantes.Web;
-using TNS.AdExpress.Domain.Classification;
-using TNS.Ares.Domain.LS;
 using TNS.Alert.Domain;
 using TNS.AdExpress.Domain.Web;
 
@@ -40,49 +15,15 @@ namespace AdExpress.Private.MyAdExpress{
 	/// </summary>
 	public partial class PdfFiles : TNS.AdExpress.Web.UI.PrivateWebPage{
 		
-		#region MMI
-		/// <summary>
-		/// Contrôle En tête de page
-		/// </summary>
-		/// <summary>
-		/// Mon AdExpress
-		/// </summary>
-		/// <summary>
-		/// Commentaire Mon AdExpress
-		/// </summary>
-		/// <summary>
-		/// Bouton retour Menu principal de Mon AdExpress
-		/// </summary>
-		/// <summary>
-		/// Bouton de personalisation
-		/// </summary>
+		#region MMI		
 		/// <summary>
 		/// Bouton Supprimer
 		/// </summary>
-		protected TNS.AdExpress.Web.Controls.Buttons.ImageButtonRollOverWebControl deleteImageButtonRollOverWebControl;
-		/// <summary>
-		/// Sélectionnez un résultat
-		/// </summary>
-		/// <summary>
-		/// Mes Univers
-		/// </summary>
-		/// <summary>
-		/// Bouton ouvrir Univers
-		/// </summary>
+		protected TNS.AdExpress.Web.Controls.Buttons.ImageButtonRollOverWebControl deleteImageButtonRollOverWebControl;		
 		/// <summary>
 		///  Bouton ouvrir pdf
 		/// </summary>
-		protected TNS.AdExpress.Web.Controls.Buttons.ImageButtonRollOverWebControl pdfopenImageButtonRollOverWebControl;		
-		/// <summary>
-		/// Commentaire Mes Univers
-		/// </summary>
-		
-		/// <summary>
-		/// Commentaire Mes pdf
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
+		protected TNS.AdExpress.Web.Controls.Buttons.ImageButtonRollOverWebControl pdfopenImageButtonRollOverWebControl;			
 		#endregion
 
 		#region Variables
@@ -131,47 +72,26 @@ namespace AdExpress.Private.MyAdExpress{
         }
         #endregion
 
-        #region Constructeur
-        /// <summary>
-		/// Constructeur
-		/// </summary>
-		public PdfFiles():base(){
-			// Chargement de la Session
-//			try{				
-//				idsession=HttpContext.Current.Request.QueryString.Get("idSession");	
-//			}
-//			catch(System.Exception){
-//				Response.Write(WebFunctions.Script.ErrorCloseScript("Your session is unavailable. Please reconnect via the Homepage"));
-//				Response.Flush();	
-//			}
-		}
-		#endregion
-
 		#region Chargement de la page
 		/// <summary>
 		/// Chargement de la page
 		/// </summary>
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Arguments</param>
-        protected void Page_Load(object sender, System.EventArgs e) {
+        protected void Page_Load(object sender, EventArgs e) {
 
             try {
 
-                #region Textes et Langage du site
-                //Modification de la langue pour les Textes AdExpress
-                //TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls, _webSession.SiteLanguage);
+                #region Textes et Langage du site            
 
                 HeaderWebControl1.ActiveMenu = CstWeb.MenuTraductions.MY_ADEXPRESS;
                 #endregion
 
                 #region Résultat
-                TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI myAdexpress = new TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI(_webSession, TNS.AdExpress.Web.UI.MyAdExpress.MySessionsUI.type.mySession, 500);
-                result = TNS.AdExpress.Web.BusinessFacade.Results.PdfFilesSystem.GetHtml(this.Page, _webSession, this._dataSource);
+                MySessionsUI myAdexpress = new MySessionsUI(_webSession, MySessionsUI.type.mySession, 500);
+                result = TNS.AdExpress.Web.BusinessFacade.Results.PdfFilesSystem.GetHtml(Page, _webSession, _dataSource);
                 #endregion
-
-                //Charge le script
-                //script=myAdexpress.Script;
-
+             
                 // Gestion lorsqu'il n'y a pas de répertoire
                 if(result.Length == 0) {
                     AdExpressText6.Code = 833;
@@ -193,9 +113,9 @@ namespace AdExpress.Private.MyAdExpress{
                 #endregion
 
             }
-            catch(System.Exception exc) {
+            catch(Exception exc) {
                 if(exc.GetType() != typeof(System.Threading.ThreadAbortException)) {
-                    this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
+                    OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this, exc, _webSession));
                 }
             }
         }
@@ -322,56 +242,6 @@ namespace AdExpress.Private.MyAdExpress{
         }
         #endregion
 
-//		#region Bouton supprimer
-//		/// <summary>
-//		/// Gestion du bouton supprimer
-//		/// </summary>
-//		/// <param name="sender"></param>
-//		/// <param name="e"></param>
-//		private void deleteImageButtonRollOverWebControl_Click(object sender, System.EventArgs e) {
-//			try{
-//			
-//				string[] tabParent=null;
-//				Int64 idMySession=0;
-//
-//				foreach (string currentKey in Request.Form.AllKeys){
-//					tabParent=currentKey.Split('_');
-//					if(tabParent[0]=="CKB") {
-//						idMySession=Int64.Parse(tabParent[1]);		
-//					}
-//				}
-//				if (idMySession!=0){
-//					//MySessionDataAccess deleteSession=new MySessionDataAccess(idMySession,new OracleConnection(_webSession.CustomerLogin.OracleConnectionString));
-//					MySessionDataAccess deleteSession=new MySessionDataAccess(idMySession,_webSession);
-//					if (deleteSession.Delete()){
-//						// Validation : confirmation de suppression de la requête
-//						Response.Write("<script language=javascript>");
-//						Response.Write("	alert(\""+GestionWeb.GetWebWord(286,_webSession.SiteLanguage)+"\");");					
-//						Response.Write("</script>");
-//						// Actualise la page
-//						this.OnLoad(null);
-//					}
-//					else{
-//						// Erreur : la suppression de la requête a échouée
-//						Response.Write("<script language=javascript>");
-//						Response.Write("	alert(\""+GestionWeb.GetWebWord(830,_webSession.SiteLanguage)+"\");");					
-//						Response.Write("</script>");
-//					}
-//				}
-//				else{
-//					// Erreur : veuillez sélectionner une requête
-//					Response.Write("<script language=javascript>");
-//					Response.Write("	alert(\""+GestionWeb.GetWebWord(831,_webSession.SiteLanguage)+"\");");					
-//					Response.Write("</script>");
-//				}
-//			}
-//			catch(System.Exception exc){
-//				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
-//					this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this,exc,_webSession));
-//				}
-//			}
-//		}
-//		#endregion
 		
 		#region Déchargement de la page
 		/// <summary>

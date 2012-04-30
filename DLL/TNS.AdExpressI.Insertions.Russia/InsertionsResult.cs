@@ -35,10 +35,10 @@ namespace TNS.AdExpressI.Insertions.Russia
         protected const char SEPARATOR = '°';
         protected const string brClass = "class=\"mso\"";
         protected const string CARRIAGE_RETURN = "<br>";
-        //protected const string EXCEL_CARRIAGE_RETURN = "<br class=\"mso\">";
         protected const string EXCEL_CARRIAGE_RETURN = " ";
         protected const int TV_TIME_START_OFFSET = 5;
         protected const int RADIO_TIME_START_OFFSET = 6;
+        protected const string SCAN_LOW = "scan_low";
         #endregion
 
         #region Constructor
@@ -112,12 +112,13 @@ namespace TNS.AdExpressI.Insertions.Russia
                     switch (vehicleName)
                     {
 
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.editorial:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
+                        case Vehicles.names.press:
+                        case Vehicles.names.pressClipping:
+                        case Vehicles.names.editorial:
+                        case Vehicles.names.outdoor:
                             #region Construction de la liste des images presse
 
-                            if (currentRow["associated_file"] != System.DBNull.Value && currentRow["slogan"] != System.DBNull.Value && !string.IsNullOrEmpty(currentRow["slogan"].ToString()))
+                            if (currentRow["associated_file"] != DBNull.Value && currentRow["slogan"] != DBNull.Value && !string.IsNullOrEmpty(currentRow["slogan"].ToString()))
                             {
                                 fileList = currentRow["associated_file"].ToString().Split(',');
                                 idVersion = Convert.ToInt64(currentRow["slogan"].ToString());
@@ -143,10 +144,10 @@ namespace TNS.AdExpressI.Insertions.Russia
                             #endregion
                             break;
 
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radioGeneral:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radioSponsorship:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radioMusic:
+                        case Vehicles.names.radio:
+                        case Vehicles.names.radioGeneral:
+                        case Vehicles.names.radioSponsorship:
+                        case Vehicles.names.radioMusic:
                             vignettes = "";
                             if (currentRow["associated_file"] != System.DBNull.Value)
                             {
@@ -156,11 +157,11 @@ namespace TNS.AdExpressI.Insertions.Russia
                             }
                             break;
 
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvGeneral:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvSponsorship:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvAnnounces:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvNonTerrestrials:
+                        case Vehicles.names.tv:
+                        case Vehicles.names.tvGeneral:
+                        case Vehicles.names.tvSponsorship:
+                        case Vehicles.names.tvAnnounces:
+                        case Vehicles.names.tvNonTerrestrials:
                             vignettes = "";
                             if (currentRow["associated_file"] != System.DBNull.Value)
                             {
@@ -169,7 +170,7 @@ namespace TNS.AdExpressI.Insertions.Russia
                                 vignettes = "<a href=\"" + cellTvCreativeLink.GetLink() + "\"><img border=\"0\" src=\"/App_Themes/" + themeName + "/Images/Common/Picto_pellicule.gif\"></a>";
                             }
                             break;
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
+                        case Vehicles.names.internet:
                             vignettes = "";
                             if (currentRow["associated_file"] != System.DBNull.Value && currentRow["slogan"] != System.DBNull.Value && !string.IsNullOrEmpty(currentRow["slogan"].ToString()))
                             {
@@ -276,6 +277,9 @@ namespace TNS.AdExpressI.Insertions.Russia
                 case CstDBClassif.Vehicles.names.press:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_PRESS_CREATION_ACCESS_FLAG);
                     break;
+                case CstDBClassif.Vehicles.names.pressClipping:
+                    hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_PRESS_CLIPPING_CREATION_ACCESS_FLAG);
+                    break;
                 case CstDBClassif.Vehicles.names.indoor:
                 case CstDBClassif.Vehicles.names.outdoor:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_OUTDOOR_CREATION_ACCESS_FLAG);
@@ -288,6 +292,7 @@ namespace TNS.AdExpressI.Insertions.Russia
                     break;
                 case CstDBClassif.Vehicles.names.tv:
                 case CstDBClassif.Vehicles.names.tvGeneral:
+                case CstDBClassif.Vehicles.names.tvClipping:
                 case CstDBClassif.Vehicles.names.tvSponsorship:
                 case CstDBClassif.Vehicles.names.tvNonTerrestrials:
                 case CstDBClassif.Vehicles.names.tvAnnounces:
@@ -295,7 +300,7 @@ namespace TNS.AdExpressI.Insertions.Russia
                     break;
                 case CstDBClassif.Vehicles.names.cinema:
                 case CstDBClassif.Vehicles.names.editorial:
-                    hasVisualRight = true; //TODO : Is cinema and editorial Flags will be define in ISIS Russia ?
+                    hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_EDITORIAL_CREATION_ACCESS_FLAG);
                     break;
             }
 
@@ -494,6 +499,7 @@ namespace TNS.AdExpressI.Insertions.Russia
                     vehicles.Add(VehiclesInformation.Get(id));
                     break;
                 case CstWeb.Module.Name.ANALYSE_PLAN_MEDIA:
+                case CstWeb.Module.Name.CELEBRITIES:
                     string[] ids = filters.Split(',');
                     vehicles = GetVehicles(Convert.ToInt64(ids[0]), Convert.ToInt64(ids[1]), Convert.ToInt64(ids[2]), Convert.ToInt64(ids[3]));
                     string[] list = _session.GetSelection(_session.SelectionUniversMedia, CsCustomer.Right.type.vehicleAccess).Split(',');
@@ -509,26 +515,27 @@ namespace TNS.AdExpressI.Insertions.Russia
 
             if (vehicles.Count <= 0)
             {
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.others));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.directMarketing));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.evaliantMobile));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.press));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.newspaper));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.magazine));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.outdoor));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.indoor));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.radio));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.radioGeneral));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.radioSponsorship));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.radioMusic));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.tv));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.tvGeneral));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.tvSponsorship));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.tvNonTerrestrials));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.tvAnnounces));
-                vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.editorial));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.others));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.directMarketing));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.internet));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.adnettrack));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.evaliantMobile));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.press));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.pressClipping));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.newspaper));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.magazine));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.outdoor));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.indoor));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.radio));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.radioGeneral));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.radioSponsorship));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.radioMusic));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.tv));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.tvGeneral));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.tvSponsorship));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.tvNonTerrestrials));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.tvAnnounces));
+                vehicles.Add(VehiclesInformation.Get(Vehicles.names.editorial));
 
             }
             for (int i = vehicles.Count - 1; i >= 0; i--)
@@ -600,6 +607,7 @@ namespace TNS.AdExpressI.Insertions.Russia
                             {
                                 case CstDBClassif.Vehicles.names.tv:
                                 case CstDBClassif.Vehicles.names.tvGeneral:
+                                case CstDBClassif.Vehicles.names.tvClipping:
                                 case CstDBClassif.Vehicles.names.tvSponsorship:
                                 case CstDBClassif.Vehicles.names.tvAnnounces:
                                 case CstDBClassif.Vehicles.names.tvNonTerrestrials:
@@ -680,6 +688,7 @@ namespace TNS.AdExpressI.Insertions.Russia
                                 case CstDBClassif.Vehicles.names.outdoor:
                                 case CstDBClassif.Vehicles.names.editorial:
                                 case CstDBClassif.Vehicles.names.press:
+                                case CstDBClassif.Vehicles.names.pressClipping:
                                     if (row.Table.Columns.Contains("id_slogan") && row["id_slogan"] != System.DBNull.Value
                                         && row[columnsName[i]] != System.DBNull.Value
                                         && row.Table.Columns.Contains("associated_file") && row["associated_file"] != System.DBNull.Value)
@@ -791,7 +800,9 @@ namespace TNS.AdExpressI.Insertions.Russia
                         tab[cLine, 1] = c = new CellInsertionInternetInformation(_session, columns, columnsName, cells, vehicle);
                         break;
                     default:
-                        tab[cLine, 1] = c = new CellInsertionInformation(_session, columns, columnsName, cells, vehicle);
+                        c = new CellInsertionInformation(_session, columns, columnsName, cells, vehicle);
+                        if (vehicle.Id == Vehicles.names.pressClipping) c.ThumbnailsDirectory = "/" + SCAN_LOW;
+                        tab[cLine, 1] = c;
                         break;
                 }
             }
@@ -845,8 +856,11 @@ namespace TNS.AdExpressI.Insertions.Russia
                     case CstDBClassif.Vehicles.names.editorial:
                         tab[cLine, 1] = c = new CellCreativesEditorialInformation(_session, vehicle, columns, columnsName, cells, _module);
                         break;
+
                     default:
-                        tab[cLine, 1] = c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module);
+                        c = new CellCreativesInformation(_session, vehicle, columns, columnsName, cells, _module);
+                        if (vehicle.Id == Vehicles.names.pressClipping) c.ThumbnailsDirectory = "/"+SCAN_LOW;
+                        tab[cLine, 1] = c;
                         break;
                 }
             }
@@ -970,20 +984,22 @@ namespace TNS.AdExpressI.Insertions.Russia
                         //case CstDBClassif.Vehicles.names.internet:                       
                         case CstDBClassif.Vehicles.names.indoor:
                             return null;
-                        case CstDBClassif.Vehicles.names.radio:
-                        case CstDBClassif.Vehicles.names.radioGeneral:
-                        case CstDBClassif.Vehicles.names.radioSponsorship:
-                        case CstDBClassif.Vehicles.names.radioMusic:
-                        case CstDBClassif.Vehicles.names.tv:
-                        case CstDBClassif.Vehicles.names.tvGeneral:
-                        case CstDBClassif.Vehicles.names.tvSponsorship:
-                        case CstDBClassif.Vehicles.names.tvNonTerrestrials:
-                        case CstDBClassif.Vehicles.names.tvAnnounces:
-                        case CstDBClassif.Vehicles.names.cinema:
-                        case CstDBClassif.Vehicles.names.internet:
-                        case CstDBClassif.Vehicles.names.outdoor:
-                        case CstDBClassif.Vehicles.names.editorial:
-                        case CstDBClassif.Vehicles.names.press:
+                        case Vehicles.names.radio:
+                        case Vehicles.names.radioGeneral:
+                        case Vehicles.names.radioSponsorship:
+                        case Vehicles.names.radioMusic:
+                        case Vehicles.names.tv:
+                        case Vehicles.names.tvClipping:
+                        case Vehicles.names.tvGeneral:
+                        case Vehicles.names.tvSponsorship:
+                        case Vehicles.names.tvNonTerrestrials:
+                        case Vehicles.names.tvAnnounces:
+                        case Vehicles.names.cinema:
+                        case Vehicles.names.internet:
+                        case Vehicles.names.outdoor:
+                        case Vehicles.names.editorial:
+                        case Vehicles.names.press:
+                        case Vehicles.names.pressClipping:
                             for (int i = 0; i < columns.Count; i++)
                             {
                                 root.Root.Add(new Header(GestionWeb.GetWebWord(columns[i].WebTextId, _session.SiteLanguage), columns[i].Id.GetHashCode()));
@@ -1202,11 +1218,8 @@ namespace TNS.AdExpressI.Insertions.Russia
             switch (vehicle.Id)
             {
                 case CstDBClassif.Vehicles.names.press:
-                    if (vehicle.Id == CstDBClassif.Vehicles.names.press && !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRESS_CREATION_ACCESS_FLAG))
-                    {
-                        break;
-                    }
 
+                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRESS_CREATION_ACCESS_FLAG)) break;
                     //visuel(s) disponible(s)
                     files = row["associated_file"].ToString().Split(',');
                     for (int fileIndex = 0; fileIndex < files.Length; fileIndex++)
@@ -1217,13 +1230,21 @@ namespace TNS.AdExpressI.Insertions.Russia
                         }
                     }
                     break;
+                case CstDBClassif.Vehicles.names.pressClipping:
+                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRESS_CLIPPING_CREATION_ACCESS_FLAG)) break;                   
+                    //visuel(s) disponible(s)
+                    files = row["associated_file"].ToString().Split(',');
+                    for (int fileIndex = 0; fileIndex < files.Length; fileIndex++)
+                    {
+                        if (files[fileIndex].Length > 0)
+                        {
+                            visuals.Add(this.GetCreativePathVisual(CstWeb.CreationServerPathes.IMAGES_PRESS_CLIPPING, files[fileIndex], advertisementId, false, SCAN_LOW+"/"));
+                        }
+                    }
+                    break;
                 case CstDBClassif.Vehicles.names.indoor:
                 case CstDBClassif.Vehicles.names.outdoor:
-                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG))
-                    {
-                        break;
-                    }
-
+                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG)) break;                   
                     if (row["associated_file"] != System.DBNull.Value)
                     {
                         files = row["associated_file"].ToString().Split(',');
@@ -1240,18 +1261,14 @@ namespace TNS.AdExpressI.Insertions.Russia
                         files = row["associated_file"].ToString().Split(',');
                         foreach (string s in files)
                         {
-                            visuals.Add(this.GetCreativePathVisual(CstWeb.CreationServerPathes.IMAGES_EDITORIAL, s, advertisementId, false, "scan_low/"));
+                            visuals.Add(this.GetCreativePathVisual(CstWeb.CreationServerPathes.IMAGES_EDITORIAL, s, advertisementId, false, SCAN_LOW+"/"));
                         }
                     }
                     break;
                 case CstDBClassif.Vehicles.names.radioGeneral:
                 case CstDBClassif.Vehicles.names.radioSponsorship:
                 case CstDBClassif.Vehicles.names.radioMusic:
-                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_RADIO_CREATION_ACCESS_FLAG))
-                    {
-                        break;
-                    }
-
+                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_RADIO_CREATION_ACCESS_FLAG)) break;                  
                     if (row["associated_file"] != System.DBNull.Value)
                     {
                         files = row["associated_file"].ToString().Split(',');
@@ -1265,12 +1282,9 @@ namespace TNS.AdExpressI.Insertions.Russia
                 case CstDBClassif.Vehicles.names.tvSponsorship:
                 case CstDBClassif.Vehicles.names.tvNonTerrestrials:
                 case CstDBClassif.Vehicles.names.tvAnnounces:
-                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_TV_CREATION_ACCESS_FLAG))
-                    {
-                        break;
-                    }
-
-                    if (row["associated_file"] != System.DBNull.Value)
+                case CstDBClassif.Vehicles.names.tvClipping:
+                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_TV_CREATION_ACCESS_FLAG)) break;                   
+                    if (row["associated_file"] != DBNull.Value)
                     {
                         files = row["associated_file"].ToString().Split(',');
                         foreach (string s in files)
@@ -1280,12 +1294,9 @@ namespace TNS.AdExpressI.Insertions.Russia
                     }
                     break;
                 case CstDBClassif.Vehicles.names.internet:
-                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_INTERNET_ACCESS_FLAG))
-                    {
-                        break;
-                    }
+                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_INTERNET_ACCESS_FLAG)) break;                    
 
-                    if (row["associated_file"] != System.DBNull.Value)
+                    if (row["associated_file"] != DBNull.Value)
                     {
                         files = row["associated_file"].ToString().Split(',');
                         foreach (string s in files)
@@ -1332,6 +1343,8 @@ namespace TNS.AdExpressI.Insertions.Russia
             {
                 case CstDBClassif.Vehicles.names.press:
                     return CstWeb.CreationServerPathes.IMAGES;
+                case CstDBClassif.Vehicles.names.pressClipping:
+                    return CstWeb.CreationServerPathes.IMAGES_PRESS_CLIPPING;
                 case CstDBClassif.Vehicles.names.outdoor:
                     return CstWeb.CreationServerPathes.IMAGES_OUTDOOR;
                 case CstDBClassif.Vehicles.names.internet:
@@ -1347,13 +1360,14 @@ namespace TNS.AdExpressI.Insertions.Russia
         {
             switch (vehicleId)
             {
-                case CstDBClassif.Vehicles.names.press:
+                case Vehicles.names.press:
                     return "press_low/";
-                case CstDBClassif.Vehicles.names.outdoor:
-                    return "outdoor_id_low/";
-                case CstDBClassif.Vehicles.names.editorial:
-                    return "scan_low/";
-                default:
+                case Vehicles.names.editorial:
+                case Vehicles.names.pressClipping:
+                    return SCAN_LOW+"/";
+                case Vehicles.names.outdoor:
+                    return "outdoor_id_low/";               
+               default:
                     throw (new Exceptions.InsertionsException("Unable to determine vehicle ID"));
             }
         }

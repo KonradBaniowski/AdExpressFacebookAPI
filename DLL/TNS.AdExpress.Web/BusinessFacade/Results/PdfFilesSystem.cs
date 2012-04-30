@@ -27,22 +27,7 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results{
 		/// </summary>
 		protected ArrayList _list=new ArrayList();
 		#endregion
-		
-		#region Constructeur
-//		/// <summary>
-//		/// Constructeur
-//		/// </summary>
-//		/// <param name="page">Page en cours</param>
-//		/// <param name="webSession">Session</param>
-//		/// <param name="dataSource">DataSource pour la creation de DataSet</param>
-//		public PdfFilesSystem(Page page, WebSession webSession,IDataSource dataSource){
-//			try{
-//				_list.Add(new WebCommon.Results.FilesItem(WebConstantes.FilesResults.PDF,WebRules.Results.FilesItemRules.GetData(WebConstantes.FilesResults.Type.pdf,webSession,dataSource)));
-//			}
-//			catch(System.Exception){
-//			}
-//		}
-		#endregion
+				
 
 		#region Sortie HTML
 		/// <summary>
@@ -55,25 +40,26 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results{
         public static string GetHtml(Page page, WebSession webSession, TNS.FrameWork.DB.Common.IDataSource dataSource)
         {
 			//Liste des fichiers résultats
-			ArrayList list=new ArrayList();
+			var list=new ArrayList();
 			//liste des types de résultat
-			ArrayList typeList = new ArrayList();
+			var typeList = new ArrayList();
 			
 			#region Construction de la liste des types
-			typeList.Add(TNS.AdExpress.Anubis.Constantes.Result.type.appm.GetHashCode());
-			typeList.Add(TNS.AdExpress.Anubis.Constantes.Result.type.appmInsertionDetail.GetHashCode());
-			typeList.Add(TNS.AdExpress.Anubis.Constantes.Result.type.appmExcel.GetHashCode()); 
-			typeList.Add(TNS.AdExpress.Anubis.Constantes.Result.type.hotep.GetHashCode()); 
-			typeList.Add(TNS.AdExpress.Anubis.Constantes.Result.type.miysis.GetHashCode());
-			typeList.Add(TNS.AdExpress.Anubis.Constantes.Result.type.mnevis.GetHashCode());
-			typeList.Add(TNS.AdExpress.Anubis.Constantes.Result.type.shou.GetHashCode());
-			typeList.Add(TNS.AdExpress.Anubis.Constantes.Result.type.amset.GetHashCode());
-			typeList.Add(TNS.AdExpress.Anubis.Constantes.Result.type.aton.GetHashCode());
-            typeList.Add(TNS.AdExpress.Anubis.Constantes.Result.type.tefnout.GetHashCode());
-            typeList.Add(TNS.AdExpress.Anubis.Constantes.Result.type.selket.GetHashCode());
-            typeList.Add(TNS.AdExpress.Anubis.Constantes.Result.type.thoueris.GetHashCode());
-            typeList.Add(TNS.AdExpress.Anubis.Constantes.Result.type.dedoum.GetHashCode());
-            typeList.Add(TNS.AdExpress.Anubis.Constantes.Result.type.pachet.GetHashCode());
+			typeList.Add(Anubis.Constantes.Result.type.appm.GetHashCode());
+			typeList.Add(Anubis.Constantes.Result.type.appmInsertionDetail.GetHashCode());
+			typeList.Add(Anubis.Constantes.Result.type.appmExcel.GetHashCode()); 
+			typeList.Add(Anubis.Constantes.Result.type.hotep.GetHashCode()); 
+			typeList.Add(Anubis.Constantes.Result.type.miysis.GetHashCode());
+			typeList.Add(Anubis.Constantes.Result.type.mnevis.GetHashCode());
+			typeList.Add(Anubis.Constantes.Result.type.shou.GetHashCode());
+			typeList.Add(Anubis.Constantes.Result.type.amset.GetHashCode());
+			typeList.Add(Anubis.Constantes.Result.type.aton.GetHashCode());
+            typeList.Add(Anubis.Constantes.Result.type.tefnout.GetHashCode());
+            typeList.Add(Anubis.Constantes.Result.type.selket.GetHashCode());
+            typeList.Add(Anubis.Constantes.Result.type.thoueris.GetHashCode());
+            typeList.Add(Anubis.Constantes.Result.type.dedoum.GetHashCode());
+            typeList.Add(Anubis.Constantes.Result.type.pachet.GetHashCode());
+            typeList.Add(Anubis.Constantes.Result.type.apis.GetHashCode());
 			#endregion
 			
 			#region Construction de la liste

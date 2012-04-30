@@ -1442,6 +1442,7 @@
             <defaultMediaDetailLevel id="57" name="name\profession" />
             <defaultMediaDetailLevel id="58" name="media\name" />
             <defaultMediaDetailLevel id="59" name="media\profession" />
+            <defaultMediaDetailLevel id="63" name="Media\Type of presence"/>
             <defaultMediaDetailLevel id="60" name="sector\name" />
             <defaultMediaDetailLevel id="61" name="advertiser\name" />
             <defaultMediaDetailLevel id="62" name="name\advertiser\brand" />
@@ -1489,7 +1490,6 @@
               <allowedUniverseBranch id="15" name="Profession\Name"/>
             </allowedUniverseBranches>
           </selection>
-          <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/VehicleSelectionHelp.aspx" validationMethod="isMediaSelected" />
           <!--<selection id="9" name="media" traductioncode="2539" url="/Private/Selection/RegionSelection.aspx" icone="region" menuTextId="2652" helpUrl="/Private/Helps/Default.aspx" validationMethod="IsPrincipalMediaUniversesSelected">
             <allowedUniverseLevels>
               <allowedUniverseLevel id="17" name="region"/>
@@ -1498,6 +1498,7 @@
               <allowedUniverseBranch id="14" name="region"/>
             </allowedUniverseBranches>
           </selection>-->
+          <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/VehicleSelectionHelp.aspx" validationMethod="isMediaSelected" />          
           <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
         </selections>
         <optionalSelections>

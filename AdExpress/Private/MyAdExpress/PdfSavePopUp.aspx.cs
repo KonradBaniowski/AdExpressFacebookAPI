@@ -4,36 +4,14 @@
 #endregion
 
 using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using TNS.AdExpress.Domain.Classification;
-using TNS.AdExpress.Domain.Layers;
-using TNS.AdExpress.Domain.Web;
-using TNS.AdExpressI.Insertions.DAL;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Core.Result;
 using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Constantes.Customer;
 using ConstantesPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
 using TNS.AdExpress.Constantes.Web;
-using TNS.AdExpress.DataAccess.Classification;
-
-using Oracle.DataAccess.Client;
-using TNS.AdExpress.Domain.Level;
-using TNS.AdExpress.DataAccess.Classification.ProductBranch;
 using System.Collections.Generic;
-using Utils = TNS.AdExpress.Web.Core.Utilities;
-using AjaxPro;
 
 namespace AdExpress.Private.MyAdExpress
 {
@@ -235,7 +213,7 @@ namespace AdExpress.Private.MyAdExpress
         /// </summary>
         /// <param name="sender">Objet source</param>
         /// <param name="e">Arguments</param>
-        protected void closeRollOverWebControl_Click(object sender, System.EventArgs e)
+        protected void closeRollOverWebControl_Click(object sender, EventArgs e)
         {
             this.ClientScript.RegisterClientScriptBlock(this.GetType(), "closeScript", WebFunctions.Script.CloseScript());
 
@@ -247,14 +225,14 @@ namespace AdExpress.Private.MyAdExpress
         /// </summary>
         /// <param name="sender">Objet source</param>
         /// <param name="e">Arguments</param>
-        protected void validateRollOverWebControl_Click(object sender, System.EventArgs e)
+        protected void validateRollOverWebControl_Click(object sender, EventArgs e)
         {
 
-            int i = 0;
+           
             #region Validation
-            string fileName = askremoteexportwebControl1.TbxFileName.Text; //tbxFileName.Text;
-            string mail = askremoteexportwebControl1.TbxMail.Text; //tbxMail.Text;
-            List<int> sel = null;
+            string fileName = askremoteexportwebControl1.TbxFileName.Text; 
+            string mail = askremoteexportwebControl1.TbxMail.Text; 
+            List<int> sel;
             Int64 idStaticNavSession = 0;
             int maxChar = 80;
             try
@@ -262,15 +240,15 @@ namespace AdExpress.Private.MyAdExpress
 
                 if (fileName == null || mail == null || fileName.Length == 0 || mail.Length == 0)
                 {
-                    this.ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", WebFunctions.Script.Alert(GestionWeb.GetWebWord(1748, _siteLanguage)));
+                    ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", WebFunctions.Script.Alert(GestionWeb.GetWebWord(1748, _siteLanguage)));
                 }
                 else if (_webSession.CurrentModule== Module.Name.ANALYSE_DES_DISPOSITIFS && !string.IsNullOrEmpty(fileName) && fileName.Length > maxChar)
                 {
-                    this.ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", WebFunctions.Script.Alert(string.Format(GestionWeb.GetWebWord(2946, _siteLanguage),maxChar.ToString())));
+                    ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", WebFunctions.Script.Alert(string.Format(GestionWeb.GetWebWord(2946, _siteLanguage),maxChar.ToString())));
                 }
                 else if (!WebFunctions.CheckedText.CheckedMailText(mail))
                 {
-                    this.ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", WebFunctions.Script.Alert(GestionWeb.GetWebWord(2041, _siteLanguage)));
+                    ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", WebFunctions.Script.Alert(GestionWeb.GetWebWord(2041, _siteLanguage)));
                 }               
                 else
                 {
@@ -308,6 +286,7 @@ namespace AdExpress.Private.MyAdExpress
                         case Module.Name.ANALYSE_PORTEFEUILLE:
                         case Module.Name.ANALYSE_DES_PROGRAMMES:
                         case Module.Name.ALERTE_PORTEFEUILLE:
+                        case Module.Name.CELEBRITIES:
                     
 
                             if (Module.Name.ANALYSE_CONCURENTIELLE == _webSession.CurrentModule && !string.IsNullOrEmpty(_resultType) && Convert.ToInt32(_resultType) == TNS.AdExpress.Anubis.Constantes.Result.type.dedoum.GetHashCode())
@@ -389,8 +368,9 @@ namespace AdExpress.Private.MyAdExpress
                                 }
                                 _webSession.CustomerPeriodSelected = new CustomerPeriod(_webSession.PeriodBeginningDate, _webSession.PeriodEndDate);
                                 #endregion
-                             
-                                idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.miysis);
+
+                                idStaticNavSession = (_webSession.CurrentModule== Module.Name.CELEBRITIES) ? TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.apis):
+                                    TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.miysis);
                             }
                             break;
 

@@ -730,7 +730,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             }
             else
             {
-                if (data != null && data.NewHeaders == null && _cssCellInfo != null && _cssCellInfo.Length > 0)
+                if (data != null && data.NewHeaders == null && !string.IsNullOrEmpty(_cssCellInfo))
                 {
                     switch (vehicle.Id)
                     {
@@ -1117,6 +1117,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                     case WebCst.Module.Name.ANALYSE_DYNAMIQUE:
                     case WebCst.Module.Name.ANALYSE_DES_DISPOSITIFS:
                     case WebCst.Module.Name.ANALYSE_DES_PROGRAMMES:
+                    case WebCst.Module.Name.CELEBRITIES:
                         detailLevels = _customerWebSession.GenericMediaDetailLevel;
                         break;
                 }

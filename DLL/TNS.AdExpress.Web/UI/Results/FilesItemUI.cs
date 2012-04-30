@@ -3,18 +3,8 @@
 // Date de création: 23/08/2005
 #endregion
 
-using System;
-using System.Data;
 using System.Web.UI;
 using System.Collections;
-
-using TNS.AdExpress.Web.DataAccess.MyAdExpress;
-using TNS.AdExpress.Web.Core.Sessions;
-using TNS.AdExpress.Domain.Translation;
-using ClassificationConstantes=TNS.AdExpress.Constantes.Classification;
-using WebConstantes=TNS.AdExpress.Constantes.Web;
-using AdExpressWebRules=TNS.AdExpress.Web.Rules;
-using BFWebResult = TNS.AdExpress.Web.BusinessFacade.Results;
 using WebCommon = TNS.AdExpress.Web.Common;
 
 namespace TNS.AdExpress.Web.UI.Results{
@@ -72,26 +62,27 @@ namespace TNS.AdExpress.Web.UI.Results{
 							if(compteur==0){ 
 								switch(currentName.Type){
 									
-									case TNS.AdExpress.Anubis.Constantes.Result.type.appmInsertionDetail:
-                                    case TNS.AdExpress.Anubis.Constantes.Result.type.pachet:
+									case Anubis.Constantes.Result.type.appmInsertionDetail:
+                                    case Anubis.Constantes.Result.type.pachet:
                                         t.Append("\n<tr><td width=50%><a href=\"" + currentName.List[1, i].ToString() + "\" target=\"_blank\"><img src=\"/App_Themes/" + themeName + "/Images/Common/file_text.gif\" border=\"0\" alt=\"" + currentName.List[0, i].ToString() + "\"></a>&nbsp;<a href=\"" + currentName.List[1, i].ToString() + "\" class=\"roll02\" target=\"_blank\">" + currentName.List[0, i].ToString() + "</a></td>");
 										break;
-									case TNS.AdExpress.Anubis.Constantes.Result.type.appmExcel:
-									case TNS.AdExpress.Anubis.Constantes.Result.type.amset:
-                                    case TNS.AdExpress.Anubis.Constantes.Result.type.tefnout:
+									case Anubis.Constantes.Result.type.appmExcel:
+									case Anubis.Constantes.Result.type.amset:
+                                    case Anubis.Constantes.Result.type.tefnout:
                                         t.Append("\n<tr><td width=50%><a href=\"" + currentName.List[1, i].ToString() + "\" target=\"_blank\"><img src=\"/App_Themes/" + themeName + "/Images/Common/file_excel.gif\" border=\"0\" alt=\"" + currentName.List[0, i].ToString() + "\"></a>&nbsp;<a href=\"" + currentName.List[1, i].ToString() + "\" class=\"roll02\" target=\"_blank\">" + currentName.List[0, i].ToString() + "</a></td>");
 										break;	
-									case TNS.AdExpress.Anubis.Constantes.Result.type.appm:
-									case TNS.AdExpress.Anubis.Constantes.Result.type.hotep:
-									case TNS.AdExpress.Anubis.Constantes.Result.type.miysis:
-									case TNS.AdExpress.Anubis.Constantes.Result.type.mnevis:
-									case TNS.AdExpress.Anubis.Constantes.Result.type.shou:
-									case TNS.AdExpress.Anubis.Constantes.Result.type.aton:
-                                    case TNS.AdExpress.Anubis.Constantes.Result.type.selket:
-                                    case TNS.AdExpress.Anubis.Constantes.Result.type.thoueris:
+									case Anubis.Constantes.Result.type.appm:
+									case Anubis.Constantes.Result.type.hotep:
+									case Anubis.Constantes.Result.type.miysis:
+									case Anubis.Constantes.Result.type.mnevis:
+									case Anubis.Constantes.Result.type.shou:
+									case Anubis.Constantes.Result.type.aton:
+                                    case Anubis.Constantes.Result.type.selket:
+                                    case Anubis.Constantes.Result.type.thoueris:
+                                    case Anubis.Constantes.Result.type.apis:
                                         t.Append("\n<tr><td width=50%><a href=\"" + currentName.List[1, i].ToString() + "\" target=\"_blank\"><img src=\"/App_Themes/" + themeName + "/Images/Common/file_pdf.gif\" border=\"0\" alt=\"" + currentName.List[0, i].ToString() + "\"></a>&nbsp;<a href=\"" + currentName.List[1, i].ToString() + "\" class=\"roll02\" target=\"_blank\">" + currentName.List[0, i].ToString() + "</a></td>");
 										break;
-                                    case TNS.AdExpress.Anubis.Constantes.Result.type.dedoum:
+                                    case Anubis.Constantes.Result.type.dedoum:
                                         t.Append("\n<tr><td width=50%><a href=\"" + currentName.List[1, i].ToString() + "\" target=\"_blank\"><img src=\"/App_Themes/" + themeName + "/Images/Common/file_zip.gif\" border=\"0\" alt=\"" + currentName.List[0, i].ToString() + "\"></a>&nbsp;<a href=\"" + currentName.List[1, i].ToString() + "\" class=\"roll02\" target=\"_blank\">" + currentName.List[0, i].ToString() + "</a></td>");
                                         break;
 								}	
@@ -100,27 +91,28 @@ namespace TNS.AdExpress.Web.UI.Results{
 							else{
 								switch(currentName.Type){ 
 									
-									case TNS.AdExpress.Anubis.Constantes.Result.type.appmInsertionDetail:
-                                    case TNS.AdExpress.Anubis.Constantes.Result.type.pachet:
+									case Anubis.Constantes.Result.type.appmInsertionDetail:
+                                    case Anubis.Constantes.Result.type.pachet:
 
                                         t.Append("\n<td width=50%><a href=\"" + currentName.List[1, i].ToString() + "\" target=\"_blank\"><img src=\"/App_Themes/" + themeName + "/Images/Common/file_text.gif\" border=0 alt=\"" + currentName.List[0, i].ToString() + "\"></a>&nbsp;<a href=\"" + currentName.List[1, i].ToString() + "\" class=\"roll02\" target=\"_blank\">" + currentName.List[0, i].ToString() + "</a></td></tr>");
 										break;
-									case TNS.AdExpress.Anubis.Constantes.Result.type.appmExcel:
-									case TNS.AdExpress.Anubis.Constantes.Result.type.amset:
-                                    case TNS.AdExpress.Anubis.Constantes.Result.type.tefnout:
+									case Anubis.Constantes.Result.type.appmExcel:
+									case Anubis.Constantes.Result.type.amset:
+                                    case Anubis.Constantes.Result.type.tefnout:
                                         t.Append("\n<td width=50%><a href=\"" + currentName.List[1, i].ToString() + "\" target=\"_blank\"><img src=\"/App_Themes/" + themeName + "/Images/Common/file_excel.gif\" border=0 alt=\"" + currentName.List[0, i].ToString() + "\"></a>&nbsp;<a href=\"" + currentName.List[1, i].ToString() + "\" class=\"roll02\" target=\"_blank\">" + currentName.List[0, i].ToString() + "</a></td></tr>");
 										break;	
-									case TNS.AdExpress.Anubis.Constantes.Result.type.appm:								
-									case TNS.AdExpress.Anubis.Constantes.Result.type.hotep:
-									case TNS.AdExpress.Anubis.Constantes.Result.type.miysis:
-									case TNS.AdExpress.Anubis.Constantes.Result.type.mnevis:
-									case TNS.AdExpress.Anubis.Constantes.Result.type.shou:
-									case TNS.AdExpress.Anubis.Constantes.Result.type.aton:
-                                    case TNS.AdExpress.Anubis.Constantes.Result.type.selket:
-                                    case TNS.AdExpress.Anubis.Constantes.Result.type.thoueris:
+									case Anubis.Constantes.Result.type.appm:								
+									case Anubis.Constantes.Result.type.hotep:
+									case Anubis.Constantes.Result.type.miysis:
+									case Anubis.Constantes.Result.type.mnevis:
+									case Anubis.Constantes.Result.type.shou:
+									case Anubis.Constantes.Result.type.aton:
+                                    case Anubis.Constantes.Result.type.selket:
+                                    case Anubis.Constantes.Result.type.thoueris:
+                                    case Anubis.Constantes.Result.type.apis:
                                         t.Append("\n<td width=50%><a href=\"" + currentName.List[1, i].ToString() + "\" target=\"_blank\"><img src=\"/App_Themes/" + themeName + "/Images/Common/file_pdf.gif\" border=0 alt=\"" + currentName.List[0, i].ToString() + "\"></a>&nbsp;<a href=\"" + currentName.List[1, i].ToString() + "\" class=\"roll02\" target=\"_blank\">" + currentName.List[0, i].ToString() + "</a></td></tr>");
 										break;
-                                    case TNS.AdExpress.Anubis.Constantes.Result.type.dedoum:
+                                    case Anubis.Constantes.Result.type.dedoum:
                                         t.Append("\n<td width=50%><a href=\"" + currentName.List[1, i].ToString() + "\" target=\"_blank\"><img src=\"/App_Themes/" + themeName + "/Images/Common/file_zip.gif\" border=0 alt=\"" + currentName.List[0, i].ToString() + "\"></a>&nbsp;<a href=\"" + currentName.List[1, i].ToString() + "\" class=\"roll02\" target=\"_blank\">" + currentName.List[0, i].ToString() + "</a></td></tr>");
                                         break;
 								}

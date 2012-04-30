@@ -38,6 +38,19 @@ namespace TNS.AdExpressI.Insertions.Russia.Cells
         protected const string CARRIAGE_RETURN = "<br/>";
         #endregion
 
+        /// <summary>
+        /// Thumbnails Directory
+        /// </summary>
+        private string _thumbnailsDirectory = "/press_low";
+
+        /// <summary>
+        /// Set ThumbnailsDirectory
+        /// </summary>
+        public string ThumbnailsDirectory
+        {
+            set { _thumbnailsDirectory = value; }
+        }
+
         #region Constructeur
         /// <summary>
         /// Constructeur
@@ -109,7 +122,7 @@ namespace TNS.AdExpressI.Insertions.Russia.Cells
             bool hasVisual = false;
             str.Append("<td valign=\"top\">");
 
-            string pathes = String.Join(",", _visuals.ToArray()).Replace("/press_low", string.Empty);
+            string pathes = String.Join(",", _visuals.ToArray()).Replace(_thumbnailsDirectory, string.Empty);
             string encryptedParams = (!string.IsNullOrEmpty(pathes)) ? TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(pathes) : "";
 
             foreach (string s in _visuals)

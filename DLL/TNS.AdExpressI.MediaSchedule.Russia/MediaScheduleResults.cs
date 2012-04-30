@@ -111,8 +111,8 @@ namespace TNS.AdExpressI.MediaSchedule.Russia
         protected override object[,] ComputeData()
         {
             #region Variables
-            object[,] oTab = null;           
-            DataTable dtTotal = null, dtLevel1 = null, dtLevel2 = null, dtLevel3 = null, dtLevel4 = null;
+
+            DataTable dtLevel1 = null, dtLevel2 = null, dtLevel3 = null, dtLevel4 = null;
             DataSet ds = null;
             Dictionary<Int64, List<int>> level1ChildsIndex = null;
             Dictionary<string, List<int>> level2ChildsIndex = null, level3ChildsIndex = null;
@@ -135,7 +135,7 @@ namespace TNS.AdExpressI.MediaSchedule.Russia
             param = new object[2];
             param[0] = _session;
             param[1] = _period;
-            IMediaScheduleResultDAL mediaScheduleDAL = (IMediaScheduleResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);            
+            var mediaScheduleDAL = (IMediaScheduleResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);            
             ds = mediaScheduleDAL.GetMediaScheduleData();
            
             if (ds == null || ds.Tables.Count == 0 || ds.Tables[0] == null)
@@ -146,7 +146,7 @@ namespace TNS.AdExpressI.MediaSchedule.Russia
 
             #region Get rows indexes and count NB elements
             //Get total data
-            dtTotal = ds.Tables["total"];
+            DataTable dtTotal = ds.Tables["total"];
 
             //Get level 1 data
             if (levelNb > 0)
@@ -309,8 +309,8 @@ namespace TNS.AdExpressI.MediaSchedule.Russia
             #endregion
 
             #region Create periods table
-            List<Int64> periodItemsList = new List<Int64>();
-            Dictionary<int, int> years_index = new Dictionary<int, int>();
+            var periodItemsList = new List<Int64>();
+            var years_index = new Dictionary<int, int>();
             int currentDate = _period.Begin.Year;
             int oldCurrentDate = _period.End.Year;
             int firstPeriodIndex = FIRST_PERIOD_INDEX;
@@ -318,8 +318,8 @@ namespace TNS.AdExpressI.MediaSchedule.Russia
             switch (_period.PeriodDetailLEvel)
             {
                 case CstWeb.CustomerSessions.Period.DisplayLevel.weekly:
-                    AtomicPeriodWeek currentWeek = new AtomicPeriodWeek(_period.Begin);
-                    AtomicPeriodWeek endWeek = new AtomicPeriodWeek(_period.End);
+                    var currentWeek = new AtomicPeriodWeek(_period.Begin);
+                    var endWeek = new AtomicPeriodWeek(_period.End);
                     currentDate = currentWeek.Year;
                     oldCurrentDate = endWeek.Year;
                     endWeek.Increment();
@@ -330,8 +330,8 @@ namespace TNS.AdExpressI.MediaSchedule.Russia
                     }
                     break;
                 case CstWeb.CustomerSessions.Period.DisplayLevel.monthly:
-                    DateTime dateCurrent = _period.Begin;
-                    DateTime dateEnd = _period.End;
+                    var dateCurrent = _period.Begin;
+                    var dateEnd = _period.End;
                     dateEnd = dateEnd.AddMonths(1);
                     while (!(dateCurrent.Month == dateEnd.Month && dateCurrent.Year == dateEnd.Year))
                     {
@@ -340,8 +340,8 @@ namespace TNS.AdExpressI.MediaSchedule.Russia
                     }
                     break;
                 case CstWeb.CustomerSessions.Period.DisplayLevel.dayly:
-                    DateTime currentDateTime = _period.Begin;
-                    DateTime endDate = _period.End;
+                    var currentDateTime = _period.Begin;
+                    var endDate = _period.End;
                     while (currentDateTime <= endDate)
                     {
                         periodItemsList.Add(Int64.Parse(DateString.DateTimeToYYYYMMDD(currentDateTime)));
@@ -369,13 +369,13 @@ namespace TNS.AdExpressI.MediaSchedule.Russia
             // Line number
             int nbline = nbL1 + nbL2 + nbL3 + nbL4 + 3 + 1;
             // Result table
-            oTab = new object[nbline, nbCol];
+            var oTab = new object[nbline, nbCol];
             //// L3 elements indexes
-            Dictionary<long, List<long>> tabL3Index = new Dictionary<long, List<long>>();
+            var tabL3Index = new Dictionary<long, List<long>>();
             // L2 elements indexes
-            Dictionary<long, List<long>> tabL2Index = new Dictionary<long, List<long>>();
+            var tabL2Index = new Dictionary<long, List<long>>();
             // L1 elements indexes
-            Dictionary<long, List<long>> tabL1Index = new Dictionary<long, List<long>>();
+            var tabL1Index = new Dictionary<long, List<long>>();
             #endregion
 
             #region Column Labels
@@ -949,9 +949,9 @@ namespace TNS.AdExpressI.MediaSchedule.Russia
         /// <returns>HTML code</returns>
         protected override MediaScheduleData ComputeDesign(object[,] data)
         {
-            MediaScheduleData oMediaScheduleData = new MediaScheduleData();
-            StringBuilder t = new System.Text.StringBuilder(5000);
-            CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
+            var oMediaScheduleData = new MediaScheduleData();
+            var t = new System.Text.StringBuilder(5000);
+            var cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].Localization);
             IFormatProvider fp =
                 (!_isExcelReport || _isCreativeDivisionMS) ? WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo
                 : WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfoExcel;

@@ -75,6 +75,10 @@ namespace TNS.Ares.Domain.LS {
         /// </summary>
         Pachet = 25,
         /// <summary>
+        /// Apis plugin
+        /// </summary>
+        Apis = 26,
+        /// <summary>
         /// easyMusicExcel Plugin
         /// </summary>
         easyMusicExcel = 30,
@@ -90,6 +94,8 @@ namespace TNS.Ares.Domain.LS {
         /// wcbPdf Plugin
         /// </summary>
         wcbPdf = 41,
+
+      
     }
     #endregion
 

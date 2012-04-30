@@ -36,23 +36,40 @@ namespace TNS.AdExpressI.Insertions.Russia.Cells
     public class CellCreativesInformation : TNS.AdExpressI.Insertions.Cells.CellCreativesInformation
     {
         protected const char SEPARATOR = '°';
+
+        /// <summary>
+        /// Thumbnails Directory
+        /// </summary>
+        private string _thumbnailsDirectory = "/press_low";
+
+        /// <summary>
+        /// Set ThumbnailsDirectory
+        /// </summary>
+        public string ThumbnailsDirectory
+        {
+            set { _thumbnailsDirectory = value; }
+        }
+
         #region Constructeur
+
         /// <summary>
         /// Constructeur
         /// </summary>
-        /// <param name="label">Texte</param>
         public CellCreativesInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, TNS.AdExpress.Domain.Web.Navigation.Module module)
             : base(session, vehicle,columns, columnNames, cells,module)
         {            
         }
+
         /// <summary>
         /// Constructeur
         /// </summary>
-        /// <param name="label">Texte</param>
         public CellCreativesInformation(WebSession session, VehicleInformation vehicle, List<GenericColumnItemInformation> columns, List<string> columnNames, List<Cell> cells, TNS.AdExpress.Domain.Web.Navigation.Module module, Int64 idColumnsSet)
             : base(session, vehicle, columns, columnNames, cells,module,idColumnsSet)
         {            
         }
+
+     
+
         #endregion
 
         #region Add Values
@@ -199,7 +216,7 @@ namespace TNS.AdExpressI.Insertions.Russia.Cells
             bool hasVisual = false;
             str.Append("<tr><th valign=\"top\">");
 
-            string pathes = String.Join(",", _visuals.ToArray()).Replace("/press_low", string.Empty);
+            string pathes = String.Join(",", _visuals.ToArray()).Replace(_thumbnailsDirectory, string.Empty);
             string encryptedParams = (!string.IsNullOrEmpty(pathes)) ? TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(pathes) : "";
 
             foreach (string s in _visuals)
@@ -271,7 +288,7 @@ namespace TNS.AdExpressI.Insertions.Russia.Cells
             str.Append("<tr ><td align=\"left\" class=\"sloganVioletBackGround\" >");
             str.Append("<table align=\"left\" border=0 cellpadding=0  cellspacing=0><tr >");
 
-            string pathes = String.Join(",", _visuals.ToArray()).Replace("/press_low", string.Empty);
+            string pathes = String.Join(",", _visuals.ToArray()).Replace(_thumbnailsDirectory, string.Empty);
             string encryptedParams = (!string.IsNullOrEmpty(pathes)) ? TNS.AdExpress.Web.Functions.QueryStringEncryption.EncryptQueryString(pathes) : "";
 
             foreach (string s in _visuals)
@@ -379,5 +396,10 @@ namespace TNS.AdExpressI.Insertions.Russia.Cells
             }
         }
         #endregion
+
+        
+
+
+       
     }
 }
