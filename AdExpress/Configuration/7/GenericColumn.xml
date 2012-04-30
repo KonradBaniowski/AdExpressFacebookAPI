@@ -484,7 +484,7 @@
       <columnItem id="33"   name="Date"             idDetailLevelMatching="18"/>
       <columnItem id="38"   name="Programme"        idDetailLevelMatching="24"/>
       <columnItem id="114"  name="Programme flight start"/>
-      <columnItem id="176"  name="programmeGenre"/>
+      <columnItem id="176"  name="programmeGenre"   idDetailLevelMatching="71"/>
       <columnItem id="174"  name="Audience"                                     inBasket="true"/>
       <columnItem id="18"   name="Duration"         idDetailLevelMatching="19"  inBasket="true"/>
     </detailColumn>
