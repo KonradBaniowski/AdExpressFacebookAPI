@@ -215,7 +215,9 @@
     <column id="172" name="rubric" webTextId="2960" dbId="id_rubric" dbLabel="rubric" dbTable="rubric" dbTablePrefixe="rbr" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="173" name="presenceType" webTextId="2957" dbId="id_presence_type" dbLabel="presence_type" dbTable="presence_type" dbTablePrefixe="prt" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="174" name="audience" webTextId="2963" dbId="id_audience" dbLabel="audience" dbTable="audience" dbTablePrefixe="aud" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
-
+    <column id="175" name="country" webTextId="2091" dbId="id_country" dbLabel="country" dbTable="country" dbTablePrefixe="cou" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="176" name="programmeGenre" webTextId="2958" dbId="id_programme_genre" dbLabel="programme_genre" dbTable="programme_genre" dbTablePrefixe="pgg" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    
     <!--End New columns for Russia-->
 
   </columnItems>
@@ -251,6 +253,56 @@
       <columnItem id="127" name="Volume (page)"/>
       <columnItem id="128" name="Volume (page A2)" inBasket="true"/>
       <!--<columnItem id="86" name="Date of issue"/>-->
+    </detailColumn>
+    <!--Press (Insertions columns) Celebrities-->
+    <detailColumn id="41"   name="Spot\Name\profession...">
+      <columnItem id="10"   name="Spot"             notInExcelExport="true"/>
+      <columnItem id="171"  name="Name"             idDetailLevelMatching="69"/>
+      <columnItem id="170"  name="profession"       idDetailLevelMatching="68"/>
+      <columnItem id="175"  name="country"          idDetailLevelMatching="26"/>
+      <columnItem id="173"  name="Type of presence" idDetailLevelMatching="72"/>
+      <columnItem id="7"    name="Advertiser"       idDetailLevelMatching="8"/>
+      <columnItem id="9"    name="Product"          idDetailLevelMatching="10"/>
+      <columnItem id="125"  name="Ad PageNo"/>      
+      <columnItem id="33"   name="Date"             idDetailLevelMatching="18"/>
+      <columnItem id="120"  name="Edition"          idDetailLevelMatching="44"/>
+      <columnItem id="127"  name="Volume (page)"/>
+      <columnItem id="101"  name="Brand"            idDetailLevelMatching="9"/>
+      <columnItem id="116"  name="Cost RUB"/>
+      <columnItem id="174"  name="Audience"                                     inBasket="true"/>
+      <columnItem id="100"  name="Sub brand"        idDetailLevelMatching="28"  inBasket="true"/>
+      <columnItem id="6"    name="Advertisment ID"  idDetailLevelMatching="6"   inBasket="true"/>
+      <columnItem id="115"  name="Cost USD"                                     inBasket="true"/>
+      <columnItem id="128"  name="Volume (page A2)"                             inBasket="true"/>
+      <columnItem id="105"  name="Advertisment"     idDetailLevelMatching="41"  inBasket="true"/>
+      <columnItem id="122"  name="St Format"        idDetailLevelMatching="46"  inBasket="true"/>
+      <columnItem id="169"  name="St Position"                                  inBasket="true"/> 
+      <columnItem id="124"  name="St Design"        idDetailLevelMatching="47"  inBasket="true"/>
+      <columnItem id="126"  name="Issue Local Number"                           inBasket="true"/>
+      <columnItem id="95"   name="Region"           idDetailLevelMatching="30"  inBasket="true"/>
+      <columnItem id="118"  name="Allocation"                                   inBasket="true"/>
+      <columnItem id="8"    name="Category level 3" idDetailLevelMatching="13"  inBasket="true"/>
+      <columnItem id="106"  name="Advertisment description"                     inBasket="true"/>
+      <columnItem id="119"  name="Publishing house" idDetailLevelMatching="34"  inBasket="true"/>
+      <columnItem id="121"  name="Edition type"     idDetailLevelMatching="37"  inBasket="true"/>
+      <columnItem id="108"  name="First issue date"                             inBasket="true"/>
+    </detailColumn>
+    <!--Press Clipping (Insertions columns) Celebrities-->
+    <detailColumn id="46"   name="Spot\Name\profession...">
+      <columnItem id="10"   name="Spot"   notInExcelExport="true"/>
+      <columnItem id="171"  name="Name"                 idDetailLevelMatching="69"/>
+      <columnItem id="170"  name="profession"           idDetailLevelMatching="68"/>
+      <columnItem id="175"  name="country"              idDetailLevelMatching="26"/>
+      <columnItem id="173"  name="Type of presence"     idDetailLevelMatching="72"/>
+      <columnItem id="120"  name="Edition"              idDetailLevelMatching="44"/>
+      <columnItem id="33"   name="Date"                 idDetailLevelMatching="18"/>
+      <columnItem id="164"  name="Mentions"/>
+      <columnItem id="163"  name="Square"/>
+      <columnItem id="34"   name="Page"/>
+      <columnItem id="172"  name="rubric"               idDetailLevelMatching="73"/>
+      <columnItem id="174"  name="Audience"                                         inBasket="true"/>
+      <columnItem id="119"  name="Publishing house"     idDetailLevelMatching="34"  inBasket="true"/>
+      <columnItem id="162"  name="Type of publication"  idDetailLevelMatching="62"  inBasket="true"/>
     </detailColumn>
     <!--Editorial (Insertions columns)-->
     <detailColumn id="28" name="Visual\Region\Advertiser...">
@@ -296,6 +348,39 @@
       <columnItem id="38" name="Programme" idDetailLevelMatching="24"/>
       <columnItem id="115" name="Cost USD"/>
       <columnItem id="116" name="Cost RUB"/>
+    </detailColumn>
+    <!--Radio (Insertions columns) Celebrities-->
+    <detailColumn id="42"   name="Spot\Name\profession...">
+      <columnItem id="10"   name="Spot" notInExcelExport="true"/>
+      <columnItem id="171"  name="Name"               idDetailLevelMatching="69"/>
+      <columnItem id="170"  name="profession"         idDetailLevelMatching="68"/>
+      <columnItem id="175"  name="country"            idDetailLevelMatching="26"/>
+      <columnItem id="173"  name="Type of presence"   idDetailLevelMatching="72"/>
+      <columnItem id="117"  name="Station"            idDetailLevelMatching="33"/>
+      <columnItem id="33"   name="Date"               idDetailLevelMatching="18"/>
+      <columnItem id="116"  name="Cost RUB"/>
+      <columnItem id="18"   name="Duration"           idDetailLevelMatching="19"/>
+      <columnItem id="7"    name="Advertiser"         idDetailLevelMatching="8"/>
+      <columnItem id="101"  name="Brand"              idDetailLevelMatching="9"/>
+      <columnItem id="99"   name="Time start"/>
+      <columnItem id="115"  name="Cost USD"                                       inBasket="true"/>
+      <columnItem id="9"    name="Product"            idDetailLevelMatching="10"  inBasket="true"/>
+      <columnItem id="95"   name="Region"             idDetailLevelMatching="30"  inBasket="true"/>
+      <columnItem id="174"  name="Audience"                                       inBasket="true"/>
+      <columnItem id="108"  name="First issue date"                               inBasket="true"/>
+      <columnItem id="105"  name="Advertisment"       idDetailLevelMatching="41"  inBasket="true"/>
+      <columnItem id="109"  name="Clip position"                                  inBasket="true"/>
+      <columnItem id="110"  name="Clip count"                                     inBasket="true"/>
+      <columnItem id="111"  name="Break flight start"                             inBasket="true"/>
+      <columnItem id="112"  name="Break"                                          inBasket="true"/>
+      <columnItem id="113"  name="Break distribution" idDetailLevelMatching="42"  inBasket="true"/>
+      <columnItem id="114"  name="Programme flight start"                         inBasket="true"/>
+      <columnItem id="38"   name="Programme"          idDetailLevelMatching="24"  inBasket="true"/>
+      <columnItem id="103"  name="Radio Hodling"      idDetailLevelMatching="43"  inBasket="true"/>
+      <columnItem id="100"  name="Sub brand"          idDetailLevelMatching="28"  inBasket="true"/>
+      <columnItem id="8"    name="Category level 3"   idDetailLevelMatching="13"  inBasket="true"/>
+      <columnItem id="6"    name="Advertisment ID"    idDetailLevelMatching="6"   inBasket="true"/>
+      <columnItem id="106"  name="Advertisment description"                       inBasket="true"/>
     </detailColumn>
     <!--Radio (Insertions columns)-->
     <detailColumn id="31" name="Spot\Region\Advertiser...">
@@ -355,6 +440,54 @@
       <columnItem id="115" name="Cost USD" inBasket="true"/>
       <columnItem id="116" name="Cost RUB"/>
     </detailColumn>
+    <!--TV (Insertions columns) Celebrities-->
+    <detailColumn id="43"   name="Spot\Name\...">
+      <columnItem id="10"   name="Spot" notInExcelExport="true"/>
+      <columnItem id="171"  name="Name"               idDetailLevelMatching="69"/>
+      <columnItem id="170"  name="profession"         idDetailLevelMatching="68"/>
+      <columnItem id="175"  name="country"            idDetailLevelMatching="26"/>
+      <columnItem id="173"  name="Type of presence"   idDetailLevelMatching="72"/>
+      <columnItem id="97"   name="TV Company"         idDetailLevelMatching="31"/>
+      <columnItem id="33"   name="Date"               idDetailLevelMatching="18"/>
+      <columnItem id="116"  name="Cost RUB"/>
+      <columnItem id="101"  name="Brand"              idDetailLevelMatching="9"/>
+      <columnItem id="18"   name="Duration"           idDetailLevelMatching="19"/>
+      <columnItem id="99"   name="Time start"/>
+      <columnItem id="7"    name="Advertiser"         idDetailLevelMatching="8"/>
+      <columnItem id="9"    name="Product"            idDetailLevelMatching="10"/>
+      <columnItem id="174"  name="Audience"                                       inBasket="true"/>
+      <columnItem id="105"  name="Advertisment"       idDetailLevelMatching="41"  inBasket="true"/>
+      <columnItem id="115"  name="Cost USD"                                       inBasket="true"/>
+      <columnItem id="109"  name="Clip position"                                  inBasket="true"/>
+      <columnItem id="110"  name="Clip count"                                     inBasket="true"/>
+      <columnItem id="111"  name="Break flight start"                             inBasket="true"/>
+      <columnItem id="112"  name="Break"                                          inBasket="true"/>
+      <columnItem id="114"  name="Programme flight start"                         inBasket="true"/>
+      <columnItem id="38"   name="Programme"          idDetailLevelMatching="24"  inBasket="true"/>
+      <columnItem id="95"   name="Region"             idDetailLevelMatching="30"  inBasket="true"/>
+      <columnItem id="96"   name="National Channel"   idDetailLevelMatching="39"  inBasket="true"/>
+      <columnItem id="98"   name="TV Channel"         idDetailLevelMatching="40"  inBasket="true"/>
+      <columnItem id="100"  name="Sub brand"          idDetailLevelMatching="28"  inBasket="true"/>
+      <columnItem id="8"    name="Category level 3"   idDetailLevelMatching="13"  inBasket="true"/>
+      <columnItem id="6"    name="Advertisment ID"    idDetailLevelMatching="6"   inBasket="true"/>
+      <columnItem id="106"  name="Advertisment description"                       inBasket="true"/>
+      <columnItem id="108"  name="First issue date"                               inBasket="true"/>
+      <columnItem id="113"  name="Break distribution" idDetailLevelMatching="42"  inBasket="true"/>
+    </detailColumn>
+    <!--TV Clipping (Insertions columns) Celebrities-->
+    <detailColumn id="47"   name="Name\profession\...">
+      <columnItem id="171"  name="Name"             idDetailLevelMatching="69"/>
+      <columnItem id="170"  name="profession"       idDetailLevelMatching="68"/>
+      <columnItem id="175"  name="country"          idDetailLevelMatching="26"/>
+      <columnItem id="173"  name="Type of presence" idDetailLevelMatching="72"/>
+      <columnItem id="97"   name="TV Company"       idDetailLevelMatching="31"/>
+      <columnItem id="33"   name="Date"             idDetailLevelMatching="18"/>
+      <columnItem id="38"   name="Programme"        idDetailLevelMatching="24"/>
+      <columnItem id="114"  name="Programme flight start"/>
+      <columnItem id="176"  name="programmeGenre"/>
+      <columnItem id="174"  name="Audience"                                     inBasket="true"/>
+      <columnItem id="18"   name="Duration"         idDetailLevelMatching="19"  inBasket="true"/>
+    </detailColumn>
     <!--TV Niche Channels(Insertions columns)-->
     <detailColumn id="32" name="Spot\National channel\...">
       <columnItem id="10" name="Spot" notInExcelExport="true"/>
@@ -411,7 +544,36 @@
       <columnItem id="116" name="Cost RUB"/>
       <columnItem id="137" name="Volume (m2)" inBasket="true"/>
     </detailColumn>
-
+    <!--Outdoor (Insertions columns) Celebrities-->
+    <detailColumn id="44"   name="Spot\Name\profession\...">
+      <columnItem id="10"   name="Spot" notInExcelExport="true"/>
+      <columnItem id="171"  name="Name"             idDetailLevelMatching="69"/>
+      <columnItem id="170"  name="profession"       idDetailLevelMatching="68"/>
+      <columnItem id="175"  name="country"          idDetailLevelMatching="26"/>
+      <columnItem id="173"  name="Type of presence" idDetailLevelMatching="72"/>
+      <columnItem id="7"    name="Advertiser"       idDetailLevelMatching="8"/>
+      <columnItem id="9"    name="Product"          idDetailLevelMatching="10"/>
+      <columnItem id="116"  name="Cost RUB"/>
+      <columnItem id="101"  name="Brand"            idDetailLevelMatching="9"/>
+      <columnItem id="33"   name="Date"             idDetailLevelMatching="18"/>
+      <columnItem id="137"  name="Volume (m2)"/>
+      <columnItem id="8"    name="Category level 3" idDetailLevelMatching="13" inBasket="true"/>
+      <columnItem id="108"  name="First issue date"                            inBasket="true"/>
+      <columnItem id="131"  name="Address"          idDetailLevelMatching="52" inBasket="true"/>
+      <columnItem id="115"  name="Cost USD"                                    inBasket="true"/>
+      <columnItem id="132"  name="Outdoor Agency"   idDetailLevelMatching="49" inBasket="true"/>
+      <columnItem id="133"  name="Surface Height"                              inBasket="true"/>
+      <columnItem id="134"  name="Surface Weight"                              inBasket="true"/>
+      <columnItem id="105"  name="Advertisment"     idDetailLevelMatching="41" inBasket="true"/>
+      <columnItem id="106"  name="Advertisment description"                    inBasket="true"/>
+      <columnItem id="31"   name="Outdoor Network"  idDetailLevelMatching="50" inBasket="true"/>
+      <columnItem id="135"  name="Surface side"                                inBasket="true"/>
+      <columnItem id="136"  name="Surface side count"                          inBasket="true"/>
+      <columnItem id="95"   name="Region"           idDetailLevelMatching="30" inBasket="true"/>
+      <columnItem id="100"  name="Sub brand"        idDetailLevelMatching="28" inBasket="true"/>
+      <columnItem id="6"    name="Advertisment ID"  idDetailLevelMatching="6"  inBasket="true"/>
+      <columnItem id="130"  name="District"         idDetailLevelMatching="51" inBasket="true"/>
+    </detailColumn>
     <!--Press (Media Insertions columns)-->
     <detailColumn id="6" name="Visual\Advertiser\Plan Media\Vehicle\Product\Category level 4\Category level 3\Page\Format\Position\Design\Color\Price USD\Price RUB">
       <columnItem id="10" name="Spot" notInExcelExport="true"/>
@@ -450,7 +612,6 @@
       <columnItem id="144" name="Price RUB"/>
       <columnItem id="166" name="Time slot" visible="false"/>
     </detailColumn>
-
     <!--Radio Music (Insertions columns)-->
     <detailColumn id="30" name="Spot\Date de diffusion\Advertiser\Plan Media\Vehicle\Product\Category level 4\Category level 3\Time aired\Duration\Ad break\Position\Adbreak duration\spots adbreak">
       <columnItem id="10" name="Spot" notInExcelExport="true"/>
@@ -468,7 +629,6 @@
       <columnItem id="23" name="spots adbreak"/>    
       <columnItem id="166" name="Time slot" visible="false"/>
     </detailColumn>
-
     <!--Internet (Media Insertions columns)-->
     <detailColumn id="27" name="Visual\Advertiser\Plan Media\Vehicle\Product\Category level 4\Category level 3\Page\Format\Position\Design\Color\Price USD\Price RUB">
       <columnItem id="10" name="Spot" notInExcelExport="true"/>
@@ -503,6 +663,41 @@
       <columnItem id="116" name="Cost RUB"/>
       <columnItem id="167" name="Banner width" visible="false"/>
       <columnItem id="168" name="Banner heightB" visible="false"/>
+    </detailColumn>
+    <!--Internet (Insertions columns) Celebrities-->
+    <detailColumn id="45"   name="Spot\Name\profession\...">
+      <columnItem id="10"   name="Spot" notInExcelExport="true"/>
+      <columnItem id="171"  name="Name"                       idDetailLevelMatching="69"/>
+      <columnItem id="170"  name="profession"                 idDetailLevelMatching="68"/>
+      <columnItem id="175"  name="country"                    idDetailLevelMatching="26"/>
+      <columnItem id="173"  name="Type of presence"           idDetailLevelMatching="72"/>
+      <columnItem id="33"   name="Date"                       idDetailLevelMatching="18"/>
+      <columnItem id="7"    name="Advertiser"                 idDetailLevelMatching="8"/>
+      <columnItem id="149"  name="Site"                       idDetailLevelMatching="53"/>
+      <columnItem id="9"    name="Product"                    idDetailLevelMatching="10"/>
+      <columnItem id="101"  name="Brand"                      idDetailLevelMatching="9"/>
+      <columnItem id="155"  name="Advertisment position"                                  inBasket="true"/>
+      <columnItem id="106"  name="Advertisment description"                               inBasket="true"/>
+      <columnItem id="156"  name="Advertisment St format"     idDetailLevelMatching="61"  inBasket="true"/>
+      <columnItem id="174"  name="Audience"                                               inBasket="true"/>
+      <columnItem id="108"  name="First issue date"                                       inBasket="true"/>
+      <columnItem id="6"    name="Advertisment ID"            idDetailLevelMatching="6"   inBasket="true"/>
+      <columnItem id="8"    name="Category level 3"           idDetailLevelMatching="13"  inBasket="true"/>
+      <columnItem id="146"  name="Geo"                                                    inBasket="true"/>
+      <columnItem id="147"  name="Advertisment placement"                                 inBasket="true"/>
+      <columnItem id="148"  name="Holding"                    idDetailLevelMatching="32"  inBasket="true"/>
+      <columnItem id="150"  name="Site section"               idDetailLevelMatching="54"  inBasket="true"/>
+      <columnItem id="151"  name="Site subsection"            idDetailLevelMatching="55"  inBasket="true"/>
+      <columnItem id="152"  name="Landing page"                                           inBasket="true"/>
+      <columnItem id="153"  name="Advertisment file type"     idDetailLevelMatching="56"  inBasket="true"/>
+      <columnItem id="105"  name="Advertisment"               idDetailLevelMatching="41"  inBasket="true"/>
+      <columnItem id="154"  name="Advertisment display type"  idDetailLevelMatching="57"  inBasket="true"/>
+      <columnItem id="157"  name="Advertisment format"                                    inBasket="true"/>
+      <columnItem id="158"  name="Age"                        idDetailLevelMatching="58"  inBasket="true"/>
+      <columnItem id="159"  name="Gender"                     idDetailLevelMatching="59"  inBasket="true"/>
+      <columnItem id="160"  name="Distribution type"          idDetailLevelMatching="60"  inBasket="true"/>
+      <columnItem id="95"   name="Region"                     idDetailLevelMatching="30"  inBasket="true"/>
+      <columnItem id="100"  name="Sub brand"                  idDetailLevelMatching="28"  inBasket="true"/>
     </detailColumn>
     <!--TV Niche Channels (Media Insertions columns)-->
     <detailColumn id="34" name="Spot\Date de diffusion\Advertiser\Plan Media\Vehicle\Product\Category level 4\Category level 3\Time aired\Duration\Ad break\Position\Adbreak duration\spots adbreak\Price USD\Price RUB">

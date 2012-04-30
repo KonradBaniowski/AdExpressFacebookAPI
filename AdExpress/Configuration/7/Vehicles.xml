@@ -616,7 +616,7 @@
     </ColumnDetailLevel>  
 </vehicle>
   <!-- TV Cliiping-->
-  <vehicle id="tvClipping" databaseId="110" showInsertions="false" showCreations="false">
+  <vehicle id="tvClipping" databaseId="110" showInsertions="true" showCreations="false">
     <!-- Units-->
     <allowedUnits defaultUnit="rubles">
       <allowedUnit>rubles</allowedUnit>

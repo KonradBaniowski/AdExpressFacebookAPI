@@ -719,8 +719,15 @@ namespace TNS.AdExpress.Domain.Level
             /// <summary>
             /// Audience
             /// </summary>
-            audience = 174
-
+            audience = 174,
+            /// <summary>
+            /// Country
+            /// </summary>
+            country = 175,
+            /// <summary>
+            /// Programme Genre
+            /// </summary>
+            programmeGenre = 176
         }
         #endregion
 
