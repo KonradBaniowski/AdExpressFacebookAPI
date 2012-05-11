@@ -6,7 +6,7 @@
     <column id="3" name="Support" webTextId="971" dbId="id_media" dbLabel="media" dbTable="media" dbTablePrefixe="md" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="4" name="Centre d'interet" webTextId="1887" dbId="id_interest_center" dbLabel="interest_center" dbTable="interest_center" dbTablePrefixe="ic" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="5" name="Régie" webTextId="1383" dbId="id_media_seller" dbLabel="media_seller" dbTable="media_seller" dbTablePrefixe="ms" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="6" name="Version" webTextId="1888"  dbId="id_slogan" dbIdAlias="id_slogan" convertNullDbId="true" dbLabel="id_slogan" dbLabelAlias="slogan" convertNullDbLabel="true"  dbTablePrefixe="wp"/>
+    <column id="6" name="Version" webTextId="1888"  dbId="id_slogan" dbIdAlias="id_slogan" convertNullDbId="true" dbLabel="id_slogan" dbLabelAlias="slogan" convertNullDbLabel="true"/>
     <column id="7" name="Annonceur" webTextId="857" dbId="id_advertiser" dbLabel="advertiser" dbTable="advertiser" dbTablePrefixe="ad" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="8" name="Groupe" webTextId="1110" dbId="id_group_" dbLabel="group_" dbTable="group_" dbTablePrefixe="gr" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="9" name="Produit" webTextId="858" dbId="id_product" dbLabel="product" dbTable="product" dbTablePrefixe="pr" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
@@ -115,16 +115,11 @@
       <constraints>
         <dbConstraints>
           <dbJoinConstraints>
-            <dbJoinConstraint id="1" name="Jointure slogan" dbField="id_slogan" dbTablePrefixe="dmc" dbRelatedField="id_slogan" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
-            <!--<dbJoinConstraint id="1" name="Jointure date" dbField="date_media_num" dbTablePrefixe="dmc" dbRelatedField="date_media_num" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
-            <dbJoinConstraint id="2" name="Jointure support" dbField="id_media" dbTablePrefixe="dmc" dbRelatedField="id_media" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
-            <dbJoinConstraint id="3" name="Jointure cobranding" dbField="id_cobranding_advertiser" dbTablePrefixe="dmc" dbRelatedField="id_cobranding_advertiser" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
-            <dbJoinConstraint id="3" name="Jointure id data marketing" dbField="id_data_marketing_direct_panel" dbTablePrefixe="dmc" dbRelatedField="id_data_marketing_direct_panel" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
-            <dbJoinConstraint id="3" name="validation donnée" dbField="activation" dbTablePrefixe="dmc" dbRelatedField="50" sqlOperation="leftOuterJoin"/>-->
+            <dbJoinConstraint id="1" name="Jointure slogan" dbField="id_slogan" dbTablePrefixe="dmc" dbRelatedField="id_slogan" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>           
           </dbJoinConstraints>
           <dbTableConstraints>
-            <dbTableConstraint id="1" name="data mail content" dbTable="data_mail_content2" dbTablePrefixe="dmc" dbSchema="adexpr03"/>
-            <!--<dbTableConstraint id="1" name="data mail content" dbTable="data_mail_content" dbTablePrefixe="dmc" dbSchema="adexpr03"/>-->
+            <!--<dbTableConstraint id="1" name="data mail content" dbTable="data_mail_content2" dbTablePrefixe="dmc" dbSchema="adexpr03"/>-->
+            <dbTableConstraint id="1" name="data mail content" dbTable="data_mail_content" dbTablePrefixe="dmc" dbSchema="adexpr03"/>
           </dbTableConstraints>
         </dbConstraints>
       </constraints>

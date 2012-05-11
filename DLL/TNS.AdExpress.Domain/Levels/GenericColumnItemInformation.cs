@@ -1015,6 +1015,7 @@ namespace TNS.AdExpress.Domain.Level
         public string DataBaseAliasIdField
         {
             get { return (_dataBaseAliasIdField); }
+            set { _dataBaseAliasIdField = value; }
         }
         /// <summary>
         /// Obtient le nom de la table pour la colonne de la base de données AdExpress 3
@@ -1029,6 +1030,7 @@ namespace TNS.AdExpress.Domain.Level
         public string DataBaseTableNamePrefix
         {
             get { return (_dataBaseTableNamePrefix); }
+            set { _dataBaseTableNamePrefix = value; }
         }
         /// <summary>
         /// Indique si on doit convertir la valeur null d'un identifiant en 0

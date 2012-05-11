@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using TNS.AdExpress.Constantes.Classification.DB;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstCustomer = TNS.AdExpress.Constantes.Customer;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
@@ -732,6 +733,7 @@ namespace TNS.AdExpressI.Insertions.DAL {
 
 
             #region Execution de la requête
+
             try
             {
                 return _session.Source.Fill(sql.ToString());
@@ -881,7 +883,12 @@ namespace TNS.AdExpressI.Insertions.DAL {
             /* Get the SQL code of the fields corresponding to columns (from the XML configuration files) except the ones that mutched with
              * the detail level list
              * */
+           
             tmp = GenericColumns.GetSqlFields(columns,null);
+            if (vehicle.Id == Vehicles.names.directMarketing)
+            {
+                tmp = tmp.Replace("nvl(id_slogan,0)", "nvl(wp.id_slogan,0)");
+            }
             if (tmp.Length > 0)
             {
                 sql.AppendFormat(" {0},", tmp);
@@ -955,7 +962,12 @@ namespace TNS.AdExpressI.Insertions.DAL {
             /* Get the SQL code of the fields corresponding to columns (from the XML configuration files) except the ones that mutched with
              * the detail level list
              * */
+            
             tmp = GenericColumns.GetSqlFields(columns, detailLevelsIds);
+            if (vehicle.Id == Vehicles.names.directMarketing)
+            {
+                tmp = tmp.Replace("nvl(id_slogan,0)", "nvl(wp.id_slogan,0)");
+            }
             if (tmp.Length > 0) {
                 if (detailLevelSelected) sql.Append(",");
                 sql.AppendFormat(" {0},", tmp);
@@ -1547,8 +1559,12 @@ namespace TNS.AdExpressI.Insertions.DAL {
             /* Get SQL group by fields for the classification columns defined in the Xml configuration file
              * */
             tmp = GenericColumns.GetSqlGroupByFields(columns, null);
-            tmp = tmp.Replace("id_slogan", "wp.id_slogan");
-            tmp = tmp.Replace("wp.wp.id_slogan", "wp.id_slogan");
+            if (vehicle.Id == Vehicles.names.directMarketing)
+            {
+                tmp = tmp.Replace("id_slogan", "wp.id_slogan");
+            }
+            //tmp = tmp.Replace("id_slogan", "wp.id_slogan");
+            //tmp = tmp.Replace("wp.wp.id_slogan", "wp.id_slogan");
             if (tmp.Length > 0)
             {
                 sql.AppendFormat(" {0}", tmp);
@@ -1607,9 +1623,12 @@ namespace TNS.AdExpressI.Insertions.DAL {
 
             /* Get SQL group by fields for the classification columns defined in the Xml configuration file
              * */
+            
             tmp = GenericColumns.GetSqlGroupByFields(columns, detailLevelIds);
-            tmp = tmp.Replace("id_slogan", "wp.id_slogan");
-            tmp = tmp.Replace("wp.wp.id_slogan", "wp.id_slogan");
+            if (vehicle.Id == Vehicles.names.directMarketing)
+            {
+                tmp = tmp.Replace("id_slogan", "wp.id_slogan");
+            }
             if (tmp.Length > 0) {
                 if (!first) sql.Append(",");
                 sql.AppendFormat(" {0}", tmp);
@@ -1620,7 +1639,7 @@ namespace TNS.AdExpressI.Insertions.DAL {
              * */
             if (columns != null) {
                 tmp = GenericColumns.GetSqlConstraintGroupByFields(columns);
-                if (tmp != null && tmp.Length > 0) {
+                if (!string.IsNullOrEmpty(tmp)) {
                     if (!first) sql.Append(",");
                     first = false;
                     sql.AppendFormat(" {0}", tmp);
@@ -1675,9 +1694,8 @@ namespace TNS.AdExpressI.Insertions.DAL {
 
             /* Get SQL order by fields for the classification columns defined in the Xml configuration file
              * */
-            tmp = GenericColumns.GetSqlOrderFields(columns, null);
-            tmp = tmp.Replace("id_slogan", "wp.id_slogan");
-            tmp = tmp.Replace("wp.wp.id_slogan", "wp.id_slogan");
+          
+            tmp = GenericColumns.GetSqlOrderFields(columns, null);            
             if (tmp.Length > 0)
             {
                 if (!first) sql.Append(",");
@@ -1736,7 +1754,8 @@ namespace TNS.AdExpressI.Insertions.DAL {
 
             /* Get SQL order by fields for the classification columns defined in the Xml configuration file
              * */
-            tmp = GenericColumns.GetSqlOrderFields(columns, detailLevelIds);
+         
+            tmp = GenericColumns.GetSqlOrderFields(columns, detailLevelIds);          
             if (tmp.Length > 0) {
                 if (!first) sql.Append(",");
                 sql.AppendFormat(" {0}", tmp);
@@ -1747,7 +1766,7 @@ namespace TNS.AdExpressI.Insertions.DAL {
              * */
             if (columns != null) {
                 tmp = GenericColumns.GetSqlConstraintOrderFields(columns);
-                if (tmp != null && tmp.Length > 0) {
+                if (!string.IsNullOrEmpty(tmp)) {
                     if (!first)sql.Append(",");
                     first = false;
                     sql.AppendFormat(" {0}", tmp);
@@ -1770,7 +1789,7 @@ namespace TNS.AdExpressI.Insertions.DAL {
         /// <returns>versions SQL query</returns>
         protected virtual string GetSQLQuery(string idVehicle, string beginingDate, string endDate){
 
-            System.Text.StringBuilder sql = new System.Text.StringBuilder(1000);
+            StringBuilder sql = new System.Text.StringBuilder(1000);
 
             VehicleInformation vehicleInformation = null;
 
@@ -1857,7 +1876,7 @@ namespace TNS.AdExpressI.Insertions.DAL {
 
         protected virtual string GetSloganField(VehicleInformation vehicleInformation, string tablePrefixe)
         {
-            System.Text.StringBuilder sql = new System.Text.StringBuilder(500);
+            StringBuilder sql = new System.Text.StringBuilder(500);
             if (_session.CurrentModule == CstWeb.Module.Name.BILAN_CAMPAGNE)
             {
                 sql.AppendFormat(", nvl({0}.id_slogan, 0) as id_slogan", tablePrefixe);

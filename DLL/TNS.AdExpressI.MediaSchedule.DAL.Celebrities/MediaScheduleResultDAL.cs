@@ -33,22 +33,22 @@ namespace TNS.AdExpressI.MediaSchedule.DAL.Celebrities
         }
         #endregion
 
-        //  #region GetMediaScheduleData RUSSIA
-        ///// <summary>
-        ///// Get Data tables  to build Media Schedule report
-        ///// The method will return :
-        ///// - 1 Data table for line TOTAL
-        ///// - N data tables for N levels
-        /////
-        ///// The format of the data will be :
-        ///// [identifier Level1, Label level 1,...,identifier LevelN, Label level N,date_num,period_count,unit selected]
-        ///// </summary>
-        ///// <returns>DataSet containing Data</returns>
-        //public override DataSet GetMediaScheduleData()
-        //{
-        //    DataSet ds = base.GetMediaScheduleData();
-        //    return ds;
-        //}
-        //#endregion
+        #region GetMediaScheduleData RUSSIA
+        /// <summary>
+        /// Get Data tables  to build Media Schedule report
+        /// The method will return :
+        /// - 1 Data table for line TOTAL
+        /// - N data tables for N levels
+        ///
+        /// The format of the data will be :
+        /// [identifier Level1, Label level 1,...,identifier LevelN, Label level N,date_num,period_count,unit selected]
+        /// </summary>
+        /// <returns>DataSet containing Data</returns>
+        public override DataSet GetMediaScheduleData()
+        {
+            var ds = new DataSet();
+            return ds;
+        }
+        #endregion
     }
 }
