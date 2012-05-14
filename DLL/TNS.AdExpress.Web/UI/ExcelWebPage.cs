@@ -1476,9 +1476,16 @@ namespace TNS.AdExpress.Web.UI
                     DetailLevelItemInformation cLevel = (DetailLevelItemInformation)detailLevels.Levels[i];
                     if (filters[i] != long.MinValue.ToString() || (((VehiclesInformation.Contains(ClassificationCst.DB.Vehicles.names.adnettrack) && idVehicle == VehiclesInformation.EnumToDatabaseId(ClassificationCst.DB.Vehicles.names.adnettrack)) || (VehiclesInformation.Contains(ClassificationCst.DB.Vehicles.names.evaliantMobile) && idVehicle == VehiclesInformation.EnumToDatabaseId(ClassificationCst.DB.Vehicles.names.evaliantMobile))) && cLevel.Id == DetailLevelItemInformation.Levels.slogan && filters[i] != long.MinValue.ToString()))
                     {
-                        levels = factoryLevels.CreateClassificationLevelListDAL(cLevel, filters[i]);
-                        if (levels != null && levels.IdListOrderByClassificationItem != null && levels.IdListOrderByClassificationItem.Count > 0)
-                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(cLevel.WebTextId, webSession.SiteLanguage) + " : </font> " + levels[Convert.ToInt64(filters[i].ToString())] + "</TD></TR>");
+                        if (cLevel.Id == DetailLevelItemInformation.Levels.slogan)
+                        {
+                            t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(cLevel.WebTextId, webSession.SiteLanguage) + " : </font> " + filters[i].ToString() + "</TD></TR>");  
+                        }else
+                        {
+                            levels = factoryLevels.CreateClassificationLevelListDAL(cLevel, filters[i]);
+                            if (levels != null && levels.IdListOrderByClassificationItem != null && levels.IdListOrderByClassificationItem.Count > 0)
+                                t.Append("<TR><TD colspan=4 class=\"excelData\" ><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(cLevel.WebTextId, webSession.SiteLanguage) + " : </font> " + levels[Convert.ToInt64(filters[i].ToString())] + "</TD></TR>"); 
+                        }
+                     
                     }
                 }
             }

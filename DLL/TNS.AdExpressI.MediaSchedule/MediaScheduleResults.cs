@@ -3381,14 +3381,9 @@ namespace TNS.AdExpressI.MediaSchedule {
         /// <returns>Data Levels</returns>
         protected virtual DataTable GetDataLevels(IMediaScheduleResultDAL mediaScheduleResultDAL, GenericDetailLevel detailLevel, DataTable dt) {
 
-#if DEBUG
-            System.Diagnostics.Debug.WriteLine("Builds dataLevels distinct for " + dt.Rows.Count + " rows");
-            var stopWatch = new System.Diagnostics.Stopwatch();
-            stopWatch.Start();
-#endif
             DataTable dtLevels = null;
 
-            if (_session.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule) {
+            if (_session.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule && !IsPlanMediaAdnettrack()) {
                 DataSet ds = mediaScheduleResultDAL.GetMediaScheduleDataLevels();
                 if (ds != null && ds.Tables != null && ds.Tables.Count > 0) dtLevels = ds.Tables[0];
                 else dtLevels = null;
@@ -3442,15 +3437,6 @@ namespace TNS.AdExpressI.MediaSchedule {
                 dtLevels.PrimaryKey = dataColumnList.ToArray();
 
             }
-
-
-#if DEBUG
-            stopWatch.Stop();
-            TimeSpan ts = stopWatch.Elapsed;
-            System.Diagnostics.Debug.WriteLine("Builds dataLevels distinct ("+dtLevels.Rows.Count+" rows) in :" + String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
-                ts.Hours, ts.Minutes, ts.Seconds,
-                ts.Milliseconds / 10));
-#endif
 
             return dtLevels;
         }

@@ -126,10 +126,8 @@ namespace TNS.AdExpressI.Date.DAL {
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
                 case DBClassificationConstantes.Vehicles.names.czinternet:
-                    firstDayOfWeek = publicationDate.AddDays(1);
-                    return firstDayOfWeek;
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
-                    firstDayOfWeek = publicationDate.AddDays(7);
+                    firstDayOfWeek = publicationDate.AddDays(1);
                     return firstDayOfWeek;
                 case DBClassificationConstantes.Vehicles.names.internet:
                     publicationDate = publicationDate.AddMonths(1);
