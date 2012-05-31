@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -98,10 +99,6 @@
     <ProjectReference Include="..\..\DLL\TNS.Ares.StaticNavSession.DAL.Default\TNS.Ares.StaticNavSession.DAL.Default.csproj">
       <Project>{5D4C60A4-D7D0-4725-9BA8-57EF44677BC4}</Project>
       <Name>TNS.Ares.StaticNavSession.DAL.Default</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TNS.Ares.AdExpress.PdfPM\TNS.Ares.AdExpress.PdfPM.csproj">
-      <Project>{D35ABD23-DF9A-4B83-AF3E-775F25D6E148}</Project>
-      <Name>TNS.Ares.AdExpress.PdfPM</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.AdExpress.Anubis.Miysis\TNS.AdExpress.Anubis.Miysis.csproj">
       <Project>{789382E6-1D15-43BA-94C9-AB4252A522EB}</Project>

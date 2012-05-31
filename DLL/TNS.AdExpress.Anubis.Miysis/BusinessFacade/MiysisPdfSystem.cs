@@ -12,61 +12,34 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Web;
-using System.Windows.Forms;
 using System.Reflection;
 
 using TNS.AdExpress.Anubis.Miysis.Common;
 using TNS.AdExpress.Anubis.Miysis.Exceptions;
-
-using TNS.AdExpress.Web.UI.Results;
-
-using TNS.AdExpress.Constantes.Customer;
 using CstRights = TNS.AdExpress.Constantes.Customer.Right;
-using CstResult = TNS.AdExpress.Constantes.FrameWork.Results;
 using TNS.AdExpress.Constantes.Web;
-using TNS.FrameWork.Date;
-
-using TNS.AdExpress.Web.BusinessFacade.Results;
-using TNS.AdExpress.Web.BusinessFacade.Selections.Products;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Web.DataAccess.Selections.Grp;
 using TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Web.Rules.Results.APPM;
 using TNS.AdExpress.Web.UI;
-using TNS.AdExpress.Web.Rules.Results;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using DBCst = TNS.AdExpress.Constantes.Classification.DB;
-using FrameWorkResultConstantes = TNS.AdExpress.Constantes.FrameWork.Results;
-
 using TNS.FrameWork;
 using TNS.FrameWork.Net.Mail;
 
 using PDFCreatorPilotLib;
 using TNS.FrameWork.DB.Common;
-
-using TNS.AdExpress.Classification;
-using TNS.AdExpress.Web.Common.Results;
 using TNS.AdExpress.Web.UI.Results.MediaPlanVersions;
 using WebFunctions = TNS.AdExpress.Web.Functions;
-using ExcelFunction = TNS.AdExpress.Web.UI.ExcelWebPage;
-using System.Globalization;
-using Oracle.DataAccess.Client;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpressI.MediaSchedule;
 using TNS.AdExpress.Domain.Web.Navigation;
-using DomainLevel = TNS.AdExpress.Domain.Level;
-using ConstantePeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
-using TNS.AdExpressI.Insertions;
 using TNS.AdExpressI.Insertions.Cells;
-using TNS.Ares;
 using TNS.Ares.Pdf;
 using TNS.FrameWork.WebTheme;
 using TNS.AdExpress.Web.Core;
-using TNS.Ares.Pdf.Exceptions;
 using TNS.AdExpress.Domain.CampaignTypes;
 #endregion
 
@@ -144,13 +117,10 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         {
             try
             {
-                this._dataSource = dataSource;
-                this._config = config;
-                this._rqDetails = rqDetails;
-                this._webSession = webSession;
-
-              
-               
+                _dataSource = dataSource;
+                _config = config;
+                _rqDetails = rqDetails;
+                _webSession = webSession;               
             }
             catch (Exception e)
             {
@@ -161,25 +131,26 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         #endregion
 
         #region Init
+        /// <summary>
+        /// Initialization
+        /// </summary>
+        /// <returns>short File Name</returns>
         public string Init()
         {
             try
             {
-                string shortFName = "";
-                string fName = GetFileName(_rqDetails, ref shortFName);
-                bool display = false;
-#if(DEBUG)
-                display = true;
-#endif
-                base.Init(true, fName, _config.PdfCreatorPilotLogin, _config.PdfCreatorPilotPass);
-                this.DocumentInfo_Creator = this.DocumentInfo_Author = _config.PdfAuthor;
-                this.DocumentInfo_Subject = _config.PdfSubject;
-                this.DocumentInfo_Title = GetTitle();
-                this.DocumentInfo_Producer = _config.PdfProducer;
-                this.DocumentInfo_Keywords = _config.PdfKeyWords;
+                var shortFName = "";
+                var fName = GetFileName(_rqDetails, ref shortFName);
+
+                Init(true, fName, _config.PdfCreatorPilotLogin, _config.PdfCreatorPilotPass);
+                DocumentInfo_Creator = DocumentInfo_Author = _config.PdfAuthor;
+                DocumentInfo_Subject = _config.PdfSubject;
+                DocumentInfo_Title = GetTitle();
+                DocumentInfo_Producer = _config.PdfProducer;
+                DocumentInfo_Keywords = _config.PdfKeyWords;
                 return shortFName;
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 throw new MiysisPdfException("Error to initialize MiysisPdfSystem in Init()", e);
             }
@@ -187,7 +158,10 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         #endregion
 
         #region Fill
-        public void Fill()
+        /// <summary>
+        /// Fill
+        /// </summary>
+        public virtual void Fill()
         {
 
             try
@@ -206,9 +180,9 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                 #endregion
 
                 #region Header and Footer
-                string dateString = Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
+                string dateString = Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, Constantes.FrameWork.Dates.Pattern.customDatePattern);
 
-                this.AddHeadersAndFooters(
+                AddHeadersAndFooters(
                 _webSession,
                 imagePosition.leftImage,
                 GetTitle() + " - " + dateString,
@@ -224,7 +198,11 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         #endregion
 
         #region Send
-        public void Send(string fileName)
+        /// <summary>
+        /// Send mail
+        /// </summary>
+        /// <param name="fileName">file Name</param>
+        public virtual void Send(string fileName)
         {           
 
             try
@@ -378,14 +356,17 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         #endregion
 
         #region SessionParameter
-        private void SessionParameter()
+        /// <summary>
+        /// Session Parameter
+        /// </summary>
+        protected  virtual void SessionParameter()
         {
 
             //Formatting date to be used in the query
-            string dateBegin = WebFunctions.Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType).ToString("yyyyMMdd");
-            string dateEnd = WebFunctions.Dates.getPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType).ToString("yyyyMMdd");
+            var dateBegin = WebFunctions.Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType).ToString("yyyyMMdd");
+            var dateEnd = WebFunctions.Dates.getPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType).ToString("yyyyMMdd");
 
-            StringBuilder html = new StringBuilder();
+            var html = new StringBuilder();
 
             html.Append("<TABLE cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" border=\"0\">");
 
@@ -424,7 +405,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
             #endregion
 
             #region Média
-            //TODO Média
+            //Média
             html.Append("<TR height=\"7\">");
             html.Append("<TD></TD>");
             html.Append("</TR>");
@@ -436,13 +417,13 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
             html.Append("</TR>");
             html.Append("<TR>");
             html.Append("<TD align=\"left\">");
-            html.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversMedia, false, false, false, 600, false, false, _webSession.SiteLanguage, 2, 1, true, _webSession.DataLanguage, _webSession.CustomerDataFilters.DataSource));
+            html.Append(DisplayTreeNode.ToHtml(_webSession.SelectionUniversMedia, false, false, false, 600, false, false, _webSession.SiteLanguage, 2, 1, true, _webSession.DataLanguage, _webSession.CustomerDataFilters.DataSource));
             html.Append("</TD>");
             html.Append("</TR>");
             #endregion
             
             #region Unité
-            //TODO Unité
+            //Unité
             html.Append("<TR height=\"7\">");
             html.Append("<TD></TD>");
             html.Append("</TR>");
@@ -599,7 +580,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 
             html.Append("</TABLE>");
 
-            this.ConvertHtmlToPDF(html.ToString(),
+            ConvertHtmlToPDF(html.ToString(),
                 WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Charset,
                 WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
                 _config.WebServer,
@@ -636,10 +617,10 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
             currentLine = 5;
 
             #region Region Set
-            TNS.AdExpress.Domain.Web.Navigation.Module currentModule = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
-            ArrayList detailSelections = ((ResultPageInformation)currentModule.GetResultPageInformation((int)_webSession.CurrentTab)).DetailSelectionItemsType;
+            Domain.Web.Navigation.Module currentModule = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
+            ArrayList detailSelections = currentModule.GetResultPageInformation((int)_webSession.CurrentTab).DetailSelectionItemsType;
             if (_webSession.PrincipalMediaUniverses != null && _webSession.PrincipalMediaUniverses.Count > 0
-                && (detailSelections != null && detailSelections.Contains(WebConstantes.DetailSelection.Type.regionSelected.GetHashCode())))
+                && (detailSelections != null && detailSelections.Contains(DetailSelection.Type.regionSelected.GetHashCode())))
             {
 
                 html.Append("<TR height=\"7\">");
@@ -654,10 +635,31 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 
                 html.Append("<TR align=\"left\">");
                 html.Append("<TD>");
-                html.Append(ConvertionToHtmlString(TNS.AdExpress.Web.Functions.DisplayUniverse.ToHtml(_webSession.PrincipalMediaUniverses[0], _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.CustomerDataFilters.DataSource, 600, true, nbLineByPage, ref currentLine)));
+                html.Append(ConvertionToHtmlString(DisplayUniverse.ToHtml(_webSession.PrincipalMediaUniverses[0], _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.CustomerDataFilters.DataSource, 600, true, nbLineByPage, ref currentLine)));
                 html.Append("</TD>");
                 html.Append("</TR>");
 
+            }
+            #endregion
+
+            #region Profession and Name set
+            if (_webSession.PrincipalProfessionUniverses != null && _webSession.PrincipalProfessionUniverses.Count > 0)
+            {
+                html.Append("<TR height=\"7\">");
+                html.Append("<TD></TD>");
+                html.Append("</TR>");
+                html.Append("<TR height=\"1\" class=\"lightPurple\">");
+                html.Append("<TD></TD>");
+                html.Append("</TR>");
+                html.Append("<TR>");
+                html.Append("<TD class=\"txtViolet11Bold\">&nbsp;" + ConvertionToHtmlString(GestionWeb.GetWebWord(2965, _webSession.SiteLanguage)) + " :</TD>");
+                html.Append("</TR>");
+
+                html.Append("<TR align=\"left\">");
+                html.Append("<TD>");
+                html.Append(ConvertionToHtmlString(DisplayUniverse.ToHtml(_webSession.PrincipalProfessionUniverses[0], _webSession.SiteLanguage, _webSession.DataLanguage, _webSession.CustomerDataFilters.DataSource, 600, true, nbLineByPage, ref currentLine)));
+                html.Append("</TD>");
+                html.Append("</TR>");
             }
             #endregion
 
@@ -677,39 +679,33 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         #endregion
 
         #region MediaPlanIpression
-        private void MediaPlanImpression()
+        /// <summary>
+        /// Media Plan html render
+        /// </summary>
+        protected virtual void MediaPlanImpression()
         {
 
             #region GETHTML
-            StringBuilder html = new StringBuilder(10000);
-            ArrayList versionsUIs = new ArrayList();
-            int startIndexVisual = 0;
-            Int64 nbToSplit = 0;
-            int nbLines = 0;
-            string charSet = WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].PdfContentEncoding;
-            string themeName = WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
-            MediaScheduleData result = null;
-            MediaSchedulePeriod period = null;
-            TNS.AdExpress.Domain.Web.Navigation.Module module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
-            DateTime begin;
-            DateTime end;
-            object[] param = null;
+            var html = new StringBuilder(10000);
+            var module = GetModule();
 
             string[] vehicles = _webSession.GetSelection(_webSession.SelectionUniversMedia, CstRights.type.vehicleAccess).Split(',');
             try
             {
 
                 #region result
-                Int64 idVehicle = Int64.Parse(vehicles[0]);
+                var idVehicle = Int64.Parse(vehicles[0]);
 
-                begin = Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
-                end = Dates.getPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType);
+                var begin = Dates.getPeriodBeginningDate(_webSession.PeriodBeginningDate, _webSession.PeriodType);
+                var end = Dates.getPeriodEndDate(_webSession.PeriodEndDate, _webSession.PeriodType);
 
-                if (_webSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule && _webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                MediaSchedulePeriod period;
+                if (_webSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule && _webSession.CurrentModule == Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
                     period = new MediaSchedulePeriod(begin, end, _webSession.DetailPeriod, _webSession.ComparativePeriodType);
                 else
                     period = new MediaSchedulePeriod(begin, end, _webSession.DetailPeriod);
-                
+
+                object[] param;
                 if (vehicles.Length == 1) {
                     param = new object[3];
                     param[2] = idVehicle;
@@ -720,18 +716,17 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                 param[0] = _webSession;
                 param[1] = period;
 
-                IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                var mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                 mediaScheduleResult.Module = module;
-                result = mediaScheduleResult.GetPDFHtml();
-                SortedDictionary<Int64, List<CellCreativesInformation>> creativeCells = new SortedDictionary<Int64, List<CellCreativesInformation>>();
+                var result = mediaScheduleResult.GetPDFHtml();
+                var creativeCells = new SortedDictionary<Int64, List<CellCreativesInformation>>();
 
                 if (vehicles.Length == 1 && _webSession.DetailPeriod == CustomerSessions.Period.DisplayLevel.dayly && result.VersionsDetail.Count > 0)
                 {
 
-                    VersionsPluriMediaUI versionsUI = new VersionsPluriMediaUI(_webSession, period, "");
-                    //html.Append("\r\n\t<tr class=\"whiteBackGround\">\r\n\t\t<td>");
-                    startIndexVisual = decoupageVersionHTML(html, versionsUI.GetExportMSCreativesHtml(ref creativeCells, base.Style), true, int.Parse(vehicles[0]));
-                    VehicleInformation currentVehicle = VehiclesInformation.Get(idVehicle);
+                    var versionsUI = new VersionsPluriMediaUI(_webSession, period, "");
+                    int startIndexVisual = decoupageVersionHTML(html, versionsUI.GetExportMSCreativesHtml(ref creativeCells, base.Style), true, int.Parse(vehicles[0]));
+                    var currentVehicle = VehiclesInformation.Get(idVehicle);
                     if (CanShowVisual(currentVehicle.Id ))                       
                         BuildVersionPDF(creativeCells, startIndexVisual);
 
@@ -740,14 +735,20 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 
                 #region Construction du tableaux global
                 Double w, width;
-                TimeSpan timeSpan = period.End.Subtract(period.Begin);
-                nbToSplit = (Int64)Math.Round((double)timeSpan.Days / 7);
+                var timeSpan = period.End.Subtract(period.Begin);
+                var nbToSplit = (Int64)Math.Round((double)timeSpan.Days / 7);
 
-                if (_webSession.DetailPeriod == CustomerSessions.Period.DisplayLevel.weekly)
-                    nbToSplit = (Int64)Math.Round((double)nbToSplit / 7);
-                else if (_webSession.DetailPeriod == CustomerSessions.Period.DisplayLevel.monthly)
-                    nbToSplit = (Int64)Math.Round((double)nbToSplit / 30);
+                switch (_webSession.DetailPeriod)
+                {
+                    case CustomerSessions.Period.DisplayLevel.weekly:
+                        nbToSplit = (Int64)Math.Round((double)nbToSplit / 7);
+                        break;
+                    case CustomerSessions.Period.DisplayLevel.monthly:
+                        nbToSplit = (Int64)Math.Round((double)nbToSplit / 30);
+                        break;
+                }
 
+                int nbLines;
                 if (nbToSplit < 5)
                 {
                     width = 863;
@@ -770,7 +771,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                 html.Append("</HTML>");
 
             }
-            catch (System.Exception err)
+            catch (Exception err)
             {
                 throw (new MiysisPdfException("Unable to process Media Schedule Alert export result for request " + _rqDetails["id_static_nav_session"].ToString() + ".", err));
             }
@@ -792,13 +793,12 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         /// <param name="html">Le code HTML à générer</param>
         /// <param name="strHtml">Le code HTML à découper</param>
         /// <param name="nbLines">Nombres de lignes pour le découpage</param>
-        /// <param name="htmlHeader">L'entête HTML</param>
-        private void decoupageHTML(StringBuilder html, string strHtml, int nbLines, bool version)
+        /// <param name="version">true if version</param>
+        protected  virtual void decoupageHTML(StringBuilder html, string strHtml, int nbLines, bool version)
         {
-
-            int startIndex = 0, oldStartIndex = 0, tmp;
-            ArrayList partieHTML = new ArrayList();
-            string resultTableHeader = string.Empty;
+            int startIndex = 0, oldStartIndex = 0;
+            var partieHTML = new ArrayList();
+            var resultTableHeader = string.Empty;
             if (strHtml.Length > 0)
             {
                 for (int i = 0; i < 3; i++)
@@ -811,7 +811,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
 
             while ((startIndex < strHtml.Length) && (startIndex != -1))
             {
-                tmp = 0;
+                int tmp = 0;
 
                 if (start == 0)
                 {
@@ -859,15 +859,15 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         /// <param name="strHtml">Le code HTML à découper</param>
         private int decoupageVersionHTML(StringBuilder html, string strHtml, bool version, int vehicle)
         {
-
-            int startIndex = 0, oldStartIndex = 0, tmp, startIndexVisual = 0;
-            ArrayList partieHTML = new ArrayList();
-            StringBuilder htmltmp = new StringBuilder(1000);
+            int startIndex = 0, oldStartIndex = 0;
+            int startIndexVisual = 0;
+            var partieHTML = new ArrayList();
+            var htmltmp = new StringBuilder(1000);
             htmltmp.Append(html.ToString());
 
             while ((startIndex < strHtml.Length) && (startIndex != -1))
             {
-                tmp = 0;
+                int tmp = 0;
 
                 while ((tmp < 1) && (startIndex < strHtml.Length) && (startIndex != -1))
                 {
@@ -893,7 +893,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                 {
                     if (i == 0)
                     {
-                        startIndexVisual = this.ConvertHtmlToPDF(htmltmp.ToString(),
+                        startIndexVisual = ConvertHtmlToPDF(htmltmp.ToString(),
                                                 WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].PdfContentEncoding,
                                                 WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
                                                 _config.WebServer,
@@ -902,7 +902,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                     }
                     else
                     {
-                        this.ConvertHtmlToPDF(htmltmp.ToString(),
+                        ConvertHtmlToPDF(htmltmp.ToString(),
                                                 WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].PdfContentEncoding,
                                                 WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
                                                 _config.WebServer,
@@ -912,7 +912,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                 }
                 else
                 {
-                    this.ConvertHtmlToPDF(htmltmp.ToString(),
+                    ConvertHtmlToPDF(htmltmp.ToString(),
                                                 WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].PdfContentEncoding,
                                                 WebApplicationParameters.Themes[_webSession.SiteLanguage].Name,
                                                 _config.WebServer,
@@ -1322,6 +1322,15 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         }
         #endregion
 
+        /// <summary>
+        /// Get Module
+        /// </summary>
+        /// <returns>module</returns>
+        protected virtual Domain.Web.Navigation.Module GetModule()
+        {
+            return ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
+        }
+
         #endregion
 
         #region Methode Override
@@ -1345,9 +1354,9 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
         /// </summary>
         /// <param name="source">Error source></param>
         /// <param name="message">Error message</param>
-        private void mail_mailKoHandler(object source, string message)
+        protected virtual void mail_mailKoHandler(object source, string message)
         {
-            throw new Exceptions.MiysisPdfException("Echec lors de l'envoi mail client pour la session " + _webSession.IdSession + " : " + message);
+            throw new MiysisPdfException("Echec lors de l'envoi mail client pour la session " + _webSession.IdSession + " : " + message);
         }
         #endregion        
 

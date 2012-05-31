@@ -115,13 +115,10 @@
       <constraints>
         <dbConstraints>
           <dbJoinConstraints>
-            <dbJoinConstraint id="1" name="Jointure date" dbField="date_media_num" dbTablePrefixe="dmc" dbRelatedField="date_media_num" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
-            <dbJoinConstraint id="2" name="Jointure support" dbField="id_media" dbTablePrefixe="dmc" dbRelatedField="id_media" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
-            <dbJoinConstraint id="3" name="Jointure cobranding" dbField="id_cobranding_advertiser" dbTablePrefixe="dmc" dbRelatedField="id_cobranding_advertiser" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
-            <dbJoinConstraint id="3" name="Jointure id data marketing" dbField="id_data_marketing_direct_panel" dbTablePrefixe="dmc" dbRelatedField="id_data_marketing_direct_panel" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
-            <dbJoinConstraint id="3" name="validation donnée" dbField="activation" dbTablePrefixe="dmc" dbRelatedField="50" sqlOperation="leftOuterJoin"/>
+            <dbJoinConstraint id="1" name="Jointure slogan" dbField="id_slogan" dbTablePrefixe="dmc" dbRelatedField="id_slogan" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin"/>
           </dbJoinConstraints>
           <dbTableConstraints>
+            <!--<dbTableConstraint id="1" name="data mail content" dbTable="data_mail_content2" dbTablePrefixe="dmc" dbSchema="adexpr03"/>-->
             <dbTableConstraint id="1" name="data mail content" dbTable="data_mail_content" dbTablePrefixe="dmc" dbSchema="adexpr03"/>
           </dbTableConstraints>
         </dbConstraints>

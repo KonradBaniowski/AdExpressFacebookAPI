@@ -61,4 +61,19 @@
   <branch id="14"  name="region" labelId="2652">
     <level id="17" name="region"/>
   </branch>
+
+  <branch id="15"  name="profession\name" labelId="2953">
+    <level id="21" name="profession"/>
+    <level id="25" name="name"/>
+  </branch>
+  <branch id="16"  name="programme genre \programme" labelId="2964">
+    <level id="24" name="Programme genre"/>
+    <level id="23" name="Programme"/>
+  </branch>
+  <branch id="17"  name="rubric" labelId="2960">
+    <level id="22" name="rubric"/>
+  </branch>
+  <branch id="18"  name="presence Type" labelId="2957">
+    <level id="26" name="presence Type"/>
+  </branch>
 </universeBranches>

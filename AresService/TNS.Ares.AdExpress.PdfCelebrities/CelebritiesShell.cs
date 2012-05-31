@@ -1,6 +1,6 @@
 ﻿using System;
 using TNS.LinkSystem.LinkKernel;
-using TNS.AdExpress.Anubis.Miysis;
+using TNS.AdExpress.Anubis.Apis;
 using TNS.Ares.Domain.LS;
 using TNS.Ares.AdExpress.Exceptions;
 
@@ -28,7 +28,7 @@ namespace TNS.Ares.AdExpress.PdfCelebrities {
         /// <param name="oObj">task Execution</param>
         protected override void DoTask(object oObj) {
 
-            TaskExecution task = (TaskExecution)oObj;
+            var task = (TaskExecution)oObj;
             long staticNavSession = -1;
             try
             {

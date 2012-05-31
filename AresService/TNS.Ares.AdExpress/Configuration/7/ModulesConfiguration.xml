@@ -208,7 +208,7 @@
         </ColumnDetailLevel>
         <selections>
           <selection id="3" name="Vehicle" showLink="true" traductioncode="799" url="/Private/Selection/OneVehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/OneVehicleSelectionHelp.aspx" validationMethod="isMediaSelected" allowRecall="false"/>
-          <selection id="7" name="DetailVehicle" showLink="false" traductioncode="799" url="/Private/Selection/Russia/MediaSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/DetailVehicleSelectionConcurrentHelp.aspx" validationMethod="isMediaSelected"/>
+          <selection id="7" name="DetailVehicle" showLink="true" traductioncode="799" url="/Private/Selection/Russia/MediaSelection.aspx" icone="media" menuTextId="18" helpUrl="/Private/Helps/DetailVehicleSelectionConcurrentHelp.aspx" validationMethod="isMediaSelected"/>
           <selection id="4" name="Date"  showLink="true" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
         </selections>
         <optionalSelections>
@@ -1418,9 +1418,120 @@
           <link name="Tableaux dynamiques" privilegecode="194" />
         </moduleBridge>
       </module>
+
+      <!-- *****************************************      Celebrities                  *****************************************-->
+      <module name="Celebrities" privilegecode="20000" traductioncode="2949" moduleCategoryId="14" displayIncompleteDateInCalendar="True" urlNextPage="/Private/Selection/UniverseProductSelection.aspx" descriptionWebTextId="2951" descriptionImageName="/Images/Common/Infobulle/Celebrities.png">
+        <RulesLayer name="Celebrities rules layers" assemblyName="TNS.AdExpressI.MediaSchedule.Celebrities.dll" class="TNS.AdExpressI.MediaSchedule.Celebrities.MediaScheduleResults"/>
+        <DataAccessLayer name="Celebrities data access layers" assemblyName="TNS.AdExpressI.MediaSchedule.DAL.Celebrities.dll" class="TNS.AdExpressI.MediaSchedule.DAL.Celebrities.MediaScheduleResultDAL"/>
+        <ProductRights branches="product|advertiser"/>
+        <allowedUnits>
+          <allowedUnit>rubles</allowedUnit>
+          <allowedUnit>kRubles</allowedUnit>
+          <allowedUnit>usd</allowedUnit>
+          <allowedUnit>kusd</allowedUnit>
+          <allowedUnit>spot</allowedUnit>
+          <allowedUnit>insertion</allowedUnit>
+          <allowedUnit>volume</allowedUnit>
+          <allowedUnit>audience</allowedUnit>
+        </allowedUnits>
+        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
+          <ModuleVehicles list="100,110,200,300,310,400,600"/>
+        </ModuleAllowedMediaUniverse>
+        <MediaDetailLevel>
+          <defaultMediaDetailLevels>
+            <defaultMediaDetailLevel id="57" name="profession\name" />
+            <defaultMediaDetailLevel id="58" name="media\name" />
+            <defaultMediaDetailLevel id="59" name="media\profession" />
+            <defaultMediaDetailLevel id="63" name="Media\Type of presence"/>
+            <defaultMediaDetailLevel id="60" name="sector\name" />
+            <defaultMediaDetailLevel id="61" name="advertiser\name" />
+            <defaultMediaDetailLevel id="62" name="name\advertiser\brand" />
+          </defaultMediaDetailLevels>
+          <allowedMediaLevelItems>
+            <allowedMediaLevelItem id="1" name="Media type"/>
+            <allowedMediaLevelItem id="3" name="Media vehicle"/>
+            <allowedMediaLevelItem id="8" name="Advertiser"/>
+            <allowedMediaLevelItem id="9" name="Brand"/>
+            <allowedMediaLevelItem id="10" name="Product"/>
+            <allowedMediaLevelItem id="11" name="Product Category"/>
+            <allowedMediaLevelItem id="12" name="Product Sub Category"/>
+            <allowedMediaLevelItem id="13" name="Group"/>
+            <allowedMediaLevelItem id="72" name="Type of presence"/>
+            <allowedMediaLevelItem id="71" name="programme Genre"/>
+            <allowedMediaLevelItem id="70" name="programme"/>
+            <allowedMediaLevelItem id="69" name="Name"/>
+            <allowedMediaLevelItem id="68" name="Profession"/>
+            <allowedMediaLevelItem id="26" name="Country"/>
+            <allowedMediaLevelItem id="73" name="Rubric"/>
+          </allowedMediaLevelItems>
+        </MediaDetailLevel>
+        <selections>
+          <selection id="2" name="Annonceur" traductioncode="798" url="/Private/Selection/UniverseProductSelection.aspx" icone="product" menuTextId="1984" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="isAdvertisersSelected">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="1" name="sector"/>
+              <allowedUniverseLevel id="2" name="subsector"/>
+              <allowedUniverseLevel id="3" name="group_"/>
+              <allowedUniverseLevel id="6" name="advertiser"/>
+              <allowedUniverseLevel id="8" name="brand"/>
+              <allowedUniverseLevel id="16" name="sub_brand"/>
+              <allowedUniverseLevel id="5" name="product"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches defaultBranchId="1">
+              <allowedUniverseBranch id="1" name="sector\subsector\group_\segment"/>
+              <allowedUniverseBranch id="10"  name="advertiser\brand"/>
+            </allowedUniverseBranches>
+          </selection>
+          <selection id="5" name="Profession" traductioncode="798" url="/Private/Selection/UniverseProfessionSelection.aspx" icone="profession" menuTextId="2954" helpUrl="/Private/Helps/UniverseProductSelectionHelp.aspx" validationMethod="IsProfessionSelected">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="21" name="Profession"/>
+              <allowedUniverseLevel id="25" name="Name"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches defaultBranchId="15">
+              <allowedUniverseBranch id="15" name="Profession\Name"/>
+            </allowedUniverseBranches>
+          </selection>
+          <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/VehicleSelectionHelp.aspx" validationMethod="isMediaSelected" />
+          <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
+        </selections>
+        <optionalSelections>
+          <optionalSelection id="6" name="media" traductioncode="2539" url="/Private/Selection/UniverseMediaSelection.aspx" icone="media" menuTextId="2539" helpUrl="/Private/Helps/Default.aspx">
+            <allowedUniverseLevels>
+              <allowedUniverseLevel id="11" name="vehicle"/>
+              <allowedUniverseLevel id="17" name="region"/>
+              <allowedUniverseLevel id="14" name="media"/>
+            </allowedUniverseLevels>
+            <allowedUniverseBranches defaultBranchId="11">
+              <allowedUniverseBranch id="11" name="vehicle\region\media"/>
+            </allowedUniverseBranches>
+          </optionalSelection>
+        </optionalSelections>
+        <results>
+          <page id="0" resultid="16" name="Résultats" traductioncode="1474" url="/Private/Results/CelebritiesResults.aspx" printExcelUrl="/Private/Results/Excel/CelebritiesResults.aspx" valueExcelUrl="/Private/Results/ValueExcel/CelebritiesResults.aspx" remoteResultPdfUrl="/Private/MyAdExpress/PdfSavePopUp.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPlanAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+            <allowedUnits>
+              <allowedUnit>rubles</allowedUnit>
+              <allowedUnit>kRubles</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
+              <allowedUnit>kusd</allowedUnit>
+              <allowedUnit>spot</allowedUnit>
+              <allowedUnit>insertion</allowedUnit>
+              <allowedUnit>volume</allowedUnit>
+              <allowedUnit>audience</allowedUnit>
+            </allowedUnits>
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>
+              <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="4" name="Unit"/>
+              <detailSelection id="18" name="Generic Media Level Detail"/>
+              <detailSelection id="29" name="Media Personnalized"/>
+              <detailSelection id="35" name="region Selected"/>
+            </detailSelections>
+          </page>
+        </results>
+      </module>
     </moduleGroup>
-
-
   </moduleGroups>
 </configuration>
 

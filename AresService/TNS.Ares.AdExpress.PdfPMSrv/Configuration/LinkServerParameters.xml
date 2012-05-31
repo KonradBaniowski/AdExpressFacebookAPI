@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <servers selectedServerId="3">
   <!--<smtp host="frmitpu-msprod" from="tnsadexpress@kantarmedia.com" errorEmailList="youssef.rkaina@kantarmedia.com;alexandre.rousseau@kantarmedia.com;benjamin.masson@kantarmedia.com;guillaume.facon@kantarmedia.com;dede.mussuma@kantarmedia.com" mailPort="25"/>-->
+  <!--Finland-->
+  <!--<smtp host="tsespmgw001.tnsad.com" from="tnsadexpress@tnsmi.fr" errorEmailList="dede.mussuma@kantarmedia.com" mailPort="25"/>-->
   <!-- Slovaquie -->
   <!--<smtp host="localhost.hobbit.tns-global.sk" from="tnsadexpress@tns-global.sk" errorEmailList="youssef.rkaina@tnsmi.fr;alexandre.rousseau@tnsmi.fr;benjamin.masson@tnsmi.fr;guillaume.facon@tnsmi.fr" mailPort="25"/>-->
   <smtp host="frmitpu-msprod" from="tnsadexpress@kantarmedia.com" errorEmailList="dede.mussuma@kantarmedia.com" mailPort="25"/>

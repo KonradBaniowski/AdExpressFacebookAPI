@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -76,6 +77,50 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Anubis.Apis\TNS.AdExpress.Anubis.Apis.csproj">
+      <Project>{E7437554-D70E-4180-8B03-00EEEC2AD2C9}</Project>
+      <Name>TNS.AdExpress.Anubis.Apis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
+      <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
+      <Name>TNS.AdExpress.Constantes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Web.Core.Russia\TNS.AdExpress.Web.Core.Russia.csproj">
+      <Project>{C264EB54-57AC-46F2-9AED-CE6AE6EF2BD9}</Project>
+      <Name>TNS.AdExpress.Web.Core.Russia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Web.Core\TNS.AdExpress.Web.Core.csproj">
+      <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
+      <Name>TNS.AdExpress.Web.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Classification.DAL.Russia\TNS.AdExpressI.Classification.DAL.Russia.csproj">
+      <Project>{EEE4B6D8-C8FE-4950-96DA-26B2A1C27C3A}</Project>
+      <Name>TNS.AdExpressI.Classification.DAL.Russia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.MediaSchedule.Celebrities\TNS.AdExpressI.MediaSchedule.Celebrities.csproj">
+      <Project>{480BBDCF-816C-4197-A80E-0360DDC2D149}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule.Celebrities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.MediaSchedule.DAL.Celebrities\TNS.AdExpressI.MediaSchedule.DAL.Celebrities.csproj">
+      <Project>{A1211487-CF32-4665-918F-63EAEF78B8D5}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule.DAL.Celebrities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.MediaSchedule.DAL.Russia\TNS.AdExpressI.MediaSchedule.DAL.Russia.csproj">
+      <Project>{F702445A-7DC7-4448-A6BD-BD71618D6F82}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule.DAL.Russia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.MediaSchedule.DAL\TNS.AdExpressI.MediaSchedule.DAL.csproj">
+      <Project>{39325692-D25F-400C-8E46-080BCB3B3524}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.MediaSchedule.Russia\TNS.AdExpressI.MediaSchedule.Russia.csproj">
+      <Project>{2B006E0D-7D7A-42B4-ABD9-3AD5B79667A6}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule.Russia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.MediaSchedule\TNS.AdExpressI.MediaSchedule.csproj">
+      <Project>{23E7E071-0FB0-43D4-B19D-B964EC3082F6}</Project>
+      <Name>TNS.AdExpressI.MediaSchedule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.Ares.Constantes\TNS.Ares.Constantes.csproj">
       <Project>{303C6B21-CA16-4D7B-8EDB-E8869B2B3EC9}</Project>
       <Name>TNS.Ares.Constantes</Name>
@@ -83,6 +128,10 @@
     <ProjectReference Include="..\..\DLL\TNS.Ares.Domain\TNS.Ares.Domain.csproj">
       <Project>{255834E2-DCA3-4290-9325-FFA4291839A6}</Project>
       <Name>TNS.Ares.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.Ares.StaticNavSession.DAL.Default\TNS.Ares.StaticNavSession.DAL.Default.csproj">
+      <Project>{5D4C60A4-D7D0-4725-9BA8-57EF44677BC4}</Project>
+      <Name>TNS.Ares.StaticNavSession.DAL.Default</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.Ares.AdExpress.PdfCelebrities\TNS.Ares.AdExpress.PdfCelebrities.csproj">
       <Project>{65B06003-2E8B-44C4-BEEC-CFF7CE1CDF8C}</Project>
@@ -101,4 +150,14 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>rmdir /S /Q "$(TargetDir)Bin\"
+mkdir "$(TargetDir)Bin\"
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.Celebrities.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.Celebrities.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.DAL.Celebrities.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.DAL.Celebrities.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.DAL.Russia.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.DAL.Russia.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.Russia.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.Russia.dll" /Y
+copy "$(TargetDir)TNS.AdExpress.Web.Core.Russia.dll" "$(TargetDir)Bin\TNS.AdExpress.Web.Core.Russia.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Classification.DAL.Russia.dll" "$(TargetDir)Bin\TNS.AdExpressI.Classification.DAL.Russia.dll" /Y</PostBuildEvent>
+  </PropertyGroup>
 </Project>

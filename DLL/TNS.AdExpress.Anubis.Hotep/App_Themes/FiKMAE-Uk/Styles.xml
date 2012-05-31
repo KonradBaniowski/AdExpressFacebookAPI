@@ -307,13 +307,13 @@
     </cell>
   </cells>
   <pictures>
-    <picture name="PictureLogoAdExpress" path="Images\44\LogoAdExpress.jpg" height="80" width="70"/>
-    <picture name="PictureLogoAdExpress220" path="Images\44\LogoAdExpress220.jpg" height="80" width="70"/>
+    <picture name="PictureLogoAdExpress" path="Images\35\LogoAdExpress.jpg" height="80" width="70"/>
+    <picture name="PictureLogoAdExpress220" path="Images\35\LogoAdExpress220.jpg" height="80" width="70"/>
     <picture name="PictureLogoTNSMedia" path="Images\logoTNSMedia.gif" height="75" width="75"/>
     <picture name="PictureLogoAPPM" path="Images\Common\APPM.bmp" height="45" width="55"/>
     <picture name="PictureCheckBox" path="Images\checkbox.GIF" height="100" width="100"/>
     <picture name="PictureCheckBoxNotChecked" path="Images\checkbox_not_checked.GIF" height="100" width="100"/>
-    <picture name="PictureLogoTNS" path="Images\44\logo_Tns.bmp"/>
+    <picture name="PictureLogoTNS" path="Images\35\logo_Tns.bmp"/>
   </pictures>
   <boxes>
     <box name="BoxMargin15" marginTop="15" marginRight="15" marginBottom="15" marginLeft="15" />

@@ -51,7 +51,7 @@ namespace TNS.Ares.AdExpress.PdfCelebritiesSrv
         {
             try {
                 string configurationDirectoryRoot = AppDomain.CurrentDomain.BaseDirectory + CONFIGURATION_DIRECTORY_NAME + @"\";
-                LsClientConfiguration lsClientConfiguration = Domain.XmlLoader.LsClientConfigurationXL.Load(new XmlReaderDataSource(configurationDirectoryRoot + TNS.Ares.Constantes.ConfigurationFile.LS_CLIENT_CONFIGURATION_FILENAME));
+                LsClientConfiguration lsClientConfiguration = Domain.XmlLoader.LsClientConfigurationXL.Load(new XmlReaderDataSource(configurationDirectoryRoot + Constantes.ConfigurationFile.LS_CLIENT_CONFIGURATION_FILENAME));
 
 
                 _currentShell = new CelebritiesShell(lsClientConfiguration, lsClientConfiguration.DirectoryName);

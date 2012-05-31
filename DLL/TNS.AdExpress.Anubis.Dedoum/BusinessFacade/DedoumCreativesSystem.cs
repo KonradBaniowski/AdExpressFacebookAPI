@@ -157,7 +157,7 @@ namespace TNS.AdExpress.Anubis.Dedoum.BusinessFacade
         /// <param name="fileName">file name</param>
         internal void Send(string fileName, bool res)
         {
-                MailMessage message = new MailMessage();
+        
 
                 try
                 {

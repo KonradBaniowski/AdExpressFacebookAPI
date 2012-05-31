@@ -2,7 +2,7 @@
 <configurations>
    
   <!-- Config RU (26) -->
-  <lsClientConfiguration familyId="139" familyName="AdExpress RU Treatment service" monitorPort="30280" productName="Ares Service treatment - PDF Celebrities (Apis)" maxAvailableSlots="1" directoryName="26\Plugins\Apis.xml">
+  <lsClientConfiguration familyId="139" familyName="AdExpress RU Treatment service" monitorPort="30378" productName="Ares Service treatment - PDF Celebrities (Apis)" maxAvailableSlots="1" directoryName="7\Plugins\Apis.xml">
     <moduleDescription description="Ares Service treatment - PDF Celebrities (Apis))" moduleId="26"/>
   </lsClientConfiguration>
 

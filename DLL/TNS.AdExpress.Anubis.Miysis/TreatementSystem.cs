@@ -168,23 +168,7 @@ namespace TNS.AdExpress.Anubis.Miysis
                 }
                 #endregion
 
-                #region Check Path File
-                if (configurationFilePath == null) {
-                    throw new MiysisPdfException("Impossible de lancer le traitement d'un job", new ArgumentNullException("configurationFilePath"));
-                }
-                if (configurationFilePath.Length == 0) {
-                    throw new MiysisPdfException("Impossible de lancer le traitement d'un job", new ArgumentException("Le nom du fichier de configuration est vide."));
-                }
-                #endregion
-
-                #region Initialize Hotep
-                try {
-                    _miysisConfig = new MiysisConfig(new XmlReaderDataSource(configurationFilePath));
-                }
-                catch (Exception err) {
-                    throw new MiysisPdfException("Impossible de lancer le traitement d'un job <== impossible de charger le fichier de configuration", err);
-                }
-                #endregion
+                InitializeConfig(configurationFilePath);
 
                 #region Initialize WebSession
                 try {
@@ -195,25 +179,8 @@ namespace TNS.AdExpress.Anubis.Miysis
                 }
                 #endregion
 
-                #region Initialize Theme
-                string pathFileTheme = string.Empty;
-                try {
-
-                    if (File.Exists(_miysisConfig.ThemePath + @"\" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + @"\" + "Styles.xml")) {
-                        pathFileTheme = _miysisConfig.ThemePath + @"\" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + @"\" + "Styles.xml";
-                    }
-                    else if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + _miysisConfig.ThemePath + @"\" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + @"\" + "Styles.xml")) {
-                        pathFileTheme = AppDomain.CurrentDomain.BaseDirectory + _miysisConfig.ThemePath + @"\" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + @"\" + "Styles.xml";
-                    }
-                    else {
-                        pathFileTheme = _miysisConfig.ThemePath + @"\" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + @"\" + "Styles.xml";
-                    }
-                    _theme = new Theme(new XmlReaderDataSource(pathFileTheme));
-                }
-                catch (Exception err) {
-                    throw new MiysisPdfException(string.Format("File of theme not found ! (in Plugin Hotep in TreatmentSystem class) - Path : '{0}'", pathFileTheme), err);
-                }
-                #endregion
+                InitializeTheme();
+                
 
                 #endregion
 
@@ -237,7 +204,9 @@ namespace TNS.AdExpress.Anubis.Miysis
 			_myThread.Start();
 		}
 
-		/// <summary>
+       
+
+	    /// <summary>
 		/// Arrête le traitement du résultat
 		/// </summary>
 		public void AbortTreatement(){
@@ -286,6 +255,66 @@ namespace TNS.AdExpress.Anubis.Miysis
 			}
 		}
 		#endregion
+
+        /// <summary>
+        /// Initialize Configuration
+        /// </summary>
+        /// <param name="configurationFilePath"></param>
+        protected  virtual void InitializeConfig(string configurationFilePath)
+        {
+            #region Check Path File
+            if (configurationFilePath == null)
+            {
+                throw new MiysisPdfException("Impossible de lancer le traitement d'un job", new ArgumentNullException("configurationFilePath"));
+            }
+            if (configurationFilePath.Length == 0)
+            {
+                throw new MiysisPdfException("Impossible de lancer le traitement d'un job", new ArgumentException("Le nom du fichier de configuration est vide."));
+            }
+            #endregion
+
+            #region Initialize Hotep
+            try
+            {
+                _miysisConfig = new MiysisConfig(new XmlReaderDataSource(configurationFilePath));
+            }
+            catch (Exception err)
+            {
+                throw new MiysisPdfException("Impossible de lancer le traitement d'un job <== impossible de charger le fichier de configuration", err);
+            }
+            #endregion
+        }
+
+        /// <summary>
+        /// Initialize Theme
+        /// </summary>
+        protected virtual void InitializeTheme()
+        {
+            #region Initialize Theme
+            var pathFileTheme = string.Empty;
+            try
+            {
+
+                if (File.Exists(_miysisConfig.ThemePath + @"\" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + @"\" + "Styles.xml"))
+                {
+                    pathFileTheme = _miysisConfig.ThemePath + @"\" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + @"\" + "Styles.xml";
+                }
+                else if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + _miysisConfig.ThemePath + @"\" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + @"\" + "Styles.xml"))
+                {
+                    pathFileTheme = AppDomain.CurrentDomain.BaseDirectory + _miysisConfig.ThemePath + @"\" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + @"\" + "Styles.xml";
+                }
+                else
+                {
+                    pathFileTheme = _miysisConfig.ThemePath + @"\" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + @"\" + "Styles.xml";
+                }
+                _theme = new Theme(new XmlReaderDataSource(pathFileTheme));
+            }
+            catch (Exception err)
+            {
+                throw new MiysisPdfException(string.Format("File of theme not found ! (in Plugin Hotep in TreatmentSystem class) - Path : '{0}'", pathFileTheme), err);
+            }
+            #endregion
+        }
 
     }
 }
