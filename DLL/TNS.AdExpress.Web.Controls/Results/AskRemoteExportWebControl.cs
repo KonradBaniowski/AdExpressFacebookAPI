@@ -200,7 +200,7 @@ namespace TNS.AdExpress.Web.Controls.Results
                 js.Append("\r\n\t }\r\n");
                 js.Append("\r\n\t var oN2=document.getElementById('validationDiv');");
                 js.Append("\r\n\t if(oN2!=null){ \r\n");
-                js.Append("\r\n\t oN2.innerHTML='<a id=\"validateRollOverWebControl\"  onmouseover=\"rolloverServerControl_display('+validatButtonName_img+',validateRollOverWebControl_img_over);\" onmouseout=\"rolloverServerControl_display('+validatButtonName_img+',validateRollOverWebControl_img_out);\" href=\"javascript:__doPostBack('+'&quot;validateRollOverWebControl&quot;'+','+'&quot;&quot;'+')\"><img name=\"validateRollOverWebControl_img\" src=\"/App_Themes/KMAE-Fr/Images/Culture/button/valider_up.gif\" style=\"border-width:0px;\"/></a>&nbsp;';");
+                js.Append("\r\n\t oN2.innerHTML='<a id=\"validateRollOverWebControl\"  onmouseover=\"rolloverServerControl_display('+validatButtonName_img+',validateRollOverWebControl_img_over);\" onmouseout=\"rolloverServerControl_display('+validatButtonName_img+',validateRollOverWebControl_img_out);\" href=\"javascript:__doPostBack('+'&quot;validateRollOverWebControl&quot;'+','+'&quot;&quot;'+')\"><img name=\"validateRollOverWebControl_img\" src=\"/App_Themes/" + Page.Theme + "/Images/Culture/button/valider_up.gif\" style=\"border-width:0px;\"/></a>&nbsp;';");
                 js.Append("\r\n\t }\r\n");
                 js.Append("\r\n\t}\r\n");
                 js.Append("\r\n}\r\n");
@@ -211,7 +211,7 @@ namespace TNS.AdExpress.Web.Controls.Results
                 js.Append("\r\nfunction getButtonValidate(){");
                 js.Append("\r\n\t var oN2=document.getElementById('validationDiv');");
                 js.Append("\r\n\t if(oN2!=null){ \r\n");
-                js.Append("\r\n\t oN2.innerHTML='<a id=\"validateRollOverWebControl\"  onmouseover=\"rolloverServerControl_display('+validatButtonName_img+',validateRollOverWebControl_img_over);\" onmouseout=\"rolloverServerControl_display('+validatButtonName_img+',validateRollOverWebControl_img_out);\" href=\"javascript:__doPostBack('+'&quot;validateRollOverWebControl&quot;'+','+'&quot;&quot;'+')\"><img name=\"validateRollOverWebControl_img\" src=\"/App_Themes/KMAE-Fr/Images/Culture/button/valider_up.gif\" style=\"border-width:0px;\"/></a>&nbsp;';");
+                js.Append("\r\n\t oN2.innerHTML='<a id=\"validateRollOverWebControl\"  onmouseover=\"rolloverServerControl_display('+validatButtonName_img+',validateRollOverWebControl_img_over);\" onmouseout=\"rolloverServerControl_display('+validatButtonName_img+',validateRollOverWebControl_img_out);\" href=\"javascript:__doPostBack('+'&quot;validateRollOverWebControl&quot;'+','+'&quot;&quot;'+')\"><img name=\"validateRollOverWebControl_img\" src=\"/App_Themes/" + Page.Theme + "/Images/Culture/button/valider_up.gif\" style=\"border-width:0px;\"/></a>&nbsp;';");
                 js.Append("\r\n\t }\r\n");
                 js.Append("\r\n}\r\n");
                 js.Append("\r\naddEvent(window, \"load\", getButtonValidate);");
@@ -307,21 +307,7 @@ namespace TNS.AdExpress.Web.Controls.Results
             }
             html.Append(AjaxEventScript());
             output.Write(html.ToString());
-
-            //output.Write("<table cellSpacing=\"0\" cellPadding=\"0\" width=\"100%\" height=\"100%\" border=\"0\">");
-            //output.Write(" <!-- Header -->");
-            //output.Write(" <tr><td class=\"popUpHeaderBackground popUpTextHeader\">&nbsp;");
-            //AdExpressText saveTitle = new AdExpressText();
-            //if (!string.IsNullOrEmpty(_resultType) && Convert.ToInt32(_resultType) == TNS.AdExpress.Anubis.Constantes.Result.type.dedoum.GetHashCode())
-            //{
-            //    _canGroupCreativesExport = true;
-            //    saveTitle.Code = 2932;
-            //}
-            //else saveTitle.Code = 1747;
-            //saveTitle.ID = "saveTitle";
-            //saveTitle.Language = _webSession.SiteLanguage;
-            //saveTitle.RenderControl(output);
-            //output.Write("</td></tr>");
+        
             output.Write("  <!-- Content -->");
             output.Write(" <tr> <td style=\"height:100%;background-color:#FFF;padding:10;\" valign=\"top\"> <table id=\"SaveData\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" border=\"0\">");//class=\"redBackGround\" 
             if (!string.IsNullOrEmpty(_resultType) && Convert.ToInt32(_resultType) == TNS.AdExpress.Anubis.Constantes.Result.type.dedoum.GetHashCode())
@@ -394,15 +380,7 @@ namespace TNS.AdExpress.Web.Controls.Results
                 output.Write("</table></div></td></tr>");//Fin div content
             }
 
-            output.Write("  <!-- Footer -->");
-
-            //output.Write(" <tr><td class=\"popUpFooterBackground\" align=\"right\"><table><tr><td>  <div id=\"validationDiv\"></div></td><td>");
-
-            //closeRollOverWebControl.RenderControl(output);
-            //output.Write("&nbsp;</td></tr></table>");
-
-            //output.Write("</td></tr>");
-            //output.Write("</table>");
+            output.Write("  <!-- Footer -->");            
         }
         #endregion
 

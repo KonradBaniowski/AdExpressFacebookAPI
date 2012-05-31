@@ -1439,7 +1439,7 @@
         </ModuleAllowedMediaUniverse>
         <MediaDetailLevel>
           <defaultMediaDetailLevels>
-            <defaultMediaDetailLevel id="57" name="name\profession" />
+            <defaultMediaDetailLevel id="57" name="profession\name" />
             <defaultMediaDetailLevel id="58" name="media\name" />
             <defaultMediaDetailLevel id="59" name="media\profession" />
             <defaultMediaDetailLevel id="63" name="Media\Type of presence"/>
@@ -1489,15 +1489,7 @@
             <allowedUniverseBranches defaultBranchId="15">
               <allowedUniverseBranch id="15" name="Profession\Name"/>
             </allowedUniverseBranches>
-          </selection>
-          <!--<selection id="9" name="media" traductioncode="2539" url="/Private/Selection/RegionSelection.aspx" icone="region" menuTextId="2652" helpUrl="/Private/Helps/Default.aspx" validationMethod="IsPrincipalMediaUniversesSelected">
-            <allowedUniverseLevels>
-              <allowedUniverseLevel id="17" name="region"/>
-            </allowedUniverseLevels>
-            <allowedUniverseBranches defaultBranchId="14">
-              <allowedUniverseBranch id="14" name="region"/>
-            </allowedUniverseBranches>
-          </selection>-->
+          </selection>        
           <selection id="3" name="Vehicle" traductioncode="799" url="/Private/Selection/VehicleSelection.aspx" icone="media" menuTextId="1985" helpUrl="/Private/Helps/VehicleSelectionHelp.aspx" validationMethod="isMediaSelected" />          
           <selection id="4" name="Date" traductioncode="854" url="/Private/Selection/GlobalDateSelection.aspx" icone="calendar" menuTextId="1986" helpUrl="/Private/Helps/GlobalDateSelectionHelp.aspx" validationMethod="isDatesSelected"/>
         </selections>
@@ -1505,11 +1497,10 @@
           <optionalSelection id="6" name="media" traductioncode="2539" url="/Private/Selection/UniverseMediaSelection.aspx" icone="media" menuTextId="2539" helpUrl="/Private/Helps/Default.aspx">
             <allowedUniverseLevels>
               <allowedUniverseLevel id="11" name="vehicle"/>
-              <allowedUniverseLevel id="17" name="region"/>
               <allowedUniverseLevel id="14" name="media"/>
             </allowedUniverseLevels>
-            <allowedUniverseBranches defaultBranchId="11">
-              <allowedUniverseBranch id="11" name="vehicle\region\media"/>
+            <allowedUniverseBranches defaultBranchId="19">
+              <allowedUniverseBranch id="19" name="vehicle\media"/>
             </allowedUniverseBranches>
           </optionalSelection>           
         </optionalSelections>
@@ -1531,6 +1522,7 @@
               <detailSelection id="3" name="Date"/>
               <detailSelection id="5" name="Vehicle Selected"/>
               <detailSelection id="6" name="Product Selected"/>
+              <detailSelection id="37" name="Profession Selected"/>
               <detailSelection id="4" name="Unit"/>
               <detailSelection id="18" name="Generic Media Level Detail"/>              
               <detailSelection id="29" name="Media Personnalized"/>  

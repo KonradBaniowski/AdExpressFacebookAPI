@@ -210,12 +210,12 @@
     <column id="168" name="Banner height" webTextId="2776" dbLabel="banner_height" dbTable="banner_height" dbTablePrefixe="bht" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="169" name="St Position" webTextId="2904"  dbId="id_position" dbLabel="position" dbTablePrefixe="pos" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
 
-    <column id="170" name="profession" webTextId="2952" dbId="id_profession" dbLabel="profession" dbTable="profession" dbTablePrefixe="pro" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="171" name="name" webTextId="67" dbId="id_name" dbLabel="name" dbTable="name" dbTablePrefixe="nm" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="170" name="profession" webTextId="2952" dbId="id_profession" dbLabel="profession" dbTable="profession" dbTablePrefixe="pro" CellType="TNS.FrameWork.WebResultUI.CellLabel" isContainsSeparator="true"/>
+    <column id="171" name="name" webTextId="2968" dbId="id_name" dbLabel="name" dbTable="name" dbTablePrefixe="nm" CellType="TNS.FrameWork.WebResultUI.CellLabel" isContainsSeparator="true"/>
     <column id="172" name="rubric" webTextId="2960" dbId="id_rubric" dbLabel="rubric" dbTable="rubric" dbTablePrefixe="rbr" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="173" name="presenceType" webTextId="2957" dbId="id_presence_type" dbLabel="presence_type" dbTable="presence_type" dbTablePrefixe="prt" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="174" name="audience" webTextId="2963" dbId="id_audience" dbLabel="audience" dbTable="audience" dbTablePrefixe="aud" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
-    <column id="175" name="country" webTextId="2091" dbId="id_country" dbLabel="country" dbTable="country" dbTablePrefixe="cou" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
+    <column id="175" name="country" webTextId="2091" dbId="id_country" dbLabel="country" dbTable="country" dbTablePrefixe="cou" CellType="TNS.FrameWork.WebResultUI.CellLabel" isContainsSeparator="true"/>
     <column id="176" name="programmeGenre" webTextId="2958" dbId="id_programme_genre" dbLabel="programme_genre" dbTable="programme_genre" dbTablePrefixe="pgg" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     
     <!--End New columns for Russia-->
@@ -767,6 +767,7 @@
       <columnItem id="163" name="Square"/>
       <columnItem id="164" name="Mentions"/>
       <columnItem id="174" name="Audience"/>
+      <columnItem id="120" name="Edition"/>
       <columnItem id="70" name="Number of active vehicles"/>
     </detailColumn>
     <!--Radio (versions)-->

@@ -184,14 +184,10 @@ namespace TNS.AdExpressI.Portofolio {
         /// <param name="webSession">Customer Session</param>		
         /// <param name="resultType">resultType</param>
         public PortofolioResults(WebSession webSession, int resultType)
-        {
-            if (webSession == null) throw (new ArgumentNullException("Customer session is null"));
-            _webSession = webSession;
+            : this(webSession)
+        {            
             _resultType = resultType;
-            // Set Vehicle
-            _vehicleInformation = GetVehicleInformation();
-            // Module
-            _module = ModulesList.GetModule(webSession.CurrentModule);
+          
         }
         #endregion
 
@@ -234,7 +230,8 @@ namespace TNS.AdExpressI.Portofolio {
         /// <param name="dtVisuel">Visuel information</param>
         /// <param name="htValue">investment values</param>
         /// <returns>Media name</returns>
-        virtual public void GetVehicleViewData(out DataTable dtVisuel, out Hashtable htValue){
+        public virtual void GetVehicleViewData(out DataTable dtVisuel, out Hashtable htValue)
+        {
             Engines.Engine result = new Engines.SynthesisEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd);
              result.GetVehicleViewData(out dtVisuel, out htValue);
         }

@@ -18,4 +18,5 @@
   <unit id="impressions"    format="max0"      webTextId="2912"   baseId ="none"       assembly="TNS.FrameWork.WebResultUI"  cellType="TNS.FrameWork.WebResultUI.CellNumber"                field="impressions"         multimediaField="totalimpressions"      trendsField="impressions"/>
   <unit id="screens"    format="max0"      webTextId="2913"   baseId ="none"       assembly="TNS.FrameWork.WebResultUI"  cellType="TNS.FrameWork.WebResultUI.CellNumber"                field="screens"         multimediaField="totalscreens"      trendsField="screens"/>
   <unit id="audience"    format="max0"      webTextId="2963"   baseId ="none"       assembly="TNS.FrameWork.WebResultUI"  cellType="TNS.FrameWork.WebResultUI.CellNumber"                field="audience"         multimediaField="totalaudience"      trendsField="audience"/>
+  <unit id="volume"      format="max0"      baseId ="none"        assembly="TNS.FrameWork.WebResultUI" cellType="TNS.FrameWork.WebResultUI.CellNumber"     field="volume"            multimediaField="totalvolume"                                webTextId="2247"/>
 </units>

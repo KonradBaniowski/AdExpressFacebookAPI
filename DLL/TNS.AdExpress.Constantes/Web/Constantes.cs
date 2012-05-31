@@ -1997,7 +1997,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Selected Banenrs format
             /// </summary>
-            bannersFormatSelected = 36
+            bannersFormatSelected = 36,
+            /// <summary>
+            /// Selected Profession
+            /// </summary>
+            professionSelected = 37
 		}
 	}
 

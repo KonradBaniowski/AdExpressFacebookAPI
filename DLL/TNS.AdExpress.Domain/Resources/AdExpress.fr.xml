@@ -2203,6 +2203,7 @@
     <item mnemonic="w2965" type="System.String">Univers profession</item>
     <item mnemonic="w2966" type="System.String">AdExpress -- Fichier Pdf Celebrités</item>
     <item mnemonic="w2967" type="System.String">PDF Celebrités</item>
+    <item mnemonic="w2968" type="System.String">!</item>
     <!-- ********************************* -->
   </items>
 </localization>

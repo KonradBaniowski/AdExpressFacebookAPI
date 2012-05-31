@@ -561,6 +561,13 @@ namespace TNS.AdExpressI.Insertions.DAL.Russia
             cmd.Parameters.AddWithValue("@detailCategory3", _common.IsNull(detailLevel.DetailCategory3));
             cmd.Parameters.AddWithValue("@detailCategory4", _common.IsNull(detailLevel.DetailCategory4));
 
+            cmd.Parameters.AddWithValue("@detailProfession", _common.IsNull(detailLevel.DetailProfession));
+            cmd.Parameters.AddWithValue("@detailName", _common.IsNull(detailLevel.DetailName));
+            cmd.Parameters.AddWithValue("@detailProgramme", _common.IsNull(detailLevel.DetailProgramme));
+            cmd.Parameters.AddWithValue("@detailProgrammeGenre", _common.IsNull(detailLevel.DetailProgrammeGenre));
+            cmd.Parameters.AddWithValue("@detailPresenceType", _common.IsNull(detailLevel.DetailPresenceType));
+            cmd.Parameters.AddWithValue("@detailRubric", _common.IsNull(detailLevel.DetailRubric));
+
             #endregion
 
             MediaRight mediaRight = _common.GetMediaRight();
@@ -679,6 +686,20 @@ namespace TNS.AdExpressI.Insertions.DAL.Russia
             cmd.Parameters.AddWithValue("@adtypeClassAdTypeExcept", _common.IsNull(adtypeClass.AdTypeExcept));
 
             #endregion
+
+            ProfessionClassification professionClass = _common.GetProfessionClassification();
+
+            #region Set Profession Classification Data
+
+            cmd.Parameters.AddWithValue("@professionClassNameAccess1", _common.IsNull(professionClass.NameAccess1));
+            cmd.Parameters.AddWithValue("@professionClassNameAccess2", _common.IsNull(professionClass.NameAccess2));
+            cmd.Parameters.AddWithValue("@professionClassNameExcept", _common.IsNull(professionClass.NameExcept));
+            cmd.Parameters.AddWithValue("@professionClassProfAccess1", _common.IsNull(professionClass.ProfAccess1));
+            cmd.Parameters.AddWithValue("@professionClassProfAccess2", _common.IsNull(professionClass.ProfAccess2));
+            cmd.Parameters.AddWithValue("@professionClassProfExcept", _common.IsNull(professionClass.ProfExcept));
+
+            #endregion
+
         }
         #endregion
 

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <smtp>
-    <server adress="fitnses-spam.tnsad.com" port="25"/>
+    <server adress="tsespmgw001.tnsad.com" port="25"/>
     <message from="tnsadexpress@tns-global.fi">
 		<to>guillaume.facon@tnsmi.fr</to>
 		<to>benjamin.masson@tnsmi.fr</to>		

@@ -405,7 +405,26 @@
 					<TD></TD>
 				</TR>
 				<%}%>
-				
+				<!--Professions-->
+				<%if(DisplayProfession){%>
+				<TR>
+					<td width="5"></td>
+					<TD class="txtViolet11Bold" bgColor="#ffffff">&nbsp;						
+					</TD>
+				</TR>
+				<TR height="20">
+					<td width="5"></td>
+					<TD vAlign="top" align="center" bgColor="#ffffff"><%=ProfessionText%></TD>
+				</TR>
+				<TR height="5">
+					<td width="5"></td>
+					<TD bgColor="#ffffff"></TD>
+				</TR>
+				<TR height="7">
+					<td width="5"></td>
+					<TD></TD>
+				</TR>
+				<%}%>
 				<!--Advertising Agency-->
 				<%if(displayAdvertisingAgency){%>
 				<TR>

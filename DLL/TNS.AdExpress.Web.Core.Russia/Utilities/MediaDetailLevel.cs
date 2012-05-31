@@ -93,9 +93,9 @@ namespace TNS.AdExpress.Web.Core.Russia.Utilities
                     levels.Add(11);
                     break;
                 case TNS.AdExpress.Constantes.Web.Module.Name.CELEBRITIES:
-                    // Name/Profession
-                    levels.Add(69);
+                    //Profession/Name
                     levels.Add(68);
+                    levels.Add(69);                   
                     break;
                 default:
                     // Media/Support

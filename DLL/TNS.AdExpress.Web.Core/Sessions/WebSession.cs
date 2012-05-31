@@ -1533,10 +1533,12 @@ namespace TNS.AdExpress.Web.Core.Sessions
             {
                if(value!=null && value.Count>0)
                {
+                   if (userParameters.ContainsKey(CoreConstantes.SessionParamters.principalProfessionUniverses))
+                       userParameters.Remove(CoreConstantes.SessionParamters.principalProfessionUniverses);
                    userParameters.Add(CoreConstantes.SessionParamters.principalProfessionUniverses,Utilities.Converters.ConvertUniverseToString(value));
-                   modificationDate = DateTime.Now;
                }else if(userParameters.ContainsKey(CoreConstantes.SessionParamters.principalProfessionUniverses))
                    userParameters.Remove(CoreConstantes.SessionParamters.principalProfessionUniverses);
+               modificationDate = DateTime.Now;
             }
         }
         #endregion

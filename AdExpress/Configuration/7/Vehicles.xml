@@ -1015,6 +1015,7 @@
       <allowedUnit>kRubles</allowedUnit>
       <allowedUnit>usd</allowedUnit>
       <allowedUnit>kusd</allowedUnit>
+      <allowedUnit>insertion</allowedUnit>
       <allowedUnit>quantity</allowedUnit>    
       <allowedUnit>screens</allowedUnit>
       <allowedUnit>audience</allowedUnit>

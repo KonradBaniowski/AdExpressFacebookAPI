@@ -18,5 +18,12 @@
         public string DetailCategory2;
         public string DetailCategory3;
         public string DetailCategory4;
+
+        public string DetailProfession;
+        public string DetailName;
+        public string DetailProgramme;
+        public string DetailProgrammeGenre;
+        public string DetailPresenceType;
+        public string DetailRubric;
     }
 }

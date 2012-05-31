@@ -99,6 +99,49 @@ namespace TNS.AdExpressI.Common.DAL.Russia
             return result;
         }
 
+        public ProfessionClassification GetProfessionClassification()
+        {
+            ProfessionClassification result = new ProfessionClassification();
+
+            //Get product classification selections
+            Dictionary<UniverseAccessType, List<Dictionary<CustomerRightType, string>>> selections = _session.CustomerDataFilters.PrincipalProfessionUniverses;
+
+            // First list of the current classiifcation items to include
+            if (selections != null && selections.ContainsKey(UniverseAccessType.includes) && selections[UniverseAccessType.includes].Count > 0)
+            {
+                Dictionary<CustomerRightType, string> items = selections[UniverseAccessType.includes][0];
+                if (items != null && items.Count > 0)
+                {
+                    result.NameAccess1 = GetCustomerRightTypeValue(items, CustomerRightType.nameAccess);
+                    result.ProfAccess1 = GetCustomerRightTypeValue(items, CustomerRightType.professionAccess);
+                }
+            }
+
+            // Second list of the current classiifcation items to include
+            if (selections != null && selections.ContainsKey(UniverseAccessType.includes) && selections[UniverseAccessType.includes].Count > 1)
+            {
+                Dictionary<CustomerRightType, string> items = selections[UniverseAccessType.includes][1];
+                if (items != null && items.Count > 0)
+                {
+                    result.NameAccess2 = GetCustomerRightTypeValue(items, CustomerRightType.nameAccess);
+                    result.ProfAccess2 = GetCustomerRightTypeValue(items, CustomerRightType.professionAccess);
+                }
+            }
+
+            // List of the current classiifcation items to exclude
+            if (_session.CustomerDataFilters.PrincipalProductUniverses.ContainsKey(UniverseAccessType.excludes) && _session.CustomerDataFilters.PrincipalProductUniverses[UniverseAccessType.excludes].Count > 0)
+            {
+                Dictionary<CustomerRightType, string> items = _session.CustomerDataFilters.PrincipalProductUniverses[UniverseAccessType.excludes][0];
+                if (items != null && items.Count > 0)
+                {
+                    result.NameExcept = GetCustomerRightTypeValue(items, CustomerRightType.nameException);
+                    result.ProfExcept = GetCustomerRightTypeValue(items, CustomerRightType.professionException);
+                }
+            }
+
+            return result;
+        }
+
         public ProductClassification GetProductClassification()
         {
             ProductClassification result = new ProductClassification();
@@ -412,6 +455,7 @@ namespace TNS.AdExpressI.Common.DAL.Russia
 
             if (includeLevel
                 || _moduleId == ModuleName.ANALYSE_PLAN_MEDIA
+                || _moduleId == ModuleName.CELEBRITIES
                 || _moduleId == ModuleName.ANALYSE_DYNAMIQUE)
             {
                 if (_session.CustomerDataFilters.LevelProduct != null && _session.CustomerDataFilters.LevelProduct.Count > 0)
@@ -465,6 +509,7 @@ namespace TNS.AdExpressI.Common.DAL.Russia
 
                     case AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA: //if module is module “Media schedule”
                     case AdExpress.Constantes.Web.Module.Name.ANALYSE_DYNAMIQUE: //if module is module “Lost Won report”
+                    case AdExpress.Constantes.Web.Module.Name.CELEBRITIES: //if module is module “Celebrities”
                         genericDetailLevel = _session.GenericMediaDetailLevel;
                         break;
                 }
@@ -521,6 +566,25 @@ namespace TNS.AdExpressI.Common.DAL.Russia
                             case DetailLevelItemInformation.Levels.segment:
                                 result.DetailCategory4 = identity;
                                 break;
+
+                            case DetailLevelItemInformation.Levels.profession:
+                                result.DetailProfession = identity;
+                                break;
+                            case DetailLevelItemInformation.Levels.name:
+                                result.DetailName = identity;
+                                break;
+                            case DetailLevelItemInformation.Levels.programme:
+                                result.DetailProgramme = identity;
+                                break;
+                            case DetailLevelItemInformation.Levels.programmeGenre:
+                                result.DetailProgrammeGenre = identity;
+                                break;
+                            case DetailLevelItemInformation.Levels.presenceType:
+                                result.DetailPresenceType = identity;
+                                break;
+                            case DetailLevelItemInformation.Levels.rubric:
+                                result.DetailRubric = identity;
+                                break;
                         }
                     }
                 }
@@ -553,7 +617,7 @@ namespace TNS.AdExpressI.Common.DAL.Russia
             string result = string.Empty;
 
             //if module is “Media schedule”
-            if (_moduleId == ModuleName.ANALYSE_PLAN_MEDIA)
+            if (_moduleId == ModuleName.ANALYSE_PLAN_MEDIA || _moduleId == ModuleName.CELEBRITIES)
             {
                 result = _session.CustomerDataFilters.SelectedMediaType;
             }

@@ -76,4 +76,8 @@
   <branch id="18"  name="presence Type" labelId="2957">
     <level id="26" name="presence Type"/>
   </branch>
+  <branch id="19"  name="vehicle/media" labelId="1544">
+    <level id="11" name="vehicle"/>
+    <level id="14" name="media"/>
+  </branch>
 </universeBranches>

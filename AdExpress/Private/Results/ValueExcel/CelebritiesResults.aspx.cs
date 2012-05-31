@@ -124,6 +124,7 @@ namespace AdExpress.Private.Results.ValueExcel
                 param[0] = _webSession;
                 param[1] = period;
                 IMediaScheduleResults mediaScheduleResult = (IMediaScheduleResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                mediaScheduleResult.Module = module;
                 result = mediaScheduleResult.GetExcelHtml(true).HTMLCode;
 
                 #endregion

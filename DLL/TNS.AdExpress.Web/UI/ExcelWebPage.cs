@@ -246,6 +246,9 @@ namespace TNS.AdExpress.Web.UI
                         case WebConstantes.DetailSelection.Type.productSelected:
                             t.Append(GetProductSelected(webSession));
                             break;
+                        case WebConstantes.DetailSelection.Type.professionSelected:
+					        t.Append(GetProfessionSelected((webSession)));
+					        break;
                         case WebConstantes.DetailSelection.Type.advertisingAgencySelected:
                             t.Append(GetAdvertisingAgencySelected(webSession));
                             break;
@@ -783,6 +786,38 @@ namespace TNS.AdExpress.Web.UI
 				t.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel((TreeNode)webSession.ReferenceUniversMedia, webSession.SiteLanguage, webSession.DomainName));
 			}
 			#endregion
+
+            return (t.ToString());
+        }
+        #endregion
+
+        #region Profession sélectionné
+        /// <summary>
+        /// Profession sélectionnés
+        /// </summary>
+        /// <param name="webSession">Session du client</param>
+        /// <returns>HTML</returns>
+        public static string GetProfessionSelected(WebSession webSession) {
+            
+            StringBuilder t = new StringBuilder();
+            //int idAdvertiser = 1;
+            int universeCodeTitle = 2965;
+            string professionSelection = "";
+
+            AdExpressUniverse adExpressUniverse = null;
+
+            #region selection profession principale
+            if (webSession.PrincipalProfessionUniverses.Count == 1) {
+
+                professionSelection += GetBlankLine();
+                professionSelection += "<TR><TD colspan=4 class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(universeCodeTitle, webSession.SiteLanguage) + " :</font></TD></TR>";
+                adExpressUniverse = webSession.PrincipalProfessionUniverses[0];
+
+                professionSelection += TNS.AdExpress.Web.Functions.DisplayUniverse.ToExcel(adExpressUniverse, webSession.SiteLanguage, webSession.DataLanguage, webSession.CustomerDataFilters.DataSource, webSession.DomainName);
+                professionSelection += GetBlankLine();
+                t.Append(professionSelection);
+            }
+            #endregion
 
             return (t.ToString());
         }

@@ -41,6 +41,15 @@ namespace TNS.AdExpressI.Portofolio.Default {
 		public Results(WebSession webSession, TNS.AdExpress.Constantes.DB.TableType.Type tableType) 
 		: base(webSession,tableType){
 		}
+         /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="webSession">Customer Session</param>		
+        /// <param name="resultType">resultType</param>
+        public Results(WebSession webSession, int resultType)
+            : base(webSession, resultType)
+        {
+        }
         #endregion
 
     }

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <lists>
-  <list group="media" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="mediaInSelectAll" listIds ="100,200,300,400,500,600,800"/>
+  <list group="media" keyType="TNS.AdExpress.Constantes.Web.Core.GroupList.Type" id="mediaInSelectAll" listIds ="100,110,200,300,310,400,500,600,800"/>
 </lists>

@@ -247,10 +247,7 @@ namespace AdExpress.Private.MyAdExpress
                 CstWeb.globalCalendar.periodDisponibilityType periodDisponibilityType;
                 bool verifCustomerPeriod = false;
                 CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
-                TNS.AdExpress.Domain.Layers.CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.dateDAL];
-                object[] param = new object[1];
-                param[0] = _webSession;
-                IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+               
                 #endregion
 
 
@@ -285,47 +282,7 @@ namespace AdExpress.Private.MyAdExpress
                 #endregion
 
                 // Affichage du module
-                moduleLabel.Text = GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSessionSave.CurrentModule), _webSession.SiteLanguage);
-
-                #region SelectionUniversAdvertiser
-                ////Affichage type d'advertiser
-                //// Holding Company
-                //if(webSessionSave.SelectionUniversAdvertiser.FirstNode!=null){
-
-                //    displayAdvertiser=true;
-                //    if(((LevelInformation)webSessionSave.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyAccess 
-                //        ||	((LevelInformation)webSessionSave.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.holdingCompanyException ) {
-                //        advertiserAdexpresstext.Code=814;}
-                //        // Advertiser
-                //    else if(((LevelInformation)webSessionSave.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.advertiserAccess
-                //        ||	((LevelInformation)webSessionSave.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.advertiserException ) {
-                //        advertiserAdexpresstext.Code=813;}
-                //        // Marque
-                //    else if(((LevelInformation)webSessionSave.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.brandAccess
-                //        ||	((LevelInformation)webSessionSave.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.brandException ) 
-                //    {
-                //        advertiserAdexpresstext.Code=1585;}
-                //        // Product
-                //    else if(((LevelInformation)webSessionSave.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.productAccess 
-                //        ||	((LevelInformation)webSessionSave.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.productException ) {
-                //        advertiserAdexpresstext.Code=815;}
-                //        // Sector
-                //    else if(((LevelInformation)webSessionSave.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.sectorAccess 
-                //        ||	((LevelInformation)webSessionSave.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.sectorException ) {
-                //        advertiserAdexpresstext.Code=965;}
-                //        // SubSector
-                //    else if(((LevelInformation)webSessionSave.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.subSectorAccess 
-                //        ||	((LevelInformation)webSessionSave.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.subSectorException ) {
-                //        advertiserAdexpresstext.Code=966;}
-                //        // Group
-                //    else if(((LevelInformation)webSessionSave.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.groupAccess 
-                //        ||	((LevelInformation)webSessionSave.SelectionUniversAdvertiser.FirstNode.Tag).Type==TNS.AdExpress.Constantes.Customer.Right.type.groupException ) {
-                //        advertiserAdexpresstext.Code=967;}
-
-                //}else{
-                //    displayAdvertiser=false;
-                //}
-                #endregion
+                moduleLabel.Text = GestionWeb.GetWebWord((int)ModulesList.GetModuleWebTxt(webSessionSave.CurrentModule), _webSession.SiteLanguage);               
 
                 #region Période sélectionnée (GlobalDateSelection)
                 if (webSessionSave.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_CONCURENTIELLE
@@ -341,8 +298,13 @@ namespace AdExpress.Private.MyAdExpress
                     if (webSessionSave.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA
                         && webSessionSave.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES
                         && webSessionSave.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.NEW_CREATIVES)
-                        //FirstDayNotEnable = WebFunctions.Dates.GetFirstDayNotEnabled(webSessionSave, selectedVehicle, oldYear,_webSession.Source);
+                    {
+                        TNS.AdExpress.Domain.Layers.CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.dateDAL];
+                        object[] param = new object[1];
+                        param[0] = webSessionSave;
+                        IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
                         FirstDayNotEnable = dateDAL.GetFirstDayNotEnabled(new List<Int64>(new Int64[] { selectedVehicle }), oldYear);
+                    }
                     _webSession.CurrentModule = webSessionSave.CurrentModule;
 
                     switch (webSessionSave.DetailPeriod)
@@ -936,12 +898,13 @@ namespace AdExpress.Private.MyAdExpress
                 #endregion
 
                 #region Univers profession principal sélectionné
-                if (_webSession.PrincipalProfessionUniverses != null && _webSession.PrincipalProfessionUniverses.Count > 0) {
+                if (webSessionSave.PrincipalProfessionUniverses != null && webSessionSave.PrincipalProfessionUniverses.Count > 0)
+                {
 
                     displayProfessions = true;
                     professionAdExpressText.Code = 2965;
 
-                    TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl selectItemsInClassificationWebControl = new TNS.AdExpress.Web.Controls.Selections.SelectItemsInClassificationWebControl();
+                    SelectItemsInClassificationWebControl selectItemsInClassificationWebControl = new SelectItemsInClassificationWebControl();
                     selectItemsInClassificationWebControl.TreeViewIcons = "/App_Themes/" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + "/Styles/TreeView/Icons";
                     selectItemsInClassificationWebControl.TreeViewScripts = "/App_Themes/" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + "/Styles/TreeView/Scripts";
                     selectItemsInClassificationWebControl.TreeViewStyles = "/App_Themes/" + WebApplicationParameters.Themes[_webSession.SiteLanguage].Name + "/Styles/TreeView/Css";
@@ -956,11 +919,11 @@ namespace AdExpress.Private.MyAdExpress
                     selectItemsInClassificationWebControl.TreeIncludeFrameCss = "treeIncludeFrameCss";
                     selectItemsInClassificationWebControl.TreeIncludeFrameHeaderCss = "treeIncludeFrameHeaderCss";
                     selectItemsInClassificationWebControl.SiteLanguage = _webSession.SiteLanguage;
-                    selectItemsInClassificationWebControl.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(TNS.AdExpress.Domain.DataBaseDescription.SchemaIds.adexpr03).Label;
+                    selectItemsInClassificationWebControl.DBSchema = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label;
 
-                    for (int k = 0; k < _webSession.PrincipalProfessionUniverses.Count; k++) {
-                        if (_webSession.PrincipalProfessionUniverses.ContainsKey(k)) {
-                            professionText += selectItemsInClassificationWebControl.ShowUniverse(_webSession.PrincipalProfessionUniverses[k], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession));
+                    for (int k = 0; k < webSessionSave.PrincipalProfessionUniverses.Count; k++) {
+                        if (webSessionSave.PrincipalProfessionUniverses.ContainsKey(k)) {
+                            professionText += selectItemsInClassificationWebControl.ShowUniverse(webSessionSave.PrincipalProfessionUniverses[k], _webSession.DataLanguage, DBFunctions.GetDataSource(_webSession));
                         }
                     }
                 }

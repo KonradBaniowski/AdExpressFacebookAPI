@@ -20,7 +20,7 @@
     </vehicle>
     <vehicle id="310"   name="pressClipping">
       <detailColumns>        
-        <detailColumn id="38">
+        <detailColumn id="36">
           <allowedModules>
             <allowedModule name="Celebrities" privilegecode="20000"/>
           </allowedModules>

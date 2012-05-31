@@ -288,9 +288,19 @@ namespace AdExpress.Private.Selection{
         /// </summary>
         public string adTypeText = "";
         /// <summary>
-        /// Ture if display Ad type 
+        /// True if display Ad type 
         /// </summary>
         protected bool displayAdType = false;
+
+        /// <summary>
+        /// Si vrai affiche les produits dans la page aspx
+        /// </summary>
+        private bool _displayProfession = false;
+
+        /// <summary>
+        /// Profession Text
+        /// </summary>
+        private string _professionText = "";
 		#endregion
 
 		#region Constructeur
@@ -299,7 +309,26 @@ namespace AdExpress.Private.Selection{
 		/// </summary>
 		public DetailSelectionExcel():base(){
 		}
-		#endregion
+
+	    /// <summary>
+	    /// Si vrai affiche les produits dans la page aspx
+	    /// </summary>
+	    public bool DisplayProfession
+	    {
+	        get { return _displayProfession; }
+	        set { _displayProfession = value; }
+	    }
+
+	    /// <summary>
+	    /// Profession Text
+	    /// </summary>
+	    public string ProfessionText
+	    {
+	        get { return _professionText; }
+	        set { _professionText = value; }
+	    }
+
+	    #endregion
 
 		#region Chargement de la page
 		/// <summary>
@@ -479,6 +508,19 @@ namespace AdExpress.Private.Selection{
 					idAdvertiser=0;
                 }
                 #endregion
+
+                #region Selection univers profession
+                if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.CELEBRITIES)
+                {
+                    _professionText = Convertion.ToHtmlString(TNS.AdExpress.Web.UI.ExcelWebPage.GetProfessionSelected(_webSession));
+                    if (!string.IsNullOrEmpty(_professionText))
+                    {
+                        _professionText = string.Format("<table>{0}</table>", _professionText);
+                        _displayProfession = true;
+                    }
+                }
+
+			    #endregion
 
                 #region Advertising Agency Selected
                 advertisingAgencyText = Convertion.ToHtmlString(TNS.AdExpress.Web.UI.ExcelWebPage.GetAdvertisingAgencySelected(_webSession));

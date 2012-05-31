@@ -539,7 +539,7 @@ namespace TNS.AdExpress.Web.Core
         public Dictionary<TNS.Classification.Universe.AccessType, List<Dictionary<TNS.AdExpress.Constantes.Customer.Right.type, string>>> PrincipalProfessionUniverses {
             get {
                 //Get product classification selected universe
-                TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = _customerSession.PrincipalProfessionUniverses[0];
+                TNS.AdExpress.Classification.AdExpressUniverse adExpressUniverse = (_customerSession.PrincipalProfessionUniverses.Count>0) ?_customerSession.PrincipalProfessionUniverses[0]:null;
                 return GetUniverses(adExpressUniverse);
             }
         }

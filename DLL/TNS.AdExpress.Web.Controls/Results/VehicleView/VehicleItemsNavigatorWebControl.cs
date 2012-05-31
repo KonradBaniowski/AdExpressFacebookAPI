@@ -259,8 +259,9 @@ namespace TNS.AdExpress.Web.Controls.Results.VehicleView
                         )
                     {
                         Domain.Web.Navigation.Module module = _customerWebSession.CustomerLogin.GetModule(_customerWebSession.CurrentModule);
-                        object[] parameters = new object[1];
+                        object[] parameters = new object[2];
                         parameters[0] = _customerWebSession;
+                        parameters[1] = _resultType;
                         Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 
                         _itemsCollection = portofolioResult.GetVehicleItems();

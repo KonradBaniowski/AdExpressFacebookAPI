@@ -19,6 +19,6 @@
   <level id="22" name="rubric" labelId="2960" dbId="id_rubric" dbTable="rubric"/>
   <level id="23" name="programme" labelId="2682" dbId="id_programme" dbTable="programme"/>
   <level id="24" name="programme_genre" labelId="2658" dbId="id_programme_genre" dbTable="programme_genre"/>
-  <level id="25" name="name" labelId="67" dbId="id_name" dbTable="name"/>
+  <level id="25" name="name" labelId="2968" dbId="id_name" dbTable="name"/>
   <level id="26" name="presence Type" labelId="2657" dbId="id_presence_type" dbTable="presence_type"/>
 </universeLevels>
