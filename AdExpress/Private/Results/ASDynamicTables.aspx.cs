@@ -167,7 +167,7 @@ namespace AdExpress{
                 if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Product Class Analysis"));
                 object[] param = new object[1];
                 param[0] = _webSession;
-                IProductClassReports productClassReport = (IProductClassReports)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                IProductClassReports productClassReport = (IProductClassReports)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                 result = productClassReport.GetProductClassReport();
                 #endregion
 

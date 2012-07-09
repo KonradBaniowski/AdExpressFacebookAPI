@@ -73,6 +73,9 @@
     <level id="65" name="Sub Segment VP"  webTextId="2878" dbId="id_category" dbLabel="category"  dbTable="category"  dbTablePrefixe="ca"/>
     <level id="66" name="Brand VP"        webTextId="2876" dbId="id_brand"    dbLabel="brand"     dbTable="brand"     dbTablePrefixe="br"/>
     <level id="67" name="Product VP"      webTextId="2880" dbId="id_product"  dbLabel="product"   dbTable="product"   dbTablePrefixe="pr"/>
+
+    <level id="74" name="Target"      webTextId="1991" dbId="id_target"  dbLabel="target"   dbTable="target"   dbTablePrefixe="tg"/>
+    <level id="75" name="Wave"      webTextId="1762" dbId="id_wave"  dbLabel="wave"   dbTable="wave"   dbTablePrefixe="wv"/>
   </detaillevelItems>
 
 	<detailLevels>

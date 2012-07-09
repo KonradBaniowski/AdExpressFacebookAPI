@@ -4028,9 +4028,8 @@ namespace TNS.AdExpress.Web.Core.Sessions
             try
             {
                 Module moduleSelected = customerLogin.GetModule(currentModule);
-                Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
-                //customerLogin.HtModulesList.Clear();
-                DATracking.SetVehicle(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
+                Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));                
+                DATracking.UseGad(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
             }
             catch (System.Exception) { }
 

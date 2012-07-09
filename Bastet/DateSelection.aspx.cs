@@ -124,6 +124,7 @@ namespace BastetWeb{
 				switch(_moduleId){
 					case 1: // Stats
                     case 3:
+                    case 4:
                         if (Session[TNS.AdExpress.Bastet.Constantes.Web.WebSession.MAILS] == null) throw (new SystemException("Aucun email en session"));
 						break;
 				}
@@ -149,6 +150,7 @@ namespace BastetWeb{
 				switch(_moduleId){
 					case 1: // STATS > Mois et semaines coulants
                     case 3:
+                    case 4:
 						nbMonths = 15;
 						nbWeeks = 53;
 						break;
@@ -285,6 +287,7 @@ namespace BastetWeb{
                     switch (_moduleId) {
                         case 1: // Stats
                         case 3:
+                        case 4:
                             if (!string.IsNullOrEmpty(Page.Request.Url.Query))
                                 Response.Redirect("LoginSelection.aspx" + Page.Request.Url.Query);
                             else
@@ -383,6 +386,7 @@ namespace BastetWeb{
 				switch(_moduleId){
                     case 1: // Stats
                     case 3:
+                    case 4:
                         if (!string.IsNullOrEmpty(Page.Request.Url.Query))
                             Response.Redirect("LoginSelection.aspx" + Page.Request.Url.Query);
                         else

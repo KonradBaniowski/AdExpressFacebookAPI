@@ -87,7 +87,7 @@ public partial class Private_Selection_PortofolioMediaSelection : TNS.AdExpress.
 				keyWordTextBox.Text = keyWordTextBox.Text.TrimStart();
 				#endregion
 
-				#region Textes et langage du site				
+				#region Textes et langage du site
 				ModuleTitleWebControl2.CustomerWebSession = _webSession;
 				InformationWebControl1.Language = _webSession.SiteLanguage;
 				GenericDetailVehicleSelectionWebControl1.CustomerWebSession = _webSession;
@@ -157,7 +157,7 @@ public partial class Private_Selection_PortofolioMediaSelection : TNS.AdExpress.
 
 				#endregion
 
-				#region Boutons RollOver				
+				#region Boutons RollOver			
 				if (PortofolioDetailVehicleSelectionWebControl.IsEmptyListPortofolio == true) {
 					validImageButtonRollOverWebControl.Visible = false;
 				}
@@ -196,7 +196,7 @@ public partial class Private_Selection_PortofolioMediaSelection : TNS.AdExpress.
 			}
 			catch (System.Exception exc) {
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)) {
-					//this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this,exc,_webSession));
+					this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this,exc,_webSession));
 				}
 			}
 		}
@@ -293,12 +293,16 @@ public partial class Private_Selection_PortofolioMediaSelection : TNS.AdExpress.
 
 				#region Parcours du form
 				//Parcours des éléments dans form et récupère la valeur dans le champ hidden
-				foreach (string currentKey in Request.Form.AllKeys) {
-					tabParent = currentKey.Split('_');
-					if (tabParent[0] == "CKB") {
-						valueMedia = Int64.Parse(tabParent[1]);
-					}
-				}
+
+
+                foreach (string currentKey in Request.Form.AllKeys)
+                {
+                    tabParent = currentKey.Split('_');
+                    if (tabParent[0] == "CKB")
+                    {
+                        valueMedia = Int64.Parse(tabParent[1]);
+                    }
+                }
 				#endregion
 
 				if (valueMedia != -1) {

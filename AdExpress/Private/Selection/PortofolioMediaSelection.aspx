@@ -40,7 +40,8 @@
 				document.Form2.idMedia.name="CKB_"+idSession+"_"+idRepertory;
 			}*/
 			function insertValueInHidden(idMedia){
-				document.Form2.idMedia.name="CKB_"+idMedia;
+			    document.Form2.idMedia.name = "CKB_" + idMedia;
+			  
 			}
 								
 			//-->
@@ -152,7 +153,7 @@
 							<tr>
 								<td>
 									<cc3:PortofolioGenericDetailVehicleSelectionWebControl id="GenericDetailVehicleSelectionWebControl1" runat="server"></cc3:PortofolioGenericDetailVehicleSelectionWebControl>
-									<input id="idMedia" type="hidden" name="nameMedia">
+								    <input id="idMedia" type="hidden" name="nameMedia" />
 								</td>
 							</tr>
 							<tr>

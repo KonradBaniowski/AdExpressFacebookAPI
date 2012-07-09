@@ -83,7 +83,11 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// Promo monitoring
         /// </summary>
-        vPromo = 12
+        vPromo = 12,
+        /// <summary>
+        /// bipp
+        /// </summary>
+        bipp =13
 
     } 
     #endregion

@@ -2541,21 +2541,24 @@ namespace TNS.AdExpress.Web.UI
             string temp = string.Empty;
             string absolutePath = string.Empty;
 
-            if (_webSession.DomainName.Length > 0) absolutePath = "http://" + _webSession.DomainName;
+            if (!string.IsNullOrEmpty(_webSession.DomainName)) absolutePath = "http://" + _webSession.DomainName;
 
-            for (int i = 0; i < this.Header.Controls.Count; i++){
-                if (this.Header.Controls[i] is HtmlLink && ((HtmlLink)this.Header.Controls[i]).Href.Contains("App_Themes")) {
-                    if (_webSession.DomainName.Length > 0) {
-                        temp = ((HtmlLink)this.Header.Controls[i]).Href;
-                        temp = temp.Substring(1, temp.Length - 1);
-                        ((HtmlLink)this.Header.Controls[i]).Href = absolutePath + temp;
+            if (Page.Header != null)
+            {
+                for (int i = 0; i < Page.Header.Controls.Count; i++)
+                {
+                    if (Page.Header.Controls[i] is HtmlLink && ((HtmlLink)this.Page.Header.Controls[i]).Href.Contains("App_Themes"))
+                    {
+                        if (_webSession.DomainName.Length > 0)
+                        {
+                            temp = ((HtmlLink)this.Page.Header.Controls[i]).Href;
+                            temp = temp.Substring(1, temp.Length - 1);
+                            ((HtmlLink)this.Page.Header.Controls[i]).Href = absolutePath + temp;
+                        }
                     }
                 }
-            }
 
-//			TNS.AdExpress.Web.UI.HtmlHeader header = new HtmlHeader(_cssKeys);
-//			this.Response.ContentType = "application/vnd.ms-excel";
-//			this.Page.Controls.AddAt(0,header);			
+            }	
 		}
 
         #endregion

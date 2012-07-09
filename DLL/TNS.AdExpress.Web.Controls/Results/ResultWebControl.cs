@@ -2264,7 +2264,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
                     if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Lost/Won result"));
                     param = new object[1];
                     param[0] = customerWebSession;
-                    LostWon.ILostWonResult lostWonResult = (LostWon.ILostWonResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                    LostWon.ILostWonResult lostWonResult = (LostWon.ILostWonResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                     data = lostWonResult.GetResult();
                     break;
                 case WebConstantes.Module.Name.ANALYSE_CONCURENTIELLE:
@@ -2272,9 +2272,8 @@ namespace TNS.AdExpress.Web.Controls.Results{
                     if(module.CountryRulesLayer==null)throw(new NullReferenceException("Rules layer is null for the present/absent result"));
                     param=new object[1];                     
                     param[0]=customerWebSession;
-                    PresentAbsent.IPresentAbsentResult presentAbsentResult = (PresentAbsent.IPresentAbsentResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                    PresentAbsent.IPresentAbsentResult presentAbsentResult = (PresentAbsent.IPresentAbsentResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                     data = presentAbsentResult.GetResult();
-					//return WebBusinessFacade.Results.CompetitorSystem.GetHtml(customerWebSession);
                     break;
                 case WebConstantes.Module.Name.ANALYSE_DES_DISPOSITIFS:
 				case WebConstantes.Module.Name.ANALYSE_DES_PROGRAMMES :
@@ -2285,10 +2284,8 @@ namespace TNS.AdExpress.Web.Controls.Results{
                     if(module.CountryRulesLayer==null)throw(new NullReferenceException("Rules layer is null for the portofolio result"));
                     object[] parameters=new object[1];                     
                     parameters[0]=customerWebSession;
-                    Portofolio.IPortofolioResults portofolioResult=(Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory+@"Bin\"+module.CountryRulesLayer.AssemblyName,module.CountryRulesLayer.Class,false,BindingFlags.CreateInstance|BindingFlags.Instance|BindingFlags.Public,null,parameters,null,null,null);
-                    //Portofolio.IResults result=(Portofolio.IResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory+@"Bin\"+module.CountryRulesLayer.AssemblyName,module.CountryRulesLayer.Class);
+                    Portofolio.IPortofolioResults portofolioResult=(Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory+@"Bin\"+module.CountryRulesLayer.AssemblyName,module.CountryRulesLayer.Class,false,BindingFlags.CreateInstance|BindingFlags.Instance|BindingFlags.Public,null,parameters,null,null);                   
                     data = (portofolioResult.GetResultTable());
-					//return WebBusinessFacade.Results.PortofolioSystem.GetResultTable(customerWebSession); 
                     break;
                 case WebConstantes.Module.Name.DONNEES_DE_CADRAGE:
                     data = WebBusinessFacade.Results.SectorDataSystem.GetHtml(customerWebSession);
@@ -2301,7 +2298,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
                     if(module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Lost/Won result"));
                     param = new object[1];
                     param[0] = customerWebSession;
-                    NewCreatives.INewCreativesResult newCreativesResult = (NewCreatives.INewCreativesResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                    NewCreatives.INewCreativesResult newCreativesResult = (NewCreatives.INewCreativesResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                     data = newCreativesResult.GetData();
 
                     break;
@@ -2311,7 +2308,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
                     param = new object[1];
                     param[0] = customerWebSession;
 
-                    ProductClassReports.IProductClassReports productClassLayer = (ProductClassReports.IProductClassReports)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                    ProductClassReports.IProductClassReports productClassLayer = (ProductClassReports.IProductClassReports)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                     data = productClassLayer.GetGenericProductClassReport();
 					if (data != null && data.LinesNumber > 0) data.Sort(ResultTable.SortOrder.DESC, 2);
                     break;
@@ -2321,7 +2318,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
                     if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for advertising agency report"));
                     param = new object[1];
                     param[0] = customerWebSession;
-                    TNS.AdExpressI.AdvertisingAgency.IAdvertisingAgencyResult advertisingAgencyClassLayer = (TNS.AdExpressI.AdvertisingAgency.IAdvertisingAgencyResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                    TNS.AdExpressI.AdvertisingAgency.IAdvertisingAgencyResult advertisingAgencyClassLayer = (TNS.AdExpressI.AdvertisingAgency.IAdvertisingAgencyResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                     data = advertisingAgencyClassLayer.GetResult();
                     break;
                 case WebConstantes.Module.Name.INDICATEUR:
@@ -2330,7 +2327,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
                     param = new object[1];
                     param[0] = customerWebSession;
 
-                    ProductClassIndicators.IProductClassIndicators productClassIndicatorLayer = (ProductClassIndicators.IProductClassIndicators)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                    ProductClassIndicators.IProductClassIndicators productClassIndicatorLayer = (ProductClassIndicators.IProductClassIndicators)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                     data = productClassIndicatorLayer.GetResultTable();
                     break;
                 case WebConstantes.Module.Name.TENDACES:
@@ -2338,15 +2335,12 @@ namespace TNS.AdExpress.Web.Controls.Results{
                     if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the Trends"));
                     param = new object[1];
                     param[0] = customerWebSession;
-                    TNS.AdExpressI.Trends.ITrends trendsClassLayer = (TNS.AdExpressI.Trends.ITrends)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                   Trends.ITrends trendsClassLayer = (Trends.ITrends)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                     data = trendsClassLayer.GetResult();                 
                     break;
                 default:
 					return null;
 			}
-
-            //CellLabel c = new CellLabel(string.Empty);
-            //data.CultureInfo = new CultureInfo("fi-FI");
 			if(data != null)
             data.CultureInfo = WebApplicationParameters.AllowedLanguages[customerWebSession.SiteLanguage].CultureInfo;
             return data;

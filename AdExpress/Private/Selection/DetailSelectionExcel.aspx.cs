@@ -481,14 +481,14 @@ namespace AdExpress.Private.Selection{
                 #region Vague
                 if (_webSession.IsWaveSelected()){
 					displayWave=true;
-					waveText= TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(_webSession.SelectionUniversAEPMWave,_webSession.SiteLanguage,false,_webSession.DomainName,_webSession.DataLanguage,dataSource);
+                    waveText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(_webSession.SelectionUniversAEPMWave, _webSession.SiteLanguage, false, _webSession.DomainName, _webSession.DataLanguage, _webSession.Source);
                 }
                 #endregion
 
                 #region Cibles
                 if (_webSession.IsTargetSelected()){
 					displayTargets=true;
-                    targetsText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(_webSession.SelectionUniversAEPMTarget, _webSession.SiteLanguage, false, _webSession.DomainName, _webSession.DataLanguage, dataSource);
+                    targetsText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(_webSession.SelectionUniversAEPMTarget, _webSession.SiteLanguage, false, _webSession.DomainName, _webSession.DataLanguage, _webSession.Source);
                 }
                 #endregion
 

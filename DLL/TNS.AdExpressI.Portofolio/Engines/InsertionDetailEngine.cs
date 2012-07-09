@@ -37,11 +37,13 @@ using TNS.AdExpressI.Portofolio.Exceptions;
 using TNS.AdExpressI.Portofolio.DAL;
 using TNS.AdExpress.Constantes.Classification.DB;
 
-namespace TNS.AdExpressI.Portofolio.Engines {
-	/// <summary>
-	/// Compute media insertion detail's results
-	/// </summary>
-	public class InsertionDetailEngine : Engine {
+namespace TNS.AdExpressI.Portofolio.Engines
+{
+    /// <summary>
+    /// Compute media insertion detail's results
+    /// </summary>
+    public class InsertionDetailEngine : Engine
+    {
 
         #region Constantes
         protected const char SEPARATOR = '°';
@@ -51,13 +53,13 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
         #region Variables
         /// <summary>
-		/// Screen code
-		/// </summary>
-		protected string _adBreak;
-		/// <summary>
-		/// Day of Week
-		/// </summary>
-		protected string _dayOfWeek;
+        /// Screen code
+        /// </summary>
+        protected string _adBreak;
+        /// <summary>
+        /// Day of Week
+        /// </summary>
+        protected string _dayOfWeek;
         /// <summary>
         /// Define if show media schedule Link
         /// </summary>
@@ -98,255 +100,273 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         /// Vehicle
         /// </summary>
         protected VehicleInformation _vehicle;
-		#endregion
+        #endregion
 
-		#region Constructor
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="webSession">Client Session</param>
-		/// <param name="vehicleInformation">vehicle Information</param>
-		/// <param name="idMedia">Id media</param>
-		/// <param name="periodBeginning">Period Beginning </param>
-		/// <param name="periodEnd">Period End</param>
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="webSession">Client Session</param>
+        /// <param name="vehicleInformation">vehicle Information</param>
+        /// <param name="idMedia">Id media</param>
+        /// <param name="periodBeginning">Period Beginning </param>
+        /// <param name="periodEnd">Period End</param>
         /// <param name="adBreak">Ad break</param>
         /// <param name="dayOfWeek">Day of week</param>
         /// <param name="excel">Excel</param>
-		public InsertionDetailEngine(WebSession webSession, VehicleInformation vehicleInformation, Int64 idMedia, string periodBeginning, string periodEnd, string adBreak, string dayOfWeek, bool excel)
-			: base(webSession, vehicleInformation, idMedia, periodBeginning, periodEnd) {
-			_adBreak = adBreak;
-			_dayOfWeek = dayOfWeek;
+        public InsertionDetailEngine(WebSession webSession, VehicleInformation vehicleInformation, Int64 idMedia, string periodBeginning, string periodEnd, string adBreak, string dayOfWeek, bool excel)
+            : base(webSession, vehicleInformation, idMedia, periodBeginning, periodEnd)
+        {
+            _adBreak = adBreak;
+            _dayOfWeek = dayOfWeek;
             _showMediaSchedule = webSession.CustomerLogin.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) != null ? true : false;
             _excel = excel;
-		}
-		#endregion
+        }
+        #endregion
 
-		#region Abstract methods implementation
+        #region Abstract methods implementation
 
-		#region ComputeResultTable
-		/// <summary>
-		/// Get portofolio media detail insertions 
-		/// </summary>
-		/// <returns>Result table</returns>
-		protected override ResultTable ComputeResultTable() {
+        #region ComputeResultTable
+        /// <summary>
+        /// Get portofolio media detail insertions 
+        /// </summary>
+        /// <returns>Result table</returns>
+        protected override ResultTable ComputeResultTable()
+        {
 
-			#region Variables
-			ResultTable tab = null;
-			DataSet ds;
-			DataTable dt = null;
-			Headers headers;
-			int iNbLine = 0;
-			Assembly assembly;
-			Type type;
-			bool allPeriod = true;
-            bool isDigitalTV = false;           
+            #region Variables
+            ResultTable tab = null;
+            DataSet ds;
+            DataTable dt = null;
+            Headers headers;
+            int iNbLine = 0;
+            Assembly assembly;
+            Type type;
+            bool allPeriod = true;
+            bool isDigitalTV = false;
             _vehicle = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
-			#endregion
+            #endregion
 
-			if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
-			object[] parameters = new object[6];
-			parameters[0] = _webSession;
-			parameters[1] = _vehicleInformation;
-			parameters[2] = _idMedia;
-			parameters[3] = _periodBeginning;
-			parameters[4] = _periodEnd;
-			parameters[5] = _adBreak;
+            if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
+            object[] parameters = new object[6];
+            parameters[0] = _webSession;
+            parameters[1] = _vehicleInformation;
+            parameters[2] = _idMedia;
+            parameters[3] = _periodBeginning;
+            parameters[4] = _periodEnd;
+            parameters[5] = _adBreak;
             if ((_adBreak != null && _adBreak.Length > 0) || (_dayOfWeek != null && _dayOfWeek.Length > 0)) _allPeriod = false;
-			IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
-			string idTNTCategory = TNS.AdExpress.Domain.Lists.GetIdList(WebCst.GroupList.ID.category, WebCst.GroupList.Type.digitalTv);
-			if (idTNTCategory != null && idTNTCategory.Length > 0)
-				_isDigitalTV = portofolioDAL.IsMediaBelongToCategory(_idMedia, idTNTCategory);
+            IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+            string idTNTCategory = TNS.AdExpress.Domain.Lists.GetIdList(WebCst.GroupList.ID.category, WebCst.GroupList.Type.digitalTv);
+            if (idTNTCategory != null && idTNTCategory.Length > 0)
+                _isDigitalTV = portofolioDAL.IsMediaBelongToCategory(_idMedia, idTNTCategory);
 
-			#region Product detail level (Generic)
-			// Initialisation to product
-			ArrayList levels = new ArrayList();
-			levels.Add(10);
-			_webSession.GenericProductDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
-			#endregion
+            #region Product detail level (Generic)
+            // Initialisation to product
+            ArrayList levels = new ArrayList();
+            levels.Add(10);
+            _webSession.GenericProductDetailLevel = new GenericDetailLevel(levels, TNS.AdExpress.Constantes.Web.GenericDetailLevel.SelectedFrom.defaultLevels);
+            #endregion
 
-			#region Columns levels (Generic)
+            #region Columns levels (Generic)
             _columnItemList = WebApplicationParameters.GenericColumnsInformation.GetGenericColumnItemInformationList(_vehicle.DetailColumnId);
 
             List<Int64> columnIdList = new List<Int64>();
-			foreach (GenericColumnItemInformation Column in _columnItemList)
-				columnIdList.Add((int)Column.Id);
+            foreach (GenericColumnItemInformation Column in _columnItemList)
+                columnIdList.Add((int)Column.Id);
 
-			_webSession.GenericInsertionColumns = new GenericColumns(columnIdList);
-			_webSession.Save();
-			#endregion
+            _webSession.GenericInsertionColumns = new GenericColumns(columnIdList);
+            _webSession.Save();
+            #endregion
 
-			#region Data loading
-			try {
-				ds = portofolioDAL.GetInsertionData(); //portofolioDAL.GetGenericDetailMedia();
-				if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) {
+            #region Data loading
+            try
+            {
+                ds = portofolioDAL.GetInsertionData(); //portofolioDAL.GetGenericDetailMedia();
+                if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+                {
 
-					dt = ds.Tables[0];
-				}
-			}
-			catch (System.Exception err) {
-				throw (new PortofolioException("Error while extracting portofolio media detail data", err));
-			}
-			#endregion
+                    dt = ds.Tables[0];
+                }
+            }
+            catch (System.Exception err)
+            {
+                throw (new PortofolioException("Error while extracting portofolio media detail data", err));
+            }
+            #endregion
 
-			#region Press and Internatioanl Press cases
-			try {
-				if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press 
+            #region Press and Internatioanl Press cases
+            try
+            {
+                if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
                     )
-					SetDataTable(dt, _dayOfWeek, _allPeriod);
-			}
-			catch (System.Exception err) {
-				throw (new PortofolioException("Error while deleting rows (case of press) fro portofolio media detail", err));
-			}
-			#endregion
+                    SetDataTable(dt, _dayOfWeek, _allPeriod);
+            }
+            catch (System.Exception err)
+            {
+                throw (new PortofolioException("Error while deleting rows (case of press) fro portofolio media detail", err));
+            }
+            #endregion
 
-			if (dt != null && dt.Rows != null && dt.Rows.Count > 0) {
+            if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+            {
 
-				#region Rigths management des droits
-				// Show creatives
-				
-				if (_webSession.CustomerLogin.ShowCreatives(_vehicleInformation.Id) && _vehicleInformation.ShowCreations) _showCreative = true;
-				// Show media agency
-				
-				if (_webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_MEDIA_AGENCY) && dt.Columns.Contains("advertising_agency")) {
-					_showMediaAgency = true;
-				}
-				//Show diffusion date
+                #region Rigths management des droits
+                // Show creatives
 
-				if (!_allPeriod && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press 
+                if (_webSession.CustomerLogin.ShowCreatives(_vehicleInformation.Id) && _vehicleInformation.ShowCreations) _showCreative = true;
+                // Show media agency
+
+                if (_webSession.CustomerLogin.CustomerMediaAgencyFlagAccess(_vehicleInformation.DatabaseId) && dt.Columns.Contains("advertising_agency"))
+                    _showMediaAgency = true;
+
+                //Show diffusion date
+
+                if (!_allPeriod && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
                     ))
-					_showDate = false;
-				//Show column product
+                    _showDate = false;
+                //Show column product
                 _showProduct = _webSession.CustomerLogin.CustormerFlagAccess(DBCst.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG);
-				#endregion
+                #endregion
 
-				#region Table nb rows
-				iNbLine = dt.Rows.Count;
-				#endregion
+                #region Table nb rows
+                iNbLine = dt.Rows.Count;
+                #endregion
 
-				#region Initialisation of result table
-				try {
-					headers = new Headers();
+                #region Initialisation of result table
+                try
+                {
+                    headers = new Headers();
                     _columnItemList = WebApplicationParameters.GenericColumnsInformation.GetGenericColumnItemInformationList(_vehicle.DetailColumnId);
 
-					foreach (GenericColumnItemInformation Column in _columnItemList) {
+                    foreach (GenericColumnItemInformation Column in _columnItemList)
+                    {
 
-						switch (Column.Id) {
-							case GenericColumnItemInformation.Columns.associatedFile://Visual radio/tv
-							case GenericColumnItemInformation.Columns.visual://Visual press
-								if (_showCreative)
-									headers.Root.Add(new HeaderCreative(false, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
-								break;
-							case GenericColumnItemInformation.Columns.agenceMedia://media agency
-								if (_showMediaAgency)
-									headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
-								break;
-							case GenericColumnItemInformation.Columns.planMedia://Plan media
-                                if(_showMediaSchedule)
-								headers.Root.Add(new HeaderMediaSchedule(false, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
-								break;
-							case GenericColumnItemInformation.Columns.dateDiffusion:
-							case GenericColumnItemInformation.Columns.dateParution:
-								if (_showDate)
-									headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
-								break;
-							case GenericColumnItemInformation.Columns.topDiffusion:
-								if (!_isDigitalTV)
-									headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
-								break;
-							case GenericColumnItemInformation.Columns.product:
+                        switch (Column.Id)
+                        {
+                            case GenericColumnItemInformation.Columns.associatedFile://Visual radio/tv
+                            case GenericColumnItemInformation.Columns.visual://Visual press
+                                if (_showCreative)
+                                    headers.Root.Add(new HeaderCreative(false, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
+                                break;
+                            case GenericColumnItemInformation.Columns.agenceMedia://media agency
+                                if (_showMediaAgency)
+                                    headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
+                                break;
+                            case GenericColumnItemInformation.Columns.planMedia://Plan media
+                                if (_showMediaSchedule)
+                                    headers.Root.Add(new HeaderMediaSchedule(false, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
+                                break;
+                            case GenericColumnItemInformation.Columns.dateDiffusion:
+                            case GenericColumnItemInformation.Columns.dateParution:
+                                if (_showDate)
+                                    headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
+                                break;
+                            case GenericColumnItemInformation.Columns.topDiffusion:
+                                if (!_isDigitalTV)
+                                    headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
+                                break;
+                            case GenericColumnItemInformation.Columns.product:
                                 if (_showProduct && WebApplicationParameters.GenericColumnsInformation.IsVisible(_vehicle.DetailColumnId, Column.Id))
-									headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
-								break;
-							default:
+                                    headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
+                                break;
+                            default:
                                 if (WebApplicationParameters.GenericColumnsInformation.IsVisible(_vehicle.DetailColumnId, Column.Id))
-									headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
-								break;
-						}
+                                    headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(Column.WebTextId, _webSession.SiteLanguage), Column.WebTextId));
+                                break;
+                        }
 
-					}
+                    }
 
-					tab = new ResultTable(iNbLine, headers);
-				}
-				catch (System.Exception err) {
-					throw (new PortofolioException("Error while initiating headers of portofolio media detail", err));
-				}
-				#endregion
+                    tab = new ResultTable(iNbLine, headers);
+                }
+                catch (System.Exception err)
+                {
+                    throw (new PortofolioException("Error while initiating headers of portofolio media detail", err));
+                }
+                #endregion
 
                 SetResultTable(dt, tab);
 
-			}
+            }
 
-			return tab;
-		}
+            return tab;
+        }
 
-		#endregion
+        #endregion
 
-		/// <summary>
-		/// Build Html result
-		/// </summary>
-		/// <returns></returns>
-		protected override string BuildHtmlResult() {
-			throw new PortofolioException("The method or operation is not implemented.");
-		}
-		#endregion
+        /// <summary>
+        /// Build Html result
+        /// </summary>
+        /// <returns></returns>
+        protected override string BuildHtmlResult()
+        {
+            throw new PortofolioException("The method or operation is not implemented.");
+        }
+        #endregion
 
-		#region Compute DataTable for Press and   interntional Press
-		/// <summary>
-		/// Adapte data for vehcilce Press and interntional press
-		/// </summary>
-		/// <param name="dt">DataTable</param>
-		/// <returns>DataTable</returns>
-		protected virtual void SetDataTable(DataTable dt, string dayOfWeek, bool allPeriod) {
+        #region Compute DataTable for Press and   interntional Press
+        /// <summary>
+        /// Adapte data for vehcilce Press and interntional press
+        /// </summary>
+        /// <param name="dt">DataTable</param>
+        /// <returns>DataTable</returns>
+        protected virtual void SetDataTable(DataTable dt, string dayOfWeek, bool allPeriod)
+        {
 
-			#region Variables
-			Int64 idOldLine = -1;
-			Int64 idLine = -1;
-			DataRow oldRow = null;
-			int iLine = 0;
-			ArrayList indexLines = new ArrayList();
-			#endregion
+            #region Variables
+            Int64 idOldLine = -1;
+            Int64 idLine = -1;
+            DataRow oldRow = null;
+            int iLine = 0;
+            ArrayList indexLines = new ArrayList();
+            #endregion
 
             if (dt != null && dt.Rows != null && dt.Rows.Count > 0 && dt.Columns.Contains("id_advertisement"))
             {
 
-				#region Parcours du tableau
-				foreach (DataRow row in dt.Rows) {
+                #region Parcours du tableau
+                foreach (DataRow row in dt.Rows)
+                {
 
-					if (dayOfWeek == row["date_media_num"].ToString() || allPeriod) {
+                    if (dayOfWeek == row["date_media_num"].ToString() || allPeriod)
+                    {
 
-						idLine = (long)row["id_advertisement"];
+                        idLine = (long)row["id_advertisement"];
 
-						if (idLine != idOldLine) {
-							idOldLine = idLine;
-							oldRow = row;
-						}
-						else {
-							if (oldRow["location"].ToString().Length > 0 && row["location"].ToString().Length > 0)
-								oldRow["location"] = oldRow["location"].ToString() + "-" + row["location"].ToString();
-							else if (oldRow["location"].ToString().Length == 0 && row["location"].ToString().Length > 0)
-								oldRow["location"] = row["location"].ToString();
-							indexLines.Add(iLine);
-						}
-					}
+                        if (idLine != idOldLine)
+                        {
+                            idOldLine = idLine;
+                            oldRow = row;
+                        }
+                        else
+                        {
+                            if (oldRow["location"].ToString().Length > 0 && row["location"].ToString().Length > 0)
+                                oldRow["location"] = oldRow["location"].ToString() + "-" + row["location"].ToString();
+                            else if (oldRow["location"].ToString().Length == 0 && row["location"].ToString().Length > 0)
+                                oldRow["location"] = row["location"].ToString();
+                            indexLines.Add(iLine);
+                        }
+                    }
 
-					iLine++;
-				}
-				#endregion
+                    iLine++;
+                }
+                #endregion
 
-				indexLines.Reverse();
-				//suppress rows
-				foreach (int index in indexLines)
-					dt.Rows.Remove(dt.Rows[index]);
+                indexLines.Reverse();
+                //suppress rows
+                foreach (int index in indexLines)
+                    dt.Rows.Remove(dt.Rows[index]);
 
-			}
-		}
-		#endregion
+            }
+        }
+        #endregion
 
         #region SplitStringValue
         /// <summary>
@@ -361,7 +381,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             for (int z = 0; z < sArr.Length; z++)
             {
                 stringValue += sArr[z].ToString();
-                if (sArr.Length > 1 && z < sArr.Length - 1) 
+                if (sArr.Length > 1 && z < sArr.Length - 1)
                     stringValue += (_excel) ? EXCEL_CARRIAGE_RETURN : CARRIAGE_RETURN;
             }
             s = stringValue;
@@ -375,7 +395,8 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         /// </summary>
         /// <param name="dt">Data Table</param>
         /// <param name="tab">Result table</param>
-        protected virtual void SetResultTable(DataTable dt, ResultTable tab) {
+        protected virtual void SetResultTable(DataTable dt, ResultTable tab)
+        {
 
             string dateMediaNum = string.Empty;
             DateTime dateMedia;
@@ -574,7 +595,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         /// <param name="value">Value of the cell</param>
         /// <returns>Value</returns>
         /// <remarks>We have add this method to solve cobranding problem for Russia</remarks>
-        protected object GetColumnValue(GenericColumnItemInformation column, object value) 
+        protected object GetColumnValue(GenericColumnItemInformation column, object value)
         {
 
             string s = string.Empty;
@@ -591,7 +612,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
         }
         #endregion
-        
+
 
     }
 }

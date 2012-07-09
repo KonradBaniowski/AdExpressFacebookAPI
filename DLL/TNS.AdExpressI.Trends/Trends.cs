@@ -113,7 +113,7 @@ namespace TNS.AdExpressI.Trends
             if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the Trends result"));
             object[] parameters = new object[1];
             parameters[0] = _session;
-            ITrendsDAL trendsDAL = (ITrendsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+            ITrendsDAL trendsDAL = (ITrendsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
             ds = trendsDAL.GetData();
             int i=0;
             if (ds.Tables["TOTAL"] != null) dtTotal = ds.Tables["TOTAL"];

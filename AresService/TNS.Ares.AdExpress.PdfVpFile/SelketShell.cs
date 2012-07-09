@@ -43,12 +43,12 @@ namespace TNS.Ares.AdExpress.PdfVpFile
                     _oListRunningTasks.Add(staticNavSession, task);
                 // Preparing treatment
                 t = new TreatementSystem();
-                t.OnStartWork += new TNS.Ares.StartWork(t_OnStartWork);
-                t.OnError += new TNS.Ares.Error(t_OnError);
-                t.OnStopWorkerJob += new TNS.Ares.StopWorkerJob(t_OnStopWorkerJob);
-                t.OnSendReport += new TNS.Ares.SendReport(t_OnSendReport);
-                t.OnMessageAlert += new TNS.Ares.MessageAlert(t_OnMessage);
-                t.Treatement(this._confFile, this._source, staticNavSession);
+                t.EvtStartWork += t_OnStartWork;
+                t.EvtError += t_OnError;
+                t.EvtStopWorkerJob += t_OnStopWorkerJob;
+                t.EvtSendReport += t_OnSendReport;
+                t.EvtMessageAlert += t_OnMessage;
+                t.Treatement(_confFile, _source, staticNavSession);
             }
             catch (Exception e) {
                 if (staticNavSession > 0) {

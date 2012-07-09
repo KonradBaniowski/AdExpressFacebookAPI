@@ -427,17 +427,20 @@ namespace AdExpress.Private.Selection{
                 }
                 #endregion
 
+
                 #region Vague
-                if (_webSession.IsWaveSelected()){
-					displayWave=true;
-                    waveText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversAEPMWave, false, false, false, "100", false, false, _webSession.SiteLanguage, 2, 1, true, _webSession.DataLanguage, dataSource);
+                if (_webSession.IsWaveSelected())
+                {
+                    displayWave = true;
+                    waveText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversAEPMWave, false, false, false, "100", false, false, _webSession.SiteLanguage, 2, 1, true, _webSession.DataLanguage, _webSession.Source);
                 }
                 #endregion
 
                 #region Cibles
-				if (_webSession.IsTargetSelected()){
-					displayTargets=true;
-                    targetsText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversAEPMTarget, false, false, false, "100", false, false, _webSession.SiteLanguage, 2, 1, true, _webSession.DataLanguage, dataSource);
+                if (_webSession.IsTargetSelected())
+                {
+                    displayTargets = true;
+                    targetsText = TNS.AdExpress.Web.Functions.DisplayTreeNode.ToHtml(_webSession.SelectionUniversAEPMTarget, false, false, false, "100", false, false, _webSession.SiteLanguage, 2, 1, true, _webSession.DataLanguage, _webSession.Source);
                 }
                 #endregion
 

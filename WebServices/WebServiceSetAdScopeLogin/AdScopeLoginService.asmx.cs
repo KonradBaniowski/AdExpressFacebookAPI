@@ -78,8 +78,8 @@ namespace WebServiceSetAdScopeLogin
                   decryptedCreationDate = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(creationDate);
                   decryptedAction = KMI.P3.Web.Functions.QueryStringEncryption.AdScopeCrypt(action);
 
-                 
-                
+
+                return false;
                 #endregion
 
               

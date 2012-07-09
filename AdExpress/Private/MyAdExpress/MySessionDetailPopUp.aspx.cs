@@ -257,7 +257,7 @@ namespace AdExpress.Private.MyAdExpress
                     {
                         DataAccessLayer layer = PluginConfiguration.GetDataAccessLayer(PluginDataAccessLayerName.Alert);
                         TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
-                        IAlertDAL alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null, null);
+                        IAlertDAL alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { src }, null, null);
                         int idAlert = Int32.Parse(Page.Request.QueryString.Get("idAlertSession"));
                         Alert alert = alertDAL.GetAlert(idAlert);
                         webSessionSave = (WebSession)alert.Session;
@@ -302,7 +302,7 @@ namespace AdExpress.Private.MyAdExpress
                         TNS.AdExpress.Domain.Layers.CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.dateDAL];
                         object[] param = new object[1];
                         param[0] = webSessionSave;
-                        IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                        IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                         FirstDayNotEnable = dateDAL.GetFirstDayNotEnabled(new List<Int64>(new Int64[] { selectedVehicle }), oldYear);
                     }
                     _webSession.CurrentModule = webSessionSave.CurrentModule;
@@ -1136,7 +1136,7 @@ namespace AdExpress.Private.MyAdExpress
         {
 
             TNS.AdExpress.Domain.Layers.CoreLayer cl = WebApplicationParameters.CoreLayers[CstWeb.Layers.Id.date];
-            IDate date = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null);
+            IDate date = (IDate)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null);
 
             date.UpdateDate(type, ref _webSession, webSessionSave, FirstDayNotEnable);
             Dictionary<Vehicles.names, DateTime> d = date.GetLastAvailableDate();

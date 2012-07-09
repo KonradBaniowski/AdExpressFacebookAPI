@@ -371,6 +371,9 @@ namespace BastetWeb{
                         case 3:
                             source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.music);
                             break;
+                        case 4:
+                            source = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.bipp);
+                            break;
                         default:
                             Response.Redirect("LoginSelection.aspx");
                             Response.Write("<script _siteLanguage=Javascript>alert('Project invalide');</script>");

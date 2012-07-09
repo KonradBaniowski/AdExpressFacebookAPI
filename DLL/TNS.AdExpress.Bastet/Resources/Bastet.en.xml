@@ -96,6 +96,13 @@
     <item mnemonic="w81" type="System.String">KantarMusic -- Excel statistics generated</item>
     <!---->
     
+    <!--Version BIPP-->
+    <item mnemonic="w82" type="System.String">Tracking BIPP</item>
+    <item mnemonic="w83" type="System.String">The attached Excel file contains the usage statistics of BIPP.</item>
+    <item mnemonic="w84" type="System.String">There are no statistics concerning the BIPP portal for your parameters.</item>
+    <item mnemonic="w85" type="System.String">BIPP -- Excel statistics generated</item>
+    <!---->
+    
     <!-- AdExpress Text -->
     <item mnemonic="w124" type="System.String">From</item>
 

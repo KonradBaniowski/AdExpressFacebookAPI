@@ -1052,7 +1052,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				case DetailLevelItemInformation.Levels.groupMediaAgency:
 				case DetailLevelItemInformation.Levels.agency:
                     List<Int64> vehicleList = GetVehicles();
-                    return ((CheckProductDetailLevelAccess()) && _customerWebSession.CustomerLogin.CustomerMediaAgencyFlagAccess(vehicleList));
+                    return (_customerWebSession.CustomerLogin.CustomerMediaAgencyFlagAccess(vehicleList));
 				default:
 					return(true);
 			}

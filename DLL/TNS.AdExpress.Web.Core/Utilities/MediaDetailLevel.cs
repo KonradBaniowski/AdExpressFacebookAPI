@@ -621,8 +621,7 @@ namespace TNS.AdExpress.Web.Core.Utilities{
                                 case DetailLevelItemInformation.Levels.groupMediaAgency:
                                 case DetailLevelItemInformation.Levels.agency:
                                     vehicleList = GetVehicles();
-                                    if (
-                                        CheckProductDetailLevelAccess() &&
+                                    if (                                      
                                         // Droit sur les agences media
                                         _customerWebSession.CustomerLogin.CustomerMediaAgencyFlagAccess(vehicleList)
                                         ) return (true);
@@ -695,7 +694,8 @@ namespace TNS.AdExpress.Web.Core.Utilities{
                                 #region Agences et groupe d'agence
                                 case DetailLevelItemInformation.Levels.groupMediaAgency:
                                 case DetailLevelItemInformation.Levels.agency:
-                                    return (_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_MEDIA_AGENCY));
+                                    vehicleList = GetVehicles();
+                                    return (_customerWebSession.CustomerLogin.CustomerMediaAgencyFlagAccess(vehicleList));
 
                                 #endregion
 
@@ -821,8 +821,7 @@ namespace TNS.AdExpress.Web.Core.Utilities{
                         case DetailLevelItemInformation.Levels.groupMediaAgency:
                         case DetailLevelItemInformation.Levels.agency:
                             vehicleList = GetVehicles();
-                            if (
-                                CheckProductDetailLevelAccess() &&
+                            if (                                
                                 // Droit sur les agences media
                                  _customerWebSession.CustomerLogin.CustomerMediaAgencyFlagAccess(vehicleList)
                                 ) return (true);

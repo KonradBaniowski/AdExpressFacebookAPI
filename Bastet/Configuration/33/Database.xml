@@ -16,6 +16,7 @@
     <defaultConnection enumId="7" description="Web Administration" dataBaseEnumId="2" login="admin_web" password="zepabony9"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="8" description="Alerts" dataBaseEnumId="2" login="adexpr03_proc_11" password="trela5"            dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="9" description="EasyMusic" dataBaseEnumId="2" login="WEBNAV01_PROC_1" password="tchery98"       dataSource="easymusicfr.prod" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="13" description="Bipp" dataBaseEnumId="2" login="WEBNAV01_PROC_1" password="fezsdr95"       dataSource="mediadiscfr01.prod" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <!--Test default rights connection-->
     <defaultConnection enumId="10" description="Rights" dataBaseEnumId="2" login="gfacon" password="sandie5"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
   </defaultConnections>

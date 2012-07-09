@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,12 +10,18 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TNS.Ares.AdExpress.PdfSectorielleSrv</RootNamespace>
     <AssemblyName>TNS.Ares.AdExpress.PdfSectorielleSrv</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -28,9 +34,9 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,6 +46,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -49,6 +57,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -108,6 +117,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Anubis.Hotep\TNS.AdExpress.Anubis.Hotep.csproj">
+      <Project>{15D35C74-51FD-4533-8FF1-6C6064E6B963}</Project>
+      <Name>TNS.AdExpress.Anubis.Hotep</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
       <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
       <Name>TNS.AdExpress.Constantes</Name>
@@ -140,10 +153,6 @@
       <Project>{255834E2-DCA3-4290-9325-FFA4291839A6}</Project>
       <Name>TNS.Ares.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Anubis.Hotep\TNS.AdExpress.Anubis.Hotep.csproj">
-      <Project>{15D35C74-51FD-4533-8FF1-6C6064E6B963}</Project>
-      <Name>TNS.AdExpress.Anubis.Hotep</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.AdExpress.DataAccess\TNS.AdExpress.DataAccess.csproj">
       <Project>{A4DEDE88-C99E-495F-98F2-E2762520F4BE}</Project>
       <Name>TNS.AdExpress.DataAccess</Name>
@@ -172,10 +181,6 @@
       <Project>{4762D913-FC82-42BD-840F-5BCB43E5979D}</Project>
       <Name>TNS.Ares.StaticNavSession.DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TNS.Ares.AdExpress.PdfSectorielle\TNS.Ares.AdExpress.PdfSectorielle.csproj">
-      <Project>{20C3692A-B3C6-4542-BC38-0833B90067D0}</Project>
-      <Name>TNS.Ares.AdExpress.PdfSectorielle</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TNS.Ares.AdExpress\TNS.Ares.AdExpress.csproj">
       <Project>{3DDC18B6-8AB8-489F-A0C5-2118CE19D795}</Project>
       <Name>TNS.Ares.AdExpress</Name>
@@ -195,7 +200,7 @@
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
-      <ProductName>.NET Framework Client Profile</ProductName>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -233,25 +238,16 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>rmdir /S /Q "$(TargetDir)Bin\"
+    <PostBuildEvent>
+rmdir /S /Q "$(TargetDir)Bin\"
 mkdir "$(TargetDir)Bin\"
 copy "$(TargetDir)TNS.Ares.StaticNavSession.DAL.Default.dll" "$(TargetDir)Bin\TNS.Ares.StaticNavSession.DAL.Default.dll" /Y
 copy "$(TargetDir)TNS.AdExpressI.ProductClassIndicators.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.ProductClassIndicators.DAL.Default.dll" /Y
 copy "$(TargetDir)TNS.AdExpressI.ProductClassIndicators.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.ProductClassIndicators.Default.dll" /Y
-copy "$(TargetDir)TNS.AdExpress.Web.Core.Default.dll" "$(TargetDir)Bin\TNS.AdExpress.Web.Core.Default.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpress.Web.Core.Default.dll" "$(TargetDir)Bin\TNS.AdExpress.Web.Core.Default.dll" /Y
 copy "$(TargetDir)TNS.AdExpressI.Classification.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Classification.DAL.Default.dll" /Y
 copy "$(TargetDir)TNS.AdExpressI.Date.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Date.DAL.Default.dll" /Y</PostBuildEvent>
-    <PreBuildEvent>echo ----------------------------------------------
-echo -                      Pre buid
-echo ----------------------------------------------
-echo  -- Suppression du lecteur I --
-subst i: /D
-echo  -- Obtention du répertoire où seront les librairies --
-set toto="$(TargetDir)"
-echo  -- Suppression du \ de fin; et ajout du " de fin --
-set toto=%25toto:~0,-2%25"
-echo  -- Définition d'un lecteur pointant sur le répertoire où seront les librairies --
-subst i: %25toto%25
-</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>

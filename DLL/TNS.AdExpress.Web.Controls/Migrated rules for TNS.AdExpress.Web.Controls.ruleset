@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Migrated rules for TNS.AdExpress.Web.Controls.ruleset" Description="Cet ensemble de règles a été créé à partir de la propriété CodeAnalysisRules de la configuration &quot;Debug (Any CPU)&quot; du projet &quot;F:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Web.Controls\TNS.AdExpress.Web.Controls.csproj&quot;." ToolsVersion="10.0">
+  <IncludeAll Action="Warning" />
+  <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
+    <Rule Id="CA1500" Action="None" />
+    <Rule Id="CA1501" Action="None" />
+    <Rule Id="CA1502" Action="None" />
+    <Rule Id="CA1504" Action="None" />
+    <Rule Id="CA1505" Action="None" />
+    <Rule Id="CA1506" Action="None" />
+  </Rules>
+</RuleSet>

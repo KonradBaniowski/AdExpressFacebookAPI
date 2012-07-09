@@ -202,7 +202,7 @@ namespace AdExpress.Private.Results{
             param[5] = title;
             param[6] = _hasCreationReadRights;
             param[7] = _hasCreationDownloadRights;
-            TNS.AdExpressI.Insertions.CreativeResult.CreativePopUp result = (TNS.AdExpressI.Insertions.CreativeResult.CreativePopUp)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null, null);
+            TNS.AdExpressI.Insertions.CreativeResult.CreativePopUp result = (TNS.AdExpressI.Insertions.CreativeResult.CreativePopUp)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
             
             streamingCreationsResult = result.CreativePopUpRender();
 		}

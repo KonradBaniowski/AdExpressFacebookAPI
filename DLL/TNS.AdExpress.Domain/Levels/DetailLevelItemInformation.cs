@@ -313,7 +313,15 @@ namespace TNS.AdExpress.Domain.Level{
             /// <summary>
             /// Rubric
             /// </summary>
-            rubric = 73
+            rubric = 73,
+              /// <summary>
+            /// Target
+            /// </summary>
+            target = 74,
+            /// <summary>
+            /// wAVE
+            /// </summary>
+            wave = 75
         }
 		#endregion
 

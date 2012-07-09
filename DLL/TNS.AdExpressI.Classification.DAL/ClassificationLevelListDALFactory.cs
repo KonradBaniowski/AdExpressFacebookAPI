@@ -146,7 +146,17 @@ namespace TNS.AdExpressI.Classification.DAL {
                 
                 //Create a list of region level 's  items		
                 case DetailLevelItemInformation.Levels.region:
-                    return new MediaBrand.RegionLevelListDAL(idList, _language, _source);				
+                    return new MediaBrand.RegionLevelListDAL(idList, _language, _source);
+
+                //Create a list of program level 's  items		
+                case DetailLevelItemInformation.Levels.program:
+                    return new ProgramBranch.ProgramLevelListDAL(idList, _language, _source);
+                //Create a list of program type level 's  items		
+                case DetailLevelItemInformation.Levels.programType:
+                    return new ProgramBranch.ProgramTypeLevelListDAL(idList, _language, _source);
+                //Create a list of sponsorshipForm level 's  items		
+                case DetailLevelItemInformation.Levels.sponsorshipForm:
+                    return new ProgramBranch.SponsorshipFormLevelListDAL(idList, _language, _source);
 				default :
 					throw new Exceptions.ClassificationDALException(" Unknow Detail level information Identifier ");
 			}
@@ -232,6 +242,29 @@ namespace TNS.AdExpressI.Classification.DAL {
                 case TNS.AdExpress.Constantes.Customer.Right.type.vpProductAccess:
                 case TNS.AdExpress.Constantes.Customer.Right.type.vpProductException:
                     return new ProductBrand.VpProductLevelListDAL(_language, _source, dbSchema);
+
+                //Create a list of program level 's  items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.programAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.programException:
+                    return new ProgramBranch.ProgramLevelListDAL(_language, _source, dbSchema);
+                //Create a list of program type level 's  items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.programTypeAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.programTypeException:
+                    return new ProgramBranch.ProgramTypeLevelListDAL(_language, _source, dbSchema);
+                //Create a list of sponsorshipForm level 's  items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.sponsorshipFormAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.sponsorshipFormException:
+                    return new ProgramBranch.SponsorshipFormLevelListDAL(_language, _source, dbSchema);
+                //Create a list of target level 's  items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.aepmBaseTargetAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.aepmBaseTargetException:
+                case TNS.AdExpress.Constantes.Customer.Right.type.aepmTargetAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.aepmTargetException:
+                    return new GrpBranch.TargetLevelListDAL(_language, _source, dbSchema);
+                //Create a list of wave level 's  items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.aepmWaveAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.aepmWaveException:
+                    return new GrpBranch.WaveLevelListDAL(_language, _source, dbSchema);
                 default:
                     throw new Exceptions.ClassificationDALException(" Unknow level type Identifier ");
             }
@@ -298,10 +331,27 @@ namespace TNS.AdExpressI.Classification.DAL {
                     return new MediaBrand.VpCircuitLevelListDAL(_language, _source);
                 case DetailLevelItemInformation.Levels.vpBrand:
                     return new MediaBrand.VpBrandLevelListDAL(_language, _source);
+
+                //Create a list of program level 's  items		
+                case DetailLevelItemInformation.Levels.program:
+                    return new ProgramBranch.ProgramLevelListDAL(_language, _source);
+                //Create a list of program type level 's  items		
+                case DetailLevelItemInformation.Levels.programType:
+                    return new ProgramBranch.ProgramTypeLevelListDAL(_language, _source);
+                //Create a list of sponsorshipForm level 's  items		
+                case DetailLevelItemInformation.Levels.sponsorshipForm:
+                    return new ProgramBranch.SponsorshipFormLevelListDAL(_language, _source);
+                //Create a list of wave level 's  items		
+                case DetailLevelItemInformation.Levels.wave:
+                    return new GrpBranch.WaveLevelListDAL(_language, _source);
+                //Create a list of target level 's  items		
+                case DetailLevelItemInformation.Levels.target:
+                    return new GrpBranch.TargetLevelListDAL(_language, _source);
 				default:
 					throw new Exceptions.ClassificationDALException(" Unknow Detail level information Identifier ");
 			}
 		}
+        /// <summary>
 		/// Get partial items list of a classification's level
 		/// </summary>
         /// <param name="level">Cuurent universe classification level ex. product or group or media type</param>
@@ -394,6 +444,28 @@ namespace TNS.AdExpressI.Classification.DAL {
                 case TNS.AdExpress.Constantes.Customer.Right.type.nameAccess:
                 case TNS.AdExpress.Constantes.Customer.Right.type.nameException:
                     return DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.name);
+                //Create a list of program level 's  items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.programAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.programException:
+                    return DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.program);
+                //Create a list of program type level 's  items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.programTypeAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.programTypeException:
+                    return DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.programType);
+                //Create a list of sponsorshipForm level 's  items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.sponsorshipFormAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.sponsorshipFormException:
+                    return DetailLevelItemsInformation.Get(TNS.AdExpress.Domain.Level.DetailLevelItemInformation.Levels.sponsorshipForm);
+                //Create a list of target level 's  items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.aepmBaseTargetAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.aepmBaseTargetException:
+                case TNS.AdExpress.Constantes.Customer.Right.type.aepmTargetAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.aepmTargetException:
+                    return DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.target);
+                //Create a list of wave level 's  items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.aepmWaveAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.aepmWaveException:
+                    return DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.wave);
                 default:
                     throw new Exceptions.ClassificationDALException(" Unknow level type Identifier ");
             }

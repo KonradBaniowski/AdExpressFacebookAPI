@@ -451,7 +451,7 @@ namespace AdExpress.Private.Results{
                 if (module.CountryDataAccessLayer == null) throw (new NullReferenceException("DataAccess layer is null for the present/absent result"));
                 param = new object[1];
                 param[0] = _webSession;
-                IPresentAbsentResultDAL presentAbsentResultDal = (IPresentAbsentResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryDataAccessLayer.AssemblyName, module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+                IPresentAbsentResultDAL presentAbsentResultDal = (IPresentAbsentResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryDataAccessLayer.AssemblyName, module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 
                 DataSet dsMedia = null;
                 dsMedia = presentAbsentResultDal.GetColumnDetails();

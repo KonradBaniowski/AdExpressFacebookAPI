@@ -111,11 +111,11 @@ namespace TNS.AdExpress.Anubis.Bastet {
 		/// <summary>
 		/// Source de données pour charger la session du résultat
 		/// </summary>
-		private IDataSource _dataSource;
+        protected IDataSource _dataSource;
         /// <summary>
         /// Source de données pour charger la nomenclature
         /// </summary>
-        private IDataSource _dataSourceClassification;
+        protected IDataSource _dataSourceClassification;
 		/// <summary>
 		/// Configuration du plug-in
 		/// </summary>

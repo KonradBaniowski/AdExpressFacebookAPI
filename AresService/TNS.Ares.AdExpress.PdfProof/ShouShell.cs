@@ -54,13 +54,13 @@ namespace TNS.Ares.AdExpress.PdfProof
                     if (_oListRunningTasks.ContainsKey(staticNavSession) == false)
                         _oListRunningTasks.Add(staticNavSession, task);
                         // Preparing treatment
-                        TreatementSystem t = new TreatementSystem();
-                        t.OnStartWork += new TNS.Ares.StartWork(t_OnStartWork);
-                        t.OnError += new TNS.Ares.Error(t_OnError);
-                        t.OnStopWorkerJob += new TNS.Ares.StopWorkerJob(t_OnStopWorkerJob);
-                        t.OnSendReport += new TNS.Ares.SendReport(t_OnSendReport);
-                        t.OnMessageAlert += new TNS.Ares.MessageAlert(t_OnMessage);
-                        t.Treatement(this._confFile, this._source, staticNavSession);
+                    TreatementSystem t = new TreatementSystem();
+                    t.EvtStartWork += t_OnStartWork;
+                    t.EvtError += t_OnError;
+                    t.EvtStopWorkerJob += t_OnStopWorkerJob;
+                    t.EvtSendReport += t_OnSendReport;
+                    t.EvtMessageAlert += t_OnMessage;
+                    t.Treatement(_confFile, _source, staticNavSession);
                 }
                 else {
                     this._oLinkClient.ReleaseTaskInError(task, new LogLine("TaskExecution object is null", eLogCategories.Problem));
