@@ -191,6 +191,7 @@ namespace TNS.AdExpressI.AdvertisingAgency
                 case CstFormat.PreformatedMediaDetails.category:
                 case CstFormat.PreformatedMediaDetails.Media:
                 case CstFormat.PreformatedMediaDetails.mediaSeller:
+                case CstFormat.PreformatedMediaDetails.Title:
                     sortStr = "M1,ID_M1";
                     break;
                 case CstFormat.PreformatedMediaDetails.vehicleCategory:

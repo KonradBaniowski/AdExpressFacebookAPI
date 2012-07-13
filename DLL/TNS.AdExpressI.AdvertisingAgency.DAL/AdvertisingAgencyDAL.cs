@@ -907,6 +907,9 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                 case CstFormat.PreformatedMediaDetails.Media:
                     levelsIds.Add((int)DetailLevelItemInformation.Levels.media);
                     break;
+                case CstFormat.PreformatedMediaDetails.Title:
+                    levelsIds.Add((int)DetailLevelItemInformation.Levels.title);
+                    break;
                 default:
                     levelsIds.Add((int)DetailLevelItemInformation.Levels.vehicle);
                     break;

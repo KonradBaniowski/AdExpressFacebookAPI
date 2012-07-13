@@ -2323,6 +2323,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1382, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.category.GetHashCode().ToString()));
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(18, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.Media.GetHashCode().ToString()));
+                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1976, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.Title.GetHashCode().ToString()));
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1544, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMedia.GetHashCode().ToString()));
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1860, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMediaSeller.GetHashCode().ToString()));
