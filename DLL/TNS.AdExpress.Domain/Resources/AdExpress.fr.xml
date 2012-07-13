@@ -2205,5 +2205,8 @@
     <item mnemonic="w2967" type="System.String">PDF Celebrités</item>
     <item mnemonic="w2968" type="System.String">!</item>
     <!-- ********************************* -->
+    <!-- New for FR module analyse des mandataires-->
+    <item mnemonic="w2969" type="System.String">Média/Titre</item>
+    <item mnemonic="w2970" type="System.String">Régie/Titre</item>
   </items>
 </localization>
