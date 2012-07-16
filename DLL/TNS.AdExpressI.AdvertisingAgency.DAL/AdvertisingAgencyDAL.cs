@@ -882,6 +882,10 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                     levelsIds.Add((int)DetailLevelItemInformation.Levels.vehicle);
                     levelsIds.Add((int)DetailLevelItemInformation.Levels.media);
                     break;
+                case CstFormat.PreformatedMediaDetails.vehicleTitle:
+                    levelsIds.Add((int)DetailLevelItemInformation.Levels.vehicle);
+                    levelsIds.Add((int)DetailLevelItemInformation.Levels.title);
+                    break;
                 case CstFormat.PreformatedMediaDetails.vehicleMediaSeller:
                     levelsIds.Add((int)DetailLevelItemInformation.Levels.vehicle);
                     levelsIds.Add((int)DetailLevelItemInformation.Levels.mediaSeller);
@@ -904,10 +908,14 @@ namespace TNS.AdExpressI.AdvertisingAgency.DAL
                     levelsIds.Add((int)DetailLevelItemInformation.Levels.mediaSeller);
                     levelsIds.Add((int)DetailLevelItemInformation.Levels.category);
                     break;
+                case CstFormat.PreformatedMediaDetails.mediaSellerTitle:
+                    levelsIds.Add((int)DetailLevelItemInformation.Levels.mediaSeller);
+                    levelsIds.Add((int)DetailLevelItemInformation.Levels.title);
+                    break;
                 case CstFormat.PreformatedMediaDetails.Media:
                     levelsIds.Add((int)DetailLevelItemInformation.Levels.media);
                     break;
-                case CstFormat.PreformatedMediaDetails.Title:
+                case CstFormat.PreformatedMediaDetails.title:
                     levelsIds.Add((int)DetailLevelItemInformation.Levels.title);
                     break;
                 default:

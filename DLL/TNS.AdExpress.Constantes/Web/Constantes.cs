@@ -1083,7 +1083,15 @@ namespace TNS.AdExpress.Constantes.Web{
                 /// <summary>
                 /// Table detailed by Title
                 /// </summary>
-                Title
+                title,
+                /// <summary>
+                /// Table detailed by Vehicle\Title
+                /// </summary>
+                vehicleTitle,
+                /// <summary>
+                /// Table detailed by Régies\Title
+                /// </summary>
+                mediaSellerTitle
 			}
 
 	

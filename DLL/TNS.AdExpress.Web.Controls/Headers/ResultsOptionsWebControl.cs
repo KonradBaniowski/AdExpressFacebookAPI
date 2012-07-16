@@ -2323,14 +2323,16 @@ namespace TNS.AdExpress.Web.Controls.Headers
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1141, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicle.GetHashCode().ToString()));
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1382, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.category.GetHashCode().ToString()));
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(18, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.Media.GetHashCode().ToString()));
-                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1976, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.Title.GetHashCode().ToString()));
+                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1976, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.title.GetHashCode().ToString()));
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1142, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleCategory.GetHashCode().ToString()));
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1544, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMedia.GetHashCode().ToString()));
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1860, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleMediaSeller.GetHashCode().ToString()));
+                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2969, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.vehicleTitle.GetHashCode().ToString())); 
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1383, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.mediaSeller.GetHashCode().ToString()));
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2812, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.mediaSellerVehicle.GetHashCode().ToString()));
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(1862, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.mediaSellerMedia.GetHashCode().ToString()));
                     mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2813, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.mediaSellerCategory.GetHashCode().ToString()));
+                    mediaDetail.Items.Add(new ListItem(GestionWeb.GetWebWord(2970, customerWebSession.SiteLanguage), SessionCst.PreformatedDetails.PreformatedMediaDetails.mediaSellerTitle.GetHashCode().ToString())); 
 
                 }
                 else if (customerWebSession.CurrentModule == WebConstantes.Module.Name.INDICATEUR || customerWebSession.CurrentModule == WebConstantes.Module.Name.TABLEAU_DYNAMIQUE)
