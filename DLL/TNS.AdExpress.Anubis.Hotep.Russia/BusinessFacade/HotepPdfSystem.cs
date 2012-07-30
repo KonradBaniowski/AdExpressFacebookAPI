@@ -807,7 +807,7 @@ namespace TNS.AdExpress.Anubis.Hotep.Russia.BusinessFacade
 
             try
             {
-                if ((tab.GetLongLength(0) != 0) && (!((PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year - 2) && DateTime.Now.Year <= _webSession.DownLoadDate)
+                if ((tab!=null && tab.GetLongLength(0) != 0) && (!((PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year - 2) && DateTime.Now.Year <= _webSession.DownLoadDate)
                     || (PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year - 3) && DateTime.Now.Year > _webSession.DownLoadDate))))
                 {
 
