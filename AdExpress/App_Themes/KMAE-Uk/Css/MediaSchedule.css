@@ -773,6 +773,15 @@ td.p4X
 	/*color:#646262;*/
 	color:#FFFFFF;
 }
+/* Eléments de période absent*/
+td.NpX
+{
+    border-color: #A0A1A7;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-bottom-style: solid;
+}
 /* Eléments de période étendu*/
 td.p5X
 {

@@ -39,6 +39,7 @@ using TNS.AdExpress.Domain.Units;
 using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpressI.Classification.DAL;
 using System.Reflection;
+using Module = TNS.AdExpress.Domain.Web.Navigation.Module;
 
 
 //OpenGenericMediaSchedule 
@@ -138,6 +139,17 @@ namespace AdExpress.Private.Results
                     _zoom,
                     id,
                     Level);
+
+                var module = ModulesList.GetModule(WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA);
+                if (module != null && module.GetResultPageInformation(0) != null && module.GetResultPageInformation(0).CanDisplayRawExcelPage())
+                {
+                    MenuWebControl1.ForceRawExcel = string.Format("/Private/Results/RawExcel/MediaPlanResults.aspx?idSession={0}&zoomDate={1}&id={2}&Level={3}",
+               _webSession.IdSession,
+               _zoom,
+               id,
+               Level);
+                }
+
                 MenuWebControl1.ForcePdfExportResult = string.Format("/Private/MyAdExpress/PdfSavePopUp.aspx?idSession={0}&zoomDate={1}&id={2}&Level={3}",
                     this._webSession.IdSession,
                     _zoom,
@@ -209,6 +221,11 @@ namespace AdExpress.Private.Results
                 js.AppendFormat("\r\n\t\tmenu.items.printMenuItem.actionOnClick = menu.items.printMenuItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});", SubPeriodSelectionWebControl1.PeriodContainerName);
                 js.AppendFormat("\r\n\t\tmenu.items.excelUnitItem.actionOnClick = menu.items.excelUnitItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});", SubPeriodSelectionWebControl1.PeriodContainerName);
                 js.AppendFormat("\r\n\t\tmenu.items.pdfExportResultItem.actionOnClick = menu.items.pdfExportResultItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});", SubPeriodSelectionWebControl1.PeriodContainerName);
+
+                //Debut export Excel brute
+                js.AppendFormat("\r\n\t\tmenu.itemsexcelExportItem.actionOnClick = menu.items.excelExportItem.actionOnClick.replace(\"zoomDate=\"+date,\"zoomDate=\"+{0});", SubPeriodSelectionWebControl1.PeriodContainerName);
+                //Fin export Excel brute
+
                 js.AppendFormat("\r\n\t\tdocument.getElementById(\"zoomParam\").value = {0};", SubPeriodSelectionWebControl1.PeriodContainerName);
                 js.Append("\r\n\t}");
                 js.Append("\r\n}");
@@ -291,7 +308,7 @@ namespace AdExpress.Private.Results
         /// <param name="level">Element Classification level</param>
         private void SetProduct(int id, int level)
         {
-            WebFunctions.ProductDetailLevel.SetProductLevel(_webSession, id, level);    
+            WebFunctions.ProductDetailLevel.SetProductLevel(_webSession, id, level);
         }
         #endregion
 

@@ -516,9 +516,9 @@ namespace TNS.AdExpressI.LostWon.Russia
 
             if (eltNb > 1)
             {
-                hGpYearN.AddSubTotal(true, GestionWeb.GetWebWord(1102, _session.SiteLanguage), SUBTOTAL_ID);
-                hGpYearN1.AddSubTotal(true, GestionWeb.GetWebWord(1102, _session.SiteLanguage), SUBTOTAL_ID);
-                hGpEvol.AddSubTotal(true, GestionWeb.GetWebWord(1102, _session.SiteLanguage), SUBTOTAL_ID);
+                hGpYearN.AddSubTotal(true, GestionWeb.GetWebWord(1102, _session.SiteLanguage) + " " + GestionWeb.GetWebWord(_session.GetSelectedUnit().WebTextId,_session.SiteLanguage), SUBTOTAL_ID);
+                hGpYearN1.AddSubTotal(true, GestionWeb.GetWebWord(1102, _session.SiteLanguage) + " " + GestionWeb.GetWebWord(_session.GetSelectedUnit().WebTextId, _session.SiteLanguage), SUBTOTAL_ID);
+                hGpEvol.AddSubTotal(true, GestionWeb.GetWebWord(1102, _session.SiteLanguage) + " " + GestionWeb.GetWebWord(_session.GetSelectedUnit().WebTextId, _session.SiteLanguage), SUBTOTAL_ID);
             }
 
             foreach (Int64 i in levels.IdListOrderByClassificationItem)
@@ -1230,19 +1230,7 @@ namespace TNS.AdExpressI.LostWon.Russia
 
             #region Identifiant du texte des unités
             Int64 unitId = _session.GetUnitLabelId();
-            CellUnitFactory cellUnitFactory = _session.GetCellUnitFactory();
-            //GetProductActivity getProductActivity;
-            //string expression = string.Empty;
-            //if (cellUnitFactory.Get(0.0) is CellIdsNumber)
-            //{
-            //    expression = _session.GetSelectedUnit().Id.ToString();
-            //    //getProductActivity = new GetProductActivity(GetListProductActivity);
-            //}
-            //else
-            //{
-            //    expression = FctWeb.SQLGenerator.GetUnitAliasSum(_session);
-            //    //getProductActivity = new GetProductActivity(GetDoubleProductActivity);
-            //}
+            CellUnitFactory cellUnitFactory = _session.GetCellUnitFactory();           
             #endregion
 
             #region Création des headers

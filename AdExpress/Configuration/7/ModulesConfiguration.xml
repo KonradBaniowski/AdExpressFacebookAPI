@@ -21,18 +21,13 @@
          <allowedUnit>kRubles</allowedUnit>
          <allowedUnit>usd</allowedUnit>
          <allowedUnit>kusd</allowedUnit>
-         <allowedUnit>spot</allowedUnit>
-         <allowedUnit>insertion</allowedUnit>
+         <allowedUnit>quantity</allowedUnit>
          <allowedUnit>duration</allowedUnit>
          <allowedUnit>pagesA2</allowedUnit>
-         <allowedUnit>pages</allowedUnit>
-         <allowedUnit>numberBoard</allowedUnit>
-         <allowedUnit>volume</allowedUnit>
-         <allowedUnit>versionNb</allowedUnit>
-         <allowedUnit>square</allowedUnit>
-         <allowedUnit>mentions</allowedUnit>
-         <allowedUnit>impressions</allowedUnit>
+         <allowedUnit>pages</allowedUnit>     
+         <allowedUnit>square</allowedUnit>       
          <allowedUnit>screens</allowedUnit>
+         <allowedUnit>squareEditorial</allowedUnit>
        </allowedUnits> 
        <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="100,103,200,300,400,500,600,800"/>
@@ -125,18 +120,14 @@
               <allowedUnit>kRubles</allowedUnit>
               <allowedUnit>usd</allowedUnit>
               <allowedUnit>kusd</allowedUnit>
-              <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
+              <allowedUnit>quantity</allowedUnit>
               <allowedUnit>duration</allowedUnit>
               <allowedUnit>pagesA2</allowedUnit>
               <allowedUnit>pages</allowedUnit>
-              <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
               <allowedUnit>versionNb</allowedUnit>
               <allowedUnit>square</allowedUnit>
-              <allowedUnit>mentions</allowedUnit>
-              <allowedUnit>impressions</allowedUnit>
               <allowedUnit>screens</allowedUnit>
+              <allowedUnit>squareEditorial</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>
@@ -244,13 +235,12 @@
               <allowedUnit>duration</allowedUnit>
               <allowedUnit>pagesA2</allowedUnit>
               <allowedUnit>pages</allowedUnit>
-              <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
+              <allowedUnit>numberBoard</allowedUnit>             
               <allowedUnit>square</allowedUnit>
               <allowedUnit>mentions</allowedUnit>
               <allowedUnit>impressions</allowedUnit>
               <allowedUnit>screens</allowedUnit>
+              <allowedUnit>squareEditorial</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none">
               <campaignType>none</campaignType>
@@ -286,12 +276,11 @@
               <allowedUnit>pagesA2</allowedUnit>
               <allowedUnit>pages</allowedUnit>
               <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
               <allowedUnit>square</allowedUnit>
               <allowedUnit>mentions</allowedUnit>
               <allowedUnit>impressions</allowedUnit>
               <allowedUnit>screens</allowedUnit>
+              <allowedUnit>squareEditorial</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none">
               <campaignType>none</campaignType>
@@ -317,7 +306,7 @@
           </page>
           <page id="2" resultid="20" name="Résultats absents" traductioncode="1126" url="/Private/Results/CompetitorAlertResults.aspx" printExcelUrl="/Private/Results/Excel/CompetitorAlertResults.aspx" rawExcelUrl="/Private/Results/RawExcel/CompetitorAlertResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/CompetitorAlertResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <allowedUnits>
-              <allowedUnit>rubles</allowedUnit>
+             <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
               <allowedUnit>usd</allowedUnit>
               <allowedUnit>kusd</allowedUnit>
@@ -326,13 +315,12 @@
               <allowedUnit>duration</allowedUnit>
               <allowedUnit>pagesA2</allowedUnit>
               <allowedUnit>pages</allowedUnit>
-              <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
+              <allowedUnit>numberBoard</allowedUnit>             
               <allowedUnit>square</allowedUnit>
               <allowedUnit>mentions</allowedUnit>
               <allowedUnit>impressions</allowedUnit>
               <allowedUnit>screens</allowedUnit>
+              <allowedUnit>squareEditorial</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none">
               <campaignType>none</campaignType>
@@ -368,12 +356,11 @@
               <allowedUnit>pagesA2</allowedUnit>
               <allowedUnit>pages</allowedUnit>
               <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
               <allowedUnit>square</allowedUnit>
               <allowedUnit>mentions</allowedUnit>
               <allowedUnit>impressions</allowedUnit>
               <allowedUnit>screens</allowedUnit>
+              <allowedUnit>squareEditorial</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none">
               <campaignType>none</campaignType>
@@ -408,13 +395,12 @@
               <allowedUnit>duration</allowedUnit>
               <allowedUnit>pagesA2</allowedUnit>
               <allowedUnit>pages</allowedUnit>
-              <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
+              <allowedUnit>numberBoard</allowedUnit>             
               <allowedUnit>square</allowedUnit>
               <allowedUnit>mentions</allowedUnit>
               <allowedUnit>impressions</allowedUnit>
               <allowedUnit>screens</allowedUnit>
+              <allowedUnit>squareEditorial</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none">
               <campaignType>none</campaignType>
@@ -450,12 +436,11 @@
               <allowedUnit>pagesA2</allowedUnit>
               <allowedUnit>pages</allowedUnit>
               <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
               <allowedUnit>square</allowedUnit>
               <allowedUnit>mentions</allowedUnit>
               <allowedUnit>impressions</allowedUnit>
               <allowedUnit>screens</allowedUnit>
+              <allowedUnit>squareEditorial</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none">
               <campaignType>none</campaignType>
@@ -491,12 +476,11 @@
               <allowedUnit>pagesA2</allowedUnit>
               <allowedUnit>pages</allowedUnit>
               <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
               <allowedUnit>square</allowedUnit>
               <allowedUnit>mentions</allowedUnit>
               <allowedUnit>impressions</allowedUnit>
               <allowedUnit>screens</allowedUnit>
+              <allowedUnit>squareEditorial</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none">
               <campaignType>none</campaignType>
@@ -608,23 +592,22 @@
         </optionalSelections>
         <results>
           <page id="0" resultid="22" name="Résultats portefeuille" traductioncode="1240" url="/Private/Results/DynamicResults.aspx" printExcelUrl="/Private/Results/Excel/DynamicResults.aspx" rawExcelUrl="/Private/Results/RawExcel/DynamicResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/DynamicResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
-            <allowedUnits>            
-                <allowedUnit>rubles</allowedUnit>
-                <allowedUnit>kRubles</allowedUnit>
-                <allowedUnit>usd</allowedUnit>
-                <allowedUnit>kusd</allowedUnit>
-                <allowedUnit>spot</allowedUnit>
-                <allowedUnit>insertion</allowedUnit>
-                <allowedUnit>duration</allowedUnit>
-                <allowedUnit>pagesA2</allowedUnit>
-                <allowedUnit>pages</allowedUnit>
-                <allowedUnit>numberBoard</allowedUnit>
-                <allowedUnit>volume</allowedUnit>
-                <allowedUnit>versionNb</allowedUnit>
-                <allowedUnit>square</allowedUnit>
+            <allowedUnits>
+              <allowedUnit>rubles</allowedUnit>
+              <allowedUnit>kRubles</allowedUnit>
+              <allowedUnit>usd</allowedUnit>
+              <allowedUnit>kusd</allowedUnit>
+              <allowedUnit>spot</allowedUnit>
+              <allowedUnit>insertion</allowedUnit>
+              <allowedUnit>duration</allowedUnit>
+              <allowedUnit>pagesA2</allowedUnit>
+              <allowedUnit>pages</allowedUnit>
+              <allowedUnit>numberBoard</allowedUnit>
+              <allowedUnit>square</allowedUnit>
               <allowedUnit>mentions</allowedUnit>
               <allowedUnit>impressions</allowedUnit>
               <allowedUnit>screens</allowedUnit>
+              <allowedUnit>squareEditorial</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none">
               <campaignType>none</campaignType>
@@ -660,12 +643,11 @@
               <allowedUnit>pagesA2</allowedUnit>
               <allowedUnit>pages</allowedUnit>
               <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
               <allowedUnit>square</allowedUnit>
               <allowedUnit>mentions</allowedUnit>
               <allowedUnit>impressions</allowedUnit>
               <allowedUnit>screens</allowedUnit>
+              <allowedUnit>squareEditorial</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none">
               <campaignType>none</campaignType>
@@ -701,12 +683,11 @@
               <allowedUnit>pagesA2</allowedUnit>
               <allowedUnit>pages</allowedUnit>
               <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
               <allowedUnit>square</allowedUnit>
               <allowedUnit>mentions</allowedUnit>
               <allowedUnit>impressions</allowedUnit>
               <allowedUnit>screens</allowedUnit>
+              <allowedUnit>squareEditorial</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none">
               <campaignType>none</campaignType>
@@ -742,12 +723,11 @@
               <allowedUnit>pagesA2</allowedUnit>
               <allowedUnit>pages</allowedUnit>
               <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
               <allowedUnit>square</allowedUnit>
               <allowedUnit>mentions</allowedUnit>
               <allowedUnit>impressions</allowedUnit>
               <allowedUnit>screens</allowedUnit>
+              <allowedUnit>squareEditorial</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none">
               <campaignType>none</campaignType>
@@ -783,12 +763,11 @@
               <allowedUnit>pagesA2</allowedUnit>
               <allowedUnit>pages</allowedUnit>
               <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
               <allowedUnit>square</allowedUnit>
               <allowedUnit>mentions</allowedUnit>
               <allowedUnit>impressions</allowedUnit>
               <allowedUnit>screens</allowedUnit>
+              <allowedUnit>squareEditorial</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none">
               <campaignType>none</campaignType>
@@ -824,12 +803,11 @@
               <allowedUnit>pagesA2</allowedUnit>
               <allowedUnit>pages</allowedUnit>
               <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
               <allowedUnit>square</allowedUnit>
               <allowedUnit>mentions</allowedUnit>
               <allowedUnit>impressions</allowedUnit>
               <allowedUnit>screens</allowedUnit>
+              <allowedUnit>squareEditorial</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none">
               <campaignType>none</campaignType>
@@ -865,12 +843,11 @@
               <allowedUnit>pagesA2</allowedUnit>
               <allowedUnit>pages</allowedUnit>
               <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
-              <allowedUnit>versionNb</allowedUnit>
               <allowedUnit>square</allowedUnit>
               <allowedUnit>mentions</allowedUnit>
               <allowedUnit>impressions</allowedUnit>
               <allowedUnit>screens</allowedUnit>
+              <allowedUnit>squareEditorial</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none">
               <campaignType>none</campaignType>
@@ -981,16 +958,16 @@
           <page id="1" resultid="32" name="Détail du Portefeuille" traductioncode="1376" url="/Private/Results/MediaPortofolioResults.aspx" printExcelUrl="/Private/Results/Excel/PortofolioResults.aspx" rawExcelUrl="/Private/Results/RawExcel/PortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/MediaPortofolioResultsHelp.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
             <!-- s'il n'y en a pas toutes les unites sont disponibles-->
             <allowedUnits>
-              <allowedUnit>rubles</allowedUnit>
-              <allowedUnit>usd</allowedUnit>
+              <allowedUnit>rubles</allowedUnit>          
+              <allowedUnit>usd</allowedUnit>              
               <allowedUnit>spot</allowedUnit>
-              <allowedUnit>duration</allowedUnit>
               <allowedUnit>insertion</allowedUnit>
+              <allowedUnit>duration</allowedUnit>
               <allowedUnit>pagesA2</allowedUnit>
               <allowedUnit>pages</allowedUnit>
               <allowedUnit>numberBoard</allowedUnit>
               <allowedUnit>square</allowedUnit>
-              <allowedUnit>quantity</allowedUnit>
+              <allowedUnit>squareEditorial</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none">
               <campaignType>none</campaignType>
@@ -1019,7 +996,9 @@
             <allowedUnits>
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>usd</allowedUnit>
-              <allowedUnit>spot</allowedUnit>             
+              <allowedUnit>spot</allowedUnit>
+              <allowedUnit>pagesA2</allowedUnit>
+              <allowedUnit>pages</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none">
               <campaignType>none</campaignType>
@@ -1050,7 +1029,8 @@
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
               <allowedUnit>square</allowedUnit>
-              <allowedUnit>quantity</allowedUnit>
+              <allowedUnit>pagesA2</allowedUnit>
+              <allowedUnit>pages</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none">
               <campaignType>none</campaignType>
@@ -1076,15 +1056,16 @@
             </ResultAllowedMediaUniverse>
             <allowedUnits>
               <allowedUnit>rubles</allowedUnit>
+              <allowedUnit>kRubles</allowedUnit>
               <allowedUnit>usd</allowedUnit>
+              <allowedUnit>kusd</allowedUnit>
               <allowedUnit>spot</allowedUnit>
               <allowedUnit>duration</allowedUnit>
               <allowedUnit>insertion</allowedUnit>
               <allowedUnit>pagesA2</allowedUnit>
               <allowedUnit>pages</allowedUnit>
               <allowedUnit>numberBoard</allowedUnit>
-              <allowedUnit>square</allowedUnit>
-              <allowedUnit>quantity</allowedUnit>
+              <allowedUnit>square</allowedUnit>           
             </allowedUnits>
             <campaignTypes default="none">
               <campaignType>none</campaignType>
@@ -1162,8 +1143,6 @@
               <allowedUnit>kRubles</allowedUnit>
               <allowedUnit>usd</allowedUnit>
               <allowedUnit>kusd</allowedUnit>
-              <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
               <allowedUnit>quantity</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none" forceDisplay="true">
@@ -1243,9 +1222,7 @@
               <allowedUnit>rubles</allowedUnit>
               <allowedUnit>kRubles</allowedUnit>
               <allowedUnit>usd</allowedUnit>
-              <allowedUnit>kusd</allowedUnit>
-              <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
+              <allowedUnit>kusd</allowedUnit>             
               <allowedUnit>quantity</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none" forceDisplay="true">
@@ -1273,8 +1250,6 @@
               <allowedUnit>kRubles</allowedUnit>
               <allowedUnit>usd</allowedUnit>
               <allowedUnit>kusd</allowedUnit>
-              <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
               <allowedUnit>quantity</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none" forceDisplay="true">
@@ -1302,8 +1277,6 @@
               <allowedUnit>kRubles</allowedUnit>
               <allowedUnit>usd</allowedUnit>
               <allowedUnit>kusd</allowedUnit>
-              <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
               <allowedUnit>quantity</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none" forceDisplay="true">
@@ -1331,8 +1304,6 @@
               <allowedUnit>kRubles</allowedUnit>
               <allowedUnit>usd</allowedUnit>
               <allowedUnit>kusd</allowedUnit>
-              <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
               <allowedUnit>quantity</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none" forceDisplay="true">
@@ -1360,8 +1331,6 @@
               <allowedUnit>kRubles</allowedUnit>
               <allowedUnit>usd</allowedUnit>
               <allowedUnit>kusd</allowedUnit>
-              <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
               <allowedUnit>quantity</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none" forceDisplay="true">
@@ -1390,8 +1359,6 @@
               <allowedUnit>kRubles</allowedUnit>
               <allowedUnit>usd</allowedUnit>
               <allowedUnit>kusd</allowedUnit>
-              <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
               <allowedUnit>quantity</allowedUnit>
             </allowedUnits>
             <campaignTypes default="none" forceDisplay="true">
@@ -1428,11 +1395,15 @@
           <allowedUnit>rubles</allowedUnit>
           <allowedUnit>kRubles</allowedUnit>
           <allowedUnit>usd</allowedUnit>
-          <allowedUnit>kusd</allowedUnit>
-          <allowedUnit>spot</allowedUnit>
-          <allowedUnit>insertion</allowedUnit>         
-          <allowedUnit>volume</allowedUnit>
+          <allowedUnit>kusd</allowedUnit>        
+          <allowedUnit>quantity</allowedUnit>
+          <allowedUnit>duration</allowedUnit>
           <allowedUnit>audience</allowedUnit>
+          <allowedUnit>pagesA2</allowedUnit>
+         <allowedUnit>pages</allowedUnit>     
+         <allowedUnit>square</allowedUnit>       
+         <allowedUnit>screens</allowedUnit>       
+          <allowedUnit>squarePressClipping</allowedUnit>
         </allowedUnits>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="100,110,200,300,310,400,600"/>
@@ -1511,10 +1482,14 @@
               <allowedUnit>kRubles</allowedUnit>
               <allowedUnit>usd</allowedUnit>
               <allowedUnit>kusd</allowedUnit>
-              <allowedUnit>spot</allowedUnit>
-              <allowedUnit>insertion</allowedUnit>
-              <allowedUnit>volume</allowedUnit>
+              <allowedUnit>quantity</allowedUnit>
+              <allowedUnit>duration</allowedUnit>
               <allowedUnit>audience</allowedUnit>
+              <allowedUnit>pagesA2</allowedUnit>
+              <allowedUnit>pages</allowedUnit>
+              <allowedUnit>square</allowedUnit>
+              <allowedUnit>screens</allowedUnit>
+              <allowedUnit>squarePressClipping</allowedUnit>
             </allowedUnits>
             <detailSelections>
               <detailSelection id="1" name="Module name"/>

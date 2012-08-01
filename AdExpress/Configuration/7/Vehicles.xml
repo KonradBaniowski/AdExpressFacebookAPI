@@ -150,10 +150,10 @@
       <allowedUnit>rubles</allowedUnit>
       <allowedUnit>kRubles</allowedUnit>
       <allowedUnit>usd</allowedUnit>
-      <allowedUnit>kusd</allowedUnit>
-      <allowedUnit>insertion</allowedUnit>
-      <allowedUnit>volume</allowedUnit>
+      <allowedUnit>kusd</allowedUnit> 
       <allowedUnit>audience</allowedUnit>
+      <allowedUnit>squarePressClipping</allowedUnit>
+      <allowedUnit>quantity</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results -->
     <allowedMediaDetailLevels>
@@ -389,7 +389,6 @@
       <allowedUnit>kusd</allowedUnit>
       <allowedUnit>duration</allowedUnit>
       <allowedUnit>spot</allowedUnit>
-      <allowedUnit>quantity</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results-->
     <allowedMediaDetailLevels>
@@ -500,8 +499,7 @@
   <vehicle id="radioMusic" databaseId="202" showInsertions="true" showCreations="true">
     <!-- Units-->
     <allowedUnits defaultUnit="spot">
-      <allowedUnit>spot</allowedUnit>
-      <allowedUnit>quantity</allowedUnit>
+      <allowedUnit>spot</allowedUnit>     
     </allowedUnits>
     <!-- Media detail level in results-->
     <allowedMediaDetailLevels>
@@ -753,10 +751,8 @@
       <allowedUnit>usd</allowedUnit>
       <allowedUnit>kusd</allowedUnit>
       <allowedUnit>duration</allowedUnit>
-      <allowedUnit>spot</allowedUnit>
       <allowedUnit>quantity</allowedUnit>
       <allowedUnit>audience</allowedUnit>
-      <allowedUnit>volume</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results-->
     <allowedMediaDetailLevels>
@@ -1097,7 +1093,11 @@
   <!-- TV Niche Channels-->
   <vehicle id="tvNonTerrestrials" databaseId="103" showInsertions="true" showCreations="true">
     <!-- Units-->
-    <allowedUnits defaultUnit="spot">
+    <allowedUnits defaultUnit="rubles">
+      <allowedUnit>rubles</allowedUnit>
+      <allowedUnit>kRubles</allowedUnit>
+      <allowedUnit>usd</allowedUnit>
+      <allowedUnit>kusd</allowedUnit>
       <allowedUnit>spot</allowedUnit>
       <allowedUnit>duration</allowedUnit>
       <allowedUnit>quantity</allowedUnit>
@@ -1216,13 +1216,12 @@
   <!-- INTERNET -->
   <vehicle id="internet" databaseId="600" showInsertions="true" showCreations="true" showActiveMedia="false">
     <!-- Units-->
-    <allowedUnits defaultUnit="impressions">
-      <allowedUnit>impressions</allowedUnit>
+    <allowedUnits defaultUnit="rubles">     
       <allowedUnit>rubles</allowedUnit>
       <allowedUnit>kRubles</allowedUnit>
       <allowedUnit>usd</allowedUnit>
       <allowedUnit>kusd</allowedUnit>
-      <allowedUnit>insertion</allowedUnit>
+      <allowedUnit>impressions</allowedUnit>
       <allowedUnit>quantity</allowedUnit>
       <allowedUnit>screens</allowedUnit>
       <allowedUnit>audience</allowedUnit>
@@ -1694,13 +1693,14 @@
   <!-- Editorial -->
   <vehicle id="editorial" databaseId="800" showInsertions="true" showCreations="true">
     <!-- Units-->
-    <allowedUnits defaultUnit="mentions">
-      <allowedUnit>square</allowedUnit>
-      <allowedUnit>mentions</allowedUnit>
+    <allowedUnits defaultUnit="rubles">     
       <allowedUnit>rubles</allowedUnit>
       <allowedUnit>kRubles</allowedUnit>
       <allowedUnit>usd</allowedUnit>
       <allowedUnit>kusd</allowedUnit>
+      <allowedUnit>squareEditorial</allowedUnit>
+      <allowedUnit>mentions</allowedUnit>
+      <allowedUnit>quantity</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results -->
     <allowedMediaDetailLevels>

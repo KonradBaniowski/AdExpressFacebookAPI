@@ -358,6 +358,40 @@ namespace TNS.AdExpressI.Portofolio.Russia.Engines {
         }
         #endregion
 
+        #region Calendar headers
+        /// <summary>
+        /// Calendar Headers and Cell factory
+        /// </summary>
+        /// <returns></returns>
+        protected override void GetCalendarHeaders(out Headers headers, out CellUnitFactory cellFactory, List<Int32> parutions)
+        {
+            headers = new Headers();
+            headers.Root.Add(new Header(true, GestionWeb.GetWebWord(PROD_COL, _webSession.SiteLanguage), PROD_COL));
+            /* If the customer don't have the right to media schedule module, we don't show the MS column
+             * */
+            if (_webSession.CustomerLogin.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) != null)
+                headers.Root.Add(new HeaderMediaSchedule(false, GestionWeb.GetWebWord(PM_COL, _webSession.SiteLanguage), PM_COL));
+            headers.Root.Add(new Header(true, GestionWeb.GetWebWord(TOTAL_COL, _webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(_webSession.GetSelectedUnit().WebTextId, _webSession.SiteLanguage), TOTAL_COL));
+            headers.Root.Add(new Header(true, GestionWeb.GetWebWord(POURCENTAGE_COL, _webSession.SiteLanguage), POURCENTAGE_COL));
+
+            //une colonne par date de parution
+            parutions.Sort();
+            foreach (Int32 parution in parutions)
+            {
+                headers.Root.Add(new Header(true, Dates.YYYYMMDDToDD_MM_YYYY(parution.ToString(), _webSession.SiteLanguage), (long)parution));
+            }
+            if (!_webSession.Percentage)
+            {
+                cellFactory = _webSession.GetCellUnitFactory();
+            }
+            else
+            {
+
+                cellFactory = new CellUnitFactory(GetCellPDM(null));
+            }
+        }
+        #endregion
+
         #region GetCalendarSize
         /// <summary>
         /// Calcul la taille du tableau de résultats d'un calendrier d'action

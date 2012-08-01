@@ -91,6 +91,9 @@
     <Compile Include="MediaPlanItem.cs" />
     <Compile Include="MediaScheduleData.cs" />
     <Compile Include="MediaScheduleResults.cs" />
+    <Compile Include="MediaScheduleResults.Excel.cs">
+      <DependentUpon>MediaScheduleResults.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Style\MediaScheduleStyle.cs" />
   </ItemGroup>

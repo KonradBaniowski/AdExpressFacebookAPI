@@ -107,10 +107,15 @@ namespace TNS.AdExpress.Web.Controls.Headers
         /// Force the menu to display the print function
         /// </summary>
         protected string _forcePrint = string.Empty;
+
         /// <summary>
         /// Force the menu to display the excel export function
         /// </summary>
         protected string _forceExcelUnit = string.Empty;
+             /// <summary>
+        /// Force the menu to display the raw excel export function
+        /// </summary>
+             private string _forceRawExcel = string.Empty;
         /// <summary>
         /// Force the menu to display HELP function
         /// </summary>
@@ -287,6 +292,15 @@ namespace TNS.AdExpress.Web.Controls.Headers
         public int TextExportWebtextId
         {
             set { _textExportWebtextId = value; }
+        }
+
+        /// <summary>
+        /// Force the menu to display the raw excel export function
+        /// </summary>
+        public string ForceRawExcel
+        {
+            get { return _forceRawExcel; }
+            set { _forceRawExcel = value; }
         }
 
         #endregion
@@ -529,6 +543,12 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 if (_forceExcelUnit.Length > 0)
                 {
                     js.Append(this.GetExportSubMenu("excelUnitItem", GestionWeb.GetWebWord(1997, _webSession.SiteLanguage), exportMenu, "javascript:OpenNewWindow('" + _forceExcelUnit + "');", "excelUnitMenuIcon"));
+                    jsTmp = " ";
+                }
+                // Force raw Excel Export
+                if (_forceRawExcel.Length > 0)
+                {
+                    js.Append(this.GetExportSubMenu("excelExportItem", GestionWeb.GetWebWord(2014, _webSession.SiteLanguage), exportMenu, "javascript:OpenNewWindow('" + _forceRawExcel + "');", "excelMenuIcon"));
                     jsTmp = " ";
                 }
 

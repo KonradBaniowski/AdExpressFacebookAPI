@@ -873,7 +873,7 @@ namespace TNS.AdExpressI.PresentAbsent.Russia {
 			Header headerTotal = null;
 			elementsHeader = new Dictionary<string, HeaderBase>();
 			if (_session.CompetitorUniversMedia.Count > 1 || idElements.Count > 1) {
-				headerTotal = new Header(true, GestionWeb.GetWebWord(805, _session.SiteLanguage), TOTAL_HEADER_ID);
+                headerTotal = new Header(true, GestionWeb.GetWebWord(805, _session.SiteLanguage) + " " + GestionWeb.GetWebWord(_session.GetSelectedUnit().WebTextId, _session.SiteLanguage), TOTAL_HEADER_ID);
 				elementsHeader.Add(TOTAL_HEADER_ID.ToString(), headerTotal);
 				headers.Root.Add(headerTotal);
 				_showTotal = true;
@@ -895,7 +895,7 @@ namespace TNS.AdExpressI.PresentAbsent.Russia {
 					headerGroupTmp = new HeaderGroup(GestionWeb.GetWebWord(1365, _session.SiteLanguage), true, START_ID_GROUP + iUnivers);
 				}
 				if (idsByUnivers[iUnivers].Count > 1 && _session.CompetitorUniversMedia.Count > 1) {
-					headerGroupSubTotal = headerGroupTmp.AddSubTotal(true, GestionWeb.GetWebWord(1102, _session.SiteLanguage), SUB_TOTAL_HEADER_ID);
+                    headerGroupSubTotal = headerGroupTmp.AddSubTotal(true, GestionWeb.GetWebWord(1102, _session.SiteLanguage) + " " + GestionWeb.GetWebWord(_session.GetSelectedUnit().WebTextId, _session.SiteLanguage), SUB_TOTAL_HEADER_ID);
 					universesSubTotal.Add(iUnivers, headerGroupSubTotal);
 				}
 				List<Header> heads = new List<Header>();

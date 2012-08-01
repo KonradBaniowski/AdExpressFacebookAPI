@@ -394,7 +394,7 @@ namespace TNS.AdExpressI.MediaSchedule.Russia
             #region Init totals
             Int64 currentTotalIndex = 1;
             Int64 currentLineIndex = 1;
-            oTab[currentTotalIndex, 0] = GestionWeb.GetWebWord(805, _session.SiteLanguage);
+            oTab[currentTotalIndex, 0] = GestionWeb.GetWebWord(805, _session.SiteLanguage) ;
 
             if (_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
                 oTab[currentTotalIndex, TOTAL_COLUMN_INDEX] = new CellIdsNumber();
@@ -1049,7 +1049,7 @@ namespace TNS.AdExpressI.MediaSchedule.Russia
             // Total Column
             if (_allowTotal)
             {
-                t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, GestionWeb.GetWebWord(805, _session.SiteLanguage), rowSpanNb);
+                t.AppendFormat("\r\n\t\t<td rowspan={2} class=\"{0}\">{1}", _style.CellTitle, GestionWeb.GetWebWord(805, _session.SiteLanguage)+" " + GestionWeb.GetWebWord(_session.GetSelectedUnit().WebTextId, _session.SiteLanguage), rowSpanNb);
 
                 int nbtot;
                 if (_session.GetSelectedUnit().Id == CstWeb.CustomerSessions.Unit.versionNb)
@@ -1645,7 +1645,7 @@ namespace TNS.AdExpressI.MediaSchedule.Russia
                     colTotalYears++;
                     colFirstMediaPlan++;
                     cells.Merge(cellRow - 1, colTotal, rowSpanNb, labColSpan);
-                    WorkSheet.PutCellValue(excel, cells, GestionWeb.GetWebWord(805, _session.SiteLanguage), cellRow - 1, colTotal, colFirstMediaPlan, "MediaPlanCellTitle", null, styleExcel);
+                    WorkSheet.PutCellValue(excel, cells, GestionWeb.GetWebWord(805, _session.SiteLanguage)+" " + GestionWeb.GetWebWord(_session.GetSelectedUnit().WebTextId, _session.SiteLanguage), cellRow - 1, colTotal, colFirstMediaPlan, "MediaPlanCellTitle", null, styleExcel);
                     styleExcel.GetTag("MediaPlanCellTitle").SetStyleExcel(excel, cells, cellRow, colSupport);
                     if (_period.PeriodDetailLEvel == CstWeb.CustomerSessions.Period.DisplayLevel.dayly)
                     {

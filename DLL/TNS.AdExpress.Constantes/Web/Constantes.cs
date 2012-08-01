@@ -592,7 +592,15 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Audience
             /// </summary>
-            audience =24
+            audience =24,
+            /// <summary>
+            /// Square Editorial
+            /// </summary>
+            squareEditorial = 25,
+            /// <summary>
+            /// Square Press Clipping
+            /// </summary>
+            squarePressClipping = 26
 
 		}
 		#endregion
