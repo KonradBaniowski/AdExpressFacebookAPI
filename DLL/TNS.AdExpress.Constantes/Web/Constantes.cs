@@ -2778,7 +2778,7 @@ namespace TNS.AdExpress.Constantes.Web{
 		/// <summary>
 		/// Mail du contact qui doit recevoir les demandes d'informations
 		/// </summary>
-		public const string mailRecipient = "corinne.in-albon@tns-global.com";
+		public const string mailRecipient = "Corinne.InAlbon@KantarMedia.com";
 		
 	}
 	#endregion

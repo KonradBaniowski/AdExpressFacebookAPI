@@ -120,9 +120,7 @@ namespace AdExpress.Public{
 			message += ((commentTxt.Text.Length>0)?"\n\nCommentaire :\n":"")+commentTxt.Text;
 			message=Convertion.ToHtmlString(message);
 
-
-			TNSMail.SmtpUtilities mail = new TNSMail.SmtpUtilities("Contact@TNSAdExpress.com", tos, "AdExpress 3.0 : demande d'information", message, true, "smtp.secodip.com", 25);			
-
+            TNSMail.SmtpUtilities mail = new TNSMail.SmtpUtilities("Contact@TNSAdExpress.com", tos, "AdExpress 3.0 : demande d'information", message, true, "frmitpu-msprod", 25);			
 			
 			mail.mailKoHandler += new TNSMail.SmtpUtilities.mailKoEventHandler(GestKO);
 			mail.Send(true);
