@@ -137,28 +137,30 @@ namespace AdExpress.Private.Results{
 
 				tabSelected = Int64.Parse(Page.Request.Form.GetValues("_resultsPages")[0]);
 
-                switch (tabSelected)
-                {
-                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
-                        _ResultWebControl.SkinID = "portofolioSynthesisResultTable";
-                        _ResultWebControl.ShowContainer = false;
-                        //TODO : A vérifier pour fusion Dev Trunk
-                       _ResultWebControl.UseLimitation = false;
-                        break;
-                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
-                    case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
-                        _ResultWebControl.SkinID = "portofolioResultTable"; 
-                          //TODO : A vérifier pour fusion Dev Trunk                    
-                        _ResultWebControl.UseLimitation = true;
-					break;
+                
+			}
+			catch{
+				tabSelected = _webSession.CurrentTab;
+			}
+
+            switch (tabSelected)
+            {
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
+                    _ResultWebControl.SkinID = "portofolioSynthesisResultTable";
+                    _ResultWebControl.ShowContainer = false;
+                    //TODO : A vérifier pour fusion Dev Trunk
+                    _ResultWebControl.UseLimitation = false;
+                    break;
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
+                case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
+                    _ResultWebControl.SkinID = "portofolioResultTable";
+                    //TODO : A vérifier pour fusion Dev Trunk                    
+                    _ResultWebControl.UseLimitation = true;
+                    break;
                 default:
                     _ResultWebControl.UseLimitation = true;
                     break;
-                }
-			}
-			catch (System.Exception err) {
-				tabSelected = _webSession.CurrentTab;
-			}
+            }
 			
 		}
 		#endregion
