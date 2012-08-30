@@ -845,9 +845,11 @@ namespace TNS.AdExpressI.Insertions.DAL {
                     sql.Append(" select * from ( ");
                     sql.Append(tempSql);
                     sql.Append(" ) order by advertiser,id_advertiser,product ,id_product, vehicle,id_vehicle,id_slogan,associated_file,date_media_num");
+
+                    return _session.Source.Fill(sql.ToString());
                 }
 
-                return _session.Source.Fill(sql.ToString());
+                return null;
             }
             catch (System.Exception exc)
             {

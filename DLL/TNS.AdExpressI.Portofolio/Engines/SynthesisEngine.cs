@@ -1709,11 +1709,13 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         /// <summary>
         /// GetInvestment
         /// </summary>
-        public virtual string GetInvestment() {
-            if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.euro) && _dt.Columns.Contains(UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()) && _dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()].ToString().Length > 0)
-                return (_dt.Rows[0][UnitsInformation.List[WebCst.CustomerSessions.Unit.euro].Id.ToString()].ToString());
-            else
-                return ("0");
+        public virtual string GetInvestment()
+        {
+
+            if (_vehicleInformation.AllowedUnitEnumList.Contains(UnitsInformation.DefaultCurrency) && _dt.Columns.Contains(UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()) && _dt.Rows[0][UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()].ToString().Length > 0)
+                return (_dt.Rows[0][UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()].ToString());
+
+            return ("0");
         }
         #endregion
 

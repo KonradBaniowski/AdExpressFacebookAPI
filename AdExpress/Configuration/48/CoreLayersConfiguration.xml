@@ -12,5 +12,7 @@
     <layer id="mediaDetailLevelUtilities" name="layer of media Detail Level Utilities" assemblyName="TNS.AdExpress.Web.Core.Default.dll" class="TNS.AdExpress.Web.Core.Default.Utilities.MediaDetailLevel"/>
     <layer id="productDetailLevelUtilities" name="layer of product Detail Level Utilities" assemblyName="TNS.AdExpress.Web.Core.Default.dll" class="TNS.AdExpress.Web.Core.Default.Utilities.ProductDetailLevel"/>
     <layer id="visual" name="layer of visual" assemblyName="TNS.AdExpressI.Visual.Default.dll" class="TNS.AdExpressI.Visual.Default.Visual"/>
+    <layer id="sourceProvider" name="layer of classification" assemblyName="TNS.AdExpress.Web.Core.Default.dll" class="TNS.AdExpress.Web.Core.Default.SourceProvider"/>
+
   </layers>
 </configuration>

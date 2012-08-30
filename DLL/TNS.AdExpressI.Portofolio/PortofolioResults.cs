@@ -198,26 +198,25 @@ namespace TNS.AdExpressI.Portofolio {
 		///  - CALENDAR
 		///  - SYNTHESIS (only result table)
 		/// </summary>
-		/// <param name="webSession">Customer session</param>
 		/// <returns>Result Table</returns>
 		public virtual ResultTable GetResultTable() {
-			Engines.Engine result = null;
+			Engines.Engine result;
 			try {
 				switch (_webSession.CurrentTab) {
-					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
+					case AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_PORTOFOLIO:
 						result = new Engines.PortofolioDetailEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd, _showInsertions, _showCreatives);
 						break;
-					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
+					case AdExpress.Constantes.FrameWork.Results.Portofolio.CALENDAR:
 						result = new Engines.CalendarEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd);
 						break;
-					case TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
+					case AdExpress.Constantes.FrameWork.Results.Portofolio.SYNTHESIS:
 						result = new Engines.SynthesisEngine(_webSession, _vehicleInformation, _idMedia, _periodBeginning, _periodEnd);
 						break;
 					default:
 						throw (new PortofolioException("Impossible to identified current tab "));
 				}
 			}
-			catch (System.Exception err) {
+			catch (Exception err) {
 				throw (new PortofolioException("Impossible to compute portofolio results", err));
 			}
 
