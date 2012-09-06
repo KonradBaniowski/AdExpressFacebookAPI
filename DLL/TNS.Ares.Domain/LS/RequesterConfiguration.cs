@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TNS.Ares.Domain.Layers;
-using TNS.Ares.Domain.XmlLoader;
-using TNS.FrameWork.DB.Common;
-using TNS.Ares.Domain.DataBaseDescription;
+﻿using System.Collections.Generic;
 using TNS.LinkSystem.LinkKernel;
 
 namespace TNS.Ares.Domain.LS

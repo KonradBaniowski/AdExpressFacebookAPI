@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ServiceProcess;
 using System.Text;
 using TNS.Ares.Domain.LS;
+using TNS.Ares.RequesterWcbSrv;
 
 namespace TNS.Ares.RequesterSrv {
     /// <summary>

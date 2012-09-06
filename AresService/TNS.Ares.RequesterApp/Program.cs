@@ -1,26 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using System.Configuration;
+using TNS.Ares.Constantes;
+using TNS.Ares.Requester;
 using TNS.FrameWork.DB.Common;
-using System.Data;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
-using TNS.Ares.Domain.DataBaseDescription;
 using TNS.Ares.Domain.LS;
 using TNS.Ares.Domain.DataBase;
-using TNS.Ares.Domain.Layers;
-using System.Reflection;
-using TNS.LinkSystem.LinkKernel;
-using System.Text.RegularExpressions;
-
-using ConfigurationFile = TNS.Ares.Constantes.ConfigurationFile;
-using TNS.FrameWorks.LSConnectivity;
 using TNS.Alert.Domain;
-using System.Diagnostics;
 
-namespace TNS.Ares.Requester.App
+namespace TNS.Ares.RequesterApp
 {
     class Program
     {
@@ -38,7 +25,7 @@ namespace TNS.Ares.Requester.App
                 if (args.Length == 2 && args[0] == "-p" && args[1].Length > 0)
                 {
 
-                    LsClientName lsClientName = (LsClientName) Enum.Parse(typeof (LsClientName), args[1]);
+                    LsClientName lsClientName = (LsClientName)Enum.Parse(typeof(LsClientName), args[1]);
 
                     string configurationDirectoryRoot = AppDomain.CurrentDomain.BaseDirectory + CONFIGARION_DIRECTORY_NAME + @"\";
 
@@ -57,14 +44,14 @@ namespace TNS.Ares.Requester.App
                         PluginConfiguration.Load(new XmlReaderDataSource(configurationDirectoryRoot + ConfigurationFile.PLUGIN_CONFIGURATION_FILENAME));
 
                         //Loading Alert Configuration
-                        if (File.Exists(configurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.ALERTE_CONFIGURATION))
-                            AlertConfiguration.Load(new XmlReaderDataSource(configurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.ALERTE_CONFIGURATION));
+                        if (File.Exists(configurationDirectoryRoot + AdExpress.Constantes.Web.ConfigurationFile.ALERTE_CONFIGURATION))
+                            AlertConfiguration.Load(new XmlReaderDataSource(configurationDirectoryRoot + AdExpress.Constantes.Web.ConfigurationFile.ALERTE_CONFIGURATION));
 
                         // Loading DataBase configuration
                         DataBaseConfiguration.Load(new XmlReaderDataSource(configurationDirectoryRoot + ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
 
                         // Creating datasource
-                        src = (IDataSource) DataBaseConfiguration.DataBase.GetDefaultConnection(PluginConfiguration.DefaultConnectionId);
+                        src = DataBaseConfiguration.DataBase.GetDefaultConnection(PluginConfiguration.DefaultConnectionId);
                     }
 
                     SrvShell srv = new SrvShell(lsClientName, currentResquesterConfiguration, src);
@@ -75,12 +62,27 @@ namespace TNS.Ares.Requester.App
                     Console.ReadLine();
                     srv.Dispose();
                 }
-            }catch(Exception e)
+                else
+                {
+                    Console.WriteLine("Impossible to determine parameters :");
+                    foreach (var arg in args)
+                    {
+                        Console.WriteLine(arg);
+                    }
+                    Console.WriteLine("");
+                    Console.WriteLine("Push enter to exit");
+                    Console.ReadLine();
+                }
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.StackTrace);
+                Console.WriteLine("");
+                Console.WriteLine("Push enter to exit");
                 Console.ReadLine();
             }
+
         }
     }
 }

@@ -57,6 +57,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Oracle.DataAccess, Version=2.102.2.20, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
@@ -139,6 +140,10 @@
     <ProjectReference Include="..\..\DLL\TNS.Alert.Domain\TNS.Alert.Domain.csproj">
       <Project>{741A9674-6545-469F-8528-F96BA2DB3A74}</Project>
       <Name>TNS.Alert.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.Requester\TNS.Ares.Requester.csproj">
+      <Project>{F77F07C9-87F4-40DF-9455-584D2E66A9AC}</Project>
+      <Name>TNS.Ares.Requester</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

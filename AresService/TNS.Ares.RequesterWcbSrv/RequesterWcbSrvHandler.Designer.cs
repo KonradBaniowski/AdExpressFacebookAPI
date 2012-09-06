@@ -1,4 +1,4 @@
-﻿namespace TNS.Ares.RequesterSrv {
+﻿namespace TNS.Ares.RequesterWcbSrv {
     partial class RequesterWcbSrvHandler {
         /// <summary> 
         /// Variable nécessaire au concepteur.

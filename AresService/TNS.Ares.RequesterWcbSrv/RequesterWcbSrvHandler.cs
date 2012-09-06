@@ -1,22 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.ServiceProcess;
-using System.Text;
+using TNS.Ares.Constantes;
 using TNS.Ares.Domain.DataBase;
+using TNS.Ares.RequesterSrv;
 using TNS.FrameWork.DB.Common;
-
-using ConfigurationFile = TNS.Ares.Constantes.ConfigurationFile;
 using TNS.Ares.Requester;
 using System.Threading;
-using System.Configuration;
 using TNS.Ares.Domain.LS;
 using System.IO;
 using TNS.Alert.Domain;
 
-namespace TNS.Ares.RequesterSrv
+namespace TNS.Ares.RequesterWcbSrv
 {
     public partial class RequesterWcbSrvHandler : ServiceBase
     {
@@ -32,11 +26,11 @@ namespace TNS.Ares.RequesterSrv
         /// <summary>
         /// Current Thread.
         /// </summary>
-        private Thread _CurrentThread = null;
+        private Thread _currentThread;
         /// <summary>
         /// Current Shell.
         /// </summary>
-        private SrvShell _CurrentShell;
+        private SrvShell _currentShell;
         /// <summary>
         /// Requester Name.
         /// </summary>
@@ -86,21 +80,21 @@ namespace TNS.Ares.RequesterSrv
                 PluginConfiguration.Load(new XmlReaderDataSource(configurationDirectoryRoot + ConfigurationFile.PLUGIN_CONFIGURATION_FILENAME));
 
                 //Loading Alert Configuration
-                if (File.Exists(configurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.ALERTE_CONFIGURATION))
-                    AlertConfiguration.Load(new XmlReaderDataSource(configurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.ALERTE_CONFIGURATION));
+                if (File.Exists(configurationDirectoryRoot + AdExpress.Constantes.Web.ConfigurationFile.ALERTE_CONFIGURATION))
+                    AlertConfiguration.Load(new XmlReaderDataSource(configurationDirectoryRoot + AdExpress.Constantes.Web.ConfigurationFile.ALERTE_CONFIGURATION));
 
                 // Loading DataBase configuration
                 DataBaseConfiguration.Load(new XmlReaderDataSource(configurationDirectoryRoot + ConfigurationFile.DATABASE_CONFIGURATION_FILENAME));
 
                 // Creating datasource
-                src = (IDataSource)DataBaseConfiguration.DataBase.GetDefaultConnection(PluginConfiguration.DefaultConnectionId);
+                src = DataBaseConfiguration.DataBase.GetDefaultConnection(PluginConfiguration.DefaultConnectionId);
             }
 
-            _CurrentShell = new SrvShell(_lsClientName, currentResquesterConfiguration, src);
-            _CurrentShell.StartMonitorServer(currentResquesterConfiguration.MonitorPort);
+            _currentShell = new SrvShell(_lsClientName, currentResquesterConfiguration, src);
+            _currentShell.StartMonitorServer(currentResquesterConfiguration.MonitorPort);
                         
             Thread.Sleep(Timeout.Infinite);
-            _CurrentShell.Dispose();
+            _currentShell.Dispose();
         }
         #endregion
 
@@ -122,8 +116,8 @@ namespace TNS.Ares.RequesterSrv
                 }
 
             }
-            _CurrentThread = new System.Threading.Thread(this.Run);
-            _CurrentThread.Start();
+            _currentThread = new Thread(Run);
+            _currentThread.Start();
             
             /*
             if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["RequesterName"]))
@@ -142,13 +136,13 @@ namespace TNS.Ares.RequesterSrv
         /// </summary>
         protected override void OnStop()
         {            
-            if (_CurrentShell != null)
+            if (_currentShell != null)
             {
-                _CurrentShell.Dispose();
-                _CurrentShell = null;
+                _currentShell.Dispose();
+                _currentShell = null;
             }
 
-            _CurrentThread.Abort();
+            _currentThread.Abort();
         }
         #endregion
 
