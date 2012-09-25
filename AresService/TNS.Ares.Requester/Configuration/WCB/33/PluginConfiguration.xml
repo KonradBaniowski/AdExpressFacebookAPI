@@ -5,6 +5,7 @@
   </dataAccessLayers>
   <plugins description="List of plugins" defaultLongevity="30" defaultFamilyId="146" defaultFilePath="C:\Anubis" defaultVirtualPath="Export" alertDal="AlertDAL" sessionDal="SessionDAL" defaultThemePath="C:\Dev\Csharp2\AdExpress International Demo\Dev\Anubis">
     <plugin enumId="wcbExcel" name="wcbExcel" resultType="40" longevity="5" deleteExpired="true" extension=".xls" pathFileConfiguration="Plugins\ExportExcel.xml" />
+    <plugin enumId="Bastet" name="Bastet" resultType="2" longevity="5" deleteExpired="true" extension=".xls" pathFileConfiguration="Plugins\Bastet.xml" />
     <!--<plugin enumId="wcbPdf" name="wcbPdf" resultType="41" resultLongevity="5" deleteExpired="true" extension=".pdf" />-->
   </plugins>
 </pluginConfiguration>
