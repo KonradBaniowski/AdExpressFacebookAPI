@@ -23,12 +23,12 @@ namespace AdExpress.Private.Results{
     public partial class Gad : TNS.AdExpress.Web.UI.PrivateWebPage {
 
 		#region Variables
-		///<summary>
-		/// WebSession
-		/// </summary>
-		///  <directed>True</directed>
-		///  <supplierCardinality>1</supplierCardinality>
-		protected WebSession _webSession;
+        /////<summary>
+        ///// WebSession
+        ///// </summary>
+        /////  <directed>True</directed>
+        /////  <supplierCardinality>1</supplierCardinality>
+        //protected WebSession _webSession;
 		/// <summary>
 		/// Entier pour la langue du site
 		/// </summary>
@@ -60,48 +60,7 @@ namespace AdExpress.Private.Results{
 		#endregion
 
 		#region Variables MMI
-		/// <summary>
-		/// Label
-		/// </summary>
-		/// <summary>
-		/// Label
-		/// </summary>
-		/// <summary>
-		/// Label
-		/// </summary>
-		/// <summary>
-		/// Label
-		/// </summary>
-		/// <summary>
-		/// Label
-		/// </summary>
-		/// <summary>
-		/// Label
-		/// </summary>
-		/// <summary>
-		/// Label
-		/// </summary>
-		/// <summary>
-		/// Label
-		/// </summary>
-		/// <summary>
-		/// Label
-		/// </summary>
-		/// <summary>
-		/// Label
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
-		/// <summary>
-		/// Texte
-		/// </summary>
+		
 		/// <summary>
 		/// Texte
 		/// </summary>
@@ -110,74 +69,27 @@ namespace AdExpress.Private.Results{
 		/// Contrôle : Bouton fermer
 		/// </summary>
 		#endregion
+
+		public Gad()
+		{
+          
+
+		}
 		
 		#region Chargement de la page
+        /// <summary>
+        /// Page load
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">Event Args</param>
 		protected void Page_Load(object sender, System.EventArgs e){
-			
+						
 
-			//Récupération de l'adresse et de l'annonceur
-			idAddress = Page.Request.QueryString.Get("idAddress").ToString();
-			advertiser = Page.Request.QueryString.Get("advertiser").ToString();
-
-			//Session de l'utilisateur
-			_webSession = (WebSession)WebSession.Load(Page.Request.QueryString.Get("idSession"));
-
-			//Langage du site
-			_siteLanguage = _webSession.SiteLanguage;
-	
 			#region Enregistrement Tracking pour le Gad
 			if(!IsPostBack)_webSession.OnUseGad();
 			#endregion
 
-			try{
-				linkGadLabel.Text=GestionWeb.GetWebWord(1137,_siteLanguage);
-				linkGad = "http://"+GestionWeb.GetWebWord(1137,_siteLanguage);
-
-				emailGadLabel.Text=GestionWeb.GetWebWord(1138,_siteLanguage);
-				emailGad = "mailto:"+GestionWeb.GetWebWord(1138,_siteLanguage);
-				
-				advertiserLabel.Text = advertiser;
-
-				BusinessFacade.GadSystem result = new BusinessFacade.GadSystem(_webSession,idAddress);
-				companyLabel.Text		= result.Company;
-				streetLabel.Text		= result.Street;
-				street2Label.Text		= result.Street2;
-				codePostalLabel.Text	= result.CodePostal;
-				townLabel.Text			= result.Town;
-				phoneLabel.Text			= result.Phone;
-				faxLabel.Text			= result.Fax;
-				emailLabel.Text			= result.Email;
-				if (result.DocMarketingId.Length > 0){
-					_docMarketingTarget = string.Format("<a href=\"javascript:OpenGad('{0}');\" onMouseOver=\"advertiserFile.src=ficheDown.src\" onMouseOut=\"advertiserFile.src=ficheUp.src\"><img title=\"{1}\" border=0 name=\"advertiserFile\" src=\"/App_Themes/"+this.Theme+"/Images/Culture/Button/bt_fiche_up.gif\"/></a>", 
-						//lien
-						string.Format(GestionWeb.GetWebWord(2092,_siteLanguage) , result.DocMarketingId, result.DocMarketingKey),
-						GestionWeb.GetWebWord(2098,_siteLanguage)
-						);
-					_docMarketingTitle = string.Format(GestionWeb.GetWebWord(2095 ,_siteLanguage), result.Company).Replace("'", "''");
-				}
-				else{
-					_docMarketingTarget = string.Format("<img title=\"{0}\" border=0 name=\"advertiserFile\" src=\"/App_Themes/"+this.Theme+"/Images/Culture/Button/bt_fiche_off.gif\"/>",
-						GestionWeb.GetWebWord(2098,_siteLanguage)); 
-				}
-
-
-                #region Script
-                StringBuilder js = new StringBuilder();
-                js.Append("\r\n<script type=\"text/javascript\">");
-                js.Append("\r\nvar ficheUp = new Image();");
-                js.Append("\r\nvar ficheDown = new Image();");
-                js.Append("\r\nvar ficheUnavailable = new Image();");
-                js.Append("\r\nficheUp.src = \"/App_Themes/"+this.Theme+"/Images/Culture/button/bt_fiche_up.gif\";");
-                js.Append("\r\nficheDown.src = \"/App_Themes/"+this.Theme+"/Images/Culture/button/bt_fiche_down.gif\";");
-                js.Append("\r\nficheUnavailable.src = \"/App_Themes/"+this.Theme+"/Images/Culture/button/bt_fiche_off.gif\";");
-                js.Append("\r\n</script>");
-                if (!this.ClientScript.IsClientScriptBlockRegistered("FicheScript")) this.ClientScript.RegisterClientScriptBlock(this.GetType(), "FicheScript", js.ToString());
-                #endregion
-
-            }
-			catch(System.Exception et){
-				Response.Write(WebFunctions.Script.ErrorCloseScript(GestionWeb.GetWebWord(959, _siteLanguage)) + " " + et.Message);
-			}
+			
 		}
 		#endregion
 
@@ -202,6 +114,23 @@ namespace AdExpress.Private.Results{
            
 		}
 		#endregion
+
+        #region DeterminePostBackMode
+        /// <summary>
+        /// Evaluation de l'évènement PostBack:
+        ///		base.DeterminePostBackMode();
+        ///		Initialisation de la session ds les composants 'options de resultats" et "gestion de la navigation"
+        /// </summary>
+        /// <returns></returns>
+        protected override System.Collections.Specialized.NameValueCollection DeterminePostBackMode()
+        {
+            System.Collections.Specialized.NameValueCollection tmp = base.DeterminePostBackMode();
+            gadWebControl1.CustomerWebSession = _webSession;
+            
+            return tmp;
+        }
+        #endregion
+
 
 		#region Bouton Fermer
 		/// <summary>
