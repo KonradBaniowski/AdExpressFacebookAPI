@@ -11,6 +11,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Web;
 using System.Web.UI.WebControls;
+using System.Windows.Forms;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using DBFunctions=TNS.AdExpress.Web.DataAccess.Functions;
@@ -80,17 +81,12 @@ namespace AdExpress.Private.Selection{
 			try{
 
 				#region Textes et langage du site
-				//Modification de la langue pour les Textes AdExpress
-                //for (int i = 0; i < this.Controls.Count; i++) {
-                //    TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[i].Controls, _siteLanguage);
-                //}
+				
                 HeaderWebControl1.Language = _webSession.SiteLanguage;
 
 				// Initialisation de la liste des média
 				ModuleTitleWebControl1.CustomerWebSession = _webSession;
-				InformationWebControl1.Language = _webSession.SiteLanguage;
-				//validateButton.ImageUrl="/Images/"+_siteLanguage+"/button/valider_up.gif";
-				//validateButton.RollOverImageUrl="/Images/"+_siteLanguage+"/button/valider_down.gif";
+				InformationWebControl1.Language = _webSession.SiteLanguage;				
 				#endregion			
 			
 				#region Remise à zéro de CompetitorUniversMedia
@@ -147,9 +143,7 @@ namespace AdExpress.Private.Selection{
 		/// </summary>
 		private void InitializeComponent(){    
 			
-           
-            this.Unload += new System.EventHandler(this.Page_UnLoad);
-            
+                  
 		}
 		#endregion
 
@@ -183,27 +177,39 @@ namespace AdExpress.Private.Selection{
 		/// <param name="sender">Objet qui lance l'évènement</param>
 		/// <param name="e">Arguments</param>
 		protected void validateButton_Click(object sender, System.EventArgs e) {
-			try{
-				string vehiclesSelection="";
+			try
+			{
+                List<System.Windows.Forms.TreeNode> levelsSelected = new List<System.Windows.Forms.TreeNode>();
+                System.Windows.Forms.TreeNode tmpNode;
+
 				// On recherche les éléments sélectionnés
 				foreach(ListItem currentItem in OneVehicleSelectionWebControl1.Items){
-					if(currentItem.Selected)vehiclesSelection+=currentItem.Value+",";
+					if(currentItem.Selected)
+					{
+                        tmpNode = new System.Windows.Forms.TreeNode(currentItem.Text);
+                        tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess,long.Parse(currentItem.Value), currentItem.Text);
+                        tmpNode.Checked = true;
+                        levelsSelected.Add(tmpNode);
+					}
 				}
-				if(vehiclesSelection.Length<1){
-					//_webSession.Source.Close();
+                if (levelsSelected.Count==0)
+                {
 					Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(1052,_webSession.SiteLanguage)));
 				}
 				else{
 
                     //Reinitialize banners selection if change vehicle
                     Dictionary<Int64, VehicleInformation> vehicleInformationList = _webSession.GetVehiclesSelected();
-                    if (OneVehicleSelectionWebControl1.Items.Count != vehicleInformationList.Count) {
-                        foreach (ListItem currentItem in OneVehicleSelectionWebControl1.Items) {
-                            if (!vehicleInformationList.ContainsKey(long.Parse(currentItem.Value))) {
-                                _webSession.SelectedBannersFormatList = string.Empty;
-                                break;
+                    if (OneVehicleSelectionWebControl1.Items.Count != vehicleInformationList.Count) {                      
+                            foreach (System.Windows.Forms.TreeNode node in levelsSelected)
+                            {
+                                if (!vehicleInformationList.ContainsKey(((LevelInformation)node.Tag).ID))
+                                {
+                                    _webSession.SelectedBannersFormatList = string.Empty;
+                                    break;
+                                }
+                            
                             }
-                        }
                     }
                     else {
                         _webSession.SelectedBannersFormatList = string.Empty;
@@ -212,31 +218,18 @@ namespace AdExpress.Private.Selection{
                     // Sauvegarde de la sélection dans la session
                     //Si la sélection comporte des éléments, on la vide
                     _webSession.SelectionUniversMedia.Nodes.Clear();
-                    System.Windows.Forms.TreeNode tmpNode;
-					foreach(ListItem currentItem in OneVehicleSelectionWebControl1.Items){
-                        if (currentItem.Selected)
-                        {
-                            tmpNode = new System.Windows.Forms.TreeNode(currentItem.Text);
-                            tmpNode.Tag =
-                                new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess,
-                                                     long.Parse(currentItem.Value), currentItem.Text);
-                            tmpNode.Checked = true;
-
-                            //_webSession.CurrentUnivers. .Nodes.Add(tmpNode);
-
-                            _webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
-
-                            // Tracking
-                            _webSession.OnSetVehicle(long.Parse(currentItem.Value));
-
-                        }
+                
+					 foreach (System.Windows.Forms.TreeNode node in levelsSelected){
+                        _webSession.SelectionUniversMedia.Nodes.Add(node);
+                        // Tracking
+                            _webSession.OnSetVehicle(((LevelInformation)node.Tag).ID);                       
 					}
 					// On sauvegarde la session
 					_webSession.Save();
 					//Redirection vers la page suivante
 					if(_nextUrl.Length>0){
 						_webSession.Source.Close();
-						HttpContext.Current.Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession);
+						HttpContext.Current.Response.Redirect(_nextUrl+"?idSession="+_webSession.IdSession,false);
 					}
 				}
 			}

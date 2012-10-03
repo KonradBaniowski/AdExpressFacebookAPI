@@ -163,7 +163,7 @@ namespace AdExpress.Private.Selection
         private void InitializeComponent()
         {
 
-            this.Unload += new System.EventHandler(this.Page_UnLoad);
+        
 
         }
         #endregion
@@ -207,15 +207,22 @@ namespace AdExpress.Private.Selection
             try
             {
                 _webSession.Insert = TNS.AdExpress.Constantes.Web.CustomerSessions.Insert.total;
-                string vehiclesSelection = "";
+                List<System.Windows.Forms.TreeNode> levelsSelected = new List<System.Windows.Forms.TreeNode>();
+                System.Windows.Forms.TreeNode tmpNode;
+
                 // On recherche les éléments sélectionnés
                 foreach (ListItem currentItem in VehicleSelectionWebControl2.Items)
                 {
-                    if (currentItem.Selected) vehiclesSelection += currentItem.Value + ",";
+                    if (currentItem.Selected)
+                    {
+                        tmpNode = new System.Windows.Forms.TreeNode(currentItem.Text);
+                        tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, long.Parse(currentItem.Value), currentItem.Text);
+                        tmpNode.Checked = true;
+                        levelsSelected.Add(tmpNode);
+                    }
                 }
-                if (vehiclesSelection.Length < 1)
-                {
-                    //_webSession.Source.Close();
+                if (levelsSelected.Count == 0)
+                {                
                     Response.Write(WebFunctions.Script.Alert(GestionWeb.GetWebWord(1052, _webSession.SiteLanguage)));
                 }
                 else {
@@ -224,9 +231,9 @@ namespace AdExpress.Private.Selection
                     Dictionary<Int64, VehicleInformation> vehicleInformationList = _webSession.GetVehiclesSelected();
                     if (VehicleSelectionWebControl2.Items.Count != vehicleInformationList.Count)
                     {
-                        foreach (ListItem currentItem in VehicleSelectionWebControl2.Items)
+                        foreach (System.Windows.Forms.TreeNode node in levelsSelected)
                         {
-                            if(!vehicleInformationList.ContainsKey(long.Parse(currentItem.Value)))
+                            if (!vehicleInformationList.ContainsKey(((LevelInformation)node.Tag).ID))
                             {
                                 _webSession.SelectedBannersFormatList = string.Empty;
                                 break;
@@ -241,20 +248,12 @@ namespace AdExpress.Private.Selection
                     // Sauvegarde de la sélection dans la session
                     //Si la sélection comporte des éléments, on la vide
                     _webSession.SelectionUniversMedia.Nodes.Clear();
-                    System.Windows.Forms.TreeNode tmpNode;
-                    foreach (ListItem currentItem in VehicleSelectionWebControl2.Items)
-                    {
-                        if (currentItem.Selected)
-                        {
-                            tmpNode = new System.Windows.Forms.TreeNode(currentItem.Text);
-                            tmpNode.Tag = new LevelInformation(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, long.Parse(currentItem.Value), currentItem.Text);
-                            tmpNode.Checked = true;
-
-                            //_webSession.CurrentUnivers. .Nodes.Add(tmpNode);
-                            _webSession.SelectionUniversMedia.Nodes.Add(tmpNode);
+                
+                     foreach (System.Windows.Forms.TreeNode node in levelsSelected)
+                    {                       
+                            _webSession.SelectionUniversMedia.Nodes.Add(node);
                             // Tracking
-                            _webSession.OnSetVehicle(long.Parse(currentItem.Value));
-                        }
+                            _webSession.OnSetVehicle(((LevelInformation)node.Tag).ID);                           
                     }
 
                     //verification que l unite deja sélectionnée convient pour tous les medias
@@ -276,7 +275,7 @@ namespace AdExpress.Private.Selection
                         if (_nextUrl.Length > 0)
                         {
                             _webSession.Source.Close();
-                            HttpContext.Current.Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession);
+                            HttpContext.Current.Response.Redirect(_nextUrl + "?idSession=" + _webSession.IdSession, false);
                         }
                     }
 
