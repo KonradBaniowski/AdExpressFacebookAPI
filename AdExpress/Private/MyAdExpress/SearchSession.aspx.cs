@@ -999,6 +999,7 @@ namespace AdExpress.Private.MyAdExpress{
                     _webSession.SecondaryAdvertisingAgnecyUniverses = webSessionSave.SecondaryAdvertisingAgnecyUniverses;
                      //Profession universes
 				    _webSession.PrincipalProfessionUniverses = webSessionSave.PrincipalProfessionUniverses;
+				    _webSession.ProductDetailLevel = null;
 
 					if(notValidPeriod){
 						//Erreur : période non disponible
