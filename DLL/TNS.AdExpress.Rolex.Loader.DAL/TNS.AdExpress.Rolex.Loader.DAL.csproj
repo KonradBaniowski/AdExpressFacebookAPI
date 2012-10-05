@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C02B8999-1254-4984-AA7E-66269072524F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TNS.AdExpress.Rolex.Loader.DAL</RootNamespace>
+    <AssemblyName>TNS.AdExpress.Rolex.Loader.DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Aspose.Cells">
+      <HintPath>\\frmitch-fs04\programme\Projets\France\AdExpress Olympe 2009\Bin\Aspose.Cells.dll</HintPath>
+    </Reference>
+    <Reference Include="BLToolkit.4, Version=4.1.7.0, Culture=neutral, PublicKeyToken=b1d3f6ab3aadaca3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\frmitch-fs04\programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\BLToolKit4.1\BLToolkit.4.dll</HintPath>
+    </Reference>
+    <Reference Include="BLToolkit.Data.DataProvider.Generic.4, Version=4.1.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\frmitch-fs04\programme\Projets\France\AdExpress Olympe 2009\Bin\4.0\BLToolKit4.1\BLToolkit.Data.DataProvider.Generic.4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TNS.FrameWork">
+      <HintPath>\\frmitch-fs04\programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.dll</HintPath>
+    </Reference>
+    <Reference Include="TNS.FrameWork.Date">
+      <HintPath>\\frmitch-fs04\programme\Projets\France\AdExpress Olympe 2009\Bin\TNS.FrameWork.Date.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataAccessDAL.cs" />
+    <Compile Include="DataAccessDAL.Location.cs">
+      <DependentUpon>DataAccessDAL.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccessDAL.Media.cs">
+      <DependentUpon>DataAccessDAL.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccessDAL.TypePresence.cs">
+      <DependentUpon>DataAccessDAL.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccessDb.cs" />
+    <Compile Include="DataAccessDbConnectionFactory.cs" />
+    <Compile Include="DbType\DataLocation.cs" />
+    <Compile Include="DbType\DataMedia.cs" />
+    <Compile Include="DbType\DataRolex.cs" />
+    <Compile Include="DbType\DataTypePresence.cs" />
+    <Compile Include="Exceptions\DataAccessDALExcelPresenceTypeException.cs" />
+    <Compile Include="Exceptions\DataAccessDALExcelSiteException.cs" />
+    <Compile Include="Exceptions\DataAccessDALExcelLocationException.cs" />
+    <Compile Include="Exceptions\DataAccessDALInsertException.cs" />
+    <Compile Include="Exceptions\DataAccessDALExcelFormatException.cs" />
+    <Compile Include="Exceptions\DataAccessDALClassificationException.cs" />
+    <Compile Include="Exceptions\DataAccessDALBadPictureNameException.cs" />
+    <Compile Include="Exceptions\DataAccessDALBadPictureNumberException.cs" />
+    <Compile Include="Exceptions\DataAccessDALExcelVisualException.cs" />
+    <Compile Include="Exceptions\DataAccessDALExcelException.cs" />
+    <Compile Include="Exceptions\DataAccessDALExcelInvalidDateException.cs" />
+    <Compile Include="Exceptions\DataAccessDALExcelOpenFileException.cs" />
+    <Compile Include="Exceptions\DataAccessDALException.cs" />
+    <Compile Include="IDataAccessDbConnectionFactory.cs" />
+    <Compile Include="Provider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TNS.AdExpress.Rolex.Loader.Domain\TNS.AdExpress.Rolex.Loader.Domain.csproj">
+      <Project>{7717E7DD-85FD-4629-9672-9C3C36D6BCFF}</Project>
+      <Name>TNS.AdExpress.Rolex.Loader.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataAccessDAL.Rolex.cs">
+      <DependentUpon>DataAccessDAL.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
