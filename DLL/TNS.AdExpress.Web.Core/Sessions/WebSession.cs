@@ -46,6 +46,7 @@ using TNS.AdExpress.Domain.Classification;
 using CustPeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type;
 using TNS.AdExpress.Web.Core.Selection;
 
+
 namespace TNS.AdExpress.Web.Core.Sessions
 {
     /// <summary>
@@ -1523,22 +1524,23 @@ namespace TNS.AdExpress.Web.Core.Sessions
         {
             get
             {
-              if(userParameters.ContainsKey(CoreConstantes.SessionParamters.principalProfessionUniverses))
-              {
-                  return Utilities.Converters.ConvertToUniverseDictionary(Dimension.profession, Convert.ToString(userParameters[CoreConstantes.SessionParamters.principalProfessionUniverses]));
-              }
-              return new Dictionary<int, AdExpressUniverse>();
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.principalProfessionUniverses))
+                {
+                    return Utilities.Converters.ConvertToUniverseDictionary(Dimension.profession, Convert.ToString(userParameters[CoreConstantes.SessionParamters.principalProfessionUniverses]));
+                }
+                return new Dictionary<int, AdExpressUniverse>();
             }
             set
             {
-               if(value!=null && value.Count>0)
-               {
-                   if (userParameters.ContainsKey(CoreConstantes.SessionParamters.principalProfessionUniverses))
-                       userParameters.Remove(CoreConstantes.SessionParamters.principalProfessionUniverses);
-                   userParameters.Add(CoreConstantes.SessionParamters.principalProfessionUniverses,Utilities.Converters.ConvertUniverseToString(value));
-               }else if(userParameters.ContainsKey(CoreConstantes.SessionParamters.principalProfessionUniverses))
-                   userParameters.Remove(CoreConstantes.SessionParamters.principalProfessionUniverses);
-               modificationDate = DateTime.Now;
+                if (value != null && value.Count > 0)
+                {
+                    if (userParameters.ContainsKey(CoreConstantes.SessionParamters.principalProfessionUniverses))
+                        userParameters.Remove(CoreConstantes.SessionParamters.principalProfessionUniverses);
+                    userParameters.Add(CoreConstantes.SessionParamters.principalProfessionUniverses, Utilities.Converters.ConvertUniverseToString(value));
+                }
+                else if (userParameters.ContainsKey(CoreConstantes.SessionParamters.principalProfessionUniverses))
+                    userParameters.Remove(CoreConstantes.SessionParamters.principalProfessionUniverses);
+                modificationDate = DateTime.Now;
             }
         }
         #endregion
@@ -1549,7 +1551,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
         public Dictionary<int, AdExpressUniverse> AdvertisementTypeUniverses
         {
             get
-            { 
+            {
                 Dictionary<int, AdExpressUniverse> list = new Dictionary<int, AdExpressUniverse>();
                 AdExpressUniverse adexUniverse = new AdExpressUniverse(TNS.Classification.Universe.Dimension.advertisementType);
                 TNS.Classification.Universe.NomenclatureElementsGroup group = null;
@@ -1580,10 +1582,10 @@ namespace TNS.AdExpress.Web.Core.Sessions
                 {
                     list.Add(list.Count, adexUniverse);
                 }
-                
+
                 return (list);
 
-                
+
             }
             set
             {
@@ -2680,7 +2682,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
                 userParameters[CoreConstantes.SessionParamters.genericColumnDetailLevelType] = value.Type;
                 modificationDate = DateTime.Now;
             }
-        }     
+        }
 
         #endregion
 
@@ -3219,6 +3221,82 @@ namespace TNS.AdExpress.Web.Core.Sessions
         }
         #endregion
 
+        #region Presence type
+        /// <summary>
+        /// Get Presence types selected
+        /// </summary>
+        public List<long> SelectedPresenceTypes
+        {
+            get
+            {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.presenceType))
+                {
+                    return (new List<string>(userParameters[CoreConstantes.SessionParamters.presenceType].ToString().Split(','))).ConvertAll(Convert.ToInt64);
+                }
+                return new List<long>();
+            }
+            set
+            {
+                if (value != null && value.Count > 0)
+                {
+                    userParameters[CoreConstantes.SessionParamters.presenceType] = string.Join(",", value);
+                }
+                else if (userParameters.ContainsKey(CoreConstantes.SessionParamters.presenceType)) 
+                    userParameters.Remove(CoreConstantes.SessionParamters.presenceType);
+            }
+        }
+        #endregion
+
+        #region location
+        /// <summary>
+        /// Get Locations selected
+        /// </summary>
+        public List<long> SelectedLocations
+        {
+            get
+            {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.location))
+                {
+                    return (new List<string>(userParameters[CoreConstantes.SessionParamters.location].ToString().Split(','))).ConvertAll(Convert.ToInt64);
+                }
+                return new List<long>();
+            }
+            set
+            {
+                if (value != null && value.Count > 0)
+                {
+                    userParameters[CoreConstantes.SessionParamters.location] = string.Join(",", value);
+                }
+                else if (userParameters.ContainsKey(CoreConstantes.SessionParamters.location))
+                    userParameters.Remove(CoreConstantes.SessionParamters.location);
+            }
+        }
+        #endregion
+
+        /// <summary>
+        /// Get/Set Selected Levels Value
+        /// </summary>
+        public List<long> SelectedLevelsValue
+        {
+            get
+            {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.selectedLevelsValue))
+                {
+                    return (new List<string>(userParameters[CoreConstantes.SessionParamters.selectedLevelsValue].ToString().Split(','))).ConvertAll(Convert.ToInt64);
+                }
+                return new List<long>();
+            }
+            set
+            {
+                if (value != null && value.Count > 0)
+                {
+                    userParameters[CoreConstantes.SessionParamters.selectedLevelsValue] = string.Join(",", value);
+                }
+                else if (userParameters.ContainsKey(CoreConstantes.SessionParamters.selectedLevelsValue))
+                    userParameters.Remove(CoreConstantes.SessionParamters.selectedLevelsValue);
+            }
+        }
+
         #region Export creatives options
         /// <summary>
         /// Get \Set Campaign Type 
@@ -3701,7 +3779,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// <returns>True Profesion has been selected</returns>
         public bool IsProfessionSelected()
         {
-           
+
             if (PrincipalProfessionUniverses.Count > 0) return (true);
             return (false);
         }
@@ -3712,7 +3790,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// </summary>
         /// <returns>True si des annonceurs ont été enregistrées, false sinon</returns>
         public bool isAdvertisersSelected()
-        {           
+        {
             if (PrincipalProductUniverses.Count > 0) return (true);
             return (false);
         }
@@ -3768,7 +3846,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// </summary>
         /// <returns></returns>
         public int advertiserUniversNumber()
-        {         
+        {
             int advertiserNumber = 0;
             if (this.SecondaryProductUniverses.Count > 0)
             {
@@ -4014,7 +4092,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
         public void OnSetVehicle(Int64 vehicleId)
         {
             try
-            {               
+            {
                 DATracking.SetVehicle(Source, Int64.Parse(IdSession), CustomerLogin.IdLogin, CurrentModule, vehicleId);
             }
             catch (System.Exception) { }
@@ -4028,7 +4106,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
             try
             {
                 Module moduleSelected = customerLogin.GetModule(currentModule);
-                Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));                
+                Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
                 DATracking.UseGad(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
             }
             catch (System.Exception) { }
@@ -4086,7 +4164,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
         private void OnSetPeriodType()
         {
             try
-            {               
+            {
                 DATracking.SetPeriodType(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, (int)periodType);
             }
             catch (System.Exception) { }
@@ -4132,7 +4210,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
             {
                 //customerLogin.ModuleList();
                 Module moduleSelected = customerLogin.GetModule(currentModule);
-                Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));             
+                Int64 resultId = moduleSelected.GetResultId(int.Parse(currentTab.ToString()));
                 DATracking.UseFileExport(Source, Int64.Parse(idSession), CustomerLogin.IdLogin, currentModule, resultId);
             }
             catch (System.Exception) { }
@@ -4613,7 +4691,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// Set Vp renault Date
         /// </summary>
         /// <param name="periodType">Period Type</param>
-        public void SetVpDates(TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType)
+        public void SetDates(TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type periodType)
         {
             DateTime cDateTime = (new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1));
             PeriodType = periodType;
@@ -4641,7 +4719,7 @@ namespace TNS.AdExpress.Web.Core.Sessions
         /// </summary>
         /// <param name="dateBegin">Period Type</param>
         /// <param name="periodEnd">periodEnd</param>
-        public void SetVpDates(DateTime dateBegin, DateTime periodEnd)
+        public void SetDates(DateTime dateBegin, DateTime periodEnd)
         {
             PeriodType = TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type.personalize;
             PeriodBeginningDate = dateBegin.ToString("yyyyMMdd");

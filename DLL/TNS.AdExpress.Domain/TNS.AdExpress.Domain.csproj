@@ -126,7 +126,8 @@
     <Compile Include="Layers\CoreLayer.cs" />
     <Compile Include="ModulesDescritpion\Trends.cs" />
     <Compile Include="ModulesDescritpion\TrendsDateOpeningOption.cs" />
-    <Compile Include="Results\VpDateConfigurations.cs" />
+    <Compile Include="Results\RolexConfigurationDetail.cs" />
+    <Compile Include="Results\DateConfigurations.cs" />
     <Compile Include="Results\VpConfigurationDetail.cs" />
     <Compile Include="Results\DataPromotionDetails.cs" />
     <Compile Include="Results\DataPromotionDetail.cs" />
@@ -136,7 +137,7 @@
     <Compile Include="Results\InfoNewsItem.cs" />
     <Compile Include="Results\InsertionOptions.cs" />
     <Compile Include="Results\MSCreativesDetails.cs" />
-    <Compile Include="Results\VpDateConfiguration.cs" />
+    <Compile Include="Results\DateConfiguration.cs" />
     <Compile Include="Units\AllowUnits.cs" />
     <Compile Include="Units\DefaultUnit.cs" />
     <Compile Include="Units\DefaultUnitList.cs" />

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Text;
 using TNS.AdExpress.Constantes.Customer;
+using TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Core.Sessions;
-using TNS.FrameWork.DB.Common;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpressI.Rolex.DAL
@@ -118,7 +117,7 @@ namespace TNS.AdExpressI.Rolex.DAL
             var orderByFieldName = detailLevel.GetSqlOrderFields();
 
             // Get joins for classification
-            
+
             var mediaJoinCondition = detailLevel.GetSqlJoins(_session.DataLanguage, dataRolex.Prefix);
 
             // Select : Media classificaion selection
@@ -153,6 +152,62 @@ namespace TNS.AdExpressI.Rolex.DAL
             // Order by
             sql.AppendFormat(" Order by {0} , {1}", orderByFieldName, DATE_BEGIN_NUM);
 
+
+            return ExecuteStatement(sql);
+        }
+        #endregion
+
+        /// <summary>
+        /// Get site without visibility
+        /// </summary>
+        /// <param name="detailLevelInformation">detail Level Information</param>
+        /// <returns></returns>
+        public virtual DataSet GetSitesWithoutVisibility(DetailLevelItemInformation detailLevelInformation)
+        {
+            var sql = new StringBuilder();
+
+
+            //Get Data base schema descritpion
+            var schRolex = WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.rolex03);
+
+            //Get data rolex table
+            var dataRolex = WebApplicationParameters.GetDataTable(TableIds.dataRolex, false);
+
+
+            // Select : Append site lfileds
+            sql.AppendFormat("select {0}, {1} ", detailLevelInformation.GetSqlFieldId(), detailLevelInformation.GetSqlField());
+
+            // From : Tables
+            sql.AppendFormat(" from {0}.{1},{2} ", schRolex.Label, detailLevelInformation.GetTableNameWithPrefix(), dataRolex.SqlWithPrefix);
+
+            // Where 
+            sql.AppendFormat("where 0=0 ");
+
+            sql.AppendFormat(" and {0}.{1}={2}.{1}(+)", detailLevelInformation.DataBaseTableNamePrefix, detailLevelInformation.DataBaseIdField, dataRolex.Prefix);
+
+            sql.AppendFormat(" and {0}.id_language={1}", detailLevelInformation.DataBaseTableNamePrefix, _session.DataLanguage);
+            sql.AppendFormat(" and {0}.activation<{1} ", detailLevelInformation.DataBaseTableNamePrefix , ActivationValues.UNACTIVATED);
+
+            //Filtering period
+            if (_session.PeriodType != CstWeb.CustomerSessions.Period.Type.allHistoric)
+            {
+                sql.AppendFormat("and  DATE_BEGIN_NUM (+)>= {0} and DATE_BEGIN_NUM (+)<= {1} ", _periodBeginningDate, _periodEndDate);
+            }
+
+            sql.Append(" and DATE_BEGIN_NUM is null ");
+
+            //Only site with URL
+            sql.Append(" and URL is not null ");
+
+            sql.AppendFormat(" order by {0},{1}", detailLevelInformation.GetSqlField(),
+                             detailLevelInformation.GetSqlFieldId());
+
+            return ExecuteStatement(sql);
+        }
+
+        private DataSet ExecuteStatement(StringBuilder sql)
+        {
+
 #if DEBUG
             var dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rolex);
             return dataSource.Fill(sql.ToString());
@@ -160,8 +215,8 @@ namespace TNS.AdExpressI.Rolex.DAL
             return _session.Source.Fill(sql.ToString());
 #endif
         }
-        #endregion
 
+        #region GetFileData
         /// <summary>
         /// Retreive the data for Rolex schedule result
         /// </summary>
@@ -193,11 +248,12 @@ namespace TNS.AdExpressI.Rolex.DAL
             var mediaJoinCondition = detailLevel.GetSqlJoins(_session.DataLanguage, dataRolex.Prefix);
 
 
+
             // Select : Media classificaion selection
             sql.AppendFormat("select {0} ", mediaFieldName);
 
             //Select visuals
-            sql.AppendFormat(",ID_PAGE, {0}.COMMENTARY, URL, VISUAL ,{1},{2}", dataRolex.Prefix, DATE_BEGIN_NUM,DATE_END_NUM);
+            sql.AppendFormat(",ID_PAGE, {0}.COMMENTARY, URL, VISUAL ,{1},{2}", dataRolex.Prefix, DATE_BEGIN_NUM, DATE_END_NUM);
 
             // From : Tables
             sql.AppendFormat(" from {0},{1} ", mediaTableName, dataRolex.SqlWithPrefix);
@@ -224,6 +280,7 @@ namespace TNS.AdExpressI.Rolex.DAL
             return _session.Source.Fill(sql.ToString());
 #endif
         }
+        #endregion
 
         #region GetSiteClassifFilters
         /// <summary>

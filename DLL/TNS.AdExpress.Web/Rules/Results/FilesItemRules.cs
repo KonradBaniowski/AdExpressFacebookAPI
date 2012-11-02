@@ -87,6 +87,8 @@ namespace TNS.AdExpress.Web.Rules.Results {
                                     case Anubis.Constantes.Result.type.selket:
                                     case Anubis.Constantes.Result.type.thoueris:
                                     case Anubis.Constantes.Result.type.apis:
+                                    case Anubis.Constantes.Result.type.amon:
+                                    case Anubis.Constantes.Result.type.ptah:
 										linkTemp =linkFile+current["ID_LOGIN"].ToString()+"/"+current["pdf_name"].ToString()+".pdf";break;
                                     case Anubis.Constantes.Result.type.dedoum:
                                         linkTemp = linkFile + current["ID_LOGIN"].ToString() + "/" + current["pdf_name"].ToString() + ".zip"; break;
@@ -133,6 +135,8 @@ namespace TNS.AdExpress.Web.Rules.Results {
                     case (Anubis.Constantes.Result.type.dedoum): return (GestionWeb.GetWebWord(2937, webSession.SiteLanguage));
                     case (Anubis.Constantes.Result.type.pachet): return (GestionWeb.GetWebWord(2942, webSession.SiteLanguage));
                     case (Anubis.Constantes.Result.type.apis): return (GestionWeb.GetWebWord(2967, webSession.SiteLanguage));
+                    case (Anubis.Constantes.Result.type.amon): return (GestionWeb.GetWebWord(2984, webSession.SiteLanguage));
+                    case (Anubis.Constantes.Result.type.ptah): return (GestionWeb.GetWebWord(2983, webSession.SiteLanguage));
 					default:return("");	
 				}	
 			}

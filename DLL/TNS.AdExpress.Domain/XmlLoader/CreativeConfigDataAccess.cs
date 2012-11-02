@@ -184,6 +184,12 @@ namespace TNS.AdExpress.Domain.XmlLoader
                                     case "IMAGES_PRESS_CLIPPING":
                                         CreationServerPathes.IMAGES_PRESS_CLIPPING = value;
                                         break;
+                                    case "IMAGES_ROLEX":
+                                        CreationServerPathes.IMAGES_ROLEX = value;
+                                        break;
+                                    case "LOCAL_PATH_ROLEX":
+                                        CreationServerPathes.LOCAL_PATH_ROLEX = value;
+                                        break;
                                 }
                                 break;
                         }

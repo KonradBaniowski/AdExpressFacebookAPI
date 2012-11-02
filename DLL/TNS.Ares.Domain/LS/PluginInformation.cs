@@ -79,6 +79,14 @@ namespace TNS.Ares.Domain.LS {
         /// </summary>
         Apis = 26,
         /// <summary>
+        /// Amon plugin
+        /// </summary>
+        Amon=27,
+        /// <summary>
+        /// Ptah plugin
+        /// </summary>
+        Ptah =28,
+        /// <summary>
         /// easyMusicExcel Plugin
         /// </summary>
         easyMusicExcel = 30,

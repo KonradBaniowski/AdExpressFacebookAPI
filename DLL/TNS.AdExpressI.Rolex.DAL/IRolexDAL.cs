@@ -36,5 +36,12 @@ namespace TNS.AdExpressI.Rolex.DAL
         /// DataSet  
         /// </returns>
         DataSet GetFileData(GenericDetailLevel selectedDetailLevel, List<long> selectedLevelValues, GenericDetailLevel detailLevel);
+
+        /// <summary>
+        /// Get site without visibility
+        /// </summary>
+        /// <param name="detailLevelInformation">detail Level Information</param>
+        /// <returns></returns>
+        DataSet GetSitesWithoutVisibility(DetailLevelItemInformation detailLevelInformation);
     }
 }

@@ -8,7 +8,7 @@ using TNS.AdExpress.Domain.Level;
 
 namespace TNS.AdExpressI.Rolex
 {
-  public  interface  IRolexResults
+    public interface IRolexResults
     {
 
         #region Properties
@@ -44,14 +44,14 @@ namespace TNS.AdExpressI.Rolex
         /// <summary>
         /// User Session
         /// </summary>
-         WebSession Session
+        WebSession Session
         { get; set; }
 
-      /// <summary>
-      /// Get / Set flag to specify if Rolex Schedule output is PDF
-      /// </summary>
-       RolexScheduleStyle RolexScheduleStyle
-      { get; set; }
+        /// <summary>
+        /// Get / Set flag to specify if Rolex Schedule output is PDF
+        /// </summary>
+        RolexScheduleStyle RolexScheduleStyle
+        { get; set; }
 
 
         #endregion
@@ -70,13 +70,16 @@ namespace TNS.AdExpressI.Rolex
         /// Get HTML code for a pdf export of the rolex schedule
         /// </summary>
         /// <returns>HTML Code</returns>
-       string GetPDFHtml();
+        string[] GetPDFHtml();
 
-      /// <summary>
-      /// Get HTML code for the rolex file
-      /// </summary>
-      /// <returns>HTML Code</returns>
-      string GetRolexFileHtml(GenericDetailLevel selectedDetailLevel, List<long> selectedLevelValues,out  List<string> visuals);
+        /// <summary>
+        /// Get HTML code for the rolex file
+        /// </summary>
+        /// <returns>HTML Code</returns>
+        string GetRolexFileHtml(GenericDetailLevel selectedDetailLevel, List<long> selectedLevelValues, out  List<string> visuals);
+
+
+
 
     }
 }

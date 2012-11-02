@@ -139,7 +139,7 @@
           <allowedMediaLevelItem id="4" name="Centre d'interet"/>
           <allowedMediaLevelItem id="5" name="Régie"/>
           <allowedMediaLevelItem id="6" name="Version"/>
-         <!-- <allowedMediaLevelItem id="7" name="Groupe de société"/>-->
+          <!-- <allowedMediaLevelItem id="7" name="Groupe de société"/>-->
           <allowedMediaLevelItem id="8" name="Annonceur"/>
           <allowedMediaLevelItem id="9" name="Marque"/>
           <allowedMediaLevelItem id="10" name="Produit"/>

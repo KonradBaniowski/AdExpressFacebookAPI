@@ -1,0 +1,509 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Theme>
+  <fonts>
+    <font name="TitleFontPurple40" policeName="Arial" size="40" color="100,98,98" isBold="true"/>
+    <font name="FontPurple14" policeName="Arial" size="14" color="100,98,98"/>
+    <font name="FontPurple13" policeName="Arial" size="13" color="100,98,98"/>
+    <font name="TitleFontWhite12" policeName="Arial" size="12" color="255,255,255"  isBold="true"/>
+    <font name="TitleFontPurple12" policeName="Arial" size="12" color="100,98,98" isBold="true"/>
+    <font name="FontPurple12" policeName="Arial" size="12" color="100,98,98"/>
+    <font name="TitleFontPurple11" policeName="Arial" size="11" color="100,98,98" isBold="true"/>
+    <font name="TitleFontPurple10" policeName="Arial" size="10" color="100,98,98" isBold="true"/>
+    <font name="TitleFontHighPurple10" policeName="Arial" size="10" color="100,98,98" isBold="true"/>
+    <font name="FontHighPurple10" policeName="Arial" size="10" color="100,98,98"/>
+    <font name="FontPurple10" policeName="Arial" size="10" color="100,98,98"/>
+    <font name="TitleFontWhite9" policeName="Arial" size="9" color="255,255,255" isBold="true"/>
+    <font name="TitleFontBlack9" policeName="Arial" size="9" color="0,0,0" isBold="true"/>
+    <font name="FontBlackV6_9" policeName="Arial" size="9" color="0,0,0"/>
+    <font name="FontPurple8" policeName="Arial" size="8" color="100,98,98"/>
+    <font name="TitleFontPurple8" policeName="Arial" size="8" color="100,98,98" isBold="true"/>
+    <font name="TitleFontWhite8" policeName="Arial" size="8" color="255,255,255"  isBold="true"/>
+    <font name="FontWhite8" policeName="Arial" size="8" color="255,255,255"/>
+    <font name="TitleFontBlack8" policeName="Arial" size="8" color="0,0,0" isBold="true"/>
+    <font name="FontBlack8" policeName="Arial" size="8" color="0,0,0"/>
+    <font name="FontDarkPurple8" policeName="Arial" size="8" color="204,204,204"/>
+    <font name="FontBlackV6_8" policeName="Arial" size="8" color="0,0,0"/>
+  </fonts>
+  <cells>
+    <cell name="TitleCellPurple40" fontName="TitleFontPurple40" foregroundColor="255,255,255"/>
+
+    <cell name="TitleCellPurple12" fontName="TitleFontPurple12" foregroundColor="255,255,255"/>
+    <cell name="TitleCellWhite12ForegroundColorPurple" fontName="TitleFontWhite12" foregroundColor="100,98,98"/>
+
+    <cell name="TitleCellPurple11" fontName="TitleFontPurple11" foregroundColor="255,255,255"/>
+
+    <cell name="TitleCellPurple10BorderPurple" fontName="TitleFontPurple10" foregroundColor="255,255,255">
+      <borders>
+        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="LeftBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="TopBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellPurple10BorderTopLightPurple" fontName="TitleFontPurple10" foregroundColor="255,255,255">
+      <borders>
+        <border type="TopBorder" color="222, 216, 229" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellHighPurple10BorderRightLeftPurpleForegroundColorPaleVioletV2" fontName="TitleFontHighPurple10" foregroundColor="223,223,223">
+      <borders>
+        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="LeftBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellHighPurple10BorderRightLeftPurpleForegroundColorPaleVioletV2" fontName="FontHighPurple10" foregroundColor="223,223,223">
+      <borders>
+        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="LeftBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2" fontName="TitleFontHighPurple10" foregroundColor="223,223,223">
+      <borders>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="LeftBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellHighPurple10WithoutBorderTopPurpleForegroundColorPaleVioletV2" fontName="FontHighPurple10" foregroundColor="223,223,223">
+      <borders>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="LeftBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellHighPurple10WithoutBorderTopPurpleForegroundColorWhite" fontName="TitleFontHighPurple10" foregroundColor="255,255,255">
+      <borders>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="LeftBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellHighPurple10WithoutBorderTopPurpleForegroundColorWhite" fontName="FontHighPurple10" foregroundColor="255,255,255">
+      <borders>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="LeftBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+
+    <cell name="TitleCellWhite9BorderRightBottomWhiteForegroundColorPurple" fontName="TitleFontWhite9" foregroundColor="100,98,98">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellWhite9ForegroundColorPurple" fontName="TitleFontWhite9" foregroundColor="100,98,98"/>
+    <cell name="TitleCellWhite9BorderRightWhiteForegroundColorPurple" fontName="TitleFontWhite9" foregroundColor="100,98,98">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+
+    <cell name="TitleCellWhite8BorderRightWhiteForegroundColorPurple" fontName="TitleFontWhite8" foregroundColor="100,98,98">
+      <borders>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellWhite8BorderRightTopWhiteForegroundColorPurple" fontName="TitleFontWhite8" foregroundColor="100,98,98">
+      <borders>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="TopBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellWhite8BorderRightTopWhiteForegroundColorMediumPurple" fontName="TitleFontWhite8" foregroundColor="195,199,208">
+      <borders>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="TopBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellWhite8BorderRightBottomWhiteForegroundColorMediumPurple" fontName="TitleFontWhite8" foregroundColor="195,199,208">
+      <borders>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellWhite8BorderRightBottomPurpleV3ForegroundColorPurple" fontName="FontWhite8" foregroundColor="100,98,98">
+      <borders>
+        <border type="RightBorder" color="160,161,167" lineStyle="Thin"/>
+        <border type="BottomBorder" color="160,161,167" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellWhite8BorderRightBottomPurpleV3ForegroundColorPurpleV3" fontName="FontWhite8" foregroundColor="160,161,167">
+      <borders>
+        <border type="RightBorder" color="160,161,167" lineStyle="Thin"/>
+        <border type="BottomBorder" color="160,161,167" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellWhite8BorderBottomPurple" fontName="FontWhite8" foregroundColor="255,255,255">
+      <borders>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellWhite8BorderAllWhiteForegroundColorPurple" fontName="TitleFontWhite8" foregroundColor="100,98,98">
+      <borders>
+        <border type="TopBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="LeftBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellWhite8WithoutBorderLeftWhiteForegroundColorPurple" fontName="TitleFontWhite8" foregroundColor="100,98,98">
+      <borders>
+        <border type="TopBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellWhite8WithoutBorderTopWhiteForegroundColorPurple" fontName="TitleFontWhite8" foregroundColor="100,98,98">
+      <borders>
+        <border type="LeftBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellWhite8BorderRightBottomWhiteForegroundColorPurple" fontName="TitleFontWhite8" foregroundColor="100,98,98">
+      <borders>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellBlack8BorderRightTopWhiteForegroundColorMediumPurple" fontName="TitleFontBlack8" foregroundColor="195,199,208">
+      <borders>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="TopBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellBlack8BorderRightBottomWhiteForegroundColorMediumPurple" fontName="TitleFontBlack8" foregroundColor="195,199,208">
+      <borders>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellBlack8WithoutBorderTopWhiteForegroundColorMediumPurple" fontName="TitleFontBlack8" foregroundColor="195,199,208">
+      <borders>
+        <border type="LeftBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+
+    <cell name="TitleCellBlack8BorderRightBottomWhiteForegroundColorWhite" fontName="TitleFontBlack8" foregroundColor="255, 255, 255">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellBlack8WithoutBorderTopWhiteForegroundColorWhite" fontName="TitleFontBlack8" foregroundColor="255, 255, 255">
+      <borders>
+        <border type="LeftBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellBlack8BorderRightBottomWhiteForegroundColorPurpleV3" fontName="TitleFontBlack8" foregroundColor="160,161,167">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellBlack8WithoutBorderTopWhiteForegroundColorPurpleV3" fontName="TitleFontBlack8" foregroundColor="160,161,167">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="LeftBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellBlack8BorderRightPurpleBottomWhiteForegroundColorPurpleV3" fontName="FontBlack8" foregroundColor="160,161,167">
+      <borders>
+        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellBlack8BorderRightBottomWhiteForegroundColorPurpleV3" fontName="FontBlack8" foregroundColor="160,161,167">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellBlack8BorderRightBottomWhiteForegroundColorGrey" fontName="FontBlack8" foregroundColor="225, 224, 218">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellBlack8BorderRightBottomWhiteForegroundColorPurple" fontName="FontBlack8" foregroundColor="100,98,98">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellBlack8BorderRightBottomWhiteForegroundColorMediumPurple" fontName="FontBlack8" foregroundColor="208, 200, 218">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellBlack8BorderRightBottomWhiteForegroundColorHighPurple" fontName="FontBlack8" foregroundColor="217,224,206">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellBlack8BorderRightBottomWhiteForegroundColorHighPurple" fontName="TitleFontBlack8" foregroundColor="217,224,206">
+      <borders>
+        <border type="RightBorder" color="255, 255, 255" lineStyle="Thin"/>
+        <border type="BottomBorder" color="255, 255, 255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellBlack8" fontName="TitleFontBlack8" foregroundColor="255, 255, 255"/>
+    <cell name="TitleCellBlack8BorderRightWhiteForegroundColorPurpleV3" fontName="TitleFontBlack8" foregroundColor="160,161,167">
+      <borders>
+        <border type="RightBorder" color="255,255,255" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellPurple8" fontName="TitleFontPurple8" foregroundColor="255,255,255"/>
+    <cell name="TitleCellPurple8WithoutBorderRightPurple" fontName="TitleFontPurple8" foregroundColor="255,255,255">
+      <borders>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="LeftBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="TopBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellPurple8BorderTopBottomPurple" fontName="TitleFontPurple8" foregroundColor="255,255,255">
+      <borders>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="TopBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellPurple8WithoutBorderLeftPurple" fontName="TitleFontPurple8" foregroundColor="255,255,255">
+      <borders>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="TopBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellPurple8BorderLeftBottomPurpleForegroundColorLightPurple" fontName="TitleFontPurple8" foregroundColor="223,223,223">
+      <borders>
+        <border type="LeftBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellPurple8BorderBottomForegroundColorLightPurple" fontName="TitleFontPurple8" foregroundColor="223,223,223">
+      <borders>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="TitleCellPurple8BorderRightBottomPurpleForegroundColorLightPurple" fontName="TitleFontPurple8" foregroundColor="223,223,223">
+      <borders>
+        <border type="RightBorder" color="100,98,98" lineStyle="Thin"/>
+        <border type="BottomBorder" color="100,98,98" lineStyle="Thin"/>
+      </borders>
+    </cell>
+    <cell name="CellDarkPurple8BorderRightBottomPurpleV3ForegroundColorPurpleV4" fontName="FontDarkPurple8" foregroundColor="204,204,204">
+      <borders>
+        <border type="RightBorder" color="160,161,167" lineStyle="Thin"/>
+        <border type="BottomBorder" color="160,161,167" lineStyle="Thin"/>
+      </borders>
+    </cell>
+  </cells>
+  <pictures>
+    <picture name="PictureLogoAdExpress" path="Images\33\LogoAdExpress.jpg" height="80" width="70"/>
+    <picture name="PictureLogoAdExpress220" path="Images\33\LogoAdExpress220.jpg" height="80" width="70"/>
+    <picture name="PictureLogoTNSMedia" path="Images\logoTNSMedia.gif" height="75" width="75"/>
+    <picture name="PictureLogoAPPM" path="Images\Common\APPM.bmp" height="45" width="55"/>
+    <picture name="PictureCheckBox" path="Images\checkbox.GIF" height="100" width="100"/>
+    <picture name="PictureCheckBoxNotChecked" path="Images\checkbox_not_checked.GIF" height="100" width="100"/>
+    <picture name="PictureLogoTNS" path="Images\Common\logo_Tns.bmp"/>
+  </pictures>
+  <boxes>
+    <box name="BoxMargin15" marginTop="15" marginRight="15" marginBottom="15" marginLeft="15" />
+    <box name="BoxHeigth30"  height="30"/>
+    <box name="BoxHeigth20"  height="20"/>
+    <box name="BoxMargin0_3" marginTop="0,3" marginRight="0,3" marginBottom="0,3" marginLeft="0,3" />
+    <box name="BoxHeigth700Width1100"  height="700" width="1100"/>
+    <box name="BoxHeigth700Width1000"  height="700" width="1000"/>
+    <box name="BoxHeigth500Width1000"  height="500" width="1000"/>
+    <box name="BoxHeigth350Width900"  height="350" width="900"/>
+    <box name="BoxHeigth400Width900"  height="400" width="900"/>
+    <box name="BoxHeigth550Width900"  height="550" width="900"/>
+    <box name="BoxHeigth400Width800"  height="400" width="800"/>
+    <box name="BoxHeigth500Width800"  height="500" width="800"/>
+    <box name="BoxHeigth700Width700"  height="700" width="700"/>
+    <box name="BoxHeigth400Width700"  height="400" width="700"/>
+    <box name="BoxHeigth20Width250"  height="400" width="700"/>
+  </boxes>
+  <colorsList>
+    <colorList name="pieColors32">
+      <color>100,98,98</color>
+      <color>160,161,167</color>
+      <color>195,199,208</color>
+      <color>217,224,206</color>
+      <color>204,255,255</color>
+      <color>204,204,255</color>
+      <color>255,204,255</color>
+      <color>255,255,204</color>
+      <color>204,255,204</color>
+      <color>255,204,204</color>
+      <color>204,102,153</color>
+      <color>153,255,255</color>
+      <color>153,153,255</color>
+      <color>255,153,255</color>
+      <color>255,255,153</color>
+      <color>153,255,153</color>
+      <color>255,153,153</color>
+      <color>153,51,102</color>
+      <color>102,255,255</color>
+      <color>102,102,255</color>
+      <color>255,102,255</color>
+      <color>255,255,102</color>
+      <color>102,255,102</color>
+      <color>255,102,102</color>
+      <color>102,0,51</color>
+      <color>51,255,255</color>
+      <color>51,51,255</color>
+      <color>255,51,255</color>
+      <color>255,255,51</color>
+      <color>51,255,51</color>
+      <color>255,51,51</color>
+    </colorList>
+    <colorList name="pieColors12">
+      <color>100,98,98</color>
+      <color>160,161,167</color>
+      <color>195,199,208</color>
+      <color>217,224,206</color>
+      <color>255,215,215</color>
+      <color>255,240,240</color>
+      <color>202,255,202</color>
+      <color>255,5,182</color>
+      <color>157,152,133</color>
+      <color>241,241,241</color>
+      <color>77,150,75</color>
+      <color>0,0,0</color>
+    </colorList>
+    <colorList name="pieColors7">
+      <color>100,98,98</color>
+      <color>160,161,167</color>
+      <color>195,199,208</color>
+      <color>217,224,206</color>
+      <color>255,215,215</color>
+      <color>255,240,240</color>
+      <color>202,255,202</color>
+    </colorList>
+    <colorList name="newPieColors">
+      <color>100,98,98</color>
+      <color>160,161,167</color>
+      <color>195,199,208</color>
+      <color>245,236,255</color>
+      <color>57,85,115</color>
+      <color>107,129,153</color>
+      <color>195,211,230</color>
+      <color>237,246,255</color>
+      <color>82,90,62</color>
+      <color>176,191,134</color>
+      <color>220,230,195</color>
+      <color>250,255,236</color>
+      <color>62,90,81</color>
+      <color>125,179,162</color>
+      <color>195,230,219</color>
+      <color>236,255,249</color>
+      <color>66,90,62</color>
+      <color>142,191,134</color>
+      <color>200,230,195</color>
+      <color>238,255,236</color>
+      <color>125,50,0</color>
+      <color>217,87,0</color>
+      <color>230,161,115</color>
+      <color>255,217,191</color>
+      <color>67,65,90</color>
+      <color>144,141,191</color>
+      <color>201,199,230</color>
+      <color>239,238,255</color>
+      <color>125,75,0</color>
+      <color>179,107,0</color>
+      <color>255,204,128</color>
+      <color>255,230,191</color>
+    </colorList>
+    <colorList name="barColors2">
+      <color>255,113,0</color>
+      <color>151,151,151</color>
+    </colorList>
+    <colorList name="barColor">
+      <color>255,223,222</color>
+    </colorList>
+    <colorList name="barColorPurpleV7">
+      <color>255,113,0</color>
+    </colorList>
+    <colorList name="lightPurpleColor">
+      <color>223,223,223</color>
+    </colorList>
+    <colorList name="ColorEmpty">
+    </colorList>
+    <colorList name="lightGreenColor">
+      <color>222,255,222</color>
+    </colorList>
+    <colorList name="purpleV8Color">
+      <color>255,113,0</color>
+    </colorList>
+    <colorList name="lightPinkColor">
+      <color>255, 223, 222</color>
+    </colorList>
+    <colorList name="lightYellowColor">
+      <color>255,255,51</color>
+    </colorList>
+    <colorList name="msCreativesColor">
+      <color>100,98,98</color>
+      <color>204,153,255</color>
+      <color>153,51,0</color>
+      <color>153,204,255</color>
+      <color>0,51,0</color>
+      <color>0,51,102</color>
+      <color>0,0,128</color>
+      <color>51,51,153</color>
+      <color>128,0,0</color>
+      <color>255,102,0</color>
+      <color>128,128,0</color>
+      <color>0,128,0</color>
+      <color>0,128,128</color>
+      <color>0,0,255</color>
+      <color>255,0,0</color>
+      <color>255,153,0</color>
+      <color>153,204,0</color>
+      <color>51,153,102</color>
+      <color>51,204,204</color>
+      <color>51,102,255</color>
+      <color>128,0,128</color>
+      <color>255,0,255</color>
+      <color>255,204,0</color>
+      <color>255,255,0</color>
+      <color>0,255,0</color>
+      <color>0,255,255</color>
+      <color>0,204,255</color>
+      <color>153,51,102</color>
+      <color>255,153,204</color>
+      <color>255,204,153</color>
+      <color>255,255,153</color>
+      <color>204,255,204</color>
+    </colorList>
+  </colorsList>
+  <lines>
+    <line name="LineSolid1PurpleV5"  size="1" color="100,98,98" borderStyle="Solid"/>
+    <line name="LineSolid2PurpleV5"  size="2" color="100,98,98" borderStyle="Solid"/>
+  </lines>
+
+  <!-- Style Plugin Ptah -->
+  <style name="Ptah">
+    <tag name="layout">BoxMargin15</tag>
+    <tag name="header">BoxHeigth30</tag>
+    <tag name="footer">BoxHeigth20</tag>
+    <tag name="footerFont">FontPurple10</tag>
+    <tag name="headerFont">FontPurple10</tag>
+    <tag name="copyright">FontPurple10</tag>
+    <tag name="pictureLeft">PictureLogoTNS</tag>
+    <tag name="pictureRight">PictureLogoAPPM</tag>
+    <tag name="pictureTitle">PictureLogoAdExpress</tag>
+    <tag name="bigTitle">TitleFontPurple40</tag>
+    <tag name="createdTitle">TitleFontPurple12</tag>
+    <tag name="defaultFont">FontPurple8</tag>
+    <tag name="msCreativesColor">msCreativesColor</tag>
+  </style>
+</Theme>

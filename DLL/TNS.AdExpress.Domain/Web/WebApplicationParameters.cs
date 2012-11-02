@@ -161,7 +161,7 @@ namespace TNS.AdExpress.Domain.Web {
         /// <summary>
         /// Vp Date Configuration List
         /// </summary>
-        protected static VpDateConfigurations _vpDateConfigurations = null;
+        protected static DateConfigurations _vpDateConfigurations = null;
       
         /// <summary>
         /// Campaign type option is allowed
@@ -187,6 +187,14 @@ namespace TNS.AdExpress.Domain.Web {
         ///  Insertions reports options
         /// </summary>
         protected static TNS.AdExpress.Domain.Results.InsertionOptions _insertionOptions = null;
+        /// <summary>
+        /// Rolex Configuration Detail
+        /// </summary>
+        protected static RolexConfigurationDetail _rolexConfigurationDetail = null;
+        /// <summary>
+        /// Rolex Date Configuration List
+        /// </summary>
+        protected static DateConfigurations _rolexDateConfigurations = null;
         #endregion
         
         #region Contructeur
@@ -472,10 +480,28 @@ namespace TNS.AdExpress.Domain.Web {
         /// <summary>
         /// Get / Set Vp Date Configurations
         /// </summary>
-        public static VpDateConfigurations VpDateConfigurations {
+        public static DateConfigurations VpDateConfigurations {
             get { return _vpDateConfigurations; }
             set { _vpDateConfigurations = value; }
         }
+
+        /// <summary>
+        /// Get / Set Rolex Configuration Detail
+        /// </summary>
+        public static RolexConfigurationDetail RolexConfigurationDetail
+        {
+            get { return _rolexConfigurationDetail; }
+            set { _rolexConfigurationDetail = value; }
+        }
+        /// <summary>
+        /// Get / Set Rolex Date Configurations
+        /// </summary>
+        public static DateConfigurations RolexDateConfigurations
+        {
+            get { return _rolexDateConfigurations; }
+            set { _rolexDateConfigurations = value; }
+        }
+
         #endregion
 
         #region Get Table

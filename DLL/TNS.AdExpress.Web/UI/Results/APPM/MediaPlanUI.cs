@@ -1148,7 +1148,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 												t.Append("<tr width=\"100%\">");													
 												isNewVersionLine=false;
 											}
-											t.Append("<td class=\""+presentClass+"\"  style=\"width:4px;\" nowrap>"+stringItem+"</td>"); 
+											t.Append("<td class=\""+presentClass+"\"  style=\"width:4px;\" nowrap>&nbsp;"+stringItem+"</td>"); 
 											break;
 										case FrameWorkResultConstantes.MediaPlanAPPM.graphicItemType.extended:
 											if(isNewVersionLine)
@@ -1158,7 +1158,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 												t.Append("<tr width=\"100%\">");												
 												isNewVersionLine=false;
 											}
-											t.Append("<td class=\""+extendedClass+"\" style=\"width:4px;\" nowrap></td>"); 
+                                            t.Append("<td class=\"" + extendedClass + "\" style=\"width:4px;\" nowrap>&nbsp;</td>"); 
 											break;
 										default:
 											if(isNewVersionLine)
@@ -1168,7 +1168,7 @@ namespace TNS.AdExpress.Web.UI.Results.APPM
 												t.Append("<tr width=\"100%\">");													
 												isNewVersionLine=false;
 											}
-											t.Append("<td class=\"pma\" nowrap></td>");
+                                            t.Append("<td class=\"pma\" nowrap>&nbsp;</td>");
 											break;
 									}
 								}

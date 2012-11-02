@@ -20,6 +20,7 @@ using System.Globalization;
 using System.Web.UI.HtmlControls;
 
 using Oracle.DataAccess.Client;
+using TNS.AdExpress.Domain.DataBaseDescription;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
@@ -223,8 +224,8 @@ namespace TNS.AdExpress.Web.UI
                                 t.Append(GetDateSelected(webSession, currentModule, dateFormatText, periodBeginning, periodEnd));
 
 
-                            if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA
-                                && webSession.ComparativeStudy && TNS.AdExpress.Domain.Web.WebApplicationParameters.UseComparativeMediaSchedule
+                            if (webSession.CurrentModule == Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA
+                                && webSession.ComparativeStudy && WebApplicationParameters.UseComparativeMediaSchedule
                                 && zoomDate.Length == 0)
                             {
                                 // Période comparative
@@ -307,8 +308,13 @@ namespace TNS.AdExpress.Web.UI
                         case WebConstantes.DetailSelection.Type.campaignType:
                             t.Append(GetCampaignType(webSession,currentModule));
                             break;
-                        default:
+                        case WebConstantes.DetailSelection.Type.selectedLocations:
+                            t.Append(AppendSelectedItems(webSession, 1439, webSession.SelectedLocations, DetailLevelItemInformation.Levels.location,GetClassificationLevelListDAL));
                             break;
+                        case WebConstantes.DetailSelection.Type.selectedPresenceType:
+                            t.Append(AppendSelectedItems(webSession, 2978, webSession.SelectedPresenceTypes, DetailLevelItemInformation.Levels.presenceType,GetClassificationLevelListDAL));
+                            break;
+                       
                     }
                 }
                 t.Append(GetBlankLine());
@@ -324,6 +330,17 @@ namespace TNS.AdExpress.Web.UI
                 throw (new WebExceptions.ExcelWebPageException("Impossible de construire le rappel des paramètres dans le fichier Excel", err));
             }
         }
+
+        public static ClassificationLevelListDAL GetClassificationLevelListDAL(WebSession webSession,DetailLevelItemInformation.Levels level)
+        {
+            var dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rolex);
+            var classificationLevelListDAL =
+                new ClassificationLevelListDAL(DetailLevelItemsInformation.Get(level)
+                                               , webSession.SiteLanguage, dataSource,
+                                               WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.rolex03).Label);
+            return classificationLevelListDAL;
+        }
+
         #endregion
 
         #region Nouvelles Méthodes privées
@@ -648,9 +665,81 @@ namespace TNS.AdExpress.Web.UI
             StringBuilder html = new StringBuilder();
             if (webSession.isMediaSelected())
             {
+
                 html.Append(GetBlankLine());
-                html.Append("<tr><td class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(190, webSession.SiteLanguage) + " :</font></td></tr>");
-                html.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(webSession.SelectionUniversMedia, webSession.SiteLanguage, webSession.DomainName));
+              
+                if (webSession.CurrentModule == CstWeb.Module.Name.ROLEX)
+                {                   
+                    string str = webSession.GetSelection(webSession.SelectionUniversMedia,
+                                                         CustomerRightConstante.type.siteAccess);
+                    List<long> list = new List<string>(str.Split(',')).ConvertAll(Int64.Parse);
+                      html.Append(AppendSelectedItems(webSession, 2977, list,
+                                        DetailLevelItemInformation.Levels.site, GetClassificationLevelListDAL));
+
+                }else
+                {               
+                    html.Append("<tr><td class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(190, webSession.SiteLanguage) + " :</font></td></tr>");
+                    html.Append(TNS.AdExpress.Web.Functions.DisplayTreeNode.ToExcel(webSession.SelectionUniversMedia, webSession.SiteLanguage, webSession.DomainName));
+
+                }
+                  
+            }
+            return (html.ToString());
+        }
+        #endregion
+
+        #region Selected locations
+
+        /// <summary>
+        /// Media sélectionné
+        /// </summary>
+        /// <param name="webSession">Session du client</param>
+        /// <param name="code"> code</param>
+        /// <param name="selectedItems">selected Items </param>
+        /// <param name="level"> level</param>
+        /// <param name="GetClassificationLevelListDAL">GetClassificationLevelListDAL function </param>
+        /// <returns>HTML</returns>
+        public static string AppendSelectedItems(WebSession webSession, int code, List<long> selectedItems, DetailLevelItemInformation.Levels level,Func<WebSession,DetailLevelItemInformation.Levels,ClassificationLevelListDAL> GetClassificationLevelListDAL)
+        {
+            var html = new StringBuilder();
+            int nbCol = 0;
+            if (selectedItems!=null && selectedItems.Count > 0)
+            {
+                html.Append(GetBlankLine());
+                html.Append("<tr><td class=\"excelData\"><font class=txtBoldGrisExcel>" + GestionWeb.GetWebWord(code, webSession.SiteLanguage) + " :</font></td></tr>");
+
+                string absolutePath = "http://" + webSession.DomainName;
+                string themeName = WebApplicationParameters.Themes[webSession.SiteLanguage].Name;
+                string img = "<img src=\"" + absolutePath + "/App_Themes/" + themeName +"/Images/Common/checkbox.GIF\">";
+                var classificationLevelListDAL = GetClassificationLevelListDAL(webSession, level);
+                for (int i = 0; i < selectedItems.Count; i++)
+                {
+                    string text = classificationLevelListDAL[selectedItems[i]];
+                    if(nbCol==0)
+                    {
+                        html.AppendFormat("<tr>");
+                        html.AppendFormat("<td class=\"Level1\">{0}&nbsp;&nbsp;&nbsp;&nbsp;{1}</td>", img, text);
+                        nbCol++;
+                    }
+                    else if (nbCol == 1)
+                    {
+                        html.AppendFormat("<td class=\"Level1\">{0}&nbsp;&nbsp;&nbsp;&nbsp;{1}</td>", img, text);
+                        nbCol++;
+                    }
+                    else
+                    {
+                        html.AppendFormat("<td class=\"Level1\">{0}&nbsp;&nbsp;&nbsp;&nbsp;{1}</td>", img, text);
+                        html.AppendFormat("<td class=\"LevelRightBorder1\" >&nbsp;</td></tr>");
+                        nbCol = 0;
+                    }
+                }
+                if (nbCol != 0)
+                {
+                    for (int j = nbCol; j <3 ; j++)
+                        html.Append("<td class=\"Level1\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>");
+                        html.Append("<td class=\"LevelRightBorder1\" >&nbsp;</td></tr>");
+                }
+               
             }
             return (html.ToString());
         }

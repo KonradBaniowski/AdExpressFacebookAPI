@@ -247,7 +247,14 @@ namespace TNS.AdExpress.Constantes.Customer{
             /// <summary>
             /// Name in exception
             /// </summary>
-            nameException
+            nameException,
+            /// Site in Access
+            /// </summary>
+            siteAccess,
+            /// <summary>
+            /// Site in exception
+            /// </summary>
+            siteException
 		}
 		#endregion
 	}

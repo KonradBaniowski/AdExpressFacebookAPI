@@ -127,6 +127,10 @@ namespace TNS.AdExpress.Web.Core.Utilities{
                     //VP Brand
                     levels.Add(66);
                     break;
+                case TNS.AdExpress.Constantes.Web.Module.Name.ROLEX:
+                    //Site
+                    levels.Add(53);                   
+                    break;
                 default:
                     // Media/catégorie
                     levels.Add(1);
@@ -272,6 +276,24 @@ namespace TNS.AdExpress.Web.Core.Utilities{
                         return (GestionWeb.GetWebWord(2731, webSession.SiteLanguage));
                     case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleRegionMedia:
                         return (GestionWeb.GetWebWord(2741, webSession.SiteLanguage));
+
+                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.title:
+                        return (GestionWeb.GetWebWord(1976, webSession.SiteLanguage));
+                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleTitle:
+                        return (GestionWeb.GetWebWord(2969, webSession.SiteLanguage));
+                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.mediaSellerTitle:
+                        return (GestionWeb.GetWebWord(2970, webSession.SiteLanguage));
+
+                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.mediaSeller:
+                        return (GestionWeb.GetWebWord(1383, webSession.SiteLanguage));
+                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.mediaSellerVehicle:
+                        return (GestionWeb.GetWebWord(2812, webSession.SiteLanguage));
+                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.mediaSellerCategory:
+                        return (GestionWeb.GetWebWord(2813, webSession.SiteLanguage));
+                    case WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.category:
+                        return (GestionWeb.GetWebWord(1382, webSession.SiteLanguage));
+
+
                     default:
                         return ("no value");
                 }

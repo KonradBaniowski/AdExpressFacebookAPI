@@ -88,6 +88,7 @@
     <Compile Include="GrpBranch\WaveLevelListDAL.cs" />
     <Compile Include="IClassificationLevelListDALFactory.cs" />
     <Compile Include="MediaBrand\CategoryLevelListDAL.cs" />
+    <Compile Include="MediaBrand\SiteLevelListDAL.cs" />
     <Compile Include="MediaBrand\VpCircuitLevelListDAL.cs" />
     <Compile Include="MediaBrand\VpBrandLevelListDAL.cs" />
     <Compile Include="MediaBrand\RegionLevelListDAL.cs" />

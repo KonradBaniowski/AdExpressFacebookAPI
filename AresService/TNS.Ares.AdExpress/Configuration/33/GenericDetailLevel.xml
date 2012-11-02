@@ -26,7 +26,7 @@
     <level id="23" name="Genre d'émissions" webTextId="2122" dbId="id_program_type" dbLabel="program_type" dbTable="program_type" dbTablePrefixe="pt"/>
     <level id="24" name="Emissions" webTextId="2051" dbId="id_program" dbLabel="program" dbTable="program" dbTablePrefixe="pg"/>
     <level id="25" name="Formes de Parrainage" webTextId="2121" dbId="id_form_sponsorship" dbLabel="form_sponsorship" dbTable="form_sponsorship" dbTablePrefixe="fs"/>
-    <level id="26" name="Pays" webTextId="2091" dbId="id_country" dbLabel="country" dbTable="country" dbTablePrefixe="co"/>
+    <level id="26" name="Pays" webTextId="2091" dbId="id_country"  dbLabel="country" dbTable="country" dbTablePrefixe="co"/>
     <level id="27" name="Basic Media" webTextId="2544" dbId="id_basic_media" dbLabel="basic_media" dbTable="basic_media" dbTablePrefixe="bm"/>
     <level id="28" name="Sub Brand" webTextId="2650" dbId="id_sub_brand" dbLabel="sub_brand" dbTable="sub_brand" dbTablePrefixe="sb"/>
     <level id="29" name="Network" webTextId="2651" dbId="id_network" dbLabel="network" dbTable="network" dbTablePrefixe="nt"/>
@@ -73,6 +73,13 @@
     <level id="65" name="Sub Segment VP"  webTextId="2878" dbId="id_category" dbLabel="category"  dbTable="category"  dbTablePrefixe="ca"/>
     <level id="66" name="Brand VP"        webTextId="2876" dbId="id_brand"    dbLabel="brand"     dbTable="brand"     dbTablePrefixe="br"/>
     <level id="67" name="Product VP"      webTextId="2880" dbId="id_product"  dbLabel="product"   dbTable="product"   dbTablePrefixe="pr"/>
+
+    <level id="72" name="presenceType" webTextId="2957" dbId="id_presence_type" dbLabel="presence_type" dbTable="presence_type" dbTablePrefixe="prt"/>
+
+    <level id="74" name="Target"      webTextId="1991" dbId="id_target"  dbLabel="target"   dbTable="target"   dbTablePrefixe="tg"/>
+    <level id="75" name="Wave"      webTextId="1762" dbId="id_wave"  dbLabel="wave"   dbTable="wave"   dbTablePrefixe="wv"/>
+
+    <level id="76" name="Location"      webTextId="1732" dbId="id_location"  dbLabel="location"   dbTable="location"   dbTablePrefixe="lc"/>
   </detaillevelItems>
 
   <detailLevels>
@@ -348,5 +355,19 @@
     </detailLevel>
     -->
     <!--Fin Niveau Détail rajouté en Russie-->
+    <detailLevel id="74" name="Site\Location\Type of presence">
+      <levelItem id="53" name="Site"/>
+      <levelItem id="76" name="Location"/>
+      <levelItem id="72" name="Type of presence"/>
+    </detailLevel>
+    <detailLevel id="75" name="Site">
+      <levelItem id="53" name="Site"/>
+    </detailLevel>
+    <detailLevel id="76" name="Location">
+      <levelItem id="76" name="Location"/>
+    </detailLevel>
+    <detailLevel id="77" name="Type of presence">
+      <levelItem id="72" name="Type of presence"/>
+    </detailLevel>
   </detailLevels>
 </genericDetailLevel>

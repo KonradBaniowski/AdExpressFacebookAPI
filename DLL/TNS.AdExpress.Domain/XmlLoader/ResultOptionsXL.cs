@@ -45,8 +45,10 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             bool useRetailer = false;
             Dictionary<TableIds, MatchingTable> matchingTableList = new Dictionary<TableIds, MatchingTable>();
             VpConfigurationDetail vpConfigurationDetail = null;
-            List<VpDateConfiguration> vpDateConfigurationList = null;
+            RolexConfigurationDetail rolexConfigurationDetail = null;
+            List<DateConfiguration> vpDateConfigurationList = null, rolexDateConfigurationList = null;
             TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type defaultVpDateType = CustomerSessions.Period.Type.currentMonth;
+            TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type defaultRolexDateType = CustomerSessions.Period.Type.currentMonth;
             DetailLevelItemInformation.Levels defaultPersoLevel = DetailLevelItemInformation.Levels.vpBrand;
             bool useComparativeLostWon = false;
             bool useDiponibilityLostWon = true;
@@ -126,52 +128,23 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                 if (ModulesList.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.VP) != null) {
 
                                     #region Variables
-                                    List<ControlLayer> resultControlLayerList = new List<ControlLayer>();
-                                    List<ControlLayer> selectionControlLayerList = new List<ControlLayer>();
-                                    vpDateConfigurationList = new List<VpDateConfiguration>();
+                                    var resultControlLayerList = new List<ControlLayer>();
+                                    var selectionControlLayerList = new List<ControlLayer>();
+                                    vpDateConfigurationList = new List<DateConfiguration>();
                                     #endregion
 
                                     subReader = reader.ReadSubtree();
                                     while (subReader.Read()) {
                                         if (subReader.NodeType == XmlNodeType.Element) {
                                             switch (subReader.LocalName) {
-                                                case "dateSelections":
-                                                    defaultVpDateType = (TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type)Enum.Parse(typeof(TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type), subReader.GetAttribute("defaultType"));
-
-                                                    subSubReader = subReader.ReadSubtree();
-                                                    while (subSubReader.Read()) {
-                                                        if (subSubReader.NodeType == XmlNodeType.Element) {
-                                                            switch (subSubReader.LocalName) {
-                                                                case "dateSelection":
-                                                                    vpDateConfigurationList.Add(new VpDateConfiguration((TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type)Enum.Parse(typeof(TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type), subSubReader.GetAttribute("type")), Int64.Parse(subSubReader.GetAttribute("textId"))));
-                                                                    break;
-                                                            }
-                                                        }
-                                                    }
+                                                case "dateSelections":                                                  
+                                                    defaultVpDateType = GetDateConfigurations(vpDateConfigurationList, subReader);
                                                     break;
                                                 case "results":
-                                                    subSubReader = subReader.ReadSubtree();
-                                                    while (subSubReader.Read()) {
-                                                        if (subSubReader.NodeType == XmlNodeType.Element) {
-                                                            switch (subSubReader.LocalName) {
-                                                                case "result":
-                                                                    resultControlLayerList.Add(new ControlLayer(subSubReader.GetAttribute("name"), subSubReader.GetAttribute("id"), subSubReader.GetAttribute("assemblyName"), subSubReader.GetAttribute("class"), (!string.IsNullOrEmpty(subSubReader.GetAttribute("skinId"))) ? subSubReader.GetAttribute("skinId") : string.Empty, (!string.IsNullOrEmpty(subSubReader.GetAttribute("validationMethod"))) ? subSubReader.GetAttribute("validationMethod") : string.Empty, (!string.IsNullOrEmpty(subSubReader.GetAttribute("display"))) ? bool.Parse(subSubReader.GetAttribute("display")) : true, (!string.IsNullOrEmpty(subSubReader.GetAttribute("textId"))) ? Int64.Parse(subSubReader.GetAttribute("textId")) : 0));
-                                                                    break;
-                                                            }
-                                                        }
-                                                    }
+                                                    GetResultControlLayers(resultControlLayerList, subReader);
                                                     break;
                                                 case "selections":
-                                                    subSubReader = subReader.ReadSubtree();
-                                                    while (subSubReader.Read()) {
-                                                        if (subSubReader.NodeType == XmlNodeType.Element) {
-                                                            switch (subSubReader.LocalName) {
-                                                                case "selection":
-                                                                    selectionControlLayerList.Add(new ControlLayer(subSubReader.GetAttribute("name"), subSubReader.GetAttribute("id"), subSubReader.GetAttribute("assemblyName"), subSubReader.GetAttribute("class"), (!string.IsNullOrEmpty(subSubReader.GetAttribute("skinId"))) ? subSubReader.GetAttribute("skinId") : string.Empty, (!string.IsNullOrEmpty(subSubReader.GetAttribute("validationMethod"))) ? subSubReader.GetAttribute("validationMethod") : string.Empty, (!string.IsNullOrEmpty(subSubReader.GetAttribute("display"))) ? bool.Parse(subSubReader.GetAttribute("display")) : true, (!string.IsNullOrEmpty(subSubReader.GetAttribute("textId"))) ? Int64.Parse(subSubReader.GetAttribute("textId")) : 0));
-                                                                    break;
-                                                            }
-                                                        }
-                                                    }
+                                                    GetSelectionControlLayers(selectionControlLayerList, subReader);
                                                     break;
                                                 case "defaulPersonnalizedLevel":
                                                     defaultPersoLevel = (DetailLevelItemInformation.Levels)Enum.Parse(typeof(DetailLevelItemInformation.Levels), subReader.GetAttribute("level"));
@@ -182,7 +155,38 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                                     }
                                     vpConfigurationDetail = new VpConfigurationDetail(resultControlLayerList, selectionControlLayerList, defaultPersoLevel);
                                 }
-                                break;							
+                                break;
+							case "rolexConfiguration":
+                                if (ModulesList.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.ROLEX) != null)
+                                {   
+                                    #region Variables
+                                    var resultControlLayerList = new List<ControlLayer>();
+                                    var selectionControlLayerList = new List<ControlLayer>();
+                                    rolexDateConfigurationList = new List<DateConfiguration>();
+                                    #endregion
+
+                                    subReader = reader.ReadSubtree();
+                                    while (subReader.Read())
+                                    {
+                                        if (subReader.NodeType == XmlNodeType.Element)
+                                        {
+                                            switch (subReader.LocalName)
+                                            {
+                                                case "dateSelections":
+                                                    defaultRolexDateType = GetDateConfigurations(rolexDateConfigurationList, subReader);
+                                                    break;
+                                                case "results":
+                                                    GetResultControlLayers(resultControlLayerList, subReader);
+                                                    break;
+                                                case "selections":
+                                                    GetSelectionControlLayers(selectionControlLayerList, subReader);
+                                                    break;                                               
+                                            }
+                                        }
+                                    }
+                                    rolexConfigurationDetail = new RolexConfigurationDetail(resultControlLayerList, selectionControlLayerList);
+                                }
+                                break;
                             case "campaignType":
                                 if (reader.GetAttribute("available") != null && reader.GetAttribute("available").Length > 0)
                                 {
@@ -213,7 +217,9 @@ namespace TNS.AdExpress.Domain.XmlLoader {
                 WebApplicationParameters.UseRetailer = useRetailer;
                 WebApplicationParameters.MatchingRetailerTableList = matchingTableList;
                 WebApplicationParameters.VpConfigurationDetail = vpConfigurationDetail;
-                WebApplicationParameters.VpDateConfigurations = new VpDateConfigurations(defaultVpDateType, vpDateConfigurationList);		
+                WebApplicationParameters.RolexConfigurationDetail = rolexConfigurationDetail;
+                WebApplicationParameters.VpDateConfigurations = new DateConfigurations(defaultVpDateType, vpDateConfigurationList);
+                WebApplicationParameters.RolexDateConfigurations = new DateConfigurations(defaultRolexDateType, rolexDateConfigurationList);	
                 WebApplicationParameters.UseComparativeLostWon = useComparativeLostWon;
                 WebApplicationParameters.UseDiponibilityOptionPeriodLostWon = useDiponibilityLostWon;
                 WebApplicationParameters.UseTypeOptionPeriodLostWon = useTypeLostWon;
@@ -235,6 +241,107 @@ namespace TNS.AdExpress.Domain.XmlLoader {
             }
             #endregion
 
+        }
+
+        private static CustomerSessions.Period.Type GetDateConfigurations(List<DateConfiguration> vpDateConfigurationList, XmlReader subReader)
+        {
+            CustomerSessions.Period.Type defaultVpDateType;
+            XmlReader subSubReader;
+            defaultVpDateType =
+                (CustomerSessions.Period.Type)
+                Enum.Parse(typeof (CustomerSessions.Period.Type), subReader.GetAttribute("defaultType"));
+
+            subSubReader = subReader.ReadSubtree();
+            while (subSubReader.Read())
+            {
+                if (subSubReader.NodeType == XmlNodeType.Element)
+                {
+                    switch (subSubReader.LocalName)
+                    {
+                        case "dateSelection":
+                            vpDateConfigurationList.Add(
+                                new DateConfiguration(
+                                    (CustomerSessions.Period.Type)
+                                    Enum.Parse(typeof (CustomerSessions.Period.Type), subSubReader.GetAttribute("type")),
+                                    Int64.Parse(subSubReader.GetAttribute("textId"))));
+                            break;
+                    }
+                }
+            }
+            return defaultVpDateType;
+        }
+
+        private static void GetSelectionControlLayers(List<ControlLayer> selectionControlLayerList, XmlReader subReader)
+        {
+            XmlReader subSubReader;
+            subSubReader = subReader.ReadSubtree();
+            while (subSubReader.Read())
+            {
+                if (subSubReader.NodeType == XmlNodeType.Element)
+                {
+                    switch (subSubReader.LocalName)
+                    {
+                        case "selection":
+                            selectionControlLayerList.Add(new ControlLayer(subSubReader.GetAttribute("name"),
+                                                                           subSubReader.GetAttribute("id"),
+                                                                           subSubReader.GetAttribute("assemblyName"),
+                                                                           subSubReader.GetAttribute("class"),
+                                                                           (!string.IsNullOrEmpty(
+                                                                               subSubReader.GetAttribute("skinId")))
+                                                                               ? subSubReader.GetAttribute("skinId")
+                                                                               : string.Empty,
+                                                                           (!string.IsNullOrEmpty(
+                                                                               subSubReader.GetAttribute("validationMethod")))
+                                                                               ? subSubReader.GetAttribute("validationMethod")
+                                                                               : string.Empty,
+                                                                           (!string.IsNullOrEmpty(
+                                                                               subSubReader.GetAttribute("display")))
+                                                                               ? bool.Parse(subSubReader.GetAttribute("display"))
+                                                                               : true,
+                                                                           (!string.IsNullOrEmpty(
+                                                                               subSubReader.GetAttribute("textId")))
+                                                                               ? Int64.Parse(subSubReader.GetAttribute("textId"))
+                                                                               : 0));
+                            break;
+                    }
+                }
+            }
+        }
+
+        private static void GetResultControlLayers(List<ControlLayer> resultControlLayerList, XmlReader subReader)
+        {
+            XmlReader subSubReader = subReader.ReadSubtree();
+            while (subSubReader.Read())
+            {
+                if (subSubReader.NodeType == XmlNodeType.Element)
+                {
+                    switch (subSubReader.LocalName)
+                    {
+                        case "result":
+                            resultControlLayerList.Add(new ControlLayer(subSubReader.GetAttribute("name"),
+                                                                        subSubReader.GetAttribute("id"),
+                                                                        subSubReader.GetAttribute("assemblyName"),
+                                                                        subSubReader.GetAttribute("class"),
+                                                                        (!string.IsNullOrEmpty(
+                                                                            subSubReader.GetAttribute("skinId")))
+                                                                            ? subSubReader.GetAttribute("skinId")
+                                                                            : string.Empty,
+                                                                        (!string.IsNullOrEmpty(
+                                                                            subSubReader.GetAttribute("validationMethod")))
+                                                                            ? subSubReader.GetAttribute("validationMethod")
+                                                                            : string.Empty,
+                                                                        (!string.IsNullOrEmpty(
+                                                                            subSubReader.GetAttribute("display")))
+                                                                            ? bool.Parse(subSubReader.GetAttribute("display"))
+                                                                            : true,
+                                                                        (!string.IsNullOrEmpty(
+                                                                            subSubReader.GetAttribute("textId")))
+                                                                            ? Int64.Parse(subSubReader.GetAttribute("textId"))
+                                                                            : 0));
+                            break;
+                    }
+                }
+            }
         }
     }
 }

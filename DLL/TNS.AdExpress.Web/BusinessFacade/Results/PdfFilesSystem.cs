@@ -60,6 +60,8 @@ namespace TNS.AdExpress.Web.BusinessFacade.Results{
             typeList.Add(Anubis.Constantes.Result.type.dedoum.GetHashCode());
             typeList.Add(Anubis.Constantes.Result.type.pachet.GetHashCode());
             typeList.Add(Anubis.Constantes.Result.type.apis.GetHashCode());
+            typeList.Add(Anubis.Constantes.Result.type.amon.GetHashCode());
+            typeList.Add(Anubis.Constantes.Result.type.ptah.GetHashCode());
 			#endregion
 			
 			#region Construction de la liste

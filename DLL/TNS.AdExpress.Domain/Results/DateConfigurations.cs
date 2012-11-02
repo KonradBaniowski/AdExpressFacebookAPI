@@ -5,7 +5,7 @@ using TNS.AdExpress.Domain.Layers;
 
 namespace TNS.AdExpress.Domain.Results {
 
-    public class VpDateConfigurations {
+    public class DateConfigurations {
 
         #region Variables
         /// <summary>
@@ -15,7 +15,7 @@ namespace TNS.AdExpress.Domain.Results {
         /// <summary>
         /// Vp Date Configuration List
         /// </summary>
-        protected List<VpDateConfiguration> _vpDateConfigurationList;
+        protected List<DateConfiguration> _vpDateConfigurationList;
         #endregion
 
         #region Constructor
@@ -24,7 +24,7 @@ namespace TNS.AdExpress.Domain.Results {
         /// </summary>
         /// <param name="dateTypeDefault">Vp Date Configuration Type</param>
         /// <param name="vpDateConfigurationList">Vp Date Configuration List</param>
-        public VpDateConfigurations(TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type dateTypeDefault, List<VpDateConfiguration> vpDateConfigurationList) {
+        public DateConfigurations(TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type dateTypeDefault, List<DateConfiguration> vpDateConfigurationList) {
             _dateTypeDefault = dateTypeDefault;
             _vpDateConfigurationList = vpDateConfigurationList;
         }
@@ -40,7 +40,7 @@ namespace TNS.AdExpress.Domain.Results {
         /// <summary>
         /// Get Vp Date Configuration List
         /// </summary>
-        public List<VpDateConfiguration> VpDateConfigurationList {
+        public List<DateConfiguration> VpDateConfigurationList {
             get { return _vpDateConfigurationList; }
         }
         #endregion

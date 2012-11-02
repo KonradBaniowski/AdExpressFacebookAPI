@@ -5,7 +5,7 @@ using TNS.AdExpress.Domain.Layers;
 
 namespace TNS.AdExpress.Domain.Results {
     
-    public class VpDateConfiguration {
+    public class DateConfiguration {
 
         #region Variables
         /// <summary>
@@ -24,7 +24,7 @@ namespace TNS.AdExpress.Domain.Results {
         /// </summary>
         /// <param name="dateType">Date Type</param>
         /// <param name="textId">Text Id</param>
-        public VpDateConfiguration(TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type dateType, Int64 textId) {
+        public DateConfiguration(TNS.AdExpress.Constantes.Web.CustomerSessions.Period.Type dateType, Int64 textId) {
             _dateType = dateType;
             _textId = textId;
         }

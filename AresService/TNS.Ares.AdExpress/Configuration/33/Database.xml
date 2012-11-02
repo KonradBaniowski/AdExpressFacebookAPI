@@ -19,8 +19,10 @@
     <!--Test default rights connection-->
     <defaultConnection enumId="10" description="Rights" dataBaseEnumId="2" login="gfacon" password="sandie5"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="12" description="Veille Promo" dataBaseEnumId="2" login="PROMO03" password="waltari2"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="14" description="Rolex" dataBaseEnumId="2" login="ROLEX03" password="40ans"    dataSource="adexpress_web_test" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
   </defaultConnections>
   <schemas>
+
     <schema enumId="0" description="AdExpress Data (AdExpr03)" label="adexpr03"/>
     <schema enumId="1" description="APPM (Chronopress)" label="appm01"/>
     <schema enumId="2" description="Right" label="mau01"/>
@@ -29,6 +31,7 @@
     <schema enumId="5" description="Web" label="webnav01"/>
     <schema enumId="10" description="Alert" label="mau01"/>
     <schema enumId="11" description="Promotion monitoring tables" label="promo03"/>
+    <schema enumId="12" description="Rolex tables" label="rolex03"/>
   </schemas>
   <tables defaultResultTablesPrefix="wp">
     <table enumId="0" description="List table" schemaEnumId="5" label="list" prefix="lst"/>
@@ -266,6 +269,11 @@
     <table enumId="236" description="Customer Insertions levels: insertion leves save" schemaEnumId="5" label="insertion_save" prefix="isl"/>
     <table enumId="237" description="Classif: Group Format Banners" schemaEnumId="0" label="group_format_banners" prefix="gfb"/>
     <table enumId="238" description="Right: Group Format Banners" schemaEnumId="2" label="ORDER_CLIENT_GROUP_FORMAT" prefix="ocgf"/>
+
+    <table enumId="239" description="Rolex : Data  "   schemaEnumId="12" label="data_rolex" prefix="wp"/>
+    <table enumId="240" description="Rolex : Location  "   schemaEnumId="12" label="emplacement" prefix="ep"/>
+    <table enumId="241" description="Rolex : Site  "   schemaEnumId="12" label="site" prefix="st"/>
+    <table enumId="242" description="Rolex : Tye presence  "   schemaEnumId="12" label="type_presence" prefix="tp"/>
 
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>

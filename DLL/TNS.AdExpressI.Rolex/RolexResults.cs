@@ -216,7 +216,10 @@ namespace TNS.AdExpressI.Rolex
                 _isExcelReport = false;
                 _isPDFReport = false;
                 _style = new DefaultRolexScheduleStyle();
-                return ComputeDesign(ComputeData);
+                var htmlVisibility = new StringBuilder();
+                var htmlNoVisibility = new StringBuilder();
+                 ComputeDesign(ComputeData, ComputeSitesWithoutVisibility, htmlVisibility, htmlNoVisibility);
+                 return string.Format("{0}<br/><br/>{1}", htmlVisibility.ToString(), htmlNoVisibility.ToString());
             }
             catch (Exception ex)
             {
@@ -236,7 +239,10 @@ namespace TNS.AdExpressI.Rolex
                 _isExcelReport = true;
                 _isPDFReport = false;
                 _style = new ExcelRolexScheduleStyle();
-                return ComputeDesign(ComputeData);
+                var htmlVisibility = new StringBuilder();
+                var htmlNoVisibility = new StringBuilder();
+                ComputeDesign(ComputeData, ComputeSitesWithoutVisibility, htmlVisibility, htmlNoVisibility);
+                return string.Format("{0}{1}<br/><br/>{2}{3}", GetExcelHeader(), htmlVisibility.ToString(), htmlNoVisibility.ToString(), GetExcelFooter());
 
             }
             catch (Exception ex)
@@ -248,13 +254,20 @@ namespace TNS.AdExpressI.Rolex
         /// Get HTML code for a pdf export of the rolex schedule
         /// </summary>
         /// <returns>HTML Code</returns>
-        public virtual string GetPDFHtml()
+        public virtual string[] GetPDFHtml()
         {
 
             _isExcelReport = false;
             _isPDFReport = true;
             _style = new PDFRolexScheduleStyle();
-            return ComputeDesign(ComputeData);
+             var htmlVisibility = new StringBuilder();
+            var htmlNoVisibility = new StringBuilder();
+            ComputeDesign(ComputeData, ComputeSitesWithoutVisibility, htmlVisibility, htmlNoVisibility);
+            var tab = new string[2];
+            tab[0] = htmlVisibility.ToString();
+            tab[1] = htmlNoVisibility.ToString();
+            return tab;
+
         }
         /// <summary>
         /// Get HTML code for the rolex file
@@ -264,238 +277,237 @@ namespace TNS.AdExpressI.Rolex
         {
             var html = new StringBuilder(1000);
 
-            object[] param = null;
-
-            var arrList = new ArrayList();
-            arrList.Add(53);
-            arrList.Add(76);
-            arrList.Add(72);
+            var arrList = new ArrayList { 53, 76, 72 };
             var detailLevel = new GenericDetailLevel(arrList);
 
-            param = new object[3];
+            var param = new object[3];
             param[0] = _session;
             param[1] = _periodBeginningDate;
             param[2] = _periodEndDate;
-            var rolexScheduleDAL = (IRolexDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+            var rolexScheduleDAL = (IRolexDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\"
+                + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance
+                | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
 
-            var ds = rolexScheduleDAL.GetFileData(selectedDetailLevel, selectedLevelValues, detailLevel);
-            long _idDataPromotion = long.MinValue;
-            visuals = new List<string>();
-            if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+            using (var ds = rolexScheduleDAL.GetFileData(selectedDetailLevel, selectedLevelValues, detailLevel))
             {
 
-                string visibility = "hidden";
-                html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"center\" width=\"100%\" height=\"100%\">");
-                html.Append("<tr> <td   class=\"rolexScheduleResultFilterWebControlResult\">");//debut 1 //puour le content
+                visuals = new List<string>();
 
-                html.Append("<div class=\"rolexScheduleResultFilterWebControlResult\">");//  debut 2
-                html.Append("<div class=\"rolexScheduleResultFileContent\">");//  debut 3
 
-                long? oldIdSite = null;
-                long? oldIdPage = null;
-                long? oldIdLocation = null;
-                List<string> temsVisuals;
-
-                int m = 0;
-
-                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                 {
+                    html.Append("<table class=\"rolexSchedulFileResult\" >");// cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"center\" width=\"650\" height=\"590\"
+                    html.Append("<tr> <td   class=\"rolexSchedulFileResult\" valign=\"top\" >");//debut 1 //puour le content
 
-                    var dr = ds.Tables[0].Rows[i];
+                    html.Append("<div class=\"rolexSchedulFileResult\">");//  debut 2
+                    html.Append("<div class=\"rolexScheduleResultFileContent\">");//  debut 3
 
-                    if (oldIdSite != Convert.ToInt64(dr["ID_SITE"]) || oldIdLocation != Convert.ToInt64(dr["ID_LOCATION"])
-                       || oldIdPage != Convert.ToInt64(dr["ID_PAGE"]))
+                    long? oldIdSite = null;
+                    long? oldIdPage = null;
+                    long? oldIdLocation = null;
+
+                    int m = 0;
+
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                     {
 
+                        var dr = ds.Tables[0].Rows[i];
 
-                        #region Content
-
-                        html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"center\" Valign=\"top\" width=\"100%\" height=\"100%\">");
-
-                        #region Header
-
-                        //SITE
-                        if (oldIdSite != Convert.ToInt64(dr["ID_SITE"]))
+                        if (oldIdSite != Convert.ToInt64(dr["ID_SITE"]) || oldIdLocation != Convert.ToInt64(dr["ID_LOCATION"])
+                           || oldIdPage != Convert.ToInt64(dr["ID_PAGE"]))
                         {
-                            html.Append("<tr><td class=\"RolexFilePopUpHeader\">");
-                            html.AppendFormat("&nbsp;&nbsp;{0}", dr["SITE"].ToString());
-
-                            html.Append("</td></tr>");
-                        }
-                        #endregion
-
-                        //Content
-                        html.Append("<tr><td class=\"rofDescr\">");
-                        html.Append("<ul class=\"rof\">");
-
-                        //URL
-                        html.AppendFormat(" <li><span class=\"rofSp\"\"> <a class=\"roSite\" href=\"{1}\" target=\"_blank\" >{1}</a></span>", "&nbsp;", dr["URL"].ToString());
-
-                        //Image export pdf
-                        if (oldIdSite != Convert.ToInt64(dr["ID_SITE"]) && i == 0)
-                        {
-                            html.Append("<img align=\"right\" alt=\"" + GestionWeb.GetWebWord(2865, _session.SiteLanguage) +
-                                        "\" ");
-                            html.Append("id=\"promofile" + _resultControlId + "\" ");
-                            html.AppendFormat("src=\"/App_Themes/{0}/Images/Common/export_pdf.gif\" ", _theme);
-                            html.AppendFormat(
-                                "onmouseover=\"javascript:this.src='/App_Themes/{0}/Images/Common/export_pdf_over.gif';\" ",
-                                _theme);
-                            html.AppendFormat(
-                                "onmouseout=\"javascript:this.src='/App_Themes/{0}/Images/Common/export_pdf.gif';\" ",
-                                _theme);
-                            html.AppendFormat(
-                                "onclick=\"javascript:popupOpenBis('/Private/MyAdExpress/PdfSavePopUp.aspx?idSession={0}&idDataPromotion={1}&resultType={2}','470','210','yes');\" ",
-                                _session.IdSession, _idDataPromotion,
-                                TNS.AdExpress.Anubis.Constantes.Result.type.selket.GetHashCode());
-                            html.Append(" />");
-                        }
-
-                        html.Append("</li>");
-
-                        //Dates
-                        string dateBegin = DateString.YYYYMMDDToDD_MM_YYYY(Convert.ToInt32(dr["DATE_BEGIN_NUM"].ToString()), _session.SiteLanguage);
-                        string dateEnd = DateString.YYYYMMDDToDD_MM_YYYY(Convert.ToInt32(dr["DATE_END_NUM"].ToString()), _session.SiteLanguage);
-                        html.AppendFormat(" <li><span><b>{0}:</b></span><span class=\"rofSp\"> {1} {2} {3} {4}</span></li>", GestionWeb.GetWebWord(895, _session.SiteLanguage), GestionWeb.GetWebWord(896, _session.SiteLanguage), dateBegin, GestionWeb.GetWebWord(897, _session.SiteLanguage), dateEnd);
-
-                        // Location
-                        html.AppendFormat(" <li><span><b>{0}:</b></span><span class=\"rofSp\"\"> {1}</span></li>", GestionWeb.GetWebWord(1732, _session.SiteLanguage), dr["LOCATION"].ToString());
 
 
+                            #region Content
 
-                        //PRESENCE TYPE               
-                        html.AppendFormat(" <li><span><b>{0}:</b></span>", GestionWeb.GetWebWord(2957, _session.SiteLanguage));
-                        html.Append(" <ul class=\"rofbd\">");
-                        DataRow[] dataRows =
-                            ds.Tables[0].Select(" ID_SITE =" + Convert.ToString(dr["ID_SITE"]) + " AND ID_LOCATION=" +
-                                                Convert.ToString(dr["ID_LOCATION"]) + " AND ID_PAGE=" +
-                                                Convert.ToString(dr["ID_PAGE"]));
-                        foreach (DataRow dataRow in dataRows)
-                        {
-                            html.AppendFormat("<li><span class=\"rofSp\">{0}</span> </li>", dataRow["PRESENCE_TYPE"].ToString());
-                        }
-                        html.Append(" </ul>");
-                        html.Append(" </li>");
+                            html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" align=\"center\" valign=\"top\" width=\"650\" height=\"530\">");
 
-                        // Commentary
-                        if (dr["COMMENTARY"] != DBNull.Value)
-                            html.AppendFormat(" <li><span><b>{0}:</b></span><span class=\"rofSp\"\"> {1}</span>", GestionWeb.GetWebWord(74, _session.SiteLanguage), dr["COMMENTARY"].ToString());
+                            #region Header
 
-                        html.Append("</ul></td></tr>");
-
-                        //Space                      
-                        html.Append("<tr><td>");
-                        html.Append("&nbsp;");
-                        html.Append("</td></tr>");
-
-
-                        #region Image(s) promotion
-                        if (dr["VISUAL"] != DBNull.Value && dr["VISUAL"].ToString().Length > 0)
-                        {
-                            //Button arrow left
-                            html.Append("<tr><td>");
-                            html.Append("  <table cellpadding=\"0\" border=\"0\" align=\"center\">");
-                            html.Append(" <tr><td id=\"previous\">");
-                            html.AppendFormat(" <img id=\"imgPrevious_" + m + "_" + _resultControlId + "\" style=\"visibility: hidden; margin-left: 5px; cursor: pointer; margin-right: 5px; vertical-align: middle;\" onmouseover=\"this.src='/App_Themes/{0}/Images/Common/Button/arrow_left_down.gif'\" onmouseout=\"this.src='/App_Themes/{0}/Images/Common/Button/arrow_left.gif'\" onclick=\"javascript:DisplayPics_"
-                                + _resultControlId + "(-1,this,document.getElementById('imgNext_" + m + "_" + _resultControlId + "'),document.getElementById('img_ro_" + m + "_" + _resultControlId + "'),'" + dr["VISUAL"].ToString() + "');\" src=\"/App_Themes/{0}/Images/Common/Button/arrow_left.gif\" />", _theme);
-                            html.Append("</td>");
-
-                            //Show Visual                           
-                            visibility = "hidden";
-                            temsVisuals = new List<string>(dr["VISUAL"].ToString().Split(','));
-                            if (temsVisuals.Count > 1) visibility = "visible";
-                            for (int k = 0; k < temsVisuals.Count; k++)
+                            //SITE
+                            if (oldIdSite != Convert.ToInt64(dr["ID_SITE"]))
                             {
-                                string currentVisual = string.Format("{0}/{1}?p={2}", CstWeb.CreationServerPathes.IMAGES_ROLEX, temsVisuals[k].Trim(), k);
-                                visuals.Add(currentVisual);
-                                if (k == 0) html.AppendFormat(" <td id=\"img_pr_div\" class=\"ro_visu1\"><a onclick=\"javascript:ZoomRolexImage_" + _resultControlId + "(''+document.getElementById('img_ro_" + m + "_" + _resultControlId + "').src+'');\"><img class=\"ro_visu\" id=\"img_ro_" + m + "_" + _resultControlId + "\" src=\"{0}\" /> </a></td>", currentVisual);
+                                html.Append("<tr><td class=\"RolexFilePopUpHeader\">");
+                                html.AppendFormat("&nbsp;&nbsp;{0}", dr["SITE"].ToString());
+
+                                html.Append("</td></tr>");
+                            }
+                            #endregion
+
+                            //Content
+                            html.Append("<tr><td class=\"rofDescr\" valign=\"top\">");
+                            html.Append("<ul class=\"rof\">");
+
+                            //URL
+                            html.AppendFormat(" <li><span class=\"rofSp\"\"> <a class=\"roSite\" href=\"{1}\" target=\"_blank\" >{1}</a></span>", "&nbsp;", dr["URL"].ToString());
+
+                            //Image export pdf
+                            if (oldIdSite != Convert.ToInt64(dr["ID_SITE"]) && i == 0)
+                            {
+                                html.Append("<img align=\"right\" alt=\"" + GestionWeb.GetWebWord(2865, _session.SiteLanguage) +
+                                            "\" ");
+                                html.Append("id=\"promofile" + _resultControlId + "\" ");
+                                html.AppendFormat("src=\"/App_Themes/{0}/Images/Common/export_pdf.gif\" ", _theme);
+                                html.AppendFormat(
+                                    "onmouseover=\"javascript:this.src='/App_Themes/{0}/Images/Common/export_pdf_over.gif';\" ",
+                                    _theme);
+                                html.AppendFormat(
+                                    "onmouseout=\"javascript:this.src='/App_Themes/{0}/Images/Common/export_pdf.gif';\" ",
+                                    _theme);
+                                html.AppendFormat(
+                                    "onclick=\"javascript:popupOpenBis('/Private/MyAdExpress/PdfSavePopUp.aspx?idSession={0}&levelsValue={1}&resultType={2}&datebegin={3}&dateend={4}','470','210','yes');\" ",
+                                    _session.IdSession, string.Join(",", selectedLevelValues.Select(p => p.ToString()).ToArray()),
+                                    TNS.AdExpress.Anubis.Constantes.Result.type.ptah.GetHashCode(), dr["DATE_BEGIN_NUM"].ToString(), dr["DATE_END_NUM"].ToString());
+                                html.Append(" />");
                             }
 
+                            html.Append("</li>");
 
-                            //Button arrow right
-                            html.Append(" <td id=\"next\">");
-                            html.AppendFormat(" <img id=\"imgNext_" + m + "_" + _resultControlId + "\" style=\"visibility: {1}; margin-left: 5px; cursor: pointer; margin-right: 5px; vertical-align: middle;\" onmouseover=\"this.src='/App_Themes/{0}/Images/Common/Button/arrow_right_down.gif'\" onmouseout=\"this.src='/App_Themes/{0}/Images/Common/Button/arrow_right.gif'\" onclick=\"javascript:DisplayPics_"
-                                + _resultControlId + "(1,document.getElementById('imgPrevious_" + m + "_" + _resultControlId + "'),this,document.getElementById('img_ro_" + m + "_" + _resultControlId + "'),'" + dr["VISUAL"].ToString() + "');\" src=\"/App_Themes/{0}/Images/Common/Button/arrow_right.gif\" />", _theme, visibility);
-                            html.Append("</td>");
+                            //Dates
+                            string dateBegin = DateString.YYYYMMDDToDD_MM_YYYY(Convert.ToInt32(dr["DATE_BEGIN_NUM"].ToString()), _session.SiteLanguage);
+                            string dateEnd = DateString.YYYYMMDDToDD_MM_YYYY(Convert.ToInt32(dr["DATE_END_NUM"].ToString()), _session.SiteLanguage);
+                            html.AppendFormat(" <li><span><b>{0}:</b></span><span class=\"rofSp\"> {1} {2} {3} {4}</span></li>", GestionWeb.GetWebWord(895, _session.SiteLanguage),
+                                GestionWeb.GetWebWord(896, _session.SiteLanguage), dateBegin, GestionWeb.GetWebWord(897, _session.SiteLanguage), dateEnd);
+
+                            // Location
+                            html.AppendFormat(" <li><span><b>{0}:</b></span><span class=\"rofSp\"\"> {1}</span></li>", GestionWeb.GetWebWord(1732, _session.SiteLanguage), dr["LOCATION"].ToString());
 
 
 
-                            html.Append("</table>");
+                            //PRESENCE TYPE               
+                            html.AppendFormat(" <li><span><b>{0}:</b></span>", GestionWeb.GetWebWord(2957, _session.SiteLanguage));
+                            html.Append(" <ul class=\"rofbd\">");
+                            DataRow[] dataRows =
+                                ds.Tables[0].Select(" ID_SITE =" + Convert.ToString(dr["ID_SITE"]) + " AND ID_LOCATION=" +
+                                                    Convert.ToString(dr["ID_LOCATION"]) + " AND ID_PAGE=" +
+                                                    Convert.ToString(dr["ID_PAGE"]));
+                            foreach (DataRow dataRow in dataRows)
+                            {
+                                html.AppendFormat("<li><span class=\"rofSp\">{0}</span> </li>", dataRow["PRESENCE_TYPE"].ToString());
+                            }
+                            html.Append(" </ul>");
+                            html.Append(" </li>");
+
+                            // Commentary
+                            if (dr["COMMENTARY"] != DBNull.Value)
+                                html.AppendFormat(" <li><span><b>{0}:</b></span><span class=\"rofSp\"\"> {1}</span>", GestionWeb.GetWebWord(74, _session.SiteLanguage), dr["COMMENTARY"].ToString());
+
+                            html.Append("</ul></td></tr>");
+
+                            //Space                      
+                            html.Append("<tr><td valign=\"top\">");
+                            html.Append("&nbsp;");
                             html.Append("</td></tr>");
 
-                            m++;
+
+                            #region Image(s)
+                            if (dr["VISUAL"] != DBNull.Value && dr["VISUAL"].ToString().Length > 0)
+                            {
+                                //Button arrow left
+                                html.Append("<tr><td>");
+                                html.Append("  <table cellpadding=\"0\" border=\"0\" align=\"center\">");
+                                html.Append(" <tr><td id=\"previous\">");
+                                html.AppendFormat(" <img id=\"imgPrevious_" + m + "_" + _resultControlId + "\" style=\"visibility: hidden; margin-left: 5px; cursor: pointer; margin-right: 5px; vertical-align: middle;\" onmouseover=\"this.src='/App_Themes/{0}/Images/Common/Button/arrow_left_down.gif'\" onmouseout=\"this.src='/App_Themes/{0}/Images/Common/Button/arrow_left.gif'\" onclick=\"javascript:DisplayPics_"
+                                    + _resultControlId + "(-1,this,document.getElementById('imgNext_" + m + "_" + _resultControlId + "'),document.getElementById('img_ro_" + m + "_" + _resultControlId + "'),'" + dr["VISUAL"].ToString() + "');\" src=\"/App_Themes/{0}/Images/Common/Button/arrow_left.gif\" />", _theme);
+                                html.Append("</td>");
+
+                                //Show Visual                           
+                                string visibility = "hidden";
+                                List<string> temsVisuals = new List<string>(dr["VISUAL"].ToString().Split(','));
+                                if (temsVisuals.Count > 1) visibility = "visible";
+                                for (int k = 0; k < temsVisuals.Count; k++)
+                                {
+                                    string currentVisual = string.Format("{0}/{1}?p={2}", CstWeb.CreationServerPathes.IMAGES_ROLEX, temsVisuals[k].Trim(), k);
+                                    visuals.Add(currentVisual);
+                                    if (k == 0) html.AppendFormat(" <td id=\"img_pr_div\" class=\"ro_visu1\" valign=\"top\"><a onclick=\"javascript:ZoomRolexImage_" + _resultControlId + "(''+document.getElementById('img_ro_" + m + "_" + _resultControlId + "').src+'');\"><img class=\"ro_visu\" id=\"img_ro_" + m + "_" + _resultControlId + "\" src=\"{0}\" /> </a></td>", currentVisual);
+                                }
+
+
+                                //Button arrow right
+                                html.Append(" <td id=\"next\">");
+                                html.AppendFormat(" <img id=\"imgNext_" + m + "_" + _resultControlId + "\" style=\"visibility: {1}; margin-left: 5px; cursor: pointer; margin-right: 5px; vertical-align: middle;\" onmouseover=\"this.src='/App_Themes/{0}/Images/Common/Button/arrow_right_down.gif'\" onmouseout=\"this.src='/App_Themes/{0}/Images/Common/Button/arrow_right.gif'\" onclick=\"javascript:DisplayPics_"
+                                    + _resultControlId + "(1,document.getElementById('imgPrevious_" + m + "_" + _resultControlId + "'),this,document.getElementById('img_ro_" + m + "_" + _resultControlId + "'),'" + dr["VISUAL"].ToString() + "');\" src=\"/App_Themes/{0}/Images/Common/Button/arrow_right.gif\" />", _theme, visibility);
+                                html.Append("</td>");
+
+
+
+                                html.Append("</table>");
+                                html.Append("</td></tr>");
+
+                                m++;
+                            }
+                            #endregion
+
+                            ////Space                      
+                            html.Append("<tr><td valign=\"top\">");
+                            html.Append("&nbsp;");
+                            html.Append("</td></tr>");
+
+                            html.Append("</table>");
+
+
+                            #endregion
+
                         }
-                        #endregion
 
-                        //Space                      
-                        html.Append("<tr><td>");
-                        html.Append("&nbsp;");
-                        html.Append("</td></tr>");
-
-                        html.Append("</table>");
-
-
-                        #endregion
-
+                        oldIdSite = Convert.ToInt64(dr["ID_SITE"]);
+                        oldIdLocation = Convert.ToInt64(dr["ID_LOCATION"]);
+                        oldIdPage = Convert.ToInt64(dr["ID_PAGE"]);
                     }
 
+                    html.Append("</div> ");//fin 3
+                    html.Append("</div> ");//fin 2
+                    html.Append("</td></tr> ");//fin 1
 
+                    html.Append("<tr> <td class=\"rolexScheduleResultFilterWebControlButtons\">");//debut 1 bis //puour le bouton close
+                    #region Button close
 
-                    oldIdSite = Convert.ToInt64(dr["ID_SITE"]);
-                    oldIdLocation = Convert.ToInt64(dr["ID_LOCATION"]);
-                    oldIdPage = Convert.ToInt64(dr["ID_PAGE"]);
+                    html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"650\" class=\"rolexScheduleResultWebControlButtons\">");//height=\"60\"
+                    html.Append("<tr>");
+                    html.Append("<td class=\"rolexScheduleResultWebControlButtonCancel\">");
+                    html.AppendFormat("<img src=\"/App_Themes/{0}/Images/Common/Button/initialize_all_up.gif\" onmouseover=\"javascript:this.src='/App_Themes/{0}/Images/Common/Button/initialize_all_down.gif';\" onmouseout=\"javascript:this.src='/App_Themes/{0}/Images/Common/Button/initialize_all_up.gif';\" onclick=\"javascript:displayRolexFile_"
+                        + _resultControlId + "('" + string.Join(",", selectedLevelValues.ConvertAll(p => p.ToString()).ToArray()) + "','" + _periodBeginningDate + "','" + _periodEndDate + "',false);\"/>", _theme);
+                    html.Append("</td>");
+                    html.Append("</tr>");
+                    html.Append("</table>");
+
+                    #endregion
+                    html.Append("</td></tr> ");//fin 1 bbis 
+
+                    html.Append("</table>");
+
                 }
-
-
-
-                //html.Append("</table> ");//fin 4
-
-                html.Append("</div> ");//fin 3
-                html.Append("</div> ");//fin 2
-                html.Append("</td></tr> ");//fin 1
-
-                html.Append("<tr> <td class=\"rolexScheduleResultFilterWebControlButtons\">");//debut 1 bis //puour le bouton close
-                #region Button close
-
-                html.Append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" class=\"vpScheduleResultWebControlButtons\">");
-                html.Append("<tr>");
-                html.Append("<td class=\"vpScheduleResultWebControlButtonCancel\">");
-                html.AppendFormat("<img src=\"/App_Themes/{0}/Images/Common/Button/initialize_all_up.gif\" onmouseover=\"javascript:this.src='/App_Themes/{0}/Images/Common/Button/initialize_all_down.gif';\" onmouseout=\"javascript:this.src='/App_Themes/{0}/Images/Common/Button/initialize_all_up.gif';\" onclick=\"javascript:displayRolexFile_"
-                    + _resultControlId + "('" + string.Join(",", selectedLevelValues.ConvertAll(p => p.ToString()).ToArray()) + "','" + _periodBeginningDate + "','" + _periodEndDate + "',false);\"/>", _theme);
-                html.Append("</td>");
-                html.Append("</tr>");
-                html.Append("</table>");
-
-                #endregion
-                html.Append("</td></tr> ");//fin 1 bbis 
-
-                html.Append("</table>");
-
+                else
+                {
+                    html.AppendFormat("<div align=\"center\" class=\"vpResNoData\">{0}</div>", GestionWeb.GetWebWord(177, _session.SiteLanguage));
+                }
             }
-            else
-            {
-                html.AppendFormat("<div align=\"center\" class=\"vpResNoData\">{0}</div>", GestionWeb.GetWebWord(177, _session.SiteLanguage));
-            }
+
+
             return html.ToString();
         }
 
         #endregion
 
         #region ComputeDesign
+
         /// <summary>
         /// Provide html Code to present Rolex Schedule
         /// </summary>
         /// <param name="computeData"> ComputeData</param>
+        /// <param name="computeSitesWithoutVisibility">compute No Visible Sites Data </param>
         /// <returns>HTML code</returns>
-        protected virtual string ComputeDesign(Func<object[,]> computeData)
+        protected virtual void ComputeDesign(Func<object[,]> computeData, Func<DataSet> computeSitesWithoutVisibility, StringBuilder htmlVisibility, StringBuilder htmlNoVisibility)
         {
-            var data = computeData();
 
+            var data = computeData();
+             
             #region No data
             if (data.GetLength(0) == 0)
             {
-
-                return "<div align=\"center\" class=\"vpResNoData\">" + GestionWeb.GetWebWord(177, _session.SiteLanguage) + "</div>";
+                htmlVisibility.AppendFormat("<div align=\"center\" class=\"vpResNoData\">{0}</div>",
+                                            GestionWeb.GetWebWord(177, _session.SiteLanguage));
+                return;
             }
             #endregion
 
@@ -511,16 +523,12 @@ namespace TNS.AdExpressI.Rolex
             int nbline = data.GetLength(0);
             bool isExport = _isExcelReport || _isPDFReport;
             int labColSpan = (isExport) ? 2 : 1;
+            string cssClasse;
             #endregion
 
-            #region Selection callback
-            if (_isExcelReport)
-            {
-                html.Append(FctExcel.GetLogo(_session));
-                html.Append(FctExcel.GetExcelHeader(_session, false, false));
-            }
-            #endregion
+            // html.Append(GetExcelHeader());
 
+            #region Append Rolex Visibility Schedule
             //Beginning of html table
             html.Append("<table id=\"calendartable\" border=0 cellpadding=0 cellspacing=0>\r\n\t<tr>");
 
@@ -535,11 +543,12 @@ namespace TNS.AdExpressI.Rolex
               , labColSpan);
 
             //Periods
-            GetPeriodHtml(fp, firstPeriodIndex, nbColTab, html, data, isExport);
+            string periodHtml = GetPeriodHtml(fp, firstPeriodIndex, nbColTab, data, isExport);
+            html.Append(periodHtml);
 
             #endregion
 
-            #region Rolex Schedule
+          
             int i;
 
             string stringItem = "&nbsp;";
@@ -550,7 +559,7 @@ namespace TNS.AdExpressI.Rolex
             {
                 for (int j = 0; j < nbColTab; j++)
                 {
-                    string cssClasse;
+                   
                     switch (j)
                     {
                         case L1_COLUMN_INDEX:
@@ -585,12 +594,12 @@ namespace TNS.AdExpressI.Rolex
                                         var idLevels = rolexItem.Level1.ToString(CultureInfo.InvariantCulture);
                                         idLevels = idLevels + "," + rolexItem.Level2.ToString(fp);
                                         idLevels = idLevels + "," + rolexItem.Level3.ToString(fp);
-                                        if(isExport)
-                                            html.AppendFormat("<td class=\"{0}\">{1}</td>", cssPresentClass , stringItem);
+                                        if (isExport)
+                                            html.AppendFormat("<td class=\"{0}\">{1}</td>", cssPresentClass, stringItem);
                                         else
-                                        html.AppendFormat("<td class=\"{0}\"><a style=\"width:100%;height:100%;text-decoration:none;\"  href=\"javascript:displayRolexFile_" 
-                                            + _resultControlId + "('{2}',{3},{4}, true);\">{1}</a></td>", cssPresentClass, stringItem, idLevels, rolexItem.DateBegin.ToString("yyyyMMdd")
-                                            , rolexItem.DateEnd.ToString("yyyyMMdd"));
+                                            html.AppendFormat("<td class=\"{0}\"><a style=\"width:100%;height:100%;text-decoration:none;\"  href=\"javascript:displayRolexFile_"
+                                                + _resultControlId + "('{2}',{3},{4}, true);\">{1}</a></td>", cssPresentClass, stringItem, idLevels, rolexItem.DateBegin.ToString("yyyyMMdd")
+                                                , rolexItem.DateEnd.ToString("yyyyMMdd"));
                                         break;
                                     default:
                                         html.AppendFormat("<td class=\"{0}\">&nbsp;</td>", _style.CellNotPresent);
@@ -605,26 +614,112 @@ namespace TNS.AdExpressI.Rolex
 
             #endregion
 
-            #endregion
+           
 
             //End of html table
             html.Append("</table>");
 
+            htmlVisibility.Append(html.ToString());
+            #endregion
 
+            //html.Append(GetExcelFooter());
+
+            #region Append Rolex schedule sites without visibility
+            html = new StringBuilder();
+            using (var siteWithoutVisibility = computeSitesWithoutVisibility())
+            {
+
+                if (siteWithoutVisibility!=null && siteWithoutVisibility.Tables.Count>0 && siteWithoutVisibility.Tables[0].Rows.Count>0)
+                {
+                    //Beginning of html table
+                    html.Append("<table id=\"calendartable\" border=0 cellpadding=0 cellspacing=0>\r\n\t<tr>");
+
+                    #region Columns
+
+                    //Detail level column
+                    html.AppendFormat("\r\n\t\t<td colSpan=\"{4}\" rowspan=\"{3}\" width=\"250px\" class=\"{0}\" nowrap>{1}{2}</td>"
+                      , _style.CellTitle
+                      , GestionWeb.GetWebWord(2987, _session.SiteLanguage)
+                      , (!isExport) ? string.Empty : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+                      , rowSpanNb
+                      , labColSpan);
+
+                    html.Append(periodHtml);
+
+                    #endregion
+
+                    cssClasse = _style.CellLevelL1;
+                    foreach (DataRow dr in siteWithoutVisibility.Tables[0].Rows)
+                    {
+                        AppendLevelLabel(dr["SITE"].ToString(), string.Empty, html, cssClasse, labColSpan);
+                        for (int j = L3_ID_COLUMN_INDEX+1; j < nbColTab; j++)
+                        {
+                            html.AppendFormat("<td class=\"{0}\">&nbsp;</td>", _style.CellNotPresent);
+                        }
+                        html.Append("</tr>");
+                    }
+
+                    //End of html table
+                    html.Append("</table>");
+                    htmlNoVisibility.Append(html.ToString());
+                }
+            }
+
+          
+
+            #endregion
+
+           
+         
+        }
+
+       
+
+        #endregion
+
+        #region GetExcelFooter
+        /// <summary>
+        /// Get Excel Footer
+        /// </summary>
+        /// <returns></returns>
+        protected virtual string GetExcelFooter()
+        {
+            var html = new StringBuilder();
             if (_isExcelReport)
             {
                 html.Append(FctExcel.GetFooter(_session));
             }
+            return html.ToString();
+        }
+
+        #endregion
+
+        #region GetExcelHeader
+        /// <summary>
+        /// Get Excel Header
+        /// </summary>
+        /// <returns></returns>
+        protected virtual string GetExcelHeader()
+        {
+            #region Selection callback
+            var html = new StringBuilder();
+            if (_isExcelReport)
+            {
+                html.Append(FctExcel.GetLogo(_session));
+                html.Append(FctExcel.GetExcelHeader(_session, false, false));
+            }
+
+            #endregion
 
             return html.ToString();
-
         }
         #endregion
 
         #region GetPeriodHtml
-        protected virtual void GetPeriodHtml(CultureInfo cultureInfo, int firstPeriodIndex, int nbColTab, StringBuilder html,
+        protected virtual string GetPeriodHtml(CultureInfo cultureInfo, int firstPeriodIndex, int nbColTab,
                                             object[,] data, bool isExport)
         {
+            var html = new StringBuilder();
             var headers = new StringBuilder();
             var periods = new StringBuilder();
             int oldYear = -1;
@@ -679,6 +774,8 @@ namespace TNS.AdExpressI.Rolex
             }
             html.AppendFormat("{0}</tr>", headers);
             html.AppendFormat("<tr>{0}</tr>", periods);
+
+            return html.ToString();
         }
         #endregion
 
@@ -686,18 +783,39 @@ namespace TNS.AdExpressI.Rolex
         protected virtual void AppendLevelLabel(object[,] data, int i, int j, string padding, StringBuilder html,
                                                string cssClasse, int labColSpan)
         {
+
+            string label = (data[i, j] != null) ? Convert.ToString(data[i, j]) : string.Empty;
+            AppendLevelLabel(label, padding, html, cssClasse, labColSpan);
+        }
+        protected virtual void AppendLevelLabel(string label, string padding, StringBuilder html,
+                                              string cssClasse, int labColSpan)
+        {
             html.AppendFormat("\r\n\t<tr>\r\n\t\t<td class=\"{0}\" colSPan=\"{1}\" nowrap>{4}{2}{3}{5}</td>"
                               , cssClasse
                               , labColSpan
                               , padding
-                              , data[i, j]
+                              , label
                               , ((_isExcelReport) ? "=\"" : "")
                               , ((_isExcelReport) ? "\"" : ""));
         }
+        #endregion
 
+        #region ComputeSitesWithoutVisibility
+        /// <summary>
+        /// Compute Sites Without Visibility
+        /// </summary>
+        /// <returns></returns>
+        protected virtual DataSet ComputeSitesWithoutVisibility()
+        {
+            var rolexScheduleDAL = GetRolexScheduleDAL();
+
+            DetailLevelItemInformation detailLevelInformation = DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.site);
+            return rolexScheduleDAL.GetSitesWithoutVisibility(detailLevelInformation);
+        } 
         #endregion
 
         #region Compute Data
+
         /// <summary>
         /// Compute data from database
         /// </summary>
@@ -710,18 +828,13 @@ namespace TNS.AdExpressI.Rolex
             {
                 var detailLevel = _session.GenericMediaDetailLevel;
 
-                if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("Data access layer is null for the Rolex Schedule result"));
-                var param = new object[3];
-                param[0] = _session;
-                param[1] = _periodBeginningDate;
-                param[2] = _periodEndDate;
-                var rolexScheduleDAL = (IRolexDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false
-                    , BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+                var rolexScheduleDAL = GetRolexScheduleDAL();
 
                 using (var ds = rolexScheduleDAL.GetData(detailLevel))
                 {
                     Int64 currentLineIndex = 0;
                     int indexPeriod = -1;
+
 
                     if (ds == null || ds.Tables.Count == 0 || ds.Tables[0] == null)
                         return (new object[0, 0]);
@@ -746,6 +859,7 @@ namespace TNS.AdExpressI.Rolex
                     //No Data
                     if (nbL1 == 0)
                         return (new object[0, 0]);
+
 
 
                     #region Create periods table
@@ -857,6 +971,23 @@ namespace TNS.AdExpressI.Rolex
 
             return oTab;
 
+        }
+
+        private IRolexDAL GetRolexScheduleDAL()
+        {
+            if (_module.CountryDataAccessLayer == null)
+                throw (new NullReferenceException("Data access layer is null for the Rolex Schedule result"));
+            var param = new object[3];
+            param[0] = _session;
+            param[1] = _periodBeginningDate;
+            param[2] = _periodEndDate;
+            var rolexScheduleDAL =
+                (IRolexDAL)
+                AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
+                    AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName,
+                    _module.CountryDataAccessLayer.Class, false
+                    , BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+            return rolexScheduleDAL;
         }
 
         private long SetLevelData(GenericDetailLevel detailLevel, DataRow currentRowLevels, int nbCol, int firstPeriodIndex,

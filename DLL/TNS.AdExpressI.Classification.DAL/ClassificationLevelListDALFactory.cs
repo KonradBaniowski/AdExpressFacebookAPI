@@ -143,6 +143,9 @@ namespace TNS.AdExpressI.Classification.DAL {
                     return new MediaBrand.VpCircuitLevelListDAL(idList, _language, _source);
                 case DetailLevelItemInformation.Levels.vpBrand:
                     return new MediaBrand.VpBrandLevelListDAL(idList, _language, _source);
+                case DetailLevelItemInformation.Levels.site:
+                    return new MediaBrand.SiteLevelListDAL(idList, _language, _source);
+                
                 
                 //Create a list of region level 's  items		
                 case DetailLevelItemInformation.Levels.region:
@@ -265,6 +268,10 @@ namespace TNS.AdExpressI.Classification.DAL {
                 case TNS.AdExpress.Constantes.Customer.Right.type.aepmWaveAccess:
                 case TNS.AdExpress.Constantes.Customer.Right.type.aepmWaveException:
                     return new GrpBranch.WaveLevelListDAL(_language, _source, dbSchema);
+                //Create a list of site level 's  items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.siteAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.siteException:
+                    return new MediaBrand.SiteLevelListDAL(_language, _source);
                 default:
                     throw new Exceptions.ClassificationDALException(" Unknow level type Identifier ");
             }
@@ -347,6 +354,9 @@ namespace TNS.AdExpressI.Classification.DAL {
                 //Create a list of target level 's  items		
                 case DetailLevelItemInformation.Levels.target:
                     return new GrpBranch.TargetLevelListDAL(_language, _source);
+                //Create a list of site level 's  items		
+                case DetailLevelItemInformation.Levels.site:
+                    return new MediaBrand.SiteLevelListDAL(_language, _source);
 				default:
 					throw new Exceptions.ClassificationDALException(" Unknow Detail level information Identifier ");
 			}
@@ -466,6 +476,10 @@ namespace TNS.AdExpressI.Classification.DAL {
                 case TNS.AdExpress.Constantes.Customer.Right.type.aepmWaveAccess:
                 case TNS.AdExpress.Constantes.Customer.Right.type.aepmWaveException:
                     return DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.wave);
+                //Create a list of site level 's  items		
+                case TNS.AdExpress.Constantes.Customer.Right.type.siteAccess:
+                case TNS.AdExpress.Constantes.Customer.Right.type.siteException:
+                    return DetailLevelItemsInformation.Get(DetailLevelItemInformation.Levels.site);
                 default:
                     throw new Exceptions.ClassificationDALException(" Unknow level type Identifier ");
             }

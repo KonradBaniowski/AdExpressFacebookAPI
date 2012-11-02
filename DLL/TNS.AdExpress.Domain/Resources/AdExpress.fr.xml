@@ -1960,7 +1960,7 @@
     <item mnemonic="w2767" type="System.String">!</item>
     <item mnemonic="w2768" type="System.String">!</item>
     <item mnemonic="w2769" type="System.String">!</item>
-    <item mnemonic="w2770" type="System.String">!</item>
+    <item mnemonic="w2770" type="System.String">Site</item>
     <item mnemonic="w2771" type="System.String">!</item>
     <item mnemonic="w2772" type="System.String">!</item>
     <item mnemonic="w2773" type="System.String">!</item>
@@ -2101,7 +2101,7 @@
     <item mnemonic="w2878" type="System.String">Sous Segment</item>
     <item mnemonic="w2879" type="System.String">Circuit</item>
     <item mnemonic="w2880" type="System.String">Type de pièce</item>
-    <item mnemonic="w2881" type="System.String">Sélection de périodes</item>
+    <item mnemonic="w2881" type="System.String">Sélection de la période</item>
     <item mnemonic="w2882" type="System.String">Dates</item>
     <item mnemonic="w2883" type="System.String">FICHE</item>
     <item mnemonic="w2884" type="System.String">Nomenclature produit</item>
@@ -2208,5 +2208,24 @@
     <!-- New for FR module analyse des mandataires-->
     <item mnemonic="w2969" type="System.String">Média/Titre</item>
     <item mnemonic="w2970" type="System.String">Régie/Titre</item>
+    <!--Added for GAD adaptation in finlande-->
+    <item mnemonic="w2971" type="System.String">Désolé mais votre navigateur ne supporte pas les iframes.</item>
+    <item mnemonic="w2972" type="System.String">!</item>
+    <item mnemonic="w2973" type="System.String">!</item>
+    <item mnemonic="w2974" type="System.String">!</item>    
+    <!--Add text for module Rolex-->
+    <item mnemonic="w2975" type="System.String">Visibilité Rolex</item>
+    <item mnemonic="w2976" type="System.String"></item>
+    <item mnemonic="w2977" type="System.String">Sites</item>
+    <item mnemonic="w2978" type="System.String">Type de présence</item>
+    <item mnemonic="w2979" type="System.String"></item>
+    <item mnemonic="w2980" type="System.String">Sélectionner/désélectionner tous les sites</item>
+    <item mnemonic="w2981" type="System.String">Sélectionner/désélectionner tous les emplacements</item>
+    <item mnemonic="w2982" type="System.String">Sélectionner/désélectionner tous les types de présence</item>
+    <item mnemonic="w2983" type="System.String">PDF Fiches Visibilité Rolex</item>
+    <item mnemonic="w2984" type="System.String">PDF Visibilité Rolex</item>
+    <item mnemonic="w2985" type="System.String">AdExpress - Fichier PDF Fiches Visibilité Rolex généré</item>
+    <item mnemonic="w2986" type="System.String">AdExpress - Fichier PDF Visibilité Rolex généré</item>
+    <item mnemonic="w2987" type="System.String">Sites sans visibilité</item>
   </items>
 </localization>

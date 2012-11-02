@@ -293,7 +293,19 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// principal Profession Universes
             /// </summary>
-            principalProfessionUniverses =67
+            principalProfessionUniverses =67,
+            /// <summary>
+            /// presence type  Universe
+            /// </summary>
+            presenceType = 68,
+            /// <summary>
+            /// location Universes
+            /// </summary>
+            location = 69,
+            /// <summary>
+            /// selected Levels Value
+            /// </summary>
+            selectedLevelsValue = 70
           
 		}
 	
@@ -1773,6 +1785,10 @@ namespace TNS.AdExpress.Constantes.Web{
             /// </summary>
             public const int VP = 7854;
             /// <summary>
+            /// Visibilité ROLEX
+            /// </summary>
+            public const int ROLEX = 9119;
+            /// <summary>
             /// Identifiant Celebrities
             /// </summary>
             public const int CELEBRITIES = 20000;
@@ -2021,7 +2037,15 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Selected Profession
             /// </summary>
-            professionSelected = 37
+            professionSelected = 37,
+            /// <summary>
+            /// Selected Locations
+            /// </summary>
+            selectedLocations = 38,
+            /// <summary>
+            /// Selected Presence Types
+            /// </summary>
+            selectedPresenceType = 39
 		}
 	}
 
@@ -2558,6 +2582,14 @@ namespace TNS.AdExpress.Constantes.Web{
         /// Press clipping creative's virtual directory
         /// </summary>
         public static string IMAGES_PRESS_CLIPPING = string.Empty;
+        /// <summary>
+        ///Rolex files' virtual directory
+        /// </summary>
+        public static string IMAGES_ROLEX= string.Empty;
+        /// <summary>
+        ///Rolex files' physical directory
+        /// </summary>
+        public static string  LOCAL_PATH_ROLEX = string.Empty;
     }
     #endregion
 
@@ -3381,7 +3413,21 @@ namespace TNS.AdExpress.Constantes.Web{
 			/// <remarks>
 			/// Le composant se basera sur la variable: _customerWebSession.GenericAdNetTrackDetailLevel 
 			/// </remarks>
-			adnettrack=3
+			adnettrack=3,
+            /// <summary>
+            /// Profile locaion
+            /// </summary>
+            /// <remarks>
+            /// Le composant se basera sur la variable: _customerWebSession.GenericLocationDetailLevel 
+            /// </remarks>
+            location = 4,
+            /// <summary>
+            /// Profile locaion
+            /// </summary>
+            /// <remarks>
+            /// Le composant se basera sur la variable: _customerWebSession.GenericPresenceTypeDetailLevel 
+            /// </remarks>
+            presenceType = 5
 		}
 
 		/// <summary>
@@ -3848,7 +3894,15 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Classification level list layer Id for Russia
             /// </summary>
-            classificationLevelListRussia = 14
+            classificationLevelListRussia = 14,
+            /// <summary>
+            /// Gad DAL layer
+            /// </summary>
+            gadDAL = 15,
+            /// <summary>
+            /// Gad layer
+            /// </summary>
+            gad = 16
 		}
 	}
 

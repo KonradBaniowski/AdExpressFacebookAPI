@@ -111,7 +111,7 @@ namespace TNS.AdExpress.Web.UI
                     case CustomerSessions.Period.Type.cumulWithNextMonth:
                     case CustomerSessions.Period.Type.allHistoric:
                     case CustomerSessions.Period.Type.currentMonth:
-                        foreach (VpDateConfiguration cVpDateConfiguration in WebApplicationParameters.VpDateConfigurations.VpDateConfigurationList)
+                        foreach (DateConfiguration cVpDateConfiguration in WebApplicationParameters.VpDateConfigurations.VpDateConfigurationList)
                         {
                             if (cVpDateConfiguration.DateType == webSession.PeriodType)
                                 return Convertion.ToHtmlString(GestionWeb.GetWebWord(cVpDateConfiguration.TextId, webSession.SiteLanguage));
@@ -439,7 +439,7 @@ namespace TNS.AdExpress.Web.UI
                     case CustomerSessions.Period.Type.cumulWithNextMonth:
                     case CustomerSessions.Period.Type.allHistoric:
                     case CustomerSessions.Period.Type.currentMonth:
-                        foreach (VpDateConfiguration cVpDateConfiguration in WebApplicationParameters.VpDateConfigurations.VpDateConfigurationList)
+                        foreach (DateConfiguration cVpDateConfiguration in WebApplicationParameters.VpDateConfigurations.VpDateConfigurationList)
                         {
                             if(cVpDateConfiguration.DateType==webSession.PeriodType)
                                 return GestionWeb.GetWebWord(cVpDateConfiguration.TextId, webSession.SiteLanguage);

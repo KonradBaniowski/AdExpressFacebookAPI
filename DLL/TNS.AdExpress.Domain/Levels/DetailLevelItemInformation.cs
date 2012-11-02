@@ -321,7 +321,12 @@ namespace TNS.AdExpress.Domain.Level{
             /// <summary>
             /// wAVE
             /// </summary>
-            wave = 75
+            wave = 75,
+            /// <summary>
+            /// Location
+            /// </summary>
+            location = 76
+
         }
 		#endregion
 

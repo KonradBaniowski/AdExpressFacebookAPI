@@ -87,7 +87,11 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// bipp
         /// </summary>
-        bipp =13
+        bipp =13,
+        /// <summary>
+        /// Rolex
+        /// </summary>
+        rolex = 14
 
     } 
     #endregion
@@ -128,7 +132,11 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// <summary>
         /// Promotion 
         /// </summary>
-        promo03=11
+        promo03=11,
+        /// <summary>
+        /// Rolex 
+        /// </summary>
+        rolex03 = 12
     } 
     #endregion
 
@@ -1088,6 +1096,22 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Right Group Format
         /// </summary>
         rightGroupFormat = 238,
+        /// <summary>
+        /// Table data rolex
+        /// </summary>
+        dataRolex = 239,
+        /// <summary>
+        /// Table rolex  Location
+        /// </summary>
+        rolexLocation = 240,
+        /// <summary>
+        /// Table rolex site
+        /// </summary>
+        site = 241,
+        /// <summary>
+        /// Table rolex presence type
+        /// </summary>
+        presenceType = 242,
 
 
         /// <summary>

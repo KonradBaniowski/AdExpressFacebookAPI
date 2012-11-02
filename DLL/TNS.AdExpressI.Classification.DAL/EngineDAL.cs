@@ -237,7 +237,8 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <returns>string sql</returns>
 		protected virtual string GetMediaRights(string prefix, bool beginByAnd)
         {
-            if (_session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.VP)
+            if (_session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.VP
+                ||  _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ROLEX)
             {
                 if (beginByAnd) return string.Empty;
                 else return " 1 = 1 ";
@@ -258,7 +259,8 @@ namespace TNS.AdExpressI.Classification.DAL {
         /// <returns>sql rights string</returns>
         protected virtual string GetMediaRights(Table vehicleTable, Table categoryTable, Table mediaTable, bool beginByAnd)
         {
-            if (_session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.VP)
+            if (_session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.VP
+                 || _session.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ROLEX)
             {
                 if (beginByAnd) return string.Empty;
                 else return " 1 = 1 ";

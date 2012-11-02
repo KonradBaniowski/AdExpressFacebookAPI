@@ -102,9 +102,13 @@ namespace TNS.AdExpress.Anubis.Constantes{
             pachet = 25,
             /// Export PDF Celebrities
             /// </summary>
-            apis = 26
-
-            
+            apis = 26,           
+            /// Export PDF Rolex schedule
+            /// </summary>
+            amon = 27,
+            /// Export PDF Rolex files
+            /// </summary>
+            ptah = 28
 		}
 
 		/// <summary>
