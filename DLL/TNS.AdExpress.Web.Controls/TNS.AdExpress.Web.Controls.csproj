@@ -108,6 +108,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\frmitch-fs04\programme\Projets\France\AdExpress Olympe 2009\Bin\DundasWebChart.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="obout_ASPTreeView_2_NET, Version=2.0.37.0, Culture=neutral, PublicKeyToken=6fd96a95fc486c7d">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\frmitch-fs04\programme\Projets\France\AdExpress Olympe 2009\Bin\obout_ASPTreeView_2_NET.dll</HintPath>
@@ -127,6 +128,7 @@
     <Reference Include="System.Data">
       <Name>System.Data</Name>
     </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Design">
       <Name>System.Design</Name>
     </Reference>
@@ -325,6 +327,7 @@
     <Compile Include="Headers\VehicleHeaderWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Results\AjaxResultBaseWebControl.cs" />
     <Compile Include="Results\AlertsCreationsResultsWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -359,6 +362,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Results\AskRemoteExportWebControl.cs" />
+    <Compile Include="Results\GadWebControl.cs" />
+    <Compile Include="Results\ResultBaseWebControl.cs" />
+    <Compile Include="Results\Rolex\RolexScheduleContainerWebControl.cs" />
+    <Compile Include="Results\Rolex\RolexScheduleResultFilterWebControl.cs" />
+    <Compile Include="Results\Rolex\RolexScheduleResultWebControl.cs" />
     <Compile Include="Results\VehicleView\CoverItemWebControl.cs" />
     <Compile Include="Results\VehicleView\CoverLinkItemSynthesisWebControl.cs" />
     <Compile Include="Results\VehicleView\CoverLinkItemWebControl.cs" />
@@ -369,9 +377,6 @@
     <Compile Include="Results\VP\VpScheduleAjaxResultBaseWebControl.cs" />
     <Compile Include="Results\VP\VpScheduleContainerWebControl.cs" />
     <Compile Include="Results\VP\VpScheduleResultWebControl.cs" />
-    <Compile Include="Results\_BannerInformationWebControl.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Results\ClassificationDescription.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -396,17 +401,11 @@
     <Compile Include="Results\DetailProductLevelWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Results\_DisplayBannerWebControl.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Results\DisplayMediaPagesWebControl.cs" />
     <Compile Include="Results\ImageDropDownListWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Results\MediaAgencyYearWebControl.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Results\_MediaInsertionsCreationsResultsWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Results\MediaPlan\AlertAdNetTrackMediaScheduleWebControl.cs">
@@ -443,6 +442,7 @@
     <Compile Include="Selections\AdvertiserSelectionWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Selections\AjaxSelectionBaseWebControl.cs" />
     <Compile Include="Selections\LoadableCustomisedLevelsWebControl.cs" />
     <Compile Include="Selections\RegionWebControl.cs" />
     <Compile Include="Selections\CheckBoxsDependentSelection.cs" />
@@ -505,6 +505,11 @@
     <Compile Include="Selections\RecapProductSelectionWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Selections\Rolex\Filter\RolexScheduleSelectionDatesWebControl.cs" />
+    <Compile Include="Selections\Rolex\Filter\RolexScheduleSelectionDetailLevelWebControl.cs" />
+    <Compile Include="Selections\Rolex\Filter\RolexScheduleSelectionFilterBaseWebControl.cs" />
+    <Compile Include="Selections\Rolex\Filter\RolexScheduleSelectionNodeWebControl.cs" />
+    <Compile Include="Selections\Rolex\RolexScheduleSelectionDropDownDateListWebControl.cs" />
     <Compile Include="Selections\Russia\GenericDetailVehicleSelectionWebControl.cs" />
     <Compile Include="Selections\Russia\PortofolioGenericDetailVehicleSelectionWebControl.cs.cs" />
     <Compile Include="Selections\Russia\RecapAdvertiserSelectionWebControl.cs" />
@@ -516,6 +521,8 @@
     <Compile Include="Selections\SectorSelectionWebControl.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Selections\SelectionBaseWebControl.cs" />
+    <Compile Include="Selections\SelectionImageWebControl.cs" />
     <Compile Include="Selections\SelectItemsInClassificationWebControl.cs" />
     <Compile Include="Selections\SelectRecapItemsInClassificationWebControl.cs" />
     <Compile Include="Selections\SloganPersonalisationWebControl.cs">
@@ -607,6 +614,10 @@
       <Project>{D24531CC-E000-4AEF-8218-56885D87DFCB}</Project>
       <Name>TNS.AdExpressI.Date</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.GAD\TNS.AdExpressI.GAD.csproj">
+      <Project>{A3E2BF3B-45F2-4253-826D-7A2CA03C15F7}</Project>
+      <Name>TNS.AdExpressI.GAD</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.Insertions.DAL\TNS.AdExpressI.Insertions.DAL.csproj">
       <Project>{446AA1FA-2CE3-49D1-99CC-6EBAECCDA911}</Project>
       <Name>TNS.AdExpressI.Insertions.DAL</Name>
@@ -646,6 +657,10 @@
     <ProjectReference Include="..\TNS.AdExpressI.ProductClassReports\TNS.AdExpressI.ProductClassReports.csproj">
       <Project>{C0D576BE-BB8D-4F27-B361-385162442113}</Project>
       <Name>TNS.AdExpressI.ProductClassReports</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.AdExpressI.Rolex\TNS.AdExpressI.Rolex.csproj">
+      <Project>{257EEF45-C4CE-4C02-8D18-35E3019D6F6A}</Project>
+      <Name>TNS.AdExpressI.Rolex</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.AdExpressI.Trends\TNS.AdExpressI.Trends.csproj">
       <Project>{B2BE1C87-8341-462E-907A-F2EDAA87F819}</Project>
@@ -732,6 +747,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

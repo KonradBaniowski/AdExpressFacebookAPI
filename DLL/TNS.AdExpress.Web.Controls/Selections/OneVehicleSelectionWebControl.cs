@@ -59,7 +59,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
 				object[]  param = new object[1];
 				param[0] = webSession;
-				IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);				
+				IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);				
 				this.DataSource = classficationDAL.GetMediaType().Tables[0];
                 this.DataTextField = "mediaType";
                 this.DataValueField = "idMediaType";

@@ -107,6 +107,9 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <%@ Register TagPrefix="ctrVpSelection" Namespace="TNS.AdExpress.Web.Controls.Selections.VP" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="ctrVpSelectionFilter" Namespace="TNS.AdExpress.Web.Controls.Selections.VP.Filter" Assembly="TNS.AdExpress.Web.Controls" %>
 <%@ Register TagPrefix="ctrHeader" Namespace="TNS.AdExpress.Web.Controls.Selections" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrRolexResult" Namespace="TNS.AdExpress.Web.Controls.Results.Rolex" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrRolexSelection" Namespace="TNS.AdExpress.Web.Controls.Selections.Rolex" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrRolexSelectionFilter" Namespace="TNS.AdExpress.Web.Controls.Selections.Rolex.Filter" Assembly="TNS.AdExpress.Web.Controls" %>
 
 
 <%-- Header web control : used to show the commun header for all the aspx pages in the site--%>
@@ -292,7 +295,8 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 282:/App_Themes/KMAE-Uk/Images/Common/Infobulle/Portefeuille.png,196:/App_Themes/KMAE-Uk/Images/Common/Infobulle/PlanMedia.png,184:/App_Themes/KMAE-Uk/Images/Common/Infobulle/PlanMediaConcurrentiel.png,278:/App_Themes/KMAE-Uk/Images/Common/Infobulle/Concurrentiels.png,197:/App_Themes/KMAE-Uk/Images/Common/Infobulle/Dynamique.png,
 281:/App_Themes/KMAE-Uk/Images/Common/Infobulle/Potentiel.png,1950:/App_Themes/KMAE-Uk/Images/Common/Infobulle/Justificatifs.png,283:/App_Themes/KMAE-Uk/Images/Common/Infobulle/Portefeuille.png,194:/App_Themes/KMAE-Uk/Images/Common/Infobulle/TableauDynamique.png,195:/App_Themes/KMAE-Uk/Images/Common/Infobulle/Indicateurs.png,
 450:/App_Themes/KMAE-Uk/Images/Common/Infobulle/Tendances.png,475:/App_Themes/KMAE-Uk/Images/Common/Infobulle/TableauBord.png,601:/App_Themes/KMAE-Uk/Images/Common/Infobulle/TableauBord.png,602:/App_Themes/KMAE-Uk/Images/Common/Infobulle/TableauBord.png,1036:/App_Themes/KMAE-Uk/Images/Common/Infobulle/TableauBord.png,
-4370:/App_Themes/KMAE-Uk/Images/Common/Infobulle/TableauBord.png,546:/App_Themes/KMAE-Uk/Images/Common/Infobulle/Chronopresse.png,1920:/App_Themes/KMAE-Uk/Images/Common/Infobulle/Cadrage.png,1780:/App_Themes/KMAE-Uk/Images/Common/Infobulle/Dispositifs.png,1781:/App_Themes/KMAE-Uk/Images/Common/Infobulle/Programmes.png,4369:/App_Themes/KMAE-Uk/Images/Common/Infobulle/Evaliant.png,7216:/App_Themes/KMAE-Uk/Images/Common/Infobulle/PlanMedia.png,7854:/App_Themes/KMAE-Fr/Images/Common/Infobulle/PlanMedia.png"
+4370:/App_Themes/KMAE-Uk/Images/Common/Infobulle/TableauBord.png,546:/App_Themes/KMAE-Uk/Images/Common/Infobulle/Chronopresse.png,1920:/App_Themes/KMAE-Uk/Images/Common/Infobulle/Cadrage.png,1780:/App_Themes/KMAE-Uk/Images/Common/Infobulle/Dispositifs.png,1781:/App_Themes/KMAE-Uk/Images/Common/Infobulle/Programmes.png
+,4369:/App_Themes/KMAE-Uk/Images/Common/Infobulle/Evaliant.png,7216:/App_Themes/KMAE-Uk/Images/Common/Infobulle/PlanMedia.png,7854:/App_Themes/KMAE-Fr/Images/Common/Infobulle/PlanMedia.png,9119:/App_Themes/KMAE-Fr/Images/Common/Infobulle/PlanMedia.png"
 />
 <%-- Module title web control : used to show module title --%>
 <ctrHeader:ModuleTitleWebControl  
@@ -1822,6 +1826,134 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <ctrVpSelection:VpScheduleSelectionImageWebControl   
                             runat="server" 
                             SkinID="SaveVpResultWebControl" 
+                            PictureSrcPath="/App_Themes/KMAE-Fr/Images/Common/Button/save_up2.gif"
+                            PictureSrcPathOver="/App_Themes/KMAE-Fr/Images/Common/Button/save_down2.gif"
+                            CssClass="excelSelectionWebControlSelection"
+/>
+<%--Rolex result Container control --%>
+<ctrRolexResult:RolexScheduleContainerWebControl   
+                            runat="server" 
+                            SkinID="RolexScheduleContainerWebControl"
+                            CssClass="rolexScheduleContainerWebControl" 
+/>
+<%--Rolex result control --%>
+<ctrRolexResult:RolexScheduleResultWebControl   
+                            runat="server" 
+                            SkinID="RolexScheduleResultWebControl"
+                            CssClass="" 
+/>
+<%--Rolex Selection Filter control --%>
+<ctrRolexSelectionFilter:RolexScheduleSelectionNodeWebControl   
+                            runat="server" 
+                            SkinID="RolexScheduleSelectionNodeMediaWebControlSkinId" 
+                            CssClass="rolexScheduleResultFilterNodeWebControlResult"
+                            CssClassLvl1="rolexScheduleResultFilterNodeWebControlResultLvl1"
+                            CssClassLvl2="rolexScheduleResultFilterNodeWebControlResultLvl2"
+                            CssClassLvl3="rolexScheduleResultFilterNodeWebControlResultLvl3"
+                            CssClassDisplay="rolexScheduleResultFilterNodeWebControlResultDisplay"
+                            PathPictureDisplayOver="/App_Themes/KMAE-Fr/Images/Common/arrow_down.gif"
+                            PathPictureDisplay="/App_Themes/KMAE-Fr/Images/Common/arrow_up.gif"
+/>
+
+<ctrRolexSelectionFilter:RolexScheduleSelectionNodeWebControl   
+                            runat="server" 
+                            SkinID="RolexScheduleSelectionNodeLocationWebControlSkinId" 
+                            CssClass="rolexScheduleResultFilterNodeWebControlResult"
+                            CssClassLvl1="rolexScheduleResultFilterNodeProductWebControlResultLvl1"
+                            CssClassLvl2="rolexScheduleResultFilterNodeProductWebControlResultLvl2"
+                            CssClassLvl3="rolexScheduleResultFilterNodeProductWebControlResultLvl3"
+                            CssClassContainerLvl1="rolexScheduleResultFilterNodeProductContainerWebControlResultLvl1"
+                            CssClassContainerLvl2="rolexScheduleResultFilterNodeProductContainerWebControlResultLvl2"
+                            CssClassContainerLvl3="rolexScheduleResultFilterNodeProductContainerWebControlResultLvl3"
+                            CssClassDisplay="rolexScheduleResultFilterNodeWebControlResultDisplay"
+                            PathPictureDisplayOver="/App_Themes/KMAE-Fr/Images/Common/arrow_down.gif"
+                            PathPictureDisplay="/App_Themes/KMAE-Fr/Images/Common/arrow_up.gif"
+/>
+<ctrRolexSelectionFilter:RolexScheduleSelectionNodeWebControl   
+                            runat="server" 
+                            SkinID="RolexScheduleSelectionNodePresenceTypeWebControlSkinId" 
+                            CssClass="rolexScheduleResultFilterNodeWebControlResult"
+                            CssClassLvl1="rolexScheduleResultFilterNodeProductWebControlResultLvl1"
+                            CssClassLvl2="rolexScheduleResultFilterNodeProductWebControlResultLvl2"
+                            CssClassLvl3="rolexScheduleResultFilterNodeProductWebControlResultLvl3"
+                            CssClassContainerLvl1="rolexScheduleResultFilterNodeProductContainerWebControlResultLvl1"
+                            CssClassContainerLvl2="rolexScheduleResultFilterNodeProductContainerWebControlResultLvl2"
+                            CssClassContainerLvl3="rolexScheduleResultFilterNodeProductContainerWebControlResultLvl3"
+                            CssClassDisplay="rolexScheduleResultFilterNodeWebControlResultDisplay"
+                            PathPictureDisplayOver="/App_Themes/KMAE-Fr/Images/Common/arrow_down.gif"
+                            PathPictureDisplay="/App_Themes/KMAE-Fr/Images/Common/arrow_up.gif"
+/>
+
+<ctrRolexSelectionFilter:RolexScheduleSelectionDetailLevelWebControl   
+                            runat="server" 
+                            SkinID="RolexScheduleSelectionDetailLevelWebControlSkinId" 
+                            CssClass="rolexScheduleSelectionDetailLevelWebControl"
+                            CssClassLvl1=""
+                            CssClassLvl2=""
+                            CssClassLvl3=""
+                            CssClassDetailTab="rolexScheduleSelectionDetailLevelWebControlDetailTab"
+                            CssClassDetailTabHeader="rolexScheduleSelectionDetailLevelWebControlDetailTabHeader"
+                            CssClassSeparator="rolexScheduleSelectionDetailLevelWebControlSeparator"
+                            CssClassPersonnalisationHeader="rolexScheduleSelectionDetailLevelWebControlPersonnalisationHeader"
+                            CssClassPersonnalisationHeaderBis="rolexScheduleSelectionDetailLevelWebControlPersonnalisationHeaderBis"
+                            CssClassPersonnalisation="rolexScheduleSelectionDetailLevelWebControlPersonnalisation"
+/>
+<%--Rolex Selection Filter control --%>
+<ctrRolexResult:RolexScheduleResultFilterWebControl   
+                            runat="server" 
+                            SkinID="RolexScheduleResultFilterWebControl"
+                             CssClass="rolexScheduleResultFilterWebControl" 
+                            CssClassResult="rolexScheduleResultFilterWebControlResult"
+                            CssClassResultContent="rolexScheduleResultFilterWebControlResultContent"
+                            CssClassOption="rolexScheduleResultFilterWebControlOption"
+                            CssClassOptionHeader="rolexScheduleResultFilterWebControlOptionHeader"
+                            CssClassOptionMenu="rolexScheduleResultFilterWebControlMenu"
+                            CssClassOptionMenuSelected="rolexScheduleResultFilterWebControlMenuSelected"
+                            RolexSelectionNodeMediaWebControlSkinId="RolexScheduleSelectionNodeMediaWebControlSkinId"
+                            RolexSelectionNodeLocationWebControlSkinId="RolexScheduleSelectionNodeLocationWebControlSkinId"
+                            RolexSelectionNodePresenceTypeWebControlSkinId="RolexScheduleSelectionNodePresenceTypeWebControlSkinId"
+                            RolexSelectionDetailLevelWebControlSkinId="RolexScheduleSelectionDetailLevelWebControlSkinId"
+                            CssClassOptionButtons="rolexScheduleResultFilterWebControlButtons"
+                            CssClassOptionButtonCancel="rolexScheduleResultFilterWebControlButtonCancel"
+                            PicturePathButtonCancel="/App_Themes/KMAE-Fr/Images/Common/Button/initialize_all_up.gif"
+                            PicturePathButtonCancelOver="/App_Themes/KMAE-Fr/Images/Common/Button/initialize_all_down.gif"
+                            CssClassOptionButtonValidation="vpScheduleResultFilterWebControlButtonValidation"
+                            PicturePathButtonValidation="/App_Themes/KMAE-Fr/Images/Common/Button/appliquer_up.gif"
+                            PicturePathButtonValidationOver="/App_Themes/KMAE-Fr/Images/Common/Button/appliquer_down.gif"
+/>
+<%--Rolex Selection control --%>
+<ctrRolexSelection:RolexScheduleSelectionDropDownDateListWebControl   
+                            runat="server" 
+                            SkinID="DateSelectionWebControl" 
+                            CssClass="dateSelectionWebControlSelection"
+/>
+
+<ctrSelections:SelectionImageWebControl   
+                            runat="server" 
+                            SkinID="FiltreSelectionWebControl" 
+                            PictureSrcPath="/App_Themes/KMAE-Fr/Images/Common/options.gif"
+                            PictureSrcPathOver="/App_Themes/KMAE-Fr/Images/Common/options_over.gif"
+                            CssClass="filtreSelectionWebControlSelection"
+/>
+
+<ctrSelections:SelectionImageWebControl   
+                            runat="server" 
+                            SkinID="ExcelSelectionWebControl" 
+                            PictureSrcPath="/App_Themes/KMAE-Fr/Images/Common/export_excel.gif"
+                            PictureSrcPathOver="/App_Themes/KMAE-Fr/Images/Common/export_excel_over.gif"
+                            CssClass="excelSelectionWebControlSelection"
+/>
+
+<ctrSelections:SelectionImageWebControl   
+                            runat="server" 
+                            SkinID="PdfSelectionWebControl" 
+                            PictureSrcPath="/App_Themes/KMAE-Fr/Images/Common/export_pdf.gif"
+                            PictureSrcPathOver="/App_Themes/KMAE-Fr/Images/Common/export_pdf_over.gif"
+                            CssClass="pdfSelectionWebControlSelection"
+/>
+<ctrSelections:SelectionImageWebControl   
+                            runat="server" 
+                            SkinID="SaveRolexResultWebControl" 
                             PictureSrcPath="/App_Themes/KMAE-Fr/Images/Common/Button/save_up2.gif"
                             PictureSrcPathOver="/App_Themes/KMAE-Fr/Images/Common/Button/save_down2.gif"
                             CssClass="excelSelectionWebControlSelection"

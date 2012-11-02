@@ -19,6 +19,7 @@ using AjaxPro;
 using TNS.AdExpress.Web.Controls.Headers;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
+using TNS.AdExpress.Web.Controls.Selections;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Common.Results;
@@ -56,11 +57,11 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// <summary>
         /// Result Control List
         /// </summary>
-        List<VpScheduleResultBaseWebControl> _vpScheduleResultWebControlList = null;
+        List<ResultBaseWebControl> _vpScheduleResultWebControlList = null;
         /// <summary>
         /// Selection Web Control List
         /// </summary>
-        List<VpScheduleSelectionBaseWebControl> _vpScheduleSelectionBaseWebControlList = null;
+        List<SelectionBaseWebControl> _vpScheduleSelectionBaseWebControlList = null;
         #endregion
 
         #region Accesors
@@ -86,7 +87,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         /// </summary>
         /// <returns></returns>
         protected string GetJavaScript() {
-            StringBuilder js = new StringBuilder(1000);
+            var js = new StringBuilder(1000);
             js.Append("\r\n<script language=\"javascript\">\r\n<!--");
 
             #region RefreshVpScheduleResultWebControl
@@ -170,9 +171,9 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         {
             base.OnInit(e);
 
-            _vpScheduleResultWebControlList = new List<VpScheduleResultBaseWebControl>();
+            _vpScheduleResultWebControlList = new List<ResultBaseWebControl>();
             foreach (ControlLayer cControlLayer in WebApplicationParameters.VpConfigurationDetail.ResultControlLayerList) {
-                _vpScheduleResultWebControlList.Add((VpScheduleResultBaseWebControl)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cControlLayer.AssemblyName, cControlLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null));
+                _vpScheduleResultWebControlList.Add((ResultBaseWebControl)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cControlLayer.AssemblyName, cControlLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null));
                 _vpScheduleResultWebControlList[_vpScheduleResultWebControlList.Count - 1].SkinID = cControlLayer.SkinId;
                 _vpScheduleResultWebControlList[_vpScheduleResultWebControlList.Count - 1].Display = cControlLayer.Display;
                 _vpScheduleResultWebControlList[_vpScheduleResultWebControlList.Count - 1].ID = this.ID + cControlLayer.ControlId;
@@ -181,9 +182,9 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                 this.Controls.Add(_vpScheduleResultWebControlList[_vpScheduleResultWebControlList.Count - 1]);
             }
 
-            _vpScheduleSelectionBaseWebControlList = new List<VpScheduleSelectionBaseWebControl>();
+            _vpScheduleSelectionBaseWebControlList = new List<SelectionBaseWebControl>();
             foreach (ControlLayer cControlLayer in WebApplicationParameters.VpConfigurationDetail.SelectionControlLayerList) {
-                _vpScheduleSelectionBaseWebControlList.Add((VpScheduleSelectionBaseWebControl)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cControlLayer.AssemblyName, cControlLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null, null));
+                _vpScheduleSelectionBaseWebControlList.Add((SelectionBaseWebControl)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cControlLayer.AssemblyName, cControlLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, null, null, null));
                 _vpScheduleSelectionBaseWebControlList[_vpScheduleSelectionBaseWebControlList.Count - 1].SkinID = cControlLayer.SkinId;
                 _vpScheduleSelectionBaseWebControlList[_vpScheduleSelectionBaseWebControlList.Count - 1].ID = this.ID + cControlLayer.ControlId;
                 _vpScheduleSelectionBaseWebControlList[_vpScheduleSelectionBaseWebControlList.Count - 1].TextId = cControlLayer.TextId;
@@ -202,11 +203,12 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
         protected override void OnLoad(EventArgs e)
         {
 
-            foreach (VpScheduleResultBaseWebControl cVpScheduleResultBaseWebControl in _vpScheduleResultWebControlList) {
+            foreach (var cVpScheduleResultBaseWebControl in _vpScheduleResultWebControlList)
+            {
                 cVpScheduleResultBaseWebControl.WebSession = this._webSession;
             }
 
-            foreach (VpScheduleSelectionBaseWebControl cVpScheduleSelectionBaseWebControl in _vpScheduleSelectionBaseWebControlList) {
+            foreach (var cVpScheduleSelectionBaseWebControl in _vpScheduleSelectionBaseWebControlList) {
                 cVpScheduleSelectionBaseWebControl.WebSession = this._webSession;
             }
             base.OnLoad(e);
@@ -238,7 +240,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                 output.Write("<td>");
                 output.Write("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">");
                 output.Write("<tr>");
-                foreach (VpScheduleSelectionBaseWebControl cVpScheduleSelectionBaseWebControl in _vpScheduleSelectionBaseWebControlList) {
+                foreach (var cVpScheduleSelectionBaseWebControl in _vpScheduleSelectionBaseWebControlList) {
                     output.Write("<td>");
                     cVpScheduleSelectionBaseWebControl.RenderControl(output);
                     output.Write("</td>");
@@ -249,7 +251,7 @@ namespace TNS.AdExpress.Web.Controls.Results.VP
                 output.Write("</tr>");
             }
             if (_vpScheduleResultWebControlList.Count > 0) {
-                foreach (VpScheduleResultBaseWebControl cVpScheduleResultBaseWebControl in _vpScheduleResultWebControlList) {
+                foreach (var cVpScheduleResultBaseWebControl in _vpScheduleResultWebControlList) {
                     output.Write("<tr>");
                     output.Write("<td>");
                     cVpScheduleResultBaseWebControl.RenderControl(output);

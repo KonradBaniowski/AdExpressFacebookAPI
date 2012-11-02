@@ -861,10 +861,8 @@ namespace TNS.AdExpressI.PresentAbsent.Russia {
 			}
 
 			// Add Media Schedule column	
-		    if(_vehicleInformation.Id != CstDBClassif.Vehicles.names.editorial){
 			headers.Root.Add(new HeaderMediaSchedule(false, GestionWeb.GetWebWord(150, _session.SiteLanguage), MEDIA_SCHEDULE_HEADER_ID));
 			_showMediaSchedule = true;
-            }
 			
 			#endregion
 

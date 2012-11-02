@@ -55,7 +55,9 @@ namespace AdExpress.Private.MyAdExpress
         private string _idDataPromotion = null;
         private string _resultType = null;
         protected bool _canGroupCreativesExport = false;
-
+        protected string _levelsValue = string.Empty;
+        protected string _dateBegin = string.Empty;
+        protected string _dateEnd = string.Empty;
         #endregion
 
         #region Varaibles MMI
@@ -138,7 +140,10 @@ namespace AdExpress.Private.MyAdExpress
                 _idDataPromotion = Page.Request.QueryString.Get("idDataPromotion");
 
                 _resultType = Page.Request.QueryString.Get("resultType");
-              
+
+                _levelsValue = Page.Request.QueryString.Get("levelsValue");
+                _dateBegin = Page.Request.QueryString.Get("datebegin");
+                _dateEnd = Page.Request.QueryString.Get("dateend");
 
                 askremoteexportwebControl1.ResultType = _resultType;
 
@@ -398,6 +403,22 @@ namespace AdExpress.Private.MyAdExpress
                                 else if (Convert.ToInt32(_resultType) == TNS.AdExpress.Anubis.Constantes.Result.type.thoueris.GetHashCode())
                                 {
                                     idStaticNavSession = TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.thoueris);
+                                }
+                            }
+                            break;
+                        case Module.Name.ROLEX:
+                            if (!string.IsNullOrEmpty(_resultType))
+                            {
+                                if (Convert.ToInt32(_resultType) == TNS.AdExpress.Anubis.Constantes.Result.type.ptah.GetHashCode())
+                                {
+                                    if (!string.IsNullOrEmpty(_levelsValue)) _webSession.SelectedLevelsValue = new List<string>(_levelsValue.Split(',')).ConvertAll(Convert.ToInt64);
+                                    _webSession.DetailPeriodBeginningDate = _dateBegin;
+                                    _webSession.DetailPeriodEndDate = _dateEnd;
+                                    TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.ptah);
+                                }
+                                else if (Convert.ToInt32(_resultType) == TNS.AdExpress.Anubis.Constantes.Result.type.amon.GetHashCode())
+                                {
+                                     TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession, TNS.AdExpress.Anubis.Constantes.Result.type.amon);
                                 }
                             }
                             break;

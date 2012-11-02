@@ -1827,6 +1827,44 @@
       </module>
     </moduleGroup>
 
+    <!-- ***************************************************************************************************************************-->
+    <!-- ***************************************************************************************************************************-->
+    <!-- **													                    Rolex	                                                                    **-->
+    <!-- ***************************************************************************************************************************-->
+    <!-- ***************************************************************************************************************************-->
+
+    <moduleGroup name="Rolex" type="1" privilegecode="161" traductioncode="2975" flashUrl="/Flash/Common/GroupedeModuleAlerte.swf" missingFlashUrl="/Images/Common/FlashReplacement/GroupedeModuleAlerte.gif" descriptionWebTextId="2979">
+      <!-- *****************************************         Plan d'actions                *****************************************-->
+      <module name="Plan d'actions" privilegecode="9119" traductioncode="2860" moduleCategoryId="0" urlNextPage="/Private/Results/RolexResults.aspx" descriptionWebTextId="2976" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
+        <RulesLayer name="Default Rolex rules layers" assemblyName="TNS.AdExpressI.Rolex.Default.dll" class="TNS.AdExpressI.Rolex.Default.RolexResults"/>
+        <DataAccessLayer name="Default Rolex data access layers" assemblyName="TNS.AdExpressI.Rolex.DAL.Default.dll" class="TNS.AdExpressI.Rolex.DAL.Default.RolexDAL"/>
+        <MediaDetailLevel>
+          <defaultMediaDetailLevels>
+            <defaultMediaDetailLevel id="75" name="Site"/>         
+            <defaultMediaDetailLevel id="76" name="Location"/>
+            <defaultMediaDetailLevel id="77" name="Site"/>
+          </defaultMediaDetailLevels>
+          <allowedMediaLevelItems>
+            <allowedMediaLevelItem id="53" name="Site"/>
+            <allowedMediaLevelItem id="76" name="Location"/>
+            <allowedMediaLevelItem id="72" name="presence Type"/>
+          </allowedMediaLevelItems>
+        </MediaDetailLevel>
+        <results>
+          <page id="0" resultid="67" name="Calendrier d'actions" traductioncode="2862" url="/Private/Results/RolexResults.aspx" rawExcelUrl="" printExcelUrl="" menuTextId="1983" helpUrl="/Private/Helps/Default.aspx" createAlertUrl="/Private/Alerts/AlertSavePopUp.aspx">
+            <detailSelections>
+              <detailSelection id="1" name="Module name"/>
+              <detailSelection id="2" name="Result name"/>
+              <detailSelection id="3" name="Date"/>
+              <detailSelection id="5" name="Vehicle Selected"/>                                   
+              <detailSelection id="38" name="Selected Locations"/>
+              <detailSelection id="39" name="Selected presence types"/>
+              <detailSelection id="18" name="Generic Media Level Detail"/>
+            </detailSelections>
+          </page>
+        </results>
+      </module>
+    </moduleGroup>
 
   </moduleGroups>
 </configuration>

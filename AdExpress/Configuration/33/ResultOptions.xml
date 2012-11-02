@@ -34,4 +34,23 @@
     </results>
     <defaulPersonnalizedLevel level="vpBrand"/>
   </vpConfiguration>
+  
+  <rolexConfiguration>
+    <dateSelections defaultType="currentMonth">
+      <dateSelection type="currentMonth"        textId="2866"/>
+      <dateSelection type="cumulWithNextMonth"  textId="2867"/>
+      <dateSelection type="allHistoric"         textId="2868"/>
+    </dateSelections>
+    <selections>
+      <selection name="Date Selection"              id="DateSelection"        assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.Rolex.RolexScheduleSelectionDropDownDateListWebControl"  skinId="DateSelectionWebControl"                      validationMethod="RefreshRolexSchedulResultWebControl('Result');"/>
+      <selection name="Filtre Selection"            id="FilterSelection"      assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.SelectionImageWebControl"         skinId="FiltreSelectionWebControl"        textId="2863"   validationMethod="DisplayRolexScheduleResultWebControl('ResultFilter');"/>
+      <selection name="Export Excel Selection"      id="ExportExcelSelection" assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.SelectionImageWebControl"         skinId="ExcelSelectionWebControl"         textId="2864" validationMethod="AskResultExportExcel();"/>
+      <selection name="Save Result"      id="SaveResultOption" assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.SelectionImageWebControl"         skinId="SaveRolexResultWebControl"         textId="1990" validationMethod="SaveResult();"/>
+      <selection name="Export PDF Schedule"        id="ExportPdfSchedule"   assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Selections.SelectionImageWebControl"         skinId="PdfSelectionWebControl"        textId="2865"    validationMethod="AskResultExportPDF('schedule');"/>
+    </selections>
+    <results>
+      <result name="layer of result control"        id="Result"       assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Results.Rolex.RolexScheduleResultWebControl"                            skinId="RolexScheduleResultWebControl"       />
+      <result name="layer of result filter control" id="ResultFilter" assemblyName="TNS.AdExpress.Web.Controls.dll" class="TNS.AdExpress.Web.Controls.Results.Rolex.RolexScheduleResultFilterWebControl"                      skinId="RolexScheduleResultFilterWebControl" validationMethod="RefreshRolexSchedulResultWebControl('Result');" display="false"/>
+    </results>
+  </rolexConfiguration>
 </resultOptions>

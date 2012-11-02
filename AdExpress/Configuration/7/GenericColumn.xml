@@ -296,6 +296,8 @@
       <columnItem id="173"  name="Type of presence"     idDetailLevelMatching="72"/>
       <columnItem id="120"  name="Edition"              idDetailLevelMatching="44"/>
       <columnItem id="33"   name="Date"                 idDetailLevelMatching="18"/>
+      <columnItem id="116"  name="Cost RUB"/>
+      <columnItem id="115"  name="Cost USD"/>
       <columnItem id="164"  name="Mentions"/>
       <columnItem id="163"  name="Square"/>
       <columnItem id="34"   name="Page"/>
@@ -310,6 +312,8 @@
       <columnItem id="120" name="Edition"  idDetailLevelMatching="44"/>
       <columnItem id="119" name="Publishing house"  idDetailLevelMatching="34"/>
       <columnItem id="33" name="Date" idDetailLevelMatching="18"/>
+      <columnItem id="116"  name="Cost RUB"/>
+      <columnItem id="115"  name="Cost USD"/>
       <columnItem id="34" name="Page"/>
       <columnItem id="161" name="Column"/>
       <columnItem id="101" name="Brand" idDetailLevelMatching="9"/>

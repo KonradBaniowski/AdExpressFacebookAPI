@@ -73,8 +73,10 @@ namespace TNS.AdExpressI.GAD.Finland
             //Company
             html.AppendLine(" <!-- Company --> ");
             html.AppendLine(" <tr valign=\"top\">");
-            html.AppendLine("<td align=\"center\" rowspan=\"6\" width=\"170\">");
-            html.AppendFormat("<img src=\"/App_Themes/{0}/Images/Common/Gad.jpg\"><br><br>", _theme);                     
+            html.AppendLine("<td align=\"center\" rowspan=\"6\" width=\"180\" nowrap>");
+            html.AppendFormat("<img width=\"135\" height=\"135\"src=\"/App_Themes/{0}/Images/Common/TNS_logowebsafe.jpg\"><br>", _theme);
+            html.AppendFormat("<span  class=\"txtViolet11Bold\" id=\"sourceAdress\">{0}</span><br/>", GestionWeb.GetWebWord(2973, _session.SiteLanguage));
+            html.AppendFormat("<span class=\"txtViolet11\" id=\"fonectaAdress\">{0}</span><br/>", GestionWeb.GetWebWord(2974, _session.SiteLanguage));
             html.AppendLine(" </td>");
             html.AppendFormat("<td class=\"txtViolet11Bold\" valign=\"top\" width=\"1%\" noWrap>&nbsp;{0}</td>", GestionWeb.GetWebWord(1132, _session.SiteLanguage));
             html.AppendLine(" <td class=\"txtViolet11Bold\" valign=\"top\" width=\"1%\">&nbsp;:&nbsp;</td>");

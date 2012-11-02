@@ -1000,6 +1000,8 @@ namespace AdExpress.Private.MyAdExpress{
                      //Profession universes
 				    _webSession.PrincipalProfessionUniverses = webSessionSave.PrincipalProfessionUniverses;
 				    _webSession.ProductDetailLevel = null;
+				    _webSession.SelectedLocations = webSessionSave.SelectedLocations;
+                    _webSession.SelectedPresenceTypes = webSessionSave.SelectedPresenceTypes;
 
 					if(notValidPeriod){
 						//Erreur : période non disponible

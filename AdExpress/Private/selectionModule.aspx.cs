@@ -8,6 +8,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -77,11 +78,8 @@ namespace AdExpress{
 		/// <param name="sender">Objet source</param>
 		/// <param name="e">Arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
-			//test
-			_webSession.ExportedPDFFileName="test01";
-			//Int64 idStaticNavSession=TNS.AdExpress.Anubis.BusinessFacade.Result.ParameterSystem.Save(_webSession,TNS.AdExpress.Anubis.Constantes.Result.type.appm);
-			//TNS.AdExpress.Anubis.Constantes.Network.Server.code code=TNS.AdExpress.Anubis.BusinessFacade.Network.ClientSystem.Send(TNS.AdExpress.Anubis.Common.Network.WebClientConfiguration.IP,TNS.AdExpress.Anubis.Common.Network.WebClientConfiguration.Port,idStaticNavSession,TNS.AdExpress.Anubis.Constantes.Result.type.appm);
-
+		
+			
 			try{
 				if (Page.Request.QueryString.Get("m")!=null){
 					Int64 tmp = _webSession.CurrentModule = Int64.Parse(Page.Request.QueryString.Get("m").ToString());
@@ -261,9 +259,12 @@ namespace AdExpress{
 						SetRecapDefaultPeriodSelection();
 					}
                     if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.VP)
-                    {
-                        _webSession.SetVpDates(WebApplicationParameters.VpDateConfigurations.DateTypeDefault);
-                    }
+                         _webSession.SetDates(WebApplicationParameters.VpDateConfigurations.DateTypeDefault);
+
+                    if (_webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ROLEX)
+                        _webSession.SetDates(WebApplicationParameters.RolexDateConfigurations.DateTypeDefault);
+                  
+                  
 					//Nouveaux univers produit
 					_webSession.PrincipalProductUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
 					_webSession.SecondaryProductUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
@@ -286,6 +287,9 @@ namespace AdExpress{
 
                     //Avertisement Type
                     _webSession.AdvertisementTypeUniverses = new System.Collections.Generic.Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>();
+                    _webSession.SelectedLocations = new List<long>();
+                    _webSession.SelectedPresenceTypes = new List<long>();
+
                     //Initialisation de customerPeriod
                     try {
                         if (_webSession.CustomerPeriodSelected != null)

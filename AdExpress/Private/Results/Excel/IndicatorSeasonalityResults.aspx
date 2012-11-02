@@ -7,7 +7,7 @@
 <HTML>
 	<HEAD runat="server">
 		<title>AdExpress</title>
-		<meta http-equiv="Content-Type" content="application/vnd.ms-excel;charset=ISO-8859-5"/>
+		<meta http-equiv="Content-Type" content="application/vnd.ms-excel;"/>
 		<meta name="GENERATOR" Content="Microsoft Visual Studio .NET 7.1"/>
 		<meta name="CODE_LANGUAGE" Content="C#"/>
 		<meta name="vs_defaultClientScript" content="JavaScript"/>
