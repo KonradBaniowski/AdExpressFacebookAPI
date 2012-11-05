@@ -120,13 +120,13 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
 
                         #region Get Product
 
-                        idProduct = AllClassification.GetProduct((string) cells[line, columnProduct].Value).Id;
+                        idProduct = AllClassification.GetProduct((string)cells[line, columnProduct].Value).Id;
 
                         #endregion
 
                         #region Get Brand
 
-                        idBrand = AllClassification.GetBrand((string) cells[line, columnBrand].Value).Id;
+                        idBrand = AllClassification.GetBrand((string)cells[line, columnBrand].Value).Id;
 
                         #endregion
 
@@ -150,27 +150,27 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
 
                         #region Get Date Begin
 
-                        dateBegin = (DateTime) cells[line, columnDateBegin].Value;
+                        dateBegin = (DateTime)cells[line, columnDateBegin].Value;
 
                         #endregion
 
                         #region Get Date End
 
-                        dateEnd = (DateTime) cells[line, columnDateEnd].Value;
+                        dateEnd = (DateTime)cells[line, columnDateEnd].Value;
                         if (dateEnd < dateBegin) throw new VeillePromoDALExcelInvalidDateException(new CellExcel(line, columnProduct), "Invalid Date");
                         #endregion
 
                         #region Get Promo Content
 
-                        promotionContent = (string) cells[line, columnPromoDetail].Value;
+                        promotionContent = (string)cells[line, columnPromoDetail].Value;
 
                         #endregion
 
                         #region Get Visuals condition
 
-                        if (cells[line, columnVisualsCondition].Value != null)
+                        if (cells[line, columnVisualsCondition].Value != null && cells[line, columnVisualsCondition].Value is string && !string.IsNullOrWhiteSpace((string)cells[line, columnVisualsCondition].Value))
                             conditionVisual =
-                                (new List<string>(((string) cells[line, columnVisualsCondition].Value).Split(new[]{';',','}))).
+                                (new List<string>(((string)cells[line, columnVisualsCondition].Value).Split(new[] { ';', ',' }))).
                                     ConvertAll<string>(
                                         file =>
                                         System.IO.Path.GetFullPath(
@@ -203,7 +203,7 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
                         #region Get Text Condition
 
                         conditionText = (cells[line, columnTextCondition].Value != null)
-                                            ? (string) cells[line, columnTextCondition].Value
+                                            ? (string)cells[line, columnTextCondition].Value
                                             : null;
 
                         #endregion
@@ -211,7 +211,7 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
                         #region Get Brand Promotion
 
                         promotionBrand = (cells[line, columnBrandPromo].Value != null)
-                                             ? (string) cells[line, columnBrandPromo].Value
+                                             ? (string)cells[line, columnBrandPromo].Value
                                              : null;
 
                         #endregion
@@ -268,6 +268,10 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
                 catch (AllClassificationException e)
                 {
                     throw new VeillePromoDALExcelCellException(new CellExcel(line, columnProduct), "Erreur in Cell [" + line + "," + columnProduct + "]", e);
+                }
+                catch (Exception e)
+                {
+                    throw;
                 }
                 return new DataPromotionDetails(dateFile, dataPromotionDetailList);
             }
