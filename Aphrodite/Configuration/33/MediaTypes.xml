@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hathor>
+  <configuration>
+    <vehicles>
+      
+      <!-- RADIO -->
+      <vehicle id="radio" databaseId="2">
+        <tables>
+          <dataTable name="adexpr03.data_radio"/>
+          <tableTendenciesMonth name="adexpr03.tendency_month"/>
+          <totalTableTendenciesMonth name="adexpr03.total_tendency_month"/>
+          <tableTendenciesWeek name="adexpr03.tendency_week"/>
+          <totalTableTendenciesWeek name="adexpr03.total_tendency_week"/>
+        </tables>
+        <units>
+          <type currentYear="expenditure_cur" previousYear="expenditure_prev" dataYear="expenditure_euro"/>
+          type currentYear="insertion_cur" previousYear="insertion_prev" dataYear="insertion"/>
+          <type currentYear="duration_cur" previousYear="duration_prev" dataYear="duration"/>
+        </units>
+        <Media listId="182"/>
+      </vehicle>
+    </vehicles>
+  </configuration>
+</hathor>
