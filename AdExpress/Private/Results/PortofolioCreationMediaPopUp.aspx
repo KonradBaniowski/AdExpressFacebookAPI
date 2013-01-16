@@ -17,7 +17,7 @@
 		<script language="javascript">
 
 		</script>
-		<BODY class="darkBackGround backGroundWhite" onload="javascript:goToAnchorImage('<%=pageAnchor%>');javascript:activateActiveX();">
+		<BODY class="darkBackGround backGroundWhite" onload="javascript:goToAnchorImage('<%=_pageAnchor%>');javascript:activateActiveX();">
 		<form id="Form1" method="post" runat="server">
 		<%=result%>
 		<cc1:displaymediaPageswebcontrol id="displaymediaPageswebcontrol1" runat="server"></cc1:displaymediaPageswebcontrol>

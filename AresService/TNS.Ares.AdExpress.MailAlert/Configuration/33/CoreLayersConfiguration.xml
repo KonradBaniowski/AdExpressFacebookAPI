@@ -2,9 +2,19 @@
 <configuration>
   <layers>
     <layer id="classification" name="layer of classification" assemblyName="TNS.AdExpressI.Classification.DAL.Default.dll" class="TNS.AdExpressI.Classification.DAL.Default.ClassificationDAL"/>
-   <!-- <layer id="utilities" name="layer of utilities functions" assemblyName="TNS.AdExpressI.Utilities.Default.dll" class="TNS.AdExpressI.Utilities.Default.Utilities"/>-->
+    <!-- <layer id="utilities" name="layer of utilities functions" assemblyName="TNS.AdExpressI.Utilities.Default.dll" class="TNS.AdExpressI.Utilities.Default.Utilities"/>-->
     <layer id="date" name="layer of date functions" assemblyName="TNS.AdExpressI.Date.Default.dll" class="TNS.AdExpressI.Date.Default.Date"/>
     <layer id="dateDAL" name="layer of date DataAccess" assemblyName="TNS.AdExpressI.Date.DAL.Default.dll" class="TNS.AdExpressI.Date.DAL.Default.DateDAL"/>
-    <layer id="classificationLevelList" name="layer of classification" assemblyName="TNS.AdExpressI.Classification.DAL.Default.dll" class="TNS.AdExpressI.Classification.DAL.Default.ClassificationLevelListDALFactory"/>    
+    <layer id="classificationLevelList" name="layer of classification" assemblyName="TNS.AdExpressI.Classification.DAL.Default.dll" class="TNS.AdExpressI.Classification.DAL.Default.ClassificationLevelListDALFactory"/>
+    <layer id="sourceProvider" name="layer of classification" assemblyName="TNS.AdExpress.Web.Core.Default.dll" class="TNS.AdExpress.Web.Core.Default.SourceProvider"/>
+    <layer id="insertions" name="insertions layer" assemblyName="TNS.AdExpressI.Insertions.Default.dll" class="TNS.AdExpressI.Insertions.Default.InsertionsResult"/>
+    <layer id="insertionsDAL" name="insertions DAL layer" assemblyName="TNS.AdExpressI.Insertions.DAL.Default.dll" class="TNS.AdExpressI.Insertions.DAL.Default.InsertionsDAL"/>
+    <layer id="creativesUtilities" name="layer of creatives Utilities" assemblyName="TNS.AdExpress.Web.Core.Default.dll" class="TNS.AdExpress.Web.Core.Default.Utilities.Creatives"/>
+    <layer id="creativePopUp" name="layer of creative Pop Up" assemblyName="TNS.AdExpressI.Insertions.Default.dll" class="TNS.AdExpressI.Insertions.Default.CreativeResult.CreativePopUp"/>
+    <layer id="mediaDetailLevelUtilities" name="layer of media Detail Level Utilities" assemblyName="TNS.AdExpress.Web.Core.Default.dll" class="TNS.AdExpress.Web.Core.Default.Utilities.MediaDetailLevel"/>
+    <layer id="productDetailLevelUtilities" name="layer of product Detail Level Utilities" assemblyName="TNS.AdExpress.Web.Core.Default.dll" class="TNS.AdExpress.Web.Core.Default.Utilities.ProductDetailLevel"/>
+    <layer id="visual" name="layer of visual" assemblyName="TNS.AdExpressI.Visual.Default.dll" class="TNS.AdExpressI.Visual.Default.Visual"/>
+    <layer id="gad" name="layer of GAD results" assemblyName="TNS.AdExpressI.GAD.Default.dll" class="TNS.AdExpressI.GAD.Default.GadResults"/>
+    <layer id="gadDAL" name="layer of GAD DAL" assemblyName="TNS.AdExpressI.GAD.DAL.Default.dll" class="TNS.AdExpressI.GAD.DAL.Default.GadDAL"/>
   </layers>
 </configuration>

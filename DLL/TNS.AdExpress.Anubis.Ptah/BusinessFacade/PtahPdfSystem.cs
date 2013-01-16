@@ -19,6 +19,7 @@ using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Functions;
 using TNS.AdExpressI.Rolex.DAL;
 using TNS.Ares.Pdf;
+using TNS.Ares.Pdf.Exceptions;
 using TNS.FrameWork.DB.Common;
 using TNS.FrameWork.Date;
 using TNS.FrameWork.Net.Mail;
@@ -84,6 +85,15 @@ namespace TNS.AdExpress.Anubis.Ptah.BusinessFacade
             /// </summary>
             DYNAMIC = -1
         };
+
+        /// <summary>
+        /// Impersonate Information
+        /// </summary>
+        private ImpersonateInformation _impersonateInformation = null;
+        /// <summary>
+        /// Impersonation
+        /// </summary>
+        private Impersonation _oImp = null;
         #endregion
 
         #region Constructor
@@ -110,10 +120,16 @@ namespace TNS.AdExpress.Anubis.Ptah.BusinessFacade
         #endregion
 
         #region Init
-        internal string Init()
+        public string Init()
         {
             try
             {
+                if (_config.UseImpersonate)
+                {
+                    _impersonateInformation = _config.ImpersonateConfig;
+                   OpenImpersonation();
+                }
+
                 string shortFName = "";
                 string fName = GetFileName(_rqDetails, ref shortFName);
                 bool display = false;
@@ -132,6 +148,10 @@ namespace TNS.AdExpress.Anubis.Ptah.BusinessFacade
             {
                 throw new PtahPdfException("Error to initialize PtahPdfSystem in Init()", e);
             }
+            finally
+            {
+                if (_config.UseImpersonate && _impersonateInformation != null) CloseImpersonation();
+            }
         }
         #endregion
 
@@ -144,28 +164,39 @@ namespace TNS.AdExpress.Anubis.Ptah.BusinessFacade
 
             try
             {
+                
+
                 #region MainPage
+
                 MainPageDesign();
+
                 #endregion
 
                 #region RolexFileResult
-                RolexFileResult(AddVisuals,CreationServerPathes.LOCAL_PATH_ROLEX);
+
+                RolexFileResult(AddVisuals, CreationServerPathes.LOCAL_PATH_ROLEX);
+
                 #endregion
 
                 #region Header and Footer
-                string dateString = Web.Core.Utilities.Dates.DateToString(DateTime.Now, _webSession.SiteLanguage, TNS.AdExpress.Constantes.FrameWork.Dates.Pattern.customDatePattern);
+
+                string dateString = Web.Core.Utilities.Dates.DateToString(DateTime.Now, _webSession.SiteLanguage,
+                                                                          TNS.AdExpress.Constantes.FrameWork.Dates
+                                                                             .Pattern.customDatePattern);
 
                 this.AddHeadersAndFooters(
-                _webSession,
-                imagePosition.leftImage,
-                GestionWeb.GetWebWord(2975, _webSession.SiteLanguage) + " - " + dateString,
-                0, -1, true);
+                    _webSession,
+                    imagePosition.leftImage,
+                    GestionWeb.GetWebWord(2975, _webSession.SiteLanguage) + " - " + dateString,
+                    0, -1, true);
+
                 #endregion
             }
             catch (System.Exception e)
             {
                 throw new PtahPdfException("Error to Fill Pdf in Fill()" + e.StackTrace + e.Source, e);
             }
+           
         }
         #endregion
 
@@ -291,8 +322,8 @@ namespace TNS.AdExpress.Anubis.Ptah.BusinessFacade
 
                             //URL
                             html.AppendFormat(
-                                " <li><span class=\"rofSp\"\"> <a class=\"roSite\" href=\"{1}\" target=\"_blank\" >{1}</a></span></li>",
-                                "&nbsp;", dr["URL"].ToString());
+                                " <li><span class=\"rofSp\"\" style=\"white-space: nowrap\"> <a class=\"roSite\" href=\"{0}\" target=\"_blank\" >{0}</a></span></li>",
+                                 dr["URL"].ToString());
 
                             //Dates
                             string dateBegin =
@@ -523,6 +554,7 @@ namespace TNS.AdExpress.Anubis.Ptah.BusinessFacade
         {
             if (imgList != null && imgList.Count > 0)
             {
+              
                 foreach (string visual in imgList.Select(img => visualDitectory + img).Where(File.Exists))
                 {
                     NewPage();
@@ -533,7 +565,7 @@ namespace TNS.AdExpress.Anubis.Ptah.BusinessFacade
                         int imgI = this.AddImageFromFilename(visual, TxImageCompressionType.itcFlate);
                         double w = (double) (this.PDFPAGE_Width - this.LeftMargin - this.RightMargin)/(double) imgG.Width;
                         double coef = coef = Math.Min((double) 1.0, w);
-                        w = ((double) (this.WorkZoneBottom - this.WorkZoneTop)/(double) imgG.Height);
+                        w = ((double) (this.WorkZoneBottom - (this.WorkZoneTop+20))/(double) imgG.Height);
                         coef = Math.Min((double) coef, w);
                         double X1 = (double) (this.PDFPAGE_Width/2 - (coef*imgG.Width)/2);
                         double Y1 = (double) (this.PDFPAGE_Height/2 - (coef*imgG.Height)/2);
@@ -548,6 +580,55 @@ namespace TNS.AdExpress.Anubis.Ptah.BusinessFacade
             }
         }
 
+        #endregion
+
+        #region Impersonation Methods
+        /// <summary>
+        /// Open Impersonation
+        /// </summary>
+        /// <returns></returns>
+        public void OpenImpersonation()
+        {
+            
+            if (_impersonateInformation != null)
+            {
+                CloseImpersonation();                
+                _oImp = new Impersonation();
+                _oImp.ImpersonateValidUser(_impersonateInformation.UserName, _impersonateInformation.Domain, _impersonateInformation.Password, Impersonation.LogonType.LOGON32_LOGON_NEW_CREDENTIALS);
+            }
+        }
+        /// <summary>
+        /// Close Impersonation
+        /// </summary>
+        public void CloseImpersonation()
+        {
+            if (_oImp != null)
+                _oImp.UndoImpersonation();
+            _oImp = null;
+        }
+        #endregion
+
+        #region Init
+        /// <summary>
+        /// Initialize the PDF (Create it and get it ready for building process)
+        /// </summary>
+        public override void Init(bool postDisplay, string fileName, string pdfCreatorPilotMail, string pdfCreatorPilotPass)
+        {
+            try
+            {
+                this.StartEngine(pdfCreatorPilotMail, pdfCreatorPilotPass);               
+                this.FileName = Path.GetTempPath() + "\\" + Path.GetFileName(fileName);
+                this.AutoLaunch = postDisplay;
+                this.Resolution = 96;
+
+                this.BeginDoc();
+
+            }
+            catch (System.Exception e)
+            {
+                throw (new PdfException("Unable to initialize pdf building", e));
+            }
+        }
         #endregion
     }
 }

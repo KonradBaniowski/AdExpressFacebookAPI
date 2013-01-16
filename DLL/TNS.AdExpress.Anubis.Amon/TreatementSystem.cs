@@ -281,6 +281,15 @@ namespace TNS.AdExpress.Anubis.Amon
                 pdf.AutoLaunch = false;
                 pdf.Fill();
                 pdf.EndDoc();
+
+                if (_amonConfig.UseImpersonate) pdf.OpenImpersonation();
+                string tempDirectory = Path.GetTempPath();
+                string sourceFileName = Path.Combine(tempDirectory, fileName + ".pdf");
+                var file = new FileInfo(sourceFileName);
+                file.CopyTo(_amonConfig.PdfPath + "\\" + rqDetails["ID_LOGIN"].ToString() + "\\" + fileName + ".pdf");
+                file.Delete();
+                if (_amonConfig.UseImpersonate) pdf.CloseImpersonation();
+
                 _dataAccess.RegisterFile(_navSessionId, fileName);
                 pdf.Send(fileName);
                 _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.sent.GetHashCode());

@@ -51,6 +51,8 @@ namespace TNS.AdExpressI.Rolex
         /// Index of ID level 3 column 
         /// </summary>
         public const int L3_ID_COLUMN_INDEX = 5;
+
+        public const string IMAGETTE_DIRECTORY_NAME = "imagette";
         #endregion
 
         #endregion
@@ -417,9 +419,10 @@ namespace TNS.AdExpressI.Rolex
                                 if (temsVisuals.Count > 1) visibility = "visible";
                                 for (int k = 0; k < temsVisuals.Count; k++)
                                 {
+                                    string currentThumnailVisual = string.Format("{0}/{3}/{1}?p={2}", CstWeb.CreationServerPathes.IMAGES_ROLEX, temsVisuals[k].Trim(), k, IMAGETTE_DIRECTORY_NAME);
                                     string currentVisual = string.Format("{0}/{1}?p={2}", CstWeb.CreationServerPathes.IMAGES_ROLEX, temsVisuals[k].Trim(), k);
-                                    visuals.Add(currentVisual);
-                                    if (k == 0) html.AppendFormat(" <td id=\"img_pr_div\" class=\"ro_visu1\" valign=\"top\"><a onclick=\"javascript:ZoomRolexImage_" + _resultControlId + "(''+document.getElementById('img_ro_" + m + "_" + _resultControlId + "').src+'');\"><img class=\"ro_visu\" id=\"img_ro_" + m + "_" + _resultControlId + "\" src=\"{0}\" /> </a></td>", currentVisual);
+                                    visuals.Add(currentThumnailVisual);
+                                    if (k == 0) html.AppendFormat(" <td id=\"img_pr_div\" class=\"ro_visu1\" valign=\"top\"><a onclick=\"javascript:ZoomRolexImage_" + _resultControlId + "('{1}');\"><img class=\"ro_visu\" id=\"img_ro_" + m + "_" + _resultControlId + "\" src=\"{0}\" /> </a></td>", currentThumnailVisual,currentVisual);
                                 }
 
 

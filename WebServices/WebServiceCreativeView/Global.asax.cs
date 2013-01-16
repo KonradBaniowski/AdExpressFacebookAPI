@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
+using TNS.AdExpress.Constantes.Web;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.XmlLoader;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.WebService.Domain;
@@ -37,6 +40,8 @@ namespace WebServiceCreativeView {
                 pathConfCountry = System.IO.Path.Combine(pathConf, countryName);
               
                 VehiclesCreativesInformation.Init(VehiclesCreativesInformationDataAccess.Load(new XmlReaderDataSource(System.IO.Path.Combine(pathConfCountry, "VehicleCreativesAccess.xml"))));
+
+                Media.LoadBaalLists(new XmlReaderDataSource(System.IO.Path.Combine(pathConfCountry, TNS.AdExpress.Constantes.Web.ConfigurationFile.BAAL_CONFIGURATION_FILENAME)));
             }
             catch (System.Exception error) {
                 string body = "";

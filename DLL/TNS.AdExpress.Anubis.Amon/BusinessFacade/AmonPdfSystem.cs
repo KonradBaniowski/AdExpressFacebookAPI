@@ -20,6 +20,7 @@ using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Web.UI;
 using TNS.AdExpressI.Rolex;
 using TNS.Ares.Pdf;
+using TNS.Ares.Pdf.Exceptions;
 using TNS.FrameWork;
 using TNS.FrameWork.DB.Common;
 using TNS.FrameWork.Net.Mail;
@@ -46,6 +47,14 @@ namespace TNS.AdExpress.Anubis.Amon.BusinessFacade
         /// WebSession to process
         /// </summary>
         protected WebSession _webSession = null;
+        /// <summary>
+        /// Impersonate Information
+        /// </summary>
+        private ImpersonateInformation _impersonateInformation = null;
+        /// <summary>
+        /// Impersonation
+        /// </summary>
+        private Impersonation _oImp = null;
         #endregion
 
         #region Constructor
@@ -80,13 +89,19 @@ namespace TNS.AdExpress.Anubis.Amon.BusinessFacade
         {
             try
             {
+                if (_config.UseImpersonate)
+                {
+                    _impersonateInformation = _config.ImpersonateConfig;
+                    OpenImpersonation();
+                }
+
                 string shortFName = "";
                 string fName = GetFileName(_rqDetails, ref shortFName);
                 bool display = false;
 #if(DEBUG)
                 display = true;
 #endif
-                base.Init(true, fName, _config.PdfCreatorPilotLogin, _config.PdfCreatorPilotPass);
+                Init(true, fName, _config.PdfCreatorPilotLogin, _config.PdfCreatorPilotPass);
                 this.DocumentInfo_Creator = this.DocumentInfo_Author = _config.PdfAuthor;
                 this.DocumentInfo_Subject = _config.PdfSubject;
                 this.DocumentInfo_Title = GestionWeb.GetWebWord(751, _webSession.SiteLanguage);
@@ -97,6 +112,10 @@ namespace TNS.AdExpress.Anubis.Amon.BusinessFacade
             catch (System.Exception e)
             {
                 throw new AmonPdfException("Error to initialize AmonPdfSystem in Init()", e);
+            }
+            finally
+            {
+                if (_config.UseImpersonate && _impersonateInformation != null) CloseImpersonation();
             }
         }
         #endregion
@@ -655,6 +674,55 @@ namespace TNS.AdExpress.Anubis.Amon.BusinessFacade
         private void mail_mailKoHandler(object source, string message)
         {
             throw new AmonPdfException("Echec lors de l'envoi mail client pour la session " + _webSession.IdSession + " : " + message);
+        }
+        #endregion
+
+        #region Impersonation Methods
+        /// <summary>
+        /// Open Impersonation
+        /// </summary>
+        /// <returns></returns>
+        public void OpenImpersonation()
+        {
+
+            if (_impersonateInformation != null)
+            {
+                CloseImpersonation();
+                _oImp = new Impersonation();
+                _oImp.ImpersonateValidUser(_impersonateInformation.UserName, _impersonateInformation.Domain, _impersonateInformation.Password, Impersonation.LogonType.LOGON32_LOGON_NEW_CREDENTIALS);
+            }
+        }
+        /// <summary>
+        /// Close Impersonation
+        /// </summary>
+        public void CloseImpersonation()
+        {
+            if (_oImp != null)
+                _oImp.UndoImpersonation();
+            _oImp = null;
+        }
+        #endregion
+
+        #region Init
+        /// <summary>
+        /// Initialize the PDF (Create it and get it ready for building process)
+        /// </summary>
+        public override void Init(bool postDisplay, string fileName, string pdfCreatorPilotMail, string pdfCreatorPilotPass)
+        {
+            try
+            {
+                this.StartEngine(pdfCreatorPilotMail, pdfCreatorPilotPass);
+                this.FileName = Path.GetTempPath() + "\\" + Path.GetFileName(fileName);
+                this.AutoLaunch = postDisplay;
+                this.Resolution = 96;
+
+                this.BeginDoc();
+
+            }
+            catch (System.Exception e)
+            {
+                throw (new PdfException("Unable to initialize pdf building", e));
+            }
         }
         #endregion
 

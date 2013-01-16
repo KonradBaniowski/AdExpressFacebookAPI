@@ -4,7 +4,10 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Windows;
+using System.Drawing;
+using System.Drawing.Imaging;
 using Microsoft.Win32;
 using RolexLoader.Exceptions;
 using RolexLoader.Helpers;
@@ -220,12 +223,20 @@ namespace RolexLoader.ViewModel
                         db.BeginTransaction();
 
                         List<PictureMatching>  pictures;
+                        long weekDate;
 
                         var rolexDetails = dal.GetRolexDetails(CurrentFile.FullName,out pictures, db);
-                       
-                        //Check if has data
-                        string str = Path.GetFileNameWithoutExtension(CurrentFile.FullName).Replace("Rolex_", "");
-                        var weekDate = long.Parse(str);
+                        try
+                        {
+                            //Check if has data
+                            string str = Path.GetFileNameWithoutExtension(CurrentFile.FullName).Replace("Rolex_", "");
+                             weekDate = long.Parse(str);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new ExcelFormatException("Incorrect File Name", ex);
+                        }
+                     
 
                         if (dal.HasData(weekDate, weekDate, db))
                         {
@@ -237,9 +248,11 @@ namespace RolexLoader.ViewModel
 
                         //Save visuals in directory file
                         #region Copy Pictures
+                        const string imagetteDirectoryName = "imagette";
                         foreach (PictureMatching pictureMatching in pictures)
                         {
                             File.Copy(pictureMatching.PathIn, Path.Combine(_rolexConfig.ViualPath, pictureMatching.PathOut), true);
+                            SaveImagette(imagetteDirectoryName, Path.Combine(_rolexConfig.ViualPath, pictureMatching.PathOut));
                         }                      
                         #endregion
 
@@ -379,27 +392,27 @@ namespace RolexLoader.ViewModel
             }
             if (e is DataAccessDALExcelInvalidDateException)
             {
-                MessageBox.Show("Les dates sont invalides sur la cellule  [" + ((DataAccessDALExcelInvalidDateException)e).CellExcel.LineId + "," + ((DataAccessDALExcelInvalidDateException)e).CellExcel.ColumnId + "]", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Les dates sont invalides sur la cellule  [" + ((DataAccessDALExcelInvalidDateException)e).CellExcel.LineId+ "," + ((DataAccessDALExcelInvalidDateException)e).CellExcel.ColumnId + "]", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (e is DataAccessDALExcelPresenceTypeException)
             {
-                MessageBox.Show(" Impossible de retrouver le type de présence saisi sur la cellule  [" + ((DataAccessDALExcelPresenceTypeException)e).CellExcel.LineId + "," + ((DataAccessDALExcelPresenceTypeException)e).CellExcel.ColumnId + "]", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(" Impossible de retrouver le type de présence saisi sur la ligne  [" + ((DataAccessDALExcelPresenceTypeException)e).CellExcel.LineId +  "]", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (e is DataAccessDALExcelLocationException)
             {
-                MessageBox.Show(" Impossible de retrouver l'emplacement saisi sur la cellule  [" + ((DataAccessDALExcelLocationException)e).CellExcel.LineId + "," + ((DataAccessDALExcelLocationException)e).CellExcel.ColumnId + "]", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(" Impossible de retrouver l'emplacement saisi sur la ligne  [" + ((DataAccessDALExcelLocationException)e).CellExcel.LineId +  "]", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (e is DataAccessDALExcelSiteException)
             {
-                MessageBox.Show(" Impossible de retrouver le Site saisi sur la cellule  [" + ((DataAccessDALExcelSiteException)e).CellExcel.LineId + "," + ((DataAccessDALExcelSiteException)e).CellExcel.ColumnId + "]", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(" Impossible de retrouver le Site saisi sur la ligne  [" + ((DataAccessDALExcelSiteException)e).CellExcel.LineId +  "]", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (e is DataAccessDALClassificationException)
             {
                 MessageBox.Show("Une erreur est survenue lors de la récupération de la nomenclature","Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (e is DataAccessDALExcelFormatException)
+            else if (e is DataAccessDALExcelFormatException || e is ExcelFormatException)
             {
-                MessageBox.Show("Le format du fichier est incorrect. Le format doit être du type 'Renault_yyyyMM'", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Le format du fichier est incorrect. Le format doit être du type 'Rolex_yyyyMM'", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (e is DataAccessDALExcelOpenFileException)
             {
@@ -407,29 +420,91 @@ namespace RolexLoader.ViewModel
             }
             else if (e is DataAccessDALExcelVisualException)
             {
-                MessageBox.Show("Une erreur est survenue lors du chargement du fichier Excel: Impossible de retrouver un fichier visuel", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Impossible de retrouver le(s) visuel(s) saisi(s) sur la ligne [" + ((DataAccessDALExcelVisualException)e).CellExcel.LineId + "].\n Pour rappel les visuels doivent avoir l'extension JPG et ne peuvent être séparés que par les caractères virgule [,]  ou point virgule [;]", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (e is DataAccessDALBadPictureNumberException)
             {
-                MessageBox.Show("Impossible de retrouver le fichier image. Il existe plusieurs fichiers avec le meme nom, mais avec des extentions différentes", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Impossible de retrouver le(s) visuel(s). Il existe plusieurs visuels avec le meme nom, mais avec des extentions différentes sur la ligne [" + ((DataAccessDALBadPictureNumberException)e).CellExcel.LineId + "].\n Pour rappel les visuels doivent avoir l'extension JPG et ne peuvent être séparés que par les caractères virgule [,]  ou point virgule [;]", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (e is DataAccessDALBadPictureNameException)
             {
-                MessageBox.Show("Impossible de retrouver le fichier image", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Impossible de retrouver le(s) visuel(s) de la ligne [" + ((DataAccessDALBadPictureNameException)e).CellExcel.LineId +  "].\n Pour rappel les visuels doivent avoir l'extension JPG et ne peuvent être séparés que par les caractères virgule [,]  ou point virgule [;]", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else if (e is DataAccessDALInsertException)
             {
                 MessageBox.Show("Une erreur est survenue lors du chargement du fichier Excel", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            else if (e is DataAccessDALRedundantPictureNameException)
+            {
+                MessageBox.Show("Plusieurs images ne peuvent pas porter le même nom sur la ligne [" + ((DataAccessDALRedundantPictureNameException)e).CellExcel.LineId + "].", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             else
             {
-                MessageBox.Show("Une erreur est survenue", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                if (cwe != null)
+                    MessageBox.Show("Une erreur est survenue.\n Veuillez contacter le service Informatique. \n " + cwe.FormatError(), "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                else MessageBox.Show("Une erreur est survenue.\n Veuillez contacter le service Informatique. \n ", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
 
         }
         #endregion
 
+        private  void SaveImagette(string imagetteDirectoryName, string sourceFileName)
+        {
+            using (var image = Image.FromFile(sourceFileName))
+            {
 
+                using (var imagette = ResizeImage(image, 350))
+                {
+                    string destFileName = Path.GetDirectoryName(sourceFileName) + @"\" + imagetteDirectoryName + @"\" +
+                        Path.GetFileName(sourceFileName);
+                    SaveAsJpeg(imagette, destFileName, 30L);
+                }
+            }
+        }
+        private  Image ResizeImage(Image imgPhoto, int WidthMax)
+        {
+
+            int sourceWidth = imgPhoto.Width;
+            int sourceHeight = imgPhoto.Height;
+
+            float nPercent = 0;
+
+
+            nPercent = ((float)WidthMax / (float)sourceWidth);
+
+
+
+            int destWidth = (int)(sourceWidth * nPercent);
+            int destHeight = (int)(sourceHeight * nPercent);
+
+            if (destWidth == 0 || destHeight == 0)
+                return null;
+
+            Bitmap bmPhoto = new Bitmap(destWidth, destHeight, PixelFormat.Format32bppRgb);
+            bmPhoto.SetResolution(imgPhoto.HorizontalResolution, imgPhoto.VerticalResolution);
+            Graphics grPhoto = Graphics.FromImage(bmPhoto);
+            grPhoto.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            grPhoto.DrawImage(imgPhoto, new Rectangle(0, 0, destWidth, destHeight),
+                new Rectangle(0, 0, sourceWidth, sourceHeight), GraphicsUnit.Pixel);
+            grPhoto.Dispose();
+            grPhoto = null;
+
+            return bmPhoto;
+        }
+        private  void SaveAsJpeg(Image img, string fileName, Int64 quality)
+        {
+            ImageCodecInfo jgpEncoder = GetEncoder(ImageFormat.Jpeg);
+            System.Drawing.Imaging.Encoder qualityEncoder = System.Drawing.Imaging.Encoder.Quality;
+            using (EncoderParameters EP = new EncoderParameters(1))
+            {
+                using (EncoderParameter qualityEncoderParameter = new EncoderParameter(qualityEncoder, quality))
+                {
+                    EP.Param[0] = qualityEncoderParameter;
+                    img.Save(fileName, jgpEncoder, EP);
+                }
+            }
+        }
+         private ImageCodecInfo GetEncoder(ImageFormat format) { return ImageCodecInfo.GetImageDecoders().SingleOrDefault(c => c.FormatID == format.Guid); }   
     }
 }

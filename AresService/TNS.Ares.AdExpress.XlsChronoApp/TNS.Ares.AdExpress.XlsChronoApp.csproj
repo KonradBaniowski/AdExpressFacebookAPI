@@ -186,10 +186,16 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>mkdir Bin
-copy TNS.AdExpressI.MediaSchedule.dll Bin
-copy TNS.AdExpressI.MediaSchedule.Appm.dll Bin
-copy TNS.AdExpressI.MediaSchedule.DAL.dll Bin
-copy TNS.AdExpressI.MediaSchedule.DAL.Appm.dll Bin</PostBuildEvent>
+    <PostBuildEvent>rmdir /S /Q "$(TargetDir)Bin\"
+mkdir "$(TargetDir)Bin\"
+copy "$(TargetDir)TNS.Ares.StaticNavSession.DAL.Default.dll" "$(TargetDir)Bin\TNS.Ares.StaticNavSession.DAL.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Insertions.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Insertions.DAL.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Insertions.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Insertions.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.Appm.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.Appm.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.DAL.Appm.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.DAL.Appm.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.DAL.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.DAL.Finland.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.DAL.Finland.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Classification.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Classification.DAL.Default.dll" /Y</PostBuildEvent>
   </PropertyGroup>
 </Project>

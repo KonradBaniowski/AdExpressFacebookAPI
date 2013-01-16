@@ -78,7 +78,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessFacade\PtahPdfSystem.cs" />
+    <Compile Include="Common\Impersonation.cs" />
     <Compile Include="Common\PtahConfig.cs" />
+    <Compile Include="Common\ImpersonateInformation.cs" />
     <Compile Include="DataAccess\PtahConfigDataAccess.cs" />
     <Compile Include="Exceptions\PtahConfigDataAccessException.cs" />
     <Compile Include="Exceptions\PtahPdfException.cs" />

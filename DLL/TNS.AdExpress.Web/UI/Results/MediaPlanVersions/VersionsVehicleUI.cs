@@ -14,8 +14,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Text;
-
-
+using TNS.AdExpress.Domain.Layers;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Results;
@@ -188,7 +187,13 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
             object[] paramMSCraetives = new object[2];
             paramMSCraetives[0] = _webSession;
             paramMSCraetives[1] = _webSession.CurrentModule;
-            IInsertionsResult resultMSCreatives = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + "TNS.AdExpressI.Insertions.Default.dll", "TNS.AdExpressI.Insertions.Default.InsertionsResult", false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, paramMSCraetives, null, null, null);
+
+            CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[Constantes.Web.Layers.Id.insertions];
+            if (cl == null) throw (new NullReferenceException("Core layer is null for the insertions rules"));
+            var resultMSCreatives = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory 
+                + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance
+                | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, paramMSCraetives, null, null);
+
             ResultTable data = null;
             string[] vehicles = _webSession.GetSelection(_webSession.SelectionUniversMedia, CustomCst.Right.type.vehicleAccess).Split(',');
             string filters = string.Empty;
@@ -198,7 +203,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 
             data = resultMSCreatives.GetMSCreatives(VehiclesInformation.Get(Int64.Parse(vehicles[0])), fromDate, toDate, filters, -1, _zoomDate); 
 
-            StringBuilder htmlBld = new StringBuilder(10000);
+            var htmlBld = new StringBuilder(10000);
             BuildMSCreativesHtml(htmlBld, data);
             return htmlBld.ToString();
         }

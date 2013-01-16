@@ -1,42 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configurations>
-   <!--Config FR (33)-->
-<lsClientConfiguration familyId="123" familyName="AdExpress FR Treatment service" monitorPort="30231" productName="Ares Service treatment - PDF Plan Media (Myisis)" maxAvailableSlots="1" directoryName="33\Plugins\Miysis.xml">
+  <!--Config FR (33)-->
+  <!--<lsClientConfiguration familyId="123" familyName="AdExpress FR Treatment service" monitorPort="30231" productName="Ares Service treatment - PDF Plan Media (Myisis)" maxAvailableSlots="1" directoryName="33\Plugins\Miysis.xml">
   <moduleDescription description="Ares Service treatment - PDF Plan Media (Myisis)" moduleId="7"/>
-</lsClientConfiguration>
+</lsClientConfiguration>-->
 
   <!-- Config SK (421) 
   <lsClientConfiguration familyId="130" familyName="AdExpress SK Treatment service" monitorPort="30259" productName="Ares Service treatment - PDF Plan Media (Myisis)" maxAvailableSlots="1" directoryName="421\Plugins\Miysis.xml">
     <moduleDescription description="Ares Service treatment - PDF Plan Media (Myisis)" moduleId="7"/>
   </lsClientConfiguration>-->
--->
+  -->
   <!-- Config SK Evaliant (4211)
   <lsClientConfiguration familyId="132" familyName="AdExpress SK Evaliant Treatment service" monitorPort="30269" productName="Ares Service treatment - PDF Plan Media (Myisis)" maxAvailableSlots="1" directoryName="421\Plugins\Miysis.xml">
     <moduleDescription description="Ares Service treatment - PDF Plan Media (Myisis)" moduleId="7"/>
   </lsClientConfiguration>-->
 
-  <!-- Config FI (35) 
-  <lsClientConfiguration familyId="132" familyName="AdExpress FI Treatment service" monitorPort="30264" productName="Ares Service treatment - PDF Plan Media (Myisis)" maxAvailableSlots="1" directoryName="421\Plugins\Miysis.xml">
+  <!-- Config PL (48) -->
+  <!--<lsClientConfiguration familyId="135" familyName="AdExpress PL Treatment service" monitorPort="30280" productName="Ares Service treatment - PDF Plan Media (Myisis)" maxAvailableSlots="1" directoryName="48\Plugins\Miysis.xml">
     <moduleDescription description="Ares Service treatment - PDF Plan Media (Myisis)" moduleId="7"/>
   </lsClientConfiguration>-->
 
-  <!-- Config PL (48) 
-  <lsClientConfiguration familyId="135" familyName="AdExpress PL Treatment service" monitorPort="30280" productName="Ares Service treatment - PDF Plan Media (Myisis)" maxAvailableSlots="1" directoryName="48\Plugins\Miysis.xml">
+  <!-- Config RU (48) -->
+  <!--<lsClientConfiguration familyId="139" familyName="AdExpress RU Treatment service" monitorPort="30280" productName="Ares Service treatment - PDF Plan Media (Myisis)" maxAvailableSlots="1" directoryName="421\Plugins\Miysis.xml">
     <moduleDescription description="Ares Service treatment - PDF Plan Media (Myisis)" moduleId="7"/>
   </lsClientConfiguration>-->
 
-  <!-- Config RU (48) 
-  <lsClientConfiguration familyId="139" familyName="AdExpress RU Treatment service" monitorPort="30280" productName="Ares Service treatment - PDF Plan Media (Myisis)" maxAvailableSlots="1" directoryName="421\Plugins\Miysis.xml">
+  <!-- Config FI (35) -->
+  <lsClientConfiguration familyId="132" monitorPort="30264" productName="Ares Service treatment - PDF Plan Media (Myisis)" maxAvailableSlots="1" directoryName="35\Plugins\Miysis.xml">
     <moduleDescription description="Ares Service treatment - PDF Plan Media (Myisis)" moduleId="7"/>
-  </lsClientConfiguration>-->
-
-  <!-- Config FI (35) -->  
-  <!--<lsClientConfiguration familyId="132" monitorPort="30264" productName="Ares Service treatment - PDF Plan Media (Myisis)" maxAvailableSlots="1" directoryName="35\Plugins\Miysis.xml">
-    <moduleDescription description="Ares Service treatment - PDF Plan Media (Myisis)" moduleId="7"/>
-  </lsClientConfiguration>-->
+  </lsClientConfiguration>
 
   <!-- Config RU (7) -->
-  <!--<lsClientConfiguration familyId="139" familyName="AdExpress RU Treatment service" monitorPort="30280" productName="Ares Service treatment - PDF Plan Media (Myisis)" maxAvailableSlots="1" directoryName="7\Plugins\Miysis.xml">
+  <!--<lsClientConfiguration familyId="123" familyName="AdExpress RU Treatment service" monitorPort="30280" productName="Ares Service treatment - PDF Plan Media (Myisis)" maxAvailableSlots="1" directoryName="33\Plugins\Miysis.xml">
     <moduleDescription description="Ares Service treatment - PDF Plan Media (Myisis)" moduleId="7"/>
   </lsClientConfiguration>-->
 

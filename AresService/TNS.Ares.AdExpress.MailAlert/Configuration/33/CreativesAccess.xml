@@ -11,6 +11,8 @@
     <VirtualPath id="DOWNLOAD_TV_SERVER" name="Répertoire des spots tv" value="/SpotTv"/>
     <VirtualPath id="DOWNLOAD_PAN_EURO" name="Répertoire des PanEuro" value="/PanEuro"/>
     <VirtualPath id="LOGO_PRESS" name="Répertoire contenant les logos de la presse" value="/LogosPresse"/>
+    <VirtualPath id="MEDIA_UPDATE" name="Répertoire contenant la liste des médias dispo" value="/MediaList"/>
+    <VirtualPath id="IMAGES_VP" name="Répertoire virtuel des créations presse" value="/ImagesVP"/>
   </VirtualPaths>
   <Streamings>
     <Streaming id="READ_REAL_RADIO_SERVER" name="Serveur Real en streaming en radio" value="rtsp://streamrl.secodip.com/radiostream"/>
@@ -22,18 +24,19 @@
     <Streaming id="READ_REAL_TV_SERVER" name="Serveur Real en streaming en TV" value="rtsp://streamrl.secodip.com/stream/fr/rm"/>
   </Streamings>
   <Networks>
-    <Network id="LOCAL_PATH_RADIO" name="Répertoire pour télécharger les spots radio" value="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\radio\"/>
-    <Network id="LOCAL_PATH_CREATIVES_RADIO" name="Nouveau Répertoire pour télécharger les spots radio" value="\\frmitch-fs03\quali_multimedia\Streaming\fr"/>
-    <Network id="LOCAL_PATH_VIDEO" name="Répertoire pour télécharger les spots tv" value="\\frmitch-fs03\quali_multimedia\Streaming\fr"/>
-    <Network id="LOCAL_PATH_PAN_EURO" name="Répertoire pour télécharger les paneuro" value="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\PanEuro"/>
-    <Network id="LOCAL_PATH_IMAGE" name="Répertoire contenant les visuels de la presse" value="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Press\SCANS\"/>
-    <Network id="LOCAL_PATH_MD_IMAGE" name="Répertoire contenant les visuels du Marketing Direct" value="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\MarketingDirect\"/>
-    <Network id="LOCAL_PATH_OUTDOOR" name="Répertoire contenant les logos de la publicité extérieur" value="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\Outdoor\"/>
+    <Network id="LOCAL_PATH_RADIO" name="Répertoire pour télécharger les spots radio" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\radio\"/>
+    <Network id="LOCAL_PATH_CREATIVES_RADIO" name="Nouveau Répertoire pour télécharger les spots radio" value="\\frmitch-fs03.tnsad.com\quali_multimedia\Streaming\fr"/>
+    <Network id="LOCAL_PATH_VIDEO" name="Répertoire pour télécharger les spots tv" value="\\frmitch-fs03.tnsad.com\quali_multimedia\Streaming\fr"/>
+    <Network id="LOCAL_PATH_PAN_EURO" name="Répertoire pour télécharger les paneuro" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\PanEuro"/>
+    <Network id="LOCAL_PATH_IMAGE" name="Répertoire contenant les visuels de la presse" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\Press\SCANS\"/>
+    <Network id="LOCAL_PATH_MD_IMAGE" name="Répertoire contenant les visuels du Marketing Direct" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\MarketingDirect\"/>
+    <Network id="LOCAL_PATH_OUTDOOR" name="Répertoire contenant les logos de la publicité extérieur" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\Outdoor\"/>
     <Network id="LOCAL_PATH_LOGO_PRESS" name="Répertoire contenant les logos de la presse" value="\\hera\AdexDatas\LogosPresse\"/>
-    <Network id="LOCAL_PATH_ADEXNEWS" name="Fichiers AdExNews" value="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\InfoNews\AdexNews\"/>
-    <Network id="LOCAL_PATH_ADEXREPORT" name="Fichiers AdExReport" value="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\InfoNews\adexreport\"/>
-    <Network id="LOCAL_PATH_ADEXREVIEW" name="Fichiers AdExReview" value="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\InfoNews\adexreview\"/>
-    <Network id="LOCAL_PATH_NOUVEAUTES" name="" value="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\InfoNews\nouveautes\"/>
-    <Network id="LOCAL_PATH_MEDIA_UPDATE" name="Fichiers contenant la liste des médias dispo" value="\\frmitch-fs03\quanti_multimedia_perf\AdexDatas\InfoNews\MediaList\"/>
+    <Network id="LOCAL_PATH_ADEXNEWS" name="Fichiers AdExNews" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\InfoNews\AdexNews\"/>
+    <Network id="LOCAL_PATH_ADEXREPORT" name="Fichiers AdExReport" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\InfoNews\adexreport\"/>
+    <Network id="LOCAL_PATH_ADEXREVIEW" name="Fichiers AdExReview" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\InfoNews\adexreview\"/>
+    <Network id="LOCAL_PATH_NOUVEAUTES" name="" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\InfoNews\nouveautes\"/>
+    <Network id="LOCAL_PATH_MEDIA_UPDATE" name="Fichiers contenant la liste des médias dispo" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\InfoNews\MediaList\"/>
+    <Network id="LOCAL_PATH_VP" name="Visuels de la Veille promotionnelle Renault" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\VP\"/>
   </Networks>
 </CreativesAccess>

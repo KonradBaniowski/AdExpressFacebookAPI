@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TNS.AdExpress.Domain.CampaignTypes;
 using TNS.FrameWorks.LSConnectivity;
 using System.Collections;
 using TNS.LinkSystem.LinkKernel;
@@ -246,6 +247,11 @@ namespace TNS.Ares.AdExpress.MailAlert
                 }
                 #endregion
 
+
+                //Campaign  types
+                CampaignTypesInformation.Init(new XmlReaderDataSource(WebApplicationParameters.CountryConfigurationDirectoryRoot + WebConstantes.ConfigurationFile.CAMPAIGN_TYPES_CONFIGURATION_FILENAME));
+
+
                 #region Create Instance of Static Nav Session
                 try {
                     object[] parameter = new object[1];
@@ -362,7 +368,8 @@ namespace TNS.Ares.AdExpress.MailAlert
 
                             // Delete static nav session row
                             PluginInformation pluginInformation = PluginConfiguration.GetPluginInformation(PluginType.Alertes);
-                            if (pluginInformation.DeleteRowSuccess) {
+                            if (pluginInformation.DeleteRowSuccess)
+                            {
                                 this.Log(new LogLine(string.Format("Delete static nav session row #{1} for alert '{0}'", alertId.ToString(), extractParameterId(oTaskExecution).ToString()), eLogCategories.Information, "Alerts"));
                                 this._navDAL.DeleteRow(extractParameterId(oTaskExecution));
                             }

@@ -11,6 +11,8 @@ using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Bastet.XmlLoader;
 using TNS.FrameWork.DB.Common;
 using TNS.AdExpress.Bastet.Exceptions;
+using TNS.AdExpress.Domain.Level;
+using TNS.AdExpress.Constantes.Web;
 
 namespace TNS.AdExpress.Bastet.Web {
 
@@ -98,6 +100,12 @@ namespace TNS.AdExpress.Bastet.Web {
                 _coreLayers = CoreLayersXL.Load(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.CORE_LAYERS_CONFIGURATION_FILENAME));
                 _webServiceRightConfiguration = WebServiceRightConfigurationXL.Load(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Constantes.Web.ConfigurationFile.WEB_SERVICE_RIGHT_CONFIGURATION));
                 _groupContactFilterList = GroupContactFilterXL.Load(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + TNS.AdExpress.Bastet.Constantes.Web.ConfigurationFile.GROUP_CONTACT_FILTER_CONFIGURATION_FILENAME));
+
+                // Initialisation des descriptions des éléments de niveaux de détail
+                DetailLevelItemsInformation.Init(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + ConfigurationFile.GENERIC_DETAIL_LEVEL_ITEMS_CONFIGURATION_FILENAME));
+
+                // Initialisation des descriptions des niveaux de détail
+                DetailLevelsInformation.Init(new XmlReaderDataSource(_countryConfigurationDirectoryRoot + ConfigurationFile.GENERIC_DETAIL_LEVEL_CONFIGURATION_FILENAME)); 		
             }
             catch (Exception e) {
                 throw new WebApplicationInitialisationException("Initialization Error in WebApplicationParameters constructor", e);

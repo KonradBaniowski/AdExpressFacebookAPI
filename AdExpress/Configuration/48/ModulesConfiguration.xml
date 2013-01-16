@@ -306,6 +306,7 @@
             <allowedProductLevelItem id="8" name="Annonceur"/>
             <!--<allowedProductLevelItem id="15" name="Groupe d'agence"/>-->
             <!--<allowedProductLevelItem id="16" name="Agence"/>-->
+             <allowedMediaLevelItem>slogan</allowedMediaLevelItem>                 <!-- Version -->
           </allowedProductLevelItems>
         </ProductDetailLevel>
         <ColumnDetailLevel>
@@ -470,7 +471,7 @@
       <!-- *****************************************      Portefeuille d'un support           *****************************************-->
       <module name="Portefeuille d'un support" privilegecode="283" traductioncode="2170" moduleCategoryId="1" displayIncompleteDateInCalendar="True" urlNextPage="/Private/Selection/OneVehicleSelection.aspx" descriptionWebTextId="2199" descriptionImageName="/Images/Common/Infobulle/Portefeuille.png">
         <RulesLayer name="Default Portofolio rules layers" assemblyName="TNS.AdExpressI.Portofolio.Poland.dll" class="TNS.AdExpressI.Portofolio.Poland.PortofolioResults"/>
-        <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.Default.dll" class="TNS.AdExpressI.Portofolio.DAL.Default.PortofolioDAL"/>
+        <DataAccessLayer name="Default Portofolio data access layers" assemblyName="TNS.AdExpressI.Portofolio.DAL.Poland.dll" class="TNS.AdExpressI.Portofolio.DAL.Poland.PortofolioDAL"/>
         <ProductRights branches="product"/>
         <ModuleAllowedMediaUniverse initFromBaal="false" baalId="-1">
           <ModuleVehicles list="1,2,3,5,6,7,8"/>
@@ -560,7 +561,7 @@
           <page id="3" resultid="11" name="Détail Support" traductioncode="1378" url="/Private/Results/MediaPortofolioResults.aspx" menuTextId="1983" helpUrl="/Private/Helps/PortofolioResultsHelp.aspx">
             <ResultAllowedMediaUniverse initFromBaal="false" baalId="-1">
               <!-- Press is not present because not field date_cover_num in dataBase  -->
-              <ResultVehicles list="1,2,5"/>
+              <ResultVehicles list="1,3,2,5"/>
             </ResultAllowedMediaUniverse>
             <allowedUnits>
               <allowedUnit>pln</allowedUnit>

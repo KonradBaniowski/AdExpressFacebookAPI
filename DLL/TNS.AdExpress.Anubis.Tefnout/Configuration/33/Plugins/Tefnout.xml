@@ -2,6 +2,7 @@
 <Configuration>
 	<CustomerMail server="frmitch-msprod" port="25" from="tnsadexpress@tnsmi.fr" webServer="http://www.tnsadexpress.com" subject="AdExpress"/>
 	<ExcelPath path="\\testarossa2\adexdatas\AdExCustomerFiles"/>
+
 	<!--If path empty then path = current directory of executable-->
   	<ThemePath path="App_Themes"/>
 </Configuration>

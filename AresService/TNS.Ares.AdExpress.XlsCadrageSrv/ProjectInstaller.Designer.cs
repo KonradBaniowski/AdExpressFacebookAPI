@@ -1,4 +1,6 @@
-﻿namespace TNS.Ares.AdExpress.XlsCadrageSrv
+﻿using System.ServiceProcess;
+
+namespace TNS.Ares.AdExpress.XlsCadrageSrv
 {
     partial class ProjectInstaller
     {
@@ -35,6 +37,7 @@
             // 
             this.aresXlsCadrageProcessInstaller.Password = null;
             this.aresXlsCadrageProcessInstaller.Username = null;
+            aresXlsCadrageProcessInstaller.Account = ServiceAccount.LocalSystem;
             // 
             // aresXlsCadrageInstaller
             // 

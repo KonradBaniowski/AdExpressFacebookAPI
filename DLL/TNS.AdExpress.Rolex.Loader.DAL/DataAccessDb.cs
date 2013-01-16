@@ -14,7 +14,7 @@ namespace TNS.AdExpress.Rolex.Loader.DAL
         }
 
         public Table<DataLocation> Location { get { return GetTable<DataLocation>(); } }
-        public Table<DataTypePresence> TypePresence { get { return GetTable<DataTypePresence>(); } }
+        public Table<DataPresenceType> PresenceType { get { return GetTable<DataPresenceType>(); } }
         public Table<DataMedia> Media { get { return GetTable<DataMedia>(); } }
         public Table<DataRolex> Rolex { get { return GetTable<DataRolex>(); } }
         public long GetVisualSequenceId() { return DataAccessDbConnectionFactory.GetSequenceId("ROLEX03", "VISUAL", this); }

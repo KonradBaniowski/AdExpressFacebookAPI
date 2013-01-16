@@ -333,10 +333,10 @@ namespace TNS.AdExpress.Web.UI
 
         public static ClassificationLevelListDAL GetClassificationLevelListDAL(WebSession webSession,DetailLevelItemInformation.Levels level)
         {
-            var dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rolex);
+          
             var classificationLevelListDAL =
                 new ClassificationLevelListDAL(DetailLevelItemsInformation.Get(level)
-                                               , webSession.SiteLanguage, dataSource,
+                                               , webSession.SiteLanguage, webSession.CustomerDataFilters.DataSource,
                                                WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.rolex03).Label);
             return classificationLevelListDAL;
         }

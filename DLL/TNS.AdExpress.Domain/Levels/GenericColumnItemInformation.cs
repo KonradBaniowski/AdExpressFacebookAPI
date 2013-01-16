@@ -727,7 +727,11 @@ namespace TNS.AdExpress.Domain.Level
             /// <summary>
             /// Programme Genre
             /// </summary>
-            programmeGenre = 176
+            programmeGenre = 176,
+            /// <summary>
+            /// Banner Id
+            /// </summary>
+            bannerId =177
         }
         #endregion
 

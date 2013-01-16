@@ -285,6 +285,15 @@ namespace TNS.AdExpress.Anubis.Ptah
                 pdf.AutoLaunch = false;
                 pdf.Fill();
                 pdf.EndDoc();
+
+                if (_ptahConfig.UseImpersonate) pdf.OpenImpersonation();              
+                string tempDirectory = Path.GetTempPath();
+                string sourceFileName = Path.Combine(tempDirectory, fileName + ".pdf");
+                var file = new FileInfo(sourceFileName);
+                file.CopyTo(_ptahConfig.PdfPath + "\\" + rqDetails["ID_LOGIN"].ToString() +"\\"+ fileName + ".pdf");
+                file.Delete();
+                if (_ptahConfig.UseImpersonate) pdf.CloseImpersonation();
+
                 _dataAccess.RegisterFile(_navSessionId, fileName);
                 pdf.Send(fileName);
                 _dataAccess.UpdateStatus(_navSessionId, TNS.Ares.Constantes.Constantes.Result.status.sent.GetHashCode());

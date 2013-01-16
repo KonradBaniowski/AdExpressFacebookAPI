@@ -234,7 +234,9 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
                 SmtpUtilities mail = new SmtpUtilities(_config.CustomerMailFrom, to,
                     GestionWeb.GetWebWord(1971, _webSession.SiteLanguage),
                     Encoding.GetEncoding(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].ContentEncoding),
-                    GestionWeb.GetWebWord(1750, _webSession.SiteLanguage) + "\"" + _webSession.ExportedPDFFileName + "\"" + String.Format(GestionWeb.GetWebWord(1751, _webSession.SiteLanguage), _config.WebServer) + "<br><br>" + GestionWeb.GetWebWord(1776, _webSession.SiteLanguage),
+                    GestionWeb.GetWebWord(1750, _webSession.SiteLanguage) + "\"" + _webSession.ExportedPDFFileName + "\""
+                    + String.Format(GestionWeb.GetWebWord(1751, _webSession.SiteLanguage), _config.WebServer) + "<br><br>"
+                    + String.Format(GestionWeb.GetWebWord(1776, _webSession.SiteLanguage), _config.WebServer),
                     Encoding.GetEncoding(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].ContentEncoding),
                     true, _config.CustomerMailServer, _config.CustomerMailPort);
                 mail.mailKoHandler += new TNS.FrameWork.Net.Mail.SmtpUtilities.mailKoEventHandler(mail_mailKoHandler);
@@ -910,7 +912,7 @@ namespace TNS.AdExpress.Anubis.Hotep.BusinessFacade{
 			#endregion
 
 			try{
-                if ((tab.GetLongLength(0) != 0) && (!((PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year - (WebApplicationParameters.DataNumberOfYear - 1)) && DateTime.Now.Year <= _webSession.DownLoadDate)
+                if ((tab!=null && tab.GetLongLength(0) != 0) && (!((PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year - (WebApplicationParameters.DataNumberOfYear - 1)) && DateTime.Now.Year <= _webSession.DownLoadDate)
                     || (PeriodBeginningDate.Year.Equals(System.DateTime.Now.Year - WebApplicationParameters.DataNumberOfYear) && DateTime.Now.Year > _webSession.DownLoadDate)))) {
 
 					this.NewPage();

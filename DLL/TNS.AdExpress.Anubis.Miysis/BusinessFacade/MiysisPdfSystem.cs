@@ -217,7 +217,7 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
                     GestionWeb.GetWebWord(1750, _webSession.SiteLanguage) + "\"" + _webSession.ExportedPDFFileName
                     + "\"" + String.Format(GestionWeb.GetWebWord(1751, _webSession.SiteLanguage), _config.WebServer)
                     + "<br><br>"
-                    + GestionWeb.GetWebWord(1776, _webSession.SiteLanguage),
+                    + String.Format(GestionWeb.GetWebWord(1776, _webSession.SiteLanguage), _config.WebServer),
                     true, _config.CustomerMailServer, _config.CustomerMailPort);
                 try
                 {

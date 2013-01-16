@@ -7,16 +7,16 @@ using BLToolkit.Mapping;
 
 namespace TNS.AdExpress.Rolex.Loader.DAL.DbType
 {
-    [TableName(Name = "ROLEX03.TYPE_PRESENCE")]
-    public class DataTypePresence
+    [TableName(Name = "ROLEX03.PRESENCE_TYPE")]
+    public class DataPresenceType
     {
-        [MapField("ID_TYPE_PRESENCE"), NotNull, PrimaryKey]
+        [MapField("ID_PRESENCE_TYPE"), NotNull, PrimaryKey]
         public long IdTypePresence { get; set; }
 
         [MapField("ID_LANGUAGE"), NotNull, PrimaryKey]
         public long IdLanguage { get; set; }
 
-        [MapField("TYPE_PRESENCE"), NotNull]
+        [MapField("PRESENCE_TYPE"), NotNull]
         public String TypePresence { get; set; }
     }
 }

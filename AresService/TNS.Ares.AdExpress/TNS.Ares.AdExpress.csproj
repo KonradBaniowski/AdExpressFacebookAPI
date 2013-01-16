@@ -212,7 +212,9 @@
     <Content Include="Configuration\35\BaalList.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Configuration\35\CampaignTypes.xml" />
+    <Content Include="Configuration\35\CampaignTypes.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\35\CoreLayersConfiguration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

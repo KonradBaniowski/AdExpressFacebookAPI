@@ -132,11 +132,18 @@ namespace TNS.AdExpress.Web.Controls.Results {
                 _isBlur = value;
             }
         }
+
+        /// <summary>
+        /// Page anchor
+        /// </summary>
+        [Bindable(true)]
+        public string SubFolder { get; set; }
 		#endregion
 
 		protected override void Render(HtmlTextWriter output) {
-			string pathWeb1 = _idMedia + "/" + _dateCover + "/" + _fileName1 + "";
-			string pathWeb2 = _idMedia + "/" + _dateCover + "/" + _fileName2 + "";
+            string pathWeb1 = string.Format("{0}/{1}/{2}/{3}", _idMedia, _dateCover, SubFolder, _fileName1);
+            string pathWeb2 = string.Format("{0}/{1}/{2}/{3}", _idMedia, _dateCover, SubFolder, _fileName2);
+
 			StringBuilder t = new StringBuilder(3000);
             Int64 vehicleId = 0;
             if (VehiclesInformation.Contains(Vehicles.names.press))
@@ -152,7 +159,10 @@ namespace TNS.AdExpress.Web.Controls.Results {
             parameters[0] = vehicleId;
             parameters[1] = pathWeb1;
 
-            IVisual visual = (IVisual)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.visual].AssemblyName, WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.visual].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+            IVisual visual = (IVisual)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" 
+                + WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.visual].AssemblyName, 
+                WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.visual].Class, false, BindingFlags.CreateInstance
+                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 
 
 
@@ -162,7 +172,10 @@ namespace TNS.AdExpress.Web.Controls.Results {
                 parameters = new object[2];
                 parameters[0] = vehicleId;
                 parameters[1] = pathWeb2;
-                visual = (IVisual)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.visual].AssemblyName, WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.visual].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+                visual = (IVisual)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\"
+                    + WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.visual].AssemblyName, 
+                    WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.visual].Class, false, 
+                    BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
                 t.Append("<img src='" + visual.GetVirtualPath(_isBlur) + "' border=\"0\" width=470 height=627>");
             }
 

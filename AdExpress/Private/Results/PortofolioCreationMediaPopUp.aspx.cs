@@ -59,7 +59,12 @@ namespace AdExpress.Private.Results{
 		/// <summary>
 		/// Ancre du numéro de page pour le positionnement de la publicité dans son contexte
 		/// </summary>
-		public string pageAnchor=null;
+		public string _pageAnchor=null;
+
+        /// <summary>
+        /// Sub folder name of magazine pages
+        /// </summary>
+        public string _subFolder = null;
 		#endregion
 
 		#region Constructeur
@@ -72,7 +77,8 @@ namespace AdExpress.Private.Results{
 			dateCover = HttpContext.Current.Request.QueryString.Get("parution");
 			nameMedia=HttpContext.Current.Request.QueryString.Get("nameMedia");
 			nbrePages=HttpContext.Current.Request.QueryString.Get("nbrePages");
-			pageAnchor=HttpContext.Current.Request.QueryString.Get("pageAnchor");
+            _pageAnchor = HttpContext.Current.Request.QueryString.Get("pageAnchor");
+            _subFolder = HttpContext.Current.Request.QueryString.Get("subfolder");
 		}
 		#endregion
 		
@@ -83,37 +89,7 @@ namespace AdExpress.Private.Results{
 		/// <param name="sender">page</param>
 		/// <param name="e">arguments</param>
 		protected void Page_Load(object sender, System.EventArgs e){
-			try{
-				//result=PortofolioUI.GetPortofolioCreationMedia(_webSession,date,parution,idMedia,nameMedia,nbrePages,pageAnchor);
-				//Domain.Module module = _webSession.CustomerLogin.GetModule(_webSession.CurrentModule);
-				//if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
-				//object[] parameters = new object[6];
-				//parameters[0] = _webSession;
-				//parameters[1] = date;
-				//parameters[2] = parution;
-				//parameters[3] = nameMedia;
-				//parameters[4] = nbrePages;
-				//parameters[5] = pageAnchor;
-				//Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
-				//result = portofolioResult.GetPortofolioCreationMedia();
 				
-				//#region Scripts
-				//// Ouverture de la popup une création
-				//if (!Page.ClientScript.IsClientScriptBlockRegistered("portofolioOneCreation")) {
-				//    Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"portofolioOneCreation",TNS.AdExpress.Web.Functions.Script.PortofolioOneCreation());
-				//}
-				//// Positionnement de l'image avec Anchor
-				//if (!Page.ClientScript.IsClientScriptBlockRegistered("goToAnchorImage")) {
-				//    Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"goToAnchorImage",TNS.AdExpress.Web.Functions.Script.GoToAnchorImage());
-				//}
-				//#endregion
-
-			}
-			catch(System.Exception exc){
-				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){
-					this.OnError(new TNS.AdExpress.Web.UI.ErrorEventArgs(this,exc,_webSession));
-				}
-			}			
 		}
 		#endregion
 
@@ -130,7 +106,8 @@ namespace AdExpress.Private.Results{
 			displaymediaPageswebcontrol1.NbPages = nbrePages;
 			displaymediaPageswebcontrol1.DateParution = date;
 			displaymediaPageswebcontrol1.DateCover = dateCover;
-
+            displaymediaPageswebcontrol1.PageAnchor = _pageAnchor;
+		    displaymediaPageswebcontrol1.SubFolder = _subFolder;
 			return tmp;
 		}
 		#endregion

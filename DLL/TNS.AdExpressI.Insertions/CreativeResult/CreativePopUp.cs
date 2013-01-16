@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Web.UI;
-
 using CstClassification = TNS.AdExpress.Constantes.Classification;
 using CstClassificationVehicle = TNS.AdExpress.Constantes.Classification.DB.Vehicles;
 using CstWeb = TNS.AdExpress.Constantes.Web;
@@ -15,11 +14,13 @@ using TNS.AdExpressI.Insertions.DAL;
 using System.Web;
 using TNS.AdExpress.Domain.Classification;
 
-namespace TNS.AdExpressI.Insertions.CreativeResult{
+namespace TNS.AdExpressI.Insertions.CreativeResult
+{
     /// <summary>
     /// Class used to display tv and radio creatives in reading and streamin mode
     /// </summary>
-    public class CreativePopUp{
+    public class CreativePopUp
+    {
 
         #region constantes
         /// <summary>
@@ -30,6 +31,10 @@ namespace TNS.AdExpressI.Insertions.CreativeResult{
         ///  Constante cookie pour fichier format real media player 
         /// </summary>
         protected const string REAL_MEDIA_PLAYER_FORMAT = "realPalyerFormat";
+        protected const string RA_EXTENSION = "ra";
+        protected  const string WMA_EXTENSION = "wma";
+        protected const string WMV_EXTENSION = "wmv";
+        protected const string RM_EXTENSION = "rm";
         #endregion
 
         #region Variables
@@ -100,7 +105,9 @@ namespace TNS.AdExpressI.Insertions.CreativeResult{
         /// <param name="file">File</param>
         /// <param name="webSession">WebSession</param>
         /// <param name="title">Title</param>
-        public CreativePopUp(Page popUp, CstClassificationVehicle.names vehicle, string idSlogan, string file, WebSession webSession, string title, bool hasCreationReadRights, bool hasCreationDownloadRights){
+        public CreativePopUp(Page popUp, CstClassificationVehicle.names vehicle, string idSlogan, string file,
+            WebSession webSession, string title, bool hasCreationReadRights, bool hasCreationDownloadRights)
+        {
             _vehicle = vehicle;
             _idSlogan = idSlogan;
             _file = file;
@@ -119,162 +126,345 @@ namespace TNS.AdExpressI.Insertions.CreativeResult{
         /// <returns>Html code</returns>
         public virtual string CreativePopUpRender()
         {
-
-            #region Construction et vérification des chemins d'accès aux fichiers real ou wm
             //Vérification de l'existence des fichiers et construction des chemins d'accès suivant la volonté de 
             //lire ou de télécharger le fichier
-            bool realFormatFound = true;
-            bool windowsFormatFound = true;
+            bool realFormatFound = false;
+            bool windowsFormatFound = false;
 
-            switch (_vehicle){
+            GetCreativePathes(ref realFormatFound, ref windowsFormatFound);
 
-                case CstClassification.DB.Vehicles.names.radio:
-                case CstClassification.DB.Vehicles.names.radioGeneral:
-                case CstClassification.DB.Vehicles.names.radioMusic:
-                case CstClassification.DB.Vehicles.names.radioSponsorship:
-                    //Vérification de l'existence du fichier real
-                    if (_idSlogan != null && File.Exists(CstWeb.CreationServerPathes.LOCAL_PATH_CREATIVES_RADIO + @"\ra\2\" + _idSlogan.Substring(0, 3) + @"\2" + _idSlogan + ".ra")){
-                        _isNewRealAudioFilePath = realFormatFound = true;
-                    }
-                    else if (File.Exists(CstWeb.CreationServerPathes.LOCAL_PATH_RADIO + _file.Replace("/", "\\"))){
-                        realFormatFound = true;
-                    }
-                    else realFormatFound = false;
-
-                    //Vérification de l'existence du fichier wm
-                    if (_idSlogan != null && File.Exists(CstWeb.CreationServerPathes.LOCAL_PATH_CREATIVES_RADIO + @"\wma\2\" + _idSlogan.Substring(0, 3) + @"\2" + _idSlogan + ".wma")){
-                        _isNewWindowsAudioFilePath = windowsFormatFound = true;
-                    }
-                    else if (File.Exists(CstWeb.CreationServerPathes.LOCAL_PATH_RADIO + (_file.Replace("/", "\\")).Replace("rm", "wma"))){
-                        windowsFormatFound = true;
-                    }
-                    else windowsFormatFound = false;
-
-                    #region Test
-#if DEBUG
-                    //isNewRealAudioFilePath = isNewWindowsAudioFilePath = true;
-#endif
-
-                    #endregion
-
-                    //Construction des chemins real et wm					
-                    if (_hasCreationReadRights){
-                        //Fichiers en lectures (streaming)
-                        _pathReadingRealFile = (_isNewRealAudioFilePath) ? CstWeb.CreationServerPathes.READ_REAL_CREATIVES_RADIO_SERVER + "/2/" + _idSlogan.Substring(0, 3) + "/2" + _idSlogan + ".ra" : CstWeb.CreationServerPathes.READ_REAL_RADIO_SERVER + _file;
-                        _pathReadingWindowsFile = (_isNewWindowsAudioFilePath) ? CstWeb.CreationServerPathes.READ_WM_CREATIVES_RADIO_SERVER + "/2/" + _idSlogan.Substring(0, 3) + "/2" + _idSlogan + ".wma" : CstWeb.CreationServerPathes.READ_WM_RADIO_SERVER + _file.Replace("rm", "wma");
-                    }
-
-                    if (_hasCreationDownloadRights){
-                        //Fichiers à télécharger 
-                        _pathDownloadingRealFile = (_isNewRealAudioFilePath) ? CstWeb.CreationServerPathes.DOWNLOAD_CREATIVES_RADIO_SERVER + "/ra/2/" + _idSlogan.Substring(0, 3) + "/2" + _idSlogan + ".ra" : CstWeb.CreationServerPathes.DOWNLOAD_RADIO_SERVER + _file;
-                        _pathDownloadingWindowsFile = (_isNewWindowsAudioFilePath) ? CstWeb.CreationServerPathes.DOWNLOAD_CREATIVES_RADIO_SERVER + "/wma/2/" + _idSlogan.Substring(0, 3) + "/2" + _idSlogan + ".wma" : CstWeb.CreationServerPathes.DOWNLOAD_RADIO_SERVER + _file.Replace("rm", "wma");
-                    }
-                    break;
-
-                case CstClassification.DB.Vehicles.names.tv:
-                case CstClassification.DB.Vehicles.names.tvGeneral:
-                case CstClassification.DB.Vehicles.names.tvSponsorship:
-                case CstClassification.DB.Vehicles.names.tvAnnounces:
-                case CstClassification.DB.Vehicles.names.tvNonTerrestrials:
-
-                    if (File.Exists(CstWeb.CreationServerPathes.LOCAL_PATH_VIDEO + @"\rm\3\" + _file.Substring(0, 3) + @"\3" + _file + ".rm")){
-                        realFormatFound = true;
-                    }
-                    else realFormatFound = false;
-                    if (File.Exists(CstWeb.CreationServerPathes.LOCAL_PATH_VIDEO + @"\wmv\3\" + _file.Substring(0, 3) + @"\3" + _file + ".wmv")){
-                        windowsFormatFound = true;
-                    }
-                    else windowsFormatFound = false;
-
-                    //Construction des chemins real et wm	
-                    if (_hasCreationReadRights){
-                        //Fichiers en lectures (streaming)
-                        _pathReadingRealFile = CstWeb.CreationServerPathes.READ_REAL_TV_SERVER + "/3/" + _file.Substring(0, 3) + "/3" + _file + ".rm";
-                        _pathReadingWindowsFile = CstWeb.CreationServerPathes.READ_WM_TV_SERVER + "/3/" + _file.Substring(0, 3) + "/3" + _file + ".wmv";
-                    }
-
-                    if (_hasCreationDownloadRights){
-                        //Fichiers à télécharger 
-                        _pathDownloadingRealFile = CstWeb.CreationServerPathes.DOWNLOAD_TV_SERVER + "/rm/3/" + _file.Substring(0, 3) + "/3" + _file + ".rm";
-                        _pathDownloadingWindowsFile = CstWeb.CreationServerPathes.DOWNLOAD_TV_SERVER + "/wmv/3/" + _file.Substring(0, 3) + "/3" + _file + ".wmv";
-                    }
-                    break;
-
-                case CstClassification.DB.Vehicles.names.others:
-
-                    realFormatFound = false;
-
-                    if (File.Exists(CstWeb.CreationServerPathes.LOCAL_PATH_PAN_EURO + @"\" + _file.Substring(0, 4) + @"\" + _file.Substring(4, 2) + @"\" + _file + ".wmv")){
-                        windowsFormatFound = true;
-                    }
-                    else windowsFormatFound = false;
-
-                    //Construction des chemins real et wm	
-                    if (_hasCreationReadRights){
-                        _pathReadingWindowsFile = CstWeb.CreationServerPathes.READ_WM_PAN_EURO_SERVER + "/" + _file.Substring(0, 4) + "/" + _file.Substring(4, 2) + "/" + _file + ".wmv";
-                    }
-
-                    if (_hasCreationDownloadRights){
-                        _pathDownloadingWindowsFile = CstWeb.CreationServerPathes.DOWNLOAD_PAN_EURO + "/" + _file.Substring(0, 4) + "/" + _file.Substring(4, 2) + "/" + _file + ".wmv";
-                    }
-                    break;
-                default:
-                    _webSession.Source.Close();
-                    _popUp.Response.Redirect("/Public/Message.aspx?msgTxt=" + GestionWeb.GetWebWord(890, _webSession.SiteLanguage) + "&title=" + GestionWeb.GetWebWord(887, _webSession.SiteLanguage));
-                    break;
-            }
-            #endregion
-
-            #region Design Tableau d'images real ou wm suivant la disponibilité des fichiers
-
-            #region Test
-#if DEBUG
-            //realFormatFound = true;
-            //windowsFormatFound = true;
-#endif
-
-            #endregion
-
-            StringBuilder res = new StringBuilder(2000);
-
-            if ((realFormatFound || windowsFormatFound) && (_hasCreationReadRights || _hasCreationDownloadRights)){
-
-                #region scripts
-                //Gestion de l'ouverture du fichier windows media
-                if (!_popUp.ClientScript.IsClientScriptBlockRegistered("GetObjectWindowsMediaPlayerRender")){
-                    _popUp.ClientScript.RegisterClientScriptBlock(_popUp.GetType(), "GetObjectWindowsMediaPlayerRender", GetObjectWindowsMediaPlayerRender(_webSession.SiteLanguage));
-                }
-
-                //Gestion de l'ouverture du fichier real media
-                if (!_popUp.ClientScript.IsClientScriptBlockRegistered("GetObjectRealPlayer")){
-                    _popUp.ClientScript.RegisterClientScriptBlock(_popUp.GetType(), "GetObjectRealPlayer", GetObjectRealPlayer());
-                }
-                #endregion
-
-                res.Append("<TABLE cellSpacing=\"0\" cellPadding=\"10\" width=\"770\" border=\"0\" align=\"center\" height=\"100%\" ><TR>");
-                //Rendu créations en lecture				
-                if (_hasCreationReadRights) res.Append(ManageCreationsDownloadWithCookies(_pathReadingRealFile, _pathReadingWindowsFile, true, realFormatFound, windowsFormatFound));
-
-                //Tableau des options
-                res.Append(GetCreationsOptionsRender(realFormatFound, windowsFormatFound, _pathDownloadingRealFile, _pathDownloadingWindowsFile, false, 2079));
-            }
-            else{
-                //Aucun fichier n'est dispo	
-                res.Append("<TABLE height=\"40%\"><TR><TD>&nbsp;</TD></TR></TABLE>");
-                res.Append("<TABLE cellSpacing=\"0\" cellPadding=\"10\" width=\"440\" border=\"0\" align=\"center\" height=\"10%\" ><TR valign=\"middle\">");
-                res.Append("<TD  align=\"center\" class=\"txtViolet11Bold backGroundWhite\" >");
-                res.Append(GestionWeb.GetWebWord(892, _webSession.SiteLanguage));
-                res.Append("</TD>");
-            }
-            
-            res.Append("</TR></TABLE>");
+            var res = RenderCreative(realFormatFound, windowsFormatFound);
 
             return res.ToString();
 
-            //streamingCreationsResult = res.ToString();
+        }
+
+
+        #endregion
+
+        #region RenderCreative
+
+        /// <summary>
+        /// Render Creative
+        /// </summary>
+        /// <param name="realFormatFound">True if real Format Found</param>
+        /// <param name="windowsFormatFound">True if windows Forma tFound</param>       
+        /// <returns></returns>
+        protected virtual StringBuilder RenderCreative(bool realFormatFound, bool windowsFormatFound)
+        {
+            var res = new StringBuilder(2000);
+
+            if ((realFormatFound || windowsFormatFound) && (_hasCreationReadRights || _hasCreationDownloadRights))
+            {
+                AddScripts();
+
+                res.Append(
+                    "<TABLE cellSpacing=\"0\" cellPadding=\"10\" width=\"770\" border=\"0\" align=\"center\" height=\"100%\" ><TR>");
+                //Rendu créations en lecture				
+                if (_hasCreationReadRights)
+                    res.Append(ManageCreationsDownloadWithCookies(_pathReadingRealFile, _pathReadingWindowsFile, true,
+                                                                  realFormatFound, windowsFormatFound));
+
+                //Tableau des options
+                res.Append(GetCreationsOptionsRender(realFormatFound, windowsFormatFound, _pathDownloadingRealFile,
+                                                     _pathDownloadingWindowsFile, false, 2079));
+            }
+            else
+            {
+                AppendNoFileAvailable(res);
+            }
+
+            res.Append("</TR></TABLE>");
+            return res;
+        }
+
+        #endregion
+
+        #region AppendNoFileAvailable
+
+        /// <summary>
+        /// Append No File Available message
+        /// </summary>
+        /// <param name="res">String Builder</param>
+        protected virtual void AppendNoFileAvailable(StringBuilder res)
+        {
+            //Aucun fichier n'est dispo	
+            res.Append("<TABLE height=\"40%\"><TR><TD>&nbsp;</TD></TR></TABLE>");
+            res.Append(
+                "<TABLE cellSpacing=\"0\" cellPadding=\"10\" width=\"440\" border=\"0\" align=\"center\" height=\"10%\" ><TR valign=\"middle\">");
+            res.Append("<TD  align=\"center\" class=\"txtViolet11Bold backGroundWhite\" >");
+            res.Append(GestionWeb.GetWebWord(892, _webSession.SiteLanguage));
+            res.Append("</TD>");
+        }
+
+        #endregion
+
+
+        #region AddScripts
+
+        /// <summary>
+        /// Add Scripts
+        /// </summary>
+        protected virtual void AddScripts()
+        {
+            #region scripts
+
+            //Gestion de l'ouverture du fichier windows media
+            if (!_popUp.ClientScript.IsClientScriptBlockRegistered("GetObjectWindowsMediaPlayerRender"))
+            {
+                _popUp.ClientScript.RegisterClientScriptBlock(_popUp.GetType(), "GetObjectWindowsMediaPlayerRender",
+                                                              GetObjectWindowsMediaPlayerRender(_webSession.SiteLanguage));
+            }
+
+            //Gestion de l'ouverture du fichier real media
+            if (!_popUp.ClientScript.IsClientScriptBlockRegistered("GetObjectRealPlayer"))
+            {
+                _popUp.ClientScript.RegisterClientScriptBlock(_popUp.GetType(), "GetObjectRealPlayer",
+                                                              GetObjectRealPlayer());
+            }
+
             #endregion
+        }
+
+        #endregion
+
+
+        #region GetCreativePathes
+
+        /// <summary>
+        /// Get Creative Pathes
+        /// </summary>
+        /// <param name="realFormatFound">True if real Format Found</param>
+        /// <param name="windowsFormatFound">True if windows Forma tFound</param>       
+        protected virtual void GetCreativePathes(ref bool realFormatFound, ref bool windowsFormatFound)
+        {
+            switch (_vehicle)
+            {
+                case CstClassificationVehicle.names.radio:
+                case CstClassificationVehicle.names.radioGeneral:
+                case CstClassificationVehicle.names.radioMusic:
+                case CstClassificationVehicle.names.radioSponsorship:
+
+                    IsRadioFileExists(ref realFormatFound, ref windowsFormatFound);
+                    GetRadioCreativePathes();
+                    break;
+                case CstClassificationVehicle.names.tv:
+                case CstClassificationVehicle.names.tvGeneral:
+                case CstClassificationVehicle.names.tvSponsorship:
+                case CstClassificationVehicle.names.tvAnnounces:
+                case CstClassificationVehicle.names.tvNonTerrestrials:
+
+                    IsTvFileExists(out realFormatFound, out windowsFormatFound);
+                    GetTvCreativePathes();
+                    break;
+
+                case CstClassificationVehicle.names.others:
+
+                    IsOthersFileExists(out realFormatFound, out windowsFormatFound);
+                    GetOthersCreativePathes();
+                    break;
+                default:
+                    _webSession.Source.Close();
+                    _popUp.Response.Redirect(string.Format("/Public/Message.aspx?msgTxt={0}&title={1}",
+                                                           GestionWeb.GetWebWord(890, _webSession.SiteLanguage),
+                                                           GestionWeb.GetWebWord(887, _webSession.SiteLanguage)));
+                    break;
+            }
 
         }
+
+        #endregion
+
+
+        #region GetOthersCreativePathes
+
+        /// <summary>
+        /// Get Others Creative Pathes
+        /// </summary>
+        protected virtual void GetOthersCreativePathes()
+        {
+            Func<string, string> getCreativePath = s =>
+                                                   string.Format("{0}/{1}/{2}/{3}.{4}", s, _file.Substring(0, 4),
+                                                                 _file.Substring(4, 2), _file, WMV_EXTENSION);
+
+            //Construction des chemins real et wm	
+            if (_hasCreationReadRights)
+                _pathReadingWindowsFile = getCreativePath(CstWeb.CreationServerPathes.READ_WM_PAN_EURO_SERVER);
+
+
+            if (_hasCreationDownloadRights)
+                _pathDownloadingWindowsFile = getCreativePath(CstWeb.CreationServerPathes.DOWNLOAD_PAN_EURO);
+
+
+        }
+
+        #endregion
+
+
+        #region IsOthersFileExists
+
+        /// <summary>
+        /// Is Others FileExists
+        /// </summary>
+        /// <param name="realFormatFound">True if real Format Found</param>
+        /// <param name="windowsFormatFound">True if windows Format Found</param>
+        protected virtual void IsOthersFileExists(out bool realFormatFound, out bool windowsFormatFound)
+        {
+            realFormatFound = false;
+
+            windowsFormatFound = File.Exists(string.Format("{0}\\{1}\\{2}\\{3}.{4}",
+                                                           CstWeb.CreationServerPathes.LOCAL_PATH_PAN_EURO,
+                                                           _file.Substring(0, 4), _file.Substring(4, 2), _file,
+                                                           WMV_EXTENSION));
+        }
+
+        #endregion
+
+
+        #region GetTvCreativePathes
+
+        /// <summary>
+        /// Get Tv Creative Pathes
+        /// </summary>
+        protected virtual void GetTvCreativePathes()
+        {
+            Func<string, string, string> getCreativePath = (s, e) => string.Format("{0}/3/{1}/3{2}.{3}",
+                                                                                   s, _file.Substring(0, 3),
+                                                                                   _file, e);
+            //Construction des chemins real et wm	
+            if (_hasCreationReadRights)
+            {
+                //Fichiers en lectures (streaming)
+                _pathReadingRealFile = getCreativePath(CstWeb.CreationServerPathes.READ_REAL_TV_SERVER, RM_EXTENSION);
+
+                _pathReadingWindowsFile = getCreativePath(CstWeb.CreationServerPathes.READ_WM_TV_SERVER, WMV_EXTENSION);
+            }
+
+            Func<string, string, string> getCreativePath2 = (s, e) => string.Format("{0}/{3}/3/{1}/3{2}.{3}",
+                                                                                    s, _file.Substring(0, 3),
+                                                                                    _file, e);
+            ;
+            if (_hasCreationDownloadRights)
+            {
+                //Fichiers à télécharger 
+                _pathDownloadingRealFile = getCreativePath2(CstWeb.CreationServerPathes.DOWNLOAD_TV_SERVER, RM_EXTENSION);
+
+                _pathDownloadingWindowsFile = getCreativePath2(CstWeb.CreationServerPathes.DOWNLOAD_TV_SERVER,
+                                                               WMV_EXTENSION);
+            }
+        }
+
+        #endregion
+
+
+        #region IsTvFileExists
+
+        /// <summary>
+        /// Is Tv File Exists
+        /// </summary>
+        /// <param name="realFormatFound">True if real Format Found</param>
+        /// <param name="windowsFormatFound">True if windows Format Found</param>
+        protected virtual void IsTvFileExists(out bool realFormatFound, out bool windowsFormatFound)
+        {
+            Func<string, string, bool> isCreativeExists =
+                (s, e) => File.Exists(string.Format("{0}\\{3}\\3\\{1}\\3{2}.{3}",
+                                                    s, _file.Substring(0, 3),
+                                                    _file, e));
+
+            realFormatFound = isCreativeExists(CstWeb.CreationServerPathes.LOCAL_PATH_VIDEO, RM_EXTENSION);
+
+            windowsFormatFound = isCreativeExists(CstWeb.CreationServerPathes.LOCAL_PATH_VIDEO, WMV_EXTENSION);
+        }
+
+        #endregion
+
+        #region GetRadioCreativePathes
+
+        /// <summary>
+        /// Get Radio Creative Pathes
+        /// </summary>
+        protected virtual void GetRadioCreativePathes()
+        {
+            //Construction des chemins real et wm					
+            if (_hasCreationReadRights)
+            {
+                Func<string, string, string> getCreativePath = (s, e) => string.Format("{0}/2/{1}/2{2}.{3}",
+                                                                                       s, _idSlogan.Substring(0, 3),
+                                                                                       _idSlogan, e);
+                //Fichiers en lectures (streaming)
+                _pathReadingRealFile = (_isNewRealAudioFilePath)
+                                           ? getCreativePath(
+                                               CstWeb.CreationServerPathes.READ_REAL_CREATIVES_RADIO_SERVER,
+                                               RA_EXTENSION)
+                                           : string.Format("{0}{1}", CstWeb.CreationServerPathes.READ_REAL_RADIO_SERVER,
+                                                           _file);
+
+                _pathReadingWindowsFile = (_isNewWindowsAudioFilePath)
+                                              ? getCreativePath(
+                                                  CstWeb.CreationServerPathes.READ_WM_CREATIVES_RADIO_SERVER,
+                                                  WMA_EXTENSION)
+                                              : string.Format("{0}{1}", CstWeb.CreationServerPathes.READ_WM_RADIO_SERVER,
+                                                              _file.Replace("rm", WMA_EXTENSION));
+            }
+
+            if (_hasCreationDownloadRights)
+            {
+                Func<string, string, string> getCreativePath2 = (s, e) => string.Format("{0}/{3}/2/{1}/2{2}.{3}",
+                                                                                        s, _idSlogan.Substring(0, 3),
+                                                                                        _idSlogan, e);
+                //Fichiers à télécharger 
+                _pathDownloadingRealFile = (_isNewRealAudioFilePath)
+                                               ? getCreativePath2(
+                                                   CstWeb.CreationServerPathes.DOWNLOAD_CREATIVES_RADIO_SERVER,
+                                                   RA_EXTENSION)
+                                               : CstWeb.CreationServerPathes.DOWNLOAD_RADIO_SERVER + _file;
+
+                _pathDownloadingWindowsFile = (_isNewWindowsAudioFilePath)
+                                                  ? getCreativePath2(
+                                                      CstWeb.CreationServerPathes.DOWNLOAD_CREATIVES_RADIO_SERVER,
+                                                      WMA_EXTENSION)
+                                                  : string.Format("{0}{1}",
+                                                                  CstWeb.CreationServerPathes.DOWNLOAD_RADIO_SERVER,
+                                                                  _file.Replace("rm", WMA_EXTENSION));
+            }
+        }
+
+        #endregion
+
+
+        #region IsRadioFileExists
+
+        /// <summary>
+        /// Is Radio File Exists
+        /// </summary>
+        /// <param name="realFormatFound">True if real Format Found</param>
+        /// <param name="windowsFormatFound">True if windows Format Found</param>
+        protected virtual void IsRadioFileExists(ref bool realFormatFound, ref bool windowsFormatFound)
+        {
+            Func<string, bool> isCreativeExists =
+                e => _idSlogan != null && File.Exists(string.Format("{0}\\{3}\\2\\{1}\\2{2}.{3}",
+                                                                    CstWeb.CreationServerPathes
+                                                                          .LOCAL_PATH_CREATIVES_RADIO,
+                                                                    _idSlogan.Substring(0, 3),
+                                                                    _idSlogan, e));
+
+            //Vérification de l'existence du fichier real
+            if (isCreativeExists(RA_EXTENSION))
+                _isNewRealAudioFilePath = realFormatFound = true;
+            else if (File.Exists(string.Format("{0}{1}",
+                                               CstWeb.CreationServerPathes.LOCAL_PATH_RADIO, _file.Replace("/", "\\"))))
+                realFormatFound = true;
+
+
+            //Vérification de l'existence du fichier wm
+            if (isCreativeExists(WMA_EXTENSION))
+                _isNewWindowsAudioFilePath = windowsFormatFound = true;
+            else if (
+                File.Exists(string.Format("{0}{1}", CstWeb.CreationServerPathes.LOCAL_PATH_RADIO,
+                                          (_file.Replace("/", "\\")).Replace("rm", WMA_EXTENSION))))
+                windowsFormatFound = true;
+        }
+
         #endregion
 
         #region Gestion du Rendu
@@ -293,17 +483,19 @@ namespace TNS.AdExpressI.Insertions.CreativeResult{
         protected virtual string GetCreationsOptionsRender(bool realFormatFound, bool windowsFormatFound, string path1, string path2, bool manageQuote, long code)
         {
 
-            StringBuilder result = new StringBuilder(1000);
+            var result = new StringBuilder(1000);
             bool withDetail = false;
 
             DataSet ds = GetCreativeDS();
-            
-            if ((ds != null && ds.Tables[0].Rows.Count > 0) || (_hasCreationDownloadRights)){
+
+            if ((ds != null && ds.Tables[0].Rows.Count > 0) || (_hasCreationDownloadRights))
+            {
 
                 result.Append("<TD><TABLE height=\"326\" cellPadding=\"5\" width=\"394\" align=\"center\" class=\"backGroundWhite\"><TBODY><TR><TD vAlign=\"top\">");
                 //Détail version
 
-                if (ds != null && ds.Tables[0].Rows.Count > 0){
+                if (ds != null && ds.Tables[0].Rows.Count > 0)
+                {
 
                     result.Append("<TR><TD><TABLE height=\"100%\"  ><TD>");
 
@@ -335,23 +527,29 @@ namespace TNS.AdExpressI.Insertions.CreativeResult{
                     withDetail = true;
                 }
 
-                if (_hasCreationDownloadRights){
-                    if (windowsFormatFound){
+                if (_hasCreationDownloadRights)
+                {
+                    if (windowsFormatFound)
+                    {
                         result.Append("<tr vAlign=\"middle\"><td align=\"left\" ><span  id=txt_" + code + " class=\"txtViolet11Bold\">" +
                             GestionWeb.GetWebWord(code, _webSession.SiteLanguage) +
                             "</span></td></tr>");
                         result.Append("<TR><TD align=\"left\">");
-                        result.Append("<img src=/App_Themes/" + _popUp.Theme + "/Images/Common/icoWindowsMediaPlayer.gif align=absmiddle>&nbsp;<a href=\"" + path2 + "\"  class=txtViolet11>" + GestionWeb.GetWebWord(2086, _webSession.SiteLanguage) + "</a>");
+                        result.Append("<img src=/App_Themes/" + _popUp.Theme + "/Images/Common/icoWindowsMediaPlayer.gif align=absmiddle>&nbsp;<a href=\""
+                            + path2 + "\"  class=txtViolet11>" + GestionWeb.GetWebWord(2086, _webSession.SiteLanguage) + "</a>");
                         result.Append("</td></tr>");
                     }
 
-                    if (realFormatFound){
-                        if (!windowsFormatFound){
+                    if (realFormatFound)
+                    {
+                        if (!windowsFormatFound)
+                        {
                             result.Append("<tr vAlign=\"middle\"><td align=\"left\" ><span  id=txt_" + code + " class=\"txtViolet11Bold\">" +
                                 GestionWeb.GetWebWord(code, _webSession.SiteLanguage) +
                                 "</span></td></tr>");
                         }
-                        result.Append("<tr><td align=\"left\"><img src=/App_Themes/" + _popUp.Theme + "/Images/Common/icoRealPlayer.gif align=absmiddle>&nbsp;<a href=\"" + path1 + "\"   class=txtViolet11>" + GestionWeb.GetWebWord(2085, _webSession.SiteLanguage) + "</a>");
+                        result.Append("<tr><td align=\"left\"><img src=/App_Themes/" + _popUp.Theme + "/Images/Common/icoRealPlayer.gif align=absmiddle>&nbsp;<a href=\""
+                            + path1 + "\"   class=txtViolet11>" + GestionWeb.GetWebWord(2085, _webSession.SiteLanguage) + "</a>");
                         result.Append("</td></tr>");
                     }
                     if (!withDetail) result.Append("<TR height=100%><TD>&nbsp;</TD></TR>");
@@ -369,7 +567,8 @@ namespace TNS.AdExpressI.Insertions.CreativeResult{
         /// Get creative description
         /// </summary>
         /// <returns>DataSet</returns>
-        protected virtual  DataSet GetCreativeDS() {
+        protected virtual DataSet GetCreativeDS()
+        {
 
             DataSet ds = null;
 
@@ -378,15 +577,18 @@ namespace TNS.AdExpressI.Insertions.CreativeResult{
                  || CstClassification.DB.Vehicles.names.tvSponsorship == _vehicle
                  || CstClassification.DB.Vehicles.names.tvAnnounces == _vehicle
                  || CstClassification.DB.Vehicles.names.tvNonTerrestrials == _vehicle
-                ) {
+                )
+            {
 
                 CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.insertionsDAL];
                 if (cl == null) throw (new NullReferenceException("Core layer is null for insertions DAL"));
                 object[] param = new object[2];
                 param[0] = _webSession;
                 param[1] = _webSession.CurrentModule;
-                IInsertionsDAL dalLayer = (IInsertionsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null, null);
-                ds = dalLayer.GetVersion(_file,VehiclesInformation.Get(_vehicle).DatabaseId);
+                var dalLayer = (IInsertionsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
+                    + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance
+                    | System.Reflection.BindingFlags.Public, null, param, null, null);
+                ds = dalLayer.GetVersion(_file, VehiclesInformation.Get(_vehicle).DatabaseId);
             }
 
             return ds;
@@ -409,13 +611,17 @@ namespace TNS.AdExpressI.Insertions.CreativeResult{
             result.Append("<tr vAlign=\"middle\"><td align=\"left\" ><span  id=txt_ex class=\"txtViolet11Bold\">" +
             GestionWeb.GetWebWord(2087, _webSession.SiteLanguage) + "</span>");
 
-            if (windowsFormatFound){
-                result.Append("&nbsp;<a href=\"http://www.microsoft.com/Windows/MediaPlayer/\"  target=\"_blank\" class=txtViolet11>" + GestionWeb.GetWebWord(2088, _webSession.SiteLanguage) + "</a>");
+            if (windowsFormatFound)
+            {
+                result.Append("&nbsp;<a href=\"http://www.microsoft.com/Windows/MediaPlayer/\"  target=\"_blank\" class=txtViolet11>"
+                    + GestionWeb.GetWebWord(2088, _webSession.SiteLanguage) + "</a>");
             }
 
-            if (realFormatFound){
+            if (realFormatFound)
+            {
                 if (windowsFormatFound) result.Append(",");
-                result.Append("&nbsp;<a href=\"http://www.real.com\"  target=\"_blank\" class=txtViolet11>" + GestionWeb.GetWebWord(2090, _webSession.SiteLanguage) + "</a>");
+                result.Append("&nbsp;<a href=\"http://www.real.com\"  target=\"_blank\" class=txtViolet11>" 
+                    + GestionWeb.GetWebWord(2090, _webSession.SiteLanguage) + "</a>");
             }
 
             if (windowsFormatFound) result.Append(".</td></tr>");
@@ -437,23 +643,27 @@ namespace TNS.AdExpressI.Insertions.CreativeResult{
         protected virtual string ManageCreationsDownloadWithCookies(string path1, string path2, bool read, bool realFormatFound, bool windowsFormatFound)
         {
 
-            StringBuilder res = new StringBuilder(2000);
+            var res = new StringBuilder(2000);
             HttpCookie cspotFileType = null;
 
             //Vérifie si le navigateur accepte les cookies
-            if (_popUp.Request.Browser.Cookies){
+            if (_popUp.Request.Browser.Cookies)
+            {
                 //if(false){
 
                 //Si les cookies existent				
                 cspotFileType = _popUp.Request.Cookies[CstWeb.Cookies.SpotFileType];
 
                 //Ouvrir le fichier en lecture seule
-                if (realFormatFound && windowsFormatFound){
+                if (realFormatFound && windowsFormatFound)
+                {
 
                     //Lire le type de média stocké en cookie
-                    if (cspotFileType != null && cspotFileType.Value != null){
+                    if (cspotFileType != null && cspotFileType.Value != null)
+                    {
 
-                        switch (cspotFileType.Value){
+                        switch (cspotFileType.Value)
+                        {
 
                             case WINDOWS_MEDIA_PLAYER_FORMAT:
                                 res.Append("<script language=\"JavaScript\" type=\"text/javascript\">GetObjectWindowsMediaPlayerRender('" + path2 + "');</script>");
@@ -467,23 +677,27 @@ namespace TNS.AdExpressI.Insertions.CreativeResult{
                                 break;
                         }
                     }
-                    else{
+                    else
+                    {
                         //Sinon lire un fichier média par défaut (en fonction du média player du client)
                         res.Append(ReadDefaultMediaPlayerRender(realFormatFound, windowsFormatFound, path1, path2));
                     }
                 }
-                else if (realFormatFound){
+                else if (realFormatFound)
+                {
                     res.Append("<script language=\"JavaScript\" type=\"text/javascript\">\n GetObjectRealPlayer('" + path1 + "');");
                     res.Append("\n setCookie('" + CstWeb.Cookies.SpotFileType + "','" + REAL_MEDIA_PLAYER_FORMAT + "');");
                     res.Append("</script>");
                 }
-                else{
+                else
+                {
                     res.Append("<script language=\"JavaScript\" type=\"text/javascript\">\n GetObjectWindowsMediaPlayerRender('" + path2 + "');");
                     res.Append("\n setCookie('" + CstWeb.Cookies.SpotFileType + "','" + WINDOWS_MEDIA_PLAYER_FORMAT + "');");
                     res.Append("</script>");
                 }
             }
-            else{
+            else
+            {
                 //Sinon lire un fichier média par défaut (en fonction du média player du client)
                 res.Append(ReadDefaultMediaPlayerRender(realFormatFound, windowsFormatFound, path1, path2));
             }
@@ -504,9 +718,10 @@ namespace TNS.AdExpressI.Insertions.CreativeResult{
         protected virtual string ReadDefaultMediaPlayerRender(bool realFormatFound, bool windowsFormatFound, string path1, string path2)
         {
 
-            StringBuilder res = new StringBuilder(2000);
+            var res = new StringBuilder(2000);
             //Ajout des images à cliquer
-            if (realFormatFound && windowsFormatFound){
+            if (realFormatFound && windowsFormatFound)
+            {
 
                 //Les deux fichiers sont disponibles
                 res.Append("<script language=\"JavaScript\" type=\"text/javascript\">");
@@ -529,8 +744,10 @@ namespace TNS.AdExpressI.Insertions.CreativeResult{
                 res.Append("\n } ");
                 res.Append("</script>");
             }
-            else{
-                if (realFormatFound){
+            else
+            {
+                if (realFormatFound)
+                {
 
                     //Seule le fichier real est disponible
                     res.Append("<script language=\"JavaScript\" type=\"text/javascript\">\n GetObjectRealPlayer('" + path1 + "');");
@@ -538,7 +755,8 @@ namespace TNS.AdExpressI.Insertions.CreativeResult{
                     res.Append("</script>");
 
                 }
-                else{
+                else
+                {
 
                     //Seul le fichier wm est dispo
                     res.Append("<script language=\"JavaScript\" type=\"text/javascript\">\n GetObjectWindowsMediaPlayerRender('" + path2 + "');");
@@ -558,12 +776,13 @@ namespace TNS.AdExpressI.Insertions.CreativeResult{
         protected virtual string GetObjectWindowsMediaPlayerRender(int siteLanguage)
         {
 
-            StringBuilder res = new StringBuilder(2000);
+            var res = new StringBuilder(2000);
             res.Append("<script language=\"JavaScript\" type=\"text/javascript\">");
             res.Append(" function GetObjectWindowsMediaPlayerRender(filepath){");
             res.Append(" document.write('<TD><TABLE height=\"326\" cellPadding=\"5\" width=\"368\" align=\"center\" class=\"backGroundWhite\"><TBODY><TR><TD>');");
             //Lecture par Media player
-            res.Append(" document.write('<object id=\"video1\"  classid=\"CLSID:22D6F312-B0F6-11D0-94AB-0080C74C7E95\" height=\"288\" width=\"352\" align=\"middle\"  codebase=\"http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=6,4,5,715\"  standby=\"" + GestionWeb.GetWebWord(1911, siteLanguage) + "\" type=\"application/x-oleobject\">');");
+            res.Append(" document.write('<object id=\"video1\"  classid=\"CLSID:22D6F312-B0F6-11D0-94AB-0080C74C7E95\" height=\"288\" width=\"352\" align=\"middle\"  codebase=\"http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=6,4,5,715\"  standby=\"" 
+                + GestionWeb.GetWebWord(1911, siteLanguage) + "\" type=\"application/x-oleobject\">');");
             res.Append(" document.write('<param name=\"FileName\" value='+filepath+' >');");
             res.Append(" document.write('<param name=\"AutoStart\" value=\"true\">');");
             res.Append(" document.write('<embed type=\"application/x-mplayer2\" pluginspage=\"http://www.microsoft.com/Windows/MediaPlayer/\"  src='+filepath+' name=\"video1\" height=\"288\" width=\"352\" AutoStart=true>'); ");
@@ -584,7 +803,7 @@ namespace TNS.AdExpressI.Insertions.CreativeResult{
         protected virtual string GetObjectRealPlayer()
         {
 
-            StringBuilder res = new StringBuilder(2000);
+            var res = new StringBuilder(2000);
             res.Append("<script language=\"JavaScript\" type=\"text/javascript\">");
             res.Append(" function GetObjectRealPlayer(filepath){");
             res.Append(" document.write('<TD><TABLE height=\"326\" cellPadding=\"5\" width=\"368\" align=\"center\" class=\"backGroundWhite\"><TBODY><TR><TD>');");

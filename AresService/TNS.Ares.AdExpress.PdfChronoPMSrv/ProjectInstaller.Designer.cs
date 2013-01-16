@@ -1,4 +1,6 @@
-﻿namespace TNS.Ares.AdExpress.PdfChronoPMSrv
+﻿using System.ServiceProcess;
+
+namespace TNS.Ares.AdExpress.PdfChronoPMSrv
 {
     partial class ProjectInstaller
     {
@@ -35,12 +37,13 @@
             // 
             this.serviceProcessInstaller.Password = null;
             this.serviceProcessInstaller.Username = null;
+            this.serviceProcessInstaller.Account=ServiceAccount.LocalSystem;
             // 
             // aresPdfChronoRServiceInstaller
             // 
             this.aresPdfChronoRServiceInstaller.Description = "Generates Pdf for Chronopress Roulement module";
-            this.aresPdfChronoRServiceInstaller.DisplayName = "Ares PdfChronoR Service (Mnevis)";
-            this.aresPdfChronoRServiceInstaller.ServiceName = "Ares PdfChronoR Service (Mnevis)";
+            this.aresPdfChronoRServiceInstaller.DisplayName = "Ares Pdf Chrono plan roulement Service (Mnevis)";
+            this.aresPdfChronoRServiceInstaller.ServiceName = "Ares Pdf Chrono plan roulement Service (Mnevis)";
             this.aresPdfChronoRServiceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller

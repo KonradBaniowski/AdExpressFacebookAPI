@@ -32,7 +32,7 @@ namespace TNS.Ares.AdExpress.PdfProofApp
 
             ShouShell shell = new ShouShell(lsClientConfiguration, lsClientConfiguration.DirectoryName);
             shell.StartMonitorServer(lsClientConfiguration.MonitorPort);
-            Console.WriteLine("Ares XlsStats treatment service");
+            Console.WriteLine("Ares Pdf Proof App treatment service");
             Console.ReadLine();
             shell.Dispose();
         }

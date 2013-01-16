@@ -344,7 +344,9 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                 object[] param = new object[2];
                 param[0] = webSession;
                 param[1] = webSession.CurrentModule;
-                _rulesLayer = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null, null);				
+                _rulesLayer = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" 
+                    + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance
+                    | System.Reflection.BindingFlags.Public, null, param, null, null);				
 
 				#region Foreach  Dataset des versions
 				foreach(DataRow currentRow in dsSloganList.Tables[0].Rows) {

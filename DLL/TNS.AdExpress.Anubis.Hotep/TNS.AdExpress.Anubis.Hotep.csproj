@@ -180,14 +180,6 @@
       <Project>{8889ED07-01CE-4F3A-A296-3A2C4B21989C}</Project>
       <Name>TNS.AdExpressI.Date.DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TNS.AdExpressI.ProductClassIndicators.DAL\TNS.AdExpressI.ProductClassIndicators.DAL.csproj">
-      <Project>{3CA92134-6C33-4A42-A3C9-1F7D3F36AC42}</Project>
-      <Name>TNS.AdExpressI.ProductClassIndicators.DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TNS.AdExpressI.ProductClassIndicators\TNS.AdExpressI.ProductClassIndicators.csproj">
-      <Project>{F0E136B5-AA9D-468D-BAE4-3599B11D854F}</Project>
-      <Name>TNS.AdExpressI.ProductClassIndicators</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TNS.ADEXPRESS\TNS.AdExpress.csproj">
       <Project>{6E75699B-838C-4534-99F7-D4C3E768CD57}</Project>
       <Name>TNS.AdExpress</Name>
@@ -320,6 +312,7 @@
     </Content>
     <Content Include="Configuration\48\Plugins\Hotep.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Configuration\7\Plugins\Hotep.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -355,6 +348,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\44\logo_Tns.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\48\LogoAdExpress.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\48\LogoAdExpress220.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\7\logo_Tns.bmp">

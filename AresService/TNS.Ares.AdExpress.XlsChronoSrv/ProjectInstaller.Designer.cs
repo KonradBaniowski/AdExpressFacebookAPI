@@ -1,4 +1,6 @@
-﻿namespace TNS.AdExpress.Ares.PdfChronoSrv
+﻿using System.ServiceProcess;
+
+namespace TNS.AdExpress.Ares.PdfChronoSrv
 {
     partial class ProjectInstaller
     {
@@ -35,6 +37,7 @@
             // 
             this.serviceProcessInstaller.Password = null;
             this.serviceProcessInstaller.Username = null;
+                        this.serviceProcessInstaller.Account=ServiceAccount.LocalSystem;
             // 
             // aresXlsChronoServiceInstaller
             // 

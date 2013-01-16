@@ -7,6 +7,27 @@
   	<ThemePath path=""/>
   <excelTabs>
     <excelTab name="Rappel des paramètres" id="customerSelelection"/>    
-    <excelTab name="Top connections Clients, IP, time slot" id="topConnectedByIpTimeSlot"/>
+    <!--<excelTab name="Top connections Clients, IP, time slot" id="topConnectedByIpTimeSlot"/>-->
+    <excelTab name="IP Adresse par client" id="iPAdresseByClient"/>
+    <excelTab name="Top type clients qui se connectent le plus" id="topTypeConnectedCustomer"/>
+    <excelTab name="Top connections par type de clients et par jour nommé" id="topTypeConnectedCustomerByDay"/>
+    <excelTab name="Top connections par type de clients et par mois" id="topTypeConnectedCustomerByMonth"/>
+    <excelTab name="Top clients qui se connectent le plus" id="topConnectedCustomer"/>
+    <excelTab name="Top connections clients par mois" id="topConnectedCustomerByMonth"/>
+    <excelTab name="Top connections clients par jour nommé" id="topConnectedCustomerByDay"/>
+    <excelTab name="Top sociétés qui se connectent le plus" id="topConnectedCompany"/>
+    <excelTab name="Top sociétés qui se connectent le plus par mois" id="topConnectedCompanyByMonth"/>
+    <excelTab name="Top sociétés qui se connectent le plus par jour nommé" id="topConnectedCompanyByDay"/>
+    <excelTab name="Durée moyenne des connections par clients" id="connexionDurationAverage"/>
+    <excelTab name="Top des modules et des groupes de modules" id="topUsedModules"/>
+    <excelTab name="Top médias utilisés" id="topVehicle"/>
+    <excelTab name="Top médias utilisés par module" id="topVehicleByModule"/>
+    <excelTab name="Top utilisation du fichier GAD etAGM" id="topFileUsing"/>
+    <excelTab name="Top export de fichier" id="topExport"/>
+    <excelTab name="Top des options utilisées" id="topUsedTab"/>
+    <excelTab name="Top des unités utilisées" id="topUsedUnits"/>
+    <excelTab name="Top des période utilisées" id="topUsedPeriod"/>
+    <excelTab name="Top clients utilisant le plus les requêtes sauvegardées" id="topUsingSavedSession"/>
+    
   </excelTabs>
 </Configuration>

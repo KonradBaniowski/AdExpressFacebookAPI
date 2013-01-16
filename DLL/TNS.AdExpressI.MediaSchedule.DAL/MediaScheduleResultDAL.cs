@@ -490,10 +490,7 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             if (!isComparative)
                 sql.AppendFormat("{0}, ", mediaPeriodicity);
 
-            // Unit selection expect for AdNetTrack
-            //if(VehiclesInformation.Contains(_vehicleId) && VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack{
-            //    sql.AppendFormat("sum(OCCURRENCE) as {0}", unitAlias);
-            //}
+            // Unit selection expect for AdNetTrack           
             if(VehiclesInformation.Contains(vehicleId) 
                 && (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack
 				|| VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.evaliantMobile)
@@ -620,12 +617,13 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             #region Selection
             list = _session.GetSelection(_session.SelectionUniversMedia, CstRight.type.vehicleAccess);
             if(_isAdNetTrackMediaSchedule){
-				 sql.AppendFormat(" and ({0}.id_vehicle={1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack).DatabaseId);
+				 sql.AppendFormat(" and ({0}.id_vehicle={1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
+                     VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack).DatabaseId);
             }
-            else if(periodDisplay == CstPeriod.DisplayLevel.dayly) {
+            else if(vehicleId>-1) {
                 sql.AppendFormat(" and ({0}.id_vehicle={1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, vehicleId);
             }
-            else if(list.Length > 0) {                
+            else {                
                  sql.AppendFormat(" and ({0}.id_vehicle in ({1})) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, list);
             }
             #endregion

@@ -55,7 +55,10 @@ namespace AdExpress.Private.Results{
 		/// Affichage du résultat
 		/// </summary>
 		public string result;
-		
+        /// <summary>
+        /// Sub folder name of magazine pages
+        /// </summary>
+        public string _subFolder = null;
 		#endregion
 
 		#region Constructeur
@@ -68,6 +71,8 @@ namespace AdExpress.Private.Results{
 			fileName1=HttpContext.Current.Request.QueryString.Get("fileName1");
 			fileName2=HttpContext.Current.Request.QueryString.Get("fileName2");
             _isBlur = bool.Parse(HttpContext.Current.Request.QueryString.Get("isBlur").ToLower());
+            _subFolder = HttpContext.Current.Request.QueryString.Get("subfolder");
+
 		}
 		#endregion
 
@@ -95,6 +100,7 @@ namespace AdExpress.Private.Results{
 			zoommediapageswebControl1.FileName2 = fileName2;
 			zoommediapageswebControl1.DateCover = date;
             zoommediapageswebControl1.IsBlur = _isBlur;
+            zoommediapageswebControl1.SubFolder = _subFolder;
 			return tmp;
 		}
 		#endregion

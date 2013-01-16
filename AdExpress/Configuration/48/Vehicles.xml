@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <vehicles>
   <!-- PRESS -->
-  <vehicle id="press" databaseId="3" showInsertions="true" showCreations="false">
+  <vehicle id="press" databaseId="3" showInsertions="true" showCreations="true">
     <!-- Units-->
     <allowedUnits defaultUnit="pages">
       <allowedUnit>pln</allowedUnit>
@@ -26,6 +26,8 @@
         <allowedMediaLevelItem>group</allowedMediaLevelItem>                  <!-- Groupe -->
         <allowedMediaLevelItem>segment</allowedMediaLevelItem>                <!-- Variété -->
         <allowedMediaLevelItem>title</allowedMediaLevelItem>                  <!-- Titre -->
+        <allowedMediaLevelItem>slogan</allowedMediaLevelItem>
+        <!-- Version -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
@@ -83,7 +85,7 @@
     </ColumnDetailLevel>
   </vehicle>
   <!-- RADIO -->
-  <vehicle id="radio" databaseId="2" showInsertions="true" showCreations="false">
+  <vehicle id="radio" databaseId="2" showInsertions="true" showCreations="true">
     <!-- Units-->
     <allowedUnits defaultUnit="pln">
       <allowedUnit>pln</allowedUnit>
@@ -99,8 +101,6 @@
         <allowedMediaLevelItem>media</allowedMediaLevelItem>                  <!-- Support -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>         <!-- Centre d'interet -->
         <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>            <!-- Régie -->
-        <!--<allowedMediaLevelItem>slogan</allowedMediaLevelItem>-->                 <!-- Version -->
-        <!--<allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>-->         <!-- Groupe de société -->
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>             <!-- Annonceur -->
         <allowedMediaLevelItem>brand</allowedMediaLevelItem>                  <!-- Marque -->
         <allowedMediaLevelItem>product</allowedMediaLevelItem>                <!-- Produit -->
@@ -108,18 +108,14 @@
         <allowedMediaLevelItem>subSector</allowedMediaLevelItem>              <!-- Classe -->
         <allowedMediaLevelItem>group</allowedMediaLevelItem>                  <!-- Groupe -->
         <allowedMediaLevelItem>segment</allowedMediaLevelItem>                <!-- Variété -->
-        <!--<allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>-->       <!-- Groupe d'agences -->
-        <!--<allowedMediaLevelItem>agency</allowedMediaLevelItem>-->                 <!-- Agence -->
-        <!--<allowedMediaLevelItem>title</allowedMediaLevelItem>-->                  <!-- Titre -->
-        <!--<allowedMediaLevelItem>country</allowedMediaLevelItem>-->                <!-- Pays -->
+        <allowedMediaLevelItem>slogan</allowedMediaLevelItem>
+        <!-- Version -->
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
     <MediaSelectionParents DefaultMediaSelectionParent="category">
       <MediaSelectionParent>category</MediaSelectionParent>             <!-- Catégorie -->
-      <!--<MediaSelectionParent>interestCenter</MediaSelectionParent>-->             <!-- Centre d'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>                <!-- Régie -->
-      <!--<MediaSelectionParent>title</MediaSelectionParent>-->                      <!-- Titre -->
     </MediaSelectionParents>
     <!--Media detail level in selection-->
     <MediaSelectionDetailLevel>
@@ -151,7 +147,6 @@
       <allowedUniverseLevel id="2" name="subsector"/>
       <allowedUniverseLevel id="3" name="group_"/>
       <allowedUniverseLevel id="4" name="segment"/>
-      <!--<allowedUniverseLevel id="7" name="holding_company"/>-->
       <allowedUniverseLevel id="6" name="advertiser"/>
       <allowedUniverseLevel id="8" name="brand"/>
       <allowedUniverseLevel id="5" name="product"/>
@@ -171,7 +166,7 @@
     </ColumnDetailLevel>
   </vehicle>
   <!-- TV -->
-  <vehicle id="tv" databaseId="1" showInsertions="true" showCreations="false">
+  <vehicle id="tv" databaseId="1" showInsertions="true" showCreations="true">
     <!-- Units-->
     <allowedUnits defaultUnit="pln">
       <allowedUnit>pln</allowedUnit>
@@ -187,8 +182,6 @@
         <allowedMediaLevelItem>media</allowedMediaLevelItem>                  <!-- Support -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem>         <!-- Centre d'interet -->
         <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem>            <!-- Régie -->
-        <!--<allowedMediaLevelItem>slogan</allowedMediaLevelItem>-->                 <!-- Version -->
-        <!--<allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>-->         <!-- Groupe de société -->
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>             <!-- Annonceur -->
         <allowedMediaLevelItem>brand</allowedMediaLevelItem>                  <!-- Marque -->
         <allowedMediaLevelItem>product</allowedMediaLevelItem>                <!-- Produit -->
@@ -196,21 +189,15 @@
         <allowedMediaLevelItem>subSector</allowedMediaLevelItem>              <!-- Classe -->
         <allowedMediaLevelItem>group</allowedMediaLevelItem>                  <!-- Groupe -->
         <allowedMediaLevelItem>segment</allowedMediaLevelItem>                <!-- Variété -->
-        <!--<allowedMediaLevelItem>groupMediaAgency</allowedMediaLevelItem>-->       <!-- Groupe d'agences -->
-        <!--<allowedMediaLevelItem>agency</allowedMediaLevelItem>-->                 <!-- Agence -->
-        <!--<allowedMediaLevelItem>title</allowedMediaLevelItem>-->                  <!-- Titre -->
-        <!--<allowedMediaLevelItem>programType</allowedMediaLevelItem>-->            <!-- Genre d'émission -->
-        <!--<allowedMediaLevelItem>program</allowedMediaLevelItem>-->                <!-- Emission -->
-        <!--<allowedMediaLevelItem>sponsorshipForm</allowedMediaLevelItem>-->        <!-- Forme de parrainage -->
-        <!--<allowedMediaLevelItem>country</allowedMediaLevelItem>-->                <!-- Pays -->
+        <allowedMediaLevelItem>slogan</allowedMediaLevelItem>
+        <!-- Version -->
+    
       </allowedMediaLevelItems>
     </allowedMediaDetailLevels>
     <!-- Selection hierarchy-->
     <MediaSelectionParents DefaultMediaSelectionParent="category">
       <MediaSelectionParent>category</MediaSelectionParent>                   <!-- Catégorie -->
-      <!--<MediaSelectionParent>interestCenter</MediaSelectionParent>-->             <!-- Centre d'interet -->
       <MediaSelectionParent>mediaSeller</MediaSelectionParent>                <!-- Régie -->
-      <!--<MediaSelectionParent>title</MediaSelectionParent>-->                      <!-- Titre -->
     </MediaSelectionParents>
     <!--Media detail level in selection-->
     <MediaSelectionDetailLevel>
@@ -242,7 +229,6 @@
       <allowedUniverseLevel id="2" name="subsector"/>
       <allowedUniverseLevel id="3" name="group_"/>
       <allowedUniverseLevel id="4" name="segment"/>
-      <!--<allowedUniverseLevel id="7" name="holding_company"/>-->
       <allowedUniverseLevel id="6" name="advertiser"/>
       <allowedUniverseLevel id="8" name="brand"/>
       <allowedUniverseLevel id="5" name="product"/>
@@ -262,7 +248,7 @@
     </ColumnDetailLevel>
   </vehicle>
   <!-- OUTDOOR -->
-  <vehicle id="outdoor" databaseId="5" showInsertions="true" showCreations="false">
+  <vehicle id="outdoor" databaseId="5" showInsertions="true" showCreations="true">
     <!-- Units-->
     <allowedUnits defaultUnit="pln">
       <allowedUnit>pln</allowedUnit>
@@ -277,7 +263,7 @@
         <allowedMediaLevelItem>media</allowedMediaLevelItem><!-- Support -->
         <allowedMediaLevelItem>interestCenter</allowedMediaLevelItem><!-- Centre d'interet -->
         <allowedMediaLevelItem>mediaSeller</allowedMediaLevelItem><!-- Régie -->
-        <!--<allowedMediaLevelItem>slogan</allowedMediaLevelItem>--><!-- Version -->
+        <allowedMediaLevelItem>slogan</allowedMediaLevelItem><!-- Version -->
         <!--<allowedMediaLevelItem>holdingCompany</allowedMediaLevelItem>--><!-- Groupe de société -->
         <allowedMediaLevelItem>advertiser</allowedMediaLevelItem><!-- Annonceur -->
         <allowedMediaLevelItem>brand</allowedMediaLevelItem><!-- Marque -->

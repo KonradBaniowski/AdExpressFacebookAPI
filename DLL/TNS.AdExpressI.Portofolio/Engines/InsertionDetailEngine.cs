@@ -7,27 +7,16 @@
 
 using System;
 using System.Data;
-using System.Text;
-using System.Web.UI;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 
 using TNS.FrameWork.WebResultUI;
-using TNS.FrameWork.Date;
-
-using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Result;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
-using FrameWorkConstantes = TNS.AdExpress.Constantes.FrameWork;
-using FrameWorkResultConstantes = TNS.AdExpress.Constantes.FrameWork.Results;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using DBCst = TNS.AdExpress.Constantes.DB;
-using WebFunctions = TNS.AdExpress.Web.Functions;
-
-using TNS.AdExpress.Domain.Exceptions;
-using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;

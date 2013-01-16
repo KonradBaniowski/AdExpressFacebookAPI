@@ -47,6 +47,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -164,6 +165,19 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>rmdir /S /Q "$(TargetDir)Bin\"
+mkdir "$(TargetDir)Bin\"
+copy "$(TargetDir)TNS.Ares.StaticNavSession.DAL.Default.dll" "$(TargetDir)Bin\TNS.Ares.StaticNavSession.DAL.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Insertions.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Insertions.DAL.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Insertions.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Insertions.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.Appm.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.Appm.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.DAL.Appm.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.DAL.Appm.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.DAL.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.DAL.Finland.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.DAL.Finland.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.MediaSchedule.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.MediaSchedule.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Classification.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Classification.DAL.Default.dll" /Y</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

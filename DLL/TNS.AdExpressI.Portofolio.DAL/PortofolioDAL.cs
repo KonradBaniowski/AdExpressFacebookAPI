@@ -8,9 +8,9 @@ using System;
 using System.Data;
 using System.Collections;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Text;
 using TNS.AdExpress.Web.Core.Sessions;
+using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpressI.Portofolio.DAL.Exceptions;
 using DBClassificationConstantes=TNS.AdExpress.Constantes.Classification.DB;
 using WebFunctions=TNS.AdExpress.Web.Functions;
@@ -20,15 +20,11 @@ using DBConstantes=TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Web.Navigation;
-using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Classification;
 
 using TNS.AdExpress.Web.Exceptions;
-using CustormerConstantes=TNS.AdExpress.Constantes.Customer;
 using CstProject = TNS.AdExpress.Constantes.Project;
 using TNS.AdExpress.Constantes.FrameWork.Results;
-using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Domain.Units;
 
 namespace TNS.AdExpressI.Portofolio.DAL {
@@ -203,7 +199,8 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 		/// </summary>
 		/// <returns></returns>
 		public virtual DataSet GetInsertionData() {
-			Engines.Engine res = new Engines.InsertionDetailEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate,_adBreak);
+			var res = new Engines.InsertionDetailEngine(_webSession, 
+                _vehicleInformation, _module, _idMedia, _beginingDate, _endDate,_adBreak);
 			return res.GetData();
 		}
 
@@ -214,7 +211,8 @@ namespace TNS.AdExpressI.Portofolio.DAL {
         /// <param name="synthesisDataType">Synthesis Data Type</param>
 		/// <returns></returns>
         public virtual DataSet GetSynthisData(PortofolioSynthesis.dataType synthesisDataType) {
-            Engines.SynthesisEngine res = new Engines.SynthesisEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate, synthesisDataType);
+            var res = new Engines.SynthesisEngine(_webSession, 
+                _vehicleInformation, _module, _idMedia, _beginingDate, _endDate, synthesisDataType);
 			return res.GetData();
 		}		
 
@@ -223,7 +221,8 @@ namespace TNS.AdExpressI.Portofolio.DAL {
         /// </summary>
         /// <returns>Ecrans</returns>
         public virtual DataSet GetEcranData() {
-            Engines.SynthesisEngine res = new Engines.SynthesisEngine(_webSession, _vehicleInformation, _module, _idMedia, _beginingDate, _endDate);
+            var res = new Engines.SynthesisEngine(_webSession, 
+                _vehicleInformation, _module, _idMedia, _beginingDate, _endDate);
             return res.GetEcranData();
         }
 
@@ -282,7 +281,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 		/// Get Investment By Media
 		/// </summary>
 		/// <returns>Data</returns>
-		public Hashtable GetInvestmentByMedia() {
+		public virtual Hashtable GetInvestmentByMedia() {
 
 			#region Variables
 			string sql = "";
@@ -297,25 +296,31 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 
 			try {
 				product = GetProductData();
-                productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
-				mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
-				//listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
+                productsRights = SQLGenerator.GetClassificationCustomerProductRight(_webSession,
+                    WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
+				mediaRights = SQLGenerator.getAnalyseCustomerMediaRight(_webSession,
+                    WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
 				listProductHap = GetExcludeProducts(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
-                euroFieldNameSumWithAlias = "sum(" + UnitsInformation.List[UnitsInformation.DefaultCurrency].DatabaseField + ") as " + UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString();
-                insertionFieldNameSumWithAlias = "sum(" + UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].DatabaseField + ") as " + UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].Id.ToString();
+                euroFieldNameSumWithAlias = string.Format("sum({0}) as {1}", UnitsInformation.List[UnitsInformation.DefaultCurrency].DatabaseField,
+                    UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString());
+                insertionFieldNameSumWithAlias = string.Format("sum({0}) as {1}",
+                    UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].DatabaseField,
+                    UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].Id.ToString());
 			}
 			catch (System.Exception err) {
 				throw (new PortofolioDALException("Impossible to build the request for GetInvestmentByMedia() : " + sql, err));
 			}
 
 			#region Construction de la requête
-            sql += " select " + insertionFieldNameSumWithAlias + "," + euroFieldNameSumWithAlias + ",date_cover_num date1";
-            sql += "  from " + WebApplicationParameters.GetDataTable(TableIds.dataPress, _webSession.IsSelectRetailerDisplay).Sql + "  " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;//+ DBConstantes.Schema.ADEXPRESS_SCHEMA + "." + DBConstantes.Tables.ALERT_DATA_PRESS + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
-			sql += " where id_media=" + _idMedia + " ";
+
+            sql += string.Format(" select {0},{1},date_cover_num date1", insertionFieldNameSumWithAlias, euroFieldNameSumWithAlias);
+            sql += string.Format("  from {0}  {1}", WebApplicationParameters.GetDataTable(TableIds.dataPress, _webSession.IsSelectRetailerDisplay).Sql,
+                WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+			sql += string.Format(" where id_media={0} ", _idMedia);
 			if (_beginingDate.Length > 0)
-				sql += " and date_media_num>=" + _beginingDate + " ";
+				sql += string.Format(" and date_media_num>={0} ", _beginingDate);
 			if (_endDate.Length > 0)
-				sql += "  and date_media_num<=" + _endDate + " ";
+				sql += string.Format("  and date_media_num<={0} ", _endDate);
 			sql += product;
 			sql += productsRights;
 			sql += mediaRights;
@@ -327,9 +332,8 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 			try {
 				DataSet ds = _webSession.Source.Fill(sql);
 				if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0) {
-					string[] value1 = null;
-					foreach (DataRow current in ds.Tables[0].Rows) {
-						value1 = new string[2];
+				    foreach (DataRow current in ds.Tables[0].Rows) {
+						var value1 = new string[2];
                         value1[0] = current[UnitsInformation.List[UnitsInformation.DefaultCurrency].Id.ToString()].ToString();
                         value1[1] = current[UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].Id.ToString()].ToString();
 						htInvestment.Add(current["date1"], value1);
@@ -357,87 +361,102 @@ namespace TNS.AdExpressI.Portofolio.DAL {
         /// <returns>DataSet</returns>
         public virtual DataSet GetListDate(bool conditionEndDate,DBConstantes.TableType.Type tableType) {
 
-            string tableName = "";
+            string tableName;
             try {
 				switch (tableType) {
 					case DBConstantes.TableType.Type.dataVehicle4M:
-						tableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
+						tableName = SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id,
+                            WebConstantes.Module.Type.alert, _webSession.IsSelectRetailerDisplay);
 						break;
 					case DBConstantes.TableType.Type.dataVehicle:
-                        tableName = WebFunctions.SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id, WebConstantes.Module.Type.analysis, _webSession.IsSelectRetailerDisplay);
+                        tableName = SQLGenerator.GetVehicleTableSQLForDetailResult(_vehicleInformation.Id,
+                            WebConstantes.Module.Type.analysis, _webSession.IsSelectRetailerDisplay);
 						break;				
 					default:
-						throw (new CompetitorDataAccessException("Table type unknown"));
+                        throw (new PortofolioDALException("Table type unknown"));
 				}
-                //tableName = GetAlertTable();
             }
             catch (System.Exception err) {
                 throw (new PortofolioDALException("Error when getting table name", err));
             }
 
             #region Construction de la requête
-            StringBuilder sql = new StringBuilder(500);
+            var sql = new StringBuilder(500);
 
-            sql.Append("select distinct date_media_num ");
+            sql.Append(" select distinct date_media_num ");
 
             if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
-                sql.Append(", disponibility_visual ");
-                sql.Append(", number_page_media ");
+                sql.Append(", disponibility_visual, number_page_media ");
                 sql.Append(", date_cover_num ");
             }
             else if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine) {
-                sql.Append(", disponibility_visual ");
-                sql.Append(", number_page_media ");
+                sql.Append(", disponibility_visual , number_page_media ");
                 sql.Append(", date_media_num as date_cover_num");
             }
             sql.Append(", media ");
             sql.Append(" from ");
-            //sql.Append(WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Label + "." + tableName + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 			sql.Append(tableName);
 
             if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
-                sql.Append("," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.applicationMedia).SqlWithPrefix + " ");
-                sql.Append("," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.alarmMedia).SqlWithPrefix + " ");
+                sql.AppendFormat(",{0} ", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.applicationMedia).SqlWithPrefix);
+                sql.AppendFormat(",{0} ", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.alarmMedia).SqlWithPrefix);
             }
-            sql.Append("," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).SqlWithPrefix + " ");
-            sql.Append(" where " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media=" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_media" + " ");
-            sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media=" + _idMedia + " ");
-			sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_language=" + _webSession.DataLanguage + " ");
+            sql.AppendFormat(",{0} ", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).SqlWithPrefix);
+            sql.AppendFormat(" where {0}.id_media={1}.id_media" + " ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
+                WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix);
+            sql.AppendFormat(" and {0}.id_media={1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _idMedia);
+			sql.AppendFormat(" and {0}.id_language={1} ", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix,
+                _webSession.DataLanguage);
+
             // Période			
 
             if (_beginingDate.Length > 0)
-                sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num>=" + _beginingDate);
+                sql.AppendFormat(" and {0}.date_media_num>={1}",
+                    WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _beginingDate);
             if (_endDate.Length > 0 && conditionEndDate)
-                sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num<=" + _endDate);
+                sql.AppendFormat(" and {0}.date_media_num<={1}",
+                    WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _endDate);
 
             if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.newspaper
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internationalPress) {
 
-                sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.applicationMedia).Prefix + ".date_debut(+) = " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num ");
+                sql.AppendFormat(" and {0}.date_debut(+) = {1}.date_media_num ",
+                    WebApplicationParameters.DataBaseDescription.GetTable(TableIds.applicationMedia).Prefix,
+                    WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 
-                sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.applicationMedia).Prefix + ".id_project(+) = " + CstProject.ADEXPRESS_ID + " ");
-                sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.applicationMedia).Prefix + ".id_media(+) = " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media ");
+                sql.AppendFormat(" and {0}.id_project(+) = {1} ", 
+                    WebApplicationParameters.DataBaseDescription.GetTable(TableIds.applicationMedia).Prefix, CstProject.ADEXPRESS_ID);
+                sql.AppendFormat(" and {0}.id_media(+) = {1}.id_media ", 
+                    WebApplicationParameters.DataBaseDescription.GetTable(TableIds.applicationMedia).Prefix,
+                    WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 
-                sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".id_media=al.id_media(+)");
+                sql.AppendFormat(" and {0}.id_media=al.id_media(+)",
+                    WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 
-                sql.Append(" and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num=al.DATE_ALARM(+)");
+                sql.AppendFormat(" and {0}.date_media_num=al.DATE_ALARM(+)",
+                    WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 
-                sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.alarmMedia).Prefix + ".id_media(+)=" + _idMedia + " ");
-                sql.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.alarmMedia).Prefix + ".ID_LANGUAGE_I(+)=" + _webSession.DataLanguage + " ");
-                sql.Append(" and  " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.alarmMedia).Prefix + ".DATE_ALARM(+)>=" + _beginingDate + " ");
+                sql.AppendFormat(" and {0}.id_media(+)={1} ", 
+                    WebApplicationParameters.DataBaseDescription.GetTable(TableIds.alarmMedia).Prefix, _idMedia);
+                sql.AppendFormat(" and {0}.ID_LANGUAGE_I(+)={1} ",
+                    WebApplicationParameters.DataBaseDescription.GetTable(TableIds.alarmMedia).Prefix, _webSession.DataLanguage);
+                sql.AppendFormat(" and  {0}.DATE_ALARM(+)>={1} ",
+                    WebApplicationParameters.DataBaseDescription.GetTable(TableIds.alarmMedia).Prefix, _beginingDate);
                 if (_endDate.Length > 0 && conditionEndDate)
-                    sql.Append(" and  " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.alarmMedia).Prefix + ".DATE_ALARM(+)<=" + _endDate + " ");
+                    sql.AppendFormat(" and  {0}.DATE_ALARM(+)<={1} ", 
+                        WebApplicationParameters.DataBaseDescription.GetTable(TableIds.alarmMedia).Prefix, _endDate);
 
             }
             // Tri			
-            sql.Append(" order by " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".date_media_num desc");
+            sql.AppendFormat(" order by {0}.date_media_num desc",
+                WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
 
             #endregion
 
@@ -445,7 +464,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
             try {
                 return (_webSession.Source.Fill(sql.ToString()));
             }
-            catch (System.Exception err) {
+            catch (Exception err) {
                 throw (new PortofolioDALException("Erreur lors de la sélection de la table", err));
             }
             #endregion
@@ -465,17 +484,26 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 			StringBuilder t = new StringBuilder(1000);
 			DataTable dt = null;
 
-			t.Append(" select  " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_media," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".media," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category).Prefix + ".id_category ");
-			t.Append(" from  " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category).SqlWithPrefix + "," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).SqlWithPrefix);
-			t.Append(" " + "," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.basicMedia).SqlWithPrefix + " ");
+			t.AppendFormat(" select  {0}.id_media,{0}.media,{1}.id_category ",
+                WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix,
+                WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category).Prefix);
+			t.AppendFormat(" from  {0},{1}", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category).SqlWithPrefix,
+                WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).SqlWithPrefix);
+			t.AppendFormat(" " + ",{0} ", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.basicMedia).SqlWithPrefix);
 			t.Append(" where ");
-			t.Append(" " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_basic_media =" + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.basicMedia).Prefix + ".id_basic_media ");
-			t.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category).Prefix + ".id_category = " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.basicMedia).Prefix + ".id_category ");
-			t.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category).Prefix + ".id_category = "+idCategory);
-			t.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category).Prefix + ".id_language = " + _webSession.DataLanguage);
-			t.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_language = " + _webSession.DataLanguage);
-			t.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.basicMedia).Prefix + ".id_language = " + _webSession.DataLanguage);
-			t.Append(" and " + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix + ".id_media in ( " + idMedia +")  ");
+			t.AppendFormat(" {0}.id_basic_media ={1}.id_basic_media ", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix,
+                WebApplicationParameters.DataBaseDescription.GetTable(TableIds.basicMedia).Prefix);
+			t.AppendFormat(" and {0}.id_category = {1}.id_category ", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category).Prefix,
+                WebApplicationParameters.DataBaseDescription.GetTable(TableIds.basicMedia).Prefix);
+			t.AppendFormat(" and {0}.id_category = {1}",
+                WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category).Prefix, idCategory);
+			t.AppendFormat(" and {0}.id_language = {1}", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.category).Prefix, _webSession.DataLanguage);
+			t.AppendFormat(" and {0}.id_language = {1}", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix,
+                _webSession.DataLanguage);
+			t.AppendFormat(" and {0}.id_language = {1}", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.basicMedia).Prefix,
+                _webSession.DataLanguage);
+			t.AppendFormat(" and {0}.id_media in ( {1})  ",
+                WebApplicationParameters.DataBaseDescription.GetTable(TableIds.media).Prefix, idMedia);
 			t.Append("  order by media ");
 
 			#region Execution de la requête
@@ -505,7 +533,8 @@ namespace TNS.AdExpressI.Portofolio.DAL {
         protected virtual string GetProductData() {
             string sql="";
             if(_webSession.PrincipalProductUniverses != null && _webSession.PrincipalProductUniverses.Count > 0)
-                sql= _webSession.PrincipalProductUniverses[0].GetSqlConditions(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,true);
+                sql= _webSession.PrincipalProductUniverses[0].
+                    GetSqlConditions(WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,true);
 
             return sql;
         }
@@ -546,7 +575,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
         /// </summary>
         /// <returns>SQL</returns>
 		protected virtual string GetSelectDataEcran() {
-            string sql = "";
+            var sql = string.Empty;
             switch (_vehicleInformation.Id) {
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                 case DBClassificationConstantes.Vehicles.names.press:
@@ -554,7 +583,7 @@ namespace TNS.AdExpressI.Portofolio.DAL {
                 case DBClassificationConstantes.Vehicles.names.magazine:
                 case DBClassificationConstantes.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.internet:
-                    return "";
+                   break;
                 case DBClassificationConstantes.Vehicles.names.radio:
                 case DBClassificationConstantes.Vehicles.names.radioGeneral:
                 case DBClassificationConstantes.Vehicles.names.radioSponsorship:
@@ -562,9 +591,10 @@ namespace TNS.AdExpressI.Portofolio.DAL {
                     sql += " select  distinct ID_COBRANDING_ADVERTISER";
                     sql += " ,duration_commercial_break as ecran_duration";
                     sql += " , NUMBER_spot_com_break nbre_spot";
-                    sql += " ," + UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].DatabaseField + " ";
-
-                    return sql;
+                    sql += string.Format(" ,{0} ",
+                        UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].DatabaseField);
+                    break;
+                   
                 case DBClassificationConstantes.Vehicles.names.tv:
                 case DBClassificationConstantes.Vehicles.names.others:
                 case DBClassificationConstantes.Vehicles.names.tvGeneral:
@@ -574,11 +604,13 @@ namespace TNS.AdExpressI.Portofolio.DAL {
                     sql += "select  distinct id_commercial_break ";
                     sql += " ,duration_commercial_break as ecran_duration";
                     sql += " ,NUMBER_MESSAGE_COMMERCIAL_BREA nbre_spot ";
-                    sql += " ," + UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].DatabaseField + " ";
-                    return sql;
+                    sql += string.Format(" ,{0} ",
+                         UnitsInformation.List[TNS.AdExpress.Constantes.Web.CustomerSessions.Unit.insertion].DatabaseField);
+                    break;
                 default:
                     throw new PortofolioDALException("getTable(DBClassificationConstantes.Vehicles.value idMedia)-->Vehicle unknown.");
             }
+            return sql;
         }
         #endregion
 
@@ -592,34 +624,43 @@ namespace TNS.AdExpressI.Portofolio.DAL {
             switch (_vehicleInformation.Id) {
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                 case DBClassificationConstantes.Vehicles.names.press:
-                    sql += WebApplicationParameters.GetDataTable(TableIds.dataPressAlert, _webSession.IsSelectRetailerDisplay).Sql + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
-                    sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).SqlWithPrefix;
-                    sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.color).SqlWithPrefix;
-                    sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.format).SqlWithPrefix;
+                    sql += string.Format("{0} {1}", 
+                        WebApplicationParameters.GetDataTable(TableIds.dataPressAlert, _webSession.IsSelectRetailerDisplay).Sql,
+                        WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                    sql += string.Format(" ,{0}", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).SqlWithPrefix);
+                    sql += string.Format(" ,{0}", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.color).SqlWithPrefix);
+                    sql += string.Format(" ,{0}", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.format).SqlWithPrefix);
                     return sql;
                 case DBClassificationConstantes.Vehicles.names.newspaper:
-                    sql += WebApplicationParameters.GetDataTable(TableIds.dataNewspaperAlert, _webSession.IsSelectRetailerDisplay).Sql + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
-                    sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).SqlWithPrefix;
-                    sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.color).SqlWithPrefix;
-                    sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.format).SqlWithPrefix;
+                    sql += string.Format("{0} {1}",
+                        WebApplicationParameters.GetDataTable(TableIds.dataNewspaperAlert, _webSession.IsSelectRetailerDisplay).Sql, 
+                        WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                    sql += string.Format(" ,{0}", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).SqlWithPrefix);
+                    sql += string.Format(" ,{0}", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.color).SqlWithPrefix);
+                    sql += string.Format(" ,{0}", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.format).SqlWithPrefix);
                     return sql;
                 case DBClassificationConstantes.Vehicles.names.magazine:
-                    sql += WebApplicationParameters.GetDataTable(TableIds.dataMagazineAlert, _webSession.IsSelectRetailerDisplay).Sql + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
-                    sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).SqlWithPrefix;
-                    sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.color).SqlWithPrefix;
-                    sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.format).SqlWithPrefix;
+                    sql += string.Format("{0} {1}",
+                        WebApplicationParameters.GetDataTable(TableIds.dataMagazineAlert, _webSession.IsSelectRetailerDisplay).Sql,
+                        WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                    sql += string.Format(" ,{0}", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).SqlWithPrefix);
+                    sql += string.Format(" ,{0}", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.color).SqlWithPrefix);
+                    sql += string.Format(" ,{0}", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.format).SqlWithPrefix);
                     return sql;
                 case DBClassificationConstantes.Vehicles.names.radio:
-                    sql += WebApplicationParameters.GetDataTable(TableIds.dataRadioAlert, _webSession.IsSelectRetailerDisplay).Sql + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
+                    sql += string.Format("{0} {1}", WebApplicationParameters.GetDataTable(TableIds.dataRadioAlert, _webSession.IsSelectRetailerDisplay).Sql,
+                        WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
                     sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).SqlWithPrefix;
                     return sql;
                 case DBClassificationConstantes.Vehicles.names.tv:
                 case DBClassificationConstantes.Vehicles.names.others:
-                    sql += WebApplicationParameters.GetDataTable(TableIds.dataTvAlert, _webSession.IsSelectRetailerDisplay).Sql + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix;
-                    sql += " ," + WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).SqlWithPrefix;
+                    sql += string.Format("{0} {1}",
+                        WebApplicationParameters.GetDataTable(TableIds.dataTvAlert, _webSession.IsSelectRetailerDisplay).Sql,
+                        WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
+                    sql += string.Format(" ,{0}", WebApplicationParameters.DataBaseDescription.GetTable(TableIds.product).SqlWithPrefix);
                     return sql;
                 default:
-                    throw new PortofolioDALException("getTable(DBClassificationConstantes.Vehicles.value idMedia)-->Vehicle unknown.");
+                    throw new PortofolioDALException(" Vehicle unknown.");
             }
         }
         #endregion
@@ -632,9 +673,10 @@ namespace TNS.AdExpressI.Portofolio.DAL {
 		/// <returns></returns>
 		protected virtual string GetExcludeProducts(string prefix) {
 			// Exclude product 
-			string sql = "";
+			string sql = string.Empty;
 			ProductItemsList prList = null; ;
-			if (Product.Contains(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID) && (prList = Product.GetItemsList(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID)) != null)
+			if (Product.Contains(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID) 
+                && (prList = Product.GetItemsList(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID)) != null)
 				sql = prList.GetExcludeItemsSql(true, prefix);
 			return sql;
 		}

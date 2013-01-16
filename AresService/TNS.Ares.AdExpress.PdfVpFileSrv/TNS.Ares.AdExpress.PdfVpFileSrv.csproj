@@ -47,6 +47,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -141,10 +142,6 @@
     <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Classification.DAL.Default\TNS.AdExpressI.Classification.DAL.Default.csproj">
       <Project>{28311011-B4C8-47F0-97EB-B94EE8F99900}</Project>
       <Name>TNS.AdExpressI.Classification.DAL.Default</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Insertions.DAL.Default\TNS.AdExpressI.Insertions.DAL.Default.csproj">
-      <Project>{04D00ADF-5026-4790-9D76-8B9F6F0B6F47}</Project>
-      <Name>TNS.AdExpressI.Insertions.DAL.Default</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Insertions.Default\TNS.AdExpressI.Insertions.Default.csproj">
       <Project>{DEA1A6A0-32D0-4624-B216-A95B13070078}</Project>

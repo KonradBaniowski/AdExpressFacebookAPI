@@ -6,9 +6,9 @@ namespace TNS.AdExpress.Rolex.Loader.DAL
 {
     public partial class DataAccessDAL
     {
-        public List<DataTypePresence> SelectTypePresence(DataAccessDb db, long idLanguage)
+        public List<DataPresenceType> SelectPresenceType(DataAccessDb db, long idLanguage)
         {
-            var query = from p in db.TypePresence where p.IdLanguage == idLanguage select p;
+            var query = from p in db.PresenceType where p.IdLanguage == idLanguage select p;
             return query.ToList();
         }
     }

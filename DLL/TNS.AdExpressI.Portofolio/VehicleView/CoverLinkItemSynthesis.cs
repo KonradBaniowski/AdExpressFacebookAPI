@@ -12,15 +12,16 @@ namespace TNS.AdExpressI.Portofolio.VehicleView
         /// <summary>
         /// Vehicle
         /// </summary>
-        private string _media = string.Empty;
+        protected string _media = string.Empty;
         /// <summary>
         /// Number page media
         /// </summary>
-        private string _numberPageMedia = string.Empty;
+        protected string _numberPageMedia = string.Empty;
         #endregion
 
         #region Constructor
-        public CoverLinkItemSynthesis(string media, string numberPageMedia, string idSession, long mediaId, string dateMediaNum, string dateCoverNum)
+        public CoverLinkItemSynthesis(string media, string numberPageMedia, string idSession
+            , long mediaId, string dateMediaNum, string dateCoverNum)
             : base(idSession, mediaId, dateMediaNum, dateCoverNum) {
 
                 _media = media;
@@ -35,7 +36,8 @@ namespace TNS.AdExpressI.Portofolio.VehicleView
         /// <returns>Html code</returns>
         override public string Render(){
 
-            return "onclick=\"javascript:portofolioCreation('" + _idSession + "','" + _mediaId + "','" + _dateMediaNum + "','" + _dateCoverNum + "','" + _media + "','" + _numberPageMedia + "');\"";
+            return string.Format("onclick=\"javascript:portofolioCreation('{0}','{1}','{2}','{3}','{4}','{5}');\""
+                , _idSession, _mediaId, _dateMediaNum, _dateCoverNum, _media, _numberPageMedia);
         }
      
         #endregion

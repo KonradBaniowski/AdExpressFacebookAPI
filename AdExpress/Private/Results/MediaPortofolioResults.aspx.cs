@@ -318,12 +318,13 @@ namespace AdExpress.Private.Results{
 				#region Scripts
 				// Ouverture de la popup chemin de fer
 				if (!Page.ClientScript.IsClientScriptBlockRegistered("portofolioCreation")) {
-					Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"portofolioCreation",TNS.AdExpress.Web.Functions.Script.PortofolioCreation());
+					Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"portofolioCreation",
+                        TNS.AdExpress.Web.Functions.Script.PortofolioCreation());
 				}					
-				//if (!Page.ClientScript.IsClientScriptBlockRegistered("openCreation"))Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"openCreation",WebFunctions.Script.OpenCreation());
 				// Ouverture de la popup detail portefeuille
 				if (!Page.ClientScript.IsClientScriptBlockRegistered("portofolioDetailMedia")) {
-					Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"portofolioDetailMedia",TNS.AdExpress.Web.Functions.Script.PortofolioDetailMedia());
+					Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"portofolioDetailMedia",
+                        TNS.AdExpress.Web.Functions.Script.PortofolioDetailMedia());
 				}	
 				#endregion
 			

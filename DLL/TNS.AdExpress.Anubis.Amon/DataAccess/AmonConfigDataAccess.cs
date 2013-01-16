@@ -93,6 +93,15 @@ namespace TNS.AdExpress.Anubis.Amon.DataAccess
 								Value=Reader.GetAttribute("keywords");
 								if (Value!=null) cfg.PdfKeyWords = Value;
 								break;
+                            case "impersonateInformation":
+                                if (Reader.GetAttribute("user") != null && Reader.GetAttribute("password") != null && Reader.GetAttribute("domain") != null)
+                                {
+                                    var impersonateInformation = new ImpersonateInformation(Reader.GetAttribute("user"), Reader.GetAttribute("domain"), Reader.GetAttribute("password"));
+                                    cfg.ImpersonateConfig = impersonateInformation;
+                                }
+                                Value = Reader.GetAttribute("useImpersonate");
+                                if (Value != null) cfg.UseImpersonate = bool.Parse(Value);
+                                break;
 						}
 					}
 				}

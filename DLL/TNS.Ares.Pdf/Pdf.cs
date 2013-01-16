@@ -190,7 +190,7 @@ namespace TNS.Ares.Pdf
         /// <summary>
         /// Initialize the PDF (Create it and get it ready for building process)
         /// </summary>
-        public void Init(bool postDisplay, string fileName, string pdfCreatorPilotMail, string pdfCreatorPilotPass)
+        public virtual void Init(bool postDisplay, string fileName, string pdfCreatorPilotMail, string pdfCreatorPilotPass)
         {
             try
             {

@@ -3,11 +3,12 @@ using TNS.FrameWorks.LSConnectivity;
 using TNS.LinkSystem.LinkKernel;
 using TNS.AdExpress.Anubis.Bastet;
 using TNS.FrameWork.DB.Common;
-using TNS.AdExpress.Bastet.Web;
+
 using TNS.Ares.Domain.DataBase;
 using TNS.Ares.Constantes;
 using TNS.Ares.AdExpress.XlsStats.Exceptions;
 using TNS.Ares.Domain.LS;
+using TNS.AdExpress.Bastet.Web;
 
 namespace TNS.Ares.AdExpress.XlsStats
 {
@@ -43,7 +44,7 @@ namespace TNS.Ares.AdExpress.XlsStats
         protected override void InitializeShell(string pathConfiguration) {
             try {
                 try {
-                    new WebApplicationParameters();
+                    new TNS.AdExpress.Bastet.Web.WebApplicationParameters();
                 }
                 catch (Exception e) {
                     throw new ShelInitializationException("Impossible to load WebApplicationParameters", e);

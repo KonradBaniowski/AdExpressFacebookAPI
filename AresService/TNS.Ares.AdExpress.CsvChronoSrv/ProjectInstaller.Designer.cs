@@ -1,4 +1,6 @@
-﻿namespace TNS.Ares.AdExpress.CsvChronoSrv
+﻿using System.ServiceProcess;
+
+namespace TNS.Ares.AdExpress.CsvChronoSrv
 {
     partial class ProjectInstaller
     {
@@ -33,6 +35,7 @@
             // 
             // serviceProcessInstaller
             // 
+            this.serviceProcessInstaller.Account = ServiceAccount.LocalSystem;
             this.serviceProcessInstaller.Password = null;
             this.serviceProcessInstaller.Username = null;
             // 

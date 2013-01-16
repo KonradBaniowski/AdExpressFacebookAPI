@@ -81,6 +81,8 @@
   <ItemGroup>
     <Compile Include="BusinessFacade\AmonPdfSystem.cs" />
     <Compile Include="Common\AmonConfig.cs" />
+    <Compile Include="Common\ImpersonateInformation.cs" />
+    <Compile Include="Common\Impersonation.cs" />
     <Compile Include="DataAccess\AmonConfigDataAccess.cs" />
     <Compile Include="Exceptions\AmonConfigDataAccessException.cs" />
     <Compile Include="Exceptions\AmonPdfException.cs" />
@@ -96,6 +98,7 @@
     </Content>
     <Content Include="Configuration\33\Plugins\Amon.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Images\33\LogoAdExpress.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

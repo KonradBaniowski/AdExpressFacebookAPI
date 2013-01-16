@@ -366,23 +366,25 @@ namespace TNS.AdExpressI.Portofolio {
 		/// <param name="endDate">End date</param>
 		/// <returns>Dates parution</returns>
 		public virtual Dictionary<string, string> GetVisualList(string beginDate, string endDate) {
-			Dictionary<string, string> dic = new Dictionary<string, string>();
+			var dic = new Dictionary<string, string>();
 			if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the portofolio result"));
-			object[] parameters = new object[5];
+			var parameters = new object[5];
 			parameters[0] = _webSession;
 			parameters[1] = _vehicleInformation;
 			parameters[2] = _idMedia;
 			parameters[3] = beginDate;
 			parameters[4] = endDate;
 			string themeName = TNS.AdExpress.Domain.Web.WebApplicationParameters.Themes[_webSession.SiteLanguage].Name;
-			IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
-			DataSet ds = portofolioDAL.GetListDate(true, _tableType);
+			var portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" 
+                + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance
+                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+			var ds = portofolioDAL.GetListDate(true, _tableType);
 
 			if (_mediaList == null) {
 				try {
 					string[] mediaList = Media.GetItemsList(WebCst.AdExpressUniverse.CREATIVES_KIOSQUE_LIST_ID).MediaList.Split(',');
 					if(mediaList!=null && mediaList.Length>0)
-						_mediaList = new List<Int64>(Array.ConvertAll<string, Int64>(mediaList, (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); }));					
+						_mediaList = new List<Int64>(Array.ConvertAll<string, Int64>(mediaList, Convert.ToInt64));					
 				}
 				catch { }
 			}
@@ -390,8 +392,10 @@ namespace TNS.AdExpressI.Portofolio {
 			foreach (DataRow dr in ds.Tables[0].Rows) {
 				if (dr["disponibility_visual"] != System.DBNull.Value && int.Parse(dr["disponibility_visual"].ToString()) >= 10) {
 					if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
-						dic.Add(dr["date_media_num"].ToString(), WebCst.CreationServerPathes.IMAGES + "/" + _idMedia + "/" + dr["date_media_num"].ToString() + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "");
-					else dic.Add(dr["date_media_num"].ToString(), WebCst.CreationServerPathes.IMAGES + "/" + _idMedia + "/" + dr["date_cover_num"].ToString() + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "");
+						dic.Add(dr["date_media_num"].ToString(), WebCst.CreationServerPathes.IMAGES + "/" + _idMedia + "/" + dr["date_media_num"].ToString()
+                            + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "");
+					else dic.Add(dr["date_media_num"].ToString(), WebCst.CreationServerPathes.IMAGES + "/" + _idMedia + "/" + dr["date_cover_num"].ToString() 
+                        + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "");
 				}
 				else
 					dic.Add(dr["date_media_num"].ToString(), "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif");
@@ -431,78 +435,115 @@ namespace TNS.AdExpressI.Portofolio {
                 {
 
 
-                    object[] parameters = new object[1];
+                    var parameters = new object[1];
                     parameters[0] = _webSession;
-                    IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryRulesLayer.AssemblyName, _module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+                    var portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.
+                        CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory 
+                        + @"Bin\" + _module.CountryRulesLayer.AssemblyName, _module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
+                        | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
                     portofolioResult.GetVehicleViewData(out dtVisuel, out htValue);
 
 
-                    CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
+                    var cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
                     if (_mediaList == null)
                     {
                         try
                         {
                             string[] mediaList = Media.GetItemsList(WebCst.AdExpressUniverse.CREATIVES_KIOSQUE_LIST_ID).MediaList.Split(',');
                             if (mediaList != null && mediaList.Length > 0)
-                                _mediaList = new List<Int64>(Array.ConvertAll<string, Int64>(mediaList, (Converter<string, long>)delegate(string s) { return Convert.ToInt64(s); }));
+                                _mediaList = new List<Int64>(Array.ConvertAll<string, Int64>(mediaList, Convert.ToInt64));
                         }
                         catch { }
                     }
-                    for (int i = 0; i < dtVisuel.Rows.Count; i++)
+
+                    if (dtVisuel!=null)
                     {
-                        //date_media_num
-
-                        if (dtVisuel.Rows[i]["disponibility_visual"] != System.DBNull.Value && int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10)
+                        for (int i = 0; i < dtVisuel.Rows.Count; i++)
                         {
-                            if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
-                                pathWeb = WebCst.CreationServerPathes.IMAGES + "/" + _idMedia.ToString() + "/" + dtVisuel.Rows[i]["date_media_num"].ToString() + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "";
-                            else pathWeb = WebCst.CreationServerPathes.IMAGES + "/" + _idMedia.ToString() + "/" + dtVisuel.Rows[i]["date_cover_num"].ToString() + "/Imagette/" + WebCst.CreationServerPathes.COUVERTURE + "";
-                        }
-                        else
-                        {
-                            pathWeb = "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif";
-                        }
-                        DateTime dayDT = new DateTime(int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(0, 4)), int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(4, 2)), int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(6, 2)));
+                            //date_media_num
 
-                        if (dtVisuel.Rows[i]["disponibility_visual"] != System.DBNull.Value && int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10)
-                        {
-
-                            if (_resultType == FrameWorkResultConstantes.Portofolio.SYNTHESIS)
+                            if (dtVisuel.Rows[i]["disponibility_visual"] != DBNull.Value &&
+                                int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10)
                             {
                                 if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
-                                    coverLinkItemSynthesis = new CoverLinkItemSynthesis(dtVisuel.Rows[i]["media"].ToString(), dtVisuel.Rows[i]["number_page_media"].ToString(), _webSession.IdSession, _idMedia, dtVisuel.Rows[i]["date_media_num"].ToString(), dtVisuel.Rows[i]["date_media_num"].ToString());
+                                    pathWeb = WebCst.CreationServerPathes.IMAGES + "/" + _idMedia.ToString() + "/" +
+                                              dtVisuel.Rows[i]["date_media_num"].ToString() + "/Imagette/" +
+                                              WebCst.CreationServerPathes.COUVERTURE + "";
                                 else
-                                    coverLinkItemSynthesis = new CoverLinkItemSynthesis(dtVisuel.Rows[i]["media"].ToString(), dtVisuel.Rows[i]["number_page_media"].ToString(), _webSession.IdSession, _idMedia, dtVisuel.Rows[i]["date_media_num"].ToString(), dtVisuel.Rows[i]["date_cover_num"].ToString());
-                                coverItem = new CoverItem(i + 1, GestionWeb.GetWebWord(1409, _webSession.SiteLanguage), pathWeb, coverLinkItemSynthesis);
+                                    pathWeb = WebCst.CreationServerPathes.IMAGES + "/" + _idMedia.ToString() + "/" +
+                                              dtVisuel.Rows[i]["date_cover_num"].ToString() + "/Imagette/" +
+                                              WebCst.CreationServerPathes.COUVERTURE + "";
                             }
-                            else if (_resultType == FrameWorkResultConstantes.Portofolio.DETAIL_MEDIA)
+                            else
                             {
-                                coverLinkItem = new CoverLinkItem(_webSession.IdSession, _idMedia, dtVisuel.Rows[i]["date_media_num"].ToString(), "");
-                                coverItem = new CoverItem(i + 1, "", pathWeb, coverLinkItem);
+                                pathWeb = "/App_Themes/" + themeName + "/Images/Culture/Others/no_visuel.gif";
                             }
-                        }
-                        else
-                            if (_resultType == FrameWorkResultConstantes.Portofolio.SYNTHESIS)
-                                coverItem = new CoverItem(i + 1, GestionWeb.GetWebWord(1409, _webSession.SiteLanguage), pathWeb, null);
+                            DateTime dayDT =
+                                new DateTime(int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(0, 4)),
+                                             int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(4, 2)),
+                                             int.Parse(dtVisuel.Rows[i]["date_media_num"].ToString().Substring(6, 2)));
+
+                            if (dtVisuel.Rows[i]["disponibility_visual"] != DBNull.Value &&
+                                int.Parse(dtVisuel.Rows[i]["disponibility_visual"].ToString()) >= 10)
+                            {
+
+                                if (_resultType == FrameWorkResultConstantes.Portofolio.SYNTHESIS)
+                                {
+                                    if (_mediaList != null && _mediaList.Count > 0 && _mediaList.Contains(_idMedia))
+                                        coverLinkItemSynthesis =
+                                            new CoverLinkItemSynthesis(dtVisuel.Rows[i]["media"].ToString(),
+                                                                       dtVisuel.Rows[i]["number_page_media"].ToString(),
+                                                                       _webSession.IdSession, _idMedia,
+                                                                       dtVisuel.Rows[i]["date_media_num"].ToString(),
+                                                                       dtVisuel.Rows[i]["date_media_num"].ToString());
+                                    else
+                                        coverLinkItemSynthesis =
+                                            new CoverLinkItemSynthesis(dtVisuel.Rows[i]["media"].ToString(),
+                                                                       dtVisuel.Rows[i]["number_page_media"].ToString(),
+                                                                       _webSession.IdSession, _idMedia,
+                                                                       dtVisuel.Rows[i]["date_media_num"].ToString(),
+                                                                       dtVisuel.Rows[i]["date_cover_num"].ToString());
+                                    coverItem = new CoverItem(i + 1,
+                                                              GestionWeb.GetWebWord(1409, _webSession.SiteLanguage),
+                                                              pathWeb, coverLinkItemSynthesis);
+                                }
+                                else if (_resultType == FrameWorkResultConstantes.Portofolio.DETAIL_MEDIA)
+                                {
+                                    coverLinkItem = new CoverLinkItem(_webSession.IdSession, _idMedia,
+                                                                      dtVisuel.Rows[i]["date_media_num"].ToString(), "");
+                                    coverItem = new CoverItem(i + 1, "", pathWeb, coverLinkItem);
+                                }
+                            }
+                            else if (_resultType == FrameWorkResultConstantes.Portofolio.SYNTHESIS)
+                                coverItem = new CoverItem(i + 1, GestionWeb.GetWebWord(1409, _webSession.SiteLanguage),
+                                                          pathWeb, null);
                             else if (_resultType == FrameWorkResultConstantes.Portofolio.DETAIL_MEDIA)
                                 coverItem = new CoverItem(i + 1, "", pathWeb, null);
 
 
-                        if (htValue.Count > 0)
-                        {
-                            if (htValue.ContainsKey(dtVisuel.Rows[i]["date_cover_num"]))
+                            if (htValue.Count > 0)
                             {
-                                vehicleItem = new VehicleItem(dayDT, ((string[])htValue[dtVisuel.Rows[i]["date_cover_num"]])[1], int.Parse(((string[])htValue[dtVisuel.Rows[i]["date_cover_num"]])[0]).ToString("### ### ### ###"), _webSession.SiteLanguage, coverItem);
-                            }
-                            else
-                            {
-                                vehicleItem = new VehicleItem(dayDT, "0", "0", _webSession.SiteLanguage, coverItem);
+                                if (htValue.ContainsKey(dtVisuel.Rows[i]["date_cover_num"]))
+                                {
+                                    vehicleItem = new VehicleItem(dayDT,
+                                                                  ((string[])
+                                                                   htValue[dtVisuel.Rows[i]["date_cover_num"]])[1],
+                                                                  int.Parse(
+                                                                      ((string[])
+                                                                       htValue[dtVisuel.Rows[i]["date_cover_num"]])[0])
+                                                                     .ToString("### ### ### ###"),
+                                                                  _webSession.SiteLanguage, coverItem);
+                                }
+                                else
+                                {
+                                    vehicleItem = new VehicleItem(dayDT, "0", "0", _webSession.SiteLanguage, coverItem);
 
+                                }
                             }
+
+                            itemsCollection.Add(vehicleItem);
+
                         }
-
-                        itemsCollection.Add(vehicleItem);
-
                     }
 
 

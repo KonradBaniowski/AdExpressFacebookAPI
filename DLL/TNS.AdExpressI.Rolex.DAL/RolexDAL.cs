@@ -77,12 +77,8 @@ namespace TNS.AdExpressI.Rolex.DAL
             DataSet ds = null;
             var sql = new StringBuilder(5000);
 
-            sql.Append(" select min(DATE_BEGIN_NUM) DATE_BEGIN_NUM,max(DATE_END_NUM) DATE_END_NUM from DATA_ROLEX ");
-            var dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rolex);
-            ds = dataSource.Fill(sql.ToString());
-
-            return ds;
-
+            sql.Append(" select min(DATE_BEGIN_NUM) DATE_BEGIN_NUM,max(DATE_END_NUM) DATE_END_NUM from DATA_ROLEX ");            
+            return  _session.Source.Fill(sql.ToString());
         }
         #endregion
 
@@ -153,7 +149,7 @@ namespace TNS.AdExpressI.Rolex.DAL
             sql.AppendFormat(" Order by {0} , {1}", orderByFieldName, DATE_BEGIN_NUM);
 
 
-            return ExecuteStatement(sql);
+            return _session.Source.Fill(sql.ToString());
         }
         #endregion
 
@@ -202,19 +198,9 @@ namespace TNS.AdExpressI.Rolex.DAL
             sql.AppendFormat(" order by {0},{1}", detailLevelInformation.GetSqlField(),
                              detailLevelInformation.GetSqlFieldId());
 
-            return ExecuteStatement(sql);
-        }
-
-        private DataSet ExecuteStatement(StringBuilder sql)
-        {
-
-#if DEBUG
-            var dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rolex);
-            return dataSource.Fill(sql.ToString());
-#else
             return _session.Source.Fill(sql.ToString());
-#endif
         }
+
 
         #region GetFileData
         /// <summary>
@@ -273,12 +259,7 @@ namespace TNS.AdExpressI.Rolex.DAL
             sql.AppendFormat("Group by {0} , {1}, {2}.COMMENTARY, URL, VISUAL,{3},{4} ", groupByFieldName, "ID_PAGE", dataRolex.Prefix, DATE_BEGIN_NUM, DATE_END_NUM);
             sql.Append(" ORDER BY SITE,ID_LOCATION asc,LOCATION,ID_PAGE,PRESENCE_TYPE ");
 
-#if DEBUG
-            var dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rolex);
-            return dataSource.Fill(sql.ToString());
-#else
             return _session.Source.Fill(sql.ToString());
-#endif
         }
         #endregion
 

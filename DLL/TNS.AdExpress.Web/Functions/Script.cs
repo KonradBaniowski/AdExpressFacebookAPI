@@ -1984,7 +1984,7 @@ namespace TNS.AdExpress.Web.Functions{
 		/// </remarks>
 		/// <returns>Code JavaScript</returns>
 		public static string PortofolioCreation(){
-			StringBuilder script = new StringBuilder(1000);
+			var script = new StringBuilder(1000);
 			script.Append("\n<script language=\"JavaScript\" type=\"text/JavaScript\">");
 			script.Append("\n\tfunction portofolioCreation(idSession, idMedia, date,parution,nameMedia,nbrePages){");
 			script.Append("\n\t\twindow.open("+
@@ -1997,6 +1997,19 @@ namespace TNS.AdExpress.Web.Functions{
 				+",'', \"top=10, left=10,toolbar=0, directories=0, status=0, menubar=0, width=980, height=650, scrollbars=1, location=0, resizable=0\""
 				+");");
 			script.Append("\n\t}");
+
+            script.Append("\n\tfunction portofolioCreation2(idSession, idMedia, date,parution,nameMedia,nbrePages,subfolder){");
+            script.Append("\n\t\twindow.open(" +
+                "\"/Private/Results/PortofolioCreationMediaPopUp.aspx?idSession=\"+idSession"
+                + "+\"&idMedia=\"+idMedia"
+                + "+\"&date=\"+date"
+                + "+\"&parution=\"+parution"
+                + "+\"&nameMedia=\"+nameMedia"
+                + "+\"&nbrePages=\"+nbrePages"
+                 + "+\"&subfolder=\"+subfolder"
+                + ",'', \"top=10, left=10,toolbar=0, directories=0, status=0, menubar=0, width=980, height=650, scrollbars=1, location=0, resizable=1\""
+                + ");");
+            script.Append("\n\t}");
 			script.Append("\n</script>");
 			return script.ToString();
 		}
@@ -2051,6 +2064,20 @@ namespace TNS.AdExpress.Web.Functions{
 				+",'', \"top=10, left=10,toolbar=0, directories=0, status=0, menubar=0, width=985, height=700, scrollbars=1, location=0, resizable=1\""
 				+");");
 			script.Append("\n\t}");
+
+            script.Append("\n\tfunction portofolioOneCreation2(idMedia, date,fileName1,fileName2,isBlur,subfolder){");
+            script.Append("\n\t\tvar isBlurValue = false;");
+            script.Append("\n\t\tif(isBlur)isBlurValue = true ;");
+            script.Append("\n\t\twindow.open(" +
+                "\"/Private/Results/PortofolioCreationOneMediaPopUp.aspx?idMedia=\"+idMedia"
+                + "+\"&date=\"+date"
+                + "+\"&fileName1=\"+fileName1"
+                + "+\"&fileName2=\"+fileName2"
+                + "+\"&isBlur=\"+isBlurValue"
+                  + "+\"&subfolder=\"+subfolder"
+                + ",'', \"top=10, left=10,toolbar=0, directories=0, status=0, menubar=0, width=985, height=700, scrollbars=1, location=0, resizable=1\""
+                + ");");
+            script.Append("\n\t}");
 			script.Append("\n</script>");
 			return script.ToString();
 		}

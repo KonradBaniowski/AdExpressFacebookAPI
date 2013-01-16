@@ -110,7 +110,9 @@
     <Compile Include="UI\SessionParameter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Aspose.Cells.lic" />
+    <None Include="Aspose.Cells.lic">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Themes\AE-Fr\Styles.xml">

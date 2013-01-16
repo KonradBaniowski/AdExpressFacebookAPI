@@ -307,8 +307,8 @@
     </cell>
   </cells>
   <pictures>
-    <picture name="PictureLogoAdExpress" path="Images\44\LogoAdExpress.jpg" height="80" width="70"/>
-    <picture name="PictureLogoAdExpress220" path="Images\44\LogoAdExpress220.jpg" height="80" width="70"/>
+    <picture name="PictureLogoAdExpress" path="Images\48\LogoAdExpress.jpg" height="80" width="70"/>
+    <picture name="PictureLogoAdExpress220" path="Images\48\LogoAdExpress220.jpg" height="80" width="70"/>
     <picture name="PictureLogoTNSMedia" path="Images\logoTNSMedia.gif" height="75" width="75"/>
     <picture name="PictureLogoAPPM" path="Images\Common\APPM.bmp" height="45" width="55"/>
     <picture name="PictureCheckBox" path="Images\checkbox.GIF" height="100" width="100"/>

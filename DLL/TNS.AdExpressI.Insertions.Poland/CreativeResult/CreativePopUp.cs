@@ -35,12 +35,7 @@ namespace TNS.AdExpressI.Insertions.Poland.CreativeResult
 
         #endregion
 
-        readonly Func<string, string, string,bool> isCreativeExists = (s, e,v) =>
-                      File.Exists(string.Format("{0}\\{3}\\{1}\\{2}.{3}"
-                     , s, v.Substring(0, 3), v, e));
-
-        readonly Func<string, string, string,string> getCreativePath = (s, e,v) => 
-            string.Format("{0}/{3}/{1}/{2}.{3}",s, v.Substring(0, 3), v, e);
+      
 
         /// <summary>
         /// Get Creative Pathes
@@ -49,7 +44,13 @@ namespace TNS.AdExpressI.Insertions.Poland.CreativeResult
         /// <param name="windowsFormatFound">True if windows Forma tFound</param>       
         protected override void GetCreativePathes(ref bool realFormatFound, ref bool windowsFormatFound)
         {
-          
+               Func<string, string, string,bool> isCreativeExists = (s, e,v) =>
+                      File.Exists(string.Format("{0}\\{3}\\{1}\\{2}.{3}"
+                     , s, v.Substring(0, 5), v, e));
+
+           Func<string, string, string,string> getCreativePath = (s, e,v) => 
+            string.Format("{0}/{3}/{1}/{2}.{3}",s, v.Substring(0, 5), v, e);
+
             switch (_vehicle)
             {
                 case Vehicles.names.radio:
@@ -109,5 +110,36 @@ namespace TNS.AdExpressI.Insertions.Poland.CreativeResult
                     break;
             }
         }
+
+        #region IsRadioFileExists
+
+        /// <summary>
+        /// Is Radio File Exists
+        /// </summary>
+        /// <param name="realFormatFound">True if real Format Found</param>
+        /// <param name="windowsFormatFound">True if windows Format Found</param>
+        protected override void IsRadioFileExists(ref bool realFormatFound, ref bool windowsFormatFound)
+        {
+            Func<string, bool> isCreativeExists =
+                e => _idSlogan != null && File.Exists(string.Format("{0}\\{3}\\{1}\\{2}.{3}",
+                                                                    CstWeb.CreationServerPathes
+                                                                          .LOCAL_PATH_CREATIVES_RADIO,
+                                                                    _idSlogan.Substring(0, 5),
+                                                                    _idSlogan, e));
+
+            //Vérification de l'existence du fichier real
+            if (isCreativeExists(RA_EXTENSION))
+                _isNewRealAudioFilePath = realFormatFound = true;           
+            
+
+            //Vérification de l'existence du fichier wm
+            if (isCreativeExists(WMA_EXTENSION))
+                _isNewWindowsAudioFilePath = windowsFormatFound = true;
+
+        }
+
+        #endregion
+
+
     }
 }

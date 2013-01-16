@@ -240,16 +240,17 @@ namespace TNS.AdExpress.Web.Controls.Results {
         /// <param name="customerWebSession">Session du client</param>
         /// <returns>tableau de résultats</returns>
         protected override ResultTable GetResultTable(WebSession customerWebSession) {          
-
-            //return WebRules.Results.PortofolioRules.GetPortofolioDetailMediaResultTable(customerWebSession, _dayOfWeek, _adBreak);
+         
 			Domain.Web.Navigation.Module module = customerWebSession.CustomerLogin.GetModule(customerWebSession.CurrentModule);
 			if (module.CountryRulesLayer == null) throw (new NullReferenceException("Rules layer is null for the portofolio result"));
-			object[] parameters = new object[3];
+			var parameters = new object[3];
 			parameters[0] = customerWebSession;
 			parameters[1] = _adBreak;
 			parameters[2] = _dayOfWeek;
-			Portofolio.IPortofolioResults portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
-			//return (portofolioResult.GetPortofolioDetailMediaResultTable());
+			var portofolioResult = (Portofolio.IPortofolioResults)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory 
+                + @"Bin\" + module.CountryRulesLayer.AssemblyName, module.CountryRulesLayer.Class, false, BindingFlags.CreateInstance
+                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+			
             ResultTable r;
             if(_renderType == RenderType.excel)
                 r = portofolioResult.GetInsertionDetailResultTable(true);

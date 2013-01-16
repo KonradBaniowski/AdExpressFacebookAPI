@@ -181,6 +181,10 @@
       <Project>{4762D913-FC82-42BD-840F-5BCB43E5979D}</Project>
       <Name>TNS.Ares.StaticNavSession.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.AdExpress.PdfSectorielle\TNS.Ares.AdExpress.PdfSectorielle.csproj">
+      <Project>{20C3692A-B3C6-4542-BC38-0833B90067D0}</Project>
+      <Name>TNS.Ares.AdExpress.PdfSectorielle</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.Ares.AdExpress\TNS.Ares.AdExpress.csproj">
       <Project>{3DDC18B6-8AB8-489F-A0C5-2118CE19D795}</Project>
       <Name>TNS.Ares.AdExpress</Name>
@@ -243,10 +247,15 @@ rmdir /S /Q "$(TargetDir)Bin\"
 mkdir "$(TargetDir)Bin\"
 copy "$(TargetDir)TNS.Ares.StaticNavSession.DAL.Default.dll" "$(TargetDir)Bin\TNS.Ares.StaticNavSession.DAL.Default.dll" /Y
 copy "$(TargetDir)TNS.AdExpressI.ProductClassIndicators.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.ProductClassIndicators.DAL.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.ProductClassIndicators.DAL.Russia.dll" "$(TargetDir)Bin\TNS.AdExpressI.ProductClassIndicators.DAL.Russia.dll" /Y
 copy "$(TargetDir)TNS.AdExpressI.ProductClassIndicators.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.ProductClassIndicators.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.ProductClassIndicators.Russia.dll" "$(TargetDir)Bin\TNS.AdExpressI.ProductClassIndicators.Russia.dll" /Y
 copy "$(TargetDir)TNS.AdExpress.Web.Core.Default.dll" "$(TargetDir)Bin\TNS.AdExpress.Web.Core.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpress.Web.Core.Russia.dll" "$(TargetDir)Bin\TNS.AdExpress.Web.Core.Russia.dll" /Y
 copy "$(TargetDir)TNS.AdExpressI.Classification.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Classification.DAL.Default.dll" /Y
-copy "$(TargetDir)TNS.AdExpressI.Date.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Date.DAL.Default.dll" /Y</PostBuildEvent>
+copy "$(TargetDir)TNS.AdExpressI.Classification.DAL.Russia.dll" "$(TargetDir)Bin\TNS.AdExpressI.Classification.DAL.Russia.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Date.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Date.DAL.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Date.DAL.Russia.dll" "$(TargetDir)Bin\TNS.AdExpressI.Date.DAL.Russia.dll" /Y</PostBuildEvent>
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>

@@ -346,7 +346,7 @@ namespace TNS.AdExpressI.Insertions.DAL {
                 level = (DetailLevelItemInformation)detailLevels.Levels[i];
                 if (id > 0
                     || (id == 0 && level.Id != DetailLevelItemInformation.Levels.slogan)
-                    || (id != -1 && id != 0 && level.Id == DetailLevelItemInformation.Levels.slogan && (vehicle.Id == CstDBClassif.Vehicles.names.adnettrack || vehicle.Id == CstDBClassif.Vehicles.names.internet || vehicle.Id == CstDBClassif.Vehicles.names.evaliantMobile))) {
+                    || (id > long.MinValue && id != 0 && level.Id == DetailLevelItemInformation.Levels.slogan && (vehicle.Id == CstDBClassif.Vehicles.names.adnettrack || vehicle.Id == CstDBClassif.Vehicles.names.internet || vehicle.Id == CstDBClassif.Vehicles.names.evaliantMobile))) {
                     /* This test concerns only the French version of the site
                      * */
                     if (level.DataBaseIdField == CstDB.Fields.ID_VEHICLE && VehiclesInformation.Contains(CstDBClassif.Vehicles.names.internet) && id == VehiclesInformation.EnumToDatabaseId(CstDBClassif.Vehicles.names.internet))
@@ -381,7 +381,9 @@ namespace TNS.AdExpressI.Insertions.DAL {
         /// <param name="vehicle">Vehicle</param>
         /// <param name="filters">Filters</param>
         /// <returns>SQL</returns>
-        private static string CheckZeroVersion(Table table, TNS.AdExpress.Domain.Level.GenericDetailLevel detailLevels, VehicleInformation vehicle, string filters) {
+        protected virtual string CheckZeroVersion(Table table,
+            TNS.AdExpress.Domain.Level.GenericDetailLevel detailLevels, VehicleInformation vehicle, string filters)
+        {
             
             Int64 id = 0;
             string[] ids = filters.Split(',');
@@ -392,7 +394,9 @@ namespace TNS.AdExpressI.Insertions.DAL {
              * */
             if (rank != 0) {
                 id = Convert.ToInt64(ids[rank - 1]);
-                if (id == 0 && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack && vehicle.Id != CstDBClassif.Vehicles.names.internet && vehicle.Id != CstDBClassif.Vehicles.names.evaliantMobile) 
+                if (id == 0 && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack &&
+                    vehicle.Id != CstDBClassif.Vehicles.names.internet
+                    && vehicle.Id != CstDBClassif.Vehicles.names.evaliantMobile) 
                     return string.Format(" and {0}.id_slogan is null ", table.Prefix);
             }
             return ("");
@@ -1284,7 +1288,8 @@ namespace TNS.AdExpressI.Insertions.DAL {
         /// <param name="vehicle">Vehicle information</param>
         /// <param name="universId">Current Univers</param>
         /// <param name="filters">FIlters to apply</param>
-        protected virtual void AppendUniversFilters(StringBuilder sql, Table tData, int fromDate, int toDate, VehicleInformation vehicle, int universId, string filters)
+        protected virtual void AppendUniversFilters(StringBuilder sql, Table tData,
+            int fromDate, int toDate, VehicleInformation vehicle, int universId, string filters)
         {
 
             #region Period
@@ -1469,7 +1474,9 @@ namespace TNS.AdExpressI.Insertions.DAL {
                 cVehicleInfo = vehicle;
             formatIdList = _session.GetValidFormatSelectedList(new List<VehicleInformation>(new[] { cVehicleInfo }));
             if (formatIdList.Count>0)
-                sql.Append(" and " + tData.Prefix + ".ID_" + WebApplicationParameters.DataBaseDescription.GetTable(WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList[cVehicleInfo.DatabaseId].FormatTableName).Label + " in (" + string.Join(",", formatIdList.ConvertAll(p => p.ToString()).ToArray()) + ") ");
+                sql.Append(" and " + tData.Prefix + ".ID_" + WebApplicationParameters.DataBaseDescription.
+                    GetTable(WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList[cVehicleInfo.DatabaseId].FormatTableName).Label 
+                    + " in (" + string.Join(",", formatIdList.ConvertAll(p => p.ToString()).ToArray()) + ") ");
             #endregion
 
             #region Filtres
@@ -1499,7 +1506,8 @@ namespace TNS.AdExpressI.Insertions.DAL {
             if (_session.SloganIdZoom > -1) {//For Russia : _session.SloganIdZoom > long.MinValue (correspond to the absence of ID for the version)
                 sql.AppendFormat(" and wp.id_slogan={0}", _session.SloganIdZoom);
             }
-            if ((_msCreaConfig || _creaConfig) && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack && vehicle.Id != CstDBClassif.Vehicles.names.internet && vehicle.Id != CstDBClassif.Vehicles.names.evaliantMobile) {
+            if ((_msCreaConfig || _creaConfig) && vehicle.Id != CstDBClassif.Vehicles.names.adnettrack && 
+                vehicle.Id != CstDBClassif.Vehicles.names.internet && vehicle.Id != CstDBClassif.Vehicles.names.evaliantMobile) {
                 sql.AppendFormat(" and {0}.id_slogan is not null", tData.Prefix);
             }
 
@@ -1517,7 +1525,8 @@ namespace TNS.AdExpressI.Insertions.DAL {
             /* For the media type press and international press we can do studies according to the inset option (total, inset excluding, inset)
              * so to get the corresponding filter we use GetJointForInsertDetail method
              * */
-            if (vehicle.Id == CstDBClassif.Vehicles.names.press || vehicle.Id == CstDBClassif.Vehicles.names.internationalPress || vehicle.Id == CstDBClassif.Vehicles.names.newspaper
+            if (vehicle.Id == CstDBClassif.Vehicles.names.press || vehicle.Id == CstDBClassif.Vehicles.names.internationalPress
+                || vehicle.Id == CstDBClassif.Vehicles.names.newspaper
                 || vehicle.Id == CstDBClassif.Vehicles.names.magazine)
             {
                 sql.Append(FctWeb.SQLGenerator.GetJointForInsertDetail(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
@@ -1605,7 +1614,8 @@ namespace TNS.AdExpressI.Insertions.DAL {
         /// <param name="vehicle">Vehicle Information</param>
         /// <param name="detailLevelIds">List of levels detail</param>
         /// <param name="columns">Classification columns list</param>
-        protected virtual void AppendSqlGroupByFields(StringBuilder sql, Table tData, VehicleInformation vehicle, ArrayList detailLevelIds, List<GenericColumnItemInformation> columns)
+        protected virtual void AppendSqlGroupByFields(StringBuilder sql, Table tData,
+            VehicleInformation vehicle, ArrayList detailLevelIds, List<GenericColumnItemInformation> columns)
         {
 
             string tmp = string.Empty;
@@ -1737,7 +1747,8 @@ namespace TNS.AdExpressI.Insertions.DAL {
         /// <param name="vehicle">Vehicle Information</param>
         /// <param name="detailLevelIds">List of detail levels</param>
         /// <param name="columns">Classification columns list</param>
-        protected virtual void AppendSqlOrderFields(Table tData, StringBuilder sql, VehicleInformation vehicle, ArrayList detailLevelIds, List<GenericColumnItemInformation> columns)
+        protected virtual void AppendSqlOrderFields(Table tData, StringBuilder sql,
+            VehicleInformation vehicle, ArrayList detailLevelIds, List<GenericColumnItemInformation> columns)
         {
             string tmp = string.Empty;
             bool first = true;

@@ -521,8 +521,8 @@ namespace TNS.AdExpress.Web.Controls.Selections.Rolex.Filter
         /// <returns></returns>
         protected DataSet GetData(GenericDetailLevel genericDetailLevel)
         {
-            var dataSource = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.rolex);
-            var classificationLevelListDAL = new ClassificationLevelListDAL(genericDetailLevel[1], _webSession.SiteLanguage, dataSource,
+           
+            var classificationLevelListDAL = new ClassificationLevelListDAL(genericDetailLevel[1], _webSession.SiteLanguage, _webSession.Source,
                  WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.rolex03).Label);
             var ds = new DataSet();
             ds.Tables.Add(classificationLevelListDAL.GetDataTable.Copy());

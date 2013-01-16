@@ -3,6 +3,7 @@
 //Creation : 10/08/2006
 #endregion
 
+using System.ComponentModel;
 using TNS.AdExpress.Anubis.Ptah.DataAccess;
 using TNS.FrameWork.DB.Common;
 
@@ -56,6 +57,8 @@ namespace TNS.AdExpress.Anubis.Ptah.Common
 		/// Pass for Html2Pdf
 		/// </summary>
 		private string _html2PdfPass = "";
+
+	   
 		#endregion
 
 		#region Pdf Properties
@@ -102,6 +105,16 @@ namespace TNS.AdExpress.Anubis.Ptah.Common
         private string _outdoorScanPath;
         #endregion
 
+        /// <summary>
+        /// Get / Set Use Impersonate
+        /// </summary>
+        [DefaultValue(false)]
+        public bool UseImpersonate { get; set; }
+
+        /// <summary>
+        /// Get / Set Impersonate Config
+        /// </summary>
+        public ImpersonateInformation ImpersonateConfig { get; set; }
 		#endregion
 
 		#region Constructeur

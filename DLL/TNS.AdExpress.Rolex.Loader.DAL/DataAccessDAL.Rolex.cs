@@ -20,7 +20,7 @@ namespace TNS.AdExpress.Rolex.Loader.DAL
             var rolexDetails = new List<RolexDetail>();
             Workbook excel = null;
             const int startLineData = 1;
-            const int startColumnData = 0;
+            //const int startColumnData = 0;
             const int columnVehicle = 0;
             const int columnLocation = 1, columnCommentary = 2, columnVisibility = 3;
             const int columnVisuals = 4;
@@ -31,8 +31,8 @@ namespace TNS.AdExpress.Rolex.Loader.DAL
                 excel = new Workbook();
                 var license = new License();
                 license.SetLicense("Aspose.Cells.lic");
-                FileStream fileStream = null;
-                AtomicPeriodWeek atomicPeriodWeek = null;
+                FileStream fileStream;
+                AtomicPeriodWeek atomicPeriodWeek;
                 #endregion
 
                 #region Load file
@@ -73,7 +73,7 @@ namespace TNS.AdExpress.Rolex.Loader.DAL
                     var vehicles = SelectMedia(db, _idLanguage);
 
                     //Get visibility types
-                    var typePresences = SelectTypePresence(db, _idLanguage);
+                    var typePresences = SelectPresenceType(db, _idLanguage);
 
                     //Get location
                     var locations = SelectLocation(db, _idLanguage);
@@ -87,16 +87,16 @@ namespace TNS.AdExpress.Rolex.Loader.DAL
                     pictures = new List<PictureMatching>();
 
                     int line;
-                    for (line = startLineData; cells[line, startColumnData].Value != null; line++)
+                    for (line = startLineData; !IsEndLine(columnLocation, columnVisibility, columnVisuals, cells, line, columnVehicle); line++)
                     {
                         //Get vehicle
-                        var vehicle = GetVehicle(Convert.ToString(cells[line, columnVehicle].Value), vehicles, line, columnVehicle);
+                        var vehicle = GetVehicle(cells,cells[line, columnVehicle].Value, vehicles, line, columnVehicle);
 
                         //Get location
-                        var location = GetLocation(Convert.ToString(cells[line, columnLocation].Value), locations, line, columnLocation);
+                        var location = GetLocation(cells,cells[line, columnLocation].Value, locations, line, columnLocation);
 
                         //Get vehicle
-                        var typePresenceIds = GetTypePresences(Convert.ToString(cells[line, columnVisibility].Value), typePresences, line, columnVisibility);
+                        var typePresenceIds = GetTypePresences(cells,cells[line, columnVisibility].Value, typePresences, line, columnVisibility);
                       
                         //Get commentary
                         var commentary = (cells[line, columnCommentary].Value!=null) ? Convert.ToString(cells[line, columnCommentary].Value) : string.Empty;
@@ -104,7 +104,7 @@ namespace TNS.AdExpress.Rolex.Loader.DAL
                         //Get visuals
                         var visuals = GetVisuals(fileStream, columnVisuals, cells, line);
 
-                        var picturesTemp =  GetPictureFileName(visuals, db);
+                        var picturesTemp = GetPictureFileName(visuals, db, line, columnVisuals);
 
                         pictures.AddRange(picturesTemp.Values);
 
@@ -121,10 +121,16 @@ namespace TNS.AdExpress.Rolex.Loader.DAL
             }
             finally
             {
-                if (excel != null) excel = null;
+                excel = null;
             }
 
 
+        }
+
+        private bool IsEndLine(int columnLocation, int columnVisibility, int columnVisuals, Cells cells, int line, int columnVehicle)
+        {
+            return (cells[line, columnVehicle].Value == null && cells[line, columnLocation].Value == null &&
+                    cells[line, columnVisibility].Value == null && cells[line, columnVisuals].Value == null);
         }
 
         private List<string> GetVisuals(FileStream fileStream, int columnVisuals, Cells cells, int line)
@@ -144,19 +150,29 @@ namespace TNS.AdExpress.Rolex.Loader.DAL
                 {
                     if (!File.Exists(visuals[i]))
                     {
-                        var files = Directory.GetFiles(Path.GetDirectoryName(visuals[i]),
-                                                       Path.GetFileName(visuals[i]) + ".*",
-                                                       SearchOption.TopDirectoryOnly);
+                       string[] files;
+                        try
+                        {
+                             files = Directory.GetFiles(Path.GetDirectoryName(visuals[i]),
+                                                      Path.GetFileName(visuals[i]) + ".*",
+                                                      SearchOption.TopDirectoryOnly);
+                        }
+                        catch (Exception)
+                        {
+
+                            throw new DataAccessDALExcelVisualException(new CellExcel(line + 1, columnVisuals + 1), "Invalid visuals");
+                        }
+                       
                         if (files.Length > 1)
-                            throw new DataAccessDALBadPictureNumberException(
+                            throw new DataAccessDALBadPictureNumberException(new CellExcel(line+1, columnVisuals+1),
                                 "Impossible to retrieve the file. " + files.Length + " files are found");
                         if (files.Length <= 0)
-                            throw new DataAccessDALBadPictureNameException(
+                            throw new DataAccessDALBadPictureNameException(new CellExcel(line+1, columnVisuals+1),
                                 "Impossible to retrieve the file '" + visuals[i] + "'");
                     }
                 }
             }
-            else throw new DataAccessDALExcelVisualException(new CellExcel(line, columnVisuals), "Invalid visuals");
+            else throw new DataAccessDALExcelVisualException(new CellExcel(line+1, columnVisuals+1), "Invalid visuals");
             return visuals;
         }
 
@@ -187,7 +203,7 @@ namespace TNS.AdExpress.Rolex.Loader.DAL
                 {
 
                     var sql = new StringBuilder(200);
-                    var queryInsertPattern = string.Format(" INSERT INTO {0}DATA_ROLEX (ID_DATA_ROLEX, ID_LANGUAGE_DATA_I, ID_SITE, ID_EMPLACEMENT, ID_TYPE_PRESENCE,DATE_BEGIN_NUM, DATE_END_NUM, VISUAL, ID_PAGE,ACTIVATION, COMMENTARY,LOAD_DATE) ", ROLEX_SCHEMA);
+                    var queryInsertPattern = string.Format(" INSERT INTO {0}DATA_ROLEX (ID_DATA_ROLEX, ID_LANGUAGE_DATA_I, ID_SITE, ID_LOCATION, ID_PRESENCE_TYPE,DATE_BEGIN_NUM, DATE_END_NUM, VISUAL, ID_PAGE,ACTIVATION, COMMENTARY,LOAD_DATE) ", ROLEX_SCHEMA);
                     const string queryValuesPattern = " VALUES ({0}, {1}, {2}, {3}, {4}, {5},{6}, '{7}',{8}, {9},'{10}', {11}); ";
 
                     var query = new StringBuilder();
@@ -196,12 +212,12 @@ namespace TNS.AdExpress.Rolex.Loader.DAL
                     foreach (RolexDetail rolexDetail in rolexDetails)
                     {
                         long idPage = db.GetPageIdSequenceId();
-                        for (int i = 0; i < rolexDetail.IdTypePresences.Count; i++)
+                        for (int i = 0; i < rolexDetail.IdPresenceTypes.Count; i++)
                         {
                             var comments = (string.IsNullOrEmpty(rolexDetail.Commentary)? "": Regex.Replace(rolexDetail.Commentary, "[']", "''"));
                             query.Append(queryInsertPattern);
                             query.AppendFormat(queryValuesPattern, "ROLEX03.SEQ_DATA_ROLEX.NEXTVAL", _idLanguage,
-                                               rolexDetail.IdSite, rolexDetail.IdLocation, rolexDetail.IdTypePresences[i],
+                                               rolexDetail.IdSite, rolexDetail.IdLocation, rolexDetail.IdPresenceTypes[i],
                                                rolexDetail.DateBegin.ToString("yyyyMMdd")
                                                , rolexDetail.DateEnd.ToString("yyyyMMdd"),
                                                String.Join(",", rolexDetail.Visuals),idPage, ACTIVATED, comments, weekDate);
@@ -217,60 +233,63 @@ namespace TNS.AdExpress.Rolex.Loader.DAL
 
         }
 
-        private List<long> GetTypePresences(string value, IEnumerable<DataTypePresence> visibilities, int lineId, int columnId)
+        private List<long> GetTypePresences(Cells cells, object value, IEnumerable<DataPresenceType> visibilities, int lineId, int columnId)
         {
             List<long> typePresences = null;
             try
             {
-                if (!string.IsNullOrEmpty(value))
+                var val = Convert.ToString(cells[lineId, columnId].Value);
+                if (!string.IsNullOrEmpty(val))
                 {
-                    List<string> strArr = value.Split(',').Select(e => e.Trim().ToUpper()).ToList();
+                    List<string> strArr = val.Split(',').Select(e => e.Trim().ToUpper()).ToList();
                     typePresences = visibilities.Where(el => strArr.Contains(el.TypePresence.Trim().ToUpper())).Select(el => el.IdTypePresence).ToList();
                 }
             }
             catch (Exception ex)
             {
-                throw (new DataAccessDALExcelPresenceTypeException(new CellExcel(lineId, columnId), " Impossible de retrouver le type de présence saisi", ex));
+                throw (new DataAccessDALExcelPresenceTypeException(new CellExcel(lineId+1, columnId+1), " Impossible de retrouver le type de présence saisi", ex));
             }
             if (typePresences != null && typePresences.Count >0) return typePresences;
-            throw (new DataAccessDALExcelPresenceTypeException(new CellExcel(lineId, columnId), " Impossible de retrouver le type de présence saisi "));
+            throw (new DataAccessDALExcelPresenceTypeException(new CellExcel(lineId+1, columnId+1), " Impossible de retrouver le type de présence saisi "));
         }
 
-        private DataLocation GetLocation(string value, IEnumerable<DataLocation> locations, int lineId, int columnId)
+        private DataLocation GetLocation(Cells cells, object value, IEnumerable<DataLocation> locations, int lineId, int columnId)
         {
             List<DataLocation> locs = null;
             try
             {
+                var val = Convert.ToString(cells[lineId, columnId].Value);
                 if (locations != null)
                 {
-                    locs = (from m in locations where m.Emplacement.Trim().ToUpper() == value.Trim().ToUpper() select m).ToList();
+                    locs = (from m in locations where m.Emplacement.Trim().ToUpper() == val.Trim().ToUpper() select m).ToList();
                 }
             }
             catch (Exception ex)
             {
-                throw (new DataAccessDALExcelLocationException(new CellExcel(lineId, columnId), " Impossible de retrouver l'emplacement saisi ", ex));
+                throw (new DataAccessDALExcelLocationException(new CellExcel(lineId+1, columnId+1), " Impossible de retrouver l'emplacement saisi ", ex));
             }                    
             if (locs != null && locs.Count == 1) return locs[0];
-            throw (new DataAccessDALExcelLocationException(new CellExcel(lineId, columnId), " Impossible de retrouver l'emplacement saisi "));
+            throw (new DataAccessDALExcelLocationException(new CellExcel(lineId+1, columnId+1), " Impossible de retrouver l'emplacement saisi "));
         }
 
-        private DataMedia GetVehicle(string value, IEnumerable<DataMedia> vehicles, int lineId, int columnId)
+        private DataMedia GetVehicle( Cells cells,object value, IEnumerable<DataMedia> vehicles, int lineId, int columnId)
         {
             List<DataMedia> dataMedias = null;
             try
             {
+                var val = Convert.ToString(cells[lineId, columnId].Value);
                 if (vehicles != null)
                 {
-                    dataMedias = (from m in vehicles where m.Site.Trim().ToUpper() == value.Trim().ToUpper() select m).ToList();
+                    dataMedias = (from m in vehicles where m.Site.Trim().ToUpper() == val.Trim().ToUpper() select m).ToList();
                 }
             }
             catch (Exception ex)
             {
-                throw (new DataAccessDALExcelSiteException(new CellExcel(lineId, columnId), " Impossible de retrouver le Site saisi ", ex));
+                throw (new DataAccessDALExcelSiteException(new CellExcel(lineId+1, columnId+1), " Impossible de retrouver le Site saisi ", ex));
             }
           
             if (dataMedias != null && dataMedias.Count == 1) return dataMedias[0];
-            throw (new DataAccessDALExcelSiteException(new CellExcel(lineId, columnId), "  Impossible de retrouver le Site saisi  " + value));
+            throw (new DataAccessDALExcelSiteException(new CellExcel(lineId+1, columnId+1), "  Impossible de retrouver le Site saisi  " + value));
         }
 
         /// <summary>
@@ -278,16 +297,28 @@ namespace TNS.AdExpress.Rolex.Loader.DAL
         /// </summary>
         /// <param name="fileList">File List</param>
         /// <param name="db">database </param>
+        /// <param name="line">line index</param>
+        /// <param name="columnVisuals">column visual</param>
         /// <returns>Picture File Name List</returns>
-        public Dictionary<string, PictureMatching> GetPictureFileName(List<string> fileList, DataAccessDb db)
+        public Dictionary<string, PictureMatching> GetPictureFileName(List<string> fileList, DataAccessDb db, int line, int columnVisuals)
         {
                 var filePictureList = new Dictionary<string, PictureMatching>();
                 if (fileList != null)
                 {
                     foreach (string cFile in fileList)
                     {
-                        long id = db.GetVisualSequenceId();                      
-                        filePictureList.Add(cFile, new PictureMatching(cFile, id.ToString(CultureInfo.InvariantCulture) + Path.GetExtension(cFile)));
+                        long id = db.GetVisualSequenceId();
+
+                        try
+                        {
+                            filePictureList.Add(cFile, new PictureMatching(cFile, id.ToString(CultureInfo.InvariantCulture) + Path.GetExtension(cFile)));
+                        }
+                        catch (ArgumentException e)
+                        {                         
+                                throw new DataAccessDALRedundantPictureNameException(new CellExcel(line + 1, columnVisuals + 1),
+                                   "Redundant image name in the same cell. ");
+                        }
+                       
                     }
                 }
                 return filePictureList;

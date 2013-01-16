@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-
+using System.Linq;
 using FctUtilities = TNS.AdExpress.Web.Core.Utilities;
 using CstWeb = TNS.AdExpress.Constantes.Web;
 using CsCustomer = TNS.AdExpress.Constantes.Customer;
@@ -12,16 +11,13 @@ using CstVMCFormat = TNS.AdExpress.Constantes.DB.Format;
 
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Level;
-using TNS.AdExpress;
 using TNS.AdExpress.Web.Core.Result;
 using TNS.AdExpress.Web.Core.Sessions;
-using System.Windows.Forms;
 using TNS.AdExpressI.Insertions.Exceptions;
 using TNS.AdExpressI.Insertions.DAL;
 using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.FrameWork.WebResultUI;
 using System.Data;
-using System.Collections;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpressI.Insertions.Cells;
@@ -76,18 +72,19 @@ namespace TNS.AdExpressI.Insertions
         /// <summary>
         /// List of category to test for top diffusion rule
         /// </summary>
-        protected string[] _topDiffCategory = TNS.AdExpress.Domain.Lists.GetIdList(CstWeb.GroupList.ID.category, CstWeb.GroupList.Type.digitalTv).Split(new char[1] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+        protected string[] _topDiffCategory = 
+            TNS.AdExpress.Domain.Lists.GetIdList(GroupList.ID.category, GroupList.Type.digitalTv).Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
         #endregion
 
         #region RenderType
         /// <summary>
         /// Define Render Type
         /// </summary>
-        protected TNS.FrameWork.WebResultUI.RenderType _renderType = RenderType.html;
+        protected RenderType _renderType = RenderType.html;
         /// <summary>
         /// Get render type Session
         /// </summary>
-        public TNS.FrameWork.WebResultUI.RenderType RenderType
+        public RenderType RenderType
         {
             get { return _renderType; }
             set { _renderType = value; }
@@ -104,28 +101,32 @@ namespace TNS.AdExpressI.Insertions
         {
             _session = session;
             _module = ModulesList.GetModule(moduleId);
-            object[] param = new object[2];
+            var param = new object[2];
 
             param[0] = session;
             param[1] = moduleId;
-            CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.insertionsDAL];
+            CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.insertionsDAL];
             if (cl == null) throw (new NullReferenceException("Core layer is null for the insertions DAL"));
-            _dalLayer = (IInsertionsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null, null);
+            _dalLayer = (IInsertionsDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false,
+                System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
         }
         #endregion
 
         #region GetVehicles
+
         /// <summary>
         /// Get vehicles matching filters and which has data
         /// </summary>
         /// <param name="filters">Filters to apply (id1,id2,id3,id4</param>
+        /// <param name="universId">univers Id</param>
+        /// <param name="sloganNotNull">true if slogan Not Null</param>
         /// <returns>List of vehicles with data</returns>
         public virtual List<VehicleInformation> GetPresentVehicles(string filters, int universId, bool sloganNotNull)
         {
-            List<VehicleInformation> vehicles = new List<VehicleInformation>();
+            var vehicles = new List<VehicleInformation>();
 
-            DateTime dateBegin = FctUtilities.Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
-            DateTime dateEnd = FctUtilities.Dates.getPeriodEndDate(_session.PeriodEndDate, _session.PeriodType);
+            DateTime dateBegin = Dates.getPeriodBeginningDate(_session.PeriodBeginningDate, _session.PeriodType);
+            DateTime dateEnd = Dates.getPeriodEndDate(_session.PeriodEndDate, _session.PeriodType);
             int iDateBegin = Convert.ToInt32(dateBegin.ToString("yyyyMMdd"));
             int iDateEnd = Convert.ToInt32(dateEnd.ToString("yyyyMMdd"));
             _getCreatives = sloganNotNull;
@@ -145,56 +146,33 @@ namespace TNS.AdExpressI.Insertions
                     string[] ids = filters.Split(',');
                     vehicles = GetVehicles(Convert.ToInt64(ids[0]), Convert.ToInt64(ids[1]), Convert.ToInt64(ids[2]), Convert.ToInt64(ids[3]));
                     string[] list = _session.GetSelection(_session.SelectionUniversMedia, CsCustomer.Right.type.vehicleAccess).Split(',');
-                    for (int i = vehicles.Count-1; i >= 0; i--)
+                    for (int i = vehicles.Count - 1; i >= 0; i--)
                     {
-                        if (Array.IndexOf(list, vehicles[i].DatabaseId.ToString()) < 0){
+                        if (Array.IndexOf(list, vehicles[i].DatabaseId.ToString()) < 0)
+                        {
                             vehicles.Remove(vehicles[i]);
                         }
                     }
                     break;
                 case CstWeb.Module.Name.ANALYSE_DES_DISPOSITIFS:
                 case CstWeb.Module.Name.ANALYSE_DES_PROGRAMMES:
-                    vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.tv));
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.tv));
                     break;
             }
 
-            if (vehicles.Count <= 0)
-            {
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.others)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.others));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.directMarketing)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.directMarketing));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.internet)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.internet));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.czinternet)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.czinternet));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.adnettrack)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.adnettrack));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.evaliantMobile)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.evaliantMobile));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.press)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.press));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.newspaper)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.newspaper));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.magazine)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.magazine));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.outdoor)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.outdoor));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.indoor))vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.indoor));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.instore)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.instore));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.radio)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.radio));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.radioGeneral))vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.radioGeneral));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.radioSponsorship))vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.radioSponsorship));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.radioMusic))vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.radioMusic));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.tv)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.tv));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.tvGeneral))vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.tvGeneral));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.tvSponsorship))vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.tvSponsorship));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.tvNonTerrestrials))vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.tvNonTerrestrials));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.tvAnnounces))vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.tvAnnounces));
-if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.Add(VehiclesInformation.Get(CstDBClassif.Vehicles.names.cinema));
+            AddVehiclesInformation(vehicles);
 
-
-            }
-            for (int i = vehicles.Count-1; i >= 0; i-- )
+            for (int i = vehicles.Count - 1; i >= 0; i--)
             {
                 if (_module.AllowedMediaUniverse.GetVehicles() != null && !_module.AllowedMediaUniverse.GetVehicles().Contains(vehicles[i].DatabaseId))
                 {
                     vehicles.Remove(vehicles[i]);
                 }
             }
-            for (int i = vehicles.Count-1; i >= 0; i--)
+            for (int i = vehicles.Count - 1; i >= 0; i--)
             {
-                if ((_getCreatives && !vehicles[i].ShowCreations) || (!_getCreatives && !vehicles[i].ShowInsertions)){
+                if ((_getCreatives && !vehicles[i].ShowCreations) || (!_getCreatives && !vehicles[i].ShowInsertions))
+                {
                     vehicles.Remove(vehicles[i]);
                 }
             }
@@ -205,6 +183,61 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
             return _dalLayer.GetPresentVehicles(vehicles, filters, iDateBegin, iDateEnd, universId, _module, _getCreatives);
 
         }
+
+        /// <summary>
+        /// Add Vehicles Information
+        /// </summary>
+        /// <param name="vehicles">media type liste</param>
+        protected virtual void AddVehiclesInformation(List<VehicleInformation> vehicles)
+        {
+            if (vehicles.Count <= 0)
+            {
+                if (VehiclesInformation.Contains(Vehicles.names.others))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.others));
+                if (VehiclesInformation.Contains(Vehicles.names.directMarketing))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.directMarketing));
+                if (VehiclesInformation.Contains(Vehicles.names.internet))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.internet));
+                if (VehiclesInformation.Contains(Vehicles.names.czinternet))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.czinternet));
+                if (VehiclesInformation.Contains(Vehicles.names.adnettrack))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.adnettrack));
+                if (VehiclesInformation.Contains(Vehicles.names.evaliantMobile))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.evaliantMobile));
+                if (VehiclesInformation.Contains(Vehicles.names.press))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.press));
+                if (VehiclesInformation.Contains(Vehicles.names.newspaper))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.newspaper));
+                if (VehiclesInformation.Contains(Vehicles.names.magazine))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.magazine));
+                if (VehiclesInformation.Contains(Vehicles.names.outdoor))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.outdoor));
+                if (VehiclesInformation.Contains(Vehicles.names.indoor))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.indoor));
+                if (VehiclesInformation.Contains(Vehicles.names.instore))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.instore));
+                if (VehiclesInformation.Contains(Vehicles.names.radio))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.radio));
+                if (VehiclesInformation.Contains(Vehicles.names.radioGeneral))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.radioGeneral));
+                if (VehiclesInformation.Contains(Vehicles.names.radioSponsorship))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.radioSponsorship));
+                if (VehiclesInformation.Contains(Vehicles.names.radioMusic))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.radioMusic));
+                if (VehiclesInformation.Contains(Vehicles.names.tv)) vehicles.Add(VehiclesInformation.Get(Vehicles.names.tv));
+                if (VehiclesInformation.Contains(Vehicles.names.tvGeneral))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.tvGeneral));
+                if (VehiclesInformation.Contains(Vehicles.names.tvSponsorship))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.tvSponsorship));
+                if (VehiclesInformation.Contains(Vehicles.names.tvNonTerrestrials))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.tvNonTerrestrials));
+                if (VehiclesInformation.Contains(Vehicles.names.tvAnnounces))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.tvAnnounces));
+                if (VehiclesInformation.Contains(Vehicles.names.cinema))
+                    vehicles.Add(VehiclesInformation.Get(Vehicles.names.cinema));
+            }
+        }
+
         #endregion
 
         #region Liste of vehicles matching filters
@@ -218,25 +251,17 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
         /// <returns>List of vehicles matching filters</returns>
         protected List<VehicleInformation> GetVehicles(Int64 idLevel1, Int64 idLevel2, Int64 idLevel3, Int64 idLevel4)
         {
-
-            Dictionary<DetailLevelItemInformation, Int64> filters;
-            List<VehicleInformation> vehicles = new List<VehicleInformation>();
+            var vehicles = new List<VehicleInformation>();
             Int64[] vIds = null;
 
             try
             {
                 //Get media classification filters
-                filters = FctUtilities.MediaDetailLevel.GetFilters(_session, idLevel1, idLevel2, idLevel3, idLevel4);
-                vIds = _dalLayer.GetVehiclesIds(filters);
-                foreach (Int64 id in vIds)
-                {
-                    if (VehiclesInformation.Contains(id))
-                    {
-                        vehicles.Add(VehiclesInformation.Get(id));
-                    }
-                }
+                var filters = MediaDetailLevel.GetFilters(_session, idLevel1, idLevel2, idLevel3, idLevel4);
+                vIds = _dalLayer.GetVehiclesIds(filters);              
+                vehicles.AddRange(vIds.Where(VehiclesInformation.Contains).Select(VehiclesInformation.Get));
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 throw (new InsertionsException("Unable to get media classifications level matching the filters.", ex));
             }
@@ -245,30 +270,34 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
         #endregion
 
         #region GetInsertions
-        public virtual ResultTable GetInsertions(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
+        public virtual ResultTable GetInsertions(VehicleInformation vehicle, int fromDate, int toDate, string filters,
+            int universId, string zoomDate)
         {
-            this._getCreatives = false;
-            this._zoomDate = zoomDate;
-            this._universId = universId;
+            _getCreatives = false;
+            _zoomDate = zoomDate;
+            _universId = universId;
             return GetData(vehicle, fromDate, toDate, filters, universId);
         }
         #endregion
 
         #region GetCreatives
-        public virtual ResultTable GetCreatives(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate)
+        public virtual ResultTable GetCreatives(VehicleInformation vehicle, int fromDate, int toDate, string filters,
+            int universId, string zoomDate)
         {
-            this._getCreatives = true;
-            this._zoomDate = zoomDate;
-            this._universId = universId;
+            _getCreatives = true;
+            _zoomDate = zoomDate;
+            _universId = universId;
             return GetData(vehicle, fromDate, toDate, filters, universId);
         }
         #endregion
 
         #region GetMSCreatives
-        public virtual ResultTable GetMSCreatives(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId, string zoomDate) {
-            this._getMSCreatives = true;
-            this._zoomDate = zoomDate;
-            this._universId = universId;
+        public virtual ResultTable GetMSCreatives(VehicleInformation vehicle, int fromDate, int toDate, string filters,
+            int universId, string zoomDate)
+        {
+            _getMSCreatives = true;
+            _zoomDate = zoomDate;
+            _universId = universId;
             return GetData(vehicle, fromDate, toDate, filters, universId);
         }
         #endregion
@@ -282,129 +311,55 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
         /// <returns>Creative Links string</returns>
         public virtual string GetCreativeLinks(long idVehicle, DataRow currentRow)
         {
-            string vignettes = "";
-            string sloganDetail = "";
-            string imagesList = "";
-            string[] fileList = null;
-            string dateField = "date_media_num";
-            string pathWeb = "";
-            bool first = true;
+            string vignettes = string.Empty;
+            const string imagesList = "";
+            const string dateField = "date_media_num";
             string themeName = WebApplicationParameters.Themes[_session.SiteLanguage].Name;
-            if (_session.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(idVehicle))) {//droit créations
-                if (currentRow["associated_file"] != DBNull.Value && currentRow["associated_file"].ToString().Length > 0)
-                {
 
+            if (_session.CustomerLogin.ShowCreatives(VehiclesInformation.DatabaseIdToEnum(idVehicle)))
+            {//droit créations
+                if (currentRow["associated_file"] != DBNull.Value && !string.IsNullOrEmpty(currentRow["associated_file"].ToString()))
+                {
+                    string[] fileList;
                     switch (VehiclesInformation.DatabaseIdToEnum(idVehicle))
                     {
-
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.newspaper:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.magazine:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
-
-                            #region Construction de la liste des images presse
-                            fileList = currentRow["associated_file"].ToString().Split(',');
-
-                            if (_session.CurrentModule == CstWeb.Module.Name.BILAN_CAMPAGNE) dateField = "date_cover_num";
-
-                            string pathWebImagette = CstWeb.CreationServerPathes.IMAGES + "/" + currentRow["id_media"].ToString() + "/" + currentRow[dateField].ToString() + "/imagette/";
-                            pathWeb = CstWeb.CreationServerPathes.IMAGES + "/" + currentRow["id_media"].ToString() + "/" + currentRow[dateField].ToString() + "/";
-                            string pathImagette = CstWeb.CreationServerPathes.LOCAL_PATH_IMAGE + currentRow["id_media"].ToString() + @"\" + currentRow[dateField].ToString() + @"\imagette\";
-
-                            if (fileList != null)
-                            {
-                                for (int j = 0; j < fileList.Length; j++)
-                                {
-
-                                    vignettes += "<img src='" + pathWebImagette + fileList[j] + "' border=\"0\" width=\"50\" height=\"64\" >";
-                                    if (first) imagesList = pathWeb + fileList[j];
-                                    else { imagesList += "," + pathWeb + fileList[j]; }
-                                    first = false;
-                                }
-
-                                if (vignettes.Length > 0)
-                                {
-                                    vignettes = "<a href=\"javascript:openPressCreation('" + imagesList.Replace("/Imagette", "") + "');\">" + vignettes + "</a>";
-                                    vignettes += "\n<br>";
-                                }
-
-                            }
-                            else vignettes = GestionWeb.GetWebWord(843, _session.SiteLanguage) + "<br>";
-                            #endregion
-
+                        case Vehicles.names.press:
+                        case Vehicles.names.newspaper:
+                        case Vehicles.names.magazine:
+                        case Vehicles.names.internationalPress:
+                            vignettes = GetPressVignettes(currentRow, dateField, vignettes, imagesList);
                             break;
-
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radioGeneral:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radioSponsorship:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radioMusic:
-                            if (currentRow["associated_file"] != null && currentRow["associated_file"].ToString().CompareTo("") != 0)
-                                vignettes = "<a href=\"javascript:openDownload('" + currentRow["associated_file"].ToString() + "','" + _session.IdSession + "','" + idVehicle + "');\"><img border=\"0\" src=\"/App_Themes/" + themeName + "/Images/Common/Picto_Radio.gif\"></a>";
+                        case Vehicles.names.radio:
+                        case Vehicles.names.radioGeneral:
+                        case Vehicles.names.radioSponsorship:
+                        case Vehicles.names.radioMusic:
+                            vignettes = GetVignettes(idVehicle, currentRow, vignettes, themeName,"Picto_Radio.gif");
                             break;
-
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvGeneral:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvSponsorship:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvAnnounces:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvNonTerrestrials:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others:
-                            if (currentRow["associated_file"] != null && currentRow["associated_file"].ToString().CompareTo("") != 0)
-                                vignettes = "<a href=\"javascript:openDownload('" + currentRow["associated_file"].ToString() + "','" + _session.IdSession + "','" + idVehicle + "');\"><img border=\"0\" src=\"/App_Themes/" + themeName + "/Images/Common/Picto_pellicule.gif\"></a>";
+                        case Vehicles.names.tv:
+                        case Vehicles.names.tvGeneral:
+                        case Vehicles.names.tvSponsorship:
+                        case Vehicles.names.tvAnnounces:
+                        case Vehicles.names.tvNonTerrestrials:
+                        case Vehicles.names.others:                            
+                            vignettes = GetVignettes(idVehicle, currentRow, vignettes, themeName, "Picto_pellicule.gif");
                             break;
-
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.indoor:
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.instore:
-
-                            #region Construction de la liste des images du marketing direct ou de la publicité extérieure
-                            fileList = currentRow["associated_file"].ToString().Split(',');
-                            string idAssociatedFile = currentRow["associated_file"].ToString();
-
-                            if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == CstDBClassif.Vehicles.names.directMarketing)
-                                pathWeb = CstWeb.CreationServerPathes.IMAGES_MD;
-                            else pathWeb = CstWeb.CreationServerPathes.IMAGES_OUTDOOR;
-                            string dir1 = idAssociatedFile.Substring(idAssociatedFile.Length - 8, 1);
-                            pathWeb = string.Format(@"{0}/{1}", pathWeb, dir1);
-                            string dir2 = idAssociatedFile.Substring(idAssociatedFile.Length - 9, 1);
-                            pathWeb = string.Format(@"{0}/{1}", pathWeb, dir2);
-                            string dir3 = idAssociatedFile.Substring(idAssociatedFile.Length - 10, 1);
-                            pathWeb = string.Format(@"{0}/{1}/imagette/", pathWeb, dir3);
-
-                            if (fileList != null)
-                            {
-                                for (int j = 0; j < fileList.Length; j++)
-                                {
-                                    vignettes += "<img src='" + pathWeb + fileList[j] + "' border=\"0\" width=\"50\" height=\"64\" >";
-                                    if (first) imagesList = pathWeb + fileList[j];
-                                    else { imagesList += "," + pathWeb + fileList[j]; }
-                                    first = false;
-                                }
-
-                                if (vignettes.Length > 0)
-                                {
-                                    vignettes = "<a href=\"javascript:openPressCreation('" + imagesList.Replace("/Imagette", "") + "');\">" + vignettes + "</a>";
-                                    vignettes += "\n<br>";
-                                }
-
-                            }
-                            else vignettes = GestionWeb.GetWebWord(843, _session.SiteLanguage) + "<br>";
-                            #endregion
-
+                        case Vehicles.names.directMarketing:
+                        case Vehicles.names.outdoor:
+                        case Vehicles.names.indoor:
+                        case Vehicles.names.instore:
+                            vignettes = GetOutDoorVignettes(idVehicle, currentRow, vignettes, imagesList);
                             break;
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
-                            if (currentRow["associated_file"] != null && currentRow["associated_file"].ToString().CompareTo("") != 0)
-                                vignettes = string.Format("<a href=\"javascript:openEvaliantCreative('{1}/{0}', '{3}');\"><img border=\"0\" src=\"/App_Themes/{2}/Images/Common/Button/adnettrack.gif\"></a>", currentRow["associated_file"].ToString().Replace(@"\", "/"), CstWeb.CreationServerPathes.CREA_ADNETTRACK, themeName, currentRow["advertDimension"]);
+                        case Vehicles.names.adnettrack:
+                            vignettes = GetEvaliantVignettes(currentRow, vignettes, themeName, CreationServerPathes.CREA_ADNETTRACK);
                             break;
-                        case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
-                            if (currentRow["associated_file"] != null && currentRow["associated_file"].ToString().CompareTo("") != 0)
-                                vignettes = string.Format("<a href=\"javascript:openEvaliantCreative('{1}/{0}', '{3}');\"><img border=\"0\" src=\"/App_Themes/{2}/Images/Common/Button/adnettrack.gif\"></a>", currentRow["associated_file"].ToString().Replace(@"\", "/"), CstWeb.CreationServerPathes.CREA_EVALIANT_MOBILE, themeName, currentRow["advertDimension"]);
+                        case Vehicles.names.evaliantMobile:
+                            vignettes = GetEvaliantVignettes(currentRow, vignettes, themeName, CreationServerPathes.CREA_EVALIANT_MOBILE);                            
                             break;
                     }
-                }              
+                }
             }
 
-            sloganDetail = "\n<table border=\"0\" width=\"50\" height=\"64\" class=\"txtViolet10\">";
+            string sloganDetail = "\n<table border=\"0\" width=\"50\" height=\"64\" class=\"txtViolet10\">";
             if (vignettes.Length > 0)
             {
                 sloganDetail += "\n<tr><td   nowrap align=\"center\">";
@@ -413,11 +368,12 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
             }
             sloganDetail += "\n<tr><td  nowrap align=\"center\">";
             sloganDetail += currentRow["id_slogan"].ToString();
-            if (currentRow["advertDimension"] != null && currentRow["advertDimension"] != System.DBNull.Value)
+            if (currentRow["advertDimension"] != DBNull.Value && currentRow["advertDimension"] != DBNull.Value)
             {
                 if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) != Vehicles.names.directMarketing
-                    || (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == Vehicles.names.directMarketing && _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_POIDS_MARKETING_DIRECT)))
-                    sloganDetail += " - " + currentRow["advertDimension"].ToString();
+                    || (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) == Vehicles.names.directMarketing
+                    && _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_POIDS_MARKETING_DIRECT)))
+                    sloganDetail += string.Format(" - {0}", currentRow["advertDimension"].ToString());
             }
             sloganDetail += "\n</td></tr>";
             sloganDetail += "\n</table>";
@@ -425,47 +381,156 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
             return sloganDetail;
 
         }
+
+        protected virtual string GetEvaliantVignettes(DataRow currentRow, string vignettes, string themeName,string creativePath)
+        {
+            if (currentRow["associated_file"] != DBNull.Value && !string.IsNullOrEmpty(currentRow["associated_file"].ToString()))
+                vignettes =
+                    string.Format(
+                        "<a href=\"javascript:openEvaliantCreative('{1}/{0}', '{3}');\"><img border=\"0\" src=\"/App_Themes/{2}/Images/Common/Button/adnettrack.gif\"></a>",
+                        currentRow["associated_file"].ToString().Replace(@"\", "/"),
+                        creativePath, themeName, currentRow["advertDimension"]);
+            return vignettes;
+        }
+
+        protected virtual string GetOutDoorVignettes(long idVehicle, DataRow currentRow, string vignettes, 
+                                                     string imagesList)
+        {
+            bool first = true;
+            string pathWeb;
+            string[] fileList = currentRow["associated_file"].ToString().Split(',');
+            string idAssociatedFile = currentRow["associated_file"].ToString();
+
+            if (VehiclesInformation.DatabaseIdToEnum(long.Parse(idVehicle.ToString())) ==
+                Vehicles.names.directMarketing)
+                pathWeb = CreationServerPathes.IMAGES_MD;
+            else pathWeb = CreationServerPathes.IMAGES_OUTDOOR;
+            string dir1 = idAssociatedFile.Substring(idAssociatedFile.Length - 8, 1);
+            pathWeb = string.Format(@"{0}/{1}", pathWeb, dir1);
+            string dir2 = idAssociatedFile.Substring(idAssociatedFile.Length - 9, 1);
+            pathWeb = string.Format(@"{0}/{1}", pathWeb, dir2);
+            string dir3 = idAssociatedFile.Substring(idAssociatedFile.Length - 10, 1);
+            pathWeb = string.Format(@"{0}/{1}/imagette/", pathWeb, dir3);
+
+            if (fileList != null && fileList.Length > 0)
+            {
+                for (int j = 0; j < fileList.Length; j++)
+                {
+                    vignettes += string.Format("<img src='{0}{1}' border=\"0\" width=\"50\" height=\"64\" >", pathWeb, fileList[j]);
+                    if (first) imagesList = string.Format("{0}{1}", pathWeb, fileList[j]);
+                    else
+                    {
+                        imagesList += string.Format(",{0}{1}", pathWeb, fileList[j]);
+                    }
+                    first = false;
+                }
+
+                if (vignettes.Length > 0)
+                {
+                    vignettes = string.Format("<a href=\"javascript:openPressCreation('{0}');\">{1}</a>"
+                        , imagesList.Replace("/Imagette", ""), vignettes);
+                    vignettes += "\n<br>";
+                }
+            }
+            else vignettes = GestionWeb.GetWebWord(843, _session.SiteLanguage) + "<br>";
+            return vignettes;
+        }
+
+        protected virtual string GetPressVignettes(DataRow currentRow, string dateField, string vignettes,
+                                                   string imagesList)
+        {
+            bool first = true;
+            var fileList = currentRow["associated_file"].ToString().Split(',');
+
+            if (_session.CurrentModule == CstWeb.Module.Name.BILAN_CAMPAGNE) dateField = "date_cover_num";
+
+            string pathWebImagette = string.Format("{0}/{1}/{2}/imagette/", CreationServerPathes.IMAGES, currentRow["id_media"].ToString()
+                , currentRow[dateField].ToString());
+            string pathWeb = string.Format("{0}/{1}/{2}/", CreationServerPathes.IMAGES, currentRow["id_media"].ToString()
+                , currentRow[dateField].ToString());
+
+            foreach (string file in fileList)
+            {
+                vignettes += string.Format("<img src='{0}{1}' border=\"0\" width=\"50\" height=\"64\" >", pathWebImagette, file);
+                if (first) imagesList = string.Format("{0}{1}", pathWeb, file);
+                else
+                {
+                    imagesList += string.Format(",{0}{1}", pathWeb, file);
+                }
+                first = false;
+            }
+
+            if (vignettes.Length > 0)
+            {
+                vignettes = string.Format("<a href=\"javascript:openPressCreation('{0}');\">{1}</a>", imagesList.Replace("/Imagette", ""), vignettes);
+                vignettes += "\n<br>";
+            }
+            return vignettes;
+        }
+
+        protected virtual string GetVignettes(long idVehicle, DataRow currentRow, string vignettes, string themeName,string picto)
+        {
+            if (currentRow["associated_file"] != DBNull.Value && !string.IsNullOrEmpty(currentRow["associated_file"].ToString()))
+                vignettes =
+                    string.Format(
+                        "<a href=\"javascript:openDownload('{0}','{1}','{2}');\"><img border=\"0\" src=\"/App_Themes/{3}/Images/Common/{4}\"></a>"
+                        , currentRow["associated_file"].ToString(), _session.IdSession, idVehicle, themeName, picto);
+            return vignettes;
+        }
+
         #endregion
 
         #region GetData
-        protected virtual ResultTable GetData(VehicleInformation vehicle, int fromDate, int toDate, string filters, int universId)
+        /// <summary>
+        /// Get Data
+        /// </summary>
+        /// <param name="vehicle">Vehicle Information</param>
+        /// <param name="fromDate">Data beginning</param>
+        /// <param name="toDate">Date end</param>
+        /// <param name="filters">filters</param>
+        /// <param name="universId">univers Ids</param>
+        /// <returns></returns>
+        protected virtual ResultTable GetData(VehicleInformation vehicle, int fromDate, int toDate, string filters,
+            int universId)
         {
-            ResultTable data = null;
+            ResultTable data;
 
             #region Data Access
             if (vehicle == null)
                 return null;
 
-            DataSet ds = null;
+            DataSet ds;
 
-            if (_getMSCreatives) {
+            if (_getMSCreatives)
+            {
                 ds = _dalLayer.GetMSCreativesData(vehicle, fromDate, toDate, universId, filters);
             }
-            else if (_getCreatives){
+            else if (_getCreatives)
+            {
                 ds = _dalLayer.GetCreativesData(vehicle, fromDate, toDate, universId, filters);
             }
-            else{
+            else
+            {
                 ds = _dalLayer.GetInsertionsData(vehicle, fromDate, toDate, universId, filters);
             }
 
-            if (ds == null || ds.Equals(DBNull.Value) || ds.Tables[0] == null || ds.Tables[0].Rows.Count ==0)
+            if (ds == null || ds.Tables[0] == null || ds.Tables[0].Rows.Count == 0)
                 return null;
             #endregion
 
             DataTable dt = ds.Tables[0];
 
             #region Init ResultTable
-            List<DetailLevelItemInformation> levels = new List<DetailLevelItemInformation>();
-            if (!_getMSCreatives) {
-                foreach (DetailLevelItemInformation d in _session.DetailLevel.Levels) {
-                    levels.Add((DetailLevelItemInformation)d);
-                }
+            var levels = new List<DetailLevelItemInformation>();
+            if (!_getMSCreatives)
+            {
+                levels.AddRange(_session.DetailLevel.Levels.Cast<DetailLevelItemInformation>());
             }
-            List<GenericColumnItemInformation> columns ;
+            List<GenericColumnItemInformation> columns;
 
-            if (this._getMSCreatives)
+            if (_getMSCreatives)
                 columns = WebApplicationParameters.MsCreativesDetail.GetDetailColumns(vehicle.DatabaseId);
-            else if (this._getCreatives)
+            else if (_getCreatives)
             {
                 columns = _session.GenericCreativesColumns.Columns;
             }
@@ -475,44 +540,44 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
             bool hasVisualRight = false;
             switch (vehicle.Id)
             {
-                case CstDBClassif.Vehicles.names.adnettrack:
-                case CstDBClassif.Vehicles.names.internet:
-                case CstDBClassif.Vehicles.names.czinternet:
+                case Vehicles.names.adnettrack:
+                case Vehicles.names.internet:
+                case Vehicles.names.czinternet:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_INTERNET_ACCESS_FLAG);
                     break;
-                case CstDBClassif.Vehicles.names.evaliantMobile:
+                case Vehicles.names.evaliantMobile:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG);
                     break;
-                case CstDBClassif.Vehicles.names.directMarketing:
+                case Vehicles.names.directMarketing:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG);
                     break;
-                case CstDBClassif.Vehicles.names.internationalPress:
-                case CstDBClassif.Vehicles.names.newspaper:
-                case CstDBClassif.Vehicles.names.magazine:
-                case CstDBClassif.Vehicles.names.press:
+                case Vehicles.names.internationalPress:
+                case Vehicles.names.newspaper:
+                case Vehicles.names.magazine:
+                case Vehicles.names.press:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_PRESS_CREATION_ACCESS_FLAG);
                     break;
-                case CstDBClassif.Vehicles.names.others:
+                case Vehicles.names.others:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_OTHERS_CREATION_ACCESS_FLAG);
                     break;
-                case CstDBClassif.Vehicles.names.indoor:
-                case CstDBClassif.Vehicles.names.outdoor:
+                case Vehicles.names.indoor:
+                case Vehicles.names.outdoor:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_OUTDOOR_CREATION_ACCESS_FLAG);
                     break;
-                case CstDBClassif.Vehicles.names.instore:
+                case Vehicles.names.instore:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_INSTORE_CREATION_ACCESS_FLAG);
                     break;
-                case CstDBClassif.Vehicles.names.radio:
-                case CstDBClassif.Vehicles.names.radioGeneral:
-                case CstDBClassif.Vehicles.names.radioSponsorship:
-                case CstDBClassif.Vehicles.names.radioMusic:
+                case Vehicles.names.radio:
+                case Vehicles.names.radioGeneral:
+                case Vehicles.names.radioSponsorship:
+                case Vehicles.names.radioMusic:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_RADIO_CREATION_ACCESS_FLAG);
                     break;
-                case CstDBClassif.Vehicles.names.tv:
-                case CstDBClassif.Vehicles.names.tvGeneral:
-                case CstDBClassif.Vehicles.names.tvSponsorship:
-                case CstDBClassif.Vehicles.names.tvNonTerrestrials:
-                case CstDBClassif.Vehicles.names.tvAnnounces:
+                case Vehicles.names.tv:
+                case Vehicles.names.tvGeneral:
+                case Vehicles.names.tvSponsorship:
+                case Vehicles.names.tvNonTerrestrials:
+                case Vehicles.names.tvAnnounces:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_TV_CREATION_ACCESS_FLAG);
                     break;
             }
@@ -527,92 +592,95 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
                     || c.Id == GenericColumnItemInformation.Columns.visual
                     )
                 {
-                    hasVisuals = true && hasVisualRight;
+                    hasVisuals = hasVisualRight;
                 }
                 if (c.Id == GenericColumnItemInformation.Columns.content)
                 {
-                        //Data Base ID
-                        if (c.DataBaseAliasIdField != null && c.DataBaseAliasIdField.Length > 0)
-                        {
-                            divideCol = c.DataBaseAliasIdField.ToUpper();
-                        }
-                        else if (c.DataBaseIdField != null && c.DataBaseIdField.Length > 0)
-                        {
-                            divideCol = c.DataBaseIdField.ToUpper();
-                        }
-                        //Database Label
-                        if (c.DataBaseAliasField != null && c.DataBaseAliasField.Length > 0)
-                        {
-                            divideCol = c.DataBaseAliasField.ToUpper();
-                        }
-                        else if (c.DataBaseField != null && c.DataBaseField.Length > 0)
-                        {
-                            divideCol = c.DataBaseField.ToUpper();
-                        }
-                        break;
+                    //Data Base ID
+                    if (!string.IsNullOrEmpty(c.DataBaseAliasIdField))
+                    {
+                        divideCol = c.DataBaseAliasIdField.ToUpper();
+                    }
+                    else if (!string.IsNullOrEmpty(c.DataBaseIdField))
+                    {
+                        divideCol = c.DataBaseIdField.ToUpper();
+                    }
+                    //Database Label
+                    if (!string.IsNullOrEmpty(c.DataBaseAliasField))
+                    {
+                        divideCol = c.DataBaseAliasField.ToUpper();
+                    }
+                    else if (!string.IsNullOrEmpty(c.DataBaseField))
+                    {
+                        divideCol = c.DataBaseField.ToUpper();
+                    }
+                    break;
                 }
             }
 
             Int64 idColumnsSet = -1;
-            if (this._getMSCreatives) 
+            if (_getMSCreatives)
                 idColumnsSet = WebApplicationParameters.MsCreativesDetail.GetDetailColumnsId(vehicle.DatabaseId);
-            else if (this._getCreatives){
+            else if (_getCreatives)
+            {
                 idColumnsSet = WebApplicationParameters.CreativesDetail.GetDetailColumnsId(vehicle.DatabaseId, _module.Id);
             }
-            else{
+            else
+            {
                 idColumnsSet = WebApplicationParameters.InsertionsDetail.GetDetailColumnsId(vehicle.DatabaseId, _module.Id);
             }
-            
+
             //Data Keys
-            List<GenericColumnItemInformation> keys = WebApplicationParameters.GenericColumnsInformation.GetKeys(idColumnsSet);
-            List<string> keyIdName = new List<string>();
-            List<string> keyLabelName = new List<string>();
+            var keys = WebApplicationParameters.GenericColumnsInformation.GetKeys(idColumnsSet);
+            var keyIdName = new List<string>();
+            var keyLabelName = new List<string>();
             GetKeysColumnNames(dt, keys, keyIdName, keyLabelName);
             //Line Number
             int nbLine = GetLineNumber(dt, levels, keyIdName);
             //Data Columns
-            List<Cell> cells = new List<Cell>();
-            List<string> columnsName = GetColumnsName(dt, columns, cells);
+            var cells = new List<Cell>();
+            var columnsName = GetColumnsName(dt, columns, cells);
             //Result Table init
-            Headers root = GetHeaders(vehicle, columns, hasVisuals);
-            if (root != null)
+            var root = GetHeaders(vehicle, columns, hasVisuals);
+            data = root != null ? new ResultTable(nbLine, root) : new ResultTable(nbLine, 1);
+
+
+            Action<VehicleInformation, ResultTable, DataRow, int,
+            List<GenericColumnItemInformation>, List<string>, List<Cell>, string> setLine;
+
+            Action<VehicleInformation, ResultTable, DataRow, int,
+            List<GenericColumnItemInformation>, List<string>, List<Cell>, Int64> setSpecificLine = null;
+
+            if (_getMSCreatives)
             {
-                data = new ResultTable(nbLine, root);
+                setSpecificLine = SetMSCreativeLine;
+            }
+            if (_getCreatives)
+            {
+                setLine = SetCreativeLine;
             }
             else
             {
-                data = new ResultTable(nbLine, 1);
-            }
-
-            SetLine setLine = null;
-            SetSpecificLine setSpecificLine = null;
-            if (_getMSCreatives) {
-                setSpecificLine = new SetSpecificLine(SetMSCreativeLine);
-            }
-            if (_getCreatives){
-                setLine = new SetLine(SetCreativeLine);
-            }
-            else{
                 if (!hasVisuals)
                 {
-                    setLine = new SetLine(SetRawLine);
+                    setLine = SetRawLine;
                 }
                 else
                 {
                     switch (vehicle.Id)
                     {
-                        case CstDBClassif.Vehicles.names.directMarketing:
-                        case CstDBClassif.Vehicles.names.internationalPress:
-                        case CstDBClassif.Vehicles.names.press:
-                        case CstDBClassif.Vehicles.names.newspaper:
-                        case CstDBClassif.Vehicles.names.magazine:
-                        case CstDBClassif.Vehicles.names.outdoor:
-                        case CstDBClassif.Vehicles.names.instore:
-                        case CstDBClassif.Vehicles.names.indoor:
-                            setLine = new SetLine(SetAggregLine);
+                        case Vehicles.names.directMarketing:
+                        case Vehicles.names.internationalPress:
+                        case Vehicles.names.press:
+                        case Vehicles.names.newspaper:
+                        case Vehicles.names.magazine:
+                        case Vehicles.names.outdoor:
+                        case Vehicles.names.instore:
+                        case Vehicles.names.indoor:
+                            setLine = SetAggregLine;
                             break;
                         default:
-                            setLine = new SetLine(SetRawLine);
+                            setLine = SetRawLine;
                             break;
                     }
                 }
@@ -620,31 +688,31 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
             #endregion
 
             #region Table fill
-            LineType[] lineTypes = new LineType[4]{LineType.level1, LineType.level2, LineType.level3, LineType.level4};
-            Dictionary<string, Int64> levelKeyValues = null;
+            var lineTypes = new[] { LineType.level1, LineType.level2, LineType.level3, LineType.level4 };
 
-            Int64[] oldIds = new Int64[levels.Count];
+            var oldIds = new Int64[levels.Count];
             for (int i = 0; i < oldIds.Length; i++) { oldIds[i] = -1; }
-            Int64[] cIds = new Int64[levels.Count];
+            var cIds = new Int64[levels.Count];
 
-            Int64[] oldKeyIds = new Int64[keys.Count];
+            var oldKeyIds = new Int64[keys.Count];
             for (int i = 0; i < oldKeyIds.Length; i++) { oldKeyIds[i] = -1; }
-            Int64[] cKeyIds = new Int64[keys.Count];
+            var cKeyIds = new Int64[keys.Count];
 
-            string label = string.Empty;
             int cLine = 0;
-            bool isNewInsertion = false;
-            string key = string.Empty;
 
-            foreach (DataRow row in dt.Rows) {
+            foreach (DataRow row in dt.Rows)
+            {
 
-                isNewInsertion = false;
+                bool isNewInsertion = false;
                 //Detail levels
-                for (int i = 0; i < oldIds.Length; i++) {
+                for (int i = 0; i < oldIds.Length; i++)
+                {
                     cIds[i] = Convert.ToInt64(row[levels[i].DataBaseIdField]);
-                    if (cIds[i] != oldIds[i]) {
-                        oldIds[i] = cIds[i];                        
-                        if (i < oldIds.Length - 1) {
+                    if (cIds[i] != oldIds[i])
+                    {
+                        oldIds[i] = cIds[i];
+                        if (i < oldIds.Length - 1)
+                        {
                             oldIds[i + 1] = -1;
                             for (int j = 0; j < oldKeyIds.Length; j++) { oldKeyIds[j] = -1; }
                         }
@@ -654,11 +722,14 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
                         switch (levels[i].Id)
                         {
                             case DetailLevelItemInformation.Levels.date:
-                                data[cLine, 1] = new CellDate(Dates.getPeriodBeginningDate(row[levels[i].DataBaseField].ToString(), CstWeb.CustomerSessions.Period.Type.dateToDate), "{0:shortdatepattern}");
+                                data[cLine, 1] = new CellDate(Dates.getPeriodBeginningDate(row[levels[i].DataBaseField].ToString(),
+                                    CustomerSessions.Period.Type.dateToDate), "{0:shortdatepattern}");
                                 break;
                             case DetailLevelItemInformation.Levels.duration:
                                 data[cLine, 1] = new CellDuration(Convert.ToDouble(row[levels[i].DataBaseField]));
-                                ((CellUnit)data[cLine, 1]).StringFormat = string.Format("{{0:{0}}}", WebApplicationParameters.GenericColumnItemsInformation.Get(GenericColumnItemInformation.Columns.duration.GetHashCode()).StringFormat);
+                                ((CellUnit)data[cLine, 1]).StringFormat = string.Format("{{0:{0}}}",
+                                    WebApplicationParameters.GenericColumnItemsInformation.
+                                    Get(GenericColumnItemInformation.Columns.duration.GetHashCode()).StringFormat);
                                 break;
                             default:
                                 data[cLine, 1] = new CellLabel(row[levels[i].DataBaseField].ToString());
@@ -666,7 +737,8 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
 
                         }
 
-                        for (int j = 2; j <= data.DataColumnsNumber; j++) {
+                        for (int j = 2; j <= data.DataColumnsNumber; j++)
+                        {
                             data[cLine, j] = new CellEmpty();
                         }
 
@@ -674,12 +746,14 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
                 }
 
                 //Insertion Keys
-                key = string.Empty;
-                for (int i = 0; i < oldKeyIds.Length; i++) {
-                    cKeyIds[i] = Convert.ToInt64(row[keyIdName[i]]);                    
-                    if (cKeyIds[i] != oldKeyIds[i]) {
+                for (int i = 0; i < oldKeyIds.Length; i++)
+                {
+                    cKeyIds[i] = Convert.ToInt64(row[keyIdName[i]]);
+                    if (cKeyIds[i] != oldKeyIds[i])
+                    {
                         oldKeyIds[i] = cKeyIds[i];
-                        if (i < oldKeyIds.Length - 1) {
+                        if (i < oldKeyIds.Length - 1)
+                        {
                             oldKeyIds[i + 1] = -1;
                         }
                         isNewInsertion = true;
@@ -691,7 +765,7 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
                     cLine = data.AddNewLine(lineTypes[3]);
                 }
 
-                if(_getMSCreatives)
+                if (_getMSCreatives)
                     setSpecificLine(vehicle, data, row, cLine, columns, columnsName, cells, idColumnsSet);
                 else
                     setLine(vehicle, data, row, cLine, columns, columnsName, cells, divideCol);
@@ -703,27 +777,31 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
             return data;
         }
 
-        protected delegate void SetLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol);
-        protected virtual void SetRawLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol)
+
+        protected virtual void SetRawLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine,
+            List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol)
         {
             int i = -1;
             int j = 0;
-            foreach (GenericColumnItemInformation g in columns) {
+            foreach (GenericColumnItemInformation g in columns)
+            {
 
                 i++;
                 j++;
-                if (cells[i] is CellUnit) {
+                if (cells[i] is CellUnit)
+                {
                     int div = 1;
                     if (g.IsSum)
                     {
                         div = Math.Max(div, row[divideCol].ToString().Split(',').Length);
                     }
                     Double val = 0;
-                    if (row[columnsName[i]] != System.DBNull.Value)
+                    if (row[columnsName[i]] != DBNull.Value)
                     {
                         val = Convert.ToDouble(row[columnsName[i]]) / div;
                     }
-                    switch(columns[i].Id){
+                    switch (columns[i].Id)
+                    {
                         case GenericColumnItemInformation.Columns.weight:
                             if (!_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_POIDS_MARKETING_DIRECT))
                             {
@@ -737,20 +815,23 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
                             }
                             break;
                         case GenericColumnItemInformation.Columns.topDiffusion:
-                            if(vehicle.Id == CstDBClassif.Vehicles.names.tv
+                            if (vehicle.Id == CstDBClassif.Vehicles.names.tv
                                 || vehicle.Id == CstDBClassif.Vehicles.names.tvGeneral
                                 || vehicle.Id == CstDBClassif.Vehicles.names.tvAnnounces
                                 || vehicle.Id == CstDBClassif.Vehicles.names.tvSponsorship
                                 || vehicle.Id == CstDBClassif.Vehicles.names.tvNonTerrestrials)
                             {
-								string idCat = "";
-								try {
-									idCat = row[WebApplicationParameters.GenericColumnItemsInformation.Get((long)GenericColumnItemInformation.Columns.idCategory).DataBaseField].ToString();
-								}
-								catch (Exception e) {
-									idCat = "";
-								}
-                                if (Array.IndexOf(_topDiffCategory, idCat) >= 0){
+                                string idCat = "";
+                                try
+                                {
+                                    idCat = row[WebApplicationParameters.GenericColumnItemsInformation.Get((long)GenericColumnItemInformation.Columns.idCategory).DataBaseField].ToString();
+                                }
+                                catch (Exception e)
+                                {
+                                    idCat = "";
+                                }
+                                if (Array.IndexOf(_topDiffCategory, idCat) >= 0)
+                                {
                                     val = 0;
                                 }
                             }
@@ -758,19 +839,23 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
                         default:
                             break;
                     }
-                    if (tab[cLine, j] == null){
+                    if (tab[cLine, j] == null)
+                    {
                         tab[cLine, j] = ((CellUnit)cells[i]).Clone(val);
                     }
-                    else{
+                    else
+                    {
                         ((CellUnit)tab[cLine, j]).Add(val);
                     }
                 }
-                else {
+                else
+                {
                     string s = string.Empty;
                     switch (columns[i].Id)
                     {
                         case GenericColumnItemInformation.Columns.associatedFile:
-                            switch (vehicle.Id){
+                            switch (vehicle.Id)
+                            {
                                 case CstDBClassif.Vehicles.names.others:
                                 case CstDBClassif.Vehicles.names.tv:
                                 case CstDBClassif.Vehicles.names.tvGeneral:
@@ -778,8 +863,8 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
                                 case CstDBClassif.Vehicles.names.tvAnnounces:
                                 case CstDBClassif.Vehicles.names.tvNonTerrestrials:
                                     s = row[columnsName[i]].ToString();
-                                    if(s.Length > 0)
-                                        tab[cLine, j] = new CellTvCreativeLink(s, _session,vehicle.DatabaseId);
+                                    if (s.Length > 0)
+                                        tab[cLine, j] = new CellTvCreativeLink(s, _session, vehicle.DatabaseId);
                                     else
                                         tab[cLine, j] = new CellTvCreativeLink(string.Empty, _session, vehicle.DatabaseId);
                                     break;
@@ -799,9 +884,9 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
                             break;
                         case GenericColumnItemInformation.Columns.dayOfWeek:
                             Int32 n = Convert.ToInt32(row[columnsName[i]]);
-                            int y = n/10000;
-                            int m = (n-(10000*y))/100;
-                            int d = n-(10000*y + 100*m);                            
+                            int y = n / 10000;
+                            int m = (n - (10000 * y)) / 100;
+                            int d = n - (10000 * y + 100 * m);
                             tab[cLine, j] = new CellDate(new DateTime(y, m, d), string.Format("{{0:{0}}}", g.StringFormat));
                             break;
                         case GenericColumnItemInformation.Columns.mailFormat:
@@ -868,15 +953,18 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
 
             }
         }
-        protected virtual void SetAggregLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol)
+
+        protected virtual void SetAggregLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine,
+            List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol)
         {
 
             CellInsertionInformation c;
-            List<string> visuals = new List<string>();
-            if (tab[cLine, 1] == null) {
+            var visuals = new List<string>();
+            if (tab[cLine, 1] == null)
+            {
                 switch (vehicle.Id)
                 {
-                    case CstDBClassif.Vehicles.names.directMarketing:
+                    case Vehicles.names.directMarketing:
                         tab[cLine, 1] = c = new CellInsertionVMCInformation(_session, columns, columnsName, cells);
                         break;
                     default:
@@ -884,12 +972,14 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
                         break;
                 }
             }
-            else {
+            else
+            {
                 c = (CellInsertionInformation)tab[cLine, 1];
             }
             foreach (GenericColumnItemInformation g in columns)
             {
-                if (g.Id == GenericColumnItemInformation.Columns.visual || g.Id == GenericColumnItemInformation.Columns.associatedFile || g.Id == GenericColumnItemInformation.Columns.poster)
+                if (g.Id == GenericColumnItemInformation.Columns.visual || g.Id == GenericColumnItemInformation.Columns.associatedFile
+                    || g.Id == GenericColumnItemInformation.Columns.poster)
                 {
                     visuals = GetPath(vehicle, row, columns, columnsName);
                 }
@@ -897,7 +987,8 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
             c.Add(row, visuals);
 
         }
-        protected virtual void SetCreativeLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol)
+        protected virtual void SetCreativeLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine,
+            List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, string divideCol)
         {
 
             CellCreativesInformation c;
@@ -921,7 +1012,7 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
                     case CstDBClassif.Vehicles.names.tvAnnounces:
                     case CstDBClassif.Vehicles.names.tvNonTerrestrials:
                     case CstDBClassif.Vehicles.names.others:
-                       tab[cLine, 1] = c = new CellCreativesTvInformation(_session, vehicle, columns, columnsName, cells, _module);
+                        tab[cLine, 1] = c = new CellCreativesTvInformation(_session, vehicle, columns, columnsName, cells, _module);
                         break;
                     case CstDBClassif.Vehicles.names.adnettrack:
                     case CstDBClassif.Vehicles.names.internet:
@@ -941,7 +1032,8 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
             }
             foreach (GenericColumnItemInformation g in columns)
             {
-                if (g.Id == GenericColumnItemInformation.Columns.visual || g.Id == GenericColumnItemInformation.Columns.associatedFile || g.Id == GenericColumnItemInformation.Columns.poster || g.Id == GenericColumnItemInformation.Columns.associatedFileMax)
+                if (g.Id == GenericColumnItemInformation.Columns.visual || g.Id == GenericColumnItemInformation.Columns.associatedFile 
+                    || g.Id == GenericColumnItemInformation.Columns.poster || g.Id == GenericColumnItemInformation.Columns.associatedFileMax)
                 {
                     visuals = GetPath(vehicle, row, columns, columnsName);
                 }
@@ -950,14 +1042,17 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
 
         }
 
-        protected delegate void SetSpecificLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, Int64 idColumnsSet);
-        protected virtual void SetMSCreativeLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine, List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, Int64 idColumnsSet)
+
+        protected virtual void SetMSCreativeLine(VehicleInformation vehicle, ResultTable tab, DataRow row, int cLine,
+            List<GenericColumnItemInformation> columns, List<string> columnsName, List<Cell> cells, Int64 idColumnsSet)
         {
 
             CellCreativesInformation c;
             List<string> visuals = new List<string>();
-            if (tab[cLine, 1] == null) {
-                switch (vehicle.Id) {
+            if (tab[cLine, 1] == null)
+            {
+                switch (vehicle.Id)
+                {
                     case CstDBClassif.Vehicles.names.directMarketing:
                         tab[cLine, 1] = c = new CellCreativesVMCInformation(_session, vehicle, columns, columnsName, cells, _module, idColumnsSet);
                         break;
@@ -987,11 +1082,14 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
                         break;
                 }
             }
-            else {
+            else
+            {
                 c = (CellCreativesInformation)tab[cLine, 1];
             }
-            foreach (GenericColumnItemInformation g in columns) {
-                if (g.Id == GenericColumnItemInformation.Columns.visual || g.Id == GenericColumnItemInformation.Columns.associatedFile || g.Id == GenericColumnItemInformation.Columns.poster || g.Id == GenericColumnItemInformation.Columns.associatedFileMax) {
+            foreach (GenericColumnItemInformation g in columns)
+            {
+                if (g.Id == GenericColumnItemInformation.Columns.visual || g.Id == GenericColumnItemInformation.Columns.associatedFile || g.Id == GenericColumnItemInformation.Columns.poster || g.Id == GenericColumnItemInformation.Columns.associatedFileMax)
+                {
                     visuals = GetPath(vehicle, row, columns, columnsName);
                 }
             }
@@ -1012,23 +1110,26 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
 
             int nbLine = 0;
 
-            Int64[] oldIds = new Int64[levels.Count];
+            var oldIds = new Int64[levels.Count];
             for (int i = 0; i < oldIds.Length; i++) { oldIds[i] = -1; }
-            Int64[] cIds = new Int64[levels.Count];
+            var cIds = new Int64[levels.Count];
 
-            Int64[] oldKeyIds = new Int64[keys.Count];
+            var oldKeyIds = new Int64[keys.Count];
             for (int i = 0; i < oldKeyIds.Length; i++) { oldKeyIds[i] = -1; }
-            Int64[] cKeyIds = new Int64[keys.Count];
-            bool isNewInsertion = false;
-            foreach (DataRow row in dt.Rows) {
-                isNewInsertion = false;
+            var cKeyIds = new Int64[keys.Count];
+            foreach (DataRow row in dt.Rows)
+            {
+                bool isNewInsertion = false;
                 //Detail levels
-                for (int i = 0; i < oldIds.Length; i++) {
+                for (int i = 0; i < oldIds.Length; i++)
+                {
                     cIds[i] = Convert.ToInt64(row[levels[i].DataBaseIdField]);
-                    if (cIds[i] != oldIds[i]) {
+                    if (cIds[i] != oldIds[i])
+                    {
                         oldIds[i] = cIds[i];
                         nbLine++;
-                        if (i < oldIds.Length - 1) {
+                        if (i < oldIds.Length - 1)
+                        {
                             oldIds[i + 1] = -1;
                             for (int j = 0; j < oldKeyIds.Length; j++) { oldKeyIds[j] = -1; }
                         }
@@ -1036,12 +1137,15 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
                 }
 
                 //Insertion Keys
-                for (int i = 0; i < oldKeyIds.Length; i++) {
+                for (int i = 0; i < oldKeyIds.Length; i++)
+                {
                     cKeyIds[i] = Convert.ToInt64(row[keys[i]]);
-                    if (cKeyIds[i] != oldKeyIds[i]) {
+                    if (cKeyIds[i] != oldKeyIds[i])
+                    {
                         oldKeyIds[i] = cKeyIds[i];
                         isNewInsertion = true;
-                        if (i < oldKeyIds.Length - 1) {
+                        if (i < oldKeyIds.Length - 1)
+                        {
                             oldKeyIds[i + 1] = -1;
                         }
                     }
@@ -1061,39 +1165,48 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
         #endregion
 
         #region GetColumnsName
+
         /// <summary>
         /// Get Data Column Names for data to display
         /// </summary>
+        /// <param name="dt">data table</param>
         /// <param name="columns">List of columns</param>
+        /// <param name="cells">cells</param>
         /// <returns>List of data column names</returns>
-        protected virtual List<string> GetColumnsName(DataTable dt, List<GenericColumnItemInformation> columns, List<Cell> cells) {
+        protected virtual List<string> GetColumnsName(DataTable dt, List<GenericColumnItemInformation> columns, List<Cell> cells)
+        {
 
-            List<string> names = new List<string>();
+            var names = new List<string>();
             string name = string.Empty;
             System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(@"TNS.FrameWork.WebResultUI");
 
-            foreach (GenericColumnItemInformation g in columns) {
+            foreach (GenericColumnItemInformation g in columns)
+            {
 
-                if (g.DataBaseAliasField != null && g.DataBaseAliasField.Length > 0) {
+                if (!string.IsNullOrEmpty(g.DataBaseAliasField))
+                {
                     name = g.DataBaseAliasField.ToUpper();
                 }
-                else if (g.DataBaseField != null && g.DataBaseField.Length > 0) {
+                else if (!string.IsNullOrEmpty(g.DataBaseField))
+                {
                     name = g.DataBaseField.ToUpper();
                 }
 
                 if (dt.Columns.Contains(name) && !names.Contains(name))
                     names.Add(name);
 
-                switch (g.CellType) {
+                switch (g.CellType)
+                {
                     case "":
                     case "TNS.FrameWork.WebResultUI.CellLabel":
                         cells.Add(new CellLabel(string.Empty));
                         break;
                     default:
-                        
+
                         Type type = assembly.GetType(g.CellType);
-                        Cell cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
-                        cellUnit.StringFormat = string.Format("{{0:{0}}}",g.StringFormat);
+                        Cell cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public
+                            | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
+                        cellUnit.StringFormat = string.Format("{{0:{0}}}", g.StringFormat);
                         cells.Add(cellUnit);
                         break;
                 }
@@ -1109,32 +1222,35 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
         /// </summary>
         /// <param name="columns">List of key columns</param>
         /// <returns>List of key column names</returns>
-        protected virtual void GetKeysColumnNames(DataTable dt, List<GenericColumnItemInformation> columns, List<string> idsColumn, List<string> labelsColumn) {
-
-            string idName = string.Empty;
-            string labelName = string.Empty;
-
-            foreach (GenericColumnItemInformation g in columns) {
+        protected virtual void GetKeysColumnNames(DataTable dt, List<GenericColumnItemInformation> columns, List<string> idsColumn, List<string> labelsColumn)
+        {
+            foreach (GenericColumnItemInformation g in columns)
+            {
                 //Init stirngs
-                idName = string.Empty;
-                labelName = string.Empty;
+                var idName = string.Empty;
+                var labelName = string.Empty;
 
                 //Data Base ID
-                if (g.DataBaseAliasIdField != null && g.DataBaseAliasIdField.Length > 0) {
+                if (!string.IsNullOrEmpty(g.DataBaseAliasIdField))
+                {
                     labelName = idName = g.DataBaseAliasIdField.ToUpper();
                 }
-                else if (g.DataBaseIdField != null && g.DataBaseIdField.Length > 0) {
+                else if (!string.IsNullOrEmpty(g.DataBaseIdField))
+                {
                     labelName = idName = g.DataBaseIdField.ToUpper();
                 }
                 //Database Label
-                if (g.DataBaseAliasField != null && g.DataBaseAliasField.Length > 0 ) {
+                if (!string.IsNullOrEmpty(g.DataBaseAliasField))
+                {
                     labelName = g.DataBaseAliasField.ToUpper();
                 }
-                else if (g.DataBaseField != null && g.DataBaseField.Length > 0) {
+                else if (!string.IsNullOrEmpty(g.DataBaseField))
+                {
                     labelName = g.DataBaseField.ToUpper();
                 }
 
-                if (idName.Length < 1) {
+                if (idName.Length < 1)
+                {
                     idName = labelName;
                 }
 
@@ -1154,56 +1270,53 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
         /// <param name="vehicle">Current vehicle</param>
         /// <param name="columns">Data columns to display</param>
         /// <returns>Table headers</returns>
-        protected virtual Headers GetHeaders(VehicleInformation vehicle, List<GenericColumnItemInformation> columns, bool hasVisual) {
+        protected virtual Headers GetHeaders(VehicleInformation vehicle, List<GenericColumnItemInformation> columns, bool hasVisual)
+        {
 
-            Headers root = new Headers();
+            var root = new Headers();
             if (_getCreatives || _getMSCreatives)
             {
                 return null;
             }
+            if (!hasVisual)
+            {
+                for (int i = 0; i < columns.Count; i++)
+                {
+                    root.Root.Add(new Header(GestionWeb.GetWebWord(columns[i].WebTextId, _session.SiteLanguage), columns[i].Id.GetHashCode()));
+                }
+            }
             else
             {
-                if (!hasVisual)
+                switch (vehicle.Id)
                 {
-                    for (int i = 0; i < columns.Count; i++)
-                    {
-                        root.Root.Add(new Header(GestionWeb.GetWebWord(columns[i].WebTextId, _session.SiteLanguage), columns[i].Id.GetHashCode()));
-                    }
-                }
-                else
-                {
-                    switch (vehicle.Id)
-                    {
-                        case CstDBClassif.Vehicles.names.directMarketing:
-                        case CstDBClassif.Vehicles.names.adnettrack:
-                        case CstDBClassif.Vehicles.names.evaliantMobile:
-                        case CstDBClassif.Vehicles.names.internet:
-                        case CstDBClassif.Vehicles.names.czinternet:
-                        case CstDBClassif.Vehicles.names.internationalPress:
-                        case CstDBClassif.Vehicles.names.outdoor:
-                        case CstDBClassif.Vehicles.names.instore:
-                        case CstDBClassif.Vehicles.names.indoor :
-                        case CstDBClassif.Vehicles.names.press:
-                        case CstDBClassif.Vehicles.names.newspaper:
-                        case CstDBClassif.Vehicles.names.magazine:
-                            return null;
-                            break;
-                        case CstDBClassif.Vehicles.names.others:
-                        case CstDBClassif.Vehicles.names.radio:
-                        case CstDBClassif.Vehicles.names.radioGeneral:
-                        case CstDBClassif.Vehicles.names.radioSponsorship:
-                        case CstDBClassif.Vehicles.names.radioMusic:
-                        case CstDBClassif.Vehicles.names.tv:
-                        case CstDBClassif.Vehicles.names.tvGeneral:
-                        case CstDBClassif.Vehicles.names.tvSponsorship:
-                        case CstDBClassif.Vehicles.names.tvNonTerrestrials:
-                        case CstDBClassif.Vehicles.names.tvAnnounces:
-                            for (int i = 0; i < columns.Count; i++)
-                            {
-                                root.Root.Add(new Header(GestionWeb.GetWebWord(columns[i].WebTextId, _session.SiteLanguage), columns[i].Id.GetHashCode()));
-                            }
-                            break;
-                    }
+                    case Vehicles.names.directMarketing:
+                    case Vehicles.names.adnettrack:
+                    case Vehicles.names.evaliantMobile:
+                    case Vehicles.names.internet:
+                    case Vehicles.names.czinternet:
+                    case Vehicles.names.internationalPress:
+                    case Vehicles.names.outdoor:
+                    case Vehicles.names.instore:
+                    case Vehicles.names.indoor:
+                    case Vehicles.names.press:
+                    case Vehicles.names.newspaper:
+                    case Vehicles.names.magazine:
+                        return null;
+                    case Vehicles.names.others:
+                    case Vehicles.names.radio:
+                    case Vehicles.names.radioGeneral:
+                    case Vehicles.names.radioSponsorship:
+                    case Vehicles.names.radioMusic:
+                    case Vehicles.names.tv:
+                    case Vehicles.names.tvGeneral:
+                    case Vehicles.names.tvSponsorship:
+                    case Vehicles.names.tvNonTerrestrials:
+                    case Vehicles.names.tvAnnounces:
+                        for (int i = 0; i < columns.Count; i++)
+                        {
+                            root.Root.Add(new Header(GestionWeb.GetWebWord(columns[i].WebTextId, _session.SiteLanguage), columns[i].Id.GetHashCode()));
+                        }
+                        break;
                 }
             }
 
@@ -1213,22 +1326,26 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
         #endregion
 
         #region Init cells
-        protected List<Cell> GetCells(List<GenericColumnItemInformation> columns) {
+        protected List<Cell> GetCells(List<GenericColumnItemInformation> columns)
+        {
 
-            List<Cell> cells = new List<Cell>();
-            Cell cell = null;
+            var cells = new List<Cell>();
             int i = -1;
 
-            foreach (GenericColumnItemInformation g in columns) {
+            foreach (GenericColumnItemInformation g in columns)
+            {
 
                 i++;
-                try {
-                    System.Reflection.Assembly assembly = System.Reflection.Assembly.Load(@"TNS.FrameWork.WebResultUI");
+                try
+                {
+                    var assembly = System.Reflection.Assembly.Load(@"TNS.FrameWork.WebResultUI");
                     Type type = assembly.GetType(g.CellType);
-                    cell = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
+                    var cell = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public
+                                                                       | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
                     cell.StringFormat = g.StringFormat;
                 }
-                catch (Exception e) {
+                catch (Exception)
+                {
                     cells[i] = new CellLabel(string.Empty);
                 }
 
@@ -1247,65 +1364,41 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
         /// <param name="vehicle">vehicle</param>
         /// <returns>True if can show insertion </returns>
         public virtual bool CanShowInsertion(VehicleInformation vehicle)
-        {            
-            if (vehicle == null || vehicle.Id == CstDBClassif.Vehicles.names.internet)
-            {
-                return false;
-            }
-            return true;
+        {
+            return vehicle != null && vehicle.Id != Vehicles.names.internet;
         }
+
         #endregion
 
         #region Creatives Rules
 
         #region GetPath
-        virtual protected List<string> GetPath(VehicleInformation vehicle, DataRow row, List<GenericColumnItemInformation> columns, List<string> columnNames)
+        /// <summary>
+        /// Get Path
+        /// </summary>
+        /// <param name="vehicle">Vehicle Information</param>
+        /// <param name="row">data row</param>
+        /// <param name="columns">columns</param>
+        /// <param name="columnNames">columnNames</param>
+        /// <returns></returns>
+        protected virtual List<string> GetPath(VehicleInformation vehicle, DataRow row, List<GenericColumnItemInformation> columns, List<string> columnNames)
         {
-            string path = string.Empty;
-            List<string> visuals = new List<string>();
+            var visuals = new List<string>();
 
             switch (vehicle.Id)
             {
-                case CstDBClassif.Vehicles.names.press:
-                case CstDBClassif.Vehicles.names.newspaper:
-                case CstDBClassif.Vehicles.names.magazine:
-                case CstDBClassif.Vehicles.names.internationalPress:
+                case Vehicles.names.press:
+                case Vehicles.names.newspaper:
+                case Vehicles.names.magazine:
+                case Vehicles.names.internationalPress:
 
-                    if ((vehicle.Id==CstDBClassif.Vehicles.names.internationalPress && !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG))
-                        || (vehicle.Id==CstDBClassif.Vehicles.names.press && !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRESS_CREATION_ACCESS_FLAG))
-                        || (vehicle.Id == CstDBClassif.Vehicles.names.newspaper && !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRESS_CREATION_ACCESS_FLAG))
-                        || (vehicle.Id == CstDBClassif.Vehicles.names.magazine && !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRESS_CREATION_ACCESS_FLAG))
-                        )
-                    {
-                        break;
-                    }
+                    if (CheckPressFlagAccess(vehicle)) break;
 
-                    Int64 disponibility = -1;
-                    Int64 activation = -1;
-                    Int64 idMedia = -1;
-                    Int64 dateCoverNum = -1;
-                    Int64 dateMediaNum = -1;
+                    Int64 idMedia;
+                    Int64 dateCoverNum;
+                    Int64 dateMediaNum;
 
-                    if (row.Table.Columns.Contains("disponibility_visual") && row["disponibility_visual"] != System.DBNull.Value){
-                        disponibility = Convert.ToInt64(row["disponibility_visual"]);
-                    }
-                    if (row.Table.Columns.Contains("activation") && row["activation"] != System.DBNull.Value){
-                        activation = Convert.ToInt64(row["activation"]);
-                    }
-                    if (row.Table.Columns.Contains("id_media") && row["id_media"] != System.DBNull.Value){
-                        idMedia = Convert.ToInt64(row["id_media"]);
-                    }
-                    if (row.Table.Columns.Contains("date_cover_num") && row["date_cover_num"] != System.DBNull.Value){
-                        dateCoverNum = Convert.ToInt64(row["date_cover_num"]);
-                    }
-                    if (row.Table.Columns.Contains("date_media_num") && row["date_media_num"] != System.DBNull.Value){
-                        dateMediaNum = Convert.ToInt64(row["date_media_num"]);
-                    }
-                    if (row.Table.Columns.Contains("dateKiosque") && row["dateKiosque"] != System.DBNull.Value)
-                    {
-                        dateMediaNum = Convert.ToInt64(row["dateKiosque"]);
-                    }
-                    if (disponibility <= 10 && activation <= 100 && idMedia > 0 && dateCoverNum > 0)
+                    if (IsVisualAvailable(row, out idMedia, out dateCoverNum, out dateMediaNum))
                     {
                         //visuel(s) disponible(s)
                         string[] files = row["visual"].ToString().Split(',');
@@ -1313,140 +1406,176 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
                         {
                             if (files[fileIndex].Length > 0)
                             {
-                                visuals.Add(this.GetCreativePathPress(files[fileIndex], idMedia, dateCoverNum, false, dateMediaNum));
+                                visuals.Add(GetCreativePathPress(files[fileIndex], idMedia, dateCoverNum, false, dateMediaNum));
                             }
                         }
                     }
                     break;
-                case CstDBClassif.Vehicles.names.indoor:
-                case CstDBClassif.Vehicles.names.outdoor:
+                case Vehicles.names.indoor:
+                case Vehicles.names.outdoor:
                     if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG))
-                    {
                         break;
-                    }
-
-                    if (row["associated_file"] != System.DBNull.Value)
-                    {
-                        string[] files = row["associated_file"].ToString().Split(',');
-                        foreach (string s in files)
-                        {
-                            visuals.Add(this.GetCreativePathOutDoor(s, false));
-                        }
-
-                    }
+                    AddVisuals(row, visuals, GetCreativePathOutDoor);
                     break;
-                case CstDBClassif.Vehicles.names.instore:
-                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_INSTORE_CREATION_ACCESS_FLAG)) {
+                case Vehicles.names.instore:
+                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_INSTORE_CREATION_ACCESS_FLAG))
                         break;
-                    }
-
-                    if (row["associated_file"] != System.DBNull.Value) {
-                        string[] files = row["associated_file"].ToString().Split(',');
-                        foreach (string s in files) {
-                            visuals.Add(this.GetCreativePathInStore(s, false));
-                        }
-
-                    }
+                    AddVisuals(row, visuals, GetCreativePathInStore);
                     break;
-                case CstDBClassif.Vehicles.names.directMarketing:
-                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG))
-                    {
+                case Vehicles.names.directMarketing:
+                    if (
+                        !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG))
                         break;
-                    }
-
-                    if (row["associated_file"] != System.DBNull.Value)
-                    {
-                        string[] files = row["associated_file"].ToString().Split(',');
-                        foreach (string s in files)
-                        {
-                            visuals.Add(this.GetCreativePathVMC(s, false));
-                        }
-
-                    }
+                    AddVisuals(row, visuals, GetCreativePathVMC);
                     break;
-                case CstDBClassif.Vehicles.names.radio:
-                case CstDBClassif.Vehicles.names.radioGeneral:
-                case CstDBClassif.Vehicles.names.radioSponsorship:
-                case CstDBClassif.Vehicles.names.radioMusic:
+                case Vehicles.names.radio:
+                case Vehicles.names.radioGeneral:
+                case Vehicles.names.radioSponsorship:
+                case Vehicles.names.radioMusic:
                     if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_RADIO_CREATION_ACCESS_FLAG))
-                    {
                         break;
-                    }
-
-                    if (row["associated_file"] != System.DBNull.Value)
-                    {
-                        string[] files = row["associated_file"].ToString().Split(',');
-                        foreach (string s in files)
-                        {
-                            visuals.Add(this.GetCreativePathRadio(s));
-                        }
-
-                    }
+                    AddVisuals(row, visuals, GetCreativePathRadio);
                     break;
-                case CstDBClassif.Vehicles.names.tv:
-                case CstDBClassif.Vehicles.names.others:
-                case CstDBClassif.Vehicles.names.tvGeneral:
-                case CstDBClassif.Vehicles.names.tvSponsorship:
-                case CstDBClassif.Vehicles.names.tvNonTerrestrials:
-                case CstDBClassif.Vehicles.names.tvAnnounces:
+                case Vehicles.names.tv:
+                case Vehicles.names.others:
+                case Vehicles.names.tvGeneral:
+                case Vehicles.names.tvSponsorship:
+                case Vehicles.names.tvNonTerrestrials:
+                case Vehicles.names.tvAnnounces:
                     if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_TV_CREATION_ACCESS_FLAG))
-                    {
                         break;
-                    }
-
-                    if (row["associated_file"] != System.DBNull.Value)
-                    {
-                        string[] files = row["associated_file"].ToString().Split(',');
-                        foreach (string s in files)
-                        {
-                            visuals.Add(this.GetCreativePathTv(s));
-                        }
-
-                    }
+                    AddVisuals(row, visuals, GetCreativePathTv);
                     break;
-                case CstDBClassif.Vehicles.names.adnettrack:
-                case CstDBClassif.Vehicles.names.czinternet:
-                case CstDBClassif.Vehicles.names.internet:
+                case Vehicles.names.adnettrack:
+                case Vehicles.names.czinternet:
+                case Vehicles.names.internet:
                     if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_INTERNET_ACCESS_FLAG))
-                    {
                         break;
-                    }
-
-                    if (row["associated_file"] != System.DBNull.Value)
-                    {
-                        string[] files = row["associated_file"].ToString().Split(',');
-                        foreach (string s in files)
-                        {
-                            visuals.Add(this.GetCreativePathAdNetTrack(s));
-                        }
-
-                    }
+                    AddVisuals(row, visuals, GetCreativePathAdNetTrack);
                     break;
-                case CstDBClassif.Vehicles.names.evaliantMobile:
-                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG)) {
+                case Vehicles.names.evaliantMobile:
+                    if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG))
                         break;
-                    }
-                    if (row["associated_file"] != System.DBNull.Value) {
-                        string[] files = row["associated_file"].ToString().Split(',');
-                        foreach (string s in files) {
-                            visuals.Add(this.GetCreativePathEvaliantMobile(s));
-                        }
-
-                    }
-                    break;
-                default:
+                    AddVisuals(row, visuals, GetCreativePathEvaliantMobile);
                     break;
             }
 
             return visuals;
 
         }
+
+        /// <summary>
+        /// Add Visuals
+        /// </summary>
+        /// <param name="row">Data row</param>
+        /// <param name="visuals">Visuals list</param>
+        /// <param name="getCreativePath">extact creative path</param>
+        protected virtual void AddVisuals(DataRow row, List<string> visuals, Func<string, bool, string> getCreativePath)
+        {
+            if (row["associated_file"] != DBNull.Value)
+            {
+                var files = row["associated_file"].ToString().Split(',');
+                visuals.AddRange(files.Select(s => getCreativePath(s, false)));
+            }
+        }
+        /// <summary>
+        /// Add Visuals
+        /// </summary>
+        /// <param name="row">Data row</param>
+        /// <param name="visuals">Visuals list</param>
+        /// <param name="getCreativePath">extact creative path</param>
+        protected virtual void AddVisuals(DataRow row, List<string> visuals, Func<string, string> getCreativePath)
+        {
+            if (row["associated_file"] != DBNull.Value)
+            {
+                var files = row["associated_file"].ToString().Split(',');
+                visuals.AddRange(files.Select(getCreativePath));
+            }
+        }
+
+        /// <summary>
+        /// Check Press FlagAccess
+        /// </summary>
+        /// <param name="vehicle">Media Type</param>
+        /// <returns>True if has no press flag access</returns>
+        protected virtual bool CheckPressFlagAccess(VehicleInformation vehicle)
+        {
+            if ((vehicle.Id == Vehicles.names.internationalPress &&
+                 !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG))
+                ||
+                (vehicle.Id == Vehicles.names.press &&
+                 !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRESS_CREATION_ACCESS_FLAG))
+                ||
+                (vehicle.Id == Vehicles.names.newspaper &&
+                 !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRESS_CREATION_ACCESS_FLAG))
+                ||
+                (vehicle.Id == Vehicles.names.magazine &&
+                 !_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRESS_CREATION_ACCESS_FLAG))
+                )
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Check if visual is available
+        /// </summary>
+        /// <param name="row">Data  row</param>
+        /// <param name="idMedia">Id vehicle</param>
+        /// <param name="dateCoverNum">cover date</param>
+        /// <param name="dateMediaNum">date</param>
+        /// <returns>True if viual is available</returns>
+        protected virtual bool IsVisualAvailable(DataRow row, out long idMedia, out long dateCoverNum, out long dateMediaNum)
+        {
+            Int64 disponibility = -1;
+            Int64 activation = -1;
+            dateCoverNum = -1;
+            dateMediaNum = -1;
+            idMedia = -1;
+            if (row.Table.Columns.Contains("disponibility_visual") && row["disponibility_visual"] != DBNull.Value)
+            {
+                disponibility = Convert.ToInt64(row["disponibility_visual"]);
+            }
+            if (row.Table.Columns.Contains("activation") && row["activation"] != DBNull.Value)
+            {
+                activation = Convert.ToInt64(row["activation"]);
+            }
+            if (row.Table.Columns.Contains("id_media") && row["id_media"] != DBNull.Value)
+            {
+                idMedia = Convert.ToInt64(row["id_media"]);
+            }
+            if (row.Table.Columns.Contains("date_cover_num") && row["date_cover_num"] != DBNull.Value)
+            {
+                dateCoverNum = Convert.ToInt64(row["date_cover_num"]);
+            }
+            if (row.Table.Columns.Contains("date_media_num") && row["date_media_num"] != DBNull.Value)
+            {
+                dateMediaNum = Convert.ToInt64(row["date_media_num"]);
+            }
+            if (row.Table.Columns.Contains("dateKiosque") && row["dateKiosque"] != DBNull.Value)
+            {
+                dateMediaNum = Convert.ToInt64(row["dateKiosque"]);
+            }
+            return (disponibility <= 10 && activation <= 100 && idMedia > 0 && dateCoverNum > 0);
+        }
+
         #endregion
 
         #region GetCreativePathPress
-        protected string GetCreativePathPress(string file, Int64 idMedia, Int64 dateCoverNum, bool bigSize, Int64 dateMediaNum)
+        /// <summary>
+        /// Get Creative Path Press
+        /// </summary>
+        /// <param name="file">file</param>
+        /// <param name="idMedia">id Media</param>
+        /// <param name="dateCoverNum">date Cover 
+        /// </param>
+        /// <param name="bigSize">true if big size else false</param>
+        /// <param name="dateMediaNum">date Media </param>
+        /// <returns>creative path</returns>
+        protected virtual string GetCreativePathPress(string file, Int64 idMedia, Int64 dateCoverNum, bool bigSize, Int64 dateMediaNum)
         {
-            string imagette = (bigSize)?string.Empty:"/Imagette";
+            string imagette = (bigSize) ? string.Empty : "/Imagette";
 
             lock (_mutex)
             {
@@ -1456,27 +1585,25 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
                     {
                         _mediaList = Media.GetItemsList(AdExpressUniverse.CREATIVES_KIOSQUE_LIST_ID).MediaList.Split(',');
                     }
-                    catch { }
+                    catch
+                    { }
                 }
             }
-            if (Array.IndexOf(_mediaList, idMedia.ToString()) > -1)
+            if (_mediaList != null && Array.IndexOf(_mediaList, idMedia.ToString()) > -1)
             {
-                return string.Format("{0}/{1}/{2}{3}/{4}", CstWeb.CreationServerPathes.IMAGES, idMedia, dateMediaNum, imagette, file);
+                return string.Format("{0}/{1}/{2}{3}/{4}", CreationServerPathes.IMAGES, idMedia, dateMediaNum, imagette, file);
             }
-            else
-            {
-                return string.Format("{0}/{1}/{2}{3}/{4}", CstWeb.CreationServerPathes.IMAGES, idMedia, dateCoverNum, imagette, file);
-            }
+            return string.Format("{0}/{1}/{2}{3}/{4}", CreationServerPathes.IMAGES, idMedia, dateCoverNum, imagette, file);
         }
         #endregion
 
         #region GetCreativePathOutDoor
-        virtual protected string GetCreativePathOutDoor(string file, bool bigSize)
+        protected virtual string GetCreativePathOutDoor(string file, bool bigSize)
         {
-            string imagette = (bigSize)?string.Empty:"/Imagette";
+            string imagette = (bigSize) ? string.Empty : "/Imagette";
 
             return string.Format("{0}/{1}/{2}/{3}{4}/{5}"
-                , CstWeb.CreationServerPathes.IMAGES_OUTDOOR
+                , CreationServerPathes.IMAGES_OUTDOOR
                 , file.Substring(file.Length - 8, 1)
                 , file.Substring(file.Length - 9, 1)
                 , file.Substring(file.Length - 10, 1)
@@ -1484,11 +1611,12 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
                 , file);
 
         }
-        protected string GetCreativePathInStore(string file, bool bigSize) {
+        protected virtual string GetCreativePathInStore(string file, bool bigSize)
+        {
             string imagette = (bigSize) ? string.Empty : "/Imagette";
 
             return string.Format("{0}/{1}/{2}/{3}{4}/{5}"
-                , CstWeb.CreationServerPathes.IMAGES_INSTORE
+                , CreationServerPathes.IMAGES_INSTORE
                 , file.Substring(file.Length - 8, 1)
                 , file.Substring(file.Length - 9, 1)
                 , file.Substring(file.Length - 10, 1)
@@ -1499,12 +1627,12 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
         #endregion
 
         #region GetCreativePathVMC
-        virtual protected string GetCreativePathVMC(string file, bool bigSize)
+        protected virtual string GetCreativePathVMC(string file, bool bigSize)
         {
-            string imagette = (bigSize)?string.Empty:"/Imagette";
+            string imagette = (bigSize) ? string.Empty : "/Imagette";
 
             return string.Format("{0}/{1}/{2}/{3}{4}/{5}"
-                , CstWeb.CreationServerPathes.IMAGES_MD
+                , CreationServerPathes.IMAGES_MD
                 , file.Substring(file.Length - 8, 1)
                 , file.Substring(file.Length - 9, 1)
                 , file.Substring(file.Length - 10, 1)
@@ -1521,19 +1649,22 @@ if (VehiclesInformation.Contains(CstDBClassif.Vehicles.names.cinema)) vehicles.A
         #endregion
 
         #region GetCreativePathAdNetTrack
-        virtual protected string GetCreativePathAdNetTrack(string file){
-            return string.Format("{0}/{1}", CstWeb.CreationServerPathes.CREA_ADNETTRACK, file);
+        virtual protected string GetCreativePathAdNetTrack(string file)
+        {
+            return string.Format("{0}/{1}", CreationServerPathes.CREA_ADNETTRACK, file);
         }
         #endregion
 
         #region GetCreativePathEvaliantMobile
-        virtual protected string GetCreativePathEvaliantMobile(string file){
-            return string.Format("{0}/{1}", CstWeb.CreationServerPathes.CREA_EVALIANT_MOBILE, file);
+        virtual protected string GetCreativePathEvaliantMobile(string file)
+        {
+            return string.Format("{0}/{1}", CreationServerPathes.CREA_EVALIANT_MOBILE, file);
         }
         #endregion
 
         #region GetCreativePathTv
-        virtual protected string GetCreativePathTv(string file){
+        virtual protected string GetCreativePathTv(string file)
+        {
             return file;
         }
         #endregion

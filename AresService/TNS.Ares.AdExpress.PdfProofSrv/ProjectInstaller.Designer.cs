@@ -1,4 +1,5 @@
-﻿namespace TNS.Ares.AdExpress.PdfProofSrv
+﻿using System.ServiceProcess;
+namespace TNS.Ares.AdExpress.PdfProofSrv
 {
     partial class ProjectInstaller
     {
@@ -35,6 +36,7 @@
             // 
             this.serviceProcessInstaller.Password = null;
             this.serviceProcessInstaller.Username = null;
+            
             // 
             // aresPdfProofServiceInstaller
             // 

@@ -4,6 +4,7 @@
 #endregion
 
 using System;
+using System.ComponentModel;
 using System.Drawing;
 
 using TNS.AdExpress.Anubis.Amon.DataAccess;
@@ -104,6 +105,17 @@ namespace TNS.AdExpress.Anubis.Amon.Common
         /// </summary>
         private string _outdoorScanPath;
         #endregion
+
+        /// <summary>
+        /// Get / Set Use Impersonate
+        /// </summary>
+        [DefaultValue(false)]
+        public bool UseImpersonate { get; set; }
+
+        /// <summary>
+        /// Get / Set Impersonate Config
+        /// </summary>
+        public ImpersonateInformation ImpersonateConfig { get; set; }
 
 		#endregion
 

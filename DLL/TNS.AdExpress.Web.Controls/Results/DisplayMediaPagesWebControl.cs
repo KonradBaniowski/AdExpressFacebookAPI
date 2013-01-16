@@ -58,6 +58,7 @@ namespace TNS.AdExpress.Web.Controls.Results {
 		/// </summary>
 		protected WebSession _webSession;
 		
+    
 		#endregion
 
 		#region Acccessors
@@ -172,6 +173,11 @@ namespace TNS.AdExpress.Web.Controls.Results {
 				_idMedia = value;
 			}
 		}
+        /// <summary>
+        /// Page anchor
+        /// </summary>
+        [Bindable(true)]             
+		public string SubFolder { get; set; }
 		#endregion
 
 		#region Onload
@@ -203,50 +209,59 @@ namespace TNS.AdExpress.Web.Controls.Results {
 		
 
 			#region Variables
-			string pathWeb = WebCst.CreationServerPathes.IMAGES + "/" + _idMedia + "/" + _dateCover + "/imagette/";
-			string path = WebCst.CreationServerPathes.LOCAL_PATH_IMAGE + _idMedia + @"\" + _dateCover + @"\imagette";
 
-			// Pour test en localhost :
-			//string path = "\\\\localhost\\ImagesPresse\\" + _idMedia + "\\" + _dateCover + "\\imagette";
-			
+		 
+            string pathWeb = string.Format("{0}/{1}/{2}/{3}/",
+                WebCst.CreationServerPathes.IMAGES, _idMedia, _dateCover, 
+                (string.IsNullOrEmpty(SubFolder)) ?  "imagette" : SubFolder);
+            string path = string.Format("{0}{1}\\{2}\\{3}", 
+                WebCst.CreationServerPathes.LOCAL_PATH_IMAGE, _idMedia, _dateCover, 
+                (string.IsNullOrEmpty(SubFolder)) ?  "imagette" : SubFolder);
+
 
 			string[] files = Directory.GetFiles(path, "*.jpg");
             Array.Sort(files);
 
-			string[] endFile;
-			StringBuilder t = new StringBuilder(5000);
+		    var t = new StringBuilder(5000);
 			int i = 1;
 			int compteur = 0;
-			string endBalise = "";
-			string day;
-			string[] filesName = new string[2];
+		    var filesName = new string[2];
 			#endregion
-			CultureInfo cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
-			DateTime dayDT = new DateTime(int.Parse(_dateParution.Substring(0, 4)), int.Parse(_dateParution.Substring(4, 2)), int.Parse(_dateParution.ToString().Substring(6, 2)));
-			day = DayString.GetCharacters(dayDT, cultureInfo) + " " + Dates.DateToString(dayDT, _webSession.SiteLanguage);
+			var cultureInfo = new CultureInfo(WebApplicationParameters.AllowedLanguages[_webSession.SiteLanguage].Localization);
+			var dayDT = new DateTime(int.Parse(_dateParution.Substring(0, 4)),
+                int.Parse(_dateParution.Substring(4, 2)), int.Parse(_dateParution.ToString().Substring(6, 2)));
+			string day = string.Format("{0} {1}", DayString.GetCharacters(dayDT, cultureInfo),
+                Dates.DateToString(dayDT, _webSession.SiteLanguage));
 
 			t.Append("<table border=1 class=\"violetBorder paleVioletBackGroundV2\" cellpadding=0 cellspacing=0 width=100% ><tr>");
-			t.Append("<td class=\"portofolio1\" style=\"BORDER-RIGHT-STYLE: none;BORDER-BOTTOM-STYLE: none\">" + day + "</td>");
-			t.Append("<td align=center class=\"portofolio1\" style=\"BORDER-RIGHT-STYLE: none;BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none\">" + _nameMedia + "</td>");
-			t.Append("<td align=right class=\"portofolio1\" style=\"BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none\">" + GestionWeb.GetWebWord(1385, _webSession.SiteLanguage) + " : " + _nbrePages + "</td>");
+			t.AppendFormat("<td class=\"portofolio1\" style=\"BORDER-RIGHT-STYLE: none;BORDER-BOTTOM-STYLE: none\">{0}</td>", day);
+			t.AppendFormat("<td align=center class=\"portofolio1\" style=\"BORDER-RIGHT-STYLE: none;BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none\">{0}</td>"
+                , _nameMedia);
+			t.AppendFormat("<td align=right class=\"portofolio1\" style=\"BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none\">{0} : {1}</td>"
+                , GestionWeb.GetWebWord(1385, _webSession.SiteLanguage), _nbrePages);
 			t.Append("</tr></table>");
 
 			t.Append("<table border=0 cellpadding=0 cellspacing=0 width=100% class=\"paleVioletBackGroundV2\">");
 			foreach (string name in files) {
 
-				endFile = name.Split('\\');
+				string[] endFile = name.Split('\\');
 				// Couverture - Dos
 				if (i == 1 || i == files.Length) {
 					t.Append("<tr><td colspan=4 align=center>");
 					t.Append("<table border=1 class=\"violetBorder\" cellpadding=0 cellspacing=0 width=100%><tr><td align=center>");
 					if (i == 1) t.Append("<a name=\"C1\"></a><a name=\"C2\"></a>");
 					if (i == files.Length) t.Append("<a name=\"C3\"></a><a name=\"C4\"></a>");
-					t.Append("<a href=\"javascript:portofolioOneCreation('" + _idMedia + "','" + _dateCover + "','" + endFile[endFile.Length - 1] + "','', true);\"><img src='" + pathWeb + endFile[endFile.Length - 1] + "' border=\"0\"></a>");
+                    if (string.IsNullOrEmpty(SubFolder)) 
+					t.AppendFormat("<a href=\"javascript:portofolioOneCreation('{0}','{1}','{2}','', true);\"><img src='{3}{2}' border=\"0\"></a>"
+                        , _idMedia, _dateCover, endFile[endFile.Length - 1], pathWeb);
+                    else t.AppendFormat("<a href=\"javascript:portofolioOneCreation2('{0}','{1}','{2}','', true,'{4}');\"><img src='{3}{2}' border=\"0\"></a>"
+                        , _idMedia, _dateCover, endFile[endFile.Length - 1], pathWeb, SubFolder);
 					t.Append("</td></tr></table>");
 					t.Append("</td></tr>");
 				}
 				else {
-					if (compteur == 0) {
+				    string endBalise;
+				    if (compteur == 0) {
 						t.Append("<tr>");
 						endBalise = "";
 					}
@@ -262,18 +277,27 @@ namespace TNS.AdExpress.Web.Controls.Results {
 					t.Append("<td align=center style=\"BORDER-RIGHT-STYLE: none;BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none\">");
 					// Tableau niveau 2
 					if (compteur == 0 || compteur == 2) {
-						t.Append("<table border=1 class=\"violetBorder\" cellpadding=0 cellspacing=0 width=100%><tr><td style=\"BORDER-RIGHT-STYLE: none;BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none\">");
+						t.Append("<table border=1 class=\"violetBorder\" cellpadding=0 cellspacing=0 width=100%>");
+					    t.Append("<tr><td style=\"BORDER-RIGHT-STYLE: none;BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none\">");
 						filesName[0] = endFile[endFile.Length - 1];
 						filesName[1] = files[i].Split('\\')[endFile.Length - 1];
 					}
 					// Tableau niveau 1
 					t.Append("<table border=0 cellpadding=0 cellspacing=0 width=100%><tr><td>");
-                    t.Append("<a name=\"#" + i.ToString() + "\" href=\"javascript:portofolioOneCreation('" + _idMedia + "','" + _dateCover + "','" + filesName[0] + "','" + filesName[1] + "', true);\"><img src='" + pathWeb + endFile[endFile.Length - 1] + "' border=\"0\"></a>");
+                    if (string.IsNullOrEmpty(SubFolder)) 
+                    t.AppendFormat("<a name=\"#{0}\" href=\"javascript:portofolioOneCreation('{1}','{2}','{3}','{4}', true);\"><img src='{5}{6}' border=\"0\"></a>"
+                        , i.ToString(), _idMedia, _dateCover, filesName[0], filesName[1], pathWeb, endFile[endFile.Length - 1]);
+                    else t.AppendFormat("<a name=\"#{0}\" href=\"javascript:portofolioOneCreation2('{1}','{2}','{3}','{4}', true,'{7}');\"><img src='{5}{6}' border=\"0\"></a>"
+                       , i.ToString(), _idMedia, _dateCover, filesName[0], filesName[1], pathWeb, endFile[endFile.Length - 1],SubFolder);
 					t.Append("</td></tr>");
 					t.Append("</table>");
 
-					if (compteur == 1 || compteur == -1) {
-						t.Append("<tr ><td colspan=2 align=center class=\"portofolio1\" style=\"BORDER-RIGHT-STYLE: none;BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none\">Pages : " + ((int)(i - 1)).ToString() + "/" + i.ToString() + "</td></tr>");
+					if (compteur == 1 || compteur == -1)
+					{
+					    t.Append(
+					        "<tr ><td colspan=2 align=center class=\"portofolio1\" style=\"BORDER-RIGHT-STYLE: none;BORDER-LEFT-STYLE: none;BORDER-BOTTOM-STYLE: none\">");
+						t.AppendFormat("Pages : {0}/{1}</td></tr>"
+                            , ((int)(i - 1)).ToString(), i.ToString());
 						t.Append("</td></tr></table>");
 					}
 
@@ -287,7 +311,7 @@ namespace TNS.AdExpress.Web.Controls.Results {
 
 			// Script location
 			t.Append("\n<script language=\"JavaScript\" type=\"text/JavaScript\">");
-			t.Append("\ndocument.location='#" + _pageAnchor + "';");
+			t.AppendFormat("\ndocument.location='#{0}';", _pageAnchor);
 			t.Append("\n</script>");
 
 		#endregion

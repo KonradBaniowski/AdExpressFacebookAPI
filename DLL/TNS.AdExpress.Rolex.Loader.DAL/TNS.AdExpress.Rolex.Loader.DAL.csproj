@@ -74,7 +74,7 @@
     <Compile Include="DataAccessDAL.Media.cs">
       <DependentUpon>DataAccessDAL.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataAccessDAL.TypePresence.cs">
+    <Compile Include="DataAccessDAL.PresenceType.cs">
       <DependentUpon>DataAccessDAL.cs</DependentUpon>
     </Compile>
     <Compile Include="DataAccessDb.cs" />
@@ -82,7 +82,8 @@
     <Compile Include="DbType\DataLocation.cs" />
     <Compile Include="DbType\DataMedia.cs" />
     <Compile Include="DbType\DataRolex.cs" />
-    <Compile Include="DbType\DataTypePresence.cs" />
+    <Compile Include="DbType\DataPresenceType.cs" />
+    <Compile Include="Exceptions\DataAccessDALRedundantPictureNameException.cs" />
     <Compile Include="Exceptions\DataAccessDALExcelPresenceTypeException.cs" />
     <Compile Include="Exceptions\DataAccessDALExcelSiteException.cs" />
     <Compile Include="Exceptions\DataAccessDALExcelLocationException.cs" />

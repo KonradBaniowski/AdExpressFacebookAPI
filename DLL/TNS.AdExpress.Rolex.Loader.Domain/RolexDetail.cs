@@ -18,9 +18,9 @@ namespace TNS.AdExpress.Rolex.Loader.Domain
 
 
         /// <summary>
-        /// ID Type presences 
+        /// ID  presences Type
         /// </summary>
-        private List<long> _idTypePresences;
+        private List<long> _idPresenceTypes;
 
         /// <summary>
         /// Date begin
@@ -47,7 +47,7 @@ namespace TNS.AdExpress.Rolex.Loader.Domain
         #endregion
 
 
-        public RolexDetail(long idSite, long idLocation, List<long> idTypePresences, DateTime dateBegin, DateTime dateEnd, List<string> visuals, string commentary)
+        public RolexDetail(long idSite, long idLocation, List<long> idPresenceTypes, DateTime dateBegin, DateTime dateEnd, List<string> visuals, string commentary)
         {
             if (idSite < 1) throw new ArgumentException(" Parameter idSite  is invalid");
             _idSite = idSite;
@@ -55,8 +55,8 @@ namespace TNS.AdExpress.Rolex.Loader.Domain
             _idLocation = idLocation;
             _dateBegin = dateBegin;
             _dateEnd = dateEnd;
-            if (idTypePresences == null || idTypePresences.Count == 0) throw new ArgumentException(" Parameter idTypePresences is invalid");
-            _idTypePresences = idTypePresences;
+            if (idPresenceTypes== null || idPresenceTypes.Count == 0) throw new ArgumentException(" Parameter idPresenceTypeS is invalid");
+            _idPresenceTypes = idPresenceTypes;
            
             if (visuals == null || visuals.Count == 0) throw new ArgumentNullException("Parameter visuals cannot be null or empty");
             _visuals = visuals;
@@ -90,9 +90,9 @@ namespace TNS.AdExpress.Rolex.Loader.Domain
         /// <summary>
         /// ID Type presences
         /// </summary>
-        public List<long> IdTypePresences
+        public List<long> IdPresenceTypes
         {
-            get { return _idTypePresences; }
+            get { return _idPresenceTypes; }
         }
 
         /// <summary>
