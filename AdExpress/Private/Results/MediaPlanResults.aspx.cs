@@ -7,9 +7,11 @@
 #region Namespaces
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.SessionState;
@@ -18,7 +20,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using System.Windows.Forms;
 using Oracle.DataAccess.Client;
-
+using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Web.Core.Selection;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
@@ -286,7 +288,7 @@ namespace AdExpress.Private.Results
 
             #region Period Detail
             _zoom = Page.Request.QueryString.Get("zoomDate");
-            if (_zoom != null && _zoom != string.Empty)
+            if (!string.IsNullOrEmpty(_zoom))
             {
                 if (Page.Request.Form.GetValues("zoomParam") != null && Page.Request.Form.GetValues("zoomParam")[0].Length > 0)
                 {
@@ -384,6 +386,8 @@ namespace AdExpress.Private.Results
                 // Clic droit (Indique si le client peut affiner l'univers de versions)
                 SetSloganUniverseOptions();
 
+                ForbidMediaRefinePage();
+
                 #region MAJ _webSession
                
                 _webSession.LastReachedResultUrl = Page.Request.Url.AbsolutePath;
@@ -422,16 +426,43 @@ namespace AdExpress.Private.Results
         /// </summary>		
         private void SetSloganUniverseOptions()
         {
-            if ((!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(_webSession) || !_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG)) //droits affiner univers Versions
+            if ((!WebFunctions.ProductDetailLevel.CanCustomizeUniverseSlogan(_webSession)
+                || !_webSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_SLOGAN_ACCESS_FLAG)) 
+                //droits affiner univers Versions
                   || (_webSession.DetailPeriod != ConstantesPeriod.DisplayLevel.dayly && string.IsNullOrEmpty(_zoom)) ) {
 
-          
-                //ResultsOptionsWebControl1.InializeSlogansOption = false;
                 ArrayList forbiddenOptions = new ArrayList();
                 forbiddenOptions.Add(TNS.AdExpress.Constantes.FrameWork.Selection.OptionalPageSelections.SLOGAN);
                 MenuWebControl2.ForbidOptionPagesList = forbiddenOptions;
             }
         }
+
+
+        private void ForbidMediaRefinePage()
+        {
+             string listStr = _webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess);
+            if (!string.IsNullOrEmpty(listStr))
+            {
+               List<string> arrStr = new List<string>( listStr.Split(','));
+               List<Int64> idMedias = arrStr.ConvertAll(Convert.ToInt64);
+                bool hasMediaLevel = false;
+               List<DetailLevelItemInformation> levelInfos = VehiclesInformation.GetSelectionDetailLevelList(idMedias);
+               foreach (DetailLevelItemInformation currentDetailLevelItem in levelInfos)
+               {
+                   if (currentDetailLevelItem.Id == DetailLevelItemInformation.Levels.media)
+                   {
+                       hasMediaLevel = true; break;
+                   }                      
+               }
+               if (!hasMediaLevel)
+               {
+                   if (MenuWebControl2.ForbidOptionPagesList==null) MenuWebControl2.ForbidOptionPagesList = new ArrayList();
+                   MenuWebControl2.ForbidOptionPagesList.Add(6);
+               }
+             
+            }
+        }
+
         #endregion
 
     }

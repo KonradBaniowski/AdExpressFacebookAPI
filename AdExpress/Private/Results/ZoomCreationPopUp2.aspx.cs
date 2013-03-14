@@ -42,7 +42,7 @@ namespace AdExpress.Private.Results
             string encrypt = HttpContext.Current.Request.QueryString.Get("crypt");
             string idSession = HttpContext.Current.Request.QueryString.Get("idSession");
 
-            string decryptedFileName = TNS.AdExpress.Web.Functions.QueryStringEncryption.DecryptQueryString(path);
+            string decryptedFileName = TNS.AdExpress.Web.Core.Utilities.QueryStringEncryption.DecryptQueryString(path);
             result = "";
 
             Regex f = new Regex(@"\.swf");

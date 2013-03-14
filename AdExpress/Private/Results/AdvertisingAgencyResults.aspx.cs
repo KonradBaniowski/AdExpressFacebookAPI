@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using TNS.AdExpress.Constantes.Customer;
+using TNS.AdExpress.Domain.Classification;
+using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Web.BusinessFacade.Global.Loading;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 
@@ -159,6 +163,8 @@ public partial class Private_Results_AdvertisingAgencyResults : TNS.AdExpress.We
         }
         ResultsOptionsWebControl1.MutualExclusion = true;
 
+        ForbidMediaRefinePage();
+
         return (tmp);
     }
     #endregion
@@ -175,5 +181,30 @@ public partial class Private_Results_AdvertisingAgencyResults : TNS.AdExpress.We
         return this.MenuWebControl2.NextUrl;
     }
     #endregion
+
+    private void ForbidMediaRefinePage()
+    {
+        string listStr = _webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess);
+        if (!string.IsNullOrEmpty(listStr))
+        {
+            List<string> arrStr = new List<string>(listStr.Split(','));
+            List<Int64> idMedias = arrStr.ConvertAll(Convert.ToInt64);
+            bool hasMediaLevel = false;
+            List<DetailLevelItemInformation> levelInfos = VehiclesInformation.GetSelectionDetailLevelList(idMedias);
+            foreach (DetailLevelItemInformation currentDetailLevelItem in levelInfos)
+            {
+                if (currentDetailLevelItem.Id == DetailLevelItemInformation.Levels.media)
+                {
+                    hasMediaLevel = true; break;
+                }
+            }
+            if (!hasMediaLevel)
+            {
+                 MenuWebControl2.ForbidOptionPagesList = new ArrayList();
+                MenuWebControl2.ForbidOptionPagesList.Add(6);
+            }
+
+        }
+    }
 
 }

@@ -85,7 +85,7 @@
     </ProjectReference>
     <ProjectReference Include="..\TNS.Alert.Domain\TNS.Alert.Domain.csproj">
       <Project>{741A9674-6545-469F-8528-F96BA2DB3A74}</Project>
-      <Name>TNS.Ares.Alert.Domain</Name>
+      <Name>TNS.Alert.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.Ares.Alerts.DAL\TNS.Ares.Alerts.DAL.csproj">
       <Project>{3EDBE8FB-A516-49C9-92FC-B0B0103F7D06}</Project>

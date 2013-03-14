@@ -1291,7 +1291,7 @@
         <RulesLayer name="Default Advertising Agency rules layers" assemblyName="TNS.AdExpressI.AdvertisingAgency.Default.dll" class="TNS.AdExpressI.AdvertisingAgency.Default.AdvertisingAgencyResult"/>
         <DataAccessLayer name="Default Advertising Agency data access layers" assemblyName="TNS.AdExpressI.AdvertisingAgency.DAL.Default.dll" class="TNS.AdExpressI.AdvertisingAgency.DAL.Default.AdvertisingAgencyDAL"/>
         <ProductRights branches="product|advertiser"/>
-        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="445">      
+        <ModuleAllowedMediaUniverse initFromBaal="true" baalId="445">    
         </ModuleAllowedMediaUniverse>
         <ProductDetailLevel>
           <defaultProductDetailLevels>

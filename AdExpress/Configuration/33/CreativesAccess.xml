@@ -30,7 +30,8 @@
     <Network id="LOCAL_PATH_VIDEO" name="Répertoire pour télécharger les spots tv" value="\\frmitch-fs03.tnsad.com\quali_multimedia\Streaming\fr"/>
     <Network id="LOCAL_PATH_PAN_EURO" name="Répertoire pour télécharger les paneuro" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\PanEuro"/>
     <Network id="LOCAL_PATH_IMAGE" name="Répertoire contenant les visuels de la presse" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\Press\SCANS\"/>
-    <Network id="LOCAL_PATH_MD_IMAGE" name="Répertoire contenant les visuels du Marketing Direct" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\MarketingDirect\"/>
+    <!--<Network id="LOCAL_PATH_MD_IMAGE" name="Répertoire contenant les visuels du Marketing Direct" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\MarketingDirect\"/>-->
+    <Network id="LOCAL_PATH_MD_IMAGE" name="Répertoire contenant les visuels du Marketing Direct" value="\\KMCHMFS001\Adex\Multimedia\MarketingDirect\"/>
     <Network id="LOCAL_PATH_OUTDOOR" name="Répertoire contenant les logos de la publicité extérieur" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\Outdoor\"/>
     <Network id="LOCAL_PATH_LOGO_PRESS" name="Répertoire contenant les logos de la presse" value="\\hera\AdexDatas\LogosPresse\"/>
     <Network id="LOCAL_PATH_ADEXNEWS" name="Fichiers AdExNews" value="\\frmitch-fs03.tnsad.com\quanti_multimedia_perf\AdexDatas\InfoNews\AdexNews\"/>

@@ -522,7 +522,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             HeaderColumnLineHeader currentHeaderColumnLineHeader = new HeaderColumnLineHeader(string.Empty);
             headers.Root.Add(currentHeaderColumnLineHeader);
 
-            Header currentHeader = new Header(string.Empty, indexColheader);
+            Header currentHeader = new Header("", indexColheader);
             headers.Root.Add(currentHeader);
 
             indexColheader++;
@@ -601,13 +601,15 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             Int64 TOTAL_SECTOR_LINE_INDEX = 1;
             //Rowspan
             int rowspan = 0;
-            if (((tabTotal == null || tabTotal.GetLength(0) == 0) || (tabResult == null || tabResult[3] == null && dtTotalMarket == null)) && (tabTotalUniverse == null || tabTotalUniverse.GetLength(0) == 0)) {
+            if (((tabTotal == null || tabTotal.GetLength(0) == 0) || (tabResult == null || tabResult[3] == null && dtTotalMarket == null)) && (tabTotalUniverse == null
+                || tabTotalUniverse.GetLength(0) == 0)) {
                 rowspan = nbAdvertiser + 1;
             }
             else if ((tabTotal == null) && (tabResult != null && tabResult[3] == null) && (tabTotalUniverse != null || tabTotalUniverse.GetLength(0) > 0)) {
                 rowspan = nbAdvertiser + 1;
             }
-            else if (((tabTotal != null && tabTotal.GetLength(0) > 0) || (tabResult != null || tabResult[3] != null && (dtTotalMarket != null && dtTotalMarket.Rows.Count > 0))) && (tabTotalUniverse == null || tabTotalUniverse.GetLength(0) == 0)) {
+            else if (((tabTotal != null && tabTotal.GetLength(0) > 0) || (tabResult != null || tabResult[3] != null && (dtTotalMarket != null
+                && dtTotalMarket.Rows.Count > 0))) && (tabTotalUniverse == null || tabTotalUniverse.GetLength(0) == 0)) {
                 rowspan = nbAdvertiser + 1;
             }
             else {
@@ -781,9 +783,7 @@ namespace TNS.AdExpressI.ProductClassIndicators.Engines
             }
             #endregion
 
-            #region Add HeadersLine to Header Columns Line Header
-            currentHeaderColumnLineHeader.HeadersLine =resultTable.NewHeadersLine;
-            #endregion
+           
 
             return resultTable;
 
