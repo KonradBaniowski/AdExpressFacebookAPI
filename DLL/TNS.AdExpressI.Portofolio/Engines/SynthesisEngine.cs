@@ -185,6 +185,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             if (isAlertModule && (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing 
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.czinternet
+                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mailValo
                 )) {
                 if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.indoor
@@ -306,6 +307,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.czinternet
+                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mailValo
                 ) {
                 DataSet ds = _portofolioDAL.GetSynthisData(PortofolioSynthesis.dataType.periodSelected);
                 DataTable dt = ds.Tables[0];
@@ -364,6 +366,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             string pageNumber = string.Empty;
             if (_vehicleInformation.AllowedUnitEnumList.Contains(WebCst.CustomerSessions.Unit.pages)
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
+                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mailValo
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.czinternet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
@@ -399,6 +402,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         /// </summary>
         protected virtual string GetDataProductNumberInTracking() {
             if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
+                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mailValo
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.instore
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.indoor
@@ -422,6 +426,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
         /// </summary>
         protected virtual string GetDataProductNumberInVehicle() {
             if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
+                  && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mailValo
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.outdoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.instore
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.indoor
@@ -513,6 +518,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             if (!isAlertModule
                 || (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.directMarketing && _webSession.CustomerPeriodSelected.IsSliding4M)
                 || (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.internet && _webSession.CustomerPeriodSelected.IsSliding4M)
+                 || (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.mailValo && _webSession.CustomerPeriodSelected.IsSliding4M)
                 || (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.czinternet && _webSession.CustomerPeriodSelected.IsSliding4M)
                 || (firstDate.Length > 0 && lastDate.Length > 0 && isAlertModule)) {
 
@@ -617,7 +623,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region Compute data
-            if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing) {
+            if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mailValo)
+            {
 
                 #region Get Data
                 regie = GetDataMediaSeller();
@@ -676,7 +684,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region Compute data
-            if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing) {
+            if (_vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mailValo)
+            {
 
                 #region Get Data
                 interestCenter = GetDataInterestCenter();
@@ -1130,6 +1140,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 
             #region Compute data
             if (dataUnit!=null && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.radio
+                   && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mailValo
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioGeneral
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioMusic
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.radioSponsorship
@@ -1140,7 +1151,10 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvNonTerrestrials
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.tvSponsorship
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.others
-                && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile)) {
+                && (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.adnettrack
+                || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.evaliantMobile)
+             )
+            {
 
                 #region Get Data
                 nbrSpot = dataUnit.GetSpotNumber();
@@ -1184,9 +1198,14 @@ namespace TNS.AdExpressI.Portofolio.Engines {
             #endregion
 
             #region Compute data
-            if (dataUnit!=null && investment != null && investment.Length > 0 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile) {
+            if (dataUnit!=null && investment != null && investment.Length > 0 &&
+                _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.evaliantMobile
+                &&  _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing) {
                 data = new List<ICell>(2);
-                data.Add(new CellLabel(GestionWeb.GetWebWord(2787, _webSession.SiteLanguage) + " (" + defaultCurrency.GetUnitWebText(_webSession.SiteLanguage) + ")"));
+                data.Add(new CellLabel(string.Format("{0} ({1})",
+                    GestionWeb.GetWebWord(2787, _webSession.SiteLanguage), 
+                    defaultCurrency.GetUnitWebText(_webSession.SiteLanguage))));
                 CellEuro cE = new CellEuro(double.Parse(investment));
                 cE.StringFormat = UnitsInformation.Get(UnitsInformation.DefaultCurrency).StringFormat;
                 data.Add(cE);
@@ -1239,6 +1258,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.instore
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.indoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
+                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mailValo
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.czinternet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack
@@ -1277,6 +1297,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.instore
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.indoor
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.directMarketing
+                && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.mailValo
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.internet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.czinternet
                 && _vehicleInformation.Id != DBClassificationConstantes.Vehicles.names.adnettrack

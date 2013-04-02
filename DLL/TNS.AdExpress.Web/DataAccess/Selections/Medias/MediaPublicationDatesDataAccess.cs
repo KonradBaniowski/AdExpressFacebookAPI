@@ -149,6 +149,9 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
                     tableName = WebApplicationParameters.GetDataTable(TableIds.dataMarketingDirect, webSession.IsSelectRetailerDisplay).Sql;
                     break;
+                case DBClassificationConstantes.Vehicles.names.mailValo:
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataMail, webSession.IsSelectRetailerDisplay).Sql;
+                    break;
                 case DBClassificationConstantes.Vehicles.names.press:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                     tableName = WebApplicationParameters.GetDataTable(TableIds.dataPress, webSession.IsSelectRetailerDisplay).Sql;
@@ -185,13 +188,11 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
             }
 
             switch (VehiclesInformation.DatabaseIdToEnum(idVehicle)) {
-                case DBClassificationConstantes.Vehicles.names.internet:
-                    sql += " select max(" + DBConstantes.Fields.DATE_MEDIA_NUM + ") last_date ";
-                    sql += " from " + tableName;
-                    break;
+                case DBClassificationConstantes.Vehicles.names.internet:                  
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
-                    sql += " select max(" + DBConstantes.Fields.DATE_MEDIA_NUM + ") last_date ";
-                    sql += " from " + tableName;
+                case DBClassificationConstantes.Vehicles.names.mailValo:
+                    sql += string.Format(" select max({0}) last_date ", DBConstantes.Fields.DATE_MEDIA_NUM);
+                    sql += string.Format(" from {0}", tableName);
                     break;
                 case DBClassificationConstantes.Vehicles.names.press:
                 case DBClassificationConstantes.Vehicles.names.newspaper:

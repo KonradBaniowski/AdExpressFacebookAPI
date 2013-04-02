@@ -298,11 +298,14 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.czinternet:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.mailValo:
 
                     foreach (UnitInformation currentUnit in _webSession.GetValidUnitForResult()) {
-                        headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, GestionWeb.GetWebWord(currentUnit.WebTextId, _webSession.SiteLanguage), currentUnit.WebTextId));
+                        headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, 
+                            GestionWeb.GetWebWord(currentUnit.WebTextId, _webSession.SiteLanguage), currentUnit.WebTextId));
                         type = assembly.GetType(currentUnit.CellType);
-                        cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
+                        cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static
+                            | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
 						cellUnit.StringFormat = currentUnit.StringFormat;
                         columnsName[columnIndex + creatives + insertions] = currentUnit.Id.ToString();
                         cellFactories[columnIndex + creatives + insertions] = new CellUnitFactory((CellUnit)cellUnit);
@@ -338,7 +341,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
 			parameters[2] = _idMedia;
 			parameters[3] = _periodBeginning;
 			parameters[4] = _periodEnd;
-			IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+			IPortofolioDAL portofolioDAL = (IPortofolioDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
+                + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance
+                | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
 			return portofolioDAL.GetData();			
 		}
 		#endregion

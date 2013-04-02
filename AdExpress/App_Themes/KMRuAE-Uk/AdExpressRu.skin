@@ -1159,6 +1159,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
                            InitializeUpImage = "/App_Themes/KMRuAE-Uk/Images/Common/button/initialize_up.gif"
                            InitializeDownImage = "/App_Themes/KMRuAE-Uk/Images/Common/button/initialize_down.gif"
                            WaitLoadingImage = "/App_Themes/KMRuAE-Uk/Images/Common/waitAjax.gif"
+                            IsCheckUniverseLevels="False"
 />
 <%-- Select items in classification web control : used to select Items in Classification --%>
 <ctrSelections:SelectRecapItemsInClassificationWebControl   
@@ -1271,6 +1272,7 @@ de contrôle par défaut par type de contrôle est autorisée dans le même thè
 <ctrSelections:vehicleselectionwebcontrol 
                            runat="server" 
                            CssClass="txtViolet11Bold"
+CheckActiveVehicle="False"
 />
 
 <%-- generic media schedule web control : used to display a generic media plan --%>

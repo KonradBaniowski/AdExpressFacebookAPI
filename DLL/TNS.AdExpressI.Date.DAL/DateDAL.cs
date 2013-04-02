@@ -130,6 +130,7 @@ namespace TNS.AdExpressI.Date.DAL {
                     firstDayOfWeek = publicationDate.AddDays(1);
                     return firstDayOfWeek;
                 case DBClassificationConstantes.Vehicles.names.internet:
+                case DBClassificationConstantes.Vehicles.names.mailValo:
                     publicationDate = publicationDate.AddMonths(1);
                     firstDayOfWeek = new DateTime(publicationDate.Year, publicationDate.Month, 1);
                     return firstDayOfWeek;
@@ -219,6 +220,9 @@ namespace TNS.AdExpressI.Date.DAL {
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
                     tableName = WebApplicationParameters.GetDataTable(TableIds.dataMarketingDirect, _session.IsSelectRetailerDisplay).Sql;
                     break;
+                case DBClassificationConstantes.Vehicles.names.mailValo:
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataMail, _session.IsSelectRetailerDisplay).Sql;
+                    break;
                 case DBClassificationConstantes.Vehicles.names.press:
                 case DBClassificationConstantes.Vehicles.names.internationalPress:
                     tableName = WebApplicationParameters.GetDataTable(TableIds.dataPress, _session.IsSelectRetailerDisplay).Sql;
@@ -256,16 +260,15 @@ namespace TNS.AdExpressI.Date.DAL {
             switch (VehiclesInformation.DatabaseIdToEnum(idVehicle)) {
                 /* For internet media type, we select the max date from DATA_INTERNET, for all the vehicles
                  * */
-                case DBClassificationConstantes.Vehicles.names.internet:
-                    sql += " select max(" + DBConstantes.Fields.DATE_MEDIA_NUM + ") last_date ";
-                    sql += " from " + tableName;
-                    break;
                 /* For directMarketing media type, we select the max date from DATA_MARKETING_DIRECT for all the vehicles
-                 * */
+            * */
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
-                    sql += " select max(" + DBConstantes.Fields.DATE_MEDIA_NUM + ") last_date ";
-                    sql += " from " + tableName;
+                case DBClassificationConstantes.Vehicles.names.mailValo:
+                case DBClassificationConstantes.Vehicles.names.internet:
+                    sql += string.Format(" select max({0}) last_date ", DBConstantes.Fields.DATE_MEDIA_NUM);
+                    sql += string.Format(" from {0}", tableName);
                     break;
+                               
                 /* For the media types below, we select the max date for every vehicle and after that we select the min date from the list of max date
                  * */
                 case DBClassificationConstantes.Vehicles.names.czinternet:
@@ -462,11 +465,14 @@ namespace TNS.AdExpressI.Date.DAL {
         /// </summary>
         /// <returns>Data source</returns>
         protected virtual TNS.FrameWork.DB.Common.IDataSource GetDataSource() {
-            TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.sourceProvider];
+            TNS.AdExpress.Domain.Layers.CoreLayer cl = TNS.AdExpress.Domain.Web.
+                WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.sourceProvider];
             object[] param = new object[1];
             param[0] = _session;
             if (cl == null) throw (new NullReferenceException("Core layer is null for the source provider layer"));
-            TNS.AdExpress.Web.Core.ISourceProvider sourceProvider = (TNS.AdExpress.Web.Core.SourceProvider)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
+            TNS.AdExpress.Web.Core.ISourceProvider sourceProvider = (TNS.AdExpress.Web.Core.SourceProvider)AppDomain.CurrentDomain.
+                CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class,
+                false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
             return sourceProvider.GetSource();
 
         }

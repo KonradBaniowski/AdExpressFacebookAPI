@@ -24,6 +24,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
+using TNS.AdExpress.Domain.Classification;
 using WebConstantes = TNS.AdExpress.Constantes.Web;
 using ConstantesFrwkResults = TNS.AdExpress.Constantes.FrameWork.Results;
 using DBConstantes = TNS.AdExpress.Constantes.DB;
@@ -59,6 +61,16 @@ namespace TNS.AdExpress.Web.Core.Utilities{
         {
         }
 
+        public List<long> GetAllowedVehicles(List<long> vehicles, TNS.Classification.Universe.Universe universe)
+        {
+            var levels = universe.ConvertToDetailLevelItemInformation();
+
+            return (from vehicle in vehicles let vehicleInformation = VehiclesInformation.Get(vehicle)
+                    let allowedMediaLevelItemsEnumList = vehicleInformation.AllowedMediaLevelItemsEnumList
+                    where levels.TrueForAll(allowedMediaLevelItemsEnumList.Contains)
+                    select vehicle).ToList();
+        }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -70,6 +82,14 @@ namespace TNS.AdExpress.Web.Core.Utilities{
             _componentProfile = componentProfile;
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="customerWebSession">_customer WebSession</param>
+        public MediaDetailLevel(WebSession customerWebSession)
+        {
+            _customerWebSession = customerWebSession;
+        }
 
         /// <summary>
         /// Obtient le niveau de détail media par défaut en fonction du module
@@ -78,7 +98,8 @@ namespace TNS.AdExpress.Web.Core.Utilities{
         /// <returns>Niveau de détail</returns>
         public virtual WebConstantes.CustomerSessions.PreformatedDetails.PreformatedMediaDetails GetDefaultPreformatedMediaDetails(WebSession webSession)
         {
-            if (webSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE && webSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR)
+            if (webSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.TABLEAU_DYNAMIQUE 
+                && webSession.CurrentModule != TNS.AdExpress.Constantes.Web.Module.Name.INDICATEUR)
             {
 
                 if (webSession.CurrentModule == TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_DES_DISPOSITIFS)
@@ -87,7 +108,8 @@ namespace TNS.AdExpress.Web.Core.Utilities{
                     return TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicle;
                 else return TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategory;
             }
-            else return TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicle;
+            else 
+                return TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicle;
         }
 
         /// <summary>
@@ -164,8 +186,7 @@ namespace TNS.AdExpress.Web.Core.Utilities{
                     for (int i = 0; i < session.GenericMediaDetailLevel.Levels.Count; i++)
                     {
                         if (session.GenericMediaDetailLevel.Levels[i] != null
-                            && ((DetailLevelItemInformation)session.GenericMediaDetailLevel.Levels[i]).DataBaseIdField != null
-                            && ((DetailLevelItemInformation)session.GenericMediaDetailLevel.Levels[i]).DataBaseIdField.Length > 0
+                            && !string.IsNullOrEmpty(((DetailLevelItemInformation)session.GenericMediaDetailLevel.Levels[i]).DataBaseIdField)
                             ) {
                             indexLevel++;
                             switch (indexLevel) {
@@ -458,12 +479,14 @@ namespace TNS.AdExpress.Web.Core.Utilities{
                 switch ((WebConstantes.DetailSelection.Type)currentType)
                 {
                     case WebConstantes.DetailSelection.Type.genericMediaLevelDetail:
-                        genericlevelDetailLabel.Text = (excel) ? Convertion.ToHtmlString(webSession.GenericMediaDetailLevel.GetLabel(webSession.SiteLanguage)) : webSession.GenericMediaDetailLevel.GetLabel(webSession.SiteLanguage);
+                        genericlevelDetailLabel.Text = (excel) ? Convertion.ToHtmlString(webSession.GenericMediaDetailLevel.GetLabel(webSession.SiteLanguage))
+                            : webSession.GenericMediaDetailLevel.GetLabel(webSession.SiteLanguage);
                         if (genericlevelDetailLabel.Text != null && genericlevelDetailLabel.Text.Length > 0)
                             displayGenericlevelDetailLabel = true;
                         break;
                     case WebConstantes.DetailSelection.Type.genericProductLevelDetail:
-                        genericlevelDetailLabel.Text = (excel) ? Convertion.ToHtmlString(webSession.GenericProductDetailLevel.GetLabel(webSession.SiteLanguage)) : webSession.GenericProductDetailLevel.GetLabel(webSession.SiteLanguage);
+                        genericlevelDetailLabel.Text = (excel) ? Convertion.ToHtmlString(webSession.GenericProductDetailLevel.GetLabel(webSession.SiteLanguage))
+                            : webSession.GenericProductDetailLevel.GetLabel(webSession.SiteLanguage);
                         if (genericlevelDetailLabel.Text != null && genericlevelDetailLabel.Text.Length > 0)
                             displayGenericlevelDetailLabel = true;
                         break;
@@ -483,7 +506,8 @@ namespace TNS.AdExpress.Web.Core.Utilities{
         /// <param name="genericlevelDetailColumnLabel">Libellé niveaux de détail</param>
         /// <param name="excel">Indique si sortie excel</param>
         /// <returns>HTML</returns>
-        public static void GetGenericLevelDetailColumn(WebSession webSession, ref bool displayGenericlevelDetailColumnLabel, System.Web.UI.WebControls.Label genericlevelDetailColumnLabel, bool excel)
+        public static void GetGenericLevelDetailColumn(WebSession webSession, ref bool displayGenericlevelDetailColumnLabel,
+            System.Web.UI.WebControls.Label genericlevelDetailColumnLabel, bool excel)
         {
             ArrayList detailSelections = null;
 
@@ -503,7 +527,8 @@ namespace TNS.AdExpress.Web.Core.Utilities{
                 switch ((WebConstantes.DetailSelection.Type)currentType)
                 {
                     case WebConstantes.DetailSelection.Type.genericColumnLevelDetail:
-                        genericlevelDetailColumnLabel.Text = (excel) ? Convertion.ToHtmlString(webSession.GenericColumnDetailLevel.GetLabel(webSession.SiteLanguage)) : webSession.GenericColumnDetailLevel.GetLabel(webSession.SiteLanguage);
+                        genericlevelDetailColumnLabel.Text = (excel) ? Convertion.ToHtmlString(webSession.GenericColumnDetailLevel.
+                            GetLabel(webSession.SiteLanguage)) : webSession.GenericColumnDetailLevel.GetLabel(webSession.SiteLanguage);
                         if (genericlevelDetailColumnLabel.Text != null && genericlevelDetailColumnLabel.Text.Length > 0)
                             displayGenericlevelDetailColumnLabel = true;
                         break;

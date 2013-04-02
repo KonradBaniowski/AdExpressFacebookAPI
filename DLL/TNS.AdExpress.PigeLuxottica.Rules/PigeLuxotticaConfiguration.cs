@@ -37,8 +37,8 @@ namespace TNS.AdExpress.PigeLuxottica.Rules
             _idAdvertisers = "49044,9160,41258,10919,6761,31194,55823,49811,35765";
             _idProducts = "123125,175080,176509,157705,147885,170768,31695,284565,64488,58050,183809,69324,423781,110189,41781,45930,463887,316354,39129,284680,263121,58960,166239,292475,208003";
             _idVehicle = 1;
-            _beginningDate = "20080101";
-            _endDate = "20081231";
+            _beginningDate = "20120101";
+            _endDate = "20121231";
             _connectionString = "User Id=gfacon; Password=sandie5; Data Source=adexpr03.pige;Pooling=true; Max Pool Size=150; Decr Pool Size=20; Connection Timeout=120";
             _source = new OracleDataSource(_connectionString);
         }

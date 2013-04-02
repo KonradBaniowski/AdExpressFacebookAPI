@@ -485,17 +485,22 @@ namespace AdExpress.Private.Results{
                 case ClassificationCst.DB.Vehicles.names.instore:
                 case ClassificationCst.DB.Vehicles.names.indoor:
 				case ClassificationCst.DB.Vehicles.names.cinema :
-					if (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE || (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR && !_webSession.CustomerPeriodSelected.IsSliding4M)) {
+					if (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY ||
+                        _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA
+                        || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE || 
+                        (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR && !_webSession.CustomerPeriodSelected.IsSliding4M)) {
 						_webSession.CurrentTab = FrameWorkConstantes.Portofolio.SYNTHESIS;
 						_webSession.Save();
 					}
 					break;
 				case ClassificationCst.DB.Vehicles.names.directMarketing:
+                case ClassificationCst.DB.Vehicles.names.mailValo:
 				case ClassificationCst.DB.Vehicles.names.internet:
                 case ClassificationCst.DB.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.adnettrack:
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
-					if ((_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR)) {
+					if ((_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA 
+                        || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR)) {
 						_webSession.CurrentTab = FrameWorkConstantes.Portofolio.SYNTHESIS;
 						_webSession.Save();
 					}
@@ -514,7 +519,10 @@ namespace AdExpress.Private.Results{
                 case ClassificationCst.DB.Vehicles.names.newspaper:
                 case ClassificationCst.DB.Vehicles.names.magazine:
 				case ClassificationCst.DB.Vehicles.names.internationalPress:
-					if (!_webSession.CustomerPeriodSelected.IsSliding4M && (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR)) {
+					if (!_webSession.CustomerPeriodSelected.IsSliding4M && (_webSession.CurrentTab == FrameWorkConstantes.Portofolio.NOVELTY
+                        || _webSession.CurrentTab == FrameWorkConstantes.Portofolio.DETAIL_MEDIA || 
+                        _webSession.CurrentTab == FrameWorkConstantes.Portofolio.STRUCTURE ||
+                        _webSession.CurrentTab == FrameWorkConstantes.Portofolio.CALENDAR)) {
 						_webSession.CurrentTab = FrameWorkConstantes.Portofolio.SYNTHESIS;
 						_webSession.Save();
 					}

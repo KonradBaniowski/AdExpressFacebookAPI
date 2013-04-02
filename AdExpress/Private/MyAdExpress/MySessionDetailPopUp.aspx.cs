@@ -301,6 +301,7 @@ namespace AdExpress.Private.MyAdExpress
                     {
                         TNS.AdExpress.Domain.Layers.CoreLayer cl = WebApplicationParameters.CoreLayers[Layers.Id.dateDAL];
                         object[] param = new object[1];
+                        webSessionSave.Source = _webSession.Source;
                         param[0] = webSessionSave;
                         IDateDAL dateDAL = (IDateDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
                         FirstDayNotEnable = dateDAL.GetFirstDayNotEnabled(new List<Int64>(new Int64[] { selectedVehicle }), oldYear);

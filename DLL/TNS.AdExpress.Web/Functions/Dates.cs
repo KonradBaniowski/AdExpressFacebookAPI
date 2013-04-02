@@ -615,6 +615,7 @@ namespace TNS.AdExpress.Web.Functions{
                     return firstDayOfWeek;
                 case DBClassificationConstantes.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.internet:
+                case DBClassificationConstantes.Vehicles.names.mailValo:
                     lastDate = TNS.AdExpress.Web.DataAccess.Selections.Medias.MediaPublicationDatesDataAccess.GetLatestPublication(webSession, selectedVehicle,dataSource);
                     startYear--;
                     if (lastDate.Length == 0) lastDate = startYear + "1231";

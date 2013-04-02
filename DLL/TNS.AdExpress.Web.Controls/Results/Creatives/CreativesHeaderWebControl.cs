@@ -9,21 +9,15 @@
  */
 #endregion
 
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Text;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Web.Controls.Headers;
 using DBClassifCst = TNS.AdExpress.Constantes.Classification.DB;
-using WebCst = TNS.AdExpress.Constantes.Web;
-using TNS.FrameWork.Date;
 using TNS.AdExpress.Domain.Classification;
 
 namespace TNS.AdExpress.Web.Controls.Results.Creatives {
@@ -314,7 +308,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                         vehicle = GestionWeb.GetWebWord(648, _webSession.SiteLanguage); 
                         break;
                     case DBClassifCst.Vehicles.names.directMarketing:
-                        vehicle = GestionWeb.GetWebWord(2219, _webSession.SiteLanguage); 
+                        vehicle = GestionWeb.GetWebWord(2989, _webSession.SiteLanguage); 
                         break;
                     case DBClassifCst.Vehicles.names.internet:
                     case DBClassifCst.Vehicles.names.czinternet:

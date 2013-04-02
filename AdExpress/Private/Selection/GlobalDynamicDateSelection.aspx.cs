@@ -449,6 +449,7 @@ namespace AdExpress.Private.Selection {
                     return firstDayOfWeek;
                 case DBClassificationConstantes.Vehicles.names.internet:
                 case DBClassificationConstantes.Vehicles.names.czinternet:
+                case DBClassificationConstantes.Vehicles.names.mailValo:
                     lastDate = TNS.AdExpress.Web.DataAccess.Selections.Medias.MediaPublicationDatesDataAccess.GetLatestPublication(_webSession, selectedVehicle,_webSession.Source);
                     publicationDate = new DateTime(Convert.ToInt32(lastDate.Substring(0, 4)), Convert.ToInt32(lastDate.Substring(4, 2)), Convert.ToInt32(lastDate.Substring(6, 2)));
                     publicationDate = publicationDate.AddMonths(1);

@@ -5,6 +5,7 @@
 #endregion
 using System;
 using System.Data;
+using System.Linq;
 using System.Text;
 using System.IO;
 using System.Reflection;
@@ -20,6 +21,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.ComponentModel;
 using System.ComponentModel.Design;
+using TNS.AdExpress.Domain.Web;
 using ClassificationDA=TNS.AdExpress.DataAccess.Classification;
 using ClassificationTable = TNS.AdExpress.Constantes.Classification.DB.Table;
 using TNS.AdExpress.Domain.Translation;
@@ -143,6 +145,8 @@ namespace TNS.AdExpress.Web.Controls.Selections{
             get { return _filters; }
             set { _filters = value; }
         }
+
+	    public bool IsCheckUniverseLevels { get; set; }
 		#endregion
 
 		#region JavaScript
@@ -1393,5 +1397,48 @@ namespace TNS.AdExpress.Web.Controls.Selections{
         protected override string NewText(string text) {
             return text;
         }
-    }
+
+	    /// <summary>
+	    /// Chekc if is valid product universe  with media selected
+	    /// </summary>
+	    /// <param name="universe">universe</param>
+	    /// <returns>True if is valid product universe</returns>
+	    public bool IsValidUniverseLevels(TNS.AdExpress.Classification.AdExpressUniverse universe)
+	    {
+            if (IsCheckUniverseLevels && _webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA)
+	        {
+	            string eventArg = string.Empty;
+	            if (Page.Request.Form.GetValues("__EVENTARGUMENT") != null &&
+	                Page.Request.Form.GetValues("__EVENTARGUMENT")[0] != null)
+	                eventArg = Page.Request.Form.GetValues("__EVENTARGUMENT")[0];
+
+	            var vehiclesSelected = _webSession.GetVehiclesSelected();
+
+	            if (vehiclesSelected.Count > 0 && (eventArg.Equals("4") || eventArg.Equals("9999")))
+	            {
+	                var param = new object[1];
+	                param[0] = _webSession;
+	                var clMediaU = WebApplicationParameters.CoreLayers[WebConstantes.Layers.Id.mediaDetailLevelUtilities];
+	                if (clMediaU == null)
+	                    throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
+	                var mediaDetailLevelUtilities = (TNS.AdExpress.Web.Core.Utilities.
+	                                                     MediaDetailLevel)
+	                                                AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(
+	                                                    string.Format("{0}Bin\\{1}"
+	                                                                  , AppDomain.CurrentDomain.BaseDirectory,
+	                                                                  clMediaU.AssemblyName), clMediaU.Class, false,
+	                                                    BindingFlags.CreateInstance
+	                                                    | BindingFlags.Instance | BindingFlags.Public, null, param, null,
+	                                                    null);
+
+	                var activeVehicles =
+	                    mediaDetailLevelUtilities.GetAllowedVehicles(_webSession.GetVehiclesSelected().Keys.ToList(),
+	                                                                 universe);
+	                return (activeVehicles.Count == vehiclesSelected.Count);
+
+	            }
+	        }
+            return true;
+	    }
+	}
 }

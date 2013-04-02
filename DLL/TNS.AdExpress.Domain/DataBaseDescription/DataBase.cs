@@ -1112,7 +1112,15 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Table rolex presence type
         /// </summary>
         presenceType = 242,
+        /// <summary>
+        /// Table Data mail
+        /// </summary>
+        dataMail = 243,
 
+        /// <summary>
+        /// Table Data mail 4M
+        /// </summary>
+        dataMailAlert = 244,
 
         /// <summary>
         /// Alert description

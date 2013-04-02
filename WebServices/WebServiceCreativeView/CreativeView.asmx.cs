@@ -180,6 +180,8 @@ namespace WebServiceCreativeView
             VehicleCreativesInformation vehicleCreativesInformation = null;
             try
             {
+                idVersion = DecryptIdVersion(idVersion);
+
                 vehicleCreativesInformation = VehiclesCreativesInformation.GetVehicleCreativesInformation(idVehicle);
                 if (vehicleCreativesInformation != null)
                 {
@@ -208,7 +210,8 @@ namespace WebServiceCreativeView
                 {
                     try
                     {
-                        body = "<html><b><u>" + Server.MachineName + ":</u></b><br>" + "<font color=#FF0000>A error occure in the AdExpress creative webservice.</font><br>Erreur(" + exc.GetType().FullName + "):" + exc.Message + "<br><br><b><u>Source:</u></b><font color=#008000>" + exc.StackTrace.Replace("at ", "<br>at ") + "</font>";
+                        body = "<html><b><u>" + Server.MachineName + ":</u></b><br>" + "<font color=#FF0000>A error occure in the AdExpress creative webservice.</font><br>Erreur(" + exc.GetType().FullName + "):"
+                            + exc.Message + "<br><br><b><u>Source:</u></b><font color=#008000>" + exc.StackTrace.Replace("at ", "<br>at ") + "</font>";
                         if (!string.IsNullOrEmpty(idVersion)) body += "<br><b><u>ID Version path:</u></b><font color=#008000>" + idVersion + "</font>";
                         body += "<br><b><u>Id Media Type :</u></b><font color=#008000>" + idVehicle + "</font>";
                         body += "</html>";
@@ -228,7 +231,15 @@ namespace WebServiceCreativeView
             }
             return string.Empty;
         }
-     
+
+        private static string DecryptIdVersion(string idVersion)
+        {
+               //Decrypt id verion
+            if (string.IsNullOrEmpty(idVersion)) throw new ArgumentNullException("Parameter idVersion cannot be null");
+            idVersion = TNS.AdExpress.Web.Core.Utilities.QueryStringEncryption.DecryptQueryString(idVersion);
+            return idVersion;
+        }
+
 
         private string GetPath(string idVersion, Int64 idVehicle, VehicleCreativesInformation vehicleCreativesInformation)
         {
@@ -324,7 +335,9 @@ namespace WebServiceCreativeView
         {
             VehicleCreativesInformation vehicleCreativesInformation = null;
             try
-            {
+            {              
+                idVersion = DecryptIdVersion(idVersion);
+
                 List<string> list = GetPressPathes(idVersion, idVehicle);
                 var listByte = new List<byte[]>();
 

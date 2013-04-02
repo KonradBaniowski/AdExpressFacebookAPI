@@ -3484,6 +3484,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.GetDataTable(TableIds.dataInternet, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataMarketingDirect, isRetailerSelected).SqlWithPrefix);
+                case DBClassificationConstantes.Vehicles.names.mailValo:
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataMail, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.cinema:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataCinema, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
@@ -3540,8 +3542,10 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.GetDataTable(TableIds.dataInternetAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataMarketingDirectAlert, isRetailerSelected).SqlWithPrefix);
+                case DBClassificationConstantes.Vehicles.names.mailValo:
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataMailAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.cinema:
-                    return (WebApplicationParameters.GetDataTable(TableIds.dataCinema, isRetailerSelected).SqlWithPrefix);
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataCinemaAlert, isRetailerSelected).SqlWithPrefix);
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataEvaliantMobileAlert, isRetailerSelected).SqlWithPrefix);
                 default:
@@ -3617,6 +3621,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.GetDataTable(TableIds.dataInternet, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataMarketingDirect, isRetailerSelected).Label);
+                case DBClassificationConstantes.Vehicles.names.mailValo:
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataMail, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.cinema:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataCinema, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
@@ -3673,6 +3679,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return (WebApplicationParameters.GetDataTable(TableIds.dataInternetAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataMarketingDirectAlert, isRetailerSelected).Label);
+                case DBClassificationConstantes.Vehicles.names.mailValo:
+                    return (WebApplicationParameters.GetDataTable(TableIds.dataMailAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.cinema:
                     return (WebApplicationParameters.GetDataTable(TableIds.dataCinemaAlert, isRetailerSelected).Label);
                 case DBClassificationConstantes.Vehicles.names.evaliantMobile:
@@ -3724,6 +3732,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                             return WebApplicationParameters.GetDataTable(TableIds.dataInternetAlert, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.directMarketing:
                             return WebApplicationParameters.GetDataTable(TableIds.dataMarketingDirectAlert, isRetailerSelected).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.mailValo:
+                            return WebApplicationParameters.GetDataTable(TableIds.dataMailAlert, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.cinema:
                             return WebApplicationParameters.GetDataTable(TableIds.dataCinemaAlert, isRetailerSelected).SqlWithPrefix;
 						case DBClassificationConstantes.Vehicles.names.evaliantMobile:
@@ -3761,6 +3771,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                             return WebApplicationParameters.GetDataTable(TableIds.dataInternet, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.directMarketing:
                             return WebApplicationParameters.GetDataTable(TableIds.dataMarketingDirect, isRetailerSelected).SqlWithPrefix;
+                        case DBClassificationConstantes.Vehicles.names.mailValo:
+                            return WebApplicationParameters.GetDataTable(TableIds.dataMail, isRetailerSelected).SqlWithPrefix;
                         case DBClassificationConstantes.Vehicles.names.cinema:
                             return WebApplicationParameters.GetDataTable(TableIds.dataCinema, isRetailerSelected).SqlWithPrefix;
 						case DBClassificationConstantes.Vehicles.names.evaliantMobile:
@@ -4399,6 +4411,8 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return WebApplicationParameters.GetDataTable(TableIds.dataInternet, isRetailerSelected);
                 case DBClassificationConstantes.Vehicles.names.directMarketing:
                     return WebApplicationParameters.GetDataTable(TableIds.dataMarketingDirect, isRetailerSelected);
+                case DBClassificationConstantes.Vehicles.names.mailValo:
+                    return WebApplicationParameters.GetDataTable(TableIds.dataMail, isRetailerSelected);
                 case DBClassificationConstantes.Vehicles.names.cinema:
                     return WebApplicationParameters.GetDataTable(TableIds.dataCinema, isRetailerSelected);
 				case DBClassificationConstantes.Vehicles.names.evaliantMobile:

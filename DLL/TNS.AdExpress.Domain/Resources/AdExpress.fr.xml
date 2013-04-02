@@ -2227,6 +2227,9 @@
     <item mnemonic="w2985" type="System.String">AdExpress - Fichier PDF Fiches Visibilité Rolex généré</item>
     <item mnemonic="w2986" type="System.String">AdExpress - Fichier PDF Visibilité Rolex généré</item>
     <item mnemonic="w2987" type="System.String">Sites sans visibilité</item>
-    <item mnemonic="w2988" type="System.String">!</item>
+    <item mnemonic="w2988" type="System.String">!</item>    
+    <!--Ajout nouveau media Courrier -->
+    <item mnemonic="w2989" type="System.String">Courrier créations</item>
+    <item mnemonic="w2990" type="System.String">Veuillez changer votre sélection. Votre univers produit n'est pas disponible sur votre sélection de médias.</item>
   </items>
 </localization>

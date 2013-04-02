@@ -728,6 +728,7 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                 case DBClassificationConstantes.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.internet:
 				case DBClassificationConstantes.Vehicles.names.directMarketing:
+                case DBClassificationConstantes.Vehicles.names.mailValo:
 					return sql;
 				default:
 					throw new PortofolioDALException("getTable()-->There is no table for this vehicle.");
@@ -764,6 +765,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataInStoreAlert : TableIds.dataInStore, _webSession.IsSelectRetailerDisplay).Label;
 				case DBClassificationConstantes.Vehicles.names.directMarketing:
                     return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataMarketingDirectAlert : TableIds.dataMarketingDirect, _webSession.IsSelectRetailerDisplay).Label;
+                case DBClassificationConstantes.Vehicles.names.mailValo:
+                    return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataMailAlert : TableIds.dataMail, _webSession.IsSelectRetailerDisplay).Label;
                 case DBClassificationConstantes.Vehicles.names.czinternet:
                 case DBClassificationConstantes.Vehicles.names.internet:
                     return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataInternetAlert : TableIds.dataInternet, _webSession.IsSelectRetailerDisplay).Label;

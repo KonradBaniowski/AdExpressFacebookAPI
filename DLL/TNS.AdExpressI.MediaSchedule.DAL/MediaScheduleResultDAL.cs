@@ -540,14 +540,18 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                 || CstDBClassif.Vehicles.names.newspaper == vehicleInfo.Id
                 || CstDBClassif.Vehicles.names.magazine == vehicleInfo.Id
                 ))
-                || (periodBreakDown != CstWeb.CustomerSessions.Period.PeriodBreakdownType.data && periodBreakDown != CstWeb.CustomerSessions.Period.PeriodBreakdownType.data_4m)
+                || (periodBreakDown != CstWeb.CustomerSessions.Period.PeriodBreakdownType.data
+                && periodBreakDown != CstWeb.CustomerSessions.Period.PeriodBreakdownType.data_4m)
                 )
             {
-                sql.Append(FctWeb.SQLGenerator.GetJointForInsertDetail(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
+                sql.Append(FctWeb.SQLGenerator.GetJointForInsertDetail(_session,
+                    WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix));
             }
 
             // Autopromo Evaliant
-            if(VehiclesInformation.Contains(vehicleId) &&  (VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.adnettrack || VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.evaliantMobile)) {
+            if(VehiclesInformation.Contains(vehicleId) &&  (VehiclesInformation.DatabaseIdToEnum(vehicleId)
+                == CstDBClassif.Vehicles.names.adnettrack
+                || VehiclesInformation.DatabaseIdToEnum(vehicleId) == CstDBClassif.Vehicles.names.evaliantMobile)) {
                 if(_session.AutopromoEvaliant) // Hors autopromo (checkbox = checked)
                     sql.AppendFormat(" and {0}.auto_promotion = 0 ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix);
             }
@@ -560,34 +564,54 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             // Version selection
             string slogans = _session.SloganIdList;
             
-            // Zoom on a specific version
-            TNS.AdExpress.Web.Core.Utilities.Creatives creativesUtilities = new TNS.AdExpress.Web.Core.Utilities.Creatives();
-            if (creativesUtilities.IsSloganZoom(_session.SloganIdZoom) && periodDisplay == CstPeriod.DisplayLevel.dayly)
-            {
-                sql.AppendFormat(" and {0}.{2} = {1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.SloganIdZoom
-                    ,(vehicleInfo != null && (vehicleInfo.Id != CstDBClassif.Vehicles.names.adnettrack && vehicleInfo.Id != CstDBClassif.Vehicles.names.evaliantMobile ))?"id_slogan":"hashcode");
-            }
-            else {
-                // Refine vesions
-                if(slogans.Length > 0 && periodDisplay == CstPeriod.DisplayLevel.dayly) {
-                    sql.AppendFormat(" and {0}.{2} in({1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, slogans
-						, (vehicleInfo != null && (vehicleInfo.Id != CstDBClassif.Vehicles.names.adnettrack && vehicleInfo.Id != CstDBClassif.Vehicles.names.evaliantMobile)) ? "id_slogan" : "hashcode");
-                }
-            }
+          
+                // Zoom on a specific version
+           if (vehicleInfo != null &&
+               vehicleInfo.Id != CstDBClassif.Vehicles.names.mailValo)
+           {
+               var creativesUtilities = new TNS.AdExpress.Web.Core.Utilities.Creatives();
+               if (creativesUtilities.IsSloganZoom(_session.SloganIdZoom) && periodDisplay == CstPeriod.DisplayLevel.dayly)
+               {
+                   sql.AppendFormat(" and {0}.{2} = {1} ",
+                                         WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
+                                         _session.SloganIdZoom
+                                         ,
+                                         (vehicleInfo != null &&
+                                          (vehicleInfo.Id != CstDBClassif.Vehicles.names.adnettrack &&
+                                           vehicleInfo.Id != CstDBClassif.Vehicles.names.evaliantMobile))
+                                             ? "id_slogan"
+                                             : "hashcode");
+               }
+               else
+               {
+                   // Refine vesions
+                   if (slogans.Length > 0 && periodDisplay == CstPeriod.DisplayLevel.dayly)
+                   {
+                       sql.AppendFormat(" and {0}.{2} in({1}) ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, slogans
+                           , (vehicleInfo != null && (vehicleInfo.Id != CstDBClassif.Vehicles.names.adnettrack &&
+                           vehicleInfo.Id != CstDBClassif.Vehicles.names.evaliantMobile)) ? "id_slogan" : "hashcode");
+                   }
+               }
+           }
+               
+            
+          
 
             // Selection and right managment
 
             #region Nomenclature Produit (droits)
             //Access rgithDroits en accès
             if (_module == null) throw (new MediaScheduleDALException("_module cannot be NULL"));
-            sql.Append(FctWeb.SQLGenerator.GetClassificationCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches));
+            sql.Append(FctWeb.SQLGenerator.GetClassificationCustomerProductRight(_session,
+                WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches));
 
             GetExcludeProudcts(sql);
             #endregion
 
             #region Nomenclature Produit (Niveau de détail)
             // Product level
-            sql.Append(FctWeb.SQLGenerator.getLevelProduct(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+            sql.Append(FctWeb.SQLGenerator.getLevelProduct(_session,
+                WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             #endregion
 
             #region Sélection produit
@@ -608,10 +632,12 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
             #region Rights
             // No media right if AdNetTrack media schedule
 			if (_isAdNetTrackMediaSchedule) {
-				sql.Append(FctWeb.SQLGenerator.GetAdNetTrackMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+				sql.Append(FctWeb.SQLGenerator.GetAdNetTrackMediaRight(_session,
+                    WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
 			}
 			else
-				sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerMediaRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
+				sql.Append(FctWeb.SQLGenerator.getAnalyseCustomerMediaRight(_session,
+                    WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true));
             #endregion
 
             #region Selection
@@ -675,7 +701,10 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                             sqlFormatSelectedClause.AppendFormat(" {0}.id_vehicle = {1} ",
                                              WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
                                              cVehicleInfo.DatabaseId);
-                            sqlFormatSelectedClause.Append("and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + ".ID_" + WebApplicationParameters.DataBaseDescription.GetTable(WebApplicationParameters.VehiclesFormatInformation.VehicleFormatInformationList[cVehicleInfo.DatabaseId].FormatTableName).Label + " in (" + string.Join(",", formatIdList.ConvertAll(p => p.ToString()).ToArray()) + ") ");
+                            sqlFormatSelectedClause.Append("and " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix
+                                + ".ID_" + WebApplicationParameters.DataBaseDescription.GetTable(WebApplicationParameters.
+                                VehiclesFormatInformation.VehicleFormatInformationList[cVehicleInfo.DatabaseId].FormatTableName).Label
+                                + " in (" + string.Join(",", formatIdList.ConvertAll(p => p.ToString()).ToArray()) + ") ");
                             hasValidFormat = true;
                         }
                         else
@@ -718,7 +747,8 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 		/// <param name="additionalConditions">Addtional conditions such as AdNetTrack Baners...</param>
         /// <param name="isComparative">True if we need data for comparative period</param>
 		/// <returns>Sql query as a string</returns>
-        protected virtual string GetQueryForWebPlanEvaliant(GenericDetailLevel detailLevel, CstPeriod.DisplayLevel periodDisplay, CstPeriod.PeriodBreakdownType periodBreakDown, List<PeriodItem> periodItems, string additionalConditions, bool isComparative)
+        protected virtual string GetQueryForWebPlanEvaliant(GenericDetailLevel detailLevel, CstPeriod.DisplayLevel periodDisplay,
+            CstPeriod.PeriodBreakdownType periodBreakDown, List<PeriodItem> periodItems, string additionalConditions, bool isComparative)
         {
 
 			#region Variables
@@ -806,12 +836,16 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 			switch (periodBreakDown) {
 				case CstPeriod.PeriodBreakdownType.data:
 				case CstPeriod.PeriodBreakdownType.data_4m:
-					unitFieldName = string.Format(" to_char({0}.{1}) as {2} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseField, _session.GetSelectedUnit().Id.ToString());
-					groupByOptional = string.Format(", {0}.{1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseField);
+					unitFieldName = string.Format(" to_char({0}.{1}) as {2} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
+                        _session.GetSelectedUnit().DatabaseField, _session.GetSelectedUnit().Id.ToString());
+					groupByOptional = string.Format(", {0}.{1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
+                        _session.GetSelectedUnit().DatabaseField);
 					break;
 				default:
-					unitFieldName = string.Format(" {0}.{1} as {2} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseMultimediaField, _session.GetSelectedUnit().Id.ToString());
-					groupByOptional = string.Format(", {0}.{1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, _session.GetSelectedUnit().DatabaseMultimediaField);
+					unitFieldName = string.Format(" {0}.{1} as {2} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
+                        _session.GetSelectedUnit().DatabaseMultimediaField, _session.GetSelectedUnit().Id.ToString());
+					groupByOptional = string.Format(", {0}.{1} ", WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix,
+                        _session.GetSelectedUnit().DatabaseMultimediaField);
 					break;
 			}
 			sql.AppendFormat("{0}", unitFieldName);						
@@ -871,7 +905,8 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
 			#region Nomenclature Produit (droits)
 			//Access rgithDroits en accès
             if (_module == null) throw (new MediaScheduleDALException("_module cannot be NULL"));
-            sql.Append(FctWeb.SQLGenerator.GetClassificationCustomerProductRight(_session, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches));
+            sql.Append(FctWeb.SQLGenerator.GetClassificationCustomerProductRight(_session, 
+                WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches));
 
             // Exclude product if radio selected)
 			GetExcludeProudcts(sql);
@@ -1012,10 +1047,10 @@ namespace TNS.AdExpressI.MediaSchedule.DAL {
                         case CstDBClassif.Vehicles.names.czinternet:
                         case CstDBClassif.Vehicles.names.adnettrack:
 						case CstDBClassif.Vehicles.names.evaliantMobile:
-                        case CstDBClassif.Vehicles.names.cinema: // A Changer quand les durées seront bonnes
-                            return (" 1 as period_count ");
                         case CstDBClassif.Vehicles.names.directMarketing:
-                            return (" 1 as period_count ");
+                        case CstDBClassif.Vehicles.names.mailValo:
+                        case CstDBClassif.Vehicles.names.cinema: // A Changer quand les durées seront bonnes
+                            return (" 1 as period_count ");                      
                         default:
                             throw (new MediaScheduleDALException("Unable to determine the media periodicity"));
                     }

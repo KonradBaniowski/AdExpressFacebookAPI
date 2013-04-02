@@ -274,6 +274,9 @@
     <table enumId="240" description="Rolex : Location  "   schemaEnumId="12" label="emplacement" prefix="ep"/>
     <table enumId="241" description="Rolex : Site  "   schemaEnumId="12" label="site" prefix="st"/>
     <table enumId="242" description="Rolex : Tye presence  "   schemaEnumId="12" label="type_presence" prefix="tp"/>
+
+    <table enumId="243" description="Data: VMC Valo FP" schemaEnumId="0" label="data_mail" prefix="wp"/>
+    <table enumId="244" description="Data: VMC Valo FP" schemaEnumId="0" label="data_mail_4m" prefix="wp"/>
     
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>

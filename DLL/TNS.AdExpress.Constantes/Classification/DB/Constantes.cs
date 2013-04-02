@@ -219,7 +219,11 @@ namespace TNS.AdExpress.Constantes.Classification.DB{
             /// <summary>
             /// Press Clipping
             /// </summary>
-            pressClipping = 31
+            pressClipping = 31,
+            /// <summary>
+            /// Mail valorized with France Pub data
+            /// </summary>
+            mailValo = 32
 		}
 	}
 	#endregion

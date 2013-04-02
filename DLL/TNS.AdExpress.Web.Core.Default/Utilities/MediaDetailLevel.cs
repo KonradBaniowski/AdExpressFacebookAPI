@@ -55,6 +55,15 @@ namespace TNS.AdExpress.Web.Core.Default.Utilities
         {
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="customerWebSession">_customer WebSession</param>
+        public MediaDetailLevel(WebSession customerWebSession)
+            : base(customerWebSession)
+        {          
+        }
+
 
 
     }

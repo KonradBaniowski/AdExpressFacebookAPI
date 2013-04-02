@@ -47,12 +47,14 @@ using TNS.FrameWork.Collections;
 
 #endregion
 
-namespace TNS.AdExpressI.LostWon {
+namespace TNS.AdExpressI.LostWon
+{
 
     /// <summary>
     /// Default Dynamic reports
     /// </summary>
-    public abstract class LostWonResult : ILostWonResult {
+    public abstract class LostWonResult : ILostWonResult
+    {
 
         #region Constantes
         /// <summary>
@@ -137,25 +139,29 @@ namespace TNS.AdExpressI.LostWon {
         /// <summary>
         /// Get User session
         /// </summary>
-        public WebSession Session {
+        public WebSession Session
+        {
             get { return _session; }
         }
         /// <summary>
         /// Get Result Type
         /// </summary>
-        public Int32 ResultType {
+        public Int32 ResultType
+        {
             get { return _result; }
         }
         /// <summary>
         /// Get Current Vehicle
         /// </summary>
-        public VehicleInformation VehicleInformationObject {
+        public VehicleInformation VehicleInformationObject
+        {
             get { return _vehicleInformation; }
         }
         /// <summary>
         /// Get Current Module
         /// </summary>
-        public Navigation.Module CurrentModule {
+        public Navigation.Module CurrentModule
+        {
             get { return _module; }
         }
         #endregion
@@ -165,7 +171,8 @@ namespace TNS.AdExpressI.LostWon {
         /// Default Constructor
         /// </summary>
         /// <param name="session">User session</param>
-        public LostWonResult(WebSession session) {
+        public LostWonResult(WebSession session)
+        {
             _session = session;
             _module = Navigation.ModulesList.GetModule(session.CurrentModule);
 
@@ -183,56 +190,64 @@ namespace TNS.AdExpressI.LostWon {
         /// Compute portefolio report
         /// </summary>
         /// <returns>Computed data</returns>
-        public ResultTable GetPortofolio() {
+        public ResultTable GetPortofolio()
+        {
             return GetResult(DynamicAnalysis.PORTEFEUILLE);
         }
         /// <summary>
         /// Compute Loyal Report
         /// </summary>
         /// <returns>Computed data</returns>
-        public ResultTable GetLoyal() {
+        public ResultTable GetLoyal()
+        {
             return GetResult(DynamicAnalysis.LOYAL);
         }
         /// <summary>
         /// Compute "Loyal In Decline" Report
         /// </summary>
         /// <returns>Computed data</returns>
-        public ResultTable GetLoyalDecline() {
+        public ResultTable GetLoyalDecline()
+        {
             return GetResult(DynamicAnalysis.LOYAL_DECLINE);
         }
         /// <summary>
         /// Compute "Loyal In Progress" Report
         /// </summary>
         /// <returns>Computed data</returns>
-        public ResultTable GetLoyalRise() {
+        public ResultTable GetLoyalRise()
+        {
             return GetResult(DynamicAnalysis.LOYAL_RISE);
         }
         /// <summary>
         /// Compute "Won" Report
         /// </summary>
         /// <returns>Computed data</returns>
-        public ResultTable GetWon() {
+        public ResultTable GetWon()
+        {
             return GetResult(DynamicAnalysis.WON);
         }
         /// <summary>
         /// Compute "Lost" Report
         /// </summary>
         /// <returns>Computed data</returns>
-        public ResultTable GetLost() {
+        public ResultTable GetLost()
+        {
             return GetResult(DynamicAnalysis.LOST);
         }
         /// <summary>
         /// Compute "Synthesis" Report
         /// </summary>
         /// <returns>Computed data</returns>
-        public ResultTable GetSynthesis() {
+        public ResultTable GetSynthesis()
+        {
             return GetResult(DynamicAnalysis.SYNTHESIS);
         }
         /// <summary>
         /// Compute result specified in user session
         /// </summary>
         /// <returns>Computed data</returns>
-        public ResultTable GetResult() {
+        public ResultTable GetResult()
+        {
             return this.GetResult((Int32)_session.CurrentTab);
         }
         /// <summary>
@@ -240,8 +255,10 @@ namespace TNS.AdExpressI.LostWon {
         /// </summary>
         /// <param name="result">Type of result (DynamicAnalysis)</param>
         /// <returns>Computed data</returns>
-        public ResultTable GetResult(Int32 result) {
-            switch (result) {
+        public ResultTable GetResult(Int32 result)
+        {
+            switch (result)
+            {
                 case DynamicAnalysis.LOST:
                 case DynamicAnalysis.LOYAL:
                 case DynamicAnalysis.LOYAL_DECLINE:
@@ -313,7 +330,7 @@ namespace TNS.AdExpressI.LostWon {
         {
 
             #region variables
-            Int32 nbLine;
+            Int32 nbLine =0;
             List<string> advertisers = null;
             List<string> products = null;
             List<string> brands = null;
@@ -346,45 +363,56 @@ namespace TNS.AdExpressI.LostWon {
 
             string beginningPeriodN1DA = customerPeriod.ComparativeStartDate;
             string endPeriodN1DA = customerPeriod.ComparativeEndDate;
-            DateTime PeriodBeginningDate = new DateTime(Int32.Parse(customerPeriod.StartDate.Substring(0, 4)), Int32.Parse(customerPeriod.StartDate.Substring(4, 2)), Int32.Parse(customerPeriod.StartDate.Substring(6, 2)));
-            DateTime PeriodEndDate = new DateTime(Int32.Parse(customerPeriod.EndDate.Substring(0, 4)), Int32.Parse(customerPeriod.EndDate.Substring(4, 2)), Int32.Parse(customerPeriod.EndDate.Substring(6, 2))); ;
+            DateTime PeriodBeginningDate = new DateTime(Int32.Parse(customerPeriod.StartDate.Substring(0, 4)),
+                Int32.Parse(customerPeriod.StartDate.Substring(4, 2)), Int32.Parse(customerPeriod.StartDate.Substring(6, 2)));
+            DateTime PeriodEndDate = new DateTime(Int32.Parse(customerPeriod.EndDate.Substring(0, 4)),
+                Int32.Parse(customerPeriod.EndDate.Substring(4, 2)), Int32.Parse(customerPeriod.EndDate.Substring(6, 2))); ;
 
-            DateTime PeriodBeginningDateN1DA = new DateTime(Int32.Parse(customerPeriod.ComparativeStartDate.Substring(0, 4)), Int32.Parse(customerPeriod.ComparativeStartDate.Substring(4, 2)), Int32.Parse(customerPeriod.ComparativeStartDate.Substring(6, 2)));
-            DateTime PeriodEndDateN1DA = new DateTime(Int32.Parse(customerPeriod.ComparativeEndDate.Substring(0, 4)), Int32.Parse(customerPeriod.ComparativeEndDate.Substring(4, 2)), Int32.Parse(customerPeriod.ComparativeEndDate.Substring(6, 2))); ;
+            DateTime PeriodBeginningDateN1DA = new DateTime(Int32.Parse(customerPeriod.ComparativeStartDate.Substring(0, 4)),
+                Int32.Parse(customerPeriod.ComparativeStartDate.Substring(4, 2)), Int32.Parse(customerPeriod.ComparativeStartDate.Substring(6, 2)));
+            DateTime PeriodEndDateN1DA = new DateTime(Int32.Parse(customerPeriod.ComparativeEndDate.Substring(0, 4)),
+                Int32.Parse(customerPeriod.ComparativeEndDate.Substring(4, 2)), Int32.Parse(customerPeriod.ComparativeEndDate.Substring(6, 2))); ;
             CultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
-            
-			//string PeriodDateN = string.Format(cInfo, "{0:d}-{1:d}", PeriodBeginningDate, PeriodEndDate);
-			//string PeriodDateN1 = string.Format(cInfo, "{0:d}-{1:d}", PeriodBeginningDateN1DA, PeriodEndDateN1DA);
-			string PeriodDateN = FctUtilities.Dates.DateToString(PeriodBeginningDate,_session.SiteLanguage) + "-" + FctUtilities.Dates.DateToString(PeriodEndDate,_session.SiteLanguage);
-			string PeriodDateN1 = FctUtilities.Dates.DateToString(PeriodBeginningDateN1DA, _session.SiteLanguage) + "-" + FctUtilities.Dates.DateToString(PeriodEndDateN1DA, _session.SiteLanguage);
+
+            string PeriodDateN = string.Format("{0}-{1}", FctUtilities.Dates.DateToString(PeriodBeginningDate, _session.SiteLanguage),
+                FctUtilities.Dates.DateToString(PeriodEndDate, _session.SiteLanguage));
+            string PeriodDateN1 = string.Format("{0}-{1}", FctUtilities.Dates.DateToString(PeriodBeginningDateN1DA, _session.SiteLanguage),
+                FctUtilities.Dates.DateToString(PeriodEndDateN1DA, _session.SiteLanguage));
 
             #endregion
 
             #region Aucune données (par rapport aux dates)
-            if (PeriodBeginningDate > DateTime.Now) {
+            if (PeriodBeginningDate > DateTime.Now)
+            {
                 return null;
             }
             #endregion
 
             #region Chargement des données à partir de la base
 
-            try {
+            try
+            {
                 if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the lost won result"));
-                object[] parameters = new object[1];
+                var parameters = new object[1];
                 parameters[0] = _session;
-                ILostWonResultDAL lostwonDAL = (ILostWonResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+                var lostwonDAL = (ILostWonResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory +
+                    @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance
+                    | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
+
                 DataSet ds = lostwonDAL.GetSynthesisData();
-                if(ds !=null && ds.Tables !=null && ds.Tables[0] !=null)
+                if (ds != null && ds.Tables != null && ds.Tables[0] != null)
                     dt = ds.Tables[0];
 
             }
-            catch (System.Exception err) {
+            catch (System.Exception err)
+            {
                 throw (new LostWonException("Unable to load data for synthesis report.", err));
             }
             #endregion
 
             #region No Data
-            if (dt == null || dt.Rows == null || dt.Rows.Count==0) {
+            if (dt == null || dt.Rows == null || dt.Rows.Count == 0)
+            {
                 return null;
             }
             #endregion
@@ -394,21 +422,28 @@ namespace TNS.AdExpressI.LostWon {
             CellUnitFactory cellUnitFactory = _session.GetCellUnitFactory();
             GetProductActivity getProductActivity;
             string expression = string.Empty;
-            if (cellUnitFactory.Get(null) is CellIdsNumber){
+            if (cellUnitFactory.Get(null) is CellIdsNumber)
+            {
                 expression = _session.GetSelectedUnit().Id.ToString();
                 getProductActivity = new GetProductActivity(GetListProductActivity);
             }
-            else{
+            else
+            {
                 expression = FctWeb.SQLGenerator.GetUnitAliasSum(_session);
                 getProductActivity = new GetProductActivity(GetDoubleProductActivity);
             }
             #endregion
 
             #region Création des headers
-            nbLine = 4;
-			if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) nbLine++;
-            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE)) nbLine++;
-            //if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)) {
+            if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.sector)) nbLine++;
+            if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.subSector)) nbLine++;
+            if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.group)) nbLine++;
+            if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.advertiser)) nbLine++;
+
+            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)
+                && _vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.product)) nbLine++;
+            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE)
+                && _vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.brand)) nbLine++;
             if (_session.CustomerLogin.CustomerMediaAgencyFlagAccess(_vehicleInformation.DatabaseId))
             {
                 if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
@@ -418,7 +453,7 @@ namespace TNS.AdExpressI.LostWon {
             }
 
             // Ajout de la colonne Produit
-            Headers headers = new Headers();
+            var headers = new Headers();
             headers.Root.Add(new Header(GestionWeb.GetWebWord(1164, _session.SiteLanguage), LEVEL_ID));
 
             #region Fidèle
@@ -473,7 +508,7 @@ namespace TNS.AdExpressI.LostWon {
 
             #endregion
 
-            ResultTable resultTable = new ResultTable(nbLine, headers);
+            var resultTable = new ResultTable(nbLine, headers);
             Int32 nbCol = resultTable.ColumnsNumber - 2;
 
             advertisers = new List<string>();
@@ -487,31 +522,58 @@ namespace TNS.AdExpressI.LostWon {
 
             #region Initialisation des lignes
             Int32 levelLabelColIndex = resultTable.GetHeadersIndexInResultTable(LEVEL_ID.ToString());
-            advertiserLineIndex = resultTable.AddNewLine(LineType.level1);
-            resultTable[advertiserLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1146, _session.SiteLanguage));
-            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE)) {
+
+            if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.advertiser))
+            {
+                advertiserLineIndex = resultTable.AddNewLine(LineType.level1);
+                resultTable[advertiserLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1146, _session.SiteLanguage));                
+            }
+
+
+            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE)
+                  && _vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.brand))
+            {
                 brandLineIndex = resultTable.AddNewLine(LineType.level1);
                 resultTable[brandLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1149, _session.SiteLanguage));
             }
-			if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)) {
-				productLineIndex = resultTable.AddNewLine(LineType.level1);
-				resultTable[productLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1164, _session.SiteLanguage));
-			}
-			sectorLineIndex = resultTable.AddNewLine(LineType.level1);
-            resultTable[sectorLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1847, _session.SiteLanguage));
-            subsectorLineIndex = resultTable.AddNewLine(LineType.level1);
-            resultTable[subsectorLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1848, _session.SiteLanguage));
-            groupLineIndex = resultTable.AddNewLine(LineType.level1);
-            resultTable[groupLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1849, _session.SiteLanguage));
+
+            if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)
+                && _vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.product))
+            {
+                productLineIndex = resultTable.AddNewLine(LineType.level1);
+                resultTable[productLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1164, _session.SiteLanguage));
+            }
+            if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.sector))
+            {
+                sectorLineIndex = resultTable.AddNewLine(LineType.level1);
+                resultTable[sectorLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1847, _session.SiteLanguage));
+
+            }
+
+            if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.subSector))
+            {
+                subsectorLineIndex = resultTable.AddNewLine(LineType.level1);
+                resultTable[subsectorLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1848, _session.SiteLanguage));
+
+            }
+
+            if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.group))
+            {
+                groupLineIndex = resultTable.AddNewLine(LineType.level1);
+                resultTable[groupLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1849, _session.SiteLanguage));
+
+            }
+
             // Groupe d'Agence && Agence
-            //if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)) {
             if (_session.CustomerLogin.CustomerMediaAgencyFlagAccess(_vehicleInformation.DatabaseId))
             {
-                if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency)) {
+                if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency))
+                {
                     agencyGroupLineIndex = resultTable.AddNewLine(LineType.level1);
                     resultTable[agencyGroupLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1850, _session.SiteLanguage));
                 }
-                if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency)) {
+                if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency))
+                {
                     agencyLineIndex = resultTable.AddNewLine(LineType.level1);
                     resultTable[agencyLineIndex, levelLabelColIndex] = new CellLabel(GestionWeb.GetWebWord(1851, _session.SiteLanguage));
                 }
@@ -526,7 +588,8 @@ namespace TNS.AdExpressI.LostWon {
             Int32 _lostNumberColonneIndex = resultTable.GetHeadersIndexInResultTable(LOST_HEADER_ID + "-" + ITEM_NUMBER_HEADER_ID);
 
             #region Initialisation des Nombres
-            for (Int32 i = 0; i < nbLine; i++) {
+            for (Int32 i = 0; i < nbLine; i++)
+            {
                 resultTable[i, _loyalNumberColonneIndex] = numberFactory.Get(0.0);
                 resultTable[i, _loyalDeclineNumberColonneIndex] = numberFactory.Get(0.0);
                 resultTable[i, _loyalRiseNumberColonneIndex] = numberFactory.Get(0.0);
@@ -561,70 +624,107 @@ namespace TNS.AdExpressI.LostWon {
             #endregion
 
             #region Traitement des données
-            foreach (DataRow currentRow in dt.Rows) {
+            foreach (DataRow currentRow in dt.Rows)
+            {
 
                 //Activité publicitaire Annonceurs
-                if (currentRow["id_advertiser"] != null && currentRow["id_advertiser"] != System.DBNull.Value && !advertisers.Contains(currentRow["id_advertiser"].ToString())) {
-                    filterN = "id_advertiser=" + currentRow["id_advertiser"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))";
-                    filterN1 = "id_advertiser=" + currentRow["id_advertiser"].ToString() + " AND ((date_num>=" + beginningPeriodN1DA + " AND date_num<=" + endPeriodN1DA + ") or (date_num>=" + beginningPeriodN1DA.Substring(0, 6) + " AND date_num<=" + endPeriodN1DA.Substring(0, 6) + "))";
+                if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.advertiser) &&
+                    currentRow["id_advertiser"] != DBNull.Value && !advertisers.Contains(currentRow["id_advertiser"].ToString()))
+                {
+                    filterN = string.Format("id_advertiser={0} AND ((date_num>={1} AND date_num<={2}) or (date_num>={3} AND date_num<={4}))"
+                        , currentRow["id_advertiser"].ToString(), beginningPeriodDA, endPeriodDA, beginningPeriodDA.Substring(0, 6), endPeriodDA.Substring(0, 6));
+                    filterN1 = string.Format("id_advertiser={0} AND ((date_num>={1} AND date_num<={2}) or (date_num>={3} AND date_num<={4}))"
+                        , currentRow["id_advertiser"].ToString(), beginningPeriodN1DA, endPeriodN1DA, beginningPeriodN1DA.Substring(0, 6), endPeriodN1DA.Substring(0, 6));
                     getProductActivity(resultTable, dt, advertiserLineIndex, expression, filterN, filterN1);
                     advertisers.Add(currentRow["id_advertiser"].ToString());
                 }
 
-                if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE)) {//droits marques
+                if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MARQUE)
+                    && _vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.brand))
+                {
                     //Activité publicitaire marques
-                    if (currentRow["id_brand"] != null && currentRow["id_brand"] != System.DBNull.Value && !brands.Contains(currentRow["id_brand"].ToString())) {
-                        filterN = "id_brand=" + currentRow["id_brand"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))";
-                        filterN1 = "id_brand=" + currentRow["id_brand"].ToString() + " AND ((date_num>=" + beginningPeriodN1DA + " AND date_num<=" + endPeriodN1DA + ") or (date_num>=" + beginningPeriodN1DA.Substring(0, 6) + " AND date_num<=" + endPeriodN1DA.Substring(0, 6) + "))";
+                    if (currentRow["id_brand"] != null && currentRow["id_brand"] != System.DBNull.Value && !brands.Contains(currentRow["id_brand"].ToString()))
+                    {
+                        filterN = string.Format("id_brand={0} AND ((date_num>={1} AND date_num<={2}) or (date_num>={3} AND date_num<={4}))",
+                            currentRow["id_brand"].ToString(), beginningPeriodDA, endPeriodDA, beginningPeriodDA.Substring(0, 6), endPeriodDA.Substring(0, 6));
+                        filterN1 = string.Format("id_brand={0} AND ((date_num>={1} AND date_num<={2}) or (date_num>={3} AND date_num<={4}))"
+                            , currentRow["id_brand"].ToString(), beginningPeriodN1DA, endPeriodN1DA, beginningPeriodN1DA.Substring(0, 6), endPeriodN1DA.Substring(0, 6));
                         getProductActivity(resultTable, dt, brandLineIndex, expression, filterN, filterN1);
                         brands.Add(currentRow["id_brand"].ToString());
                     }
                 }
 
                 //Activité publicitaire produits
-                if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG) && currentRow["id_product"] != null && currentRow["id_product"] != System.DBNull.Value && !products.Contains(currentRow["id_product"].ToString())) {
-                    filterN = "id_product=" + currentRow["id_product"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))";
-                    filterN1 = "id_product=" + currentRow["id_product"].ToString() + " AND ((date_num>=" + beginningPeriodN1DA + " AND date_num<=" + endPeriodN1DA + ") or (date_num>=" + beginningPeriodN1DA.Substring(0, 6) + " AND date_num<=" + endPeriodN1DA.Substring(0, 6) + "))";
+                if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.product) &&
+                    _session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_PRODUCT_LEVEL_ACCESS_FLAG)  &&
+                    currentRow["id_product"] != DBNull.Value && !products.Contains(currentRow["id_product"].ToString()))
+                {
+                    filterN = string.Format("id_product={0} AND ((date_num>={1} AND date_num<={2}) or (date_num>={3} AND date_num<={4}))"
+                        , currentRow["id_product"].ToString(), beginningPeriodDA, endPeriodDA, beginningPeriodDA.Substring(0, 6), endPeriodDA.Substring(0, 6));
+                    filterN1 = string.Format("id_product={0} AND ((date_num>={1} AND date_num<={2}) or (date_num>={3} AND date_num<={4}))",
+                        currentRow["id_product"].ToString(), beginningPeriodN1DA, endPeriodN1DA, beginningPeriodN1DA.Substring(0, 6), endPeriodN1DA.Substring(0, 6));
                     getProductActivity(resultTable, dt, productLineIndex, expression, filterN, filterN1);
                     products.Add(currentRow["id_product"].ToString());
                 }
 
                 //Activité publicitaire Famille
-                if (currentRow["id_sector"] != null && currentRow["id_sector"] != System.DBNull.Value && !sectors.Contains(currentRow["id_sector"].ToString())) {
-                    filterN = "id_sector=" + currentRow["id_sector"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))";
-                    filterN1 = "id_sector=" + currentRow["id_sector"].ToString() + " AND ((date_num>=" + beginningPeriodN1DA + " AND date_num<=" + endPeriodN1DA + ") or (date_num>=" + beginningPeriodN1DA.Substring(0, 6) + " AND date_num<=" + endPeriodN1DA.Substring(0, 6) + "))";
+                if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.sector) &&
+                    currentRow["id_sector"] != null && currentRow["id_sector"] != DBNull.Value && !sectors.Contains(currentRow["id_sector"].ToString()))
+                {
+                    filterN = string.Format("id_sector={0} AND ((date_num>={1} AND date_num<={2}) or (date_num>={3} AND date_num<={4}))"
+                        , currentRow["id_sector"].ToString(), beginningPeriodDA, endPeriodDA, beginningPeriodDA.Substring(0, 6), endPeriodDA.Substring(0, 6));
+                    filterN1 = string.Format("id_sector={0} AND ((date_num>={1} AND date_num<={2}) or (date_num>={3} AND date_num<={4}))"
+                        , currentRow["id_sector"].ToString(), beginningPeriodN1DA, endPeriodN1DA, beginningPeriodN1DA.Substring(0, 6), endPeriodN1DA.Substring(0, 6));
                     getProductActivity(resultTable, dt, sectorLineIndex, expression, filterN, filterN1);
                     sectors.Add(currentRow["id_sector"].ToString());
                 }
                 //Activité publicitaire Classe
-                if (currentRow["id_subsector"] != null && currentRow["id_subsector"] != System.DBNull.Value && !subsectors.Contains(currentRow["id_subsector"].ToString())) {
-                    filterN = "id_subsector=" + currentRow["id_subsector"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))"; ;
-                    filterN1 = "id_subsector=" + currentRow["id_subsector"].ToString() + " AND ((date_num>=" + beginningPeriodN1DA + " AND date_num<=" + endPeriodN1DA + ") or (date_num>=" + beginningPeriodN1DA.Substring(0, 6) + " AND date_num<=" + endPeriodN1DA.Substring(0, 6) + "))";
+                if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.subSector) &&
+                    currentRow["id_subsector"] != null && currentRow["id_subsector"] != DBNull.Value && !subsectors.Contains(currentRow["id_subsector"].ToString()))
+                {
+                    filterN = string.Format("id_subsector={0} AND ((date_num>={1} AND date_num<={2}) or (date_num>={3} AND date_num<={4}))"
+                        , currentRow["id_subsector"].ToString(), beginningPeriodDA, endPeriodDA, beginningPeriodDA.Substring(0, 6), endPeriodDA.Substring(0, 6)); ;
+                    filterN1 = string.Format("id_subsector={0} AND ((date_num>={1} AND date_num<={2}) or (date_num>={3} AND date_num<={4}))"
+                        , currentRow["id_subsector"].ToString(), beginningPeriodN1DA, endPeriodN1DA, beginningPeriodN1DA.Substring(0, 6), endPeriodN1DA.Substring(0, 6));
                     getProductActivity(resultTable, dt, subsectorLineIndex, expression, filterN, filterN1);
                     subsectors.Add(currentRow["id_subsector"].ToString());
                 }
                 //Activité publicitaire Groupes
-                if (currentRow["id_group_"] != null && currentRow["id_group_"] != System.DBNull.Value && !groups.Contains(currentRow["id_group_"].ToString())) {
-                    filterN = "id_group_=" + currentRow["id_group_"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))";
-                    filterN1 = "id_group_=" + currentRow["id_group_"].ToString() + " AND ((date_num>=" + beginningPeriodN1DA + " AND date_num<=" + endPeriodN1DA + ") or (date_num>=" + beginningPeriodN1DA.Substring(0, 6) + " AND date_num<=" + endPeriodN1DA.Substring(0, 6) + "))";
+                if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.group) &&
+                    currentRow["id_group_"] != null && currentRow["id_group_"] != DBNull.Value && !groups.Contains(currentRow["id_group_"].ToString()))
+                {
+                    filterN = string.Format("id_group_={0} AND ((date_num>={1} AND date_num<={2}) or (date_num>={3} AND date_num<={4}))"
+                        , currentRow["id_group_"].ToString(), beginningPeriodDA, endPeriodDA, beginningPeriodDA.Substring(0, 6), endPeriodDA.Substring(0, 6));
+                    filterN1 = string.Format("id_group_={0} AND ((date_num>={1} AND date_num<={2}) or (date_num>={3} AND date_num<={4}))"
+                        , currentRow["id_group_"].ToString(), beginningPeriodN1DA, endPeriodN1DA, beginningPeriodN1DA.Substring(0, 6), endPeriodN1DA.Substring(0, 6));
                     getProductActivity(resultTable, dt, groupLineIndex, expression, filterN, filterN1);
                     groups.Add(currentRow["id_group_"].ToString());
                 }
 
-                //if (_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_MEDIA_AGENCY)) {//droits agences média					
-                if (_session.CustomerLogin.CustomerMediaAgencyFlagAccess(_vehicleInformation.DatabaseId)){
+                if (_session.CustomerLogin.CustomerMediaAgencyFlagAccess(_vehicleInformation.DatabaseId))
+                {
                     //activité publicitaire Groupes d'agences
-                    if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency) && currentRow["ID_GROUP_ADVERTISING_AGENCY"] != null && currentRow["ID_GROUP_ADVERTISING_AGENCY"] != System.DBNull.Value && !agencyGroups.Contains(currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString())) {
-                        filterN = "ID_GROUP_ADVERTISING_AGENCY=" + currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))";
-                        filterN1 = "ID_GROUP_ADVERTISING_AGENCY=" + currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString() + " AND ((date_num>=" + beginningPeriodN1DA + " AND date_num<=" + endPeriodN1DA + ") or (date_num>=" + beginningPeriodN1DA.Substring(0, 6) + " AND date_num<=" + endPeriodN1DA.Substring(0, 6) + "))";
+                    if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.groupMediaAgency) &&
+                        currentRow["ID_GROUP_ADVERTISING_AGENCY"] != null && currentRow["ID_GROUP_ADVERTISING_AGENCY"]
+                        != System.DBNull.Value && !agencyGroups.Contains(currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString()))
+                    {
+                        filterN = string.Format("ID_GROUP_ADVERTISING_AGENCY={0} AND ((date_num>={1} AND date_num<={2}) or (date_num>={3} AND date_num<={4}))"
+                            , currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString(), beginningPeriodDA, endPeriodDA, beginningPeriodDA.Substring(0, 6), endPeriodDA.Substring(0, 6));
+                        filterN1 = string.Format("ID_GROUP_ADVERTISING_AGENCY={0} AND ((date_num>={1} AND date_num<={2}) or (date_num>={3} AND date_num<={4}))"
+                            , currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString(), beginningPeriodN1DA, endPeriodN1DA, beginningPeriodN1DA.Substring(0, 6), endPeriodN1DA.Substring(0, 6));
                         getProductActivity(resultTable, dt, agencyGroupLineIndex, expression, filterN, filterN1);
                         agencyGroups.Add(currentRow["ID_GROUP_ADVERTISING_AGENCY"].ToString());
                     }
 
                     //activité publicitaire agence
-                    if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency) && currentRow["ID_ADVERTISING_AGENCY"] != null && currentRow["ID_ADVERTISING_AGENCY"] != System.DBNull.Value && !agency.Contains(currentRow["ID_ADVERTISING_AGENCY"].ToString())) {
-                        filterN = "ID_ADVERTISING_AGENCY=" + currentRow["ID_ADVERTISING_AGENCY"].ToString() + " AND ((date_num>=" + beginningPeriodDA + " AND date_num<=" + endPeriodDA + ") or (date_num>=" + beginningPeriodDA.Substring(0, 6) + " AND date_num<=" + endPeriodDA.Substring(0, 6) + "))";
-                        filterN1 = "ID_ADVERTISING_AGENCY=" + currentRow["ID_ADVERTISING_AGENCY"].ToString() + " AND ((date_num>=" + beginningPeriodN1DA + " AND date_num<=" + endPeriodN1DA + ") or (date_num>=" + beginningPeriodN1DA.Substring(0, 6) + " AND date_num<=" + endPeriodN1DA.Substring(0, 6) + "))";
+                    if (_vehicleInformation.AllowedMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.agency)
+                        && currentRow["ID_ADVERTISING_AGENCY"] != null && currentRow["ID_ADVERTISING_AGENCY"]
+                        != System.DBNull.Value && !agency.Contains(currentRow["ID_ADVERTISING_AGENCY"].ToString()))
+                    {
+                        filterN = string.Format("ID_ADVERTISING_AGENCY={0} AND ((date_num>={1} AND date_num<={2}) or (date_num>={3} AND date_num<={4}))"
+                            , currentRow["ID_ADVERTISING_AGENCY"].ToString(), beginningPeriodDA, endPeriodDA, beginningPeriodDA.Substring(0, 6), endPeriodDA.Substring(0, 6));
+                        filterN1 = string.Format("ID_ADVERTISING_AGENCY={0} AND ((date_num>={1} AND date_num<={2}) or (date_num>={3} AND date_num<={4}))"
+                            , currentRow["ID_ADVERTISING_AGENCY"].ToString(), beginningPeriodN1DA, endPeriodN1DA, beginningPeriodN1DA.Substring(0, 6), endPeriodN1DA.Substring(0, 6));
                         getProductActivity(resultTable, dt, agencyLineIndex, expression, filterN, filterN1);
                         agency.Add(currentRow["ID_ADVERTISING_AGENCY"].ToString());
                     }
@@ -648,7 +748,7 @@ namespace TNS.AdExpressI.LostWon {
             #region Date
             Int32 dateBegin = Int32.Parse(_session.PeriodBeginningDate);
             Int32 dateEnd = Int32.Parse(_session.PeriodEndDate);
-            DateTime startDate = new DateTime(dateBegin / 10000, (dateBegin-(10000*(dateBegin/10000))) / 100, (dateBegin-(100*(dateBegin/100))));
+            DateTime startDate = new DateTime(dateBegin / 10000, (dateBegin - (10000 * (dateBegin / 10000))) / 100, (dateBegin - (100 * (dateBegin / 100))));
             if (startDate > DateTime.Now)
             {
                 return null;
@@ -663,11 +763,13 @@ namespace TNS.AdExpressI.LostWon {
             {
 
                 if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the lost won result"));
-                object[] parameters = new object[1];
+                var parameters = new object[1];
                 parameters[0] = _session;
-                ILostWonResultDAL lostwonDAL = (ILostWonResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+                var lostwonDAL = (ILostWonResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory
+                    + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class,
+                    false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
                 DataSet ds = lostwonDAL.GetData();
-                dt = (ds!=null) ? ds.Tables[0]:null;
+                dt = (ds != null) ? ds.Tables[0] : null;
                 dsMedia = lostwonDAL.GetColumnDetails();
 
             }
@@ -822,7 +924,7 @@ namespace TNS.AdExpressI.LostWon {
                 idSubTotal = string.Format("{0}-{1}", N_UNIVERSE_ID, SUBTOTAL_ID);
             }
 
-			Double value = (row[_session.GetSelectedUnit().Id.ToString()] != System.DBNull.Value) ? Convert.ToDouble(row[_session.GetSelectedUnit().Id.ToString()]) : 0;
+            Double value = (row[_session.GetSelectedUnit().Id.ToString()] != System.DBNull.Value) ? Convert.ToDouble(row[_session.GetSelectedUnit().Id.ToString()]) : 0;
             tab.AffectValueAndAddToHierarchy(1, cLine, tab.GetHeadersIndexInResultTable(idCol), value);
             if (tab.HeadersIndexInResultTable.ContainsKey(idSubTotal))
             {
@@ -864,7 +966,7 @@ namespace TNS.AdExpressI.LostWon {
             {
                 iSubTotal = tab.GetHeadersIndexInResultTable(idSubTotal);
             }
-           
+
             string[] value = row[_session.GetSelectedUnit().Id.ToString()].ToString().Split(',');
             Int64 v = 0;
             foreach (string s in value)
@@ -896,7 +998,8 @@ namespace TNS.AdExpressI.LostWon {
         protected virtual bool IsComparativeDateLine(Int64 dateToCompare, Int64 beginningDate, Int64 endDate)
         {
 
-            if (dateToCompare.ToString().Length == 6) {
+            if (dateToCompare.ToString().Length == 6)
+            {
                 beginningDate = beginningDate / 100;
                 endDate = endDate / 100;
             }
@@ -923,10 +1026,10 @@ namespace TNS.AdExpressI.LostWon {
             DateTime periodEndN1 = new DateTime(Int32.Parse(_session.CustomerPeriodSelected.ComparativeEndDate.Substring(0, 4)), Int32.Parse(_session.CustomerPeriodSelected.ComparativeEndDate.Substring(4, 2)), Int32.Parse(_session.CustomerPeriodSelected.ComparativeEndDate.Substring(6, 2))); ;
 
             AdExpressCultureInfo cInfo = WebApplicationParameters.AllowedLanguages[_session.SiteLanguage].CultureInfo;
-			//string periodLabelN = string.Format("{0}-{1}", string.Format(cInfo, "{0:d}", periodBeginN), string.Format(cInfo, "{0:d}", periodEndN));
-			//string periodLabelN1 = string.Format("{0}-{1}", string.Format(cInfo, "{0:d}", periodBeginN1), string.Format(cInfo, "{0:d}", periodEndN1));
-			string periodLabelN = FctUtilities.Dates.DateToString(periodBeginN, _session.SiteLanguage) + "-" + FctUtilities.Dates.DateToString(periodEndN, _session.SiteLanguage);
-			string periodLabelN1 = FctUtilities.Dates.DateToString(periodBeginN1, _session.SiteLanguage) + "-" + FctUtilities.Dates.DateToString(periodEndN1, _session.SiteLanguage);
+            //string periodLabelN = string.Format("{0}-{1}", string.Format(cInfo, "{0:d}", periodBeginN), string.Format(cInfo, "{0:d}", periodEndN));
+            //string periodLabelN1 = string.Format("{0}-{1}", string.Format(cInfo, "{0:d}", periodBeginN1), string.Format(cInfo, "{0:d}", periodEndN1));
+            string periodLabelN = FctUtilities.Dates.DateToString(periodBeginN, _session.SiteLanguage) + "-" + FctUtilities.Dates.DateToString(periodEndN, _session.SiteLanguage);
+            string periodLabelN1 = FctUtilities.Dates.DateToString(periodBeginN1, _session.SiteLanguage) + "-" + FctUtilities.Dates.DateToString(periodEndN1, _session.SiteLanguage);
 
             #endregion
 
@@ -988,10 +1091,10 @@ namespace TNS.AdExpressI.LostWon {
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.holdingCompany) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.sector) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.subSector) ||
-                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.group)||
-                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.segment)||
+                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.group) ||
+                _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.segment) ||
                 _session.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.subBrand))
-                && _session.CustomerLogin.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)!=null
+                && _session.CustomerLogin.GetModule(TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA) != null
                 )
             {
                 headers.Root.Add(new HeaderMediaSchedule(false, GestionWeb.GetWebWord(150, _session.SiteLanguage), MEDIA_SCHEDULE_ID));
@@ -1017,7 +1120,7 @@ namespace TNS.AdExpressI.LostWon {
 
             foreach (Int64 i in levels.IdListOrderByClassificationItem)
             {
-                hGpYearN.Add(new Header(true,levels[i], i));
+                hGpYearN.Add(new Header(true, levels[i], i));
                 hGpYearN1.Add(new Header(true, levels[i], i));
                 hGpEvol.Add(new Header(true, levels[i], i));
             }
@@ -1063,8 +1166,8 @@ namespace TNS.AdExpressI.LostWon {
             Dictionary<string, double> resNbParution = null;
             DetailLevelItemInformation columnDetailLevel = (DetailLevelItemInformation)_session.GenericColumnDetailLevel.Levels[0];
 
-            if (columnDetailLevel.Id == DetailLevelItemInformation.Levels.media && 
-                (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id 
+            if (columnDetailLevel.Id == DetailLevelItemInformation.Levels.media &&
+                (CstDBClassif.Vehicles.names.press == _vehicleInformation.Id
                 || CstDBClassif.Vehicles.names.internationalPress == _vehicleInformation.Id
                 || CstDBClassif.Vehicles.names.newspaper == _vehicleInformation.Id
                 || CstDBClassif.Vehicles.names.magazine == _vehicleInformation.Id
@@ -1176,7 +1279,7 @@ namespace TNS.AdExpressI.LostWon {
                     continue;
 
                 #region Init Line
-                cLine = InitFinalLine(tabData, tabResult, i, levels[((CellLevel)tabData[i, 1]).Level-1], msIndex);
+                cLine = InitFinalLine(tabData, tabResult, i, levels[((CellLevel)tabData[i, 1]).Level - 1], msIndex);
                 initValues(tabResult, cLine, cellUnitFactory, computePDM, NIndex, N1Index, EvolIndex);
                 cLevel = (CellLevel)tabResult[cLine, 1];
                 #endregion
@@ -1185,7 +1288,8 @@ namespace TNS.AdExpressI.LostWon {
                 {
                     levels[cLevel.Level] = cLevel;
                 }
-                else{
+                else
+                {
                     setValues(tabData, tabResult, i, cLine, NIndex, N1Index, EvolIndex, NTotalIndex, N1TotalIndex);
                 }
 
@@ -1749,7 +1853,7 @@ namespace TNS.AdExpressI.LostWon {
             #region Extract data
             //Year N
             DataRow[] rows = dt.Select(filterN);
-            string[] ids;            
+            string[] ids;
             foreach (DataRow row in rows)
             {
                 ids = row[expression].ToString().Split(',');
@@ -1774,7 +1878,7 @@ namespace TNS.AdExpressI.LostWon {
             Double NValue = unitValueN.Value;
             Double N1Value = unitValueN1.Value;
             bool loyal = NValue > 0 && N1Value > 0;
-            bool loyalDecline = NValue > 0  && N1Value > NValue;
+            bool loyalDecline = NValue > 0 && N1Value > NValue;
             bool loyalRising = NValue > N1Value && N1Value > 0;
             bool won = NValue > 0 && N1Value <= 0;
             bool lost = NValue <= 0 && N1Value > 0;
@@ -1875,25 +1979,32 @@ namespace TNS.AdExpressI.LostWon {
 
             #region Chargement des données à partir de la base
             DataSet ds;
-            try {
+            try
+            {
                 if (_module.CountryDataAccessLayer == null) throw (new NullReferenceException("DAL layer is null for the lost won result"));
-                object[] parameters = new object[1];
+                var parameters = new object[1];
                 parameters[0] = _session;
-                ILostWonResultDAL lostwonDAL = (ILostWonResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null, null);
+                var lostwonDAL = (ILostWonResultDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory 
+                    + @"Bin\" + _module.CountryDataAccessLayer.AssemblyName, _module.CountryDataAccessLayer.Class
+                    , false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameters, null, null);
                 ds = lostwonDAL.GetNbParutionData();
                 if (ds != null) dt = ds.Tables[0];
             }
-            catch (System.Exception err) {
+            catch (System.Exception err)
+            {
                 throw (new LostWonException("Unable to load data for synthesis report.", err));
             }
             #endregion
 
             string cKey;
-            if (dt != null && dt.Rows.Count > 0) {
+            if (dt != null && dt.Rows.Count > 0)
+            {
 
-                foreach (DataRow dr in dt.Rows) {
+                foreach (DataRow dr in dt.Rows)
+                {
                     cKey = string.Format("-{0}-{1}", dr["yearParution"], dr["id_media"]);
-                    if (!oldKey.Equals(cKey) && !start) {
+                    if (!oldKey.Equals(cKey) && !start)
+                    {
                         res.Add(oldKey, nbParutionsCounter);
                         nbParutionsCounter = 0;
                     }

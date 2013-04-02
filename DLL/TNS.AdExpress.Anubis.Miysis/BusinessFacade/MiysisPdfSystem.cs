@@ -1254,7 +1254,8 @@ namespace TNS.AdExpress.Anubis.Miysis.BusinessFacade
             {
                 path = "";
                 path = item.Visuals[(int)i].Replace("/imagette", "");
-                path = item.Visuals[(int)i].Replace("/ImagesPresse", "");
+                path = path.Replace("/ImagesPresse", "");
+                path = path.Replace("/ImagesMD", "");
 
                 if (item.Vehicle.Id == DBCst.Vehicles.names.directMarketing)
                 {

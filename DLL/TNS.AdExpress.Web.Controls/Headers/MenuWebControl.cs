@@ -497,7 +497,9 @@ namespace TNS.AdExpress.Web.Controls.Headers
                         {
                             DataAccessLayer layer = PluginConfiguration.GetDataAccessLayer(PluginDataAccessLayerName.Alert);
                             TNS.FrameWork.DB.Common.IDataSource src = WebApplicationParameters.DataBaseDescription.GetDefaultConnection(DefaultConnectionIds.alert);
-                            IAlertDAL alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + layer.AssemblyName, layer.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, new object[] { src }, null, null, null);
+                            IAlertDAL alertDAL = (IAlertDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\"
+                                + layer.AssemblyName, layer.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance 
+                                | System.Reflection.BindingFlags.Public, null, new object[] { src }, null, null);
                             int nbUserAlert = alertDAL.GetAlerts(_webSession.CustomerLogin.IdLogin).Count;
                             if (_webSession.CustomerLogin.GetNbAlertsAdExpress() > nbUserAlert)
                             {
@@ -953,7 +955,9 @@ namespace TNS.AdExpress.Web.Controls.Headers
         private string generateNumber()
         {
             DateTime dt = DateTime.Now;
-            return (dt.Year.ToString() + dt.Month.ToString() + dt.Day.ToString() + dt.Hour.ToString() + dt.Minute.ToString() + dt.Second.ToString() + dt.Millisecond.ToString() + new Random().Next(1000));
+            return (dt.Year.ToString() + dt.Month.ToString() + dt.Day.ToString() 
+                + dt.Hour.ToString() + dt.Minute.ToString() + dt.Second.ToString() 
+                + dt.Millisecond.ToString() + new Random().Next(1000));
         }
 
         /// <summary>
@@ -964,7 +968,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
         protected  bool CanDisplayRemoteCreativeExportUrl(ResultPageInformation pInfo)
         {
             
-            if   (pInfo.CanDisplayRemoteCreativeExportUrl() && _module.Id == WebCst.Module.Name.ANALYSE_CONCURENTIELLE && _webSession.CustomerLogin.CustormerFlagAccess(Flags.ID_EXPORT_INTERNET_EVALIANT_CREATIVE_FLAG))
+            if   (pInfo.CanDisplayRemoteCreativeExportUrl() && _module.Id == WebCst.Module.Name.ANALYSE_CONCURENTIELLE 
+                && _webSession.CustomerLogin.CustormerFlagAccess(Flags.ID_EXPORT_INTERNET_EVALIANT_CREATIVE_FLAG))
             {
                 VehicleInformation vehicleInformation = null;
                 string vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, Constantes.Customer.Right.type.vehicleAccess);

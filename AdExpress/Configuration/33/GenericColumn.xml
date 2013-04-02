@@ -426,7 +426,7 @@
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="6" name="Version" idDetailLevelMatching="6" isKey="true"/>
-      <columnItem id="67" name="Prix"/>
+      <!--<columnItem id="67" name="Prix"/>-->
       <columnItem id="62" name="Poid"/>
       <columnItem id="61" name="Volume"/>
       <columnItem id="11" name="Format" idDetailLevelMatching="20"/>
@@ -512,7 +512,7 @@
       <columnItem id="9" name="Produit"/>
       <columnItem id="6" name="slogan" isKey="true"/>
       <columnItem id="3" name="Support"/>
-      <columnItem id="85" name="Budget"/>
+      <!--<columnItem id="85" name="Budget"/>-->
       <columnItem id="61" name="Volume"/>
       <columnItem id="62" name="Poid"/>
       <columnItem id="63" name="Item"/>
@@ -600,7 +600,7 @@
       <columnItem id="6" name="slogan" isKey="true" visible="false"/>
       <columnItem id="3" name="Support" visible="false"/>
       <columnItem id="62" name="Poid"/>
-      <columnItem id="85" name="Budget"/>
+      <!--<columnItem id="85" name="Budget"/>-->
       <columnItem id="61" name="Volume"/>
       <columnItem id="11" name="Format"/>
       <columnItem id="63" name="Item"/>

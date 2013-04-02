@@ -133,10 +133,6 @@
       <Project>{4762D913-FC82-42BD-840F-5BCB43E5979D}</Project>
       <Name>TNS.Ares.StaticNavSession.DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TNS.Ares.AdExpress.PdfRolexSchedule\TNS.Ares.AdExpress.PdfRolexSchedule.csproj">
-      <Project>{5624A722-B926-4FDD-B67C-C3ECA1072EB5}</Project>
-      <Name>TNS.Ares.AdExpress.PdfRolexSchedule</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TNS.Ares.AdExpress\TNS.Ares.AdExpress.csproj">
       <Project>{3DDC18B6-8AB8-489F-A0C5-2118CE19D795}</Project>
       <Name>TNS.Ares.AdExpress</Name>

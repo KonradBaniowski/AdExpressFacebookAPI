@@ -5,6 +5,8 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
@@ -32,8 +34,11 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// <summary>
 		/// Session du client
 		/// </summary>
-		protected WebSession webSession=null; 
- 
+        protected WebSession _webSession = null;
+
+	    protected List<long> _activeMediaTypes = null;
+
+	    private bool _checkActiveVehicle = false;
 		#endregion
 	
 		#region Accesseurs
@@ -42,10 +47,19 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// Définit la session à utiliser
 		/// </summary>
 		public virtual WebSession CustomerWebSession {
-			set{webSession = value;}
+            set { _webSession = value; }
 			}
 
-		#endregion
+        /// <summary>
+        /// Check Active Media
+        /// </summary>
+	    public bool CheckActiveVehicle
+	    {
+	        get { return _checkActiveVehicle; }
+	        set { _checkActiveVehicle = value; }
+	    }
+
+	    #endregion
 
 		#region Evènements
 		/// <summary>
@@ -53,16 +67,49 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 		/// </summary>
 		/// <param name="e">Arguments</param>
 		protected override void OnPreRender(EventArgs e) {
-			if(webSession!=null){
-                CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.classification];
+			if(_webSession!=null){
+                CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[Layers.Id.classification];
                 if (cl == null) throw (new NullReferenceException("Core layer is null for the Classification DAL"));
                 object[] param = new object[1];
-                param[0] = webSession;
-                IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, param, null, null, null);
-                this.DataSource = FilteringWithMediaAgencyFlag(classficationDAL.GetMediaType().Tables[0]);
+                param[0] = _webSession;
+                IClassificationDAL classficationDAL = (IClassificationDAL)AppDomain.CurrentDomain.
+                    CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory 
+                    + @"Bin\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance
+                    | BindingFlags.Public, null, param, null, null);
+
+              
+
+                DataTable dt = FilteringWithMediaAgencyFlag(classficationDAL.GetMediaType().Tables[0]);
+
+             
+			    this.DataSource = dt;
                 this.DataTextField = "mediaType";
-                this.DataValueField = "idMediaType";
+                this.DataValueField = "idMediaType";               
 				this.DataBind();
+
+                if (_checkActiveVehicle
+                    && _webSession.CurrentModule == Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                {
+                    CoreLayer clMediaU = Domain.Web.WebApplicationParameters.CoreLayers[Layers.Id.mediaDetailLevelUtilities];
+                    if (clMediaU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
+                    Core.Utilities.MediaDetailLevel mediaDetailLevelUtilities = (TNS.AdExpress.Web.Core.Utilities.
+                        MediaDetailLevel)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
+                        , AppDomain.CurrentDomain.BaseDirectory, clMediaU.AssemblyName), clMediaU.Class, false, BindingFlags.CreateInstance
+                        | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
+                    _activeMediaTypes = (dt.Rows.Cast<DataRow>()
+                                           .Select(dr => Convert.ToInt64(dr["idMediaType"].ToString()))).ToList();
+
+                    _activeMediaTypes = mediaDetailLevelUtilities.GetAllowedVehicles(_activeMediaTypes,_webSession.PrincipalProductUniverses[0]);
+
+                    foreach (ListItem item in this.Items)
+                    {
+                        if (!_activeMediaTypes.Contains(Convert.ToInt64(item.Value)))
+                            item.Enabled = false;
+                    }
+                }
+              
+			
+			   
 			}
 			else throw (new WebControlInitializationException("Impossible d'initialiser le composant, la session n'est pas définie"));
 			//Edition du javascript permettant la selection de tous les vehicules
@@ -72,16 +119,21 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				string tmp2="";
 				Object tmp = this.Parent;
 				while (tmp!= null && tmp.GetType() != typeof(System.Web.UI.HtmlControls.HtmlForm))
-					tmp = ((System.Web.UI.Control) tmp).Parent;
+					tmp = ((Control) tmp).Parent;
 				if (tmp != null)
 					tmp2 =((System.Web.UI.HtmlControls.HtmlForm) tmp).ID;
 				else tmp2 = "Form2";
 				script += "\n\tm=";
 
-                string[] idMedias = Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaInSelectAll).Split(new char[]{','}, StringSplitOptions.RemoveEmptyEntries);
+                string[] idMedias = Lists.GetIdList(GroupList.ID.media, GroupList.Type.mediaInSelectAll)
+                    .Split(new char[]{','}, StringSplitOptions.RemoveEmptyEntries);
+                if (_checkActiveVehicle && _webSession.CurrentModule == Constantes.Web.Module.Name.ANALYSE_PLAN_MEDIA)
+                {
+                    idMedias = idMedias.Where(_activeMediaTypes.ConvertAll(Convert.ToString).Contains).ToArray();
+                }
 				for(int i=0; i<this.Items.Count; i++){
                     if (idMedias == null || idMedias.Length == 0
-                        || Array.Exists<string>(idMedias, delegate(string s) { return s == this.Items[i].Value; }))
+                        || Array.Exists(idMedias, s => s == this.Items[i].Value))
                     {
                         script += " document." + tmp2 + "." + this.ID + "_" + i + ".checked &&";
                     }
@@ -90,7 +142,9 @@ namespace TNS.AdExpress.Web.Controls.Selections{
 				for(int i=0; i<this.Items.Count; i++){
                     script += string.Format("\n\t document.{0}.{1}_{2}.checked = !m && {3};"
                         , tmp2, this.ID, i
-                        , (idMedias == null || idMedias.Length == 0 || Array.Exists<string>(idMedias, delegate(string s) { return s == this.Items[i].Value; })).GetHashCode());
+                        , (idMedias == null || idMedias.Length == 0 || Array.Exists(idMedias,
+                                                                                            s =>
+                                                                                            s == this.Items[i].Value)).GetHashCode());
 				}
 				script += "\n\t}\n</script>";
 				Page.ClientScript.RegisterClientScriptBlock(this.GetType(),"selectAllVehicles",script);
@@ -108,7 +162,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
         /// <returns>Data Table </returns>
         protected DataTable FilteringWithMediaAgencyFlag(DataTable dt)
         {
-            switch (webSession.CurrentModule)
+            switch (_webSession.CurrentModule)
             {
                 case TNS.AdExpress.Constantes.Web.Module.Name.ANALYSE_MANDATAIRES :
                     DataTable dataTable = new DataTable();
@@ -132,7 +186,7 @@ namespace TNS.AdExpress.Web.Controls.Selections{
                         foreach (DataRow row in dt.Rows)
                         {
                             Int64 idV = Convert.ToInt64(row["idMediaType"].ToString());
-                            if (webSession.CustomerLogin.CustomerMediaAgencyFlagAccess(idV))
+                            if (_webSession.CustomerLogin.CustomerMediaAgencyFlagAccess(idV))
                             {
                                 dr = dataTable.NewRow();
                                 dr["idMediaType"] = idV;

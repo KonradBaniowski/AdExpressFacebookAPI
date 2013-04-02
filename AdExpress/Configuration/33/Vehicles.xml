@@ -908,9 +908,9 @@
   <!-- DIRECT_MARKETING -->
   <vehicle id="directMarketing" databaseId="10" showInsertions="true" showCreations="true" mediaAgencyFlag="305">
     <!-- Units-->
-    <allowedUnits defaultUnit="euro">
-      <allowedUnit>euro</allowedUnit>
-      <allowedUnit>kEuro</allowedUnit>
+    <allowedUnits defaultUnit="volume">
+      <!--<allowedUnit>euro</allowedUnit>
+      <allowedUnit>kEuro</allowedUnit>-->
       <allowedUnit>volume</allowedUnit>
     </allowedUnits>
     <!-- Media detail level in results-->
@@ -1299,6 +1299,73 @@
         <allowedColumnDetailLevelItem id="2" name="Categorie"/>
         <allowedColumnDetailLevelItem id="3" name="Support"/>
         <allowedColumnDetailLevelItem id="4" name="Centre d'interet"/>
+      </allowedColumnDetailLevelItems>
+    </ColumnDetailLevel>
+  </vehicle>
+  <!-- Mail Valo -->
+  <vehicle id="mailValo" databaseId="19" showInsertions="false" showCreations="false">
+    <!-- Units-->
+    <allowedUnits defaultUnit="euro">
+      <allowedUnit>euro</allowedUnit>
+      <allowedUnit>kEuro</allowedUnit>
+    </allowedUnits>
+    <!-- Media detail level in results-->
+    <allowedMediaDetailLevels>
+      <allowedMediaLevelItems>
+        <allowedMediaLevelItem>vehicle</allowedMediaLevelItem>
+        <!-- Media -->
+        <allowedMediaLevelItem>category</allowedMediaLevelItem>
+        <!-- Categorie -->
+        <allowedMediaLevelItem>media</allowedMediaLevelItem>
+        <!-- Annonceur -->
+        <allowedMediaLevelItem>advertiser</allowedMediaLevelItem>
+        <allowedMediaLevelItem>sector</allowedMediaLevelItem>
+      </allowedMediaLevelItems>
+    </allowedMediaDetailLevels>
+    <!-- Selection hierarchy-->
+    <MediaSelectionParents DefaultMediaSelectionParent="category">
+
+      <!-- Centre d'interet -->
+      <MediaSelectionParent>category</MediaSelectionParent>
+      <!-- Régie -->
+      <MediaSelectionParent>media</MediaSelectionParent>
+      <!-- Titre -->
+    </MediaSelectionParents>
+    <!--Media detail level in selection-->
+    <MediaSelectionDetailLevel>
+      <defaultMediaSelectionDetailLevels baseDefaultMediaSelectionDetailLevel="25">
+        <defaultMediaSelectionDetailLevel id="25" name="categorie\support" />
+      </defaultMediaSelectionDetailLevels>
+      <allowedMediaSelectionLevelItemsList>
+        <allowedMediaSelectionLevelItem id="3"/>
+        <!-- Support -->
+        <allowedMediaSelectionLevelItem id="2"/>
+        <!-- Categorie -->
+      </allowedMediaSelectionLevelItemsList>
+    </MediaSelectionDetailLevel>
+    <!--Media detail level allowed in recap's modules-->
+    <!--Media detail level allowed in recap's modules-->
+    <allowedRecapMediaDetailLevels>
+      <allowedRecapMediaLevelItems>
+        <allowedRecapMediaLevelItem>vehicle</allowedRecapMediaLevelItem>
+        <!-- Media -->
+        <allowedRecapMediaLevelItem>category</allowedRecapMediaLevelItem>
+        <!-- Categorie -->
+      </allowedRecapMediaLevelItems>
+    </allowedRecapMediaDetailLevels>
+    <!--Allowed universe levels-->
+    <allowedUniverseLevels>
+      <allowedUniverseLevel id="1" name="sector"/>  >
+      <allowedUniverseLevel id="6" name="advertiser"/>
+      <allowedUniverseLevel id="11" name="vehicle"/>
+      <allowedUniverseLevel id="12" name="category"/>
+      <allowedUniverseLevel id="14" name="media"/>
+    </allowedUniverseLevels>
+    <!--Allowed column broken down-->
+    <ColumnDetailLevel>
+      <allowedColumnDetailLevelItems>
+        <allowedColumnDetailLevelItem id="2" name="Categorie"/>
+        <allowedColumnDetailLevelItem id="3" name="Support"/>
       </allowedColumnDetailLevelItems>
     </ColumnDetailLevel>
   </vehicle>

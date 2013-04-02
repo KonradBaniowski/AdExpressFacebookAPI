@@ -107,9 +107,21 @@
       <Project>{0AD4151F-074C-4C7D-9FFC-6DE8D186626A}</Project>
       <Name>TNS.AdExpress.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Web\TNS.AdExpress.Web.csproj">
+      <Project>{2370d3fd-15e0-4fa6-8535-2f16eb42fe93}</Project>
+      <Name>TNS.AdExpress.Web</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Common.DAL.Russia\TNS.AdExpressI.Common.DAL.Russia.csproj">
-      <Project>{10D39D83-B876-4ED0-BC3C-3FBB29A1BB7F}</Project>
+      <Project>{d5e70526-fcbe-49ba-bed2-3330f5b5d0d9}</Project>
       <Name>TNS.AdExpressI.Common.DAL.Russia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Insertions.Default\TNS.AdExpressI.Insertions.Default.csproj">
+      <Project>{dea1a6a0-32d0-4624-b216-a95b13070078}</Project>
+      <Name>TNS.AdExpressI.Insertions.Default</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Insertions\TNS.AdExpressI.Insertions.csproj">
+      <Project>{e1a418fc-6512-46d5-99cf-374682f0c792}</Project>
+      <Name>TNS.AdExpressI.Insertions</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.AdExpress\TNS.AdExpress.csproj">
       <Project>{6E75699B-838C-4534-99F7-D4C3E768CD57}</Project>
@@ -135,10 +147,6 @@
       <Project>{631C0A5E-19F9-4F90-B80C-03A4F59A8174}</Project>
       <Name>TNS.AdExpress.Web.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Web\TNS.AdExpress.Web.csproj">
-      <Project>{2370D3FD-15E0-4FA6-8535-2F16EB42FE93}</Project>
-      <Name>TNS.AdExpress.Web</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Insertions.DAL.Default\TNS.AdExpressI.Insertions.DAL.Default.csproj">
       <Project>{04D00ADF-5026-4790-9D76-8B9F6F0B6F47}</Project>
       <Name>TNS.AdExpressI.Insertions.DAL.Default</Name>
@@ -146,14 +154,6 @@
     <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Insertions.DAL\TNS.AdExpressI.Insertions.DAL.csproj">
       <Project>{446AA1FA-2CE3-49D1-99CC-6EBAECCDA911}</Project>
       <Name>TNS.AdExpressI.Insertions.DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Insertions.Default\TNS.AdExpressI.Insertions.Default.csproj">
-      <Project>{DEA1A6A0-32D0-4624-B216-A95B13070078}</Project>
-      <Name>TNS.AdExpressI.Insertions.Default</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\DLL\TNS.AdExpressI.Insertions\TNS.AdExpressI.Insertions.csproj">
-      <Project>{E1A418FC-6512-46D5-99CF-374682F0C792}</Project>
-      <Name>TNS.AdExpressI.Insertions</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.AdExpressI.MediaSchedule.DAL.Default\TNS.AdExpressI.MediaSchedule.DAL.Default.csproj">
       <Project>{8368962F-842E-481B-9C86-5E5609ABCCC9}</Project>
@@ -170,6 +170,10 @@
     <ProjectReference Include="..\..\DLL\TNS.AdExpressI.MediaSchedule\TNS.AdExpressI.MediaSchedule.csproj">
       <Project>{23E7E071-0FB0-43D4-B19D-B964EC3082F6}</Project>
       <Name>TNS.AdExpressI.MediaSchedule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.AdExpress.PdfPM\TNS.Ares.AdExpress.PdfPM.csproj">
+      <Project>{d35abd23-df9a-4b83-af3e-775f25d6e148}</Project>
+      <Name>TNS.Ares.AdExpress.PdfPM</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.Ares.AdExpress\TNS.Ares.AdExpress.csproj">
       <Project>{3DDC18B6-8AB8-489F-A0C5-2118CE19D795}</Project>

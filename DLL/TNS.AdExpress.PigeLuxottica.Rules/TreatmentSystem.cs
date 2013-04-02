@@ -6,6 +6,7 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Text;
 using Aspose.Cells;
+using Aspose.Cells.Drawing;
 using WebCst = TNS.AdExpress.Constantes.Web;
 
 using TNS.FrameWork.Date;
@@ -165,6 +166,7 @@ namespace TNS.AdExpress.PigeLuxottica.Rules
                     }
                     catch { }
 
+                    int pos = 0;
                     foreach (DataRow dr in ds.Tables[0].Rows)
                     {
                         isNewInsertion = false;
@@ -183,7 +185,8 @@ namespace TNS.AdExpress.PigeLuxottica.Rules
                         if (oldAdvertiserId != Convert.ToInt64(dr["id_advertiser"].ToString()))
                         {
                             //For each New Advertiser create a new excel sheet
-                            _sheet = _excel.Worksheets[_excel.Worksheets.Add()];
+
+                            _sheet = _excel.Worksheets[pos];
                             _sheet.Name = dr["advertiser"].ToString();
                             _sheet.PageSetup.Orientation = PageOrientationType.Landscape;
                             _sheet.IsGridlinesVisible = false;
@@ -196,17 +199,19 @@ namespace TNS.AdExpress.PigeLuxottica.Rules
 
                             //Set columns headers
                             SetHeaders(ref cellRow, ref cellColumn, ref locationColumn, ref sloganColumn);
-                             
+
+                            pos = _excel.Worksheets.Add();
+                            
                         }
                         //Set cells values
                         SetValues(ref cellRow, ref cellColumn, locationColumn, sloganColumn, isNewInsertion, ref firstlocationLabel, dr);
                      
                         //Ajout du logo TNS
-                        Pictures pics = _sheet.Pictures;
+                        PictureCollection pics = _sheet.Pictures;
                         string tnsLogoPath = @"Images\logoTNSMedia.gif";
                         string logoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, tnsLogoPath);
                         int picIndex = pics.Add(0, 0, logoPath);
-                        pics[picIndex].Placement = Aspose.Cells.PlacementType.Move;
+                        pics[picIndex].Placement = PlacementType.Move;
 
                         oldAdvertiserId = Convert.ToInt64(dr["id_advertiser"].ToString());
                         oldDate = dr["date_media_num"].ToString();
@@ -475,7 +480,7 @@ namespace TNS.AdExpress.PigeLuxottica.Rules
                         
                             fileInfo = new FileInfo(visualOldPath);
                             fileInfo.CopyTo(_imagesPresseDirectory + _advertsDir + @"\" + _dirNum + @"\" + visuals[i], true);
-                            hplIndex = _sheet.Hyperlinks.Add(_cells[cellRow, cellColumn].Name, 1, 1, _imagesPresseDirectory + _advertsDir + @"\" + _dirNum);
+                            hplIndex = _sheet.Hyperlinks.Add(_cells[cellRow, cellColumn].Name, 1, 1, @".\"+_advertsDir + @"\" + _dirNum);//_imagesPresseDirectory
                             _sheet.Hyperlinks[hplIndex].TextToDisplay = "Visuels";
                             hasCopy = true;
                         }

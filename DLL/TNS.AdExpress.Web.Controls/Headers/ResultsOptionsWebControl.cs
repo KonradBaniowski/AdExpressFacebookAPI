@@ -3409,14 +3409,17 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 case ClassificationCst.DB.Vehicles.names.directMarketing:
                 case ClassificationCst.DB.Vehicles.names.internet:
                 case ClassificationCst.DB.Vehicles.names.czinternet:
-                    return ((current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO));
+                case ClassificationCst.DB.Vehicles.names.mailValo:
+                    return ((current.Id == FrameWorkResults.Portofolio.SYNTHESIS
+                        || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO));
                 case ClassificationCst.DB.Vehicles.names.outdoor:
                 case ClassificationCst.DB.Vehicles.names.instore:
                 case ClassificationCst.DB.Vehicles.names.indoor:
                 case ClassificationCst.DB.Vehicles.names.cinema:
                 case ClassificationCst.DB.Vehicles.names.adnettrack:
                 case ClassificationCst.DB.Vehicles.names.evaliantMobile:
-                    return (current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO || (current.Id == FrameWorkResults.Portofolio.CALENDAR && webSession.CustomerPeriodSelected.IsSliding4M));
+                    return (current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO
+                        || (current.Id == FrameWorkResults.Portofolio.CALENDAR && webSession.CustomerPeriodSelected.IsSliding4M));
                 case ClassificationCst.DB.Vehicles.names.others:
                 case ClassificationCst.DB.Vehicles.names.tv:
                 case ClassificationCst.DB.Vehicles.names.tvGeneral:
@@ -3431,7 +3434,8 @@ namespace TNS.AdExpress.Web.Controls.Headers
                 case ClassificationCst.DB.Vehicles.names.newspaper:
                 case ClassificationCst.DB.Vehicles.names.magazine:
                 case ClassificationCst.DB.Vehicles.names.internationalPress:
-                    return (current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO || (webSession.CustomerPeriodSelected.IsSliding4M));
+                    return (current.Id == FrameWorkResults.Portofolio.SYNTHESIS || current.Id == FrameWorkResults.Portofolio.DETAIL_PORTOFOLIO
+                        || (webSession.CustomerPeriodSelected.IsSliding4M));
                 default: throw new Exceptions.ResultsOptionsWebControlException("ResultsOptionsWebControl : Vehicle unknown.");
             }
         }

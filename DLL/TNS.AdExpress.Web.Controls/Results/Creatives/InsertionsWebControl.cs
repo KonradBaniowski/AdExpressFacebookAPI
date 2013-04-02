@@ -11,30 +11,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-
 using AjaxPro;
 
 using WebCst = TNS.AdExpress.Constantes.Web;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using CstFlags = TNS.AdExpress.Constantes.DB.Flags;
 using ExcelFunction = TNS.AdExpress.Web.UI.ExcelWebPage;
-
-using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
-using WebCtrlFct = TNS.AdExpress.Web.Controls.Functions;
 using WebFct = TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Web.Rules.Results;
-using TNS.AdExpress.Web.Common.Results.Creatives;
-using FrmFct = TNS.FrameWork.WebResultUI.Functions;
-using TNS.FrameWork.WebResultUI.TableControl;
-using TNS.FrameWork.Date;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Web.Controls.Headers;
 using TNS.FrameWork.WebResultUI;
@@ -366,7 +353,9 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             object[] param = new object[2];
             param[0] = _customerWebSession;
             param[1] = _idModule;
-            _rulesLayer = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null, null);				
+            _rulesLayer = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" 
+                + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance
+                | System.Reflection.BindingFlags.Public, null, param, null, null);				
 
             this._header.JavascriptRefresh = this.JavaScriptRefresh;
             this._header.ID = string.Format("{0}_header", this.ID);
@@ -607,7 +596,8 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             object[] param = new object[2];
             param[0] = session;
             param[1] = module.Id;
-            IInsertionsResult result = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null, null);
+            IInsertionsResult result = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" 
+                + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
 
 
             if (!this._isCreativeConfig && (vehicle.Id == CstDBClassif.Vehicles.names.internet || vehicle.Id == CstDBClassif.Vehicles.names.czinternet)&& !result.CanShowInsertion(vehicle))

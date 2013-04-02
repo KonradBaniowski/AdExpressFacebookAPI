@@ -1,0 +1,1962 @@
+﻿<%--
+Modèle d'apparence par défaut. Les apparences sont fournies uniquement à titre d'exemple.
+
+1. Apparence de contrôle nommée. Le SkinId doit être défini de manière unique, car
+ un type de contrôle d’un même thème ne peut pas compter de SkinId dupliqués.
+
+<asp:GridView runat="server" SkinId="gridviewSkin" BackColor="White" >
+   <AlternatingRowStyle BackColor="Blue" />
+</asp:GridView>
+
+2. Apparence par défaut. Le SkinId n'est pas défini. Une seule apparence 
+de contrôle par défaut par type de contrôle est autorisée dans le même thème.
+
+<asp:Image runat="server" ImageUrl="~/images/image1.jpg" />
+--%>
+<asp:image runat="server" ImageUrl="Images/Common/logo_cote_gauche.gif" SkinID="logo_cote_gauche" />
+<asp:image runat="server" ImageUrl="Images/Common/logo_cote_gauche_bis.gif" SkinID="logo_cote_gauche_bis" />
+<asp:image runat="server" ImageUrl="Images/Common/pixel.gif" SkinID="pixel" />
+<asp:image runat="server" ImageUrl="Images/Common/plus_sous_logo.gif" SkinID="plus_sous_logo" />
+<asp:image runat="server" ImageUrl="Images/Common/logo_cote_droit.gif" SkinID="logo_cote_droit" />
+<asp:image runat="server" ImageUrl="Images/Common/croix.gif" SkinID="croix" />
+<asp:image runat="server" ImageUrl="Images/Common/logoTNShome.gif" SkinID="logoTNShome" />
+<asp:image runat="server" ImageUrl="Images/Common/detailSpot_up.gif" SkinID="detailSpot" />
+<asp:image runat="server" ImageUrl="Images/Common/picto_plus.gif" SkinID="picto_plus" />
+<asp:image runat="server" ImageUrl="Images/Common/fleche_1.gif" SkinID="fleche_1" />
+<asp:image runat="server" ImageUrl="Images/Common/block_fleche.gif" SkinID="block_fleche" />
+<asp:image runat="server" ImageUrl="Images/Common/bande.gif" SkinID="bande" />
+<asp:image runat="server" ImageUrl="Images/Common/bande300.gif" SkinID="bande300" />
+<asp:image runat="server" ImageUrl="Images/Culture/logo/LogoAdexpress.gif" SkinID="LogoAdexpress" />
+<asp:image runat="server" ImageUrl="Images/Culture/logo/logo.gif" SkinID="logo" />
+<asp:image runat="server" ImageUrl="Images/Common/Result/bt_detail_up.gif" SkinID="bt_detail" />
+<asp:image runat="server" ImageUrl="Images/Common/Logo_Adnettrack.jpg" SkinID="Logo_Adnettrack" />
+<asp:image runat="server" ImageUrl="Images/Common/await.gif" SkinID="await" />
+<asp:image runat="server" ImageUrl="Images/Common/vide.gif" SkinID="visual_cover" />
+
+<%-- Icons du menu contextuel --%>
+<asp:image runat="server" ImageUrl="Images/Common/Menu/selectedMenuIcon.gif" SkinID="selected" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/productMenuIcon.gif" SkinID="product" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/mediaMenuIcon.gif" SkinID="media" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/calendarMenuIcon.gif" SkinID="calendar" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/resultMenuIcon.gif" SkinID="result" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/excelMenuIcon.gif" SkinID="excel" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/excelExportMenuIcon.gif" SkinID="excelExport" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/excelUnitMenuIcon.gif" SkinID="excelUnit" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/printMenuIcon.gif" SkinID="print" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/printColMenuIcon.gif" SkinID="printCol" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/textExportMenuIcon.gif" SkinID="textExport" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/pdfExportMenuIcon.gif" SkinID="pdfExport" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/jpegExportMenuIcon.gif" SkinID="jpegExport" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/sloganMenuIcon.gif" SkinID="slogan" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/targetMenuIcon.gif" SkinID="target" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/sponsorshipMenuIcon.gif" SkinID="sponsorship" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/programMenuIcon.gif" SkinID="program" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/helpMenuIcon.gif" SkinID="help" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/createAlertMenuIcon.gif" SkinID="createAlert" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/updateDateMenuIcon.gif" SkinID="updateDate" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/kantarWebsiteMenuIcon.gif" SkinID="website" />
+<asp:image runat="server" ImageUrl="Images/Common/Menu/exportCreativesMenuIcon.gif" SkinID="creativeExport" />
+
+<%-- Alert--%>
+<asp:image runat="server" ImageUrl="Images/Common/flagPending.gif" SkinID="alertFlagPending" />
+
+<%-- Boutons --%>
+<asp:image runat="server" ImageUrl="Images/Culture/Button/valider_up.gif" SkinID="valider" />
+<asp:image runat="server" ImageUrl="Images/Culture/Button/suivant_up.gif" SkinID="suivant" />
+<asp:image runat="server" ImageUrl="Images/Culture/Button/enregistrer_univers_up.gif" SkinID="enregistrer_univers" />
+<asp:image runat="server" ImageUrl="Images/Culture/Button/charger_up.gif" SkinID="charger" />
+<asp:image runat="server" ImageUrl="Images/Culture/Button/back_up.gif" SkinID="back" />
+<asp:image runat="server" ImageUrl="Images/Culture/Button/fermer_up.gif" SkinID="close" />
+<asp:image runat="server" ImageUrl="Images/Culture/Button/ouvrir_up.gif" SkinID="ouvrir" />
+<asp:image runat="server" ImageUrl="Images/Culture/Button/ouvrir_gris.gif" SkinID="ouvrir_gris" />
+<asp:image runat="server" ImageUrl="Images/Culture/Button/bt_fiche_up.gif" SkinID="fiche" />
+<asp:image runat="server" ImageUrl="Images/Culture/Button/personnaliser_gris.gif" SkinID="personnaliser" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/save_up.gif" SkinID="save" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/bt_delete_up.gif" SkinID="delete" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/bt_delete2_up.gif" SkinID="delete2" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/ok_up.gif" SkinID="ok" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/initialize_up.gif" SkinID="initialize" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/initialize_all_up.gif" SkinID="initialize_all" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/chart_up.gif" SkinID="chart" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/table_up.gif" SkinID="table" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/loupe_zoom_up.gif" SkinID="loupe_zoom" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/result2_up.gif" SkinID="result2" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/mpClose.gif" SkinID="mpClose" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/mpOpen.gif" SkinID="mpOpen" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/delete_up.gif" SkinID="deleteLevels" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/restore_up.gif" SkinID="restoreLevels" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/bt_arrow_down.gif" SkinID="bt_arrow_down" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/bt_loupe_up.gif" SkinID="bt_loupe" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/bt_delete_item.gif" SkinID="bt_delete_item" />
+<asp:image runat="server" ImageUrl="Images/Common/Button/bt_valid_up.gif" SkinID="bt_valider" />
+
+
+
+
+<%@ Register TagPrefix="ctrHeader" Namespace="TNS.AdExpress.Web.Controls.Headers" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrButtons" Namespace="TNS.AdExpress.Web.Controls.Buttons" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrSelections" Namespace="TNS.AdExpress.Web.Controls.Selections" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrResults" Namespace="TNS.AdExpress.Web.Controls.Results" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="webUiResults" Namespace="TNS.AdExpress.Web.UI.Results" Assembly="TNS.AdExpress.Web" %>
+<%@ Register TagPrefix="ctrCreatives" Namespace="TNS.AdExpress.Web.Controls.Results.Creatives" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrMadiaPlan" Namespace="TNS.AdExpress.Web.Controls.Results.MediaPlan" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrAppm" Namespace="TNS.AdExpress.Web.Controls.Results.Appm" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="indicatorCharts" Namespace="TNS.AdExpressI.ProductClassIndicators.Charts" Assembly="TNS.AdExpressI.ProductClassIndicators" %>
+<%@ Register TagPrefix="ctrProductClassResults" Namespace="TNS.AdExpress.Web.Controls.Results.ProductClassAnalysis" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrVpResult" Namespace="TNS.AdExpress.Web.Controls.Results.VP" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrVpSelection" Namespace="TNS.AdExpress.Web.Controls.Selections.VP" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrVpSelectionFilter" Namespace="TNS.AdExpress.Web.Controls.Selections.VP.Filter" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrHeader" Namespace="TNS.AdExpress.Web.Controls.Selections" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrRolexResult" Namespace="TNS.AdExpress.Web.Controls.Results.Rolex" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrRolexSelection" Namespace="TNS.AdExpress.Web.Controls.Selections.Rolex" Assembly="TNS.AdExpress.Web.Controls" %>
+<%@ Register TagPrefix="ctrRolexSelectionFilter" Namespace="TNS.AdExpress.Web.Controls.Selections.Rolex.Filter" Assembly="TNS.AdExpress.Web.Controls" %>
+
+
+<%-- Header web control : used to show the commun header for all the aspx pages in the site--%>
+<ctrHeader:HeaderWebControl  
+                            runat="server" 
+                            language="33" 
+                            FlashUrl="/App_Themes/PlKMAE-Uk/Flash/Common/HeaderStrip.swf" 
+                            MissingFlashUrl="/App_Themes/PlKMAE-Uk/Images/Common/FlashReplacement/HeaderStrip.gif" 
+/>
+
+<%-- Flash web control : used to show a flash animation --%>
+<ctrHeader:FlashWebControl  
+                           runat="server" 
+                           FlashUrl="/App_Themes/PlKMAE-Uk/Flash/Culture/anime6.swf" 
+                           MissingFlashUrl="/App_Themes/PlKMAE-Uk/Images/Culture/FlashReplacement/HomeAnime.gif"
+/>
+
+<%-- A list of ImageButtonRollOver web control used in the site--%>
+<%-- Validate Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol  
+                           runat="server" 
+                           ImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/valider_up.gif" 
+                           RollOverImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/valider_down.gif" 
+                           SkinID="validateButton" 
+/>
+
+<%-- Ok Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol  
+                           runat="server" 
+                           ImageUrl="/App_Themes/PlKMAE-Uk/Images/Common/Button/ok_up.gif" 
+                           RollOverImageUrl="/App_Themes/PlKMAE-Uk/Images/Common/Button/ok_down.gif" 
+                           SkinID="okButton"
+/>
+
+<%-- Ok Loupe Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol  
+                           runat="server" 
+                           ImageUrl="/App_Themes/PlKMAE-Uk/Images/Common/Button/bt_loupe_up.gif" 
+                           RollOverImageUrl="/App_Themes/PlKMAE-Uk/Images/Common/Button/bt_loupe_down.gif" 
+                           SkinID="okLoupeButton"
+/>
+
+<%-- Valid Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol  
+                           runat="server" 
+                           ImageUrl="/App_Themes/PlKMAE-Uk/Images/Common/Button/bt_valid_up.gif" 
+                           RollOverImageUrl="/App_Themes/PlKMAE-Uk/Images/Common/Button/bt_valid_down.gif" 
+                           SkinID="validButton"
+/>
+
+<%-- Initialize Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol  
+                           runat="server" 
+                           ImageUrl="/App_Themes/PlKMAE-Uk/Images/Common/button/initialize_up.gif" 
+                           RollOverImageUrl="/App_Themes/PlKMAE-Uk/Images/Common/button/initialize_down.gif" 
+                           SkinID="initializeButton" 
+/>
+
+<%-- Initialize All Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol   
+                           runat="server" 
+                           ImageUrl="/App_Themes/PlKMAE-Uk/Images/Common/button/initialize_all_up.gif" 
+                           RollOverImageUrl="/App_Themes/PlKMAE-Uk/Images/Common/button/initialize_all_down.gif" 
+                           SkinID="initializeAllButton" 
+/>
+
+<%-- Next Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol  
+                           runat="server" 
+                           ImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/suivant_up.gif" 
+                           RollOverImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/suivant_down.gif" 
+                           SkinID="nextButton" 
+/>
+
+<%-- Save Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol  
+                           runat="server" 
+                           ImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/enregistrer_univers_up.gif" 
+                           RollOverImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/enregistrer_univers_down.gif" 
+                           SkinID="saveButton" 
+/>
+
+<%-- Load Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol   
+                           runat="server" 
+                           ImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/charger_up.gif" 
+                           RollOverImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/charger_down.gif" 
+                           SkinID="loadButton" 
+/>
+
+<%-- Open Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol 
+                           runat="server" 
+                           ImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/ouvrir_up.gif" 
+                           RollOverImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/ouvrir_down.gif" 
+                           SkinID="ouvrirButton" 
+/>
+
+<%-- Close Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol 
+                           runat="server" 
+                           ImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/fermer_up.gif" 
+                           RollOverImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/fermer_down.gif" 
+                           SkinID="fermerButton" 
+/>
+
+<%-- Personnaliser Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol 
+                           runat="server" 
+                           ImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/personnaliser_up.gif" 
+                           RollOverImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/personnaliser_down.gif" 
+                           SkinID="personnaliserButton" 
+/>
+
+<%-- Cancel Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol 
+                           runat="server" 
+                           ImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/annuler_up.gif" 
+                           RollOverImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/annuler_down.gif" 
+                           SkinID="annulerButton" 
+/>
+
+<%-- Result Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol 
+                           runat="server" 
+                           ImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/resultat_up.gif" 
+                           RollOverImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/resultat_down.gif" 
+                           SkinID="resultatButton" 
+/>
+
+<%-- Delete Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol 
+                           runat="server" 
+                           ImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/supprimer_up.gif" 
+                           RollOverImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/supprimer_down.gif" 
+                           SkinID="supprimerButton" 
+/>
+
+<%-- Detail Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol 
+                           runat="server" 
+                           ImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/detail_up.gif" 
+                           RollOverImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/detail_down.gif" 
+                           SkinID="detailButton" 
+/>
+
+<%-- Form Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol  
+                           runat="server" 
+                           ImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/bt_formes_up.gif" 
+                           RollOverImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/bt_formes_down.gif" 
+                           SkinID="formButton" 
+/>
+
+<%-- Emission Button--%>
+<ctrButtons:imagebuttonrolloverwebcontrol  
+                           runat="server" 
+                           ImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/bt_emissions_up.gif" 
+                           RollOverImageUrl="/App_Themes/PlKMAE-Uk/Images/Culture/button/bt_emissions_down.gif" 
+                           SkinID="EmissionButton" 
+/>
+
+<%-- Actualities web control : used to show the actualities in the selection module page --%>
+<ctrHeader:actualitieswebcontrol  
+                           runat="server" 
+                           ImageUrlPath="/App_Themes/PlKMAE-Uk/Images/Common/AdExpressVisu.gif" 
+                           TitleCss="actualities" 
+                           RssTitleCss="txtViolet11Bold" 
+                           RssDescriptionCss="txtViolet11" 
+                           ImageRssUrlPath="/App_Themes/PlKMAE-Uk/Images/Common/iconRss.gif" 
+/>
+
+<%-- Module selection web control : used to show adexpress modules--%>
+<ctrSelections:moduleselection2webcontrol  
+                           runat="server" 
+                           ModuleGroupWithBackgroundCss="moduleGroupWithBackgroung" 
+                           ModuleSubGroupCss="moduleSubGroup" 
+                           ModuleGroupInformationCss="moduleGroupInformation" 
+                           ModuleGroupCss="moduleGroup" 
+                           ModuleCss="Tips1" 
+                           ImageModuleUrlPath="/App_Themes/PlKMAE-Uk/Images/Common/arrowModule.gif" 
+                           DescriptionImageList="198:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/PlanMedia.png,199:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/PlanMediaConcurrentiel.png,277:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/Concurrentiels.png,280:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/Potentiel.png,
+282:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/Portefeuille.png,196:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/PlanMedia.png,184:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/PlanMediaConcurrentiel.png,278:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/Concurrentiels.png,197:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/Dynamique.png,
+281:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/Potentiel.png,1950:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/Justificatifs.png,283:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/Portefeuille.png,194:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/TableauDynamique.png,195:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/Indicateurs.png,
+450:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/Tendances.png,475:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/TableauBord.png,601:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/TableauBord.png,602:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/TableauBord.png,1036:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/TableauBord.png,
+4370:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/TableauBord.png,546:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/Chronopresse.png,1920:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/Cadrage.png,1780:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/Dispositifs.png,1781:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/Programmes.png
+,4369:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/Evaliant.png,7216:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/PlanMedia.png,7854:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/PlanMedia.png,9119:/App_Themes/PlKMAE-Uk/Images/Common/Infobulle/PlanMedia.png"
+/>
+<%-- Module title web control : used to show module title --%>
+<ctrHeader:ModuleTitleWebControl  
+                           runat="server" 
+                           BlockFlechePath="/App_Themes/PlKMAE-Uk/Images/Common/block_fleche.gif" 
+                           BlockDupliPath="/App_Themes/PlKMAE-Uk/Images/Common/block_dupli.gif" 
+                           TitleUppercaseCss="titleUppercase" 
+/>
+
+<%-- Module bridge web control : used to switch between 2 modules --%>
+<ctrHeader:ModuleBridgeWebControl  
+                           runat="server" 
+                           BlockFlechePath="/App_Themes/PlKMAE-Uk/Images/Common/block_fleche.gif" 
+                           BlockDupliPath="/App_Themes/PlKMAE-Uk/Images/Common/block_dupli.gif" 
+                           TitleUppercaseCss="titleUppercase" 
+/>
+
+<%-- Media seller web control : used to show media detail : Media Genre, Title ... --%>
+<ctrHeader:mediasellerwebcontrol  
+                           runat="server" 
+                           BlockFlechePath="/App_Themes/PlKMAE-Uk/Images/Common/block_fleche.gif" 
+                           BlockDupliPath="/App_Themes/PlKMAE-Uk/Images/Common/block_dupli.gif" 
+                           TitleUppercaseCss="titleUppercase" 
+                           CommonCssClass="txtBlanc11Bold" 
+/>
+
+<%-- Information web control : used to show information about how to use the web menu --%>
+<ctrHeader:InformationWebControl  
+                           runat="server" 
+                           FlashPath="/App_Themes/PlKMAE-Uk/Flash/Culture/infoOptions.swf" 
+                           FlashReplacementPath="/App_Themes/PlKMAE-Uk/Images/Culture/FlashReplacement/infoOptions.gif" 
+                           FlashOneLinePath="/App_Themes/PlKMAE-Uk/Flash/Culture/infoOptionsOneLine.swf" 
+                           FlashOneLineReplacementPath="/App_Themes/PlKMAE-Uk/Images/Culture/FlashReplacement/infoOptionsOneLine.gif" 
+/>
+
+<%-- One vehicle selection web control --%>
+<ctrSelections:OneVehicleSelectionWebControl  
+                           runat="server" 
+                           CssClass="txtViolet11Bold" 
+/>
+
+<%-- Day calendar web control : used to show a calendar who allows you to choose between a day, month and year --%>
+<ctrSelections:daycalendarwebcontrol  
+                           runat="server" 
+                           TableBorderColor="#A9A9A9" 
+                           TableColor="#FFFFFF" 
+                           FontColor="#646262" 
+                           TableColorSelectedDate="#787878" 
+                           FontColorSelectedDate="#FFFFFF" 
+/>
+
+<%-- Month calendar web control : used to show a calendar who allows you to choose between a month and year --%>
+<ctrSelections:monthcalendarwebcontrol  
+                           runat="server"
+                           TableBorderColor = "#9D9885"
+                           TableColor = "#FFFFFF"
+                           TableColorSelectedDate = "#646262"
+                           TitleBackgroundColor = "#646262"
+                           FontColor = "#646262"
+                           FontColorSelectedDate = "#FFFFFF"
+                           TableColorNoDate = "#9378B3"
+                           TdBgcolor = "#FFFFFF"
+                           SkinID="monthcalendarwebcontrol1"
+/>
+
+<%-- Last month week calendar web control : used to show a calendar who allows you to choose between a month and week --%>
+<ctrSelections:lastmonthweekcalendarwebcontrol  
+                           runat="server"
+                           TableBorderColor = "#9D9885"
+                           TableColor = "#FFFFFF"
+                           TableColorSelectedDate = "#787878"
+                           TitleBackgroundColor = "#454343"
+                           FontColor = "#646262"
+                           FontColorSelectedDate = "#FFFFFF"
+                           TableColorNoDate = "#9378B3"
+                           SkinID="lastmonthweekcalendarwebcontrol1" 
+/>
+
+<%-- Date list web control : used to build a list of numbers to allow relative dates selection --%>
+<ctrSelections:datelistwebcontrol  
+                           runat="server" 
+                           CssClass="txtNoir11" 
+/>
+
+<%-- Result web control : used to display a generic result table (HTML) (Product Class) --%>
+<ctrProductClassResults:ProductClassReportWebControl  
+                           runat="server" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel" 
+                           CssDetailSelectionL1="dsLv1" 
+                           CssDetailSelectionL2="dsLv2" 
+                           CssDetailSelectionL3="dsLv3"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3" 
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData"
+                           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+                           CssLHeader="h2" 
+                           BackgroudColorL1="#A0A1A7,#B1FFC1,#FFA3C1,#FFFFC1" 
+                           BackgroudColorL2="#C3C7D0,#D0FFDA,#FFC8DA,#FFFFDA" 
+                           BackgroudColorL3="#D9E0CE,#E1FFDA,#FFE0DA,#FFFFDA" 
+                           BackgroudColorL4="#D9E0CE,#00FF00,#FF0000,#FFFF00" 
+                           BackgroudColorL5="#D1D0CA,#D1FFCA,#FFD0CA,#FFFFCA" 
+                           BackgroudColorL6="#D9E0CE,#E1FFDA,#FFE0DA,#FFFFDA" 
+                           BackgroudColorL7="#F1F1F1,#F1FFF1,#FFF1F1,#FFFFF1" 
+                           BackgroudColorL8="#F1F1F1" 
+                           BackgroudColorL9="#F1F1F1" 
+                           BackgroudColorSubTotal1="#FFFFFF,#D1FFCA,#FFD0CA,#FFFFCA" 
+                           BackgroudColorSubTotal2="#FFFFFF,#E1FFDA,#FFE0DA,#FFFFDA" 
+                           BackgroudColorSubTotal3="#FFFFFF,#F1FFF1,#FFF1F1,#FFFFF1" 
+                           BackgroudColorSubTotal4="#FFFFFF,#00FF00,#FF0000,#FFFF00"
+                           BackgroudColorLNbParution="#C8F4C8"
+                           CssL1="prClLv1" 
+                           CssL2="prClLv2" 
+                           CssL3="prClLv3"
+                           CssL4="prClLv4"
+                           CssL5="prClLv5"
+                           CssL6="prClLv6"
+                           CssL7="prClLv7"
+                           CssL8="prClLv8"
+                           CssL9="prClLv9"
+                           CssSubTotal1="prClLv5" 
+                           CssSubTotal2="prClLv6" 
+                           CssSubTotal3="prClLv7"
+                           CssSubTotal4="prClLv8"
+                           CssLNbParution="lvNbParution" 
+                           HighlightBackgroundColorLNbParution="#FFFFFF"
+                           HighlightBackgroundColorL1="#FFFFFF" 
+                           HighlightBackgroundColorL2="#FFFFFF" 
+                           HighlightBackgroundColorL3="#FFFFFF" 
+                           HighlightBackgroundColorL4="#FFFFFF" 
+                           HighlightBackgroundColorL5="#FFFFFF" 
+                           HighlightBackgroundColorL6="#FFFFFF" 
+                           HighlightBackgroundColorL7="#FFFFFF" 
+                           HighlightBackgroundColorL8="#FFFFFF" 
+                           HighlightBackgroundColorL9="#FFFFFF" 
+                           HighlightBackgroundColorSubTotal1="#FFFFFF"
+                           HighlightBackgroundColorSubTotal2="#FFFFFF"
+                           HighlightBackgroundColorSubTotal3="#FFFFFF"
+                           HighlightBackgroundColorSubTotal4="#FFFFFF"
+                           ImgBtnCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3_in.gif" 
+                           ImgBtnCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+                           ImgBtnDeCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif" 
+                           ImgBtnDeCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
+                           CssLTotal="prClLv0" 
+                           SkinID="productClassResultTable" 
+/>
+<%-- Result web control : used to display a generic result table (HTML) (Product Class) --%>
+<ctrProductClassResults:ProductClassReportWebControl  
+                           runat="server" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel" 
+                           CssDetailSelectionL1="dsLv1" 
+                           CssDetailSelectionL2="dsLv2" 
+                           CssDetailSelectionL3="dsLv3"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3" 
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData"
+                           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+                           CssLHeader="exh2" 
+                           BackgroudColorL1="#A0A1A7,#B1FFC1,#FFA3C1,#FFFFC1" 
+                           BackgroudColorL2="#C3C7D0,#D0FFDA,#FFC8DA,#FFFFDA" 
+                           BackgroudColorL3="#D9E0CE,#E1FFDA,#FFE0DA,#FFFFDA" 
+                           BackgroudColorL4="#D9E0CE,#00FF00,#FF0000,#FFFF00" 
+                           BackgroudColorL5="#D1D0CA,#D1FFCA,#FFD0CA,#FFFFCA" 
+                           BackgroudColorL6="#D9E0CE,#E1FFDA,#FFE0DA,#FFFFDA" 
+                           BackgroudColorL7="#F1F1F1,#F1FFF1,#FFF1F1,#FFFFF1" 
+                           BackgroudColorL8="#F1F1F1" 
+                           BackgroudColorL9="#F1F1F1" 
+                           BackgroudColorSubTotal1="#FFFFFF,#D1FFCA,#FFD0CA,#FFFFCA" 
+                           BackgroudColorSubTotal2="#FFFFFF,#E1FFDA,#FFE0DA,#FFFFDA" 
+                           BackgroudColorSubTotal3="#FFFFFF,#F1FFF1,#FFF1F1,#FFFFF1" 
+                           BackgroudColorSubTotal4="#FFFFFF,#00FF00,#FF0000,#FFFF00"
+                           BackgroudColorLNbParution="#C8F4C8"
+                           CssL1="prClLv1Neutral,prClLv1Ref,prClLv1Comp,prClLv1Both" 
+                           CssL2="prClLv2Neutral,prClLv2Ref,prClLv2Comp,prClLv2Both" 
+                           CssL3="prClLv3Neutral,prClLv3Ref,prClLv3Comp,prClLv3Both" 
+                           CssL4="prClLv4Neutral,prClLv4Ref,prClLv4Comp,prClLv4Both" 
+                           CssL5="prClLv5Neutral,prClLv5Ref,prClLv5Comp,prClLv5Both" 
+                           CssL6="prClLv6Neutral,prClLv6Ref,prClLv6Comp,prClLv6Both" 
+                           CssL7="prClLv7Neutral,prClLv7Ref,prClLv7Comp,prClLv7Both" 
+                           CssL8="prClLv8Neutral,prClLv8Ref,prClLv8Comp,prClLv8Both" 
+                           CssL9="prClLv9Neutral,prClLv9Ref,prClLv9Comp,prClLv9Both" 
+                           CssSubTotal1="prClLv5SbNeutral,prClLv5Ref,prClLv5Comp,prClLv5Both" 
+                           CssSubTotal2="prClLv6SbNeutral,prClLv6Ref,prClLv6Comp,prClLv6Both" 
+                           CssSubTotal3="prClLv7SbNeutral,prClLv7Ref,prClLv7Comp,prClLv7Both" 
+                           CssSubTotal4="prClLv8Neutral,prClLv8Ref,prClLv8Comp,prClLv8Both" 
+                           CssLNbParution="lvNbParution" 
+                           HighlightBackgroundColorLNbParution="#FFFFFF"
+                           HighlightBackgroundColorL1="#FFFFFF" 
+                           HighlightBackgroundColorL2="#FFFFFF" 
+                           HighlightBackgroundColorL3="#FFFFFF" 
+                           HighlightBackgroundColorL4="#FFFFFF" 
+                           HighlightBackgroundColorL5="#FFFFFF" 
+                           HighlightBackgroundColorL6="#FFFFFF" 
+                           HighlightBackgroundColorL7="#FFFFFF" 
+                           HighlightBackgroundColorL8="#FFFFFF" 
+                           HighlightBackgroundColorL9="#FFFFFF" 
+                           HighlightBackgroundColorSubTotal1="#FFFFFF"
+                           HighlightBackgroundColorSubTotal2="#FFFFFF"
+                           HighlightBackgroundColorSubTotal3="#FFFFFF"
+                           HighlightBackgroundColorSubTotal4="#FFFFFF"
+                           ImgBtnCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3_in.gif" 
+                           ImgBtnCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+                           ImgBtnDeCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif" 
+                           ImgBtnDeCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
+                           CssLTotal="prClLv0Excel" 
+                           SkinID="productClassResultTableXL" 
+/>
+<%-- Result web control : used to display a generic result table (HTML) (Product Class) --%>
+<ctrProductClassResults:ProductClassReportWebControl  
+                           runat="server" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel" 
+                           CssDetailSelectionL1="dsLv1" 
+                           CssDetailSelectionL2="dsLv2" 
+                           CssDetailSelectionL3="dsLv3"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3" 
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData"
+                           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+                           CssLHeader="h2" 
+                           BackgroudColorL1="#A0A1A7,#B1FFC1,#FFA3C1,#FFFFC1" 
+                           BackgroudColorL2="#D1D0CA,#CAFFCA,#FFC8DA,#FFFFCA" 
+                           BackgroudColorL3="#D9E0CE,#E1FFDA,#FFE0DA,#FFFFDA" 
+                           BackgroudColorL4="#D9E0CE,#00FF00,#FF0000,#FFFF00" 
+                           BackgroudColorL5="#C3C7D0,#E6FFE6,#FFE0EC,#FFFFDA" 
+                           BackgroudColorL6="#D9E0CE,#F2FFF2,#FFE8FA,#FFFFDA" 
+                           BackgroudColorL7="#F1F1F1,#F1FFF1,#FFF1F1,#FFFFF1" 
+                           BackgroudColorL8="#F1F1F1" 
+                           BackgroudColorL9="#F1F1F1" 
+                           BackgroudColorSubTotal1="#FFFFFF,#D1FFCA,#FFD0CA,#FFFFCA" 
+                           BackgroudColorSubTotal2="#FFFFFF,#E1FFDA,#FFE0DA,#FFFFDA" 
+                           BackgroudColorSubTotal3="#FFFFFF,#F1FFF1,#FFF1F1,#FFFFF1" 
+                           BackgroudColorSubTotal4="#FFFFFF,#00FF00,#FF0000,#FFFF00"
+                           BackgroudColorLNbParution="#C8F4C8"
+                           CssL1="prClLv1" 
+                           CssL2="prClLv2" 
+                           CssL3="prClLv3"
+                           CssL4="prClLv4"
+                           CssL5="prClLv5"
+                           CssL6="prClLv6"
+                           CssL7="prClLv7"
+                           CssL8="prClLv8"
+                           CssL9="prClLv9"
+                           CssSubTotal1="prClLv5" 
+                           CssSubTotal2="prClLv6" 
+                           CssSubTotal3="prClLv7"
+                           CssSubTotal4="prClLv8"
+                           CssLNbParution="lvNbParution" 
+                           HighlightBackgroundColorLNbParution="#FFFFFF"
+                           HighlightBackgroundColorL1="#FFFFFF" 
+                           HighlightBackgroundColorL2="#FFFFFF" 
+                           HighlightBackgroundColorL3="#FFFFFF" 
+                           HighlightBackgroundColorL4="#FFFFFF" 
+                           HighlightBackgroundColorL5="#FFFFFF" 
+                           HighlightBackgroundColorL6="#FFFFFF" 
+                           HighlightBackgroundColorL7="#FFFFFF" 
+                           HighlightBackgroundColorL8="#FFFFFF" 
+                           HighlightBackgroundColorL9="#FFFFFF" 
+                           HighlightBackgroundColorSubTotal1="#FFFFFF"
+                           HighlightBackgroundColorSubTotal2="#FFFFFF"
+                           HighlightBackgroundColorSubTotal3="#FFFFFF"
+                           HighlightBackgroundColorSubTotal4="#FFFFFF"
+                           ImgBtnCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3_in.gif" 
+                           ImgBtnCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+                           ImgBtnDeCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif" 
+                           ImgBtnDeCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
+                           CssLTotal="prClLv0" 
+                           SkinID="productClassResultTableProductXMedia" 
+/>
+<%-- Result web control : used to display a generic result table (HTML) (Product Class) --%>
+<ctrProductClassResults:ProductClassReportWebControl  
+                           runat="server" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel" 
+                           CssDetailSelectionL1="dsLv1" 
+                           CssDetailSelectionL2="dsLv2" 
+                           CssDetailSelectionL3="dsLv3"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3" 
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData"
+                           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+                           CssLHeader="exh2" 
+                           CssL1="prClLv1BisNeutral,prClLv1BisRef,prClLv1BisComp,prClLv1BisBoth" 
+                           CssL2="prClLv2BisNeutral,prClLv2BisRef,prClLv2BisComp,prClLv2BisBoth" 
+                           CssL5="prClLv5BisNeutral,prClLv5BisRef,prClLv5BisComp,prClLv5BisBoth" 
+                           CssL6="prClLv6BisNeutral,prClLv6BisRef,prClLv6BisComp,prClLv6BisBoth" 
+                           CssSubTotal1="prClLv5BisNeutral,prClLv5BisRef,prClLv5BisComp,prClLv5BisBoth" 
+                           CssLTotal="prClLv0Excel" 
+                           SkinID="productClassResultTableProductXMediaXL" 
+/>
+<%-- Result web control : used to display a generic result table (HTML) (Vehicle portfolio) --%>
+<ctrResults:Resultwebcontrol  
+                           runat="server" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel" 
+                           CssDetailSelectionL1="dsLv1" 
+                           CssDetailSelectionL2="dsLv2" 
+                           CssDetailSelectionL3="dsLv3"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3" 
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData"
+                           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+                           CssLHeader="h2" 
+                           BackgroudColorL1="#A0A1A7" 
+                           BackgroudColorL2="#C3C7D0" 
+                           BackgroudColorL3="#D9E0CE" 
+                           BackgroudColorLNbParution="#C8F4C8"
+                           CssL1="lv1" 
+                           CssL2="lv2" 
+                           CssL3="lv3"
+                           CssLNbParution="lvNbParution" 
+                           HighlightBackgroundColorLNbParution="#FFFFFF"
+                           HighlightBackgroundColorL1="#FFFFFF" 
+                           HighlightBackgroundColorL2="#FFFFFF" 
+                           HighlightBackgroundColorL3="#FFFFFF" 
+                           ImgBtnCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3_in.gif" 
+                           ImgBtnCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+                           ImgBtnDeCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif" 
+                           ImgBtnDeCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
+                           CssLTotal="lv0" 
+                           SkinID="portofolioResultTable" 
+/>
+<%-- Result web control : used to display a generic result table (HTML) (Product Class Indicator) --%>
+<ctrResults:ResultWebControl  
+                           runat="server" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel" 
+                           CssDetailSelectionL1="dsLv1" 
+                           CssDetailSelectionL2="dsLv2" 
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3" 
+                           CssLHeader="productClassIndicatorH2" 
+                           CssCHeader="productClassIndicatorH2" 
+                           CssLTotal="productClassIndicatorTotal" 
+                           CssSubTotal1="productClassIndicatorSubTotal1" 
+                           CssSubTotal2="productClassIndicatorSubTotal2" 
+                           CssL1="productClassIndicatorRef" 
+                           CssL2="productClassIndicatorComp" 
+                           BackgroudColorL1="#ffd0ca"
+						   BackgroudColorL2="#d1ffca"
+						   BackgroudColorSubTotal1="#e1e0da" 
+                           BackgroudColorSubTotal2="#f1f1f1" 					    
+                           SkinID="productClassIndicatorResultTable" 
+/>
+<%-- Result web control : used to display a generic result table (HTML) (Product Class) --%>
+<ctrProductClassResults:ProductClassReportWebControl  
+                           runat="server" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel" 
+                           CssDetailSelectionL1="dsLv1" 
+                           CssDetailSelectionL2="dsLv2" 
+                           CssDetailSelectionL3="dsLv3"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3" 
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData"
+                           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+                           CssLHeader="h2" 
+                           BackgroudColorL1="#A0A1A7,#B1FFC1,#FFA3C1,#FFFFC1" 
+                           BackgroudColorL2="#D9E0CE,#D2FFD2,#FFC8DA,#FFFFBA" 
+                           CssL1="prClLv1" 
+                           CssL2="prClLv5" 
+                           HighlightBackgroundColorL1="#FFFFFF" 
+                           HighlightBackgroundColorL2="#FFFFFF" 
+                           ImgBtnCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3_in.gif" 
+                           ImgBtnCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+                           ImgBtnDeCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif" 
+                           ImgBtnDeCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
+                           CssLTotal="prClLv0" 
+                           SkinID="productClassResultTableClassif1XYear" 
+/>
+<%-- Result web control : used to display a generic result table (HTML) (Product Class) --%>
+<ctrProductClassResults:ProductClassReportWebControl  
+                           runat="server" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel" 
+                           CssDetailSelectionL1="dsLv1" 
+                           CssDetailSelectionL2="dsLv2" 
+                           CssDetailSelectionL3="dsLv3"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3" 
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData"
+                           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+                           CssLHeader="exh2" 
+                           CssL1="prClLv1Neutral,prClLv1Ref,prClLv1Comp,prClLv1Both" 
+                           CssL2="prClLv2TerNeutral,prClLv5Ref,prClLv5Comp,prClLv5Both" 
+                           ImgBtnCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3_in.gif" 
+                           ImgBtnCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+                           ImgBtnDeCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif" 
+                           ImgBtnDeCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
+                           CssLTotal="prClLv0Excel" 
+                           SkinID="productClassResultTableClassif1XYearXL" 
+/>
+<%-- Result web control : used to display a list of insertions --%>
+<ctrCreatives:InsertionsWebControl  
+                           runat="server"
+                           
+                           CssL1="insertionlv1" 
+                           CssL2="insertionlv2" 
+                           CssL3="insertionlv3" 
+                           CssL4="insertionlv4" 
+                           CssCellInfo="insertionInfo"
+                           CssLHeader="h2"
+						   CssLTotal="lv0" 
+						   CssCHeader="h2"
+						   BackgroudColorL1="#A0A1A7"
+						   BackgroudColorL2="#C3C7D0" 
+						   BackgroudColorL3="#D9E0CE"
+						   BackgroudColorL4="#F1F1F1" 
+						   HighlightBackgroundColorL1="#FFFFFF" 
+						   HighlightBackgroundColorL2="#FFFFFF" 
+						   HighlightBackgroundColorL3="#FFFFFF"  
+						   HighlightBackgroundColorL4="#FFFFFF" 
+						   ImgBtnCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3_in.gif"
+						   ImgBtnCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+						   ImgBtnDeCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif"
+						   ImgBtnDeCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
+						   PageSizeOptions="100,200,500,1000" 
+						   AllowPaging="True"
+						   CssDetailSelectionBordelLevel="dsBorderLevel"
+						   CssDetailSelectionL1="dsLv1" 
+						   CssDetailSelectionL2="dsLv2" 
+						   CssDetailSelectionL3="dsLv3" 
+						   CssDetailSelectionRightBorderL1 = "dsRightBorderLv1"
+                           CssDetailSelectionRightBorderL2 = "dsRightBorderLv2"
+                           CssDetailSelectionRightBorderL3 = "dsRightBorderLv3"
+                           CssDetailSelectionRightBottomBorderL1 = "dsRightBottomBorderLv1"
+                           CssDetailSelectionRightBottomBorderL2 = "dsRightBottomBorderLv2"
+                           CssDetailSelectionRightBottomBorderL3 = "dsRightBottomBorderLv3"
+						   CssDetailSelectionTitle="dsTitle"
+						   CssDetailSelectionTitleData="dsTitleData" 
+						   CssDetailSelectionTitleGlobal="dsTitleGlobal"
+/>
+<ctrCreatives:InsertionsWebControl  
+                           runat="server"
+                           
+                           CssL1="exlv1" 
+                           CssL2="exlv2" 
+                           CssL3="exlv3" 
+                           CssL4="exlv4" 
+                           CssCellInfo="insertionInfo"
+                           CssLHeader="exh2"
+						   CssLTotal="exlv0" 
+						   CssCHeader="exh2"
+						   BackgroudColorL1="#A0A1A7"
+						   BackgroudColorL2="#C3C7D0" 
+						   BackgroudColorL3="#D9E0CE"
+						   BackgroudColorL4="#F1F1F1" 
+						   CssDetailSelectionBordelLevel="dsBorderLevel"
+						   CssDetailSelectionL1="dsLv1" 
+						   CssDetailSelectionL2="dsLv2" 
+						   CssDetailSelectionL3="dsLv3" 
+						   CssDetailSelectionRightBorderL1 = "dsRightBorderLv1"
+                           CssDetailSelectionRightBorderL2 = "dsRightBorderLv2"
+                           CssDetailSelectionRightBorderL3 = "dsRightBorderLv3"
+                           CssDetailSelectionRightBottomBorderL1 = "dsRightBottomBorderLv1"
+                           CssDetailSelectionRightBottomBorderL2 = "dsRightBottomBorderLv2"
+                           CssDetailSelectionRightBottomBorderL3 = "dsRightBottomBorderLv3"
+						   CssDetailSelectionTitle="dsTitle"
+						   CssDetailSelectionTitleData="dsTitleData" 
+						   CssDetailSelectionTitleGlobal="dsTitleGlobal"
+						   SkinID="excelInsertion"
+/>
+<%-- Result web control : used to display a olist of creatives --%>
+<ctrCreatives:InsertionsWebControl  
+                           runat="server"
+                           
+                           CssL1="insertionlv1" 
+                           CssL2="insertionlv2" 
+                           CssL3="insertionlv3" 
+                           CssL4="insertionlv4" 
+                           CssCellInfo="creativeInfo"
+                           CssLHeader="h2"
+						   CssLTotal="lv0" 
+						   CssCHeader="h2"
+						   BackgroudColorL1="#A0A1A7"
+						   BackgroudColorL2="#C3C7D0" 
+						   BackgroudColorL3="#D9E0CE"
+						   BackgroudColorL4="#F1F1F1" 
+						   HighlightBackgroundColorL1="#FFFFFF" 
+						   HighlightBackgroundColorL2="#FFFFFF" 
+						   HighlightBackgroundColorL3="#FFFFFF"  
+						   HighlightBackgroundColorL4="#FFFFFF" 
+						   ImgBtnCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3_in.gif"
+						   ImgBtnCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+						   ImgBtnDeCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif"
+						   ImgBtnDeCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
+						   DefaultPageSize="10"
+						   PageSizeOptions="10,15,20" 
+						   AllowPaging="True"
+						   AllowRepeatHeader="False"
+						   CssDetailSelectionBordelLevel="dsBorderLevel"
+						   CssDetailSelectionL1="dsLv1" 
+						   CssDetailSelectionL2="dsLv2" 
+						   CssDetailSelectionL3="dsLv3" 
+						   CssDetailSelectionRightBorderL1 = "dsRightBorderLv1"
+                           CssDetailSelectionRightBorderL2 = "dsRightBorderLv2"
+                           CssDetailSelectionRightBorderL3 = "dsRightBorderLv3"
+                           CssDetailSelectionRightBottomBorderL1 = "dsRightBottomBorderLv1"
+                           CssDetailSelectionRightBottomBorderL2 = "dsRightBottomBorderLv2"
+                           CssDetailSelectionRightBottomBorderL3 = "dsRightBottomBorderLv3"
+						   CssDetailSelectionTitle="dsTitle"
+						   CssDetailSelectionTitleData="dsTitleData" 
+						   CssDetailSelectionTitleGlobal="dsTitleGlobal"
+				           SkinID="creativeControl"  
+/>
+<%-- Result web control : used to display a generic result table (Excel) (Vehicle portfolio) --%>
+<ctrResults:ResultWebControl  
+                           runat="server" 
+                           CssLTotal="exlv0" 
+                           CssL3="exlv3" 
+                           CssL2="exlv2"
+                           CssL1="exlv1" 
+                           CssLHeader="exh2"                           
+                           CssDetailSelectionL1="dsLv1Excel" 
+                           CssDetailSelectionL2="dsLv2Excel" 
+                           CssDetailSelectionL3="dsLv3Excel"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3Excel" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3Excel"  
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData"
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+				           CssDetailSelectionBordelLevel="dsBorderLevel"
+				           SkinID="portofolioExcelResultTable"  
+/>
+
+<%-- Result web control : used to display a generic result table (Raw Excel) (Vehicle portfolio) --%>
+<ctrResults:ResultWebControl  
+                           runat="server" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel"
+				           CssDetailSelectionL1="dsLv1Excel" 
+				           CssDetailSelectionL2="dsLv2Excel" 
+				           CssDetailSelectionL3="dsLv3Excel"
+				           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3Excel" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3Excel"
+				           CssDetailSelectionTitle="dsTitle" 
+				           CssDetailSelectionTitleData="dsTitleData" 
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal"
+				           SkinID="portofolioRawExcelResultTable"  
+/>
+
+<%-- Portofolio chart web control : used to show charts for protofolio module --%>
+<%--<webUiResults:PortofolioChartUI  
+                           runat="server" 
+                           PieColors="#644883,#A0A1A7,#C3C7D0,#D9E0CE,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000" 
+                           PieLineColor="Black" 
+                           DefaultBorderLineColor="#C0C0C0" 
+                           ChartBorderLineColor="#634984" 
+                           TitleColor="#644883"  
+/>--%>
+<ctrResults:PortofolioChartWebControl  
+                           runat="server" 
+                           PieColors="#646262,#A0A1A7,#C3C7D0,#D9E0CE,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000" 
+                           PieLineColor="Black" 
+                           DefaultBorderLineColor="#C0C0C0" 
+                           ChartBorderLineColor="#646262" 
+                           TitleColor="#646262"  
+/>
+
+<%-- Portofolio chart web control : used to show charts for indicators module --%>
+<%--<webUiResults:INDICATORCHARTUI  
+                           runat="server"
+                           ChartAreasBackColor="#DECFE7"
+                           ChartBorderLineColor="#634984"
+                           SeriesColor="#9479B5"
+                           CompetitorSerieColor="#FFDFDE"
+                           ReferenceSerieColor="#DEFFDE"
+                           LegendItemCompetitorColor="#FFDFDE"
+                           LegendItemReferenceColor="#DEFFDE"
+                           PieColors="#644883,#A0A1A7,#C3C7D0,#D9E0CE,#FFD7D7,#FFF0F0,#CAFFCA"
+                           PieLineColor="Black"
+                           TitleColor="#644883"
+/>--%>
+<%-- Indicators charts--%>
+<indicatorCharts:ChartSeasonality
+                           runat="server"
+                           ChartAreasBackColor="#DFDFDF"
+                           ChartBorderLineColor="#646262"
+                           SeriesColor="#FF7100"
+                           CompetitorSerieColor="#FFDFDE"
+                           ReferenceSerieColor="#DEFFDE"
+                           LegendItemCompetitorColor="#FFDFDE"
+                           LegendItemReferenceColor="#DEFFDE"
+                           PieColors="#646262,#A0A1A7,#C3C7D0,#D9E0CE,#FFD7D7,#FFF0F0,#CAFFCA"
+                           PieLineColor="Black"
+                           TitleColor="#646262"
+/>
+<indicatorCharts:ChartTop
+                           runat="server"
+                           ChartAreasBackColor="#DFDFDF"
+                           ChartBorderLineColor="#646262"
+                           SeriesColor="#FF7100"
+                           CompetitorSerieColor="#FFDFDE"
+                           ReferenceSerieColor="#DEFFDE"
+                           MixedSerieColor="#FFFF33"
+                           LegendItemCompetitorColor="#FFDFDE"
+                           LegendItemReferenceColor="#DEFFDE"
+                           LegendItemMixedColor="#FFFF33"
+                           PieColors="#646262,#A0A1A7,#C3C7D0,#D9E0CE,#FFD7D7,#FFF0F0,#CAFFCA"
+                           PieLineColor="Black"
+                           TitleColor="#646262"
+/>
+<indicatorCharts:ChartEvolution
+                           runat="server"
+                           ChartAreasBackColor="#DFDFDF"
+                           ChartBorderLineColor="#646262"
+                           SeriesColor="#FF7100"
+                           CompetitorSerieColor="#FFDFDE"
+                           ReferenceSerieColor="#DEFFDE"
+                           MixedSerieColor="#FFFF33"
+                           LegendItemCompetitorColor="#FFDFDE"
+                           LegendItemReferenceColor="#DEFFDE"
+                           LegendItemMixedColor="#FFFF33"
+                           PieColors="#646262,#A0A1A7,#C3C7D0,#D9E0CE,#FFD7D7,#FFF0F0,#CAFFCA"
+                           PieLineColor="Black"
+                           TitleColor="#646262"
+/>
+<indicatorCharts:ChartMediaStartegy
+                           runat="server"
+                           ChartAreasBackColor="#DFDFDF"
+                           ChartBorderLineColor="#646262"
+                           SeriesColor="#FF7100"
+                           CompetitorSerieColor="#FFDFDE"
+                           ReferenceSerieColor="#DEFFDE"
+                           LegendItemCompetitorColor="#FFDFDE"
+                           LegendItemReferenceColor="#DEFFDE"
+                           PieColors="#646262,#A0A1A7,#C3C7D0,#D9E0CE,#FFD7D7,#FFF0F0,#CAFFCA"
+                           PieLineColor="Black"
+                           TitleColor="#646262"
+/>
+<%-- Result options web control : used to display result options : insertOption, percentage, pdmOption ... --%>
+<ctrHeader:resultsoptionswebcontrol  
+                           runat="server" 
+                           CommonCssClass="txtNoir11Bold" 
+                           OutCssClass="ddlOut" 
+                           OverCssClass="ddlOver" 
+/>
+<ctrHeader:resultsoptionswebcontrol  
+                           runat="server" 
+                           CommonCssClass="txtNoir11Bold" 
+                           OutCssClass="ddlOut" 
+                           OverCssClass="ddlOver" 
+                           SectorSelectionOptions="False" 
+                           SectorMultipleSelectionOptions="True"
+                           SkinID="SectorsDropDownCheckBoxListWebControl"
+/>
+
+<%-- Result options web control : used to display result options specific to Dynamic Tables module --%>
+<ctrHeader:resultsoptionswebcontrol 
+                           runat="server" 
+                           CommonCssClass="txtNoir11Bold" 
+                           OutCssClass="ddlOut" 
+                           OverCssClass="ddlOver" 
+                           BorderColor="#BBBFC6"
+                           ImageWidth="139" 
+                           ImageHeight="26" 
+                           SkinID="resultsOptionsASDynamicTables"
+/>
+
+<%-- Portofolio detail media result : used to display generic result for portofolio media detail (HTML) --%>
+<ctrResults:PortofolioDetailMediaResultWebControl 
+                           runat="server" 
+                           BackgroudColorL1="#C3C7D0" 
+                           CssL1="lv2" 
+                           CssLHeader="h2" 
+                           HighlightBackgroundColorL1="#FFFFFF" 
+                           ImgBtnCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3_in.gif" 
+                           ImgBtnCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+                           ImgBtnDeCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif" 
+                           ImgBtnDeCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel" 
+                           CssDetailSelectionL1="dsLv1" 
+                           CssDetailSelectionL2="dsLv2" 
+                           CssDetailSelectionL3="dsLv3"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3"  
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData"
+                           SkinID="PortofolioPopUpResult" 
+/>
+
+<%-- Portofolio detail media result : used to display generic result for portofolio media detail (Excel) --%>
+<ctrResults:PortofolioDetailMediaResultWebControl  
+                           runat="server" 
+                           CssL1="exlv3" 
+                           CssL2="exlv2"
+                           CssLHeader="exh2" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel" 
+                           CssDetailSelectionL1="dsLv1Excel" 
+                           CssDetailSelectionL2="dsLv2Excel"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData" 
+                           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+                           SkinID="PortofolioPopUpExcelResult"
+/>
+
+<%-- Result web control : used to display a generic result table (Excel) (Present/absent report)--%>
+<ctrResults:ResultWebControl  
+                           runat="server" 
+                           CssLTotal="exlv0" 
+                           CssL3="exlv3" 
+                           CssL2="exlv2"
+				           CssL1="exlv1" 
+				           CssLHeader="exh2"
+				           CssLNbParution="exlvNbParution" 
+				           CssDetailSelectionL1="dsLv1Excel" 
+				           CssDetailSelectionL2="dsLv2Excel"
+				           CssDetailSelectionL3="dsLv3Excel"
+				           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3Excel" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3Excel"   
+				           CssDetailSelectionTitle="dsTitle" 
+				           CssDetailSelectionTitleData="dsTitleData"
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+				           CssDetailSelectionBordelLevel="dsBorderLevel"
+				           SkinID="PresentAbsentExcelResult" 
+/>
+
+<%-- Result web control : used to display a generic result table (Raw Excel) (Present/absent report)--%>
+<ctrResults:ResultWebControl  
+                           runat="server" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel"
+				           CssDetailSelectionL1="dsLv1Excel" 
+				           CssDetailSelectionL2="dsLv2Excel" 
+				           CssDetailSelectionL3="dsLv3Excel"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3Excel" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3Excel" 
+				           CssDetailSelectionTitle="dsTitle" 
+				           CssDetailSelectionTitleData="dsTitleData" 
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal"
+				           SkinID="PresentAbsentRawExcelResult"  
+/>
+
+<%-- Creatives web control : to display a set of creations, vehicle by vehicle, depending on a univers of products and media --%>
+<ctrCreatives:CreativesWebControl  
+                           runat="server" 
+                           FooterImage="/App_Themes/PlKMAE-Uk/Images/Common/Result/footer.gif"
+                           HeaderImage="/App_Themes/PlKMAE-Uk/Images/Common/Result/header.gif"
+                           LoadingImage="/App_Themes/PlKMAE-Uk/Images/Common/waitAjax.gif"
+                           ButtonFirstDown="/App_Themes/PlKMAE-Uk/Images/Common/Result/bt_first_down.gif"
+                           ButtonFirstUp="/App_Themes/PlKMAE-Uk/Images/Common/Result/bt_first_up.gif"
+                           ButtonLastDown="/App_Themes/PlKMAE-Uk/Images/Common/Result/bt_last_down.gif"
+                           ButtonLastUp="/App_Themes/PlKMAE-Uk/Images/Common/Result/bt_last_up.gif"
+                           ButtonNextDown="/App_Themes/PlKMAE-Uk/Images/Common/Result/bt_next_down.gif"
+                           ButtonNextUp="/App_Themes/PlKMAE-Uk/Images/Common/Result/bt_next_up.gif"
+                           ButtonPreviousDown="/App_Themes/PlKMAE-Uk/Images/Common/Result/bt_previous_down.gif"
+                           ButtonPreviousUp="/App_Themes/PlKMAE-Uk/Images/Common/Result/bt_previous_up.gif"
+/>
+
+<%-- Select items in classification web control : used to select Items in Classification --%>
+<ctrSelections:SelectItemsInClassificationWebControl  
+                           runat="server" 
+                           ChildNodeExcludeCss="txtChildNodeExcludeCss" 
+                           ChildNodeIncludeCss="txtChildNodeIncludeCss" 
+                           CustomSelectCss="customSelectCss" 
+                           LabelNbCurrentElementCss="labelNbelements" 
+                           ListBoxBodyCss="listBoxBodyCss" 
+                           ListBoxCss="listBoxCss" 
+                           ListBoxHeaderCss="listBoxHeaderCss" 
+                           ParentNodeChildExcludeCss="txtParentNodeChildExcludeCss" 
+                           ParentNodeChildIncludeCss="txtParentNodeChildIncludeCss" 
+                           SelectOptionItemDefaultCss="optionItemDefault" 
+                           SelectOptionItemHierarchyCss="optionItemHierarchy" 
+                           TrashNodeCss="trashNodeCss"
+                           TreeExcludeFrameBodyCss="treeExcludeFrameBodyCss" 
+                           TreeExcludeFrameCss="treeExcludeFrameCss" 
+                           TreeExcludeFrameHeaderCss="treeExcludeFrameHeaderCss" 
+                           TreeIncludeFrameBodyCss="treeIncludeFrameBodyCss" 
+                           TreeIncludeFrameCss="treeIncludeFrameCss" 
+                           TreeIncludeFrameHeaderCss="treeIncludeFrameHeaderCss" 
+                           TreeViewIcons="/App_Themes/PlKMAE-Uk/Styles/TreeView/Icons" 
+                           TreeViewScripts="/App_Themes/PlKMAE-Uk/Styles/TreeView/Scripts" 
+                           TreeViewStyles="/App_Themes/PlKMAE-Uk/Styles/TreeView/Css" 
+                           ExcludeImage="/App_Themes/PlKMAE-Uk/Images/Common/exclude_item.gif"
+                           IncludeImage="/App_Themes/PlKMAE-Uk/Images/Common/include_item.gif"
+                           Intersectionimage="/App_Themes/PlKMAE-Uk/Images/Common/intersection.gif"
+                           TrashImage="/App_Themes/PlKMAE-Uk/Images/Common/button/bt_delete_up.GIF"
+                           DeleteImage="/App_Themes/PlKMAE-Uk/Styles/TreeView/Css/bt_delete_item.gif"
+                           LoupeUpImage = "/App_Themes/PlKMAE-Uk/Images/Common/button/bt_loupe_up.gif"
+                           LoupeDownImage = "/App_Themes/PlKMAE-Uk/Images/Common/button/bt_loupe_down.gif"
+                           InitializeUpImage = "/App_Themes/PlKMAE-Uk/Images/Common/button/initialize_up.gif"
+                           InitializeDownImage = "/App_Themes/PlKMAE-Uk/Images/Common/button/initialize_down.gif"
+                           WaitLoadingImage = "/App_Themes/PlKMAE-Uk/Images/Common/waitAjax.gif"
+                            IsCheckUniverseLevels="False"
+/>
+<%-- Select items in classification web control : used to select Items in Classification --%>
+<ctrSelections:SelectRecapItemsInClassificationWebControl  
+                           runat="server" 
+                           ChildNodeExcludeCss="txtChildNodeExcludeCss" 
+                           ChildNodeIncludeCss="txtChildNodeIncludeCss" 
+                           CustomSelectCss="customSelectCss" 
+                           LabelNbCurrentElementCss="labelNbelements" 
+                           ListBoxBodyCss="listBoxBodyCss" 
+                           ListBoxCss="listBoxCss" 
+                           ListBoxHeaderCss="listBoxHeaderCss" 
+                           ParentNodeChildExcludeCss="txtParentNodeChildExcludeCss" 
+                           ParentNodeChildIncludeCss="txtParentNodeChildIncludeCss" 
+                           SelectOptionItemDefaultCss="optionItemDefault" 
+                           SelectOptionItemHierarchyCss="optionItemHierarchy" 
+                           TrashNodeCss="trashNodeCss"
+                           TreeExcludeFrameBodyCss="treeExcludeFrameBodyCss" 
+                           TreeExcludeFrameCss="treeExcludeFrameCss" 
+                           TreeExcludeFrameHeaderCss="treeExcludeFrameHeaderCss" 
+                           TreeIncludeFrameBodyCss="treeIncludeFrameBodyCss" 
+                           TreeIncludeFrameCss="treeIncludeFrameCss" 
+                           TreeIncludeFrameHeaderCss="treeIncludeFrameHeaderCss" 
+                           TreeViewIcons="/App_Themes/PlKMAE-Uk/Styles/TreeView/Icons" 
+                           TreeViewScripts="/App_Themes/PlKMAE-Uk/Styles/TreeView/Scripts" 
+                           TreeViewStyles="/App_Themes/PlKMAE-Uk/Styles/TreeView/Css" 
+                           ExcludeImage="/App_Themes/PlKMAE-Uk/Images/Common/exclude_item.gif"
+                           IncludeImage="/App_Themes/PlKMAE-Uk/Images/Common/include_item.gif"
+                           Intersectionimage="/App_Themes/PlKMAE-Uk/Images/Common/intersection.gif"
+                           TrashImage="/App_Themes/PlKMAE-Uk/Images/Common/button/bt_delete_up.GIF"
+                           DeleteImage="/App_Themes/PlKMAE-Uk/Styles/TreeView/Css/bt_delete_item.gif"
+                           LoupeUpImage = "/App_Themes/PlKMAE-Uk/Images/Common/button/bt_loupe_up.gif"
+                           LoupeDownImage = "/App_Themes/PlKMAE-Uk/Images/Common/button/bt_loupe_down.gif"
+                           InitializeUpImage = "/App_Themes/PlKMAE-Uk/Images/Common/button/initialize_up.gif"
+                           InitializeDownImage = "/App_Themes/PlKMAE-Uk/Images/Common/button/initialize_down.gif"
+                           WaitLoadingImage = "/App_Themes/PlKMAE-Uk/Images/Common/waitAjax.gif"
+/>
+<%-- Select items in classification web control : used to select Items in Classification specific to details selection--%>
+<ctrSelections:SelectItemsInClassificationWebControl  
+                           runat="server" 
+                           
+                           TreeViewIcons = "/App_Themes/PlKMAE-Uk/Styles/TreeView/Icons"
+                           TreeViewScripts = "/App_Themes/PlKMAE-Uk/Styles/TreeView/Scripts"
+                           TreeViewStyles = "/App_Themes/PlKMAE-Uk/Styles/TreeView/Css"
+                           ChildNodeExcludeCss = "txtChildNodeExcludeCss"
+                           ChildNodeIncludeCss = "txtChildNodeIncludeCss"
+                           ParentNodeChildExcludeCss = "txtParentNodeChildExcludeCss"
+                           ParentNodeChildIncludeCss = "txtParentNodeChildIncludeCss"
+                           TreeExcludeFrameBodyCss = "treeExcludeFrameBodyCss"
+                           TreeExcludeFrameCss = "treeExcludeFrameCss"
+                           TreeExcludeFrameHeaderCss = "treeExcludeFrameHeaderCss"
+                           TreeIncludeFrameBodyCss = "treeIncludeFrameBodyCss"
+                           TreeIncludeFrameCss = "treeIncludeFrameCss"
+                           TreeIncludeFrameHeaderCss = "treeIncludeFrameHeaderCss"
+                           
+                           SkinID="detailsselection"
+/>
+
+<%-- Global calendar web control : used to display the global calendar --%>
+<ctrSelections:GlobalCalendarWebControl  
+                           runat="server"
+                           CssPath="Css/PlKMAE-Uk/Calendar.css"
+                           ThemeName="PlKMAE-Uk"
+/>
+
+<%-- Initialize product web control : used to initialize products selection txtNoir11Bold --%>
+<ctrHeader:InitializeProductWebControl  
+                           runat="server"
+                           CssClass="txtInitialize" 
+/>
+<%-- Initialize Media web control : used to initialize products selection --%>
+<ctrHeader:InitializeMediaWebControl  
+                           runat="server"
+                           CssClass="txtInitialize" 
+/>
+
+<%-- Generic media level detail selection web control--%>
+<ctrHeader:genericmedialeveldetailselectionwebcontrol 
+                           runat="server" 
+                           BackGroundColor=""
+                           CssDefaultListLabel="txtBlanc11Bold"
+                           CssListLabel="txtViolet11Bold"
+                           CssListBox="txtNoir11Bold"
+                           CssCustomSectionTitle="txtViolet11Bold"
+/>
+
+<%-- Generic media level detail selection web control--%>
+<ctrHeader:GenericColumnLevelDetailSelectionWebControl 
+                           runat="server" 
+                           BackGroundColor=""
+                           CssListLabel="txtBlanc11Bold"
+                           CssListBox="txtNoir11Bold"
+/>
+
+<%-- Generic media level detail selection web control--%>
+<ctrHeader:genericmedialeveldetailselectionwebcontrol 
+                           runat="server" 
+                           SkinID="genericmedialeveldetailselectionwebcontrol"
+/>
+
+<%-- Vehicle selection web control --%>
+<ctrSelections:vehicleselectionwebcontrol 
+                           runat="server" 
+                           CssClass="txtViolet11Bold"
+CheckActiveVehicle="False"
+/>
+
+<%-- generic media schedule web control : used to display a generic media plan --%>
+<ctrMadiaPlan:genericmediaschedulewebcontrol 
+                           runat="server"
+                           ThemeName = "PlKMAE-Uk" 
+/>
+
+<%-- Period Detail Selection WebControl : designed for Media Plan Schedules --%>
+<ctrHeader:PeriodDetailWebControl 
+                           runat="server"
+                           BackgroundColor=""
+                           LabelCssClass="txtBlanc11Bold"  
+                           ListCssClass="txtNoir11Bold"
+                           SkinID="PeriodDetailWebControl"
+/>
+
+<%-- Sector Selection WebControl : designed for new creatives --%>
+<ctrHeader:SectorWebControl 
+                           runat="server"
+                           BackgroundColor=""
+                           LabelCssClass="txtBlanc11Bold"  
+                           ListCssClass="txtNoir11Bold"
+                           SkinID="SectorWebControl"
+/>
+<%-- Sector multiple  Selection WebControl : designed for new creatives --%>
+<ctrHeader:DropDownCheckBoxListWebControl 
+                           runat="server"
+                            BackgroundColor=""
+                           LabelCssClass="txtBlanc11Bold"    
+                           ContainerHeight="400px"    
+                           MaxItemsNotScrollable="18"                 
+                           SkinID="SectorsDropDownCheckBoxListWebControl"
+/>
+
+<%-- Generic detail selection web control : used to display columns detail --%>
+<ctrHeader:genericdetailselectionwebcontrol 
+                           runat="server"
+                           ThemeName = "PlKMAE-Uk"
+                            TitleBarWidth = "1700"
+                           TitleDivWidth = "1696"
+/>
+
+<%-- Media insertions creations result web control 
+<ctrResults:MediaInsertionsCreationsResultsWebControl 
+                           runat="server"
+                           CssDefaultListLabel="txtGris11Bold"
+                           CssListLabel="txtViolet11Bold"
+                           CssListBox="txtNoir11Bold"
+                           CssCustomSectionTitle="txtViolet11Bold"
+                           ThemeName = "PlKMAE-Uk"
+/>--%>
+
+<%-- Option layer web control : used to display generic details selection --%>
+<ctrHeader:OptionLayerWebControl 
+                           runat="server" 
+                           CssDefaultListLabel="txtViolet11Bold"
+						   BackGroundColor="#EEEEEE" 
+						   ThemeName = "PlKMAE-Uk"
+/>
+
+<%-- Option table types web control : used to display format table details selection --%>
+<ctrHeader:ResultsTableTypesWebControl 
+                           runat="server" 
+                           BorderColor="#BBBFC6"
+                           ImageButtonArrow="/App_Themes/PlKMAE-Uk/Images/Common/Button/bt_arrow_tall_top.gif"
+						   SkinID = "ResultsTableTypesWebControl1"
+/>
+<%-- Option Dash Board web control : used to display Dash Board details selection --%>
+<ctrHeader:ResultsDashBoardOptionsWebControl
+                           runat="server" 
+                           BorderColor="#BBBFC6"
+                           CommonCssClass="txtNoir11Bold" 
+                           ImageButtonArrow="/App_Themes/PlKMAE-Uk/Images/Common/Button/bt_arrow_tall_top.gif"
+                           ImageWidth="139" 
+                           ImageHeight="26"
+						   SkinID = "ResultsDashBoardOptionsWebControl1"
+/>
+
+<%-- Result web control : used to display a generic result table (HTML) (portfolio Synthesis) --%>
+<ctrResults:Resultwebcontrol 
+                           runat="server" 
+                           BackgroudColorL1="#C3C7D0" 
+                           BackgroudColorL2="#D9E0CE" 
+                           CssL1="portofolioSynthesisL1" 
+                           CssL2="portofolioSynthesisL2" 
+                           SkinID="portofolioSynthesisResultTable" 
+/>
+
+<%-- Result web control : used to display a generic result table (Excel) (portfolio Synthesis) --%>
+<ctrResults:ResultWebControl 
+                           runat="server" 
+                           CssL2="portofolioSynthesisExcel2"
+                           CssL1="portofolioSynthesisExcel1" 
+                           CssDetailSelectionL1="dsLv1Excel" 
+                           CssDetailSelectionL2="dsLv2Excel" 
+                           CssDetailSelectionL3="dsLv3Excel"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3Excel" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3Excel"  
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData"
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+				           CssDetailSelectionBordelLevel="dsBorderLevel"
+				           SkinID="portofolioExcelSynthesisResultTable"  
+/>
+<%-- APPM container web control : used to display APPM result --%>
+<ctrAppm:AppmContainerWebControl
+                           runat="server" 
+                           AnalyseFamilyInterestPlanSkinID="AnalyseFamilyInterestPlanSkinID"
+                           PdvPlanSkinID="PdvPlanSkinID"
+                           PeriodicityPlanSkinID="PeriodicityPlanSkinID"
+                           
+				           SkinID="container"  
+/>
+
+
+<%-- APPM Family interest web control : used to display APPM result in APPM container --%>
+<ctrAppm:AnalyseFamilyInterestPlanAppmChartWebControl
+                           runat="server" 
+                           
+                           PieColors="#646262,#A0A1A7,#C3C7D0,#D9E0CE,#395573,#6B8199,#C3D3E6,#EDF6FF,#525A3E,#B0BF86,#DCE6C3,#FAFFEC,#3E5A51,#7DB3A2,#C3E6DB,#ECFFF9,#425A3E,#8EBF86,#C8E6C3,#EEFFEC,#7D3200,#D95700,#E6A173,#FFD9BF,#43415A,#908DBF,#C9C7E6,#EFEEFF,#7D4B00,#B36B00,#FFCC80,#FFE6BF"
+                           CamembertTitleTextFontColor1="#646262"
+                           CamembertTitleTextFontSize1="10"
+                           CamembertTitleTextFontFamily1="Arial"
+                           CamembertTitleTextFontColor2="#646262"
+                           CamembertTitleTextFontSize2="10"
+                           CamembertTitleTextFontFamily2="Arial"
+                           
+                           HistogrammeTitleTextFontColor="#646262"
+                           HistogrammeTitleTextFontSize="10"
+                           HistogrammeTitleTextFontFamily="Arial"
+                           HistogrammeLegendTextFontColor="#000000"
+                           HistogrammeLegendTextFontSize="8"
+                           HistogrammeLegendTextFontFamily="Arial"
+                           HistogrammeColorFamille1="#979797"
+                           HistogrammeColorFamille2="#FF7100"
+                           HistogrammeColorFamille3="#FF7100"
+                           HistogrammeBackgroundColor="#DFDFDF"
+                           HistogrammeOrdonneeTextFontFamily="Arial" 
+                           HistogrammeOrdonneeTextFontSize="8" 
+                           HistogrammeAbscisseTextFontFamily="Arial" 
+                           HistogrammeAbscisseTextFontSize="8" 
+                           
+                           TextNoResultFontFamily="Arial"         
+                           TextNoResultFontSize="8"
+                           TextNoResultFontColor="#646262" 
+                           
+                           ControlBorderSize="2"
+                           ControlBorderColor="#454343"                
+                           
+				           SkinID="AnalyseFamilyInterestPlanSkinID"  
+/>
+
+<%-- APPM PDV plan web control : used to display APPM result in APPM container --%>
+<ctrAppm:PdvPlanAppmChartWebControl
+                           runat="server"     
+                           
+                           PieColors="#646262,#A0A1A7,#C3C7D0,#D9E0CE,#395573,#6B8199,#C3D3E6,#EDF6FF,#525A3E,#B0BF86,#DCE6C3,#FAFFEC,#3E5A51,#7DB3A2,#C3E6DB,#ECFFF9,#425A3E,#8EBF86,#C8E6C3,#EEFFEC,#7D3200,#D95700,#E6A173,#FFD9BF,#43415A,#908DBF,#C9C7E6,#EFEEFF,#7D4B00,#B36B00,#FFCC80,#FFE6BF"        
+                           
+                           CamembertEurosFontColor = "#646262"
+                           CamembertEurosFontSize = "12"
+                           CamembertEurosFontFamily = "Arial"
+                           
+                           CamembertPagesFontColor = "#646262"
+                           CamembertPagesFontSize = "12"
+                           CamembertPagesFontFamily = "Arial"
+                           
+                           CamembertInsertionsFontColor = "#646262"
+                           CamembertInsertionsFontSize = "12"
+                           CamembertInsertionsFontFamily = "Arial"
+                           
+                           CamembertGRPFontColor = "#646262"
+                           CamembertGRPFontSize = "12"
+                           CamembertGRPFontFamily = "Arial"
+                           
+                           TextNoResultFontFamily="Arial"         
+                           TextNoResultFontSize="8"
+                           TextNoResultFontColor="#646262"
+                           
+                           ControlBorderSize="2"
+                           ControlBorderColor="#454343" 
+                           
+				           SkinID="PdvPlanSkinID"  
+/>
+
+<%-- APPM Periodicity plan web control : used to display APPM result in APPM container --%>
+<ctrAppm:PeriodicityPlanAppmChartWebControl
+                           runat="server"     
+                           
+                           PieColors="#646262,#A0A1A7,#C3C7D0,#D9E0CE,#395573,#6B8199,#C3D3E6,#EDF6FF,#525A3E,#B0BF86,#DCE6C3,#FAFFEC,#3E5A51,#7DB3A2,#C3E6DB,#ECFFF9,#425A3E,#8EBF86,#C8E6C3,#EEFFEC,#7D3200,#D95700,#E6A173,#FFD9BF,#43415A,#908DBF,#C9C7E6,#EFEEFF,#7D4B00,#B36B00,#FFCC80,#FFE6BF"
+                           CamembertTitleTextFontColor1="#646262"
+                           CamembertTitleTextFontSize1="10"
+                           CamembertTitleTextFontFamily1="Arial"
+                           CamembertTitleTextFontColor2="#646262"
+                           CamembertTitleTextFontSize2="10"
+                           CamembertTitleTextFontFamily2="Arial"
+                           
+                           HistogrammeTitleTextFontColor="#646262"
+                           HistogrammeTitleTextFontSize="10"
+                           HistogrammeTitleTextFontFamily="Arial"
+                           HistogrammeLegendTextFontColor="#000000"
+                           HistogrammeLegendTextFontSize="8"
+                           HistogrammeLegendTextFontFamily="Arial"
+                           HistogrammeColorFamille1="#979797"
+                           HistogrammeColorFamille2="#FF7100"
+                           HistogrammeColorFamille3="#FF7100"
+                           HistogrammeBackgroundColor="#DFDFDF"
+                           HistogrammeOrdonneeTextFontFamily="Arial" 
+                           HistogrammeOrdonneeTextFontSize="8" 
+                           HistogrammeAbscisseTextFontFamily="Arial" 
+                           HistogrammeAbscisseTextFontSize="8" 
+                           
+                           TextNoResultFontFamily="Arial"         
+                           TextNoResultFontSize="8"
+                           TextNoResultFontColor="#646262" 
+                           
+                           ControlBorderSize="2"
+                           ControlBorderColor="#454343"
+                                    
+				           SkinID="PeriodicityPlanSkinID"  
+/>
+
+
+<%-- Sector data container web control : used to display Sector data result --%>
+<ctrAppm:SectorDataContainerWebControl
+                           runat="server"           
+                           
+                           CssLHeader="h2" 
+                           CssTitle="title" 
+                           CssL1="synthesisLv1" 
+                           CssL2="synthesisLv2"
+                           CssL3="avgLv0" 
+						   CssDetailSelectionL1="dsLv1" 
+						   CssDetailSelectionL2="dsLv2" 
+						   CssDetailSelectionRightBorderL1 = "dsRightBorderLv1"
+                           CssDetailSelectionRightBorderL2 = "dsRightBorderLv2"
+                           CssDetailSelectionRightBorderL3 = "dsRightBorderLv3"
+                           CssDetailSelectionRightBottomBorderL1 = "dsRightBottomBorderLv1"
+                           CssDetailSelectionRightBottomBorderL2 = "dsRightBottomBorderLv2"
+                           CssDetailSelectionRightBottomBorderL3 = "dsRightBottomBorderLv3"
+						   CssDetailSelectionTitle="dsTitle" 
+						   CssDetailSelectionTitleData="dsTitleData" 
+						   CssDetailSelectionTitleGlobal="dsTitleGlobal"
+						   CssDetailSelectionBordelLevel="dsBorderLevel" 
+						   CssLTotal="lv0" 
+						   CssLAffinities="affinitiesLv1" 
+						   
+						   AnalyseFamilyInterestPlanSkinID="AnalyseFamilyInterestPlanSkinID"
+                           SeasonalityPlanSkinID="SeasonalityPlanSkinID"
+                           PeriodicityPlanSkinID="PeriodicityPlanSkinID"
+  
+				           SkinID="SectorData"  
+/>
+
+<%-- Sector data container web control : used to display Sector data result (excel) --%>
+<ctrAppm:SectorDataContainerWebControl
+                           runat="server" 
+
+                           CssL1="exlv2" 
+                           CssL2="exlv3" 
+                           CssLHeader="exh2"
+				           CssTitle="synthesisTitleEx" 
+				           CssDetailSelectionBordelLevel="dsBorderLevel" 
+				           CssDetailSelectionL1="dsLv1Excel" 
+				           CssDetailSelectionRightBorderL1 = "dsRightBorderLv1Excel"
+                           CssDetailSelectionRightBorderL2 = "dsRightBorderLv2Excel"
+                           CssDetailSelectionRightBorderL3 = "dsRightBorderLv3Excel"
+                           CssDetailSelectionRightBottomBorderL1 = "dsRightBottomBorderLv1Excel"
+                           CssDetailSelectionRightBottomBorderL2 = "dsRightBottomBorderLv2Excel"
+                           CssDetailSelectionRightBottomBorderL3 = "dsRightBottomBorderLv3Excel"
+				           CssDetailSelectionTitle="dsTitle"
+				           CssDetailSelectionTitleData="dsTitleData" 
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal"  
+				           CssLAffinities="exlv2"
+				           CssLTotal="exlv0" 
+				           CssDetailSelectionL2="dsLv2Excel"
+				           
+				           SkinID="SectorDataExcel"
+/>
+
+<%-- Seasonality Plan Sector Data chart web control : used to display Seasonality Plan Sector data result --%>
+<ctrAppm:SeasonalityPlanSectorDataChartWebControl
+                           runat="server"  
+                           
+                           PieColors="#646262,#A0A1A7,#C3C7D0,#D9E0CE,#FFD7D7,#FFF0F0,#CAFFCA,#FF05B6,#9D9885,#F1F1F1,#4D964B,#000000"
+                           
+                           AbscisseTextFontFamily="Arial" 
+                           Ordonnee1TextFontFamily="Arial" 
+                           Ordonnee2TextFontFamily="Arial"
+                           
+                           HistogrammeTitleTextFontColor="#646262"
+                           HistogrammeTitleTextFontSize="10"
+                           HistogrammeTitleTextFontFamily="Arial"
+                           HistogrammeColorFamille1="#FF7100"
+                           HistogrammeFamille1LegendTextFontSize="8"
+                           HistogrammeFamille1LegendTextFontFamily="Arial"
+                           HistogrammeBackgroundColor="#E9E9E9"
+                           HistogrammeOrdonneeTextFontSize="8" 
+                           HistogrammeAbscisseTextFontSize="8"
+                           
+                           GraphTitleTextFontColor="#646262"
+                           GraphTitleTextFontSize="10"
+                           GraphTitleTextFontFamily="Arial"
+                           GraphColorFamille1="#FF7100"
+                           GraphFamille1LegendTextFontSize="8"
+                           GraphFamille1LegendTextFontFamily="Arial"
+                           GraphBackgroundColor="#E9E9E9"
+                           GraphOrdonneeTextFontSize="8" 
+                           GraphAbscisseTextFontSize="8"
+                           
+                           TextNoResultFontFamily="Arial"         
+                           TextNoResultFontSize="8"
+                           TextNoResultFontColor="#644883" 
+
+                           ControlBorderSize="2"
+                           ControlBorderColor="#454343"
+
+                           SkinID="SeasonalityPlanSkinID"  
+/>
+<%-- Result web control : used to display generic details result --%>
+<ctrResults:ResultWebControl
+                           runat="server"
+                           
+                           CssL1="lv1" 
+                           CssL2="lv2" 
+                           CssL3="lv3" 
+                           CssL4="lv4" 
+                           CssLHeader="h2"
+						   CssLTotal="lv0" 
+						   CssCHeader="h2"
+						   BackgroudColorL1="#A0A1A7"
+						   BackgroudColorL2="#C3C7D0" 
+						   BackgroudColorL3="#D9E0CE"
+						   BackgroudColorL4="#F1F1F1" 
+						   HighlightBackgroundColorL1="#FFFFFF" 
+						   HighlightBackgroundColorL2="#FFFFFF" 
+						   HighlightBackgroundColorL3="#FFFFFF"  
+						   HighlightBackgroundColorL4="#FFFFFF" 
+						   ImgBtnCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3_in.gif"
+						   ImgBtnCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+						   ImgBtnDeCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif"
+						   ImgBtnDeCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
+						   PageSizeOptions="100,200,500,1000" 
+						   AllowPaging="True"
+						   CssDetailSelectionBordelLevel="dsBorderLevel"
+						   CssDetailSelectionL1="dsLv1" 
+						   CssDetailSelectionL2="dsLv2" 
+						   CssDetailSelectionL3="dsLv3" 
+						   CssDetailSelectionRightBorderL1 = "dsRightBorderLv1"
+                           CssDetailSelectionRightBorderL2 = "dsRightBorderLv2"
+                           CssDetailSelectionRightBorderL3 = "dsRightBorderLv3"
+                           CssDetailSelectionRightBottomBorderL1 = "dsRightBottomBorderLv1"
+                           CssDetailSelectionRightBottomBorderL2 = "dsRightBottomBorderLv2"
+                           CssDetailSelectionRightBottomBorderL3 = "dsRightBottomBorderLv3"
+						   CssDetailSelectionTitle="dsTitle"
+						   CssDetailSelectionTitleData="dsTitleData" 
+						   CssDetailSelectionTitleGlobal="dsTitleGlobal"
+						   
+						   SkinID="resultwebcontrol1" 
+/>
+<%-- Result web control : used to display generic details result --%>
+<ctrResults:ResultWebControl
+                           runat="server"
+                           
+                           CssLTotal="exlv0" 
+                           CssL1="exlv1"
+                           CssL2="exlv2"
+                           CssL3="exlv3" 
+                           CssL4="exlv4" 
+				           CssLHeader="exh2" 
+				           OutputType="excel" 
+				           CssDetailSelectionL1="dsLv1Excel" 
+				           CssDetailSelectionL2="dsLv2Excel"
+				           CssDetailSelectionL3="dsLv3Excel" 
+				           CssDetailSelectionRightBorderL1 = "dsRightBorderLv1Excel"
+                           CssDetailSelectionRightBorderL2 = "dsRightBorderLv2Excel"
+                           CssDetailSelectionRightBorderL3 = "dsRightBorderLv3Excel"
+                           CssDetailSelectionRightBottomBorderL1 = "dsRightBottomBorderLv1Excel"
+                           CssDetailSelectionRightBottomBorderL2 = "dsRightBottomBorderLv2Excel"
+                           CssDetailSelectionRightBottomBorderL3 = "dsRightBottomBorderLv3Excel"
+				           CssDetailSelectionTitle="dsTitle" 
+				           CssDetailSelectionTitleData="dsTitleData"
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+				           CssDetailSelectionBordelLevel="dsBorderLevel"
+				           			           
+				           SkinID="resultwebcontrol1Excel" 
+/>
+
+<%-- Month Week calendar web control : used to show a calendar who allows you to choose between a week, month and year --%>
+<ctrSelections:MonthWeekCalendarWebControl
+                           runat="server"
+                           TitleDateBeginPicture="Starting_date.gif"
+                           TitleDateEndPicture="Ending_date.gif"
+                           TableBorderColor="#9D9885"
+                           TableColor="#FFFFFF"
+                           TableColorSelectedDate="#646262"
+                           TitleBackGroundColor="#646262"
+                           FontColor="#646262"
+                           FontColorSelectedDate="#FFFFFF"
+                           TableColorNoDate="#9378B3"
+                           SkinID="MonthWeekCalendarWebControl1" 
+                           
+/>
+
+<%-- Result web control : used to display a generic result table (HTML) (Media Agency) --%>
+<ctrResults:Resultwebcontrol  
+                           runat="server" 
+                           CssDetailSelectionBordelLevel="dsBorderLevel" 
+                           CssDetailSelectionL1="dsLv1" 
+                           CssDetailSelectionL2="dsLv2" 
+                           CssDetailSelectionL3="dsLv3"
+                           CssDetailSelectionRightBorderL1="dsRightBorderLv1" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3" 
+                           CssDetailSelectionTitle="dsTitle" 
+                           CssDetailSelectionTitleData="dsTitleData"
+                           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+                           CssLHeader="h2" 
+                           BackgroudColorL1="#A0A1A7" 
+                           BackgroudColorL2="#C3C7D0" 
+                           BackgroudColorL3="#D9E0CE" 
+                           BackgroudColorL4="#F1F1F1"
+                           BackgroudColorLNbParution="#C8F4C8"
+                           CssL1="lv1" 
+                           CssL2="lv2" 
+                           CssL3="lv3"
+                           CssL4="lv4"
+                           CssLNbParution="lvNbParution" 
+                           HighlightBackgroundColorLNbParution="#FFFFFF"
+                           HighlightBackgroundColorL1="#FFFFFF" 
+                           HighlightBackgroundColorL2="#FFFFFF" 
+                           HighlightBackgroundColorL3="#FFFFFF"
+                           HighlightBackgroundColorL4="#FFFFFF" 
+                           ImgBtnCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3_in.gif" 
+                           ImgBtnCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_croi3.gif" 
+                           ImgBtnDeCroiOverPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3_in.gif" 
+                           ImgBtnDeCroiPath="/App_Themes/PlKMAE-Uk/Images/Common/fl_tri_decroi3.gif" 
+                           CssLTotal="lv0" 
+                           SkinID="mediaAgencyResultTable" 
+/>
+
+<%-- Result web control : used to display a generic result table (Excel) (Present/absent report)--%>
+<ctrResults:ResultWebControl  
+                           runat="server" 
+                           CssLTotal="exlv0" 
+                           CssL4="exlv4"
+                           CssL3="exlv3" 
+                           CssL2="exlv2"
+				           CssL1="exlv1" 
+				           CssLHeader="exh2"
+				           CssLNbParution="exlvNbParution" 
+				           CssDetailSelectionL1="dsLv1Excel" 
+				           CssDetailSelectionL2="dsLv2Excel"
+				           CssDetailSelectionL3="dsLv3Excel"
+				           CssDetailSelectionRightBorderL1="dsRightBorderLv1Excel" 
+                           CssDetailSelectionRightBorderL2="dsRightBorderLv2Excel" 
+                           CssDetailSelectionRightBorderL3="dsRightBorderLv3Excel" 
+                           CssDetailSelectionRightBottomBorderL1="dsRightBottomBorderLv1Excel" 
+                           CssDetailSelectionRightBottomBorderL2="dsRightBottomBorderLv2Excel" 
+                           CssDetailSelectionRightBottomBorderL3="dsRightBottomBorderLv3Excel"   
+				           CssDetailSelectionTitle="dsTitle" 
+				           CssDetailSelectionTitleData="dsTitleData"
+				           CssDetailSelectionTitleGlobal="dsTitleGlobal" 
+				           CssDetailSelectionBordelLevel="dsBorderLevel"
+				           SkinID="mediaAgencyExcelResultTable" 
+/>
+
+
+<%--Veille Promo result Coàntainer control --%>
+
+<ctrVpResult:VpScheduleContainerWebControl   
+                            runat="server" 
+                            SkinID="VpScheduleContainerWebControl"
+                            CssClass="vpScheduleContainerWebControl" 
+/>
+
+<%--Veille Promo result control --%>
+<ctrVpResult:VpScheduleResultWebControl   
+                            runat="server" 
+                            SkinID="VpScheduleResultWebControl"
+                            CssClass="" 
+/>
+
+<ctrVpResult:VpScheduleResultFilterWebControl   
+                            runat="server" 
+                            SkinID="VpScheduleResultFilterWebControl"
+                            CssClass="vpScheduleResultFilterWebControl" 
+                            CssClassResult="vpScheduleResultFilterWebControlResult"
+                            CssClassResultContent="vpScheduleResultFilterWebControlResultContent"
+                            CssClassOption="vpScheduleResultFilterWebControlOption"
+                            CssClassOptionHeader="vpScheduleResultFilterWebControlOptionHeader"
+                            CssClassOptionMenu="vpScheduleResultFilterWebControlMenu"
+                            CssClassOptionMenuSelected="vpScheduleResultFilterWebControlMenuSelected"
+                            VpScheduleSelectionNodeMediaWebControlSkinId="VpScheduleSelectionNodeMediaWebControlSkinId"
+                            VpScheduleSelectionNodeProductWebControlSkinId="VpScheduleSelectionNodeProductWebControlSkinId"
+                            VpScheduleSelectionDetailLevelWebControlSkinId="VpScheduleSelectionDetailLevelWebControlSkinId"
+                            CssClassOptionButtons="vpScheduleResultFilterWebControlButtons"
+                            CssClassOptionButtonCancel="vpScheduleResultFilterWebControlButtonCancel"
+                            PicturePathButtonCancel="/App_Themes/PlKMAE-Uk/Images/Common/Button/initialize_all_up.gif"
+                            PicturePathButtonCancelOver="/App_Themes/PlKMAE-Uk/Images/Common/Button/initialize_all_down.gif"
+                            CssClassOptionButtonValidation="vpScheduleResultFilterWebControlButtonValidation"
+                            PicturePathButtonValidation="/App_Themes/PlKMAE-Uk/Images/Common/Button/appliquer_up.gif"
+                            PicturePathButtonValidationOver="/App_Themes/PlKMAE-Uk/Images/Common/Button/appliquer_down.gif"
+/>
+
+<%--Veille Promo Selection Filter control --%>
+<ctrVpSelectionFilter:VpScheduleSelectionNodeWebControl   
+                            runat="server" 
+                            SkinID="VpScheduleSelectionNodeMediaWebControlSkinId" 
+                            CssClass="vpScheduleResultFilterNodeWebControlResult"
+                            CssClassLvl1="vpScheduleResultFilterNodeWebControlResultLvl1"
+                            CssClassLvl2="vpScheduleResultFilterNodeWebControlResultLvl2"
+                            CssClassLvl3="vpScheduleResultFilterNodeWebControlResultLvl3"
+                            CssClassDisplay="vpScheduleResultFilterNodeWebControlResultDisplay"
+                            PathPictureDisplayOver="/App_Themes/PlKMAE-Uk/Images/Common/arrow_down.gif"
+                            PathPictureDisplay="/App_Themes/PlKMAE-Uk/Images/Common/arrow_up.gif"
+/>
+
+<ctrVpSelectionFilter:VpScheduleSelectionNodeWebControl   
+                            runat="server" 
+                            SkinID="VpScheduleSelectionNodeProductWebControlSkinId" 
+                            CssClass="vpScheduleResultFilterNodeWebControlResult"
+                            CssClassLvl1="vpScheduleResultFilterNodeProductWebControlResultLvl1"
+                            CssClassLvl2="vpScheduleResultFilterNodeProductWebControlResultLvl2"
+                            CssClassLvl3="vpScheduleResultFilterNodeProductWebControlResultLvl3"
+                            CssClassContainerLvl1="vpScheduleResultFilterNodeProductContainerWebControlResultLvl1"
+                            CssClassContainerLvl2="vpScheduleResultFilterNodeProductContainerWebControlResultLvl2"
+                            CssClassContainerLvl3="vpScheduleResultFilterNodeProductContainerWebControlResultLvl3"
+                            CssClassDisplay="vpScheduleResultFilterNodeWebControlResultDisplay"
+                            PathPictureDisplayOver="/App_Themes/PlKMAE-Uk/Images/Common/arrow_down.gif"
+                            PathPictureDisplay="/App_Themes/PlKMAE-Uk/Images/Common/arrow_up.gif"
+/>
+
+<ctrVpSelectionFilter:VpScheduleSelectionDetailLevelWebControl   
+                            runat="server" 
+                            SkinID="VpScheduleSelectionDetailLevelWebControlSkinId" 
+                            CssClass="vpScheduleSelectionDetailLevelWebControl"
+                            CssClassLvl1=""
+                            CssClassLvl2=""
+                            CssClassLvl3=""
+                            CssClassDetailTab="vpScheduleSelectionDetailLevelWebControlDetailTab"
+                            CssClassDetailTabHeader="vpScheduleSelectionDetailLevelWebControlDetailTabHeader"
+                            CssClassSeparator="vpScheduleSelectionDetailLevelWebControlSeparator"
+                            CssClassPersonnalisationHeader="vpScheduleSelectionDetailLevelWebControlPersonnalisationHeader"
+                            CssClassPersonnalisationHeaderBis="vpScheduleSelectionDetailLevelWebControlPersonnalisationHeaderBis"
+                            CssClassPersonnalisation="vpScheduleSelectionDetailLevelWebControlPersonnalisation"
+/>
+
+<%--Veille Promo Selection control --%>
+<ctrVpSelection:VpScheduleSelectionDropDownDateListWebControl   
+                            runat="server" 
+                            SkinID="DateSelectionWebControl" 
+                            CssClass="dateSelectionWebControlSelection"
+/>
+
+<ctrVpSelection:VpScheduleSelectionImageWebControl   
+                            runat="server" 
+                            SkinID="FiltreSelectionWebControl" 
+                            PictureSrcPath="/App_Themes/PlKMAE-Uk/Images/Common/options.gif"
+                            PictureSrcPathOver="/App_Themes/PlKMAE-Uk/Images/Common/options_over.gif"
+                            CssClass="filtreSelectionWebControlSelection"
+/>
+
+<ctrVpSelection:VpScheduleSelectionImageWebControl   
+                            runat="server" 
+                            SkinID="ExcelSelectionWebControl" 
+                            PictureSrcPath="/App_Themes/PlKMAE-Uk/Images/Common/export_excel.gif"
+                            PictureSrcPathOver="/App_Themes/PlKMAE-Uk/Images/Common/export_excel_over.gif"
+                            CssClass="excelSelectionWebControlSelection"
+/>
+
+<ctrVpSelection:VpScheduleSelectionImageWebControl   
+                            runat="server" 
+                            SkinID="PdfSelectionWebControl" 
+                            PictureSrcPath="/App_Themes/PlKMAE-Uk/Images/Common/export_pdf.gif"
+                            PictureSrcPathOver="/App_Themes/PlKMAE-Uk/Images/Common/export_pdf_over.gif"
+                            CssClass="pdfSelectionWebControlSelection"
+/>
+
+<ctrVpSelection:VpScheduleSelectionImageWebControl   
+                            runat="server" 
+                            SkinID="SaveVpResultWebControl" 
+                            PictureSrcPath="/App_Themes/PlKMAE-Uk/Images/Common/Button/save_up2.gif"
+                            PictureSrcPathOver="/App_Themes/PlKMAE-Uk/Images/Common/Button/save_down2.gif"
+                            CssClass="excelSelectionWebControlSelection"
+/>
+<%--Rolex result Container control --%>
+<ctrRolexResult:RolexScheduleContainerWebControl   
+                            runat="server" 
+                            SkinID="RolexScheduleContainerWebControl"
+                            CssClass="rolexScheduleContainerWebControl" 
+/>
+<%--Rolex result control --%>
+<ctrRolexResult:RolexScheduleResultWebControl   
+                            runat="server" 
+                            SkinID="RolexScheduleResultWebControl"
+                            CssClass="" 
+/>
+<%--Rolex Selection Filter control --%>
+<ctrRolexSelectionFilter:RolexScheduleSelectionNodeWebControl   
+                            runat="server" 
+                            SkinID="RolexScheduleSelectionNodeMediaWebControlSkinId" 
+                            CssClass="rolexScheduleResultFilterNodeWebControlResult"
+                            CssClassLvl1="rolexScheduleResultFilterNodeWebControlResultLvl1"
+                            CssClassLvl2="rolexScheduleResultFilterNodeWebControlResultLvl2"
+                            CssClassLvl3="rolexScheduleResultFilterNodeWebControlResultLvl3"
+                            CssClassDisplay="rolexScheduleResultFilterNodeWebControlResultDisplay"
+                            PathPictureDisplayOver="/App_Themes/PlKMAE-Uk/Images/Common/arrow_down.gif"
+                            PathPictureDisplay="/App_Themes/PlKMAE-Uk/Images/Common/arrow_up.gif"
+/>
+
+<ctrRolexSelectionFilter:RolexScheduleSelectionNodeWebControl   
+                            runat="server" 
+                            SkinID="RolexScheduleSelectionNodeLocationWebControlSkinId" 
+                            CssClass="rolexScheduleResultFilterNodeWebControlResult"
+                            CssClassLvl1="rolexScheduleResultFilterNodeProductWebControlResultLvl1"
+                            CssClassLvl2="rolexScheduleResultFilterNodeProductWebControlResultLvl2"
+                            CssClassLvl3="rolexScheduleResultFilterNodeProductWebControlResultLvl3"
+                            CssClassContainerLvl1="rolexScheduleResultFilterNodeProductContainerWebControlResultLvl1"
+                            CssClassContainerLvl2="rolexScheduleResultFilterNodeProductContainerWebControlResultLvl2"
+                            CssClassContainerLvl3="rolexScheduleResultFilterNodeProductContainerWebControlResultLvl3"
+                            CssClassDisplay="rolexScheduleResultFilterNodeWebControlResultDisplay"
+                            PathPictureDisplayOver="/App_Themes/PlKMAE-Uk/Images/Common/arrow_down.gif"
+                            PathPictureDisplay="/App_Themes/PlKMAE-Uk/Images/Common/arrow_up.gif"
+/>
+<ctrRolexSelectionFilter:RolexScheduleSelectionNodeWebControl   
+                            runat="server" 
+                            SkinID="RolexScheduleSelectionNodePresenceTypeWebControlSkinId" 
+                            CssClass="rolexScheduleResultFilterNodeWebControlResult"
+                            CssClassLvl1="rolexScheduleResultFilterNodeProductWebControlResultLvl1"
+                            CssClassLvl2="rolexScheduleResultFilterNodeProductWebControlResultLvl2"
+                            CssClassLvl3="rolexScheduleResultFilterNodeProductWebControlResultLvl3"
+                            CssClassContainerLvl1="rolexScheduleResultFilterNodeProductContainerWebControlResultLvl1"
+                            CssClassContainerLvl2="rolexScheduleResultFilterNodeProductContainerWebControlResultLvl2"
+                            CssClassContainerLvl3="rolexScheduleResultFilterNodeProductContainerWebControlResultLvl3"
+                            CssClassDisplay="rolexScheduleResultFilterNodeWebControlResultDisplay"
+                            PathPictureDisplayOver="/App_Themes/PlKMAE-Uk/Images/Common/arrow_down.gif"
+                            PathPictureDisplay="/App_Themes/PlKMAE-Uk/Images/Common/arrow_up.gif"
+/>
+
+<ctrRolexSelectionFilter:RolexScheduleSelectionDetailLevelWebControl   
+                            runat="server" 
+                            SkinID="RolexScheduleSelectionDetailLevelWebControlSkinId" 
+                            CssClass="rolexScheduleSelectionDetailLevelWebControl"
+                            CssClassLvl1=""
+                            CssClassLvl2=""
+                            CssClassLvl3=""
+                            CssClassDetailTab="rolexScheduleSelectionDetailLevelWebControlDetailTab"
+                            CssClassDetailTabHeader="rolexScheduleSelectionDetailLevelWebControlDetailTabHeader"
+                            CssClassSeparator="rolexScheduleSelectionDetailLevelWebControlSeparator"
+                            CssClassPersonnalisationHeader="rolexScheduleSelectionDetailLevelWebControlPersonnalisationHeader"
+                            CssClassPersonnalisationHeaderBis="rolexScheduleSelectionDetailLevelWebControlPersonnalisationHeaderBis"
+                            CssClassPersonnalisation="rolexScheduleSelectionDetailLevelWebControlPersonnalisation"
+/>
+<%--Rolex Selection Filter control --%>
+<ctrRolexResult:RolexScheduleResultFilterWebControl   
+                            runat="server" 
+                            SkinID="RolexScheduleResultFilterWebControl"
+                             CssClass="rolexScheduleResultFilterWebControl" 
+                            CssClassResult="rolexScheduleResultFilterWebControlResult"
+                            CssClassResultContent="rolexScheduleResultFilterWebControlResultContent"
+                            CssClassOption="rolexScheduleResultFilterWebControlOption"
+                            CssClassOptionHeader="rolexScheduleResultFilterWebControlOptionHeader"
+                            CssClassOptionMenu="rolexScheduleResultFilterWebControlMenu"
+                            CssClassOptionMenuSelected="rolexScheduleResultFilterWebControlMenuSelected"
+                            RolexSelectionNodeMediaWebControlSkinId="RolexScheduleSelectionNodeMediaWebControlSkinId"
+                            RolexSelectionNodeLocationWebControlSkinId="RolexScheduleSelectionNodeLocationWebControlSkinId"
+                            RolexSelectionNodePresenceTypeWebControlSkinId="RolexScheduleSelectionNodePresenceTypeWebControlSkinId"
+                            RolexSelectionDetailLevelWebControlSkinId="RolexScheduleSelectionDetailLevelWebControlSkinId"
+                            CssClassOptionButtons="rolexScheduleResultFilterWebControlButtons"
+                            CssClassOptionButtonCancel="rolexScheduleResultFilterWebControlButtonCancel"
+                            PicturePathButtonCancel="/App_Themes/PlKMAE-Uk/Images/Common/Button/initialize_all_up.gif"
+                            PicturePathButtonCancelOver="/App_Themes/PlKMAE-Uk/Images/Common/Button/initialize_all_down.gif"
+                            CssClassOptionButtonValidation="vpScheduleResultFilterWebControlButtonValidation"
+                            PicturePathButtonValidation="/App_Themes/PlKMAE-Uk/Images/Common/Button/appliquer_up.gif"
+                            PicturePathButtonValidationOver="/App_Themes/PlKMAE-Uk/Images/Common/Button/appliquer_down.gif"
+/>
+<%--Rolex Selection control --%>
+<ctrRolexSelection:RolexScheduleSelectionDropDownDateListWebControl   
+                            runat="server" 
+                            SkinID="DateSelectionWebControl" 
+                            CssClass="dateSelectionWebControlSelection"
+/>
+
+<ctrSelections:SelectionImageWebControl   
+                            runat="server" 
+                            SkinID="FiltreSelectionWebControl" 
+                            PictureSrcPath="/App_Themes/PlKMAE-Uk/Images/Common/options.gif"
+                            PictureSrcPathOver="/App_Themes/PlKMAE-Uk/Images/Common/options_over.gif"
+                            CssClass="filtreSelectionWebControlSelection"
+/>
+
+<ctrSelections:SelectionImageWebControl   
+                            runat="server" 
+                            SkinID="ExcelSelectionWebControl" 
+                            PictureSrcPath="/App_Themes/PlKMAE-Uk/Images/Common/export_excel.gif"
+                            PictureSrcPathOver="/App_Themes/PlKMAE-Uk/Images/Common/export_excel_over.gif"
+                            CssClass="excelSelectionWebControlSelection"
+/>
+
+<ctrSelections:SelectionImageWebControl   
+                            runat="server" 
+                            SkinID="PdfSelectionWebControl" 
+                            PictureSrcPath="/App_Themes/PlKMAE-Uk/Images/Common/export_pdf.gif"
+                            PictureSrcPathOver="/App_Themes/PlKMAE-Uk/Images/Common/export_pdf_over.gif"
+                            CssClass="pdfSelectionWebControlSelection"
+/>
+<ctrSelections:SelectionImageWebControl   
+                            runat="server" 
+                            SkinID="SaveRolexResultWebControl" 
+                            PictureSrcPath="/App_Themes/PlKMAE-Uk/Images/Common/Button/save_up2.gif"
+                            PictureSrcPathOver="/App_Themes/PlKMAE-Uk/Images/Common/Button/save_down2.gif"
+                            CssClass="excelSelectionWebControlSelection"
+/>

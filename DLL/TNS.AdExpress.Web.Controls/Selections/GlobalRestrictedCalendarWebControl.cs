@@ -673,6 +673,10 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                 case Vehicles.names.newspaper:
                 case Vehicles.names.magazine:
                 case Vehicles.names.internationalPress:
+                case Vehicles.names.directMarketing:
+                case Vehicles.names.internet:
+                case Vehicles.names.czinternet:
+                case Vehicles.names.mailValo:
                     days = _firstDayNotEnable.Subtract(currentDay).Days;
                     if (days >= 1) return true;
                     break;
@@ -690,16 +694,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                     }
                     days = firstDayOfWeek.Subtract(currentDay).Days;
                     if (days >= 1) return true;
-                    break;
-                case Vehicles.names.directMarketing:
-                    days = _firstDayNotEnable.Subtract(currentDay).Days;
-                    if (days >= 1) return true;
-                    break;
-                case Vehicles.names.internet:
-                case Vehicles.names.czinternet:
-                    days = _firstDayNotEnable.Subtract(currentDay).Days;
-                    if (days >= 1) return true;
-                    break;
+                    break;                           
             }
 
             return enabled;
@@ -746,6 +741,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                     return firstDayOfWeek;
                 case Vehicles.names.internet:
                 case Vehicles.names.czinternet:
+                case Vehicles.names.mailValo:
 					lastDate = TNS.AdExpress.Web.DataAccess.Selections.Medias.MediaPublicationDatesDataAccess.GetLatestPublication(_customerWebSession, _selectedVehicle, _customerWebSession.Source);
                     publicationDate = new DateTime(Convert.ToInt32(lastDate.Substring(0, 4)), Convert.ToInt32(lastDate.Substring(4, 2)), Convert.ToInt32(lastDate.Substring(6, 2)));
                     publicationDate = publicationDate.AddMonths(1);
