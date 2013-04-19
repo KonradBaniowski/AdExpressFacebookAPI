@@ -1121,7 +1121,22 @@ namespace TNS.AdExpress.Domain.DataBaseDescription {
         /// Table Data mail 4M
         /// </summary>
         dataMailAlert = 244,
-
+        /// <summary>
+        /// InDoor Data
+        /// </summary>
+        dataInDoor = 245,
+        /// <summary>
+        /// 4M outdoor Data
+        /// </summary>
+        dataInDoorAlert = 246,
+        /// <summary>
+        /// Product class analysis indoor data
+        /// </summary>
+        recapInDoor = 247,
+        /// <summary>
+        /// Product class analysis indoor data aggregated by segment
+        /// </summary>
+        recapInDoorSegment = 248,
         /// <summary>
         /// Alert description
         /// </summary>

@@ -6,9 +6,6 @@
 
 using System;
 using System.Data;
-using System.Collections;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Text;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpressI.Portofolio.DAL.Exceptions;
@@ -19,17 +16,10 @@ using DBConstantes = TNS.AdExpress.Constantes.DB;
 using TNS.AdExpress.Domain.DataBaseDescription;
 using TNS.AdExpress.Domain.Web;
 using TNS.AdExpress.Domain.Web.Navigation;
-using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Constantes.FrameWork.Results;
-
-using TNS.AdExpress.Web.Exceptions;
-using CustormerConstantes = TNS.AdExpress.Constantes.Customer;
-using CstProject = TNS.AdExpress.Constantes.Project;
 using TNS.AdExpress.Web.Core;
-using TNS.AdExpress.Web.Core.Exceptions;
 using TNS.AdExpress.Domain.Units;
-using TNS.AdExpress.Domain;
 
 namespace TNS.AdExpressI.Portofolio.DAL.Engines {
 	/// <summary>
@@ -761,6 +751,8 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
                     return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataTvAlert : TableIds.dataTv, _webSession.IsSelectRetailerDisplay).Label;
 				case DBClassificationConstantes.Vehicles.names.outdoor:
                     return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataOutDoorAlert : TableIds.dataOutDoor, _webSession.IsSelectRetailerDisplay).Label;
+                case DBClassificationConstantes.Vehicles.names.indoor:
+                    return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataInDoorAlert : TableIds.dataInDoor, _webSession.IsSelectRetailerDisplay).Label;
                 case DBClassificationConstantes.Vehicles.names.instore:
                     return WebApplicationParameters.GetDataTable(isAlertModule ? TableIds.dataInStoreAlert : TableIds.dataInStore, _webSession.IsSelectRetailerDisplay).Label;
 				case DBClassificationConstantes.Vehicles.names.directMarketing:
@@ -1046,20 +1038,27 @@ namespace TNS.AdExpressI.Portofolio.DAL.Engines {
             #region Construction de la requête
             string table = GetTableData(true);
             string product = GetProductData();
-            string productsRights = WebFunctions.SQLGenerator.GetClassificationCustomerProductRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
-            string mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
+            string productsRights = WebFunctions.SQLGenerator.
+                GetClassificationCustomerProductRight(_webSession,
+                WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, _module.ProductRightBranches);
+            string mediaRights = WebFunctions.SQLGenerator.getAnalyseCustomerMediaRight(_webSession,
+                WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true);
             //liste des produit hap
-            string listProductHap = WebFunctions.SQLGenerator.GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID, WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
+            string listProductHap = WebFunctions.SQLGenerator.
+                GetAdExpressProductUniverseCondition(WebConstantes.AdExpressUniverse.EXCLUDE_PRODUCT_LIST_ID,
+                WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix, true, false);
 
             string sql;
                 
                 sql = "select  min(DATE_MEDIA_NUM) first_date, max(DATE_MEDIA_NUM) last_date";
 
             if (_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.outdoor
+                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.indoor
                 || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.instore)
                 sql = "select min(DATE_CAMPAIGN_BEGINNING) first_date, max(DATE_CAMPAIGN_END) last_date";
 
-            sql += " from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql + table + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + " ";
+            sql += " from " + WebApplicationParameters.DataBaseDescription.GetSchema(SchemaIds.adexpr03).Sql 
+                + table + " " + WebApplicationParameters.DataBaseDescription.DefaultResultTablePrefix + " ";
             sql += " where id_media = " + _idMedia + "";
             if (_beginingDate.Length > 0)
                 sql += " and date_media_num>=" + _beginingDate + " ";

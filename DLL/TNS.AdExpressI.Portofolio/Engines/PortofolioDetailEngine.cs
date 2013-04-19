@@ -6,32 +6,16 @@
 
 using System;
 using System.Data;
-using System.Text;
-using System.Web.UI;
 using System.Reflection;
-using System.Collections;
-using System.Collections.Generic;
-
 using TNS.FrameWork.WebResultUI;
-using TNS.FrameWork.Date;
-
-using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Web.Core.Result;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
-using WebCst = TNS.AdExpress.Constantes.Web;
-using DBCst = TNS.AdExpress.Constantes.DB;
-using WebFunctions = TNS.AdExpress.Web.Functions;
-using TNS.AdExpress.Domain.Exceptions;
-using TNS.AdExpress.Domain.Web.Navigation;
-using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Domain.Web;
 using TNS.AdExpressI.Portofolio.Exceptions;
 using TNS.AdExpressI.Portofolio.DAL;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Units;
-using TNS.FrameWork.Collections;
 
 namespace TNS.AdExpressI.Portofolio.Engines {
 	/// <summary>
@@ -292,6 +276,7 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvNonTerrestrials:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvAnnounces:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.indoor:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.instore:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.cinema:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
@@ -301,19 +286,19 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.mailValo:
 
                     foreach (UnitInformation currentUnit in _webSession.GetValidUnitForResult()) {
-                        headers.Root.Add(new TNS.FrameWork.WebResultUI.Header(true, 
+                        headers.Root.Add(new Header(true, 
                             GestionWeb.GetWebWord(currentUnit.WebTextId, _webSession.SiteLanguage), currentUnit.WebTextId));
                         type = assembly.GetType(currentUnit.CellType);
-                        cellUnit = (Cell)type.InvokeMember("GetInstance", System.Reflection.BindingFlags.Static
-                            | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null, null);
+                        cellUnit = (Cell)type.InvokeMember("GetInstance", BindingFlags.Static
+                            | BindingFlags.Public | BindingFlags.InvokeMethod, null, null, null);
 						cellUnit.StringFormat = currentUnit.StringFormat;
                         columnsName[columnIndex + creatives + insertions] = currentUnit.Id.ToString();
                         cellFactories[columnIndex + creatives + insertions] = new CellUnitFactory((CellUnit)cellUnit);
                         if(cellUnit is CellIdsNumber) {
-                            lineDelegates[columnIndex + creatives + insertions] = new AffectLine(AffectListLine);
+                            lineDelegates[columnIndex + creatives + insertions] = AffectListLine;
                         }
                         else {
-                            lineDelegates[columnIndex + creatives + insertions] = new AffectLine(AffectDoubleLine);
+                            lineDelegates[columnIndex + creatives + insertions] = AffectDoubleLine;
                         }
 
                         columnIndex++;

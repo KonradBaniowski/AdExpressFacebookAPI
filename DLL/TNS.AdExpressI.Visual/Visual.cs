@@ -9,14 +9,10 @@
  * */
 #endregion
 using System;
-using System.Text;
-using System.Reflection;
-using System.Collections.Generic;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Constantes.Classification.DB;
 using WebCst = TNS.AdExpress.Constantes.Web;
 using System.IO;
-using TNS.AdExpress.Web.Core.Sessions;
 
 namespace TNS.AdExpressI.Visual
 {
@@ -162,7 +158,7 @@ namespace TNS.AdExpressI.Visual
         /// </summary>
         /// <param name="vehicleId"></param>
         /// <returns></returns>
-        protected virtual string GetImagesPath(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names vehicleId)
+        protected virtual string GetImagesPath(Vehicles.names vehicleId)
         {
             switch (vehicleId)
             {
@@ -171,6 +167,7 @@ namespace TNS.AdExpressI.Visual
                 case Vehicles.names.magazine:
                 case Vehicles.names.newspaper:
                     return WebCst.CreationServerPathes.IMAGES;
+                case Vehicles.names.indoor:
                 case Vehicles.names.outdoor:
                     return WebCst.CreationServerPathes.IMAGES_OUTDOOR;
                 case Vehicles.names.internet:
@@ -178,7 +175,7 @@ namespace TNS.AdExpressI.Visual
                 case Vehicles.names.editorial:
                     return WebCst.CreationServerPathes.IMAGES_EDITORIAL;
                 default:
-                    throw (new TNS.AdExpressI.Visual.Exceptions.VisualException("Unable to determine vehicle ID"));
+                    throw (new Exceptions.VisualException("Unable to determine vehicle ID"));
             }
         }
 

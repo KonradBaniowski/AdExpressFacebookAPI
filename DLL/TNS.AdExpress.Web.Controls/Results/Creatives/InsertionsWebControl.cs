@@ -11,6 +11,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Web.UI;
 using AjaxPro;
@@ -584,11 +585,18 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             string message = string.Empty;
             if (!this._isCreativeConfig) {
 
-                if (vehicle.Id == CstDBClassif.Vehicles.names.outdoor && !_customerWebSession.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)) {
+                if (vehicle.Id == CstDBClassif.Vehicles.names.outdoor && 
+                    !_customerWebSession.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)) {
                     message = GestionWeb.GetWebWord(1882, _customerWebSession.SiteLanguage);
                 }
-                else if (vehicle.Id == CstDBClassif.Vehicles.names.instore && !_customerWebSession.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_INSTORE_ACCESS_FLAG)) {
+                else if (vehicle.Id == CstDBClassif.Vehicles.names.instore && 
+                    !_customerWebSession.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_INSTORE_ACCESS_FLAG)) {
                     message = GestionWeb.GetWebWord(2668, _customerWebSession.SiteLanguage);
+                }
+                else if (vehicle.Id == CstDBClassif.Vehicles.names.indoor && 
+                    !_customerWebSession.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DETAIL_INDOOR_ACCESS_FLAG))
+                {
+                    message = GestionWeb.GetWebWord(2992, _customerWebSession.SiteLanguage);
                 }
             }
             CoreLayer cl = Domain.Web.WebApplicationParameters.CoreLayers[TNS.AdExpress.Constantes.Web.Layers.Id.insertions];
@@ -596,11 +604,13 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             object[] param = new object[2];
             param[0] = session;
             param[1] = module.Id;
-            IInsertionsResult result = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" 
-                + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
+            var result = (IInsertionsResult)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + @"Bin\" 
+                + cl.AssemblyName, cl.Class, false, System.Reflection.BindingFlags.CreateInstance
+                | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public, null, param, null, null);
 
 
-            if (!this._isCreativeConfig && (vehicle.Id == CstDBClassif.Vehicles.names.internet || vehicle.Id == CstDBClassif.Vehicles.names.czinternet)&& !result.CanShowInsertion(vehicle))
+            if (!this._isCreativeConfig && (vehicle.Id == CstDBClassif.Vehicles.names.internet
+                || vehicle.Id == CstDBClassif.Vehicles.names.czinternet)&& !result.CanShowInsertion(vehicle))
             {
                 message = GestionWeb.GetWebWord(2244, _customerWebSession.SiteLanguage);
             }
@@ -608,7 +618,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             {
                 data = new ResultTable(1, 1);
                 data.AddNewLine(LineType.total);
-                CellLabel c = new CellLabel(message);
+                var c = new CellLabel(message);
                 c.CssClass = "error";
                 this.CssLTotal = "error";
                 data[0, 1] = c;
@@ -621,16 +631,10 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             string periodBegin = _customerWebSession.PeriodBeginningDate;
             string periodEnd = _customerWebSession.PeriodEndDate;
 
-            if (ZoomDate != null && ZoomDate.Length > 0)
+            if (!string.IsNullOrEmpty(ZoomDate))
             {
-                if (_customerWebSession.DetailPeriod == WebCst.CustomerSessions.Period.DisplayLevel.weekly)
-                {
-                    periodType = WebCst.CustomerSessions.Period.Type.dateToDateWeek;
-                }
-                else
-                {
-                    periodType = WebCst.CustomerSessions.Period.Type.dateToDateMonth;
-                }
+                periodType = _customerWebSession.DetailPeriod == WebCst.CustomerSessions.Period.DisplayLevel.weekly
+                    ? WebCst.CustomerSessions.Period.Type.dateToDateWeek : WebCst.CustomerSessions.Period.Type.dateToDateMonth;
                 _fromDate = Convert.ToInt32(
                     WebFct.Dates.Max(WebFct.Dates.getZoomBeginningDate(ZoomDate, periodType),
                         WebFct.Dates.getPeriodBeginningDate(periodBegin, _customerWebSession.PeriodType)).ToString("yyyyMMdd")
@@ -649,13 +653,16 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
           
             if (_isCreativeConfig)
             {
-                List<GenericColumnItemInformation> columns = WebApplicationParameters.CreativesDetail.GetDetailColumns(vehicle.DatabaseId, module.Id);
-                List<Int64> columnsId = new List<long>();
-                List<GenericColumnItemInformation> columnFilters = new List<GenericColumnItemInformation>();
+                var columns = WebApplicationParameters.CreativesDetail.GetDetailColumns(vehicle.DatabaseId, module.Id);
+                var columnsId = new List<long>();
+                var columnFilters = new List<GenericColumnItemInformation>();
                 Int64 idColumnsSet = WebApplicationParameters.CreativesDetail.GetDetailColumnsId(vehicle.DatabaseId, module.Id);
                 foreach (GenericColumnItemInformation g in columns)
                 {
-                    if (this._renderType != RenderType.html && (g.Id == GenericColumnItemInformation.Columns.associatedFile || g.Id == GenericColumnItemInformation.Columns.associatedFileMax || g.Id == GenericColumnItemInformation.Columns.poster || g.Id == GenericColumnItemInformation.Columns.visual))
+                    if (_renderType != RenderType.html && (g.Id == GenericColumnItemInformation.Columns.associatedFile
+                        || g.Id == GenericColumnItemInformation.Columns.associatedFileMax
+                        || g.Id == GenericColumnItemInformation.Columns.poster
+                        || g.Id == GenericColumnItemInformation.Columns.visual))
                     {
                         continue;
                     }
@@ -694,16 +701,14 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                     return null;
                 }
                 if (this._renderType != RenderType.html){
-                    List<GenericColumnItemInformation> columns = _customerWebSession.GenericInsertionColumns.Columns;
-                    List<Int64> columnIds = new List<Int64>();
-                    foreach (GenericColumnItemInformation g in columns)
-                    {
-                        if (g.Id == GenericColumnItemInformation.Columns.associatedFile || g.Id == GenericColumnItemInformation.Columns.associatedFileMax || g.Id == GenericColumnItemInformation.Columns.poster || g.Id == GenericColumnItemInformation.Columns.visual)
-                        {
-                            continue;
-                        }
-                        columnIds.Add(g.Id.GetHashCode());
-                    }
+                    var columns = _customerWebSession.GenericInsertionColumns.Columns;
+                    var columnIds = (columns.Where(
+                        g =>
+                        g.Id != GenericColumnItemInformation.Columns.associatedFile &&
+                        g.Id != GenericColumnItemInformation.Columns.associatedFileMax &&
+                        g.Id != GenericColumnItemInformation.Columns.poster &&
+                        g.Id != GenericColumnItemInformation.Columns.visual).Select(g => g.Id.GetHashCode()))
+                        .Select(dummy => (long) dummy).ToList();
                     _customerWebSession.GenericInsertionColumns = new GenericColumns(columnIds);
 
                     result.RenderType = _renderType;
@@ -734,14 +739,12 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
                         case CstDBClassif.Vehicles.names.directMarketing:
                         case CstDBClassif.Vehicles.names.internet:
                         case CstDBClassif.Vehicles.names.czinternet:
-                            this._cssLHeader = string.Empty;
-                            this._cssL4 = _cssCellInfo;
-                            this._highlightBackgroundColorL1 = string.Empty;
-                            this._highlightBackgroundColorL2 = string.Empty;
-                            this._highlightBackgroundColorL3 = string.Empty;
-                            this._highlightBackgroundColorL4 = string.Empty;
-                            break;
-                        default:
+                            _cssLHeader = string.Empty;
+                            _cssL4 = _cssCellInfo;
+                            _highlightBackgroundColorL1 = string.Empty;
+                            _highlightBackgroundColorL2 = string.Empty;
+                            _highlightBackgroundColorL3 = string.Empty;
+                            _highlightBackgroundColorL4 = string.Empty;
                             break;
                     }
                 }
@@ -766,7 +769,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             #region Filter data and build available filters
             string value = string.Empty;
             string[] values = null;
-            char[] sep = new char[1] { ',' };
+            var sep = new char[1] { ',' };
             bool match = true;
 
             //Set available filters
@@ -834,7 +837,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
             {
                 data = new ResultTable(1, 1);
                 data.AddNewLine(LineType.total);
-                CellLabel c = new CellLabel(GestionWeb.GetWebWord(2543, _customerWebSession.SiteLanguage));
+                var c = new CellLabel(GestionWeb.GetWebWord(2543, _customerWebSession.SiteLanguage));
                 c.CssClass = "error";
                 this.CssLTotal = "error";
                 data[0, 1] = c;
@@ -843,7 +846,7 @@ namespace TNS.AdExpress.Web.Controls.Results.Creatives {
 
             #region Build Filters Html Code
             string themeName = WebApplicationParameters.Themes[_customerWebSession.SiteLanguage].Name;
-            StringBuilder str = new StringBuilder();
+            var str = new StringBuilder();
             str.AppendFormat("<tr id=\"filters_{0}\" style=\"display:none;\" ><td colSpan=\"2\"><table>", this.ID);
             bool checke = false;
             foreach (GenericColumnItemInformation c in columnFilters)

@@ -303,9 +303,6 @@ namespace TNS.AdExpressI.ProductClassIndicators.Russia.Engines
             }
             #endregion
 
-            #region Add HeadersLine to Header Columns Line Header
-            currentHeaderColumnLineHeader.HeadersLine = resultTable.NewHeadersLine;
-            #endregion
 
             return resultTable;
 

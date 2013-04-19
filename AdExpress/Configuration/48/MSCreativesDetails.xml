@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
 <vehicleGroups>
-    <vehicle id="3" name="presse">
+    <vehicle id="3" name="Press">
       <detailColumn id="11"/>
     </vehicle>   
-    <vehicle id="2" name="radio">
+    <vehicle id="2" name="Radio">
       <detailColumn id="12"/>
     </vehicle>
-    <vehicle id="1" name="télévision">
+    <vehicle id="1" name="TV">
       <detailColumn id="13"/>
     </vehicle>
-   <vehicle id="5" name="Publicité extérieure">
+   <vehicle id="5" name="Oudoor">
       <detailColumn id="14"/>
-    </vehicle>  
-  </vehicleGroups>
+    </vehicle>
+  <vehicle id="9" name="Indoor">
+    <detailColumn id="14"/>
+  </vehicle>
+</vehicleGroups>
 </configuration>

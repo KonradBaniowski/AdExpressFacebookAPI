@@ -967,13 +967,21 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			dropDownList.CssClass=_cssListBox;
 			dropDownList.Items.Add(new ListItem("-------","-1"));
 
-			if (((_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)) && (VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab) == DBClassificationConstantes.Vehicles.names.outdoor))
-                || ((_customerWebSession.CustomerLogin.CustormerFlagAccess(DBConstantes.Flags.ID_DETAIL_INSTORE_ACCESS_FLAG)) && (VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab) == DBClassificationConstantes.Vehicles.names.instore))
-                || (VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab) != DBClassificationConstantes.Vehicles.names.outdoor && (VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab) != DBClassificationConstantes.Vehicles.names.instore))) {
+			if (((_customerWebSession.CustomerLogin.CustormerFlagAccess(Flags.ID_DETAIL_OUTDOOR_ACCESS_FLAG)) 
+                && (VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab) == DBClassificationConstantes.Vehicles.names.outdoor))
+                || ((_customerWebSession.CustomerLogin.CustormerFlagAccess(Flags.ID_DETAIL_INSTORE_ACCESS_FLAG)) 
+                && (VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab) == DBClassificationConstantes.Vehicles.names.instore))
+                || ((_customerWebSession.CustomerLogin.CustormerFlagAccess(Flags.ID_DETAIL_INDOOR_ACCESS_FLAG))
+                && (VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab) == DBClassificationConstantes.Vehicles.names.indoor))
+                || (VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab) != DBClassificationConstantes.Vehicles.names.outdoor 
+                    && VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab) != DBClassificationConstantes.Vehicles.names.instore
+                    && VehiclesInformation.DatabaseIdToEnum(_idVehicleFromTab) != DBClassificationConstantes.Vehicles.names.indoor )
+                ) {
 				
 				foreach(DetailLevelItemInformation currentDetailLevelItem in _allowedDetailItemList){
 					if(CanAddDetailLevelItem(currentDetailLevelItem)){
-						dropDownList.Items.Add(new ListItem(GestionWeb.GetWebWord(currentDetailLevelItem.WebTextId,_customerWebSession.SiteLanguage),currentDetailLevelItem.Id.GetHashCode().ToString()));
+						dropDownList.Items.Add(new ListItem(GestionWeb.
+                            GetWebWord(currentDetailLevelItem.WebTextId,_customerWebSession.SiteLanguage),currentDetailLevelItem.Id.GetHashCode().ToString()));
 					}
 				}
 			

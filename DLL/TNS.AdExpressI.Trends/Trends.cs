@@ -8,13 +8,11 @@
  */
 #endregion
 using System;
-using System.Text;
 using System.Reflection;
 using System.Collections.Generic;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web;
-using TNS.AdExpressI.Trends.Exceptions;
 using TNS.FrameWork.WebResultUI;
 using System.Data;
 using TNS.AdExpressI.Trends.DAL;
@@ -317,6 +315,7 @@ namespace TNS.AdExpressI.Trends
                 case DBClassificationConstantes.Vehicles.names.others:
                 case DBClassificationConstantes.Vehicles.names.outdoor:
                 case DBClassificationConstantes.Vehicles.names.instore:
+                case DBClassificationConstantes.Vehicles.names.indoor:
                     //Vehicle label
                     code = 804;
                     break;

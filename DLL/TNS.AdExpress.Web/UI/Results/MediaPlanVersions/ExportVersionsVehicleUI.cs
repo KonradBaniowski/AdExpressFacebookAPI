@@ -212,11 +212,15 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 					break;
                 
                 case DBCst.Vehicles.names.outdoor: 
-                    OutdoorSetUp();
+                    OutdoorSetUp(Vehicles.names.outdoor);
                     versionsUIs = this._versionsUIs;
-                    OutdoorBuildHtml(htmlBld);
+                    OutdoorBuildHtml(htmlBld,2255);
                     break;
-               
+                case DBCst.Vehicles.names.indoor:
+                    OutdoorSetUp(Vehicles.names.indoor);
+                    versionsUIs = this._versionsUIs;
+                    OutdoorBuildHtml(htmlBld,2993);
+                    break;
                 case DBCst.Vehicles.names.instore: 
                         InStoreSetUp();
                         versionsUIs = this._versionsUIs;
@@ -317,6 +321,9 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
                         break;
                     case DBCst.Vehicles.names.outdoor:
                         _title = Convertion.ToHtmlString(GestionWeb.GetWebWord(2255, this._webSession.SiteLanguage));
+                        break;
+                    case DBCst.Vehicles.names.indoor:
+                        _title = Convertion.ToHtmlString(GestionWeb.GetWebWord(2993, this._webSession.SiteLanguage));
                         break;
                     case DBCst.Vehicles.names.instore:
                         _title = Convertion.ToHtmlString(GestionWeb.GetWebWord(2667, this._webSession.SiteLanguage));
@@ -1164,13 +1171,13 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
         /// <summary>
         /// Initialise all webcontrols For Outdoor
         /// </summary>
-        protected void OutdoorSetUp() {
+        protected void OutdoorSetUp(DBCst.Vehicles.names vehicleName) {
 
             #region Get Data from persistent layer
             //TODO Get Data from database
             DataSet dtSet = null, dtSetDetails = null;
-            dtSet = VersionDataAccess.GetVersions(_versions.Keys, _webSession, DBCst.Vehicles.names.outdoor);
-            dtSetDetails = VersionDataAccess.GetPressVersionsDetails(_versions.Keys, _webSession, DBCst.Vehicles.names.outdoor);
+            dtSet = VersionDataAccess.GetVersions(_versions.Keys, _webSession, vehicleName);
+            dtSetDetails = VersionDataAccess.GetPressVersionsDetails(_versions.Keys, _webSession, vehicleName);
             #endregion
 
             #region Build Set of VersionControl
@@ -1180,9 +1187,9 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
             string dirPath = string.Empty;
             ExportOutdoorVersionItem item = null;
             VersionPressUI versionUi = null;
-            ArrayList[] versionsUi = new ArrayList[30];
+            var versionsUi = new ArrayList[30];
 
-            ArrayList indexList = new ArrayList();
+            var indexList = new ArrayList();
             int i = 0;
 
             if (dtSet != null && dtSet.Tables[0].Rows != null && dtSet.Tables[0].Rows.Count > 0) {
@@ -1225,9 +1232,11 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
                         }
 
                         //build control
-                        switch (this._vehicle) {
-                            case DBCst.Vehicles.names.outdoor:
-                                versionUi = new VersionPressUI(this._webSession, item);
+                        switch (vehicleName)
+                        {
+                            case Vehicles.names.outdoor:
+                            case Vehicles.names.indoor:
+                                versionUi = new VersionPressUI(_webSession, item);
                                 break;
                             default:
                                 throw new VersionUIException("Non authorized vehicle level : " + this._vehicle.ToString());
@@ -1245,7 +1254,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
                 indexList.Sort();
                 foreach (int j in indexList) {
                     for (int k = 0; k < versionsUi[j].Count; k++)
-                        this._versionsUIs.Add(versionsUi[j][k]);
+                        _versionsUIs.Add(versionsUi[j][k]);
                 }
             }
             #endregion
@@ -1938,7 +1947,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
         /// Render all versions controls
         /// </summary>
         /// <returns>Html code</returns>
-        protected void OutdoorBuildHtml(StringBuilder output) {
+        protected void OutdoorBuildHtml(StringBuilder output, int code ) {
             int startToMedium = 0, mediumToEnd = 0, end = 0, indexTable = 0;
 
             if (this._versionsUIs != null) {
@@ -1946,9 +1955,10 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
                 output.Append("<tr><td colSpan=\"" + _nb_column + "\">");
                 if (_title == string.Empty) {
                     switch (this._vehicle) {
-                        case DBCst.Vehicles.names.outdoor:
-                            _title = Convertion.ToHtmlString(GestionWeb.GetWebWord(2255, this._webSession.SiteLanguage));
-                            break;
+                        case Vehicles.names.outdoor:
+                        case Vehicles.names.indoor:
+                            _title = Convertion.ToHtmlString(GestionWeb.GetWebWord(code, _webSession.SiteLanguage));
+                            break;                                               
                         default:
                             _title = "?";
                             break;
@@ -1959,7 +1969,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
 
 
                 int columnIndex = 0;
-                foreach (VersionDetailUI item in this._versionsUIs) {
+                foreach (VersionDetailUI item in _versionsUIs) {
 
                     if (item.ExportOutdoorVersion.NbVisuel == 1) {
                         startToMedium = 1;
@@ -2057,10 +2067,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
                                         if ((columnIndex % 2) == 0) {
                                             output.Append("<br>");
                                         }
-                                        if (columnIndex % 2 == 0)
-                                            columnIndex = 0;
-                                        else
-                                            columnIndex = 1;
+                                        columnIndex = columnIndex % 2 == 0 ? 0 : 1;
                                         mediumToEnd = 0;
                                     }
                                     else {
@@ -2077,12 +2084,7 @@ namespace TNS.AdExpress.Web.UI.Results.MediaPlanVersions
                                 item.GetHtmlOutdoorExport(output, 0, false);
                             }
                             else {
-                                if (i == end - 1) {
-                                    item.GetHtmlOutdoorExport(output, i + (4 * i), true);
-                                }
-                                else {
-                                    item.GetHtmlOutdoorExport(output, i + (4 * i), false);
-                                }
+                                item.GetHtmlOutdoorExport(output, i + (4*i), i == end - 1);
                             }
                             output.Append("</td>");
                             columnIndex++;

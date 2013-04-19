@@ -6,15 +6,10 @@
 
 using System;
 using System.Data;
-using System.Text;
-using System.Web.UI;
 using System.Reflection;
-using System.Collections;
 using System.Collections.Generic;
 
 using TNS.FrameWork.WebResultUI;
-using TNS.FrameWork.Date;
-
 using TNS.AdExpress.Web.Core.Utilities;
 using TNS.AdExpress.Web.Core.Sessions;
 using DBClassificationConstantes = TNS.AdExpress.Constantes.Classification.DB;
@@ -22,10 +17,6 @@ using WebCst = TNS.AdExpress.Constantes.Web;
 using DBCst = TNS.AdExpress.Constantes.DB;
 using WebFunctions = TNS.AdExpress.Web.Functions;
 using TNS.AdExpress.Constantes.FrameWork.Results;
-
-using TNS.AdExpress.Domain;
-using TNS.AdExpress.Domain.Exceptions;
-using TNS.AdExpress.Domain.Web.Navigation;
 using TNS.AdExpress.Domain.Level;
 using TNS.AdExpress.Domain.Translation;
 using TNS.AdExpress.Domain.Web;
@@ -536,7 +527,6 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 }
                 // Period selected
                 else {
-                    //if (firstDate.Length > 0 || !isAlertModule) {
                     data = new List<ICell>(2);
                     if ((_vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.press
                     || _vehicleInformation.Id == DBClassificationConstantes.Vehicles.names.magazine
@@ -547,12 +537,15 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                     else {
                         data.Add(new CellLabel(GestionWeb.GetWebWord(1541, _webSession.SiteLanguage)));
                     }
-                    if ((firstDate != null && firstDate.Length > 0 && lastDate != null && lastDate.Length > 0 && firstDate.Equals(lastDate) && isAlertModule)
+                    if ((!string.IsNullOrEmpty(firstDate) && !string.IsNullOrEmpty(lastDate)
+                        && firstDate.Equals(lastDate) && isAlertModule)
                         || (dtLastDate.CompareTo(dtFirstDate) == 0 && !isAlertModule)) {
                         data.Add(new CellLabel(Dates.DateToString(dtFirstDate, _webSession.SiteLanguage)));
                     }
                     else {
-                        data.Add(new CellLabel(GestionWeb.GetWebWord(896, _webSession.SiteLanguage) + " " + Dates.DateToString(dtFirstDate, _webSession.SiteLanguage) + " " + GestionWeb.GetWebWord(1730, _webSession.SiteLanguage) + " " + Dates.DateToString(dtLastDate, _webSession.SiteLanguage)));
+                        data.Add(new CellLabel(string.Format("{0} {1} {2} {3}",
+                            GestionWeb.GetWebWord(896, _webSession.SiteLanguage), Dates.DateToString(dtFirstDate, _webSession.SiteLanguage),
+                            GestionWeb.GetWebWord(1730, _webSession.SiteLanguage), Dates.DateToString(dtLastDate, _webSession.SiteLanguage))));
                     }
                     //}
                 }
@@ -754,11 +747,9 @@ namespace TNS.AdExpressI.Portofolio.Engines {
                 #endregion
 
                 //number board
-                if (numberBoard != null && numberBoard.Length > 0) {
-                    data = new List<ICell>(2);
-                    data.Add(new CellLabel(GestionWeb.GetWebWord(1604, _webSession.SiteLanguage)));
-                    CellNumber cN1 = new CellNumber(double.Parse(numberBoard.ToString()));
-                    cN1.StringFormat = UNIT_FORMAT;
+                if (!string.IsNullOrEmpty(numberBoard)) {
+                    data = new List<ICell>(2) {new CellLabel(GestionWeb.GetWebWord(1604, _webSession.SiteLanguage))};
+                    var cN1 = new CellNumber(double.Parse(numberBoard.ToString())) {StringFormat = UNIT_FORMAT};
                     data.Add(cN1);
                 }
             }

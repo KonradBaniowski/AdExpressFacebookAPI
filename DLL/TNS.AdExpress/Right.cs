@@ -919,7 +919,8 @@ namespace TNS.AdExpress {
 			try {
 				ds = RightDAL.GetFlagsRights(Source, _loginId);
 				_flagsRights = new Dictionary<Int64, string>();
-				if (ds != null && ds.Tables != null && ds.Tables[0] != null && ds.Tables[0].Rows != null) {
+                if (ds != null && ds.Tables.Count>0 && ds.Tables[0].Rows != null)
+                {
 					foreach (DataRow row in ds.Tables[0].Rows) {
 						_flagsRights.Add((Int64)row[0], row[1].ToString());
 					}
@@ -940,7 +941,7 @@ namespace TNS.AdExpress {
 				
 				if(!Domain.AllowedFlags.ContainFlag(flagId))return true;
 				if (_flagsRights == null) SetFlagsRights();
-				if (_flagsRights.ContainsKey(flagId)) return (true);
+                if (_flagsRights!= null && _flagsRights.ContainsKey(flagId)) return (true);
 				return (false);
 			}
 			catch (System.Exception err) {
@@ -1037,51 +1038,68 @@ namespace TNS.AdExpress {
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.magazine:
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.press:
 					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_PRESS_CREATION_ACCESS_FLAG)) return true;
-					return (_flagsRights.ContainsKey(Flags.ID_PRESS_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_PRESS_CREATION_ACCESS_FLAG] != null);
+                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_PRESS_CREATION_ACCESS_FLAG)
+                        && _flagsRights[Flags.ID_PRESS_CREATION_ACCESS_FLAG] != null);
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radio:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radioGeneral:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radioSponsorship:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.radioMusic:
 					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_RADIO_CREATION_ACCESS_FLAG)) return true;
-					return (_flagsRights.ContainsKey(Flags.ID_RADIO_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_RADIO_CREATION_ACCESS_FLAG] != null);
+                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_RADIO_CREATION_ACCESS_FLAG)
+                        && _flagsRights[Flags.ID_RADIO_CREATION_ACCESS_FLAG] != null);
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tv:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvGeneral:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvSponsorship:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvNonTerrestrials:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.tvAnnounces:
 					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_TV_CREATION_ACCESS_FLAG)) return true;
-					return (_flagsRights.ContainsKey(Flags.ID_TV_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_TV_CREATION_ACCESS_FLAG] != null);
+                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_TV_CREATION_ACCESS_FLAG) 
+                        && _flagsRights[Flags.ID_TV_CREATION_ACCESS_FLAG] != null);
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internet:
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.czinternet:
 					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_DETAIL_INTERNET_ACCESS_FLAG)) return true;
-					return (_flagsRights.ContainsKey(Flags.ID_DETAIL_INTERNET_ACCESS_FLAG) && _flagsRights[Flags.ID_DETAIL_INTERNET_ACCESS_FLAG] != null);
+                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_DETAIL_INTERNET_ACCESS_FLAG) 
+                        && _flagsRights[Flags.ID_DETAIL_INTERNET_ACCESS_FLAG] != null);
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.outdoor:
 					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG)) return true;
-					return (_flagsRights.ContainsKey(Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG] != null);
+                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG) 
+                        && _flagsRights[Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG] != null);
+                case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.indoor:
+                    if (!Domain.AllowedFlags.ContainFlag(Flags.ID_INDOOR_CREATION_ACCESS_FLAG)) return true;
+                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_INDOOR_CREATION_ACCESS_FLAG) 
+                        && _flagsRights[Flags.ID_INDOOR_CREATION_ACCESS_FLAG] != null);
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.instore:
                     if (!Domain.AllowedFlags.ContainFlag(Flags.ID_INSTORE_CREATION_ACCESS_FLAG)) return true;
-                    return (_flagsRights.ContainsKey(Flags.ID_INSTORE_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_INSTORE_CREATION_ACCESS_FLAG] != null);
+                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_INSTORE_CREATION_ACCESS_FLAG)
+                        && _flagsRights[Flags.ID_INSTORE_CREATION_ACCESS_FLAG] != null);
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.directMarketing:
 					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG)) return true;
-					return (_flagsRights.ContainsKey(Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG] != null);
+                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG)
+                        && _flagsRights[Flags.ID_DIRECT_MARKETING_CREATION_ACCESS_FLAG] != null);
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.others:
 					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_OTHERS_CREATION_ACCESS_FLAG)) return true;
-					return (_flagsRights.ContainsKey(Flags.ID_OTHERS_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_OTHERS_CREATION_ACCESS_FLAG] != null);
+                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_OTHERS_CREATION_ACCESS_FLAG)
+                        && _flagsRights[Flags.ID_OTHERS_CREATION_ACCESS_FLAG] != null);
 				case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.internationalPress:
 					if (!Domain.AllowedFlags.ContainFlag(Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG)) return true;
-					return (_flagsRights.ContainsKey(Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG] != null);
+                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG)
+                        && _flagsRights[Flags.ID_INTERNATIONAL_PRESS_CREATION_ACCESS_FLAG] != null);
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack:
                     if (!Domain.AllowedFlags.ContainFlag(Flags.ID_DETAIL_INTERNET_ACCESS_FLAG)) return true;
-                    return (_flagsRights.ContainsKey(Flags.ID_DETAIL_INTERNET_ACCESS_FLAG) && _flagsRights[Flags.ID_DETAIL_INTERNET_ACCESS_FLAG] != null);
+                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_DETAIL_INTERNET_ACCESS_FLAG)
+                        && _flagsRights[Flags.ID_DETAIL_INTERNET_ACCESS_FLAG] != null);
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.evaliantMobile:
                     if (!Domain.AllowedFlags.ContainFlag(Flags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG)) return true;
-                    return (_flagsRights.ContainsKey(Flags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG) && _flagsRights[Flags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG] != null);
+                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG)
+                        && _flagsRights[Flags.ID_DETAIL_EVALIANT_MOBILE_ACCESS_FLAG] != null);
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.editorial:
                     if (!Domain.AllowedFlags.ContainFlag(Flags.ID_EDITORIAL_CREATION_ACCESS_FLAG)) return true;
-                    return (_flagsRights.ContainsKey(Flags.ID_EDITORIAL_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_EDITORIAL_CREATION_ACCESS_FLAG] != null);               
+                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_EDITORIAL_CREATION_ACCESS_FLAG)
+                        && _flagsRights[Flags.ID_EDITORIAL_CREATION_ACCESS_FLAG] != null);               
                 case TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.pressClipping:
                     if (!Domain.AllowedFlags.ContainFlag(Flags.ID_PRESS_CLIPPING_CREATION_ACCESS_FLAG)) return true;
-                    return (_flagsRights.ContainsKey(Flags.ID_PRESS_CLIPPING_CREATION_ACCESS_FLAG) && _flagsRights[Flags.ID_PRESS_CLIPPING_CREATION_ACCESS_FLAG] != null);
+                    return (_flagsRights != null && _flagsRights.ContainsKey(Flags.ID_PRESS_CLIPPING_CREATION_ACCESS_FLAG)
+                        && _flagsRights[Flags.ID_PRESS_CLIPPING_CREATION_ACCESS_FLAG] != null);
                 default:
 					return (false);
 			}

@@ -561,6 +561,8 @@ namespace TNS.AdExpressI.Insertions
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_OTHERS_CREATION_ACCESS_FLAG);
                     break;
                 case Vehicles.names.indoor:
+                      hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_INDOOR_CREATION_ACCESS_FLAG);
+                    break;
                 case Vehicles.names.outdoor:
                     hasVisualRight = _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_OUTDOOR_CREATION_ACCESS_FLAG);
                     break;
@@ -1412,6 +1414,10 @@ namespace TNS.AdExpressI.Insertions
                     }
                     break;
                 case Vehicles.names.indoor:
+                     if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_INDOOR_CREATION_ACCESS_FLAG))
+                        break;
+                    AddVisuals(row, visuals, GetCreativePathOutDoor);
+                    break;
                 case Vehicles.names.outdoor:
                     if (!_session.CustomerLogin.CustormerFlagAccess(CstDB.Flags.ID_OUTDOOR_CREATION_ACCESS_FLAG))
                         break;

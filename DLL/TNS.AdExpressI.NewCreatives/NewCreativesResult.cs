@@ -155,12 +155,12 @@ namespace TNS.AdExpressI.NewCreatives {
             DataTable dt = null;
             CellUnitFactory cellFactory = null;
             AdExpressCellLevel[] cellLevels;
-            LineType[] lineTypes = new LineType[4] { LineType.total, LineType.level1, LineType.level2, LineType.level3 };
+            var lineTypes = new LineType[4] { LineType.total, LineType.level1, LineType.level2, LineType.level3 };
             Headers headers = null;
             Int32 iCurLine = 0;
             Int32 iNbLine = 0;
             Int32 iNbLevels = 0;
-            ArrayList parutions = new ArrayList();
+            var parutions = new ArrayList();
 
             InitLine initLine = null;
             SetLine setLine = null;
@@ -193,8 +193,8 @@ namespace TNS.AdExpressI.NewCreatives {
             #endregion
 
             #region Initialisation du type de ligne
-            initLine = new InitLine(InitListLine);
-            setLine = new SetLine(SetListLine);
+            initLine = InitListLine;
+            setLine = SetListLine;
             #endregion
 
             #region Traitement du tableau de résultats
@@ -207,8 +207,8 @@ namespace TNS.AdExpressI.NewCreatives {
             tab[iCurLine, 1] = cellLevels[0] = new AdExpressCellLevel(0, GestionWeb.GetWebWord(805, _webSession.SiteLanguage), 0, iCurLine, _webSession);
             int iCol = 3;
             if (_showCreative) {
-                iCol++; 
-                tab[iCurLine, iCol] = new CellCreativesLink(cellLevels[0], _webSession, _webSession.GenericProductDetailLevel, string.Empty, -1);
+                iCol++;                
+                SetCellCreativesLink(tab, iCurLine, iCol, cellLevels, 0);
             }
             if (_showMediaSchedule) { 
                 iCol++; 
@@ -241,8 +241,8 @@ namespace TNS.AdExpressI.NewCreatives {
                         // version
                         iCol = 3;
                         if(_showCreative){
-                            iCol++;
-                            tab[iCurLine, iCol] = new CellCreativesLink(cellLevels[i], _webSession, _webSession.GenericProductDetailLevel, string.Empty, -1);
+                            iCol++;                           
+                            SetCellCreativesLink(tab, iCurLine, iCol, cellLevels, i);
                         }
                         if (_showMediaSchedule) {
                             iCol++;
@@ -392,13 +392,12 @@ namespace TNS.AdExpressI.NewCreatives {
             headers.Root.Add(new Header(true, GestionWeb.GetWebWord(PROD_COL, _webSession.SiteLanguage), PROD_COL));
             headers.Root.Add(new Header(true, GestionWeb.GetWebWord(TOTAL_COL, _webSession.SiteLanguage), TOTAL_COL));
             headers.Root.Add(new Header(true, GestionWeb.GetWebWord(POURCENTAGE_COL, _webSession.SiteLanguage), POURCENTAGE_COL));
+
+            _showCreative = CanShowCreative();
             // Add Creative column
-            if(_vehicleInformation.ShowCreations 
-                //&& _webSession.CustomerLogin.ShowCreatives(_vehicleInformation.Id) 
-                && (_webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser) ||
-                _webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.product))){
-                headers.Root.Add(new HeaderInsertions(false, GestionWeb.GetWebWord(VERSION_COL, _webSession.SiteLanguage), VERSION_COL));
-                _showCreative = true;
+            if (_showCreative)
+            {
+                headers.Root.Add(new HeaderInsertions(false, GestionWeb.GetWebWord(VERSION_COL, _webSession.SiteLanguage), VERSION_COL));               
             }
 
             if (_showMediaSchedule) {
@@ -438,6 +437,21 @@ namespace TNS.AdExpressI.NewCreatives {
             }
         }
         #endregion
+
+
+        protected virtual bool CanShowCreative()
+        {
+            return
+                (_vehicleInformation.ShowCreations
+                 &&
+                 (_webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.advertiser) ||
+                  _webSession.GenericProductDetailLevel.ContainDetailLevelItem(DetailLevelItemInformation.Levels.product)));
+        }
+
+        protected virtual  void SetCellCreativesLink(ResultTable tab, int iCurLine, int iCol, AdExpressCellLevel[] cellLevels,int i)
+        {
+            tab[iCurLine, iCol] = new CellCreativesLink(cellLevels[i], _webSession, _webSession.GenericProductDetailLevel, string.Empty, -1);
+        }
 
     }
 

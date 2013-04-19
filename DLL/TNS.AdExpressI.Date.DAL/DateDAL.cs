@@ -243,6 +243,9 @@ namespace TNS.AdExpressI.Date.DAL {
                 case DBClassificationConstantes.Vehicles.names.outdoor:
                     tableName = WebApplicationParameters.GetDataTable(TableIds.dataOutDoor, _session.IsSelectRetailerDisplay).Sql;
                     break;
+                case DBClassificationConstantes.Vehicles.names.indoor:
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataInDoor, _session.IsSelectRetailerDisplay).Sql;
+                    break;
                 case DBClassificationConstantes.Vehicles.names.instore:
                     tableName = WebApplicationParameters.GetDataTable(TableIds.dataInStore, _session.IsSelectRetailerDisplay).Sql;
                     break;

@@ -1774,9 +1774,17 @@ namespace TNS.AdExpress.Constantes.DB{
         /// <summary>
         /// Identifier of  EDITORIAL creatives flag
         /// </summary>
-        public const Int64 ID_EDITORIAL_CREATION_ACCESS_FLAG = 336;  
-  
+        public const Int64 ID_EDITORIAL_CREATION_ACCESS_FLAG = 336;
 
+        /// <summary>
+        /// Indoor creative access flag identifier
+        /// </summary>
+        public const Int64 ID_INDOOR_CREATION_ACCESS_FLAG = 337;
+
+        /// <summary>
+        /// Indoor insertion detail acccess  flag 
+        /// </summary>
+        public const Int64 ID_DETAIL_INDOOR_ACCESS_FLAG = 338;
     }
 	#endregion
 

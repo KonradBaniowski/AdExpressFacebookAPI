@@ -1,19 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using TNS.AdExpress.Web.Core.Sessions;
 using System.Data;
 
 using CstFormat = TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails;
 using CstPeriod = TNS.AdExpress.Constantes.Web.CustomerSessions.Period;
-using CstWeb = TNS.AdExpress.Constantes.Web;
 using CstDBClassif = TNS.AdExpress.Constantes.Classification.DB;
 using FctUtilities = TNS.AdExpress.Web.Functions;
-
-using TNS.Classification.Universe;
 using TNS.AdExpressI.ProductClassReports.Exceptions;
 using TNS.AdExpress.Domain.Translation;
-using TNS.AdExpress.Domain.Classification;
 using TNS.AdExpress.Domain.Web;
 using TNS.FrameWork.WebResultUI;
 using TNS.AdExpress.Domain.Level;
@@ -174,7 +169,7 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
             #endregion
 
             #region Build headers
-            Headers headers = new Headers();
+            var headers = new Headers();
             headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1164, _session.SiteLanguage), ID_PRODUCT));
             string vehicleLabel = dtData.Rows[0]["M1"].ToString();
             switch (_vehicle)
@@ -183,22 +178,18 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                     headers.Root.Add(new Header(true, GestionWeb.GetWebWord(210, _session.SiteLanguage).ToUpper(), ID_TOTAL));
                     break;
                 case CstDBClassif.Vehicles.names.press:
-                    //headers.Root.Add(new Header(true, GestionWeb.GetWebWord(204, _session.SiteLanguage).ToUpper(), ID_TOTAL));
                     headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
                 case CstDBClassif.Vehicles.names.magazine:
-                    //headers.Root.Add(new Header(true, GestionWeb.GetWebWord(204, _session.SiteLanguage).ToUpper(), ID_TOTAL));
                     headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
                 case CstDBClassif.Vehicles.names.newspaper:
-                    //headers.Root.Add(new Header(true, GestionWeb.GetWebWord(204, _session.SiteLanguage).ToUpper(), ID_TOTAL));
                     headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
                 case CstDBClassif.Vehicles.names.radio:
                 case CstDBClassif.Vehicles.names.radioGeneral:
                 case CstDBClassif.Vehicles.names.radioSponsorship:
                 case CstDBClassif.Vehicles.names.radioMusic:
-					//headers.Root.Add(new Header(true, GestionWeb.GetWebWord(205, _session.SiteLanguage).ToUpper(), ID_TOTAL));
 					headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
                 case CstDBClassif.Vehicles.names.tv:
@@ -206,30 +197,25 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                 case CstDBClassif.Vehicles.names.tvSponsorship:
                 case CstDBClassif.Vehicles.names.tvNonTerrestrials:
                 case CstDBClassif.Vehicles.names.tvAnnounces:
-                    //headers.Root.Add(new Header(true, GestionWeb.GetWebWord(206, _session.SiteLanguage).ToUpper(), ID_TOTAL));
                     headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
                 case CstDBClassif.Vehicles.names.mediasTactics:
-                    //headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1304, _session.SiteLanguage).ToUpper(), ID_TOTAL));
                     headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
                 case CstDBClassif.Vehicles.names.czinternet:
                 case CstDBClassif.Vehicles.names.internet:
-                    //headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1301, _session.SiteLanguage).ToUpper(), ID_TOTAL));
+                 
                     headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
                 case CstDBClassif.Vehicles.names.outdoor:
                 case CstDBClassif.Vehicles.names.indoor:
-                case CstDBClassif.Vehicles.names.instore:
-					//headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1302, _session.SiteLanguage).ToUpper(), ID_TOTAL));
+                case CstDBClassif.Vehicles.names.instore:					
 					headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
-                case CstDBClassif.Vehicles.names.cinema:
-                    //headers.Root.Add(new Header(true, GestionWeb.GetWebWord(1303, _session.SiteLanguage).ToUpper(), ID_TOTAL));
+                case CstDBClassif.Vehicles.names.cinema:                   
                     headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
                 case CstDBClassif.Vehicles.names.emailing:
-                    //headers.Root.Add(new Header(true, "E mailing".ToUpper(), ID_TOTAL));
                     headers.Root.Add(new Header(true, vehicleLabel.ToUpper(), ID_TOTAL));
                     break;
             }
@@ -242,27 +228,22 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                     break;
                 case CstFormat.PreformatedMediaDetails.vehicleCategory:
                 case CstFormat.PreformatedMediaDetails.vehicleMedia:
-                    if (_vehicle != CstDBClassif.Vehicles.names.plurimedia)
-                    {
-                        sortStr = "M2,ID_M2";
-                    }
-                    else
-                    {
-                        sortStr = "M1,ID_M1,M2,ID_M2";
-                    }
+                    sortStr = _vehicle != CstDBClassif.Vehicles.names.plurimedia
+                        ? "M2,ID_M2" : "M1,ID_M1,M2,ID_M2";
                     break;
                 case CstFormat.PreformatedMediaDetails.vehicleCategoryMedia:
                     sortStr = "M2,ID_M2,M3,ID_M3";
                     break;
                 default:
-                    throw new ProductClassReportsException("Detail format " + _session.PreformatedMediaDetail.ToString() + " unvalid.");
+                    throw new ProductClassReportsException(string.Format("Detail format {0} unvalid.",
+                        _session.PreformatedMediaDetail.ToString()));
             }
             DataRow[] dtMedias = dtData.Select("", sortStr);
 
-            Dictionary<long, Header> RES_MEDIA_HEADERS = new Dictionary<long, Header>();
-            Dictionary<long, HeaderBase> RES_MEDIA_SUBTOTAL = new Dictionary<long, HeaderBase>();
-            HeaderBase[] MEDIA_IDS = new HeaderBase[DATA_MEDIA_INDEXES.Count];
-            List<HeaderBase> SUB_TOTALS = new List<HeaderBase>();
+            var RES_MEDIA_HEADERS = new Dictionary<long, Header>();
+            var RES_MEDIA_SUBTOTAL = new Dictionary<long, HeaderBase>();
+            var MEDIA_IDS = new HeaderBase[DATA_MEDIA_INDEXES.Count];
+            var SUB_TOTALS = new List<HeaderBase>();
             long cId = -1;
             HeaderBase pHeaderBase = headers.Root;
             foreach (DataRow row in dtMedias)
@@ -276,7 +257,8 @@ namespace TNS.AdExpressI.ProductClassReports.GenericEngines
                         if (i < DATA_MEDIA_INDEXES.Count - 1)
                         {
                             MEDIA_IDS[i] = new HeaderGroup(row[DATA_MEDIA_INDEXES[i] + 1].ToString(), cId);
-                            SUB_TOTALS.Add(((HeaderGroup)MEDIA_IDS[i]).AddSubTotal(true, GestionWeb.GetWebWord(1102, _session.SiteLanguage), ID_TOTAL));
+                            SUB_TOTALS.Add(((HeaderGroup)MEDIA_IDS[i]).AddSubTotal(true,
+                                GestionWeb.GetWebWord(1102, _session.SiteLanguage), ID_TOTAL));
                             if (i > 0)
                             {
                                 MEDIA_IDS[i - 1].Add(MEDIA_IDS[i]);

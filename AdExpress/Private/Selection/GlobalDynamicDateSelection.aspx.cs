@@ -433,6 +433,7 @@ namespace AdExpress.Private.Selection {
                     return firstDayOfWeek;
                 case DBClassificationConstantes.Vehicles.names.outdoor:
                 case DBClassificationConstantes.Vehicles.names.instore:
+                case DBClassificationConstantes.Vehicles.names.indoor:
                     firstDayOfWeek = firstDayOfWeek.AddDays(-7);
                     return (firstDayOfWeek);
                 case DBClassificationConstantes.Vehicles.names.radio:

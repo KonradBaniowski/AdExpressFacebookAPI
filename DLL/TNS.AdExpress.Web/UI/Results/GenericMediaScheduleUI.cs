@@ -1414,6 +1414,7 @@ namespace TNS.AdExpress.Web.UI.Results {
                                     case DBClassificationConstantes.Vehicles.names.directMarketing:
                                         mediaPlanResultData.VersionsDetail.Add((Int64)tab[i, sloganIndex], new ExportMDVersionItem((Int64)tab[i, sloganIndex], "pc" + colorNumberToUse.ToString()));
                                         break;
+                                    case DBClassificationConstantes.Vehicles.names.indoor:
                                     case DBClassificationConstantes.Vehicles.names.outdoor:
                                         mediaPlanResultData.VersionsDetail.Add((Int64)tab[i, sloganIndex], new ExportOutdoorVersionItem((Int64)tab[i, sloganIndex], "pc" + colorNumberToUse.ToString()));
                                         break;
@@ -1437,6 +1438,7 @@ namespace TNS.AdExpress.Web.UI.Results {
                                     case DBClassificationConstantes.Vehicles.names.directMarketing:
                                         mediaPlanResultData.VersionsDetail.Add((Int64)tab[i, sloganIndex], new ExportMDVersionItem((Int64)tab[i, sloganIndex], webSession.SloganColors[(Int64)tab[i, sloganIndex]].ToString()));
                                         break;
+                                    case DBClassificationConstantes.Vehicles.names.indoor:
                                     case DBClassificationConstantes.Vehicles.names.outdoor:
                                         mediaPlanResultData.VersionsDetail.Add((Int64)tab[i, sloganIndex], new ExportOutdoorVersionItem((Int64)tab[i, sloganIndex], webSession.SloganColors[(Int64)tab[i, sloganIndex]].ToString()));
                                         break;

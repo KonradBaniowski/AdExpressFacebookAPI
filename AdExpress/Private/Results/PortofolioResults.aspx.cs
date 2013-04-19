@@ -213,26 +213,32 @@ namespace AdExpress.Private.Results{
 				#endregion
 
 				// Initialisation de preformatedProductDetail
-				if(_webSession.PreformatedProductDetail==TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.groupAdvertiserProduct
+				if(_webSession.PreformatedProductDetail==TNS.AdExpress.Constantes.Web.
+                    CustomerSessions.PreformatedDetails.PreformatedProductDetails.groupAdvertiserProduct
 					|| !_webSession.ReachedModule
 					) {
-					_webSession.PreformatedProductDetail=TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiser;	 
+					_webSession.PreformatedProductDetail=TNS.AdExpress.Constantes.Web.
+                        CustomerSessions.PreformatedDetails.PreformatedProductDetails.advertiser;	 
 				}
 				// Initialisation de l'unité pour le cas de la presse
-				if(_webSession.GetSelection(_webSession.SelectionUniversMedia,TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess) == DBClassificationConstantes.Vehicles.names.press.GetHashCode().ToString()
+				if(_webSession.GetSelection(_webSession.SelectionUniversMedia,Right.type.vehicleAccess) 
+                    == DBClassificationConstantes.Vehicles.names.press.GetHashCode().ToString()
 					&& !_webSession.ReachedModule
 					){
 					_webSession.Unit=WebConstantes.CustomerSessions.Unit.pages;
 				}
-				if(_webSession.GetSelection(_webSession.SelectionUniversMedia,TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess) == DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode().ToString()
+				if(_webSession.GetSelection(_webSession.SelectionUniversMedia,Right.type.vehicleAccess)
+                    == DBClassificationConstantes.Vehicles.names.internationalPress.GetHashCode().ToString()
 					&& !_webSession.ReachedModule
 					){
 					_webSession.Unit=WebConstantes.CustomerSessions.Unit.pages;
 				}
 				// Création de la liste nouveaux produit (dans la pige ou dans le support)
 				if(!IsPostBack){
-					newProductRadioButtonList.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1421,_webSession.SiteLanguage),TNS.AdExpress.Constantes.Web.CustomerSessions.NewProduct.support.GetHashCode().ToString()));
-					newProductRadioButtonList.Items.Add(new System.Web.UI.WebControls.ListItem(GestionWeb.GetWebWord(1422,_webSession.SiteLanguage),TNS.AdExpress.Constantes.Web.CustomerSessions.NewProduct.pige.GetHashCode().ToString()));
+					newProductRadioButtonList.Items.Add(new ListItem(GestionWeb.GetWebWord(1421,_webSession.SiteLanguage)
+                        ,TNS.AdExpress.Constantes.Web.CustomerSessions.NewProduct.support.GetHashCode().ToString()));
+					newProductRadioButtonList.Items.Add(new ListItem(GestionWeb.GetWebWord(1422,_webSession.SiteLanguage)
+                        ,TNS.AdExpress.Constantes.Web.CustomerSessions.NewProduct.pige.GetHashCode().ToString()));
 					newProductRadioButtonList.Items[0].Selected=true;
 					newProductRadioButtonList.CssClass="txtNoir11";			
 				}
@@ -242,7 +248,8 @@ namespace AdExpress.Private.Results{
 				}
 				catch(Exception){
 					if(_webSession.CurrentTab==TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.NOVELTY ){
-						newProductRadioButtonList.Items.FindByValue(TNS.AdExpress.Constantes.Web.CustomerSessions.NewProduct.support.GetHashCode().ToString()).Selected=true;
+						newProductRadioButtonList.Items.FindByValue(TNS.AdExpress.Constantes.Web.
+                            CustomerSessions.NewProduct.support.GetHashCode().ToString()).Selected=true;
 					}
 				}
 
@@ -253,7 +260,9 @@ namespace AdExpress.Private.Results{
 				#endregion
 
 				#region Outdoor prerequisites
-                if ((DBClassificationConstantes.Vehicles.names.outdoor == vehicleName || DBClassificationConstantes.Vehicles.names.instore == vehicleName) &&
+                if ((DBClassificationConstantes.Vehicles.names.outdoor == vehicleName
+                    || DBClassificationConstantes.Vehicles.names.instore == vehicleName
+                    || DBClassificationConstantes.Vehicles.names.indoor == vehicleName) &&
 					((_webSession.CurrentTab==TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.DETAIL_MEDIA)||
 					(_webSession.CurrentTab==TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.NOVELTY)||
 					(_webSession.CurrentTab==TNS.AdExpress.Constantes.FrameWork.Results.Portofolio.STRUCTURE)))		

@@ -169,6 +169,9 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
                 case DBClassificationConstantes.Vehicles.names.instore:
                     tableName = WebApplicationParameters.GetDataTable(TableIds.dataInStore, webSession.IsSelectRetailerDisplay).Sql;
                     break;
+                case DBClassificationConstantes.Vehicles.names.indoor:
+                    tableName = WebApplicationParameters.GetDataTable(TableIds.dataInDoor, webSession.IsSelectRetailerDisplay).Sql;
+                    break;
                 case DBClassificationConstantes.Vehicles.names.cinema:
                     tableName = WebApplicationParameters.GetDataTable(TableIds.dataCinema, webSession.IsSelectRetailerDisplay).Sql;
                     break;
@@ -209,6 +212,7 @@ namespace TNS.AdExpress.Web.DataAccess.Selections.Medias
                 case DBClassificationConstantes.Vehicles.names.tvNonTerrestrials:
                 case DBClassificationConstantes.Vehicles.names.others:
                 case DBClassificationConstantes.Vehicles.names.outdoor:
+                case DBClassificationConstantes.Vehicles.names.indoor:
                 case DBClassificationConstantes.Vehicles.names.instore:
                 case DBClassificationConstantes.Vehicles.names.cinema:
                 case DBClassificationConstantes.Vehicles.names.adnettrack:

@@ -188,7 +188,7 @@
       <!--<columnItem id="22" name="Nombre Spots écran"/>-->
       <columnItem id="14" name="Prix"/>
     </detailColumn>
-    <!--Outdoor-->
+    <!--Outdoor & Indoor-->
     <detailColumn id="4" name="Affiche\Annonceur\Produit\Groupe\Centre d'interet\Régie\Nombre de panneaux\Format du panneau\Type de réseau\Réseau afficheur\Agglomeration\Prix">
       <columnItem id="3" name="Support" idDetailLevelMatching="3" visible="false" isKey="true"/>
       <columnItem id="49" name="Date du Support" idDetailLevelMatching="18" visible="false" isKey="true"/>
@@ -322,7 +322,7 @@
       <columnItem id="69" name="Durée"/>
       <columnItem id="70" name="nb Support"/>
     </detailColumn>
-    <!--Outdoor-->
+    <!--Outdoor & Indoor-->
     <detailColumn id="14" name="Affiche\Annonceur\Groupe\Produit\Version\budget\Nombre panneaux\Nb supports">
       <columnItem id="6" name="Version" isKey="true"/>
       <columnItem id="41" name="Affiche"/>

@@ -254,8 +254,8 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
 
                         if (_isSelectionPage && !SelectItemsInClassificationWebControl1.IsValidUniverseLevels(universe))
                         {
-                            SelectItemsInClassificationWebControl1.EventTarget_ =
-                                FrameWorkSelection.eventSelection.INITIALIZE_WITH_PREVIOUS_SELECTION_EVENT;
+                            //SelectItemsInClassificationWebControl1.EventTarget_ =
+                            //    FrameWorkSelection.eventSelection.INITIALIZE_WITH_PREVIOUS_SELECTION_EVENT;
                           
                             StringBuilder script = new StringBuilder();
                             script.Append("<script language=javascript>");
@@ -410,7 +410,8 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
                 Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "ShowHideContent1", TNS.AdExpress.Web.Functions.Script.ShowHideContent1(1));
             }
 
-            Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> Universes = (Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>)TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetObjectUniverses(idUniverse, _webSession);
+            Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse> Universes = (Dictionary<int, TNS.AdExpress.Classification.AdExpressUniverse>)
+                TNS.AdExpress.Web.Core.DataAccess.ClassificationList.UniversListDataAccess.GetObjectUniverses(idUniverse, _webSession);
             _webSession.PrincipalProductUniverses = Universes;
             _webSession.Save();
             selectionnedUnivers = true;
@@ -536,36 +537,7 @@ public partial class Private_Selection_UniverseProductSelection : TNS.AdExpress.
 
     }
 
-    //private  bool IsValidUniverseLevels(TNS.AdExpress.Classification.AdExpressUniverse universe)
-    //{
-    //    if (_isSelectionPage && _webSession.CurrentModule == WebConstantes.Module.Name.ANALYSE_PLAN_MEDIA)
-    //    {
-    //        string eventArg = string.Empty;
-    //        if (Page.Request.Form.GetValues("__EVENTARGUMENT") != null &&
-    //            Page.Request.Form.GetValues("__EVENTARGUMENT")[0] != null)
-    //            eventArg = Page.Request.Form.GetValues("__EVENTARGUMENT")[0];
-
-    //        var vehiclesSelected = _webSession.GetVehiclesSelected();
-
-    //        if (vehiclesSelected.Count > 0 && (eventArg.Equals("4") || eventArg.Equals("9999")))
-    //        {
-    //            object[] param = new object[1];
-    //            param[0] = _webSession;
-    //            CoreLayer clMediaU = WebApplicationParameters.CoreLayers[WebConstantes.Layers.Id.mediaDetailLevelUtilities];
-    //            if (clMediaU == null) throw (new NullReferenceException("Core layer is null for the Media detail level utilities class"));
-    //            var mediaDetailLevelUtilities = (TNS.AdExpress.Web.Core.Utilities.
-    //                MediaDetailLevel)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(string.Format("{0}Bin\\{1}"
-    //                , AppDomain.CurrentDomain.BaseDirectory, clMediaU.AssemblyName), clMediaU.Class, false, BindingFlags.CreateInstance
-    //                | BindingFlags.Instance | BindingFlags.Public, null, param, null, null);
-
-    //            var activeVehicles = mediaDetailLevelUtilities.GetAllowedVehicles(_webSession.GetVehiclesSelected().Keys.ToList(), universe);
-    //            return (activeVehicles.Count == vehiclesSelected.Count);
-
-    //        }
-    //    }
-
-    //    return true;
-    //}
+   
 
     #endregion
 

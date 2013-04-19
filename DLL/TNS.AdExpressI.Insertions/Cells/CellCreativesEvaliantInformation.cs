@@ -339,6 +339,7 @@ namespace TNS.AdExpressI.Insertions.Cells {
 
 
             #region Formatage des longueur et largeur du fichier
+            bool displayFlv =false;
             string[] dimensionValue = null;
             string width = "";
             string height = "";
@@ -369,7 +370,7 @@ namespace TNS.AdExpressI.Insertions.Cells {
                 else if (_format.ToUpper() == FLV_ID)
                 {
 
-                    bool displayFlv;
+                  
 
                     if (!WebApplicationParameters.VehiclesFormatInformation.Use)
                     {
@@ -377,7 +378,7 @@ namespace TNS.AdExpressI.Insertions.Cells {
                     }
                     else
                     {
-                        Dictionary<Int64, VehicleInformation> vehicleInformationList = new Dictionary<Int64, VehicleInformation>();
+                        var vehicleInformationList = new Dictionary<Int64, VehicleInformation>();
                         vehicleInformationList.Add(VehiclesInformation.Get(AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack).DatabaseId, VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack));
                         List<Int64> formatIdList = _session.GetValidFormatSelectedList(vehicleInformationList, true);
 
@@ -457,12 +458,11 @@ namespace TNS.AdExpressI.Insertions.Cells {
                         _visuals[0]);
                 }
 
-                if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DOWNLOAD_ACCESS_FLAG)) {
+                if (_session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_DOWNLOAD_ACCESS_FLAG) && _visuals != null && _visuals.Count>0)
+                {
                     if ((_format.ToUpper() != MULTIPART_ID && _format.ToUpper() != FLV_ID)
-                        || (_format.ToUpper() == FLV_ID
-                            && ((!WebApplicationParameters.VehiclesFormatInformation.Use &&  _session.CustomerLogin.CustormerFlagAccess(CstFlags.ID_FLV_EVALIANT_CREATION_ACCESS_FLAG))
-                                || (WebApplicationParameters.VehiclesFormatInformation.Use
-                                    && _session.GetValidFormatSelectedList(new List<VehicleInformation>(new[]{VehiclesInformation.Get(TNS.AdExpress.Constantes.Classification.DB.Vehicles.names.adnettrack)})).Contains(TNS.AdExpress.Constantes.Classification.DB.Formats.InStream))))) {
+                        || displayFlv)
+                    {
                         output.AppendFormat("\n<br/><a href={0} class=\"roll06\" title=\"{1}\">{2}</a>",
                             _visuals[0],
                             GestionWeb.GetWebWord(SAVE_LINK_LABEL_HELP_ID, _session.SiteLanguage),
@@ -482,10 +482,10 @@ namespace TNS.AdExpressI.Insertions.Cells {
         /// Get Html
         /// </summary>
         /// <returns>Html</returns>
-        private string GetHtmlPanels(List<TNS.AdExpressI.Insertions.MultiPart.Panel> panelList, string iframeId, string filePath, TNS.AdExpressI.Insertions.MultiPart.Panel panelSelected) {
+        private string GetHtmlPanels(List<Panel> panelList, string iframeId, string filePath, Panel panelSelected) {
             StringBuilder html = new StringBuilder();
             if (panelList != null) {
-                foreach (TNS.AdExpressI.Insertions.MultiPart.Panel currentPanel in panelList) {
+                foreach (Panel currentPanel in panelList) {
 
                     html.AppendFormat("\n<option value=\"{0}\" ",
                         GetHtmlFlash(currentPanel).Replace("\"","&quot;"));

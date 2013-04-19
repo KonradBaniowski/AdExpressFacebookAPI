@@ -199,43 +199,54 @@ namespace TNS.AdExpressI.ProductClassIndicators.DAL.DALEngines
             switch (_vehicle)
             {
                 case CstDBClassif.Vehicles.names.cinema:
-                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapCinema, _session.IsSelectRetailerDisplay) : WebApplicationParameters.GetDataTable(TableIds.recapCinemaSegment, _session.IsSelectRetailerDisplay);
+                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapCinema, _session.IsSelectRetailerDisplay) 
+                        : WebApplicationParameters.GetDataTable(TableIds.recapCinemaSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.czinternet:
                 case CstDBClassif.Vehicles.names.internet:
-                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapInternet, _session.IsSelectRetailerDisplay) : WebApplicationParameters.GetDataTable(TableIds.recapInternetSegment, _session.IsSelectRetailerDisplay);
+                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapInternet, _session.IsSelectRetailerDisplay)
+                        : WebApplicationParameters.GetDataTable(TableIds.recapInternetSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.outdoor:
-                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapOutDoor, _session.IsSelectRetailerDisplay) : WebApplicationParameters.GetDataTable(TableIds.recapOutDoorSegment, _session.IsSelectRetailerDisplay);
+                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapOutDoor, _session.IsSelectRetailerDisplay) 
+                        : WebApplicationParameters.GetDataTable(TableIds.recapOutDoorSegment, _session.IsSelectRetailerDisplay);
+                case CstDBClassif.Vehicles.names.indoor:
+                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapInDoor, _session.IsSelectRetailerDisplay) 
+                        : WebApplicationParameters.GetDataTable(TableIds.recapInDoorSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.instore:
-                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapInStore, _session.IsSelectRetailerDisplay) : WebApplicationParameters.GetDataTable(TableIds.recapInStoreSegment, _session.IsSelectRetailerDisplay);
+                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapInStore, _session.IsSelectRetailerDisplay) 
+                        : WebApplicationParameters.GetDataTable(TableIds.recapInStoreSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.radio:
-                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapRadio, _session.IsSelectRetailerDisplay) : WebApplicationParameters.GetDataTable(TableIds.recapRadioSegment, _session.IsSelectRetailerDisplay);
+                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapRadio, _session.IsSelectRetailerDisplay) 
+                        : WebApplicationParameters.GetDataTable(TableIds.recapRadioSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.tv:
-                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapTv, _session.IsSelectRetailerDisplay) : WebApplicationParameters.GetDataTable(TableIds.recapTvSegment, _session.IsSelectRetailerDisplay);
+                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapTv, _session.IsSelectRetailerDisplay) 
+                        : WebApplicationParameters.GetDataTable(TableIds.recapTvSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.press:
-                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapPress, _session.IsSelectRetailerDisplay) : WebApplicationParameters.GetDataTable(TableIds.recapPressSegment, _session.IsSelectRetailerDisplay);
+                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapPress, _session.IsSelectRetailerDisplay) 
+                        : WebApplicationParameters.GetDataTable(TableIds.recapPressSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.newspaper:
-                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapNewspaper, _session.IsSelectRetailerDisplay) : WebApplicationParameters.GetDataTable(TableIds.recapNewspaperSegment, _session.IsSelectRetailerDisplay);
+                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapNewspaper, _session.IsSelectRetailerDisplay) 
+                        : WebApplicationParameters.GetDataTable(TableIds.recapNewspaperSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.magazine:
-                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapMagazine, _session.IsSelectRetailerDisplay) : WebApplicationParameters.GetDataTable(TableIds.recapMagazineSegment, _session.IsSelectRetailerDisplay);
+                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapMagazine, _session.IsSelectRetailerDisplay) 
+                        : WebApplicationParameters.GetDataTable(TableIds.recapMagazineSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.plurimedia:
-                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapPluri, _session.IsSelectRetailerDisplay) : WebApplicationParameters.GetDataTable(TableIds.recapPluriSegment, _session.IsSelectRetailerDisplay);
+                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapPluri, _session.IsSelectRetailerDisplay) 
+                        : WebApplicationParameters.GetDataTable(TableIds.recapPluriSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.mediasTactics:
-                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapTactic, _session.IsSelectRetailerDisplay) : WebApplicationParameters.GetDataTable(TableIds.recapTacticSegment, _session.IsSelectRetailerDisplay);
+                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapTactic, _session.IsSelectRetailerDisplay) 
+                        : WebApplicationParameters.GetDataTable(TableIds.recapTacticSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.mobileTelephony:
-                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapMobileTel, _session.IsSelectRetailerDisplay) : WebApplicationParameters.GetDataTable(TableIds.recapMobileTelSegment, _session.IsSelectRetailerDisplay);
+                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapMobileTel, _session.IsSelectRetailerDisplay) 
+                        : WebApplicationParameters.GetDataTable(TableIds.recapMobileTelSegment, _session.IsSelectRetailerDisplay);
                 case CstDBClassif.Vehicles.names.emailing:
-                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapEmailing, _session.IsSelectRetailerDisplay) : WebApplicationParameters.GetDataTable(TableIds.recapEmailingSegment, _session.IsSelectRetailerDisplay);
+                    return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapEmailing, _session.IsSelectRetailerDisplay) 
+                        : WebApplicationParameters.GetDataTable(TableIds.recapEmailingSegment, _session.IsSelectRetailerDisplay);
 				case CstDBClassif.Vehicles.names.directMarketing:
-					return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapDirectMarketing, _session.IsSelectRetailerDisplay) : WebApplicationParameters.GetDataTable(TableIds.recapDirectMarketingSegment, _session.IsSelectRetailerDisplay);
-                case CstDBClassif.Vehicles.names.internationalPress:
-                case CstDBClassif.Vehicles.names.others:
-                case CstDBClassif.Vehicles.names.adnettrack:
+					return (productDetail) ? WebApplicationParameters.GetDataTable(TableIds.recapDirectMarketing, _session.IsSelectRetailerDisplay) 
+                        : WebApplicationParameters.GetDataTable(TableIds.recapDirectMarketingSegment, _session.IsSelectRetailerDisplay);                
                 default:
                     throw new ProductClassIndicatorsDALException(string.Format("Vehicle \"{0}\" is unknown. Unable to find a matching table.", _vehicle.GetHashCode()));
             }
-
-            return null;
-
         }
         #endregion
 

@@ -5,13 +5,9 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-
 using TNS.FrameWork.Date;
 using TNS.AdExpress.Web.Core.Sessions;
 using TNS.AdExpress.Domain.Translation;
@@ -661,13 +657,12 @@ namespace TNS.AdExpress.Web.Controls.Selections {
         /// <param name="date">La date courante</param>
         /// <returns>vrai si le jour est sélectionnable</returns>
         public bool IsDayLinkEnabled(string date) {
-            bool enabled = false;
-            DateTime currentDay = new DateTime(Convert.ToInt32(date.Substring(0, 4)), Convert.ToInt32(date.Substring(4, 2)), Convert.ToInt32(date.Substring(6, 2)));
-            AtomicPeriodWeek week = new AtomicPeriodWeek(DateTime.Now);
+            var currentDay = new DateTime(Convert.ToInt32(date.Substring(0, 4)), 
+                Convert.ToInt32(date.Substring(4, 2)), Convert.ToInt32(date.Substring(6, 2)));
+            var week = new AtomicPeriodWeek(DateTime.Now);
             DateTime firstDayOfWeek = week.FirstDay;
             int days = 0;
-            string lastDate = string.Empty;
-           
+
             switch (VehiclesInformation.DatabaseIdToEnum(_selectedVehicle)) {
                 case Vehicles.names.press:
                 case Vehicles.names.newspaper:
@@ -682,6 +677,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                     break;
                 case Vehicles.names.outdoor:
                 case Vehicles.names.instore:
+                case Vehicles.names.indoor:
                     firstDayOfWeek = firstDayOfWeek.AddDays(-7);
                     days = firstDayOfWeek.Subtract(currentDay).Days;
                     if (days >= 1) return true;
@@ -689,7 +685,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                 case Vehicles.names.radio:
                 case Vehicles.names.tv:
                 case Vehicles.names.others:
-                    if (!((int)DateTime.Now.DayOfWeek >= 5) && !((int)DateTime.Now.DayOfWeek == 0)) {
+                    if (!((int)DateTime.Now.DayOfWeek >= 5) && (int)DateTime.Now.DayOfWeek != 0) {
                         firstDayOfWeek = firstDayOfWeek.AddDays(-7);
                     }
                     days = firstDayOfWeek.Subtract(currentDay).Days;
@@ -697,7 +693,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                     break;                           
             }
 
-            return enabled;
+            return false;
 
         }
         #endregion
@@ -708,7 +704,7 @@ namespace TNS.AdExpress.Web.Controls.Selections {
         /// </summary>
         /// <returns>Le premier jour du calendrier à partir duquel les données ne sont pas encore chargées</returns>
         public DateTime GetFirstDayNotEnabled() {
-            AtomicPeriodWeek week = new AtomicPeriodWeek(DateTime.Now);
+            var week = new AtomicPeriodWeek(DateTime.Now);
             DateTime firstDayOfWeek = week.FirstDay;
             DateTime publicationDate;
             string lastDate = string.Empty;
@@ -718,19 +714,20 @@ namespace TNS.AdExpress.Web.Controls.Selections {
                 case Vehicles.names.newspaper:
                 case Vehicles.names.magazine:
                 case Vehicles.names.internationalPress:
-					lastDate = TNS.AdExpress.Web.DataAccess.Selections.Medias.MediaPublicationDatesDataAccess.GetLatestPublication(_customerWebSession, _selectedVehicle, _customerWebSession.Source);
+					lastDate = DataAccess.Selections.Medias.MediaPublicationDatesDataAccess.GetLatestPublication(_customerWebSession, _selectedVehicle, _customerWebSession.Source);
                     publicationDate = new DateTime(Convert.ToInt32(lastDate.Substring(0, 4)), Convert.ToInt32(lastDate.Substring(4, 2)), Convert.ToInt32(lastDate.Substring(6, 2)));
                     firstDayOfWeek = publicationDate.AddDays(1);
                     return firstDayOfWeek;
                     break;
                 case Vehicles.names.outdoor:
                 case Vehicles.names.instore:
+                case Vehicles.names.indoor:
                     firstDayOfWeek = firstDayOfWeek.AddDays(-7);
                     return (firstDayOfWeek);
                 case Vehicles.names.radio:
                 case Vehicles.names.tv:
                 case Vehicles.names.others:
-                    if (!((int)DateTime.Now.DayOfWeek >= 5) && !((int)DateTime.Now.DayOfWeek == 0)) {
+                    if (!((int)DateTime.Now.DayOfWeek >= 5) && (int)DateTime.Now.DayOfWeek != 0) {
                         firstDayOfWeek = firstDayOfWeek.AddDays(-7);
                     }
                     return (firstDayOfWeek);

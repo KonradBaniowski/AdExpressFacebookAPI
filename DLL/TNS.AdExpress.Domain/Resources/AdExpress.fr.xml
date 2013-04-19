@@ -2231,5 +2231,9 @@
     <!--Ajout nouveau media Courrier -->
     <item mnemonic="w2989" type="System.String">Courrier créations</item>
     <item mnemonic="w2990" type="System.String">Veuillez changer votre sélection. Votre univers produit n'est pas disponible sur votre sélection de médias.</item>
+    <item mnemonic="w2991" type="System.String">Présence</item>
+    <!--Added media Indoor in Poland-->
+    <item mnemonic="w2992" type="System.String">Aucun résultats : vous n'avez pas les droits suffisants pour accéder aux détails des insertions de la Publicité Intérieure.</item>
+    <item mnemonic="w2993" type="System.String">!</item>
   </items>
 </localization>

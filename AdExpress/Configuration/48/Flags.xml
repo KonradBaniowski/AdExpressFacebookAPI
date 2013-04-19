@@ -21,5 +21,6 @@
   <flag id="252" description="Accès aux volumes du Media Courrier"/>
   <flag id="256" description="Accès aux poids du Media Courrier"/>
   <flag id="261" description="Accès Parrainage dans analyse sectorielle"/>
-  <flag id="266" description="Accéder Spot à Spot TNT"/>  
+  <flag id="266" description="Accéder Spot à Spot TNT"/>
+  <flag id="337" description="Accéder aux creations Indoor"/>
 </flags>
