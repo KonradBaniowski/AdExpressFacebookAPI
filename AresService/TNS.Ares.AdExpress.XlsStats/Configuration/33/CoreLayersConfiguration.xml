@@ -2,5 +2,6 @@
 <configuration>
   <layers>
     <layer id="dataAccess" name="layer of data access" assemblyName="TNS.Ares.StaticNavSession.DAL.Default.dll" class="TNS.Ares.StaticNavSession.DAL.Default.StaticNavSessionDAL"/>
+    <layer id="classificationLevelList" name="layer of classification" assemblyName="TNS.AdExpressI.Classification.DAL.Default.dll" class="TNS.AdExpressI.Classification.DAL.Default.ClassificationLevelListDALFactory"/>
   </layers>
 </configuration>

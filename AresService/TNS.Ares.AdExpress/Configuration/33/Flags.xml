@@ -36,4 +36,5 @@
   <flag id="308" description="Accès Agences Media MEDIA TACTIQUE"/>
   <flag id="309" description="Accès Agences Media CINEMA"/>
   <flag id="323" description="Accès nouvelles création application mobile"/>
+  <flag id="328" description="Accès export des créations Internet Evaliant"/>
 </flags>

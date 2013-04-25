@@ -108,9 +108,7 @@
     <Content Include="Configuration\33\CampaignTypes.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Configuration\33\CoreLayersConfiguration.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Configuration\33\CoreLayersConfiguration.xml" />
     <Content Include="Configuration\33\CreativesAccess.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -182,9 +180,7 @@
     <Content Include="Configuration\33\Trends.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Configuration\33\Units.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Configuration\33\Units.xml" />
     <Content Include="Configuration\33\UniverseBranches.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -198,7 +194,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Configuration\33\WebLanguages.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Configuration\33\WebThemes.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

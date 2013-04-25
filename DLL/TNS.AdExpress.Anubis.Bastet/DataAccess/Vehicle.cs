@@ -161,8 +161,11 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
             object[] parameter = new object[2];
             parameter[0] = dataSourceClassification;
             parameter[1] = language;
-            ClassificationLevelListDALFactory classificationLevelListDALFactory = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + "Bin\\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, parameter, null, null, null);
-            ClassificationLevelListDAL classificationLevelListDAL = classificationLevelListDALFactory.CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, string.Join(",", (idVehicleList.ConvertAll(new Converter<Int64, string>(Int64ToString))).ToArray()));
+            var classificationLevelListDALFactory = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain
+                .CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + "Bin\\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance
+                | BindingFlags.Instance | BindingFlags.Public, null, parameter, null, null);
+            ClassificationLevelListDAL classificationLevelListDAL = classificationLevelListDALFactory
+                .CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, string.Join(",", (idVehicleList.ConvertAll(new Converter<Int64, string>(Int64ToString))).ToArray()));
             DataTable dtRetour = new DataTable();
 
             foreach (DataColumn currentColumn in dt.Columns) {
@@ -174,7 +177,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
                 string labelVehicle = string.Empty;
                 DataRow[] dataRowArray = classificationLevelListDAL.GetDataTable.Select("id_vehicle = " + currentRow["id_vehicle"]);
                 if (dataRowArray != null && dataRowArray.Length != 1) throw new Exception("Invalid dataRowArray request count");
-                labelVehicle = dataRowArray[0]["label"].ToString();
+                labelVehicle = dataRowArray[0]["vehicle"].ToString();
 
                 List<object> itemArrayList = new List<object>(dt.Columns.Count + 1);
                 itemArrayList.AddRange(currentRow.ItemArray);

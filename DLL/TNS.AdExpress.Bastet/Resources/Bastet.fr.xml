@@ -217,7 +217,7 @@
     <item mnemonic="w2521" type="System.String">Nombre d'accès</item>
     <item mnemonic="w2522" type="System.String">Top modules utilisés</item>
     <item mnemonic="w2523" type="System.String">Top périodes utilisées</item>
-    <item mnemonic="w2524" type="System.String">Top utilisation requêtes sauvegardées</item>
+    <item mnemonic="w2524" type="System.String">Top usage requêtes sauvegardées</item>
     <item mnemonic="w2525" type="System.String">Top clients utilisant les requêtes sauvegardées </item>
     <item mnemonic="w2526" type="System.String">Nombre d'utilisation des requêtes sauvegardées</item>
     <item mnemonic="w2527" type="System.String">Top options utilisées</item>

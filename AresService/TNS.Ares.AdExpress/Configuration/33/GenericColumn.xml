@@ -107,7 +107,7 @@
     <column id="58" name="Id VMC" webTextId="860" dbTablePrefixe="wp" dbLabel="id_data_marketing_direct_panel"/>
     <column id="59" name="Enveloppe rapidité" webTextId="2223" dbId="id_mailing_rapidity" dbLabel="mailing_rapidity" dbTable="mailing_rapidity" dbTablePrefixe="mr"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="60" name="Type de doc" webTextId="2221" dbId="id_mail_type" dbLabel="mail_type" dbTable="mail_type" dbTablePrefixe="mt" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="61" name="Volume" webTextId="2216" isSum="true" dbTablePrefixe="wp" dbLabel="volume" dbLabelAlias="volume" CellType="TNS.FrameWork.WebResultUI.CellVolume" format="max0"/>
+    <column id="61" name="Volume" webTextId="2991" isSum="true" dbTablePrefixe="wp" dbLabel="volume" dbLabelAlias="volume" CellType="TNS.FrameWork.WebResultUI.CellVolume" format="max0"/>
     <column id="62" name="Poids" webTextId="2220" dbLabel="weight" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="63" name="Nombre d'item" webTextId="2224" dbLabel="object_count" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="64" name="Format enveloppe" webTextId="1420" dbLabel="mail_format" dbLabelAlias="envelope_format" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
@@ -426,7 +426,7 @@
       <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="6" name="Version" idDetailLevelMatching="6" isKey="true"/>
-      <columnItem id="67" name="Prix"/>
+      <!--<columnItem id="67" name="Prix"/>-->
       <columnItem id="62" name="Poid"/>
       <columnItem id="61" name="Volume"/>
       <columnItem id="11" name="Format" idDetailLevelMatching="20"/>
@@ -512,7 +512,7 @@
       <columnItem id="9" name="Produit"/>
       <columnItem id="6" name="slogan" isKey="true"/>
       <columnItem id="3" name="Support"/>
-      <columnItem id="85" name="Budget"/>
+      <!--<columnItem id="85" name="Budget"/>-->
       <columnItem id="61" name="Volume"/>
       <columnItem id="62" name="Poid"/>
       <columnItem id="63" name="Item"/>
@@ -600,7 +600,7 @@
       <columnItem id="6" name="slogan" isKey="true" visible="false"/>
       <columnItem id="3" name="Support" visible="false"/>
       <columnItem id="62" name="Poid"/>
-      <columnItem id="85" name="Budget"/>
+      <!--<columnItem id="85" name="Budget"/>-->
       <columnItem id="61" name="Volume"/>
       <columnItem id="11" name="Format"/>
       <columnItem id="63" name="Item"/>

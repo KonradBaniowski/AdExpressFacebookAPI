@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
   <languages default="33" defaultDataLanguage="33">
-    <language id="33" name="Français" imageSourceText="/Images/Common/france.gif"  localization="fr-FR" classificationLanguageId="33" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="utf-8" nlsSort="FRENCH" NumberDecimalSeparator="," NumberGroupSeparator=" ">
+    <language id="33" name="Français" imageSourceText="/Images/Common/france.gif"  localization="fr-FR" classificationLanguageId="33" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="utf-8" pdfContentEncoding="utf-8" nlsSort="FRENCH" NumberDecimalSeparator="," NumberGroupSeparator=" "  PercentDecimalSeparator=",">
       <dateFormats>
         <dateFormat name="calendar"                 format="MMMM yyyy"              excelFormat="MMMM yyyy"/>
         <dateFormat name="shortdatepattern"         format="dd/MM/yyyy"             excelFormat="dd/MM/yyyy"/>
         <dateFormat name="customshortdatepattern"   format="ddd dd MMM yyyy"        excelFormat="ddd dd MMM yyyy"/>
       </dateFormats>
     </language>
-    <language id="44" name="English"  imageSourceText="/Images/Common/angleterre.gif"  localization="en-GB" classificationLanguageId="33" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="utf-8" nlsSort="BINARY" NumberDecimalSeparator="." NumberGroupSeparator=",">
+    <language id="44" name="English"  imageSourceText="/Images/Common/angleterre.gif"  localization="en-GB" classificationLanguageId="44" charset="utf-8" contentEncoding="utf-8" excelContentEncoding="utf-8" pdfContentEncoding="utf-8" nlsSort="BINARY" NumberDecimalSeparator="." NumberGroupSeparator="," PercentDecimalSeparator=".">
       <dateFormats>
         <dateFormat name="calendar"                 format="MMMM yyyy"              excelFormat="MMMM yyyy"/>
         <dateFormat name="shortdatepattern"         format="MM/dd/yyyy"             excelFormat="MM/dd/yyyy"/>

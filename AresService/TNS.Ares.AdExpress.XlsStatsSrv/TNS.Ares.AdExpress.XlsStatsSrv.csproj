@@ -120,6 +120,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\DLL\TNS.AdExpress.Anubis.Bastet\TNS.AdExpress.Anubis.Bastet.csproj">
+      <Project>{351cb38f-7054-4438-8793-13e264063f17}</Project>
+      <Name>TNS.AdExpress.Anubis.Bastet</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DLL\TNS.AdExpress.Constantes\TNS.AdExpress.Constantes.csproj">
       <Project>{E25DBD07-256D-4078-A3C9-27153081629F}</Project>
       <Name>TNS.AdExpress.Constantes</Name>
@@ -144,6 +148,10 @@
       <Project>{C54C54E9-DC89-4AB3-961A-C7BBBDE72581}</Project>
       <Name>TNS.Ares.AdExpress.XlsStats</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.AdExpress\TNS.Ares.AdExpress.csproj">
+      <Project>{3ddc18b6-8ab8-489f-a0c5-2118ce19d795}</Project>
+      <Name>TNS.Ares.AdExpress</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -151,6 +159,7 @@
   <ItemGroup>
     <Content Include="Configuration\LinkServerParameters.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Configuration\LsClientConfiguration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -195,6 +204,7 @@ echo  -- Définition d'un lecteur pointant sur le répertoire où seront les lib
 subst i: %25toto%25</PreBuildEvent>
     <PostBuildEvent>rmdir /S /Q "$(TargetDir)Bin\"
 mkdir "$(TargetDir)Bin\"
-copy "$(TargetDir)TNS.Ares.StaticNavSession.DAL.Default.dll" "$(TargetDir)Bin\TNS.Ares.StaticNavSession.DAL.Default.dll" /Y</PostBuildEvent>
+copy "$(TargetDir)TNS.Ares.StaticNavSession.DAL.Default.dll" "$(TargetDir)Bin\TNS.Ares.StaticNavSession.DAL.Default.dll" /Y
+copy "$(TargetDir)TNS.AdExpressI.Classification.DAL.Default.dll" "$(TargetDir)Bin\TNS.AdExpressI.Classification.DAL.Default.dll" /Y</PostBuildEvent>
   </PropertyGroup>
 </Project>

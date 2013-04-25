@@ -1,25 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <database>
   <customerConnections>
+
     <customerConnection enumId="0" description="AdExpress user connection" dataBaseEnumId="2"  dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
   </customerConnections>
   <defaultConnections>
     <defaultConnection enumId="0" description="Session" dataBaseEnumId="2" login="mou01_session_1" password="sessionmolle1"     dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="1" description="Translation" dataBaseEnumId="2" login="admin_web" password="zepabony9"           dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="2" login="recap01" password="itulatif8"  dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <!--<defaultConnection enumId="2" description="Product class analysis" dataBaseEnumId="2" login="gfacon" password="sandie5"  dataSource="adexpr04.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="false"/>-->
     <defaultConnection enumId="3" description="APPM (Chronopresse)" dataBaseEnumId="2" login="grp" password="rpgdoom3"          dataSource="PITAFR02.PIGE" connectionTimeOut="120" isUtf8="true"/>
     <defaultConnection enumId="4" description="Geb" dataBaseEnumId="2" login="adexpr03_proc_7" password="pushit76"              dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" isUtf8="true"/>
     <defaultConnection enumId="5" description="Hermes" dataBaseEnumId="2" login="adexpr03_proc_8" password="lnampt8"            dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" isUtf8="true"/>
     <defaultConnection enumId="6" description="Publication" dataBaseEnumId="2" login="user_web" password="zebony8"              dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="7" description="Web Administration" dataBaseEnumId="2" login="admin_web" password="zepabony9"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <defaultConnection enumId="8" description="Alerts" dataBaseEnumId="2" login="adexpr03_proc_11" password="trela5"            dataSource="adexpr03.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-    <!--<defaultConnection enumId="9" description="EasyMusic" dataBaseEnumId="2" login="nicotest3000" password="nicotest3000"       dataSource="music01_test.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>-->
-    <defaultConnection enumId="9" description="EasyMusic" dataBaseEnumId="2" login="dgaucher" password="desir999"       dataSource="easymusicfr.prod" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
-
+    <defaultConnection enumId="9" description="EasyMusic" dataBaseEnumId="2" login="nicotest3000" password="nicotest3000"       dataSource="music01_test.pige" connectionTimeOut="120" pooling="true" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
     <!--Test default rights connection-->
     <defaultConnection enumId="10" description="Rights" dataBaseEnumId="2" login="gfacon" password="sandie5"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="12" description="Veille Promo" dataBaseEnumId="2" login="PROMO03" password="waltari2"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
+    <defaultConnection enumId="14" description="Rolex" dataBaseEnumId="2" login="ROLEX03" password="40ans"    dataSource="adexpr03.pige" connectionTimeOut="120" pooling="false" decrPoolSize="20" maxPoolSize="150" isUtf8="true"/>
   </defaultConnections>
   <schemas>
+
     <schema enumId="0" description="AdExpress Data (AdExpr03)" label="adexpr03"/>
     <schema enumId="1" description="APPM (Chronopress)" label="appm01"/>
     <schema enumId="2" description="Right" label="mau01"/>
@@ -27,6 +30,8 @@
     <schema enumId="4" description="Product class analysis" label="recap01"/>
     <schema enumId="5" description="Web" label="webnav01"/>
     <schema enumId="10" description="Alert" label="mau01"/>
+    <schema enumId="11" description="Promotion monitoring tables" label="promo03"/>
+    <schema enumId="12" description="Rolex tables" label="rolex03"/>
   </schemas>
   <tables defaultResultTablesPrefix="wp">
     <table enumId="0" description="List table" schemaEnumId="5" label="list" prefix="lst"/>
@@ -182,17 +187,110 @@
     <table enumId="162" description="Data: Evaliant mobile" schemaEnumId="0" label="data_mobile_4M" prefix="wp"/>
     <table enumId="163" description="Data: banners mobile" schemaEnumId="0" label="banners_mobile" prefix="wp"/>
 
+    <table enumId="164" description="Trends: Month" schemaEnumId="0" label="tendency_month" prefix="tm"/>
+    <table enumId="165" description="Trends: Total Month" schemaEnumId="0" label="total_tendency_month" prefix="ttm"/>
+    <table enumId="166" description="Trends: Week" schemaEnumId="0" label="tendency_week" prefix="tm"/>
+    <table enumId="167" description="Trends: Total Week" schemaEnumId="0" label="total_tendency_week" prefix="ttm"/>
+
+    <table enumId="168" description="Data: Press: Newspaper" schemaEnumId="0" label="data_newspaper" prefix="wp"/>
+    <table enumId="169" description="Data: Press: Newspaper 4M" schemaEnumId="0" label="data_newspaper_4M" prefix="wp"/>
+    <table enumId="170" description="Data: Press: Magazine" schemaEnumId="0" label="data_magazine" prefix="wp"/>
+    <table enumId="171" description="Data: Press: Magazine 4M" schemaEnumId="0" label="data_magazine_4M" prefix="wp"/>
+    <table enumId="172" description="Recap Data: Newspaper" schemaEnumId="4" label="recap_newspaper" prefix="rcn"/>
+    <table enumId="173" description="Recap Data: Magazine" schemaEnumId="4" label="recap_magazine" prefix="rcm"/>
+    <table enumId="174" description="Recap Data: Newspaper Segment" schemaEnumId="4" label="recap_newspaper_segment" prefix="rcn"/>
+    <table enumId="175" description="Recap Data: Magazine Segment" schemaEnumId="4" label="recap_magazine_segment" prefix="rcm"/>
+    <table enumId="176" description="Classif: Data location" schemaEnumId="0" label="data_location_magazine" prefix="dl"/>
+    <table enumId="177" description="Classif: Data location" schemaEnumId="0" label="data_location_newspaper" prefix="dl"/>
+
+    <table enumId="178" description="Recap Data: Instore" schemaEnumId="4" label="recap_instore" prefix="rcp"/>
+    <table enumId="179" description="Recap Data: Instore Segment" schemaEnumId="4" label="recap_instore_segment" prefix="rcp"/>
+    <table enumId="180" description="Data: Instore" schemaEnumId="0" label="data_instore" prefix="wp"/>
+    <table enumId="181" description="Data: Instore 4M" schemaEnumId="0" label="data_instore_4M" prefix="wp"/>
+    <table enumId="182" description="Classif: slogan" schemaEnumId="0" label="slogan" prefix="slo"/>
+
+    <table enumId="183" description="Tracking: Connection number By Login Ip Time slot" schemaEnumId="5" label="connection_by_login_ip" prefix="cli"/>
+    <table enumId="184" description="Data: Cinema Retailer"             schemaEnumId="0" label="data_cinema_retailer" prefix="wp"/>
+    <table enumId="185" description="Data: Cinema Retailer 4M"          schemaEnumId="0" label="data_cinema_retailer_4M" prefix="wp"/>
+    <table enumId="186" description="Data: Internet Retailer"           schemaEnumId="0" label="data_internet_retailer" prefix="wp"/>
+    <table enumId="187" description="Data: Internet Retailer 4M"        schemaEnumId="0" label="data_internet_retailer_4M" prefix="wp"/>
+    <table enumId="188" description="Classif: Data Location Magazine Retailer"  schemaEnumId="0" label="data_location_magazine_ret" prefix="dl"/>
+    <table enumId="189" description="Classif: Data Location Newspaper Retailer" schemaEnumId="0" label="data_location_newspaper_ret" prefix="dl"/>
+    <table enumId="190" description="Data: Magazine Retailer"           schemaEnumId="0" label="data_magazine_retailer" prefix="wp"/>
+    <table enumId="191" description="Data: Magazine Retailer 4M"        schemaEnumId="0" label="data_magazine_retailer_4M" prefix="wp"/>
+    <table enumId="192" description="Data: Newspaper Retailer"          schemaEnumId="0" label="data_newspaper_retailer" prefix="wp"/>
+    <table enumId="193" description="Data: Newspaper Retailer 4M"       schemaEnumId="0" label="data_newspaper_retailer_4M" prefix="wp"/>
+    <table enumId="194" description="Data: Outdoor Retailer"            schemaEnumId="0" label="data_outdoor_retailer" prefix="wp"/>
+    <table enumId="195" description="Data: Outdoor Retailer 4M"         schemaEnumId="0" label="data_outdoor_retailer_4M" prefix="wp"/>
+    <table enumId="196" description="Data: Radio Retailer"              schemaEnumId="0" label="data_radio_retailer" prefix="wp"/>
+    <table enumId="197" description="Data: Radio Retailer 4M"           schemaEnumId="0" label="data_radio_retailer_4M" prefix="wp"/>
+    <table enumId="198" description="Data: TV Retailer"                 schemaEnumId="0" label="data_tv_retailer" prefix="wp"/>
+    <table enumId="199" description="Data: TV Retailer 4M"              schemaEnumId="0" label="data_tv_retailer_4M" prefix="wp"/>
+    <table enumId="201" description="Data: Month Retailer"              schemaEnumId="0" label="web_plan_media_month_ret" prefix="wp"/>
+    <table enumId="202" description="Data: Week Retailer"               schemaEnumId="0" label="web_plan_media_week_ret" prefix="wp"/>
+
+
+    <table enumId="203" description="Recap Data: Cinema Retailer"             schemaEnumId="4" label="recap_cinema_ret" prefix="rcp"/>
+    <table enumId="204" description="Recap Data: Cinema Segment Retailer"     schemaEnumId="4" label="recap_cinema_ret_segment" prefix="rcp"/>
+    <table enumId="205" description="Recap Data: Internet Retailer"           schemaEnumId="4" label="recap_internet_ret" prefix="rcp"/>
+    <table enumId="206" description="Recap Data: Internet Segment Retailer"   schemaEnumId="4" label="recap_internet_ret_segment" prefix="rcp"/>
+    <table enumId="207" description="Recap Data: Magazine Retailer"           schemaEnumId="4" label="recap_magazine_ret" prefix="rcp"/>
+    <table enumId="208" description="Recap Data: Magazine Segment Retailer"   schemaEnumId="4" label="recap_magazine_ret_segment" prefix="rcp"/>
+    <table enumId="209" description="Recap Data: Newspaper Retailer"          schemaEnumId="4" label="recap_newspaper_ret" prefix="rcp"/>
+    <table enumId="210" description="Recap Data: Newspaper Segment Retailer"  schemaEnumId="4" label="recap_newspaper_ret_segment" prefix="rcp"/>
+    <table enumId="211" description="Recap Data: Outdoor Retailer"            schemaEnumId="4" label="recap_outdoor_ret" prefix="rcp"/>
+    <table enumId="212" description="Recap Data: Outdoor Segment Retailer"    schemaEnumId="4" label="recap_outdoor_ret_segment" prefix="rcp"/>
+    <table enumId="213" description="Recap Data: Pluri Retailer"              schemaEnumId="4" label="recap_pluri_ret" prefix="rcp"/>
+    <table enumId="214" description="Recap Data: Pluri Segment Retailer"      schemaEnumId="4" label="recap_pluri_ret_segment" prefix="rcp"/>
+    <table enumId="215" description="Recap Data: Radio Retailer"              schemaEnumId="4" label="recap_radio_ret" prefix="rcp"/>
+    <table enumId="216" description="Recap Data: Radio Segment Retailer"      schemaEnumId="4" label="recap_radio_ret_segment" prefix="rcp"/>
+    <table enumId="217" description="Recap Data: TV Retailer"                 schemaEnumId="4" label="recap_tv_ret" prefix="rcp"/>
+    <table enumId="218" description="Recap Data: TV Segment Retailer"         schemaEnumId="4" label="recap_tv_ret_segment" prefix="rcp"/>
+
+    <table enumId="219" description="Dash Board Data: Pluri Month"            schemaEnumId="0" label="TABLEAU_BORD_PLURI_MONTH" prefix="dshb"/>
+    <table enumId="220" description="Dash Board Data: Pluri Week"             schemaEnumId="0" label="TABLEAU_BORD_PLURI_WEEK" prefix="dshb"/>
+    <table enumId="221" description="Dash Board Data: Radio Day"              schemaEnumId="0" label="TABLEAU_BORD_RADIO_DAY" prefix="dshb"/>
+    <table enumId="222" description="Dash Board Data: Radio Repartition Month"  schemaEnumId="0" label="TABLEAU_BORD_RADIO_R_MTH" prefix="dshb"/>
+    <table enumId="223" description="Dash Board Data: Radio Repartition Week" schemaEnumId="0" label="TABLEAU_BORD_RADIO_R_WEEK" prefix="dshb"/>
+    <table enumId="224" description="Dash Board Data: TV Day"                 schemaEnumId="0" label="TABLEAU_BORD_TV_DAY" prefix="dshb"/>
+    <table enumId="225" description="Dash Board Data: TV Repartition Month"   schemaEnumId="0" label="TABLEAU_BORD_TV_REP_MTH" prefix="dshb"/>
+    <table enumId="226" description="Dash Board Data: TV Repartition Week"    schemaEnumId="0" label="TABLEAU_BORD_TV_REP_WEEK" prefix="dshb"/>
+
+    <table enumId="227" description="Dash Board Data: Pluri Month Retailer"   schemaEnumId="0" label="TABLEAU_BORD_PLURI_MONTH_RET" prefix="dshb"/>
+    <table enumId="228" description="Dash Board Data: Pluri Week Retailer"    schemaEnumId="0" label="TABLEAU_BORD_PLURI_WEEK_RET" prefix="dshb"/>
+
+    <table enumId="229" description="Promo : detail  Product"   schemaEnumId="11" label="product" prefix="pr"/>
+    <table enumId="230" description="Promo :  Product category"   schemaEnumId="11" label="category" prefix="ct"/>
+    <table enumId="231" description="Promo : Brand "   schemaEnumId="11" label="brand" prefix="br"/>
+    <table enumId="232" description="Promo : Circuit "   schemaEnumId="11" label="circuit" prefix="cr"/>
+    <table enumId="233" description="Promo : Data  "   schemaEnumId="11" label="data_promotion" prefix="wp"/>
+    <table enumId="234" description="Promo : Product Segment"   schemaEnumId="11" label="segment" prefix="sg"/>
+    <table enumId="235" description="Customer Insertions levels: Group insertion save" schemaEnumId="5" label="group_insertion_save" prefix="dir"/>
+    <table enumId="236" description="Customer Insertions levels: insertion leves save" schemaEnumId="5" label="insertion_save" prefix="isl"/>
+    <table enumId="237" description="Classif: Group Format Banners" schemaEnumId="0" label="group_format_banners" prefix="gfb"/>
+    <table enumId="238" description="Right: Group Format Banners" schemaEnumId="2" label="ORDER_CLIENT_GROUP_FORMAT" prefix="ocgf"/>
+
+    <table enumId="239" description="Rolex : Data  "   schemaEnumId="12" label="data_rolex" prefix="wp"/>
+    <table enumId="240" description="Rolex : Location  "   schemaEnumId="12" label="emplacement" prefix="ep"/>
+    <table enumId="241" description="Rolex : Site  "   schemaEnumId="12" label="site" prefix="st"/>
+    <table enumId="242" description="Rolex : Tye presence  "   schemaEnumId="12" label="type_presence" prefix="tp"/>
+
+    <table enumId="243" description="Data: VMC Valo FP" schemaEnumId="0" label="data_mail" prefix="wp"/>
+    <table enumId="244" description="Data: VMC Valo FP" schemaEnumId="0" label="data_mail_4m" prefix="wp"/>
+
     <table enumId="300" description="Alert" schemaEnumId="10" label="alert" prefix="al"/>
     <table enumId="301" description="Alert Occurrence" schemaEnumId="10" label="alert_occurence" prefix="alo"/>
     <table enumId="302" description="Alert Schedule" schemaEnumId="10" label="alert_schedule" prefix="as"/>
     <table enumId="400" description="Static Nav Session" schemaEnumId="5" label="static_nav_session" prefix="snv"/>
-
   </tables>
   <views>
     <view enumId="0" description="Classif: all media" schemaEnumId="0" label="all_media_" prefix="allm"/>
     <view enumId="1" description="Classif: all product" schemaEnumId="0" label="all_product_" prefix="allp"/>
     <view enumId="2" description="Classif: all Recap media" schemaEnumId="4" label="all_media_" prefix="allrm"/>
     <view enumId="3" description="Classif: all Recap product" schemaEnumId="4" label="all_product_" prefix="allrp"/>
+    <view enumId="4" description="Classif: all Adv Agency" schemaEnumId="0" label="all_adv_agency_" prefix="allaa"/>
+    <view enumId="5" description="Classif: all Promo brand" schemaEnumId="11" label="all_brand" prefix="allpb"/>
+    <view enumId="6" description="Classif: all Promo product" schemaEnumId="11" label="all_product" prefix="allpp"/>
   </views>
 </database>
 
