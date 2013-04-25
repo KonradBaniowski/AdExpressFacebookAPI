@@ -134,6 +134,10 @@
       <Project>{4762D913-FC82-42BD-840F-5BCB43E5979D}</Project>
       <Name>TNS.Ares.StaticNavSession.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.Ares.Requester\TNS.Ares.Requester.csproj">
+      <Project>{f77f07c9-87f4-40df-9455-584d2e66a9ac}</Project>
+      <Name>TNS.Ares.Requester</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ProjectInstaller.resx">

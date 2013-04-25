@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configurations>
-  <!-- Config FR (33)
+  <!-- Config FR (33)-->
   <aresConfigurations>
     <lsClientConfiguration name="AdExpress" directoryName="AdExpress\33" familyId="122" familyName="AdExpress FR Requester Treatment service" monitorPort="30227" productName="AdExpress Request treatment service">
       <moduleDescription description="AdExpress Ares Requester" moduleId="0"/>
@@ -10,14 +10,14 @@
       <moduleDescription description="AdExpress Ares Garbage For StaticNavSession" moduleId="10"/>
       <moduleDescription description="AdExpress Ares Garbage For Alertes" moduleId="11"/>
     </lsClientConfiguration>  
-  </aresConfigurations>-->
+  </aresConfigurations>
   
   <!-- Config SK (421) -->
-  <aresConfigurations>
+  <!--<aresConfigurations>
     <lsClientConfiguration name="AdExpress" directoryName="AdExpress\421" familyId="129" familyName="AdExpress SK Requester Treatment service" monitorPort="30258" productName="AdExpress Request treatment service">
       <moduleDescription description="AdExpress Ares Requester" moduleId="0"/>
       <moduleDescription description="Task AdExpress Ares Requester in error" moduleId="2"/>
       <moduleDescription description="AdExpress Ares Garbage For StaticNavSession" moduleId="10"/>
     </lsClientConfiguration>
-  </aresConfigurations>
+  </aresConfigurations>-->
 </configurations>
