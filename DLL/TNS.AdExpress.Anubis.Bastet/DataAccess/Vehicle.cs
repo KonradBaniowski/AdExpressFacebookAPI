@@ -41,32 +41,31 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
             try {
                 #region Requête
                 StringBuilder sql = new StringBuilder(3000);
-                //Table vehicleTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.vehicle);
+               
                 Table topVehicleTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingTopVehicle);
 
                 //select
                 sql.Append(" select ");
 
                 sql.Append(" " + topVehicleTable.Prefix + ".id_vehicle");
-                //sql.Append("," + vehicleTable.Prefix + ".vehicle");
+               
                 sql.Append(",sum(" + topVehicleTable.Prefix + ".CONNECTION_NUMBER) as CONNECTION_NUMBER  ");
 
                 //From
                 sql.Append(" from " + topVehicleTable.SqlWithPrefix);
-                //sql.Append(" ," + vehicleTable.SqlWithPrefix);
+               
 
                 //Where
                 sql.Append(" where " + topVehicleTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
                 if (parameters != null && parameters.Logins.Length > 0) {
                     sql.Append(" and " + topVehicleTable.Prefix + ".id_login in (" + parameters.Logins + ") ");
                 }
-                //sql.Append(" and "+topVehicleTable.Prefix+".id_vehicle="+vehicleTable.Prefix+".id_vehicle");
-                //sql.Append(" and "+vehicleTable.Prefix+".id_language="+language);
+               
                 //Gourp by
-                sql.Append(" and  " + topVehicleTable.Prefix + ".id_vehicle not in (50)");
+               
                 sql.Append(" group by  ");
                 sql.Append("  " + topVehicleTable.Prefix + ".ID_vehicle ");
-                //sql.Append("," + vehicleTable.Prefix + ".vehicle");
+              
                 //Order by
                 sql.Append(" order by  CONNECTION_NUMBER  desc");
                 #endregion
@@ -93,20 +92,20 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
             try {
                 #region Requête
                 StringBuilder sql = new StringBuilder(3000);
-                //Table vehicleTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.vehicle);
+                
                 Table topVehicleByModuleTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.trackingTopVehicleByModule);
                 Table moduleTable = WebApplicationParameters.DataBaseDescription.GetTable(TableIds.rightModule);
 
                 //select
                 sql.Append(" select ");
                 sql.Append(" " + topVehicleByModuleTable.Prefix + ".id_vehicle");
-                //sql.Append(", vehicle");
+                
                 sql.Append(", " + topVehicleByModuleTable.Prefix + ".id_module,module");
                 sql.Append(",sum(" + topVehicleByModuleTable.Prefix + ".CONNECTION_NUMBER) as CONNECTION_NUMBER  ");
 
                 //From
                 sql.Append(" from " + topVehicleByModuleTable.SqlWithPrefix);
-                //sql.Append(" ," + vehicleTable.SqlWithPrefix); 
+              
                 sql.Append("," + moduleTable.SqlWithPrefix);
 
                 //Where
@@ -115,20 +114,18 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
                 if (parameters != null && parameters.Logins.Length > 0) {
                     sql.Append(" and " + topVehicleByModuleTable.Prefix + ".id_login in (" + parameters.Logins + ") ");
                 }
-                //sql.Append(" and " + topVehicleByModuleTable.Prefix + ".id_vehicle=" + vehicleTable.Prefix + ".id_vehicle");
-                //sql.Append(" and " + vehicleTable.Prefix + ".id_language=" + language);
-                //sql.Append(" and " + vehicleTable.Prefix + ".activation<" + DBConstantes.ActivationValues.UNACTIVATED);
+               
                 sql.Append(" and " + topVehicleByModuleTable.Prefix + ".id_module=" + moduleTable.Prefix + ".id_module");
                 sql.Append(" and " + moduleTable.Prefix + ".activation<" + DBConstantes.ActivationValues.UNACTIVATED);
 
-                sql.Append("  and " + topVehicleByModuleTable.Prefix + ".id_vehicle not in (50)");
+               
                 //Gourp by
                 sql.Append(" group by  ");
                 sql.AppendFormat("  {0}.id_module,module,{0}.id_vehicle ", topVehicleByModuleTable.Prefix);
-                //sql.Append(",vehicle ");
+              
                 //Order by
                 sql.Append(" order by  module asc," + topVehicleByModuleTable.Prefix + ".id_vehicle ");
-                //sql.Append(" ,vehicle");
+               
                 #endregion
 
                 #region Execution
