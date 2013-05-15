@@ -2,4 +2,8 @@
 <resultOptions>
   <inset available="false" description="Specify if the option inset is available overall the website"/>
   <mediaSchedule useComparative="false"/>
+  <bannersFormat use="false"/>
+  <retailer use ="false"/>
+  <inset available="true" description="Specify if the option inset is available overall the website"/>
+  <lostWon useComparative="false" useDiponibility="true" useType="true"/>
 </resultOptions>

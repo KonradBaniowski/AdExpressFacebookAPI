@@ -56,7 +56,7 @@
     <column id="30" name="Type de réseau" webTextId="1609"  dbLabel="type_sale" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="31" name="Réseau afficheur" webTextId="1611"  dbLabel="poster_network" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="32" name="Agglomeration" webTextId="1660"  dbId="id_agglomeration" dbLabel="agglomeration" dbTable="agglomeration" dbTablePrefixe="agglo" dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
-    <column id="33" name="Date" webTextId="895"  dbLabel="date_media_num" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
+    <column id="33" name="Date" webTextId="895"  dbLabel="date_media_num" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="shortdatepattern"/>
     <column id="34" name="Page" webTextId="894"  dbLabel="media_paging"  CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="35" name="Visuel" webTextId="1909"  dbLabel="visual">
       <constraints>
@@ -87,14 +87,14 @@
     <column id="39" name="Formes de Parrainage" webTextId="2121" dbId="id_form_sponsorship" dbLabel="form_sponsorship" dbTable="form_sponsorship" dbTablePrefixe="fs" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="40" name="Jour Semaine" webTextId="2068"  dbLabel="date_media_num" dbLabelAlias="day_of_week" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="dddd"/>
     <column id="41" name="Affiche" webTextId="1610"  dbLabel="associated_file"/>
-    <column id="42" name="Date du Support" webTextId="2267"  dbLabel="date_media_num" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
+    <column id="42" name="Date du Support" webTextId="2267"  dbLabel="date_media_num" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellDate" format="shortdatepattern"/>
     <!--<column id="43" name="Agence Media" webTextId="731" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>-->
     <column id="44" name="Famille" webTextId="1103" dbId="id_sector" dbLabel="sector" dbTable="sector" dbTablePrefixe="sc" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="45" name="Surface en mmc" webTextId="595"  dbLabel="area_mmc" CellType="TNS.FrameWork.WebResultUI.CellMMC" format="max0"/>
     <column id="46" name="Rang famille" webTextId="1426"  dbLabel="rank_sector" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="47" name="Rang groupe" webTextId="1427"  dbLabel="rank_group_" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
     <column id="48" name="Rang support" webTextId="1428"  dbLabel="rank_media" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="max0"/>
-    <column id="49" name="Date de diffusion" webTextId="1380"  dbLabel="date_media_num" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
+    <column id="49" name="Date de diffusion" webTextId="1380"  dbLabel="date_media_num" CellType="TNS.FrameWork.WebResultUI.CellDate" format="shortdatepattern"/>
     <column id="50" name="Code écran" webTextId="495"  dbLabel="commercial_break" CellType="TNS.FrameWork.WebResultUI.CellNumber" format="codeEcran"/>
     <column id="51" name="Prix du 30 sec" webTextId="1446" dbLabel="expenditure_30s_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="max0"/>
     <column id="52" name="Type page" webTextId="2246"  dbLabel="id_type_page" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
@@ -148,9 +148,9 @@
     <column id="83" name="Format banner Internet" webTextId="1420" dbLabel="format" dbLabelAlias="format" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="84" name="Dimension banner Internet" webTextId="2542" dbLabel="dimension" dbLabelAlias="dimension" dbTablePrefixe="wp" CellType="TNS.FrameWork.WebResultUI.CellLabel"/>
     <column id="85" name="Euros" webTextId="1712" isSum="true"  dbLabel="expenditure_euro" dbLabelAlias="expenditure_euro" CellType="TNS.FrameWork.WebResultUI.CellEuro" format="currency"/>
-    <column id="86" name="Date de parution" webTextId="1381" dbLabel="date_media_num" dbLabelAlias="date_media_num" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
+    <column id="86" name="Date de parution" webTextId="1381" dbLabel="date_media_num" dbLabelAlias="date_media_num" CellType="TNS.FrameWork.WebResultUI.CellDate" format="shortdatepattern"/>
     <column id="87" name="Gad" webTextId="2222" dbId="id_advertiser" dbLabel="id_address" dbTable="gad" dbTablePrefixe="gd"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" useLanguage="false"/>
-    <column id="88" name="Banner first parution" webTextId="2545" dbTablePrefixe="wp" dbLabel="date_creation" dbLabelAlias="dateParution" CellType="TNS.FrameWork.WebResultUI.CellDate" format="d"/>
+    <column id="88" name="Banner first parution" webTextId="2545" dbTablePrefixe="wp" dbLabel="date_creation" dbLabelAlias="dateParution" CellType="TNS.FrameWork.WebResultUI.CellDate" format="shortdatepattern"/>
     <column id="89" name="Id Category" webTextId="860" dbLabel="id_category" dbTablePrefixe="wp" dbLabelAlias="idCategory"/>
     <column id="90" name="Row number" webTextId="2560"  dbLabel="rownum" CellType="TNS.FrameWork.WebResultUI.CellNumber"/>
     <column id="91" name="Dimension banner mobile" webTextId="2542" dbId="id_dimension_banners_mobile" dbLabel="dimension_banners_mobile" dbLabelAlias="dimension_banners_mobile" dbTable="dimension_banners_mobile" dbTablePrefixe="dbanm"  dbRelatedTablePrefixe="wp" sqlOperation="leftOuterJoin" CellType="TNS.FrameWork.WebResultUI.CellLabel" useLanguage="false"/>
@@ -277,7 +277,7 @@
       <!--<columnItem id="56" name="Id_data_outdoor" visible="false" isKey="true"/>-->
       <columnItem id="41" name="Affiche" notInExcelExport="true"/>
       <columnItem id="7" name="Annonceur" idDetailLevelMatching="8"/>
-      <columnItem id="9" name="Produit" idDetailLevelMatching="10"/>
+      <columnItem id="9" name="Produit" idDetailLevelMatching="10" isKey="true"/>
       <columnItem id="8" name="Groupe" idDetailLevelMatching="13"/>
       <columnItem id="4" name="Centre d'interet" idDetailLevelMatching="4"/>
       <columnItem id="5" name="Régie"/>

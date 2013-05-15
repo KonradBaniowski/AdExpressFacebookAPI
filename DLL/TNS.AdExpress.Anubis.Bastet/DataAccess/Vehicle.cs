@@ -63,6 +63,7 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
                 //sql.Append(" and "+topVehicleTable.Prefix+".id_vehicle="+vehicleTable.Prefix+".id_vehicle");
                 //sql.Append(" and "+vehicleTable.Prefix+".id_language="+language);
                 //Gourp by
+                sql.Append(" and  " + topVehicleTable.Prefix + ".id_vehicle not in (50)");
                 sql.Append(" group by  ");
                 sql.Append("  " + topVehicleTable.Prefix + ".ID_vehicle ");
                 //sql.Append("," + vehicleTable.Prefix + ".vehicle");
@@ -109,7 +110,8 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
                 sql.Append("," + moduleTable.SqlWithPrefix);
 
                 //Where
-                sql.Append(" where " + topVehicleByModuleTable.Prefix + ".date_connection  between " + parameters.PeriodBeginningDate.ToString("yyyyMMdd") + " and " + parameters.PeriodEndDate.ToString("yyyyMMdd"));
+                sql.AppendFormat(" where {0}.date_connection  between {1} and {2}",
+                    topVehicleByModuleTable.Prefix, parameters.PeriodBeginningDate.ToString("yyyyMMdd"), parameters.PeriodEndDate.ToString("yyyyMMdd"));
                 if (parameters != null && parameters.Logins.Length > 0) {
                     sql.Append(" and " + topVehicleByModuleTable.Prefix + ".id_login in (" + parameters.Logins + ") ");
                 }
@@ -118,9 +120,11 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
                 //sql.Append(" and " + vehicleTable.Prefix + ".activation<" + DBConstantes.ActivationValues.UNACTIVATED);
                 sql.Append(" and " + topVehicleByModuleTable.Prefix + ".id_module=" + moduleTable.Prefix + ".id_module");
                 sql.Append(" and " + moduleTable.Prefix + ".activation<" + DBConstantes.ActivationValues.UNACTIVATED);
+
+                sql.Append("  and " + topVehicleByModuleTable.Prefix + ".id_vehicle not in (50)");
                 //Gourp by
                 sql.Append(" group by  ");
-                sql.Append("  " + topVehicleByModuleTable.Prefix + ".id_module,module," + topVehicleByModuleTable.Prefix + ".id_vehicle ");
+                sql.AppendFormat("  {0}.id_module,module,{0}.id_vehicle ", topVehicleByModuleTable.Prefix);
                 //sql.Append(",vehicle ");
                 //Order by
                 sql.Append(" order by  module asc," + topVehicleByModuleTable.Prefix + ".id_vehicle ");
@@ -164,8 +168,10 @@ namespace TNS.AdExpress.Anubis.Bastet.DataAccess
             var classificationLevelListDALFactory = (ClassificationLevelListDALFactory)AppDomain.CurrentDomain
                 .CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + "Bin\\" + cl.AssemblyName, cl.Class, false, BindingFlags.CreateInstance
                 | BindingFlags.Instance | BindingFlags.Public, null, parameter, null, null);
+
             ClassificationLevelListDAL classificationLevelListDAL = classificationLevelListDALFactory
-                .CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess, string.Join(",", (idVehicleList.ConvertAll(new Converter<Int64, string>(Int64ToString))).ToArray()));
+                .CreateClassificationLevelListDAL(TNS.AdExpress.Constantes.Customer.Right.type.vehicleAccess,
+                string.Join(",", (idVehicleList.ConvertAll(Convert.ToString)).ToArray()));
             DataTable dtRetour = new DataTable();
 
             foreach (DataColumn currentColumn in dt.Columns) {

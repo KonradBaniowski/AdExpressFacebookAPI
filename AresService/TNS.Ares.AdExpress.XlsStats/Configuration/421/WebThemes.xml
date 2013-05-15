@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
   <themes>
-    <theme id="1" description="Default AdExpress Theme using English" name="DefaultAdExpressUk" siteLanguage="44"/>
+    <theme id="1" description="AdExpress Theme using Slovakia" name="SKKMAE-Sk" siteLanguage="421"/>
+    <theme id="2" description="AdExpress Theme using English" name="SKKMAE-Uk" siteLanguage="44"/>
   </themes>
 </configuration>

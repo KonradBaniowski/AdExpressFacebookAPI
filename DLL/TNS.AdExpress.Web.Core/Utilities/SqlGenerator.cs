@@ -2874,6 +2874,7 @@ namespace TNS.AdExpress.Web.Core.Utilities
                     return WebApplicationParameters.GetDataTable(TableIds.recapInStore, isRetailerSelected).Sql;
                 case ClassificationConstantes.DB.Vehicles.names.indoor:
                     return WebApplicationParameters.GetDataTable(TableIds.recapInDoor, isRetailerSelected).Sql;
+                case DBClassificationConstantes.Vehicles.names.adnettrack:
                 case DBClassificationConstantes.Vehicles.names.czinternet:
                 case ClassificationConstantes.DB.Vehicles.names.internet:
                     return WebApplicationParameters.GetDataTable(TableIds.recapInternet, isRetailerSelected).Sql;
