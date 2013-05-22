@@ -1785,6 +1785,11 @@ namespace TNS.AdExpress.Constantes.DB{
         /// Indoor insertion detail acccess  flag 
         /// </summary>
         public const Int64 ID_DETAIL_INDOOR_ACCESS_FLAG = 338;
+
+        /// <summary>
+        /// Press Vehicle pages access  flag 
+        /// </summary>
+        public const Int64 ID_PRESS_VEHICLE_PAGES_ACCESS_FLAG = 339;
     }
 	#endregion
 
