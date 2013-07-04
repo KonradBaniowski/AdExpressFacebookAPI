@@ -101,6 +101,14 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		/// Checkbox dédiée à la PDM 
 		/// </summary>
 		protected System.Web.UI.WebControls.CheckBox PdmCheckBox;
+        /// <summary>
+        /// Radio button for date week comparative
+        /// </summary>
+        protected System.Web.UI.WebControls.RadioButton dateWeekComparativeRadioButton;
+        /// <summary>
+        /// Radio button for date to date
+        /// </summary>
+        protected System.Web.UI.WebControls.RadioButton dateToDateRadioButton;
 		/// <summary>
 		/// Checkbox pour pdm (pourcentage quelconque et PDM pour tout ce qui est concurrentielle)
 		/// </summary>
@@ -201,6 +209,18 @@ namespace TNS.AdExpress.Web.Controls.Headers
 			get{return pdmOption;}
 			set{pdmOption=value;}
 		}
+
+        /// <summary>
+        /// Comparative Type Option
+        /// </summary>
+        [Bindable(true),
+        Description("Comparative Type Option")]
+        protected bool comparativeOption = false;
+        /// <summary></summary>
+        public bool ComparativeOption {
+            get { return comparativeOption; }
+            set { comparativeOption = value; }
+        }
 		
 		/// <summary>
 		/// Option PDV
@@ -599,6 +619,10 @@ namespace TNS.AdExpress.Web.Controls.Headers
 		protected override void OnInit(EventArgs e) {
 			string listSector="";
 			string listInterestCenter="";
+
+            if (customerWebSession.CurrentModule==CstWeb.Module.Name.TENDACES && WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FRANCE))
+                comparativeOption = true;
+
 			//string nameSector="";
 			//DataSet dsSector;
 			if (Page.IsPostBack){
@@ -638,7 +662,24 @@ namespace TNS.AdExpress.Web.Controls.Headers
 						if(Page.Request.Form.GetValues(this.ID+"_pdm")[0]!=null)customerWebSession.PDM=true;
 					}catch(System.Exception) {
 						customerWebSession.PDM=false;}						
-				}	
+				}
+
+                //Comparative Type
+                if (comparativeOption) {
+                    try {
+                        string submiterRadioButton;
+                        if (Page.Request.Form.GetValues("comparativeTypeRadioButton")[0] != null) {
+                            submiterRadioButton = Page.Request.Form.GetValues("comparativeTypeRadioButton")[0];
+                            if (submiterRadioButton == this.ID + "_dateWeekComparative")
+                                customerWebSession.DateToDateComparativeWeek = false;
+                            else
+                                customerWebSession.DateToDateComparativeWeek = true;
+                        }
+                    }
+                    catch (System.Exception) {
+                        
+                    }
+                }	
 				//Evolution
 				if(evolutionOption){
 					try{
@@ -881,6 +922,33 @@ namespace TNS.AdExpress.Web.Controls.Headers
 				Controls.Add(PdmCheckBox);
 			}
 			#endregion
+
+            #region Comparative Type
+            //Comparative Type Option
+            if (comparativeOption) {
+                dateWeekComparativeRadioButton = new System.Web.UI.WebControls.RadioButton();
+                dateWeekComparativeRadioButton.AutoPostBack = autoPostBackOption;
+                dateWeekComparativeRadioButton.CssClass = "checkBoxOption";
+                dateWeekComparativeRadioButton.ID = this.ID + "_dateWeekComparative";
+                dateWeekComparativeRadioButton.GroupName = "comparativeTypeRadioButton";
+                dateWeekComparativeRadioButton.ToolTip = GestionWeb.GetWebWord(2295, customerWebSession.SiteLanguage);
+                dateWeekComparativeRadioButton.Text = GestionWeb.GetWebWord(2295, customerWebSession.SiteLanguage);
+                if (!customerWebSession.DateToDateComparativeWeek)
+                    dateWeekComparativeRadioButton.Checked = true;
+                Controls.Add(dateWeekComparativeRadioButton);
+
+                dateToDateRadioButton = new System.Web.UI.WebControls.RadioButton();
+                dateToDateRadioButton.AutoPostBack = autoPostBackOption;
+                dateToDateRadioButton.CssClass = "checkBoxOption";
+                dateToDateRadioButton.ID = this.ID + "_dateToDate";
+                dateToDateRadioButton.GroupName = "comparativeTypeRadioButton";
+                dateToDateRadioButton.ToolTip = GestionWeb.GetWebWord(2294, customerWebSession.SiteLanguage);
+                dateToDateRadioButton.Text = GestionWeb.GetWebWord(2294, customerWebSession.SiteLanguage);
+                if (customerWebSession.DateToDateComparativeWeek)
+                    dateToDateRadioButton.Checked = true;
+                Controls.Add(dateToDateRadioButton);
+            }
+            #endregion
 			
 			#region PDV
 			//Option PDV
@@ -1469,7 +1537,7 @@ namespace TNS.AdExpress.Web.Controls.Headers
             #endregion
 
             #region Options PDM ,PDV, cumul date, pourcentage
-            if (pdmOption || pdvOption || percentage || cumulPeriodOption || _retailerSelectionOption) {
+            if (pdmOption || pdvOption || percentage || cumulPeriodOption || _retailerSelectionOption || comparativeOption) {
                 if (pdmOption || pdvOption || percentage || cumulPeriodOption) {
                     output.Write("\n<tr class=\"backGroundOptionsPadding\" >");
                     output.Write("\n<td>");
@@ -1479,6 +1547,14 @@ namespace TNS.AdExpress.Web.Controls.Headers
                     }
                     if (pdmOption) {
                         PdmCheckBox.RenderControl(output);
+                        output.Write("&nbsp;&nbsp;");
+                    }
+                    if (comparativeOption) {
+                        output.Write("</br>");
+                        dateWeekComparativeRadioButton.RenderControl(output);
+                        output.Write("&nbsp;&nbsp;");
+                        output.Write("</br>");
+                        dateToDateRadioButton.RenderControl(output);
                         output.Write("&nbsp;&nbsp;");
                     }
                     if (pdvOption) {

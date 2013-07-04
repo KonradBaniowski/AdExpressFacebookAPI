@@ -443,6 +443,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Selections\AjaxSelectionBaseWebControl.cs" />
+    <Compile Include="Selections\DetailPeriodWebControl.cs" />
     <Compile Include="Selections\LoadableCustomisedLevelsWebControl.cs" />
     <Compile Include="Selections\RegionWebControl.cs" />
     <Compile Include="Selections\CheckBoxsDependentSelection.cs" />

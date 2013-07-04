@@ -59,6 +59,10 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		/// </summary>
 		protected TNS.AdExpress.Web.Controls.Selections.DetailSelectionWebControl detailSelectionWebControl=null;
         /// <summary>
+        /// Rappel de la période
+        /// </summary>
+        //protected TNS.AdExpress.Web.Controls.Selections.DetailPeriodWebControl detailPeriodWebControl = null;
+        /// <summary>
         /// Specify if the ajax scripts have been rendered;
         /// </summary>
         protected bool _ajaxRendered = false;
@@ -277,6 +281,48 @@ namespace TNS.AdExpress.Web.Controls.Results{
 			get{throw(new NotImplementedException());}
 			set{throw(new NotImplementedException());}
         }
+        /// <summary>
+        /// Css class for period title
+        /// </summary>
+        protected string _cssDetailPeriodTitle = "";
+        /// <summary>
+        /// Set / Get the css style for a period title
+        /// </summary>
+        [Bindable(true),
+        Category("Detail Period"),
+        DefaultValue("")]
+        public string CssDetailPeriodTitle {
+            get { return _cssDetailPeriodTitle; }
+            set { _cssDetailPeriodTitle = value; }
+        }
+        /// <summary>
+        /// Css class for period title data
+        /// </summary>
+        protected string _cssDetailPeriodTitleData = "";
+        /// <summary>
+        /// Set / Get the css style for a period title data
+        /// </summary>
+        [Bindable(true),
+        Category("Detail Period"),
+        DefaultValue("")]
+        public string CssDetailPeriodTitleData {
+            get { return _cssDetailPeriodTitleData; }
+            set { _cssDetailPeriodTitleData = value; }
+        }
+        /// <summary>
+        /// Css class for period background color
+        /// </summary>
+        protected string _cssDetailPeriodBackgroundColor = "";
+        /// <summary>
+        /// Set / Get the css style for a period background color
+        /// </summary>
+        [Bindable(true),
+        Category("Detail Period"),
+        DefaultValue("")]
+        public string CssDetailPeriodBackgroundColor {
+            get { return _cssDetailPeriodBackgroundColor; }
+            set { _cssDetailPeriodBackgroundColor = value; }
+        }
         #endregion
 
         #region Show Container
@@ -471,6 +517,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 		protected override void OnInit(EventArgs e) {
 			base.OnInit(e);
             DetailSelectionInit();
+            //DetailPeriodInit();
 		}
         /// <summary>
         /// Initialisation du composant DetailSelectionWebControl
@@ -485,6 +532,18 @@ namespace TNS.AdExpress.Web.Controls.Results{
                     break;
             }
         }
+        /// <summary>
+        /// Initialisation du composant DetailPeriodWebControl
+        /// </summary>
+        /*protected virtual void DetailPeriodInit() {
+            detailPeriodWebControl = new TNS.AdExpress.Web.Controls.Selections.DetailPeriodWebControl();
+            detailPeriodWebControl.WebSession = _customerWebSession;
+            detailPeriodWebControl.PeriodBeginning = _customerWebSession.PeriodBeginningDate;
+            detailPeriodWebControl.PeriodEnd = _customerWebSession.PeriodEndDate;
+            detailPeriodWebControl.CssTitle = CssDetailPeriodTitle;
+            detailPeriodWebControl.CssTitleData = CssDetailPeriodTitleData;
+            detailPeriodWebControl.CssBackgroundColor = CssDetailPeriodBackgroundColor;
+        }*/
 		#endregion
 
 		#region OnAjaxMethodError
@@ -2174,6 +2233,7 @@ namespace TNS.AdExpress.Web.Controls.Results{
 					html.Append(GetWindowExpandMenuHTML());
 					html.Append(AjaxProTimeOutScript());
 					html.Append(AjaxEventScript());
+                    //html.Append(detailPeriodWebControl.GetHeader());
 					html.Append(GetLoadingHTML());
 					html.Append(SelectionCallBackScript());
                     if (_useLimitation)
