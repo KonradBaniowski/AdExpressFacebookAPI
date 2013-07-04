@@ -517,6 +517,11 @@ namespace TNS.AdExpress.Web.Core.Sessions
         [System.NonSerialized]
         protected Constantes.Web.CustomerSessions.CampaignType _campaignType = Constantes.Web.CustomerSessions.CampaignType.none;
 
+        /// <summary>
+        /// Date to Date comparative week
+        /// </summary>
+        [System.NonSerialized]
+        protected bool _dateToDateComparativeWeek = false;
         #endregion
 
         #endregion
@@ -2025,6 +2030,24 @@ namespace TNS.AdExpress.Web.Core.Sessions
                     pdm = value;
                     modificationDate = DateTime.Now;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Get \Set Date to Date comparative week
+        /// </summary>
+        public bool DateToDateComparativeWeek {
+            get {
+                if (userParameters.ContainsKey(CoreConstantes.SessionParamters.dateToDateComparativeType)) {
+                    _dateToDateComparativeWeek = (bool)userParameters[CoreConstantes.SessionParamters.dateToDateComparativeType];
+                }
+
+                return (_dateToDateComparativeWeek);
+            }
+            set {
+                _dateToDateComparativeWeek = value;
+                userParameters[CoreConstantes.SessionParamters.dateToDateComparativeType] = value;
+                modificationDate = DateTime.Now;
             }
         }
 

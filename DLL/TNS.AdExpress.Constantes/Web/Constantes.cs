@@ -305,7 +305,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// selected Levels Value
             /// </summary>
-            selectedLevelsValue = 70
+            selectedLevelsValue = 70,
+            /// <summary>
+            /// Date to Date comparative week
+            /// </summary>
+            dateToDateComparativeType = 71
           
 		}
 	

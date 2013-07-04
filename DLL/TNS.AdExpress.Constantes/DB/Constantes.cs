@@ -1899,7 +1899,18 @@ namespace TNS.AdExpress.Constantes.DB{
 		/// id periode pour le cumul à date
 		/// </summary>
 		public const string ID_PERIOD_CUMULATIVE="90";
-	
+        /// <summary>
+        /// Excluded product list
+        /// </summary>
+        public const string LIST_EXCLUDE_PRODUCT = "180000,50000,50001,50300";
+        /// <summary>
+        /// Comparative Type = Default : current month with previous month and current week number with previous week number
+        /// </summary>
+        public const string COMPARATIVE_TYPE_DEFAULT = "0";
+        /// <summary>
+        /// Comparative Type = Date to Date
+        /// </summary>
+        public const string COMPARATIVE_TYPE_DATE_TO_DATE = "10";
 	}
 
 
