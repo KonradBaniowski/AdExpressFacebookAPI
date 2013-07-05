@@ -1625,7 +1625,6 @@ CheckActiveVehicle="True"
 						   CssDetailSelectionTitle="dsTitle"
 						   CssDetailSelectionTitleData="dsTitleData" 
 						   CssDetailSelectionTitleGlobal="dsTitleGlobal"
-						   
 						   SkinID="resultwebcontrol1" 
 />
 <%-- Result web control : used to display generic details result --%>
@@ -1982,4 +1981,11 @@ CheckActiveVehicle="True"
                             PictureSrcPath="/App_Themes/KMAE-Fr/Images/Common/Button/save_up2.gif"
                             PictureSrcPathOver="/App_Themes/KMAE-Fr/Images/Common/Button/save_down2.gif"
                             CssClass="excelSelectionWebControlSelection"
+/>
+<ctrSelections:DetailPeriodWebControl   
+                            runat="server" 
+                            CssTitle="dpTitle"
+                            CssTitleData="dpTitleData"
+                            CssBackgroundColor="dpTable"
+                            SkinID="detailPeriodWebControl" 
 />
