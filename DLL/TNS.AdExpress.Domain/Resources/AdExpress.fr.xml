@@ -2235,5 +2235,9 @@
     <!--Added media Indoor in Poland-->
     <item mnemonic="w2992" type="System.String">Aucun résultats : vous n'avez pas les droits suffisants pour accéder aux détails des insertions de la Publicité Intérieure.</item>
     <item mnemonic="w2993" type="System.String">!</item>
+    <!--Add help info for tendencies comparative type-->
+    <item mnemonic="w2994" type="System.String">L'option « Date semaine comparative » permet de comparer une année de référence à celle de l’année précédente depuis le 1er janvier jusqu’à la dernière semaine complète de l'année précédente chargée sur AdExpress.</item>
+    <item mnemonic="w2995" type="System.String">L'option « Date à Date » permet de comparer une année de référence à celle de l'année précédente en fonction des jours de début et de fin sélectionnés.</item>
+    <item mnemonic="w2996" type="System.String">Ces 2 options sont également disponibles pour le détail hebdomadaire.</item>
   </items>
 </localization>

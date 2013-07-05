@@ -6,13 +6,13 @@
   <projects>
     <project id="Global">
       <files>
-        <file>F:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.ru.xml</file>
-        <file>F:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en.xml</file>
-        <file>F:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fr.xml</file>
-        <file>F:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-ru.xml</file>
-        <file>F:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fi.xml</file>
-        <file>F:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.cz.xml</file>
-        <file>F:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.sk.xml</file>
+        <file>D:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.ru.xml</file>
+        <file>D:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en.xml</file>
+        <file>D:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fr.xml</file>
+        <file>D:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.en-ru.xml</file>
+        <file>D:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.fi.xml</file>
+        <file>D:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.cz.xml</file>
+        <file>D:\Dev\CS2\AdExpress International Demo\Trunk\DLL\TNS.AdExpress.Domain\Resources\AdExpress.sk.xml</file>
       </files>
     </project>
   </projects>
