@@ -71,6 +71,7 @@ namespace TNS.AdExpress.Domain.Results
         /// </summary>
         protected List<string> _promotionVisual;
 
+        private long _excluWeb;
 
         #endregion
 
@@ -91,7 +92,8 @@ namespace TNS.AdExpress.Domain.Results
         /// <param name="promotionBrand">Promotion Brand</param>
         /// <param name="promotionVisual">Promotion Visual</param>
         public DataPromotionDetail(long idProduct, long idBrand, DateTime dateBegin, DateTime dateEnd, long idSegment, long idCategory, long idCircuit
-            , string promotionContent, List<string> conditionVisual, string conditionText, string promotionBrand, List<string> promotionVisual) {
+            , string promotionContent, List<string> conditionVisual, string conditionText, string promotionBrand, List<string> promotionVisual
+            ,long excluWeb) {
             if (idProduct < 1) throw new ArgumentException(" Paramter idProduct  is invalid");
             _idProduct = idProduct;
             if (idBrand < 1) throw new ArgumentException(" Paramter idBrand  is invalid");
@@ -109,7 +111,8 @@ namespace TNS.AdExpress.Domain.Results
             _conditionText = conditionText;
             _promotionBrand = promotionBrand;
             _promotionVisual = promotionVisual;
-        }
+            _excluWeb = excluWeb;
+            }
         #endregion
 
         #region Accessors
@@ -185,6 +188,11 @@ namespace TNS.AdExpress.Domain.Results
         /// </summary>
         public List<string> PromotionVisual {
             get { return _promotionVisual; }
+        }
+
+        public long ExcluWeb
+        {
+            get { return _excluWeb; }
         }
 
         #endregion

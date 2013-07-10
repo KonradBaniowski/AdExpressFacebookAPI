@@ -2239,5 +2239,10 @@
     <item mnemonic="w2994" type="System.String">L'option « Date semaine comparative » permet de comparer une année de référence à celle de l’année précédente depuis le 1er janvier jusqu’à la dernière semaine complète de l'année précédente chargée sur AdExpress.</item>
     <item mnemonic="w2995" type="System.String">L'option « Date à Date » permet de comparer une année de référence à celle de l'année précédente en fonction des jours de début et de fin sélectionnés.</item>
     <item mnemonic="w2996" type="System.String">Ces 2 options sont également disponibles pour le détail hebdomadaire.</item>
+    <!--Add Exclu Web for module VP-->
+    <item mnemonic="w2997" type="System.String">Exclu Web</item>
+    <item mnemonic="w2998" type="System.String">Oui</item>
+    <item mnemonic="w2999" type="System.String">Non</item>
+    <item mnemonic="w3000" type="System.String">Web</item>
   </items>
 </localization>

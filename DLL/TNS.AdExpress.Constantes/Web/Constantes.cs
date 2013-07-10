@@ -309,7 +309,11 @@ namespace TNS.AdExpress.Constantes.Web{
             /// <summary>
             /// Date to Date comparative week
             /// </summary>
-            dateToDateComparativeType = 71
+            dateToDateComparativeType = 71,
+            /// <summary>
+            /// Exclu web
+            /// </summary>
+            excluWeb =72
           
 		}
 	

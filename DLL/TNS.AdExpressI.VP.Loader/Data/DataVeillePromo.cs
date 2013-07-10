@@ -45,7 +45,10 @@ namespace TNS.AdExpressI.VP.Loader.Data {
         /// <param name="dataLanguage">Data Language</param>
         public DataVeillePromo(DataBase dataBase)
             : base(dataBase) {
-           _veillePromoDAL = (IDataVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].AssemblyName, ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].Class, false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { _dataBase }, null, null, null);
+           _veillePromoDAL = (IDataVeillePromoDAL)AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(AppDomain.CurrentDomain.BaseDirectory + ApplicationParameters
+               .CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].AssemblyName,
+               ApplicationParameters.CoreLayers[TNS.AdExpress.VP.Loader.Domain.Constantes.Constantes.Layers.Id.dataAccess].Class,
+               false, BindingFlags.CreateInstance | BindingFlags.Instance | BindingFlags.Public, null, new object[] { _dataBase }, null, null);
         }
         #endregion
 
@@ -175,6 +178,7 @@ namespace TNS.AdExpressI.VP.Loader.Data {
                                                                             , cDataPromotionDetail.ConditionText
                                                                             , cDataPromotionDetail.PromotionBrand
                                                                             , (from pictureMatching in pictureMatchingPromVisuListTemp.Values select pictureMatching.PathOut).ToList<string>()
+                                                                            , cDataPromotionDetail.ExcluWeb
                                                                         );
 
 

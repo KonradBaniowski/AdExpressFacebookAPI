@@ -62,7 +62,7 @@
     </Style>
     
     <!-- DatePicker -->
-    <Style x:Key="{x:Type my:DatePicker}" TargetType="{x:Type my:DatePicker}">
+    <Style x:Key="{x:Type DatePicker}" TargetType="{x:Type DatePicker}">
 
         <Setter Property="Foreground" Value="{StaticResource GlyphBrush}" />
         <Setter Property="FontSize" Value="12" />

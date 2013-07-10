@@ -62,6 +62,8 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
             int columnTextCondition = 6;
             int columnBrandPromo = 7;
             int columnVisualsPromo = 8;
+            int columnExcluWeb = 9;
+
 
             long idProduct;
             long idBrand;
@@ -76,6 +78,7 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
             string promotionBrand;
             List<string> promotionVisual = null;
             int line = startLineData;
+            long excluWeb = 0;
             #endregion
 
             try
@@ -249,6 +252,10 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
 
                         #endregion
 
+                        #region Get Exclu Web
+                        excluWeb = Convert.ToInt64(cells[line, columnExcluWeb].Value);
+                        #endregion
+
                         dataPromotionDetailList.Add(new DataPromotionDetail(
                                                         idProduct,
                                                         idBrand,
@@ -261,7 +268,7 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
                                                         conditionVisual,
                                                         conditionText,
                                                         promotionBrand,
-                                                        promotionVisual));
+                                                        promotionVisual, excluWeb));
 
                     }
                 }
@@ -277,7 +284,7 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
             }
             finally
             {
-                if (excel != null) excel = null;
+                excel = null;
             }
         }
         #endregion
@@ -325,19 +332,23 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
         /// </summary>
         /// <param name="fileList">File List</param>
         /// <returns>Picture File Name List</returns>
-        public Dictionary<string, PictureMatching> GetPictureFileName(List<string> fileList) {
+        public Dictionary<string, PictureMatching> GetPictureFileName(List<string> fileList)
+        {
 
             #region Variables
             StringBuilder sql = new StringBuilder();
             DataSet ds = null;
             #endregion
 
-            try {
+            try
+            {
 
                 Dictionary<string, PictureMatching> filePictureList = new Dictionary<string, PictureMatching>();
 
-                if (fileList != null) {
-                    foreach (string cFile in fileList) {
+                if (fileList != null)
+                {
+                    foreach (string cFile in fileList)
+                    {
 
                         #region Construct global query
                         sql = new StringBuilder(200);
@@ -353,7 +364,8 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
                 }
                 return filePictureList;
             }
-            catch (System.Exception err) {
+            catch (System.Exception err)
+            {
                 throw new VeillePromoDALDbException("DataAccess DeleteData Error. sql: " + sql.ToString(), err);
             }
         }
@@ -419,22 +431,22 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
                 string conditionText = (!string.IsNullOrEmpty(dataPromotionDetail.ConditionText) ? dataPromotionDetail.ConditionText.Replace("'", "''") : "");
                 string promotionBrand = (!string.IsNullOrEmpty(dataPromotionDetail.PromotionBrand) ? dataPromotionDetail.PromotionBrand.Replace("'", "''") : "");
                 string conditionVisual = (dataPromotionDetail.ConditionVisual != null && dataPromotionDetail.ConditionVisual.Count > 0) ?
-                string.Join(",", dataPromotionDetail.ConditionVisual.ConvertAll<string>(p => p.Replace("'", "''")).ToArray()) : "";
+                string.Join(",", dataPromotionDetail.ConditionVisual.ConvertAll(p => p.Replace("'", "''")).ToArray()) : "";
                 string promotionVisual = (dataPromotionDetail.PromotionVisual != null && dataPromotionDetail.PromotionVisual.Count > 0) ?
-                    string.Join(",", dataPromotionDetail.PromotionVisual.ConvertAll<string>(p => p.Replace("'", "''")).ToArray()) : "";
-                
+                    string.Join(",", dataPromotionDetail.PromotionVisual.ConvertAll(p => p.Replace("'", "''")).ToArray()) : "";
+
                 sql.AppendFormat("INSERT INTO {0} ", tblData.Sql);
 
-                sql.Append("(ID_DATA_PROMOTION, ID_LANGUAGE_DATA_I, ID_PRODUCT, ID_BRAND, DATE_BEGIN_NUM, DATE_END_NUM, ID_SEGMENT, ID_CATEGORY, ID_CIRCUIT, PROMOTION_CONTENT, CONDITION_VISUAL, CONDITION_TEXT, PROMOTION_BRAND, PROMOTION_VISUAL, ACTIVATION, LOAD_DATE) ");
+                sql.Append("(ID_DATA_PROMOTION, ID_LANGUAGE_DATA_I, ID_PRODUCT, ID_BRAND, DATE_BEGIN_NUM, DATE_END_NUM, ID_SEGMENT, ID_CATEGORY, ID_CIRCUIT, PROMOTION_CONTENT, CONDITION_VISUAL, CONDITION_TEXT, PROMOTION_BRAND, PROMOTION_VISUAL, ACTIVATION, LOAD_DATE,EXCLU_WEB) ");
 
                 sql.Append("VALUES ");
 
-                sql.AppendFormat("({0}, 33, {1}, {2}, {3}, {4}, {5}, {6}, {7}, '{8}', '{9}', '{10}', '{11}', '{12}', {13}, {14}) ",
+                sql.AppendFormat("({0}, 33, {1}, {2}, {3}, {4}, {5}, {6}, {7}, '{8}', '{9}', '{10}', '{11}', '{12}', {13}, {14},{15}) ",
                 "PROMO03.SEQ_DATA_PROMOTION.NEXTVAL",
                 dataPromotionDetail.IdProduct,
                 dataPromotionDetail.IdBrand,
-               Convert.ToInt64( dataPromotionDetail.DateBegin.ToString("yyyyMMdd")),
-                Convert.ToInt64( dataPromotionDetail.DateEnd.ToString("yyyyMMdd")),
+               Convert.ToInt64(dataPromotionDetail.DateBegin.ToString("yyyyMMdd")),
+                Convert.ToInt64(dataPromotionDetail.DateEnd.ToString("yyyyMMdd")),
                 dataPromotionDetail.IdSegment,
                 dataPromotionDetail.IdCategory,
                 dataPromotionDetail.IdCircuit,
@@ -444,7 +456,8 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
                 promotionBrand,
                 promotionVisual,
                 ActivationValues.ACTIVATED,
-                 Convert.ToInt64( dateTraitment.ToString("yyyyMM")));
+                 Convert.ToInt64(dateTraitment.ToString("yyyyMM")),
+                 dataPromotionDetail.ExcluWeb);
 
                 #endregion
 
@@ -462,7 +475,7 @@ namespace TNS.AdExpressI.VP.Loader.DAL.Data
 
         #endregion
 
-        
+
 
     }
 }
