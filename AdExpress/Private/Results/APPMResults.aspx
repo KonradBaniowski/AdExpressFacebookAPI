@@ -117,6 +117,11 @@
 						                <tr>
 							                <td style="HEIGHT: 5px" ></td>
 						                </tr>
+                                        <tr>
+                                            <td>
+                                                <cc4:DetailPeriodWebControl ID="DetailPeriodWebControl1" runat="server" SkinID="detailPeriodWebControl"></cc4:DetailPeriodWebControl>
+                                            </td>
+                                        </tr>
 						                <tr>
 							                <td align="center" >
 								                <cc6:AppmContainerWebControl id="AppmContainerWebControl1" runat="server" SkinID="container"></cc6:AppmContainerWebControl>

@@ -52,6 +52,33 @@
 					<td width="10"><asp:Image ID="Image12" runat="server" SkinID="pixel" width="10" /></td>
 					<td class="txtViolet11"><cc1:adexpresstext language="33" id="Adexpresstext3" runat="server" Code="1622"></cc1:adexpresstext></td>
 				</tr>
+                <!-- Comparative type -->
+                <%if (comparativeOption) { %>
+                <tr>
+					<td colSpan="2"><asp:Image ID="Image52" runat="server" SkinID="pixel" height="10" width="100%" /></td>
+				</tr>
+                <tr>
+					<td width="10"><asp:Image ID="Image48" runat="server" SkinID="pixel" width="10" /></td>
+					<td class="txtViolet11"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/weekComparativeType.gif" >&nbsp;<cc1:adexpresstext language="33" id="Adexpresstext7" runat="server" Code="2994"></cc1:adexpresstext></td>
+				</tr>
+				<tr>
+					<td colSpan="2"><asp:Image ID="Image49" runat="server" SkinID="pixel" height="15" width="100%" /></td>
+				</tr>
+                <tr>
+					<td width="10"><asp:Image ID="Image50" runat="server" SkinID="pixel" width="10" /></td>
+					<td class="txtViolet11"><IMG src="/App_Themes/<%= this.Theme %>/Images/Culture/Help/dateToDateComparativeType.gif" >&nbsp;<cc1:adexpresstext language="33" id="Adexpresstext8" runat="server" Code="2995"></cc1:adexpresstext></td>
+				</tr>
+                <tr>
+					<td colSpan="2"><asp:Image ID="Image54" runat="server" SkinID="pixel" height="15" width="100%" /></td>
+				</tr>
+                <tr>
+					<td width="10"><asp:Image ID="Image53" runat="server" SkinID="pixel" width="10" /></td>
+					<td class="txtViolet11"><cc1:adexpresstext language="33" id="Adexpresstext9" runat="server" Code="2996"></cc1:adexpresstext></td>
+				</tr>
+				<tr>
+					<td colSpan="2"><asp:Image ID="Image51" runat="server" SkinID="pixel" height="15" width="100%" /></td>
+				</tr>
+                <%} %>
 				<!-- Exemple -->
 				<tr>
 					<td colSpan="2"><asp:Image ID="Image31" runat="server" SkinID="pixel" height="10" width="100%" /></td>

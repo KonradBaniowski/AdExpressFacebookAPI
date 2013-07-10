@@ -161,6 +161,8 @@ namespace AdExpress.Private.Results{
 				scriptBody = "javascript:openMenuTest();";
 				#endregion		
 
+                DetailPeriodWebControl1.WebSession = _webSession;
+
 				#region Résultat
 				result = WebSystem.Results.DashBoardSystem.GetHtml(_webSession);
                 //result = "<div align=\"center\" class=\"txtViolet11Bold\">" + GestionWeb.GetWebWord(177, _webSession.SiteLanguage) + "</div>";

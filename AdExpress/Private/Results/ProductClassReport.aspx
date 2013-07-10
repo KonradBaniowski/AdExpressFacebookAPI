@@ -111,6 +111,11 @@
 								<td><cc2:headerwebcontrol language="33" id="HeaderWebControl1" runat="server" Type_de_page="generic"></cc2:headerwebcontrol></td>
 							</tr>
 					        <!-- Centre -->
+                            <tr>
+                                <td>
+                                    <cc4:DetailPeriodWebControl ID="DetailPeriodWebControl1" runat="server" SkinID="detailPeriodWebControl"></cc4:DetailPeriodWebControl>
+                                </td>
+                            </tr>
 					        <tr width="100%">
 						        <!-- Tableau de Résultat -->
 						        <td style="HEIGHT: 19px" align="center">

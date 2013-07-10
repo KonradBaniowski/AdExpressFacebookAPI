@@ -122,6 +122,8 @@ namespace AdExpress.Private.Results
 			}
 			#endregion
 
+            DetailPeriodWebControl1.WebSession = _webSession;
+
 			_webSession.Save();
 		}
 		#endregion

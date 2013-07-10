@@ -136,6 +136,8 @@ namespace AdExpress.Private.Results
                 InformationWebControl1.Language = _webSession.SiteLanguage;
                 #endregion
 
+                DetailPeriodWebControl1.WebSession = _webSession;
+
                 VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
 
                 if (_webSession.CurrentTab == CstResult.MediaStrategy.MEDIA_STRATEGY)

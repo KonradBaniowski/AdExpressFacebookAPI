@@ -135,7 +135,7 @@ namespace AdExpress.Private.Results
                 VehicleInformation _vehicleInformation = VehiclesInformation.Get(long.Parse(vehicleSelection));
                 if (_vehicleInformation == null) throw (new WebExceptions.CompetitorRulesException("La sélection de médias est incorrecte"));
                 #endregion
-
+                
                 if (Page.Request.UrlReferrer != null && Page.Request.UrlReferrer.AbsolutePath.IndexOf("SearchSession.aspx") > 0)
                 {
                     fromSave = true;
@@ -150,6 +150,8 @@ namespace AdExpress.Private.Results
                 //initialisation de la péiode sélectionnée
                 if (!isPeriodSelected(Page) || fromSave) SelectedPeriod(_vehicleInformation.Id);
 
+                if (!isPeriodTypeSelected(Page) && !fromSave) _webSession.DateToDateComparativeWeek = false;
+
                 displayMonthes = ResultsDateListWebControl1.Visible;
                 displayWeeks = ResultsDateListWebControl2.Visible;
 
@@ -160,6 +162,8 @@ namespace AdExpress.Private.Results
 
                 VehicleInformation vhInfo = VehiclesInformation.Get(Int64.Parse(vehicleSelection));
                 _webSession.DetailLevel = vhInfo.TrendsDefaultMediaSelectionDetailLevel;
+
+                DetailPeriodWebControl1.WebSession = _webSession;
 
                 _webSession.Save();
 
@@ -435,6 +439,20 @@ namespace AdExpress.Private.Results
 
             return false;
         }
+
+        /// <summary>
+        /// Check if the user has selected a period type
+        /// </summary>
+        /// <returns>True if a period type has been selected</returns>
+        private bool isPeriodTypeSelected(System.Web.UI.Page Page) {
+            try {
+                if (Page.Request.Form.GetValues("comparativeTypeRadioButton") != null && Page.Request.Form.GetValues("comparativeTypeRadioButton")[0] != null) return true;
+            }
+            catch (Exception) { return false; }
+
+            return false;
+        }
+
         /// <summary>
         /// Met la période cumulée dans la session cliente
         /// </summary>

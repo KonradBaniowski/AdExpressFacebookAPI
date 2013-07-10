@@ -327,6 +327,8 @@ namespace AdExpress.Private.Results{
                         TNS.AdExpress.Web.Functions.Script.PortofolioDetailMedia());
 				}	
 				#endregion
+
+                DetailPeriodWebControl1.WebSession = _webSession;
 			
 			}			
 			catch(System.Exception exc){

@@ -122,6 +122,11 @@
 					        <tr>
 						        <td>
 							        <table cellSpacing="0" cellPadding="0" width="100%" border="0">
+                                        <tr>
+                                            <td>
+                                                <cc4:DetailPeriodWebControl ID="DetailPeriodWebControl1" runat="server" SkinID="detailPeriodWebControl"></cc4:DetailPeriodWebControl>
+                                            </td>
+                                        </tr>
 								        <tr>
 									        <!-- Tableau de Résultat -->
 									        <td bgColor="#ffffff" style="HEIGHT: 37px">

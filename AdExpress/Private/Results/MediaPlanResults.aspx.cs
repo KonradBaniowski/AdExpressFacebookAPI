@@ -225,6 +225,9 @@ namespace AdExpress.Private.Results
                     _webSession.SloganIdZoom = long.MinValue;
                 }
 
+                DetailPeriodWebControl1.WebSession = _webSession;
+                if (!string.IsNullOrEmpty(_zoom)) DetailPeriodWebControl1.DisplayContent = false;
+
 
             }
             catch (System.Exception exc)

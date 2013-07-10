@@ -122,6 +122,11 @@
 					        <tr>
 						        <td>
 							        <table cellSpacing="0" cellPadding="0" width="100%" border="0">
+                                        <tr>
+                                            <td>
+                                                <cc4:DetailPeriodWebControl ID="DetailPeriodWebControl1" runat="server" SkinID="detailPeriodWebControl"></cc4:DetailPeriodWebControl>
+                                            </td>
+                                        </tr>
 								        <tr>
 									        <td align="center" height="5">
 									        <cc5:PortofolioChartWebControl id="portofolioChartWebControl1" runat="server"></cc5:PortofolioChartWebControl>

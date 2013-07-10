@@ -113,6 +113,11 @@
 					        <tr>
 						        <td>
 							        <table cellspacing="0" cellpadding="0" width="100%" border="0">
+                                        <tr>
+                                            <td>
+                                                <cc4:DetailPeriodWebControl ID="DetailPeriodWebControl1" runat="server" SkinID="detailPeriodWebControl"></cc4:DetailPeriodWebControl>
+                                            </td>
+                                        </tr>
 								        <tr>
 									        <!-- Test Tableau de Résultat -->
 									        <td><br>

@@ -104,8 +104,13 @@
 					        <tr>
 						        <td>
 							        <table cellspacing="0" cellpadding="0" width="100%" border="0">
+                                        <tr>
+                                            <td>
+                                                <cc4:DetailPeriodWebControl ID="DetailPeriodWebControl1" runat="server" SkinID="detailPeriodWebControl"></cc4:DetailPeriodWebControl>
+                                            </td>
+                                        </tr>
 								        <tr>
-									        <td align="center">
+									        <td>
 										        <!--RESULTAT -->
 										        <cc5:resultwebcontrol id="_resultWebControl" runat="server" JavascriptFilePath="/scripts/WebResult4.js" SkinID="resultwebcontrol1"></cc5:resultwebcontrol>
 									        </td>

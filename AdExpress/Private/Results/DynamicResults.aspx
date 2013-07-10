@@ -121,6 +121,12 @@
 						        <td>
 							        <table cellSpacing="0" cellPadding="0" width="100%" border="0">
                                         <tr>
+                                            <td>
+                                                <cc4:DetailPeriodWebControl ID="DetailPeriodWebControl1" runat="server" SkinID="detailPeriodWebControl"></cc4:DetailPeriodWebControl>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                        
                                             <!-- Test Tableau de Résultat -->
                                             <td style="HEIGHT: 37px">
                                                 <cc5:resultwebcontrol id="resultwebcontrol1" runat="server" JavascriptFilePath='/scripts/WebResult4.js' 

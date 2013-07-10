@@ -184,7 +184,6 @@ namespace AdExpress.Private.Results{
 				ModuleBridgeWebControl1.CustomerWebSession=_webSession;
 				InformationWebControl1.Language = _webSession.SiteLanguage;
 				#endregion
-							
 
 				#region Sélection du vehicle
 				string vehicleSelection = _webSession.GetSelection(_webSession.SelectionUniversMedia, Right.type.vehicleAccess);
@@ -205,6 +204,8 @@ namespace AdExpress.Private.Results{
 				else ResultsOptionsWebControl1.InsertOption=false;
 			
 				#endregion
+
+                DetailPeriodWebControl1.WebSession = _webSession;
 								
 				#region Résultat
 				//Code html des résultats

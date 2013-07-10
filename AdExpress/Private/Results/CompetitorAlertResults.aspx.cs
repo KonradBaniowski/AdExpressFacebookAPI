@@ -206,6 +206,8 @@ namespace AdExpress.Private.Results{
                 }
                 #endregion
 
+                DetailPeriodWebControl1.WebSession = _webSession;
+
                 #region pdm
                 if (this.ViewState["pdm"] != null) {
                     pdm = (bool)this.ViewState["pdm"];

@@ -130,6 +130,7 @@ namespace AdExpress.Private.Results
 				#endregion
 
 				SectorDataContainerWebControl1.Source = this._dataSource;
+                DetailPeriodWebControl1.WebSession = _webSession;
 
 				#region Niveau de détail media (Generic)
 				_webSession.PreformatedMediaDetail=TNS.AdExpress.Constantes.Web.CustomerSessions.PreformatedDetails.PreformatedMediaDetails.vehicleCategory;

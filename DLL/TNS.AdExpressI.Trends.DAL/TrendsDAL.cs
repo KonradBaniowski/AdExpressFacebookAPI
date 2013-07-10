@@ -218,6 +218,14 @@ namespace TNS.AdExpressI.Trends.DAL
             {
                 sqlRequest.Append(" and ID_PDM = " + DBConstantes.Hathor.PDM_FALSE);
             }
+            
+            //Comparative type
+            if ((_session.DateToDateComparativeWeek && _session.DetailPeriod == CustomerSessions.Period.DisplayLevel.weekly) ||
+                (_session.PeriodType == CustomerSessions.Period.Type.cumlDate && _session.DateToDateComparativeWeek && _session.DetailPeriod == CustomerSessions.Period.DisplayLevel.monthly))
+                sqlRequest.Append("and comparative_type = " + DBConstantes.Hathor.COMPARATIVE_TYPE_DATE_TO_DATE + " ");
+            else
+                sqlRequest.Append("and comparative_type = " + DBConstantes.Hathor.COMPARATIVE_TYPE_DEFAULT + " ");
+            
             sqlRequest.Append(" and id_type_tendency=" + DBConstantes.Hathor.TYPE_TENDENCY_TOTAL);
             if (_session.PeriodType == CustomerSessions.Period.Type.cumlDate)
             {
@@ -452,7 +460,7 @@ namespace TNS.AdExpressI.Trends.DAL
                         sqlRequest.Append(" and " + trendPrefix + ".ID_CATEGORY = " + totalTable.Prefix + ".ID_CATEGORY ");
                         sqlRequest.Append(" and " + trendPrefix + ".ID_CUMULATIVE = " + totalTable.Prefix + ".ID_CUMULATIVE ");
                         sqlRequest.Append(" and " + trendPrefix + ".DATE_PERIOD = " + totalTable.Prefix + ".DATE_PERIOD ");
-
+                        sqlRequest.Append(" and " + trendPrefix + ".COMPARATIVE_TYPE = " + totalTable.Prefix + ".COMPARATIVE_TYPE ");
                     }
                     break;
                 case DBClassificationConstantes.Vehicles.names.press:
@@ -464,6 +472,7 @@ namespace TNS.AdExpressI.Trends.DAL
                     sqlRequest.Append(" and " + trendPrefix + ".ID_CATEGORY = " + totalTable.Prefix + ".ID_CATEGORY ");
                     sqlRequest.Append(" and " + trendPrefix + ".ID_CUMULATIVE = " + totalTable.Prefix + ".ID_CUMULATIVE ");
                     sqlRequest.Append(" and " + trendPrefix + ".DATE_PERIOD = " + totalTable.Prefix + ".DATE_PERIOD ");
+                    sqlRequest.Append(" and " + trendPrefix + ".COMPARATIVE_TYPE = " + totalTable.Prefix + ".COMPARATIVE_TYPE ");
                     break;
                 default:
                     throw new DataBaseException("Unknown Media type identifier.");
@@ -481,6 +490,13 @@ namespace TNS.AdExpressI.Trends.DAL
             {
                 sqlRequest.Append("and " + trendPrefix + ".id_pdm = " + DBConstantes.Hathor.PDM_FALSE + " ");
             }
+
+            //Comparative type
+            if ((_session.DateToDateComparativeWeek && _session.DetailPeriod == CustomerSessions.Period.DisplayLevel.weekly) ||
+                (_session.PeriodType == CustomerSessions.Period.Type.cumlDate && _session.DateToDateComparativeWeek && _session.DetailPeriod == CustomerSessions.Period.DisplayLevel.monthly))
+                sqlRequest.Append("and " + trendPrefix + ".comparative_type = " + DBConstantes.Hathor.COMPARATIVE_TYPE_DATE_TO_DATE + " ");
+            else
+                sqlRequest.Append("and " + trendPrefix + ".comparative_type = " + DBConstantes.Hathor.COMPARATIVE_TYPE_DEFAULT + " ");
 
             // Period
             if (_session.PeriodType == CustomerSessions.Period.Type.cumlDate)

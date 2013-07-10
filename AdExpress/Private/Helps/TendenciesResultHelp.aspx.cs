@@ -16,12 +16,19 @@ namespace AdExpress.Private.Helps{
 	/// <summary>
 	/// Description résumée de TendenciesResultHelp.aspx
 	/// </summary>
-	public partial class TendenciesResultHelp : WebPage{
-	
-		#region Evènements
+	public partial class TendenciesResultHelp : WebPage {
 
-		#region Chargement
-		/// <summary>
+        #region Variables
+        /// <summary>
+        /// Display comprative type infor
+        /// </summary>
+        public bool comparativeOption = false;
+        #endregion
+
+        #region Evènements
+
+        #region Chargement
+        /// <summary>
 		/// Chargement de la page
 		/// </summary>
 		/// <param name="sender">Objet qui lance l'évènement</param>
@@ -29,6 +36,8 @@ namespace AdExpress.Private.Helps{
 		protected void Page_Load(object sender, System.EventArgs e){
 			//Modification de la langue pour les Textes AdExpress
 			//TNS.AdExpress.Web.Translation.Functions.Translate.SetTextLanguage(this.Controls[3].Controls,_siteLanguage);
+            if (WebApplicationParameters.CountryCode.Equals(TNS.AdExpress.Constantes.Web.CountryCode.FRANCE))
+                comparativeOption = true;
 		}
 		#endregion
 

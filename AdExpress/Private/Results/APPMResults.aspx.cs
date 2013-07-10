@@ -160,7 +160,8 @@ namespace AdExpress.Private.Results{
 				}
 				#endregion	
 				
-                AppmContainerWebControl1.Source = _webSession.Source;	
+                AppmContainerWebControl1.Source = _webSession.Source;
+                
 				
 				#region Niveau de détail media (Generic)
 				if(_webSession.CurrentTab==TNS.AdExpress.Constantes.FrameWork.Results.APPM.mediaPlanByVersion ){
@@ -220,6 +221,9 @@ namespace AdExpress.Private.Results{
 
                 }
                 #endregion
+
+                DetailPeriodWebControl1.WebSession = _webSession;
+                if (_zoom != null && _zoom != string.Empty) DetailPeriodWebControl1.DisplayContent = false;
 
                 _webSession.Save();
 			}

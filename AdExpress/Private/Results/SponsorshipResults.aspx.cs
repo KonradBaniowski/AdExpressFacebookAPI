@@ -121,6 +121,8 @@ namespace AdExpress.Private.Results
 				#region Scripts
 				scriptBody = "javascript:openMenuTest();";
 				#endregion								
+
+                DetailPeriodWebControl1.WebSession = _webSession;
 			}			
 			catch(System.Exception exc){
 				if (exc.GetType() != typeof(System.Threading.ThreadAbortException)){

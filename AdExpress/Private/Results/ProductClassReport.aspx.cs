@@ -122,6 +122,8 @@ namespace AdExpress.Private.Results
                 }
                 #endregion
 
+                DetailPeriodWebControl1.WebSession = _webSession;
+
                 VehicleInformation vehicleInfo = VehiclesInformation.Get(((LevelInformation)_webSession.SelectionUniversMedia.FirstNode.Tag).ID);
                 if (vehicleInfo != null && vehicleInfo.AllowedRecapMediaLevelItemsEnumList != null
                     && !vehicleInfo.AllowedRecapMediaLevelItemsEnumList.Contains(DetailLevelItemInformation.Levels.category)

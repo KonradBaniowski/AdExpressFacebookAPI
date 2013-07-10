@@ -79,6 +79,8 @@ public partial class Private_Results_AdvertisingAgencyResults : TNS.AdExpress.We
             InformationWebControl1.Language = _webSession.SiteLanguage;
             #endregion
 
+            DetailPeriodWebControl1.WebSession = _webSession;
+
             _webSession.LastReachedResultUrl = Page.Request.Url.AbsolutePath;
             _webSession.ReachedModule = true;
 

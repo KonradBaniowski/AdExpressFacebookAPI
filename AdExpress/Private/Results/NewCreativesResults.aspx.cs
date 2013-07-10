@@ -118,6 +118,8 @@ namespace AdExpress.Private.Results{
 				}
 				#endregion
 
+                DetailPeriodWebControl1.WebSession = _webSession;
+
                 //#region Period Detail
                 //if(!IsPostBack)
                 //    PeriodDetailWebControl1.Select(_webSession.DetailPeriod);

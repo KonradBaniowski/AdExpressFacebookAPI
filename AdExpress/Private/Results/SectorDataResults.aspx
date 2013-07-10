@@ -105,6 +105,11 @@
 					        <tr>
 						        <td>
 							        <table cellspacing="0" cellpadding="0" width="100%" border="0">
+                                        <tr>
+                                            <td>
+                                                <cc4:DetailPeriodWebControl ID="DetailPeriodWebControl1" runat="server" SkinID="detailPeriodWebControl"></cc4:DetailPeriodWebControl>
+                                            </td>
+                                        </tr>
 								        <tr>
 									        <td align="center">
 										        <cc6:SectorDataContainerWebControl SkinID="SectorData" id="SectorDataContainerWebControl1" runat="server"  JavascriptFilePath="&quot;'/scripts/WebResult4.js'&quot;"></cc6:SectorDataContainerWebControl>

@@ -107,6 +107,11 @@
 								<td><cc2:headerwebcontrol language="33" id="HeaderWebControl1" runat="server" Type_de_page="generic"></cc2:headerwebcontrol></td>
 							</tr>
 					        <!-- Centre -->
+                            <tr>
+                                <td>
+                                    <cc4:DetailPeriodWebControl ID="DetailPeriodWebControl1" runat="server" SkinID="detailPeriodWebControl"></cc4:DetailPeriodWebControl>
+                                </td>
+                            </tr>
 					        <tr>
 						        <td>
 							        <table cellspacing="0" cellpadding="0" width="100%" border="0">

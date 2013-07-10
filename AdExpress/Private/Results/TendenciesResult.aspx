@@ -63,7 +63,7 @@
 										<!--Niveaux Produits-->
 										<tr style="height:3px">
 											<td><cc2:resultsdashboardoptionswebcontrol id="ResultsDashBoardOptionsWebControl1" runat="server" WeeklyDateOption="False"
-													AutoPostBackOption="False" MonthlyDateOption="False" TitleOption="True" PdmOption="True" CumulPeriodOption="True" IsCumulPeriodChecked="False"
+													AutoPostBackOption="False" MonthlyDateOption="False" TitleOption="True" PdmOption="True" ComparativeOption="false" CumulPeriodOption="True" IsCumulPeriodChecked="False"
 													UnitOption="False"></cc2:resultsdashboardoptionswebcontrol></td>
 										</tr>
 										<%if(displayMonthes){%>
@@ -134,6 +134,11 @@
 					        <tr>
 						        <td>
 							        <table cellspacing="0" cellpadding="0" width="100%" border="0">
+                                        <tr>
+                                            <td>
+                                                <cc4:DetailPeriodWebControl ID="DetailPeriodWebControl1" runat="server" SkinID="detailPeriodWebControl"></cc4:DetailPeriodWebControl>
+                                            </td>
+                                        </tr>
 								        <tr>
 									        <!-- Tableau de Résultat -->
 									        <td>
